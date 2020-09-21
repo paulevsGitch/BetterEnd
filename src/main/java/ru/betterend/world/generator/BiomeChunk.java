@@ -13,14 +13,14 @@ public class BiomeChunk
 	
 	private final EndBiome[][] biomes;
 	
-	public BiomeChunk(BiomeMap map, Random random)
+	public BiomeChunk(BiomeMap map, Random random, BiomePicker picker)
 	{
 		EndBiome[][] PreBio = new EndBiome[SM_WIDTH][SM_WIDTH];
 		biomes = new EndBiome[WIDTH][WIDTH];
 		
 		for (int x = 0; x < SM_WIDTH; x++)
 			for (int z = 0; z < SM_WIDTH; z++)
-				PreBio[x][z] = BiomePicker.getBiome(random);
+				PreBio[x][z] = picker.getBiome(random);
 	
 		for (int x = 0; x < WIDTH; x++)
 			for (int z = 0; z < WIDTH; z++)

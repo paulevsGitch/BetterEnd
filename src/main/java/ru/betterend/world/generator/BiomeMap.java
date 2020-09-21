@@ -18,8 +18,9 @@ public class BiomeMap
 	private final int depth;
 	private final OpenSimplexNoise noiseX;;
 	private final OpenSimplexNoise noiseZ;
+	private final BiomePicker picker;
 	
-	public BiomeMap(long seed, int size)
+	public BiomeMap(long seed, int size, BiomePicker picker)
 	{
 		RANDOM.setSeed(seed);
 		noiseX = new OpenSimplexNoise(RANDOM.nextLong());
@@ -27,6 +28,7 @@ public class BiomeMap
 		this.sizeXZ = size;
 		depth = (int) Math.ceil(Math.log(size) / Math.log(2)) - 2;
 		this.size = 1 << depth;
+		this.picker = picker;
 	}
 	
 	public void clearCache()
@@ -62,7 +64,7 @@ public class BiomeMap
 		if (chunk == null)
 		{
 			RANDOM.setTerrainSeed(cpos.x, cpos.z);
-			chunk = new BiomeChunk(this, RANDOM);
+			chunk = new BiomeChunk(this, RANDOM, picker);
 			MAPS.put(cpos, chunk);
 		}
 		

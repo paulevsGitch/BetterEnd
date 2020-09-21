@@ -6,11 +6,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeSource;
+import net.minecraft.world.biome.source.TheEndBiomeSource;
+import net.minecraft.world.gen.ChunkRandom;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.world.biome.EndBiome;
@@ -23,20 +26,28 @@ public class BetterEndBiomeSource extends BiomeSource {
 			return theEndBiomeSource.seed;
 		})).apply(instance, instance.stable(BetterEndBiomeSource::new));
 	});
-	private BiomeMap map;
 	private final long seed;
 	private final Registry<Biome> biomeRegistry;
+	private final SimplexNoiseSampler noise;
 	private final Biome centerBiome;
+	private BiomeMap mapLand;
+	private BiomeMap mapVoid;
 
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 		super(Collections.emptyList());
 		this.seed = seed;
-		this.map = new BiomeMap(seed, 50);
+		this.mapLand = new BiomeMap(seed, 50, BiomeRegistry.LAND_BIOMES);
+		this.mapVoid = new BiomeMap(seed, 50, BiomeRegistry.VOID_BIOMES);
 		this.biomeRegistry = biomeRegistry;
 		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
+		ChunkRandom chunkRandom = new ChunkRandom(seed);
+		chunkRandom.consume(17292);
+		this.noise = new SimplexNoiseSampler(chunkRandom);
 
 		BiomeRegistry.MUTABLE.clear();
-		for (EndBiome biome : BiomePicker.getBiomes())
+		for (EndBiome biome : BiomeRegistry.LAND_BIOMES.getBiomes())
+			BiomeRegistry.MUTABLE.put(biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(biome)), biome);
+		for (EndBiome biome : BiomeRegistry.VOID_BIOMES.getBiomes())
 			BiomeRegistry.MUTABLE.put(biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(biome)), biome);
 	}
 
@@ -45,10 +56,13 @@ public class BetterEndBiomeSource extends BiomeSource {
 		long i = biomeX >> 2;
 		long j = biomeZ >> 2;
 		if (i * i + j * j <= 4096L) return this.centerBiome;
+		
+		float height = TheEndBiomeSource.getNoiseAt(noise, (int) i * 2 + 1, (int) j * 2 + 1);
 	         
-		EndBiome netherBiome = map.getBiome(biomeX << 2, biomeZ << 2);
+		EndBiome netherBiome = height < 20.0F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		if (biomeX == 0 && biomeZ == 0) {
-			map.clearCache();
+			mapLand.clearCache();
+			mapVoid.clearCache();
 		}
 		return biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(netherBiome));
 	}

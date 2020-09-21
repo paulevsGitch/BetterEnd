@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeSource;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.BiomeRegistry;
@@ -25,12 +26,14 @@ public class BetterEndBiomeSource extends BiomeSource {
 	private BiomeMap map;
 	private final long seed;
 	private final Registry<Biome> biomeRegistry;
+	private final Biome centerBiome;
 
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 		super(Collections.emptyList());
 		this.seed = seed;
 		this.map = new BiomeMap(seed, 50);
 		this.biomeRegistry = biomeRegistry;
+		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
 
 		BiomeRegistry.MUTABLE.clear();
 		for (EndBiome biome : BiomePicker.getBiomes())
@@ -39,6 +42,10 @@ public class BetterEndBiomeSource extends BiomeSource {
 
 	@Override
 	public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
+		long i = biomeX >> 2;
+		long j = biomeZ >> 2;
+		if (i * i + j * j <= 4096L) return this.centerBiome;
+	         
 		EndBiome netherBiome = map.getBiome(biomeX << 2, biomeZ << 2);
 		if (biomeX == 0 && biomeZ == 0) {
 			map.clearCache();

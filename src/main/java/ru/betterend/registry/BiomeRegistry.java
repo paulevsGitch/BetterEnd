@@ -10,7 +10,7 @@ import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BuiltinBiomes;
+import net.minecraft.world.biome.BiomeKeys;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BiomePicker;
@@ -19,19 +19,30 @@ public class BiomeRegistry {
 	private static final Map<EndBiome, RegistryKey<Biome>> KEYS = Maps.newHashMap();
 	public static final HashMap<Biome, EndBiome> MUTABLE = Maps.newHashMap();
 	
-	public static final EndBiome END = registerBiome(BuiltinBiomes.PLAINS);
+	public static final EndBiome END = registerBiome(BiomeKeys.THE_END);
+	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS);
+	public static final EndBiome END_HIGHLANDS = registerBiome(BiomeKeys.END_HIGHLANDS);
+	public static final EndBiome END_MIDLANDS = registerBiome(BiomeKeys.END_MIDLANDS);
+	public static final EndBiome SMALL_END_ISLANDS = registerBiome(BiomeKeys.SMALL_END_ISLANDS);
 	public static final EndBiome TEST = registerBiome(new EndBiome(new BiomeDefinition("test").setFogColor(255, 0, 0)));
 	
 	public static void register() {}
 	
-	private static EndBiome registerBiome(Biome biome) {
+	public static EndBiome registerBiome(RegistryKey<Biome> key) {
+		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.get(key));
+		BiomePicker.addBiome(endBiome);
+		makeLink(endBiome);
+		return endBiome;
+	}
+	
+	public static EndBiome registerBiome(Biome biome) {
 		EndBiome endBiome = new EndBiome(biome);
 		BiomePicker.addBiome(endBiome);
 		makeLink(endBiome);
 		return endBiome;
 	}
 	
-	private static EndBiome registerBiome(EndBiome biome) {
+	public static EndBiome registerBiome(EndBiome biome) {
 		BiomePicker.addBiome(biome);
 		registerBiomeDirect(biome);
 		return biome;

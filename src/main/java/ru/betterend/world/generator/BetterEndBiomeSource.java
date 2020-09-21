@@ -26,20 +26,22 @@ public class BetterEndBiomeSource extends BiomeSource {
 			return theEndBiomeSource.seed;
 		})).apply(instance, instance.stable(BetterEndBiomeSource::new));
 	});
-	private final long seed;
 	private final Registry<Biome> biomeRegistry;
 	private final SimplexNoiseSampler noise;
 	private final Biome centerBiome;
 	private BiomeMap mapLand;
 	private BiomeMap mapVoid;
+	private final long seed;
 
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 		super(Collections.emptyList());
-		this.seed = seed;
+		
 		this.mapLand = new BiomeMap(seed, 50, BiomeRegistry.LAND_BIOMES);
 		this.mapVoid = new BiomeMap(seed, 50, BiomeRegistry.VOID_BIOMES);
-		this.biomeRegistry = biomeRegistry;
 		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
+		this.biomeRegistry = biomeRegistry;
+		this.seed = seed;
+		
 		ChunkRandom chunkRandom = new ChunkRandom(seed);
 		chunkRandom.consume(17292);
 		this.noise = new SimplexNoiseSampler(chunkRandom);

@@ -24,7 +24,8 @@
 		]
 	},
 	"mixins": [
-		"betterend.mixins.json"
+		"betterend.mixins.common.json",
+		"betterend.mixins.client.json"
 	],
 
 	"depends": {

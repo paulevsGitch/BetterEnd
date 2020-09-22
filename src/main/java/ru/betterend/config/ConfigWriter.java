@@ -7,7 +7,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.fabricmc.loader.api.FabricLoader;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.util.JsonFactory;
 

@@ -1,7 +1,12 @@
 package ru.betterend.config;
 
 import ru.betterend.BetterEnd;
-import ru.betterend.config.ConfigKeeper.*;
+import ru.betterend.config.ConfigKeeper.BooleanEntry;
+import ru.betterend.config.ConfigKeeper.Entry;
+import ru.betterend.config.ConfigKeeper.FloatEntry;
+import ru.betterend.config.ConfigKeeper.IntegerEntry;
+import ru.betterend.config.ConfigKeeper.RangeEntry;
+import ru.betterend.config.ConfigKeeper.StringEntry;
 
 public abstract class Config {
 	

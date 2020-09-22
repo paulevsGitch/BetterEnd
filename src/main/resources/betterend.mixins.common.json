@@ -1,12 +1,11 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "ru.betterend.mixin",
+	"package": "ru.betterend.mixin.common",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
 		"DimensionTypeMixin"
 	],
-	"client": [],
 	"injectors": {
 		"defaultRequire": 1
 	}

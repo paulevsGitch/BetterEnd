@@ -1,4 +1,4 @@
-package ru.betterend.mixin;
+package ru.betterend.mixin.common;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

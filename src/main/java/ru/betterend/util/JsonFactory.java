@@ -14,7 +14,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.resource.Resource;
-
 import ru.betterend.BetterEnd;
 
 public class JsonFactory {

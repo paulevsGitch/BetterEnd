@@ -38,6 +38,7 @@ public class BiomeConfig extends Config {
 	
 	@Override
 	public void saveChanges() {
+		this.configKeeper.toJson(configWriter.getConfig());
 		this.configWriter.saveConfig();
 	}
 }

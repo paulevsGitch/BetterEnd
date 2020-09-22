@@ -22,6 +22,10 @@ public class ConfigWriter {
 	private JsonObject configObject;
 	private File configFile;
 	
+	public JsonObject getConfig() {
+		return configObject;
+	}
+	
 	public JsonObject loadConfig(File configFile) {
 		this.configFile = configFile;
 		if (configObject == null) {

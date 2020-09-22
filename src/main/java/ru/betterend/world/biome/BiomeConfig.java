@@ -41,4 +41,10 @@ public class BiomeConfig extends Config {
 		this.configKeeper.toJson(configWriter.getConfig());
 		this.configWriter.saveConfig();
 	}
+	
+	static {
+		if (!BIOME_CONFIG_DIR.toFile().exists()) {
+			BIOME_CONFIG_DIR.toFile().mkdir();
+		}
+	}
 }

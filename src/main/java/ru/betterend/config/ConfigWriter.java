@@ -63,4 +63,10 @@ public class ConfigWriter {
 	public static void save(File configFile, JsonElement config) {
 		JsonFactory.storeJson(configFile, config);
 	}
+	
+	static {
+		if (!MOD_CONFIG_DIR.exists()) {
+			MOD_CONFIG_DIR.mkdirs();
+		}
+	}
 }

@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
@@ -32,13 +33,13 @@ import ru.betterend.util.MHelper;
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
 	private static final Identifier SKY = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_2.png");
-	private static final Identifier GRADIENT = new Identifier(BetterEnd.MOD_ID, "textures/sky/gradient.png");
+	private static final Identifier HORIZON = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_3.png");
 	
 	private static VertexBuffer customStarsBuffer1;
 	private static VertexBuffer customStarsBuffer2;
 	private static VertexBuffer customStarsBuffer3;
 	private static VertexBuffer farFogBuffer;
-	private static VertexBuffer gradient;
+	private static VertexBuffer horizon;
 	private static Vector3f axis1;
 	private static Vector3f axis2;
 	private static Vector3f axis3;
@@ -73,41 +74,17 @@ public class WorldRendererMixin {
 			time += tickDelta * 0.001F;
 			if (time > 360) time -= 360;
 			
-			//RenderSystem.clearDepth(0);
-			
 			RenderSystem.enableAlphaTest();
+			GlStateManager.alphaFunc(516, 0.0F);
 			RenderSystem.enableBlend();
 			RenderSystem.enableTexture();
-			//RenderSystem.alphaFunc(GL11.GL_ONE_MINUS_SRC_ALPHA, 0);
-			RenderSystem.defaultBlendFunc();
-			RenderSystem.defaultAlphaFunc();
-			//RenderSystem.blendEquation(mode);
-			//RenderSystem.enableDepthTest();
-			//GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-			//GL14.glBlendEquation(GL14.GL_FUNC_ADD);
-			//RenderSystem.disableDepthTest();
-			//GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			
-			//RenderSystem.enableFog();
-			//BackgroundRenderer.setFogBlack();
-			//RenderSystem.fogStart(1F);
-			//RenderSystem.fogEnd(10F);
-			
-			/*Vec3d vec3d = world.method_23777(this.client.gameRenderer.getCamera().getBlockPos(), tickDelta);
-			float r = (float) vec3d.x;
-			float g = (float) vec3d.y;
-			float b = (float) vec3d.z;*/
-			
-			textureManager.bindTexture(GRADIENT);
-			renderBuffer(matrices, gradient, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 1F);
+			textureManager.bindTexture(HORIZON);
+			renderBuffer(matrices, horizon, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 1F);
 			
 			textureManager.bindTexture(SKY);
-			renderBuffer(matrices, farFogBuffer, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.3F);
+			renderBuffer(matrices, farFogBuffer, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.15F);
 
 			RenderSystem.disableTexture();
-			//RenderSystem.disableFog();
-			
-			//renderBuffer(matrices, gradient, VertexFormats.POSITION_COLOR, 0.77F, 0.31F, 0.73F, 1F);
 			
 			matrices.push();
 			matrices.multiply(new Quaternion(axis1, time * 3, true));
@@ -145,8 +122,8 @@ public class WorldRendererMixin {
 		customStarsBuffer1 = buildBuffer(buffer, customStarsBuffer1, 0.05, 0.3, 3500, 41315);
 		customStarsBuffer2 = buildBuffer(buffer, customStarsBuffer2, 0.07, 0.4, 2000, 35151);
 		customStarsBuffer3 = buildBuffer(buffer, customStarsBuffer3, 0.1, 0.5, 1500, 61354);
-		farFogBuffer = buildBufferFarFog(buffer, farFogBuffer, 40, 60, 100, 11515);
-		gradient = buildBufferGradient(buffer, gradient);
+		farFogBuffer = buildBufferFarFog(buffer, farFogBuffer, 40, 60, 60, 11515);
+		horizon = buildBufferHorizon(buffer, horizon);
 	}
 	 
 	private VertexBuffer buildBuffer(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
@@ -175,13 +152,13 @@ public class WorldRendererMixin {
 		return buffer;
 	}
 	
-	private VertexBuffer buildBufferGradient(BufferBuilder bufferBuilder, VertexBuffer buffer) {
+	private VertexBuffer buildBufferHorizon(BufferBuilder bufferBuilder, VertexBuffer buffer) {
 		if (buffer != null) {
 			buffer.close();
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
-		makeGradient(bufferBuilder);
+		makeHorizon(bufferBuilder, 16);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
@@ -282,31 +259,24 @@ public class WorldRendererMixin {
 		}
 	}
 	
-	private void makeGradient(BufferBuilder buffer) {
+	private void makeHorizon(BufferBuilder buffer, int segments) {
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
-		for (int i = 0; i < 8; i ++)
+		for (int i = 0; i < segments; i ++)
 		{
-			double a1 = (double) i * Math.PI / 4.0;
-			double a2 = (double) (i + 1) * Math.PI / 4.0;
+			double a1 = (double) i * Math.PI * 2.0 / (double) segments;
+			double a2 = (double) (i + 1) * Math.PI * 2.0 / (double) segments;
 			double px1 = Math.sin(a1) * 100;
 			double pz1 = Math.cos(a1) * 100;
 			double px2 = Math.sin(a2) * 100;
 			double pz2 = Math.cos(a2) * 100;
 			
-			buffer.vertex(px1, -30, pz1).texture(0, 0).next();
-			buffer.vertex(px1, 30, pz1).texture(0, 1).next();
-			buffer.vertex(px2, 30, pz2).texture(1, 1).next();
-			buffer.vertex(px2, -30, pz2).texture(1, 0).next();
+			float u0 = (float) i / (float) segments;
+			float u1 = (float) (i + 1) / (float) segments;
 			
-			/*buffer.vertex(px1, 0, pz1).color(1, 1, 1, 1).next();
-			buffer.vertex(px1, 0.1, pz1).color(1, 1, 1, 0).next();
-			buffer.vertex(px2, 0.1, pz2).color(1, 1, 1, 0).next();
-			buffer.vertex(px2, 0, pz2).color(1, 1, 1, 1).next();
-			
-			buffer.vertex(px1, 0, pz1).color(1, 1, 1, 1).next();
-			buffer.vertex(px1, -0.1, pz1).color(1, 1, 1, 0).next();
-			buffer.vertex(px2, -0.1, pz2).color(1, 1, 1, 0).next();
-			buffer.vertex(px2, 0, pz2).color(1, 1, 1, 1).next();*/
+			buffer.vertex(px1, -30, pz1).texture(u0, 0).next();
+			buffer.vertex(px1, 30, pz1).texture(u0, 1).next();
+			buffer.vertex(px2, 30, pz2).texture(u1, 1).next();
+			buffer.vertex(px2, -30, pz2).texture(u1, 0).next();
 		}
 	}
 }

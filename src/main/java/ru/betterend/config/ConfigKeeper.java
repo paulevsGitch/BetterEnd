@@ -13,48 +13,9 @@ import ru.betterend.BetterEnd;
 
 public final class ConfigKeeper {
 	
-	private static ConfigKeeper instance;
-	public static ConfigKeeper getInstance() {
-		if (instance == null) {
-			instance = new ConfigKeeper();
-		}
-		return instance;
-	}
-	
 	private Map<String, Entry<?>> configEntries = new HashMap<>();
 	
-	private ConfigKeeper() {}
-	
-	@SuppressWarnings("unchecked")
-	public <E extends Entry<?>> E getEntry(String key) {
-		Entry<?> entry = this.configEntries.get(key);
-		if (entry == null) {
-			BetterEnd.LOGGER.warning(String.format("Entry '%s' doesn't exists.", key));			
-			return null;
-		}
-		return (E) entry;
-	}
-	
-	public <T> T getValue(String key) {
-		Entry<T> entry = this.getEntry(key);
-		if (entry == null) {
-			BetterEnd.LOGGER.warning(String.format("Empty value will be returned.", key));			
-			return null;
-		}
-		return entry.getValue();
-	}
-	
-	public void set(String key, Entry<?> entry) {
-		configEntries.put(key, entry);
-	}
-	
-	public <T extends Entry<?>> void registerEntry(String key, T entry) {
-		configEntries.put(key, entry);
-	}
-	
-	public JsonElement toJson() {
-		JsonObject jsonObject = new JsonObject();
-		
+	public JsonElement toJson(JsonObject jsonObject) {
 		for (String param : configEntries.keySet()) {
 			jsonObject.addProperty(param, configEntries.get(param).asString());
 		}
@@ -69,6 +30,33 @@ public final class ConfigKeeper {
 				entry.fromString(JsonHelper.getString(jsonObject, param));
 			}
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <E extends Entry<?>> E getEntry(String key) {
+		Entry<?> entry = this.configEntries.get(key);
+		if (entry == null) {
+			BetterEnd.LOGGER.warning(String.format("Entry '%s' doesn't exists.", key));			
+			return null;
+		}
+		return (E) entry;
+	}
+	
+	public <T> T getValue(String key) {
+		Entry<T> entry = this.getEntry(key);
+		if (entry == null) {
+			BetterEnd.LOGGER.warning("Empty value will be returned.");
+			return null;
+		}
+		return entry.getValue();
+	}
+	
+	public void set(String key, Entry<?> entry) {
+		configEntries.put(key, entry);
+	}
+	
+	public <T extends Entry<?>> void registerEntry(String key, T entry) {
+		configEntries.put(key, entry);
 	}
 	
 	public static class BooleanEntry extends Entry<Boolean> {
@@ -94,12 +82,12 @@ public final class ConfigKeeper {
 
 		@Override
 		public String asString() {
-			return getValue() ? "true" : "false";
+			return this.getValue() ? "true" : "false";
 		}
 
 		@Override
 		public void fromString(String value) {
-			setValue(value.equals("true") ? true : false);
+			this.setValue(value.equals("true") ? true : false);
 		}
 
 	}
@@ -132,7 +120,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public void fromString(String value) {
-			setValue(Float.valueOf(value));
+			this.setValue(Float.valueOf(value));
 		}
 
 	}
@@ -155,7 +143,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public void fromString(String value) {
-			setValue(Float.valueOf(value));
+			this.setValue(Float.valueOf(value));
 		}
 
 		@Override
@@ -193,7 +181,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public void fromString(String value) {
-			setValue(Integer.valueOf(value));
+			this.setValue(Integer.valueOf(value));
 		}
 
 	}
@@ -216,7 +204,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public void fromString(String value) {
-			setValue(Integer.valueOf(value));
+			this.setValue(Integer.valueOf(value));
 		}
 
 		@Override
@@ -254,7 +242,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public void fromString(String value) {
-			setValue(value);
+			this.setValue(value);
 		}
 
 	}

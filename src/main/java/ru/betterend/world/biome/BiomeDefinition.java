@@ -26,7 +26,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import ru.betterend.BetterEnd;
-import ru.betterend.MHelper;
+import ru.betterend.util.MHelper;
 
 public class BiomeDefinition
 {

@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.gen.ChunkRandom;
-import ru.betterend.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
+import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
 public class BiomeMap

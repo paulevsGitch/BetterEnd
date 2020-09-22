@@ -5,29 +5,29 @@ import ru.betterend.config.ConfigKeeper.*;
 
 public abstract class Config {
 	
-	protected final static ConfigKeeper KEEPER = ConfigKeeper.getInstance();
+	protected final ConfigKeeper configKeeper = new ConfigKeeper();
 	
 	public abstract void saveChanges();
 	
 	public <E extends Entry<?>> E getEntry(String key) {
-		return KEEPER.getEntry(key);
+		return this.configKeeper.getEntry(key);
 	}
 	
 	public <T> T getDefault(String key) {
-		Entry<T> entry = KEEPER.getEntry(key);
+		Entry<T> entry = configKeeper.getEntry(key);
 		return entry != null ? entry.getDefault() : null;
 	}
 	
 	public String getString(String key) {
-		String str = KEEPER.getValue(key);
+		String str = configKeeper.getValue(key);
 		return str != null ? str : "";
 	}
 	
 	public boolean setString(String key, String value) {
 		try {
-			StringEntry entry = KEEPER.getEntry(key);
+			StringEntry entry = configKeeper.getEntry(key);
 			entry.setValue(value);
-			KEEPER.set(key, entry);
+			this.configKeeper.set(key, entry);
 			
 			return true;
 		} catch (NullPointerException ex) {
@@ -38,15 +38,15 @@ public abstract class Config {
 	}
 	
 	public int getInt(String key) {
-		Integer val = KEEPER.getValue(key);		
+		Integer val = configKeeper.getValue(key);		
 		return val != null ? val : 0;
 	}
 	
 	public boolean setInt(String key, int value) {
 		try {
-			IntegerEntry entry = KEEPER.getEntry(key);
+			IntegerEntry entry = configKeeper.getEntry(key);
 			entry.setValue(value);
-			KEEPER.set(key, entry);
+			this.configKeeper.set(key, entry);
 			
 			return true;
 		} catch (NullPointerException ex) {
@@ -58,9 +58,9 @@ public abstract class Config {
 	
 	public <T extends Comparable<T>> boolean setRanged(String key, T value) {
 		try {
-			RangeEntry<T> entry = KEEPER.getEntry(key);
+			RangeEntry<T> entry = configKeeper.getEntry(key);
 			entry.setValue(value);
-			KEEPER.set(key, entry);
+			this.configKeeper.set(key, entry);
 			
 			return true;
 		} catch (NullPointerException | ClassCastException ex) {
@@ -71,15 +71,15 @@ public abstract class Config {
 	}
 	
 	public float getFloat(String key) {
-		Float val = KEEPER.getValue(key);		
+		Float val = configKeeper.getValue(key);		
 		return val != null ? val : 0.0F;
 	}
 	
 	public boolean setFloat(String key, float value) {
 		try {
-			FloatEntry entry = KEEPER.getEntry(key);
+			FloatEntry entry = configKeeper.getEntry(key);
 			entry.setValue(value);
-			KEEPER.set(key, entry);
+			this.configKeeper.set(key, entry);
 			
 			return true;
 		} catch (NullPointerException ex) {
@@ -90,15 +90,15 @@ public abstract class Config {
 	}
 	
 	public boolean getBoolean(String key) {
-		Boolean val = KEEPER.getValue(key);		
+		Boolean val = configKeeper.getValue(key);		
 		return val != null ? val : false;
 	}
 	
 	public boolean setBoolean(String key, boolean value) {
 		try {
-			BooleanEntry entry = KEEPER.getEntry(key);
+			BooleanEntry entry = configKeeper.getEntry(key);
 			entry.setValue(value);
-			KEEPER.set(key, entry);
+			this.configKeeper.set(key, entry);
 			
 			return true;
 		} catch (NullPointerException ex) {

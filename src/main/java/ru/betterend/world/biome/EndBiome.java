@@ -23,8 +23,6 @@ public class EndBiome
 	protected EndBiome biomeParent;
 	protected float maxSubBiomeChance = 1;
 	protected float genChance = 1;
-	protected float noiseDensity = 0.3F;
-	protected float plantDensity = 1.0001F;
 	
 	public EndBiome(BiomeDefinition definition)
 	{
@@ -36,26 +34,6 @@ public class EndBiome
 	{
 		this.biome = biome;
 		mcID = BuiltinRegistries.BIOME.getId(biome);
-	}
-	
-	public void setPlantDensity(float density)
-	{
-		this.plantDensity = density * 1.0001F;
-	}
-	
-	public float getPlantDensity()
-	{
-		return plantDensity;
-	}
-	
-	public void setNoiseDensity(float density)
-	{
-		this.noiseDensity = 1 - density * 2;
-	}
-	
-	public float getNoiseDensity()
-	{
-		return (1F - this.noiseDensity) / 2F;
 	}
 	
 	public void genSurfColumn(WorldAccess world, BlockPos pos, Random random) {}

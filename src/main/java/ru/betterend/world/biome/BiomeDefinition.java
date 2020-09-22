@@ -261,7 +261,7 @@ public class BiomeDefinition
 		structures.forEach((structure) -> generationSettings.structureFeature(structure));
 		features.forEach((info) -> generationSettings.feature(info.featureStep, info.feature));
 		
-		effects.skyColor(fogColor).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor);
+		effects.skyColor(0).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor);
 		if (loop != null) effects.loopSound(loop);
 		if (mood != null) effects.moodSound(mood);
 		if (additions != null) effects.additionsSound(additions);

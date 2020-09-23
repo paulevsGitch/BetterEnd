@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.sound.MusicType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.sound.BiomeAdditionsSound;
@@ -23,7 +25,10 @@ import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
+import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
+import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.features.EndFeature;
@@ -45,9 +50,20 @@ public class BiomeDefinition {
 	private float fogDensity = 1F;
 
 	private final Identifier id;
+	
+	private ConfiguredSurfaceBuilder<?> surface;
 
 	public BiomeDefinition(String name) {
 		this.id = new Identifier(BetterEnd.MOD_ID, name);
+	}
+
+	public BiomeDefinition setSurface(Block surfaceBlock) {
+		this.surface = SurfaceBuilder.DEFAULT.method_30478(new TernarySurfaceConfig(
+				surfaceBlock.getDefaultState(),
+				Blocks.END_STONE.getDefaultState(),
+				Blocks.END_STONE.getDefaultState()
+		));
+		return this;
 	}
 
 	public BiomeDefinition setParticleConfig(BiomeParticleConfig config) {
@@ -148,7 +164,7 @@ public class BiomeDefinition {
 					new SpawnSettings.SpawnEntry(spawn.type, spawn.weight, spawn.minGroupSize, spawn.maxGroupSize));
 		});
 
-		generationSettings.surfaceBuilder(ConfiguredSurfaceBuilders.END);
+		generationSettings.surfaceBuilder(surface == null ? ConfiguredSurfaceBuilders.END : surface);
 		structures.forEach((structure) -> generationSettings.structureFeature(structure));
 		features.forEach((info) -> generationSettings.feature(info.featureStep, info.feature));
 

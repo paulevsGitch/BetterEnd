@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+			{ "model": "betterend:block/wet_mycelium" },
+			{ "model": "betterend:block/wet_mycelium", "y": 90 },
+			{ "model": "betterend:block/wet_mycelium", "y": 180 },
+			{ "model": "betterend:block/wet_mycelium", "y": 270 }
+		]
+    }
+}

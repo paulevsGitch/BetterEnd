@@ -2,6 +2,7 @@ package ru.betterend.world.biome;
 
 import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.FeatureRegistry;
 
 public class BiomeFoggyMushroomland extends EndBiome {
@@ -11,6 +12,7 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.setFogDensity(3)
 				.setWaterColor(119, 227, 250)
 				.setWaterFogColor(119, 227, 250)
+				.setSurface(BlockRegistry.WET_MYCELIUM)
 				.addFeature(FeatureRegistry.STONE_SPIRAL)
 				.addFeature(Feature.LAKES, ConfiguredFeatures.LAKE_WATER));
 	}

@@ -33,9 +33,9 @@ import ru.betterend.util.MHelper;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
-	private static final Identifier NEBULA_1 = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_2_3.png");
-	private static final Identifier NEBULA_2 = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_2_3_2.png");
-	private static final Identifier HORIZON = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_3_4.png");
+	private static final Identifier NEBULA_1 = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_2.png");
+	private static final Identifier NEBULA_2 = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_3.png");
+	private static final Identifier HORIZON = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_1.png");
 	
 	private static VertexBuffer customStarsBuffer1;
 	private static VertexBuffer customStarsBuffer2;

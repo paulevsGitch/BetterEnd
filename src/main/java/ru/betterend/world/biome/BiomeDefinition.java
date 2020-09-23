@@ -26,6 +26,7 @@ import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.MHelper;
+import ru.betterend.world.features.EndFeature;
 
 public class BiomeDefinition {
 	private final List<ConfiguredStructureFeature<?, ?>> structures = Lists.newArrayList();
@@ -43,39 +44,10 @@ public class BiomeDefinition {
 	private int fogColor = 3344392;
 	private float fogDensity = 1F;
 
-	private boolean stalactites = true;
-	private boolean bnStructures = true;
-
 	private final Identifier id;
 
 	public BiomeDefinition(String name) {
 		this.id = new Identifier(BetterEnd.MOD_ID, name);
-	}
-
-	public BiomeDefinition setStalactites(boolean value) {
-		stalactites = value;
-		return this;
-	}
-
-	public BiomeDefinition setBNStructures(boolean value) {
-		bnStructures = value;
-		return this;
-	}
-
-	public BiomeDefinition setDefaultOres(boolean value) {
-		return this;
-	}
-
-	public BiomeDefinition setDefaultStructureFeatures(boolean value) {
-		return this;
-	}
-
-	public BiomeDefinition setDefaultFeatures(boolean value) {
-		return this;
-	}
-
-	public BiomeDefinition setDefaultMobs(boolean value) {
-		return this;
 	}
 
 	public BiomeDefinition setParticleConfig(BiomeParticleConfig config) {
@@ -97,8 +69,15 @@ public class BiomeDefinition {
 	}
 
 	public BiomeDefinition addStructureFeature(ConfiguredStructureFeature<?, ?> feature) {
-		System.out.println("Structure " + feature);
 		structures.add(feature);
+		return this;
+	}
+	
+	public BiomeDefinition addFeature(EndFeature feature) {
+		FeatureInfo info = new FeatureInfo();
+		info.featureStep = feature.getFeatureStep();
+		info.feature = feature.getFeatureConfigured();
+		features.add(info);
 		return this;
 	}
 
@@ -207,13 +186,5 @@ public class BiomeDefinition {
 	
 	public float getFodDensity() {
 		return fogDensity;
-	}
-
-	public boolean hasStalactites() {
-		return stalactites;
-	}
-
-	public boolean hasBNStructures() {
-		return bnStructures;
 	}
 }

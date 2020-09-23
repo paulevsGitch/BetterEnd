@@ -57,7 +57,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 		
 		float height = TheEndBiomeSource.getNoiseAt(noise, (int) i * 2 + 1, (int) j * 2 + 1);
 	         
-		EndBiome netherBiome = height < 20.0F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
+		EndBiome netherBiome = height < -20.0F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		if (biomeX == 0 && biomeZ == 0) {
 			mapLand.clearCache();
 			mapVoid.clearCache();

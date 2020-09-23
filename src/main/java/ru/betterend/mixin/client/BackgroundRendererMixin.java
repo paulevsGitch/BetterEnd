@@ -1,6 +1,7 @@
 package ru.betterend.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,6 +31,14 @@ public class BackgroundRendererMixin {
 	private static final float SKY_RED = 21F / 255F;
 	private static final float SKY_GREEN = 16F / 255F;
 	private static final float SKY_BLUE = 20F / 255F;
+	//private static final float NORMAL = 0.12757292F;
+	
+	@Shadow
+	private static float red;
+	@Shadow
+	private static float green;
+	@Shadow
+	private static float blue;
 	
 	@Inject(method = "render", at = @At("RETURN"))
 	private static void onRender(Camera camera, float tickDelta, ClientWorld world, int i, float f, CallbackInfo info) {
@@ -39,6 +48,9 @@ public class BackgroundRendererMixin {
 		FluidState fluidState = camera.getSubmergedFluidState();
 		if (fluidState.isEmpty() && world.getDimension().hasEnderDragonFight()) {
 			RenderSystem.clearColor(SKY_RED, SKY_GREEN, SKY_BLUE, 0);
+			//red /= NORMAL;
+			//green /= NORMAL;
+			//blue /= NORMAL;
 		}
 	}
 	

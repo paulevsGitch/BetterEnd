@@ -11,7 +11,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
-import ru.betterend.world.biome.BiomeDefinition;
+import ru.betterend.world.biome.BiomeFoggyMushroomland;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
@@ -22,12 +22,12 @@ public class BiomeRegistry {
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
 	
-	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND);
-	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS, BiomeType.VOID);
-	public static final EndBiome END_HIGHLANDS = registerBiome(BiomeKeys.END_HIGHLANDS, BiomeType.LAND);
-	public static final EndBiome END_MIDLANDS = registerBiome(BiomeKeys.END_MIDLANDS, BiomeType.LAND);
-	public static final EndBiome SMALL_END_ISLANDS = registerBiome(BiomeKeys.SMALL_END_ISLANDS, BiomeType.VOID);
-	public static final EndBiome TEST = registerBiome(new EndBiome(new BiomeDefinition("test").setFogColor(255, 0, 0).setFogDensity(10)), BiomeType.VOID);
+	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, true);
+	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS, BiomeType.VOID, true);
+	public static final EndBiome END_HIGHLANDS = registerBiome(BiomeKeys.END_HIGHLANDS, BiomeType.LAND, false);
+	public static final EndBiome END_MIDLANDS = registerBiome(BiomeKeys.END_MIDLANDS, BiomeType.LAND, false);
+	public static final EndBiome SMALL_END_ISLANDS = registerBiome(BiomeKeys.SMALL_END_ISLANDS, BiomeType.VOID, true);
+	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new BiomeFoggyMushroomland(), BiomeType.LAND);
 	
 	public static void register() {}
 	
@@ -39,9 +39,9 @@ public class BiomeRegistry {
 			BiomeRegistry.MUTABLE.put(biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(biome)), biome);
 	}
 	
-	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type) {
+	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, boolean addToGen) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.get(key));
-		addToPicker(endBiome, type);
+		if (addToGen) addToPicker(endBiome, type);
 		makeLink(endBiome);
 		return endBiome;
 	}

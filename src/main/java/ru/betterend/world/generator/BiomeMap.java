@@ -59,7 +59,7 @@ public class BiomeMap
 			pz = pz / 2 + i;
 		}
 		
-		ChunkPos cpos = new ChunkPos(MHelper.floor((double) x / BiomeChunk.WIDTH), MHelper.floor((double) z / BiomeChunk.WIDTH));
+		ChunkPos cpos = new ChunkPos(MHelper.floor(x / BiomeChunk.WIDTH), MHelper.floor(z / BiomeChunk.WIDTH));
 		BiomeChunk chunk = MAPS.get(cpos);
 		if (chunk == null)
 		{

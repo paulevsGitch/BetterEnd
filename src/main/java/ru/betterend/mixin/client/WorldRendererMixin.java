@@ -27,7 +27,6 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Quaternion;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.util.MHelper;
 

@@ -40,7 +40,7 @@ public class BetterEnd implements ModInitializer {
 		.build();
 		
 		new RecipeBuilder("test_item_shapeless", Items.SUGAR)
-		.setShape(new String[] {"I#Y"})
+		.setList("I#Y")
 		.addMaterial('I', Items.STRING)
 		.addMaterial('#', ItemTags.LOGS)
 		.addMaterial('Y', ItemTags.ARROWS)

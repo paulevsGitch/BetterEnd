@@ -1,4 +1,4 @@
-package ru.betterend.mixin.recipe;
+package ru.betterend.recipe;
 
 import java.util.Map;
 

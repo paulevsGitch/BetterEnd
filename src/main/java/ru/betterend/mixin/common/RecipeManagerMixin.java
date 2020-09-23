@@ -22,7 +22,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
-import ru.betterend.mixin.recipe.EndRecipeManager;
+import ru.betterend.recipe.EndRecipeManager;
 
 @Mixin(RecipeManager.class)
 public class RecipeManagerMixin

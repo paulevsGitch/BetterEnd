@@ -26,7 +26,7 @@ public class RecipeBuilder {
 	private boolean shaped = true;
 	private String[] shape = new String[] {"#"};
 	private Map<Character, Ingredient> materialKeys = Maps.newHashMap();
-	private int count;
+	private int count = 1;
 	
 	public RecipeBuilder(String name, Item output) {
 		this.name = name;
@@ -45,6 +45,12 @@ public class RecipeBuilder {
 	
 	public RecipeBuilder setShape(String[] shape) {
 		this.shape = shape;
+		return this;
+	}
+	
+	public RecipeBuilder setList(String shape) {
+		this.shape = new String[] {shape};
+		this.shaped = false;
 		return this;
 	}
 	
@@ -70,11 +76,12 @@ public class RecipeBuilder {
 	
 	private DefaultedList<Ingredient> getMaterials(int width, int height) {
 		DefaultedList<Ingredient> materials = DefaultedList.ofSize(width * height, Ingredient.EMPTY);
+		int pos = 0;
 		for (String line: shape) {
 			for (int i = 0; i < width; i++) {
 				char c = line.charAt(i);
 				Ingredient material = materialKeys.get(c);
-				materials.add(material == null ? Ingredient.EMPTY : material);
+				materials.set(pos ++, material == null ? Ingredient.EMPTY : material);
 			}
 		}
 		return materials;

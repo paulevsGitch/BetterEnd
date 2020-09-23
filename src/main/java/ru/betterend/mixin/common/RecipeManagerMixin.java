@@ -30,7 +30,7 @@ public class RecipeManagerMixin
 	@Shadow
 	private Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes;
 	
-	@Inject(method = "apply", at = @At(value = "TAIL"))
+	@Inject(method = "apply", at = @At(value = "RETURN"))
 	private void setRecipes(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo info)
 	{
 		recipes = EndRecipeManager.getMap(recipes);

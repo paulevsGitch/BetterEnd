@@ -1,7 +1,11 @@
 package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.tag.ItemTags;
 import ru.betterend.config.MainConfig;
+import ru.betterend.recipe.RecipeBuilder;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.FeatureRegistry;
@@ -21,5 +25,25 @@ public class BetterEnd implements ModInitializer {
 		FeatureRegistry.register();
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();
+		
+		// TEST //
+		new RecipeBuilder("test_block", Blocks.ANVIL)
+		.setShape(new String[] {"I#", "#I"})
+		.addMaterial('I', Items.STRING)
+		.addMaterial('#', Items.APPLE)
+		.build();
+		
+		new RecipeBuilder("test_block_shaped", Blocks.STONE)
+		.setShape(new String[] {"I#", "#I"})
+		.addMaterial('I', Items.STRING)
+		.addMaterial('#', ItemTags.LOGS)
+		.build();
+		
+		new RecipeBuilder("test_item_shapeless", Items.SUGAR)
+		.setShape(new String[] {"I#Y"})
+		.addMaterial('I', Items.STRING)
+		.addMaterial('#', ItemTags.LOGS)
+		.addMaterial('Y', ItemTags.ARROWS)
+		.build();
 	}
 }

@@ -63,6 +63,13 @@ public class ConfigWriter {
 	public static void save(File configFile, JsonElement config) {
 		JsonFactory.storeJson(configFile, config);
 	}
+
+	public static String scrubFileName(String input) {
+		input = input.replaceAll("[/\\ ]+", "_");
+		input = input.replaceAll("[,:&\"\\|\\<\\>\\?\\*]", "_");
+
+		return input;
+	}
 	
 	static {
 		if (!MOD_CONFIG_DIR.exists()) {

@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
@@ -28,6 +27,7 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Quaternion;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.util.MHelper;
 
@@ -80,7 +80,7 @@ public class WorldRendererMixin {
 			BackgroundRenderer.setFogBlack();
 			
 			RenderSystem.enableAlphaTest();
-			GlStateManager.alphaFunc(516, 0.0F);
+			RenderSystem.alphaFunc(516, 0.0F);
 			RenderSystem.enableBlend();
 			RenderSystem.enableTexture();
 			

@@ -20,7 +20,8 @@ public class BiomeConfig extends Config {
 	public BiomeConfig(EndBiome biome) {
 		this.biome = biome;
 		Identifier biomeId = biome.getID();
-		this.configFile = new File(BIOME_CONFIG_DIR.toFile(), biomeId.getPath());
+		String folder = ConfigWriter.scrubFileName(biomeId.toString());
+		this.configFile = new File(BIOME_CONFIG_DIR.toFile(), folder + ".json");
 		this.configWriter = new ConfigWriter();
 		this.registerEntries();
 		JsonObject config = configWriter.loadConfig(configFile);

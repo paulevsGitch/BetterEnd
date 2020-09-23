@@ -95,7 +95,7 @@ public abstract class Config {
 	}
 	
 	public boolean getBoolean(String key) {
-		Boolean val = configKeeper.getValue(key);		
+		Boolean val = configKeeper.getValue(key);
 		return val != null ? val : false;
 	}
 	

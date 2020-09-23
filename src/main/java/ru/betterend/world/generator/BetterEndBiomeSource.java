@@ -46,11 +46,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 		chunkRandom.consume(17292);
 		this.noise = new SimplexNoiseSampler(chunkRandom);
 
-		BiomeRegistry.MUTABLE.clear();
-		for (EndBiome biome : BiomeRegistry.LAND_BIOMES.getBiomes())
-			BiomeRegistry.MUTABLE.put(biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(biome)), biome);
-		for (EndBiome biome : BiomeRegistry.VOID_BIOMES.getBiomes())
-			BiomeRegistry.MUTABLE.put(biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(biome)), biome);
+		BiomeRegistry.mutateRegistry(biomeRegistry);
 	}
 
 	@Override

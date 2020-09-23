@@ -4,7 +4,8 @@
 	"package": "ru.betterend.mixin.client",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
-		"WorldRendererMixin"
+		"WorldRendererMixin",
+		"BackgroundRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -47,7 +47,7 @@ public class BiomeDefinition {
 
 	private int waterFogColor = 329011;
 	private int waterColor = 4159204;
-	private int fogColor = 3344392;
+	private int fogColor = 10518688;
 	private float fogDensity = 1F;
 
 	private final Identifier id;
@@ -185,19 +185,23 @@ public class BiomeDefinition {
 		features.forEach((info) -> generationSettings.feature(info.featureStep, info.feature));
 
 		effects.skyColor(0).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor);
-		if (loop != null)
-			effects.loopSound(loop);
-		if (mood != null)
-			effects.moodSound(mood);
-		if (additions != null)
-			effects.additionsSound(additions);
-		if (particleConfig != null)
-			effects.particleConfig(particleConfig);
+		if (loop != null) effects.loopSound(loop);
+		if (mood != null) effects.moodSound(mood);
+		if (additions != null) effects.additionsSound(additions);
+		if (particleConfig != null) effects.particleConfig(particleConfig);
 		effects.music(MusicType.createIngameMusic(music != null ? music : SoundEvents.MUSIC_END));
 
-		return new Biome.Builder().precipitation(Precipitation.NONE).category(Category.THEEND).depth(0.1F).scale(0.2F)
-				.temperature(2.0F).downfall(0.0F).effects(effects.build()).spawnSettings(spawnSettings.build())
-				.generationSettings(generationSettings.build()).build();
+		return new Biome.Builder()
+				.precipitation(Precipitation.NONE)
+				.category(Category.THEEND)
+				.depth(0.1F)
+				.scale(0.2F)
+				.temperature(2.0F)
+				.downfall(0.0F)
+				.effects(effects.build())
+				.spawnSettings(spawnSettings.build())
+				.generationSettings(generationSettings.build())
+				.build();
 	}
 
 	private static final class SpawnInfo {

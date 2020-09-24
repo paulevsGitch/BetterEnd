@@ -1,7 +1,5 @@
 package ru.betterend.world.biome;
 
-import net.minecraft.world.gen.GenerationStep.Feature;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.FeatureRegistry;
 
@@ -14,6 +12,6 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.setWaterFogColor(119, 227, 250)
 				.setSurface(BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM)
 				.addFeature(FeatureRegistry.STONE_SPIRAL)
-				.addFeature(Feature.LAKES, ConfiguredFeatures.LAKE_WATER));
+				.addFeature(FeatureRegistry.END_LAKE));
 	}
 }

@@ -15,8 +15,6 @@ public class StoneSpiralFeature extends DefaultFeature {
 	public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		BlockPos topPos = world.getTopPosition(Type.WORLD_SURFACE, pos);
 		Direction offset = Direction.NORTH;
-
-		System.out.println(topPos);
 		
 		for (int y = 1; y <= 15; y++) {
 			offset = offset.rotateYClockwise();

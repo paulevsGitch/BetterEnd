@@ -1,5 +1,9 @@
 {
 	"itemGroup.betterend.items": "Улучшенный Край",
+	
 	"block.betterend.wet_mycelium": "Влажный мицелий",
-	"block.betterend.endstone_dust": "Эндерняковая пыль"
+	"block.betterend.endstone_dust": "Эндерняковая пыль",
+	"block.betterend.ender_ore": "Руда Эндера",
+	
+	"item.betterend.ender_dust": "Пыль Эндера"
 }

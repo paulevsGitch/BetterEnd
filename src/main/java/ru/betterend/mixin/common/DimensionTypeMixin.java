@@ -17,8 +17,7 @@ import ru.betterend.world.generator.BetterEndBiomeSource;
 public class DimensionTypeMixin
 {
 	@Inject(method = "createEndGenerator", at = @At("HEAD"), cancellable = true)
-	private static void replaceGenerator(Registry<Biome> biomeRegistry, Registry<ChunkGeneratorSettings> chunkGeneratorSettingsRegistry, long seed, CallbackInfoReturnable<ChunkGenerator> info)
-	{
+	private static void replaceGenerator(Registry<Biome> biomeRegistry, Registry<ChunkGeneratorSettings> chunkGeneratorSettingsRegistry, long seed, CallbackInfoReturnable<ChunkGenerator> info) {
 		info.setReturnValue(new NoiseChunkGenerator(new BetterEndBiomeSource(biomeRegistry, seed), seed, () -> {
 			return (ChunkGeneratorSettings) chunkGeneratorSettingsRegistry.getOrThrow(ChunkGeneratorSettings.END);
 		}));

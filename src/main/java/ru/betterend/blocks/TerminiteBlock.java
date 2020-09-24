@@ -6,7 +6,6 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.sound.BlockSoundGroup;
 
 public class TerminiteBlock extends BlockBase {
-
 	public TerminiteBlock() {
 		super(FabricBlockSettings.of(Material.METAL, MaterialColor.field_25708)
 				.hardness(7F)

@@ -21,13 +21,11 @@ public class CraftingRecipes {
 		}
 	}
 	
-	protected static boolean itemExists(Item item)
-	{
+	protected static boolean itemExists(Item item) {
 		return Registry.ITEM.getId(item) != Registry.ITEM.getDefaultId();
 	}
-	
-	protected static boolean blockExists(Block block)
-	{
+
+	protected static boolean blockExists(Block block) {
 		return Registry.BLOCK.getId(block) != Registry.BLOCK.getDefaultId();
 	}
 }

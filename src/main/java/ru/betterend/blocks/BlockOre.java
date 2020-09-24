@@ -34,12 +34,11 @@ public class BlockOre extends OreBlock {
 		this.minCount = minCount;
 		this.maxCount = maxCount;
 	}
-	
+
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.get(LootContextParameters.TOOL);
-		if (tool.isEffectiveOn(state))
-		{
+		if (tool != null && tool.isEffectiveOn(state)) {
 			int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
 			int min = MathHelper.clamp(minCount + fortune, 0, maxCount);
 			if (min == maxCount)

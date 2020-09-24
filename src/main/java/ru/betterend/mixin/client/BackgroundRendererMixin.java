@@ -13,6 +13,9 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
@@ -46,7 +49,9 @@ public class BackgroundRendererMixin {
 		if (lerp > 1) lerp = 1;
 		
 		FluidState fluidState = camera.getSubmergedFluidState();
-		if (fluidState.isEmpty() && world.getDimension().hasEnderDragonFight()) {
+		Entity entity = camera.getFocusedEntity();
+		boolean skip = entity instanceof LivingEntity && ((LivingEntity) entity).getStatusEffect(StatusEffects.NIGHT_VISION).getDuration() > 0;
+		if (!skip && fluidState.isEmpty() && world.getDimension().hasEnderDragonFight()) {
 			//RenderSystem.clearColor(SKY_RED, SKY_GREEN, SKY_BLUE, 0);
 			red *= NORMAL;
 			green *= NORMAL;

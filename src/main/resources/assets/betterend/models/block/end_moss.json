@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"particle": "betterend:block/end_moss_side",
+		"down": "block/end_stone",
+		"up": "betterend:block/end_moss_top",
+		"north": "betterend:block/end_moss_side",
+		"east": "betterend:block/end_moss_side",
+		"south": "betterend:block/end_moss_side",
+		"west": "betterend:block/end_moss_side"
+	}
+}

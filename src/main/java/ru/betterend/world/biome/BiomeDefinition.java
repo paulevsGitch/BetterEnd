@@ -32,6 +32,7 @@ import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.features.EndFeature;
+import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
 
 public class BiomeDefinition {
 	private final List<ConfiguredStructureFeature<?, ?>> structures = Lists.newArrayList();
@@ -63,6 +64,21 @@ public class BiomeDefinition {
 				Blocks.END_STONE.getDefaultState(),
 				Blocks.END_STONE.getDefaultState()
 		));
+		return this;
+	}
+	
+	public BiomeDefinition setSurface(Block surfaceBlock1, Block surfaceBlock2) {
+		this.surface = DoubleBlockSurfaceBuilder.INSTANCE.setConfigUpper(new TernarySurfaceConfig(
+				surfaceBlock1.getDefaultState(),
+				Blocks.END_STONE.getDefaultState(),
+				Blocks.END_STONE.getDefaultState()
+		)).setConfigLower(new TernarySurfaceConfig(
+				surfaceBlock2.getDefaultState(),
+				Blocks.END_STONE.getDefaultState(),
+				Blocks.END_STONE.getDefaultState()
+		)).method_30478(new TernarySurfaceConfig(surfaceBlock1.getDefaultState(),
+				Blocks.END_STONE.getDefaultState(),
+				Blocks.END_STONE.getDefaultState()));
 		return this;
 	}
 

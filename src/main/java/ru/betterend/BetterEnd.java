@@ -9,6 +9,7 @@ import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
+import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
 
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
@@ -17,6 +18,7 @@ public class BetterEnd implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
+		DoubleBlockSurfaceBuilder.register();
 		ItemRegistry.register();
 		BlockRegistry.register();
 		FeatureRegistry.register();

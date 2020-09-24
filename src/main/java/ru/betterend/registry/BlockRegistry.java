@@ -1,6 +1,7 @@
 package ru.betterend.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -9,7 +10,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockOre;
-import ru.betterend.blocks.BlockWetMycelium;
+import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.tab.CreativeTab;
@@ -17,7 +18,8 @@ import ru.betterend.tab.CreativeTab;
 public class BlockRegistry {
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new BlockEndstoneDust());
-	public static final Block WET_MYCELIUM = registerBlock("wet_mycelium", new BlockWetMycelium());
+	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new BlockTerrain(MaterialColor.LIGHT_BLUE));
+	public static final Block END_MOSS = registerBlock("end_moss", new BlockTerrain(MaterialColor.CYAN));
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(ItemRegistry.ENDER_DUST, 1, 3));

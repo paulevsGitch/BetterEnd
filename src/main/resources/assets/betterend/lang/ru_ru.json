@@ -1,7 +1,8 @@
 {
 	"itemGroup.betterend.items": "Улучшенный Край",
 	
-	"block.betterend.wet_mycelium": "Влажный мицелий",
+	"block.betterend.end_mycelium": "Мицелий края",
+	"block.betterend.end_moss": "Мох края",
 	"block.betterend.endstone_dust": "Эндерняковая пыль",
 	"block.betterend.ender_ore": "Руда Края",
 	"block.betterend.terminite_block": "Блок Терминита",

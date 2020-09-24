@@ -3,7 +3,12 @@
 	
 	"block.betterend.wet_mycelium": "Влажный мицелий",
 	"block.betterend.endstone_dust": "Эндерняковая пыль",
-	"block.betterend.ender_ore": "Руда Эндера",
+	"block.betterend.ender_ore": "Руда Края",
+	"block.betterend.terminite_block": "Блок Терминита",
+	"block.betterend.aeternium_block": "Блок Этерия",
+	"block.betterend.ender_block": "Блок Края",
 	
-	"item.betterend.ender_dust": "Пыль Эндера"
+	"item.betterend.ender_dust": "Пыль Края",
+	"item.betterend.terminite_ingot": "Терминитовый слиток",
+	"item.betterend.aeternium_ingot": "Этериевый слиток"
 }

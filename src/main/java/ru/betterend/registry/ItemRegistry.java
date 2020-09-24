@@ -17,6 +17,8 @@ public class ItemRegistry {
 	private static final List<Item> MOD_ITEMS = Lists.newArrayList();
 	
 	public final static Item ENDER_DUST = registerItem("ender_dust", new Item((new Item.Settings()).group(ItemGroup.MATERIALS)));
+	public final static Item TERMINITE_INGOT = registerItem("terminite_ingot", new Item((new Item.Settings()).group(ItemGroup.MATERIALS)));
+	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot", new Item((new Item.Settings()).group(ItemGroup.MATERIALS)));
 
 	protected static Item registerItem(String name, Item item) {
 		if (item != Items.AIR) {

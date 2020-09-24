@@ -4,6 +4,11 @@
 	"block.betterend.wet_mycelium": "Wet Mycelium",
 	"block.betterend.endstone_dust": "End Stone Dust",
 	"block.betterend.ender_ore": "Ender Ore",
+	"block.betterend.terminite_block": "Terminite Block",
+	"block.betterend.aeternium_block": "Aeternium Block",
+	"block.betterend.ender_block": "Ender Block",
 	
-	"item.betterend.ender_dust": "Ender Dust"
+	"item.betterend.ender_dust": "Ender Dust",
+	"item.betterend.terminite_ingot": "Terminite Ingot",
+	"item.betterend.aeternium_ingot": "Aeternium Ingot"
 }

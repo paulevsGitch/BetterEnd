@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.tag.ItemTags;
 import ru.betterend.config.MainConfig;
+import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.RecipeBuilder;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockRegistry;
@@ -25,6 +26,7 @@ public class BetterEnd implements ModInitializer {
 		FeatureRegistry.register();
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();
+		CraftingRecipes.register();
 		
 		// TEST //
 		new RecipeBuilder("test_block", Blocks.ANVIL)

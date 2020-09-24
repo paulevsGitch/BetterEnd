@@ -1,7 +1,9 @@
 package ru.betterend.recipe;
 
 import java.util.Map;
+
 import com.google.common.collect.Maps;
+
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
@@ -19,24 +18,32 @@ import net.minecraft.util.collection.DefaultedList;
 import ru.betterend.BetterEnd;
 
 public class RecipeBuilder {
-	private final String name;
-	private final Item output;
+	private static final RecipeBuilder INSTANCE = new RecipeBuilder();
 	
-	private String group = "";
-	private RecipeType<?> type = RecipeType.CRAFTING;
-	private boolean shaped = true;
-	private String[] shape = new String[] {"#"};
+	private String name;
+	private ItemConvertible output;
+	
+	private String group;
+	private RecipeType<?> type;
+	private boolean shaped;
+	private String[] shape;
 	private Map<Character, Ingredient> materialKeys = Maps.newHashMap();
-	private int count = 1;
+	private int count;
 	
-	public RecipeBuilder(String name, Item output) {
-		this.name = name;
-		this.output = output;
-	}
+	private RecipeBuilder() {}
 	
-	public RecipeBuilder(String name, Block output) {
-		this.name = name;
-		this.output = output.asItem();
+	public static RecipeBuilder make(String name, ItemConvertible output) {
+		INSTANCE.name = name;
+		INSTANCE.output = output;
+		
+		INSTANCE.group = "";
+		INSTANCE.type = RecipeType.CRAFTING;
+		INSTANCE.shaped = true;
+		INSTANCE.shape = new String[] {"#"};
+		INSTANCE.materialKeys.clear();
+		INSTANCE.count = 1;
+		
+		return INSTANCE;
 	}
 
 	public RecipeBuilder setGroup(String group) {

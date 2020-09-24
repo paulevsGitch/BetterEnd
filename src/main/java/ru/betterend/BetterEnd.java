@@ -29,19 +29,19 @@ public class BetterEnd implements ModInitializer {
 		CraftingRecipes.register();
 		
 		// TEST //
-		new RecipeBuilder("test_block", Blocks.ANVIL)
+		RecipeBuilder.make("test_block", Blocks.ANVIL)
 		.setShape(new String[] {"I#", "#I"})
 		.addMaterial('I', Items.STRING)
 		.addMaterial('#', Items.APPLE)
 		.build();
 		
-		new RecipeBuilder("test_block_shaped", Blocks.STONE)
+		RecipeBuilder.make("test_block_shaped", Blocks.STONE)
 		.setShape(new String[] {"I#", "#I"})
 		.addMaterial('I', Items.STRING)
 		.addMaterial('#', ItemTags.LOGS)
 		.build();
 		
-		new RecipeBuilder("test_item_shapeless", Items.SUGAR)
+		RecipeBuilder.make("test_item_shapeless", Items.SUGAR)
 		.setList("I#Y")
 		.addMaterial('I', Items.STRING)
 		.addMaterial('#', ItemTags.LOGS)

@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Ingredient;
@@ -54,18 +55,16 @@ public class RecipeBuilder {
 		return this;
 	}
 	
-	public RecipeBuilder addMaterial(char key, Item value) {
-		materialKeys.put(key, Ingredient.ofItems(value));
-		return this;
-	}
-	
-	public RecipeBuilder addMaterial(char key, Block value) {
-		materialKeys.put(key, Ingredient.ofItems(value));
-		return this;
-	}
-	
 	public RecipeBuilder addMaterial(char key, Tag<Item> value) {
-		materialKeys.put(key, Ingredient.fromTag(value));
+		return addMaterial(key, Ingredient.fromTag(value));
+	}
+	
+	public RecipeBuilder addMaterial(char key, ItemConvertible... values) {
+		return addMaterial(key, Ingredient.ofItems(values));
+	}
+	
+	public RecipeBuilder addMaterial(char key, Ingredient value) {
+		materialKeys.put(key, value);
 		return this;
 	}
 	

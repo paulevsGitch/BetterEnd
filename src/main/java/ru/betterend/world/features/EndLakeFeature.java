@@ -119,10 +119,13 @@ public class EndLakeFeature extends DefaultFeature {
 						if (world.getBlockState(POS).getMaterial().isReplaceable()) {
 							if (world.isAir(POS.up())) {
 								BlockState state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-								BlocksHelper.setWithoutUpdate(world, POS, state);
+								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
 							}
-							else
-								BlocksHelper.setWithoutUpdate(world, POS, END_STONE);
+							else {
+								BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+							}
 						}
 					}
 				}

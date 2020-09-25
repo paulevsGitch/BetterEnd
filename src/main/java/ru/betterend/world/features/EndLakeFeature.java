@@ -61,7 +61,8 @@ public class EndLakeFeature extends DefaultFeature {
 					double r = add * 1.8 + radius  * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
 					r *= r;
 					if (x2 + z2 <= r) {
-						BlocksHelper.setWithoutUpdate(world, POS, AIR);
+						if (world.getBlockState(POS).getBlock() == Blocks.END_STONE)
+							BlocksHelper.setWithoutUpdate(world, POS, AIR);
 						pos = POS.down();
 						if (world.getBlockState(pos).getBlock() == Blocks.END_STONE)
 						{

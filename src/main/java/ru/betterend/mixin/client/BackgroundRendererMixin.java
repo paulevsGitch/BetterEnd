@@ -35,7 +35,6 @@ public class BackgroundRendererMixin {
 	//private static final float SKY_RED = 21F / 255F;
 	//private static final float SKY_GREEN = 16F / 255F;
 	//private static final float SKY_BLUE = 20F / 255F;
-	private static final float NORMAL = 1.5F/ 0.12757292F; // 0.12757292F is max value for red channel after all transformations
 	
 	@Shadow
 	private static float red;
@@ -59,9 +58,9 @@ public class BackgroundRendererMixin {
 			}
 			if (!skip) {
 				//RenderSystem.clearColor(SKY_RED, SKY_GREEN, SKY_BLUE, 0);
-				red *= NORMAL;
-				green *= NORMAL;
-				blue *= NORMAL;
+				red *= 4;
+				green *= 4;
+				blue *= 4;
 			}
 		}
 	}

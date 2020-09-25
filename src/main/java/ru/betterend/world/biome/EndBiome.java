@@ -21,6 +21,7 @@ public class EndBiome {
 
 	protected EndBiome biomeParent;
 	protected float maxSubBiomeChance = 1;
+	protected final float genChanceUnmutable;
 	protected float genChance = 1;
 
 	private final float fogDensity;
@@ -29,12 +30,14 @@ public class EndBiome {
 		biome = definition.build();
 		mcID = definition.getID();
 		fogDensity = definition.getFodDensity();
+		genChanceUnmutable = definition.getGenChance();
 	}
 
 	public EndBiome(Biome biome) {
 		this.biome = biome;
 		mcID = BuiltinRegistries.BIOME.getId(biome);
 		fogDensity = 1;
+		genChanceUnmutable = 1;
 	}
 
 	public void genSurfColumn(WorldAccess world, BlockPos pos, Random random) {
@@ -106,6 +109,7 @@ public class EndBiome {
 	}
 
 	public float setGenChance(float chance) {
+		genChance = genChanceUnmutable;
 		genChance += chance;
 		return genChance;
 	}

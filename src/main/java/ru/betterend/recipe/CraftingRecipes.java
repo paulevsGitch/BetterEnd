@@ -9,11 +9,11 @@ import ru.betterend.registry.BlockRegistry;
 public class CraftingRecipes {
 	public static void register() {
 		if (blockExists(BlockRegistry.ENDER_BLOCK)) {
-			RecipeBuilder.make("be_ender_pearl_to_block", BlockRegistry.ENDER_BLOCK)
+			RecipeBuilder.make("ender_pearl_to_block", BlockRegistry.ENDER_BLOCK)
 				.setShape(new String[] { "OO", "OO" })
 				.addMaterial('O', Items.ENDER_PEARL)
 				.build();
-			RecipeBuilder.make("be_ender_block_to_pearl", Items.ENDER_PEARL)
+			RecipeBuilder.make("ender_block_to_pearl", Items.ENDER_PEARL)
 				.addMaterial('#', BlockRegistry.ENDER_BLOCK)
 				.setOutputCount(4)
 				.setList("#")

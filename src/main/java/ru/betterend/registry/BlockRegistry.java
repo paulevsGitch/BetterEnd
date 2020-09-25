@@ -11,6 +11,7 @@ import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockOre;
 import ru.betterend.blocks.BlockTerrain;
+import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.tab.CreativeTab;
@@ -28,6 +29,9 @@ public class BlockRegistry {
 	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
+	
+	// BlockEntities //
+	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
 	
 	public static void register() {}
 	

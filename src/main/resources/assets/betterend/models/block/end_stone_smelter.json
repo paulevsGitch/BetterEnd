@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"top": "betterend:block/end_stone_smelter_top",
+		"front": "betterend:block/end_stone_smelter_front",
+		"side": "betterend:block/end_stone_smelter_side"
+	}
+}

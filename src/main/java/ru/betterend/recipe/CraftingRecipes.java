@@ -1,6 +1,7 @@
 package ru.betterend.recipe;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
@@ -18,6 +19,14 @@ public class CraftingRecipes {
 				.setOutputCount(4)
 				.setList("#")
 				.build();
+		}
+		if (blockExists(BlockRegistry.END_STONE_SMELTER)) {
+			RecipeBuilder.make("end_stone_smelter", BlockRegistry.END_STONE_SMELTER)
+				.setShape(new String[] { "###", "V#V", "###" })
+				.addMaterial('#', Blocks.END_STONE_BRICKS)
+				.addMaterial('V', Items.BUCKET)
+				.build();
+				
 		}
 	}
 	

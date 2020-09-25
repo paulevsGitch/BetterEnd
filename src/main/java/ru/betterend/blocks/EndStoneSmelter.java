@@ -2,8 +2,12 @@ package ru.betterend.blocks;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -15,8 +19,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -55,7 +62,9 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 		}
 	}
 
-	private void openScreen(World world, BlockPos pos, PlayerEntity player) {}
+	private void openScreen(World world, BlockPos pos, PlayerEntity player) {
+		
+	}
 	
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -100,5 +109,25 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(FACING, LIT);
+	}
+	
+	@Environment(EnvType.CLIENT)
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+		if (state.get(LIT)) {
+			double x = pos.getX() + 0.5D;
+			double y = pos.getY();
+			double z = pos.getZ() + 0.5D;
+			if (random.nextDouble() < 0.1D) {
+			   world.playSound(x, y, z, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+			}
+
+			Direction direction = (Direction)state.get(FACING);
+			Direction.Axis axis = direction.getAxis();
+			double defOffset = random.nextDouble() * 0.6D - 0.3D;
+			double offX = axis == Direction.Axis.X ? direction.getOffsetX() * 0.52D : defOffset;
+			double offY = random.nextDouble() * 9.0D / 16.0D;
+			double offZ = axis == Direction.Axis.Z ? direction.getOffsetZ() * 0.52D : defOffset;
+			world.addParticle(ParticleTypes.SMOKE, x + offX, y + offY, z + offZ, 0.0D, 0.0D, 0.0D);
+		}
 	}
 }

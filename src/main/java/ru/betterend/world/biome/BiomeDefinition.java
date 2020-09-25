@@ -51,6 +51,7 @@ public class BiomeDefinition {
 	private float fogDensity = 1F;
 
 	private final Identifier id;
+	private float genChance = 1F;
 	
 	private ConfiguredSurfaceBuilder<?> surface;
 
@@ -84,6 +85,11 @@ public class BiomeDefinition {
 
 	public BiomeDefinition setParticleConfig(BiomeParticleConfig config) {
 		this.particleConfig = config;
+		return this;
+	}
+	
+	public BiomeDefinition setGenChance(float genChance) {
+		this.genChance = genChance;
 		return this;
 	}
 
@@ -222,5 +228,9 @@ public class BiomeDefinition {
 	
 	public float getFodDensity() {
 		return fogDensity;
+	}
+
+	public float getGenChance() {
+		return genChance;
 	}
 }

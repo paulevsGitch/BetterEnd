@@ -10,6 +10,7 @@ import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
 import ru.betterend.world.biome.BiomeFoggyMushroomland;
 import ru.betterend.world.biome.EndBiome;
@@ -33,10 +34,22 @@ public class BiomeRegistry {
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
 		BiomeRegistry.MUTABLE.clear();
+		LAND_BIOMES.clearMutables();
+		
 		for (EndBiome biome : BiomeRegistry.LAND_BIOMES.getBiomes())
 			BiomeRegistry.MUTABLE.put(biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(biome)), biome);
 		for (EndBiome biome : BiomeRegistry.VOID_BIOMES.getBiomes())
 			BiomeRegistry.MUTABLE.put(biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(biome)), biome);
+		
+		biomeRegistry.forEach((biome) -> {
+			if (biome.getCategory() == Category.THEEND) {
+				if (!MUTABLE.containsKey(biome) && !biomeRegistry.getId(biome).getNamespace().equals("minecraft")) {
+					EndBiome endBiome = new EndBiome(biome);
+					LAND_BIOMES.addBiomeMutable(endBiome);
+					KEYS.put(endBiome, biomeRegistry.getKey(biome).get());
+				}
+			}
+		});
 	}
 	
 	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, boolean addToGen) {

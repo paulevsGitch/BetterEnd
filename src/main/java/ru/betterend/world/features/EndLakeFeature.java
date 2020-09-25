@@ -15,6 +15,7 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class EndLakeFeature extends DefaultFeature {
+	private static final BlockState END_STONE = Blocks.END_STONE.getDefaultState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 	private static final Mutable POS = new Mutable();
 	
@@ -46,23 +47,6 @@ public class EndLakeFeature extends DefaultFeature {
 		if (pos.getY() < 10) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 		
-		int minX = MHelper.floor((blockPos.getX() - dist - 16) >> 4) << 4;
-		int minZ = MHelper.floor((blockPos.getZ() - dist - 16) >> 4) << 4;
-		int maxX = MHelper.floor((blockPos.getX() + dist + 16) >> 4) << 4;
-		int maxZ = MHelper.floor((blockPos.getZ() + dist + 16) >> 4) << 4;
-		
-		for (int y = blockPos.getY(); y <= blockPos.getY() + 10; y++) {
-			POS.setY(y);
-			for (int x = minX; x <= maxX; x++) {
-				POS.setX(x);
-				for (int z = minZ; z <= maxZ; z++) {
-					POS.setZ(z);
-					if (!world.getFluidState(POS).isEmpty())
-						BlocksHelper.setWithoutUpdate(world, POS, AIR);
-				}
-			}
-		}
-		
 		for (int y = blockPos.getY(); y <= blockPos.getY() + 10; y++) {
 			POS.setY(y);
 			int add = y - blockPos.getY();
@@ -74,7 +58,7 @@ public class EndLakeFeature extends DefaultFeature {
 					POS.setZ(z);
 					int z2 = z - blockPos.getZ();
 					z2 *= z2;
-					double r = add * 1.5 + radius  * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
+					double r = add * 1.8 + radius  * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
 					r *= r;
 					if (x2 + z2 <= r) {
 						BlocksHelper.setWithoutUpdate(world, POS, AIR);
@@ -115,7 +99,9 @@ public class EndLakeFeature extends DefaultFeature {
 					int z2 = z - blockPos.getZ();
 					z2 *= z2;
 					double r = radius * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
+					double rb = r * 1.2;
 					r *= r;
+					rb *= rb;
 					if (y2 + x2 + z2 <= r) {
 						BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
 						pos = POS.down();
@@ -124,9 +110,19 @@ public class EndLakeFeature extends DefaultFeature {
 						pos = POS.up();
 						if (!world.getBlockState(pos).isAir()) {
 							while (!world.getBlockState(pos).isAir()) {
-								BlocksHelper.setWithoutUpdate(world, pos, y < waterLevel ? WATER : AIR);
+								BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
 								pos = pos.up();
 							}
+						}
+					}
+					else if (y <= waterLevel && y2 + x2 + z2 <= rb) {
+						if (world.getBlockState(POS).getMaterial().isReplaceable()) {
+							if (world.isAir(POS.up())) {
+								BlockState state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+								BlocksHelper.setWithoutUpdate(world, POS, state);
+							}
+							else
+								BlocksHelper.setWithoutUpdate(world, POS, END_STONE);
 						}
 					}
 				}

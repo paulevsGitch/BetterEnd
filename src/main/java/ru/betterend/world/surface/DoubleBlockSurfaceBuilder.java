@@ -11,6 +11,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import ru.betterend.noise.OpenSimplexNoise;
+import ru.betterend.util.MHelper;
 
 public class DoubleBlockSurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
 	public static final DoubleBlockSurfaceBuilder INSTANCE = new DoubleBlockSurfaceBuilder(TernarySurfaceConfig.CODEC);
@@ -34,7 +35,7 @@ public class DoubleBlockSurfaceBuilder extends SurfaceBuilder<TernarySurfaceConf
 
 	@Override
 	public void generate(Random random, Chunk chunk, Biome biome, int x, int z, int height, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, TernarySurfaceConfig surfaceBlocks) {
-		noise = NOISE.eval(x * 0.1, z * 0.1);
+		noise = NOISE.eval(x * 0.1, z * 0.1) + MHelper.randRange(-0.4, 0.4, random);
 		SurfaceBuilder.DEFAULT.generate(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, noise > 0 ? config1 : config2);
 	}
 	

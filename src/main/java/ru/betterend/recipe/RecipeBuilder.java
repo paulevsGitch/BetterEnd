@@ -51,7 +51,7 @@ public class RecipeBuilder {
 		return this;
 	}
 	
-	public RecipeBuilder setShape(String[] shape) {
+	public RecipeBuilder setShape(String... shape) {
 		this.shape = shape;
 		return this;
 	}

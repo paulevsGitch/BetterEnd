@@ -1,4 +1,4 @@
-package ru.betterend.blocks;
+package ru.betterend.blocks.basis;
 
 import java.util.Collections;
 import java.util.List;

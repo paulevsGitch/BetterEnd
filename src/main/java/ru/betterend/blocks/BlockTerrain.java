@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
+import ru.betterend.blocks.basis.BlockBase;
 
 public class BlockTerrain extends BlockBase {
 	public static final BlockSoundGroup TERRAIN_SOUND = new BlockSoundGroup(1.0F, 1.0F,

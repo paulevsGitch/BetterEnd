@@ -35,7 +35,7 @@ public class BlockRegistry {
 	
 	public static void register() {}
 	
-	private static Block registerBlock(String name, Block block) {
+	public static Block registerBlock(String name, Block block) {
 		Registry.register(Registry.BLOCK, new Identifier(BetterEnd.MOD_ID, name), block);
 		ItemRegistry.registerItem(name, new BlockItem(block, new Item.Settings().group(CreativeTab.END_TAB)));
 		return block;

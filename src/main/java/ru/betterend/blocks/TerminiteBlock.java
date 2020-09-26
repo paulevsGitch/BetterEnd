@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.sound.BlockSoundGroup;
+import ru.betterend.blocks.basis.BlockBase;
 
 public class TerminiteBlock extends BlockBase {
 	public TerminiteBlock() {

@@ -9,6 +9,7 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import ru.betterend.blocks.basis.BlockBase;
 
 public class EnderBlock extends BlockBase {
 

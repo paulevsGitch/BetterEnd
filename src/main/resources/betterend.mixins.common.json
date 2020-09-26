@@ -7,7 +7,8 @@
 		"DimensionTypeMixin",
 		"RecipeManagerMixin",
 		"ServerPlayNetworkHandlerMixin",
-		"TagGroupLoaderMixin"
+		"TagGroupLoaderMixin",
+		"CraftingScreenHandlerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -12,5 +12,24 @@
 	
 	"item.betterend.ender_dust": "Пыль Края",
 	"item.betterend.terminite_ingot": "Терминитовый слиток",
-	"item.betterend.aeternium_ingot": "Этериевый слиток"
+	"item.betterend.aeternium_ingot": "Этериевый слиток",
+	
+	"block.betterend.mossy_glowshroom_bark": "Кора мшистого светогриба",
+	"block.betterend.mossy_glowshroom_barrel": "Бочка из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_button": "Кнопка из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_chest": "Сундук из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_crafting_table": "Верстак из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_door": "Дверь из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_fence": "Забор из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_gate": "Калитка из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_ladder": "Лестница из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_log": "Бревно мшистого светогриба",
+	"block.betterend.mossy_glowshroom_planks": "Доски мшистого светогриба",
+	"block.betterend.mossy_glowshroom_plate": "Нажимная плита из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_sign": "Табличка из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_slab": "Плита из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_stairs": "Ступени из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_striped_bark": "Обтёсанная кора из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_striped_log": "Обтёсанное бревно из мшистого светогриба",
+	"block.betterend.mossy_glowshroom_trapdoor": "Люк из мшистого светогриба"
 }

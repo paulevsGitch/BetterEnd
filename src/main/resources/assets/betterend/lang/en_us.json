@@ -12,5 +12,25 @@
 	
 	"item.betterend.ender_dust": "Ender Dust",
 	"item.betterend.terminite_ingot": "Terminite Ingot",
-	"item.betterend.aeternium_ingot": "Aeternium Ingot"
+	"item.betterend.aeternium_ingot": "Aeternium Ingot",
+	
+	"block.betterend.mossy_glowshroom_bark": "Mossy Glowshroom Bark",
+	"block.betterend.mossy_glowshroom_barrel": "Mossy Glowshroom Barrel",
+	"block.betterend.mossy_glowshroom_button": "Mossy Glowshroom Button",
+	"block.betterend.mossy_glowshroom_chest": "Mossy Glowshroom Chest",
+	"block.betterend.mossy_glowshroom_crafting_table": "Mossy Glowshroom Crafting Table",
+	"block.betterend.mossy_glowshroom_door": "Mossy Glowshroom Door",
+	"block.betterend.mossy_glowshroom_fence": "Mossy Glowshroom Fence",
+	"block.betterend.mossy_glowshroom_gate": "Mossy Glowshroom Gate",
+	"block.betterend.mossy_glowshroom_ladder": "Mossy Glowshroom Ladder",
+	"block.betterend.mossy_glowshroom_log": "Mossy Glowshroom Log",
+	"block.betterend.mossy_glowshroom_planks": "Mossy Glowshroom Planks",
+	"block.betterend.mossy_glowshroom_plate": "Mossy Glowshroom Plate",
+	"block.betterend.mossy_glowshroom_sign": "Mossy Glowshroom Sign",
+	"block.betterend.mossy_glowshroom_slab": "Mossy Glowshroom Slab",
+	"block.betterend.mossy_glowshroom_stairs": "Mossy Glowshroom Stairs",
+	"block.betterend.mossy_glowshroom_striped_bark": "Mossy Glowshroom Striped Bark",
+	"block.betterend.mossy_glowshroom_striped_log": "Mossy Glowshroom Striped Log",
+	"block.betterend.mossy_glowshroom_trapdoor": "Mossy Glowshroom Trapdoor"
+
 }

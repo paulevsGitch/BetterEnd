@@ -6,6 +6,8 @@ import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Items;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.ItemTags;
 import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.BlockChest;
@@ -79,13 +81,14 @@ public class WoodenMaterial
 		chest = BlockRegistry.registerBlock(name + "_chest", new BlockChest(planks));
 		barrel = BlockRegistry.registerBlock(name + "_barrel", new BlockBarrel(planks));
 		
+		// Recipes //
 		RecipeBuilder.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_striped, bark_striped).setGroup("end_planks").build();
 		RecipeBuilder.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
 		RecipeBuilder.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', planks).setGroup("end_planks_slabs").build();
 		RecipeBuilder.make(name + "_fence", fence).setOutputCount(3).setShape("#I#", "#I#").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_fences").build();
 		RecipeBuilder.make(name + "_gate", gate).setShape("I#I", "I#I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_gates").build();
 		RecipeBuilder.make(name + "_button", button).setList("#").addMaterial('#', planks).setGroup("end_planks_buttons").build();
-		RecipeBuilder.make(name + "_pressure_plate", pressure_plate).setList("##").addMaterial('#', planks).setGroup("end_planks_plates").build();
+		RecipeBuilder.make(name + "_pressure_plate", pressure_plate).setShape("##").addMaterial('#', planks).setGroup("end_planks_plates").build();
 		RecipeBuilder.make(name + "_trapdoor", trapdoor).setOutputCount(2).setShape("###", "###").addMaterial('#', planks).setGroup("end_trapdoors").build();
 		RecipeBuilder.make(name + "_door", door).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', planks).setGroup("end_doors").build();
 		RecipeBuilder.make(name + "_crafting_table", crafting_table).setShape("##", "##").addMaterial('#', planks).setGroup("end_tables").build();
@@ -94,7 +97,31 @@ public class WoodenMaterial
 		RecipeBuilder.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
 		RecipeBuilder.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
 		
-		TagHelper.addTag(TagHelper.CLIMBABLE, name + "_ladder");
+		// Item Tags //
+		TagHelper.addTag(ItemTags.PLANKS, planks);
+		TagHelper.addTag(ItemTags.WOODEN_PRESSURE_PLATES, pressure_plate);
+		TagHelper.addTag(ItemTags.LOGS, log, bark, log_striped, bark_striped);
+		TagHelper.addTag(ItemTags.LOGS_THAT_BURN, log, bark, log_striped, bark_striped);
+		
+		TagHelper.addTags(button, ItemTags.WOODEN_BUTTONS, ItemTags.BUTTONS);
+		TagHelper.addTags(door, ItemTags.WOODEN_DOORS, ItemTags.DOORS);
+		TagHelper.addTags(fence, ItemTags.WOODEN_FENCES, ItemTags.FENCES);
+		TagHelper.addTags(slab, ItemTags.WOODEN_SLABS, ItemTags.SLABS);
+		TagHelper.addTags(stairs, ItemTags.WOODEN_STAIRS, ItemTags.STAIRS);
+		TagHelper.addTags(trapdoor, ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS);
+		
+		// Block Tags //
+		TagHelper.addTag(BlockTags.PLANKS, planks);
+		TagHelper.addTag(BlockTags.CLIMBABLE, ladder);
+		TagHelper.addTag(BlockTags.LOGS, log, bark, log_striped, bark_striped);
+		TagHelper.addTag(BlockTags.LOGS_THAT_BURN, log, bark, log_striped, bark_striped);
+		
+		TagHelper.addTags(button, BlockTags.WOODEN_BUTTONS, BlockTags.BUTTONS);
+		TagHelper.addTags(door, BlockTags.WOODEN_DOORS, BlockTags.DOORS);
+		TagHelper.addTags(fence, BlockTags.WOODEN_FENCES, BlockTags.FENCES);
+		TagHelper.addTags(slab, BlockTags.WOODEN_SLABS, BlockTags.SLABS);
+		TagHelper.addTags(stairs, BlockTags.WOODEN_STAIRS, BlockTags.STAIRS);
+		TagHelper.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
 	}
 	
 	public boolean isTreeLog(Block block)

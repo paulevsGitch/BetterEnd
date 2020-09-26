@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "betternether:block/%name%_crafting_table_front",
-        "north": "betternether:block/%name%_crafting_table_front",
-        "south": "betternether:block/%name%_crafting_table_side",
-        "east": "betternether:block/%name%_crafting_table_side",
-        "west": "betternether:block/%name%_crafting_table_front",
-        "up": "betternether:block/%name%_crafting_table_top",
-        "down": "betternether:block/%name%_crafting_table_bottom"
+        "particle": "betterend:block/%name%_crafting_table_front",
+        "north": "betterend:block/%name%_crafting_table_front",
+        "south": "betterend:block/%name%_crafting_table_side",
+        "east": "betterend:block/%name%_crafting_table_side",
+        "west": "betterend:block/%name%_crafting_table_front",
+        "up": "betterend:block/%name%_crafting_table_top",
+        "down": "betterend:block/%name%_crafting_table_bottom"
     }
 }

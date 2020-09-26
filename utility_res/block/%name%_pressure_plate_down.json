@@ -1,6 +1,6 @@
 {
         "parent": "block/pressure_plate_down",
         "textures": {
-                "texture": "betternether:block/%name%_planks"
+                "texture": "betterend:block/%name%_planks"
         }
 }

@@ -1,12 +1,12 @@
 {
         "parent": "block/cube",
         "textures": {
-                "particle": "betternether:block/%name%_log_side",
-                "down": "betternether:block/%name%_log_top",
-                "up": "betternether:block/%name%_log_top",
-                "north": "betternether:block/%name%_log_side",
-                "east": "betternether:block/%name%_log_side",
-                "south": "betternether:block/%name%_log_side",
-                "west": "betternether:block/%name%_log_side"
+                "particle": "betterend:block/%name%_log_side",
+                "down": "betterend:block/%name%_log_top",
+                "up": "betterend:block/%name%_log_top",
+                "north": "betterend:block/%name%_log_side",
+                "east": "betterend:block/%name%_log_side",
+                "south": "betterend:block/%name%_log_side",
+                "west": "betterend:block/%name%_log_side"
         }
 }

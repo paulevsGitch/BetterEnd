@@ -1,6 +1,6 @@
 {
-	"parent": "betternether:block/chest_item",
+	"parent": "betterend:block/chest_item",
         "textures": {
-                "texture": "betternether:entity/chest/%name%_chest"
+                "texture": "betterend:entity/chest/%name%_chest"
         }
 }

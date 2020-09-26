@@ -1,6 +1,6 @@
 {
         "parent": "block/fence_side",
         "textures": {
-                "texture": "betternether:block/%name%_planks"
+                "texture": "betterend:block/%name%_planks"
         }
 }

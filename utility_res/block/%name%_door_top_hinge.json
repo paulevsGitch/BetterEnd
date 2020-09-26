@@ -1,7 +1,7 @@
 {
         "parent": "block/door_top_rh",
         "textures": {
-                "bottom": "betternether:block/%name%_door_top",
-                "top": "betternether:block/%name%_door_top"
+                "bottom": "betterend:block/%name%_door_top",
+                "top": "betterend:block/%name%_door_top"
         }
 }

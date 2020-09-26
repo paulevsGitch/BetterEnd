@@ -87,13 +87,15 @@ public class ModelHelper {
 		return out;
 	}
 	
-	private void printStates(String name) {
+	private void printStates(String name) throws IOException {
+		BufferedWriter wr = new BufferedWriter(new FileWriter(new File("./output/states.txt")));
 		for (String state: Helper.BLOCKSTATES)
 		{
 			String rname = state.replace(Helper.MASK, name);
 			String onlyName = rname.substring(0, rname.indexOf('.'));
 			String finName = name.replace('_', ' ') + " " + state.substring(0, state.indexOf('.')).replace(Helper.MASK, "").replace('_', ' ').trim();
-			System.out.println("\"block.betternether." + onlyName + "\": \"" + capitalize(finName) + "\",");
+			wr.write("	\"block.betterend." + onlyName + "\": \"" + capitalize(finName) + "\",\n");
 		}
+		wr.close();
 	}
 }

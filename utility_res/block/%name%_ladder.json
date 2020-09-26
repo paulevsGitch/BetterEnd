@@ -1,7 +1,7 @@
 {
-        "parent": "betternether:block/reeds_ladder",
+        "parent": "betterend:block/reeds_ladder",
         "textures": {
-                "particle": "betternether:block/%name%_ladder",
-		"texture": "betternether:block/%name%_ladder"
+                "particle": "betterend:block/%name%_ladder",
+		"texture": "betterend:block/%name%_ladder"
         }
 }

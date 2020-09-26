@@ -1,6 +1,6 @@
 {
         "variants":
 	{
-                "": { "model": "betternether:block/%name%_planks" }
+                "": { "model": "betterend:block/%name%_planks" }
         }
 }

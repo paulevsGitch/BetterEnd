@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "betternether:block/crafting_table_%name%"
+    "variants": {
+        "": {
+            "model": "betternether:block/crafting_table_%name%"
+        }
     }
-  }
 }

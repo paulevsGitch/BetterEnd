@@ -1,6 +1,6 @@
 {
-    "parent": "block/button_pressed",
-    "textures": {
-        "texture": "betternether:block/%name%_planks"
-    }
+        "parent": "block/button_pressed",
+        "textures": {
+                "texture": "betternether:block/%name%_planks"
+        }
 }

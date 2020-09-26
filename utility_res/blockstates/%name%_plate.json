@@ -1,6 +1,6 @@
 {
-    "variants": {
-        "powered=false": { "model": "betternether:block/%name%_pressure_plate_up" },
-        "powered=true": { "model": "betternether:block/%name%_pressure_plate_down" }
-    }
+        "variants": {
+                "powered=false": { "model": "betternether:block/%name%_pressure_plate_up" },
+                "powered=true": { "model": "betternether:block/%name%_pressure_plate_down" }
+        }
 }

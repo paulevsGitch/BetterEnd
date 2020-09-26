@@ -1,3 +1,3 @@
 {
-    "parent": "betternether:block/%name%_fence_gate_closed"
+        "parent": "betternether:block/%name%_fence_gate_closed"
 }

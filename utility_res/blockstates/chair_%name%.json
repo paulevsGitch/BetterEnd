@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"facing=east,top=false":  { "model": "betternether:block/chair_%name%", "y": 90 },
-		"facing=west,top=false":  { "model": "betternether:block/chair_%name%", "y": 270 },
+		"facing=east,top=false":    { "model": "betternether:block/chair_%name%", "y": 90 },
+		"facing=west,top=false":    { "model": "betternether:block/chair_%name%", "y": 270 },
 		"facing=south,top=false": { "model": "betternether:block/chair_%name%", "y": 180 },
 		"facing=north,top=false": { "model": "betternether:block/chair_%name%" },
 		"top=true": { "model": "betternether:block/chair_%name%_top" }

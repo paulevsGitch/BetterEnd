@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "betternether:block/empty_%name%"
+    "variants": {
+        "": {
+            "model": "betternether:block/empty_%name%"
+        }
     }
-  }
 }

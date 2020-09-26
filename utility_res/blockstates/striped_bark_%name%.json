@@ -1,7 +1,7 @@
 {
-    "variants": {
-        "axis=y": { "model": "betternether:block/striped_bark_%name%" },
-        "axis=z": { "model": "betternether:block/striped_bark_%name%", "x": 90 },
-        "axis=x": { "model": "betternether:block/striped_bark_%name%", "x": 90, "y": 90 }
-    }
+        "variants": {
+                "axis=y": { "model": "betternether:block/striped_bark_%name%" },
+                "axis=z": { "model": "betternether:block/striped_bark_%name%", "x": 90 },
+                "axis=x": { "model": "betternether:block/striped_bark_%name%", "x": 90, "y": 90 }
+        }
 }

@@ -1,8 +1,8 @@
 {
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "betternether:block/%name%_planks",
-        "top": "betternether:block/%name%_planks",
-        "side": "betternether:block/%name%_planks"
-    }
+        "parent": "block/inner_stairs",
+        "textures": {
+                "bottom": "betternether:block/%name%_planks",
+                "top": "betternether:block/%name%_planks",
+                "side": "betternether:block/%name%_planks"
+        }
 }

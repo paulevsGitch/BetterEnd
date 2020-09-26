@@ -105,7 +105,7 @@ public class ESignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEnti
 	}
 
 	static {
-		defaultLayer = RenderLayer.getEntitySolid(new Identifier(BetterEnd.MOD_ID, "entity/chest/normal.png"));
+		defaultLayer = RenderLayer.getEntitySolid(new Identifier("entity/sign/oak.png"));
 			
 		ItemRegistry.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {

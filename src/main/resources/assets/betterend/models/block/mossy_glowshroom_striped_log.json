@@ -1,0 +1,12 @@
+{
+        "parent": "block/cube",
+        "textures": {
+                "particle": "betterend:block/mossy_glowshroom_striped_log_side",
+                "down": "betterend:block/mossy_glowshroom_striped_log_top",
+                "up": "betterend:block/mossy_glowshroom_striped_log_top",
+                "north": "betterend:block/mossy_glowshroom_striped_log_side",
+                "east": "betterend:block/mossy_glowshroom_striped_log_side",
+                "south": "betterend:block/mossy_glowshroom_striped_log_side",
+                "west": "betterend:block/mossy_glowshroom_striped_log_side"
+        }
+}

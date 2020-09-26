@@ -1,0 +1,7 @@
+{
+        "variants": {
+                "axis=y": { "model": "betterend:block/mossy_glowshroom_striped_log" },
+                "axis=z": { "model": "betterend:block/mossy_glowshroom_striped_log", "x": 90 },
+                "axis=x": { "model": "betterend:block/mossy_glowshroom_striped_log", "x": 90, "y": 90 }
+        }
+}

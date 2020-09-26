@@ -1,0 +1,56 @@
+{
+    "variants": {
+        "facing=down,open=false": {
+            "x": 180,
+            "model": "betterend:block/mossy_glowshroom_barrel"
+        },
+        "facing=down,open=true": {
+            "x": 180,
+            "model": "betterend:block/mossy_glowshroom_barrel_open"
+        },
+        "facing=east,open=false": {
+            "x": 90,
+            "y": 90,
+            "model": "betterend:block/mossy_glowshroom_barrel"
+        },
+        "facing=east,open=true": {
+            "x": 90,
+            "y": 90,
+            "model": "betterend:block/mossy_glowshroom_barrel_open"
+        },
+        "facing=north,open=false": {
+            "x": 90,
+            "model": "betterend:block/mossy_glowshroom_barrel"
+        },
+        "facing=north,open=true": {
+            "x": 90,
+            "model": "betterend:block/mossy_glowshroom_barrel_open"
+        },
+        "facing=south,open=false": {
+            "x": 90,
+            "y": 180,
+            "model": "betterend:block/mossy_glowshroom_barrel"
+        },
+        "facing=south,open=true": {
+            "x": 90,
+            "y": 180,
+            "model": "betterend:block/mossy_glowshroom_barrel_open"
+        },
+        "facing=up,open=false": {
+            "model": "betterend:block/mossy_glowshroom_barrel"
+        },
+        "facing=up,open=true": {
+            "model": "betterend:block/mossy_glowshroom_barrel_open"
+        },
+        "facing=west,open=false": {
+            "x": 90,
+            "y": 270,
+            "model": "betterend:block/mossy_glowshroom_barrel"
+        },
+        "facing=west,open=true": {
+            "x": 90,
+            "y": 270,
+            "model": "betterend:block/mossy_glowshroom_barrel_open"
+        }
+    }
+}

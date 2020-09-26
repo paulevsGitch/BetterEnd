@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/cube_bottom_top",
+    "textures": {
+        "top": "betterend:block/mossy_glowshroom_barrel_top",
+        "bottom": "betterend:block/mossy_glowshroom_barrel_bottom",
+        "side": "betterend:block/mossy_glowshroom_barrel_side"
+    }
+}

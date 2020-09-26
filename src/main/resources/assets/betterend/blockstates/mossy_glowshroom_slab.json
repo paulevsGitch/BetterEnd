@@ -1,0 +1,8 @@
+{
+        "variants":
+	{
+                "type=bottom": { "model": "betterend:block/mossy_glowshroom_half_slab" },
+                "type=top": { "model": "betterend:block/mossy_glowshroom_half_slab", "x": 180, "uvlock": true },
+                "type=double": { "model": "betterend:block/mossy_glowshroom_planks" }
+        }
+}

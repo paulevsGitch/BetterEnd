@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "betterend:block/mossy_glowshroom_crafting_table_front",
+        "north": "betterend:block/mossy_glowshroom_crafting_table_front",
+        "south": "betterend:block/mossy_glowshroom_crafting_table_side",
+        "east": "betterend:block/mossy_glowshroom_crafting_table_side",
+        "west": "betterend:block/mossy_glowshroom_crafting_table_front",
+        "up": "betterend:block/mossy_glowshroom_crafting_table_top",
+        "down": "betterend:block/mossy_glowshroom_crafting_table_bottom"
+    }
+}

@@ -1,12 +1,12 @@
 {
-        "parent": "block/cube",
-        "textures": {
-                "particle": "betterend:block/%name%_log_side",
-                "down": "betterend:block/%name%_log_top",
-                "up": "betterend:block/%name%_log_top",
-                "north": "betterend:block/%name%_log_side",
-                "east": "betterend:block/%name%_log_side",
-                "south": "betterend:block/%name%_log_side",
-                "west": "betterend:block/%name%_log_side"
-        }
+    "parent": "block/cube", 
+    "textures": {
+        "down": "betterend:block/%name%_log_top", 
+        "east": "betterend:block/%name%_log_side", 
+        "north": "betterend:block/%name%_log_side", 
+        "particle": "betterend:block/%name%_log_side", 
+        "south": "betterend:block/%name%_log_side", 
+        "up": "betterend:block/%name%_log_top", 
+        "west": "betterend:block/%name%_log_side"
+    }
 }

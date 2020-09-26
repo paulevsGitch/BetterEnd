@@ -1,6 +1,6 @@
 {
-        "parent": "block/button",
-        "textures": {
-                "texture": "betterend:block/mossy_glowshroom_planks"
-        }
+    "parent": "block/button", 
+    "textures": {
+        "texture": "betterend:block/mossy_glowshroom_planks"
+    }
 }

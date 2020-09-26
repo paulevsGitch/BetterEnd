@@ -1,10 +1,18 @@
 package ru.betterend.blocks.complex;
 
+import java.lang.reflect.Field;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Items;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.SetTag;
+import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
 import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.BlockChest;
@@ -50,9 +58,10 @@ public class WoodenMaterial
 	public final Block chest;
 	public final Block barrel;
 	
+	@SuppressWarnings("unchecked")
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor)
 	{
-		FabricBlockSettings materialPlanks = FabricBlockSettings.of(Material.WOOD).materialColor(planksColor);
+		FabricBlockSettings materialPlanks = FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).materialColor(planksColor);
 		
 		log_striped = BlockRegistry.registerBlock(name + "_striped_log", new BlockPillar(materialPlanks));
 		bark_striped = BlockRegistry.registerBlock(name + "_striped_bark", new BlockPillar(materialPlanks));
@@ -91,6 +100,18 @@ public class WoodenMaterial
 		RecipeBuilder.make(name + "_sign", sign).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
 		RecipeBuilder.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
 		RecipeBuilder.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
+		
+		/*try {
+			Field field = BlockTags.CLIMBABLE.getClass().getDeclaredField("delegate");
+			field.setAccessible(true);
+			SetTag<Block> tag = SetTag.empty();
+			tag = (SetTag<Block>) field.get(tag);
+			System.out.println(tag.getClass());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		//System.out.println(BlockTags.CLIMBABLE.getClass());
 	}
 	
 	public boolean isTreeLog(Block block)

@@ -1,8 +1,19 @@
 {
-        "variants": {
-                "facing=north": { "model": "betterend:block/%name%_ladder" },
-                "facing=east":    { "model": "betterend:block/%name%_ladder", "y": 90 },
-                "facing=south": { "model": "betterend:block/%name%_ladder", "y": 180 },
-                "facing=west":    { "model": "betterend:block/%name%_ladder", "y": 270 }
+    "variants": {
+        "facing=east": {
+            "model": "betterend:block/%name%_ladder", 
+            "y": 90
+        }, 
+        "facing=north": {
+            "model": "betterend:block/%name%_ladder"
+        }, 
+        "facing=south": {
+            "model": "betterend:block/%name%_ladder", 
+            "y": 180
+        }, 
+        "facing=west": {
+            "model": "betterend:block/%name%_ladder", 
+            "y": 270
         }
+    }
 }

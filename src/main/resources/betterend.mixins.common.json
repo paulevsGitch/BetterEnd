@@ -6,7 +6,8 @@
 	"mixins": [
 		"DimensionTypeMixin",
 		"RecipeManagerMixin",
-		"ServerPlayNetworkHandlerMixin"
+		"ServerPlayNetworkHandlerMixin",
+		"TagGroupLoaderMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

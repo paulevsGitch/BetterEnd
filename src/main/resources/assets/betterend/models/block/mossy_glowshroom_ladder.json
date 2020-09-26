@@ -1,7 +1,6 @@
 {
-        "parent": "betterend:block/reeds_ladder",
-        "textures": {
-                "particle": "betterend:block/mossy_glowshroom_ladder",
-		"texture": "betterend:block/mossy_glowshroom_ladder"
-        }
+    "parent": "betterend:block/ladder", 
+    "textures": {
+        "texture": "betterend:block/mossy_glowshroom_ladder"
+    }
 }

@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "betterend:block/%name%_empty" }
+        "": {
+            "model": "betterend:block/%name%_empty"
+        }
     }
 }

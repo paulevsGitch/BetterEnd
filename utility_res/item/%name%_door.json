@@ -1,6 +1,6 @@
 {
-	"parent": "item/generated",
-        "textures": {
-                "layer0": "betterend:item/%name%_door"
-        }
+    "parent": "item/generated", 
+    "textures": {
+        "layer0": "betterend:item/%name%_door"
+    }
 }

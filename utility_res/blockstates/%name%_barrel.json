@@ -1,56 +1,56 @@
 {
     "variants": {
         "facing=down,open=false": {
-            "x": 180,
-            "model": "betterend:block/%name%_barrel"
-        },
+            "model": "betterend:block/%name%_barrel", 
+            "x": 180
+        }, 
         "facing=down,open=true": {
-            "x": 180,
-            "model": "betterend:block/%name%_barrel_open"
-        },
+            "model": "betterend:block/%name%_barrel_open", 
+            "x": 180
+        }, 
         "facing=east,open=false": {
-            "x": 90,
-            "y": 90,
-            "model": "betterend:block/%name%_barrel"
-        },
+            "model": "betterend:block/%name%_barrel", 
+            "x": 90, 
+            "y": 90
+        }, 
         "facing=east,open=true": {
-            "x": 90,
-            "y": 90,
-            "model": "betterend:block/%name%_barrel_open"
-        },
+            "model": "betterend:block/%name%_barrel_open", 
+            "x": 90, 
+            "y": 90
+        }, 
         "facing=north,open=false": {
-            "x": 90,
-            "model": "betterend:block/%name%_barrel"
-        },
+            "model": "betterend:block/%name%_barrel", 
+            "x": 90
+        }, 
         "facing=north,open=true": {
-            "x": 90,
-            "model": "betterend:block/%name%_barrel_open"
-        },
+            "model": "betterend:block/%name%_barrel_open", 
+            "x": 90
+        }, 
         "facing=south,open=false": {
-            "x": 90,
-            "y": 180,
-            "model": "betterend:block/%name%_barrel"
-        },
+            "model": "betterend:block/%name%_barrel", 
+            "x": 90, 
+            "y": 180
+        }, 
         "facing=south,open=true": {
-            "x": 90,
-            "y": 180,
-            "model": "betterend:block/%name%_barrel_open"
-        },
+            "model": "betterend:block/%name%_barrel_open", 
+            "x": 90, 
+            "y": 180
+        }, 
         "facing=up,open=false": {
             "model": "betterend:block/%name%_barrel"
-        },
+        }, 
         "facing=up,open=true": {
             "model": "betterend:block/%name%_barrel_open"
-        },
+        }, 
         "facing=west,open=false": {
-            "x": 90,
-            "y": 270,
-            "model": "betterend:block/%name%_barrel"
-        },
+            "model": "betterend:block/%name%_barrel", 
+            "x": 90, 
+            "y": 270
+        }, 
         "facing=west,open=true": {
-            "x": 90,
-            "y": 270,
-            "model": "betterend:block/%name%_barrel_open"
+            "model": "betterend:block/%name%_barrel_open", 
+            "x": 90, 
+            "y": 270
         }
     }
 }

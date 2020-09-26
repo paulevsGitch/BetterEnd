@@ -1,8 +1,15 @@
 {
-        "variants":
-	{
-                "type=bottom": { "model": "betterend:block/%name%_half_slab" },
-                "type=top": { "model": "betterend:block/%name%_half_slab", "x": 180, "uvlock": true },
-                "type=double": { "model": "betterend:block/%name%_planks" }
+    "variants": {
+        "type=bottom": {
+            "model": "betterend:block/%name%_half_slab"
+        }, 
+        "type=double": {
+            "model": "betterend:block/%name%_planks"
+        }, 
+        "type=top": {
+            "model": "betterend:block/%name%_half_slab", 
+            "uvlock": true, 
+            "x": 180
         }
+    }
 }

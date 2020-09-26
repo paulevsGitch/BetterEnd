@@ -4,12 +4,14 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.registry.Registry;
+import ru.betterend.registry.BlockEntityRenderRegistry;
 
 public class BetterEndClient implements ClientModInitializer
 {
 	@Override
 	public void onInitializeClient() {
 		registerRenderLayers();
+		BlockEntityRenderRegistry.register();
 	}
 
 	private void registerRenderLayers() {

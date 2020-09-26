@@ -5,13 +5,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Items;
+import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.BlockChest;
+import ru.betterend.blocks.basis.BlockCraftingTable;
 import ru.betterend.blocks.basis.BlockDoor;
 import ru.betterend.blocks.basis.BlockFence;
 import ru.betterend.blocks.basis.BlockGate;
+import ru.betterend.blocks.basis.BlockLadder;
 import ru.betterend.blocks.basis.BlockLogStripable;
 import ru.betterend.blocks.basis.BlockPillar;
 import ru.betterend.blocks.basis.BlockPressurePlate;
+import ru.betterend.blocks.basis.BlockSign;
 import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockStairs;
 import ru.betterend.blocks.basis.BlockTrapdoor;
@@ -38,12 +43,12 @@ public class WoodenMaterial
 	public final Block trapdoor;
 	public final Block door;
 	
-	//public final Block crafting_table;
-	//public final Block ladder;
-	//public final Block sign;
+	public final Block crafting_table;
+	public final Block ladder;
+	public final Block sign;
 	
-	//public final Block chest;
-	//public final Block barrel;
+	public final Block chest;
+	public final Block barrel;
 	
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor)
 	{
@@ -65,14 +70,14 @@ public class WoodenMaterial
 		trapdoor = BlockRegistry.registerBlock(name + "_trapdoor", new BlockTrapdoor(planks));
 		door = BlockRegistry.registerBlock(name + "_door", new BlockDoor(planks));
 		
-		//crafting_table = BlockRegistry.registerBlock("crafting_table_" + name, planks);
-		//ladder = BlockRegistry.registerBlock(name + "_ladder", planks);
-		//sign = BlockRegistry.registerBlock("sign_" + name, planks);
+		crafting_table = BlockRegistry.registerBlock(name + "_crafting_table", new BlockCraftingTable(planks));
+		ladder = BlockRegistry.registerBlock(name + "_ladder", new BlockLadder(planks));
+		sign = BlockRegistry.registerBlock(name + "_sign", new BlockSign(planks));
 		
-		//chest = BlockRegistry.registerBlock("chest_" + name, planks);
-		//barrel = BlockRegistry.registerBlock("barrel_" + name, planks, planks_slab);
+		chest = BlockRegistry.registerBlock(name + "_chest", new BlockChest(planks));
+		barrel = BlockRegistry.registerBlock(name + "_barrel", new BlockBarrel(planks));
 		
-		RecipeBuilder.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark).setGroup("end_planks").build();
+		RecipeBuilder.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_striped, bark_striped).setGroup("end_planks").build();
 		RecipeBuilder.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
 		RecipeBuilder.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', planks).setGroup("end_planks_slabs").build();
 		RecipeBuilder.make(name + "_fence", fence).setOutputCount(3).setShape("#I#", "#I#").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_fences").build();
@@ -81,6 +86,11 @@ public class WoodenMaterial
 		RecipeBuilder.make(name + "_pressure_plate", pressure_plate).setList("##").addMaterial('#', planks).setGroup("end_planks_plates").build();
 		RecipeBuilder.make(name + "_trapdoor", trapdoor).setOutputCount(2).setShape("###", "###").addMaterial('#', planks).setGroup("end_trapdoors").build();
 		RecipeBuilder.make(name + "_door", door).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', planks).setGroup("end_doors").build();
+		RecipeBuilder.make(name + "_crafting_table", crafting_table).setShape("##", "##").addMaterial('#', planks).setGroup("end_tables").build();
+		RecipeBuilder.make(name + "_ladder", ladder).setOutputCount(3).setShape("I I", "I#I", "I I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_ladders").build();
+		RecipeBuilder.make(name + "_sign", sign).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
+		RecipeBuilder.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
+		RecipeBuilder.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
 	}
 	
 	public boolean isTreeLog(Block block)

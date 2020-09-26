@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "betternether:block/%name%_planks",
+        "top": "betternether:block/%name%_planks",
+        "side": "betternether:block/%name%_planks"
+    }
+}

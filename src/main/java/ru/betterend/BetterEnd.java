@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import ru.betterend.config.MainConfig;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.registry.BiomeRegistry;
+import ru.betterend.registry.BlockEntityRegistry;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
@@ -21,6 +22,7 @@ public class BetterEnd implements ModInitializer {
 		DoubleBlockSurfaceBuilder.register();
 		ItemRegistry.register();
 		BlockRegistry.register();
+		BlockEntityRegistry.register();
 		FeatureRegistry.register();
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();

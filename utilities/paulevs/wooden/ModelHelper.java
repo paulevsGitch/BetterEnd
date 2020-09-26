@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 public class ModelHelper {
 	public static void main(String[] args) throws IOException {
-		new ModelHelper("nether_sakura");
+		new ModelHelper(args[0]);
 	}
 	
 	private ModelHelper(String name) throws IOException {
@@ -22,12 +22,18 @@ public class ModelHelper {
 	}
 	
 	private void clearOutput() {
-		for (File file: new File("./output/blockstates").listFiles())
-			file.delete();
-		for (File file: new File("./output/models/block").listFiles())
-			file.delete();
-		for (File file: new File("./output/models/item").listFiles())
-			file.delete();
+		File out = new File("./output");
+		if (out.exists()) {
+			for (File file: new File("./output/blockstates").listFiles())
+				file.delete();
+			for (File file: new File("./output/models/block").listFiles())
+				file.delete();
+			for (File file: new File("./output/models/item").listFiles())
+				file.delete();
+		}
+		else {
+			out.mkdir();
+		}
 	}
 	
 	private void editBlockstates(String name) throws IOException {

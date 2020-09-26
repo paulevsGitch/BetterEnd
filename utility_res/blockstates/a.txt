@@ -1,0 +1,28 @@
+ Том в устройстве D имеет метку Data
+ Серийный номер тома: C7B5-F673
+
+ Содержимое папки D:\BetterEnd\BetterEnd_1.16.3\utility_res\blockstates
+
+26.09.2020  17:02    <DIR>          .
+26.09.2020  17:02    <DIR>          ..
+26.09.2020  16:47               286 %name%_bark.json
+26.09.2020  17:01             1 683 %name%_barrel.json
+26.09.2020  16:47             3 177 %name%_button.json
+26.09.2020  17:01               112 %name%_chest.json
+26.09.2020  17:01               115 %name%_crafting_table.json
+26.09.2020  16:47             4 155 %name%_door.json
+26.09.2020  16:47               841 %name%_fence.json
+26.09.2020  16:47             2 275 %name%_gate.json
+26.09.2020  16:47               400 %name%_ladder.json
+26.09.2020  16:47               285 %name%_log.json
+26.09.2020  16:47               109 %name%_planks.json
+26.09.2020  16:47               228 %name%_plate.json
+26.09.2020  16:47                90 %name%_sign.json
+26.09.2020  16:47               313 %name%_slab.json
+26.09.2020  16:47             5 701 %name%_stairs.json
+26.09.2020  17:02               310 %name%_striped_bark.json
+26.09.2020  17:02               309 %name%_striped_log.json
+26.09.2020  16:47             1 931 %name%_trapdoor.json
+26.09.2020  17:02                 0 a.txt
+              19 файлов         22 320 байт
+               2 папок  811 600 121 856 байт свободно

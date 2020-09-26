@@ -6,7 +6,10 @@ public class Helper
 	
 	public static final String[] BLOCKSTATES = new String[] {
 		"%name%_bark.json",
+		"%name%_barrel.json",
 		"%name%_button.json",
+		"%name%_chest.json",
+		"%name%_crafting_table.json",
 		"%name%_door.json",
 		"%name%_fence.json",
 		"%name%_gate.json",
@@ -14,18 +17,12 @@ public class Helper
 		"%name%_log.json",
 		"%name%_planks.json",
 		"%name%_plate.json",
+		"%name%_sign.json",
 		"%name%_slab.json",
 		"%name%_stairs.json",
-		"%name%_trapdoor.json",
-		"barrel_%name%.json",
-		"bar_stool_%name%.json",
-		"chair_%name%.json",
-		"chest_%name%.json",
-		"crafting_table_%name%.json",
-		"sign_%name%.json",
-		"striped_bark_%name%.json",
-		"striped_log_%name%.json",
-		"taburet_%name%.json"
+		"%name%_striped_bark.json",
+		"%name%_striped_log.json",
+		"%name%_trapdoor.json"
 	};
 	
 	public static final String[] BLOCKS = new String[] {
@@ -64,7 +61,10 @@ public class Helper
 	
 	public static final String[] ITEMS = new String[] {
 		"%name%_bark.json",
+		"%name%_barrel.json",
 		"%name%_button.json",
+		"%name%_chest.json",
+		"%name%_crafting_table.json",
 		"%name%_door.json",
 		"%name%_fence.json",
 		"%name%_gate.json",
@@ -72,17 +72,11 @@ public class Helper
 		"%name%_log.json",
 		"%name%_planks.json",
 		"%name%_plate.json",
+		"%name%_sign.json",
 		"%name%_slab.json",
 		"%name%_stairs.json",
-		"%name%_trapdoor.json",
-		"barrel_%name%.json",
-		"bar_stool_%name%.json",
-		"chair_%name%.json",
-		"chest_%name%.json",
-		"crafting_table_%name%.json",
-		"sign_%name%.json",
-		"striped_bark_%name%.json",
-		"striped_log_%name%.json",
-		"taburet_%name%.json"
+		"%name%_striped_bark.json",
+		"%name%_striped_log.json",
+		"%name%_trapdoor.json"
 	};
 }

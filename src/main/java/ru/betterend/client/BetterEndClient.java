@@ -6,8 +6,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.registry.BlockEntityRenderRegistry;
 
-public class BetterEndClient implements ClientModInitializer
-{
+public class BetterEndClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		registerRenderLayers();

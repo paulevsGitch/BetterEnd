@@ -21,6 +21,9 @@
 	"entrypoints": {
 		"main": [
 			"ru.betterend.BetterEnd"
+		],
+		"client": [
+			"ru.betterend.client.BetterEndClient"
 		]
 	},
 	"mixins": [

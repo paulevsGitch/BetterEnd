@@ -165,9 +165,9 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 
 	static {
 		defaultLayer = new RenderLayer[] {
-			RenderLayer.getEntitySolid(new Identifier("entity/chest/normal.png")),
-			RenderLayer.getEntitySolid(new Identifier("entity/chest/normal_left.png")),
-			RenderLayer.getEntitySolid(new Identifier("entity/chest/normal_right.png"))
+			RenderLayer.getEntitySolid(new Identifier("textures/entity/chest/normal.png")),
+			RenderLayer.getEntitySolid(new Identifier("textures/entity/chest/normal_left.png")),
+			RenderLayer.getEntitySolid(new Identifier("textures/entity/chest/normal_right.png"))
 		};
 		
 		ItemRegistry.getModBlocks().forEach((item) -> {

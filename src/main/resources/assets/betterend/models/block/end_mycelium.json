@@ -1,12 +1,12 @@
 {
-    "parent": "block/cube", 
-    "textures": {
-        "down": "block/end_stone", 
-        "east": "betterend:block/end_mycelium_side", 
-        "north": "betterend:block/end_mycelium_side", 
-        "particle": "betterend:block/end_mycelium_side", 
-        "south": "betterend:block/end_mycelium_side", 
-        "up": "betterend:block/end_mycelium_top", 
-        "west": "betterend:block/end_mycelium_side"
-    }
+	"parent": "block/cube", 
+	"textures": {
+		"down": "block/end_stone", 
+		"east": "betterend:block/end_mycelium_side", 
+		"north": "betterend:block/end_mycelium_side", 
+		"particle": "betterend:block/end_mycelium_side", 
+		"south": "betterend:block/end_mycelium_side", 
+		"up": "betterend:block/end_mycelium_top", 
+		"west": "betterend:block/end_mycelium_side"
+	}
 }

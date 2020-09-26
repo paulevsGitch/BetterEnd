@@ -1,8 +1,8 @@
 {
-        "variants": {
-                "facing=north": { "model": "betterend:block/mossy_glowshroom_ladder" },
-                "facing=east":    { "model": "betterend:block/mossy_glowshroom_ladder", "y": 90 },
-                "facing=south": { "model": "betterend:block/mossy_glowshroom_ladder", "y": 180 },
-                "facing=west":    { "model": "betterend:block/mossy_glowshroom_ladder", "y": 270 }
-        }
+		"variants": {
+				"facing=north": { "model": "betterend:block/mossy_glowshroom_ladder" },
+				"facing=east":	{ "model": "betterend:block/mossy_glowshroom_ladder", "y": 90 },
+				"facing=south": { "model": "betterend:block/mossy_glowshroom_ladder", "y": 180 },
+				"facing=west":	{ "model": "betterend:block/mossy_glowshroom_ladder", "y": 270 }
+		}
 }

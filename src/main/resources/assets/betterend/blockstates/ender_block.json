@@ -1,7 +1,7 @@
 {
-    "variants": {
-        "": {
-        	"model": "betterend:block/ender_block"
-        }
-    }
+	"variants": {
+		"": {
+			"model": "betterend:block/ender_block"
+		}
+	}
 }

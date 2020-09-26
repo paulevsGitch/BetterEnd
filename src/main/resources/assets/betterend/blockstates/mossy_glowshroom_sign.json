@@ -1,5 +1,5 @@
 {
-    "variants": {
-        "": { "model": "betterend:block/mossy_glowshroom_empty" }
-    }
+	"variants": {
+		"": { "model": "betterend:block/mossy_glowshroom_empty" }
+	}
 }

@@ -1,6 +1,6 @@
 {
-    "parent": "block/template_fence_gate_open", 
-    "textures": {
-        "texture": "betterend:block/mossy_glowshroom_planks"
-    }
+	"parent": "block/template_fence_gate_open", 
+	"textures": {
+		"texture": "betterend:block/mossy_glowshroom_planks"
+	}
 }

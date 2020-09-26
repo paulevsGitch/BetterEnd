@@ -1,6 +1,6 @@
 {
-    "parent": "block/cube_all", 
-    "textures": {
-        "all": "betterend:block/terminite_block"
-    }
+	"parent": "block/cube_all", 
+	"textures": {
+		"all": "betterend:block/terminite_block"
+	}
 }

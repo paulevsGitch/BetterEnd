@@ -1,8 +1,8 @@
 {
-    "parent": "block/stairs", 
-    "textures": {
-        "bottom": "betterend:block/mossy_glowshroom_planks", 
-        "side": "betterend:block/mossy_glowshroom_planks", 
-        "top": "betterend:block/mossy_glowshroom_planks"
-    }
+	"parent": "block/stairs", 
+	"textures": {
+		"bottom": "betterend:block/mossy_glowshroom_planks", 
+		"side": "betterend:block/mossy_glowshroom_planks", 
+		"top": "betterend:block/mossy_glowshroom_planks"
+	}
 }

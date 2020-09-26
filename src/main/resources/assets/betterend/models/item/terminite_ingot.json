@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
-    "textures": {
-        "layer0": "betterend:item/terminite_ingot"
-    }
+	"textures": {
+		"layer0": "betterend:item/terminite_ingot"
+	}
 }

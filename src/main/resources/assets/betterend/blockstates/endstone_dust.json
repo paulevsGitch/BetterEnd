@@ -1,6 +1,6 @@
 {
-    "variants": {
-        "": [
+	"variants": {
+		"": [
 			{ "model": "betterend:block/endstone_dust" },
 			{ "model": "betterend:block/endstone_dust", "y": 90 },
 			{ "model": "betterend:block/endstone_dust", "y": 180 },
@@ -66,5 +66,5 @@
 			{ "model": "betterend:block/endstone_dust", "z": 270, "x": 270, "y": 180 },
 			{ "model": "betterend:block/endstone_dust", "z": 270, "x": 270, "y": 270 }
 		]   
-    }       
-}           
+	}	   
+}		   

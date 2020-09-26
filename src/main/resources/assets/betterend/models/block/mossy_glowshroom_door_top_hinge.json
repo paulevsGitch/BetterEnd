@@ -1,7 +1,7 @@
 {
-	"parent": "block/door_top_rh", 
+	"parent": "block/door_top_rh",
 	"textures": {
-		"bottom": "betterend:block/mossy_glowshroom_door_top", 
+		"bottom": "betterend:block/mossy_glowshroom_door_top",
 		"top": "betterend:block/mossy_glowshroom_door_top"
 	}
 }

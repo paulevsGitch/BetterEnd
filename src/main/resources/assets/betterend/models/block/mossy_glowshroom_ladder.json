@@ -1,5 +1,5 @@
 {
-	"parent": "betterend:block/ladder", 
+	"parent": "betterend:block/ladder",
 	"textures": {
 		"texture": "betterend:block/mossy_glowshroom_ladder"
 	}

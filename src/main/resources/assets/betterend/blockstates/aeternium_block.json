@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "betterend:block/aeternium_block"
+				"model": "betterend:block/aeternium_block"
 		}
 	}
 }

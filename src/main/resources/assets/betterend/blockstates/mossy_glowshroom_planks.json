@@ -1,6 +1,7 @@
 {
-		"variants":
-	{
-				"": { "model": "betterend:block/mossy_glowshroom_planks" }
+	"variants": {
+		"": {
+				"model": "betterend:block/mossy_glowshroom_planks"
 		}
+	}
 }

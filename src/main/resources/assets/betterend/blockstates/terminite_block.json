@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "betterend:block/terminite_block"
+				"model": "betterend:block/terminite_block"
 		}
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"parent": "block/button_pressed", 
+	"parent": "block/button_pressed",
 	"textures": {
 		"texture": "betterend:block/mossy_glowshroom_planks"
 	}

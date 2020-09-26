@@ -1,5 +1,5 @@
 {
-	"parent": "block/pressure_plate_up", 
+	"parent": "block/pressure_plate_up",
 	"textures": {
 		"texture": "betterend:block/mossy_glowshroom_planks"
 	}

@@ -1,12 +1,12 @@
 {
-	"parent": "block/cube", 
+	"parent": "block/cube",
 	"textures": {
-		"down": "block/end_stone", 
-		"east": "betterend:block/end_moss_side", 
-		"north": "betterend:block/end_moss_side", 
-		"particle": "betterend:block/end_moss_side", 
-		"south": "betterend:block/end_moss_side", 
-		"up": "betterend:block/end_moss_top", 
+		"down": "block/end_stone",
+		"east": "betterend:block/end_moss_side",
+		"north": "betterend:block/end_moss_side",
+		"particle": "betterend:block/end_moss_side",
+		"south": "betterend:block/end_moss_side",
+		"up": "betterend:block/end_moss_top",
 		"west": "betterend:block/end_moss_side"
 	}
 }

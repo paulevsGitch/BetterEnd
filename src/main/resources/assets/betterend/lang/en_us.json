@@ -1,19 +1,11 @@
 {
-	"itemGroup.betterend.items": "Better End",
-	
-	"block.betterend.end_mycelium": "End Mycelium",
-	"block.betterend.end_moss": "End Moss",
-	"block.betterend.endstone_dust": "End Stone Dust",
-	"block.betterend.ender_ore": "Ender Ore",
-	"block.betterend.terminite_block": "Terminite Block",
 	"block.betterend.aeternium_block": "Aeternium Block",
-	"block.betterend.ender_block": "Ender Block",
+	"block.betterend.end_moss": "End Moss",
+	"block.betterend.end_mycelium": "End Mycelium",
 	"block.betterend.end_stone_smelter": "End Stone Smelter",
-	
-	"item.betterend.ender_dust": "Ender Dust",
-	"item.betterend.terminite_ingot": "Terminite Ingot",
-	"item.betterend.aeternium_ingot": "Aeternium Ingot",
-	
+	"block.betterend.ender_block": "Ender Block",
+	"block.betterend.ender_ore": "Ender Ore",
+	"block.betterend.endstone_dust": "End Stone Dust",
 	"block.betterend.mossy_glowshroom_bark": "Mossy Glowshroom Bark",
 	"block.betterend.mossy_glowshroom_barrel": "Mossy Glowshroom Barrel",
 	"block.betterend.mossy_glowshroom_button": "Mossy Glowshroom Button",
@@ -31,6 +23,10 @@
 	"block.betterend.mossy_glowshroom_stairs": "Mossy Glowshroom Stairs",
 	"block.betterend.mossy_glowshroom_striped_bark": "Mossy Glowshroom Striped Bark",
 	"block.betterend.mossy_glowshroom_striped_log": "Mossy Glowshroom Striped Log",
-	"block.betterend.mossy_glowshroom_trapdoor": "Mossy Glowshroom Trapdoor"
-
+	"block.betterend.mossy_glowshroom_trapdoor": "Mossy Glowshroom Trapdoor",
+	"block.betterend.terminite_block": "Terminite Block",
+	"item.betterend.aeternium_ingot": "Aeternium Ingot",
+	"item.betterend.ender_dust": "Ender Dust",
+	"item.betterend.terminite_ingot": "Terminite Ingot",
+	"itemGroup.betterend.items": "Better End"
 }

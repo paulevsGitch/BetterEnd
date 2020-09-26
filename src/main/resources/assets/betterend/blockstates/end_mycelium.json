@@ -1,10 +1,21 @@
 {
 	"variants": {
 		"": [
-			{ "model": "betterend:block/end_mycelium" },
-			{ "model": "betterend:block/end_mycelium", "y": 90 },
-			{ "model": "betterend:block/end_mycelium", "y": 180 },
-			{ "model": "betterend:block/end_mycelium", "y": 270 }
+				{
+					"model": "betterend:block/end_mycelium"
+				},
+				{
+					"model": "betterend:block/end_mycelium",
+					"y": 90
+				},
+				{
+					"model": "betterend:block/end_mycelium",
+					"y": 180
+				},
+				{
+					"model": "betterend:block/end_mycelium",
+					"y": 270
+				}
 		]
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "betterend:block/mossy_glowshroom_crafting_table"
+				"model": "betterend:block/mossy_glowshroom_crafting_table"
 		}
 	}
 }

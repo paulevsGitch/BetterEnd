@@ -1,8 +1,8 @@
 {
-	"parent": "block/slab", 
+	"parent": "block/slab",
 	"textures": {
-		"bottom": "betterend:block/mossy_glowshroom_planks", 
-		"side": "betterend:block/mossy_glowshroom_planks", 
+		"bottom": "betterend:block/mossy_glowshroom_planks",
+		"side": "betterend:block/mossy_glowshroom_planks",
 		"top": "betterend:block/mossy_glowshroom_planks"
 	}
 }

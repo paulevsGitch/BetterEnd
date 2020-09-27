@@ -85,14 +85,11 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 		this.partLeftB.pivotY = 8.0F;
 	}
 
-	public void render(EChestBlockEntity entity, float tickDelta, MatrixStack matrices,
-			VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void render(EChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
 		boolean worldExists = world != null;
-		BlockState blockState = worldExists ? entity.getCachedState()
-				: (BlockState) Blocks.CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
-		ChestType chestType = blockState.contains(ChestBlock.CHEST_TYPE)
-				? (ChestType) blockState.get(ChestBlock.CHEST_TYPE) : ChestType.SINGLE;
+		BlockState blockState = worldExists ? entity.getCachedState() : (BlockState) Blocks.CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
+		ChestType chestType = blockState.contains(ChestBlock.CHEST_TYPE) ? (ChestType) blockState.get(ChestBlock.CHEST_TYPE) : ChestType.SINGLE;
 		Block block = blockState.getBlock();
 		if (block instanceof AbstractChestBlock) {
 			AbstractChestBlock<?> abstractChestBlock = (AbstractChestBlock<?>) block;
@@ -111,23 +108,19 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 				propertySource = DoubleBlockProperties.PropertyRetriever::getFallback;
 			}
 
-			float pitch = ((Float2FloatFunction) propertySource
-					.apply(ChestBlock.getAnimationProgressRetriever((ChestAnimationProgress) entity))).get(tickDelta);
+			float pitch = ((Float2FloatFunction) propertySource.apply(ChestBlock.getAnimationProgressRetriever((ChestAnimationProgress) entity))).get(tickDelta);
 			pitch = 1.0F - pitch;
 			pitch = 1.0F - pitch * pitch * pitch;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			int blockLight = ((Int2IntFunction) propertySource.apply(new LightmapCoordinatesRetriever()))
-					.applyAsInt(light);
+			int blockLight = ((Int2IntFunction) propertySource.apply(new LightmapCoordinatesRetriever())).applyAsInt(light);
 
 			VertexConsumer vertexConsumer = getConsumer(vertexConsumers, block, chestType);
 
 			if (isDouble) {
 				if (chestType == ChestType.LEFT) {
-					renderParts(matrices, vertexConsumer, this.partLeftA, this.partLeftB, this.partLeftC, pitch,
-							blockLight, overlay);
+					renderParts(matrices, vertexConsumer, this.partLeftA, this.partLeftB, this.partLeftC, pitch, blockLight, overlay);
 				} else {
-					renderParts(matrices, vertexConsumer, this.partRightA, this.partRightB, this.partRightC, pitch,
-							blockLight, overlay);
+					renderParts(matrices, vertexConsumer, this.partRightA, this.partRightB, this.partRightC, pitch, blockLight, overlay);
 				}
 			} else {
 				renderParts(matrices, vertexConsumer, this.partA, this.partB, this.partC, pitch, blockLight, overlay);
@@ -137,8 +130,7 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 		}
 	}
 
-	private void renderParts(MatrixStack matrices, VertexConsumer vertices, ModelPart modelPart, ModelPart modelPart2,
-			ModelPart modelPart3, float pitch, int light, int overlay) {
+	private void renderParts(MatrixStack matrices, VertexConsumer vertices, ModelPart modelPart, ModelPart modelPart2, ModelPart modelPart3, float pitch, int light, int overlay) {
 		modelPart.pitch = -(pitch * 1.5707964F);
 		modelPart2.pitch = modelPart.pitch;
 		modelPart.render(matrices, vertices, light, overlay);

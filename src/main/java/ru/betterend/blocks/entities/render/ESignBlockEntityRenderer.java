@@ -81,8 +81,7 @@ public class ESignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEnti
 			});
 			if (orderedText != null) {
 				float t = (float) (-textRenderer.getWidth(orderedText) / 2);
-				textRenderer.draw((OrderedText) orderedText, t, (float) (s * 10 - 20), q, false,
-						matrixStack.peek().getModel(), provider, false, 0, light);
+				textRenderer.draw((OrderedText) orderedText, t, (float) (s * 10 - 20), q, false, matrixStack.peek().getModel(), provider, false, 0, light);
 			}
 		}
 

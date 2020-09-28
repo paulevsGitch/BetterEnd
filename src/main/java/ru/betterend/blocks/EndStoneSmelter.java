@@ -7,6 +7,7 @@ import java.util.Random;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -19,6 +20,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
@@ -36,11 +38,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
 import ru.betterend.blocks.basis.BaseBlockWithEntity;
+import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
 public class EndStoneSmelter extends BaseBlockWithEntity {
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 	public static final BooleanProperty LIT = Properties.LIT;
+	public static final String ID = "end_stone_smelter";
 
 	public EndStoneSmelter() {
 		super(FabricBlockSettings.of(Material.STONE, MaterialColor.GRAY)
@@ -63,7 +68,10 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	}
 
 	private void openScreen(World world, BlockPos pos, PlayerEntity player) {
-		
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
+			player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
+		}
 	}
 	
 	@Override
@@ -73,7 +81,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
-		return null;
+		return new EndStoneSmelterBlockEntity();
 	}
 	
 	@Override

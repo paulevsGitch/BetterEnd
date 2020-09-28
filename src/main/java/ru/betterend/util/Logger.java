@@ -46,8 +46,8 @@ public final class Logger {
 		this.log(Level.INFO, message, params);
 	}
 	
-	public void warning(String message) {
-		this.log(Level.WARN, message);
+	public void warning(String message, Object... params) {
+		this.log(Level.WARN, message, params);
 	}
 	
 	public void warning(String message, Object obj, Exception ex) {

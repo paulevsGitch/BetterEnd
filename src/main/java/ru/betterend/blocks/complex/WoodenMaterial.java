@@ -1,6 +1,7 @@
 package ru.betterend.blocks.complex;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
@@ -56,7 +57,7 @@ public class WoodenMaterial
 	
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor)
 	{
-		FabricBlockSettings materialPlanks = FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).materialColor(planksColor);
+		FabricBlockSettings materialPlanks = FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).breakByTool(FabricToolTags.AXES).materialColor(planksColor);
 		
 		log_striped = BlockRegistry.registerBlock(name + "_striped_log", new BlockPillar(materialPlanks));
 		bark_striped = BlockRegistry.registerBlock(name + "_striped_bark", new BlockPillar(materialPlanks));

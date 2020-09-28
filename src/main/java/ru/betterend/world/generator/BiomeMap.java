@@ -22,6 +22,7 @@ public class BiomeMap
 	
 	public BiomeMap(long seed, int size, BiomePicker picker)
 	{
+		MAPS.clear();
 		RANDOM.setSeed(seed);
 		noiseX = new OpenSimplexNoise(RANDOM.nextLong());
 		noiseZ = new OpenSimplexNoise(RANDOM.nextLong());

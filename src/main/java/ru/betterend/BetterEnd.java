@@ -7,6 +7,7 @@ import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockEntityRegistry;
 import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
 import ru.betterend.util.Logger;
@@ -28,5 +29,6 @@ public class BetterEnd implements ModInitializer {
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();
 		CraftingRecipes.register();
+		BlockTagRegistry.register();
 	}
 }

@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import net.minecraft.tag.Tag;
 
+@Deprecated
 @Mixin(targets = "net.minecraft.tag.RequiredTagList$TagWrapper")
 public interface TagAccessor<T> {
 	@Accessor

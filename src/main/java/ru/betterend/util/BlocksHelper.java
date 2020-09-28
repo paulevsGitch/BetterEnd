@@ -42,6 +42,10 @@ public class BlocksHelper {
 	public static void setWithoutUpdate(WorldAccess world, BlockPos pos, BlockState state) {
 		world.setBlockState(pos, state, SET_SILENT);
 	}
+	
+	public static void setWithoutUpdate(WorldAccess world, BlockPos pos, Block block) {
+		world.setBlockState(pos, block.getDefaultState(), SET_SILENT);
+	}
 
 	public static int upRay(WorldAccess world, BlockPos pos, int maxDist) {
 		int length = 0;

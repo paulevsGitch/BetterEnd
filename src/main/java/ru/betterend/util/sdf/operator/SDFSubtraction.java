@@ -7,6 +7,6 @@ public class SDFSubtraction extends SDFBinary {
 	public float getDistance(float x, float y, float z) {
 		float a = this.sourceA.getDistance(x, y, z);
 		float b = this.sourceB.getDistance(x, y, z);
-		return MHelper.max(-a, b);
+		return MHelper.max(a, -b);
 	}
 }

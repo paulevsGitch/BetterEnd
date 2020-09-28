@@ -1,10 +1,21 @@
 package ru.betterend.util.sdf.primitive;
 
-import ru.betterend.util.MHelper;
-import ru.betterend.util.sdf.ISDF;
+import java.util.function.Function;
 
-public class SDFSphere implements ISDF {
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
+import ru.betterend.util.MHelper;
+
+public class SDFSphere extends SDFPrimitive {
 	private float radius;
+	
+	public SDFSphere(Function<BlockPos, BlockState> placerFunction) {
+		super(placerFunction);
+	}
+	
+	public SDFSphere(BlockState state) {
+		super(state);
+	}
 	
 	public SDFSphere setRadius(float radius) {
 		this.radius =  radius;

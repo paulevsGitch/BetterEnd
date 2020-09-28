@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -36,10 +37,10 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 	}
 	
 	static {
-		SDFLine stem = new SDFLine().setRadius(2F).setEnd(0, 15, 0);
+		SDFLine stem = new SDFLine(Blocks.GOLD_BLOCK.getDefaultState()).setRadius(2F).setEnd(0, 15, 0);
 		
-		SDFSphere outerSphere = new SDFSphere().setRadius(10);
-		SDFSphere innerSphere = new SDFSphere().setRadius(10);
+		SDFSphere outerSphere = new SDFSphere(Blocks.REDSTONE_BLOCK.getDefaultState()).setRadius(10);
+		SDFSphere innerSphere = new SDFSphere(Blocks.DIAMOND_BLOCK.getDefaultState()).setRadius(10);
 		
 		SDFTranslate sphereOffset = new SDFTranslate().setTranslate(0, -10F, 0);
 		

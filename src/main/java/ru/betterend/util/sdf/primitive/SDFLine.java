@@ -1,10 +1,13 @@
 package ru.betterend.util.sdf.primitive;
 
+import java.util.function.Function;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.util.MHelper;
-import ru.betterend.util.sdf.ISDF;
 
-public class SDFLine implements ISDF {
+public class SDFLine extends SDFPrimitive {
 	private float radius;
 	private float x1;
 	private float y1;
@@ -12,6 +15,14 @@ public class SDFLine implements ISDF {
 	private float x2;
 	private float y2;
 	private float z2;
+	
+	public SDFLine(Function<BlockPos, BlockState> placerFunction) {
+		super(placerFunction);
+	}
+	
+	public SDFLine(BlockState state) {
+		super(state);
+	}
 	
 	public SDFLine setRadius(float radius) {
 		this.radius = radius;

@@ -33,7 +33,7 @@ public interface ISDF {
 					run &= Math.abs(pos.getZ()) < dz;
 					
 					if (!blocks.contains(pos) && canReplace.apply(world.getBlockState(wpos))) {
-						if (this.getDistance(pos.getX(), pos.getY(), pos.getZ()) <= 0) {
+						if (this.getDistance(pos.getX(), pos.getY(), pos.getZ()) < 0) {
 							BlocksHelper.setWithoutUpdate(world, wpos, Blocks.STONE);
 							add.add(pos);
 						}

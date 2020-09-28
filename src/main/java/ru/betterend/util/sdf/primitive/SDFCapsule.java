@@ -20,6 +20,6 @@ public class SDFCapsule implements ISDF {
 	
 	@Override
 	public float getDistance(float x, float y, float z) {
-		return MHelper.length(x, MathHelper.clamp(y, -height, 0), z) - radius;
+		return MHelper.length(x, y - MathHelper.clamp(y, 0, height), z) - radius;
 	}
 }

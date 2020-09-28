@@ -1,7 +1,6 @@
 package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
-
 import ru.betterend.config.MainConfig;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.registry.BiomeRegistry;

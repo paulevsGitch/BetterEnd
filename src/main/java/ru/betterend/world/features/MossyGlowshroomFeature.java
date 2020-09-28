@@ -10,11 +10,12 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.sdf.ISDF;
+import ru.betterend.util.sdf.operator.SDFFlatWave;
 import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
 import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.primitive.SDFCapsule;
+import ru.betterend.util.sdf.primitive.SDFLine;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class MossyGlowshroomFeature extends DefaultFeature {
@@ -30,26 +31,26 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		if (!world.getBlockState(blockPos.down()).isIn(BlockTagRegistry.END_GROUND)) {
 			return false;
 		}
-		FUNCTION.fillRecursive(world, getTopPos(world, blockPos), REPLACE, 10, 20, 10);
+		FUNCTION.fillRecursive(world, getTopPos(world, blockPos), REPLACE, 20, 50, 20);
 		return true;
 	}
 	
 	static {
-		SDFCapsule capsule = new SDFCapsule().setRadius(1.7F).setHeight(5);
+		SDFLine stem = new SDFLine().setRadius(2F).setEnd(0, 15, 0);
 		
 		SDFSphere outerSphere = new SDFSphere().setRadius(10);
-		SDFSphere innerSphere = new SDFSphere().setRadius(30);
+		SDFSphere innerSphere = new SDFSphere().setRadius(10);
 		
-		ISDF scaled1 = new SDFScale3D().setScale(1, 0.3F, 1).setSource(outerSphere);
-		ISDF scaled2 = new SDFScale3D().setScale(1, 0.3F, 1).setSource(innerSphere);
 		SDFTranslate sphereOffset = new SDFTranslate().setTranslate(0, -10F, 0);
 		
-		ISDF head = new SDFSubtraction().setSourceA(scaled1).setSourceB(sphereOffset.setSource(scaled2));
+		SDFFlatWave wave = new SDFFlatWave().setRaysCount(5).setIntensity(1.2F);
+		ISDF head = new SDFSubtraction().setSourceA(outerSphere).setSourceB(sphereOffset.setSource(innerSphere));
+		head = new SDFScale3D().setScale(1, 0.5F, 1).setSource(head);
+		head = wave.setSource(head);
 		
-		SDFTranslate headOffset = new SDFTranslate().setTranslate(0, 10, 0);
+		SDFTranslate headOffset = new SDFTranslate().setTranslate(0, 15, 0);
 		
-		//FUNCTION = new SDFSmoothUnion().setRadius(3).setSourceA(capsule).setSourceB(headOffset.setSource(head));
-		FUNCTION = headOffset.setSource(head);
+		FUNCTION = new SDFSmoothUnion().setRadius(5).setSourceA(stem).setSourceB(headOffset.setSource(head));
 		
 		REPLACE = (state) -> {
 			return state.getMaterial().isReplaceable();

@@ -7,34 +7,37 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.BlockEntityType.Builder;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
+import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockChest;
 import ru.betterend.blocks.basis.BlockSign;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.blocks.entities.EChestBlockEntity;
 import ru.betterend.blocks.entities.ESignBlockEntity;
+import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
-public class BlockEntityRegistry
-{
-	public static final BlockEntityType<EChestBlockEntity> CHEST = BlockEntityType.Builder.create(EChestBlockEntity::new, getChests()).build(null);
-	public static final BlockEntityType<EBarrelBlockEntity> BARREL = BlockEntityType.Builder.create(EBarrelBlockEntity::new, getBarrels()).build(null);
-	public static final BlockEntityType<ESignBlockEntity> SIGN = BlockEntityType.Builder.create(ESignBlockEntity::new, getSigns()).build(null);
-	
-	public static void register() {
-		RegisterBlockEntity("chest", CHEST);
-		RegisterBlockEntity("barrel", BARREL);
-		RegisterBlockEntity("sign", SIGN);
+public class BlockEntityRegistry {
+	public final static BlockEntityType<EndStoneSmelterBlockEntity> END_STONE_SMELTER = registerBlockEntity(EndStoneSmelter.ID,
+			BlockEntityType.Builder.create(EndStoneSmelterBlockEntity::new, BlockRegistry.END_STONE_SMELTER));
+	public static final BlockEntityType<EChestBlockEntity> CHEST = registerBlockEntity("chest", 
+			BlockEntityType.Builder.create(EChestBlockEntity::new, getChests()));
+	public static final BlockEntityType<EBarrelBlockEntity> BARREL = registerBlockEntity("barrel",
+			BlockEntityType.Builder.create(EBarrelBlockEntity::new, getBarrels()));
+	public static final BlockEntityType<ESignBlockEntity> SIGN = registerBlockEntity("sign",
+			BlockEntityType.Builder.create(ESignBlockEntity::new, getSigns()));
+
+	public static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, BlockEntityType.Builder<T> builder) {
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(BetterEnd.MOD_ID, id), builder.build(null));
 	}
 	
-	public static void RegisterBlockEntity(String name, BlockEntityType<? extends BlockEntity> type) {
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(BetterEnd.MOD_ID, name), type);
-	}
+	public static void register() {}
 
-	private static Block[] getChests() {
+	static Block[] getChests() {
 		List<Block> result = Lists.newArrayList();
 		ItemRegistry.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
@@ -47,8 +50,7 @@ public class BlockEntityRegistry
 		return result.toArray(new Block[] {});
 	}
 	
-	private static Block[] getBarrels()
-	{
+	static Block[] getBarrels() {
 		List<Block> result = Lists.newArrayList();
 		ItemRegistry.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
@@ -61,8 +63,7 @@ public class BlockEntityRegistry
 		return result.toArray(new Block[] {});
 	}
 	
-	private static Block[] getSigns()
-	{
+	static Block[] getSigns() {
 		List<Block> result = Lists.newArrayList();
 		ItemRegistry.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {

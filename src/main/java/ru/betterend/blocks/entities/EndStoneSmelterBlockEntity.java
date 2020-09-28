@@ -1,19 +1,26 @@
 package ru.betterend.blocks.entities;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
+import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
+
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeFinder;
@@ -23,27 +30,39 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
+import ru.betterend.blocks.EndStoneSmelter;
+import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
+import ru.betterend.recipe.AlloyingRecipe;
+import ru.betterend.registry.BlockEntityRegistry;
 
 public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider, Tickable {
 
 	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
 	private static final int[] SIDE_SLOTS = new int[] { 3 };
+	private static final Map<Item, Integer> availableFuels = Maps.newHashMap();
+	
+	private final Object2IntOpenHashMap<Identifier> recipesUsed;
 	protected DefaultedList<ItemStack> inventory;
 	protected final PropertyDelegate propertyDelegate;
-	private Map<Item, Integer> availableFuels = Maps.newHashMap();
 	private int burnTime;
 	private int fuelTime;
 	private int smeltTime;
 	private int smeltTimeTotal;
 	
-	protected EndStoneSmelterBlockEntity(BlockEntityType<?> blockEntityType) {
-		super(blockEntityType);
+	public EndStoneSmelterBlockEntity() {
+		super(BlockEntityRegistry.END_STONE_SMELTER);
 		this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
+		this.recipesUsed = new Object2IntOpenHashMap<Identifier>();
 	    this.propertyDelegate = new PropertyDelegate() {
 	    	public int get(int index) {
 	    		switch(index) {
@@ -137,8 +156,37 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	}
 	
 	protected int getSmeltTime() {
-		//TODO
-		return 0;
+		return this.world.getRecipeManager().getFirstMatch(AlloyingRecipe.TYPE, this, world)
+											.map(AlloyingRecipe::getSmeltTime).orElse(350);
+	}
+	
+	public void dropExperience(PlayerEntity player) {
+		List<Recipe<?>> list = Lists.newArrayList();
+		ObjectIterator<Entry<Identifier>> usedRecipes = this.recipesUsed.object2IntEntrySet().iterator();
+		while(usedRecipes.hasNext()) {
+			Entry<Identifier> entry = usedRecipes.next();
+			world.getRecipeManager().get(entry.getKey()).ifPresent((recipe) -> {
+				list.add(recipe);
+				AlloyingRecipe alloying = (AlloyingRecipe) recipe;
+				this.dropExperience(player.world, player.getPos(), entry.getIntValue(), alloying.getExperience());
+			});
+		}
+		player.unlockRecipes(list);
+		this.recipesUsed.clear();
+	}
+	
+	private void dropExperience(World world, Vec3d vec3d, int i, float f) {
+		int j = MathHelper.floor(i * f);
+		float g = MathHelper.fractionalPart(i * f);
+		if (g != 0.0F && Math.random() < g) {
+			j++;
+		}
+
+		while(j > 0) {
+			int k = ExperienceOrbEntity.roundToOrbSize(j);
+			j -= k;
+			world.spawnEntity(new ExperienceOrbEntity(world, vec3d.x, vec3d.y, vec3d.z, k));
+		}
 	}
 
 	@Override
@@ -157,55 +205,63 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText(String.format("block.%s.end_stone_smelter", BetterEnd.MOD_ID));
+		return new TranslatableText(String.format("block.%s.%s", BetterEnd.MOD_ID, EndStoneSmelter.ID));
 	}
 
 	@Override
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-		// TODO Auto-generated method stub
-		return null;
+		return new EndStoneSmelterScreenHandler(syncId, playerInventory, this, propertyDelegate);
 	}
 
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void provideRecipeInputs(RecipeFinder finder) {
-		// TODO Auto-generated method stub
-		
+		Iterator<ItemStack> inventory = this.inventory.iterator();
+		while(inventory.hasNext()) {
+			ItemStack itemStack = inventory.next();
+			finder.addItem(itemStack);
+		}
 	}
 
 	@Override
 	public void setLastRecipe(Recipe<?> recipe) {
-		// TODO Auto-generated method stub
-		
+		if (recipe != null) {
+			Identifier recipeId = recipe.getId();
+			this.recipesUsed.addTo(recipeId, 1);
+		}
 	}
 
 	@Override
 	public Recipe<?> getLastRecipe() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int[] getAvailableSlots(Direction side) {
-		// TODO Auto-generated method stub
-		return null;
+		if (side == Direction.DOWN) {
+			return BOTTOM_SLOTS;
+		} else {
+			return side == Direction.UP ? TOP_SLOTS : SIDE_SLOTS;
+		}
 	}
 
 	@Override
 	public boolean canInsert(int slot, ItemStack stack, Direction dir) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.isValid(slot, stack);
 	}
 
 	@Override
 	public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-		// TODO Auto-generated method stub
-		return false;
+		if (dir == Direction.DOWN && slot == 2) {
+			if (stack.getItem() != Items.BUCKET) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	protected int getFuelTime(ItemStack fuel) {
@@ -213,7 +269,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 			return 0;
 		} else {
 			Item item = fuel.getItem();
-			return this.availableFuels.getOrDefault(item, 0);
+			return availableFuels.getOrDefault(item, 0);
 		}
 	}
 	
@@ -226,6 +282,12 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 		this.smeltTime = tag.getShort("SmeltTime");
 		this.smeltTimeTotal = tag.getShort("SmeltTimeTotal");
 		this.fuelTime = this.getFuelTime(this.inventory.get(2));
+		CompoundTag compoundTag = tag.getCompound("RecipesUsed");
+		Iterator<String> recipes = compoundTag.getKeys().iterator();
+		while(recipes.hasNext()) {
+			String id = recipes.next();
+			this.recipesUsed.put(new Identifier(id), compoundTag.getInt(id));
+		}
 	}
 	
 	@Override
@@ -235,6 +297,27 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 		tag.putShort("SmeltTime", (short)this.smeltTime);
 		tag.putShort("SmeltTimeTotal", (short)this.smeltTimeTotal);
 		Inventories.toTag(tag, this.inventory);
+		CompoundTag usedRecipes = new CompoundTag();
+		this.recipesUsed.forEach((identifier, integer) -> {
+			usedRecipes.putInt(identifier.toString(), integer);
+		});
+		tag.put("RecipesUsed", usedRecipes);
+		
 		return tag;
+	}
+	
+	public boolean isValid(int slot, ItemStack stack) {
+		if (slot == 3) {
+			return false;
+		} else if (slot != 0 || slot != 1) {
+			return true;
+		} else {
+			ItemStack itemStack = this.inventory.get(2);
+			return canUseAsFuel(stack) || stack.getItem() == Items.BUCKET && itemStack.getItem() != Items.BUCKET;
+		}
+	}
+
+	public static boolean canUseAsFuel(ItemStack stack) {
+		return availableFuels.containsKey(stack.getItem());
 	}
 }

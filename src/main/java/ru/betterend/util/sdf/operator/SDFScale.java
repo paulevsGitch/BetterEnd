@@ -1,15 +1,7 @@
 package ru.betterend.util.sdf.operator;
 
-import ru.betterend.util.sdf.ISDF;
-
-public class SDFScale implements ISDF {
-	private ISDF source;
+public class SDFScale extends SDFUnary {
 	private float scale;
-	
-	public SDFScale setSorce(ISDF source) {
-		this.source = source;
-		return this;
-	}
 	
 	public SDFScale setScale(float scale) {
 		this.scale = scale;

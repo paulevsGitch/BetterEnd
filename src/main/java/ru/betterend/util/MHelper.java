@@ -73,7 +73,15 @@ public class MHelper {
 		return (float) Math.sqrt(x * x + y * y + z * z);
 	}
 	
+	public static float length(float x, float y) {
+		return (float) Math.sqrt(x * x + y * y);
+	}
+	
 	public static float dot(float x1, float y1, float z1, float x2, float y2, float z2) {
 		return x1 * x2 + y1 * y2 + z1 * z2;
+	}
+	
+	public static float dot(float x1, float y1, float x2, float y2) {
+		return x1 * x2 + y1 * y2;
 	}
 }

@@ -1,21 +1,26 @@
 package ru.betterend.world.features;
 
+import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.util.MHelper;
+import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.ISDF;
 import ru.betterend.util.sdf.operator.SDFFlatWave;
 import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
 import ru.betterend.util.sdf.operator.SDFTranslate;
+import ru.betterend.util.sdf.primitive.SDFCapedCone;
 import ru.betterend.util.sdf.primitive.SDFLine;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 
@@ -32,12 +37,22 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		if (!world.getBlockState(blockPos.down()).isIn(BlockTagRegistry.END_GROUND)) {
 			return false;
 		}
-		FUNCTION.fillRecursive(world, getTopPos(world, blockPos), REPLACE, 20, 50, 20);
+		//FUNCTION.fillRecursive(world, getTopPos(world, blockPos), REPLACE, 20, 50, 20);
+		
+		float height = MHelper.randRange(10F, 25F, random);
+		int count = MHelper.floor(height / 4);
+		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, count);
+		SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
+		ISDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
+			return Blocks.DIAMOND_BLOCK.getDefaultState();
+		});
+		sdf.fillRecursive(world, blockPos, REPLACE);
+		
 		return true;
 	}
 	
 	static {
-		SDFLine stem = new SDFLine(Blocks.GOLD_BLOCK.getDefaultState()).setRadius(2F).setEnd(0, 15, 0);
+		/*SDFLine stem = new SDFLine(Blocks.GOLD_BLOCK.getDefaultState()).setRadius(2F).setEnd(0, 15, 0);
 		
 		SDFSphere outerSphere = new SDFSphere(Blocks.REDSTONE_BLOCK.getDefaultState()).setRadius(10);
 		SDFSphere innerSphere = new SDFSphere(Blocks.DIAMOND_BLOCK.getDefaultState()).setRadius(10);
@@ -51,7 +66,9 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		
 		SDFTranslate headOffset = new SDFTranslate().setTranslate(0, 15, 0);
 		
-		FUNCTION = new SDFSmoothUnion().setRadius(5).setSourceA(stem).setSourceB(headOffset.setSource(head));
+		FUNCTION = new SDFSmoothUnion().setRadius(5).setSourceA(stem).setSourceB(headOffset.setSource(head));*/
+		
+		FUNCTION = new SDFCapedCone(Blocks.GOLD_BLOCK.getDefaultState()).setHeight(10).setRadius1(0).setRadius2(10);
 		
 		REPLACE = (state) -> {
 			return state.getMaterial().isReplaceable();

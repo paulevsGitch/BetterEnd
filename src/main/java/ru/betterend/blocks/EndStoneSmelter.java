@@ -94,6 +94,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 
 	@Override
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+		//TODO
 		return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
 	}
 

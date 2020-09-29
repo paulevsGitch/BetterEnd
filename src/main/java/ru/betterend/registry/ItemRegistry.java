@@ -8,8 +8,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 
 public class ItemRegistry {
@@ -22,7 +22,7 @@ public class ItemRegistry {
 
 	protected static Item registerItem(String name, Item item) {
 		if (item != Items.AIR) {
-			Registry.register(Registry.ITEM, new Identifier(BetterEnd.MOD_ID, name), item);
+			Registry.register(Registry.ITEM, BetterEnd.getResId(name), item);
 			if (item instanceof BlockItem)
 				MOD_BLOCKS.add(item);
 			else

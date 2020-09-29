@@ -4,11 +4,9 @@ import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ServerWorldAccess;
-import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.sdf.ISDF;
+import ru.betterend.util.sdf.SDF;
 
-public abstract class SDFPrimitive implements ISDF {
+public abstract class SDFPrimitive extends SDF {
 	protected final Function<BlockPos, BlockState> placerFunction;
 	
 	public SDFPrimitive(Function<BlockPos, BlockState> placerFunction) {
@@ -21,7 +19,7 @@ public abstract class SDFPrimitive implements ISDF {
 		};
 	}
 	
-	public void setBlock(ServerWorldAccess world, BlockPos pos) {
-		BlocksHelper.setWithoutUpdate(world, pos, placerFunction.apply(pos));
+	public BlockState getBlockState(BlockPos pos) {
+		return placerFunction.apply(pos);
 	}
 }

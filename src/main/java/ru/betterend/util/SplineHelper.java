@@ -10,7 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import ru.betterend.util.sdf.ISDF;
+import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFLine;
 
@@ -41,10 +41,10 @@ public class SplineHelper {
 		}
 	}
 	
-	public static ISDF buildSDF(List<Vector3f> spline, float radius1, float radius2, Function<BlockPos, BlockState> placerFunction) {
+	public static SDF buildSDF(List<Vector3f> spline, float radius1, float radius2, Function<BlockPos, BlockState> placerFunction) {
 		int count = spline.size();
 		float max = count - 2;
-		ISDF result = null;
+		SDF result = null;
 		Vector3f start = spline.get(0);
 		for (int i = 1; i < count; i++) {
 			Vector3f pos = spline.get(i);

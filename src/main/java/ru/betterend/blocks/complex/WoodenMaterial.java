@@ -3,6 +3,7 @@ package ru.betterend.blocks.complex;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Items;
@@ -29,8 +30,7 @@ import ru.betterend.recipe.RecipeBuilder;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.util.TagHelper;
 
-public class WoodenMaterial
-{
+public class WoodenMaterial {
 	public final Block log;
 	public final Block bark;
 
@@ -55,8 +55,7 @@ public class WoodenMaterial
 	public final Block chest;
 	public final Block barrel;
 	
-	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor)
-	{
+	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).breakByTool(FabricToolTags.AXES).materialColor(planksColor);
 		
 		log_striped = BlockRegistry.registerBlock(name + "_striped_log", new BlockPillar(materialPlanks));
@@ -125,8 +124,11 @@ public class WoodenMaterial
 		TagHelper.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
 	}
 	
-	public boolean isTreeLog(Block block)
-	{
+	public boolean isTreeLog(Block block) {
 		return block == log || block == bark;
+	}
+	
+	public boolean isTreeLog(BlockState state) {
+		return isTreeLog(state.getBlock());
 	}
 }

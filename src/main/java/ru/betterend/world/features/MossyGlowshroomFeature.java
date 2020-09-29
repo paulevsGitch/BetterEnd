@@ -11,22 +11,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
-import ru.betterend.util.sdf.ISDF;
-import ru.betterend.util.sdf.operator.SDFFlatWave;
-import ru.betterend.util.sdf.operator.SDFScale3D;
-import ru.betterend.util.sdf.operator.SDFSmoothUnion;
-import ru.betterend.util.sdf.operator.SDFSubtraction;
-import ru.betterend.util.sdf.operator.SDFTranslate;
+import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.primitive.SDFCapedCone;
-import ru.betterend.util.sdf.primitive.SDFLine;
-import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class MossyGlowshroomFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
-	private static final ISDF FUNCTION;
+	private static final SDF FUNCTION;
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig featureConfig) {
@@ -43,8 +37,19 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		int count = MHelper.floor(height / 4);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, count);
 		SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
-		ISDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
-			return Blocks.DIAMOND_BLOCK.getDefaultState();
+		SDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
+			return BlockRegistry.MOSSY_GLOWSHROOM.log.getDefaultState();
+		});
+		sdf.setPostProcess((info) -> {
+			if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp())) {
+				return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
+			}
+			else if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
+				return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
+			}
+			else {
+				return info.getState();
+			}
 		});
 		sdf.fillRecursive(world, blockPos, REPLACE);
 		

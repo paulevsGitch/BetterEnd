@@ -1,20 +1,20 @@
 package ru.betterend.util.sdf.operator;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ServerWorldAccess;
-import ru.betterend.util.sdf.ISDF;
+import ru.betterend.util.sdf.SDF;
 
-public abstract class SDFBinary implements ISDF {
-	protected ISDF sourceA;
-	protected ISDF sourceB;
+public abstract class SDFBinary extends SDF {
+	protected SDF sourceA;
+	protected SDF sourceB;
 	protected boolean firstValue;
 	
-	public SDFBinary setSourceA(ISDF sourceA) {
+	public SDFBinary setSourceA(SDF sourceA) {
 		this.sourceA = sourceA;
 		return this;
 	}
 	
-	public SDFBinary setSourceB(ISDF sourceB) {
+	public SDFBinary setSourceB(SDF sourceB) {
 		this.sourceB = sourceB;
 		return this;
 	}
@@ -24,11 +24,11 @@ public abstract class SDFBinary implements ISDF {
 	}
 	
 	@Override
-	public void setBlock(ServerWorldAccess world, BlockPos pos) {
+	public BlockState getBlockState(BlockPos pos) {
 		if (firstValue) {
-			sourceA.setBlock(world, pos);
+			return sourceA.getBlockState(pos);
 		} else {
-			sourceB.setBlock(world, pos);
+			return sourceB.getBlockState(pos);
 		}
 	}
 }

@@ -13,14 +13,21 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFBinary;
+import ru.betterend.util.sdf.operator.SDFSmoothUnion;
+import ru.betterend.util.sdf.operator.SDFTranslate;
+import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFCapedCone;
+import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class MossyGlowshroomFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
-	private static final SDF FUNCTION;
+	private static final SDFBinary FUNCTION;
+	private static final SDFTranslate HEAD_POS;
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig featureConfig) {
@@ -40,18 +47,12 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		SDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
 			return BlockRegistry.MOSSY_GLOWSHROOM.log.getDefaultState();
 		});
-		sdf.setPostProcess((info) -> {
-			if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp())) {
-				return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
-			}
-			else if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
-				return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
-			}
-			else {
-				return info.getState();
-			}
-		});
-		sdf.fillRecursive(world, blockPos, REPLACE);
+		Vector3f pos = spline.get(spline.size() - 1);
+		BlockPos up = blockPos.add(pos.getX(), pos.getY(), pos.getZ());
+		HEAD_POS.setTranslate(pos.getX(), pos.getY(), pos.getZ());
+		FUNCTION.setSourceA(sdf);
+		FUNCTION.fillRecursive(world, blockPos, REPLACE);
+		BlocksHelper.setWithoutUpdate(world, up, Blocks.DIAMOND_BLOCK.getDefaultState());
 		
 		return true;
 	}
@@ -73,7 +74,22 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		
 		FUNCTION = new SDFSmoothUnion().setRadius(5).setSourceA(stem).setSourceB(headOffset.setSource(head));*/
 		
-		FUNCTION = new SDFCapedCone(Blocks.GOLD_BLOCK.getDefaultState()).setHeight(10).setRadius1(0).setRadius2(10);
+		SDFCapedCone cone = new SDFCapedCone(Blocks.GOLD_BLOCK.getDefaultState()).setHeight(10).setRadius1(0).setRadius2(10);
+		//SDFSphere sphere = new SDFSphere(Blocks.GOLD_BLOCK.getDefaultState()).setRadius(10);
+		HEAD_POS = (SDFTranslate) new SDFTranslate().setSource(cone);
+		
+		FUNCTION = new SDFUnion().setSourceB(HEAD_POS);
+		FUNCTION.setPostProcess((info) -> {
+			if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getState())) {
+				if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp())) {
+					return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
+				}
+				else if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
+					return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
+				}
+			}
+			return info.getState();
+		});
 		
 		REPLACE = (state) -> {
 			return state.getMaterial().isReplaceable();

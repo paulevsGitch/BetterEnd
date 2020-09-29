@@ -37,7 +37,7 @@ public class SDFCapedCone extends SDFPrimitive {
 
 	@Override
 	public float getDistance(float x, float y, float z) {
-		float qx = MHelper.length(x, z);;
+		float qx = MHelper.length(x, z);
 		float k2x = radius2 - radius1;
 		float k2y = 2 * height;
 		float cax = qx - MHelper.min(qx, (y < 0F) ? radius1 : radius2);

@@ -11,6 +11,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -61,22 +62,23 @@ public class EndLakeFeature extends DefaultFeature {
 					double r = add * 1.8 + radius  * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
 					r *= r;
 					if (x2 + z2 <= r) {
-						if (world.getBlockState(POS).getBlock() == Blocks.END_STONE)
+						if (world.getBlockState(POS).isIn(BlockTagRegistry.END_GROUND)) {
 							BlocksHelper.setWithoutUpdate(world, POS, AIR);
+						}
 						pos = POS.down();
-						if (world.getBlockState(pos).getBlock() == Blocks.END_STONE)
+						if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND))
 						{
-							BlockState state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+							BlockState state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
 							if (y > waterLevel + 1)
-								BlocksHelper.setWithoutUpdate(world, POS.down(), state);
+								BlocksHelper.setWithoutUpdate(world, pos, state);
 							else if (y > waterLevel)
-								BlocksHelper.setWithoutUpdate(world, POS.down(), random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
 							else
-								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
 						}
 						pos = POS.up();
-						if (!world.getBlockState(pos).isAir()) {
-							while (!world.getBlockState(pos).isAir()) {
+						if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+							while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
 								BlocksHelper.setWithoutUpdate(world, pos, AIR);
 								pos = pos.up();
 							}
@@ -106,7 +108,7 @@ public class EndLakeFeature extends DefaultFeature {
 					if (y2 + x2 + z2 <= r) {
 						BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
 						pos = POS.down();
-						if (world.getBlockState(pos).getBlock() == Blocks.END_STONE)
+						if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.END_GROUND))
 							BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
 						pos = POS.up();
 						if (!world.getBlockState(pos).isAir()) {

@@ -44,6 +44,11 @@ public class EndFeature {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100)));
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
+	
+	public static EndFeature MakeLakeFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100)));
+		return new EndFeature(name, feature, GenerationStep.Feature.LAKES, configured);
+	}
 
 	public Feature<DefaultFeatureConfig> getFeature() {
 		return feature;

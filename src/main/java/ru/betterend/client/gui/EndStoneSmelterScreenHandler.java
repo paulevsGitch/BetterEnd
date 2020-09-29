@@ -58,7 +58,7 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 		}
 		for(int i = 0; i < 9; ++i) {
 			this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-		}  
+		}
 	}
 
 	@Override
@@ -114,6 +114,54 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 
 	public boolean isFuel(ItemStack itemStack) {
 		return EndStoneSmelterBlockEntity.canUseAsFuel(itemStack);
+	}
+	
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index) {
+		ItemStack itemStack = ItemStack.EMPTY;
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasStack()) {
+			ItemStack itemStack2 = slot.getStack();
+			itemStack = itemStack2.copy();
+			if (index == 3) {
+				if (insertItem(itemStack2, 4, 40, true)) {
+					return ItemStack.EMPTY;
+				}
+				slot.onStackChanged(itemStack2, itemStack);
+			} else if (index != 2 && index != 1 && index != 0) {
+				if (isSmeltable(itemStack2)) {
+					if (!insertItem(itemStack2, 0, 2, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (isFuel(itemStack2)) {
+					if (!this.insertItem(itemStack2, 2, 3, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= 4 && index < 31) {
+					if (!insertItem(itemStack2, 31, 40, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= 31 && index < 40 && !insertItem(itemStack2, 4, 31, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!insertItem(itemStack2, 4, 40, false)) {
+				return ItemStack.EMPTY;
+			}
+
+			if (itemStack2.isEmpty()) {
+				slot.setStack(ItemStack.EMPTY);
+			} else {
+				slot.markDirty();
+			}
+
+			if (itemStack2.getCount() == itemStack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+
+			slot.onTakeItem(player, itemStack2);
+		}
+
+		return itemStack;
 	}
 	
 	@Environment(EnvType.CLIENT)

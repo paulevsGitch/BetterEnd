@@ -28,6 +28,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	protected final Ingredient primaryInput;
 	protected final Ingredient secondaryInput;
 	protected final ItemStack output;
+	protected final String group;
 	protected final float experience;
 	protected final int smeltTime;
 
@@ -35,6 +36,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	public AlloyingRecipe(Identifier id, Ingredient primaryInput, Ingredient secondaryInput,
 			ItemStack output, float experience, int smeltTime) {
 		
+		this.group = String.format("%s:%s", GROUP, id.getPath());
 		this.id = id;
 		this.primaryInput = primaryInput;
 		this.secondaryInput = secondaryInput;
@@ -98,7 +100,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	
 	@Environment(EnvType.CLIENT)
 	public String getGroup() {
-		return GROUP;
+		return this.group;
 	}
 	
 	@Environment(EnvType.CLIENT)

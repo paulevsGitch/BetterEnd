@@ -6,6 +6,7 @@
 	"client": [
 		"WorldRendererMixin",
 		"BackgroundRendererMixin",
+		"ClientRecipeBookMixin",
 		"ClientPlayNetworkHandlerMixin"
 	],
 	"injectors": {

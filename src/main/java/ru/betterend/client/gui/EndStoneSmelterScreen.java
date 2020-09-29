@@ -37,7 +37,7 @@ public class EndStoneSmelterScreen extends HandledScreen<EndStoneSmelterScreenHa
 			this.recipeBook.reset(narrow);
 			this.recipeBook.toggleOpen();
 			this.x = this.recipeBook.findLeftEdge(narrow, width, backgroundWidth);
-			((TexturedButtonWidget)buttonWidget).setPos(this.x + 20, height / 2 - 49);
+			((TexturedButtonWidget) buttonWidget).setPos(this.x + 20, height / 2 - 49);
 		}));
 		this.titleX = (this.backgroundWidth - this.textRenderer.getWidth((StringVisitable)this.title)) / 2;
 	}

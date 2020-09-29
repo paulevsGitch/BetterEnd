@@ -255,7 +255,8 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 				if (recipe == null) {
 					recipe = this.world.getRecipeManager().getFirstMatch(RecipeType.BLASTING, this, world).orElse(null);
 				}
-				if (!burning && canAcceptRecipeOutput(recipe)) {
+				boolean accepted = this.canAcceptRecipeOutput(recipe);
+				if (!burning && accepted) {
 					this.burnTime = this.getFuelTime(fuel);
 					this.fuelTime = this.burnTime;
 					burning = this.isBurning();
@@ -272,7 +273,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 					}
 				}
 
-				if (burning && canAcceptRecipeOutput(recipe)) {
+				if (burning && accepted) {
 					this.smeltTime++;
 					if (smeltTime == smeltTimeTotal) {
 						this.smeltTime = 0;
@@ -415,12 +416,12 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
 		super.fromTag(state, tag);
-		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-		Inventories.fromTag(tag, this.inventory);
+		this.inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY);
+		Inventories.fromTag(tag, inventory);
 		this.burnTime = tag.getShort("BurnTime");
+		this.fuelTime = tag.getShort("FuelTime");
 		this.smeltTime = tag.getShort("SmeltTime");
 		this.smeltTimeTotal = tag.getShort("SmeltTimeTotal");
-		this.fuelTime = this.getFuelTime(this.inventory.get(2));
 		CompoundTag compoundTag = tag.getCompound("RecipesUsed");
 		Iterator<String> recipes = compoundTag.getKeys().iterator();
 		while(recipes.hasNext()) {
@@ -432,10 +433,11 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		super.toTag(tag);
-		tag.putShort("BurnTime", (short)this.burnTime);
-		tag.putShort("SmeltTime", (short)this.smeltTime);
-		tag.putShort("SmeltTimeTotal", (short)this.smeltTimeTotal);
-		Inventories.toTag(tag, this.inventory);
+		tag.putShort("BurnTime", (short) burnTime);
+		tag.putShort("FuelTime", (short) fuelTime);
+		tag.putShort("SmeltTime", (short) smeltTime);
+		tag.putShort("SmeltTimeTotal", (short) smeltTimeTotal);
+		Inventories.toTag(tag, inventory);
 		CompoundTag usedRecipes = new CompoundTag();
 		this.recipesUsed.forEach((identifier, integer) -> {
 			usedRecipes.putInt(identifier.toString(), integer);

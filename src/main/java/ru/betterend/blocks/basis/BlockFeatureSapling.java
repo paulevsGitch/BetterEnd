@@ -22,6 +22,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
@@ -79,6 +80,7 @@ public class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizabl
 
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+		BlocksHelper.setWithoutUpdate(world, pos, Blocks.AIR.getDefaultState());
 		feature.generate(world, world.getChunkManager().getChunkGenerator(), random, pos, DefaultFeatureConfig.INSTANCE);
 	}
 

@@ -66,7 +66,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		ROOTS.setAngle(random.nextFloat() * MHelper.PI2);
 		FUNCTION.setSourceA(sdf);
 		Set<BlockPos> blocks = new SDFScale()
-				.setScale(MHelper.randRange(0.5F, 1F, random))
+				.setScale(MHelper.randRange(0.75F, 1.1F, random))
 				.setSource(FUNCTION)
 				.setReplaceFunction(REPLACE)
 				.setPostProcess(POST_PROCESS)

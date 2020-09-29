@@ -22,6 +22,8 @@ import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
+import ru.betterend.client.gui.slot.SmelterFuelSlot;
+import ru.betterend.client.gui.slot.SmelterOutputSlot;
 import ru.betterend.recipe.AlloyingRecipe;
 
 public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
@@ -44,10 +46,10 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 		this.world = playerInventory.player.world;
 		
 		this.addProperties(propertyDelegate);
-		this.addSlot(new Slot(inventory, 0, 52, 17));
-		this.addSlot(new Slot(inventory, 1, 77, 17));
+		this.addSlot(new Slot(inventory, 0, 45, 17));
+		this.addSlot(new Slot(inventory, 1, 67, 17));
 		this.addSlot(new SmelterFuelSlot(this, inventory, 2, 56, 53));
-		this.addSlot(new SmelterOutputSlot(playerInventory.player, inventory, 3, 116, 35));
+		this.addSlot(new SmelterOutputSlot(playerInventory.player, inventory, 3, 129, 35));
 
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
@@ -98,7 +100,7 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 
 	@Override
 	public RecipeBookCategory getCategory() {
-		return RecipeBookCategory.FURNACE;
+		return RecipeBookCategory.BLAST_FURNACE;
 	}
 
 	@Override
@@ -110,7 +112,7 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 		return this.world.getRecipeManager().getFirstMatch(AlloyingRecipe.TYPE, new SimpleInventory(new ItemStack[]{itemStack}), this.world).isPresent();
 	}
 
-	protected boolean isFuel(ItemStack itemStack) {
+	public boolean isFuel(ItemStack itemStack) {
 		return EndStoneSmelterBlockEntity.canUseAsFuel(itemStack);
 	}
 	

@@ -31,7 +31,7 @@ public class BlockEntityRegistry {
 			BlockEntityType.Builder.create(ESignBlockEntity::new, getSigns()));
 
 	public static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, BlockEntityType.Builder<T> builder) {
-		return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(BetterEnd.MOD_ID, id), builder.build(null));
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BetterEnd.getResId(id), builder.build(null));
 	}
 	
 	public static void register() {}

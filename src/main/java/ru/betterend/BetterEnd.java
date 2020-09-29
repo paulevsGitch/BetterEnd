@@ -1,7 +1,11 @@
 package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
+
+import net.minecraft.util.Identifier;
+
 import ru.betterend.config.MainConfig;
+import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockEntityRegistry;
@@ -28,6 +32,11 @@ public class BetterEnd implements ModInitializer {
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();
 		CraftingRecipes.register();
+		AlloyingRecipes.register();
 		BlockTagRegistry.register();
+	}
+	
+	public static Identifier getResId(String path) {
+		return new Identifier(MOD_ID, path);
 	}
 }

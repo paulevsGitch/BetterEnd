@@ -1,4 +1,4 @@
-package ru.betterend.client.gui;
+package ru.betterend.client.gui.slot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

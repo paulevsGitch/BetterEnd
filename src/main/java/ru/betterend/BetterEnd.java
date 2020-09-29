@@ -1,9 +1,7 @@
 package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
-
 import net.minecraft.util.Identifier;
-
 import ru.betterend.config.MainConfig;
 import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;

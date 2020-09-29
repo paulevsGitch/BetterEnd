@@ -13,7 +13,6 @@ import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-
 import ru.betterend.BetterEnd;
 
 public class EndStoneSmelterScreen extends HandledScreen<EndStoneSmelterScreenHandler> implements RecipeBookProvider {

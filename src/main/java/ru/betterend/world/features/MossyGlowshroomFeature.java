@@ -24,6 +24,7 @@ import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFBinary;
 import ru.betterend.util.sdf.operator.SDFCoordModify;
 import ru.betterend.util.sdf.operator.SDFFlatWave;
+import ru.betterend.util.sdf.operator.SDFScale;
 import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
@@ -60,7 +61,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		HEAD_POS.setTranslate(pos.getX(), pos.getY(), pos.getZ());
 		ROOTS.setAngle(random.nextFloat() * MHelper.PI2);
 		FUNCTION.setSourceA(sdf);
-		Set<BlockPos> blocks = FUNCTION.fillRecursive(world, blockPos);
+		Set<BlockPos> blocks = new SDFScale().setScale(MHelper.randRange(0.5F, 1F, random)).setSource(FUNCTION).fillRecursive(world, blockPos);
 		
 		for (BlockPos bpos: blocks) {
 			BlockState state = world.getBlockState(bpos);

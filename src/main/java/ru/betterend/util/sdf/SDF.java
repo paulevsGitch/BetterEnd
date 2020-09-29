@@ -17,6 +17,9 @@ public abstract class SDF {
 	private Function<PosInfo, BlockState> postProcess = (info) -> {
 		return info.getState();
 	};
+	private Function<BlockState, Boolean> canReplace = (state) -> {
+		return state.getMaterial().isReplaceable();
+	};
 
 	public abstract float getDistance(float x, float y, float z);
 	
@@ -27,13 +30,17 @@ public abstract class SDF {
 		return this;
 	}
 	
-	public void fillRecursive(ServerWorldAccess world, BlockPos start, Function<BlockState, Boolean> canReplace, int dx, int dy, int dz) {
+	public SDF setReplaceFunction(Function<BlockState, Boolean> canReplace) {
+		this.canReplace = canReplace;
+		return this;
+	}
+	
+	public Set<BlockPos> fillRecursive(ServerWorldAccess world, BlockPos start, int dx, int dy, int dz) {
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> ends = Sets.newHashSet();
 		Set<BlockPos> add = Sets.newHashSet();
 		ends.add(new BlockPos(0, 0, 0));
-		boolean process = postProcess != null;
 		boolean run = true;
 		
 		while (run) {
@@ -70,9 +77,11 @@ public abstract class SDF {
 			BlockState state = postProcess.apply(info);
 			BlocksHelper.setWithoutUpdate(world, pos, state);
 		});
+		
+		return mapWorld.keySet();
 	}
 	
-	public void fillRecursive(ServerWorldAccess world, BlockPos start, Function<BlockState, Boolean> canReplace) {
+	public Set<BlockPos> fillRecursive(ServerWorldAccess world, BlockPos start) {
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> ends = Sets.newHashSet();
@@ -87,7 +96,7 @@ public abstract class SDF {
 					BlockPos wpos = pos.add(start);
 					
 					if (!blocks.contains(pos) && canReplace.apply(world.getBlockState(wpos))) {
-						if (this.getDistance(pos.getX(), pos.getY(), pos.getZ()) <= 0) {
+						if (this.getDistance(pos.getX(), pos.getY(), pos.getZ()) < 0) {
 							BlockState state = getBlockState(wpos);
 							PosInfo.create(mapWorld, wpos).setState(state);
 							add.add(pos);
@@ -108,5 +117,7 @@ public abstract class SDF {
 			BlockState state = postProcess.apply(info);
 			BlocksHelper.setWithoutUpdate(world, pos, state);
 		});
+		
+		return mapWorld.keySet();
 	}
 }

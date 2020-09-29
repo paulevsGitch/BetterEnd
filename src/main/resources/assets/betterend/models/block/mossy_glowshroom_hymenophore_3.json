@@ -1,6 +1,6 @@
 {
-	"parent": "block/cube_all",
+	"parent": "betterend:block/cube_noshade",
 	"textures": {
-		"all": "betterend:block/mossy_glowshroom_hymenophore_3"
+		"texture": "betterend:block/mossy_glowshroom_hymenophore_3"
 	}
 }

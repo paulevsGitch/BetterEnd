@@ -2,6 +2,7 @@ package ru.betterend.util.sdf.primitive;
 
 import java.util.function.Function;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -22,6 +23,10 @@ public class SDFLine extends SDFPrimitive {
 	
 	public SDFLine(BlockState state) {
 		super(state);
+	}
+	
+	public SDFLine(Block block) {
+		super(block);
 	}
 	
 	public SDFLine setRadius(float radius) {

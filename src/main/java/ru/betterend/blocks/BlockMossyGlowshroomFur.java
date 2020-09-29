@@ -33,6 +33,8 @@ import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
+import ru.betterend.registry.BlockRegistry;
+import ru.betterend.util.MHelper;
 
 public class BlockMossyGlowshroomFur extends BlockBaseNotFull implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
@@ -96,7 +98,11 @@ public class BlockMossyGlowshroomFur extends BlockBaseNotFull implements IRender
 		ItemStack tool = builder.get(LootContextParameters.TOOL);
 		if (tool != null && tool.getItem().isIn(FabricToolTags.SHEARS) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
-		} else {
+		}
+		else if (MHelper.RANDOM.nextInt(16) == 0) {
+			return Lists.newArrayList(new ItemStack(BlockRegistry.MOSSY_GLOWSHROOM_SAPLING));
+		}
+		else {
 			return Lists.newArrayList();
 		}
 	}

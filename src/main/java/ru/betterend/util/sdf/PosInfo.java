@@ -5,6 +5,7 @@ import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 public class PosInfo {
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
@@ -30,20 +31,20 @@ public class PosInfo {
 		this.state = state;
 	}
 	
-	public BlockState getStateUp() {
-		PosInfo info = blocks.get(pos.up());
+	public BlockState getState(Direction dir) {
+		PosInfo info = blocks.get(pos.offset(dir));
 		if (info == null) {
 			return AIR;
 		}
 		return info.getState();
 	}
 	
+	public BlockState getStateUp() {
+		return getState(Direction.UP);
+	}
+	
 	public BlockState getStateDown() {
-		PosInfo info = blocks.get(pos.down());
-		if (info == null) {
-			return AIR;
-		}
-		return info.getState();
+		return getState(Direction.DOWN);
 	}
 	
 	public int hashCode() {

@@ -18,7 +18,6 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.collection.DefaultedList;
-
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
 @Environment(EnvType.CLIENT)

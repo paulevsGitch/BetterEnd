@@ -11,6 +11,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.recipebook.BlastFurnaceRecipeBookScreen;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
@@ -61,8 +62,8 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeBookScree
 	}
 	
 	@Override
-	public void drawGhostSlots(MatrixStack matrixStack, int x, int y, boolean bl, float f) {
-		this.ghostSlots.draw(matrixStack, client, x, y, bl, f);
+	public void drawGhostSlots(MatrixStack matrices, int x, int y, boolean bl, float f) {
+		this.ghostSlots.draw(matrices, client, x, y, bl, f);
 		if (fuelSlot != null) {
 			if (!Screen.hasControlDown()) {
 				this.frameTime += f;
@@ -70,10 +71,10 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeBookScree
 
 			int slotX = this.fuelSlot.x + x;
 			int slotY = this.fuelSlot.y + y;
-			DrawableHelper.fill(matrixStack, slotX, slotY, slotX + 16, slotY + 16, 822018048);
+			DrawableHelper.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822018048);
 			this.client.getItemRenderer().renderInGuiWithOverrides(client.player, this.getItem().getStackForRender(), slotX, slotY);
 			RenderSystem.depthFunc(516);
-			DrawableHelper.fill(matrixStack, slotX, slotY, slotX + 16, slotY + 16, 822083583);
+			DrawableHelper.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822083583);
 			RenderSystem.depthFunc(515);
 		}
 	}

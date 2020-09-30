@@ -19,27 +19,25 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.world.features.EndFeature;
 
-public class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
+public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 2, 4, 12, 16, 12);
-	private final EndFeature feature;
 	
-	public BlockFeatureSapling(EndFeature feature) {
+	public BlockFeatureSapling() {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByHand(true)
 				.collidable(false)
 				.breakInstantly()
 				.sounds(BlockSoundGroup.GRASS)
 				.ticksRandomly());
-		this.feature = feature;
 	}
 	
-	public BlockFeatureSapling(EndFeature feature, int light) {
+	public BlockFeatureSapling(int light) {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByHand(true)
 				.collidable(false)
@@ -47,8 +45,9 @@ public class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizabl
 				.sounds(BlockSoundGroup.GRASS)
 				.lightLevel(light)
 				.ticksRandomly());
-		this.feature = feature;
 	}
+	
+	protected abstract Feature<DefaultFeatureConfig> getFeature();
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
@@ -81,7 +80,7 @@ public class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizabl
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithoutUpdate(world, pos, Blocks.AIR.getDefaultState());
-		feature.getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, DefaultFeatureConfig.INSTANCE);
+		getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, DefaultFeatureConfig.INSTANCE);
 	}
 
 	@Override

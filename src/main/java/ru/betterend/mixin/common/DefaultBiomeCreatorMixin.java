@@ -8,9 +8,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.DefaultBiomeCreator;
 import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.gen.GenerationStep;
-
-import ru.betterend.registry.FeatureRegistry;
 
 @Mixin(DefaultBiomeCreator.class)
 public abstract class DefaultBiomeCreatorMixin {

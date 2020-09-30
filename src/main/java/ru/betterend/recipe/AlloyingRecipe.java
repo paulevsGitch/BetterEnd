@@ -33,10 +33,10 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	protected final int smeltTime;
 
 	
-	public AlloyingRecipe(Identifier id, Ingredient primaryInput, Ingredient secondaryInput,
+	public AlloyingRecipe(Identifier id, String group, Ingredient primaryInput, Ingredient secondaryInput,
 			ItemStack output, float experience, int smeltTime) {
 		
-		this.group = String.format("%s:%s", GROUP, id.getPath());
+		this.group = group;
 		this.id = id;
 		this.primaryInput = primaryInput;
 		this.secondaryInput = secondaryInput;
@@ -113,6 +113,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		
 		public static Builder create(String id) {
 			INSTANCE.id = BetterEnd.getResId(id);
+			INSTANCE.group = String.format("%s:%s", GROUP, id);
 			INSTANCE.primaryInput = null;
 			INSTANCE.secondaryInput = null;
 			INSTANCE.output = null;
@@ -126,10 +127,16 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		private Ingredient primaryInput;
 		private Ingredient secondaryInput;
 		private ItemStack output;
+		private String group;
 		private float experience;
 		private int smeltTime;
 		
 		private Builder() {}
+		
+		public Builder setGroup(String group) {
+			this.group = group;
+			return this;
+		}
 		
 		public Builder setPrimaryInput(ItemConvertible... inputs) {
 			this.primaryInput = Ingredient.ofItems(inputs);
@@ -192,7 +199,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 			} else if(output == null) {
 				throw new IllegalArgumentException("Output can't be null!");
 			}
-			EndRecipeManager.addRecipe(AlloyingRecipe.TYPE, new AlloyingRecipe(id, primaryInput, secondaryInput, output, experience, smeltTime));
+			EndRecipeManager.addRecipe(AlloyingRecipe.TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
 		}
 	}
 }

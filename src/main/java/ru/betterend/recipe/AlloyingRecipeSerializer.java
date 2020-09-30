@@ -19,6 +19,7 @@ public class AlloyingRecipeSerializer implements RecipeSerializer<AlloyingRecipe
 		Ingredient primaryInput = Ingredient.fromJson(ingredients.get(0));
 		Ingredient secondaryInput = Ingredient.fromJson(ingredients.get(1));
 		String rusultStr = JsonHelper.getString(json, "result");
+		String group = JsonHelper.getString(json, "group", "");
 		Identifier resultId = new Identifier(rusultStr);
 		ItemStack output = new ItemStack(Registry.ITEM.getOrEmpty(resultId).orElseThrow(() -> {
 			return new IllegalStateException("Item: " + rusultStr + " does not exist");
@@ -26,22 +27,24 @@ public class AlloyingRecipeSerializer implements RecipeSerializer<AlloyingRecipe
 		float experience = JsonHelper.getFloat(json, "experience", 0.0F);
 		int smeltTime = JsonHelper.getInt(json, "smelttime", 350);
 		
-		return new AlloyingRecipe(id, primaryInput, secondaryInput, output, experience, smeltTime);
+		return new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime);
 	}
 
 	@Override
 	public AlloyingRecipe read(Identifier id, PacketByteBuf packetBuffer) {
+		String group = packetBuffer.readString();
 		Ingredient primaryInput = Ingredient.fromPacket(packetBuffer);
 		Ingredient secondaryInput = Ingredient.fromPacket(packetBuffer);
 		ItemStack output = packetBuffer.readItemStack();
 		float experience = packetBuffer.readFloat();
 		int smeltTime = packetBuffer.readVarInt();
 		
-		return new AlloyingRecipe(id, primaryInput, secondaryInput, output, experience, smeltTime);
+		return new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime);
 	}
 
 	@Override
 	public void write(PacketByteBuf packetBuffer, AlloyingRecipe recipe) {
+		packetBuffer.writeString(recipe.group);
 		recipe.primaryInput.write(packetBuffer);
 		recipe.secondaryInput.write(packetBuffer);
 		packetBuffer.writeItemStack(recipe.output);

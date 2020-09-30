@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.registry.BlockTagRegistry;
@@ -81,7 +82,9 @@ public class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizabl
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithoutUpdate(world, pos, Blocks.AIR.getDefaultState());
-		feature.getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, DefaultFeatureConfig.INSTANCE);
+		@SuppressWarnings("unchecked")
+		Feature<DefaultFeatureConfig> defFeature = (Feature<DefaultFeatureConfig>) feature.getFeature();
+		defFeature.generate(world, world.getChunkManager().getChunkGenerator(), random, pos, DefaultFeatureConfig.INSTANCE);
 	}
 
 	@Override

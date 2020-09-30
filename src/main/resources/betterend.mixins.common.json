@@ -9,6 +9,7 @@
 		"ServerPlayNetworkHandlerMixin",
 		"TagGroupLoaderMixin",
 		"CraftingScreenHandlerMixin",
+		"DefaultBiomeCreatorMixin",
 		"TagAccessor"
 	],
 	"injectors": {

@@ -1,28 +1,11 @@
 package ru.betterend.util.sdf.primitive;
 
-import java.util.function.Function;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.util.MHelper;
 
 public class SDFCapsule extends SDFPrimitive {
 	private float radius;
 	private float height;
-	
-	public SDFCapsule(Function<BlockPos, BlockState> placerFunction) {
-		super(placerFunction);
-	}
-	
-	public SDFCapsule(BlockState state) {
-		super(state);
-	}
-	
-	public SDFCapsule(Block block) {
-		super(block);
-	}
 	
 	public SDFCapsule setRadius(float radius) {
 		this.radius = radius;

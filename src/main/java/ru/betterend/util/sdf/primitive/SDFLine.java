@@ -1,10 +1,5 @@
 package ru.betterend.util.sdf.primitive;
 
-import java.util.function.Function;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.util.MHelper;
 
@@ -16,18 +11,6 @@ public class SDFLine extends SDFPrimitive {
 	private float x2;
 	private float y2;
 	private float z2;
-	
-	public SDFLine(Function<BlockPos, BlockState> placerFunction) {
-		super(placerFunction);
-	}
-	
-	public SDFLine(BlockState state) {
-		super(state);
-	}
-	
-	public SDFLine(Block block) {
-		super(block);
-	}
 	
 	public SDFLine setRadius(float radius) {
 		this.radius = radius;

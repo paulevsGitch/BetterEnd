@@ -49,10 +49,11 @@ public class SplineHelper {
 		for (int i = 1; i < count; i++) {
 			Vector3f pos = spline.get(i);
 			float delta = (float) (i - 1) / max;
-			SDFLine line = new SDFLine(placerFunction)
+			SDF line = new SDFLine()
 					.setRadius(MathHelper.lerp(delta, radius1, radius2))
 					.setStart(start.getX(), start.getY(), start.getZ())
-					.setEnd(pos.getX(), pos.getY(), pos.getZ());
+					.setEnd(pos.getX(), pos.getY(), pos.getZ())
+					.setBlock(placerFunction);
 			result = result == null ? line : new SDFUnion().setSourceA(result).setSourceB(line);
 			start = pos;
 		}

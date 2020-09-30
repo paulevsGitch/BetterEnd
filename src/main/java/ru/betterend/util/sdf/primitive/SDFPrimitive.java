@@ -8,22 +8,25 @@ import net.minecraft.util.math.BlockPos;
 import ru.betterend.util.sdf.SDF;
 
 public abstract class SDFPrimitive extends SDF {
-	protected final Function<BlockPos, BlockState> placerFunction;
+	protected Function<BlockPos, BlockState> placerFunction;
 	
-	public SDFPrimitive(Function<BlockPos, BlockState> placerFunction) {
+	public SDFPrimitive setBlock(Function<BlockPos, BlockState> placerFunction) {
 		this.placerFunction = placerFunction;
+		return this;
 	}
 	
-	public SDFPrimitive(BlockState state) {
+	public SDFPrimitive setBlock(BlockState state) {
 		this.placerFunction = (pos) -> {
 			return state;
 		};
+		return this;
 	}
 	
-	public SDFPrimitive(Block block) {
+	public SDFPrimitive setBlock(Block block) {
 		this.placerFunction = (pos) -> {
 			return block.getDefaultState();
 		};
+		return this;
 	}
 	
 	public BlockState getBlockState(BlockPos pos) {

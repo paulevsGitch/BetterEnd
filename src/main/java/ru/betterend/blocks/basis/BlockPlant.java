@@ -38,7 +38,7 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 2, 4, 12, 14, 12);
 	
 	public BlockPlant() {
-		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
+		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.breakByHand(true)
@@ -46,7 +46,7 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	}
 	
 	public BlockPlant(int light) {
-		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
+		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.lightLevel(light)

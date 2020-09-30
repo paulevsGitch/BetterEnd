@@ -43,7 +43,7 @@ public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeabl
 	public static final BooleanProperty TOP = BooleanProperty.of("top");
 	
 	public BlockDoublePlant() {
-		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
+		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
 				.breakByHand(true)
@@ -52,7 +52,7 @@ public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeabl
 	}
 	
 	public BlockDoublePlant(int light) {
-		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
+		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
 				.lightLevel((state) -> { return state.get(TOP) ? light : 0; })

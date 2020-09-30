@@ -35,5 +35,8 @@
 	"block.betterend.mossy_glowshroom_stairs": "Ступени из мшистого светогриба",
 	"block.betterend.mossy_glowshroom_striped_bark": "Обтёсанная кора из мшистого светогриба",
 	"block.betterend.mossy_glowshroom_striped_log": "Обтёсанное бревно из мшистого светогриба",
-	"block.betterend.mossy_glowshroom_trapdoor": "Люк из мшистого светогриба"
+	"block.betterend.mossy_glowshroom_trapdoor": "Люк из мшистого светогриба",
+	
+	"block.betterend.umbrella_moss": "Зонтичный мох",
+	"block.betterend.umbrella_moss_tall": "Высокий зонтичный мох"
 }

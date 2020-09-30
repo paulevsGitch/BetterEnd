@@ -29,9 +29,9 @@ public class BetterEnd implements ModInitializer {
 		FeatureRegistry.register();
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();
+		BlockTagRegistry.register();
 		CraftingRecipes.register();
 		AlloyingRecipes.register();
-		BlockTagRegistry.register();
 	}
 	
 	public static Identifier getResId(String path) {

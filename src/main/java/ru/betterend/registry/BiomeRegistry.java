@@ -12,6 +12,7 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
+
 import ru.betterend.world.biome.BiomeFoggyMushroomland;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BiomePicker;

@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.registry.BlockRegistry;
 
 public class CraftingRecipes {

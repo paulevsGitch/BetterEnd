@@ -1,7 +1,6 @@
 package ru.betterend.blocks;
 
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.blocks.basis.BlockFeatureSapling;
 import ru.betterend.registry.FeatureRegistry;
 
@@ -11,7 +10,7 @@ public class BlockMossyGlowshroomSapling extends BlockFeatureSapling {
 	}
 
 	@Override
-	protected Feature<DefaultFeatureConfig> getFeature() {
-		return FeatureRegistry.MOSSY_GLOWSHROOM.getFeature();
+	protected ConfiguredFeature<?,?> getFeature() {
+		return FeatureRegistry.MOSSY_GLOWSHROOM.getFeatureConfigured();
 	}
 }

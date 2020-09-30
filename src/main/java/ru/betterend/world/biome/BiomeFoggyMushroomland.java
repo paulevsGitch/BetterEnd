@@ -12,6 +12,7 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.setWaterFogColor(119, 227, 250)
 				.setSurface(BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM)
 				.addFeature(FeatureRegistry.END_LAKE)
-				.addFeature(FeatureRegistry.MOSSY_GLOWSHROOM));
+				.addFeature(FeatureRegistry.MOSSY_GLOWSHROOM)
+				.addFeature(FeatureRegistry.ENDER_ORE));
 	}
 }

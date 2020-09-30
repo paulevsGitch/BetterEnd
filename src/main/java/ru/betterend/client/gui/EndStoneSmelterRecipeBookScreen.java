@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.recipebook.BlastFurnaceRecipeBookScreen;
@@ -18,6 +19,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.collection.DefaultedList;
+
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
 @Environment(EnvType.CLIENT)
@@ -31,6 +33,14 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeBookScree
 	@Override
 	protected Set<Item> getAllowedFuels() {
 		return EndStoneSmelterBlockEntity.availableFuels().keySet();
+	}
+	
+	@Override
+	public void slotClicked(Slot slot) {
+		super.slotClicked(slot);
+		if (slot != null && slot.id < this.craftingScreenHandler.getCraftingSlotCount()) {
+			this.fuelSlot = null;
+		}
 	}
 	
 	@Override

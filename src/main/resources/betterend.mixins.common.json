@@ -9,7 +9,6 @@
 		"ServerPlayNetworkHandlerMixin",
 		"TagGroupLoaderMixin",
 		"CraftingScreenHandlerMixin",
-		"DefaultBiomeCreatorMixin",
 		"GenerationSettingsMixin",
 		"BiomeMixin",
 		"TagAccessor"

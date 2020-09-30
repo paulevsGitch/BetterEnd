@@ -1,9 +1,11 @@
 package ru.betterend.registry;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.util.TagHelper;
 

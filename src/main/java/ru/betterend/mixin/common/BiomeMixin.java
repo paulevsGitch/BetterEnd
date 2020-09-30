@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.Biome;
@@ -24,10 +26,8 @@ public abstract class BiomeMixin {
 	
 	@Shadow
 	private Biome.Category category;
-	
 	@Shadow
 	private GenerationSettings generationSettings;
-	
 	private boolean injected = false;
 	
 	@Inject(method = "generateFeatureStep", at = @At("HEAD"))
@@ -36,10 +36,17 @@ public abstract class BiomeMixin {
 			if (category.equals(Biome.Category.THEEND)) {
 				int index = FeatureRegistry.ENDER_ORE.getFeatureStep().ordinal();
 				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = this.generationSettings.getFeatures();
-				if (features.size() > index) {
+				int size = features.size();
+				if (size > index) {
 					features.get(index).add(() -> {
 						return FeatureRegistry.ENDER_ORE.getFeatureConfigured();
 					});
+				} else {
+					List<Supplier<ConfiguredFeature<?, ?>>> feature = Lists.newArrayList();
+					feature.add(() -> {
+						return FeatureRegistry.ENDER_ORE.getFeatureConfigured();
+					});
+					features.add(feature);
 				}
 			}
 			this.injected = true;

@@ -16,7 +16,7 @@ public abstract class DefaultFeature extends Feature<DefaultFeatureConfig> {
 		super(DefaultFeatureConfig.CODEC);
 	}
 	
-	protected BlockPos getTopPos(StructureWorldAccess world, BlockPos pos) {
+	protected BlockPos getPosOnSurface(StructureWorldAccess world, BlockPos pos) {
 		return world.getTopPosition(Type.WORLD_SURFACE, pos);
 	}
 }

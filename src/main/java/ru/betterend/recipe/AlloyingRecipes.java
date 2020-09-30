@@ -2,7 +2,6 @@ package ru.betterend.recipe;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
-
 import ru.betterend.registry.ItemRegistry;
 
 public class AlloyingRecipes {

@@ -27,24 +27,24 @@ public class EndLakeFeature extends DefaultFeature {
 		int dist = MHelper.floor(radius);
 		int dist2 = MHelper.floor(radius * 1.5);
 		int bott = MHelper.floor(depth);
-		blockPos = getTopPos(world, blockPos);
+		blockPos = getPosOnSurface(world, blockPos);
 		if (blockPos.getY() < 10) return false;
 		
 		int waterLevel = blockPos.getY();
 		
-		BlockPos pos = getTopPos(world, blockPos.north(dist));
+		BlockPos pos = getPosOnSurface(world, blockPos.north(dist));
 		if (pos.getY() < 10) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 		
-		pos = getTopPos(world, blockPos.south(dist));
+		pos = getPosOnSurface(world, blockPos.south(dist));
 		if (pos.getY() < 10) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 		
-		pos = getTopPos(world, blockPos.east(dist));
+		pos = getPosOnSurface(world, blockPos.east(dist));
 		if (pos.getY() < 10) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 		
-		pos = getTopPos(world, blockPos.west(dist));
+		pos = getPosOnSurface(world, blockPos.west(dist));
 		if (pos.getY() < 10) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 		

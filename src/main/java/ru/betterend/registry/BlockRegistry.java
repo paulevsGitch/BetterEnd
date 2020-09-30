@@ -8,13 +8,13 @@ import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.BlockEndstoneDust;
+import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
 import ru.betterend.blocks.BlockMossyGlowshroomFur;
 import ru.betterend.blocks.BlockMossyGlowshroomHymenophore;
 import ru.betterend.blocks.BlockMossyGlowshroomSapling;
 import ru.betterend.blocks.BlockOre;
 import ru.betterend.blocks.BlockTerrain;
-import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
@@ -36,8 +36,9 @@ public class BlockRegistry {
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	
 	// Small Plants //
-	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss()); 
+	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockGlowingMoss(10)); 
 	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new BlockUmbrellaMossTall()); 
+	public static final Block CREEPING_MOSS = registerBlock("creeping_moss", new BlockGlowingMoss(10)); 
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(ItemRegistry.ENDER_DUST, 1, 3));

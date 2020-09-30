@@ -51,7 +51,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig featureConfig) {
-		blockPos = getTopPos(world, blockPos);
+		blockPos = getPosOnSurface(world, blockPos);
 		if (blockPos.getY() < 5) {
 			return false;
 		}

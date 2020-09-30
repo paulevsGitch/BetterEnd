@@ -68,7 +68,11 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockState down = world.getBlockState(pos.down());
-		return down.isIn(BlockTagRegistry.END_GROUND);
+		return isTerrain(down);
+	}
+	
+	protected boolean isTerrain(BlockState state) {
+		return state.isIn(BlockTagRegistry.END_GROUND);
 	}
 
 	@Override

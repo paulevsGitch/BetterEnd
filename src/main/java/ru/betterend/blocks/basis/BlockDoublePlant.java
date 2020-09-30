@@ -25,6 +25,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -40,6 +41,7 @@ import ru.betterend.util.BlocksHelper;
 
 public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 2, 4, 12, 16, 12);
+	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
 	public static final BooleanProperty TOP = BooleanProperty.of("top");
 	
 	public BlockDoublePlant() {
@@ -63,7 +65,7 @@ public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeabl
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
-		stateManager.add(TOP);
+		stateManager.add(TOP, ROTATION);
 	}
 
 	@Override
@@ -81,15 +83,19 @@ public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeabl
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockState down = world.getBlockState(pos.down());
 		BlockState up = world.getBlockState(pos.up());
-		return state.get(TOP) ? down.getBlock() == this : down.isIn(BlockTagRegistry.END_GROUND) && (up.getMaterial().isReplaceable());
+		return state.get(TOP) ? down.getBlock() == this : isTerrain(down) && (up.getMaterial().isReplaceable());
 	}
 	
 	public boolean canStayAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockState down = world.getBlockState(pos.down());
 		BlockState up = world.getBlockState(pos.up());
-		return state.get(TOP) ? down.getBlock() == this : down.isIn(BlockTagRegistry.END_GROUND) && (up.getBlock() == this);
+		return state.get(TOP) ? down.getBlock() == this : isTerrain(down) && (up.getBlock() == this);
 	}
 
+	protected boolean isTerrain(BlockState state) {
+		return state.isIn(BlockTagRegistry.END_GROUND);
+	}
+	
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (!canStayAt(state, world, pos)) {
@@ -138,6 +144,9 @@ public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeabl
 	
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		BlocksHelper.setWithoutUpdate(world, pos.up(), this.getDefaultState().with(TOP, true));
+		int rot = world.random.nextInt(4);
+		BlockState bs = this.getDefaultState().with(ROTATION, rot);
+		BlocksHelper.setWithoutUpdate(world, pos, bs);
+		BlocksHelper.setWithoutUpdate(world, pos.up(), bs.with(TOP, true));
 	}
 }

@@ -18,7 +18,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.registry.BlockTagRegistry;
@@ -46,7 +46,7 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 				.ticksRandomly());
 	}
 	
-	protected abstract ConfiguredFeature<?,?> getFeature();
+	protected abstract Feature<?> getFeature();
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
@@ -79,7 +79,7 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithoutUpdate(world, pos, Blocks.AIR.getDefaultState());
-		getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos);
+		getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, null);
 	}
 
 	@Override

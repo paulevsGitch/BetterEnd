@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+			{ "model": "betterend:block/umbrella_moss_small" },
+			{ "model": "betterend:block/umbrella_moss_small", "y":  90 },
+			{ "model": "betterend:block/umbrella_moss_small", "y": 180 },
+			{ "model": "betterend:block/umbrella_moss_small", "y": 270 }
+		]
+    }
+}

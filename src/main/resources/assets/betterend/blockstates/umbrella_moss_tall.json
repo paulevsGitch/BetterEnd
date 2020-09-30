@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "top=true,rotation=0": { "model": "betterend:block/umbrella_moss_top" },
+        "top=false,rotation=0": { "model": "betterend:block/umbrella_moss_bottom" },
+		"top=true,rotation=1": { "model": "betterend:block/umbrella_moss_top", "y": 90 },
+        "top=false,rotation=1": { "model": "betterend:block/umbrella_moss_bottom", "y": 90 },
+		"top=true,rotation=2": { "model": "betterend:block/umbrella_moss_top", "y": 180 },
+        "top=false,rotation=2": { "model": "betterend:block/umbrella_moss_bottom", "y": 180 },
+		"top=true,rotation=3": { "model": "betterend:block/umbrella_moss_top", "y": 270 },
+        "top=false,rotation=3": { "model": "betterend:block/umbrella_moss_bottom", "y": 270 }
+    }
+}

@@ -36,8 +36,7 @@ public abstract class BiomeMixin {
 			if (category.equals(Biome.Category.THEEND)) {
 				int index = FeatureRegistry.ENDER_ORE.getFeatureStep().ordinal();
 				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = this.generationSettings.getFeatures();
-				int size = features.size();
-				if (size > index) {
+				if (features.size() > index) {
 					features.get(index).add(() -> {
 						return FeatureRegistry.ENDER_ORE.getFeatureConfigured();
 					});

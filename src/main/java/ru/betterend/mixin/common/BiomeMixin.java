@@ -6,10 +6,8 @@ import java.util.function.Supplier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkRegion;
@@ -30,13 +28,21 @@ public abstract class BiomeMixin {
 	@Shadow
 	private GenerationSettings generationSettings;
 	
-	@Inject(method = "generateFeatureStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/GenerationSettings;getFeatures()Ljava/util/List;", shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
-	public void generateFeatureStep(StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, ChunkRegion region, long populationSeed, ChunkRandom random, BlockPos pos, CallbackInfo cinfo, List<List<Supplier<ConfiguredFeature<?, ?>>>> list) {
-		if (category.equals(Biome.Category.THEEND)) {
-			int index = FeatureRegistry.ENDER_ORE.getFeatureStep().ordinal();
-			list.get(index).add(() -> {
-				return FeatureRegistry.ENDER_ORE.getFeatureConfigured();
-			});
+	private boolean injected = false;
+	
+	@Inject(method = "generateFeatureStep", at = @At("HEAD"))
+	public void generateFeatureStep(StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, ChunkRegion region, long populationSeed, ChunkRandom random, BlockPos pos, CallbackInfo cinfo) {
+		if (!injected) {
+			if (category.equals(Biome.Category.THEEND)) {
+				int index = FeatureRegistry.ENDER_ORE.getFeatureStep().ordinal();
+				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = this.generationSettings.getFeatures();
+				if (features.size() > index) {
+					features.get(index).add(() -> {
+						return FeatureRegistry.ENDER_ORE.getFeatureConfigured();
+					});
+				}
+			}
+			this.injected = true;
 		}
 	}
 }

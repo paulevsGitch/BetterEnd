@@ -15,7 +15,6 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.SignEditorOpenS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.thread.ThreadExecutor;
-
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.client.gui.BlockSignEditScreen;
 

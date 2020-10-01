@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.ItemRegistry;

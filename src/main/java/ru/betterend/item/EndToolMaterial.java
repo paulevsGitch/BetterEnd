@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Lazy;
-
 import ru.betterend.registry.ItemRegistry;
 
 public enum EndToolMaterial implements ToolMaterial {

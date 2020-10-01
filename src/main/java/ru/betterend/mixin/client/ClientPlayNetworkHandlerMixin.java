@@ -19,7 +19,7 @@ import net.minecraft.util.thread.ThreadExecutor;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.client.gui.BlockSignEditScreen;
 
-@Mixin(value = ClientPlayNetworkHandler.class, priority = 1000)
+@Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin
 {
 	@Shadow

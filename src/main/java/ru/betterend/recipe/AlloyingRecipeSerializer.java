@@ -32,24 +32,12 @@ public class AlloyingRecipeSerializer implements RecipeSerializer<AlloyingRecipe
 
 	@Override
 	public AlloyingRecipe read(Identifier id, PacketByteBuf packetBuffer) {
-		String group = packetBuffer.readString();
-		Ingredient primaryInput = Ingredient.fromPacket(packetBuffer);
-		Ingredient secondaryInput = Ingredient.fromPacket(packetBuffer);
-		ItemStack output = packetBuffer.readItemStack();
-		float experience = packetBuffer.readFloat();
-		int smeltTime = packetBuffer.readVarInt();
-		
-		return new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime);
+		Identifier recipeId = packetBuffer.readIdentifier();
+		return (AlloyingRecipe) EndRecipeManager.getRecipe(AlloyingRecipe.TYPE, recipeId);
 	}
 
 	@Override
 	public void write(PacketByteBuf packetBuffer, AlloyingRecipe recipe) {
-		packetBuffer.writeString(recipe.group);
-		recipe.primaryInput.write(packetBuffer);
-		recipe.secondaryInput.write(packetBuffer);
-		packetBuffer.writeItemStack(recipe.output);
-		packetBuffer.writeFloat(recipe.experience);
-		packetBuffer.writeInt(recipe.smeltTime);
+		packetBuffer.writeIdentifier(recipe.id);
 	}
-
 }

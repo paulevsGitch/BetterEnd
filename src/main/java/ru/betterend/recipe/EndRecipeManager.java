@@ -23,6 +23,13 @@ public class EndRecipeManager {
 		}
 		list.put(recipe.getId(), recipe);
 	}
+	
+	public static Recipe<?> getRecipe(RecipeType<?> type, Identifier id) {
+		if (RECIPES.containsKey(type)) {
+			return RECIPES.get(type).get(id);
+		}
+		return null;
+	}
 
 	public static Map<RecipeType<?>, Map<Identifier, Recipe<?>>> getMap(Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes) {
 		Map<RecipeType<?>, Map<Identifier, Recipe<?>>> result = Maps.newHashMap();
@@ -53,13 +60,14 @@ public class EndRecipeManager {
 	}
 
 	static <S extends RecipeSerializer<T>, T extends Recipe<?>> S registerSerializer(String id, S serializer) {
-		return Registry.register(Registry.RECIPE_SERIALIZER, BetterEnd.getResId(id), serializer);
+		return Registry.register(Registry.RECIPE_SERIALIZER, BetterEnd.getStringId(id), serializer);
 	}
 
-	static <T extends Recipe<?>> RecipeType<T> registerType(String name) {
-		return Registry.register(Registry.RECIPE_TYPE, BetterEnd.getResId(name), new RecipeType<T>() {
+	static <T extends Recipe<?>> RecipeType<T> registerType(String type) {
+		Identifier recipeTypeId = BetterEnd.getResId(type);
+		return Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new RecipeType<T>() {
 			public String toString() {
-				return name;
+				return type;
 			}
 	    });
 	}

@@ -113,7 +113,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		
 		public static Builder create(String id) {
 			INSTANCE.id = BetterEnd.getResId(id);
-			INSTANCE.group = String.format("%s:%s", GROUP, id);
+			INSTANCE.group = String.format("%s_%s", GROUP, id);
 			INSTANCE.primaryInput = null;
 			INSTANCE.secondaryInput = null;
 			INSTANCE.output = null;

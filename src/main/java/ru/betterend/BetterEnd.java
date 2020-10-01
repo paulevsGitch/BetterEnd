@@ -37,4 +37,8 @@ public class BetterEnd implements ModInitializer {
 	public static Identifier getResId(String path) {
 		return new Identifier(MOD_ID, path);
 	}
+	
+	public static String getStringId(String id) {
+		return String.format("%s:%s", MOD_ID, id);
+	}
 }

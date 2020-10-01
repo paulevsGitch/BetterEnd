@@ -1,0 +1,38 @@
+{
+  "textures": [
+    "betterend:glowing_sphere_0",
+	"betterend:glowing_sphere_1",
+	"betterend:glowing_sphere_2",
+	"betterend:glowing_sphere_3",
+	"betterend:glowing_sphere_4",
+	
+	"betterend:glowing_sphere_5",
+	"betterend:glowing_sphere_6",
+	"betterend:glowing_sphere_7",
+    "betterend:glowing_sphere_6",
+    "betterend:glowing_sphere_5",
+	
+    "betterend:glowing_sphere_4",
+	
+	"betterend:glowing_sphere_5",
+	"betterend:glowing_sphere_6",
+	"betterend:glowing_sphere_7",
+    "betterend:glowing_sphere_6",
+    "betterend:glowing_sphere_5",
+	
+    "betterend:glowing_sphere_4",
+	
+	"betterend:glowing_sphere_5",
+	"betterend:glowing_sphere_6",
+	"betterend:glowing_sphere_7",
+    "betterend:glowing_sphere_6",
+    "betterend:glowing_sphere_5",
+	
+    "betterend:glowing_sphere_4",
+	
+    "betterend:glowing_sphere_3",
+    "betterend:glowing_sphere_2",
+    "betterend:glowing_sphere_1",
+    "betterend:glowing_sphere_0"
+  ]
+}

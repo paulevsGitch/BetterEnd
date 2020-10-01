@@ -33,7 +33,7 @@ public class AlloyingRecipeSerializer implements RecipeSerializer<AlloyingRecipe
 	@Override
 	public AlloyingRecipe read(Identifier id, PacketByteBuf packetBuffer) {
 		Identifier recipeId = packetBuffer.readIdentifier();
-		return (AlloyingRecipe) EndRecipeManager.getRecipe(AlloyingRecipe.TYPE, recipeId);
+		return EndRecipeManager.getRecipe(AlloyingRecipe.TYPE, recipeId);
 	}
 
 	@Override

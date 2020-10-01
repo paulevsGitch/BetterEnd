@@ -24,9 +24,10 @@ public class EndRecipeManager {
 		list.put(recipe.getId(), recipe);
 	}
 	
-	public static Recipe<?> getRecipe(RecipeType<?> type, Identifier id) {
+	@SuppressWarnings("unchecked")
+	public static <T extends Recipe<?>> T getRecipe(RecipeType<T> type, Identifier id) {
 		if (RECIPES.containsKey(type)) {
-			return RECIPES.get(type).get(id);
+			return (T) RECIPES.get(type).get(id);
 		}
 		return null;
 	}
@@ -59,11 +60,11 @@ public class EndRecipeManager {
 		return result;
 	}
 
-	static <S extends RecipeSerializer<T>, T extends Recipe<?>> S registerSerializer(String id, S serializer) {
+	public static <S extends RecipeSerializer<T>, T extends Recipe<?>> S registerSerializer(String id, S serializer) {
 		return Registry.register(Registry.RECIPE_SERIALIZER, BetterEnd.getStringId(id), serializer);
 	}
 
-	static <T extends Recipe<?>> RecipeType<T> registerType(String type) {
+	public static <T extends Recipe<?>> RecipeType<T> registerType(String type) {
 		Identifier recipeTypeId = BetterEnd.getResId(type);
 		return Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new RecipeType<T>() {
 			public String toString() {

@@ -28,6 +28,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Quaternion;
 import ru.betterend.BetterEnd;
+import ru.betterend.util.BackgroundInfo;
 import ru.betterend.util.MHelper;
 
 @Mixin(WorldRenderer.class)
@@ -35,13 +36,15 @@ public class WorldRendererMixin {
 	private static final Identifier NEBULA_1 = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_2.png");
 	private static final Identifier NEBULA_2 = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_3.png");
 	private static final Identifier HORIZON = new Identifier(BetterEnd.MOD_ID, "textures/sky/nebula_1.png");
+	private static final Identifier FOG = new Identifier(BetterEnd.MOD_ID, "textures/sky/fog.png");
 	
-	private static VertexBuffer customStarsBuffer1;
-	private static VertexBuffer customStarsBuffer2;
-	private static VertexBuffer customStarsBuffer3;
-	private static VertexBuffer nebulas_1;
-	private static VertexBuffer nebulas_2;
+	private static VertexBuffer stars1;
+	private static VertexBuffer stars2;
+	private static VertexBuffer stars3;
+	private static VertexBuffer nebulas1;
+	private static VertexBuffer nebulas2;
 	private static VertexBuffer horizon;
+	private static VertexBuffer fog;
 	private static Vector3f axis1;
 	private static Vector3f axis2;
 	private static Vector3f axis3;
@@ -92,30 +95,37 @@ public class WorldRendererMixin {
 			matrices.push();
 			matrices.multiply(new Quaternion(0, -time, 0, true));
 			textureManager.bindTexture(NEBULA_1);
-			renderBuffer(matrices, nebulas_1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F);
+			renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F);
 			matrices.pop();
 			
 			matrices.push();
 			matrices.multiply(new Quaternion(0, time * 2, 0, true));
 			textureManager.bindTexture(NEBULA_2);
-			renderBuffer(matrices, nebulas_2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F);
+			renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F);
 			matrices.pop();
+			
+			float a = (BackgroundInfo.fog - 1F);
+			if (a > 0) {
+				if (a > 1) a = 1;
+				textureManager.bindTexture(FOG);
+				renderBuffer(matrices, fog, VertexFormats.POSITION_TEXTURE, BackgroundInfo.red, BackgroundInfo.green, BackgroundInfo.blue, a);
+			}
 
 			RenderSystem.disableTexture();
 			
 			matrices.push();
 			matrices.multiply(new Quaternion(axis1, time * 3, true));
-			renderBuffer(matrices, customStarsBuffer1, VertexFormats.POSITION, 1, 1, 1, 0.6F);
+			renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, 0.6F);
 			matrices.pop();
 			
 			matrices.push();
 			matrices.multiply(new Quaternion(axis2, time * 2, true));
-			renderBuffer(matrices, customStarsBuffer2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, 0.6F);
+			renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, 0.6F);
 			matrices.pop();
 			
 			matrices.push();
 			matrices.multiply(new Quaternion(axis3, time, true));
-			renderBuffer(matrices, customStarsBuffer3, VertexFormats.POSITION, 0.77F, 0.31F, 0.73F, 0.6F);
+			renderBuffer(matrices, stars3, VertexFormats.POSITION, 0.77F, 0.31F, 0.73F, 0.6F);
 			matrices.pop();
 			
 			RenderSystem.enableTexture();
@@ -136,12 +146,13 @@ public class WorldRendererMixin {
 
 	private void initStars() {
 		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
-		customStarsBuffer1 = buildBuffer(buffer, customStarsBuffer1, 0.1, 0.30, 3500, 41315);
-		customStarsBuffer2 = buildBuffer(buffer, customStarsBuffer2, 0.1, 0.35, 2000, 35151);
-		customStarsBuffer3 = buildBuffer(buffer, customStarsBuffer3, 0.1, 0.40, 1500, 61354);
-		nebulas_1 = buildBufferFarFog(buffer, nebulas_1, 40, 60, 30, 11515);
-		nebulas_2 = buildBufferFarFog(buffer, nebulas_2, 40, 60, 10, 14151);
+		stars1 = buildBuffer(buffer, stars1, 0.1, 0.30, 3500, 41315);
+		stars2 = buildBuffer(buffer, stars2, 0.1, 0.35, 2000, 35151);
+		stars3 = buildBuffer(buffer, stars3, 0.1, 0.40, 1500, 61354);
+		nebulas1 = buildBufferFarFog(buffer, nebulas1, 40, 60, 30, 11515);
+		nebulas2 = buildBufferFarFog(buffer, nebulas2, 40, 60, 10, 14151);
 		horizon = buildBufferHorizon(buffer, horizon);
+		fog = buildBufferFog(buffer, fog);
 	}
 	 
 	private VertexBuffer buildBuffer(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
@@ -176,7 +187,20 @@ public class WorldRendererMixin {
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
-		makeHorizon(bufferBuilder, 16, 50);
+		makeCylinder(bufferBuilder, 16, 50, 100);
+		bufferBuilder.end();
+		buffer.upload(bufferBuilder);
+
+		return buffer;
+	}
+	
+	private VertexBuffer buildBufferFog(BufferBuilder bufferBuilder, VertexBuffer buffer) {
+		if (buffer != null) {
+			buffer.close();
+		}
+
+		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
+		makeCylinder(bufferBuilder, 16, 50, 70);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
@@ -277,16 +301,16 @@ public class WorldRendererMixin {
 		}
 	}
 	
-	private void makeHorizon(BufferBuilder buffer, int segments, double height) {
+	private void makeCylinder(BufferBuilder buffer, int segments, double height, double radius) {
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
 		for (int i = 0; i < segments; i ++)
 		{
 			double a1 = (double) i * Math.PI * 2.0 / (double) segments;
 			double a2 = (double) (i + 1) * Math.PI * 2.0 / (double) segments;
-			double px1 = Math.sin(a1) * 100;
-			double pz1 = Math.cos(a1) * 100;
-			double px2 = Math.sin(a2) * 100;
-			double pz2 = Math.cos(a2) * 100;
+			double px1 = Math.sin(a1) * radius;
+			double pz1 = Math.cos(a1) * radius;
+			double px2 = Math.sin(a2) * radius;
+			double pz2 = Math.cos(a2) * radius;
 			
 			float u0 = (float) i / (float) segments;
 			float u1 = (float) (i + 1) / (float) segments;

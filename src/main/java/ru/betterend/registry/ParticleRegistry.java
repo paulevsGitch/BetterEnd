@@ -5,13 +5,13 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
-import ru.betterend.particle.AnimatedTestParticle;
+import ru.betterend.particle.ParticleGlowingSphere;
 
 public class ParticleRegistry {
-	public static final DefaultParticleType TEST = register("test");
+	public static final DefaultParticleType GLOWING_SPHERE = register("glowing_sphere");
 	
 	public static void register() {
-		ParticleFactoryRegistry.getInstance().register(TEST, AnimatedTestParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(GLOWING_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
 	}
 	
 	private static DefaultParticleType register(String name) {

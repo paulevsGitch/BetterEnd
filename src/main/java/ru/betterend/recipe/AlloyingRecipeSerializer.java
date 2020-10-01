@@ -18,11 +18,11 @@ public class AlloyingRecipeSerializer implements RecipeSerializer<AlloyingRecipe
 		JsonArray ingredients = JsonHelper.getArray(json, "ingredients");
 		Ingredient primaryInput = Ingredient.fromJson(ingredients.get(0));
 		Ingredient secondaryInput = Ingredient.fromJson(ingredients.get(1));
-		String rusultStr = JsonHelper.getString(json, "result");
+		String resultStr = JsonHelper.getString(json, "result");
 		String group = JsonHelper.getString(json, "group", "");
-		Identifier resultId = new Identifier(rusultStr);
+		Identifier resultId = new Identifier(resultStr);
 		ItemStack output = new ItemStack(Registry.ITEM.getOrEmpty(resultId).orElseThrow(() -> {
-			return new IllegalStateException("Item: " + rusultStr + " does not exist");
+			return new IllegalStateException("Item: " + resultStr + " does not exists!");
 		}));
 		float experience = JsonHelper.getFloat(json, "experience", 0.0F);
 		int smeltTime = JsonHelper.getInt(json, "smelttime", 350);

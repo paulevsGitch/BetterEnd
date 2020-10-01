@@ -76,6 +76,6 @@ public class BetterEndBiomeSource extends BiomeSource {
 	}
 
 	public static void register() {
-		Registry.register(Registry.BIOME_SOURCE, new Identifier(BetterEnd.MOD_ID, "better_end_biome_source"), CODEC);
+		Registry.register(Registry.BIOME_SOURCE, BetterEnd.getResId("better_end_biome_source"), CODEC);
 	}
 }

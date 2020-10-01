@@ -10,7 +10,7 @@ import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.ItemRegistry;
 
 public class CreativeTab {
-	public static final ItemGroup END_TAB = FabricItemGroupBuilder.create(new Identifier(BetterEnd.MOD_ID, "items"))
+	public static final ItemGroup END_TAB = FabricItemGroupBuilder.create(BetterEnd.getResId("items"))
 			.icon(() -> new ItemStack(BlockRegistry.END_MYCELIUM)).appendItems(stacks -> {
 				for (Item i : ItemRegistry.getModBlocks()) {
 					stacks.add(new ItemStack(i));

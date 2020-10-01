@@ -3,6 +3,7 @@ package ru.betterend.client.gui;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -17,8 +18,8 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
@@ -29,7 +30,7 @@ import ru.betterend.recipe.AlloyingRecipe;
 public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
 
 	public final static ScreenHandlerType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(
-			new Identifier(BetterEnd.MOD_ID, EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
+			BetterEnd.getResId(EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
 	
 	private final Inventory inventory;
 	private final PropertyDelegate propertyDelegate;

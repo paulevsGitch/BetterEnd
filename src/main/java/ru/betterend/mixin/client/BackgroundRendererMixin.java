@@ -23,7 +23,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.util.BackgroundInfo;
-import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
 @Mixin(BackgroundRenderer.class)

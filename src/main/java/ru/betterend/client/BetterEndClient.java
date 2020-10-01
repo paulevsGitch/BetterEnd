@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.registry.BlockEntityRenderRegistry;
+import ru.betterend.registry.ParticleRegistry;
 import ru.betterend.registry.ScreensRegistry;
 
 public class BetterEndClient implements ClientModInitializer {
@@ -13,6 +14,7 @@ public class BetterEndClient implements ClientModInitializer {
 		registerRenderLayers();
 		BlockEntityRenderRegistry.register();
 		ScreensRegistry.register();
+		ParticleRegistry.register();
 	}
 
 	private void registerRenderLayers() {

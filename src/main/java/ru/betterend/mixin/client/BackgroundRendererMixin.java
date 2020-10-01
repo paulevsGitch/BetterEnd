@@ -22,14 +22,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import ru.betterend.registry.BiomeRegistry;
+import ru.betterend.util.BackgroundInfo;
+import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
 @Mixin(BackgroundRenderer.class)
 public class BackgroundRendererMixin {
-	private static float lastFogStart;
-	private static float lastFogEnd;
-	private static float fogStart;
-	private static float fogEnd;
+	private static float lastFogDensity;
+	private static float fogDensity;
 	private static float lerp;
 	
 	//private static final float SKY_RED = 21F / 255F;
@@ -63,6 +63,10 @@ public class BackgroundRendererMixin {
 				blue *= 4;
 			}
 		}
+		
+		BackgroundInfo.red = red;
+		BackgroundInfo.green = green;
+		BackgroundInfo.blue = blue;
 	}
 	
 	@Inject(method = "applyFog", at = @At("HEAD"), cancellable = true)
@@ -73,22 +77,20 @@ public class BackgroundRendererMixin {
 		if (biome.getCategory() == Category.THEEND && fluidState.isEmpty()) {
 			EndBiome endBiome = BiomeRegistry.getFromBiome(biome);
 			
-			if (fogEnd == 0) {
-				fogStart = viewDistance * 0.75F / endBiome.getFogDensity();
-				fogEnd = viewDistance / endBiome.getFogDensity();
-				lastFogStart = fogStart;
-				lastFogEnd = fogEnd;
+			if (fogDensity == 0) {
+				fogDensity = endBiome.getFogDensity();
+				lastFogDensity = fogDensity;
 			}
 			if (lerp == 1) {
-				lastFogStart = fogStart;
-				lastFogEnd = fogEnd;
-				fogStart = viewDistance * 0.75F / endBiome.getFogDensity();
-				fogEnd = viewDistance / endBiome.getFogDensity();
+				lastFogDensity = fogDensity;
+				fogDensity = endBiome.getFogDensity();
 				lerp = 0;
 			}
 			
-			RenderSystem.fogStart(MathHelper.lerp(lerp, lastFogStart, fogStart));
-			RenderSystem.fogEnd(MathHelper.lerp(lerp, lastFogEnd, fogEnd));
+			float fog = MathHelper.lerp(lerp, lastFogDensity, fogDensity);
+			BackgroundInfo.fog = fog;
+			RenderSystem.fogStart(viewDistance * 0.75F / fog);
+			RenderSystem.fogEnd(viewDistance / fog);
 			RenderSystem.fogMode(GlStateManager.FogMode.LINEAR);
 			RenderSystem.setupNvFogDistance();
 			info.cancel();

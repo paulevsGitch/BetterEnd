@@ -1,6 +1,7 @@
 {
-	"parent": "block/template_orientable_trapdoor_bottom",
+	"parent": "betterend:block/sided_trapdoor",
 	"textures": {
-		"texture": "betterend:block/mossy_glowshroom_trapdoor"
+		"texture": "betterend:block/mossy_glowshroom_trapdoor",
+		"side": "betterend:block/mossy_glowshroom_door_side"
 	}
 }

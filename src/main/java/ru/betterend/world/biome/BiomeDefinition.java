@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.sound.MusicType;
 import net.minecraft.entity.EntityType;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.BiomeAdditionsSound;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.sound.SoundEvent;
@@ -83,8 +84,8 @@ public class BiomeDefinition {
 		return this;
 	}
 
-	public BiomeDefinition setParticleConfig(BiomeParticleConfig config) {
-		this.particleConfig = config;
+	public BiomeDefinition setParticles(ParticleEffect particle, float probability) {
+		this.particleConfig = new BiomeParticleConfig(particle, probability);
 		return this;
 	}
 	

@@ -4,6 +4,10 @@
 	"block.betterend.end_mycelium": "Мицелий края",
 	"block.betterend.end_moss": "Мох края",
 	"block.betterend.endstone_dust": "Эндерняковая пыль",
+	
+	"block.betterend.end_mycelium_path": "Дорога из мицелия края",
+	"block.betterend.end_moss_path": "Дорога из мха края",
+	
 	"block.betterend.ender_ore": "Руда Края",
 	"block.betterend.terminite_block": "Блок Терминита",
 	"block.betterend.aeternium_block": "Блок Этерия",

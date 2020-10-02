@@ -14,6 +14,7 @@ import ru.betterend.blocks.BlockMossyGlowshroomFur;
 import ru.betterend.blocks.BlockMossyGlowshroomHymenophore;
 import ru.betterend.blocks.BlockMossyGlowshroomSapling;
 import ru.betterend.blocks.BlockOre;
+import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
@@ -28,6 +29,10 @@ public class BlockRegistry {
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new BlockEndstoneDust());
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new BlockTerrain(MaterialColor.LIGHT_BLUE));
 	public static final Block END_MOSS = registerBlock("end_moss", new BlockTerrain(MaterialColor.CYAN));
+	
+	// Roads //
+	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BlockPath(END_MYCELIUM));
+	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new BlockPath(END_MOSS));
 	
 	// Wooden Materials //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());

@@ -4,6 +4,10 @@
 	"block.betterend.end_mycelium": "End Mycelium",
 	"block.betterend.end_moss": "End Moss",
 	"block.betterend.endstone_dust": "End Stone Dust",
+	
+	"block.betterend.end_mycelium_path": "End Mycelium Path",
+	"block.betterend.end_moss_path": "End Moss Path",
+	
 	"block.betterend.ender_ore": "Ender Ore",
 	"block.betterend.terminite_block": "Terminite Block",
 	"block.betterend.aeternium_block": "Aeternium Block",

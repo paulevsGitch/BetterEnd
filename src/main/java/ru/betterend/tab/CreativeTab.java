@@ -14,7 +14,6 @@ public class CreativeTab {
 				for (Item i : ItemRegistry.getModBlocks()) {
 					stacks.add(new ItemStack(i));
 				}
-
 				for (Item i : ItemRegistry.getModItems()) {
 					stacks.add(new ItemStack(i));
 				}

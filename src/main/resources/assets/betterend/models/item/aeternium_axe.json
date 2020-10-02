@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "betterend:item/terminite_pickaxe"
+		"layer0": "betterend:item/aeternium_axe"
 	}
 }

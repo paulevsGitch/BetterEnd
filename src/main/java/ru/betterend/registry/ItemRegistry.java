@@ -13,6 +13,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.registry.Registry;
 
 import ru.betterend.BetterEnd;
@@ -22,6 +23,7 @@ import ru.betterend.item.EndHoe;
 import ru.betterend.item.EndPickaxe;
 import ru.betterend.item.EndToolMaterial;
 import ru.betterend.tab.CreativeTab;
+import ru.betterend.util.TagHelper;
 
 public class ItemRegistry {
 	private static final List<Item> MOD_BLOCKS = Lists.newArrayList();
@@ -69,17 +71,17 @@ public class ItemRegistry {
 		Registry.register(Registry.ITEM, BetterEnd.getIdentifier(name), item);
 		MOD_ITEMS.add(item);
 		
-//		if (item instanceof ShovelItem) {
-//			FabricToolTags.SHOVELS.values().add(item);
-//		} else if (item instanceof SwordItem) {
-//			FabricToolTags.SWORDS.values().add(item);
-//		} else if (item instanceof EndPickaxe) {
-//			FabricToolTags.PICKAXES.values().add(item);
-//		} else if (item instanceof EndAxe) {
-//			FabricToolTags.AXES.values().add(item);
-//		} else if (item instanceof EndHoe) {
-//			FabricToolTags.HOES.values().add(item);
-//		}
+		if (item instanceof ShovelItem) {
+			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.SHOVELS, item);
+		} else if (item instanceof SwordItem) {
+			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.SWORDS, item);
+		} else if (item instanceof EndPickaxe) {
+			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.PICKAXES, item);
+		} else if (item instanceof EndAxe) {
+			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.AXES, item);
+		} else if (item instanceof EndHoe) {
+			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.HOES, item);
+		}
 		
 		return item;
 	}

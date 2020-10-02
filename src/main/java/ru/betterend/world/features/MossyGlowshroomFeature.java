@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -152,6 +153,9 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		
 		REPLACE = (state) -> {
 			if (state.getBlock() != Blocks.END_STONE && state.isIn(BlockTagRegistry.END_GROUND)) {
+				return true;
+			}
+			if (state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

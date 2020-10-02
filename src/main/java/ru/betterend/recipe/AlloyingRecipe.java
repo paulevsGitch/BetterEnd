@@ -1,18 +1,24 @@
 package ru.betterend.recipe;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.BlockRegistry;
@@ -21,7 +27,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = EndRecipeManager.registerType(GROUP);
-	public final static AlloyingRecipeSerializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new AlloyingRecipeSerializer());
+	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
 	
 	protected final RecipeType<?> type;
 	protected final Identifier id;
@@ -200,6 +206,47 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 				throw new IllegalArgumentException("Output can't be null!");
 			}
 			EndRecipeManager.addRecipe(AlloyingRecipe.TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
+		}
+	}
+	
+	public static class Serializer implements RecipeSerializer<AlloyingRecipe> {
+		@Override
+		public AlloyingRecipe read(Identifier id, JsonObject json) {
+			JsonArray ingredients = JsonHelper.getArray(json, "ingredients");
+			Ingredient primaryInput = Ingredient.fromJson(ingredients.get(0));
+			Ingredient secondaryInput = Ingredient.fromJson(ingredients.get(1));
+			String resultStr = JsonHelper.getString(json, "result");
+			String group = JsonHelper.getString(json, "group", "");
+			Identifier resultId = new Identifier(resultStr);
+			ItemStack output = new ItemStack(Registry.ITEM.getOrEmpty(resultId).orElseThrow(() -> {
+				return new IllegalStateException("Item: " + resultStr + " does not exists!");
+			}));
+			float experience = JsonHelper.getFloat(json, "experience", 0.0F);
+			int smeltTime = JsonHelper.getInt(json, "smelttime", 350);
+			
+			return new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime);
+		}
+
+		@Override
+		public AlloyingRecipe read(Identifier id, PacketByteBuf packetBuffer) {
+			String group = packetBuffer.readString(32767);
+			Ingredient primary = Ingredient.fromPacket(packetBuffer);
+			Ingredient secondary = Ingredient.fromPacket(packetBuffer);
+			ItemStack output = packetBuffer.readItemStack();
+			float experience = packetBuffer.readFloat();
+			int smeltTime = packetBuffer.readVarInt();
+			
+			return new AlloyingRecipe(id, group, primary, secondary, output, experience, smeltTime);
+		}
+
+		@Override
+		public void write(PacketByteBuf packetBuffer, AlloyingRecipe recipe) {
+			packetBuffer.writeString(recipe.group);
+			recipe.primaryInput.write(packetBuffer);
+			recipe.secondaryInput.write(packetBuffer);
+			packetBuffer.writeItemStack(recipe.output);
+			packetBuffer.writeFloat(recipe.experience);
+			packetBuffer.writeVarInt(recipe.smeltTime);
 		}
 	}
 }

@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.world.ClientWorld;
@@ -30,10 +29,6 @@ public class BackgroundRendererMixin {
 	private static float lastFogDensity;
 	private static float fogDensity;
 	private static float lerp;
-	
-	//private static final float SKY_RED = 21F / 255F;
-	//private static final float SKY_GREEN = 16F / 255F;
-	//private static final float SKY_BLUE = 20F / 255F;
 	
 	@Shadow
 	private static float red;
@@ -56,7 +51,6 @@ public class BackgroundRendererMixin {
 				skip = effect != null && effect.getDuration() > 0;
 			}
 			if (!skip) {
-				//RenderSystem.clearColor(SKY_RED, SKY_GREEN, SKY_BLUE, 0);
 				red *= 4;
 				green *= 4;
 				blue *= 4;
@@ -70,8 +64,8 @@ public class BackgroundRendererMixin {
 	
 	@Inject(method = "applyFog", at = @At("HEAD"), cancellable = true)
 	private static void fogDensity(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, CallbackInfo info) {
-		ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity) camera.getFocusedEntity();
-		Biome biome = clientPlayerEntity.world.getBiome(clientPlayerEntity.getBlockPos());
+		Entity entity = camera.getFocusedEntity();
+		Biome biome = entity.world.getBiome(entity.getBlockPos());
 		FluidState fluidState = camera.getSubmergedFluidState();
 		if (biome.getCategory() == Category.THEEND && fluidState.isEmpty()) {
 			EndBiome endBiome = BiomeRegistry.getFromBiome(biome);
@@ -88,8 +82,33 @@ public class BackgroundRendererMixin {
 			
 			float fog = MathHelper.lerp(lerp, lastFogDensity, fogDensity);
 			BackgroundInfo.fog = fog;
-			RenderSystem.fogStart(viewDistance * 0.75F / fog);
-			RenderSystem.fogEnd(viewDistance / fog);
+			float start = viewDistance * 0.75F / fog;
+			float end = viewDistance / fog;
+			
+			if (entity instanceof LivingEntity) {
+				LivingEntity le = (LivingEntity) entity;
+				StatusEffectInstance effect = le.getStatusEffect(StatusEffects.BLINDNESS);
+				if (effect != null) {
+					int duration = effect.getDuration();
+					if (duration > 20) {
+						start = 0;
+						end *= 0.03F;
+						BackgroundInfo.blindness = 1;
+					}
+					else {
+						float delta = (float) duration / 20F;
+						BackgroundInfo.blindness = delta;
+						start = MathHelper.lerp(delta, start, 0);
+						end = MathHelper.lerp(delta, end, end * 0.03F);
+					}
+				}
+				else {
+					BackgroundInfo.blindness = 0;
+				}
+			}
+			
+			RenderSystem.fogStart(start);
+			RenderSystem.fogEnd(end);
 			RenderSystem.fogMode(GlStateManager.FogMode.LINEAR);
 			RenderSystem.setupNvFogDistance();
 			info.cancel();

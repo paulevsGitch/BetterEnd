@@ -86,23 +86,27 @@ public class WorldRendererMixin {
 			RenderSystem.enableBlend();
 			RenderSystem.enableTexture();
 			
-			matrices.push();
-			matrices.multiply(new Quaternion(0, time, 0, true));
-			textureManager.bindTexture(HORIZON);
-			renderBuffer(matrices, horizon, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.7F);
-			matrices.pop();
+			float blindA = 1F - BackgroundInfo.blindness;
 			
-			matrices.push();
-			matrices.multiply(new Quaternion(0, -time, 0, true));
-			textureManager.bindTexture(NEBULA_1);
-			renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F);
-			matrices.pop();
-			
-			matrices.push();
-			matrices.multiply(new Quaternion(0, time * 2, 0, true));
-			textureManager.bindTexture(NEBULA_2);
-			renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F);
-			matrices.pop();
+			if (blindA > 0) {
+				matrices.push();
+				matrices.multiply(new Quaternion(0, time, 0, true));
+				textureManager.bindTexture(HORIZON);
+				renderBuffer(matrices, horizon, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
+				matrices.pop();
+				
+				matrices.push();
+				matrices.multiply(new Quaternion(0, -time, 0, true));
+				textureManager.bindTexture(NEBULA_1);
+				renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F * blindA);
+				matrices.pop();
+				
+				matrices.push();
+				matrices.multiply(new Quaternion(0, time * 2, 0, true));
+				textureManager.bindTexture(NEBULA_2);
+				renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F * blindA);
+				matrices.pop();
+			}
 			
 			float a = (BackgroundInfo.fog - 1F);
 			if (a > 0) {
@@ -113,20 +117,22 @@ public class WorldRendererMixin {
 
 			RenderSystem.disableTexture();
 			
-			matrices.push();
-			matrices.multiply(new Quaternion(axis1, time * 3, true));
-			renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, 0.6F);
-			matrices.pop();
-			
-			matrices.push();
-			matrices.multiply(new Quaternion(axis2, time * 2, true));
-			renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, 0.6F);
-			matrices.pop();
-			
-			matrices.push();
-			matrices.multiply(new Quaternion(axis3, time, true));
-			renderBuffer(matrices, stars3, VertexFormats.POSITION, 0.77F, 0.31F, 0.73F, 0.6F);
-			matrices.pop();
+			if (blindA > 0) {
+				matrices.push();
+				matrices.multiply(new Quaternion(axis1, time * 3, true));
+				renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, 0.6F * blindA);
+				matrices.pop();
+				
+				matrices.push();
+				matrices.multiply(new Quaternion(axis2, time * 2, true));
+				renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, 0.6F * blindA);
+				matrices.pop();
+				
+				matrices.push();
+				matrices.multiply(new Quaternion(axis3, time, true));
+				renderBuffer(matrices, stars3, VertexFormats.POSITION, 0.77F, 0.31F, 0.73F, 0.6F * blindA);
+				matrices.pop();
+			}
 			
 			RenderSystem.enableTexture();
 			RenderSystem.depthMask(true);

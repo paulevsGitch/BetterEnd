@@ -87,10 +87,10 @@
 			"shade": false,
 			"faces": {
 				"down": { "uv": [ 0, 0, 6, 6 ], "texture": "#spore" },
-				"north": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"south": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"west": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"east": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" }
+				"north": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"south": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"west": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"east": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" }
 			}
 		},
 		{
@@ -100,10 +100,10 @@
 			"shade": false,
 			"faces": {
 				"up": { "uv": [ 0, 0, 6, 6 ], "texture": "#spore" },
-				"north": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"south": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"west": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"east": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" }
+				"north": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"south": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"west": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"east": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" }
 			}
 		},
 		{
@@ -135,10 +135,10 @@
 			"shade": false,
 			"faces": {
 				"down": { "uv": [ 0, 0, 6, 6 ], "texture": "#spore" },
-				"north": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"south": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"west": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"east": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" }
+				"north": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"south": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"west": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"east": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" }
 			}
 		},
 		{
@@ -183,10 +183,10 @@
 			"shade": false,
 			"faces": {
 				"down": { "uv": [ 0, 0, 6, 6 ], "texture": "#spore" },
-				"north": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"south": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"west": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" },
-				"east": { "uv": [ 0, 6, 6, 8 ], "texture": "#spore" }
+				"north": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"south": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"west": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" },
+				"east": { "uv": [ 6, 8, 0, 6 ], "texture": "#spore" }
 			}
 		}
 	]

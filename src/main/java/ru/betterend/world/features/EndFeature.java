@@ -48,12 +48,12 @@ public class EndFeature {
 	}
 	
 	public static EndFeature makeRawGenFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
-		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100)));
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
 	
 	public static EndFeature makeLakeFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
-		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100)));
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.WATER_LAKE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.LAKES, configured);
 	}
 	

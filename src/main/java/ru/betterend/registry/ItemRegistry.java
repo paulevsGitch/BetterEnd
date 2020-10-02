@@ -16,7 +16,6 @@ import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.item.EndArmorMaterial;
 import ru.betterend.item.EndAxe;

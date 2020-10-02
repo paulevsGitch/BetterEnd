@@ -79,7 +79,9 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithoutUpdate(world, pos, Blocks.AIR.getDefaultState());
-		getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, null);
+		if (!getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, null)) {
+			BlocksHelper.setWithoutUpdate(world, pos, this.getDefaultState());
+		}
 	}
 
 	@Override

@@ -20,8 +20,8 @@ public class Helper
 		"%name%_sign.json",
 		"%name%_slab.json",
 		"%name%_stairs.json",
-		"%name%_striped_bark.json",
-		"%name%_striped_log.json",
+		"%name%_stripped_bark.json",
+		"%name%_stripped_log.json",
 		"%name%_trapdoor.json"
 	};
 	
@@ -52,8 +52,8 @@ public class Helper
 		"%name%_pressure_plate_down.json",
 		"%name%_pressure_plate_up.json",
 		"%name%_stairs.json",
-		"%name%_striped_bark.json",
-		"%name%_striped_log.json",
+		"%name%_stripped_bark.json",
+		"%name%_stripped_log.json",
 		"%name%_trapdoor.json",
 		"%name%_wall_gate_closed.json",
 		"%name%_wall_gate_open.json"
@@ -75,8 +75,8 @@ public class Helper
 		"%name%_sign.json",
 		"%name%_slab.json",
 		"%name%_stairs.json",
-		"%name%_striped_bark.json",
-		"%name%_striped_log.json",
+		"%name%_stripped_bark.json",
+		"%name%_stripped_log.json",
 		"%name%_trapdoor.json"
 	};
 }

@@ -1,0 +1,25 @@
+{
+	"variants": {
+		"axis=x": [
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark", "x": 90, "y": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_2", "x": 90, "y": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_3", "x": 90, "y": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_4", "x": 90, "y": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_5", "x": 90, "y": 90 }
+		],
+		"axis=y": [
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark" },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_2" },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_3" },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_4" },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_5" }
+		],
+		"axis=z": [
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark", "x": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_2", "x": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_3", "x": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_4", "x": 90 },
+			{ "model": "betterend:block/mossy_glowshroom_stripped_bark_5", "x": 90 }
+		]
+	}
+}

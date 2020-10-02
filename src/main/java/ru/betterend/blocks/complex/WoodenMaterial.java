@@ -34,8 +34,8 @@ public class WoodenMaterial {
 	public final Block log;
 	public final Block bark;
 
-	public final Block log_striped;
-	public final Block bark_striped;
+	public final Block log_stripped;
+	public final Block bark_stripped;
 
 	public final Block planks;
 
@@ -58,11 +58,11 @@ public class WoodenMaterial {
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).breakByTool(FabricToolTags.AXES).materialColor(planksColor);
 		
-		log_striped = BlockRegistry.registerBlock(name + "_striped_log", new BlockPillar(materialPlanks));
-		bark_striped = BlockRegistry.registerBlock(name + "_striped_bark", new BlockPillar(materialPlanks));
+		log_stripped = BlockRegistry.registerBlock(name + "_stripped_log", new BlockPillar(materialPlanks));
+		bark_stripped = BlockRegistry.registerBlock(name + "_stripped_bark", new BlockPillar(materialPlanks));
 		
-		log = BlockRegistry.registerBlock(name + "_log", new BlockLogStripable(woodColor, log_striped));
-		bark = BlockRegistry.registerBlock(name + "_bark", new BlockLogStripable(woodColor, bark_striped));
+		log = BlockRegistry.registerBlock(name + "_log", new BlockLogStripable(woodColor, log_stripped));
+		bark = BlockRegistry.registerBlock(name + "_bark", new BlockLogStripable(woodColor, bark_stripped));
 		
 		planks = BlockRegistry.registerBlock(name + "_planks", new BlockBase(materialPlanks));
 		stairs = BlockRegistry.registerBlock(name + "_stairs", new BlockStairs(planks));
@@ -82,7 +82,7 @@ public class WoodenMaterial {
 		barrel = BlockRegistry.registerBlock(name + "_barrel", new BlockBarrel(planks));
 		
 		// Recipes //
-		RecipeBuilder.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_striped, bark_striped).setGroup("end_planks").build();
+		RecipeBuilder.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();
 		RecipeBuilder.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
 		RecipeBuilder.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', planks).setGroup("end_planks_slabs").build();
 		RecipeBuilder.make(name + "_fence", fence).setOutputCount(3).setShape("#I#", "#I#").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_fences").build();
@@ -100,8 +100,8 @@ public class WoodenMaterial {
 		// Item Tags //
 		TagHelper.addTag(ItemTags.PLANKS, planks);
 		TagHelper.addTag(ItemTags.WOODEN_PRESSURE_PLATES, pressure_plate);
-		TagHelper.addTag(ItemTags.LOGS, log, bark, log_striped, bark_striped);
-		TagHelper.addTag(ItemTags.LOGS_THAT_BURN, log, bark, log_striped, bark_striped);
+		TagHelper.addTag(ItemTags.LOGS, log, bark, log_stripped, bark_stripped);
+		TagHelper.addTag(ItemTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
 		
 		TagHelper.addTags(button, ItemTags.WOODEN_BUTTONS, ItemTags.BUTTONS);
 		TagHelper.addTags(door, ItemTags.WOODEN_DOORS, ItemTags.DOORS);
@@ -113,8 +113,8 @@ public class WoodenMaterial {
 		// Block Tags //
 		TagHelper.addTag(BlockTags.PLANKS, planks);
 		TagHelper.addTag(BlockTags.CLIMBABLE, ladder);
-		TagHelper.addTag(BlockTags.LOGS, log, bark, log_striped, bark_striped);
-		TagHelper.addTag(BlockTags.LOGS_THAT_BURN, log, bark, log_striped, bark_striped);
+		TagHelper.addTag(BlockTags.LOGS, log, bark, log_stripped, bark_stripped);
+		TagHelper.addTag(BlockTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
 		
 		TagHelper.addTags(button, BlockTags.WOODEN_BUTTONS, BlockTags.BUTTONS);
 		TagHelper.addTags(door, BlockTags.WOODEN_DOORS, BlockTags.DOORS);

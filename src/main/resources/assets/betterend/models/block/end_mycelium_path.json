@@ -1,0 +1,7 @@
+{   "parent": "betterend:block/path",
+    "textures": {
+        "top": "betterend:block/end_mycelium_path_top",
+        "side": "betterend:block/end_mycelium_side",
+        "bottom": "block/end_stone"
+    }
+}

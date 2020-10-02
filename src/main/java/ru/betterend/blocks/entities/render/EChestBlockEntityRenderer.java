@@ -168,9 +168,9 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 				if (block instanceof BlockChest) {
 					String name = Registry.BLOCK.getId(block).getPath();
 					LAYERS.put(Block.getRawIdFromState(block.getDefaultState()), new RenderLayer[] {
-						RenderLayer.getEntitySolid(BetterEnd.getResId("textures/entity/chest/" + name + ".png")),
-						RenderLayer.getEntitySolid(BetterEnd.getResId("textures/entity/chest/" + name + "_left.png")),
-						RenderLayer.getEntitySolid(BetterEnd.getResId("textures/entity/chest/" + name + "_right.png"))
+						RenderLayer.getEntitySolid(BetterEnd.getIdentifier("textures/entity/chest/" + name + ".png")),
+						RenderLayer.getEntitySolid(BetterEnd.getIdentifier("textures/entity/chest/" + name + "_left.png")),
+						RenderLayer.getEntitySolid(BetterEnd.getIdentifier("textures/entity/chest/" + name + "_right.png"))
 					});
 				}
 			}

@@ -33,10 +33,10 @@ import ru.betterend.util.MHelper;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
-	private static final Identifier NEBULA_1 = BetterEnd.getResId("textures/sky/nebula_2.png");
-	private static final Identifier NEBULA_2 = BetterEnd.getResId("textures/sky/nebula_3.png");
-	private static final Identifier HORIZON = BetterEnd.getResId("textures/sky/nebula_1.png");
-	private static final Identifier FOG = BetterEnd.getResId("textures/sky/fog.png");
+	private static final Identifier NEBULA_1 = BetterEnd.getIdentifier("textures/sky/nebula_2.png");
+	private static final Identifier NEBULA_2 = BetterEnd.getIdentifier("textures/sky/nebula_3.png");
+	private static final Identifier HORIZON = BetterEnd.getIdentifier("textures/sky/nebula_1.png");
+	private static final Identifier FOG = BetterEnd.getIdentifier("textures/sky/fog.png");
 	
 	private static VertexBuffer stars1;
 	private static VertexBuffer stars2;

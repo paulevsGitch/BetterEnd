@@ -34,7 +34,7 @@ public class BetterEnd implements ModInitializer {
 		AlloyingRecipes.register();
 	}
 	
-	public static Identifier getResId(String path) {
+	public static Identifier getIdentifier(String path) {
 		return new Identifier(MOD_ID, path);
 	}
 	

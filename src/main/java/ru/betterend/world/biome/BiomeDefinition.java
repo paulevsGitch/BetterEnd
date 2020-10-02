@@ -57,7 +57,7 @@ public class BiomeDefinition {
 	private ConfiguredSurfaceBuilder<?> surface;
 
 	public BiomeDefinition(String name) {
-		this.id = BetterEnd.getResId(name);
+		this.id = BetterEnd.getIdentifier(name);
 	}
 
 	public BiomeDefinition setSurface(Block surfaceBlock) {

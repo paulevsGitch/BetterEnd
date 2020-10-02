@@ -26,21 +26,21 @@ public class EndFeature {
 	private EndFeature() {}
 	
 	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, GenerationStep.Feature featureStep, ConfiguredFeature<?, ?> configuredFeature) {
-		Identifier id = BetterEnd.getResId(name);
+		Identifier id = BetterEnd.getIdentifier(name);
 		this.featureStep = featureStep;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
 		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, configuredFeature);
 	}
 	
 	public EndFeature(String name, Feature<DefaultFeatureConfig> feature) {
-		Identifier id = BetterEnd.getResId(name);
+		Identifier id = BetterEnd.getIdentifier(name);
 		this.featureStep = GenerationStep.Feature.VEGETAL_DECORATION;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
 		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100))));
 	}
 	
 	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, int density) {
-		Identifier id = BetterEnd.getResId(name);
+		Identifier id = BetterEnd.getIdentifier(name);
 		this.featureStep = GenerationStep.Feature.VEGETAL_DECORATION;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
 		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.configure(FeatureConfig.DEFAULT).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(density));
@@ -67,7 +67,7 @@ public class EndFeature {
 				  .repeat(veins);
 		newFeature.feature = Feature.ORE;
 		newFeature.featureStep = GenerationStep.Feature.UNDERGROUND_ORES;
-		newFeature.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, BetterEnd.getResId(name), oreFeature);
+		newFeature.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, BetterEnd.getIdentifier(name), oreFeature);
 		
 		return newFeature;
 	}

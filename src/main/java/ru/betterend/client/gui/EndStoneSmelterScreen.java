@@ -21,7 +21,7 @@ import ru.betterend.BetterEnd;
 public class EndStoneSmelterScreen extends HandledScreen<EndStoneSmelterScreenHandler> implements RecipeBookProvider {
 
 	private final static Identifier RECIPE_BUTTON_TEXTURE = new Identifier("textures/gui/recipe_button.png");
-	private final static Identifier BACKGROUND_TEXTURE = BetterEnd.getResId("textures/gui/smelter_gui.png");
+	private final static Identifier BACKGROUND_TEXTURE = BetterEnd.getIdentifier("textures/gui/smelter_gui.png");
 	
 	public final EndStoneSmelterRecipeBookScreen recipeBook;
 	private boolean narrow;

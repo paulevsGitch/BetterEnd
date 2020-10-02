@@ -11,7 +11,7 @@ public class BlockTagRegistry {
 	public static final Tag.Identified<Block> END_GROUND = makeTag("end_ground");
 	
 	private static Tag.Identified<Block> makeTag(String name) {
-		return (Identified<Block>) TagRegistry.block(BetterEnd.getResId(name));
+		return (Identified<Block>) TagRegistry.block(BetterEnd.getIdentifier(name));
 	}
 	
 	public static void register() {

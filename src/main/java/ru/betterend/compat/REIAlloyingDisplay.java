@@ -12,6 +12,8 @@ import me.shedaniel.rei.api.TransferRecipeDisplay;
 import me.shedaniel.rei.server.ContainerInfo;
 
 import net.minecraft.item.Item;
+import net.minecraft.recipe.BlastingRecipe;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -24,7 +26,7 @@ public class REIAlloyingDisplay implements TransferRecipeDisplay {
 
 	private static List<EntryStack> fuel;
 	
-	private AlloyingRecipe recipe;
+	private Recipe<?> recipe;
 	private List<List<EntryStack>> input;
 	private List<EntryStack> output;
 	private float xp;
@@ -38,13 +40,21 @@ public class REIAlloyingDisplay implements TransferRecipeDisplay {
 		this.smeltTime = recipe.getSmeltTime();
 	}
 	
+	public REIAlloyingDisplay(BlastingRecipe recipe) {
+		this.recipe = recipe;
+		this.input = EntryStack.ofIngredients(recipe.getPreviewInputs());
+		this.output = Collections.singletonList(EntryStack.create(recipe.getOutput()));
+		this.xp = recipe.getExperience();
+		this.smeltTime = recipe.getCookTime();
+	}
+	
 	public static List<EntryStack> getFuel() {
 		return fuel;
 	}
 	
 	@Override
 	public @NotNull Optional<Identifier> getRecipeLocation() {
-		return Optional.ofNullable(recipe).map(AlloyingRecipe::getId);
+		return Optional.ofNullable(recipe).map(Recipe::getId);
 	}
 	
 	@Override
@@ -59,7 +69,7 @@ public class REIAlloyingDisplay implements TransferRecipeDisplay {
 
 	@Override
 	public @NotNull Identifier getRecipeCategory() {
-		return REICompat.ALLOYING;
+		return AlloyingRecipe.ID;
 	}
 	
 	@Override
@@ -75,7 +85,7 @@ public class REIAlloyingDisplay implements TransferRecipeDisplay {
 		return this.smeltTime;
 	}
 	
-	public Optional<AlloyingRecipe> getOptionalRecipe() {
+	public Optional<Recipe<?>> getOptionalRecipe() {
 		return Optional.ofNullable(recipe);
 	}
 
@@ -90,8 +100,7 @@ public class REIAlloyingDisplay implements TransferRecipeDisplay {
 	}
 
 	@Override
-	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo,
-			ScreenHandler container) {
+	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo, ScreenHandler container) {
 		return input;
 	}
 	

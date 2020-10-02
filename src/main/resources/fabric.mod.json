@@ -26,8 +26,11 @@
 			"ru.betterend.client.BetterEndClient"
 		],
 		"rei_plugins": [
-    		"ru.betterend.compat.REICompat"
-  		]
+    		"ru.betterend.compat.REIPlugin"
+  		],
+		"rei_containers": [
+			"ru.betterend.compat.REIContainer"
+		]
 	},
 	"mixins": [
 		"betterend.mixins.common.json",

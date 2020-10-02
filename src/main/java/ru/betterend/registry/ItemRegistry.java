@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
@@ -65,10 +66,21 @@ public class ItemRegistry {
 	}
 	
 	protected static ToolItem registerTool(String name, ToolItem item) {
-		if (item != Items.AIR) {
-			Registry.register(Registry.ITEM, BetterEnd.getIdentifier(name), item);
-			MOD_ITEMS.add(item);
-		}
+		Registry.register(Registry.ITEM, BetterEnd.getIdentifier(name), item);
+		MOD_ITEMS.add(item);
+		
+//		if (item instanceof ShovelItem) {
+//			FabricToolTags.SHOVELS.values().add(item);
+//		} else if (item instanceof SwordItem) {
+//			FabricToolTags.SWORDS.values().add(item);
+//		} else if (item instanceof EndPickaxe) {
+//			FabricToolTags.PICKAXES.values().add(item);
+//		} else if (item instanceof EndAxe) {
+//			FabricToolTags.AXES.values().add(item);
+//		} else if (item instanceof EndHoe) {
+//			FabricToolTags.HOES.values().add(item);
+//		}
+		
 		return item;
 	}
 

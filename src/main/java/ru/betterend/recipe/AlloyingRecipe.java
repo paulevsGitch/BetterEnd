@@ -28,6 +28,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = EndRecipeManager.registerType(GROUP);
 	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
+	public final static Identifier ID = BetterEnd.getIdentifier("alloying");
 	
 	protected final RecipeType<?> type;
 	protected final Identifier id;

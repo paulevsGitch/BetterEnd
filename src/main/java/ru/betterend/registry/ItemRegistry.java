@@ -13,12 +13,14 @@ import net.minecraft.item.Items;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
+import net.minecraft.item.ToolMaterials;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.registry.Registry;
 
 import ru.betterend.BetterEnd;
 import ru.betterend.item.EndArmorMaterial;
 import ru.betterend.item.EndAxe;
+import ru.betterend.item.EndHammer;
 import ru.betterend.item.EndHoe;
 import ru.betterend.item.EndPickaxe;
 import ru.betterend.item.EndToolMaterial;
@@ -55,6 +57,7 @@ public class ItemRegistry {
 	public static ToolItem AETERNIUM_PICKAXE = registerTool("aeternium_pickaxe", new EndPickaxe(EndToolMaterial.AETERNIUM, 1, -2.8F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem AETERNIUM_AXE = registerTool("aeternium_axe", new EndAxe(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem AETERNIUM_HOE = registerTool("aeternium_hoe", new EndHoe(EndToolMaterial.AETERNIUM, -3, 0.0F, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static ToolItem IRON_HAMMER = registerTool("iron_hammer", new EndHammer(ToolMaterials.IRON, 4.0F, -3.0F, 0.2D, new Item.Settings().group(CreativeTab.END_TAB)));
 
 	protected static Item registerItem(String name, Item item) {
 		if (item != Items.AIR) {

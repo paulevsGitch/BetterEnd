@@ -7,10 +7,13 @@ import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
+import ru.betterend.blocks.BlockBlueVine;
+import ru.betterend.blocks.BlockBlueVineLantern;
+import ru.betterend.blocks.BlockBlueVineSeed;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
-import ru.betterend.blocks.BlockMossyGlowshroomFur;
+import ru.betterend.blocks.BlockGlowingFur;
 import ru.betterend.blocks.BlockMossyGlowshroomHymenophore;
 import ru.betterend.blocks.BlockMossyGlowshroomSapling;
 import ru.betterend.blocks.BlockOre;
@@ -21,6 +24,7 @@ import ru.betterend.blocks.BlockUmbrellaMossTall;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
+import ru.betterend.blocks.basis.BlockUpDownPlant;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.tab.CreativeTab;
 
@@ -38,13 +42,18 @@ public class BlockRegistry {
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());
 	public static final Block MOSSY_GLOWSHROOM_CAP = registerBlock("mossy_glowshroom_cap", new BlockMossyGlowshroomCap());
 	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new BlockMossyGlowshroomHymenophore());
-	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new BlockMossyGlowshroomFur());
+	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new BlockGlowingFur(16));
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	
 	// Small Plants //
-	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss()); 
-	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new BlockUmbrellaMossTall()); 
-	public static final Block CREEPING_MOSS = registerBlock("creeping_moss", new BlockGlowingMoss(10)); 
+	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());
+	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new BlockUmbrellaMossTall());
+	public static final Block CREEPING_MOSS = registerBlock("creeping_moss", new BlockGlowingMoss(10));
+	
+	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlockBlueVineSeed());
+	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());
+	public static final Block BLUE_VINE_LANTERN = registerBlock("blue_vine_lantern", new BlockBlueVineLantern());
+	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new BlockGlowingFur(3));
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(ItemRegistry.ENDER_DUST, 1, 3));

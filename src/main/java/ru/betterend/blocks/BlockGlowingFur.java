@@ -36,17 +36,19 @@ import ru.betterend.client.IRenderTypeable;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.util.MHelper;
 
-public class BlockMossyGlowshroomFur extends BlockBaseNotFull implements IRenderTypeable {
+public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final DirectionProperty FACING = Properties.FACING;
+	private final int dropChance;
 	
-	public BlockMossyGlowshroomFur() {
+	public BlockGlowingFur(int dropChance) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
 				.lightLevel(15)
 				.breakByHand(true)
 				.noCollision());
+		this.dropChance = dropChance;
 	}
 	
 	@Override
@@ -99,7 +101,7 @@ public class BlockMossyGlowshroomFur extends BlockBaseNotFull implements IRender
 		if (tool != null && tool.getItem().isIn(FabricToolTags.SHEARS) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
 		}
-		else if (MHelper.RANDOM.nextInt(16) == 0) {
+		else if (MHelper.RANDOM.nextInt(dropChance) == 0) {
 			return Lists.newArrayList(new ItemStack(BlockRegistry.MOSSY_GLOWSHROOM_SAPLING));
 		}
 		else {

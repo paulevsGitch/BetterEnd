@@ -17,7 +17,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
-import ru.betterend.blocks.BlockMossyGlowshroomFur;
+import ru.betterend.blocks.BlockGlowingFur;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
@@ -123,19 +123,19 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 			BlockState state = world.getBlockState(bpos);
 			if (state.getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_HYMENOPHORE) {
 				if (world.isAir(bpos.north())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.north(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockMossyGlowshroomFur.FACING, Direction.NORTH));
+					BlocksHelper.setWithoutUpdate(world, bpos.north(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.NORTH));
 				}
 				if (world.isAir(bpos.east())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.east(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockMossyGlowshroomFur.FACING, Direction.EAST));
+					BlocksHelper.setWithoutUpdate(world, bpos.east(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.EAST));
 				}
 				if (world.isAir(bpos.south())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.south(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockMossyGlowshroomFur.FACING, Direction.SOUTH));
+					BlocksHelper.setWithoutUpdate(world, bpos.south(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.SOUTH));
 				}
 				if (world.isAir(bpos.west())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.west(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockMossyGlowshroomFur.FACING, Direction.WEST));
+					BlocksHelper.setWithoutUpdate(world, bpos.west(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.WEST));
 				}
 				if (world.getBlockState(bpos.down()).getMaterial().isReplaceable()) {
-					BlocksHelper.setWithoutUpdate(world, bpos.down(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockMossyGlowshroomFur.FACING, Direction.DOWN));
+					BlocksHelper.setWithoutUpdate(world, bpos.down(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.DOWN));
 				}
 			}
 			else if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(state) && random.nextBoolean() && world.getBlockState(bpos.up()).getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_CAP) {

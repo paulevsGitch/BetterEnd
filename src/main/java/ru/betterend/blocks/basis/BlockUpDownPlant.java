@@ -1,8 +1,6 @@
 package ru.betterend.blocks.basis;
 
 import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -11,45 +9,32 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Fertilizable;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.registry.BlockTagRegistry;
 
-public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
-	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
+public class BlockUpDownPlant extends BlockBaseNotFull implements IRenderTypeable {
+	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 16, 12);
 	
-	public BlockPlant() {
+	public BlockUpDownPlant() {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
-				.breakByHand(true)
-				.noCollision());
-	}
-	
-	public BlockPlant(int light) {
-		super(FabricBlockSettings.of(Material.PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(BlockSoundGroup.GRASS)
-				.lightLevel(light)
 				.breakByHand(true)
 				.noCollision());
 	}
@@ -99,21 +84,5 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
-	}
-
-	@Override
-	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
-		return true;
-	}
-
-	@Override
-	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-		return true;
-	}
-
-	@Override
-	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(this));
-		world.spawnEntity(item);
 	}
 }

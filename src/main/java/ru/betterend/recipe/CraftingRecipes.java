@@ -46,6 +46,7 @@ public class CraftingRecipes {
 			registerPickaxe(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_PICKAXE);
 			registerAxe(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_AXE);
 			registerHoe(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HOE);
+			registerHammer(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HAMMER);
 		}
 		if (itemExists(ItemRegistry.AETERNIUM_INGOT)) {
 			String material = "aeternium";
@@ -63,7 +64,13 @@ public class CraftingRecipes {
 			registerPickaxe(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_PICKAXE);
 			registerAxe(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_AXE);
 			registerHoe(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_HOE);
+			registerHammer(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_HAMMER);
 		}
+		
+		registerHammer("iron", Items.IRON_INGOT, ItemRegistry.IRON_HAMMER);
+		registerHammer("golden", Items.GOLD_INGOT, ItemRegistry.GOLDEN_HAMMER);
+		registerHammer("diamond", Items.DIAMOND, ItemRegistry.DIAMOND_HAMMER);
+		registerHammer("netherite", Items.NETHERITE_INGOT, ItemRegistry.NETHERITE_HAMMER);
 	}
 	
 	private static void registerHelmet(String name, Item material, Item result) {
@@ -132,6 +139,14 @@ public class CraftingRecipes {
 			.addMaterial('I', material)
 			.addMaterial('#', Items.STICK)
 			.build();
+	}
+	
+	private static void registerHammer(String name, Item material, Item result) {
+		RecipeBuilder.make(name + "_hammer", result)
+		.setShape(new String[] { "I I", "I#I", " # " })
+		.addMaterial('I', material)
+		.addMaterial('#', Items.STICK)
+		.build();
 	}
 	
 	protected static boolean itemExists(Item item) {

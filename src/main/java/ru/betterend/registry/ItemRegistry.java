@@ -49,14 +49,19 @@ public class ItemRegistry {
 	public static ToolItem TERMINITE_SHOVEL = registerTool("terminite_shovel", new ShovelItem(EndToolMaterial.TERMINITE, 1.5F, -3.0F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem TERMINITE_SWORD = registerTool("terminite_sword", new SwordItem(EndToolMaterial.TERMINITE, 3, -2.4F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem TERMINITE_PICKAXE = registerTool("terminite_pickaxe", new EndPickaxe(EndToolMaterial.TERMINITE, 1, -2.8F, new Item.Settings().group(CreativeTab.END_TAB)));
-	public static ToolItem TERMINITE_AXE = registerTool("terminite_axe", new EndAxe(EndToolMaterial.TERMINITE, 5.0F, -3.0F, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static ToolItem TERMINITE_AXE = registerTool("terminite_axe", new EndAxe(EndToolMaterial.TERMINITE, 6.0F, -3.0F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem TERMINITE_HOE = registerTool("terminite_hoe", new EndHoe(EndToolMaterial.TERMINITE, -3, 0.0F, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static ToolItem TERMINITE_HAMMER = registerTool("terminite_hammer", new EndHammer(EndToolMaterial.TERMINITE, 5.0F, -3.2F, 0.3D, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new ShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem AETERNIUM_SWORD = registerTool("aeternium_sword", new SwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem AETERNIUM_PICKAXE = registerTool("aeternium_pickaxe", new EndPickaxe(EndToolMaterial.AETERNIUM, 1, -2.8F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem AETERNIUM_AXE = registerTool("aeternium_axe", new EndAxe(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem AETERNIUM_HOE = registerTool("aeternium_hoe", new EndHoe(EndToolMaterial.AETERNIUM, -3, 0.0F, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static ToolItem AETERNIUM_HAMMER = registerTool("aeternium_hammer", new EndHammer(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, new Item.Settings().group(CreativeTab.END_TAB)));
 	public static ToolItem IRON_HAMMER = registerTool("iron_hammer", new EndHammer(ToolMaterials.IRON, 5.0F, -3.2F, 0.2D, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static ToolItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammer(ToolMaterials.GOLD, 4.5F, -3.4F, 0.3D, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static ToolItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammer(ToolMaterials.DIAMOND, 5.5F, -3.1F, 0.2D, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammer(ToolMaterials.DIAMOND, 6.0F, -3.0F, 0.2D, new Item.Settings().group(CreativeTab.END_TAB)));
 
 	protected static Item registerItem(String name, Item item) {
 		if (item != Items.AIR) {

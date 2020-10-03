@@ -26,13 +26,16 @@ public abstract class ScatterFeature extends DefaultFeature {
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center, DefaultFeatureConfig featureConfig) {
-		center = getPosOnSurface(world, center);
+		center = getPosOnSurfaceWG(world, center);
 		
 		if (center.getY() < 5) {
 			return false;
 		}
 		if (!world.getBlockState(center.down()).isIn(BlockTagRegistry.END_GROUND)) {
-			return false;
+			//center = getPosOnSurfaceRaycast(world, new BlockPos(center.getX(), 72, center.getZ()), 72);
+			//if (center.getY() < 5 || !world.getBlockState(center.down()).isIn(BlockTagRegistry.END_GROUND)) {
+				return false;
+			//}
 		}
 		
 		float r = MHelper.randRange(radius * 0.5F, radius, random);

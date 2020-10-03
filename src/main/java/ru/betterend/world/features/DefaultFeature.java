@@ -21,6 +21,10 @@ public abstract class DefaultFeature extends Feature<DefaultFeatureConfig> {
 		return world.getTopPosition(Type.WORLD_SURFACE, pos);
 	}
 	
+	protected BlockPos getPosOnSurfaceWG(StructureWorldAccess world, BlockPos pos) {
+		return world.getTopPosition(Type.WORLD_SURFACE_WG, pos);
+	}
+	
 	protected BlockPos getPosOnSurfaceRaycast(StructureWorldAccess world, BlockPos pos) {
 		int h = BlocksHelper.downRay(world, pos, 256);
 		return pos.down(h);

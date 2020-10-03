@@ -28,7 +28,7 @@ public class EndLakeFeature extends DefaultFeature {
 		int dist = MHelper.floor(radius);
 		int dist2 = MHelper.floor(radius * 1.5);
 		int bott = MHelper.floor(depth);
-		blockPos = getPosOnSurface(world, blockPos);
+		blockPos = getPosOnSurfaceWG(world, blockPos);
 		if (blockPos.getY() < 10) return false;
 		
 		int waterLevel = blockPos.getY();
@@ -65,7 +65,7 @@ public class EndLakeFeature extends DefaultFeature {
 					r *= r;
 					if (x2 + z2 <= r) {
 						state = world.getBlockState(POS);
-						if (state.isIn(BlockTagRegistry.END_GROUND) || !state.canPlaceAt(world, POS) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+						if (state.isIn(BlockTagRegistry.END_GROUND) || !state.canPlaceAt(world, POS) || state.getMaterial().equals(Material.PLANT)/* || state.getBlock() == BlockRegistry.ENDSTONE_DUST*/) {
 							BlocksHelper.setWithoutUpdate(world, POS, AIR);
 						}
 						pos = POS.down();
@@ -79,13 +79,11 @@ public class EndLakeFeature extends DefaultFeature {
 							else
 								BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
 						}
-						pos = POS.up();
-						if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
-							while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
-								BlocksHelper.setWithoutUpdate(world, pos, AIR);
-								pos = pos.up();
-							}
-						}
+						/*pos = POS.up();
+						while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND) || !state.canPlaceAt(world, pos) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+							BlocksHelper.setWithoutUpdate(world, pos, AIR);
+							pos = pos.up();
+						}*/
 					}
 				}
 			}
@@ -110,7 +108,7 @@ public class EndLakeFeature extends DefaultFeature {
 					rb *= rb;
 					if (y2 + x2 + z2 <= r) {
 						state = world.getBlockState(POS);
-						if (state.isIn(BlockTagRegistry.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+						if (state.isIn(BlockTagRegistry.END_GROUND) || !state.canPlaceAt(world, POS) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
 							BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
 						}
 						pos = POS.down();

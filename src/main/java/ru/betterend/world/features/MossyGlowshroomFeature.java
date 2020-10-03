@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;

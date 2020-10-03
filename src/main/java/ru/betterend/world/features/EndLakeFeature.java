@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
@@ -53,35 +54,65 @@ public class EndLakeFeature extends DefaultFeature {
 		int maxX = blockPos.getX() + dist2;
 		int minZ = blockPos.getZ() - dist2;
 		int maxZ = blockPos.getZ() + dist2;
+		int maskMinX = minX - 1;
+		int maskMinZ = minZ - 1;
 		
-		for (int y = blockPos.getY(); y <= blockPos.getY() + 10; y++) {
-			POS.setY(y);
-			int add = y - blockPos.getY();
-			for (int x = minX; x <= maxX; x++) {
-				POS.setX(x);
-				int x2 = x - blockPos.getX();
-				x2 *= x2;
-				for (int z = minZ; z <= maxZ; z++) {
-					POS.setZ(z);
-					int z2 = z - blockPos.getZ();
-					z2 *= z2;
-					double r = add * 1.8 + radius  * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
-					r *= r;
-					if (x2 + z2 <= r) {
-						state = world.getBlockState(POS);
-						if (state.isIn(BlockTagRegistry.END_GROUND)) {
-							BlocksHelper.setWithoutUpdate(world, POS, AIR);
+		boolean[][] mask = new boolean[maxX - minX + 3][maxZ - minZ + 3];
+		for (int x = minX; x <= maxX; x++) {
+			POS.setX(x);
+			int mx = x - maskMinX;
+			for (int z = minZ; z <= maxZ; z++) {
+				POS.setZ(z);
+				int mz = z - maskMinZ;
+				if (!mask[mx][mz]) {
+					for (int y = waterLevel; y <= blockPos.getY() + 10; y++) {
+						POS.setY(y);
+						FluidState fluid = world.getFluidState(POS);
+						if (!fluid.isEmpty()) {
+							mask[mx][mz] = true;
+							mask[mx + 1][mz] = true;
+							mask[mx - 1][mz] = true;
+							mask[mx][mz + 1] = true;
+							mask[mx][mz - 1] = true;
+							break;
 						}
-						pos = POS.down();
-						if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND))
-						{
-							state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-							if (y > waterLevel + 1)
-								BlocksHelper.setWithoutUpdate(world, pos, state);
-							else if (y > waterLevel)
-								BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
-							else
-								BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
+					}
+				}
+			}
+		}
+		
+		
+		for (int x = minX; x <= maxX; x++) {
+			POS.setX(x);
+			int x2 = x - blockPos.getX();
+			x2 *= x2;
+			int mx = x - maskMinX;
+			for (int z = minZ; z <= maxZ; z++) {
+				POS.setZ(z);
+				int z2 = z - blockPos.getZ();
+				z2 *= z2;
+				int mz = z - maskMinZ;
+				if (!mask[mx][mz]) {
+					for (int y = blockPos.getY(); y <= blockPos.getY() + 10; y++) {
+						POS.setY(y);
+						int add = y - blockPos.getY();
+						double r = add * 1.8 + radius * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
+						r *= r;
+						if (x2 + z2 <= r) {
+							state = world.getBlockState(POS);
+							if (state.isIn(BlockTagRegistry.END_GROUND)) {
+								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							}
+							pos = POS.down();
+							if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+								state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+								if (y > waterLevel + 1)
+									BlocksHelper.setWithoutUpdate(world, pos, state);
+								else if (y > waterLevel)
+									BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								else
+									BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
+							}
 						}
 					}
 				}
@@ -89,48 +120,56 @@ public class EndLakeFeature extends DefaultFeature {
 		}
 		
 		double aspect = ((double) radius / (double) depth);
-		for (int y = blockPos.getY() - bott; y < blockPos.getY(); y++) {
-			POS.setY(y);
-			double y2 = (double) (y - blockPos.getY()) * aspect;
-			y2 *= y2;
-			for (int x = blockPos.getX() - dist; x <= blockPos.getX() + dist; x++) {
-				POS.setX(x);
-				int x2 = x - blockPos.getX();
-				x2 *= x2;
-				for (int z = blockPos.getZ() - dist; z <= blockPos.getZ() + dist; z++) {
-					POS.setZ(z);
-					int z2 = z - blockPos.getZ();
-					z2 *= z2;
-					double r = radius * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
-					double rb = r * 1.2;
-					r *= r;
-					rb *= rb;
-					if (y2 + x2 + z2 <= r) {
-						state = world.getBlockState(POS);
-						if (state.isIn(BlockTagRegistry.END_GROUND) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
-							BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
-						}
-						pos = POS.down();
-						if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.END_GROUND))
-							BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
-						pos = POS.up();
-						if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
-							while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
-								BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
-								pos = pos.up();
+		
+		for (int x = blockPos.getX() - dist; x <= blockPos.getX() + dist; x++) {
+			POS.setX(x);
+			int x2 = x - blockPos.getX();
+			x2 *= x2;
+			int mx = x - maskMinX;
+			for (int z = blockPos.getZ() - dist; z <= blockPos.getZ() + dist; z++) {
+				POS.setZ(z);
+				int z2 = z - blockPos.getZ();
+				z2 *= z2;
+				int mz = z - maskMinZ;
+				if (!mask[mx][mz]) {
+					for (int y = blockPos.getY() - bott; y < blockPos.getY(); y++) {
+						POS.setY(y);
+						double y2 = (double) (y - blockPos.getY()) * aspect;
+						y2 *= y2;
+						double r = radius * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
+						double rb = r * 1.2;
+						r *= r;
+						rb *= rb;
+						if (y2 + x2 + z2 <= r) {
+							state = world.getBlockState(POS);
+							if (state.isIn(BlockTagRegistry.END_GROUND)
+									|| state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+								BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
 							}
-						}
-					}
-					else if (y <= waterLevel && y2 + x2 + z2 <= rb) {
-						if (world.getBlockState(POS).getMaterial().isReplaceable()) {
-							if (world.isAir(POS.up())) {
-								state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
-								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+							pos = POS.down();
+							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.END_GROUND))
+								BlocksHelper.setWithoutUpdate(world, POS.down(),
+										BlockRegistry.ENDSTONE_DUST.getDefaultState());
+							pos = POS.up();
+							if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+								while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+									BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
+									pos = pos.up();
+								}
 							}
-							else {
-								BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.ENDSTONE_DUST.getDefaultState());
-								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+						} else if (y <= waterLevel && y2 + x2 + z2 <= rb) {
+							if (world.getBlockState(POS).getMaterial().isReplaceable()) {
+								if (world.isAir(POS.up())) {
+									state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig()
+											.getTopMaterial();
+									BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state
+											: BlockRegistry.ENDSTONE_DUST.getDefaultState());
+									BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+								} else {
+									BlocksHelper.setWithoutUpdate(world, POS,
+											BlockRegistry.ENDSTONE_DUST.getDefaultState());
+									BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+								}
 							}
 						}
 					}

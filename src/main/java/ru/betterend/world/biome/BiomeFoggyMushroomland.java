@@ -16,6 +16,7 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.addFeature(FeatureRegistry.ENDER_ORE)
 				.addFeature(FeatureRegistry.END_LAKE)
 				.addFeature(FeatureRegistry.MOSSY_GLOWSHROOM)
+				.addFeature(FeatureRegistry.BLUE_VINE)
 				.addFeature(FeatureRegistry.UMBRELLA_MOSS)
 				.addFeature(FeatureRegistry.CREEPING_MOSS));
 	}

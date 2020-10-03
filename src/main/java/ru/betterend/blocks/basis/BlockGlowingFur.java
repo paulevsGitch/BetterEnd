@@ -1,4 +1,4 @@
-package ru.betterend.blocks;
+package ru.betterend.blocks.basis;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -15,6 +15,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -30,24 +31,24 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
-import ru.betterend.registry.BlockRegistry;
 import ru.betterend.util.MHelper;
 
 public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final DirectionProperty FACING = Properties.FACING;
+	private final ItemConvertible drop;
 	private final int dropChance;
 	
-	public BlockGlowingFur(int dropChance) {
+	public BlockGlowingFur(ItemConvertible drop, int dropChance) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
 				.lightLevel(15)
 				.breakByHand(true)
 				.noCollision());
+		this.drop = drop;
 		this.dropChance = dropChance;
 	}
 	
@@ -102,7 +103,7 @@ public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable
 			return Lists.newArrayList(new ItemStack(this));
 		}
 		else if (MHelper.RANDOM.nextInt(dropChance) == 0) {
-			return Lists.newArrayList(new ItemStack(BlockRegistry.MOSSY_GLOWSHROOM_SAPLING));
+			return Lists.newArrayList(new ItemStack(drop));
 		}
 		else {
 			return Lists.newArrayList();

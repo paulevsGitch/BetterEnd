@@ -11,8 +11,7 @@
 		"CraftingScreenHandlerMixin",
 		"GenerationSettingsMixin",
 		"LivingEntityMixin",
-		"BiomeMixin",
-		"TagAccessor"
+		"BiomeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

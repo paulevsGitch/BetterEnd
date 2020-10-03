@@ -8,8 +8,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.StructureWorldAccess;
 
-public abstract class BlockPlantWithStages extends BlockPlant {
+public abstract class BlockPlantWithAge extends BlockPlant {
 	public static final IntProperty AGE = IntProperty.of("age", 0, 4);
 	
 	@Override
@@ -17,7 +18,7 @@ public abstract class BlockPlantWithStages extends BlockPlant {
 		stateManager.add(AGE);
 	}
 	
-	public abstract void grow(ServerWorld world, Random random, BlockPos pos);
+	public abstract void grow(StructureWorldAccess world, Random random, BlockPos pos);
 	
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {

@@ -6,6 +6,7 @@ import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -70,6 +71,11 @@ public class EndFeature {
 		newFeature.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, BetterEnd.getIdentifier(name), oreFeature);
 		
 		return newFeature;
+	}
+	
+	public static EndFeature makeChunkFeature(String name, Feature<DefaultFeatureConfig> feature) {
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(1)));
+		return new EndFeature(name, feature, GenerationStep.Feature.LOCAL_MODIFICATIONS, configured);
 	}
 	
 	public Feature<?> getFeature() {

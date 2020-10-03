@@ -2,18 +2,19 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.BlockPlantWithStages;
+import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockPlantWithAge;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class BlockBlueVineSeed extends BlockPlantWithStages {
+public class BlockBlueVineSeed extends BlockPlantWithAge {
 	@Override
-	public void grow(ServerWorld world, Random random, BlockPos pos) {
+	public void grow(StructureWorldAccess world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(2, 5, random);
 		int h = BlocksHelper.upRay(world, pos, height + 2);
 		if (h < height + 1) {
@@ -27,7 +28,7 @@ public class BlockBlueVineSeed extends BlockPlantWithStages {
 		placeLantern(world, pos.up(height + 1));
 	}
 	
-	private void placeLantern(ServerWorld world, BlockPos pos) {
+	private void placeLantern(StructureWorldAccess world, BlockPos pos) {
 		BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.BLUE_VINE_LANTERN.getDefaultState().with(BlockBlueVineLantern.NATURAL, true));
 		for (Direction dir: BlocksHelper.HORIZONTAL) {
 			BlockPos p = pos.offset(dir);

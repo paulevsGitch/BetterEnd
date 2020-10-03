@@ -17,7 +17,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
-import ru.betterend.blocks.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
@@ -77,10 +77,6 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 			return BlockRegistry.MOSSY_GLOWSHROOM.log.getDefaultState();
 		});
 		Vector3f pos = spline.get(spline.size() - 1);
-		CENTER.set(blockPos.getX(), 0, blockPos.getZ());
-		HEAD_POS.setTranslate(pos.getX(), pos.getY(), pos.getZ());
-		ROOTS_ROT.setAngle(random.nextFloat() * MHelper.PI2);
-		FUNCTION.setSourceA(sdf);
 		float scale = MHelper.randRange(0.75F, 1.1F, random);
 		
 		Vector3f vec = spline.get(0);
@@ -111,6 +107,11 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 			z1 = z2;
 		}
 		BlocksHelper.setWithoutUpdate(world, blockPos, AIR);
+		
+		CENTER.set(blockPos.getX(), 0, blockPos.getZ());
+		HEAD_POS.setTranslate(pos.getX(), pos.getY(), pos.getZ());
+		ROOTS_ROT.setAngle(random.nextFloat() * MHelper.PI2);
+		FUNCTION.setSourceA(sdf);
 		
 		Set<BlockPos> blocks = new SDFScale()
 				.setScale(scale)
@@ -187,7 +188,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		FUNCTION = new SDFSmoothUnion().setRadius(4).setSourceB(new SDFUnion().setSourceA(HEAD_POS).setSourceB(ROOTS_ROT));
 		
 		REPLACE = (state) -> {
-			if (state.getBlock() != Blocks.END_STONE && state.isIn(BlockTagRegistry.END_GROUND)) {
+			if (state.isIn(BlockTagRegistry.END_GROUND)) {
 				return true;
 			}
 			if (state.getMaterial().equals(Material.PLANT)) {

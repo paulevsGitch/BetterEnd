@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
@@ -50,14 +49,19 @@ public class EndLakeFeature extends DefaultFeature {
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 		BlockState state;
 		
+		int minX = blockPos.getX() - dist2;
+		int maxX = blockPos.getX() + dist2;
+		int minZ = blockPos.getZ() - dist2;
+		int maxZ = blockPos.getZ() + dist2;
+		
 		for (int y = blockPos.getY(); y <= blockPos.getY() + 10; y++) {
 			POS.setY(y);
 			int add = y - blockPos.getY();
-			for (int x = blockPos.getX() - dist2; x <= blockPos.getX() + dist2; x++) {
+			for (int x = minX; x <= maxX; x++) {
 				POS.setX(x);
 				int x2 = x - blockPos.getX();
 				x2 *= x2;
-				for (int z = blockPos.getZ() - dist2; z <= blockPos.getZ() + dist2; z++) {
+				for (int z = minZ; z <= maxZ; z++) {
 					POS.setZ(z);
 					int z2 = z - blockPos.getZ();
 					z2 *= z2;
@@ -65,7 +69,7 @@ public class EndLakeFeature extends DefaultFeature {
 					r *= r;
 					if (x2 + z2 <= r) {
 						state = world.getBlockState(POS);
-						if (state.isIn(BlockTagRegistry.END_GROUND) || !state.canPlaceAt(world, POS) || state.getMaterial().equals(Material.PLANT)/* || state.getBlock() == BlockRegistry.ENDSTONE_DUST*/) {
+						if (state.isIn(BlockTagRegistry.END_GROUND)) {
 							BlocksHelper.setWithoutUpdate(world, POS, AIR);
 						}
 						pos = POS.down();
@@ -79,11 +83,6 @@ public class EndLakeFeature extends DefaultFeature {
 							else
 								BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
 						}
-						/*pos = POS.up();
-						while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND) || !state.canPlaceAt(world, pos) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
-							BlocksHelper.setWithoutUpdate(world, pos, AIR);
-							pos = pos.up();
-						}*/
 					}
 				}
 			}
@@ -108,7 +107,7 @@ public class EndLakeFeature extends DefaultFeature {
 					rb *= rb;
 					if (y2 + x2 + z2 <= r) {
 						state = world.getBlockState(POS);
-						if (state.isIn(BlockTagRegistry.END_GROUND) || !state.canPlaceAt(world, POS) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+						if (state.isIn(BlockTagRegistry.END_GROUND) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
 							BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
 						}
 						pos = POS.down();
@@ -138,6 +137,8 @@ public class EndLakeFeature extends DefaultFeature {
 				}
 			}
 		}
+		
+		BlocksHelper.fixBlocks(world, new BlockPos(minX - 2, waterLevel - 2, minZ - 2), new BlockPos(maxX + 2, blockPos.getY() + 20, maxZ + 2));
 		
 		return true;
 	}

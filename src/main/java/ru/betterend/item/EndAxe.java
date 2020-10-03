@@ -1,7 +1,6 @@
 package ru.betterend.item;
 
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.AxeItem;

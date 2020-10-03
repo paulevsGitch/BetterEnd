@@ -10,7 +10,7 @@
 		"TagGroupLoaderMixin",
 		"CraftingScreenHandlerMixin",
 		"GenerationSettingsMixin",
-		"PlayerEntityMixin",
+		"LivingEntityMixin",
 		"BiomeMixin",
 		"TagAccessor"
 	],

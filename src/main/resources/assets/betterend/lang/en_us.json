@@ -67,5 +67,10 @@
 	
 	"block.betterend.umbrella_moss": "Umbrella Moss",
 	"block.betterend.umbrella_moss_tall": "Tall Umbrella Moss",
-	"block.betterend.creeping_moss": "Creeping Moss"
+	"block.betterend.creeping_moss": "Creeping Moss",
+	
+	"block.betterend.blue_vine_seed": "Blue Vine Seed",
+	"block.betterend.blue_vine": "Blue Vine",
+	"block.betterend.blue_vine_lantern": "Blue Vine Lantern",
+	"block.betterend.blue_vine_fur": "Blue Vine Fur"
 }

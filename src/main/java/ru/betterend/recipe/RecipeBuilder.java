@@ -16,6 +16,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import ru.betterend.BetterEnd;
+import ru.betterend.util.RecipeHelper;
 
 public class RecipeBuilder {
 	private static final RecipeBuilder INSTANCE = new RecipeBuilder();
@@ -29,6 +30,7 @@ public class RecipeBuilder {
 	private String[] shape;
 	private Map<Character, Ingredient> materialKeys = Maps.newHashMap();
 	private int count;
+	private boolean exist = true;
 	
 	private RecipeBuilder() {}
 	
@@ -42,6 +44,8 @@ public class RecipeBuilder {
 		INSTANCE.shape = new String[] {"#"};
 		INSTANCE.materialKeys.clear();
 		INSTANCE.count = 1;
+		
+		INSTANCE.exist = RecipeHelper.exists(output);
 		
 		return INSTANCE;
 	}
@@ -67,10 +71,13 @@ public class RecipeBuilder {
 	}
 	
 	public RecipeBuilder addMaterial(char key, ItemConvertible... values) {
+		for (ItemConvertible item: values) {
+			exist &= RecipeHelper.exists(item);
+		}
 		return addMaterial(key, Ingredient.ofItems(values));
 	}
 	
-	public RecipeBuilder addMaterial(char key, Ingredient value) {
+	private RecipeBuilder addMaterial(char key, Ingredient value) {
 		materialKeys.put(key, value);
 		return this;
 	}
@@ -94,13 +101,18 @@ public class RecipeBuilder {
 	}
 	
 	public void build() {
-		int height = shape.length;
-		int width = shape[0].length();
-		ItemStack result = new ItemStack(output, count);
-		Identifier id = BetterEnd.makeID(name);
-		DefaultedList<Ingredient> materials = this.getMaterials(width, height);
-		
-		CraftingRecipe recipe = shaped ? new ShapedRecipe(id, group, width, height, materials, result) : new ShapelessRecipe(id, group, result, materials);
-		EndRecipeManager.addRecipe(type, recipe); 
+		if (exist) {
+			int height = shape.length;
+			int width = shape[0].length();
+			ItemStack result = new ItemStack(output, count);
+			Identifier id = BetterEnd.makeID(name);
+			DefaultedList<Ingredient> materials = this.getMaterials(width, height);
+			
+			CraftingRecipe recipe = shaped ? new ShapedRecipe(id, group, width, height, materials, result) : new ShapelessRecipe(id, group, result, materials);
+			EndRecipeManager.addRecipe(type, recipe);
+		}
+		else {
+			BetterEnd.LOGGER.debug("recipe {} couldn't be added", name);
+		}
 	}
 }

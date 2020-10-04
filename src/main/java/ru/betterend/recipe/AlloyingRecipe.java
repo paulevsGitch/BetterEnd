@@ -40,9 +40,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	protected final int smeltTime;
 
 	
-	public AlloyingRecipe(Identifier id, String group, Ingredient primaryInput, Ingredient secondaryInput,
-			ItemStack output, float experience, int smeltTime) {
-		
+	public AlloyingRecipe(Identifier id, String group, Ingredient primaryInput, Ingredient secondaryInput, ItemStack output, float experience, int smeltTime) {
 		this.group = group;
 		this.id = id;
 		this.primaryInput = primaryInput;

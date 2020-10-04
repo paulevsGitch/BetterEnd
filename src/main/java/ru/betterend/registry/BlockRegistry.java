@@ -68,12 +68,12 @@ public class BlockRegistry {
 	public static void register() {}
 	
 	public static Block registerBlock(String name, Block block) {
-		Registry.register(Registry.BLOCK, BetterEnd.getIdentifier(name), block);
+		Registry.register(Registry.BLOCK, BetterEnd.makeID(name), block);
 		ItemRegistry.registerItem(name, new BlockItem(block, new Item.Settings().group(CreativeTab.END_TAB)));
 		return block;
 	}
 	
 	public static Block registerBlockNI(String name, Block block) {
-		return Registry.register(Registry.BLOCK, BetterEnd.getIdentifier(name), block);
+		return Registry.register(Registry.BLOCK, BetterEnd.makeID(name), block);
 	}
 }

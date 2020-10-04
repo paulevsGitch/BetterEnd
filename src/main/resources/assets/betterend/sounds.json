@@ -1,0 +1,11 @@
+{
+	"betterend.ambient.foggy_mushroomland": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/foggy_mushroomland",
+				"stream": false
+			}
+		]
+	}
+}

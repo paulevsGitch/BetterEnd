@@ -15,6 +15,6 @@ public class ParticleRegistry {
 	}
 	
 	private static DefaultParticleType register(String name) {
-		return Registry.register(Registry.PARTICLE_TYPE, BetterEnd.getIdentifier(name), FabricParticleTypes.simple());
+		return Registry.register(Registry.PARTICLE_TYPE, BetterEnd.makeID(name), FabricParticleTypes.simple());
 	}
 }

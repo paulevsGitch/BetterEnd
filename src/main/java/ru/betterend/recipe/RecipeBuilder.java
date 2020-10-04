@@ -97,7 +97,7 @@ public class RecipeBuilder {
 		int height = shape.length;
 		int width = shape[0].length();
 		ItemStack result = new ItemStack(output, count);
-		Identifier id = BetterEnd.getIdentifier(name);
+		Identifier id = BetterEnd.makeID(name);
 		DefaultedList<Ingredient> materials = this.getMaterials(width, height);
 		
 		CraftingRecipe recipe = shaped ? new ShapedRecipe(id, group, width, height, materials, result) : new ShapelessRecipe(id, group, result, materials);

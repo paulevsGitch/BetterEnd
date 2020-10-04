@@ -28,7 +28,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = EndRecipeManager.registerType(GROUP);
 	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
-	public final static Identifier ID = BetterEnd.getIdentifier("alloying");
+	public final static Identifier ID = BetterEnd.makeID("alloying");
 	
 	protected final RecipeType<?> type;
 	protected final Identifier id;
@@ -119,7 +119,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		private final static Builder INSTANCE = new Builder();
 		
 		public static Builder create(String id) {
-			INSTANCE.id = BetterEnd.getIdentifier(id);
+			INSTANCE.id = BetterEnd.makeID(id);
 			INSTANCE.group = String.format("%s_%s", GROUP, id);
 			INSTANCE.primaryInput = null;
 			INSTANCE.secondaryInput = null;

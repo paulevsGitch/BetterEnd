@@ -14,7 +14,7 @@ import ru.betterend.registry.BlockRegistry;
 @Environment(EnvType.CLIENT)
 public class REIPlugin implements REIPluginV0 {
 
-	public final static Identifier PLUGIN_ID = BetterEnd.getIdentifier("rei_plugin");
+	public final static Identifier PLUGIN_ID = BetterEnd.makeID("rei_plugin");
 	public final static EntryStack END_STONE_SMELTER = EntryStack.create(BlockRegistry.END_STONE_SMELTER);
 	
 	@Override

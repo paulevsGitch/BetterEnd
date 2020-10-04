@@ -28,7 +28,7 @@ import ru.betterend.recipe.AlloyingRecipe;
 public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
 
 	public final static ScreenHandlerType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(
-			BetterEnd.getIdentifier(EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
+			BetterEnd.makeID(EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
 	
 	private final Inventory inventory;
 	private final PropertyDelegate propertyDelegate;

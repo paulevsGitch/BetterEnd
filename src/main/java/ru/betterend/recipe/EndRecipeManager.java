@@ -65,7 +65,7 @@ public class EndRecipeManager {
 	}
 
 	public static <T extends Recipe<?>> RecipeType<T> registerType(String type) {
-		Identifier recipeTypeId = BetterEnd.getIdentifier(type);
+		Identifier recipeTypeId = BetterEnd.makeID(type);
 		return Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new RecipeType<T>() {
 			public String toString() {
 				return type;

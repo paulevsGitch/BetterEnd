@@ -65,7 +65,7 @@ public class ItemRegistry {
 
 	protected static Item registerItem(String name, Item item) {
 		if (item != Items.AIR) {
-			Registry.register(Registry.ITEM, BetterEnd.getIdentifier(name), item);
+			Registry.register(Registry.ITEM, BetterEnd.makeID(name), item);
 			if (item instanceof BlockItem)
 				MOD_BLOCKS.add(item);
 			else
@@ -75,7 +75,7 @@ public class ItemRegistry {
 	}
 	
 	protected static ToolItem registerTool(String name, ToolItem item) {
-		Registry.register(Registry.ITEM, BetterEnd.getIdentifier(name), item);
+		Registry.register(Registry.ITEM, BetterEnd.makeID(name), item);
 		MOD_ITEMS.add(item);
 		
 		if (item instanceof ShovelItem) {

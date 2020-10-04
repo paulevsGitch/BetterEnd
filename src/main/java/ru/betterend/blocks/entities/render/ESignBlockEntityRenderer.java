@@ -111,7 +111,7 @@ public class ESignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEnti
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof BlockSign) {
 					String name = Registry.BLOCK.getId(block).getPath();
-					RenderLayer layer = RenderLayer.getEntitySolid(BetterEnd.getIdentifier("textures/entity/sign/" + name + ".png"));
+					RenderLayer layer = RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/sign/" + name + ".png"));
 					LAYERS.put(Block.getRawIdFromState(block.getDefaultState()), layer);
 				}
 			}

@@ -11,6 +11,7 @@ import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.SoundsRegistry;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
@@ -22,6 +23,7 @@ public class BetterEnd implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
+		SoundsRegistry.register();
 		DoubleBlockSurfaceBuilder.register();
 		ItemRegistry.register();
 		BlockRegistry.register();
@@ -34,10 +36,11 @@ public class BetterEnd implements ModInitializer {
 		AlloyingRecipes.register();
 	}
 	
-	public static Identifier getIdentifier(String path) {
+	public static Identifier makeID(String path) {
 		return new Identifier(MOD_ID, path);
 	}
 	
+	// For what does this exists? //
 	public static String getStringId(String id) {
 		return String.format("%s:%s", MOD_ID, id);
 	}

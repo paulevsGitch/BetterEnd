@@ -7,6 +7,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FallingBlock;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -114,41 +115,82 @@ public class BlocksHelper {
 	}
 	
 	public static void fixBlocks(WorldAccess world, BlockPos start, BlockPos end) {
-		synchronized (world) {
-			BlockState state;
-			for (int x = start.getX(); x <= end.getX(); x++) {
-				POS.setX(x);
-				for (int z = start.getZ(); z <= end.getZ(); z++) {
-					POS.setZ(z);
-					for (int y = start.getY(); y <= end.getY(); y++) {
-						POS.setY(y);
+		BlockState state;
+		for (int x = start.getX(); x <= end.getX(); x++) {
+			POS.setX(x);
+			for (int z = start.getZ(); z <= end.getZ(); z++) {
+				POS.setZ(z);
+				for (int y = start.getY(); y <= end.getY(); y++) {
+					POS.setY(y);
+					state = world.getBlockState(POS);
+					// Falling blocks
+					if (state.getBlock() instanceof FallingBlock) {
+						POS.setY(POS.getY() - 1);
 						state = world.getBlockState(POS);
-						if (!state.canPlaceAt(world, POS)) {
-							// Is blue Vine
-							if (state.getBlock() instanceof BlockBlueVine) {
-								while (!state.canPlaceAt(world, POS)) {
-									BlocksHelper.setWithoutUpdate(world, POS, AIR);
-									for (Direction dir : HORIZONTAL) {
-										BlockPos p = POS.offset(dir).up();
-										state = world.getBlockState(p);
-										if (state.getBlock() instanceof BlockGlowingFur) {
-											BlocksHelper.setWithoutUpdate(world, p, AIR);
-										}
-									}
-									POS.setY(POS.getY() + 1);
-									state = world.getBlockState(POS);
+						if (state.getMaterial().isReplaceable()) {
+							BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
+							if (world.getRandom().nextBoolean()) {
+								POS.setY(POS.getY() - 1);
+								state = world.getBlockState(POS);
+								if (state.getMaterial().isReplaceable()) {
+									BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
 								}
 							}
-							// Double plants
-							if (state.getBlock() instanceof BlockDoublePlant) {
+						}
+					}
+					// Fluid fixes
+					else if (!state.getFluidState().isEmpty()) {
+						BlockState liquid = state;
+						
+						BlockPos pos = POS.down();
+						state = world.getBlockState(pos);
+						boolean update = state.getMaterial().isReplaceable() && !state.getMaterial().isLiquid();
+						
+						pos = POS.north();
+						state = world.getBlockState(pos);
+						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
+						
+						pos = POS.south();
+						state = world.getBlockState(pos);
+						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
+						
+						pos = POS.east();
+						state = world.getBlockState(pos);
+						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
+						
+						pos = POS.west();
+						state = world.getBlockState(pos);
+						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
+						
+						if (update) {
+							world.setBlockState(POS, liquid, 1 | 2 | 8);
+						}
+					}
+					else if (!state.canPlaceAt(world, POS)) {
+						// Is blue Vine
+						if (state.getBlock() instanceof BlockBlueVine) {
+							while (!state.canPlaceAt(world, POS)) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+								for (Direction dir : HORIZONTAL) {
+									BlockPos p = POS.offset(dir).up();
+									state = world.getBlockState(p);
+									if (state.getBlock() instanceof BlockGlowingFur) {
+										BlocksHelper.setWithoutUpdate(world, p, AIR);
+									}
+								}
 								POS.setY(POS.getY() + 1);
-								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+								state = world.getBlockState(POS);
 							}
-							// Common plants & blocks
-							else {
-								BlocksHelper.setWithoutUpdate(world, POS, AIR);
-							}
+						}
+						// Double plants
+						if (state.getBlock() instanceof BlockDoublePlant) {
+							BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							POS.setY(POS.getY() + 1);
+							BlocksHelper.setWithoutUpdate(world, POS, AIR);
+						}
+						// Common plants & blocks
+						else {
+							BlocksHelper.setWithoutUpdate(world, POS, AIR);
 						}
 					}
 				}

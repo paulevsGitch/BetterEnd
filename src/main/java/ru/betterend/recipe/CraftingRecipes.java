@@ -3,6 +3,7 @@ package ru.betterend.recipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.registry.BlockRegistry;
@@ -11,7 +12,7 @@ import ru.betterend.registry.ItemRegistry;
 public class CraftingRecipes {
 	
 	public static void register() {
-		if (blockExists(BlockRegistry.ENDER_BLOCK)) {
+		if (exists(BlockRegistry.ENDER_BLOCK)) {
 			RecipeBuilder.make("ender_pearl_to_block", BlockRegistry.ENDER_BLOCK)
 				.setShape(new String[] { "OO", "OO" })
 				.addMaterial('O', Items.ENDER_PEARL)
@@ -22,7 +23,7 @@ public class CraftingRecipes {
 				.setList("#")
 				.build();
 		}
-		if (blockExists(BlockRegistry.END_STONE_SMELTER)) {
+		if (exists(BlockRegistry.END_STONE_SMELTER)) {
 			RecipeBuilder.make("end_stone_smelter", BlockRegistry.END_STONE_SMELTER)
 				.setShape(new String[] { "###", "V V", "###" })
 				.addMaterial('#', Blocks.END_STONE_BRICKS)
@@ -30,7 +31,7 @@ public class CraftingRecipes {
 				.build();
 				
 		}
-		if (itemExists(ItemRegistry.TERMINITE_INGOT)) {
+		if (exists(ItemRegistry.TERMINITE_INGOT)) {
 			String material = "terminite";
 			RecipeBuilder.make(material + "_block", BlockRegistry.TERMINITE_BLOCK)
 				.setShape(new String[] { "III", "III", "III" })
@@ -48,7 +49,7 @@ public class CraftingRecipes {
 			registerHoe(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HOE);
 			registerHammer(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HAMMER);
 		}
-		if (itemExists(ItemRegistry.AETERNIUM_INGOT)) {
+		if (exists(ItemRegistry.AETERNIUM_INGOT)) {
 			String material = "aeternium";
 			RecipeBuilder.make(material + "_block", BlockRegistry.AETERNIUM_BLOCK)
 				.setShape(new String[] { "III", "III", "III" })
@@ -71,6 +72,10 @@ public class CraftingRecipes {
 		registerHammer("golden", Items.GOLD_INGOT, ItemRegistry.GOLDEN_HAMMER);
 		registerHammer("diamond", Items.DIAMOND, ItemRegistry.DIAMOND_HAMMER);
 		registerHammer("netherite", Items.NETHERITE_INGOT, ItemRegistry.NETHERITE_HAMMER);
+		
+		if (exists(BlockRegistry.BLUE_VINE_SEED)) {
+			RecipeBuilder.make("blue_vine_seed_dye", Items.BLUE_DYE).setList("#").addMaterial('#', BlockRegistry.BLUE_VINE_SEED).build();
+		}
 	}
 	
 	private static void registerHelmet(String name, Item material, Item result) {
@@ -149,11 +154,12 @@ public class CraftingRecipes {
 		.build();
 	}
 	
-	protected static boolean itemExists(Item item) {
-		return Registry.ITEM.getId(item) != Registry.ITEM.getDefaultId();
-	}
-
-	protected static boolean blockExists(Block block) {
-		return Registry.BLOCK.getId(block) != Registry.BLOCK.getDefaultId();
+	protected static boolean exists(ItemConvertible item) {
+		if (item instanceof Block) {
+			return Registry.BLOCK.getId((Block) item) != Registry.BLOCK.getDefaultId();
+		}
+		else {
+			return Registry.ITEM.getId(item.asItem()) != Registry.ITEM.getDefaultId();
+		}
 	}
 }

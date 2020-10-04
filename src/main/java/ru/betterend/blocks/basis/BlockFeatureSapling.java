@@ -25,7 +25,7 @@ import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
 
 public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
-	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 2, 4, 12, 16, 12);
+	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
 	
 	public BlockFeatureSapling() {
 		super(FabricBlockSettings.of(Material.PLANT)

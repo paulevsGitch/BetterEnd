@@ -68,6 +68,15 @@ public class BlocksHelper {
 			length++;
 		return length;
 	}
+	
+	public static int downRayRep(WorldAccess world, BlockPos pos, int maxDist) {
+		POS.set(pos);
+		for (int j = 1; j < maxDist && (world.getBlockState(POS)).getMaterial().isReplaceable(); j++)
+		{
+			POS.setY(POS.getY() - 1);
+		}
+		return pos.getY() - POS.getY();
+	}
 
 	public static BlockState rotateHorizontal(BlockState state, BlockRotation rotation, Property<Direction> facing) {
 		return (BlockState) state.with(facing, rotation.rotate((Direction) state.get(facing)));
@@ -125,49 +134,31 @@ public class BlocksHelper {
 					state = world.getBlockState(POS);
 					// Falling blocks
 					if (state.getBlock() instanceof FallingBlock) {
+						BlockState falling = state;
+						
 						POS.setY(POS.getY() - 1);
 						state = world.getBlockState(POS);
-						if (state.getMaterial().isReplaceable()) {
+						
+						int ray = downRayRep(world, POS.toImmutable(), 64);
+						if (ray > 32) {
 							BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
 							if (world.getRandom().nextBoolean()) {
 								POS.setY(POS.getY() - 1);
 								state = world.getBlockState(POS);
-								if (state.getMaterial().isReplaceable()) {
-									BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
-								}
+								BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
 							}
 						}
-					}
-					// Fluid fixes
-					else if (!state.getFluidState().isEmpty()) {
-						BlockState liquid = state;
-						
-						BlockPos pos = POS.down();
-						state = world.getBlockState(pos);
-						boolean update = state.getMaterial().isReplaceable() && !state.getMaterial().isLiquid();
-						
-						pos = POS.north();
-						state = world.getBlockState(pos);
-						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
-						
-						pos = POS.south();
-						state = world.getBlockState(pos);
-						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
-						
-						pos = POS.east();
-						state = world.getBlockState(pos);
-						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
-						
-						pos = POS.west();
-						state = world.getBlockState(pos);
-						update |= state.getMaterial().isReplaceable() && state.getFluidState().isEmpty();
-						
-						if (update) {
-							world.setBlockState(POS, liquid, 1 | 2 | 8);
+						else {
+							POS.setY(y);
+							BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							
+							POS.setY(y - ray);
+							BlocksHelper.setWithoutUpdate(world, POS, falling);
 						}
 					}
+					// Blocks without support
 					else if (!state.canPlaceAt(world, POS)) {
-						// Is blue Vine
+						// Blue Vine
 						if (state.getBlock() instanceof BlockBlueVine) {
 							while (!state.canPlaceAt(world, POS)) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
@@ -188,7 +179,7 @@ public class BlocksHelper {
 							POS.setY(POS.getY() + 1);
 							BlocksHelper.setWithoutUpdate(world, POS, AIR);
 						}
-						// Common plants & blocks
+						// Other blocks
 						else {
 							BlocksHelper.setWithoutUpdate(world, POS, AIR);
 						}

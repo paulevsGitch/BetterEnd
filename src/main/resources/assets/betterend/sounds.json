@@ -1,4 +1,20 @@
 {
+	"betterend.music.foggy_mushroomland": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/dan_henig_eternal_garden",
+				"volume": 0.3,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/dan_henig_nebular_focus",
+				"volume": 0.3,
+				"stream": false
+			}
+		]
+	},
+	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",
 		"sounds": [

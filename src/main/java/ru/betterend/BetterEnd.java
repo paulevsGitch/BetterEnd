@@ -9,6 +9,7 @@ import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockEntityRegistry;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
 import ru.betterend.registry.SoundsRegistry;
@@ -29,6 +30,7 @@ public class BetterEnd implements ModInitializer {
 		BlockRegistry.register();
 		BlockEntityRegistry.register();
 		FeatureRegistry.register();
+		EntityRegistry.register();
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();
 		BlockTagRegistry.register();

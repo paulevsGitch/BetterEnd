@@ -65,15 +65,17 @@ public class EndLakeFeature extends DefaultFeature {
 				POS.setZ(z);
 				int mz = z - maskMinZ;
 				if (!mask[mx][mz]) {
-					for (int y = waterLevel; y <= blockPos.getY() + 10; y++) {
+					for (int y = waterLevel; y <= waterLevel + 20; y++) {
 						POS.setY(y);
 						FluidState fluid = world.getFluidState(POS);
 						if (!fluid.isEmpty()) {
-							mask[mx][mz] = true;
-							mask[mx + 1][mz] = true;
-							mask[mx - 1][mz] = true;
-							mask[mx][mz + 1] = true;
-							mask[mx][mz - 1] = true;
+							for (int i = -1; i < 2; i++) {
+								int px = mx + i;
+								for (int j = -1; j < 2; j++) {
+									int pz = mz + j;
+									mask[px][pz] = true;
+								}
+							}
 							break;
 						}
 					}
@@ -142,22 +144,26 @@ public class EndLakeFeature extends DefaultFeature {
 						rb *= rb;
 						if (y2 + x2 + z2 <= r) {
 							state = world.getBlockState(POS);
-							if (state.isIn(BlockTagRegistry.END_GROUND)
-									|| state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+							if (state.isIn(BlockTagRegistry.END_GROUND) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
 								BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
+								if (y == waterLevel - 1) {
+									world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);
+								}
 							}
 							pos = POS.down();
 							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.END_GROUND))
-								BlocksHelper.setWithoutUpdate(world, POS.down(),
-										BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
 							pos = POS.up();
 							if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
 								while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
 									BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
+									if (y == waterLevel - 1) {
+										world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);
+									}
 									pos = pos.up();
 								}
 							}
-						} else if (y <= waterLevel && y2 + x2 + z2 <= rb) {
+						} else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.getBlockState(POS).getMaterial().isReplaceable()) {
 								if (world.isAir(POS.up())) {
 									state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig()

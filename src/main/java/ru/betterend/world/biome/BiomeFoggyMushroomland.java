@@ -15,6 +15,7 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.setSurface(BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM)
 				.setParticles(ParticleRegistry.GLOWING_SPHERE, 0.001F)
 				.setLoop(SoundsRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
+				.setMusic(SoundsRegistry.MUSIC_FOGGY_MUSHROOMLAND)
 				.addFeature(FeatureRegistry.ENDER_ORE)
 				.addFeature(FeatureRegistry.END_LAKE)
 				.addFeature(FeatureRegistry.MOSSY_GLOWSHROOM)

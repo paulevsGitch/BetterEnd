@@ -13,7 +13,8 @@
 		"AnvilScreenHandlerMixin",
 		"AbstractBlockMixin",
 		"LivingEntityMixin",
-		"BiomeMixin"
+		"BiomeMixin",
+		"SlimeEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

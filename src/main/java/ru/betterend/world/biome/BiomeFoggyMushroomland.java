@@ -1,5 +1,6 @@
 package ru.betterend.world.biome;
 
+import net.minecraft.entity.EntityType;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
@@ -23,6 +24,8 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.addFeature(FeatureRegistry.BLUE_VINE)
 				.addFeature(FeatureRegistry.UMBRELLA_MOSS)
 				.addFeature(FeatureRegistry.CREEPING_MOSS)
-				.addMobSpawn(EntityRegistry.DRAGONFLY, 80, 2, 4));
+				.addMobSpawn(EntityRegistry.DRAGONFLY, 80, 2, 5)
+				.addMobSpawn(EntityRegistry.END_SLIME, 10, 1, 2)
+				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));
 	}
 }

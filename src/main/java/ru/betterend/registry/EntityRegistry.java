@@ -14,12 +14,15 @@ import ru.betterend.BetterEnd;
 import ru.betterend.entity.EntityDragonfly;
 import ru.betterend.entity.EntityEndSlime;
 import ru.betterend.util.MHelper;
+import ru.betterend.util.SpawnHelper;
 
 public class EntityRegistry {
 	public static final EntityType<EntityDragonfly> DRAGONFLY = register("dragonfly", SpawnGroup.AMBIENT, 0.6F, 0.5F, EntityDragonfly::new, EntityDragonfly.createMobAttributes(), MHelper.color(32, 42, 176), MHelper.color(115, 225, 249));
-	public static final EntityType<EntityEndSlime> END_SLIME = register("end_slime", SpawnGroup.AMBIENT, 0.6F, 0.5F, EntityEndSlime::new, EntityEndSlime.createMobAttributes(), MHelper.color(28, 28, 28), MHelper.color(99, 11, 99));
+	public static final EntityType<EntityEndSlime> END_SLIME = register("end_slime", SpawnGroup.MONSTER, 0.6F, 0.5F, EntityEndSlime::new, EntityEndSlime.createMobAttributes(), MHelper.color(28, 28, 28), MHelper.color(99, 11, 99));
 	
-	public static void register() {}
+	public static void register() {
+		SpawnHelper.restrictionLand(END_SLIME, EntityEndSlime::canSpawn);
+	}
 	
 	protected static <T extends Entity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity) {
 		EntityType<T> type = Registry.register(Registry.ENTITY_TYPE, BetterEnd.makeID(name), FabricEntityTypeBuilder.<T>create(group, entity).dimensions(EntityDimensions.fixed(width, height)).build());

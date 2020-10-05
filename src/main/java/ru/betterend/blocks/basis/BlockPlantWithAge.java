@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 
 public abstract class BlockPlantWithAge extends BlockPlant {
-	public static final IntProperty AGE = IntProperty.of("age", 0, 4);
+	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {

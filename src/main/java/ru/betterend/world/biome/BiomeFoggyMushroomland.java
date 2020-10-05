@@ -4,7 +4,7 @@ import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ParticleRegistry;
-import ru.betterend.registry.SoundsRegistry;
+import ru.betterend.registry.SoundRegistry;
 
 public class BiomeFoggyMushroomland extends EndBiome {
 	public BiomeFoggyMushroomland() {
@@ -15,8 +15,8 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.setWaterFogColor(119, 227, 250)
 				.setSurface(BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM)
 				.setParticles(ParticleRegistry.GLOWING_SPHERE, 0.001F)
-				.setLoop(SoundsRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
-				.setMusic(SoundsRegistry.MUSIC_FOGGY_MUSHROOMLAND)
+				.setLoop(SoundRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
+				.setMusic(SoundRegistry.MUSIC_FOGGY_MUSHROOMLAND)
 				.addFeature(FeatureRegistry.ENDER_ORE)
 				.addFeature(FeatureRegistry.END_LAKE)
 				.addFeature(FeatureRegistry.MOSSY_GLOWSHROOM)

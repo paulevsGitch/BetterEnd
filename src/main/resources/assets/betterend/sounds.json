@@ -23,5 +23,23 @@
 				"stream": false
 			}
 		]
+	},
+	
+	"betterend.entity.dragonfly": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterend:entity/dragonfly/dragonfly_1",
+				"stream": false
+			},
+			{
+				"name": "betterend:entity/dragonfly/dragonfly_2",
+				"stream": false
+			},
+			{
+				"name": "betterend:entity/dragonfly/dragonfly_3",
+				"stream": false
+			}
+		]
 	}
 }

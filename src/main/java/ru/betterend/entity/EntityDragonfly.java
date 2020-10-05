@@ -23,12 +23,15 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import ru.betterend.registry.EntityRegistry;
+import ru.betterend.registry.SoundRegistry;
 import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.MHelper;
 
 public class EntityDragonfly extends AnimalEntity implements Flutterer {
     public EntityDragonfly(EntityType<EntityDragonfly> entityType, World world) {
@@ -102,6 +105,16 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 	@Override
 	public boolean hasNoGravity() {
 		return true;
+	}
+	
+	@Override
+	public SoundEvent getAmbientSound() {
+		return SoundRegistry.ENTITY_DRAGONFLY;
+	}
+
+	@Override
+	protected float getSoundVolume() {
+		return MHelper.randRange(0.25F, 0.5F, random);
 	}
 	
 	class DragonflyLookControl extends LookControl {

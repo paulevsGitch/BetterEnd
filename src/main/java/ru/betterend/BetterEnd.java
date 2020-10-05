@@ -19,7 +19,7 @@ import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
 import ru.betterend.registry.ItemTagRegistry;
-import ru.betterend.registry.SoundsRegistry;
+import ru.betterend.registry.SoundRegistry;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
@@ -31,7 +31,7 @@ public class BetterEnd implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
-		SoundsRegistry.register();
+		SoundRegistry.register();
 		DoubleBlockSurfaceBuilder.register();
 		ItemRegistry.register();
 		BlockRegistry.register();

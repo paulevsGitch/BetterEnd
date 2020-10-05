@@ -28,6 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import ru.betterend.registry.EntityRegistry;
+import ru.betterend.util.BlocksHelper;
 
 public class EntityDragonfly extends AnimalEntity implements Flutterer {
     public EntityDragonfly(EntityType<EntityDragonfly> entityType, World world) {
@@ -136,14 +137,16 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 	      }
 
 		private Vec3d getRandomLocation() {
-			/*return new Vec3d(
-				EntityDragonfly.this.random.nextGaussian() * 10,
-				EntityDragonfly.this.random.nextGaussian() * 2,
-				EntityDragonfly.this.random.nextGaussian() * 10
-			);*/
-			Vec3d vec3d3 = EntityDragonfly.this.getRotationVec(0.0F);
-			Vec3d vec3d4 = TargetFinder.findAirTarget(EntityDragonfly.this, 8, 7, vec3d3, 1.5707964F, 2, 1);
-			return vec3d4 != null ? vec3d4 : TargetFinder.findGroundTarget(EntityDragonfly.this, 8, 4, -2, vec3d3, 1.5707963705062866D);
+			int h = BlocksHelper.downRay(EntityDragonfly.this.world, EntityDragonfly.this.getBlockPos(), 16);
+			Vec3d rotation = EntityDragonfly.this.getRotationVec(0.0F);
+			Vec3d airPos = TargetFinder.findAirTarget(EntityDragonfly.this, 8, 7, rotation, 1.5707964F, 2, 1);
+			if (airPos != null) {
+				if (h > 5) {
+					airPos = new Vec3d(airPos.x, airPos.y - h * 0.5, airPos.z);
+				}
+				return airPos;
+			}
+			return TargetFinder.findGroundTarget(EntityDragonfly.this, 8, 4, -2, rotation, 1.5707963705062866D);
 		}
 	   }
 

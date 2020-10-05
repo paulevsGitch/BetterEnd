@@ -24,7 +24,8 @@ public class BlockBenchToFabricJava {
 			string = string
 					.replace("ModelRenderer", "ModelPart")
 					.replace("setRotationPoint", "setPivot")
-					.replace("addBox", "addCuboid");
+					.replace("addBox", "addCuboid")
+					.replace(", false", "");
 			
 			if (write)
 				wr.write(string + "\n");

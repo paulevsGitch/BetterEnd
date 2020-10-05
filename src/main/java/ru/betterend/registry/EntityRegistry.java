@@ -14,7 +14,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.entity.EntityDragonfly;
 
 public class EntityRegistry {
-	public static final EntityType<EntityDragonfly> DRAGONFLY = register("dragonfly", SpawnGroup.CREATURE, 0.5F, 0.25F, EntityDragonfly::new, EntityDragonfly.createMobAttributes());
+	public static final EntityType<EntityDragonfly> DRAGONFLY = register("dragonfly", SpawnGroup.CREATURE, 0.6F, 0.5F, EntityDragonfly::new, EntityDragonfly.createMobAttributes());
 	
 	public static void register() {}
 	

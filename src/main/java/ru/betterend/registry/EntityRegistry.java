@@ -11,9 +11,9 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer.Builder;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
+import ru.betterend.entity.EntityDragonfly;
 import ru.betterend.entity.EntityEndSlime;
 import ru.betterend.util.MHelper;
-import ru.betterend.entity.EntityDragonfly;
 
 public class EntityRegistry {
 	public static final EntityType<EntityDragonfly> DRAGONFLY = register("dragonfly", SpawnGroup.AMBIENT, 0.6F, 0.5F, EntityDragonfly::new, EntityDragonfly.createMobAttributes(), MHelper.color(32, 42, 176), MHelper.color(115, 225, 249));

@@ -1,6 +1,14 @@
 {
 	"itemGroup.betterend.items": "Улучшенный Край",
 	
+	"biome.betterend.foggy_mushroomland": "Туманное гриболесье",
+	
+	"entity.betterend.dragonfly": "Стрекоза",
+	"item.betterend.spawn_egg_dragonfly": "Яйцо призыва стрекозы",
+	
+	"entity.betterend.end_slime": "Слизень края",
+	"item.betterend.spawn_egg_end_slime": "Яйцо призыва слизня края",
+	
 	"block.betterend.end_mycelium": "Мицелий края",
 	"block.betterend.end_moss": "Мох края",
 	"block.betterend.endstone_dust": "Эндерняковая пыль",

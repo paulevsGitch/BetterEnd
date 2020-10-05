@@ -11,10 +11,12 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer.Builder;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
+import ru.betterend.entity.EntityEndSlime;
 import ru.betterend.entity.EntityDragonfly;
 
 public class EntityRegistry {
 	public static final EntityType<EntityDragonfly> DRAGONFLY = register("dragonfly", SpawnGroup.AMBIENT, 0.6F, 0.5F, EntityDragonfly::new, EntityDragonfly.createMobAttributes());
+	public static final EntityType<EntityEndSlime> END_SLIME = register("end_slime", SpawnGroup.AMBIENT, 0.6F, 0.5F, EntityEndSlime::new, EntityEndSlime.createMobAttributes());
 	
 	public static void register() {}
 	

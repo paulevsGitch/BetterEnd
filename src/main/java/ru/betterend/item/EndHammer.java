@@ -11,6 +11,7 @@ import io.netty.util.internal.ThreadLocalRandom;
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.fabricmc.fabric.api.tool.attribute.v1.ToolManager;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -32,7 +33,6 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = MathHelper.randomUuid(ThreadLocalRandom.current());
 	
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
-	private ItemStack itemStack;
 
 	public EndHammer(ToolMaterial material, float attackDamage, float attackSpeed, double knockback, Settings settings) {
 		super(attackDamage, attackSpeed, material, Sets.newHashSet(), settings);
@@ -42,7 +42,6 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 		builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION));
 		builder.put(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, new EntityAttributeModifier(ATTACK_KNOCKBACK_MODIFIER_ID, "Weapon modifier", knockback, EntityAttributeModifier.Operation.ADDITION));
 		this.attributeModifiers = builder.build();
-		this.itemStack = new ItemStack(this);
 	}
 
 	@Override
@@ -73,9 +72,23 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	@Override
 	public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
 		if (state.getMaterial().equals(Material.GLASS)) {
-			return 10.0F;
+			return this.getMaterial().getMiningSpeedMultiplier() * 2.0F;
+		}
+		if (isEffectiveOn(state)) {
+			float mult = 1.0F;
+			if (state.isOf(Blocks.DIAMOND_BLOCK) || state.isOf(Blocks.EMERALD_BLOCK) || state.isOf(Blocks.LAPIS_BLOCK) || state.isOf(Blocks.REDSTONE_BLOCK)) {
+				mult = this.getMaterial().getMiningSpeedMultiplier();
+			} else {
+				mult = this.getMaterial().getMiningSpeedMultiplier() / 2.0F;
+			}
+			return mult > 1.0F ? mult : 1.0F;
 		}
 		return 1.0F;
+	}
+	
+	@Override
+	public float getMiningSpeedMultiplier(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
+		return ToolManager.handleBreakingSpeed(state, stack, user);
 	}
 	
 	@Override
@@ -88,10 +101,20 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 		if (state.getMaterial().equals(Material.GLASS)) {
 			return true;
 		}
-		if (!state.getMaterial().equals(Material.STONE)) {
+		if (!state.isOf(Blocks.REDSTONE_BLOCK) && !state.isOf(Blocks.DIAMOND_BLOCK) && !state.isOf(Blocks.EMERALD_BLOCK) && !state.isOf(Blocks.LAPIS_BLOCK) && !state.getMaterial().equals(Material.STONE)) {
 			return false;
 		}
-		return ToolManager.handleIsEffectiveOnIgnoresVanilla(state, itemStack, null);
+		int level = this.getMaterial().getMiningLevel();
+		if (state.isOf(Blocks.IRON_ORE) || state.isOf(Blocks.LAPIS_BLOCK) || state.isOf(Blocks.LAPIS_ORE)) {
+			return level >= 1;
+		}
+		if (state.isOf(Blocks.DIAMOND_BLOCK) && !state.isOf(Blocks.DIAMOND_ORE) || state.isOf(Blocks.EMERALD_ORE) || state.isOf(Blocks.EMERALD_BLOCK) || state.isOf(Blocks.GOLD_ORE) || state.isOf(Blocks.REDSTONE_ORE)) {
+			return level >= 2;
+		}
+		if (state.isOf(Blocks.OBSIDIAN) || state.isOf(Blocks.CRYING_OBSIDIAN) || state.isOf(Blocks.RESPAWN_ANCHOR) || state.isOf(Blocks.ANCIENT_DEBRIS)) {
+			return level >= 3;
+		}
+		return true;
 	}
 
 	@Override

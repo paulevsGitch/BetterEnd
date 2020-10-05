@@ -1,6 +1,12 @@
 package ru.betterend;
 
+import java.util.Arrays;
+
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
+import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import ru.betterend.config.MainConfig;
 import ru.betterend.recipe.AlloyingRecipes;
@@ -12,6 +18,7 @@ import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.ItemTagRegistry;
 import ru.betterend.registry.SoundsRegistry;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
@@ -33,6 +40,7 @@ public class BetterEnd implements ModInitializer {
 		EntityRegistry.register();
 		BiomeRegistry.register();
 		BetterEndBiomeSource.register();
+		ItemTagRegistry.register();
 		BlockTagRegistry.register();
 		CraftingRecipes.register();
 		AlloyingRecipes.register();

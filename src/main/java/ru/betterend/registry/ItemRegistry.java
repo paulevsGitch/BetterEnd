@@ -88,6 +88,8 @@ public class ItemRegistry {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.AXES, item);
 		} else if (item instanceof EndHoe) {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.HOES, item);
+		} else if (item instanceof EndHammer) {
+			TagHelper.addTag((Tag.Identified<Item>) ItemTagRegistry.HAMMERS, item);
 		}
 		
 		return item;

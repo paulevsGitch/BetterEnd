@@ -20,7 +20,6 @@ import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.world.World;
-
 import ru.betterend.recipe.AnvilSmithingRecipe;
 
 @Mixin(AnvilScreenHandler.class)

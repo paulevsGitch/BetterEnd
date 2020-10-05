@@ -1,12 +1,6 @@
 package ru.betterend;
 
-import java.util.Arrays;
-
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
-import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import ru.betterend.config.MainConfig;
 import ru.betterend.recipe.AlloyingRecipes;

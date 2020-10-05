@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeType;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.ItemRegistry;

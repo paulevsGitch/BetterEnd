@@ -8,9 +8,11 @@ import net.minecraft.client.render.entity.model.SlimeEntityModel;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
+import ru.betterend.entity.EntityEndSlime;
 
 public class RendererEntityEndSlime extends SlimeEntityRenderer {
 	private static final Identifier TEXTURE = BetterEnd.makeID("textures/entity/end_slime.png");
+	private static final Identifier TEXTURE_MOSSY = BetterEnd.makeID("textures/entity/end_slime_mossy.png");
 	private static final RenderLayer GLOW = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/end_slime_glow.png"));
 	
     public RendererEntityEndSlime(EntityRenderDispatcher entityRenderDispatcher) {
@@ -25,6 +27,6 @@ public class RendererEntityEndSlime extends SlimeEntityRenderer {
  
     @Override
     public Identifier getTexture(SlimeEntity entity) {
-        return TEXTURE;
+        return ((EntityEndSlime) entity).isMossy() ? TEXTURE_MOSSY : TEXTURE;
     }
 }

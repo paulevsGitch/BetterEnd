@@ -103,6 +103,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		return this.type;
 	}
 	
+	@Override
 	@Environment(EnvType.CLIENT)
 	public String getGroup() {
 		return this.group;

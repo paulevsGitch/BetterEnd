@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
 
 public class ItemTagRegistry {
-	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammer");
+	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
 	
 	public static Tag<Item> registerItemTag(String name) {
 		return TagRegistry.item(BetterEnd.makeID(name));

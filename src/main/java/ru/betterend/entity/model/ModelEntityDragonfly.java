@@ -45,26 +45,24 @@ public class ModelEntityDragonfly extends EntityModel<EntityDragonfly> {
 		wing_1 = new ModelPart(this);
 		wing_1.setPivot(-2.0F, -4.0F, 4.0F);
 		model.addChild(wing_1);
-		setRotationAngle(wing_1, 0.0F, 0.0F, 0.3491F);
 		wing_1.setTextureOffset(0, 13).addCuboid(-15.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F, 0.0F);
 
 		wing_2 = new ModelPart(this);
 		wing_2.setPivot(-2.0F, -4.0F, 4.0F);
 		model.addChild(wing_2);
-		setRotationAngle(wing_2, 0.0F, 0.0F, 2.7925F);
-		wing_2.setTextureOffset(0, 13).addCuboid(-15.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F, 0.0F);
+		wing_2.mirror = true;
+		wing_2.setTextureOffset(0, 13).addCuboid(0.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F, 0.0F);
 
 		wing_3 = new ModelPart(this);
 		wing_3.setPivot(-2.0F, -4.0F, 8.0F);
 		model.addChild(wing_3);
-		setRotationAngle(wing_3, 0.0F, 0.0F, 0.3491F);
 		wing_3.setTextureOffset(4, 17).addCuboid(-12.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F, 0.0F);
 
 		wing_4 = new ModelPart(this);
 		wing_4.setPivot(-2.0F, -4.0F, 8.0F);
 		model.addChild(wing_4);
-		setRotationAngle(wing_4, 0.0F, 0.0F, 2.7925F);
-		wing_4.setTextureOffset(4, 17).addCuboid(-12.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F, 0.0F);
+		wing_4.mirror = true;
+		wing_4.setTextureOffset(4, 17).addCuboid(0.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F, 0.0F);
 
 		legs_1 = new ModelPart(this);
 		legs_1.setPivot(-1.0F, 0.0F, 1.0F);
@@ -84,14 +82,11 @@ public class ModelEntityDragonfly extends EntityModel<EntityDragonfly> {
 	public void setAngles(EntityDragonfly entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		float progress = animationProgress * 2F;
 		
-		float sin = (float) Math.sin(progress);
-		float cos = (float) Math.cos(progress);
+		wing_1.roll = 0.3491F + (float) Math.sin(progress) * 0.3491F;
+		wing_2.roll = -wing_1.roll;
 		
-		wing_1.roll = 0.3491F + sin * 0.3491F;
-		wing_2.roll = 2.7925F - sin * 0.3491F;
-		
-		wing_3.roll = 0.3491F + cos * 0.3491F;
-		wing_4.roll = 2.7925F - cos * 0.3491F;
+		wing_3.roll = 0.3491F + (float) Math.cos(progress) * 0.3491F;
+		wing_4.roll = -wing_3.roll;
 		
 		progress = animationProgress * 0.05F;
 		

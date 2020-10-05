@@ -44,8 +44,7 @@ public class BlockSign extends AbstractSignBlock {
 
 	public BlockSign(Block source) {
 		super(FabricBlockSettings.copyOf(source).noCollision().nonOpaque(), SignType.OAK);
-		this.setDefaultState(
-				this.stateManager.getDefaultState().with(ROTATION, 0).with(FLOOR, true).with(WATERLOGGED, false));
+		this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0).with(FLOOR, true).with(WATERLOGGED, false));
 	}
 
 	@Override

@@ -24,6 +24,7 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.addFeature(FeatureRegistry.BLUE_VINE)
 				.addFeature(FeatureRegistry.UMBRELLA_MOSS)
 				.addFeature(FeatureRegistry.CREEPING_MOSS)
+				.addFeature(FeatureRegistry.DENSE_VINE)
 				.addMobSpawn(EntityRegistry.DRAGONFLY, 80, 2, 5)
 				.addMobSpawn(EntityRegistry.END_SLIME, 10, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));

@@ -6,6 +6,7 @@ import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
 import ru.betterend.world.features.SinglePlantFeature;
+import ru.betterend.world.features.VineFeature;
 
 public class FeatureRegistry {
 	// Trees //
@@ -15,6 +16,8 @@ public class FeatureRegistry {
 	public static final EndFeature UMBRELLA_MOSS = new EndFeature("umbrella_moss", new DoublePlantFeature(BlockRegistry.UMBRELLA_MOSS, BlockRegistry.UMBRELLA_MOSS_TALL, 5), 5);
 	public static final EndFeature CREEPING_MOSS = new EndFeature("creeping_moss", new SinglePlantFeature(BlockRegistry.CREEPING_MOSS, 5), 5);
 	public static final EndFeature BLUE_VINE = new EndFeature("blue_vine", new BlueVineFeature(), 1);
+	
+	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(BlockRegistry.DENSE_VINE, 24), 3);
 	
 	// Features //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

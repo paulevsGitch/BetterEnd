@@ -15,11 +15,16 @@ public class SpawnHelper {
 	private static Method regRestriction;
 	
 	public static <T extends MobEntity> void restriction(EntityType<T> entity, Location location, Type heughtmapType, SpawnPredicate<T> predicate) {
-		try {
-			regRestriction.invoke(null, entity, location, heughtmapType, predicate);
+		if (regRestriction != null) {
+			try {
+				regRestriction.invoke(null, entity, location, heughtmapType, predicate);
+			}
+			catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				BetterEnd.LOGGER.error(e.getMessage());
+			}
 		}
-		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			BetterEnd.LOGGER.error(e.getMessage());
+		else {
+			BetterEnd.LOGGER.error("Unable to register spawn restriction, variable is not handled");
 		}
 	}
 	
@@ -29,10 +34,15 @@ public class SpawnHelper {
 	
 	static {
 		try {
-			regRestriction = SpawnRestriction.class.getDeclaredMethod("register", EntityType.class, Location.class, Type.class, SpawnPredicate.class);
-			regRestriction.setAccessible(true);
+			for (Method method: SpawnRestriction.class.getDeclaredMethods()) {
+				if (method.getParameterCount() == 4) {
+					regRestriction = method;
+					regRestriction.setAccessible(true);
+					break;
+				}
+			}
 		} 
-		catch (NoSuchMethodException | SecurityException e) {
+		catch (SecurityException e) {
 			BetterEnd.LOGGER.error(e.getMessage());
 		}
 	}

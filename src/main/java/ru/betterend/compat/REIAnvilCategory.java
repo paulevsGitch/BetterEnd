@@ -23,14 +23,13 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-import ru.betterend.recipe.AnvilSmithingRecipe;
 import ru.betterend.util.LangUtil;
 
 public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay> {
 
 	@Override
 	public @NotNull Identifier getIdentifier() {
-		return AnvilSmithingRecipe.ID;
+		return REIPlugin.SMITHING;
 	}
 
 	@Override

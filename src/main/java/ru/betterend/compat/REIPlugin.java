@@ -20,8 +20,8 @@ import ru.betterend.registry.BlockRegistry;
 public class REIPlugin implements REIPluginV0 {
 
 	public final static Identifier PLUGIN_ID = BetterEnd.makeID("rei_plugin");
-	public final static Identifier ALLOING = AlloyingRecipe.ID;
-	public final static Identifier SMITHING = AlloyingRecipe.ID;
+	public final static Identifier ALLOYING = AlloyingRecipe.ID;
+	public final static Identifier SMITHING = AnvilSmithingRecipe.ID;
 	
 	public final static EntryStack END_STONE_SMELTER = EntryStack.create(BlockRegistry.END_STONE_SMELTER);
 	public final static EntryStack ANVIL = EntryStack.create(Blocks.ANVIL);
@@ -33,14 +33,14 @@ public class REIPlugin implements REIPluginV0 {
 	
 	@Override
     public void registerRecipeDisplays(RecipeHelper recipeHelper) {
-		recipeHelper.registerRecipes(ALLOING, AlloyingRecipe.class, REIAlloyingDisplay::new);
-		recipeHelper.registerRecipes(ALLOING, BlastingRecipe.class, REIAlloyingDisplay::new);
+		recipeHelper.registerRecipes(ALLOYING, AlloyingRecipe.class, REIAlloyingDisplay::new);
+		recipeHelper.registerRecipes(ALLOYING, BlastingRecipe.class, REIAlloyingDisplay::new);
 		recipeHelper.registerRecipes(SMITHING, AnvilSmithingRecipe.class, REIAnvilDisplay::new);
 	}
 	
 	@Override
 	public void registerOthers(RecipeHelper recipeHelper) {
-		recipeHelper.registerWorkingStations(ALLOING, END_STONE_SMELTER);
+		recipeHelper.registerWorkingStations(ALLOYING, END_STONE_SMELTER);
 		recipeHelper.registerWorkingStations(SMITHING, ANVIL);
 		recipeHelper.removeAutoCraftButton(SMITHING);
     }

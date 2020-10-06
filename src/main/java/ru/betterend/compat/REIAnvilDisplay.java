@@ -45,7 +45,7 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 
 	@Override
 	public @NotNull Identifier getRecipeCategory() {
-		return AnvilSmithingRecipe.ID;
+		return REIPlugin.SMITHING;
 	}
 	
 	@Override

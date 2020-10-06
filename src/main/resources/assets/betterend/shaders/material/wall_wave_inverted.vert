@@ -11,17 +11,17 @@
   Remake of canvas default shader for the Nether
 ******************************************************/
 
-#define NOISE_SCALE 0.125
-
 void frx_startVertex(inout frx_VertexData data) {
 	#ifdef ANIMATED_FOLIAGE
 		float t = frx_renderSeconds() * 0.05;
 
-		vec3 pos = (data.vertex.xyz + frx_modelOriginWorldPos()) * NOISE_SCALE;
+		vec3 pos = (data.vertex.xyz + frx_modelOriginWorldPos()) * 0.5;
 		float wind = snoise(vec4(pos, t)) * 0.1;
-		wind *= 1 - data.spriteUV.y;
+		
+		wind *= data.spriteUV.y;
 
-		data.vertex.x += (cos(t) * cos(t * 3) * cos(t * 5) * cos(t * 7) + sin(t * 25)) * wind;
+		data.vertex.y += (cos(t) * cos(t * 3) * cos(t * 5) * cos(t * 7) + sin(t * 25)) * wind;
+		data.vertex.x += cos(t * 14) * wind;
 		data.vertex.z += sin(t * 19) * wind;
 	#endif
 }

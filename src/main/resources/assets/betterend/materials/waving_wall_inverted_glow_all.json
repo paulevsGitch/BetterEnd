@@ -1,7 +1,7 @@
 {
 	"layers": [
 		{
-			"vertexSource": "betterend:shaders/material/wall_wave.vert",
+			"vertexSource": "betterend:shaders/material/wall_wave_inverted.vert",
 			"fragmentSource": "betterend:shaders/material/glow_all.frag",
 			"disableAo": true,
 			"disableDiffuse": true

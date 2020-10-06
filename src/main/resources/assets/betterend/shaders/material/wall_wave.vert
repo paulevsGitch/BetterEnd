@@ -18,9 +18,6 @@ void frx_startVertex(inout frx_VertexData data) {
 		vec3 pos = (data.vertex.xyz + frx_modelOriginWorldPos()) * 0.5;
 		float wind = snoise(vec4(pos, t)) * 0.1;
 		
-		//vec3 center = frx_modelOriginWorldPos() + vec3(0.5);
-		//vec3 absDist = abs(pos - center) * 2;
-		//wind *= clamp(1 - absDist.x + absDist.y + absDist.z, 0, 1);
 		wind *= 1 - data.spriteUV.y;
 
 		data.vertex.y += (cos(t) * cos(t * 3) * cos(t * 5) * cos(t * 7) + sin(t * 25)) * wind;

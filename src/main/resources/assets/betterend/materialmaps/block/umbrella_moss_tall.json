@@ -1,0 +1,22 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/umbrella_moss_sporophyte",
+				"material": "betterend:wave_glow_all"
+			},
+			{
+				"sprite": "betterend:block/umbrella_moss_up",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/umbrella_moss_end",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/umbrella_moss_bottom",
+				"material": "betterend:waving_floor"
+			}
+		]
+	}
+}

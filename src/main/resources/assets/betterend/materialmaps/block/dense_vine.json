@@ -1,0 +1,14 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/dense_vine_bottom",
+				"material": "betterend:wave_glow_50_half"
+			},
+			{
+				"sprite": "betterend:block/dense_vine",
+				"material": "betterend:waving"
+			}
+		]
+	}
+}

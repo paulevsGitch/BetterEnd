@@ -6,6 +6,7 @@ import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ParticleRegistry;
 import ru.betterend.registry.SoundRegistry;
+import ru.betterend.registry.StructureRegistry;
 
 public class BiomeFoggyMushroomland extends EndBiome {
 	public BiomeFoggyMushroomland() {
@@ -18,6 +19,7 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.setParticles(ParticleRegistry.GLOWING_SPHERE, 0.001F)
 				.setLoop(SoundRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
 				.setMusic(SoundRegistry.MUSIC_FOGGY_MUSHROOMLAND)
+				.addStructureFeature(StructureRegistry.GIANT_MOSSY_GLOWSHROOM)
 				.addFeature(FeatureRegistry.ENDER_ORE)
 				.addFeature(FeatureRegistry.END_LAKE)
 				.addFeature(FeatureRegistry.MOSSY_GLOWSHROOM)

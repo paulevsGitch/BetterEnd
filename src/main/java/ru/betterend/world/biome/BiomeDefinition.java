@@ -33,6 +33,7 @@ import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.features.EndFeature;
+import ru.betterend.world.structures.EndStructureFeature;
 import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
 
 public class BiomeDefinition {
@@ -109,6 +110,11 @@ public class BiomeDefinition {
 
 	public BiomeDefinition addStructureFeature(ConfiguredStructureFeature<?, ?> feature) {
 		structures.add(feature);
+		return this;
+	}
+	
+	public BiomeDefinition addStructureFeature(EndStructureFeature feature) {
+		structures.add(feature.getFeatureConfigured());
 		return this;
 	}
 	

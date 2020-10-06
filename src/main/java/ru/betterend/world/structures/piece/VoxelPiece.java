@@ -39,6 +39,7 @@ public class VoxelPiece extends BasePiece {
 
 	@Override
 	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+		this.world.placeChunk(world, chunkPos);
 		return true;
 	}
 }

@@ -61,6 +61,9 @@ public class WorldRendererMixin {
 	@Shadow
 	private ClientWorld world;
 	
+	@Shadow
+	private int ticks;
+	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void onInit(MinecraftClient client, BufferBuilderStorage bufferBuilders, CallbackInfo info) {
 		initStars();
@@ -76,8 +79,8 @@ public class WorldRendererMixin {
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
 	private void renderBetterEndSky(MatrixStack matrices, float tickDelta, CallbackInfo info) {
 		if (client.world.getSkyProperties().getSkyType() == SkyProperties.SkyType.END) {
-			time += tickDelta * 0.001F;
-			if (time > 360) time -= 360;
+			time = (ticks % 360000) * 0.001F;
+			//if (time > 360) time -= 360;
 			
 			BackgroundRenderer.setFogBlack();
 			

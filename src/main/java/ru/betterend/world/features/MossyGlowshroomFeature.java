@@ -9,11 +9,13 @@ import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
+import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
@@ -129,6 +131,17 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 						
 						info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState());
 						return info.getState();
+					}
+					else if (info.getState().getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_HYMENOPHORE) {
+						for (Direction dir: BlocksHelper.HORIZONTAL) {
+							if (info.getState(dir) == AIR) {
+								info.setBlockPos(info.getPos().offset(dir), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, dir));
+							}
+						}
+						
+						if (info.getStateDown() == AIR) {
+							info.setBlockPos(info.getPos().down(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.DOWN));
+						}
 					}
 					return info.getState();
 				})

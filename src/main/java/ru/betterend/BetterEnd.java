@@ -14,6 +14,7 @@ import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ItemRegistry;
 import ru.betterend.registry.ItemTagRegistry;
 import ru.betterend.registry.SoundRegistry;
+import ru.betterend.registry.StructureRegistry;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
@@ -38,6 +39,7 @@ public class BetterEnd implements ModInitializer {
 		BlockTagRegistry.register();
 		CraftingRecipes.register();
 		AlloyingRecipes.register();
+		StructureRegistry.register();
 	}
 	
 	public static Identifier makeID(String path) {

@@ -21,7 +21,7 @@ public class VineFeature extends InvertedScatterFeature {
 
 	@Override
 	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return vineBlock.canPlaceAt(AIR, world, blockPos);
+		return world.isAir(blockPos) && vineBlock.canPlaceAt(AIR, world, blockPos);
 	}
 
 	@Override

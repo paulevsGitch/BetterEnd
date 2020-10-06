@@ -14,7 +14,8 @@
 		"AbstractBlockMixin",
 		"LivingEntityMixin",
 		"BiomeMixin",
-		"SlimeEntityMixin"
+		"SlimeEntityMixin",
+		"LocateCommandMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

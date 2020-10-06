@@ -32,4 +32,8 @@ public abstract class SDFPrimitive extends SDF {
 	public BlockState getBlockState(BlockPos pos) {
 		return placerFunction.apply(pos);
 	}
+	
+	/*public abstract CompoundTag toNBT(CompoundTag root) {
+		
+	}*/
 }

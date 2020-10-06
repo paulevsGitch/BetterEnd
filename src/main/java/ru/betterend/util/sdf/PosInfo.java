@@ -1,7 +1,6 @@
 package ru.betterend.util.sdf;
 
 import java.util.Map;
-import java.util.Set;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -11,15 +10,15 @@ import net.minecraft.util.math.Direction;
 public class PosInfo implements Comparable<PosInfo> {
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private final Map<BlockPos, PosInfo> blocks;
-	private final Set<PosInfo> add;
+	private final Map<BlockPos, PosInfo> add;
 	private final BlockPos pos;
 	private BlockState state;
 	
-	public static PosInfo create(Map<BlockPos, PosInfo> blocks, Set<PosInfo> add, BlockPos pos) {
+	public static PosInfo create(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add, BlockPos pos) {
 		return new PosInfo(blocks, add, pos);
 	}
 	
-	private PosInfo(Map<BlockPos, PosInfo> blocks, Set<PosInfo> add, BlockPos pos) {
+	private PosInfo(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add, BlockPos pos) {
 		this.blocks = blocks;
 		this.add = add;
 		this.pos = pos;
@@ -37,7 +36,8 @@ public class PosInfo implements Comparable<PosInfo> {
 	public BlockState getState(Direction dir) {
 		PosInfo info = blocks.get(pos.offset(dir));
 		if (info == null) {
-			return AIR;
+			info = add.get(pos.offset(dir));
+			return info == null ? AIR : info.getState();
 		}
 		return info.getState();
 	}
@@ -83,6 +83,6 @@ public class PosInfo implements Comparable<PosInfo> {
 	public void setBlockPos(BlockPos pos, BlockState state) {
 		PosInfo info = new PosInfo(blocks, add, pos);
 		info.state = state;
-		add.add(info);
+		add.put(pos, info);
 	}
 }

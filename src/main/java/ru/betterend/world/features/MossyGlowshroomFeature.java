@@ -139,7 +139,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 							}
 						}
 						
-						if (info.getStateDown() == AIR) {
+						if (info.getStateDown().getBlock() != BlockRegistry.MOSSY_GLOWSHROOM_HYMENOPHORE) {
 							info.setBlockPos(info.getPos().down(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.DOWN));
 						}
 					}

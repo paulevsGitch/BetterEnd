@@ -2,6 +2,8 @@ package ru.betterend.world.structures.features;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
@@ -13,6 +15,8 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
 public abstract class StructureFeatureBase extends StructureFeature<DefaultFeatureConfig> {
+	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
+	
 	public StructureFeatureBase() {
 		super(DefaultFeatureConfig.CODEC);
 	}

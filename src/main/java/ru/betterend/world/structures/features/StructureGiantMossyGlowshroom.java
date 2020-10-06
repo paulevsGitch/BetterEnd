@@ -5,9 +5,12 @@ import java.util.Random;
 
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
+import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
@@ -106,6 +109,17 @@ public class StructureGiantMossyGlowshroom extends SDFStructureFeature {
 						
 						info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState());
 						return info.getState();
+					}
+					else if (info.getState().getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_HYMENOPHORE) {
+						for (Direction dir: BlocksHelper.HORIZONTAL) {
+							if (info.getState(dir) == AIR) {
+								info.setBlockPos(info.getPos().offset(dir), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, dir));
+							}
+						}
+						
+						if (info.getStateDown().getBlock() != BlockRegistry.MOSSY_GLOWSHROOM_HYMENOPHORE) {
+							info.setBlockPos(info.getPos().down(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.DOWN));
+						}
 					}
 					return info.getState();
 				});

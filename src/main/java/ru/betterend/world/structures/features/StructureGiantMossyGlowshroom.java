@@ -2,11 +2,11 @@ package ru.betterend.world.structures.features;
 
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
@@ -90,30 +90,28 @@ public class StructureGiantMossyGlowshroom extends SDFStructureFeature {
 		
 		return new SDFRound().setRadius(1.5F).setSource(new SDFScale()
 				.setScale(scale)
-				.setSource(function)
+				.setSource(function))
 				.setPostProcess((info) -> {
 					if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getState())) {
-						if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp()) || !BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
-							return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
+						if (random.nextBoolean() && info.getStateUp().getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_CAP) {
+							info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(BlockMossyGlowshroomCap.TRANSITION, true));
+							return info.getState();
+						}
+						else if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp()) || !BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
+							info.setState(BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState());
+							return info.getState();
 						}
 					}
 					else if (info.getState().getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_CAP) {
-						if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
-							return info.getState().with(BlockMossyGlowshroomCap.TRANSITION, true);
+						if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown().getBlock())) {
+							info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(BlockMossyGlowshroomCap.TRANSITION, true));
+							return info.getState();
 						}
 						
-						int air = 0;
-						for (Direction dir: Direction.values()) {
-							if (info.getState(dir).isAir()) {
-								air ++;
-							}
-						}
-						if (air > 4) {
-							info.setState(AIR);
-							return AIR;
-						}
+						info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState());
+						return info.getState();
 					}
 					return info.getState();
-				}));
+				});
 	}
 }

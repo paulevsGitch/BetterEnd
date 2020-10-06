@@ -7,7 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-public class PosInfo {
+public class PosInfo implements Comparable<PosInfo> {
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private final Map<BlockPos, PosInfo> blocks;
 	private final BlockPos pos;
@@ -39,6 +39,14 @@ public class PosInfo {
 		return info.getState();
 	}
 	
+	public BlockState getState(Direction dir, int distance) {
+		PosInfo info = blocks.get(pos.offset(dir, distance));
+		if (info == null) {
+			return AIR;
+		}
+		return info.getState();
+	}
+	
 	public BlockState getStateUp() {
 		return getState(Direction.UP);
 	}
@@ -56,5 +64,14 @@ public class PosInfo {
 			return false;
 		}
 		return pos.equals(((PosInfo) obj).pos);
+	}
+
+	@Override
+	public int compareTo(PosInfo info) {
+		return this.pos.getY() - info.pos.getY();
+	}
+
+	public BlockPos getPos() {
+		return pos;
 	}
 }

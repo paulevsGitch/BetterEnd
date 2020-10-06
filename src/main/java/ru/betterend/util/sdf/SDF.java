@@ -1,5 +1,8 @@
 package ru.betterend.util.sdf;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -36,7 +39,7 @@ public abstract class SDF {
 		return this;
 	}
 	
-	public Set<BlockPos> fillRecursive(ServerWorldAccess world, BlockPos start, int dx, int dy, int dz) {
+	public void fillRecursive(ServerWorldAccess world, BlockPos start, int dx, int dy, int dz) {
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> ends = Sets.newHashSet();
@@ -74,15 +77,17 @@ public abstract class SDF {
 			run &= !ends.isEmpty();
 		}
 		
-		mapWorld.forEach((pos, info) -> {
-			BlockState state = postProcess.apply(info);
-			BlocksHelper.setWithoutUpdate(world, pos, state);
-		});
-		
-		return mapWorld.keySet();
+		List<PosInfo> infos = new ArrayList<PosInfo>(mapWorld.values());
+		if (infos.size() > 0) {
+			Collections.sort(infos);
+			infos.forEach((info) -> {
+				BlockState state = postProcess.apply(info);
+				BlocksHelper.setWithoutUpdate(world, info.getPos(), state);
+			});
+		}
 	}
 	
-	public Set<BlockPos> fillRecursive(ServerWorldAccess world, BlockPos start) {
+	public void fillRecursive(ServerWorldAccess world, BlockPos start) {
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> ends = Sets.newHashSet();
@@ -119,10 +124,17 @@ public abstract class SDF {
 			BlocksHelper.setWithoutUpdate(world, pos, state);
 		});
 		
-		return mapWorld.keySet();
+		List<PosInfo> infos = new ArrayList<PosInfo>(mapWorld.values());
+		if (infos.size() > 0) {
+			Collections.sort(infos);
+			infos.forEach((info) -> {
+				BlockState state = postProcess.apply(info);
+				BlocksHelper.setWithoutUpdate(world, info.getPos(), state);
+			});
+		}
 	}
 	
-	public Set<BlockPos> fillRecursive(StructureWorld world, BlockPos start) {
+	public void fillRecursive(StructureWorld world, BlockPos start) {
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> ends = Sets.newHashSet();
@@ -154,11 +166,11 @@ public abstract class SDF {
 			run &= !ends.isEmpty();
 		}
 		
-		mapWorld.forEach((pos, info) -> {
+		List<PosInfo> infos = new ArrayList<PosInfo>(mapWorld.values());
+		Collections.sort(infos);
+		infos.forEach((info) -> {
 			BlockState state = postProcess.apply(info);
-			world.setBlock(pos, state);
+			world.setBlock(info.getPos(), state);
 		});
-		
-		return mapWorld.keySet();
 	}
 }

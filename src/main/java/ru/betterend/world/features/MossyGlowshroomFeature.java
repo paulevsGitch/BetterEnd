@@ -2,7 +2,6 @@ package ru.betterend.world.features;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
@@ -10,20 +9,17 @@ import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
-import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
-import ru.betterend.util.sdf.PosInfo;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFBinary;
 import ru.betterend.util.sdf.operator.SDFCoordModify;
@@ -39,7 +35,6 @@ import ru.betterend.util.sdf.primitive.SDFPrimitive;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class MossyGlowshroomFeature extends DefaultFeature {
-	private static final Function<PosInfo, BlockState> POST_PROCESS;
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Vector3f CENTER = new Vector3f();
 	private static final SDFBinary FUNCTION;
@@ -112,37 +107,32 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		ROOTS_ROT.setAngle(random.nextFloat() * MHelper.PI2);
 		FUNCTION.setSourceA(sdf);
 		
-		Set<BlockPos> blocks = new SDFScale()
-				.setScale(scale)
+		new SDFScale().setScale(scale)
 				.setSource(FUNCTION)
 				.setReplaceFunction(REPLACE)
-				.setPostProcess(POST_PROCESS)
+				.setPostProcess((info) -> {
+					if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getState())) {
+						if (random.nextBoolean() && info.getStateUp().getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_CAP) {
+							info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(BlockMossyGlowshroomCap.TRANSITION, true));
+							return info.getState();
+						}
+						else if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp()) || !BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
+							info.setState(BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState());
+							return info.getState();
+						}
+					}
+					else if (info.getState().getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_CAP) {
+						if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown().getBlock())) {
+							info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(BlockMossyGlowshroomCap.TRANSITION, true));
+							return info.getState();
+						}
+						
+						info.setState(BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState());
+						return info.getState();
+					}
+					return info.getState();
+				})
 				.fillRecursive(world, blockPos);
-		
-		for (BlockPos bpos: blocks) {
-			BlockState state = world.getBlockState(bpos);
-			if (state.getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_HYMENOPHORE) {
-				if (world.isAir(bpos.north())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.north(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.NORTH));
-				}
-				if (world.isAir(bpos.east())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.east(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.EAST));
-				}
-				if (world.isAir(bpos.south())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.south(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.SOUTH));
-				}
-				if (world.isAir(bpos.west())) {
-					BlocksHelper.setWithoutUpdate(world, bpos.west(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.WEST));
-				}
-				if (world.getBlockState(bpos.down()).getMaterial().isReplaceable()) {
-					BlocksHelper.setWithoutUpdate(world, bpos.down(), BlockRegistry.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.DOWN));
-				}
-			}
-			else if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(state) && random.nextBoolean() && world.getBlockState(bpos.up()).getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_CAP) {
-				BlocksHelper.setWithoutUpdate(world, bpos, BlockRegistry.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(BlockMossyGlowshroomCap.TRANSITION, true));
-				BlocksHelper.setWithoutUpdate(world, bpos.up(), BlockRegistry.MOSSY_GLOWSHROOM_CAP);
-			}
-		}
 		
 		return true;
 	}
@@ -151,7 +141,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		SDFCapedCone cone1 = new SDFCapedCone().setHeight(2.5F).setRadius1(1.5F).setRadius2(2.5F);
 		SDFCapedCone cone2 = new SDFCapedCone().setHeight(3F).setRadius1(2.5F).setRadius2(13F);
 		SDF posedCone2 = new SDFTranslate().setTranslate(0, 5, 0).setSource(cone2);
-		SDF posedCone3 = new SDFTranslate().setTranslate(0, 7F, 0).setSource(cone2);
+		SDF posedCone3 = new SDFTranslate().setTranslate(0, 12F, 0).setSource(new SDFScale().setScale(2).setSource(cone2));
 		SDF upCone = new SDFSubtraction().setSourceA(posedCone2).setSourceB(posedCone3);
 		SDF wave = new SDFFlatWave().setRaysCount(12).setIntensity(1.3F).setSource(upCone);
 		SDF cones = new SDFSmoothUnion().setRadius(3).setSourceA(cone1).setSourceB(wave);
@@ -194,31 +184,6 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();
-		};
-		
-		POST_PROCESS = (info) -> {
-			if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getState())) {
-				if (!BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp()) || !BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
-					return BlockRegistry.MOSSY_GLOWSHROOM.bark.getDefaultState();
-				}
-			}
-			else if (info.getState().getBlock() == BlockRegistry.MOSSY_GLOWSHROOM_CAP) {
-				if (BlockRegistry.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
-					return info.getState().with(BlockMossyGlowshroomCap.TRANSITION, true);
-				}
-				
-				int air = 0;
-				for (Direction dir: Direction.values()) {
-					if (info.getState(dir).isAir()) {
-						air ++;
-					}
-				}
-				if (air > 4) {
-					info.setState(AIR);
-					return AIR;
-				}
-			}
-			return info.getState();
 		};
 	}
 }

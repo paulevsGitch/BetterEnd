@@ -16,7 +16,7 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modRuntime "me.shedaniel:RoughlyEnoughItems:5.6.0"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems:5.6.0"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:5.6.0"
 }
 

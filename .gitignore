@@ -28,3 +28,4 @@ bin/
 
 run/
 output/
+*.log

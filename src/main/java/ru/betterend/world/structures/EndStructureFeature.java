@@ -24,7 +24,6 @@ public class EndStructureFeature {
 		this.structure = FabricStructureBuilder.create(id, structure)
 		.step(step)
 		.defaultConfig(spacing, separation, RANDOM.nextInt(8192))
-		.adjustsSurface()
 		.register();
 
 		this.featureConfigured = this.structure.configure(DefaultFeatureConfig.DEFAULT);

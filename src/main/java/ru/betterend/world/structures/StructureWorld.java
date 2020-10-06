@@ -18,8 +18,10 @@ import net.minecraft.world.chunk.Chunk;
 public class StructureWorld {
 	private Map<ChunkPos, Part> parts = Maps.newHashMap();
 	private int minX = Integer.MAX_VALUE;
+	private int minY = Integer.MAX_VALUE;
 	private int minZ = Integer.MAX_VALUE;
 	private int maxX = Integer.MIN_VALUE;
+	private int maxY = Integer.MIN_VALUE;
 	private int maxZ = Integer.MIN_VALUE;
 	
 	public StructureWorld() {}
@@ -27,8 +29,11 @@ public class StructureWorld {
 	public StructureWorld(CompoundTag tag) {
 		minX = tag.getInt("minX");
 		maxX = tag.getInt("maxX");
+		minY = tag.getInt("minY");
+		maxY = tag.getInt("maxY");
 		minZ = tag.getInt("minZ");
 		maxZ = tag.getInt("maxZ");
+		
 		ListTag map = tag.getList("parts", 10);
 		map.forEach((element) -> {
 			CompoundTag compound = (CompoundTag) element;
@@ -51,6 +56,8 @@ public class StructureWorld {
 			if (cPos.z < minZ) minZ = cPos.z;
 			if (cPos.z > maxZ) maxZ = cPos.z;
 		}
+		if (pos.getY() < minY) minY = pos.getY();
+		if (pos.getY() > maxY) maxY = pos.getY();
 		part.addBlock(pos, state);
 	}
 	
@@ -68,6 +75,8 @@ public class StructureWorld {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("minX", minX);
 		tag.putInt("maxX", maxX);
+		tag.putInt("minY", minY);
+		tag.putInt("maxY", maxY);
 		tag.putInt("minZ", minZ);
 		tag.putInt("maxZ", maxZ);
 		ListTag map = new ListTag();
@@ -79,7 +88,10 @@ public class StructureWorld {
 	}
 	
 	public BlockBox getBounds() {
-		return new BlockBox(minX << 4, minZ << 4, (maxX << 4) | 15, (maxZ << 4) | 15);
+		if (minX == Integer.MAX_VALUE || maxX == Integer.MIN_VALUE || minZ == Integer.MAX_VALUE || maxZ == Integer.MIN_VALUE) {
+			return BlockBox.empty();
+		}
+		return new BlockBox(minX << 4, minY, minZ << 4, (maxX << 4) | 15, maxY, (maxZ << 4) | 15);
 	}
 	
 	private static final class Part {
@@ -104,6 +116,7 @@ public class StructureWorld {
 		
 		void placeChunk(Chunk chunk) {
 			blocks.forEach((pos, state) -> {
+				//if (pos.getY() > 10)
 				chunk.setBlockState(pos, state, false);
 			});
 		}

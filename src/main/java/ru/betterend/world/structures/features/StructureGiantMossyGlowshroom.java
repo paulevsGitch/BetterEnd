@@ -3,8 +3,6 @@ package ru.betterend.world.structures.features;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
@@ -28,8 +26,6 @@ import ru.betterend.util.sdf.primitive.SDFPrimitive;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class StructureGiantMossyGlowshroom extends SDFStructureFeature {
-	private static final BlockState AIR = Blocks.AIR.getDefaultState();
-	
 	@Override
 	protected SDF getSDF(BlockPos center, Random random) {
 		System.out.println(center);

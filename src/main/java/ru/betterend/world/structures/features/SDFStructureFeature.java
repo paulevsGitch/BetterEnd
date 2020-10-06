@@ -16,11 +16,8 @@ import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
-public abstract class SDFStructureFeature extends StructureFeature<DefaultFeatureConfig> {
-	public SDFStructureFeature() {
-		super(DefaultFeatureConfig.CODEC);
-	}
-
+public abstract class SDFStructureFeature extends StructureFeatureBase {
+	
 	protected abstract SDF getSDF(BlockPos pos, Random random);
 	
 	@Override
@@ -38,10 +35,12 @@ public abstract class SDFStructureFeature extends StructureFeature<DefaultFeatur
 			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
-			BlockPos start = new BlockPos(x, y, z);
-			VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
-			this.children.add(piece);
-			this.boundingBox = piece.getBoundingBox();
+			if (y > 5) {
+				BlockPos start = new BlockPos(x, y, z);
+				VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
+				this.children.add(piece);
+			}
+			this.setBoundingBoxFromChildren();
 		}
 	}
 }

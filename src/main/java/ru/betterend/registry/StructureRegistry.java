@@ -11,7 +11,7 @@ import ru.betterend.world.structures.piece.VoxelPiece;
 public class StructureRegistry {
 	public static final StructurePieceType VOXEL_PIECE = register("voxel", VoxelPiece::new);
 	
-	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new StructureGiantMossyGlowshroom(), Feature.RAW_GENERATION, 32, 8);
+	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new StructureGiantMossyGlowshroom(), Feature.SURFACE_STRUCTURES, 16, 8);
 	
 	public static void register() {}
 	

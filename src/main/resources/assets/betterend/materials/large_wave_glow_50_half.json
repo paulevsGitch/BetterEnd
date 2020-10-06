@@ -1,0 +1,10 @@
+{
+	"layers": [
+		{
+			"vertexSource": "betterend:shaders/material/wave_large.vert",
+			"fragmentSource": "betterend:shaders/material/glow_50_half.frag",
+			"disableAo": true,
+			"disableDiffuse": true
+		}
+	]
+}

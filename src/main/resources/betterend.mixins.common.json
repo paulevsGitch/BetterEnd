@@ -15,7 +15,8 @@
 		"LivingEntityMixin",
 		"BiomeMixin",
 		"SlimeEntityMixin",
-		"LocateCommandMixin"
+		"LocateCommandMixin",
+		"DefaultBiomeCreatorMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

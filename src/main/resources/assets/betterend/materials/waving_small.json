@@ -1,0 +1,10 @@
+{
+	"layers": [
+		{
+			"vertexSource": "betterend:shaders/material/small_wave.vert",
+			"fragmentSource": "canvas:shaders/material/default.frag",
+			"disableAo": true,
+			"disableDiffuse": true
+		}
+	]
+}

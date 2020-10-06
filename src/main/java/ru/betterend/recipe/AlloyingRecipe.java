@@ -28,7 +28,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = EndRecipeManager.registerType(GROUP);
 	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
-	public final static Identifier ID = BetterEnd.makeID("alloying");
+	public final static Identifier ID = BetterEnd.makeID(GROUP);
 	
 	protected final RecipeType<?> type;
 	protected final Identifier id;
@@ -38,7 +38,6 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	protected final String group;
 	protected final float experience;
 	protected final int smeltTime;
-
 	
 	public AlloyingRecipe(Identifier id, String group, Ingredient primaryInput, Ingredient secondaryInput, ItemStack output, float experience, int smeltTime) {
 		this.group = group;
@@ -59,6 +58,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		return this.smeltTime;
 	}
 
+	@Override
 	public DefaultedList<Ingredient> getPreviewInputs() {
 		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
 		defaultedList.add(primaryInput);

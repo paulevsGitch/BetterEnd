@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -15,14 +16,19 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.ItemTagRegistry;
 
 public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	
-	public final static RecipeType<AnvilSmithingRecipe> TYPE = EndRecipeManager.registerType("smithing");
-	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer("smithing", new Serializer());
+	public final static String GROUP = "smithing";
+	public final static RecipeType<AnvilSmithingRecipe> TYPE = EndRecipeManager.registerType(GROUP);
+	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
+	public final static Identifier ID = BetterEnd.makeID(GROUP);
 	
 	private final Identifier id;
 	private final Ingredient input;
@@ -44,13 +50,8 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public boolean isIgnoredInRecipeBook() {
-		return false;
-	}
-
-	@Override
 	public ItemStack getOutput() {
-		return ItemStack.EMPTY;
+		return this.output;
 	}
 	
 	@Override
@@ -60,35 +61,39 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	
 	@Override
 	public ItemStack craft(Inventory craftingInventory) {
-		if (!matches(craftingInventory)) return ItemStack.EMPTY;
-		ItemStack hammer = craftingInventory.getStack(1);
-		int damage = hammer.getDamage() + this.damage;
-		if (damage >= hammer.getMaxDamage()) return ItemStack.EMPTY;		
-		hammer.setDamage(damage);
 		return this.output.copy();
 	}
 	
 	public ItemStack craft(Inventory craftingInventory, PlayerEntity player) {
-		if (!matches(craftingInventory)) return ItemStack.EMPTY;
-		
-		ItemStack hammer = craftingInventory.getStack(1);
-		int damage = hammer.getDamage() + this.damage;
-		if (damage >= hammer.getMaxDamage()) return ItemStack.EMPTY;
-		
-		hammer.damage(this.damage, player, ((entity) -> {
-			entity.sendEquipmentBreakStatus(null);
-		}));
-		return this.output.copy();
+		if (!player.isCreative()) {
+			ItemStack hammer = craftingInventory.getStack(0);
+			int damage = hammer.getDamage() + this.damage;
+			if (damage >= hammer.getMaxDamage()) return ItemStack.EMPTY;
+			hammer.damage(this.damage, player, entity -> {
+				entity.sendEquipmentBreakStatus(null);
+			});
+		}
+		return this.craft(craftingInventory);
 	}
 	
 	public boolean matches(Inventory craftingInventory) {
-		ItemStack hammer = craftingInventory.getStack(1);
-		System.out.println(ItemTagRegistry.HAMMERS.values());
+		ItemStack hammer = craftingInventory.getStack(0);
 		if (hammer.isEmpty() || !ItemTagRegistry.HAMMERS.contains(hammer.getItem())) {
 			return false;
 		}
 		int level = ((ToolItem) hammer.getItem()).getMaterial().getMiningLevel();
-		return level >= this.level && this.input.test(craftingInventory.getStack(0));
+		return level >= this.level && this.input.test(craftingInventory.getStack(1));
+	}
+
+	@Override
+	public DefaultedList<Ingredient> getPreviewInputs() {
+		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
+		defaultedList.add(Ingredient.ofStacks(ItemTagRegistry.HAMMERS.values().stream().filter(hammer -> {
+			return ((ToolItem) hammer).getMaterial().getMiningLevel() >= level;
+		}).map(ItemStack::new)));
+		defaultedList.add(input);
+		
+		return defaultedList;
 	}
 
 	@Override
@@ -105,6 +110,11 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	@Override
 	public RecipeType<?> getType() {
 		return TYPE;
+	}
+	
+	@Override
+	public boolean isIgnoredInRecipeBook() {
+		return true;
 	}
 
 	public static class Serializer implements RecipeSerializer<AnvilSmithingRecipe> {

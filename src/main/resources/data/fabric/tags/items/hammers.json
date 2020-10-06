@@ -1,0 +1,11 @@
+{
+	"replace": false,
+	"values": [
+    	"betterend:iron_hammer",
+    	"betterend:golden_hammer",
+    	"betterend:diamond_hammer",
+    	"betterend:netherite_hammer",
+    	"betterend:terminite_hammer",
+    	"betterend:aeternium_hammer"
+	]
+}

@@ -99,7 +99,7 @@ public class REIAlloyingDisplay implements TransferRecipeDisplay {
 
 	@Override
 	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo, ScreenHandler container) {
-		return input;
+		return this.input;
 	}
 	
 	static {

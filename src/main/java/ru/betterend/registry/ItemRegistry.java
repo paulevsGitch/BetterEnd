@@ -70,7 +70,7 @@ public class ItemRegistry {
 	public static ToolItem IRON_HAMMER = registerTool("iron_hammer", new EndHammer(ToolMaterials.IRON, 5.0F, -3.2F, 0.2D, makeSettings()));
 	public static ToolItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammer(ToolMaterials.GOLD, 4.5F, -3.4F, 0.3D, makeSettings()));
 	public static ToolItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammer(ToolMaterials.DIAMOND, 5.5F, -3.1F, 0.2D, makeSettings()));
-	public static ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammer(ToolMaterials.DIAMOND, 6.0F, -3.0F, 0.2D, makeSettings()));
+	public static ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammer(ToolMaterials.NETHERITE, 5.0F, -3.0F, 0.2D, makeSettings()));
 
 	protected static Item registerItem(String name, Item item) {
 		if (item != Items.AIR) {

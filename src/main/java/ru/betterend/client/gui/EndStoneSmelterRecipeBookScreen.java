@@ -79,7 +79,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeBookScree
 			int slotX = this.fuelSlot.x + x;
 			int slotY = this.fuelSlot.y + y;
 			DrawableHelper.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822018048);
-			this.client.getItemRenderer().renderInGuiWithOverrides(client.player, this.getItem().getStackForRender(), slotX, slotY);
+			this.client.getItemRenderer().renderInGuiWithOverrides(client.player, this.getItem().getDefaultStack(), slotX, slotY);
 			RenderSystem.depthFunc(516);
 			DrawableHelper.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822083583);
 			RenderSystem.depthFunc(515);

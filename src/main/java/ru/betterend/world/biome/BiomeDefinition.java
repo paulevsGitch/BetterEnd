@@ -62,7 +62,7 @@ public class BiomeDefinition {
 	}
 
 	public BiomeDefinition setSurface(Block surfaceBlock) {
-		this.surface = SurfaceBuilder.DEFAULT.method_30478(new TernarySurfaceConfig(
+		this.surface = SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
 				surfaceBlock.getDefaultState(),
 				Blocks.END_STONE.getDefaultState(),
 				Blocks.END_STONE.getDefaultState()
@@ -79,7 +79,7 @@ public class BiomeDefinition {
 				surfaceBlock2.getDefaultState(),
 				Blocks.END_STONE.getDefaultState(),
 				Blocks.END_STONE.getDefaultState()
-		)).method_30478(new TernarySurfaceConfig(surfaceBlock1.getDefaultState(),
+		)).withConfig(new TernarySurfaceConfig(surfaceBlock1.getDefaultState(),
 				Blocks.END_STONE.getDefaultState(),
 				Blocks.END_STONE.getDefaultState()));
 		return this;

@@ -104,7 +104,7 @@ public class REIAlloyingDisplay implements TransferRecipeDisplay {
 	
 	static {
 		fuel = EndStoneSmelterBlockEntity.availableFuels().keySet().stream()
-				.map(Item::getStackForRender).map(EntryStack::create)
+				.map(Item::getDefaultStack).map(EntryStack::create)
 				.map(e -> e.setting(EntryStack.Settings.TOOLTIP_APPEND_EXTRA, stack -> Collections.singletonList(new TranslatableText("category.rei.smelting.fuel")
 						.formatted(Formatting.YELLOW)))).collect(Collectors.toList());
 	}

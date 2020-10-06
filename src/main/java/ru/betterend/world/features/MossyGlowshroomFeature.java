@@ -78,6 +78,10 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		Vector3f pos = spline.get(spline.size() - 1);
 		float scale = MHelper.randRange(0.75F, 1.1F, random);
 		
+		if (featureConfig != null && random.nextInt(32) == 0) {
+			scale *= MHelper.randRange(2F, 3F, random);
+		}
+		
 		Vector3f vec = spline.get(0);
 		float x1 = blockPos.getX() + vec.getX() * scale;
 		float y1 = blockPos.getY() + vec.getY() * scale;

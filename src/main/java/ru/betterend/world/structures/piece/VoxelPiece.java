@@ -12,6 +12,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.registry.StructureRegistry;
+import ru.betterend.world.structures.StructureWorld;
 
 public class VoxelPiece extends BasePiece {
 	private StructureWorld world;

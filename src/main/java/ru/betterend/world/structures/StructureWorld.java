@@ -1,4 +1,4 @@
-package ru.betterend.world.structures.piece;
+package ru.betterend.world.structures;
 
 import java.util.Map;
 

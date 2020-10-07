@@ -5,7 +5,6 @@ import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
-import ru.betterend.world.features.MountainFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.VineFeature;
 

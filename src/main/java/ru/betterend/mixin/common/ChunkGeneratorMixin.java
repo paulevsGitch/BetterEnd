@@ -1,15 +1,8 @@
 package ru.betterend.mixin.common;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.At;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkRegion;
-import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import ru.betterend.registry.DefaultBiomeFeatures;
 
 @Mixin(ChunkGenerator.class)
 public class ChunkGeneratorMixin {

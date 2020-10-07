@@ -19,7 +19,6 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.world.World;
-
 import ru.betterend.recipe.AnvilSmithingRecipe;
 
 @Mixin(AnvilScreenHandler.class)

@@ -9,11 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.TransferRecipeDisplay;
 import me.shedaniel.rei.server.ContainerInfo;
-
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
-
 import ru.betterend.recipe.AnvilSmithingRecipe;
 
 public class REIAnvilDisplay implements TransferRecipeDisplay {

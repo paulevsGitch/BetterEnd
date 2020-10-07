@@ -11,6 +11,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.util.BlocksHelper;
 
+@Deprecated
 public class MountainFeature extends DefaultFeature {
 	private static final Mutable POS = new Mutable();
 	

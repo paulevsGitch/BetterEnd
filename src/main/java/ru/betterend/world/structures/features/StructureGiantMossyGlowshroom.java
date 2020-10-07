@@ -31,8 +31,6 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 public class StructureGiantMossyGlowshroom extends SDFStructureFeature {
 	@Override
 	protected SDF getSDF(BlockPos center, Random random) {
-		System.out.println(center);
-		
 		SDFCapedCone cone1 = new SDFCapedCone().setHeight(2.5F).setRadius1(1.5F).setRadius2(2.5F);
 		SDFCapedCone cone2 = new SDFCapedCone().setHeight(3F).setRadius1(2.5F).setRadius2(13F);
 		SDF posedCone2 = new SDFTranslate().setTranslate(0, 5, 0).setSource(cone2);

@@ -16,6 +16,7 @@ import net.minecraft.client.sound.MusicType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.world.World;
+import ru.betterend.util.MHelper;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
@@ -36,7 +37,7 @@ public class MinecraftClientMixin {
 	private void getEndMusic(CallbackInfoReturnable<MusicSound> info) {
 		if (!(this.currentScreen instanceof CreditsScreen) && this.player != null) {
 			if (this.player.world.getRegistryKey() == World.END) {
-				if (this.inGameHud.getBossBarHud().shouldPlayDragonMusic()) {
+				if (this.inGameHud.getBossBarHud().shouldPlayDragonMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
 					info.setReturnValue(MusicType.DRAGON);
 				}
 				else {

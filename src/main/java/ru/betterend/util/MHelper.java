@@ -69,12 +69,28 @@ public class MHelper {
 		return a > b ? a : b;
 	}
 	
+	public static float lengthSqr(float x, float y, float z) {
+		return x * x + y * y + z * z;
+	}
+	
+	public static double lengthSqr(double x, double y, double z) {
+		return x * x + y * y + z * z;
+	}
+	
 	public static float length(float x, float y, float z) {
-		return (float) Math.sqrt(x * x + y * y + z * z);
+		return (float) Math.sqrt(lengthSqr(x, y, z));
+	}
+	
+	public static float lengthSqr(float x, float y) {
+		return x * x + y * y;
+	}
+	
+	public static double lengthSqr(double x, double y) {
+		return x * x + y * y;
 	}
 	
 	public static float length(float x, float y) {
-		return (float) Math.sqrt(x * x + y * y);
+		return (float) Math.sqrt(lengthSqr(x, y));
 	}
 	
 	public static float dot(float x1, float y1, float z1, float x2, float y2, float z2) {

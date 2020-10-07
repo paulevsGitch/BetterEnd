@@ -22,13 +22,11 @@ public class VoxelPiece extends BasePiece {
 		world = new StructureWorld();
 		function.accept(world);
 		this.boundingBox = world.getBounds();
-		System.out.println(this.boundingBox);
 	}
 
 	public VoxelPiece(StructureManager manager, CompoundTag tag) {
 		super(StructureRegistry.VOXEL_PIECE, tag);
 		this.boundingBox = world.getBounds();
-		System.out.println(this.boundingBox);
 	}
 
 	@Override

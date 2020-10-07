@@ -3,14 +3,11 @@ package ru.betterend.compat;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.minecraft.block.Blocks;
 import net.minecraft.recipe.BlastingRecipe;
 import net.minecraft.util.Identifier;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.AlloyingRecipe;
 import ru.betterend.recipe.AnvilSmithingRecipe;

@@ -17,6 +17,8 @@ import net.minecraft.world.chunk.Chunk;
 
 public class StructureWorld {
 	private Map<ChunkPos, Part> parts = Maps.newHashMap();
+	private ChunkPos lastPos;
+	private Part lastPart;
 	private int minX = Integer.MAX_VALUE;
 	private int minY = Integer.MAX_VALUE;
 	private int minZ = Integer.MAX_VALUE;
@@ -46,6 +48,12 @@ public class StructureWorld {
 	
 	public void setBlock(BlockPos pos, BlockState state) {
 		ChunkPos cPos = new ChunkPos(pos);
+		
+		if (cPos.equals(lastPos)) {
+			lastPart.addBlock(pos, state);
+			return;
+		}
+		
 		Part part = parts.get(cPos);
 		if (part == null) {
 			part = new Part();
@@ -59,6 +67,9 @@ public class StructureWorld {
 		if (pos.getY() < minY) minY = pos.getY();
 		if (pos.getY() > maxY) maxY = pos.getY();
 		part.addBlock(pos, state);
+		
+		lastPos = cPos;
+		lastPart = part;
 	}
 	
 	public boolean placeChunk(StructureWorldAccess world, ChunkPos chunkPos) {

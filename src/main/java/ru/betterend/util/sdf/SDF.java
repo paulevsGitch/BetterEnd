@@ -12,6 +12,7 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.ServerWorldAccess;
 import ru.betterend.util.BlocksHelper;
@@ -39,6 +40,7 @@ public abstract class SDF {
 		return this;
 	}
 	
+	@Deprecated
 	public void fillRecursive(ServerWorldAccess world, BlockPos start, int dx, int dy, int dz) {
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -107,17 +109,19 @@ public abstract class SDF {
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
 		
+		Mutable bPos = new Mutable();
+		
 		while (run) {
 			for (BlockPos center: ends) {
 				for (Direction dir: Direction.values()) {
-					BlockPos pos = center.offset(dir);
-					BlockPos wpos = pos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.add(start);
 					
-					if (!blocks.contains(pos) && canReplace.apply(world.getBlockState(wpos))) {
-						if (this.getDistance(pos.getX(), pos.getY(), pos.getZ()) < 0) {
+					if (!blocks.contains(bPos) && canReplace.apply(world.getBlockState(wpos))) {
+						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) {
 							BlockState state = getBlockState(wpos);
 							PosInfo.create(mapWorld, addInfo, wpos).setState(state);
-							add.add(pos);
+							add.add(bPos.toImmutable());
 						}
 					}
 				}
@@ -152,6 +156,8 @@ public abstract class SDF {
 	}
 	
 	public void fillRecursive(StructureWorld world, BlockPos start) {
+		long t = System.currentTimeMillis();
+		
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
 		Set<BlockPos> blocks = Sets.newHashSet();
@@ -160,17 +166,19 @@ public abstract class SDF {
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
 		
+		Mutable bPos = new Mutable();
+		
 		while (run) {
 			for (BlockPos center: ends) {
 				for (Direction dir: Direction.values()) {
-					BlockPos pos = center.offset(dir);
-					BlockPos wpos = pos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.add(start);
 					
-					if (!blocks.contains(pos)) {
-						if (this.getDistance(pos.getX(), pos.getY(), pos.getZ()) < 0) {
+					if (!blocks.contains(bPos)) {
+						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) {
 							BlockState state = getBlockState(wpos);
 							PosInfo.create(mapWorld, addInfo, wpos).setState(state);
-							add.add(pos);
+							add.add(bPos.toImmutable());
 						}
 					}
 				}
@@ -198,5 +206,8 @@ public abstract class SDF {
 			BlockState state = postProcess.apply(info);
 			world.setBlock(info.getPos(), state);
 		});
+		
+		t = System.currentTimeMillis() - t;
+		System.out.println("SDF " + t + " ms");
 	}
 }

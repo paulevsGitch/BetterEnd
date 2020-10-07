@@ -50,6 +50,17 @@
 	"item.betterend.diamond_hammer": "Алмазный Кузнечный Молот",
 	"item.betterend.netherite_hammer": "Кузнечный Молот из Незерита",
 	
+	"effect.betterend.end_veil": "Вуаль Края",
+	"enchantment.betterend.end_veil": "Вуаль Края",
+	"item.minecraft.potion.effect.end_veil": "Зелье Вуали Края",
+	"item.minecraft.potion.effect.long_end_veil": "Долгое зелье Вуали Края",
+	"item.minecraft.splash_potion.effect.end_veil": "Взрывное зелье Вуали Края",
+	"item.minecraft.splash_potion.effect.long_end_veil": "Взрывное зелье Вуали Края",
+	"item.minecraft.lingering_potion.effect.end_veil": "Оседающее зелье Вуали Края",
+	"item.minecraft.lingering_potion.effect.long_end_veil": "Оседающее зелье Вуали Края",
+	"item.minecraft.tipped_arrow.effect.end_veil": "Стрела Вуали Края",
+	"item.minecraft.tipped_arrow.effect.long_end_veil": "Стрела Вуали Края",
+	
 	"block.betterend.mossy_glowshroom_sapling": "Саженец мшистого светогриба",
 	"block.betterend.mossy_glowshroom_cap": "Шляпка мшистого светогриба",
 	"block.betterend.mossy_glowshroom_fur": "Волоски мшистого светогриба",

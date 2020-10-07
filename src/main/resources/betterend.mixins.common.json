@@ -4,19 +4,21 @@
 	"package": "ru.betterend.mixin.common",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"DimensionTypeMixin",
-		"RecipeManagerMixin",
 		"ServerPlayNetworkHandlerMixin",
-		"TagGroupLoaderMixin",
 		"CraftingScreenHandlerMixin",
+		"DefaultBiomeCreatorMixin",
 		"GenerationSettingsMixin",
 		"AnvilScreenHandlerMixin",
+		"TagGroupLoaderMixin",
+		"EndermanEntityMixin",
+		"LocateCommandMixin",
+		"DimensionTypeMixin",
+		"RecipeManagerMixin",
 		"AbstractBlockMixin",
 		"LivingEntityMixin",
-		"BiomeMixin",
 		"SlimeEntityMixin",
-		"LocateCommandMixin",
-		"DefaultBiomeCreatorMixin"
+		"BrewingAccessor",
+		"BiomeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

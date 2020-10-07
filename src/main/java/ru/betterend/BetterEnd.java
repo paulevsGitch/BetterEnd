@@ -5,6 +5,8 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 
 import ru.betterend.config.MainConfig;
+import ru.betterend.effects.EndEnchantments;
+import ru.betterend.effects.EndPotions;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockEntityRegistry;
@@ -38,6 +40,8 @@ public class BetterEnd implements ModInitializer {
 		BetterEndBiomeSource.register();
 		ItemTagRegistry.register();
 		BlockTagRegistry.register();
+		EndEnchantments.register();
+		EndPotions.register();
 		CraftingRecipes.register();
 		StructureRegistry.register();
 	}

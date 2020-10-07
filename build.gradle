@@ -21,9 +21,25 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
-	modCompile "grondag:canvas-mc116:${project.canvas_version}"
+	optionalDependency ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}")
+	optionalDependency ("me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}")
+	optionalDependency ("grondag:canvas-mc116:${project.canvas_version}")
+	
+	modCompile "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_events_version}"
+	modCompile "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+}
+
+def optionalDependency(String dep) {
+	dependencies.modRuntime (dep) {
+		exclude (module: "fabric-api")
+		exclude (module: "cloth-client-events-v0")
+		exclude (module: "cloth-config2")
+	}
+	dependencies.modCompileOnly (dep) {
+		exclude (module: "fabric-api")
+		exclude (module: "cloth-client-events-v0")
+		exclude (module: "cloth-config2")
+	}
 }
 
 processResources {

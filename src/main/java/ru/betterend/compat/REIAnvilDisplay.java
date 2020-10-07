@@ -26,6 +26,10 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 		this.output = Collections.singletonList(EntryStack.create(recipe.getOutput()));
 	}
 	
+	public int getDamage() {
+		return this.recipe.getDamage();
+	}
+	
 	@Override
 	public @NotNull Optional<Identifier> getRecipeLocation() {
 		return Optional.ofNullable(recipe).map(Recipe::getId);

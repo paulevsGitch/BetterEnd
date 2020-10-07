@@ -2,10 +2,8 @@ package ru.betterend.recipe;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import ru.betterend.BetterEnd;
+
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.ItemRegistry;
 
@@ -71,8 +69,9 @@ public class CraftingRecipes {
 		RecipeBuilder.make("creeping_moss_dye", Items.CYAN_DYE).setList("#").addMaterial('#', BlockRegistry.CREEPING_MOSS).build();
 		RecipeBuilder.make("umbrella_moss_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', BlockRegistry.UMBRELLA_MOSS).build();
 		RecipeBuilder.make("umbrella_moss_tall_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', BlockRegistry.UMBRELLA_MOSS_TALL).build();
-		
-		EndRecipeManager.addRecipe(AnvilSmithingRecipe.TYPE, new AnvilSmithingRecipe(BetterEnd.makeID("ender_pearl_to_dust"), Ingredient.ofItems(Items.ENDER_PEARL), new ItemStack(ItemRegistry.ENDER_DUST), 4, 1));
+	
+		AlloyingRecipes.register();
+		SmithingRecipes.register();
 	}
 	
 	private static void registerHelmet(String name, Item material, Item result) {
@@ -145,9 +144,9 @@ public class CraftingRecipes {
 	
 	private static void registerHammer(String name, Item material, Item result) {
 		RecipeBuilder.make(name + "_hammer", result)
-		.setShape(new String[] { "I I", "I#I", " # " })
-		.addMaterial('I', material)
-		.addMaterial('#', Items.STICK)
-		.build();
+			.setShape(new String[] { "I I", "I#I", " # " })
+			.addMaterial('I', material)
+			.addMaterial('#', Items.STICK)
+			.build();
 	}
 }

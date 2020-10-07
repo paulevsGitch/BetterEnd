@@ -82,5 +82,7 @@
 	"block.betterend.blue_vine_lantern": "Фонарь синей лозы",
 	"block.betterend.blue_vine_fur": "Пух синей лозы",
 	
-	"block.betterend.dense_vine": "Плотная лоза"
+	"block.betterend.dense_vine": "Плотная лоза",
+	
+	"category.rei.damage.amount&dmg": "Износ инструмента: %s"
 }

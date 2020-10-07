@@ -4,8 +4,11 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.network.PacketByteBuf;
@@ -13,11 +16,13 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.ItemTagRegistry;
 
@@ -82,6 +87,10 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 		int level = ((ToolItem) hammer.getItem()).getMaterial().getMiningLevel();
 		return level >= this.level && this.input.test(craftingInventory.getStack(1));
 	}
+	
+	public int getDamage() {
+		return this.damage;
+	}
 
 	@Override
 	public DefaultedList<Ingredient> getPreviewInputs() {
@@ -113,6 +122,68 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	@Override
 	public boolean isIgnoredInRecipeBook() {
 		return true;
+	}
+	
+	public static class Builder {
+		private final static Builder INSTANCE = new Builder();
+		
+		public static Builder create(String id) {
+			INSTANCE.id = BetterEnd.makeID(id);
+			INSTANCE.input = null;
+			INSTANCE.output = null;
+			INSTANCE.level = 1;
+			INSTANCE.damage = 1;
+			
+			return INSTANCE;
+		}
+		
+		private Identifier id;
+		private Ingredient input;
+		private ItemStack output;
+		private int level = 1;
+		private int damage = 1;
+		
+		private Builder() {}
+		
+		public Builder setInput(ItemConvertible... inputItem) {
+			this.setInput(Ingredient.ofItems(inputItem));
+			return this;
+		}
+		
+		public Builder setInput(Tag<Item> inputTag) {
+			this.setInput(Ingredient.fromTag(inputTag));
+			return this;
+		}
+		
+		public Builder setInput(Ingredient ingredient) {
+			this.input = ingredient;
+			return this;
+		}
+		
+		public Builder setOutput(ItemConvertible output, int amount) {
+			this.output = new ItemStack(output, amount);
+			return this;
+		}
+		
+		public Builder setLevel(int level) {
+			this.level = level;
+			return this;
+		}
+		
+		public Builder setDamage(int damage) {
+			this.damage = damage;
+			return this;
+		}
+		
+		public void build() {
+			if (input == null) {
+				throw new IllegalArgumentException("Input can't be null!");
+			} else if(output == null) {
+				throw new IllegalArgumentException("Output can't be null!");
+			}
+			
+			EndRecipeManager.addRecipe(TYPE, new AnvilSmithingRecipe(id, input, output, level, damage));
+		}
 	}
 
 	public static class Serializer implements RecipeSerializer<AnvilSmithingRecipe> {

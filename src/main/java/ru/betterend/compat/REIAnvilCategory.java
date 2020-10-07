@@ -19,6 +19,7 @@ import me.shedaniel.rei.gui.widget.Widget;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import ru.betterend.util.LangUtil;
 
@@ -46,12 +47,14 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 		widgets.add(Widgets.createRecipeBase(bounds));
 		int x = startPoint.x + 10;
 		int y = startPoint.y;
-		widgets.add(Widgets.createResultSlotBackground(new Point(x + 61, y + 9)));
+		widgets.add(Widgets.createResultSlotBackground(new Point(x + 61, y + 4)));
 		List<List<EntryStack>> inputEntries = display.getInputEntries();
-		widgets.add(Widgets.createArrow(new Point(x + 24, y + 8)));
-		widgets.add(Widgets.createSlot(new Point(x - 20, y + 8)).entries(inputEntries.get(0)).markInput());
-		widgets.add(Widgets.createSlot(new Point(x + 1, y + 8)).entries(inputEntries.get(1)).markInput());
-		widgets.add(Widgets.createSlot(new Point(x + 61, y + 9)).entries(display.getResultingEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createArrow(new Point(x + 24, y + 3)));
+		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 5, bounds.y + bounds.height - 12),
+				new TranslatableText("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createSlot(new Point(x - 20, y + 3)).entries(inputEntries.get(0)).markInput());
+		widgets.add(Widgets.createSlot(new Point(x + 1, y + 3)).entries(inputEntries.get(1)).markInput());
+		widgets.add(Widgets.createSlot(new Point(x + 61, y + 4)).entries(display.getResultingEntries().get(0)).disableBackground().markOutput());
 		return widgets;
 	}
 
@@ -62,8 +65,8 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 		matrices.push();
 		matrices.translate(0, 0, 400);
 		if (redSlots.contains(0)) {
-			DrawableHelper.fill(matrices, startPoint.x - 20, startPoint.y + 8, startPoint.x - 20 + 16, startPoint.y + 8 + 16, 1090453504);
-			DrawableHelper.fill(matrices, startPoint.x + 1, startPoint.y + 8, startPoint.x + 1 + 16, startPoint.y + 8 + 16, 1090453504);
+			DrawableHelper.fill(matrices, startPoint.x - 20, startPoint.y + 3, startPoint.x - 20 + 16, startPoint.y + 3 + 16, 1090453504);
+			DrawableHelper.fill(matrices, startPoint.x + 1, startPoint.y + 3, startPoint.x + 1 + 16, startPoint.y + 3 + 16, 1090453504);
 		}
 		matrices.pop();
 	}

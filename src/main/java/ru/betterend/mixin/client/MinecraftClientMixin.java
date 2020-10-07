@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
 import net.minecraft.client.color.block.BlockColors;
@@ -22,8 +21,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import ru.betterend.client.ERenderLayer;
-import ru.betterend.client.IRenderTypeable;
+
 import ru.betterend.util.IColorProvider;
 import ru.betterend.util.MHelper;
 

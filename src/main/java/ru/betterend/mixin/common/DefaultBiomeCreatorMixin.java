@@ -9,7 +9,6 @@ import net.minecraft.world.biome.DefaultBiomeCreator;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import ru.betterend.registry.DefaultBiomeFeatureRegistry;
 
@@ -23,9 +22,10 @@ public class DefaultBiomeCreatorMixin {
 	@Overwrite
 	public static Biome createEndHighlands() {
 		GenerationSettings.Builder builder = (new GenerationSettings.Builder())
-				.surfaceBuilder(ConfiguredSurfaceBuilders.END).structureFeature(ConfiguredStructureFeatures.END_CITY)
+				.surfaceBuilder(ConfiguredSurfaceBuilders.END)
+				//.structureFeature(ConfiguredStructureFeatures.END_CITY)
 				.feature(GenerationStep.Feature.SURFACE_STRUCTURES, ConfiguredFeatures.END_GATEWAY)
-				.feature(GenerationStep.Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
+				//.feature(GenerationStep.Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.structureFeature(DefaultBiomeFeatureRegistry.MOUNTAINS.getFeatureConfigured());
 		return composeEndSpawnSettings(builder);
 	}

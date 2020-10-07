@@ -3,7 +3,6 @@ package ru.betterend.recipe;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.ItemRegistry;
 

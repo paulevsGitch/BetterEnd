@@ -2,10 +2,8 @@ package ru.betterend.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.registry.BlockEntityRenderRegistry;
 import ru.betterend.registry.EntityRenderRegistry;
 import ru.betterend.registry.ParticleRegistry;

@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
+import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
@@ -65,6 +66,7 @@ public class BlockRegistry {
 	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
+	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	
 	// Block With Entities //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());

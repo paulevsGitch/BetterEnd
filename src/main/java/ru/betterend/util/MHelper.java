@@ -100,4 +100,16 @@ public class MHelper {
 	public static float dot(float x1, float y1, float x2, float y2) {
 		return x1 * x2 + y1 * y2;
 	}
+	
+	public static int getSeed(int seed, int x, int y) {
+		int h = seed + x * 374761393 + y * 668265263;
+		h = (h ^ (h >> 13)) * 1274126177;
+		return h ^ (h >> 16);
+	}
+
+	public static int getSeed(int seed, int x, int y, int z) {
+		int h = seed + x * 374761393 + y * 668265263 + z;
+		h = (h ^ (h >> 13)) * 1274126177;
+		return h ^ (h >> 16);
+	}
 }

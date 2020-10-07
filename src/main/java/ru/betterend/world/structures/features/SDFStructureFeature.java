@@ -37,10 +37,7 @@ public abstract class SDFStructureFeature extends StructureFeatureBase {
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 5) {
 				BlockPos start = new BlockPos(x, y, z);
-				long t = System.currentTimeMillis();
 				VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
-				t = System.currentTimeMillis() - t;
-				System.out.println("Structure " + t + " ms");
 				this.children.add(piece);
 			}
 			this.setBoundingBoxFromChildren();

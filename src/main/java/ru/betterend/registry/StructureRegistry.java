@@ -6,10 +6,12 @@ import net.minecraft.world.gen.GenerationStep.Feature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.structures.EndStructureFeature;
 import ru.betterend.world.structures.features.StructureGiantMossyGlowshroom;
+import ru.betterend.world.structures.piece.MountainPiece;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
 public class StructureRegistry {
 	public static final StructurePieceType VOXEL_PIECE = register("voxel", VoxelPiece::new);
+	public static final StructurePieceType MOUNTAIN_PIECE = register("mountain_piece", MountainPiece::new);
 	
 	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new StructureGiantMossyGlowshroom(), Feature.SURFACE_STRUCTURES, 16, 8);
 	

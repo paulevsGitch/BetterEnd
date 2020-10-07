@@ -156,8 +156,6 @@ public abstract class SDF {
 	}
 	
 	public void fillRecursive(StructureWorld world, BlockPos start) {
-		long t = System.currentTimeMillis();
-		
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
 		Set<BlockPos> blocks = Sets.newHashSet();
@@ -206,8 +204,5 @@ public abstract class SDF {
 			BlockState state = postProcess.apply(info);
 			world.setBlock(info.getPos(), state);
 		});
-		
-		t = System.currentTimeMillis() - t;
-		System.out.println("SDF " + t + " ms");
 	}
 }

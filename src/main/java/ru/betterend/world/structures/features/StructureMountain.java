@@ -1,33 +1,40 @@
 package ru.betterend.world.structures.features;
 
-import java.util.Random;
-
-import net.minecraft.block.Blocks;
+import net.minecraft.structure.StructureManager;
+import net.minecraft.structure.StructureStart;
+import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import ru.betterend.noise.VoronoiNoise;
+import net.minecraft.util.registry.DynamicRegistryManager;
+import net.minecraft.world.Heightmap.Type;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.StructureFeature;
 import ru.betterend.util.MHelper;
-import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFDisplacement;
-import ru.betterend.util.sdf.operator.SDFScale;
-import ru.betterend.util.sdf.operator.SDFSmoothUnion;
-import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.primitive.SDFCapedCone;
+import ru.betterend.world.structures.piece.MountainPiece;
 
-public class StructureMountain extends SDFStructureFeature {
+public class StructureMountain extends StructureFeatureBase {
 	@Override
-	protected SDF getSDF(BlockPos center, Random random) {
-		SDFCapedCone cone1 = new SDFCapedCone().setHeight(20F).setRadius1(40F).setRadius2(0F);
-		SDFCapedCone cone2 = new SDFCapedCone().setHeight(10F).setRadius1(0F).setRadius2(40F);
-		cone1.setBlock(Blocks.END_STONE);
-		cone2.setBlock(Blocks.END_STONE);
-		SDF mountain = new SDFSmoothUnion().setRadius(15)
-				.setSourceA(new SDFTranslate().setTranslate(0, 20, 1).setSource(cone1))
-				.setSourceB(new SDFTranslate().setTranslate(0, -10, 1).setSource(cone2));
-		mountain = new SDFScale().setScale(MHelper.randRange(1F, 2.5F, random)).setSource(mountain);
-		VoronoiNoise noise = new VoronoiNoise(random.nextInt(), 20, 0.75);
-		mountain = new SDFDisplacement().setFunction((pos) -> {
-			return (float) noise.sample(pos.getX(), pos.getY(), pos.getZ()) * 15F;
-		}).setSource(mountain);
-		return mountain;
+	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
+		return SDFStructureStart::new;
+	}
+	
+	public static class SDFStructureStart extends StructureStart<DefaultFeatureConfig> {
+		public SDFStructureStart(StructureFeature<DefaultFeatureConfig> feature, int chunkX, int chunkZ, BlockBox box, int references, long seed) {
+			super(feature, chunkX, chunkZ, box, references, seed);
+		}
+
+		@Override
+		public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator, StructureManager manager, int chunkX, int chunkZ, Biome biome, DefaultFeatureConfig config) {
+			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
+			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
+			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
+			if (y > 5) {
+				float radius = MHelper.randRange(50, 100, random);
+				float height = radius * MHelper.randRange(0.8F, 1.2F, random);
+				this.children.add(new MountainPiece(new BlockPos(x, y, z), radius, height, random.nextInt()));
+			}
+			this.setBoundingBoxFromChildren();
+		}
 	}
 }

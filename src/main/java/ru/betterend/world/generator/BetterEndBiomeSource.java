@@ -35,8 +35,8 @@ public class BetterEndBiomeSource extends BiomeSource {
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 		super(Collections.emptyList());
 		
-		this.mapLand = new BiomeMap(seed, 150, BiomeRegistry.LAND_BIOMES);
-		this.mapVoid = new BiomeMap(seed, 150, BiomeRegistry.VOID_BIOMES);
+		this.mapLand = new BiomeMap(seed, 250, BiomeRegistry.LAND_BIOMES);
+		this.mapVoid = new BiomeMap(seed, 250, BiomeRegistry.VOID_BIOMES);
 		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
 		this.biomeRegistry = biomeRegistry;
 		this.seed = seed;

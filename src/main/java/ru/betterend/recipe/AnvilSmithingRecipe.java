@@ -195,7 +195,7 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 			ItemStack output = new ItemStack(Registry.ITEM.getOrEmpty(resultId).orElseThrow(() -> {
 				return new IllegalStateException("Item: " + resultStr + " does not exists!");
 			}));
-			int level = JsonHelper.getInt(json, "level", 0);
+			int level = JsonHelper.getInt(json, "level", 1);
 			int damage = JsonHelper.getInt(json, "damage", 1);
 			
 			return new AnvilSmithingRecipe(id, input, output, level, damage);

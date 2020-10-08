@@ -36,11 +36,13 @@ public class BlockRegistry {
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new BlockEndstoneDust());
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new BlockTerrain(MaterialColor.LIGHT_BLUE));
 	public static final Block END_MOSS = registerBlock("end_moss", new BlockTerrain(MaterialColor.CYAN));
-	public static final Block FLAVOLITE = registerBlock("flavolite", new BlockStone(MaterialColor.SAND));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BlockPath(END_MYCELIUM));
 	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new BlockPath(END_MOSS));
+	
+	// Rocks //
+	public static final Block FLAVOLITE = registerBlock("flavolite", new BlockStone(MaterialColor.SAND));
 	
 	// Wooden Materials //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());

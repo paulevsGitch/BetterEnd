@@ -16,7 +16,7 @@ public class BlockTagRegistry {
 	}
 	
 	public static void register() {
-		TagHelper.addTag(END_GROUND, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM);
-		TagHelper.addTag(BlockTags.NYLIUM, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM);
+		TagHelper.addTag(END_GROUND, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.ENDER_ORE);
+		TagHelper.addTag(BlockTags.NYLIUM, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.ENDER_ORE);
 	}
 }

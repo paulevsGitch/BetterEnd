@@ -49,6 +49,7 @@ public class EntityEndSlime extends SlimeEntity {
 		if (BiomeRegistry.getFromBiome(world.getBiome(getBlockPos())) == BiomeRegistry.FOGGY_MUSHROOMLAND) {
 			this.setMossy(true);
 		}
+		this.calculateDimensions();
 		return data;
 	}
 
@@ -87,6 +88,7 @@ public class EntityEndSlime extends SlimeEntity {
 				slimeEntity.setAiDisabled(bl);
 				slimeEntity.setInvulnerable(this.isInvulnerable());
 				((ISlime) slimeEntity).setSlimeSize(j, true);
+				slimeEntity.calculateDimensions();
 				slimeEntity.refreshPositionAndAngles(this.getX() + (double) g, this.getY() + 0.5D, this.getZ() + (double) h, this.random.nextFloat() * 360.0F, 0.0F);
 				this.world.spawnEntity(slimeEntity);
 			}

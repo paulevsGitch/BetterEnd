@@ -12,6 +12,7 @@
 	"block.betterend.end_mycelium": "Мицелий края",
 	"block.betterend.end_moss": "Мох края",
 	"block.betterend.endstone_dust": "Эндерняковая пыль",
+	"block.betterend.flavolite": "Флаволит",
 	
 	"block.betterend.end_mycelium_path": "Дорога из мицелия края",
 	"block.betterend.end_moss_path": "Дорога из мха края",
@@ -53,7 +54,7 @@
 	"effect.betterend.end_veil": "Вуаль Края",
 	"enchantment.betterend.end_veil": "Вуаль Края",
 	"item.minecraft.potion.effect.end_veil": "Зелье Вуали Края",
-	"item.minecraft.potion.effect.long_end_veil": "Долгое зелье Вуали Края",
+	"item.minecraft.potion.effect.long_end_veil": "Зелье Вуали Края",
 	"item.minecraft.splash_potion.effect.end_veil": "Взрывное зелье Вуали Края",
 	"item.minecraft.splash_potion.effect.long_end_veil": "Взрывное зелье Вуали Края",
 	"item.minecraft.lingering_potion.effect.end_veil": "Оседающее зелье Вуали Края",

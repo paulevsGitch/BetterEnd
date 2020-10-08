@@ -12,6 +12,7 @@
 	"block.betterend.end_mycelium": "End Mycelium",
 	"block.betterend.end_moss": "End Moss",
 	"block.betterend.endstone_dust": "End Stone Dust",
+	"block.betterend.flavolite": "Flavolite",
 	
 	"block.betterend.end_mycelium_path": "End Mycelium Path",
 	"block.betterend.end_moss_path": "End Moss Path",
@@ -53,7 +54,7 @@
 	"effect.betterend.end_veil": "End Veil",
 	"enchantment.betterend.end_veil": "End Veil",
 	"item.minecraft.potion.effect.end_veil": "Potion of End Veil",
-	"item.minecraft.potion.effect.long_end_veil": "Long potion of End Veil",
+	"item.minecraft.potion.effect.long_end_veil": "Potion of End Veil",
 	"item.minecraft.splash_potion.effect.end_veil": "Splash potion of End Veil",
 	"item.minecraft.splash_potion.effect.long_end_veil": "Splash potion of End Veil",
 	"item.minecraft.lingering_potion.effect.end_veil": "Lingering potion of End Veil",

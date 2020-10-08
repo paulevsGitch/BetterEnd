@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -18,7 +19,7 @@ public abstract class EndermanEntityMixin {
 	@Inject(method = "isPlayerStaring", at = @At("HEAD"), cancellable = true)
 	private void isPlayerStaring(PlayerEntity player, CallbackInfoReturnable<Boolean> info) {
 		if (player.isCreative() || player.hasStatusEffect(EndStatusEffects.END_VEIL) ||
-				EnchantmentHelper.getEquipmentLevel(EndEnchantments.END_VEIL, player) > 0) {
+				EnchantmentHelper.getLevel(EndEnchantments.END_VEIL, player.getEquippedStack(EquipmentSlot.HEAD)) > 0) {
 			info.setReturnValue(false);
 			info.cancel();
 		}

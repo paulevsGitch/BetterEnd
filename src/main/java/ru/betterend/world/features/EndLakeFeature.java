@@ -152,7 +152,12 @@ public class EndLakeFeature extends DefaultFeature {
 							}
 							pos = POS.down();
 							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.END_GROUND))
+							{
 								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								if (y < waterLevel - 1 && random.nextInt(3) == 0 && NOISE.eval(x * 0.1, z * 0.1) > 0.3) {
+									BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.BUBBLE_CORAL.getDefaultState());
+								}
+							}
 							pos = POS.up();
 							if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
 								while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {

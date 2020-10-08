@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.state.property.Property;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
@@ -19,6 +20,7 @@ import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.basis.BlockDoublePlant;
 import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.registry.BlockTagRegistry;
 
 public class BlocksHelper {
 	public static final int FLAG_UPDATE_BLOCK = 1;
@@ -28,7 +30,7 @@ public class BlocksHelper {
 	public static final int FLAG_IGNORE_OBSERVERS = 16;
 
 	public static final int SET_SILENT = FLAG_UPDATE_BLOCK | FLAG_IGNORE_OBSERVERS | FLAG_SEND_CLIENT_CHANGES;
-	public static final Direction[] HORIZONTAL = new Direction[] { Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST };
+	public static final Direction[] HORIZONTAL = makeHorizontal();
 	
 	private static final Mutable POS = new Mutable();
 	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
@@ -187,5 +189,17 @@ public class BlocksHelper {
 				}
 			}
 		}
+	}
+	
+	public static boolean isEndNylium(Block block) {
+		return block.isIn(BlockTags.NYLIUM) && block.isIn(BlockTagRegistry.END_GROUND);
+	}
+	
+	public static boolean isEndNylium(BlockState state) {
+		return isEndNylium(state.getBlock());
+	}
+	
+	public static Direction[] makeHorizontal() {
+		return new Direction[] { Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST };
 	}
 }

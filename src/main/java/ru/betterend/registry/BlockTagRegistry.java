@@ -2,6 +2,7 @@ package ru.betterend.registry;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
 import ru.betterend.BetterEnd;
@@ -16,5 +17,6 @@ public class BlockTagRegistry {
 	
 	public static void register() {
 		TagHelper.addTag(END_GROUND, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM);
+		TagHelper.addTag(BlockTags.NYLIUM, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM);
 	}
 }

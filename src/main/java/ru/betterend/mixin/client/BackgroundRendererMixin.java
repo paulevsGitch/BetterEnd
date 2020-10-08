@@ -17,6 +17,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
@@ -29,6 +30,7 @@ public class BackgroundRendererMixin {
 	private static float lastFogDensity;
 	private static float fogDensity;
 	private static float lerp;
+	private static long time;
 	
 	@Shadow
 	private static float red;
@@ -39,7 +41,9 @@ public class BackgroundRendererMixin {
 	
 	@Inject(method = "render", at = @At("RETURN"))
 	private static void onRender(Camera camera, float tickDelta, ClientWorld world, int i, float f, CallbackInfo info) {
-		lerp += tickDelta * 0.01F;
+		long l = Util.getMeasuringTimeMs() - time;
+		time += l;
+		lerp += l * 0.001F;
 		if (lerp > 1) lerp = 1;
 		
 		FluidState fluidState = camera.getSubmergedFluidState();

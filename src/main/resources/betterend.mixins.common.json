@@ -16,6 +16,7 @@
 		"RecipeManagerMixin",
 		"AbstractBlockMixin",
 		"LivingEntityMixin",
+		"BoneMealItemMixin",
 		"SlimeEntityMixin",
 		"BrewingAccessor",
 		"BiomeMixin"

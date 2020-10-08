@@ -26,6 +26,7 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockUnderwaterPlant;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.tab.CreativeTab;
@@ -57,6 +58,8 @@ public class BlockRegistry {
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());
 	public static final Block BLUE_VINE_LANTERN = registerBlock("blue_vine_lantern", new BlockBlueVineLantern());
 	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new BlockGlowingFur(BLUE_VINE_SEED, 3));
+	
+	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockUnderwaterPlant(12));
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));

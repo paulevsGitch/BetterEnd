@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/bubble_coral" },
+			{ "model": "betterend:block/bubble_coral_2" }
+		]
+	}
+}

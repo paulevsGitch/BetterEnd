@@ -1,10 +1,18 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockUnderwaterPlant;
 
 public class BlockBubbleCoral extends BlockUnderwaterPlant {
@@ -13,12 +21,19 @@ public class BlockBubbleCoral extends BlockUnderwaterPlant {
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.CORAL)
 				.breakByHand(true)
-				.lightLevel(12)
 				.noCollision());
 	}
 	
 	@Override
 	public AbstractBlock.OffsetType getOffsetType() {
 		return AbstractBlock.OffsetType.NONE;
+	}
+
+	@Environment(EnvType.CLIENT)
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+		double x = pos.getX() + random.nextDouble();
+		double y = pos.getY() + random.nextDouble() * 0.5F + 0.5F;
+		double z = pos.getZ() + random.nextDouble();
+		world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
 	}
 }

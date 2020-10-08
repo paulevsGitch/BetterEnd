@@ -58,6 +58,10 @@ public class BlockUnderwaterPlant extends BlockBaseNotFull implements IRenderTyp
 				.breakByHand(true)
 				.noCollision());
 	}
+	
+	public BlockUnderwaterPlant(Settings settings) {
+		super(settings);
+	}
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {

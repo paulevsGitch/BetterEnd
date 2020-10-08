@@ -1,6 +1,3 @@
 {
-	"parent": "item/generated",
-	"textures": {
-		"layer0": "betterend:block/bubble_coral"
-	}
+	"parent": "betterend:block/bubble_coral_1"
 }

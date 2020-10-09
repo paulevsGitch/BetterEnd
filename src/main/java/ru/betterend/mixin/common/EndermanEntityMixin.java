@@ -9,7 +9,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.player.PlayerEntity;
-
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndStatusEffects;
 

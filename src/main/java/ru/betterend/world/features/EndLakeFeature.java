@@ -11,7 +11,6 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockEndLily;
-import ru.betterend.blocks.BlockEndLilySeed;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
@@ -110,11 +109,11 @@ public class EndLakeFeature extends DefaultFeature {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.isIn(BlockTagRegistry.END_GROUND)) {
+								if (state.isIn(BlockTagRegistry.GEN_TERRAIN)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								}
 								pos = POS.down();
-								if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+								if (world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
 									state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
 									if (y > waterLevel + 1)
 										BlocksHelper.setWithoutUpdate(world, pos, state);
@@ -156,14 +155,14 @@ public class EndLakeFeature extends DefaultFeature {
 						rb *= rb;
 						if (y2 + x2 + z2 <= r) {
 							state = world.getBlockState(POS);
-							if (state.isIn(BlockTagRegistry.END_GROUND) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+							if (state.isIn(BlockTagRegistry.GEN_TERRAIN) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
 								BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
 								if (y == waterLevel - 1) {
 									world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);
 								}
 							}
 							pos = POS.down();
-							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.END_GROUND))
+							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.GEN_TERRAIN))
 							{
 								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
 								if (y < waterLevel - 1 && random.nextInt(3) == 0 && ((x + z) & 1) == 0) {
@@ -182,8 +181,8 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 							}
 							pos = POS.up();
-							if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
-								while (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+							if (world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+								while (world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
 									BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
 									if (y == waterLevel - 1) {
 										world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);

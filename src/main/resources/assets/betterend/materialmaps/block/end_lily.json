@@ -1,0 +1,14 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/end_lily_flower",
+				"material": "betterend:glow_inc"
+			},
+			{
+				"sprite": "betterend:block/end_lily_flower_small",
+				"material": "betterend:glow_inc"
+			}
+		]
+	}
+}

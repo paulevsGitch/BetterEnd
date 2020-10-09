@@ -77,7 +77,8 @@ public class BlockUnderwaterPlant extends BlockBaseNotFull implements IRenderTyp
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockState down = world.getBlockState(pos.down());
-		return isTerrain(down);
+		state = world.getBlockState(pos);
+		return isTerrain(down) && state.getFluidState().getFluid().equals(Fluids.WATER.getStill());
 	}
 	
 	protected boolean isTerrain(BlockState state) {
@@ -87,7 +88,7 @@ public class BlockUnderwaterPlant extends BlockBaseNotFull implements IRenderTyp
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (!canPlaceAt(state, world, pos)) {
-			return Blocks.AIR.getDefaultState();
+			return Blocks.WATER.getDefaultState();
 		}
 		else {
 			return state;

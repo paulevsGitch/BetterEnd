@@ -12,6 +12,8 @@ import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
 import ru.betterend.blocks.BlockBubbleCoral;
+import ru.betterend.blocks.BlockEndLily;
+import ru.betterend.blocks.BlockEndLilySeed;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
@@ -62,6 +64,8 @@ public class BlockRegistry {
 	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new BlockGlowingFur(BLUE_VINE_SEED, 3));
 	
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockBubbleCoral());
+	public static final Block END_LILY = registerBlockNI("end_lily", new BlockEndLily());
+	public static final Block END_LILY_SEED = registerBlock("end_lily_seed", new BlockEndLilySeed());
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));

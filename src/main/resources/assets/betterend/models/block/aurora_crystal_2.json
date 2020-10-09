@@ -1,0 +1,6 @@
+{
+	"parent": "betterend:block/tint_cube_noshade",
+	"textures": {
+		"texture": "betterend:block/aurora_crystal_2"
+	}
+}

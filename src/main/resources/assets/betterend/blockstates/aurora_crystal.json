@@ -1,5 +1,7 @@
 {
 	"variants": {
-		"": { "model": "betterend:block/aurora_crystal" }
+		"": [
+			{ "model": "betterend:block/aurora_crystal" }
+		]
 	}
 }

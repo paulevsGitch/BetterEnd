@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockUnderwaterPlant;
 
@@ -50,7 +51,17 @@ public class BlockEndLily extends BlockUnderwaterPlant {
 	}
 	
 	@Override
-	protected boolean isTerrain(BlockState state) {
-		return super.isTerrain(state) || state.getBlock() == this;
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+		if (state.get(SHAPE) == TripleShape.TOP) {
+			return world.getBlockState(pos.down()).getBlock() == this;
+		}
+		else if (state.get(SHAPE) == TripleShape.BOTTOM) {
+			return isTerrain(world.getBlockState(pos.down()));
+		}
+		else {
+			BlockState up = world.getBlockState(pos.up());
+			BlockState down = world.getBlockState(pos.down());
+			return up.getBlock() == this && down.getBlock() == this;
+		}
 	}
 }

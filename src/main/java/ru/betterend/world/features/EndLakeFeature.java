@@ -10,6 +10,9 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import ru.betterend.blocks.BlockEndLily;
+import ru.betterend.blocks.BlockEndLilySeed;
+import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
@@ -65,7 +68,7 @@ public class EndLakeFeature extends DefaultFeature {
 				POS.setZ(z);
 				int mz = z - maskMinZ;
 				if (!mask[mx][mz]) {
-					for (int y = waterLevel; y <= waterLevel + 20; y++) {
+					for (int y = waterLevel + 1; y <= waterLevel + 20; y++) {
 						POS.setY(y);
 						FluidState fluid = world.getFluidState(POS);
 						if (!fluid.isEmpty()) {
@@ -163,8 +166,19 @@ public class EndLakeFeature extends DefaultFeature {
 							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.END_GROUND))
 							{
 								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
-								if (y < waterLevel - 1 && random.nextInt(3) == 0 && NOISE.eval(x * 0.1, z * 0.1) > 0.3) {
-									BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.BUBBLE_CORAL.getDefaultState());
+								if (y < waterLevel - 1 && random.nextInt(3) == 0 && ((x + z) & 1) == 0) {
+									if (NOISE.eval(x * 0.1, z * 0.1, 0) > 0) {
+										BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.BUBBLE_CORAL.getDefaultState());
+									}
+									else if (NOISE.eval(x * 0.1, z * 0.1, 1) > 0) {
+										world.setBlockState(POS, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM), 0);
+										BlockPos up = POS.up();
+										while (up.getY() < waterLevel) {
+											BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.MIDDLE));
+											up = up.up();
+										}
+										BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.TOP));
+									}
 								}
 							}
 							pos = POS.up();

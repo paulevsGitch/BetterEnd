@@ -2,7 +2,6 @@ package ru.betterend.registry;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
 import net.minecraft.util.registry.Registry;
@@ -21,12 +20,15 @@ public class BlockTagRegistry {
 	}
 	
 	public static void register() {
-		TagHelper.addTag(END_GROUND, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.ENDER_ORE);
-		TagHelper.addTag(BlockTags.NYLIUM, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.ENDER_ORE);
+		addSurfaceBlock(BlockRegistry.END_MOSS);
+		addSurfaceBlock(BlockRegistry.END_MYCELIUM);
 		
-		END_GROUND.values().forEach((block) -> {
-			TagHelper.addTag(GEN_TERRAIN, block);
-		});
+		TagHelper.addTag(GEN_TERRAIN, BlockRegistry.ENDER_ORE);
+	}
+	
+	public static void addSurfaceBlock(Block block) {
+		TagHelper.addTag(END_GROUND, block);
+		TagHelper.addTag(GEN_TERRAIN, block);
 	}
 	
 	public static void addTerrainTags(Registry<Biome> biomeRegistry) {

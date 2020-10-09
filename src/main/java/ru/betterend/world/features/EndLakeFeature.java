@@ -83,7 +83,6 @@ public class EndLakeFeature extends DefaultFeature {
 			}
 		}
 		
-		
 		for (int x = minX; x <= maxX; x++) {
 			POS.setX(x);
 			int x2 = x - blockPos.getX();
@@ -95,26 +94,36 @@ public class EndLakeFeature extends DefaultFeature {
 				z2 *= z2;
 				int mz = z - maskMinZ;
 				if (!mask[mx][mz]) {
-					for (int y = blockPos.getY(); y <= blockPos.getY() + 10; y++) {
+					double size = 1;
+					for (int y = blockPos.getY(); y <= blockPos.getY() + 20; y++) {
 						POS.setY(y);
-						int add = y - blockPos.getY();
-						double r = add * 1.8 + radius * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75);
-						r *= r;
-						if (x2 + z2 <= r) {
-							state = world.getBlockState(POS);
-							if (state.isIn(BlockTagRegistry.END_GROUND)) {
-								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+						double add = y - blockPos.getY();
+						if (add > 5) {
+							size *= 0.8;
+							add = 5;
+						}
+						double r = (add * 1.8 + radius * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75)) - 1.0 / size;
+						if (r > 0) {
+							r *= r;
+							if (x2 + z2 <= r) {
+								state = world.getBlockState(POS);
+								if (state.isIn(BlockTagRegistry.END_GROUND)) {
+									BlocksHelper.setWithoutUpdate(world, POS, AIR);
+								}
+								pos = POS.down();
+								if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+									state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+									if (y > waterLevel + 1)
+										BlocksHelper.setWithoutUpdate(world, pos, state);
+									else if (y > waterLevel)
+										BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
+									else
+										BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								}
 							}
-							pos = POS.down();
-							if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
-								state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-								if (y > waterLevel + 1)
-									BlocksHelper.setWithoutUpdate(world, pos, state);
-								else if (y > waterLevel)
-									BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
-								else
-									BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
-							}
+						}
+						else {
+							break;
 						}
 					}
 				}

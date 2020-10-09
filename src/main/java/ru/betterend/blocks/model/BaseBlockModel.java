@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -30,11 +31,16 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Quaternion;
 import net.minecraft.world.BlockRenderView;
+
 import ru.betterend.BetterEnd;
 
 public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedModel {
@@ -71,21 +77,24 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 		Direction[] directions = Direction.values();
 		for (Direction direction : directions) {
 			emitter.square(direction, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
-			
 			switch (sprites.length) {
 				case 1: {
-					emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+					emitter.sprite(0, 0, 1.0F, 1.0F);
+					emitter.sprite(1, 0, 1.0F, 1.0F);
+					emitter.sprite(2, 0, 1.0F, 1.0F);
+					emitter.sprite(3, 0, 1.0F, 1.0F);
+					emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_ROTATE_NONE);
 					break;
 				}
 				case 2: {
 					switch (direction) {
 						case DOWN:
 						case UP: {
-							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
 						}
 					}
 				}
@@ -93,16 +102,16 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 					switch (direction) {
 						case DOWN:
 						case UP: {
-							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
 							break;
 						}
 						case NORTH:
 						case SOUTH: {
-							emitter.spriteBake(0, sprites[2], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[2], MutableQuadView.BAKE_LOCK_UV);
 						}
 					}
 				}
@@ -110,41 +119,33 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 					switch (direction) {
 						case DOWN:
 						case UP: {
-							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
 							break;
 						}
 						case NORTH: {
-							emitter.spriteBake(0, sprites[2], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
 							break;
 						}
 						case SOUTH: {
-							emitter.spriteBake(0, sprites[3], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[2], MutableQuadView.BAKE_LOCK_UV);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[3], MutableQuadView.BAKE_LOCK_UV);
 						}
 					}
 				}
 				case 5: {
 					switch (direction) {
-						case DOWN: {
-							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
-							break;
-						}
-						case UP: {
-							emitter.spriteBake(0, sprites[2], MutableQuadView.BAKE_LOCK_UV);
-							break;
-						}
-						case NORTH: {
-							emitter.spriteBake(0, sprites[3], MutableQuadView.BAKE_LOCK_UV);
-						}
+						case DOWN:
+						case UP:
+						case NORTH:
 						case SOUTH: {
-							emitter.spriteBake(0, sprites[4], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[direction.ordinal()], MutableQuadView.BAKE_LOCK_UV);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+							emitter.spriteBake(0, sprites[4], MutableQuadView.BAKE_LOCK_UV);
 						}
 					}
 				}

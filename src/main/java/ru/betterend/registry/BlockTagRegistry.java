@@ -23,12 +23,13 @@ public class BlockTagRegistry {
 	public static void register() {
 		TagHelper.addTag(END_GROUND, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.ENDER_ORE);
 		TagHelper.addTag(BlockTags.NYLIUM, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.ENDER_ORE);
-	}
-	
-	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
+		
 		END_GROUND.values().forEach((block) -> {
 			TagHelper.addTag(GEN_TERRAIN, block);
 		});
+	}
+	
+	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				SurfaceConfig config = biome.getGenerationSettings().getSurfaceConfig();

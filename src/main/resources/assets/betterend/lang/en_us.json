@@ -98,5 +98,24 @@
 	"block.betterend.bubble_coral": "Bubble Coral",
 	"block.betterend.aurora_crystal": "Aurora Crystal",
 	
-	"category.rei.damage.amount&dmg": "Tool damage: %s"
+	"category.rei.damage.amount&dmg": "Tool damage: %s",
+	
+	"block.betterend.chorus_bark": "Chorus Bark",
+	"block.betterend.chorus_barrel": "Chorus Barrel",
+	"block.betterend.chorus_button": "Chorus Button",
+	"block.betterend.chorus_chest": "Chorus Chest",
+	"block.betterend.chorus_crafting_table": "Chorus Crafting Table",
+	"block.betterend.chorus_door": "Chorus Door",
+	"block.betterend.chorus_fence": "Chorus Fence",
+	"block.betterend.chorus_gate": "Chorus Gate",
+	"block.betterend.chorus_ladder": "Chorus Ladder",
+	"block.betterend.chorus_log": "Chorus Log",
+	"block.betterend.chorus_planks": "Chorus Planks",
+	"block.betterend.chorus_plate": "Chorus Plate",
+	"block.betterend.chorus_sign": "Chorus Sign",
+	"block.betterend.chorus_slab": "Chorus Slab",
+	"block.betterend.chorus_stairs": "Chorus Stairs",
+	"block.betterend.chorus_stripped_bark": "Chorus Stripped Bark",
+	"block.betterend.chorus_stripped_log": "Chorus Stripped Log",
+	"block.betterend.chorus_trapdoor": "Chorus Trapdoor"
 }

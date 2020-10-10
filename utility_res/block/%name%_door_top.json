@@ -1,7 +1,0 @@
-{
-    "parent": "block/door_top", 
-    "textures": {
-        "bottom": "betterend:block/%name%_door_top", 
-        "top": "betterend:block/%name%_door_top"
-    }
-}

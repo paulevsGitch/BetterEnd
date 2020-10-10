@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube", 
+    "textures": {
+        "down": "betterend:block/chorus_log_top", 
+        "east": "betterend:block/chorus_log_side", 
+        "north": "betterend:block/chorus_log_side", 
+        "particle": "betterend:block/chorus_log_side", 
+        "south": "betterend:block/chorus_log_side", 
+        "up": "betterend:block/chorus_log_top", 
+        "west": "betterend:block/chorus_log_side"
+    }
+}

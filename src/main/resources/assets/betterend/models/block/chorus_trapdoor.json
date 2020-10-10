@@ -1,0 +1,7 @@
+{
+	"parent": "betterend:block/sided_trapdoor",
+	"textures": {
+		"texture": "betterend:block/chorus_trapdoor",
+		"side": "betterend:block/chorus_door_side"
+	}
+}

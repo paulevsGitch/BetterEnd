@@ -13,6 +13,8 @@ group = project.maven_group
 repositories {
     maven { url "https://maven.dblsaiko.net/" }
     maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
+	maven { url "https://maven.fabricmc.net/" }
+	jcenter()
 }
 
 dependencies {
@@ -20,30 +22,20 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	optionalDependency "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-	optionalDependency "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
-	optionalDependency "grondag:canvas-mc116:${project.canvas_version}"
 	
-	compilelDependency "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_events_version}"
-	compilelDependency "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+	optional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	optional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+	optional "grondag:canvas-mc116:${project.canvas_version}"
 }
 
-def optionalDependency(String dep) {
+def optional(String dep) {
 	dependencies.modRuntime (dep) {
 		exclude group: "net.fabricmc.fabric-api"
-		exclude module: "cloth-client-events-v0"
-		exclude module: "config-2"
+		exclude module: "fabric-loader"
 	}
 	dependencies.modCompileOnly (dep) {
 		exclude group: "net.fabricmc.fabric-api"
-		exclude module: "cloth-client-events-v0"
-		exclude module: "config-2"
-	}
-}
-def compilelDependency(String dep) {
-	dependencies.modCompile (dep) {
-		exclude group: "net.fabricmc.fabric-api"
+		exclude module: "fabric-loader"
 	}
 }
 

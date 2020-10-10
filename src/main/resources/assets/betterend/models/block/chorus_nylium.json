@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "block/end_stone",
+		"east": "betterend:block/chorus_nylium_side",
+		"north": "betterend:block/chorus_nylium_side",
+		"particle": "betterend:block/chorus_nylium_side",
+		"south": "betterend:block/chorus_nylium_side",
+		"up": "betterend:block/chorus_nylium_top",
+		"west": "betterend:block/chorus_nylium_side"
+	}
+}

@@ -1,0 +1,15 @@
+{
+    "variants": {
+        "type=bottom": {
+            "model": "betterend:block/chorus_half_slab"
+        }, 
+        "type=double": {
+            "model": "betterend:block/chorus_planks"
+        }, 
+        "type=top": {
+            "model": "betterend:block/chorus_half_slab", 
+            "uvlock": true, 
+            "x": 180
+        }
+    }
+}

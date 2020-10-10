@@ -29,6 +29,7 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockPlant;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.tab.CreativeTab;
@@ -38,10 +39,12 @@ public class BlockRegistry {
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new BlockEndstoneDust());
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new BlockTerrain(MaterialColor.LIGHT_BLUE));
 	public static final Block END_MOSS = registerBlock("end_moss", new BlockTerrain(MaterialColor.CYAN));
+	public static final Block CHORUS_NYLIUM = registerBlock("chorus_nylium", new BlockTerrain(MaterialColor.MAGENTA));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BlockPath(END_MYCELIUM));
 	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new BlockPath(END_MOSS));
+	public static final Block CHORUS_NYLIUM_PATH = registerBlock("chorus_nylium_path", new BlockPath(CHORUS_NYLIUM));
 	
 	// Rocks //
 	public static final Block FLAVOLITE = registerBlock("flavolite", new BlockStone(MaterialColor.SAND));
@@ -52,6 +55,7 @@ public class BlockRegistry {
 	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new BlockMossyGlowshroomHymenophore());
 	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new BlockGlowingFur(MOSSY_GLOWSHROOM_SAPLING, 16));
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
+	public static final WoodenMaterial CHORUS = new WoodenMaterial("chorus", MaterialColor.MAGENTA, MaterialColor.PURPLE);
 	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());
@@ -66,6 +70,8 @@ public class BlockRegistry {
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockBubbleCoral());
 	public static final Block END_LILY = registerBlockNI("end_lily", new BlockEndLily());
 	public static final Block END_LILY_SEED = registerBlock("end_lily_seed", new BlockEndLilySeed());
+	
+	public static final Block CHORUS_GRASS = registerBlock("chorus_grass", new BlockPlant(true));
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));

@@ -8,15 +8,18 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockEndLily;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.noise.OpenSimplexNoise;
+import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
+import ru.betterend.world.biome.EndBiome;
 
 public class EndLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.getDefaultState();
@@ -165,18 +168,10 @@ public class EndLakeFeature extends DefaultFeature {
 							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.GEN_TERRAIN))
 							{
 								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
-								if (y < waterLevel - 1 && random.nextInt(3) == 0 && ((x + z) & 1) == 0) {
-									if (NOISE.eval(x * 0.1, z * 0.1, 0) > 0) {
-										BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.BUBBLE_CORAL.getDefaultState());
-									}
-									else if (NOISE.eval(x * 0.1, z * 0.1, 1) > 0) {
-										world.setBlockState(POS, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM), 0);
-										BlockPos up = POS.up();
-										while (up.getY() < waterLevel) {
-											BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.MIDDLE));
-											up = up.up();
-										}
-										BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.TOP));
+								if (random.nextInt(3) == 0 && pos.getY() < waterLevel - 1) {
+									EndBiome biome = BiomeRegistry.getFromBiome(world.getBiome(POS));
+									if (biome == BiomeRegistry.FOGGY_MUSHROOMLAND) {
+										generateFoggyMushroomland(world, x, z, waterLevel);
 									}
 								}
 							}
@@ -213,5 +208,20 @@ public class EndLakeFeature extends DefaultFeature {
 		BlocksHelper.fixBlocks(world, new BlockPos(minX - 2, waterLevel - 2, minZ - 2), new BlockPos(maxX + 2, blockPos.getY() + 20, maxZ + 2));
 		
 		return true;
+	}
+	
+	private void generateFoggyMushroomland(WorldAccess world, int x, int z, int waterLevel) {
+		if (NOISE.eval(x * 0.1, z * 0.1, 0) > 0) {
+			BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.BUBBLE_CORAL.getDefaultState());
+		}
+		else if (NOISE.eval(x * 0.1, z * 0.1, 1) > 0) {
+			world.setBlockState(POS, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM), 0);
+			BlockPos up = POS.up();
+			while (up.getY() < waterLevel) {
+				BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.MIDDLE));
+				up = up.up();
+			}
+			BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.TOP));
+		}
 	}
 }

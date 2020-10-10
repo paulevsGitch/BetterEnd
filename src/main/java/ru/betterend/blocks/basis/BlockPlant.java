@@ -38,15 +38,23 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
 	
 	public BlockPlant() {
-		super(FabricBlockSettings.of(Material.PLANT)
+		this(false);
+	}
+	
+	public BlockPlant(int light) {
+		this(false, light);
+	}
+	
+	public BlockPlant(boolean replaceable) {
+		super(FabricBlockSettings.of(replaceable ? Material.PLANT : Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.breakByHand(true)
 				.noCollision());
 	}
 	
-	public BlockPlant(int light) {
-		super(FabricBlockSettings.of(Material.PLANT)
+	public BlockPlant(boolean replaceable, int light) {
+		super(FabricBlockSettings.of(replaceable ? Material.PLANT : Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.lightLevel(light)

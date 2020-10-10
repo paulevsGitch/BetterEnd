@@ -1,0 +1,38 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/chorus_grass_01" },
+			{ "model": "betterend:block/chorus_grass_02" },
+			{ "model": "betterend:block/chorus_grass_03" },
+			{ "model": "betterend:block/chorus_grass_04" },
+			{ "model": "betterend:block/chorus_grass_05" },
+			{ "model": "betterend:block/chorus_grass_06" },
+			{ "model": "betterend:block/chorus_grass_07" },
+			{ "model": "betterend:block/chorus_grass_08" },
+			{ "model": "betterend:block/chorus_grass_01", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_02", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_03", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_04", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_05", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_06", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_07", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_08", "y": 90 },
+			{ "model": "betterend:block/chorus_grass_01", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_02", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_03", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_04", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_05", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_06", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_07", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_08", "y": 180 },
+			{ "model": "betterend:block/chorus_grass_01", "y": 270 },
+			{ "model": "betterend:block/chorus_grass_02", "y": 270 },
+			{ "model": "betterend:block/chorus_grass_03", "y": 270 },
+			{ "model": "betterend:block/chorus_grass_04", "y": 270 },
+			{ "model": "betterend:block/chorus_grass_05", "y": 270 },
+			{ "model": "betterend:block/chorus_grass_06", "y": 270 },
+			{ "model": "betterend:block/chorus_grass_07", "y": 270 },
+			{ "model": "betterend:block/chorus_grass_08", "y": 270 }
+		]
+	}
+}

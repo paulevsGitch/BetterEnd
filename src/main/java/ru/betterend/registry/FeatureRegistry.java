@@ -21,6 +21,7 @@ public class FeatureRegistry {
 	
 	// Features //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);
+	public static final EndFeature RARE_END_LAKE = EndFeature.makeLakeFeature("rare_end_lake", new EndLakeFeature(), 40);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", BlockRegistry.ENDER_ORE, 6, 3, 0, 4, 96);

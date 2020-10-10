@@ -22,6 +22,7 @@ public class BlockTagRegistry {
 	public static void register() {
 		addSurfaceBlock(BlockRegistry.END_MOSS);
 		addSurfaceBlock(BlockRegistry.END_MYCELIUM);
+		addSurfaceBlock(BlockRegistry.CHORUS_NYLIUM);
 		
 		TagHelper.addTag(GEN_TERRAIN, BlockRegistry.ENDER_ORE);
 	}

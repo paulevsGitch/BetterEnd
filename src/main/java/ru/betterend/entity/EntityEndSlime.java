@@ -24,6 +24,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.util.ISlime;
 
@@ -105,7 +106,12 @@ public class EntityEndSlime extends SlimeEntity {
 	}
 	
 	public static boolean canSpawn(EntityType<EntityEndSlime> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32);
+		return isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
+	}
+	
+	private static boolean isPermanentBiome(ServerWorldAccess world, BlockPos pos) {
+		Biome biome = world.getBiome(pos);
+		return BiomeRegistry.getFromBiome(biome) == BiomeRegistry.CHORUS_FOREST;
 	}
 	
 	private static boolean notManyEntities(ServerWorldAccess world, BlockPos pos, int radius, int maxCount) {
@@ -114,12 +120,12 @@ public class EntityEndSlime extends SlimeEntity {
 		return list.size() <= maxCount;
 	}
 	
-	private static boolean isWaterNear(ServerWorldAccess world, BlockPos pos, int radius) {
+	private static boolean isWaterNear(ServerWorldAccess world, BlockPos pos, int radius, int radius2) {
 		for (int x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
 			POS.setX(x);
 			for (int z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
 				POS.setZ(z);
-				for (int y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
+				for (int y = pos.getY() - radius2; y <= pos.getY() + radius2; y++) {
 					POS.setY(y);
 					if (world.getBlockState(POS).getBlock() == Blocks.WATER) {
 						return true;

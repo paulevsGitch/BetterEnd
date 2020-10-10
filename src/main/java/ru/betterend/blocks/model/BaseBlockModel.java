@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.google.common.math.Quantiles;
 import com.mojang.datafixers.util.Pair;
 
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
@@ -18,6 +19,7 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -30,11 +32,16 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.client.util.math.AffineTransformation;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Matrix3f;
+import net.minecraft.util.math.Quaternion;
 import net.minecraft.world.BlockRenderView;
+
 import ru.betterend.BetterEnd;
 
 public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedModel {
@@ -61,23 +68,25 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 			this.sprites[i] = textureGetter.apply(spritesIDs[i]);
         }
 		
-		JsonUnbakedModel defaultBlockModel = (JsonUnbakedModel) loader.getOrLoadModel(DEFAULT_BLOCK_MODEL);
-		this.transformation = defaultBlockModel.getTransformations();
+		JsonUnbakedModel jsonBlockModel = (JsonUnbakedModel) loader.getOrLoadModel(DEFAULT_BLOCK_MODEL);
+		this.transformation = jsonBlockModel.getTransformations();
 		
 		Renderer renderer = RendererAccess.INSTANCE.getRenderer();
 		MeshBuilder builder = renderer.meshBuilder();
 		QuadEmitter emitter = builder.getEmitter();
 		
+		Vector3f rotation = AffineTransformation.getLinearTransformationAndTranslationFromAffine(rotationContainer.getRotation().getMatrix()).getSecond();
+		
+		System.out.println("=====");
+		System.out.println(rotation);
+		
 		Direction[] directions = Direction.values();
 		for (Direction direction : directions) {
-			emitter.square(direction, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+			Direction rotate = Direction.transform(rotationContainer.getRotation().getMatrix(), direction);
+			this.rotate(emitter, direction, rotate);
 			switch (sprites.length) {
 				case 1: {
-					emitter.sprite(0, 0, 1.0F, 1.0F);
-					emitter.sprite(1, 0, 1.0F, 1.0F);
-					emitter.sprite(2, 0, 1.0F, 1.0F);
-					emitter.sprite(3, 0, 1.0F, 1.0F);
-					emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_ROTATE_NONE);
+					emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
 					break;
 				}
 				case 2: {
@@ -154,6 +163,137 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 		this.mesh = builder.build();
 		
 		return this;
+	}
+    
+    private void rotate(QuadEmitter emitter, Direction direction, Direction rotation) {
+    	switch (direction) {
+			case NORTH: {
+				switch (rotation) {
+					case DOWN:	
+					case SOUTH: {
+						emitter.square(rotation, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+						break;
+					}
+					case EAST: {
+						emitter.square(rotation, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+						break;
+					}
+					case WEST: {
+						emitter.square(rotation, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+						break;
+					}
+					default: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+					}
+				}
+				break;
+			}
+			case SOUTH: {
+				switch (rotation) {
+					case DOWN:
+					case NORTH: {
+						emitter.square(rotation, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+						break;
+					}
+					case EAST: {
+						emitter.square(rotation, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+						break;
+					}
+					case WEST: {
+						emitter.square(rotation, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+						break;
+					}
+					default: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+					}
+				}
+				break;
+			}
+			case EAST: {
+				switch (rotation) {
+					case NORTH: {
+						emitter.square(rotation, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+						break;
+					}
+					case SOUTH: {
+						emitter.square(rotation, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+						break;
+					}
+					case DOWN:
+					case WEST: {
+						emitter.square(rotation, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+						break;
+					}
+					default: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+					}
+				}
+				break;
+			}
+			case WEST: {
+				switch (rotation) {
+					case NORTH: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+						break;
+					}
+					case SOUTH: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+						break;
+					}
+					case DOWN:
+					case EAST: {
+						emitter.square(rotation, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+						break;
+					}
+					default: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+					}
+				}
+				break;
+			}
+			case DOWN: {
+				switch (rotation) {
+					case EAST: {
+						emitter.square(rotation, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+						break;
+					}
+					case WEST: {
+						emitter.square(rotation, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+						break;
+					}
+					case SOUTH:
+					case UP: {
+						emitter.square(rotation, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+						break;
+					}
+					default: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+					}
+				}
+				break;
+			}
+			case UP: {
+				switch (rotation) {
+					case EAST: {
+						emitter.square(rotation, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+						break;
+					}
+					case WEST: {
+						emitter.square(rotation, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+						break;
+					}
+					case SOUTH:
+					case DOWN: {
+						emitter.square(rotation, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+						break;
+					}
+					default: {
+						emitter.square(rotation, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+					}
+				}
+				break;
+			}
+		}
 	}
 	
 	@Override

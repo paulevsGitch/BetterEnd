@@ -168,9 +168,11 @@ public class EndLakeFeature extends DefaultFeature {
 							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.GEN_TERRAIN))
 							{
 								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
-								EndBiome biome = BiomeRegistry.getFromBiome(world.getBiome(POS));
-								if (biome == BiomeRegistry.CHORUS_FOREST) {
-									generateFoggyMushroomland(world, x, z, waterLevel);
+								if (random.nextInt(3) == 0 && pos.getY() < waterLevel - 1) {
+									EndBiome biome = BiomeRegistry.getFromBiome(world.getBiome(POS));
+									if (biome == BiomeRegistry.FOGGY_MUSHROOMLAND) {
+										generateFoggyMushroomland(world, x, z, waterLevel);
+									}
 								}
 							}
 							pos = POS.up();

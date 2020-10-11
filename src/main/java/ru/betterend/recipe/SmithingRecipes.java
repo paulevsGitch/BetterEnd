@@ -1,6 +1,7 @@
 package ru.betterend.recipe;
 
 import net.minecraft.item.Items;
+import ru.betterend.recipe.builders.AnvilSmithingRecipe;
 import ru.betterend.registry.ItemRegistry;
 
 public class SmithingRecipes {

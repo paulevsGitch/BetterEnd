@@ -23,7 +23,7 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.client.gui.slot.SmelterFuelSlot;
 import ru.betterend.client.gui.slot.SmelterOutputSlot;
-import ru.betterend.recipe.AlloyingRecipe;
+import ru.betterend.recipe.builders.AlloyingRecipe;
 
 public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
 

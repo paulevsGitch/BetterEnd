@@ -26,7 +26,7 @@ import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockStairs;
 import ru.betterend.blocks.basis.BlockTrapdoor;
 import ru.betterend.blocks.basis.BlockWoodenButton;
-import ru.betterend.recipe.RecipeBuilder;
+import ru.betterend.recipe.builders.RecipeBuilder;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.util.TagHelper;
 

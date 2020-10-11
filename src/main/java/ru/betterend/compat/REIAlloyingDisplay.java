@@ -18,7 +18,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
-import ru.betterend.recipe.AlloyingRecipe;
+import ru.betterend.recipe.builders.AlloyingRecipe;
 
 public class REIAlloyingDisplay implements TransferRecipeDisplay {
 

@@ -2,6 +2,7 @@
 	"itemGroup.betterend.items": "Better End",
 	
 	"biome.betterend.foggy_mushroomland": "Foggy Mushroomland",
+	"biome.betterend.chorus_forest": "Chorus Forest",
 	
 	"entity.betterend.dragonfly": "Dragonfly",
 	"item.betterend.spawn_egg_dragonfly": "Dragonfly Spawn Egg",
@@ -117,5 +118,14 @@
 	"block.betterend.chorus_stairs": "Chorus Stairs",
 	"block.betterend.chorus_stripped_bark": "Chorus Stripped Bark",
 	"block.betterend.chorus_stripped_log": "Chorus Stripped Log",
-	"block.betterend.chorus_trapdoor": "Chorus Trapdoor"
+	"block.betterend.chorus_trapdoor": "Chorus Trapdoor",
+	
+	"block.betterend.chorus_nylium": "Chorus Nylium",
+	"block.betterend.chorus_nylium_path": "Chorus Nylium Path",
+	"block.betterend.chorus_grass": "Chorus Grass",
+	
+	"block.betterend.end_lily": "End Lily",
+	"block.betterend.end_lily_seed": "End Lily Seed",
+	"item.betterend.end_lily_leaf": "End Lily Leaf",
+	"item.betterend.end_lily_leaf_dried": "End Lily Leaf Dried"
 }

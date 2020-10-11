@@ -9,8 +9,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.recipe.BlastingRecipe;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
-import ru.betterend.recipe.AlloyingRecipe;
-import ru.betterend.recipe.AnvilSmithingRecipe;
+import ru.betterend.recipe.builders.AlloyingRecipe;
+import ru.betterend.recipe.builders.AnvilSmithingRecipe;
 import ru.betterend.registry.BlockRegistry;
 
 @Environment(EnvType.CLIENT)

@@ -12,7 +12,7 @@ import me.shedaniel.rei.server.ContainerInfo;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
-import ru.betterend.recipe.AnvilSmithingRecipe;
+import ru.betterend.recipe.builders.AnvilSmithingRecipe;
 
 public class REIAnvilDisplay implements TransferRecipeDisplay {
 	

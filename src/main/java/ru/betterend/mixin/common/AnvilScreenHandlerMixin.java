@@ -19,7 +19,7 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.world.World;
-import ru.betterend.recipe.AnvilSmithingRecipe;
+import ru.betterend.recipe.builders.AnvilSmithingRecipe;
 
 @Mixin(AnvilScreenHandler.class)
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {

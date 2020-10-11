@@ -2,6 +2,7 @@
 	"itemGroup.betterend.items": "Улучшенный Край",
 	
 	"biome.betterend.foggy_mushroomland": "Туманное гриболесье",
+	"biome.betterend.chorus_forest": "Хорусовый лес",
 	
 	"entity.betterend.dragonfly": "Стрекоза",
 	"item.betterend.spawn_egg_dragonfly": "Яйцо призыва стрекозы",
@@ -14,8 +15,8 @@
 	"block.betterend.endstone_dust": "Эндерняковая пыль",
 	"block.betterend.flavolite": "Флаволит",
 	
-	"block.betterend.end_mycelium_path": "Дорога из мицелия края",
-	"block.betterend.end_moss_path": "Дорога из мха края",
+	"block.betterend.end_mycelium_path": "Тропа из мицелия края",
+	"block.betterend.end_moss_path": "Тропа из мха края",
 	
 	"block.betterend.ender_ore": "Руда Края",
 	"block.betterend.terminite_block": "Блок Терминита",
@@ -98,5 +99,33 @@
 	"block.betterend.bubble_coral": "Пузырчатый коралл",
 	"block.betterend.aurora_crystal": "Кристалл авроры",
 	
-	"category.rei.damage.amount&dmg": "Износ инструмента: %s"
+	"category.rei.damage.amount&dmg": "Износ инструмента: %s",
+	
+	"block.betterend.chorus_bark": "Кора хоруса",
+	"block.betterend.chorus_barrel": "Бочка из хоруса",
+	"block.betterend.chorus_button": "Кнопка из хоруса",
+	"block.betterend.chorus_chest": "Сундук из хоруса",
+	"block.betterend.chorus_crafting_table": "Верстак из хоруса",
+	"block.betterend.chorus_door": "Дверь из хоруса",
+	"block.betterend.chorus_fence": "Забор из хоруса",
+	"block.betterend.chorus_gate": "Калитка из хоруса",
+	"block.betterend.chorus_ladder": "Лестница из хоруса",
+	"block.betterend.chorus_log": "Бревно хоруса",
+	"block.betterend.chorus_planks": "Доски хоруса",
+	"block.betterend.chorus_plate": "Нажимная плита из хоруса",
+	"block.betterend.chorus_sign": "Табличка из хоруса",
+	"block.betterend.chorus_slab": "Плита из хоруса",
+	"block.betterend.chorus_stairs": "Ступени из хоруса",
+	"block.betterend.chorus_stripped_bark": "Обтёсанная кора хоруса",
+	"block.betterend.chorus_stripped_log": "Обтёсанное бревно хоруса",
+	"block.betterend.chorus_trapdoor": "Люк из хоруса",
+	
+	"block.betterend.chorus_nylium": "Нилий хоруса",
+	"block.betterend.chorus_nylium_path": "Тропа из нилия хоруса",
+	"block.betterend.chorus_grass": "Трава хоруса",
+	
+	"block.betterend.end_lily": "Лилия Края",
+	"block.betterend.end_lily_seed": "Семя лилии Края",
+	"item.betterend.end_lily_leaf": "Лист лилии Края",
+	"item.betterend.end_lily_leaf_dried": "Высушенный лист лилии Края"
 }

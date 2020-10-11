@@ -1,4 +1,4 @@
-package ru.betterend.recipe;
+package ru.betterend.recipe.builders;
 
 import java.util.Map;
 
@@ -16,6 +16,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import ru.betterend.BetterEnd;
+import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.util.RecipeHelper;
 
 public class RecipeBuilder {

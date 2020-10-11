@@ -1,4 +1,4 @@
-package ru.betterend.recipe;
+package ru.betterend.recipe.builders;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -21,6 +21,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
+import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.BlockRegistry;
 
 public class AlloyingRecipe implements Recipe<Inventory> {

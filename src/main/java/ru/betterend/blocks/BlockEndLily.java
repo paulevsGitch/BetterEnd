@@ -1,5 +1,10 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -8,6 +13,8 @@ import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -18,6 +25,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockUnderwaterPlant;
+import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.ItemRegistry;
+import ru.betterend.util.MHelper;
 
 public class BlockEndLily extends BlockUnderwaterPlant {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
@@ -63,5 +73,13 @@ public class BlockEndLily extends BlockUnderwaterPlant {
 			BlockState down = world.getBlockState(pos.down());
 			return up.getBlock() == this && down.getBlock() == this;
 		}
+	}
+	
+	@Override
+	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+		if (state.get(SHAPE) == TripleShape.TOP) {
+			return Lists.newArrayList(new ItemStack(ItemRegistry.END_LILY_LEAF, MHelper.randRange(1, 2, MHelper.RANDOM)), new ItemStack(BlockRegistry.END_LILY_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
+		}
+		return Collections.emptyList();
 	}
 }

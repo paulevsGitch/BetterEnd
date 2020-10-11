@@ -44,7 +44,7 @@ import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
-import ru.betterend.recipe.AlloyingRecipe;
+import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.BlockEntityRegistry;
 
 public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider, Tickable {

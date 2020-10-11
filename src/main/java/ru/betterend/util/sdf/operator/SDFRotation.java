@@ -7,6 +7,10 @@ public class SDFRotation extends SDFUnary {
 	private static final Vector3f POS = new Vector3f();
 	private Quaternion rotation;
 	
+	public SDFRotation setRotation() {
+		return this;
+	}
+	
 	@Override
 	public float getDistance(float x, float y, float z) {
 		POS.set(x, y, z);

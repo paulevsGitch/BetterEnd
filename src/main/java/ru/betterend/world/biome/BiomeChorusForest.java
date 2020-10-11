@@ -4,7 +4,6 @@ import net.minecraft.entity.EntityType;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
-import ru.betterend.registry.StructureRegistry;
 
 public class BiomeChorusForest extends EndBiome {
 	public BiomeChorusForest() {
@@ -15,9 +14,9 @@ public class BiomeChorusForest extends EndBiome {
 				//.setParticles(ParticleRegistry.GLOWING_SPHERE, 0.001F)
 				//.setLoop(SoundRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
 				//.setMusic(SoundRegistry.MUSIC_FOGGY_MUSHROOMLAND)
-				.addStructureFeature(StructureRegistry.GIANT_MOSSY_GLOWSHROOM)
 				.addFeature(FeatureRegistry.ENDER_ORE)
 				.addFeature(FeatureRegistry.RARE_END_LAKE)
+				.addFeature(FeatureRegistry.CHORUS_TREE)
 				.addFeature(FeatureRegistry.CHORUS_GRASS)
 				.addMobSpawn(EntityRegistry.END_SLIME, 5, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));

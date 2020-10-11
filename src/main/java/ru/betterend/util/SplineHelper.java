@@ -41,6 +41,16 @@ public class SplineHelper {
 		}
 	}
 	
+	public static void parableOffset(List<Vector3f> spline, float distance) {
+		int count = spline.size();
+		for (int i = 1; i < count; i++) {
+			Vector3f pos = spline.get(i);
+			float x = (float) i / (float) (count + 1);
+			float y = pos.getY() + x * x * distance;
+			pos.set(pos.getX(), y, pos.getZ());
+		}
+	}
+	
 	public static SDF buildSDF(List<Vector3f> spline, float radius1, float radius2, Function<BlockPos, BlockState> placerFunction) {
 		int count = spline.size();
 		float max = count - 2;

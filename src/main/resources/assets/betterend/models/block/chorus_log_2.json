@@ -2,8 +2,8 @@
     "parent": "block/cube", 
     "textures": {
         "top": "betterend:block/chorus_log_top",
-        "side": "betterend:block/chorus_log_side_1",
-        "glow": "betterend:block/chorus_log_side_glow_1",
+        "side": "betterend:block/chorus_log_side_2",
+        "glow": "betterend:block/chorus_log_side_glow_2",
         "particle": "#side"
     },
 	"elements": [ 	 

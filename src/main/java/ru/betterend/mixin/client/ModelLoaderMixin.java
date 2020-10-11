@@ -13,7 +13,7 @@ import ru.betterend.BetterEnd;
 @Mixin(ModelLoader.class)
 public class ModelLoaderMixin {
 	
-	@Inject(method = "loadModelFromJson", at = @At("HEAD"))
+	@Inject(method = "loadModelFromJson", at = @At("HEAD"), cancellable = true)
 	private void loadModelFromJson(Identifier id, CallbackInfoReturnable<JsonUnbakedModel> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID) && id.getPath().contains("pattern")) {
 			System.out.println(id.getPath());

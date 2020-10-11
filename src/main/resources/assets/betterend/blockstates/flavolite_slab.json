@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "betterend:block/flavolite_slab"
+		},
+		"type=double": {
+			"model": "betterend:block/flavolite"
+		},
+		"type=top": {
+			"model": "betterend:block/flavolite_slab_top"
+		}
+	}
+}

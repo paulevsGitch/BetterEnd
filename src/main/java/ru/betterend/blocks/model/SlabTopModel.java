@@ -39,16 +39,16 @@ import net.minecraft.world.BlockRenderView;
 
 import ru.betterend.BetterEnd;
 
-public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedModel {
+public class SlabTopModel implements UnbakedModel, BakedModel, FabricBakedModel {
 
-	private static final Identifier DEFAULT_BLOCK_MODEL = new Identifier("minecraft:block/block");
+	private static final Identifier DEFAULT_MODEL = new Identifier("minecraft:block/slab_top");
 	
 	private final SpriteIdentifier[] spritesIDs;
     private final Sprite[] sprites;
     private ModelTransformation transformation;
     private Mesh mesh;
 
-	public BaseBlockModel(String... textures) {
+	public SlabTopModel(String... textures) {
 		this.spritesIDs = new SpriteIdentifier[textures.length];
 		this.sprites = new Sprite[textures.length];
 		for (int i = 0; i < textures.length; i++) {
@@ -63,7 +63,7 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 			this.sprites[i] = textureGetter.apply(spritesIDs[i]);
         }
 		
-		JsonUnbakedModel jsonBlockModel = (JsonUnbakedModel) loader.getOrLoadModel(DEFAULT_BLOCK_MODEL);
+		JsonUnbakedModel jsonBlockModel = (JsonUnbakedModel) loader.getOrLoadModel(DEFAULT_MODEL);
 		this.transformation = jsonBlockModel.getTransformations();
 		
 		Renderer renderer = RendererAccess.INSTANCE.getRenderer();
@@ -72,21 +72,20 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 		
 		Direction[] directions = Direction.values();
 		for (Direction direction : directions) {
-			emitter.square(direction, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
 			switch (sprites.length) {
 				case 1: {
-					emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+					this.buildModel(emitter, direction, sprites[0]);
 					break;
 				}
 				case 2: {
 					switch (direction) {
 						case DOWN:
 						case UP: {
-							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[0]);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[1]);
 						}
 					}
 				}
@@ -94,16 +93,16 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 					switch (direction) {
 						case DOWN:
 						case UP: {
-							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[0]);
 							break;
 						}
 						case NORTH:
 						case SOUTH: {
-							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[1]);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[2], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[2]);
 						}
 					}
 				}
@@ -111,19 +110,19 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 					switch (direction) {
 						case DOWN:
 						case UP: {
-							emitter.spriteBake(0, sprites[0], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[0]);
 							break;
 						}
 						case NORTH: {
-							emitter.spriteBake(0, sprites[1], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[1]);
 							break;
 						}
 						case SOUTH: {
-							emitter.spriteBake(0, sprites[2], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[2]);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[3], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[3]);
 						}
 					}
 				}
@@ -133,16 +132,16 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 						case UP:
 						case NORTH:
 						case SOUTH: {
-							emitter.spriteBake(0, sprites[direction.ordinal()], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[direction.ordinal()]);
 							break;
 						}
 						default: {
-							emitter.spriteBake(0, sprites[4], MutableQuadView.BAKE_LOCK_UV);
+							this.buildModel(emitter, direction, sprites[4]);
 						}
 					}
 				}
 				default: {
-					emitter.spriteBake(0, sprites[direction.ordinal()], MutableQuadView.BAKE_LOCK_UV);
+					this.buildModel(emitter, direction, sprites[direction.ordinal()]);
 				}
 			}
 
@@ -153,6 +152,25 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 		
 		return this;
 	}
+    
+    private void buildModel(QuadEmitter emitter, Direction direction, Sprite sprite) {
+    	switch(direction) {
+    		case DOWN: {
+    			emitter.square(direction, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
+    			break;
+    		}
+    		case UP: {
+    			emitter.square(direction, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+    			emitter.cullFace(direction);
+    			break;
+    		}
+    		default: {
+    			emitter.square(direction, 0.0f, 0.5f, 1.0f, 1.0f, 0.0f);
+    			emitter.cullFace(direction);
+    		}
+    	}
+    	emitter.spriteBake(0, sprite, MutableQuadView.BAKE_LOCK_UV);
+    }
     
     @Override
 	public boolean isVanillaAdapter() {
@@ -212,7 +230,7 @@ public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
 
 	@Override
 	public Collection<Identifier> getModelDependencies() {
-		return Arrays.asList(DEFAULT_BLOCK_MODEL);
+		return Arrays.asList(DEFAULT_MODEL);
 	}
 
 	@Override

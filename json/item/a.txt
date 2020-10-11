@@ -1,0 +1,23 @@
+ Том в устройстве D имеет метку Data
+ Серийный номер тома: C7B5-F673
+
+ Содержимое папки D:\BetterEnd\Utilities\src\data\stone\item
+
+11.10.2020  15:55    <DIR>          .
+11.10.2020  15:55    <DIR>          ..
+11.10.2020  15:42                44 %name%.json
+11.10.2020  15:46                51 %name%_bricks.json
+11.10.2020  15:47                55 %name%_brick_slab.json
+11.10.2020  15:46                57 %name%_brick_stairs.json
+11.10.2020  15:47                65 %name%_brick_wall.json
+11.10.2020  15:48                61 %name%_button.json
+11.10.2020  15:43                51 %name%_pillar.json
+26.09.2020  20:36                62 %name%_plate.json
+11.10.2020  15:43                49 %name%_slab.json
+11.10.2020  15:43                56 %name%_small_tiles.json
+11.10.2020  15:43                51 %name%_stairs.json
+11.10.2020  15:43                49 %name%_tile.json
+11.10.2020  15:47                59 %name%_wall.json
+11.10.2020  15:55                 0 a.txt
+              14 файлов            710 байт
+               2 папок  785 301 659 648 байт свободно

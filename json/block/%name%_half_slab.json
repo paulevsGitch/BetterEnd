@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab", 
+    "textures": {
+        "bottom": "betterend:block/%name%", 
+        "side": "betterend:block/%name%", 
+        "top": "betterend:block/%name%"
+    }
+}

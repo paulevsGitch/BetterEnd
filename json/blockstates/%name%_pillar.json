@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=x": { "model": "betterend:block/%name%_pillar", "x": 90, "y": 90 }, 
+        "axis=y": { "model": "betterend:block/%name%_pillar" }, 
+        "axis=z": { "model": "betterend:block/%name%_pillar", "x": 90 }
+    }
+}

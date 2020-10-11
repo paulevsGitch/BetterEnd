@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.math.Quantiles;
 import com.mojang.datafixers.util.Pair;
 
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
@@ -19,7 +18,6 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -38,10 +36,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Quaternion;
 import net.minecraft.world.BlockRenderView;
-
 import ru.betterend.BetterEnd;
 
 public class BaseBlockModel implements UnbakedModel, BakedModel, FabricBakedModel {

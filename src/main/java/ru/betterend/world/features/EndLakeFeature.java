@@ -215,7 +215,7 @@ public class EndLakeFeature extends DefaultFeature {
 			BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.BUBBLE_CORAL.getDefaultState());
 		}
 		else if (NOISE.eval(x * 0.1, z * 0.1, 1) > 0) {
-			world.setBlockState(POS, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM), 0);
+			BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM));
 			BlockPos up = POS.up();
 			while (up.getY() < waterLevel) {
 				BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.MIDDLE));

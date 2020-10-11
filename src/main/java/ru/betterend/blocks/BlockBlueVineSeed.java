@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
@@ -39,5 +40,10 @@ public class BlockBlueVineSeed extends BlockPlantWithAge {
 		if (world.isAir(pos.up())) {
 			BlocksHelper.setWithoutUpdate(world, pos.up(), BlockRegistry.BLUE_VINE_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.UP));
 		}
+	}
+	
+	@Override
+	protected boolean isTerrain(BlockState state) {
+		return state.getBlock() == BlockRegistry.END_MOSS || state.getBlock() == BlockRegistry.END_MYCELIUM;
 	}
 }

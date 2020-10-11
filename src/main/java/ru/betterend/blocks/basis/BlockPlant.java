@@ -46,7 +46,7 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	}
 	
 	public BlockPlant(boolean replaceable) {
-		super(FabricBlockSettings.of(replaceable ? Material.PLANT : Material.REPLACEABLE_PLANT)
+		super(FabricBlockSettings.of(replaceable ? Material.REPLACEABLE_PLANT : Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.breakByHand(true)
@@ -54,12 +54,16 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	}
 	
 	public BlockPlant(boolean replaceable, int light) {
-		super(FabricBlockSettings.of(replaceable ? Material.PLANT : Material.REPLACEABLE_PLANT)
+		super(FabricBlockSettings.of(replaceable ? Material.REPLACEABLE_PLANT : Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.lightLevel(light)
 				.breakByHand(true)
 				.noCollision());
+	}
+	
+	public BlockPlant(Settings settings) {
+		super(settings);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class BlockEndLilySeed extends BlockUnderwaterPlantWithAge {
 	@Override
 	public void grow(StructureWorldAccess world, Random random, BlockPos pos) {
 		if (canGrow(world, pos)) {
-			world.setBlockState(pos, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM), 0);
+			BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM));
 			BlockPos up = pos.up();
 			while (world.getFluidState(up).isStill()) {
 				BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.MIDDLE));

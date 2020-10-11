@@ -45,7 +45,7 @@ public class StoneMaterial {
 		slab = BlockRegistry.registerBlock(name + "_slab", new BlockSlab(stone));
 		wall = BlockRegistry.registerBlock(name + "_wall", new BlockWall(stone));
 		button = BlockRegistry.registerBlock(name + "_button", new BlockStoneButton(stone));
-		pressure_plate = BlockRegistry.registerBlock(name + "_pressure_plate", new BlockStonePressurePlate(stone));
+		pressure_plate = BlockRegistry.registerBlock(name + "_plate", new BlockStonePressurePlate(stone));
 		
 		bricks = BlockRegistry.registerBlock(name + "_bricks", new BlockBase(material));
 		brick_stairs = BlockRegistry.registerBlock(name + "_brick_stairs", new BlockStairs(bricks));

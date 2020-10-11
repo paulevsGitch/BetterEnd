@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "powered=false": {
+            "model": "betterend:block/violecite_pressure_plate_up"
+        }, 
+        "powered=true": {
+            "model": "betterend:block/violecite_pressure_plate_down"
+        }
+    }
+}

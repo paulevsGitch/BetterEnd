@@ -4,7 +4,7 @@
             "model": "betterend:block/violecite_brick_half_slab"
         }, 
         "type=double": {
-            "model": "betterend:block/violecite_brick_planks"
+            "model": "betterend:block/violecite_bricks"
         }, 
         "type=top": {
             "model": "betterend:block/violecite_brick_half_slab", 

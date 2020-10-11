@@ -127,5 +127,19 @@
 	"block.betterend.end_lily": "End Lily",
 	"block.betterend.end_lily_seed": "End Lily Seed",
 	"item.betterend.end_lily_leaf": "End Lily Leaf",
-	"item.betterend.end_lily_leaf_dried": "End Lily Leaf Dried"
+	"item.betterend.end_lily_leaf_dried": "End Lily Leaf Dried",
+	
+	"block.betterend.violecite": "Violecite",
+	"block.betterend.violecite_bricks": "Violecite Bricks",
+	"block.betterend.violecite_brick_slab": "Violecite Brick Slab",
+	"block.betterend.violecite_brick_stairs": "Violecite Brick Stairs",
+	"block.betterend.violecite_brick_wall": "Violecite Brick Wall",
+	"block.betterend.violecite_button": "Violecite Button",
+	"block.betterend.violecite_pillar": "Violecite Pillar",
+	"block.betterend.violecite_plate": "Violecite Plate",
+	"block.betterend.violecite_slab": "Violecite Slab",
+	"block.betterend.violecite_small_tiles": "Violecite Small Tiles",
+	"block.betterend.violecite_stairs": "Violecite Stairs",
+	"block.betterend.violecite_tile": "Violecite Tile",
+	"block.betterend.violecite_wall": "Violecite Wall"
 }

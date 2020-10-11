@@ -127,5 +127,19 @@
 	"block.betterend.end_lily": "Лилия Края",
 	"block.betterend.end_lily_seed": "Семя лилии Края",
 	"item.betterend.end_lily_leaf": "Лист лилии Края",
-	"item.betterend.end_lily_leaf_dried": "Высушенный лист лилии Края"
+	"item.betterend.end_lily_leaf_dried": "Высушенный лист лилии Края",
+	
+	"block.betterend.violecite": "Виолецит",
+	"block.betterend.violecite_bricks": "Виолецитовые кирпичи",
+	"block.betterend.violecite_brick_slab": "Плита из виолецитовых кирпичей",
+	"block.betterend.violecite_brick_stairs": "Ступени из виолецитовых кирпичей",
+	"block.betterend.violecite_brick_wall": "Стена из виолецитовых кирпичей",
+	"block.betterend.violecite_button": "Виолецитовая кнопка",
+	"block.betterend.violecite_pillar": "Виолецитовая колонна",
+	"block.betterend.violecite_plate": "Виолецитовая нажимная плита",
+	"block.betterend.violecite_slab": "Виолецитовая плита",
+	"block.betterend.violecite_small_tiles": "Маленькая виолецитовая плитка",
+	"block.betterend.violecite_stairs": "Виолецитовые ступени",
+	"block.betterend.violecite_tile": "Виолецитовая плитка",
+	"block.betterend.violecite_wall": "Виолецитовая стена"
 }

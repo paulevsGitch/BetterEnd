@@ -1,6 +1,6 @@
 {
     "variants": {
-        "axis=x": { "model": "betterend:block/violecite_pillar", "x": 90, "y": 90 }, 
+        "axis=x": { "model": "betterend:block/violecite_pillar", "x": 90, "y": 270 }, 
         "axis=y": { "model": "betterend:block/violecite_pillar" }, 
         "axis=z": { "model": "betterend:block/violecite_pillar", "x": 90 }
     }

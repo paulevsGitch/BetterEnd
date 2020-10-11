@@ -32,6 +32,7 @@ import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockVine;
+import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.tab.CreativeTab;
 
@@ -50,6 +51,7 @@ public class BlockRegistry {
 	// Rocks //
 	public static final Block FLAVOLITE = registerBlock("flavolite", new BlockStone(MaterialColor.SAND));
 	public static final Block FLAVOLITE_SLAB = registerBlock("flavolite_slab", new BlockSlab(FLAVOLITE));
+	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
 	
 	// Wooden Materials //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());

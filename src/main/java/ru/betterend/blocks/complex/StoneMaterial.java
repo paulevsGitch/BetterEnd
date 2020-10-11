@@ -49,8 +49,8 @@ public class StoneMaterial {
 		
 		bricks = BlockRegistry.registerBlock(name + "_bricks", new BlockBase(material));
 		brick_stairs = BlockRegistry.registerBlock(name + "_brick_stairs", new BlockStairs(bricks));
-		brick_slab = BlockRegistry.registerBlock(name + "_brick_stairs", new BlockSlab(bricks));
-		brick_wall = BlockRegistry.registerBlock(name + "_wall", new BlockWall(bricks));
+		brick_slab = BlockRegistry.registerBlock(name + "_brick_slab", new BlockSlab(bricks));
+		brick_wall = BlockRegistry.registerBlock(name + "_brick_wall", new BlockWall(bricks));
 		
 		// Recipes //
 		RecipeBuilder.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', stone).setGroup("end_bricks").build();

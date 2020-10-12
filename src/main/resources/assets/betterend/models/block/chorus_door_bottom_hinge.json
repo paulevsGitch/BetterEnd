@@ -1,7 +1,0 @@
-{
-	"parent": "betterend:block/sided_door_bottom_rh",
-	"textures": {
-		"facade": "betterend:block/chorus_door_bottom",
-		"side": "betterend:block/chorus_door_side"
-	}
-}

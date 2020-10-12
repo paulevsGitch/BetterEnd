@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "powered=false": {
+            "model": "betterend:block/pythadendron_pressure_plate_up"
+        }, 
+        "powered=true": {
+            "model": "betterend:block/pythadendron_pressure_plate_down"
+        }
+    }
+}

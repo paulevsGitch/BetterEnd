@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=east": {
+            "model": "betterend:block/pythadendron_ladder", 
+            "y": 90
+        }, 
+        "facing=north": {
+            "model": "betterend:block/pythadendron_ladder"
+        }, 
+        "facing=south": {
+            "model": "betterend:block/pythadendron_ladder", 
+            "y": 180
+        }, 
+        "facing=west": {
+            "model": "betterend:block/pythadendron_ladder", 
+            "y": 270
+        }
+    }
+}

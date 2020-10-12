@@ -16,7 +16,7 @@ public class BiomeChorusForest extends EndBiome {
 				//.setMusic(SoundRegistry.MUSIC_FOGGY_MUSHROOMLAND)
 				.addFeature(FeatureRegistry.ENDER_ORE)
 				.addFeature(FeatureRegistry.RARE_END_LAKE)
-				.addFeature(FeatureRegistry.CHORUS_TREE)
+				.addFeature(FeatureRegistry.PYTHADENDRON_TREE)
 				.addFeature(FeatureRegistry.CHORUS_GRASS)
 				.addMobSpawn(EntityRegistry.END_SLIME, 5, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));

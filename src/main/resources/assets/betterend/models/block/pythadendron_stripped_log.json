@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube", 
+    "textures": {
+        "down": "betterend:block/pythadendron_stripped_log_top", 
+        "east": "betterend:block/pythadendron_stripped_log_side", 
+        "north": "betterend:block/pythadendron_stripped_log_side", 
+        "particle": "betterend:block/pythadendron_stripped_log_side", 
+        "south": "betterend:block/pythadendron_stripped_log_side", 
+        "up": "betterend:block/pythadendron_stripped_log_top", 
+        "west": "betterend:block/pythadendron_stripped_log_side"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "betterend:block/pythadendron_crafting_table"
+        }
+    }
+}

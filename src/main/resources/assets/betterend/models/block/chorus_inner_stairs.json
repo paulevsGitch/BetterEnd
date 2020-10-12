@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs", 
-    "textures": {
-        "bottom": "betterend:block/chorus_planks", 
-        "side": "betterend:block/chorus_planks", 
-        "top": "betterend:block/chorus_planks"
-    }
-}

@@ -1,7 +1,7 @@
 package ru.betterend.registry;
 
 import ru.betterend.world.features.BlueVineFeature;
-import ru.betterend.world.features.ChorusTreeFeature;
+import ru.betterend.world.features.PythadendronTreeFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
@@ -12,7 +12,7 @@ import ru.betterend.world.features.VineFeature;
 public class FeatureRegistry {
 	// Trees //
 	public static final EndFeature MOSSY_GLOWSHROOM = new EndFeature("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
-	public static final EndFeature CHORUS_TREE = new EndFeature("chorus_tree", new ChorusTreeFeature(), 1);
+	public static final EndFeature PYTHADENDRON_TREE = new EndFeature("pythadendron_tree", new PythadendronTreeFeature(), 1);
 	
 	// Plants //
 	public static final EndFeature UMBRELLA_MOSS = new EndFeature("umbrella_moss", new DoublePlantFeature(BlockRegistry.UMBRELLA_MOSS, BlockRegistry.UMBRELLA_MOSS_TALL, 5), 5);

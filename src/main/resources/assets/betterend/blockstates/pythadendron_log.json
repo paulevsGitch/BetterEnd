@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "axis=x": [
+			{ "model": "betterend:block/pythadendron_log", "x": 90, "y": 90 },
+			{ "model": "betterend:block/pythadendron_log_2", "x": 90, "y": 90 }
+		], 
+        "axis=y": [
+			{ "model": "betterend:block/pythadendron_log" },
+			{ "model": "betterend:block/pythadendron_log_2" }
+		], 
+        "axis=z": [
+			{ "model": "betterend:block/pythadendron_log", "x": 90 },
+			{ "model": "betterend:block/pythadendron_log_2", "x": 90 }
+		]
+    }
+}

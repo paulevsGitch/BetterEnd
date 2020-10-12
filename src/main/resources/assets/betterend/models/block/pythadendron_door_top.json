@@ -1,0 +1,7 @@
+{
+	"parent": "betterend:block/sided_door_top",
+	"textures": {
+		"facade": "betterend:block/pythadendron_door_top",
+		"side": "betterend:block/pythadendron_door_side"
+	}
+}

@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -46,8 +47,7 @@ public class ModelLoaderMixin {
 	private void loadModel(Identifier id, CallbackInfo info) {
 		IdentifiedContext context = IdentifiedContext.class.cast(variantMapDeserializationContext);
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
-			Identifier blockstateId = new Identifier(id.getNamespace(), "pattern/" + id.getPath());
-			context.setContextId(blockstateId);
+			context.setContextId(BetterEnd.makeID("pattern/" + id.getPath()));
 		} else {
 			context.setContextId(null);
 		}

@@ -14,7 +14,16 @@ public interface Patterned {
 	default String blockStatePattern(String name) {
 		return null;
 	}
+	
 	default String modelPattern(String name) {
+		return null;
+	}
+	
+	default Identifier statePatternId() {
+		return null;
+	}
+	
+	default Identifier modelPatternId() {
 		return null;
 	}
 	

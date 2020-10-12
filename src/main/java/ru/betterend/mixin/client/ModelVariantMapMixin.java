@@ -33,9 +33,9 @@ public abstract class ModelVariantMapMixin {
 			String[] data = id.getPath().split("/");
 			Identifier blockId = new Identifier(id.getNamespace(), data[1]);
 			Block block = Registry.BLOCK.get(blockId);
+			idContext.removeId();
 			if (block instanceof Patterned) {
 				String pattern = ((Patterned) block).blockStatePattern(data[1]);
-				idContext.setContextId(null);
 				info.setReturnValue(deserialize(context, new StringReader(pattern)));
 				info.cancel();
 			}

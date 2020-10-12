@@ -8,6 +8,8 @@
 		"BackgroundRendererMixin",
 		"ClientRecipeBookMixin",
 		"ModelLoaderMixin",
+		"ModelVariantMapMixin",
+		"DeserializationContextMixin",
 		"ClientPlayNetworkHandlerMixin",
 		"MinecraftClientMixin"
 	],

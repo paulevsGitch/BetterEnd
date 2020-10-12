@@ -19,7 +19,6 @@ public class EndModelProvider implements ModelResourceProvider {
 	
 	public static final UnbakedModel FLAVOLITE_BLOCK = new BaseBlockModel("block/flavolite");
 	public static final UnbakedModel FLAVOLITE_SLAB = new SlabModel("block/flavolite");
-	public static final UnbakedModel FLAVOLITE_SLAB_TOP = new SlabTopModel("block/flavolite");
 	
 	public static void registerModel(String path, UnbakedModel model) {
 		MODELS.put(BetterEnd.makeID(path), model);
@@ -39,7 +38,5 @@ public class EndModelProvider implements ModelResourceProvider {
 		registerModel("item/flavolite", FLAVOLITE_BLOCK);
 		registerModel("block/flavolite", FLAVOLITE_BLOCK);
 		registerModel("item/flavolite_slab", FLAVOLITE_SLAB);
-		registerModel("block/flavolite_slab", FLAVOLITE_SLAB);
-		registerModel("block/flavolite_slab_top", FLAVOLITE_SLAB_TOP);
 	}
 }

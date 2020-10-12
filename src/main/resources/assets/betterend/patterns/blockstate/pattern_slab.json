@@ -1,0 +1,15 @@
+{
+    "variants": {
+        "type=bottom": {
+            "model": "betterend:pattern/%name%_slab"
+        }, 
+        "type=double": {
+            "model": "betterend:block/%name%"
+        }, 
+        "type=top": {
+            "model": "betterend:pattern/%name%_slab", 
+            "uvlock": true, 
+            "x": 180
+        }
+    }
+}

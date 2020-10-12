@@ -13,7 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.render.model.json.ModelVariantMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.interfaces.IdentifiedContext;
 import ru.betterend.interfaces.Patterned;
 

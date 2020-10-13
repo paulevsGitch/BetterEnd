@@ -1,13 +1,13 @@
 {
     "variants": {
         "type=bottom": {
-            "model": "betterend:pattern/%name%_slab"
+            "model": "betterend:pattern/%block%"
         }, 
         "type=double": {
-            "model": "betterend:block/%name%"
+            "model": "betterend:block/%parent%"
         }, 
         "type=top": {
-            "model": "betterend:pattern/%name%_slab", 
+            "model": "betterend:pattern/%block%",
             "uvlock": true, 
             "x": 180
         }

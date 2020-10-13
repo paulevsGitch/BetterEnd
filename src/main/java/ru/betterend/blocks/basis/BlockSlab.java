@@ -1,5 +1,6 @@
 package ru.betterend.blocks.basis;
 
+import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,13 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.Patterned;
 
 public class BlockSlab extends SlabBlock implements Patterned {
-	
-	private final static Identifier STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_slab.json");
-	private final static Identifier MODEL_PATTERN = BetterEnd.makeID("patterns/block/pattern_slab.json");
 	
 	private final Block parent;
 	
@@ -32,18 +29,18 @@ public class BlockSlab extends SlabBlock implements Patterned {
 	}
 	
 	@Override
-	public String blockStatePattern(String name) {
+	public String getStatesPattern(Reader data, String block) {
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(STATES_PATTERN, parentId.getPath());
+		return Patterned.createJson(data, parentId, block);
 	}
 	
 	@Override
-	public String modelPattern(String name) {
+	public String getModelPattern(String block) {
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(MODEL_PATTERN, parentId.getPath());
+		return Patterned.createJson(Patterned.SLAB_BLOCK_MODEL, parentId, block);
 	}
 	
 	public Identifier statePatternId() {
-		return STATES_PATTERN;
+		return Patterned.SLAB_STATES_PATTERN;
 	}
 }

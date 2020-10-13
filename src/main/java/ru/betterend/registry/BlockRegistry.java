@@ -22,7 +22,6 @@ import ru.betterend.blocks.BlockMossyGlowshroomHymenophore;
 import ru.betterend.blocks.BlockMossyGlowshroomSapling;
 import ru.betterend.blocks.BlockOre;
 import ru.betterend.blocks.BlockPath;
-import ru.betterend.blocks.BlockStone;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
@@ -30,10 +29,10 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.BlockGlowingFur;
-import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
+
 import ru.betterend.tab.CreativeTab;
 
 public class BlockRegistry {
@@ -49,8 +48,7 @@ public class BlockRegistry {
 	public static final Block CHORUS_NYLIUM_PATH = registerBlock("chorus_nylium_path", new BlockPath(CHORUS_NYLIUM));
 	
 	// Rocks //
-	public static final Block FLAVOLITE = registerBlock("flavolite", new BlockStone(MaterialColor.SAND));
-	public static final Block FLAVOLITE_SLAB = registerBlock("flavolite_slab", new BlockSlab(FLAVOLITE));
+	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
 	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
 	
 	// Wooden Materials //

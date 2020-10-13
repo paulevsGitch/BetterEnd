@@ -5,7 +5,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_post"
+        "model": "betterend:pattern/%block%/%block%_post"
       }
     },
     {
@@ -13,7 +13,7 @@
         "north": "low"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side",
+        "model": "betterend:pattern/%block%/%block%_side",
         "uvlock": true
       }
     },
@@ -22,7 +22,7 @@
         "east": "low"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side",
+        "model": "betterend:pattern/%block%/%block%_side",
         "y": 90,
         "uvlock": true
       }
@@ -32,7 +32,7 @@
         "south": "low"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side",
+        "model": "betterend:pattern/%block%/%block%_side",
         "y": 180,
         "uvlock": true
       }
@@ -42,7 +42,7 @@
         "west": "low"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side",
+        "model": "betterend:pattern/%block%/%block%_side",
         "y": 270,
         "uvlock": true
       }
@@ -52,7 +52,7 @@
         "north": "tall"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side_tall",
+        "model": "betterend:pattern/%block%/%block%_side_tall",
         "uvlock": true
       }
     },
@@ -61,7 +61,7 @@
         "east": "tall"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side_tall",
+        "model": "betterend:pattern/%block%/%block%_side_tall",
         "y": 90,
         "uvlock": true
       }
@@ -71,7 +71,7 @@
         "south": "tall"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side_tall",
+        "model": "betterend:pattern/%block%/%block%_side_tall",
         "y": 180,
         "uvlock": true
       }
@@ -81,7 +81,7 @@
         "west": "tall"
       },
       "apply": {
-        "model": "betterend:block/%name%_wall_side_tall",
+        "model": "betterend:pattern/%block%/%block%_side_tall",
         "y": 270,
         "uvlock": true
       }

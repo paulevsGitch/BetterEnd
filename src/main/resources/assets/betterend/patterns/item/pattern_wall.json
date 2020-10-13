@@ -1,3 +1,6 @@
 {
-    "parent": "betterend:block/%name%_wall_inventory"
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "betterend:block/%parent%"
+  }
 }

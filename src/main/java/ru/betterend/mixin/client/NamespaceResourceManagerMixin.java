@@ -5,6 +5,7 @@ import java.util.List;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -24,8 +25,11 @@ public abstract class NamespaceResourceManagerMixin {
 	@Shadow
 	public abstract Resource getResource(Identifier id);
 	
-	@Inject(method = "getAllResources", at = @At("HEAD"), cancellable = true)
-	public void getAllResources(Identifier id, CallbackInfoReturnable<List<Resource>> info) {
+	@Inject(method = "getAllResources", cancellable = true, at = @At(
+		value = "NEW",
+		target = "java/io/FileNotFoundException",
+		shift = Shift.BEFORE))
+	public void getStatesPattern(Identifier id, CallbackInfoReturnable<List<Resource>> info) {
 		if (id.getNamespace().contains(BetterEnd.MOD_ID)) {
 			String[] data = id.getPath().split("/");
 			if (data.length > 1) {

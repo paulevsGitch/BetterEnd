@@ -1,6 +1,6 @@
 {
     "parent": "block/button_pressed", 
     "textures": {
-        "texture": "betterend:block/%name%"
+        "texture": "betterend:block/%parent%"
     }
 }

@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "betterend:block/%name%"
+            "model": "betterend:pattern/%block%"
         }
     }
 }

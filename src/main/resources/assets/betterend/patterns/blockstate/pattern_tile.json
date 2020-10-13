@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "": {
-            "model": "betterend:block/%name%_tile"
-        }
-    }
-}

@@ -20,6 +20,7 @@ import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
 import ru.betterend.blocks.BlockMossyGlowshroomHymenophore;
 import ru.betterend.blocks.BlockMossyGlowshroomSapling;
+import ru.betterend.blocks.BlockMossyPythadendronSapling;
 import ru.betterend.blocks.BlockOre;
 import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockStone;
@@ -30,6 +31,7 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockLeaves;
 import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.complex.StoneMaterial;
@@ -59,6 +61,9 @@ public class BlockRegistry {
 	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new BlockMossyGlowshroomHymenophore());
 	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new BlockGlowingFur(MOSSY_GLOWSHROOM_SAPLING, 16));
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
+	
+	public static final Block PYTHADENDRON_SAPLING = registerBlock("pythadendron_sapling", new BlockMossyPythadendronSapling());
+	public static final Block PYTHADENDRON_LEAVES = registerBlock("pythadendron_leaves", new BlockLeaves(MaterialColor.MAGENTA));
 	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
 	
 	// Small Plants //

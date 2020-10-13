@@ -13,7 +13,6 @@
 	"block.betterend.end_mycelium": "End Mycelium",
 	"block.betterend.end_moss": "End Moss",
 	"block.betterend.endstone_dust": "End Stone Dust",
-	"block.betterend.flavolite": "Flavolite",
 	
 	"block.betterend.end_mycelium_path": "End Mycelium Path",
 	"block.betterend.end_moss_path": "End Moss Path",
@@ -138,8 +137,22 @@
 	"block.betterend.violecite_pillar": "Violecite Pillar",
 	"block.betterend.violecite_plate": "Violecite Plate",
 	"block.betterend.violecite_slab": "Violecite Slab",
-	"block.betterend.violecite_small_tiles": "Violecite Small Tiles",
+	"block.betterend.violecite_tiles": "Violecite Tiles",
 	"block.betterend.violecite_stairs": "Violecite Stairs",
-	"block.betterend.violecite_tile": "Violecite Tile",
-	"block.betterend.violecite_wall": "Violecite Wall"
+	"block.betterend.violecite_polished": "Polished Violecite",
+	"block.betterend.violecite_wall": "Violecite Wall",
+	
+	"block.betterend.flavolite": "Flavolite",
+	"block.betterend.flavolite_bricks": "Flavolite Bricks",
+	"block.betterend.flavolite_brick_slab": "Flavolite Brick Slab",
+	"block.betterend.flavolite_brick_stairs": "Flavolite Brick Stairs",
+	"block.betterend.flavolite_brick_wall": "Flavolite Brick Wall",
+	"block.betterend.flavolite_button": "Flavolite Button",
+	"block.betterend.flavolite_pillar": "Flavolite Pillar",
+	"block.betterend.flavolite_plate": "Flavolite Plate",
+	"block.betterend.flavolite_slab": "Flavolite Slab",
+	"block.betterend.flavolite_tiles": "Flavolite Tiles",
+	"block.betterend.flavolite_stairs": "Flavolite Stairs",
+	"block.betterend.flavolite_polished": "Polished Flavolite",
+	"block.betterend.flavolite_wall": "Flavolite Wall"
 }

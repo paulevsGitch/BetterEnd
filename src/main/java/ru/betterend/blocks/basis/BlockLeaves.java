@@ -9,4 +9,8 @@ public class BlockLeaves extends LeavesBlock {
 	public BlockLeaves(MaterialColor color) {
 		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).materialColor(color));
 	}
+	
+	public BlockLeaves(MaterialColor color, int light) {
+		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).materialColor(color).lightLevel(light));
+	}
 }

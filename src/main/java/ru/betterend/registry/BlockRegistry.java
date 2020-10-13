@@ -5,6 +5,7 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
@@ -31,7 +32,6 @@ import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.blocks.basis.BlockLeaves;
-import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;

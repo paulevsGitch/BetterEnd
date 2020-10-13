@@ -24,7 +24,7 @@ public interface Patterned {
 	public final static Identifier PILLAR_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_pillar.json");
 	public final static Identifier PLATE_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_pressure_plate.json");
 	//Models
-	public final static Identifier BASE_BLOCK_MODEL = BetterEnd.makeID("patterns/blockstate/pattern_block.json");
+	public final static Identifier BASE_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_block.json");
 	public final static Identifier SLAB_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_slab.json");
 	public final static Identifier STAIRS_MODEL = BetterEnd.makeID("patterns/block/pattern_stairs.json");
 	public final static Identifier STAIRS_MODEL_INNER = BetterEnd.makeID("patterns/block/pattern_inner_stairs.json");

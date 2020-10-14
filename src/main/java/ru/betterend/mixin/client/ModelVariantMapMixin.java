@@ -35,6 +35,9 @@ public abstract class ModelVariantMapMixin {
 			idContext.removeId();
 			if (block instanceof Patterned) {
 				String pattern = ((Patterned) block).getStatesPattern(reader);
+				if (data[1].contains("violecite")) {
+					System.out.println(pattern);
+				}
 				info.setReturnValue(deserialize(context, new StringReader(pattern)));
 				info.cancel();
 			}

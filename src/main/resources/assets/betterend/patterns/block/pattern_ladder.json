@@ -1,0 +1,6 @@
+{
+	"parent": "betterend:block/ladder",
+	"textures": {
+		"texture": "betterend:block/%texture%"
+	}
+}

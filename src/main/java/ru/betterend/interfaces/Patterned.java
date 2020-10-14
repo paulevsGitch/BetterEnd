@@ -28,6 +28,7 @@ public interface Patterned {
 	public final static Identifier SAPLING_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_sapling.json");
 	public final static Identifier GATE_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_fence_gate.json");
 	public final static Identifier TRAPDOOR_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_trapdoor.json");
+	public final static Identifier LADDER_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_ladder.json");
 	
 	//Models Block
 	public final static Identifier BASE_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_block.json");
@@ -56,11 +57,13 @@ public interface Patterned {
 	public final static Identifier GATE_MODEL_OPEN = BetterEnd.makeID("patterns/block/pattern_fence_gate_open.json");
 	public final static Identifier GATE_MODEL_WALL_OPEN = BetterEnd.makeID("patterns/block/pattern_wall_gate_open.json");
 	public final static Identifier TRAPDOOR_MODEL = BetterEnd.makeID("patterns/block/pattern_trapdoor.json");
+	public final static Identifier LADDER_MODEL = BetterEnd.makeID("patterns/block/pattern_ladder.json");
 	
 	//Models Item
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");
 	public final static Identifier FENCE_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_fence.json");
 	public final static Identifier BUTTON_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_button.json");
+	public final static Identifier LADDER_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_ladder.json");
 	public final static Identifier ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_item.json");
 
 	default String getStatesPattern(Reader data, String name) {

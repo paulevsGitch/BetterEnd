@@ -1,8 +1,0 @@
-{
-    "parent": "block/slab", 
-    "textures": {
-        "bottom": "betterend:block/pythadendron_planks", 
-        "side": "betterend:block/pythadendron_planks", 
-        "top": "betterend:block/pythadendron_planks"
-    }
-}

@@ -5,17 +5,23 @@ import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFDisplacement;
+import ru.betterend.util.sdf.operator.SDFScale3D;
+import ru.betterend.util.sdf.operator.SDFTranslate;
+import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class PythadendronTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -29,7 +35,8 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		SplineHelper.offsetParts(spline, random, 0.7F, 0, 0.7F);
 		Vector3f last = spline.get(spline.size() - 1);
 		
-		branch(last.getX(), last.getY(), last.getZ(), size * 1.5F, MHelper.randRange(0, MHelper.PI2, random), random, 3, world, pos);
+		int depth = 3;//MHelper.floor((size - 10F) * 3F / 10F + 1F);
+		branch(last.getX(), last.getY(), last.getZ(), size * 1.5F, MHelper.randRange(0, MHelper.PI2, random), random, depth, world, pos);
 		
 		SDF function = SplineHelper.buildSDF(spline, 1.5F, 0.8F, (bpos) -> {
 			return BlockRegistry.PYTHADENDRON.bark.getDefaultState();
@@ -57,21 +64,46 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		SplineHelper.offsetParts(spline, random, 0.3F, 0, 0.3F);
 		Vector3f pos1 = spline.get(spline.size() - 1);
 		
-		SplineHelper.fillSpline(spline, world, BlockRegistry.PYTHADENDRON.bark.getDefaultState(), pos, REPLACE);
+		boolean s1 = SplineHelper.fillSpline(spline, world, BlockRegistry.PYTHADENDRON.bark.getDefaultState(), pos, REPLACE);
 		
 		spline = SplineHelper.makeSpline(x, y, z, x2, y, z2, 5);
 		SplineHelper.powerOffset(spline, size * MHelper.randRange(1.0F, 2.0F, random), 4);
 		SplineHelper.offsetParts(spline, random, 0.3F, 0, 0.3F);
 		Vector3f pos2 = spline.get(spline.size() - 1);
 		
-		SplineHelper.fillSpline(spline, world, BlockRegistry.PYTHADENDRON.bark.getDefaultState(), pos, REPLACE);
+		boolean s2 = SplineHelper.fillSpline(spline, world, BlockRegistry.PYTHADENDRON.bark.getDefaultState(), pos, REPLACE);
+		
+		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
+		if (depth == 1) {
+			if (s1) {
+				SDF sphere = new SDFSphere().setRadius(MHelper.randRange(4.5F, 6.5F, random)).setBlock(BlockRegistry.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+				sphere = new SDFScale3D().setScale(1, 0.4F, 1).setSource(sphere);
+				//sphere = new SDFTranslate().setTranslate(pos1.getX() + pos.getX(), pos1.getY() + pos.getY(), pos1.getZ() + pos.getZ()).setSource(sphere);
+				sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
+				sphere.setReplaceFunction(REPLACE);
+				sphere.fillRecursive(world, new BlockPos(pos1.getX() + pos.getX(), pos1.getY() + pos.getY() + 1, pos1.getZ() + pos.getZ()));
+			}
+			if (s2) {
+				SDF sphere = new SDFSphere().setRadius(MHelper.randRange(4.5F, 6.5F, random)).setBlock(BlockRegistry.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+				sphere = new SDFScale3D().setScale(1, 0.4F, 1).setSource(sphere);
+				//sphere = new SDFTranslate().setTranslate(pos2.getX() + pos.getX(), pos2.getY() + pos.getY(), pos2.getZ() + pos.getZ()).setSource(sphere);
+				sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
+				sphere.setReplaceFunction(REPLACE);
+				sphere.fillRecursive(world, new BlockPos(pos2.getX() + pos.getX(), pos2.getY() + pos.getY() + 1, pos2.getZ() + pos.getZ()));
+			}
+		}
 		
 		float size1 = size * MHelper.randRange(0.75F, 0.95F, random);
 		float size2 = size * MHelper.randRange(0.75F, 0.95F, random);
 		float angle1 = angle + (float) Math.PI * 0.5F + MHelper.randRange(-0.1F, 0.1F, random);
 		float angle2 = angle + (float) Math.PI * 0.5F + MHelper.randRange(-0.1F, 0.1F, random);
-		branch(pos1.getX(), pos1.getY(), pos1.getZ(), size1, angle1, random, depth - 1, world, pos);
-		branch(pos2.getX(), pos2.getY(), pos2.getZ(), size2, angle2, random, depth - 1, world, pos);
+		
+		if (s1) {
+			branch(pos1.getX(), pos1.getY(), pos1.getZ(), size1, angle1, random, depth - 1, world, pos);
+		}
+		if (s2) {
+			branch(pos2.getX(), pos2.getY(), pos2.getZ(), size2, angle2, random, depth - 1, world, pos);
+		}
 	}
 	
 	static {

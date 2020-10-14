@@ -1,8 +1,0 @@
-{
-    "parent": "minecraft:block/cube_bottom_top", 
-    "textures": {
-        "bottom": "betterend:block/pythadendron_barrel_bottom", 
-        "side": "betterend:block/pythadendron_barrel_side", 
-        "top": "betterend:block/pythadendron_barrel_top"
-    }
-}

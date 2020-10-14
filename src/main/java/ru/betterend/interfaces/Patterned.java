@@ -29,11 +29,13 @@ public interface Patterned {
 	public final static Identifier GATE_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_fence_gate.json");
 	public final static Identifier TRAPDOOR_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_trapdoor.json");
 	public final static Identifier LADDER_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_ladder.json");
+	public final static Identifier BARREL_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_barrel.json");
 	
 	//Models Block
 	public final static Identifier EMPTY_MODEL = BetterEnd.makeID("patterns/block/pattern_empty.json");
 	public final static Identifier BASE_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_block.json");
 	public final static Identifier SIDED_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_block_sided.json");
+	public final static Identifier BLOCK_BOTTOM_TOP_MODEL = BetterEnd.makeID("patterns/block/pattern_block_bottom_top.json");
 	public final static Identifier SLAB_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_slab.json");
 	public final static Identifier STAIRS_MODEL = BetterEnd.makeID("patterns/block/pattern_stairs.json");
 	public final static Identifier STAIRS_MODEL_INNER = BetterEnd.makeID("patterns/block/pattern_inner_stairs.json");
@@ -59,6 +61,7 @@ public interface Patterned {
 	public final static Identifier GATE_MODEL_WALL_OPEN = BetterEnd.makeID("patterns/block/pattern_wall_gate_open.json");
 	public final static Identifier TRAPDOOR_MODEL = BetterEnd.makeID("patterns/block/pattern_trapdoor.json");
 	public final static Identifier LADDER_MODEL = BetterEnd.makeID("patterns/block/pattern_ladder.json");
+	public final static Identifier BARREL_MODEL_OPEN = BetterEnd.makeID("patterns/block/pattern_barrel_open.json");
 	
 	//Models Item
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");

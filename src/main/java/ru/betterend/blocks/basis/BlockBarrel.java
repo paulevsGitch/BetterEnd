@@ -1,5 +1,6 @@
 package ru.betterend.blocks.basis;
 
+import java.io.Reader;
 import java.util.List;
 import java.util.Random;
 
@@ -18,14 +19,17 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
+import ru.betterend.interfaces.Patterned;
 import ru.betterend.registry.BlockEntityRegistry;
 
-public class BlockBarrel extends BarrelBlock {
+public class BlockBarrel extends BarrelBlock implements Patterned {
 	public BlockBarrel(Block source) {
 		super(FabricBlockSettings.copyOf(source).nonOpaque());
 	}
@@ -81,5 +85,25 @@ public class BlockBarrel extends BarrelBlock {
 				((EBarrelBlockEntity) blockEntity).setCustomName(itemStack.getName());
 			}
 		}
+	}
+	
+	@Override
+	public String getStatesPattern(Reader data) {
+		Identifier blockId = Registry.BLOCK.getId(this);
+		return Patterned.createJson(data, blockId, blockId.getPath());
+	}
+	
+	@Override
+	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
+		if (block.contains("open")) {
+			return Patterned.createJson(Patterned.BARREL_MODEL_OPEN, blockId, blockId.getPath());
+		}
+		return Patterned.createJson(Patterned.BLOCK_BOTTOM_TOP_MODEL, blockId, blockId.getPath());
+	}
+	
+	@Override
+	public Identifier statePatternId() {
+		return Patterned.BARREL_STATES_PATTERN;
 	}
 }

@@ -36,9 +36,9 @@ public class BlockDoor extends DoorBlock implements IRenderTypeable, Patterned {
 	}
 	
 	@Override
-	public String getStatesPattern(Reader data, String block) {
+	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, block);
+		return Patterned.createJson(data, blockId, blockId.getPath());
 	}
 	
 	@Override

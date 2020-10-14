@@ -31,6 +31,7 @@ public interface Patterned {
 	public final static Identifier LADDER_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_ladder.json");
 	
 	//Models Block
+	public final static Identifier EMPTY_MODEL = BetterEnd.makeID("patterns/block/pattern_empty.json");
 	public final static Identifier BASE_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_block.json");
 	public final static Identifier SIDED_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_block_sided.json");
 	public final static Identifier SLAB_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_slab.json");
@@ -64,9 +65,10 @@ public interface Patterned {
 	public final static Identifier FENCE_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_fence.json");
 	public final static Identifier BUTTON_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_button.json");
 	public final static Identifier LADDER_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_ladder.json");
+	public final static Identifier CHEST_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_chest.json");
 	public final static Identifier ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_item.json");
 
-	default String getStatesPattern(Reader data, String name) {
+	default String getStatesPattern(Reader data) {
 		return null;
 	}
 	
@@ -82,11 +84,11 @@ public interface Patterned {
 		return null;
 	}
 	
-	public static String createJson(Reader data, Identifier parent, String block) {
+	public static String createJson(Reader data, Identifier parent, String name) {
 		try (BufferedReader buffer = new BufferedReader(data)) {
 			return buffer.lines().collect(Collectors.joining())
 					.replace("%parent%", parent.getPath())
-					.replace("%block%", block);
+					.replace("%block%", name);
 		} catch (Exception ex) {
 			return null;
 		}

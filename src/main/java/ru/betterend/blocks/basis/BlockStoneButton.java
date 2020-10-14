@@ -31,9 +31,10 @@ public class BlockStoneButton extends StoneButtonBlock implements Patterned {
 	}
 	
 	@Override
-	public String getStatesPattern(Reader data, String block) {
+	public String getStatesPattern(Reader data) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, block);
+		return Patterned.createJson(data, parentId, blockId.getPath());
 	}
 	
 	@Override

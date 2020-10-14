@@ -23,9 +23,9 @@ public class BlockPillar extends PillarBlock implements Patterned {
 	}
 	
 	@Override
-	public String getStatesPattern(Reader data, String block) {
+	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, block);
+		return Patterned.createJson(data, blockId, blockId.getPath());
 	}
 	
 	@Override

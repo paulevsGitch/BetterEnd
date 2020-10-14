@@ -1,0 +1,6 @@
+{
+	"parent": "betterend:block/chest_item",
+	"textures": {
+		"texture": "betterend:entity/chest/%texture%"
+	}
+}

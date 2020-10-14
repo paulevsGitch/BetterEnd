@@ -1,5 +1,7 @@
 package ru.betterend.blocks.basis;
 
+import java.io.Reader;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractSignBlock;
 import net.minecraft.block.Block;
@@ -21,19 +23,22 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.entities.ESignBlockEntity;
+import ru.betterend.interfaces.Patterned;
 
-public class BlockSign extends AbstractSignBlock {
+public class BlockSign extends AbstractSignBlock implements Patterned {
 	public static final IntProperty ROTATION = Properties.ROTATION;
 	public static final BooleanProperty FLOOR = BooleanProperty.of("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
@@ -42,9 +47,12 @@ public class BlockSign extends AbstractSignBlock {
 			Block.createCuboidShape(0.0D, 4.5D, 0.0D, 16.0D, 12.5D, 2.0D),
 			Block.createCuboidShape(14.0D, 4.5D, 0.0D, 16.0D, 12.5D, 16.0D) };
 
+	private final Block parent;
+	
 	public BlockSign(Block source) {
 		super(FabricBlockSettings.copyOf(source).noCollision().nonOpaque(), SignType.OAK);
 		this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0).with(FLOOR, true).with(WATERLOGGED, false));
+		this.parent = source;
 	}
 
 	@Override
@@ -138,5 +146,27 @@ public class BlockSign extends AbstractSignBlock {
 		}
 
 		return null;
+	}
+	
+	@Override
+	public String getStatesPattern(Reader data) {
+		Identifier blockId = Registry.BLOCK.getId(this);
+		Identifier parentId = Registry.BLOCK.getId(parent);
+		return Patterned.createJson(data, parentId, blockId.getPath());
+	}
+	
+	@Override
+	public String getModelPattern(String path) {
+		Identifier blockId = Registry.BLOCK.getId(this);
+		Identifier parentId = Registry.BLOCK.getId(parent);
+		if (path.contains("item")) {
+			return Patterned.createJson(Patterned.ITEM_MODEL, blockId.getPath());
+		}
+		return Patterned.createJson(Patterned.EMPTY_MODEL, parentId.getPath());
+	}
+	
+	@Override
+	public Identifier statePatternId() {
+		return Patterned.BLOCK_STATES_PATTERN;
 	}
 }

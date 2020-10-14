@@ -27,6 +27,7 @@ public interface Patterned {
 	public final static Identifier DOOR_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_door.json");
 	public final static Identifier SAPLING_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_sapling.json");
 	public final static Identifier GATE_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_fence_gate.json");
+	public final static Identifier TRAPDOOR_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_trapdoor.json");
 	
 	//Models Block
 	public final static Identifier BASE_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_block.json");
@@ -53,6 +54,7 @@ public interface Patterned {
 	public final static Identifier GATE_MODEL_WALL_CLOSED = BetterEnd.makeID("patterns/block/pattern_wall_gate_closed.json");
 	public final static Identifier GATE_MODEL_OPEN = BetterEnd.makeID("patterns/block/pattern_fence_gate_open.json");
 	public final static Identifier GATE_MODEL_WALL_OPEN = BetterEnd.makeID("patterns/block/pattern_wall_gate_open.json");
+	public final static Identifier TRAPDOOR_MODEL = BetterEnd.makeID("patterns/block/pattern_trapdoor.json");
 	
 	//Models Item
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");
@@ -109,15 +111,15 @@ public interface Patterned {
 		}
 	}
 	
-	public static String createJson(Identifier patternId, Map<String, String> texturesMap, String block) {
+	public static String createJson(Identifier patternId, Map<String, String> textures) {
 		ResourceManager resourceManager = MinecraftClient.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
 			String json = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))
 					.lines().collect(Collectors.joining());
-			for (Entry<String, String> entry : texturesMap.entrySet()) {
-				json = json.replace(entry.getKey(), entry.getValue());
+			for (Entry<String, String> texture : textures.entrySet()) {
+				json = json.replace(texture.getKey(), texture.getValue());
 			}
-			return json.replace("%block%", block);
+			return json;
 		} catch (Exception ex) {
 			return null;
 		}

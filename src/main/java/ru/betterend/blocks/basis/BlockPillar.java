@@ -34,6 +34,7 @@ public class BlockPillar extends PillarBlock implements Patterned {
 		return Patterned.createJson(Patterned.PILLAR_BLOCK_MODEL, blockId, block);
 	}
 	
+	@Override
 	public Identifier statePatternId() {
 		return Patterned.PILLAR_STATES_PATTERN;
 	}

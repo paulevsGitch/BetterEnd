@@ -20,6 +20,7 @@ public interface Patterned {
 	public final static Identifier SLAB_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_slab.json");
 	public final static Identifier STAIRS_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_stairs.json");
 	public final static Identifier WALL_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_wall.json");
+	public final static Identifier FENCE_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_fence.json");
 	public final static Identifier BUTTON_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_button.json");
 	public final static Identifier PILLAR_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_pillar.json");
 	public final static Identifier PLATE_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_pressure_plate.json");
@@ -35,6 +36,8 @@ public interface Patterned {
 	public final static Identifier WALL_POST_MODEL = BetterEnd.makeID("patterns/block/pattern_wall_post.json");
 	public final static Identifier WALL_SIDE_MODEL = BetterEnd.makeID("patterns/block/pattern_wall_side.json");
 	public final static Identifier WALL_SIDE_TALL_MODEL = BetterEnd.makeID("patterns/block/pattern_wall_side_tall.json");
+	public final static Identifier FENCE_POST_MODEL = BetterEnd.makeID("patterns/block/pattern_fence_post.json");
+	public final static Identifier FENCE_SIDE_MODEL = BetterEnd.makeID("patterns/block/pattern_fence_side.json");
 	public final static Identifier BUTTON_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_button.json");
 	public final static Identifier BUTTON_PRESSED_MODEL = BetterEnd.makeID("patterns/block/pattern_button_pressed.json");
 	public final static Identifier PILLAR_BLOCK_MODEL = BetterEnd.makeID("patterns/block/pattern_pillar.json");
@@ -48,6 +51,7 @@ public interface Patterned {
 	
 	//Models Item
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");
+	public final static Identifier FENCE_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_fence.json");
 	public final static Identifier BUTTON_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_button.json");
 	public final static Identifier ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_item.json");
 

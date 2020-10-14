@@ -69,6 +69,10 @@ public class MHelper {
 		return a > b ? a : b;
 	}
 	
+	public static float max(float a, float b, float c) {
+		return max(a, max(b, c));
+	}
+	
 	public static float lengthSqr(float x, float y, float z) {
 		return x * x + y * y + z * z;
 	}

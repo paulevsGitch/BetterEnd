@@ -9,7 +9,9 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFLine;
@@ -41,12 +43,13 @@ public class SplineHelper {
 		}
 	}
 	
-	public static void parableOffset(List<Vector3f> spline, float distance) {
+	public static void powerOffset(List<Vector3f> spline, float distance, float power) {
 		int count = spline.size();
+		float max = count + 1;
 		for (int i = 1; i < count; i++) {
 			Vector3f pos = spline.get(i);
-			float x = (float) i / (float) (count + 1);
-			float y = pos.getY() + x * x * distance;
+			float x = (float) i / max;
+			float y = pos.getY() + (float) Math.pow(x, power) * distance;
 			pos.set(pos.getX(), y, pos.getZ());
 		}
 	}
@@ -68,5 +71,68 @@ public class SplineHelper {
 			start = pos;
 		}
 		return result;
+	}
+	
+	public static boolean fillSpline(List<Vector3f> spline, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+		Vector3f startPos = spline.get(0);
+		for (int i = 1; i < spline.size(); i++) {
+			Vector3f endPos = spline.get(i);
+			if (!(fillLine(startPos, endPos, world, state, pos, replace))) {
+				return false;
+			}
+			startPos = endPos;
+		}
+		
+		return true;
+	}
+	
+	private static boolean fillLine(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+		float dx = end.getX() - start.getX();
+		float dy = end.getY() - start.getY();
+		float dz = end.getZ() - start.getZ();
+		float max = MHelper.max(Math.abs(dx), Math.abs(dy), Math.abs(dz));
+		int count = MHelper.floor(max + 1);
+		dx /= max;
+		dy /= max;
+		dz /= max;
+		float x = start.getX();
+		float y = start.getY();
+		float z = start.getZ();
+		boolean down = Math.abs(dy) > 0.2;
+		
+		BlockState bState;
+		Mutable bPos = new Mutable();
+		for (int i = 0; i < count; i++) {
+			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
+			bState = world.getBlockState(bPos);
+			if (bState.equals(state) || replace.apply(bState)) {
+				BlocksHelper.setWithoutUpdate(world, bPos, state);
+				bPos.setY(bPos.getY() - 1);
+				bState = world.getBlockState(bPos);
+				if (down && bState.equals(state) || replace.apply(bState)) {
+					BlocksHelper.setWithoutUpdate(world, bPos, state);
+				}
+			}
+			else {
+				return false;
+			}
+			x += dx;
+			y += dy;
+			z += dz;
+		}
+		bPos.set(end.getX() + pos.getX(), end.getY() + pos.getY(), end.getZ() + pos.getZ());
+		bState = world.getBlockState(bPos);
+		if (bState.equals(state) || replace.apply(bState)) {
+			BlocksHelper.setWithoutUpdate(world, bPos, state);
+			bPos.setY(bPos.getY() - 1);
+			bState = world.getBlockState(bPos);
+			if (down && bState.equals(state) || replace.apply(bState)) {
+				BlocksHelper.setWithoutUpdate(world, bPos, state);
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

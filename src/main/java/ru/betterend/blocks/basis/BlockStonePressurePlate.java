@@ -43,6 +43,7 @@ public class BlockStonePressurePlate extends PressurePlateBlock implements Patte
 		return Patterned.createJson(Patterned.PLATE_MODEL_UP, parentId, block);
 	}
 	
+	@Override
 	public Identifier statePatternId() {
 		return Patterned.PLATE_STATES_PATTERN;
 	}

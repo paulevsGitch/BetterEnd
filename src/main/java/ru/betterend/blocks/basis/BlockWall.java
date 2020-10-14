@@ -49,6 +49,7 @@ public class BlockWall extends WallBlock implements Patterned {
 		return Patterned.createJson(Patterned.WALL_POST_MODEL, parentId, block);
 	}
 	
+	@Override
 	public Identifier statePatternId() {
 		return Patterned.WALL_STATES_PATTERN;
 	}

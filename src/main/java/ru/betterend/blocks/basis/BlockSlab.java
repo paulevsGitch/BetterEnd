@@ -40,6 +40,7 @@ public class BlockSlab extends SlabBlock implements Patterned {
 		return Patterned.createJson(Patterned.SLAB_BLOCK_MODEL, parentId, block);
 	}
 	
+	@Override
 	public Identifier statePatternId() {
 		return Patterned.SLAB_STATES_PATTERN;
 	}

@@ -60,6 +60,7 @@ public class BlockDoor extends DoorBlock implements IRenderTypeable, Patterned {
 		return Patterned.createJson(Patterned.DOOR_MODEL_BOTTOM, blockId, block);
 	}
 	
+	@Override
 	public Identifier statePatternId() {
 		return Patterned.DOOR_STATES_PATTERN;
 	}

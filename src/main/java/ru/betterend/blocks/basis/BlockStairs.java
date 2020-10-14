@@ -46,6 +46,7 @@ public class BlockStairs extends StairsBlock implements Patterned {
 		return Patterned.createJson(Patterned.STAIRS_MODEL, parentId, block);
 	}
 	
+	@Override
 	public Identifier statePatternId() {
 		return Patterned.STAIRS_STATES_PATTERN;
 	}

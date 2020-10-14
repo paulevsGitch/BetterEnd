@@ -34,6 +34,7 @@ public class BlockBase extends Block implements Patterned {
 		return Patterned.createJson(Patterned.BASE_BLOCK_MODEL, blockId, block);
 	}
 	
+	@Override
 	public Identifier statePatternId() {
 		return Patterned.BLOCK_STATES_PATTERN;
 	}

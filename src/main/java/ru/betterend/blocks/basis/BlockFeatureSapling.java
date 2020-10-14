@@ -1,5 +1,6 @@
 package ru.betterend.blocks.basis;
 
+import java.io.Reader;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -11,8 +12,10 @@ import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -21,6 +24,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
+import ru.betterend.interfaces.Patterned;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
 
@@ -95,5 +99,25 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
+	}
+	
+	@Override
+	public String getStatesPattern(Reader data, String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
+		return Patterned.createJson(data, blockId, block);
+	}
+	
+	@Override
+	public String getModelPattern(String block) {
+		if (block.contains("item")) {
+			block = block.split("/")[1];
+			return Patterned.createJson(Patterned.ITEM_MODEL, block);
+		}
+		return Patterned.createJson(Patterned.SAPLING_MODEL, block);
+	}
+	
+	@Override
+	public Identifier statePatternId() {
+		return Patterned.SAPLING_STATES_PATTERN;
 	}
 }

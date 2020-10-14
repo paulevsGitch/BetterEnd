@@ -1,0 +1,7 @@
+{
+	"parent": "betterend:block/sided_door_top",
+	"textures": {
+		"facade": "betterend:block/%block%_top",
+		"side": "betterend:block/%block%_side"
+	}
+}

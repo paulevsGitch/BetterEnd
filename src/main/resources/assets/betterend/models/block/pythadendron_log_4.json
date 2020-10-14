@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube_mirrored",
+	"textures": {
+		"down": "betterend:block/pythadendron_log_top",
+		"east": "betterend:block/pythadendron_log_side_mossy",
+		"north": "betterend:block/pythadendron_log_side_mossy",
+		"particle": "betterend:block/pythadendron_log_side_mossy",
+		"south": "betterend:block/pythadendron_log_side_mossy",
+		"up": "betterend:block/pythadendron_log_top",
+		"west": "betterend:block/pythadendron_log_side_mossy"
+	}
+}

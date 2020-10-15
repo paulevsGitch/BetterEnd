@@ -1,5 +1,6 @@
 {
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+	"parent": "block/block",
 	"textures": {
 		"particle": "betterend:block/chorus_plant",
 		"texture": "betterend:block/chorus_plant"

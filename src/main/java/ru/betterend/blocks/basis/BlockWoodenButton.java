@@ -37,14 +37,15 @@ public class BlockWoodenButton extends WoodenButtonBlock implements Patterned {
 	
 	@Override
 	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.BUTTON_ITEM_MODEL, parentId, block);
+			return Patterned.createJson(Patterned.BUTTON_ITEM_MODEL, parentId, blockId.getPath());
 		}
 		if (block.contains("pressed")) {
-			return Patterned.createJson(Patterned.BUTTON_PRESSED_MODEL, parentId, block);
+			return Patterned.createJson(Patterned.BUTTON_PRESSED_MODEL, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BUTTON_BLOCK_MODEL, parentId, block);
+		return Patterned.createJson(Patterned.BUTTON_BLOCK_MODEL, parentId, blockId.getPath());
 	}
 	
 	@Override

@@ -37,18 +37,19 @@ public class BlockGate extends FenceGateBlock implements Patterned {
 	
 	@Override
 	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("wall")) {
 			if (block.contains("open")) {
-				return Patterned.createJson(Patterned.GATE_MODEL_WALL_OPEN, parentId, block);
+				return Patterned.createJson(Patterned.GATE_MODEL_WALL_OPEN, parentId, blockId.getPath());
 			} else {
-				return Patterned.createJson(Patterned.GATE_MODEL_WALL_CLOSED, parentId, block);
+				return Patterned.createJson(Patterned.GATE_MODEL_WALL_CLOSED, parentId, blockId.getPath());
 			}
 		}
 		if (block.contains("open")) {
-			return Patterned.createJson(Patterned.GATE_MODEL_OPEN, parentId, block);
+			return Patterned.createJson(Patterned.GATE_MODEL_OPEN, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.GATE_MODEL_CLOSED, parentId, block);
+		return Patterned.createJson(Patterned.GATE_MODEL_CLOSED, parentId, blockId.getPath());
 	}
 	
 	@Override

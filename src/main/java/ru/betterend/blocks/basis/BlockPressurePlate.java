@@ -37,11 +37,12 @@ public class BlockPressurePlate extends PressurePlateBlock implements Patterned 
 	
 	@Override
 	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("down")) {
-			return Patterned.createJson(Patterned.PLATE_MODEL_DOWN, parentId, block);
+			return Patterned.createJson(Patterned.PLATE_MODEL_DOWN, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.PLATE_MODEL_UP, parentId, block);
+		return Patterned.createJson(Patterned.PLATE_MODEL_UP, parentId, blockId.getPath());
 	}
 	
 	@Override

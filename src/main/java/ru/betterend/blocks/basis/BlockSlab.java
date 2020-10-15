@@ -37,8 +37,9 @@ public class BlockSlab extends SlabBlock implements Patterned {
 	
 	@Override
 	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(Patterned.SLAB_BLOCK_MODEL, parentId, block);
+		return Patterned.createJson(Patterned.SLAB_BLOCK_MODEL, parentId, blockId.getPath());
 	}
 	
 	@Override

@@ -37,14 +37,15 @@ public class BlockFence extends FenceBlock implements Patterned {
 	
 	@Override
 	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.FENCE_ITEM_MODEL, parentId, block);
+			return Patterned.createJson(Patterned.FENCE_ITEM_MODEL, parentId, blockId.getPath());
 		}
 		if (block.contains("side")) {
-			return Patterned.createJson(Patterned.FENCE_SIDE_MODEL, parentId, block);
+			return Patterned.createJson(Patterned.FENCE_SIDE_MODEL, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.FENCE_POST_MODEL, parentId, block);
+		return Patterned.createJson(Patterned.FENCE_POST_MODEL, parentId, blockId.getPath());
 	}
 	
 	@Override

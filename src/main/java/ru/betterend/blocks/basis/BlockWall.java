@@ -37,17 +37,18 @@ public class BlockWall extends WallBlock implements Patterned {
 	
 	@Override
 	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.WALL_ITEM_MODEL, parentId, block);
+			return Patterned.createJson(Patterned.WALL_ITEM_MODEL, parentId, blockId.getPath());
 		}
 		if (block.contains("side_tall")) {
-			return Patterned.createJson(Patterned.WALL_SIDE_TALL_MODEL, parentId, block);
+			return Patterned.createJson(Patterned.WALL_SIDE_TALL_MODEL, parentId, blockId.getPath());
 		}
 		if (block.contains("side")) {
-			return Patterned.createJson(Patterned.WALL_SIDE_MODEL, parentId, block);
+			return Patterned.createJson(Patterned.WALL_SIDE_MODEL, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.WALL_POST_MODEL, parentId, block);
+		return Patterned.createJson(Patterned.WALL_POST_MODEL, parentId, blockId.getPath());
 	}
 	
 	@Override

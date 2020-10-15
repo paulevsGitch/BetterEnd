@@ -37,14 +37,15 @@ public class BlockStairs extends StairsBlock implements Patterned {
 	
 	@Override
 	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("inner")) {
-			return Patterned.createJson(Patterned.STAIRS_MODEL_INNER, parentId, block);
+			return Patterned.createJson(Patterned.STAIRS_MODEL_INNER, parentId, blockId.getPath());
 		}
 		if (block.contains("outer")) {
-			return Patterned.createJson(Patterned.STAIRS_MODEL_OUTER, parentId, block);
+			return Patterned.createJson(Patterned.STAIRS_MODEL_OUTER, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.STAIRS_MODEL, parentId, block);
+		return Patterned.createJson(Patterned.STAIRS_MODEL, parentId, blockId.getPath());
 	}
 	
 	@Override

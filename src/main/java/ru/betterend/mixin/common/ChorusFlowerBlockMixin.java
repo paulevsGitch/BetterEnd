@@ -11,12 +11,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChorusFlowerBlock;
 import net.minecraft.block.ChorusPlantBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import ru.betterend.registry.BlockRegistry;
@@ -24,7 +28,14 @@ import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
 
 @Mixin(ChorusFlowerBlock.class)
-public class ChorusFlowerBlockMixin {
+public abstract class ChorusFlowerBlockMixin extends Block {
+	private static final VoxelShape SHAPE_FULL = Block.createCuboidShape(0, 0, 0, 16, 16, 16);
+	private static final VoxelShape SHAPE_HALF = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
+	
+	public ChorusFlowerBlockMixin(Settings settings) {
+		super(settings);
+	}
+
 	@Shadow
 	@Final
 	private ChorusPlantBlock plantBlock;
@@ -60,4 +71,9 @@ public class ChorusFlowerBlockMixin {
 	
 	@Shadow
 	private void die(World world, BlockPos pos) {}
+	
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
+		return state.get(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;
+	}
 }

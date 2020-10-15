@@ -91,7 +91,7 @@ public class BlockRegistry {
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	
-	// Block With Entities //
+	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
 	
 	public static void register() {}

@@ -111,7 +111,7 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 	public String getModelPattern(String block) {
 		if (block.contains("item")) {
 			block = block.split("/")[1];
-			return Patterned.createJson(Patterned.ITEM_MODEL, block);
+			return Patterned.createJson(Patterned.BLOCK_ITEM_MODEL, block);
 		}
 		return Patterned.createJson(Patterned.SAPLING_MODEL, block);
 	}

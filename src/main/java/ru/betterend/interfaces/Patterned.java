@@ -67,8 +67,8 @@ public interface Patterned {
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");
 	public final static Identifier FENCE_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_fence.json");
 	public final static Identifier BUTTON_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_button.json");
-	public final static Identifier LADDER_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_ladder.json");
 	public final static Identifier CHEST_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_chest.json");
+	public final static Identifier BLOCK_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_block_item.json");
 	public final static Identifier ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_item.json");
 
 	default String getStatesPattern(Reader data) {

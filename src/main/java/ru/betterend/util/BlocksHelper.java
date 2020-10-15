@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Property;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.BlockMirror;
@@ -23,6 +24,8 @@ import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.registry.BlockTagRegistry;
 
 public class BlocksHelper {
+	public static final BooleanProperty ROOTS = BooleanProperty.of("roots");
+	
 	public static final int FLAG_UPDATE_BLOCK = 1;
 	public static final int FLAG_SEND_CLIENT_CHANGES = 2;
 	public static final int FLAG_NO_RERENDER = 4;

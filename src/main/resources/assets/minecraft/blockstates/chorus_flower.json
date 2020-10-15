@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "betterend:block/chorus_plant_flower"
+    },
+    "age=1": {
+      "model": "betterend:block/chorus_plant_flower"
+    },
+    "age=2": {
+      "model": "betterend:block/chorus_plant_flower"
+    },
+    "age=3": {
+      "model": "betterend:block/chorus_plant_flower"
+    },
+    "age=4": {
+      "model": "betterend:block/chorus_plant_flower"
+    },
+    "age=5": {
+      "model": "betterend:block/chorus_plant_flower_open"
+    }
+  }
+}

@@ -18,14 +18,13 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.util.BlocksHelper;
 
 @Mixin(ChorusPlantBlock.class)
 public class ChorusPlantBlockMixin {
-	private static final BooleanProperty ROOTS = BooleanProperty.of("roots");
-	
 	@Inject(method = "appendProperties", at = @At("TAIL"))
 	private void addProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo info) {
-		builder.add(ROOTS);
+		builder.add(BlocksHelper.ROOTS);
 	}
 	 
 	@Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
@@ -41,10 +40,10 @@ public class ChorusPlantBlockMixin {
 		BlockState plant = info.getReturnValue();
 		if (plant.isOf(Blocks.CHORUS_PLANT)) {
 			if (!plant.get(Properties.DOWN) && world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
-				info.setReturnValue(plant.with(Properties.DOWN, true).with(ROOTS, true));
+				info.setReturnValue(plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true));
 			}
 			else {
-				info.setReturnValue(plant.with(ROOTS, false));
+				info.setReturnValue(plant.with(BlocksHelper.ROOTS, false));
 			}
 		}
 	}

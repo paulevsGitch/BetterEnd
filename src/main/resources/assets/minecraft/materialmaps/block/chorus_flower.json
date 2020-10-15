@@ -1,0 +1,14 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/chorus_plant_flower_petal",
+				"material": "betterend:waving_floor"
+			},
+			{
+				"sprite": "betterend:block/chorus_plant_flower_fur",
+				"material": "betterend:waving_floor"
+			}
+		]
+	}
+}

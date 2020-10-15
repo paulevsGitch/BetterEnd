@@ -1,7 +1,0 @@
-{
-	"parent": "betterend:block/sided_door_bottom_rh",
-	"textures": {
-		"facade": "betterend:block/mossy_glowshroom_door_bottom",
-		"side": "betterend:block/mossy_glowshroom_door_side"
-	}
-}

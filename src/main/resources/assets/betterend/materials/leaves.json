@@ -1,0 +1,8 @@
+{
+	"layers": [
+		{
+			"vertexSource": "betterend:shaders/material/wave.vert",
+			"fragmentSource": "canvas:shaders/material/default.frag"
+		}
+	]
+}

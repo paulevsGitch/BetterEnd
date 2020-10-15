@@ -3,12 +3,27 @@
 		"category": "music",
 		"sounds": [
 			{
-				"name": "betterend:music/dan_henig_eternal_garden",
+				"name": "betterend:music/dan_henig-eternal_garden",
 				"volume": 0.1,
 				"stream": false
 			},
 			{
-				"name": "betterend:music/dan_henig_nebular_focus",
+				"name": "betterend:music/dan_henig-nebular_focus",
+				"volume": 0.1,
+				"stream": false
+			}
+		]
+	},
+	"betterend.music.chorus_forest": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/emmit_fenn-creep",
+				"volume": 0.1,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jesse_gallagher-the_anunnaki_return",
 				"volume": 0.1,
 				"stream": false
 			}
@@ -20,6 +35,15 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/foggy_mushroomland",
+				"stream": false
+			}
+		]
+	},
+	"betterend.ambient.chorus_forest": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/chorus_forest",
 				"stream": false
 			}
 		]

@@ -50,9 +50,6 @@ public class FeatureRegistry {
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", BlockRegistry.FLAVOLITE, 12, 4, 96, 6);
 	
 	public static void registerGlobals(List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
-		globalFeatures.add(FLAVOLITE_LAYER);
-		globalFeatures.add(ENDER_ORE);
-		
 		globalFeatures.forEach(feature -> {
 			int index = feature.getFeatureStep().ordinal();
 			if (features.size() > index) {
@@ -70,4 +67,9 @@ public class FeatureRegistry {
 	}
 	
 	public static void register() {}
+	
+	static {
+		globalFeatures.add(FLAVOLITE_LAYER);
+		globalFeatures.add(ENDER_ORE);
+	}
 }

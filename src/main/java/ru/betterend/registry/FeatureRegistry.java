@@ -32,6 +32,7 @@ public class FeatureRegistry {
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", BlockRegistry.ENDER_ORE, 6, 3, 0, 4, 96);
+	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", BlockRegistry.VIOLECITE, 15, 4, 96, 8);
 	
 	public static void register() {}
 }

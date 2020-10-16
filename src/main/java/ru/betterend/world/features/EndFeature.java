@@ -1,6 +1,7 @@
 package ru.betterend.world.features;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.util.Identifier;
@@ -18,6 +19,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import ru.betterend.BetterEnd;
+import ru.betterend.blocks.complex.StoneMaterial;
 
 public class EndFeature {
 	private Feature<?> feature;
@@ -71,6 +73,24 @@ public class EndFeature {
 		newFeature.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, BetterEnd.makeID(name), oreFeature);
 		
 		return newFeature;
+	}
+	
+	public static EndFeature makeLayerFeature(String name, BlockState state, float radius, int minY, int maxY, int count) {
+		OreLayerFeature layer = new OreLayerFeature(state, radius, minY, maxY);
+		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(count)));
+		return new EndFeature(name, layer, GenerationStep.Feature.UNDERGROUND_ORES, configured);
+	}
+	
+	public static EndFeature makeLayerFeature(String name, Block block, float radius, int minY, int maxY, int count) {
+		OreLayerFeature layer = new OreLayerFeature(block.getDefaultState(), radius, minY, maxY);
+		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(count)));
+		return new EndFeature(name, layer, GenerationStep.Feature.UNDERGROUND_ORES, configured);
+	}
+	
+	public static EndFeature makeLayerFeature(String name, StoneMaterial material, float radius, int minY, int maxY, int count) {
+		OreLayerFeature layer = new OreLayerFeature(material.stone.getDefaultState(), radius, minY, maxY);
+		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(count)));
+		return new EndFeature(name, layer, GenerationStep.Feature.UNDERGROUND_ORES, configured);
 	}
 	
 	public static EndFeature makeChunkFeature(String name, Feature<DefaultFeatureConfig> feature) {

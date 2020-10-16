@@ -19,6 +19,7 @@ public class BiomeChorusForest extends EndBiome {
 				.setLoop(SoundRegistry.AMBIENT_CHORUS_FOREST)
 				.setMusic(SoundRegistry.MUSIC_CHORUS_FOREST)
 				.addFeature(FeatureRegistry.ENDER_ORE)
+				.addFeature(FeatureRegistry.VIOLECITE_LAYER)
 				.addFeature(FeatureRegistry.RARE_END_LAKE)
 				.addFeature(FeatureRegistry.PYTHADENDRON_TREE)
 				.addFeature(FeatureRegistry.PYTHADENDRON_BUSH)

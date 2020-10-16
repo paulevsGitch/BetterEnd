@@ -1,5 +1,11 @@
 package ru.betterend.registry;
 
+import java.util.List;
+import java.util.function.Supplier;
+
+import com.google.common.collect.Lists;
+
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
@@ -11,6 +17,9 @@ import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.VineFeature;
 
 public class FeatureRegistry {
+	
+	public final static List<EndFeature> globalFeatures = Lists.newArrayList();
+	
 	// Trees //
 	public static final EndFeature MOSSY_GLOWSHROOM = new EndFeature("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
 	public static final EndFeature PYTHADENDRON_TREE = new EndFeature("pythadendron_tree", new PythadendronTreeFeature(), 2);
@@ -33,6 +42,27 @@ public class FeatureRegistry {
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", BlockRegistry.ENDER_ORE, 6, 3, 0, 4, 96);
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", BlockRegistry.VIOLECITE, 15, 4, 96, 8);
+	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", BlockRegistry.FLAVOLITE, 12, 4, 96, 6);
+	
+	public static void registerGlobals(List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+		globalFeatures.add(FLAVOLITE_LAYER);
+		globalFeatures.add(ENDER_ORE);
+		
+		globalFeatures.forEach(feature -> {
+			int index = feature.getFeatureStep().ordinal();
+			if (features.size() > index) {
+				features.get(index).add(() -> {
+					return feature.getFeatureConfigured();
+				});
+			} else {
+				List<Supplier<ConfiguredFeature<?, ?>>> newFeature = Lists.newArrayList();
+				newFeature.add(() -> {
+					return feature.getFeatureConfigured();
+				});
+				features.add(newFeature);
+			}
+		});
+	}
 	
 	public static void register() {}
 }

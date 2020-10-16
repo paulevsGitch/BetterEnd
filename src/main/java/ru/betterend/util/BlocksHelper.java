@@ -139,8 +139,8 @@ public class BlocksHelper {
 					POS.setY(y);
 					state = world.getBlockState(POS);
 					
-					// Liquids & water plants
-					if (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.UNDERWATER_PLANT) || state.getMaterial().equals(Material.REPLACEABLE_UNDERWATER_PLANT)) {
+					// Liquids
+					if (!state.getFluidState().isEmpty()) {
 						continue;
 					}
 					// Falling blocks

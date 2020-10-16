@@ -19,10 +19,16 @@ public interface BetterEndPlugin {
 	 */
 	default void registerEndBiomes() {}
 	
+	/**
+	 *  Register other mod stuff, for example, EndHammers.
+	 */
+	default void registerOthers() {}
+	
 	
 	public static void register(BetterEndPlugin plugin) {
 		plugin.registerAlloyingRecipes();
 		plugin.registerSmithingRecipes();
 		plugin.registerEndBiomes();
+		plugin.registerOthers();
 	}
 }

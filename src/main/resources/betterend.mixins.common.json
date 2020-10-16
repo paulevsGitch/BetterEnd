@@ -12,6 +12,8 @@
 		"ChorusPlantFeatureMixin",
 		"ChorusFlowerBlockMixin",
 		"ChorusPlantBlockMixin",
+		"RecipeManagerAccessor",
+		"MinecraftServerMixin",
 		"TagGroupLoaderMixin",
 		"EndermanEntityMixin",
 		"LocateCommandMixin",

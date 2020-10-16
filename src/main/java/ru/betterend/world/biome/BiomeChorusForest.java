@@ -7,6 +7,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
+import ru.betterend.registry.SoundRegistry;
 
 public class BiomeChorusForest extends EndBiome {
 	public BiomeChorusForest() {
@@ -14,9 +15,9 @@ public class BiomeChorusForest extends EndBiome {
 				.setFogColor(87, 26, 87)
 				.setFogDensity(1.5F)
 				.setSurface(BlockRegistry.CHORUS_NYLIUM)
-				.setParticles(ParticleTypes.PORTAL, 0.001F)
-				//.setLoop(SoundRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
-				//.setMusic(SoundRegistry.MUSIC_FOGGY_MUSHROOMLAND)
+				.setParticles(ParticleTypes.PORTAL, 0.01F)
+				.setLoop(SoundRegistry.AMBIENT_CHORUS_FOREST)
+				.setMusic(SoundRegistry.MUSIC_CHORUS_FOREST)
 				.addFeature(FeatureRegistry.ENDER_ORE)
 				.addFeature(FeatureRegistry.RARE_END_LAKE)
 				.addFeature(FeatureRegistry.PYTHADENDRON_TREE)

@@ -19,8 +19,7 @@ import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
 
 public class FeatureRegistry {
-	
-	private final static List<EndFeature> globalFeatures = Lists.newArrayList();
+	private final static List<EndFeature> GLOBAL_FEATURES = Lists.newArrayList();
 	
 	// Trees //
 	public static final EndFeature MOSSY_GLOWSHROOM = new EndFeature("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
@@ -50,7 +49,7 @@ public class FeatureRegistry {
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", BlockRegistry.FLAVOLITE, 12, 4, 96, 6);
 	
 	public static void registerGlobals(List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
-		globalFeatures.forEach(feature -> {
+		GLOBAL_FEATURES.forEach(feature -> {
 			int index = feature.getFeatureStep().ordinal();
 			if (features.size() > index) {
 				features.get(index).add(() -> {
@@ -69,7 +68,7 @@ public class FeatureRegistry {
 	public static void register() {}
 	
 	static {
-		globalFeatures.add(FLAVOLITE_LAYER);
-		globalFeatures.add(ENDER_ORE);
+		GLOBAL_FEATURES.add(FLAVOLITE_LAYER);
+		GLOBAL_FEATURES.add(ENDER_ORE);
 	}
 }

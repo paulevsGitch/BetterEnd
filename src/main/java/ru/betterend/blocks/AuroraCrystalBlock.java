@@ -17,7 +17,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
-import ru.betterend.util.IColorProvider;
+import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.util.MHelper;
 
 public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTypeable, IColorProvider {

@@ -21,7 +21,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import ru.betterend.util.IColorProvider;
+import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.util.MHelper;
 
 @Mixin(MinecraftClient.class)

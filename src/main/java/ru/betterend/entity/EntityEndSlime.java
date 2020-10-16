@@ -25,8 +25,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.BiomeRegistry;
-import ru.betterend.util.ISlime;
 
 public class EntityEndSlime extends SlimeEntity {
 	private static final TrackedData<Boolean> MOSSY = DataTracker.registerData(EntityEndSlime.class, TrackedDataHandlerRegistry.BOOLEAN);

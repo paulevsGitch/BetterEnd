@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.ItemTagRegistry;
+import ru.betterend.util.RecipeHelper;
 
 public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	
@@ -127,7 +128,11 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 		private final static Builder INSTANCE = new Builder();
 		
 		public static Builder create(String id) {
-			INSTANCE.id = BetterEnd.makeID(id);
+			return create(BetterEnd.makeID(id));
+		}
+		
+		public static Builder create(Identifier id) {
+			INSTANCE.id = id;
 			INSTANCE.input = null;
 			INSTANCE.output = null;
 			INSTANCE.level = 1;
@@ -141,11 +146,15 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 		private ItemStack output;
 		private int level = 1;
 		private int damage = 1;
+		private boolean alright = true;
 		
 		private Builder() {}
 		
-		public Builder setInput(ItemConvertible... inputItem) {
-			this.setInput(Ingredient.ofItems(inputItem));
+		public Builder setInput(ItemConvertible... inputItems) {
+			for (ItemConvertible item : inputItems) {
+				this.alright &= RecipeHelper.exists(item);
+			}
+			this.setInput(Ingredient.ofItems(inputItems));
 			return this;
 		}
 		
@@ -160,6 +169,7 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 		}
 		
 		public Builder setOutput(ItemConvertible output, int amount) {
+			this.alright &= RecipeHelper.exists(output);
 			this.output = new ItemStack(output, amount);
 			return this;
 		}
@@ -176,11 +186,21 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 		
 		public void build() {
 			if (input == null) {
-				throw new IllegalArgumentException("Input can't be null!");
-			} else if(output == null) {
-				throw new IllegalArgumentException("Output can't be null!");
+				BetterEnd.LOGGER.warning("Input for Smithing recipe can't be 'null', recipe {} will be ignored!", id);
+				return;
 			}
-			
+			if(output == null) {
+				BetterEnd.LOGGER.warning("Output for Smithing recipe can't be 'null', recipe {} will be ignored!", id);
+				return;
+			}
+			if (EndRecipeManager.getRecipe(TYPE, id) != null) {
+				BetterEnd.LOGGER.warning("Can't add Smithing recipe! Id {} already exists!", id);
+				return;
+			}
+			if (!alright) {
+				BetterEnd.LOGGER.debug("Can't add Smithing recipe {}! Ingeredient or output not exists.", id);
+				return;
+			}
 			EndRecipeManager.addRecipe(TYPE, new AnvilSmithingRecipe(id, input, output, level, damage));
 		}
 	}

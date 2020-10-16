@@ -1,7 +1,9 @@
 package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
+import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.MainConfig;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
@@ -48,6 +50,9 @@ public class BetterEnd implements ModInitializer {
 		AlloyingRecipes.register();
 		SmithingRecipes.register();
 		StructureRegistry.register();
+		
+		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class)
+									.forEach(BetterEndPlugin::register);
 	}
 	
 	public static Identifier makeID(String path) {

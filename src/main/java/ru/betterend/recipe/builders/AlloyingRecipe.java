@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.BlockRegistry;
+import ru.betterend.util.RecipeHelper;
 
 public class AlloyingRecipe implements Recipe<Inventory> {
 	
@@ -118,8 +119,8 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
 		
-		public static Builder create(String id) {
-			INSTANCE.id = BetterEnd.makeID(id);
+		public static Builder create(Identifier id) {
+			INSTANCE.id = id;
 			INSTANCE.group = String.format("%s_%s", GROUP, id);
 			INSTANCE.primaryInput = null;
 			INSTANCE.secondaryInput = null;
@@ -130,6 +131,10 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 			return INSTANCE;
 		}
 		
+		public static Builder create(String id) {
+			return create(BetterEnd.makeID(id));
+		}
+		
 		private Identifier id;
 		private Ingredient primaryInput;
 		private Ingredient secondaryInput;
@@ -137,6 +142,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		private String group;
 		private float experience;
 		private int smeltTime;
+		private boolean alright = true;
 		
 		private Builder() {}
 		
@@ -146,11 +152,17 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		}
 		
 		public Builder setPrimaryInput(ItemConvertible... inputs) {
+			for (ItemConvertible item : inputs) {
+				this.alright &= RecipeHelper.exists(item);
+			}
 			this.primaryInput = Ingredient.ofItems(inputs);
 			return this;
 		}
 		
 		public Builder setSecondaryInput(ItemConvertible... inputs) {
+			for (ItemConvertible item : inputs) {
+				this.alright &= RecipeHelper.exists(item);
+			}
 			this.secondaryInput = Ingredient.ofItems(inputs);
 			return this;
 		}
@@ -177,13 +189,8 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 			return this;
 		}
 		
-		public Builder setInput(Ingredient primaryInput, Ingredient secondaryInput) {
-			this.primaryInput = primaryInput;
-			this.secondaryInput = secondaryInput;
-			return this;
-		}
-		
 		public Builder setOutput(ItemConvertible output, int amount) {
+			this.alright &= RecipeHelper.exists(output);
 			this.output = new ItemStack(output, amount);
 			return this;
 		}
@@ -200,13 +207,26 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		
 		public void build() {
 			if (primaryInput == null) {
-				throw new IllegalArgumentException("Primary input can't be null!");
-			} else if(secondaryInput == null) {
-				throw new IllegalArgumentException("Secondary input can't be null!");
-			} else if(output == null) {
-				throw new IllegalArgumentException("Output can't be null!");
+				BetterEnd.LOGGER.warning("Primary input for Alloying recipe can't be 'null', recipe {} will be ignored!", id);
+				return;
 			}
-			EndRecipeManager.addRecipe(AlloyingRecipe.TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
+			if(secondaryInput == null) {
+				BetterEnd.LOGGER.warning("Secondary input for Alloying can't be 'null', recipe {} will be ignored!", id);
+				return;
+			}
+			if(output == null) {
+				BetterEnd.LOGGER.warning("Output for Alloying can't be 'null', recipe {} will be ignored!", id);
+				return;
+			}
+			if (EndRecipeManager.getRecipe(TYPE, id) != null) {
+				BetterEnd.LOGGER.warning("Can't add Alloying recipe! Id {} already exists!", id);
+				return;
+			}
+			if (!alright) {
+				BetterEnd.LOGGER.debug("Can't add Alloying recipe {}! Ingeredient or output not exists.", id);
+				return;
+			}
+			EndRecipeManager.addRecipe(TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
 		}
 	}
 	

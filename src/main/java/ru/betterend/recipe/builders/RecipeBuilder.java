@@ -111,9 +111,8 @@ public class RecipeBuilder {
 			
 			CraftingRecipe recipe = shaped ? new ShapedRecipe(id, group, width, height, materials, result) : new ShapelessRecipe(id, group, result, materials);
 			EndRecipeManager.addRecipe(type, recipe);
-		}
-		else {
-			BetterEnd.LOGGER.debug("recipe {} couldn't be added", name);
+		} else {
+			BetterEnd.LOGGER.debug("Recipe {} couldn't be added", name);
 		}
 	}
 }

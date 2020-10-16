@@ -39,7 +39,8 @@ public class BoneMealItemMixin {
 						BlocksHelper.setWithoutUpdate(world, blockPos, nylium);
 						consume = true;
 					}
-				} else {
+				}
+				else {
 					consume = growGrass(world, blockPos);
 				}
 				if (consume) {
@@ -81,8 +82,12 @@ public class BoneMealItemMixin {
 	private BlockState getGrassState(World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (block == BlockRegistry.END_MOSS || block == BlockRegistry.END_MYCELIUM)
+		if (block == BlockRegistry.END_MOSS || block == BlockRegistry.END_MYCELIUM) {
 			return world.random.nextBoolean() ? BlockRegistry.CREEPING_MOSS.getDefaultState() : BlockRegistry.UMBRELLA_MOSS.getDefaultState();
+		}
+		else if (block == BlockRegistry.CHORUS_NYLIUM) {
+			return BlockRegistry.CHORUS_GRASS.getDefaultState();
+		}
 		return null;
 	}
 

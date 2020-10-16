@@ -23,19 +23,43 @@ public abstract class ScatterFeature extends DefaultFeature {
 	
 	public abstract void generate(StructureWorldAccess world, Random random, BlockPos blockPos);
 	
+	protected BlockPos getCenterGround(StructureWorldAccess world, BlockPos pos) {
+		return getPosOnSurfaceWG(world, pos);
+	}
+	
+	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos) {
+		if (pos.getY() < 5) {
+			return false;
+		}
+		else if (!world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+			return false;
+		}
+		return true;
+	}
+	
+	protected boolean getGroundPlant(StructureWorldAccess world, Mutable pos) {
+		int down = BlocksHelper.downRay(world, pos, 16);
+		if (down > 10) {
+			return false;
+		}
+		pos.setY(pos.getY() - down);
+		return true;
+	}
+	
+	protected int getYOffset() {
+		return 5;
+	}
+	
+	protected int getChance() {
+		return 1;
+	}
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center, DefaultFeatureConfig featureConfig) {
-		center = getPosOnSurfaceWG(world, center);
+		center = getCenterGround(world, center);
 		
-		if (center.getY() < 5) {
+		if (!canSpawn(world, center)) {
 			return false;
-		}
-		if (!world.getBlockState(center.down()).isIn(BlockTagRegistry.END_GROUND)) {
-			//center = getPosOnSurfaceRaycast(world, new BlockPos(center.getX(), 72, center.getZ()), 72);
-			//if (center.getY() < 5 || !world.getBlockState(center.down()).isIn(BlockTagRegistry.END_GROUND)) {
-				return false;
-			//}
 		}
 		
 		float r = MHelper.randRange(radius * 0.5F, radius, random);
@@ -46,12 +70,8 @@ public abstract class ScatterFeature extends DefaultFeature {
 			float x = pr * (float) Math.cos(theta);
 			float z = pr * (float) Math.sin(theta);
 			
-			POS.set(center.getX() + x, center.getY() + 5, center.getZ() + z);
-			int down = BlocksHelper.downRay(world, POS, 16);
-			if (down > 10) continue;
-			POS.setY(POS.getY() - down);
-			
-			if (canGenerate(world, random, center, POS, r)) {
+			POS.set(center.getX() + x, center.getY() + getYOffset(), center.getZ() + z);
+			if (getGroundPlant(world, POS) && canGenerate(world, random, center, POS, r) && (getChance() < 2 || random.nextInt(getChance()) == 0)) {
 				generate(world, random, POS);
 			}
 		}

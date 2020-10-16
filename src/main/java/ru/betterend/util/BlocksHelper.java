@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.block.Material;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Property;
 import net.minecraft.tag.BlockTags;
@@ -138,8 +139,8 @@ public class BlocksHelper {
 					POS.setY(y);
 					state = world.getBlockState(POS);
 					
-					// Liquids
-					if (!state.getFluidState().isEmpty()) {
+					// Liquids & water plants
+					if (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.UNDERWATER_PLANT) || state.getMaterial().equals(Material.REPLACEABLE_UNDERWATER_PLANT)) {
 						continue;
 					}
 					// Falling blocks

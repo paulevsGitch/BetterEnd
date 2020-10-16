@@ -10,19 +10,19 @@ import ru.betterend.world.biome.EndBiome;
 
 public class BiomeMap
 {
-	private static final HashMap<ChunkPos, BiomeChunk> MAPS = new HashMap<ChunkPos, BiomeChunk>();
 	private static final ChunkRandom RANDOM = new ChunkRandom();
 	
+	private final HashMap<ChunkPos, BiomeChunk> maps = new HashMap<ChunkPos, BiomeChunk>();
 	private final int size;
 	private final int sizeXZ;
 	private final int depth;
-	private final OpenSimplexNoise noiseX;;
+	private final OpenSimplexNoise noiseX;
 	private final OpenSimplexNoise noiseZ;
 	private final BiomePicker picker;
 	
 	public BiomeMap(long seed, int size, BiomePicker picker)
 	{
-		MAPS.clear();
+		maps.clear();
 		RANDOM.setSeed(seed);
 		noiseX = new OpenSimplexNoise(RANDOM.nextLong());
 		noiseZ = new OpenSimplexNoise(RANDOM.nextLong());
@@ -34,8 +34,9 @@ public class BiomeMap
 	
 	public void clearCache()
 	{
-		if (MAPS.size() > 16)
-			MAPS.clear();
+		if (maps.size() > 32) {
+			maps.clear();
+		}
 	}
 	
 	private EndBiome getRawBiome(int bx, int bz)
@@ -60,13 +61,22 @@ public class BiomeMap
 			pz = pz / 2 + i;
 		}
 		
+		bx = MHelper.floor(x);
+		bz = MHelper.floor(z);
+		if ((bx & BiomeChunk.MASK_WIDTH) == BiomeChunk.MASK_WIDTH) {
+			x += (bz / 2) & 1;
+		}
+		if ((bz & BiomeChunk.MASK_WIDTH) == BiomeChunk.MASK_WIDTH) {
+			z += (bx / 2) & 1;
+		}
+		
 		ChunkPos cpos = new ChunkPos(MHelper.floor(x / BiomeChunk.WIDTH), MHelper.floor(z / BiomeChunk.WIDTH));
-		BiomeChunk chunk = MAPS.get(cpos);
+		BiomeChunk chunk = maps.get(cpos);
 		if (chunk == null)
 		{
 			RANDOM.setTerrainSeed(cpos.x, cpos.z);
 			chunk = new BiomeChunk(this, RANDOM, picker);
-			MAPS.put(cpos, chunk);
+			maps.put(cpos, chunk);
 		}
 		
 		return chunk.getBiome(MHelper.floor(x), MHelper.floor(z));

@@ -1,7 +1,8 @@
 package ru.betterend.world.generator;
 
-import java.util.Collections;
+import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -9,6 +10,7 @@ import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.TheEndBiomeSource;
@@ -33,10 +35,10 @@ public class BetterEndBiomeSource extends BiomeSource {
 	private final long seed;
 
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
-		super(Collections.emptyList());
+		super(getBiomes(biomeRegistry));
 		
-		this.mapLand = new BiomeMap(seed, 250, BiomeRegistry.LAND_BIOMES);
-		this.mapVoid = new BiomeMap(seed, 250, BiomeRegistry.VOID_BIOMES);
+		this.mapLand = new BiomeMap(seed, 256, BiomeRegistry.LAND_BIOMES);
+		this.mapVoid = new BiomeMap(seed, 256, BiomeRegistry.VOID_BIOMES);
 		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
 		this.biomeRegistry = biomeRegistry;
 		this.seed = seed;
@@ -47,6 +49,16 @@ public class BetterEndBiomeSource extends BiomeSource {
 
 		BiomeRegistry.mutateRegistry(biomeRegistry);
 	}
+	
+	private static List<Biome> getBiomes(Registry<Biome> biomeRegistry) {
+		List<Biome> list = Lists.newArrayList();
+		biomeRegistry.forEach((biome) -> {
+			if (biome.getCategory() == Category.THEEND) {
+				list.add(biome);
+			}
+		});
+		return list;
+	}
 
 	@Override
 	public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
@@ -56,7 +68,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 		
 		float height = TheEndBiomeSource.getNoiseAt(noise, (int) i * 2 + 1, (int) j * 2 + 1);
 	         
-		EndBiome netherBiome = height < -20.0F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
+		EndBiome netherBiome = height < -2.0F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		if (biomeX == 0 && biomeZ == 0) {
 			mapLand.clearCache();
 			mapVoid.clearCache();

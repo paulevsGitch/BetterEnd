@@ -8,8 +8,8 @@ public class BiomeChunk
 {
 	protected static final int WIDTH = 16;
 	private static final int SM_WIDTH = WIDTH >> 1;
-	private static final int MASK_A = SM_WIDTH - 1;
-	private static final int MASK_C = WIDTH - 1;
+	private static final int MASK_OFFSET = SM_WIDTH - 1;
+	protected static final int MASK_WIDTH = WIDTH - 1;
 	
 	private final EndBiome[][] biomes;
 	
@@ -29,11 +29,11 @@ public class BiomeChunk
 
 	public EndBiome getBiome(int x, int z)
 	{
-		return biomes[x & MASK_C][z & MASK_C];
+		return biomes[x & MASK_WIDTH][z & MASK_WIDTH];
 	}
 	
 	private int offsetXZ(int x, Random random)
 	{
-		return ((x + random.nextInt(2)) >> 1) & MASK_A;
+		return ((x + random.nextInt(2)) >> 1) & MASK_OFFSET;
 	}
 }

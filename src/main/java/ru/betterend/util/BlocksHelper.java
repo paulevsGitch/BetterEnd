@@ -137,8 +137,13 @@ public class BlocksHelper {
 				for (int y = start.getY(); y <= end.getY(); y++) {
 					POS.setY(y);
 					state = world.getBlockState(POS);
+					
+					// Liquids
+					if (!state.getFluidState().isEmpty()) {
+						continue;
+					}
 					// Falling blocks
-					if (state.getBlock() instanceof FallingBlock) {
+					else if (state.getBlock() instanceof FallingBlock) {
 						BlockState falling = state;
 						
 						POS.setY(POS.getY() - 1);

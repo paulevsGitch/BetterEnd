@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -136,7 +137,7 @@ public class EndLakeFeature extends DefaultFeature {
 		}
 		
 		double aspect = ((double) radius / (double) depth);
-		
+
 		for (int x = blockPos.getX() - dist; x <= blockPos.getX() + dist; x++) {
 			POS.setX(x);
 			int x2 = x - blockPos.getX();
@@ -158,15 +159,14 @@ public class EndLakeFeature extends DefaultFeature {
 						rb *= rb;
 						if (y2 + x2 + z2 <= r) {
 							state = world.getBlockState(POS);
-							if (state.isIn(BlockTagRegistry.GEN_TERRAIN) || state.getBlock() == BlockRegistry.ENDSTONE_DUST) {
+							if (canReplace(state)) {
 								BlocksHelper.setWithoutUpdate(world, POS, y < waterLevel ? WATER : AIR);
 								if (y == waterLevel - 1) {
 									world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);
 								}
 							}
 							pos = POS.down();
-							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.GEN_TERRAIN))
-							{
+							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.GEN_TERRAIN)) {
 								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
 								if (random.nextInt(3) == 0 && pos.getY() < waterLevel - 1) {
 									EndBiome biome = BiomeRegistry.getFromBiome(world.getBiome(POS));
@@ -176,8 +176,8 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 							}
 							pos = POS.up();
-							if (world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
-								while (world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+							if (canReplace(world.getBlockState(pos))) {
+								while (canReplace(state = world.getBlockState(pos)) && !state.isAir() && state.getFluidState().isEmpty()) {
 									BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
 									if (y == waterLevel - 1) {
 										world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);
@@ -185,20 +185,20 @@ public class EndLakeFeature extends DefaultFeature {
 									pos = pos.up();
 								}
 							}
-						} else if (y < waterLevel && y2 + x2 + z2 <= rb) {
-							if (world.getBlockState(POS).getMaterial().isReplaceable()) {
-								if (world.isAir(POS.up())) {
-									state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig()
-											.getTopMaterial();
-									BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state
-											: BlockRegistry.ENDSTONE_DUST.getDefaultState());
-									BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
-								} else {
-									BlocksHelper.setWithoutUpdate(world, POS,
-											BlockRegistry.ENDSTONE_DUST.getDefaultState());
-									BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
-								}
+						}
+						// Make border
+						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
+							//if (world.getBlockState(POS).getMaterial().isReplaceable()) {
+							if (world.isAir(POS.up())) {
+								state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
 							}
+							else {
+								BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+							}
+							//}
 						}
 					}
 				}
@@ -223,5 +223,14 @@ public class EndLakeFeature extends DefaultFeature {
 			}
 			BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.TOP));
 		}
+	}
+	
+	private boolean canReplace(BlockState state) {
+		return state.getMaterial().isReplaceable()
+				|| state.isIn(BlockTagRegistry.GEN_TERRAIN)
+				|| state.isOf(BlockRegistry.ENDSTONE_DUST)
+				|| state.getMaterial().equals(Material.PLANT)
+				|| state.getMaterial().equals(Material.UNDERWATER_PLANT)
+				|| state.getMaterial().equals(Material.UNUSED_PLANT);
 	}
 }

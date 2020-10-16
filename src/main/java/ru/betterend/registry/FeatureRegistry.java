@@ -10,10 +10,12 @@ import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
+import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
 import ru.betterend.world.features.PythadendronBushFeature;
 import ru.betterend.world.features.PythadendronTreeFeature;
 import ru.betterend.world.features.SinglePlantFeature;
+import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
 
 public class FeatureRegistry {
@@ -34,6 +36,9 @@ public class FeatureRegistry {
 	public static final EndFeature CHORUS_GRASS = new EndFeature("chorus_grass", new SinglePlantFeature(BlockRegistry.CHORUS_GRASS, 4), 5);
 	
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(BlockRegistry.DENSE_VINE, 24), 3);
+	
+	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(BlockRegistry.BUBBLE_CORAL, 4), 20);
+	public static final EndFeature END_LILY = new EndFeature("end_lily", new EndLilyFeature(5), 20);
 	
 	// Features //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

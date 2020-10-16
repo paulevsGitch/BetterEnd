@@ -20,7 +20,7 @@ import ru.betterend.world.features.VineFeature;
 
 public class FeatureRegistry {
 	
-	public final static List<EndFeature> globalFeatures = Lists.newArrayList();
+	private final static List<EndFeature> globalFeatures = Lists.newArrayList();
 	
 	// Trees //
 	public static final EndFeature MOSSY_GLOWSHROOM = new EndFeature("mossy_glowshroom", new MossyGlowshroomFeature(), 3);

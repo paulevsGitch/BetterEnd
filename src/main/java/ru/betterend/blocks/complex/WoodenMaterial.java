@@ -1,13 +1,11 @@
 package ru.betterend.blocks.complex;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Items;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import ru.betterend.blocks.basis.BlockBarrel;
@@ -56,7 +54,7 @@ public class WoodenMaterial {
 	public final Block barrel;
 	
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
-		FabricBlockSettings materialPlanks = FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).breakByTool(FabricToolTags.AXES).materialColor(planksColor);
+		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);
 		
 		log_stripped = BlockRegistry.registerBlock(name + "_stripped_log", new BlockPillar(materialPlanks));
 		bark_stripped = BlockRegistry.registerBlock(name + "_stripped_bark", new BlockPillar(materialPlanks));

@@ -13,7 +13,6 @@ import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-
 import ru.betterend.registry.FeatureRegistry;
 
 @Mixin(Biome.class)

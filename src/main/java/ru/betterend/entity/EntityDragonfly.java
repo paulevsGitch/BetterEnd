@@ -154,14 +154,28 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 			Vec3d rotation = EntityDragonfly.this.getRotationVec(0.0F);
 			Vec3d airPos = TargetFinder.findAirTarget(EntityDragonfly.this, 8, 7, rotation, 1.5707964F, 2, 1);
 			if (airPos != null) {
-				if (h > 5) {
+				if (isInVoid(airPos)) {
+					for (int i = 0; i < 8; i++) {
+						airPos = TargetFinder.findAirTarget(EntityDragonfly.this, 16, 7, rotation, MHelper.PI2, 2, 1);
+						if (!isInVoid(airPos)) {
+							return airPos;
+						}
+					}
+					return null;
+				}
+				if (h > 5 && airPos.getY() >= EntityDragonfly.this.getBlockPos().getY()) {
 					airPos = new Vec3d(airPos.x, airPos.y - h * 0.5, airPos.z);
 				}
 				return airPos;
 			}
 			return TargetFinder.findGroundTarget(EntityDragonfly.this, 8, 4, -2, rotation, 1.5707963705062866D);
 		}
-	   }
+		
+		private boolean isInVoid(Vec3d pos) {
+			int h = BlocksHelper.downRay(EntityDragonfly.this.world, new BlockPos(pos), 128);
+			return h > 100;
+		}
+	}
 
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {

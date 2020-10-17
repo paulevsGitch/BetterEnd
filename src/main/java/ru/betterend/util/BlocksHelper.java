@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldAccess;
-
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.basis.BlockDoublePlant;
 import ru.betterend.blocks.basis.BlockGlowingFur;

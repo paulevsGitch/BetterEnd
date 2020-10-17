@@ -157,7 +157,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 				if (isInVoid(airPos)) {
 					for (int i = 0; i < 8; i++) {
 						airPos = TargetFinder.findAirTarget(EntityDragonfly.this, 16, 7, rotation, MHelper.PI2, 2, 1);
-						if (!isInVoid(airPos)) {
+						if (airPos != null && !isInVoid(airPos)) {
 							return airPos;
 						}
 					}

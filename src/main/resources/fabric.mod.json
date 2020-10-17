@@ -11,11 +11,11 @@
 	],
 	"contact": {
 		"homepage": "",
-		"sources": ""
+		"sources": "https://github.com/paulevsGitch/BetterEnd"
 	},
 
 	"license": "MIT",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/betterend/icon.png",
 
 	"environment": "*",
 	"entrypoints": {

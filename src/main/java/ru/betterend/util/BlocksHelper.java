@@ -160,7 +160,18 @@ public class BlocksHelper {
 						}
 						else {
 							POS.setY(y);
-							BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							boolean place = true;
+							for (Direction dir: HORIZONTAL) {
+								state = world.getBlockState(POS.offset(dir));
+								if (!state.getFluidState().isEmpty()) {
+									BlocksHelper.setWithoutUpdate(world, POS, state);
+									place = false;
+									break;
+								}
+							}
+							if (place) {
+								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							}
 							
 							POS.setY(y - ray);
 							BlocksHelper.setWithoutUpdate(world, POS, falling);

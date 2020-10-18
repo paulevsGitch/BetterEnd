@@ -189,8 +189,7 @@ public class BiomeDefinition {
 		Builder effects = new Builder();
 
 		mobs.forEach((spawn) -> {
-			spawnSettings.spawn(spawn.type.getSpawnGroup(),
-					new SpawnSettings.SpawnEntry(spawn.type, spawn.weight, spawn.minGroupSize, spawn.maxGroupSize));
+			spawnSettings.spawn(spawn.type.getSpawnGroup(), new SpawnSettings.SpawnEntry(spawn.type, spawn.weight, spawn.minGroupSize, spawn.maxGroupSize));
 		});
 
 		generationSettings.surfaceBuilder(surface == null ? ConfiguredSurfaceBuilders.END : surface);

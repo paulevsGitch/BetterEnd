@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.EntityRegistry;
 import ru.betterend.registry.FeatureRegistry;
@@ -25,6 +26,7 @@ public class BiomeChorusForest extends EndBiome {
 				.addFeature(Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.addFeature(Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.addFeature(FeatureRegistry.CHORUS_GRASS)
+				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityRegistry.END_SLIME, 5, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}

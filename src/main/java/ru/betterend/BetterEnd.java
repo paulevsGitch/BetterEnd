@@ -51,8 +51,7 @@ public class BetterEnd implements ModInitializer {
 		SmithingRecipes.register();
 		StructureRegistry.register();
 		
-		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class)
-									.forEach(BetterEndPlugin::register);
+		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 	}
 	
 	public static Identifier makeID(String path) {

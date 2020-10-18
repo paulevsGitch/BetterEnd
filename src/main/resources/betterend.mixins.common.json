@@ -24,8 +24,7 @@
 		"LivingEntityMixin",
 		"BoneMealItemMixin",
 		"SlimeEntityMixin",
-		"BrewingAccessor",
-		"BiomeMixin"
+		"BrewingAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

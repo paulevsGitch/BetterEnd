@@ -17,6 +17,8 @@ import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.BiomeRegistry;
+import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.util.FeaturesHelper;
 import ru.betterend.world.biome.EndBiome;
 
 public class BetterEndBiomeSource extends BiomeSource {
@@ -48,6 +50,8 @@ public class BetterEndBiomeSource extends BiomeSource {
 		this.noise = new SimplexNoiseSampler(chunkRandom);
 
 		BiomeRegistry.mutateRegistry(biomeRegistry);
+		BlockTagRegistry.addTerrainTags(biomeRegistry);
+		FeaturesHelper.addFeatures(biomeRegistry);
 	}
 	
 	private static List<Biome> getBiomes(Registry<Biome> biomeRegistry) {

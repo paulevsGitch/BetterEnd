@@ -13,7 +13,7 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
 import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 
-@Mixin(DimensionType.class)
+@Mixin(value = DimensionType.class, priority = 1)
 public class DimensionTypeMixin
 {
 	@Inject(method = "createEndGenerator", at = @At("HEAD"), cancellable = true)

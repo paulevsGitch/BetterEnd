@@ -73,6 +73,7 @@ public class StoneMaterial {
 		TagHelper.addTag(ItemTags.SLABS, slab, brick_slab);
 		TagHelper.addTag(ItemTags.STONE_BRICKS, bricks);
 		TagHelper.addTag(ItemTags.STONE_CRAFTING_MATERIALS, stone);
+		TagHelper.addTag(ItemTags.STONE_TOOL_MATERIALS, stone);
 		
 		// Block Tags //
 		TagHelper.addTag(BlockTags.STONE_BRICKS, bricks);

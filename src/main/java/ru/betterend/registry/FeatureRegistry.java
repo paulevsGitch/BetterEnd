@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.DoublePlantFeature;
@@ -18,8 +17,6 @@ import ru.betterend.world.features.PythadendronTreeFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
-import ru.betterend.world.structures.EndStructureFeature;
-import ru.betterend.world.structures.features.StructureMegaLake;
 
 public class FeatureRegistry {
 	private final static List<EndFeature> GLOBAL_FEATURES = Lists.newArrayList();
@@ -50,9 +47,6 @@ public class FeatureRegistry {
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", BlockRegistry.ENDER_ORE, 6, 3, 0, 4, 96);
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", BlockRegistry.VIOLECITE, 15, 4, 96, 8);
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", BlockRegistry.FLAVOLITE, 12, 4, 96, 6);
-	
-	// Structures //
-	public static final EndStructureFeature MEGALAKE = new EndStructureFeature("megalake", new StructureMegaLake(), Feature.RAW_GENERATION, 4, 1);
 	
 	public static void registerGlobals(List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		GLOBAL_FEATURES.forEach(feature -> {

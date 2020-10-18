@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.FeatureRegistry;
+import ru.betterend.registry.StructureRegistry;
 
 public class BiomeMegalake extends EndBiome {
 	public BiomeMegalake() {
@@ -11,8 +12,9 @@ public class BiomeMegalake extends EndBiome {
 				.setFogColor(178, 209, 248)
 				.setWaterColor(96, 163, 255)
 				.setWaterFogColor(96, 163, 255)
+				.setFogDensity(1.75F)
 				.setSurface(BlockRegistry.ENDSTONE_DUST)
-				.addStructureFeature(FeatureRegistry.MEGALAKE)
+				.addStructureFeature(StructureRegistry.MEGALAKE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addFeature(FeatureRegistry.BUBBLE_CORAL)
 				.addFeature(FeatureRegistry.END_LILY)

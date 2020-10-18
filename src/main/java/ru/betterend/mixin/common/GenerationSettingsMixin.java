@@ -21,16 +21,15 @@ import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 
 @Mixin(GenerationSettings.class)
 public abstract class GenerationSettingsMixin {
-	
-	@Shadow
+	/*@Shadow
 	private List<List<Supplier<ConfiguredFeature<?, ?>>>> features;
 	
 	@Inject(method = "<init>", at = @At("TAIL"))
 	void init(Supplier<ConfiguredSurfaceBuilder<?>> surfaceBuilder, Map<GenerationStep.Carver, List<Supplier<ConfiguredCarver<?>>>> carvers, List<List<Supplier<ConfiguredFeature<?, ?>>>> features, List<Supplier<ConfiguredStructureFeature<?, ?>>> structureFeatures, CallbackInfo cinfo) {
-		List<List<Supplier<ConfiguredFeature<?, ?>>>> mutableFeatures = Lists.newArrayList();
+		List<List<Supplier<ConfiguredFeature<?, ?>>>> mutableFeatures = Lists.newArrayList(this.features);
 		this.features.forEach(supplierList -> {
 			mutableFeatures.add(Lists.newArrayList(supplierList));
 		});
 		this.features = mutableFeatures;
-	}
+	}*/
 }

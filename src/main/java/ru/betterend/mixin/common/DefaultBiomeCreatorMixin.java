@@ -1,8 +1,10 @@
 package ru.betterend.mixin.common;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.DefaultBiomeCreator;
@@ -10,7 +12,6 @@ import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
-import ru.betterend.registry.DefaultBiomeFeatureRegistry;
 
 @Mixin(DefaultBiomeCreator.class)
 public class DefaultBiomeCreatorMixin {
@@ -19,14 +20,12 @@ public class DefaultBiomeCreatorMixin {
 		return null;
 	};
 
-	@Overwrite
-	public static Biome createEndHighlands() {
+	@Inject(method = "createEndHighlands", at = @At("HEAD"), cancellable = true)
+	private static void createEndHighlands(CallbackInfoReturnable<Biome> info) {
 		GenerationSettings.Builder builder = (new GenerationSettings.Builder())
 				.surfaceBuilder(ConfiguredSurfaceBuilders.END)
-				//.structureFeature(ConfiguredStructureFeatures.END_CITY)
-				.feature(GenerationStep.Feature.SURFACE_STRUCTURES, ConfiguredFeatures.END_GATEWAY)
-				//.feature(GenerationStep.Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
-				.structureFeature(DefaultBiomeFeatureRegistry.MOUNTAINS.getFeatureConfigured());
-		return composeEndSpawnSettings(builder);
+				.feature(GenerationStep.Feature.SURFACE_STRUCTURES, ConfiguredFeatures.END_GATEWAY);
+		info.setReturnValue(composeEndSpawnSettings(builder));
+		info.cancel();
 	}
 }

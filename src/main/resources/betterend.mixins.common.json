@@ -6,8 +6,8 @@
 	"mixins": [
 		"ServerPlayNetworkHandlerMixin",
 		"CraftingScreenHandlerMixin",
+		"GenerationSettingsAccessor",
 		"DefaultBiomeCreatorMixin",
-		"GenerationSettingsMixin",
 		"AnvilScreenHandlerMixin",
 		"ChorusPlantFeatureMixin",
 		"ChorusFlowerBlockMixin",

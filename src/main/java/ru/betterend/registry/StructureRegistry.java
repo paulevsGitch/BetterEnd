@@ -1,16 +1,12 @@
 package ru.betterend.registry;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Supplier;
-
-import com.google.common.collect.Lists;
 
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep.Feature;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.structures.EndStructureFeature;

@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.DoublePlantFeature;
@@ -19,8 +20,6 @@ import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
 
 public class FeatureRegistry {
-	private final static List<EndFeature> GLOBAL_FEATURES = Lists.newArrayList();
-	
 	// Trees //
 	public static final EndFeature MOSSY_GLOWSHROOM = new EndFeature("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
 	public static final EndFeature PYTHADENDRON_TREE = new EndFeature("pythadendron_tree", new PythadendronTreeFeature(), 2);
@@ -48,27 +47,25 @@ public class FeatureRegistry {
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", BlockRegistry.VIOLECITE, 15, 4, 96, 8);
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", BlockRegistry.FLAVOLITE, 12, 4, 96, 6);
 	
-	public static void registerGlobals(List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
-		GLOBAL_FEATURES.forEach(feature -> {
-			int index = feature.getFeatureStep().ordinal();
-			if (features.size() > index) {
-				features.get(index).add(() -> {
-					return feature.getFeatureConfigured();
-				});
-			} else {
-				List<Supplier<ConfiguredFeature<?, ?>>> newFeature = Lists.newArrayList();
-				newFeature.add(() -> {
-					return feature.getFeatureConfigured();
-				});
-				features.add(newFeature);
-			}
-		});
+	public static void registerBiomeFeatures(Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+		addFeature(FLAVOLITE_LAYER, features);
+		addFeature(ENDER_ORE, features);
+	}
+	
+	private static void addFeature(EndFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+		int index = feature.getFeatureStep().ordinal();
+		if (features.size() > index) {
+			features.get(index).add(() -> {
+				return feature.getFeatureConfigured();
+			});
+		} else {
+			List<Supplier<ConfiguredFeature<?, ?>>> newFeature = Lists.newArrayList();
+			newFeature.add(() -> {
+				return feature.getFeatureConfigured();
+			});
+			features.add(newFeature);
+		}
 	}
 	
 	public static void register() {}
-	
-	static {
-		GLOBAL_FEATURES.add(FLAVOLITE_LAYER);
-		GLOBAL_FEATURES.add(ENDER_ORE);
-	}
 }

@@ -49,7 +49,7 @@ public abstract class BiomeMixin {
 					features.add(Lists.newArrayList(list));
 				});
 				
-				FeatureRegistry.registerGlobals(features);
+				FeatureRegistry.registerBiomeFeatures(biome, features);
 				StructureRegistry.registerBiomeStructures(biome, structures);
 				
 				accessor.setFeatures(features);

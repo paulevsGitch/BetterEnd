@@ -8,8 +8,9 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 import io.netty.util.internal.ThreadLocalRandom;
+
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
-import net.fabricmc.fabric.api.tool.attribute.v1.ToolManager;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -27,6 +28,8 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import ru.betterend.registry.ItemTagRegistry;
 
 public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	
@@ -46,7 +49,12 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 
 	@Override
 	public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
-		return !miner.isCreative() || state.getMaterial().equals(Material.STONE) || state.getMaterial().equals(Material.GLASS);
+		return state.getMaterial().equals(Material.STONE) ||
+			   state.getMaterial().equals(Material.GLASS) ||
+			   state.isOf(Blocks.DIAMOND_BLOCK) ||
+			   state.isOf(Blocks.EMERALD_BLOCK) ||
+			   state.isOf(Blocks.LAPIS_BLOCK) ||
+			   state.isOf(Blocks.REDSTONE_BLOCK);
 	}
 
 	@Override
@@ -88,12 +96,18 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	
 	@Override
 	public float getMiningSpeedMultiplier(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		return ToolManager.handleBreakingSpeed(state, stack, user);
+		if (tag.equals(ItemTagRegistry.HAMMERS)) {
+			return this.getMiningSpeedMultiplier(stack, state);
+		}
+		return 1.0F;
 	}
 	
 	@Override
 	public int getMiningLevel(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		return this.getMaterial().getMiningLevel();
+		if (tag.equals(ItemTagRegistry.HAMMERS)) {
+			return this.getMaterial().getMiningLevel();
+		}
+		return 0;
 	}
 
 	@Override

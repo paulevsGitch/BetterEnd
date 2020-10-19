@@ -58,7 +58,6 @@ public class BetterEnd implements ModInitializer {
 		return new Identifier(MOD_ID, path);
 	}
 	
-	// For what does this exists? //
 	public static String getStringId(String id) {
 		return String.format("%s:%s", MOD_ID, id);
 	}

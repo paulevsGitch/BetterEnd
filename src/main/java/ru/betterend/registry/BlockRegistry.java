@@ -5,6 +5,7 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
@@ -28,6 +29,7 @@ import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
+import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.blocks.basis.BlockLeaves;
@@ -51,6 +53,7 @@ public class BlockRegistry {
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
 	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
+	public static final Block FLAVOLITE_RUNED = registerBlock("flavolite_runed", new RunedFlavolite());
 	
 	// Wooden Materials //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());

@@ -31,6 +31,11 @@ public class CraftingRecipes {
 			.setShape(new String[] { "III", "III", "III" })
 			.addMaterial('I', ItemRegistry.TERMINITE_INGOT)
 			.build();
+		RecipeBuilder.make(material + "_block_to_ingot", ItemRegistry.TERMINITE_INGOT)
+			.addMaterial('#', BlockRegistry.TERMINITE_BLOCK)
+			.setOutputCount(9)
+			.setList("#")
+			.build();
 		
 		registerHelmet(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HELMET);
 		registerChestplate(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_CHESTPLATE);
@@ -47,6 +52,11 @@ public class CraftingRecipes {
 		RecipeBuilder.make(material + "_block", BlockRegistry.AETERNIUM_BLOCK)
 			.setShape(new String[] { "III", "III", "III" })
 			.addMaterial('I', ItemRegistry.AETERNIUM_INGOT)
+			.build();
+		RecipeBuilder.make(material + "_block_to_ingot", ItemRegistry.AETERNIUM_INGOT)
+			.addMaterial('#', BlockRegistry.AETERNIUM_BLOCK)
+			.setOutputCount(9)
+			.setList("#")
 			.build();
 		
 		registerHelmet(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_HELMET);

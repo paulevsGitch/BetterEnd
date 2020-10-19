@@ -20,8 +20,8 @@ import ru.betterend.util.TagHelper;
 public class StoneMaterial {
 	public final Block stone;
 	
-	public final Block tile;
-	public final Block small_tiles;
+	public final Block polished;
+	public final Block tiles;
 	public final Block pillar;
 	public final Block stairs;
 	public final Block slab;
@@ -38,8 +38,8 @@ public class StoneMaterial {
 		FabricBlockSettings material = FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color);
 		
 		stone = BlockRegistry.registerBlock(name, new BlockBase(material));
-		tile = BlockRegistry.registerBlock(name + "_polished", new BlockBase(material));
-		small_tiles = BlockRegistry.registerBlock(name + "_tiles", new BlockBase(material));
+		polished = BlockRegistry.registerBlock(name + "_polished", new BlockBase(material));
+		tiles = BlockRegistry.registerBlock(name + "_tiles", new BlockBase(material));
 		pillar = BlockRegistry.registerBlock(name + "_pillar", new BlockPillar(material));
 		stairs = BlockRegistry.registerBlock(name + "_stairs", new BlockStairs(stone));
 		slab = BlockRegistry.registerBlock(name + "_slab", new BlockSlab(stone));
@@ -54,8 +54,8 @@ public class StoneMaterial {
 		
 		// Recipes //
 		RecipeBuilder.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', stone).setGroup("end_bricks").build();
-		RecipeBuilder.make(name + "_polished", tile).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
-		RecipeBuilder.make(name + "_tiles", small_tiles).setOutputCount(4).setShape("##", "##").addMaterial('#', tile).setGroup("end_small_tile").build();
+		RecipeBuilder.make(name + "_polished", polished).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
+		RecipeBuilder.make(name + "_tiles", tiles).setOutputCount(4).setShape("##", "##").addMaterial('#', polished).setGroup("end_small_tile").build();
 		RecipeBuilder.make(name + "_pillar", pillar).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar").build();
 		
 		RecipeBuilder.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', stone).setGroup("end_stone_stairs").build();

@@ -36,10 +36,7 @@ public class ModelLoaderMixin {
 	@Shadow
 	private ResourceManager resourceManager;
 	
-	@Inject(method = "loadModelFromJson", cancellable = true, at = @At(
-			value = "NEW",
-			target = "net/minecraft/util/Identifier",
-			shift = Shift.BEFORE))
+	@Inject(method = "loadModelFromJson", at = @At("HEAD"), cancellable = true)
 	private void loadModelPattern(Identifier id, CallbackInfoReturnable<JsonUnbakedModel> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			Identifier modelId = new Identifier(id.getNamespace(), "models/" + id.getPath() + ".json");

@@ -2,6 +2,7 @@ package ru.betterend.mixin.client;
 
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -11,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BackgroundRenderer;
@@ -49,6 +51,7 @@ public class WorldRendererMixin {
 	private static Vector3f axis2;
 	private static Vector3f axis3;
 	private static float time;
+	private static boolean optifine = false;
 	
 	@Shadow
 	@Final
@@ -74,6 +77,8 @@ public class WorldRendererMixin {
 		axis1.normalize();
 		axis2.normalize();
 		axis3.normalize();
+		
+		optifine = FabricLoader.getInstance().isModLoaded("optifabric");
 	}
 	
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
@@ -83,11 +88,19 @@ public class WorldRendererMixin {
 			//if (time > 360) time -= 360;
 			
 			BackgroundRenderer.setFogBlack();
-			
-			RenderSystem.enableAlphaTest();
-			RenderSystem.alphaFunc(516, 0.0F);
-			RenderSystem.enableBlend();
 			RenderSystem.enableTexture();
+			
+			if (optifine) {
+				GL11.glEnable(GL11.GL_ALPHA_TEST);
+				GL11.glAlphaFunc(516, 0.0F);
+				GL11.glEnable(GL11.GL_BLEND);
+				RenderSystem.depthMask(false);
+			}
+			else {
+				RenderSystem.enableAlphaTest();
+				RenderSystem.alphaFunc(516, 0.0F);
+				RenderSystem.enableBlend();
+			}
 			
 			float blindA = 1F - BackgroundInfo.blindness;
 			

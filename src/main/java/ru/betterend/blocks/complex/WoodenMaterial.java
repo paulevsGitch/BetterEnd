@@ -8,6 +8,8 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Items;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
+import ru.betterend.blocks.basis.BlockBark;
+import ru.betterend.blocks.basis.BlockBarkStripable;
 import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.BlockChest;
@@ -57,10 +59,10 @@ public class WoodenMaterial {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);
 		
 		log_stripped = BlockRegistry.registerBlock(name + "_stripped_log", new BlockPillar(materialPlanks));
-		bark_stripped = BlockRegistry.registerBlock(name + "_stripped_bark", new BlockPillar(materialPlanks));
+		bark_stripped = BlockRegistry.registerBlock(name + "_stripped_bark", new BlockBark(materialPlanks));
 		
 		log = BlockRegistry.registerBlock(name + "_log", new BlockLogStripable(woodColor, log_stripped));
-		bark = BlockRegistry.registerBlock(name + "_bark", new BlockLogStripable(woodColor, bark_stripped));
+		bark = BlockRegistry.registerBlock(name + "_bark", new BlockBarkStripable(woodColor, bark_stripped));
 		
 		planks = BlockRegistry.registerBlock(name + "_planks", new BlockBase(materialPlanks));
 		stairs = BlockRegistry.registerBlock(name + "_stairs", new BlockStairs(planks));

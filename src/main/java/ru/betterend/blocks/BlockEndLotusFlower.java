@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import ru.betterend.blocks.basis.BlockPlant;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.BlockRegistry;
 
 public class BlockEndLotusFlower extends BlockPlant {
 	private static final VoxelShape SHAPE_OUTLINE = Block.createCuboidShape(2, 0, 2, 14, 14, 14);
@@ -22,7 +22,7 @@ public class BlockEndLotusFlower extends BlockPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(BlockTagRegistry.END_GROUND);
+		return state.isOf(BlockRegistry.END_LOTUS_FLOWER);
 	}
 	
 	@Override

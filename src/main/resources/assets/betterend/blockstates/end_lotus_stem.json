@@ -1,5 +1,7 @@
 {
 	"variants": {
-		"": { "model": "betterend:block/end_lotus_stem" }
+		"shape=top": { "model": "betterend:block/end_lotus_stem_top" },
+		"shape=middle": { "model": "betterend:block/end_lotus_stem" },
+		"shape=bottom": { "model": "betterend:block/end_lotus_roots" }
 	}
 }

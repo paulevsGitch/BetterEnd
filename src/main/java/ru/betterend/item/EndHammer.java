@@ -8,9 +8,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 import io.netty.util.internal.ThreadLocalRandom;
-
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -28,7 +26,6 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
 import ru.betterend.registry.ItemTagRegistry;
 
 public class EndHammer extends MiningToolItem implements DynamicAttributeTool {

@@ -27,6 +27,7 @@ import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
+import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.EternalRunedFlavolite;
@@ -98,6 +99,9 @@ public class BlockRegistry {
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
+	
+	//Technical
+	public static final Block END_PORTAL_BLOCK = registerBlock("end_portal_block", new EndPortalBlock());
 	
 	public static void register() {}
 	

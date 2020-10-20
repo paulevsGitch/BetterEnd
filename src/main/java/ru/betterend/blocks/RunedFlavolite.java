@@ -12,7 +12,9 @@ public class RunedFlavolite extends BlockBase {
 	public static final BooleanProperty ACTIVATED = BooleanProperty.of("active");
 
 	public RunedFlavolite() {
-		super(FabricBlockSettings.copyOf(BlockRegistry.FLAVOLITE.polished).lightLevel(6));
+		super(FabricBlockSettings.copyOf(BlockRegistry.FLAVOLITE.polished).luminance(state -> {
+			return state.get(ACTIVATED) ? 8 : 0;
+		}));
 		this.setDefaultState(stateManager.getDefaultState().with(ACTIVATED, false));
 	}
 	

@@ -1,0 +1,446 @@
+{
+	"variants": {
+		"active=false": [
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 90,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 90,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 90,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 180,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 180,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 180,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 270,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 270,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_1", 
+				"uvlock": true,
+				"x": 270,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 90,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 90,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 90,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 180,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 180,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 180,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 270,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 270,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_2", 
+				"uvlock": true,
+				"x": 270,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 90,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 90,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 90,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 180,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 180,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 180,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 270,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 270,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_3", 
+				"uvlock": true,
+				"x": 270,
+				"y": 270
+			}
+		],
+		"active=true": [
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 90,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 90,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 90,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 180,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 180,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 180,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 270,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 270,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_1", 
+				"uvlock": true,
+				"x": 270,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 90,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 90,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 90,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 180,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 180,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 180,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 270,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 270,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_2", 
+				"uvlock": true,
+				"x": 270,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 90,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 90,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 90,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 180,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 180,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 180,
+				"y": 270
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 270,
+				"y": 90
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 270,
+				"y": 180
+			},
+			{
+				"model": "betterend:block/flavolite_runed_active_3", 
+				"uvlock": true,
+				"x": 270,
+				"y": 270
+			}
+		]
+	}
+}

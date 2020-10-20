@@ -6,12 +6,15 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.particle.ParticleGlowingSphere;
+import ru.betterend.particle.PaticlePortalSphere;
 
 public class ParticleRegistry {
 	public static final DefaultParticleType GLOWING_SPHERE = register("glowing_sphere");
+	public static final DefaultParticleType PORTAL_SPHERE = register("portal_sphere");
 	
 	public static void register() {
 		ParticleFactoryRegistry.getInstance().register(GLOWING_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
+		ParticleFactoryRegistry.getInstance().register(PORTAL_SPHERE, PaticlePortalSphere.FactoryPortalSphere::new);
 	}
 	
 	private static DefaultParticleType register(String name) {

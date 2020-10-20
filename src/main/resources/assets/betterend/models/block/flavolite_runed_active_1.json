@@ -1,0 +1,23 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"particle": "betterend:block/flavolite_polished",
+		"rune_1": "betterend:block/flavolite_runed_active_1",
+		"rune_2": "betterend:block/flavolite_runed_active_2",
+		"rune_3": "betterend:block/flavolite_runed_active_3"
+	},
+	"elements": [
+		{
+			"from": [ 0, 0, 0 ],
+			"to": [ 16, 16, 16 ],
+			"faces": {	
+				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#rune_1", "cullface": "down" },	
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#rune_1", "cullface": "up" },	
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#rune_2", "cullface": "north" },	
+				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#rune_2", "cullface": "south" },	
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#rune_3", "cullface": "west" },	
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#rune_3", "cullface": "east" }	
+			}
+		}
+	]
+}

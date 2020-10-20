@@ -11,8 +11,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.BiomeAdditionsSound;
 import net.minecraft.sound.BiomeMoodSound;
+import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
@@ -201,7 +201,7 @@ public class BiomeDefinition {
 		if (mood != null) effects.moodSound(mood);
 		if (additions != null) effects.additionsSound(additions);
 		if (particleConfig != null) effects.particleConfig(particleConfig);
-		effects.music(MusicType.createIngameMusic(music != null ? music : SoundEvents.MUSIC_END));
+		effects.music(music != null ? new MusicSound(music, 600, 2400, true) : MusicType.END);
 
 		return new Biome.Builder()
 				.precipitation(Precipitation.NONE)

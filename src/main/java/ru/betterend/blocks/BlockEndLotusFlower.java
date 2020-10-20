@@ -22,7 +22,7 @@ public class BlockEndLotusFlower extends BlockPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isOf(BlockRegistry.END_LOTUS_FLOWER);
+		return state.isOf(BlockRegistry.END_LOTUS_STEM);
 	}
 	
 	@Override

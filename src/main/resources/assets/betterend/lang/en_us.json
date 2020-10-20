@@ -157,5 +157,29 @@
 	"block.betterend.flavolite_tiles": "Flavolite Tiles",
 	"block.betterend.flavolite_stairs": "Flavolite Stairs",
 	"block.betterend.flavolite_polished": "Polished Flavolite",
-	"block.betterend.flavolite_wall": "Flavolite Wall"
+	"block.betterend.flavolite_wall": "Flavolite Wall",
+	
+	"block.betterend.end_lotus_seed": "End Lotus Seed",
+	"block.betterend.end_lotus_stem": "End Lotus Stem",
+	"block.betterend.end_lotus_leaf": "End Lotus Leaf",
+	"block.betterend.end_lotus_flower": "End Lotus Flower",
+	
+	"block.betterend.end_lotus_bark": "End Lotus Bark",
+	"block.betterend.end_lotus_barrel": "End Lotus Barrel",
+	"block.betterend.end_lotus_button": "End Lotus Button",
+	"block.betterend.end_lotus_chest": "End Lotus Chest",
+	"block.betterend.end_lotus_crafting_table": "End Lotus Crafting Table",
+	"block.betterend.end_lotus_door": "End Lotus Door",
+	"block.betterend.end_lotus_fence": "End Lotus Fence",
+	"block.betterend.end_lotus_gate": "End Lotus Gate",
+	"block.betterend.end_lotus_ladder": "End Lotus Ladder",
+	"block.betterend.end_lotus_log": "End Lotus Log",
+	"block.betterend.end_lotus_planks": "End Lotus Planks",
+	"block.betterend.end_lotus_plate": "End Lotus Plate",
+	"block.betterend.end_lotus_sign": "End Lotus Sign",
+	"block.betterend.end_lotus_slab": "End Lotus Slab",
+	"block.betterend.end_lotus_stairs": "End Lotus Stairs",
+	"block.betterend.end_lotus_stripped_bark": "End Lotus Stripped Bark",
+	"block.betterend.end_lotus_stripped_log": "End Lotus Stripped Log",
+	"block.betterend.end_lotus_trapdoor": "End Lotus Trapdoor"
 }

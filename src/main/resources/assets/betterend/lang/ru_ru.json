@@ -157,5 +157,29 @@
 	"block.betterend.flavolite_tiles": "Флаволитовая плитка",
 	"block.betterend.flavolite_stairs": "Флаволитовые ступени",
 	"block.betterend.flavolite_polished": "Полированный Флаволит",
-	"block.betterend.flavolite_wall": "Флаволитовая стена"
+	"block.betterend.flavolite_wall": "Флаволитовая стена",
+	
+	"block.betterend.end_lotus_seed": "Семя лотоса края",
+	"block.betterend.end_lotus_stem": "Стебель лотоса края",
+	"block.betterend.end_lotus_leaf": "Лист лотоса края",
+	"block.betterend.end_lotus_flower": "Цветок лотоса края",
+	
+	"block.betterend.end_lotus_bark": "Кора лотоса края",
+	"block.betterend.end_lotus_barrel": "Бочка из лотоса края",
+	"block.betterend.end_lotus_button": "Кнопка из лотоса края",
+	"block.betterend.end_lotus_chest": "Сундук из лотоса края",
+	"block.betterend.end_lotus_crafting_table": "Верстак из лотоса края",
+	"block.betterend.end_lotus_door": "Дверь из лотоса края",
+	"block.betterend.end_lotus_fence": "Забор из лотоса края",
+	"block.betterend.end_lotus_gate": "Калитка из лотоса края",
+	"block.betterend.end_lotus_ladder": "Лестница из лотоса края",
+	"block.betterend.end_lotus_log": "Бревно лотоса края",
+	"block.betterend.end_lotus_planks": "Доски лотоса края",
+	"block.betterend.end_lotus_plate": "Нажимная плита из лотоса края",
+	"block.betterend.end_lotus_sign": "Ьабличка из лотоса края",
+	"block.betterend.end_lotus_slab": "Плита из лотоса края",
+	"block.betterend.end_lotus_stairs": "Ступени из лотоса края",
+	"block.betterend.end_lotus_stripped_bark": "Обтёсанная кора лотоса края",
+	"block.betterend.end_lotus_stripped_log": "Обтёсанное бревно лотоса края",
+	"block.betterend.end_lotus_trapdoor": "Люк из лотоса края"
 }

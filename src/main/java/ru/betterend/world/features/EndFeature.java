@@ -47,7 +47,6 @@ public class EndFeature {
 		this.featureStep = GenerationStep.Feature.VEGETAL_DECORATION;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
 		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.configure(FeatureConfig.DEFAULT).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(density));
-		//return new EndFeature(name, feature, GenerationStep.Feature.VEGETAL_DECORATION, feature.configure(FeatureConfig.DEFAULT).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(4));
 	}
 	
 	public static EndFeature makeRawGenFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {

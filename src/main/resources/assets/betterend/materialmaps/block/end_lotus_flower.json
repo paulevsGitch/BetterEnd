@@ -1,3 +1,22 @@
 {
-	"defaultMaterial": "betterend:glow_inc"
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/end_lotus_petal",
+				"material": "betterend:waving_floor_glow_inc"
+			},
+			{
+				"sprite": "betterend:block/end_lotus_petal_2",
+				"material": "betterend:waving_floor_glow_inc"
+			},
+			{
+				"sprite": "betterend:block/end_lotus_center",
+				"material": "betterend:glow_inc"
+			},
+			{
+				"sprite": "betterend:block/end_lotus_center_2",
+				"material": "betterend:glow_inc"
+			}
+		]
+	}
 }

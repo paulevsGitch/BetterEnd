@@ -41,8 +41,8 @@ public class FeatureRegistry {
 	public static final EndFeature BUBBLE_CORAL_RARE = new EndFeature("bubble_coral_rare", new UnderwaterPlantFeature(BlockRegistry.BUBBLE_CORAL, 3), 2);
 	public static final EndFeature END_LILY = new EndFeature("end_lily", new EndLilyFeature(10), 10);
 	public static final EndFeature END_LILY_RARE = new EndFeature("end_lily_rare", new EndLilyFeature(3), 1);
-	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(5), 5);
-	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(5), 5);
+	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(7), 5);
+	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(20), 25);
 	
 	// Features //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

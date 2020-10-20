@@ -17,7 +17,7 @@ public class BlockEndLotusFlower extends BlockPlant {
 	private static final VoxelShape SHAPE_COLLISION = Block.createCuboidShape(0, 0, 0, 16, 2, 16);
 	
 	public BlockEndLotusFlower() {
-		super(FabricBlockSettings.of(Material.PLANT).lightLevel(15));
+		super(FabricBlockSettings.of(Material.PLANT).nonOpaque().lightLevel(15));
 	}
 	
 	@Override

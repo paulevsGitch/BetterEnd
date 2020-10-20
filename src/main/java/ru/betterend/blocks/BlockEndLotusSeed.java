@@ -45,7 +45,6 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 			bpos.setY(bpos.getY() + 1);
 			for (int i = 1; i <= height; i++) {
 				if (!world.isAir(bpos)) {
-					System.out.println("Set incorrect flower!");
 					bpos.setY(bpos.getY() - 1);
 					BlocksHelper.setWithoutUpdate(world, bpos, flower);
 					bpos.setY(bpos.getY() - 1);
@@ -61,7 +60,6 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 				bpos.setY(bpos.getY() - 1);
 			}
 			
-			System.out.println("Set flower!");
 			BlocksHelper.setWithoutUpdate(world, bpos, flower);
 			bpos.setY(bpos.getY() - 1);
 			stem = world.getBlockState(bpos);
@@ -100,7 +98,7 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 			p.setX(pos.getX() + x);
 			for (int z = -1; z < 2; z ++) {
 				p.setZ(pos.getZ() + z);
-				if (world.isAir(p))
+				if (world.isAir(p) && !world.getFluidState(p.down()).isEmpty())
 					count ++;
 			}
 		}

@@ -25,7 +25,7 @@ public class BlockEndLotusLeaf extends BlockBaseNotFull {
 	private static final VoxelShape VSHAPE = Block.createCuboidShape(0, 0, 0, 16, 1, 16);
 	
 	public BlockEndLotusLeaf() {
-		super(FabricBlockSettings.of(Material.PLANT).sounds(BlockSoundGroup.WET_GRASS));
+		super(FabricBlockSettings.of(Material.PLANT).nonOpaque().sounds(BlockSoundGroup.WET_GRASS));
 	}
 	
 	@Override

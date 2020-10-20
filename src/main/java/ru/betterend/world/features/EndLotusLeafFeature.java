@@ -20,7 +20,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 
 	@Override
 	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		if (hasLeaf(world, blockPos)) {
+		if (canGenerate(world, blockPos)) {
 			generateLeaf(world, blockPos);
 		}
 	}
@@ -49,7 +49,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 		}
 	}
 	
-	private boolean hasLeaf(StructureWorldAccess world, BlockPos pos) {
+	private boolean canGenerate(StructureWorldAccess world, BlockPos pos) {
 		Mutable p = new Mutable();
 		p.setY(pos.getY());
 		int count = 0;
@@ -57,7 +57,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 			p.setX(pos.getX() + x);
 			for (int z = -1; z < 2; z ++) {
 				p.setZ(pos.getZ() + z);
-				if (world.isAir(p))
+				if (world.isAir(p) && world.getBlockState(p.down()).isOf(Blocks.WATER))
 					count ++;
 			}
 		}

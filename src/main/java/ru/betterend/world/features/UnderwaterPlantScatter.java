@@ -2,6 +2,7 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
@@ -23,7 +24,7 @@ public abstract class UnderwaterPlantScatter extends ScatterFeature {
 	
 	@Override
 	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return !world.getFluidState(blockPos).isEmpty();
+		return world.getBlockState(blockPos).isOf(Blocks.WATER);
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import java.util.Random;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.NetherPortalBlock;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.registry.ParticleRegistry;
@@ -23,7 +25,9 @@ import ru.betterend.registry.ParticleRegistry;
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
 
 	public EndPortalBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL));
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).luminance(state -> {
+			return 12;
+		}));
 	}
 	
 	@Override
@@ -36,19 +40,14 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		double x = pos.getX() + random.nextDouble();
 		double y = pos.getY() + random.nextDouble();
 		double z = pos.getZ() + random.nextDouble();
-		double vx = (random.nextDouble() - 0.5D) * 0.5D;
-		double vy = (random.nextDouble() - 0.5D) * 0.5D;
-		double vz = (random.nextDouble() - 0.5D) * 0.5D;
 		int k = random.nextInt(2) * 2 - 1;
 		if (!world.getBlockState(pos.west()).isOf(this) && !world.getBlockState(pos.east()).isOf(this)) {
 			x = pos.getX() + 0.5D + 0.25D * k;
-			vx = (random.nextDouble() * 2.0D * k);
 		} else {
 			z = pos.getZ() + 0.5D + 0.25D * k;
-			vz = (random.nextDouble() * 2.0D * k);
 		}
 
-		world.addParticle(ParticleRegistry.PORTAL_SPHERE, x, y, z, vx, vy, vz);
+		world.addParticle(ParticleRegistry.PORTAL_SPHERE, x, y, z, 0, 0, 0);
 	}
 
 	@Override

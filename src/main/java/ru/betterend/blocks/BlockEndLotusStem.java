@@ -13,6 +13,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -20,15 +22,18 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.util.BlocksHelper;
 
 public class BlockEndLotusStem extends BlockBase implements Waterloggable {
+	public static final EnumProperty<Direction> FACING = Properties.FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+	public static final BooleanProperty LEAF = BooleanProperty.of("leaf");
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape VSHAPE = Block.createCuboidShape(6, 0, 6, 10, 16, 10);
 	
 	public BlockEndLotusStem() {
 		super(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS));
-		this.setDefaultState(getDefaultState().with(WATERLOGGED, false).with(SHAPE, TripleShape.MIDDLE));
+		this.setDefaultState(getDefaultState().with(WATERLOGGED, false).with(SHAPE, TripleShape.MIDDLE).with(LEAF, false).with(FACING, Direction.UP));
 	}
 	
 	@Override
@@ -38,7 +43,7 @@ public class BlockEndLotusStem extends BlockBase implements Waterloggable {
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(WATERLOGGED, SHAPE);
+		builder.add(FACING, WATERLOGGED, SHAPE, LEAF);
 	}
 	
 	@Override
@@ -50,9 +55,20 @@ public class BlockEndLotusStem extends BlockBase implements Waterloggable {
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		WorldAccess worldAccess = ctx.getWorld();
 		BlockPos blockPos = ctx.getBlockPos();
-		return this.getDefaultState().with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER);
+		return this.getDefaultState().with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER).with(FACING, ctx.getSide());
+	}
+	
+	@Override
+	public BlockState rotate(BlockState state, BlockRotation rotation) {
+		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
 	}
 
+	@Override
+	public BlockState mirror(BlockState state, BlockMirror mirror) {
+		return BlocksHelper.mirrorHorizontal(state, mirror, FACING);
+	}
+
+	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if ((Boolean) state.get(WATERLOGGED)) {
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));

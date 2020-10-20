@@ -219,6 +219,10 @@ public class BlocksHelper {
 	}
 	
 	public static Direction[] makeHorizontal() {
-		return new Direction[] { Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST };
+		return new Direction[] { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
+	}
+	
+	public static Direction randomHorizontal(Random random) {
+		return HORIZONTAL[random.nextInt(4)];
 	}
 }

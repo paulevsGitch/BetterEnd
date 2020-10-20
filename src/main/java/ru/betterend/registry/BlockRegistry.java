@@ -16,6 +16,8 @@ import ru.betterend.blocks.BlockChorusGrass;
 import ru.betterend.blocks.BlockEndLily;
 import ru.betterend.blocks.BlockEndLilySeed;
 import ru.betterend.blocks.BlockEndLotusFlower;
+import ru.betterend.blocks.BlockEndLotusLeaf;
+import ru.betterend.blocks.BlockEndLotusSeed;
 import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
@@ -70,7 +72,9 @@ public class BlockRegistry {
 	public static final Block PYTHADENDRON_LEAVES = registerBlock("pythadendron_leaves", new BlockLeaves(MaterialColor.MAGENTA));
 	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
 	
+	public static final Block END_LOTUS_SEED = registerBlock("end_lotus_seed", new BlockEndLotusSeed());
 	public static final Block END_LOTUS_STEM = registerBlock("end_lotus_stem", new BlockEndLotusStem());
+	public static final Block END_LOTUS_LEAF = registerBlockNI("end_lotus_leaf", new BlockEndLotusLeaf());
 	public static final Block END_LOTUS_FLOWER = registerBlockNI("end_lotus_flower", new BlockEndLotusFlower());
 	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.LIGHT_BLUE, MaterialColor.CYAN);
 	

@@ -12,6 +12,8 @@ import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
 import ru.betterend.world.features.EndLilyFeature;
+import ru.betterend.world.features.EndLotusFeature;
+import ru.betterend.world.features.EndLotusLeafFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
 import ru.betterend.world.features.PythadendronBushFeature;
 import ru.betterend.world.features.PythadendronTreeFeature;
@@ -35,8 +37,12 @@ public class FeatureRegistry {
 	
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(BlockRegistry.DENSE_VINE, 24), 3);
 	
-	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(BlockRegistry.BUBBLE_CORAL, 4), 20);
-	public static final EndFeature END_LILY = new EndFeature("end_lily", new EndLilyFeature(5), 20);
+	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(BlockRegistry.BUBBLE_CORAL, 10), 10);
+	public static final EndFeature BUBBLE_CORAL_RARE = new EndFeature("bubble_coral_rare", new UnderwaterPlantFeature(BlockRegistry.BUBBLE_CORAL, 3), 2);
+	public static final EndFeature END_LILY = new EndFeature("end_lily", new EndLilyFeature(10), 10);
+	public static final EndFeature END_LILY_RARE = new EndFeature("end_lily_rare", new EndLilyFeature(3), 1);
+	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(5), 5);
+	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(5), 5);
 	
 	// Features //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

@@ -16,8 +16,10 @@ public class BiomeMegalake extends EndBiome {
 				.setSurface(BlockRegistry.ENDSTONE_DUST)
 				.addStructureFeature(StructureRegistry.MEGALAKE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
-				.addFeature(FeatureRegistry.BUBBLE_CORAL)
-				.addFeature(FeatureRegistry.END_LILY)
+				.addFeature(FeatureRegistry.END_LOTUS)
+				.addFeature(FeatureRegistry.END_LOTUS_LEAF)
+				.addFeature(FeatureRegistry.BUBBLE_CORAL_RARE)
+				.addFeature(FeatureRegistry.END_LILY_RARE)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

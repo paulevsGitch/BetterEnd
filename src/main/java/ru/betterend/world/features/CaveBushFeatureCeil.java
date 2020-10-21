@@ -28,12 +28,14 @@ public class CaveBushFeatureCeil extends InvertedScatterFeature {
 
 	@Override
 	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return blockPos.getY() < 64 && world.isAir(blockPos) && world.getBlockState(blockPos.up()).isIn(BlockTagRegistry.GEN_TERRAIN);
+		return world.isAir(blockPos.down())
+				&& world.getBlockState(blockPos.up()).isIn(BlockTagRegistry.GEN_TERRAIN)
+				&& world.getBlockState(blockPos.down(BlocksHelper.downRay(world, blockPos.down(), 64) + 2)).isIn(BlockTagRegistry.GEN_TERRAIN);
 	}
 
 	@Override
 	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		float radius = MHelper.randRange(0.8F, 2.5F, random);
+		float radius = MHelper.randRange(1.0F, 3.2F, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(BlockRegistry.CAVE_BUSH);
 		sphere = new SDFScale3D().setScale(MHelper.randRange(0.8F, 1.2F, random), MHelper.randRange(0.8F, 1.2F, random), MHelper.randRange(0.8F, 1.2F, random)).setSource(sphere);

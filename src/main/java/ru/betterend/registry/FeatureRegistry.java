@@ -9,8 +9,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.features.BlueVineFeature;
-import ru.betterend.world.features.CaveBushFeature;
-import ru.betterend.world.features.CaveBushFeatureCeil;
 import ru.betterend.world.features.CavePlantFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
@@ -39,9 +37,7 @@ public class FeatureRegistry {
 	public static final EndFeature CREEPING_MOSS = new EndFeature("creeping_moss", new SinglePlantFeature(BlockRegistry.CREEPING_MOSS, 5), 5);
 	public static final EndFeature BLUE_VINE = new EndFeature("blue_vine", new BlueVineFeature(), 1);
 	public static final EndFeature CHORUS_GRASS = new EndFeature("chorus_grass", new SinglePlantFeature(BlockRegistry.CHORUS_GRASS, 4), 5);
-	public static final EndFeature CAVE_GRASS = new EndFeature("cave_grass", new CavePlantFeature(BlockRegistry.CAVE_GRASS, 7), 5);
-	public static final EndFeature CAVE_BUSH = new EndFeature("cave_bush", new CaveBushFeature(5), 2);
-	public static final EndFeature CAVE_BUSH_CEIL = new EndFeature("cave_bush_ceil", new CaveBushFeatureCeil(15), 10);
+	public static final EndFeature CAVE_GRASS = new EndFeature("cave_grass", new CavePlantFeature(BlockRegistry.CAVE_GRASS, 7), 7);
 	
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(BlockRegistry.DENSE_VINE, 24), 3);
 	
@@ -68,8 +64,6 @@ public class FeatureRegistry {
 		addFeature(ENDER_ORE, features);
 		addFeature(ROUND_CAVE_RARE, features);
 		addFeature(CAVE_GRASS, features);
-		addFeature(CAVE_BUSH, features);
-		addFeature(CAVE_BUSH_CEIL, features);
 		
 		if (id.getNamespace().equals("minecraft")) {
 			if (id.getPath().equals("end_highlands")) {

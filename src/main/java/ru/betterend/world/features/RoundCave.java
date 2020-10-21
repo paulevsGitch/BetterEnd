@@ -1,6 +1,9 @@
 package ru.betterend.world.features;
 
 import java.util.Random;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -18,8 +21,13 @@ import ru.betterend.registry.StructureRegistry;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFDisplacement;
 import ru.betterend.util.sdf.operator.SDFRotation;
+import ru.betterend.util.sdf.operator.SDFScale3D;
+import ru.betterend.util.sdf.operator.SDFSubtraction;
+import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.primitive.SDFHexPrism;
+import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class RoundCave extends DefaultFeature {
 	@Override
@@ -45,6 +53,7 @@ public class RoundCave extends DefaultFeature {
 		double nr = radius * 0.25;
 		
 		Mutable bpos = new Mutable();
+		Set<BlockPos> bushes = Sets.newHashSet();
 		BlockState terrain = BlockRegistry.CAVE_MOSS.getDefaultState();
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - pos.getX();
@@ -62,22 +71,55 @@ public class RoundCave extends DefaultFeature {
 					double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
-						if (isReplaceable(world.getBlockState(bpos))) {
+						BlockState state = world.getBlockState(bpos);
+						if (isReplaceable(state)) {
 							BlocksHelper.setWithoutUpdate(world, bpos, AIR);
+							
+							while (state.getMaterial().equals(Material.LEAVES)) {
+								BlocksHelper.setWithoutUpdate(world, bpos, AIR);
+								bpos.setY(bpos.getY() + 1);
+								state = world.getBlockState(bpos);
+							}
+							
+							bpos.setY(y - 1);
+							while (state.getMaterial().equals(Material.LEAVES)) {
+								BlocksHelper.setWithoutUpdate(world, bpos, AIR);
+								bpos.setY(bpos.getY() - 1);
+								state = world.getBlockState(bpos);
+							}
 						}
 						bpos.setY(y - 1);
 						if (world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
 							BlocksHelper.setWithoutUpdate(world, bpos, terrain);
 						}
 					}
+					else if (world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+						if (world.isAir(bpos.down())) {
+							int h = BlocksHelper.downRay(world, bpos.down(), 64);
+							if (h > 6 && h < 32 && world.getBlockState(bpos.down(h + 3)).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+								bushes.add(bpos.down());
+							}
+						}
+						else if (world.isAir(bpos.up())) {
+							int h = BlocksHelper.upRay(world, bpos.up(), 64);
+							if (h > 6 && h < 32 && world.getBlockState(bpos.up(h + 3)).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+								bushes.add(bpos.up());
+							}
+						}
+					}
 				}
 			}
 		}
+		bushes.forEach((cpos) -> {
+			if (random.nextInt(32) == 0) {
+				generateBush(world, random, cpos);
+			}
+		});
 		
 		if (random.nextBoolean() && world.getBiome(pos).getGenerationSettings().hasStructureFeature(StructureRegistry.MOUNTAIN.getStructure())) {
 			pos = pos.add(random.nextGaussian() * 5, random.nextGaussian() * 5, random.nextGaussian() * 5);
 			BlockPos down = pos.down(BlocksHelper.downRay(world, pos, 64) + 2);
-			if (world.getBlockState(down).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+			if (isReplaceable(world.getBlockState(down))) {
 				SDF prism = new SDFHexPrism().setHeight(radius * MHelper.randRange(0.6F, 0.75F, random)).setRadius(3).setBlock(BlockRegistry.AURORA_CRYSTAL);
 				float angleY = MHelper.randRange(0, MHelper.PI2, random);
 				float vx = (float) Math.sin(angleY);
@@ -100,5 +142,17 @@ public class RoundCave extends DefaultFeature {
 				|| state.getMaterial().isReplaceable()
 				|| state.getMaterial().equals(Material.PLANT)
 				|| state.getMaterial().equals(Material.LEAVES);
+	}
+	
+	private void generateBush(StructureWorldAccess world, Random random, BlockPos blockPos) {
+		float radius = MHelper.randRange(1.0F, 3.2F, random);
+		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(BlockRegistry.CAVE_BUSH);
+		sphere = new SDFScale3D().setScale(MHelper.randRange(0.8F, 1.2F, random), MHelper.randRange(0.8F, 1.2F, random), MHelper.randRange(0.8F, 1.2F, random)).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
+		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
+		sphere.fillRecursive(world, blockPos);
+		BlocksHelper.setWithoutUpdate(world, blockPos, BlockRegistry.CAVE_BUSH);
 	}
 }

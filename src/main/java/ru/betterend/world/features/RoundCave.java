@@ -120,7 +120,7 @@ public class RoundCave extends DefaultFeature {
 			pos = pos.add(random.nextGaussian() * 5, random.nextGaussian() * 5, random.nextGaussian() * 5);
 			BlockPos down = pos.down(BlocksHelper.downRay(world, pos, 64) + 2);
 			if (isReplaceable(world.getBlockState(down))) {
-				SDF prism = new SDFHexPrism().setHeight(radius * MHelper.randRange(0.6F, 0.75F, random)).setRadius(3).setBlock(BlockRegistry.AURORA_CRYSTAL);
+				SDF prism = new SDFHexPrism().setHeight(radius * MHelper.randRange(0.6F, 0.75F, random)).setRadius(MHelper.randRange(1.7F, 3F, random)).setBlock(BlockRegistry.AURORA_CRYSTAL);
 				float angleY = MHelper.randRange(0, MHelper.PI2, random);
 				float vx = (float) Math.sin(angleY);
 				float vz = (float) Math.sin(angleY);

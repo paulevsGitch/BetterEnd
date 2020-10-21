@@ -24,7 +24,14 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 	private static final Vec3i[] COLORS;
 	
 	public AuroraCrystalBlock() {
-		super(FabricBlockSettings.of(Material.GLASS).breakByTool(FabricToolTags.PICKAXES).sounds(BlockSoundGroup.GLASS).lightLevel(15).nonOpaque());
+		super(FabricBlockSettings.of(Material.GLASS)
+				.breakByTool(FabricToolTags.PICKAXES)
+				.suffocates((state, world, pos) -> { return false; })
+				.hardness(1F)
+				.resistance(1F)
+				.sounds(BlockSoundGroup.GLASS)
+				.lightLevel(15)
+				.nonOpaque());
 	}
 
 	@Override

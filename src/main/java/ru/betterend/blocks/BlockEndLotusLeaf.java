@@ -17,9 +17,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
+import ru.betterend.client.ERenderLayer;
+import ru.betterend.client.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 
-public class BlockEndLotusLeaf extends BlockBaseNotFull {
+public class BlockEndLotusLeaf extends BlockBaseNotFull implements IRenderTypeable {
 	public static final EnumProperty<Direction> HORIZONTAL_FACING = Properties.HORIZONTAL_FACING;
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape VSHAPE = Block.createCuboidShape(0, 0, 0, 16, 1, 16);
@@ -46,5 +48,10 @@ public class BlockEndLotusLeaf extends BlockBaseNotFull {
 	@Override
 	public BlockState mirror(BlockState state, BlockMirror mirror) {
 		return BlocksHelper.mirrorHorizontal(state, mirror, HORIZONTAL_FACING);
+	}
+	
+	@Override
+	public ERenderLayer getRenderLayer() {
+		return ERenderLayer.CUTOUT;
 	}
 }

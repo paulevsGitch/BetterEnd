@@ -3,6 +3,7 @@ package ru.betterend.world.features;
 import java.util.Random;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -44,9 +45,7 @@ public class RoundCave extends DefaultFeature {
 		double nr = radius * 0.25;
 		
 		Mutable bpos = new Mutable();
-		BlockState stateGround;
 		BlockState terrain = BlockRegistry.CAVE_MOSS.getDefaultState();
-		//BlockState grass = BlockRegistry.CAVE_GRASS.getDefaultState();
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - pos.getX();
 			xsq *= xsq;
@@ -63,16 +62,12 @@ public class RoundCave extends DefaultFeature {
 					double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
-						if ((stateGround = world.getBlockState(bpos)).isIn(BlockTagRegistry.GEN_TERRAIN) || stateGround.getMaterial().isReplaceable()) {
+						if (isReplaceable(world.getBlockState(bpos))) {
 							BlocksHelper.setWithoutUpdate(world, bpos, AIR);
 						}
 						bpos.setY(y - 1);
 						if (world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
 							BlocksHelper.setWithoutUpdate(world, bpos, terrain);
-							/*if (random.nextInt(8) == 0) {
-								bpos.setY(y);
-								BlocksHelper.setWithoutUpdate(world, bpos, grass);
-							}*/
 						}
 					}
 				}
@@ -95,6 +90,15 @@ public class RoundCave extends DefaultFeature {
 			}
 		}
 		
+		BlocksHelper.fixBlocks(world, new BlockPos(x1, y1, z1), new BlockPos(x2, y2, z2));
+		
 		return true;
+	}
+	
+	private boolean isReplaceable(BlockState state) {
+		return state.isIn(BlockTagRegistry.GEN_TERRAIN)
+				|| state.getMaterial().isReplaceable()
+				|| state.getMaterial().equals(Material.PLANT)
+				|| state.getMaterial().equals(Material.LEAVES);
 	}
 }

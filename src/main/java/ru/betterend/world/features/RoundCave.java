@@ -129,6 +129,7 @@ public class RoundCave extends DefaultFeature {
 					return state.getMaterial().isReplaceable() || state.isIn(BlockTagRegistry.GEN_TERRAIN);
 				});
 				prism.fillRecursive(world, pos);
+				BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.AURORA_CRYSTAL);
 			}
 		}
 		

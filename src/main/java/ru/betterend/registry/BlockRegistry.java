@@ -28,6 +28,7 @@ import ru.betterend.blocks.BlockMossyPythadendronSapling;
 import ru.betterend.blocks.BlockOre;
 import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockTerrain;
+import ru.betterend.blocks.BlockTerrainPlant;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
 import ru.betterend.blocks.EndPortalBlock;
@@ -49,11 +50,13 @@ public class BlockRegistry {
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new BlockTerrain(MaterialColor.LIGHT_BLUE));
 	public static final Block END_MOSS = registerBlock("end_moss", new BlockTerrain(MaterialColor.CYAN));
 	public static final Block CHORUS_NYLIUM = registerBlock("chorus_nylium", new BlockTerrain(MaterialColor.MAGENTA));
+	public static final Block CAVE_MOSS = registerBlock("cave_moss", new BlockTerrain(MaterialColor.PURPLE));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BlockPath(END_MYCELIUM));
 	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new BlockPath(END_MOSS));
 	public static final Block CHORUS_NYLIUM_PATH = registerBlock("chorus_nylium_path", new BlockPath(CHORUS_NYLIUM));
+	public static final Block CAVE_MOSS_PATH = registerBlock("cave_moss_path", new BlockPath(CAVE_MOSS));
 	
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
@@ -82,6 +85,7 @@ public class BlockRegistry {
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());
 	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new BlockUmbrellaMossTall());
 	public static final Block CREEPING_MOSS = registerBlock("creeping_moss", new BlockGlowingMoss(11));
+	public static final Block CAVE_GRASS = registerBlock("cave_grass", new BlockTerrainPlant(CAVE_MOSS));
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlockBlueVineSeed());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());

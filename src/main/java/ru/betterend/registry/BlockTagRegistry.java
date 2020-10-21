@@ -24,6 +24,7 @@ public class BlockTagRegistry {
 		addSurfaceBlock(BlockRegistry.END_MYCELIUM);
 		addSurfaceBlock(BlockRegistry.CHORUS_NYLIUM);
 		addSurfaceBlock(BlockRegistry.ENDSTONE_DUST);
+		addSurfaceBlock(BlockRegistry.CAVE_MOSS);
 		
 		TagHelper.addTag(GEN_TERRAIN, BlockRegistry.ENDER_ORE, BlockRegistry.FLAVOLITE.stone, BlockRegistry.VIOLECITE.stone);
 	}

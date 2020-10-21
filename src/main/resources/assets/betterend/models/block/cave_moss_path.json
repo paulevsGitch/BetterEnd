@@ -1,0 +1,7 @@
+{   "parent": "betterend:block/path",
+    "textures": {
+        "top": "betterend:block/cave_moss_path_top",
+        "side": "betterend:block/cave_moss_side",
+        "bottom": "block/end_stone"
+    }
+}

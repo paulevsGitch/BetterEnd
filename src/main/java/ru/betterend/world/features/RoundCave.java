@@ -2,6 +2,7 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -43,6 +44,9 @@ public class RoundCave extends DefaultFeature {
 		double nr = radius * 0.25;
 		
 		Mutable bpos = new Mutable();
+		BlockState stateGround;
+		BlockState terrain = BlockRegistry.CAVE_MOSS.getDefaultState();
+		//BlockState grass = BlockRegistry.CAVE_GRASS.getDefaultState();
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - pos.getX();
 			xsq *= xsq;
@@ -59,8 +63,16 @@ public class RoundCave extends DefaultFeature {
 					double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
-						if (world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+						if ((stateGround = world.getBlockState(bpos)).isIn(BlockTagRegistry.GEN_TERRAIN) || stateGround.getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, bpos, AIR);
+						}
+						bpos.setY(y - 1);
+						if (world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+							BlocksHelper.setWithoutUpdate(world, bpos, terrain);
+							/*if (random.nextInt(8) == 0) {
+								bpos.setY(y);
+								BlocksHelper.setWithoutUpdate(world, bpos, grass);
+							}*/
 						}
 					}
 				}

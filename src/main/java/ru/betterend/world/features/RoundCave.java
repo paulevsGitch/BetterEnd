@@ -2,6 +2,7 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.Heightmap;
@@ -9,9 +10,14 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
+import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.StructureRegistry;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
+import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFRotation;
+import ru.betterend.util.sdf.primitive.SDFHexPrism;
 
 public class RoundCave extends DefaultFeature {
 	@Override
@@ -58,6 +64,22 @@ public class RoundCave extends DefaultFeature {
 						}
 					}
 				}
+			}
+		}
+		
+		if (random.nextBoolean() && world.getBiome(pos).getGenerationSettings().hasStructureFeature(StructureRegistry.MOUNTAIN.getStructure())) {
+			pos = pos.add(random.nextGaussian() * 5, random.nextGaussian() * 5, random.nextGaussian() * 5);
+			BlockPos down = pos.down(BlocksHelper.downRay(world, pos, 64) + 2);
+			if (world.getBlockState(down).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+				SDF prism = new SDFHexPrism().setHeight(radius * MHelper.randRange(0.6F, 0.75F, random)).setRadius(3).setBlock(BlockRegistry.AURORA_CRYSTAL);
+				float angleY = MHelper.randRange(0, MHelper.PI2, random);
+				float vx = (float) Math.sin(angleY);
+				float vz = (float) Math.sin(angleY);
+				prism = new SDFRotation().setRotation(new Vector3f(vx, 0, vz), random.nextFloat()).setSource(prism);
+				prism.setReplaceFunction((state) -> {
+					return state.getMaterial().isReplaceable() || state.isIn(BlockTagRegistry.GEN_TERRAIN);
+				});
+				prism.fillRecursive(world, pos);
 			}
 		}
 		

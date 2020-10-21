@@ -27,7 +27,7 @@ public class StructureRegistry {
 	
 	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new StructureGiantMossyGlowshroom(), Feature.SURFACE_STRUCTURES, 16, 8);
 	public static final EndStructureFeature MEGALAKE = new EndStructureFeature("megalake", new StructureMegaLake(), Feature.RAW_GENERATION, 4, 1);
-	public static final EndStructureFeature MOUNTAINS = new EndStructureFeature("mountains", new StructureMountain(), Feature.RAW_GENERATION, 3, 2);
+	public static final EndStructureFeature MOUNTAIN = new EndStructureFeature("mountain", new StructureMountain(), Feature.RAW_GENERATION, 3, 2);
 	
 	public static void register() {}
 	
@@ -38,7 +38,7 @@ public class StructureRegistry {
 	public static void registerBiomeStructures(Identifier id, Biome biome, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> structures) {
 		if (id.getNamespace().equals("minecraft")) {
 			if (id.getPath().equals("end_highlands")) {
-				addStructure(MOUNTAINS, structures);
+				addStructure(MOUNTAIN, structures);
 			}
 		}
 	}

@@ -7,7 +7,8 @@ public class SDFRotation extends SDFUnary {
 	private static final Vector3f POS = new Vector3f();
 	private Quaternion rotation;
 	
-	public SDFRotation setRotation() {
+	public SDFRotation setRotation(Vector3f axis, float rotationAngle) {
+		rotation = new Quaternion(axis, rotationAngle, false);
 		return this;
 	}
 	

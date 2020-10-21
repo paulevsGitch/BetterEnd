@@ -7,7 +7,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.FeatureConfig;
-
 import ru.betterend.blocks.RunedFlavolite;
 
 public class EndPortalFeatureConfig implements FeatureConfig {

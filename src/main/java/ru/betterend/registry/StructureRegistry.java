@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.function.Supplier;
 
 import net.minecraft.structure.StructurePieceType;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep.Feature;
@@ -34,13 +35,15 @@ public class StructureRegistry {
 		return Registry.register(Registry.STRUCTURE_PIECE, BetterEnd.makeID(id), pieceType);
 	}
 	
-	public static void registerBiomeStructures(Biome biome, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> collection) {
-		if (BiomeRegistry.getFromBiome(biome) == BiomeRegistry.END_HIGHLANDS) {
-			addFeature(MOUNTAINS, collection);
+	public static void registerBiomeStructures(Identifier id, Biome biome, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> structures) {
+		if (id.getNamespace().equals("minecraft")) {
+			if (id.getPath().equals("end_highlands")) {
+				addStructure(MOUNTAINS, structures);
+			}
 		}
 	}
 	
-	private static void addFeature(EndStructureFeature feature, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> collection) {
+	private static void addStructure(EndStructureFeature feature, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> collection) {
 		collection.add(() -> { return feature.getFeatureConfigured(); });
 	}
 }

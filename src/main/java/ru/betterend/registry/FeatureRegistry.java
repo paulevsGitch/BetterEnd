@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.features.BlueVineFeature;
@@ -17,6 +18,7 @@ import ru.betterend.world.features.EndLotusLeafFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
 import ru.betterend.world.features.PythadendronBushFeature;
 import ru.betterend.world.features.PythadendronTreeFeature;
+import ru.betterend.world.features.RoundCave;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
@@ -46,16 +48,25 @@ public class FeatureRegistry {
 	
 	// Features //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);
-	public static final EndFeature RARE_END_LAKE = EndFeature.makeLakeFeature("rare_end_lake", new EndLakeFeature(), 40);
+	public static final EndFeature END_LAKE_RARE = EndFeature.makeLakeFeature("end_lake_rare", new EndLakeFeature(), 40);
+	public static final EndFeature ROUND_CAVE = EndFeature.makeRawGenFeature("round_cave", new RoundCave(), 2);
+	public static final EndFeature ROUND_CAVE_RARE = EndFeature.makeRawGenFeature("round_cave_rare", new RoundCave(), 25);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", BlockRegistry.ENDER_ORE, 6, 3, 0, 4, 96);
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", BlockRegistry.VIOLECITE, 15, 4, 96, 8);
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", BlockRegistry.FLAVOLITE, 12, 4, 96, 6);
 	
-	public static void registerBiomeFeatures(Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		addFeature(FLAVOLITE_LAYER, features);
 		addFeature(ENDER_ORE, features);
+		addFeature(ROUND_CAVE_RARE, features);
+		
+		if (id.getNamespace().equals("minecraft")) {
+			if (id.getPath().equals("end_highlands")) {
+				addFeature(ROUND_CAVE, features);
+			}
+		}
 	}
 	
 	private static void addFeature(EndFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
@@ -64,7 +75,8 @@ public class FeatureRegistry {
 			features.get(index).add(() -> {
 				return feature.getFeatureConfigured();
 			});
-		} else {
+		}
+		else {
 			List<Supplier<ConfiguredFeature<?, ?>>> newFeature = Lists.newArrayList();
 			newFeature.add(() -> {
 				return feature.getFeatureConfigured();

@@ -30,8 +30,8 @@ public class FeaturesHelper {
 					features.add(Lists.newArrayList(list));
 				});
 
-				FeatureRegistry.registerBiomeFeatures(biome, features);
-				StructureRegistry.registerBiomeStructures(biome, structures);
+				FeatureRegistry.registerBiomeFeatures(biomeRegistry.getId(biome), biome, features);
+				StructureRegistry.registerBiomeStructures(biomeRegistry.getId(biome), biome, structures);
 
 				accessor.setFeatures(features);
 				accessor.setStructures(structures);

@@ -87,7 +87,7 @@ public class MountainPiece extends BasePiece {
 						if (maxY > 0) {
 							maxY *= (float) noise.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
 							maxY *= (float) noise.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
-							maxY += minY;
+							maxY += 56;
 							for (int y = minY; y < maxY; y++) {
 								pos.setY(y);
 								chunk.setBlockState(pos, Blocks.END_STONE.getDefaultState(), false);
@@ -111,7 +111,7 @@ public class MountainPiece extends BasePiece {
 			int y = map.get(x, z);
 			if (y > 80) {
 				pos.set(x, y, z);
-				if (chunk.getBlockState(pos.down()).getBlock() == Blocks.END_STONE) {
+				if (chunk.getBlockState(pos.down()).isOf(Blocks.END_STONE)) {
 					int height = MHelper.floor(radius * MHelper.randRange(1.5F, 3F, random) + (y - 80) * 0.3F);
 					crystal(chunk, pos, radius, height, fill, random);
 				}
@@ -137,27 +137,6 @@ public class MountainPiece extends BasePiece {
 		}
 		
 		return true;
-	}
-	
-	public int getProtoHeight(int px, int py, int pz) {
-		int px2 = px - center.getX();
-		px2 *= px2;
-
-		int pz2 = pz - center.getZ();
-		pz2 *= pz2;
-		float dist = px2 + pz2;
-
-		dist = 1 - (float) Math.pow(dist / r2, 0.3);
-		if (py > 56) {
-			float maxY = dist * height;
-			if (maxY > 0) {
-				maxY *= (float) noise.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
-				maxY *= (float) noise.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
-				return MHelper.floor(maxY + py * ((float) MathHelper.clamp((py - 57) / 7F, 0, 1)));
-			}
-		}
-
-		return py;
 	}
 	
 	private int getHeight(StructureWorldAccess world, BlockPos pos) {
@@ -218,6 +197,9 @@ public class MountainPiece extends BasePiece {
 						int az = Math.abs(z);
 						if (ax + az < max) {
 							int minY = map.get(mut.getX(), mut.getZ()) - MHelper.randRange(3, 7, random);
+							if (pos.getY() - minY > 8) {
+								minY = pos.getY() - 8;
+							}
 							int h = coefX * x + coefZ * z + height;
 							for (int y = minY; y < h; y++) {
 								mut.setY(y);

@@ -29,7 +29,7 @@ import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.primitive.SDFHexPrism;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 
-public class RoundCave extends DefaultFeature {
+public class RoundCaveFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		int radius = MHelper.randRange(10, 30, random);
@@ -126,7 +126,10 @@ public class RoundCave extends DefaultFeature {
 				float vz = (float) Math.sin(angleY);
 				prism = new SDFRotation().setRotation(new Vector3f(vx, 0, vz), random.nextFloat()).setSource(prism);
 				prism.setReplaceFunction((state) -> {
-					return state.getMaterial().isReplaceable() || state.isIn(BlockTagRegistry.GEN_TERRAIN);
+					return state.getMaterial().isReplaceable()
+							|| state.isIn(BlockTagRegistry.GEN_TERRAIN)
+							|| state.getMaterial().equals(Material.PLANT)
+							|| state.getMaterial().equals(Material.LEAVES);
 				});
 				prism.fillRecursive(world, pos);
 				BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.AURORA_CRYSTAL);

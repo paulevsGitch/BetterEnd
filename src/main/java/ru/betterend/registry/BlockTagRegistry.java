@@ -2,6 +2,7 @@ package ru.betterend.registry;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
 import net.minecraft.util.registry.Registry;
@@ -41,5 +42,9 @@ public class BlockTagRegistry {
 				TagHelper.addTag(GEN_TERRAIN, config.getTopMaterial().getBlock(), config.getUnderMaterial().getBlock());
 			}
 		});
+	}
+	
+	public static boolean validGenBlock(BlockState block) {
+		return block.isIn(END_GROUND) || block.isIn(GEN_TERRAIN);
 	}
 }

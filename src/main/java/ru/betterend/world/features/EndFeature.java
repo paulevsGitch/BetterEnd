@@ -22,11 +22,11 @@ import ru.betterend.BetterEnd;
 import ru.betterend.blocks.complex.StoneMaterial;
 
 public class EndFeature {
-	private Feature<?> feature;
-	private ConfiguredFeature<?, ?> featureConfigured;
-	private GenerationStep.Feature featureStep;
+	protected Feature<?> feature;
+	protected ConfiguredFeature<?, ?> featureConfigured;
+	protected GenerationStep.Feature featureStep;
 	
-	private EndFeature() {}
+	protected EndFeature() {}
 	
 	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, GenerationStep.Feature featureStep, ConfiguredFeature<?, ?> configuredFeature) {
 		Identifier id = BetterEnd.makeID(name);

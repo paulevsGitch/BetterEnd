@@ -9,6 +9,7 @@
 		"GenerationSettingsAccessor",
 		"DefaultBiomeCreatorMixin",
 		"AnvilScreenHandlerMixin",
+		"ServerPlayerEntityMixin",
 		"ChorusPlantFeatureMixin",
 		"ChorusFlowerBlockMixin",
 		"ChorusPlantBlockMixin",
@@ -25,7 +26,8 @@
 		"LivingEntityMixin",
 		"BoneMealItemMixin",
 		"SlimeEntityMixin",
-		"BrewingAccessor"
+		"BrewingAccessor",
+		"EntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

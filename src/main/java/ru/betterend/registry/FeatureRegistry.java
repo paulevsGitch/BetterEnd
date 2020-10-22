@@ -8,14 +8,17 @@ import com.google.common.collect.Lists;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
+import ru.betterend.world.features.DefaultEndPortalFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
+import ru.betterend.world.features.EndPortalFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
 import ru.betterend.world.features.PythadendronBushFeature;
 import ru.betterend.world.features.PythadendronTreeFeature;
@@ -58,6 +61,10 @@ public class FeatureRegistry {
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", BlockRegistry.ENDER_ORE, 6, 3, 0, 4, 96);
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", BlockRegistry.VIOLECITE, 15, 4, 96, 8);
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", BlockRegistry.FLAVOLITE, 12, 4, 96, 6);
+	
+	// Other //
+	public static final EndPortalFeature END_PORTAL = new EndPortalFeature(new DefaultEndPortalFeature(), (RunedFlavolite) BlockRegistry.FLAVOLITE_RUNED);
+	public static final EndPortalFeature END_PORTAL_ETERNAL = new EndPortalFeature(new DefaultEndPortalFeature(), (RunedFlavolite) BlockRegistry.FLAVOLITE_RUNED_ETERNAL);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		addFeature(FLAVOLITE_LAYER, features);

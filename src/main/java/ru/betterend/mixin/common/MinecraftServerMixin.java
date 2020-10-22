@@ -21,16 +21,16 @@ public class MinecraftServerMixin {
 	private ServerResourceManager serverResourceManager;
 
 	@Inject(method = "reloadResources", at = @At(value = "RETURN"), cancellable = true)
-	private void onReload(Collection<String> collection, CallbackInfoReturnable<CompletableFuture<Void>> info) {
-		injectRecipes();
+	private void beOnReload(Collection<String> collection, CallbackInfoReturnable<CompletableFuture<Void>> info) {
+		beInjectRecipes();
 	}
 
 	@Inject(method = "loadWorld", at = @At(value = "RETURN"), cancellable = true)
-	private void onLoadWorld(CallbackInfo info) {
-		injectRecipes();
+	private void beOnLoadWorld(CallbackInfo info) {
+		beInjectRecipes();
 	}
 
-	private void injectRecipes() {
+	private void beInjectRecipes() {
 		if (FabricLoader.getInstance().isModLoaded("kubejs")) {
 			RecipeManagerAccessor accessor = (RecipeManagerAccessor) serverResourceManager.getRecipeManager();
 			accessor.setRecipes(EndRecipeManager.getMap(accessor.getRecipes()));

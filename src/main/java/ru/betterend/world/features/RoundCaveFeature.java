@@ -44,7 +44,7 @@ public class RoundCaveFeature extends DefaultFeature {
 		bpos.setX(pos.getX());
 		bpos.setZ(pos.getZ());
 		bpos.setY(top);
-		while (!world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+		while (top > bottom && !world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
 			bpos.setY(--top);
 		}
 		

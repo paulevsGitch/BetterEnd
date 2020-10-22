@@ -8,7 +8,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
-
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.registry.BlockRegistry;

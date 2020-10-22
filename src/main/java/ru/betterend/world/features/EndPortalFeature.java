@@ -2,7 +2,6 @@ package ru.betterend.world.features;
 
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.gen.GenerationStep;
-
 import ru.betterend.blocks.RunedFlavolite;
 
 public class EndPortalFeature extends EndFeature {

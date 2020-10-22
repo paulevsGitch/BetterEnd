@@ -30,7 +30,6 @@ import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProperties;
 import net.minecraft.world.biome.source.BiomeAccess;
-
 import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(ServerPlayerEntity.class)

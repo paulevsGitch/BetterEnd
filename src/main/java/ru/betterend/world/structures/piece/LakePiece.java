@@ -1,6 +1,9 @@
 package ru.betterend.world.structures.piece;
 
+import java.util.Map;
 import java.util.Random;
+
+import com.google.common.collect.Maps;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -27,6 +30,7 @@ import ru.betterend.util.MHelper;
 
 public class LakePiece extends BasePiece {
 	private static final BlockState WATER = Blocks.WATER.getDefaultState();
+	private Map<Integer, Integer> heightmap = Maps.newHashMap();
 	private OpenSimplexNoise noise;
 	private BlockPos center;
 	private float radius;
@@ -136,14 +140,31 @@ public class LakePiece extends BasePiece {
 	}
 	
 	private int getHeight(StructureWorldAccess world, BlockPos pos) {
+		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
+		int h = heightmap.getOrDefault(p, Integer.MIN_VALUE);
+		if (h > Integer.MIN_VALUE) {
+			return h;
+		}
+		
 		if (BiomeRegistry.getFromBiome(world.getBiome(pos)) != BiomeRegistry.MEGALAKE) {
+			heightmap.put(p, -4);
 			return -4;
 		}
-		int h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		if (h < 57) {
+			heightmap.put(p, 0);
 			return 0;
 		}
-		return h - 57;
+		h -= 57;
+		
+		if (h < 0) {
+			heightmap.put(p, 0);
+			return 0;
+		}
+		
+		heightmap.put(p, h);
+		
+		return h;
 	}
 	
 	private float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {

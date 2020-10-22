@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
@@ -37,8 +38,8 @@ public class RoundCaveFeature extends DefaultFeature {
 		}
 		
 		int radius = MHelper.randRange(10, 30, random);
-		int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius;
-		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ()) - radius;
+		int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
+		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ()) - radius - 5;
 		
 		Mutable bpos = new Mutable();
 		bpos.setX(pos.getX());
@@ -56,12 +57,12 @@ public class RoundCaveFeature extends DefaultFeature {
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(MHelper.getSeed(534, pos.getX(), pos.getZ()));
 		
-		int x1 = pos.getX() - radius;
-		int z1 = pos.getZ() - radius;
-		int x2 = pos.getX() + radius;
-		int z2 = pos.getZ() + radius;
-		int y1 = MHelper.floor(pos.getY() - radius / 1.6);
-		int y2 = MHelper.floor(pos.getY() + radius / 1.6);
+		int x1 = pos.getX() - radius - 5;
+		int z1 = pos.getZ() - radius - 5;
+		int x2 = pos.getX() + radius + 5;
+		int z2 = pos.getZ() + radius + 5;
+		int y1 = MHelper.floor(pos.getY() - (radius + 5) / 1.6);
+		int y2 = MHelper.floor(pos.getY() + (radius + 5) / 1.6);
 		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
@@ -82,6 +83,7 @@ public class RoundCaveFeature extends DefaultFeature {
 					ysq *= ysq;
 					bpos.setY(y);
 					double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
+					double r2 = r + 5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
 						BlockState state = world.getBlockState(bpos);
@@ -106,17 +108,23 @@ public class RoundCaveFeature extends DefaultFeature {
 							BlocksHelper.setWithoutUpdate(world, bpos, terrain);
 						}
 					}
-					else if (world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
-						if (world.isAir(bpos.down())) {
-							int h = BlocksHelper.downRay(world, bpos.down(), 64);
-							if (h > 6 && h < 32 && world.getBlockState(bpos.down(h + 3)).isIn(BlockTagRegistry.GEN_TERRAIN)) {
-								bushes.add(bpos.down());
-							}
+					else if (dist < r2 * r2) {
+						BlockState state = world.getBlockState(bpos);
+						if (!state.getFluidState().isEmpty()) {
+							BlocksHelper.setWithoutUpdate(world, bpos, Blocks.END_STONE.getDefaultState());
 						}
-						else if (world.isAir(bpos.up())) {
-							int h = BlocksHelper.upRay(world, bpos.up(), 64);
-							if (h > 6 && h < 32 && world.getBlockState(bpos.up(h + 3)).isIn(BlockTagRegistry.GEN_TERRAIN)) {
-								bushes.add(bpos.up());
+						else if (world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+							if (world.isAir(bpos.down())) {
+								int h = BlocksHelper.downRay(world, bpos.down(), 64);
+								if (h > 6 && h < 32 && world.getBlockState(bpos.down(h + 3)).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+									bushes.add(bpos.down());
+								}
+							}
+							else if (world.isAir(bpos.up())) {
+								int h = BlocksHelper.upRay(world, bpos.up(), 64);
+								if (h > 6 && h < 32 && world.getBlockState(bpos.up(h + 3)).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+									bushes.add(bpos.up());
+								}
 							}
 						}
 					}

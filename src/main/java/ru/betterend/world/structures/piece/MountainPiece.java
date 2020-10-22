@@ -1,6 +1,9 @@
 package ru.betterend.world.structures.piece;
 
+import java.util.Map;
 import java.util.Random;
+
+import com.google.common.collect.Maps;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
@@ -20,10 +23,12 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.registry.StructureRegistry;
 import ru.betterend.util.MHelper;
 
 public class MountainPiece extends BasePiece {
+	private Map<Integer, Integer> heightmap = Maps.newHashMap();
 	private OpenSimplexNoise noise;
 	private BlockPos center;
 	private float radius;
@@ -140,14 +145,39 @@ public class MountainPiece extends BasePiece {
 	}
 	
 	private int getHeight(StructureWorldAccess world, BlockPos pos) {
+		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
+		int h = heightmap.getOrDefault(p, Integer.MIN_VALUE);
+		if (h > Integer.MIN_VALUE) {
+			return h;
+		}
+		
 		if (BiomeRegistry.getFromBiome(world.getBiome(pos)) != BiomeRegistry.END_HIGHLANDS) {
+			heightmap.put(p, -4);
 			return -4;
 		}
-		int h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		if (h < 57) {
+			heightmap.put(p, 0);
 			return 0;
 		}
-		return h - 57;
+		
+		Mutable m = new Mutable();
+		m.set(pos.getX(), h - 1, pos.getZ());
+		while (h > 56 && world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+			m.setY(m.getY() - 1);
+		}
+		h = m.getY();
+		
+		h -= 57;
+		
+		if (h < 0) {
+			heightmap.put(p, 0);
+			return 0;
+		}
+		
+		heightmap.put(p, h);
+		
+		return h;
 	}
 	
 	private float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {

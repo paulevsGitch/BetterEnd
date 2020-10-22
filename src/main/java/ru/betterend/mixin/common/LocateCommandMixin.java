@@ -24,8 +24,7 @@ public class LocateCommandMixin {
 	private static SimpleCommandExceptionType FAILED_EXCEPTION;
 
 	@Shadow
-	public static int sendCoordinates(ServerCommandSource source, String structure, BlockPos sourcePos,
-			BlockPos structurePos, String successMessage) {
+	public static int sendCoordinates(ServerCommandSource source, String structure, BlockPos sourcePos, BlockPos structurePos, String successMessage) {
 		return 0;
 	}
 
@@ -36,7 +35,8 @@ public class LocateCommandMixin {
 			BlockPos blockPos2 = StructureHelper.getNearestStructure(structureFeature, source.getWorld(), blockPos, 100);
 			if (blockPos2 == null) {
 				throw FAILED_EXCEPTION.create();
-			} else {
+			}
+			else {
 				info.setReturnValue(sendCoordinates(source, structureFeature.getName(), blockPos, blockPos2, "commands.locate.success"));
 				info.cancel();
 			}

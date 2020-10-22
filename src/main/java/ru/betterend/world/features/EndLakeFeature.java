@@ -158,9 +158,9 @@ public class EndLakeFeature extends DefaultFeature {
 								state = world.getBlockState(POS.up());
 								state = canReplace(state) ? (y < waterLevel ? WATER : AIR) : state;
 								BlocksHelper.setWithoutUpdate(world, POS, state);
-								if (y == waterLevel - 1 && !state.getFluidState().isEmpty()) {
+								/*if (y == waterLevel - 1 && !state.getFluidState().isEmpty()) {
 									world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
-								}
+								}*/
 							}
 							pos = POS.down();
 							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.GEN_TERRAIN)) {
@@ -169,9 +169,9 @@ public class EndLakeFeature extends DefaultFeature {
 							pos = POS.up();
 							while (canReplace(state = world.getBlockState(pos)) && !state.isAir() && state.getFluidState().isEmpty()) {
 								BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
-								if (y == waterLevel - 1) {
+								/*if (y == waterLevel - 1) {
 									world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);
-								}
+								}*/
 								pos = pos.up();
 							}
 						}

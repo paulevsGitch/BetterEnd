@@ -140,7 +140,19 @@ public class BlocksHelper {
 					
 					// Liquids
 					if (!state.getFluidState().isEmpty()) {
-						continue;
+						POS.setY(y - 1);
+						if (world.isAir(POS)) {
+							POS.setY(y);
+							while (!world.getFluidState(POS).isEmpty()) {
+								setWithoutUpdate(world, POS, AIR);
+								POS.setY(POS.getY() + 1);
+							}
+						}
+						else for (Direction dir: HORIZONTAL) {
+							if (world.getBlockState(POS.offset(dir)).getMaterial().isReplaceable()) {
+								world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
+							}
+						}
 					}
 					// Falling blocks
 					else if (state.getBlock() instanceof FallingBlock) {

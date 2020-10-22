@@ -181,5 +181,8 @@
 	"block.betterend.end_lotus_stairs": "End Lotus Stairs",
 	"block.betterend.end_lotus_stripped_bark": "End Lotus Stripped Bark",
 	"block.betterend.end_lotus_stripped_log": "End Lotus Stripped Log",
-	"block.betterend.end_lotus_trapdoor": "End Lotus Trapdoor"
+	"block.betterend.end_lotus_trapdoor": "End Lotus Trapdoor",
+	
+	"block.betterend.flavolite_runed": "Runed Flavolite",
+	"block.betterend.flavolite_runed_eternal": "Eternal Runed Flavolite"
 }

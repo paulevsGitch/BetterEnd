@@ -27,9 +27,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.client.ERenderLayer;
+import ru.betterend.client.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 
-public class BlockEndLotusStem extends BlockBase implements Waterloggable {
+public class BlockEndLotusStem extends BlockBase implements Waterloggable, IRenderTypeable {
 	public static final EnumProperty<Direction> FACING = Properties.FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final BooleanProperty LEAF = BooleanProperty.of("leaf");
@@ -43,7 +45,7 @@ public class BlockEndLotusStem extends BlockBase implements Waterloggable {
 	
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return SHAPES.get(state.get(FACING).getAxis());
+		return state.get(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.get(FACING).getAxis());
 	}
 	
 	@Override
@@ -79,6 +81,11 @@ public class BlockEndLotusStem extends BlockBase implements Waterloggable {
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 		return state;
+	}
+	
+	@Override
+	public ERenderLayer getRenderLayer() {
+		return ERenderLayer.CUTOUT;
 	}
 	
 	static {

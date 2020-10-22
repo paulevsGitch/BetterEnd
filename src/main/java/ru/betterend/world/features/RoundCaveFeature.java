@@ -32,12 +32,26 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 public class RoundCaveFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
+		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) {
+			return false;
+		}
+		
 		int radius = MHelper.randRange(10, 30, random);
 		int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius;
 		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ()) - radius;
+		
+		Mutable bpos = new Mutable();
+		bpos.setX(pos.getX());
+		bpos.setZ(pos.getZ());
+		bpos.setY(top);
+		while (!world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+			bpos.setY(--top);
+		}
+		
 		if (top <= bottom) {
 			return false;
 		}
+		
 		pos = new BlockPos(pos.getX(), MHelper.randRange(bottom, top, random), pos.getZ());
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(MHelper.getSeed(534, pos.getX(), pos.getZ()));
@@ -52,7 +66,6 @@ public class RoundCaveFeature extends DefaultFeature {
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		
-		Mutable bpos = new Mutable();
 		Set<BlockPos> bushes = Sets.newHashSet();
 		BlockState terrain = BlockRegistry.CAVE_MOSS.getDefaultState();
 		for (int x = x1; x <= x2; x++) {

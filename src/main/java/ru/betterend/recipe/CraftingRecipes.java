@@ -81,6 +81,8 @@ public class CraftingRecipes {
 		RecipeBuilder.make("umbrella_moss_tall_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', BlockRegistry.UMBRELLA_MOSS_TALL).build();
 		
 		RecipeBuilder.make("paper", Items.PAPER).setShape("###").addMaterial('#', ItemRegistry.END_LILY_LEAF_DRIED).setOutputCount(3).build();
+		
+		RecipeBuilder.make("aurora_block", BlockRegistry.AURORA_CRYSTAL).setShape("##", "##").addMaterial('#', ItemRegistry.CRYSTAL_SHARDS).build();
 	}
 	
 	private static void registerHelmet(String name, Item material, Item result) {

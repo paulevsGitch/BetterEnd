@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.fluid.WaterFluid;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.ERenderLayer;
@@ -28,6 +30,12 @@ public class BlockEndLotusLeaf extends BlockBaseNotFull implements IRenderTypeab
 	
 	public BlockEndLotusLeaf() {
 		super(FabricBlockSettings.of(Material.PLANT).nonOpaque().sounds(BlockSoundGroup.WET_GRASS));
+	}
+	
+	@Override
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+		BlockState down = world.getBlockState(pos.down());
+		return !down.getFluidState().isEmpty() && down.getFluidState().getFluid() instanceof WaterFluid;
 	}
 	
 	@Override

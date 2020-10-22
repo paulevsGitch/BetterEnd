@@ -181,5 +181,9 @@
 	"block.betterend.end_lotus_stairs": "Ступени из лотоса края",
 	"block.betterend.end_lotus_stripped_bark": "Обтёсанная кора лотоса края",
 	"block.betterend.end_lotus_stripped_log": "Обтёсанное бревно лотоса края",
-	"block.betterend.end_lotus_trapdoor": "Люк из лотоса края"
+	"block.betterend.end_lotus_trapdoor": "Люк из лотоса края",
+	
+	"block.betterend.flavolite_runed": "Рунный флаволит",
+	"block.betterend.flavolite_runed_eternal": "Вечный рунный флаволит",
+	"block.betterend.end_portal_block": "Портал Края"
 }

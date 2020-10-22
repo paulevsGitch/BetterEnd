@@ -21,6 +21,7 @@ import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.basis.BlockDoublePlant;
 import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 
 public class BlocksHelper {
@@ -193,14 +194,15 @@ public class BlocksHelper {
 					else if (!state.canPlaceAt(world, POS)) {
 						// Blue Vine
 						if (state.getBlock() instanceof BlockBlueVine) {
-							while (!state.canPlaceAt(world, POS)) {
+							while (state.isOf(BlockRegistry.BLUE_VINE) || state.isOf(BlockRegistry.BLUE_VINE_LANTERN) || state.isOf(BlockRegistry.BLUE_VINE_FUR)) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								for (Direction dir : HORIZONTAL) {
-									BlockPos p = POS.offset(dir).up();
+									BlockPos p = POS.offset(dir);
 									state = world.getBlockState(p);
 									if (state.getBlock() instanceof BlockGlowingFur) {
 										BlocksHelper.setWithoutUpdate(world, p, AIR);
 									}
+									world.getBlockTickScheduler().schedule(p, world.getBlockState(p).getBlock(), 0);
 								}
 								POS.setY(POS.getY() + 1);
 								state = world.getBlockState(POS);

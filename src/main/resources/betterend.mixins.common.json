@@ -21,6 +21,7 @@
 		"DimensionTypeMixin",
 		"RecipeManagerMixin",
 		"AbstractBlockMixin",
+		"HostileEntityMixin",
 		"LivingEntityMixin",
 		"BoneMealItemMixin",
 		"SlimeEntityMixin",

@@ -1,7 +1,8 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -10,18 +11,24 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.interfaces.IColorProvider;
+import ru.betterend.registry.ItemRegistry;
 import ru.betterend.util.MHelper;
 
 public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTypeable, IColorProvider {
 	private static final Vec3i[] COLORS;
+	private static final int MIN_DROP = 1;
+	private static final int MAX_DROP = 4;
 	
 	public AuroraCrystalBlock() {
 		super(FabricBlockSettings.of(Material.GLASS)
@@ -69,7 +76,27 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 	
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this));
+		ItemStack tool = builder.get(LootContextParameters.TOOL);
+		if (tool != null && tool.isEffectiveOn(state)) {
+			int count = 0;
+			int enchant = EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool);
+			if (enchant > 0) {
+				return Lists.newArrayList(new ItemStack(this));
+			}
+			enchant = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
+			if (enchant > 0) {
+				int min = MathHelper.clamp(MIN_DROP + enchant, MIN_DROP, MAX_DROP);
+				int max = MAX_DROP + (enchant / Enchantments.FORTUNE.getMaxLevel());
+				if (min == max) {
+					return Lists.newArrayList(new ItemStack(ItemRegistry.CRYSTAL_SHARDS, max));
+				}
+				count = MHelper.randRange(min, max, MHelper.RANDOM);
+			} else {
+				count = MHelper.randRange(MIN_DROP, MAX_DROP, MHelper.RANDOM);
+			}
+			return Lists.newArrayList(new ItemStack(ItemRegistry.CRYSTAL_SHARDS, count));
+		}
+		return Lists.newArrayList();
 	}
 	
 	static {

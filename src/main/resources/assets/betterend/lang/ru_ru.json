@@ -185,5 +185,8 @@
 	
 	"block.betterend.flavolite_runed": "Рунный флаволит",
 	"block.betterend.flavolite_runed_eternal": "Вечный рунный флаволит",
-	"block.betterend.end_portal_block": "Портал Края"
+	"block.betterend.end_portal_block": "Портал Края",
+	"block.betterend.cave_moss": "Пещерный мох",
+	"block.betterend.cave_grass": "Пещерная трава",
+	"block.betterend.cave_bush": "Пещерный куст"
 }

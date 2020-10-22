@@ -185,5 +185,8 @@
 	
 	"block.betterend.flavolite_runed": "Runed Flavolite",
 	"block.betterend.flavolite_runed_eternal": "Eternal Runed Flavolite",
-	"block.betterend.end_portal_block": "End Portal"
+	"block.betterend.end_portal_block": "End Portal",
+	"block.betterend.cave_moss": "Cave Moss",
+	"block.betterend.cave_grass": "Cave Grass",
+	"block.betterend.cave_bush": "Cave Bush"
 }

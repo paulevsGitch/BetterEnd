@@ -39,7 +39,7 @@ public class RoundCaveFeature extends DefaultFeature {
 		
 		int radius = MHelper.randRange(10, 30, random);
 		int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
-		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ()) - radius - 5;
+		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ());
 		
 		Mutable bpos = new Mutable();
 		bpos.setX(pos.getX());
@@ -48,6 +48,7 @@ public class RoundCaveFeature extends DefaultFeature {
 		while (top > bottom && !world.getBlockState(bpos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
 			bpos.setY(--top);
 		}
+		top -= radius + 5;
 		
 		if (top <= bottom) {
 			return false;

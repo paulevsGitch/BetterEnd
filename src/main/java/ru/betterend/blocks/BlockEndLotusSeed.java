@@ -64,7 +64,7 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 			BlocksHelper.setWithoutUpdate(world, bpos, flower);
 			bpos.setY(bpos.getY() - 1);
 			stem = world.getBlockState(bpos);
-			if (stem.isOf(BlockRegistry.END_LOTUS_STEM)) {
+			if (!stem.isOf(BlockRegistry.END_LOTUS_STEM)) {
 				stem = BlockRegistry.END_LOTUS_STEM.getDefaultState();
 				if (!world.getBlockState(bpos.north()).getFluidState().isEmpty()) {
 					stem = stem.with(BlockEndLotusStem.WATERLOGGED, true);

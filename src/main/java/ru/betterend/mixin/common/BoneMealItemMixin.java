@@ -85,6 +85,9 @@ public class BoneMealItemMixin {
 		if (block == BlockRegistry.END_MOSS || block == BlockRegistry.END_MYCELIUM) {
 			return world.random.nextBoolean() ? BlockRegistry.CREEPING_MOSS.getDefaultState() : BlockRegistry.UMBRELLA_MOSS.getDefaultState();
 		}
+		else if (block == BlockRegistry.CAVE_MOSS) {
+			return BlockRegistry.CAVE_GRASS.getDefaultState();
+		}
 		else if (block == BlockRegistry.CHORUS_NYLIUM) {
 			return BlockRegistry.CHORUS_GRASS.getDefaultState();
 		}

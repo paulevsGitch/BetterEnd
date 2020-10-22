@@ -3,6 +3,7 @@ package ru.betterend.registry;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
 import net.minecraft.util.registry.Registry;
@@ -28,6 +29,7 @@ public class BlockTagRegistry {
 		addSurfaceBlock(BlockRegistry.CAVE_MOSS);
 		
 		TagHelper.addTag(GEN_TERRAIN, BlockRegistry.ENDER_ORE, BlockRegistry.FLAVOLITE.stone, BlockRegistry.VIOLECITE.stone);
+		TagHelper.addTag(BlockTags.NYLIUM, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.CHORUS_NYLIUM, BlockRegistry.CAVE_MOSS);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

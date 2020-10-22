@@ -15,9 +15,9 @@
 		"leaf=false,shape=bottom,facing=down": { "model": "betterend:block/end_lotus_roots" },
 		
 		"leaf=false,shape=middle,facing=north": { "model": "betterend:block/end_lotus_stem", "x": 90 },
-		"leaf=false,shape=middle,facing=south": { "model": "betterend:block/end_lotus_stem", "z": 90 },
-		"leaf=false,shape=middle,facing=east": { "model": "betterend:block/end_lotus_stem", "x": 90 },
-		"leaf=false,shape=middle,facing=west": { "model": "betterend:block/end_lotus_stem", "z": 90 },
+		"leaf=false,shape=middle,facing=south": { "model": "betterend:block/end_lotus_stem", "x": 90 },
+		"leaf=false,shape=middle,facing=east": { "model": "betterend:block/end_lotus_stem", "x": 90, "y": 90 },
+		"leaf=false,shape=middle,facing=west": { "model": "betterend:block/end_lotus_stem", "x": 90, "y": 90 },
 		"leaf=false,shape=middle,facing=up": { "model": "betterend:block/end_lotus_stem" },
 		"leaf=false,shape=middle,facing=down": { "model": "betterend:block/end_lotus_stem" },
 		

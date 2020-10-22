@@ -1,5 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -17,6 +21,7 @@ import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
@@ -29,7 +34,7 @@ public class BlockEndLotusStem extends BlockBase implements Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final BooleanProperty LEAF = BooleanProperty.of("leaf");
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
-	private static final VoxelShape VSHAPE = Block.createCuboidShape(6, 0, 6, 10, 16, 10);
+	private static final Map<Axis, VoxelShape> SHAPES = Maps.newEnumMap(Axis.class);
 	
 	public BlockEndLotusStem() {
 		super(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS));
@@ -38,7 +43,7 @@ public class BlockEndLotusStem extends BlockBase implements Waterloggable {
 	
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return VSHAPE;
+		return SHAPES.get(state.get(FACING).getAxis());
 	}
 	
 	@Override
@@ -74,5 +79,11 @@ public class BlockEndLotusStem extends BlockBase implements Waterloggable {
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 		return state;
+	}
+	
+	static {
+		SHAPES.put(Axis.X, Block.createCuboidShape(0, 6, 6, 16, 10, 10));
+		SHAPES.put(Axis.Y, Block.createCuboidShape(6, 0, 6, 10, 16, 10));
+		SHAPES.put(Axis.Z, Block.createCuboidShape(6, 6, 0, 10, 10, 16));
 	}
 }

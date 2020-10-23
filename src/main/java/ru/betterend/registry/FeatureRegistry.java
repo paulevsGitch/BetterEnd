@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.world.features.BlueVineFeature;
@@ -67,16 +68,17 @@ public class FeatureRegistry {
 	public static final EndPortalFeature END_PORTAL_ETERNAL = new EndPortalFeature(new DefaultEndPortalFeature(), (RunedFlavolite) BlockRegistry.FLAVOLITE_RUNED_ETERNAL);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+		if (id.getNamespace().equals("minecraft")) {
+			if (id.getPath().equals("end_highlands")) {
+				features.get(GenerationStep.Feature.VEGETAL_DECORATION.ordinal()).clear();
+				addFeature(ROUND_CAVE, features);
+			}
+		}
+		
 		addFeature(FLAVOLITE_LAYER, features);
 		addFeature(ENDER_ORE, features);
 		addFeature(ROUND_CAVE_RARE, features);
 		addFeature(CAVE_GRASS, features);
-		
-		if (id.getNamespace().equals("minecraft")) {
-			if (id.getPath().equals("end_highlands")) {
-				addFeature(ROUND_CAVE, features);
-			}
-		}
 	}
 	
 	private static void addFeature(EndFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {

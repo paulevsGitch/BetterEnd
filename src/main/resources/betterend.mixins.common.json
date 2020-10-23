@@ -7,7 +7,6 @@
 		"ServerPlayNetworkHandlerMixin",
 		"CraftingScreenHandlerMixin",
 		"GenerationSettingsAccessor",
-		"DefaultBiomeCreatorMixin",
 		"AnvilScreenHandlerMixin",
 		"ServerPlayerEntityMixin",
 		"ChorusPlantFeatureMixin",

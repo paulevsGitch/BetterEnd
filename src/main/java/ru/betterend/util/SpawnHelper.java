@@ -32,6 +32,10 @@ public class SpawnHelper {
 		restriction(entity, Location.ON_GROUND, Type.MOTION_BLOCKING, predicate);
 	}
 	
+	public static <T extends MobEntity> void restrictionWater(EntityType<T> entity, SpawnPredicate<T> predicate) {
+		restriction(entity, Location.IN_WATER, Type.MOTION_BLOCKING, predicate);
+	}
+	
 	static {
 		try {
 			for (Method method: SpawnRestriction.class.getDeclaredMethods()) {

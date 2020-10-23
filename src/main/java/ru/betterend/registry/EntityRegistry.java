@@ -24,6 +24,7 @@ public class EntityRegistry {
 	
 	public static void register() {
 		SpawnHelper.restrictionLand(END_SLIME, EntityEndSlime::canSpawn);
+		SpawnHelper.restrictionWater(END_FISH, EntityEndFish::canSpawn);
 	}
 	
 	protected static <T extends Entity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity) {

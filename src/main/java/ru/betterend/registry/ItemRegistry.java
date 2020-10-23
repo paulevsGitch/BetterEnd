@@ -32,6 +32,7 @@ import ru.betterend.item.EndHammer;
 import ru.betterend.item.EndHoe;
 import ru.betterend.item.EndPickaxe;
 import ru.betterend.item.EndToolMaterial;
+import ru.betterend.item.EternalCrystal;
 import ru.betterend.tab.CreativeTab;
 import ru.betterend.util.TagHelper;
 
@@ -74,6 +75,9 @@ public class ItemRegistry {
 	public static final ToolItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammer(ToolMaterials.GOLD, 4.5F, -3.4F, 0.3D, makeSettings()));
 	public static final ToolItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammer(ToolMaterials.DIAMOND, 5.5F, -3.1F, 0.2D, makeSettings()));
 	public static final ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammer(ToolMaterials.NETHERITE, 5.0F, -3.0F, 0.2D, makeSettings()));
+	
+	// Other //
+	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
 	
 	protected static Item registerItem(String name, Item item) {
 		if (item != Items.AIR) {
@@ -122,7 +126,7 @@ public class ItemRegistry {
 		return registerItem(name, item);
 	}
 
-	private static Settings makeSettings() {
+	public static Settings makeSettings() {
 		return new Item.Settings().group(CreativeTab.END_TAB);
 	}
 

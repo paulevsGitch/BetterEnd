@@ -8,17 +8,18 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-
+import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.FeatureRegistry;
 
 public class PortalFrameHelper {
 	
-	public static boolean checkPortalFrame(World world, BlockPos pos, Block frameBlock) {
+	public static boolean checkPortalFrame(ServerWorld world, BlockPos pos, Block frameBlock) {
 		if (world == null || pos == null) return false;
 		if (!world.getBlockState(pos).isOf(frameBlock)) return false;
 		BlockPos bottomCorner = findBottomCorner(world, pos, frameBlock);
 		if (bottomCorner == null) return false;
 		boolean valid = true;
+		Direction.Axis axis = Direction.Axis.X;
 		BlockPos checkPos = bottomCorner.up();
 		Direction moveDir = Direction.UP;
 		while(!checkPos.equals(bottomCorner)) {
@@ -27,11 +28,13 @@ public class PortalFrameHelper {
 				if (!valid) {
 					switch(moveDir) {
 						case UP: {
+							checkPos = checkPos.down();
 							if (world.getBlockState(checkPos.east()).isOf(frameBlock)) {
 								checkPos = checkPos.east();
 								moveDir = Direction.EAST;
 								valid = true;
 							} else if (world.getBlockState(checkPos.north()).isOf(frameBlock)) {
+								axis = Direction.Axis.Z;
 								checkPos = checkPos.north();
 								moveDir = Direction.NORTH;
 								valid = true;
@@ -39,6 +42,7 @@ public class PortalFrameHelper {
 							break;
 						}
 						case DOWN: {
+							checkPos = checkPos.up();
 							if (world.getBlockState(checkPos.west()).isOf(frameBlock)) {
 								checkPos = checkPos.west();
 								moveDir = Direction.WEST;
@@ -52,6 +56,7 @@ public class PortalFrameHelper {
 						}
 						case NORTH:
 						case EAST: {
+							checkPos = moveDir.equals(Direction.NORTH) ? checkPos.south() : checkPos.west();
 							if (world.getBlockState(checkPos.down()).isOf(frameBlock)) {
 								checkPos = checkPos.down();
 								moveDir = Direction.DOWN;
@@ -91,6 +96,13 @@ public class PortalFrameHelper {
 						}
 					}
 				}
+			}
+		}
+		if (valid) {
+			if (world.getBlockState(bottomCorner).isOf(BlockRegistry.FLAVOLITE_RUNED)) {
+				generatePortalFrame(world, bottomCorner, axis, true);
+			} else {
+				generateEternalPortalFrame(world, bottomCorner, axis, true);
 			}
 		}
 		return valid;

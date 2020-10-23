@@ -112,10 +112,17 @@ public class StructureWorld {
 		
 		public Part(CompoundTag tag) {
 			ListTag map = tag.getList("blocks", 10);
+			ListTag map2 = tag.getList("states", 10);
+			BlockState[] states = new BlockState[map2.size()];
+			for (int i = 0; i < states.length; i++) {
+				states[i] = NbtHelper.toBlockState((CompoundTag) map2.get(i));
+			}
+			
 			map.forEach((element) -> {
 				CompoundTag block = (CompoundTag) element;
 				BlockPos pos = NbtHelper.toBlockPos(block.getCompound("pos"));
-				BlockState state = Block.getStateFromRawId(block.getInt("state"));
+				int stateID = block.getInt("state");
+				BlockState state = stateID < states.length ? states[stateID] : Block.getStateFromRawId(stateID);
 				blocks.put(pos, state);
 			});
 		}
@@ -127,7 +134,6 @@ public class StructureWorld {
 		
 		void placeChunk(Chunk chunk) {
 			blocks.forEach((pos, state) -> {
-				//if (pos.getY() > 10)
 				chunk.setBlockState(pos, state, false);
 			});
 		}
@@ -138,12 +144,26 @@ public class StructureWorld {
 			tag.putInt("z", z);
 			ListTag map = new ListTag();
 			tag.put("blocks", map);
+			ListTag stateMap = new ListTag();
+			tag.put("states", stateMap);
+			
+			int[] id = new int[1];
+			Map<BlockState, Integer> states = Maps.newHashMap();
+			
 			blocks.forEach((pos, state) -> {
+				int stateID = states.getOrDefault(states, -1);
+				if (stateID < 0) {
+					stateID = id[0] ++;
+					states.put(state, stateID);
+					stateMap.add(NbtHelper.fromBlockState(state));
+				}
+				
 				CompoundTag block = new CompoundTag();
 				block.put("pos", NbtHelper.fromBlockPos(pos));
-				block.putInt("state", Block.getRawIdFromState(state));
+				block.putInt("state", stateID);
 				map.add(block);
 			});
+			
 			return tag;
 		}
 	}

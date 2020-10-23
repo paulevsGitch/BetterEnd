@@ -58,7 +58,13 @@ public class ModelEntityEndFish extends BlockBenchModel<EntityEndFish> {
 
 	@Override
 	public void setAngles(EntityEndFish entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		
+		float s1 = (float) Math.sin(animationProgress * 0.1);
+		float s2 = (float) Math.sin(animationProgress * 0.05);
+		flipper.yaw = s1 * 0.3F;
+		fin_top.pitch = s2 * 0.02F - 0.6981F;
+		fin_bottom.pitch = 0.6981F - s2 * 0.02F;
+		fin_left.yaw = s1 * 0.3F - 0.7854F;
+		fin_right.yaw = 0.7854F - s1 * 0.3F;
 	}
 
 	@Override

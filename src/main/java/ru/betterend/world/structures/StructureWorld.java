@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -120,7 +121,8 @@ public class StructureWorld {
 			map.forEach((element) -> {
 				CompoundTag block = (CompoundTag) element;
 				BlockPos pos = NbtHelper.toBlockPos(block.getCompound("pos"));
-				BlockState state = states[block.getInt("state")];
+				int stateID = block.getInt("state");
+				BlockState state = stateID < states.length ? states[stateID] : Block.getStateFromRawId(stateID);
 				blocks.put(pos, state);
 			});
 		}

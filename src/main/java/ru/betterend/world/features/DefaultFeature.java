@@ -17,19 +17,19 @@ public abstract class DefaultFeature extends Feature<DefaultFeatureConfig> {
 		super(DefaultFeatureConfig.CODEC);
 	}
 	
-	protected BlockPos getPosOnSurface(StructureWorldAccess world, BlockPos pos) {
+	public static BlockPos getPosOnSurface(StructureWorldAccess world, BlockPos pos) {
 		return world.getTopPosition(Type.WORLD_SURFACE, pos);
 	}
 	
-	protected BlockPos getPosOnSurfaceWG(StructureWorldAccess world, BlockPos pos) {
+	public static BlockPos getPosOnSurfaceWG(StructureWorldAccess world, BlockPos pos) {
 		return world.getTopPosition(Type.WORLD_SURFACE_WG, pos);
 	}
 	
-	protected BlockPos getPosOnSurfaceRaycast(StructureWorldAccess world, BlockPos pos) {
-		return this.getPosOnSurfaceRaycast(world, pos, 256);
+	public static BlockPos getPosOnSurfaceRaycast(StructureWorldAccess world, BlockPos pos) {
+		return getPosOnSurfaceRaycast(world, pos, 256);
 	}
 	
-	protected BlockPos getPosOnSurfaceRaycast(StructureWorldAccess world, BlockPos pos, int dist) {
+	public static BlockPos getPosOnSurfaceRaycast(StructureWorldAccess world, BlockPos pos, int dist) {
 		int h = BlocksHelper.downRay(world, pos, dist);
 		return pos.down(h);
 	}

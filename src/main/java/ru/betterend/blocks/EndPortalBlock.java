@@ -11,23 +11,25 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
+
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.BlockTagRegistry;
-import ru.betterend.registry.FeatureRegistry;
 import ru.betterend.registry.ParticleRegistry;
+import ru.betterend.util.PortalFrameHelper;
+import ru.betterend.world.features.DefaultFeature;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
 	public EndPortalBlock() {
@@ -69,13 +71,16 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		if (world instanceof ServerWorld && entity instanceof LivingEntity && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
 			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entity);
 			if (teleEntity.hasCooldown()) return;
-			teleEntity.beSetCooldown(500);
+			teleEntity.beSetCooldown(300);
 			boolean isOverworld = world.getRegistryKey().equals(World.OVERWORLD);
 			ServerWorld destination = ((ServerWorld) world).getServer().getWorld(isOverworld ? World.END : World.OVERWORLD);
 			BlockPos exitPos = this.findExitPos(destination, pos, entity);
-			teleEntity.beSetExitPos(exitPos);
-			entity.moveToWorld(destination);
-			teleEntity.beSetExitPos(null);
+			if (entity instanceof ServerPlayerEntity) {
+				((ServerPlayerEntity) entity).teleport(destination, exitPos.getX(), exitPos.getY(), exitPos.getZ(), entity.yaw, entity.pitch);
+			} else {
+				teleEntity.beSetExitPos(exitPos);
+				entity.moveToWorld(destination);
+			}
 		}
 	}
 	
@@ -91,7 +96,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		BlockPos.Mutable basePos;
 		if (world.getRegistryKey().equals(World.OVERWORLD)) {
 			basePos = pos.mutableCopy().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
-			topY = world.getTopY(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ());
+			topY = DefaultFeature.getPosOnSurface(world, basePos).getY();
 		} else {
 			basePos = pos.mutableCopy().set(pos.getX() * mult, pos.getY(), pos.getZ() * mult);
 			topY = world.getHeight();
@@ -102,20 +107,20 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			BlockState state = world.getBlockState(position);
 			if(state.isOf(this)) {
 				if (state.get(AXIS).equals(Direction.Axis.X)) {
-					return position.add(1, 0, 0);
-				} else {
 					return position.add(0, 0, 1);
+				} else {
+					return position.add(1, 0, 0);
 				}
 			}
 		}
 		bottom.setY(basePos.getY());
 		Direction.Axis axis = entity.getMovementDirection().getAxis();
-		if (checkIsAreaValid(world, bottom)) {
-			generatePortalFrame(world, bottom, axis, true);
+		if (checkIsAreaValid(world, bottom, axis)) {
+			PortalFrameHelper.generatePortalFrame(world, bottom, axis, true);
 			if (axis.equals(Direction.Axis.X)) {
-				return bottom.add(1, 1, 0);
-			} else {
 				return bottom.add(0, 1, 1);
+			} else {
+				return bottom.add(1, 1, 0);
 			}
 		} else {
 			if (bottom.getY() > top.getY()) {
@@ -124,12 +129,12 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 				top = buff;
 			}
 			for(BlockPos position : BlockPos.iterate(bottom, top)) {
-				if (checkIsAreaValid(world, position)) {
-					generatePortalFrame(world, position, axis, true);
+				if (checkIsAreaValid(world, position, axis)) {
+					PortalFrameHelper.generatePortalFrame(world, position, axis, true);
 					if (axis.equals(Direction.Axis.X)) {
-						return position.add(1, 1, 0);
-					} else {
 						return position.add(0, 1, 1);
+					} else {
+						return position.add(1, 1, 0);
 					}
 				}
 			}
@@ -139,17 +144,24 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		} else {
 			basePos.setY(topY);
 		}
-		generatePortalFrame(world, basePos, axis, true);
+		PortalFrameHelper.generatePortalFrame(world, basePos, axis, true);
 		if (axis.equals(Direction.Axis.X)) {
-			return basePos.add(1, 1, 0);
-		} else {
 			return basePos.add(0, 1, 1);
+		} else {
+			return basePos.add(1, 1, 0);
 		}
 	}
 	
-	private boolean checkIsAreaValid(World world, BlockPos pos) {
-		BlockPos bottomCorner = pos.add(-1, 0, -1);
-		BlockPos topCorner = bottomCorner.add(4, 4, 1);
+	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {
+		BlockPos topCorner, bottomCorner;
+		if (axis.equals(Direction.Axis.X)) {
+			bottomCorner = pos.add(0, 0, -1);
+			topCorner = bottomCorner.add(0, 4, 4);
+		} else {
+			bottomCorner = pos.add(-1, 0, 0);
+			topCorner = bottomCorner.add(4, 4, 0);
+		}
+		if (!isBaseSolid(world, bottomCorner, axis)) return false;
 		int airBlocks = 0;
 		boolean free = true;
 		for (BlockPos position : BlockPos.iterate(bottomCorner, topCorner)) {
@@ -162,7 +174,23 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 				free &= this.validBlock(state, surfaceBlock.getBlock());
 			}
 		}
-		return free && airBlocks == 48;
+		return free && airBlocks >= 48;
+	}
+	
+	private boolean isBaseSolid(World world, BlockPos pos, Direction.Axis axis) {
+		boolean solid = true;
+		if (axis.equals(Direction.Axis.X)) {
+			for (int i = 0; i < 4; i++) {
+				BlockPos checkPos = pos.down().add(0, 0, i);
+				solid &= world.getBlockState(checkPos).isSolidBlock(world, checkPos);
+			}
+		} else {
+			for (int i = 0; i < 4; i++) {
+				BlockPos checkPos = pos.down().add(i, 0, 0);
+				solid &= world.getBlockState(checkPos).isSolidBlock(world, checkPos);
+			}
+		}
+		return solid;
 	}
 	
 	private boolean validBlock(BlockState state, Block surfaceBlock) {
@@ -171,9 +199,5 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			   state.isOf(Blocks.STONE) ||
 			   state.isOf(Blocks.SAND) ||
 			   state.isOf(Blocks.GRAVEL);
-	}
-	
-	public static void generatePortalFrame(ServerWorld world, BlockPos pos, Direction.Axis axis, boolean active) {
-		FeatureRegistry.END_PORTAL.configure(axis, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
 	}
 }

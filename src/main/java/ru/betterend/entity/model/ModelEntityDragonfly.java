@@ -2,11 +2,11 @@ package ru.betterend.entity.model;
 
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import ru.betterend.entity.BlockBenchModel;
 import ru.betterend.entity.EntityDragonfly;
 
-public class ModelEntityDragonfly extends EntityModel<EntityDragonfly> {
+public class ModelEntityDragonfly extends BlockBenchModel<EntityDragonfly> {
 	private final ModelPart model;
 	private final ModelPart head;
 	private final ModelPart tail;
@@ -98,11 +98,5 @@ public class ModelEntityDragonfly extends EntityModel<EntityDragonfly> {
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		model.render(matrices, vertices, light, overlay);
-	}
-	
-	public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
-		modelRenderer.pitch = x;
-		modelRenderer.yaw = y;
-		modelRenderer.roll = z;
 	}
 }

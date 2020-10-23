@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
-
 import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(ServerPlayerEntity.class)

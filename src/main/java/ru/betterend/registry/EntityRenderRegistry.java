@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.entity.EntityType;
 import ru.betterend.entity.render.RendererEntityDragonfly;
+import ru.betterend.entity.render.RendererEntityEndFish;
 import ru.betterend.entity.render.RendererEntityEndSlime;
 
 public class EntityRenderRegistry {
@@ -11,6 +12,7 @@ public class EntityRenderRegistry {
 	public static void register() {
 		register(EntityRegistry.DRAGONFLY, RendererEntityDragonfly.class);
 		register(EntityRegistry.END_SLIME, RendererEntityEndSlime.class);
+		register(EntityRegistry.END_FISH, RendererEntityEndFish.class);
 	}
 	
 	private static void register(EntityType<?> type, Class<? extends MobEntityRenderer<?, ?>> renderer) {

@@ -34,8 +34,7 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 			TripleShape shape = (height == 0) ? TripleShape.TOP : TripleShape.MIDDLE;
 			Direction dir = BlocksHelper.randomHorizontal(random);
 			BlockPos leafCenter = bpos.toImmutable().offset(dir);
-			boolean hasLeaf = hasLeaf(world, leafCenter);
-			if (hasLeaf) {
+			if (hasLeaf(world, leafCenter)) {
 				generateLeaf(world, leafCenter);
 				BlocksHelper.setWithoutUpdate(world, bpos, startLeaf.with(BlockEndLotusStem.SHAPE, shape).with(BlockEndLotusStem.FACING, dir));
 			}
@@ -70,7 +69,8 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 					stem = stem.with(BlockEndLotusStem.WATERLOGGED, true);
 				}
 			}
-			if (hasLeaf) {
+			
+			if (world.getBlockState(bpos.offset(dir)).isOf(BlockRegistry.END_LOTUS_LEAF)) {
 				stem = stem.with(BlockEndLotusStem.LEAF, true).with(BlockEndLotusStem.FACING, dir);
 			}
 			

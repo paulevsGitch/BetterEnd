@@ -1,5 +1,6 @@
 package ru.betterend.entity;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Blocks;
@@ -19,6 +20,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
@@ -108,6 +110,8 @@ public class EntityEndFish extends SchoolingFishEntity {
 	}
 	
 	public static boolean canSpawn(EntityType<EntityEndFish> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return true;
+		Box box = new Box(pos).expand(16);
+		List<EntityEndFish> list = world.getEntitiesByClass(EntityEndFish.class, box, (entity) -> { return true; });
+		return list.size() < 9;
 	}
 }

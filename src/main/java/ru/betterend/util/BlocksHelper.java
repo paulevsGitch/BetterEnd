@@ -3,6 +3,9 @@ package ru.betterend.util;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -131,6 +134,7 @@ public class BlocksHelper {
 	
 	public static void fixBlocks(WorldAccess world, BlockPos start, BlockPos end) {
 		BlockState state;
+		Set<BlockPos> doubleCheck = Sets.newHashSet();
 		for (int x = start.getX(); x <= end.getX(); x++) {
 			POS.setX(x);
 			for (int z = start.getZ(); z <= end.getZ(); z++) {
@@ -138,6 +142,10 @@ public class BlocksHelper {
 				for (int y = start.getY(); y <= end.getY(); y++) {
 					POS.setY(y);
 					state = world.getBlockState(POS);
+					
+					if (state.getBlock() instanceof BlockGlowingFur) {
+						doubleCheck.add(POS.toImmutable());
+					}
 					
 					// Liquids
 					if (!state.getFluidState().isEmpty()) {
@@ -222,6 +230,12 @@ public class BlocksHelper {
 				}
 			}
 		}
+		
+		doubleCheck.forEach((pos) -> {
+			if (!world.getBlockState(pos).canPlaceAt(world, pos)) {
+				BlocksHelper.setWithoutUpdate(world, pos, AIR);
+			}
+		});
 	}
 	
 	public static boolean isEndNylium(Block block) {

@@ -4,16 +4,21 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.SlimeEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -27,6 +32,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.BiomeRegistry;
+import ru.betterend.util.MHelper;
 
 public class EntityEndSlime extends SlimeEntity {
 	private static final TrackedData<Boolean> MOSSY = DataTracker.registerData(EntityEndSlime.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -95,6 +101,22 @@ public class EntityEndSlime extends SlimeEntity {
 			}
 		}
 		this.removed = true;
+	}
+	
+	@Override
+	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
+		int maxCount = this.getSize();
+		int minCount = maxCount >> 1;
+		if (minCount < 1) {
+			minCount = 1;
+		}
+		if (causedByPlayer && this.attackingPlayer != null) {
+			int looting = EnchantmentHelper.getLooting(this.attackingPlayer);
+			minCount += looting;
+		}
+		int count = minCount < maxCount ? MHelper.randRange(minCount, maxCount, random) : maxCount;
+		ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(Items.SLIME_BALL, count));
+		this.world.spawnEntity(drop);
 	}
 	
 	protected void setMossy(boolean mossy) {

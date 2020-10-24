@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ChorusFlowerBlock;
 import net.minecraft.block.ChorusPlantBlock;
 import net.minecraft.block.ShapeContext;
@@ -22,12 +23,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.BlocksHelper;
 
-@Mixin(ChorusFlowerBlock.class)
+@Mixin(value = ChorusFlowerBlock.class, priority = 100)
 public abstract class ChorusFlowerBlockMixin extends Block {
 	private static final VoxelShape SHAPE_FULL = Block.createCuboidShape(0, 0, 0, 16, 16, 16);
 	private static final VoxelShape SHAPE_HALF = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
@@ -60,6 +62,14 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 					info.cancel();
 				}
 			}
+		}
+	}
+	
+	@Inject(method = "generate", at = @At("RETURN"), cancellable = true)
+	private static void beOnGenerate(WorldAccess world, BlockPos pos, Random random, int size, CallbackInfo info) {
+		BlockState state = world.getBlockState(pos);
+		if (state.isOf(Blocks.CHORUS_PLANT)) {
+			BlocksHelper.setWithoutUpdate(world, pos, state.with(BlocksHelper.ROOTS, true));
 		}
 	}
 	

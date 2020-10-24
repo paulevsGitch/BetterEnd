@@ -1,5 +1,6 @@
 package ru.betterend.entity;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
@@ -10,13 +11,19 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.control.MoveControl;
+import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.SlimeEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -26,12 +33,14 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.BiomeRegistry;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class EntityEndSlime extends SlimeEntity {
@@ -40,6 +49,18 @@ public class EntityEndSlime extends SlimeEntity {
 	
 	public EntityEndSlime(EntityType<EntityEndSlime> entityType, World world) {
 		super(entityType, world);
+		this.moveControl = new EndSlimeMoveControl(this);
+	}
+	
+	protected void initGoals() {
+		this.goalSelector.add(1, new SwimmingGoal());
+		this.goalSelector.add(2, new FaceTowardTargetGoal());
+		this.goalSelector.add(3, new RandomLookGoal());
+		this.goalSelector.add(5, new MoveGoal());
+		this.targetSelector.add(1, new FollowTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, false, (livingEntity) -> {
+			return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
+		}));
+		this.targetSelector.add(3, new FollowTargetGoal<IronGolemEntity>(this, IronGolemEntity.class, true));
 	}
 	
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
@@ -156,5 +177,188 @@ public class EntityEndSlime extends SlimeEntity {
 			}
 		}
 		return false;
+	}
+	
+	class MoveGoal extends Goal {
+		public MoveGoal() {
+			this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
+		}
+
+		public boolean canStart() {
+			if (EntityEndSlime.this.hasVehicle()) {
+				return false;
+			}
+			
+			float yaw = EntityEndSlime.this.getHeadYaw();
+			float speed = EntityEndSlime.this.getMovementSpeed();
+			if (speed > 0.1) {
+				Vec3d dir = Vec3d.fromPolar(0, yaw);
+				BlockPos pos = EntityEndSlime.this.getBlockPos().add(dir.getX() * speed * 4, 0, dir.getZ() * speed * 4);
+				int down = BlocksHelper.downRay(EntityEndSlime.this.world, pos, 16);
+				return down < 5;
+			}
+			
+			return true;
+		}
+
+		public void tick() {
+			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).move(1.0D);
+		}
+	}
+
+	class SwimmingGoal extends Goal {
+		public SwimmingGoal() {
+			this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
+			EntityEndSlime.this.getNavigation().setCanSwim(true);
+		}
+
+		public boolean canStart() {
+			return (EntityEndSlime.this.isTouchingWater()
+					|| EntityEndSlime.this.isInLava())
+					&& EntityEndSlime.this.getMoveControl() instanceof EndSlimeMoveControl;
+		}
+
+		public void tick() {
+			if (EntityEndSlime.this.getRandom().nextFloat() < 0.8F) {
+				EntityEndSlime.this.getJumpControl().setActive();
+			}
+
+			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).move(1.2D);
+		}
+	}
+
+	class RandomLookGoal extends Goal {
+		private float targetYaw;
+		private int timer;
+
+		public RandomLookGoal() {
+			this.setControls(EnumSet.of(Goal.Control.LOOK));
+		}
+
+		public boolean canStart() {
+			return EntityEndSlime.this.getTarget() == null
+					&& (EntityEndSlime.this.onGround
+							|| EntityEndSlime.this.isTouchingWater()
+							|| EntityEndSlime.this.isInLava()
+							|| EntityEndSlime.this.hasStatusEffect(StatusEffects.LEVITATION))
+					&& EntityEndSlime.this.getMoveControl() instanceof EndSlimeMoveControl;
+		}
+
+		public void tick() {
+			if (--this.timer <= 0) {
+				this.timer = 40 + EntityEndSlime.this.getRandom().nextInt(60);
+				this.targetYaw = (float) EntityEndSlime.this.getRandom().nextInt(360);
+			}
+
+			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).look(this.targetYaw, false);
+		}
+	}
+
+	class FaceTowardTargetGoal extends Goal {
+		private int ticksLeft;
+
+		public FaceTowardTargetGoal() {
+			this.setControls(EnumSet.of(Goal.Control.LOOK));
+		}
+
+		public boolean canStart() {
+			LivingEntity livingEntity = EntityEndSlime.this.getTarget();
+			if (livingEntity == null) {
+				return false;
+			}
+			else if (!livingEntity.isAlive()) {
+				return false;
+			}
+			else {
+				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable ? false : EntityEndSlime.this.getMoveControl() instanceof EndSlimeMoveControl;
+			}
+		}
+
+		public void start() {
+			this.ticksLeft = 300;
+			super.start();
+		}
+
+		public boolean shouldContinue() {
+			LivingEntity livingEntity = EntityEndSlime.this.getTarget();
+			if (livingEntity == null) {
+				return false;
+			}
+			else if (!livingEntity.isAlive()) {
+				return false;
+			}
+			else if (livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable) {
+				return false;
+			}
+			else {
+				return --this.ticksLeft > 0;
+			}
+		}
+
+		public void tick() {
+			EntityEndSlime.this.lookAtEntity(EntityEndSlime.this.getTarget(), 10.0F, 10.0F);
+			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).look(EntityEndSlime.this.yaw, EntityEndSlime.this.canAttack());
+		}
+	}
+
+	class EndSlimeMoveControl extends MoveControl {
+		private float targetYaw;
+		private int ticksUntilJump;
+		private boolean jumpOften;
+
+		public EndSlimeMoveControl(EntityEndSlime slime) {
+			super(slime);
+			this.targetYaw = 180.0F * slime.yaw / 3.1415927F;
+		}
+
+		public void look(float targetYaw, boolean jumpOften) {
+			this.targetYaw = targetYaw;
+			this.jumpOften = jumpOften;
+		}
+
+		public void move(double speed) {
+			this.speed = speed;
+			this.state = MoveControl.State.MOVE_TO;
+		}
+
+		public void tick() {
+			this.entity.yaw = this.changeAngle(this.entity.yaw, this.targetYaw, 90.0F);
+			this.entity.headYaw = this.entity.yaw;
+			this.entity.bodyYaw = this.entity.yaw;
+			if (this.state != MoveControl.State.MOVE_TO) {
+				this.entity.setForwardSpeed(0.0F);
+			}
+			else {
+				this.state = MoveControl.State.WAIT;
+				if (this.entity.isOnGround()) {
+					this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
+					if (this.ticksUntilJump-- <= 0) {
+						this.ticksUntilJump = EntityEndSlime.this.getTicksUntilNextJump();
+						if (this.jumpOften) {
+							this.ticksUntilJump /= 3;
+						}
+
+						EntityEndSlime.this.getJumpControl().setActive();
+						if (EntityEndSlime.this.makesJumpSound()) {
+							EntityEndSlime.this.playSound(EntityEndSlime.this.getJumpSound(), EntityEndSlime.this.getSoundVolume(), getJumpSoundPitch());
+						}
+					}
+					else {
+						EntityEndSlime.this.sidewaysSpeed = 0.0F;
+						EntityEndSlime.this.forwardSpeed = 0.0F;
+						this.entity.setMovementSpeed(0.0F);
+					}
+				}
+				else {
+					this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
+				}
+
+			}
+		}
+
+		private float getJumpSoundPitch() {
+			float f = EntityEndSlime.this.isSmall() ? 1.4F : 0.8F;
+			return ((EntityEndSlime.this.random.nextFloat() - EntityEndSlime.this.random.nextFloat()) * 0.2F + 1.0F) * f;
+		}
 	}
 }

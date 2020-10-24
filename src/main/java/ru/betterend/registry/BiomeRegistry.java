@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
@@ -22,10 +23,13 @@ import ru.betterend.world.generator.BiomeType;
 
 public class BiomeRegistry {
 	private static final Map<EndBiome, RegistryKey<Biome>> KEYS = Maps.newHashMap();
+	private static final HashMap<Identifier, EndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, EndBiome> MUTABLE = Maps.newHashMap();
-	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
+	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
+	
+	private static Registry<Biome> biomeRegistry;
 	
 	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, true);
 	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS, BiomeType.VOID, true);
@@ -40,6 +44,8 @@ public class BiomeRegistry {
 	public static void register() {}
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
+		BiomeRegistry.biomeRegistry = biomeRegistry;
+		
 		BiomeRegistry.MUTABLE.clear();
 		LAND_BIOMES.clearMutables();
 		
@@ -76,7 +82,7 @@ public class BiomeRegistry {
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
 		registerBiomeDirect(biome);
 		addToPicker(biome, type);
-		CLIENT.put(biome.getBiome(), biome);
+		ID_MAP.put(biome.getID(), biome);
 		return biome;
 	}
 	
@@ -102,28 +108,10 @@ public class BiomeRegistry {
 		return KEYS.get(biome);
 	}
 	
-	private static boolean equals(Biome biome1, Biome biome2) {
-		return (biome1.getDepth() - biome2.getDepth() == 0) &&
-		(biome1.getDownfall() - biome2.getDownfall() == 0) &&
-		(biome1.getScale() - biome2.getScale() == 0) &&
-		(biome1.getCategory() == biome2.getCategory()) &&
-		(biome1.getFogColor() == biome2.getFogColor()) &&
-		(biome1.getSkyColor() == biome2.getSkyColor()) &&
-		(biome1.getWaterColor() == biome2.getWaterColor()) &&
-		(biome1.getWaterFogColor() == biome2.getWaterFogColor()) &&
-		(biome1.getPrecipitation().equals(biome2.getPrecipitation()));
-	}
-	
 	public static EndBiome getFromBiome(Biome biome) {
 		EndBiome endBiome = MUTABLE.get(biome);
 		if (endBiome == null) {
-			for (Biome key: CLIENT.keySet()) {
-				if (equals(key, biome)) {
-					endBiome = CLIENT.get(key);
-					MUTABLE.put(biome, endBiome);
-					return endBiome;
-				}
-			}
+			endBiome = ID_MAP.getOrDefault(biomeRegistry.getId(biome), END);
 			MUTABLE.put(biome, END);
 			return END;
 		}

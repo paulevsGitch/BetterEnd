@@ -16,6 +16,7 @@ import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
 import ru.betterend.BetterEnd;
+import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.util.FeaturesHelper;
@@ -29,9 +30,11 @@ public class BetterEndBiomeSource extends BiomeSource {
 			return theEndBiomeSource.seed;
 		})).apply(instance, instance.stable(BetterEndBiomeSource::new));
 	});
+	private static final OpenSimplexNoise SMALL_NOISE = new OpenSimplexNoise(8324);
 	private final Registry<Biome> biomeRegistry;
 	private final SimplexNoiseSampler noise;
 	private final Biome centerBiome;
+	private final Biome barrens;
 	private BiomeMap mapLand;
 	private BiomeMap mapVoid;
 	private final long seed;
@@ -42,6 +45,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 		this.mapLand = new BiomeMap(seed, 256, BiomeRegistry.LAND_BIOMES);
 		this.mapVoid = new BiomeMap(seed, 256, BiomeRegistry.VOID_BIOMES);
 		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
+		this.barrens = biomeRegistry.getOrThrow(BiomeKeys.END_BARRENS);
 		this.biomeRegistry = biomeRegistry;
 		this.seed = seed;
 		
@@ -66,17 +70,22 @@ public class BetterEndBiomeSource extends BiomeSource {
 
 	@Override
 	public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
-		long i = biomeX >> 2;
-		long j = biomeZ >> 2;
-		if (i * i + j * j <= 4096L) return this.centerBiome;
+		long i = (long) biomeX * (long) biomeX;
+		long j = (long) biomeZ * (long) biomeZ;
+		if (i + j <= 65536L) return this.centerBiome;
 		
-		float height = TheEndBiomeSource.getNoiseAt(noise, (int) i * 2 + 1, (int) j * 2 + 1);
-	         
-		EndBiome netherBiome = height < -2.0F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
+		float height = TheEndBiomeSource.getNoiseAt(noise, (biomeX >> 1) + 1, (biomeZ >> 1) + 1) + (float) SMALL_NOISE.eval(biomeX, biomeZ) * 5;
+
+		if (height > -20F && height < -5F) {
+			return barrens;
+		}
+		
+		EndBiome netherBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		if (biomeX == 0 && biomeZ == 0) {
 			mapLand.clearCache();
 			mapVoid.clearCache();
 		}
+		
 		return biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(netherBiome));
 	}
 

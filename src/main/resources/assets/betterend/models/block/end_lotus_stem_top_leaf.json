@@ -36,6 +36,7 @@
 			"__comment": "PlaneY3",
 			"from": [ 0, 0, 0 ],
 			"to": [ 16, 0.001, 16 ],
+			"shade": false,
 			"faces": {
 				"down": { "uv": [ 0, 16, 16, 0 ], "texture": "#leaf" },
 				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#leaf" }

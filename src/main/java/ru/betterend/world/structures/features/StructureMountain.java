@@ -32,7 +32,7 @@ public class StructureMountain extends StructureFeatureBase {
 			if (y > 50) {
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.8F, 1.2F, random);
-				MountainPiece piece = new MountainPiece(new BlockPos(x, y, z), radius, height, random.nextInt());
+				MountainPiece piece = new MountainPiece(new BlockPos(x, y, z), radius, height, random.nextInt(), biome);
 				this.children.add(piece);
 			}
 			this.setBoundingBoxFromChildren();

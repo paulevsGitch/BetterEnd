@@ -14,6 +14,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
 import ru.betterend.world.biome.BiomeChorusForest;
+import ru.betterend.world.biome.BiomeCrystalMountains;
 import ru.betterend.world.biome.BiomeDustWastelands;
 import ru.betterend.world.biome.BiomeFoggyMushroomland;
 import ru.betterend.world.biome.BiomeMegalake;
@@ -33,13 +34,15 @@ public class BiomeRegistry {
 	
 	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, true);
 	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS, BiomeType.VOID, true);
-	public static final EndBiome END_HIGHLANDS = registerBiome(BiomeKeys.END_HIGHLANDS, BiomeType.LAND, true);
+	public static final EndBiome END_HIGHLANDS = registerBiome(BiomeKeys.END_HIGHLANDS, BiomeType.LAND, false);
 	public static final EndBiome END_MIDLANDS = registerBiome(BiomeKeys.END_MIDLANDS, BiomeType.LAND, false);
 	public static final EndBiome SMALL_END_ISLANDS = registerBiome(BiomeKeys.SMALL_END_ISLANDS, BiomeType.VOID, true);
+	
 	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new BiomeFoggyMushroomland(), BiomeType.LAND);
 	public static final EndBiome CHORUS_FOREST = registerBiome(new BiomeChorusForest(), BiomeType.LAND);
 	public static final EndBiome DUST_WASTELANDS = registerBiome(new BiomeDustWastelands(), BiomeType.LAND);
 	public static final EndBiome MEGALAKE = registerBiome(new BiomeMegalake(), BiomeType.LAND);
+	public static final EndBiome CRYSTAL_MOUNTAINS = registerBiome(new BiomeCrystalMountains(), BiomeType.LAND);
 	
 	public static void register() {}
 	
@@ -116,5 +119,10 @@ public class BiomeRegistry {
 			return END;
 		}
 		return endBiome;
+	}
+	
+	public static Identifier getBiomeID(Biome biome) {
+		Identifier id = biomeRegistry.getId(biome);
+		return id == null ? END.getID() : id;
 	}
 }

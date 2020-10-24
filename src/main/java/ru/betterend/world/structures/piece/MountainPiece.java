@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.structure.StructureManager;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -17,6 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -34,14 +36,16 @@ public class MountainPiece extends BasePiece {
 	private float radius;
 	private float height;
 	private float r2;
+	private Identifier biomeID;
 	
-	public MountainPiece(BlockPos center, float radius, float height, int id) {
+	public MountainPiece(BlockPos center, float radius, float height, int id, Biome biome) {
 		super(StructureRegistry.MOUNTAIN_PIECE, id);
 		this.center = center;
 		this.radius = radius;
 		this.height = height;
 		this.r2 = radius * radius;
 		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		this.biomeID = BiomeRegistry.getBiomeID(biome);
 		makeBoundingBox();
 	}
 
@@ -55,6 +59,7 @@ public class MountainPiece extends BasePiece {
 		tag.put("center", NbtHelper.fromBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("height", height);
+		tag.putString("biome", biomeID.toString());
 	}
 
 	@Override
@@ -62,6 +67,7 @@ public class MountainPiece extends BasePiece {
 		center = NbtHelper.toBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
 		height = tag.getFloat("height");
+		biomeID = new Identifier(tag.getString("biome"));
 		r2 = radius * radius;
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 	}
@@ -151,7 +157,7 @@ public class MountainPiece extends BasePiece {
 			return h;
 		}
 		
-		if (BiomeRegistry.getFromBiome(world.getBiome(pos)) != BiomeRegistry.END_HIGHLANDS) {
+		if (!BiomeRegistry.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, -4);
 			return -4;
 		}

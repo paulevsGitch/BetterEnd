@@ -69,9 +69,9 @@ public class FeatureRegistry {
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals("minecraft")) {
-			if (id.getPath().equals("end_highlands")) {
+			String path = id.getPath();
+			if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands")) {
 				features.get(GenerationStep.Feature.VEGETAL_DECORATION.ordinal()).clear();
-				addFeature(ROUND_CAVE, features);
 			}
 		}
 		

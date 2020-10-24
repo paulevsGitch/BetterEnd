@@ -36,12 +36,12 @@ public class StructureRegistry {
 	}
 	
 	public static void registerBiomeStructures(Identifier id, Biome biome, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> structures) {
-		if (id.getNamespace().equals("minecraft")) {
+		/*if (id.getNamespace().equals("minecraft")) {
 			if (id.getPath().equals("end_highlands")) {
 				structures.clear();
 				addStructure(MOUNTAIN, structures);
 			}
-		}
+		}*/
 	}
 	
 	private static void addStructure(EndStructureFeature feature, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> collection) {

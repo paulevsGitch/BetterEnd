@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/paulevsGitch/BetterEnd.svg)](https://jitpack.io/#paulevsGitch/BetterEnd)
 # Better End
 Better End Mod for Fabric, MC 1.16.3
 

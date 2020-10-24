@@ -27,10 +27,12 @@ public class DefaultEndPortalFeature extends Feature<EndPortalFeatureConfig> {
 		BlockState portalBlock = BlockRegistry.END_PORTAL_BLOCK.getDefaultState().with(EndPortalBlock.AXIS, config.axis);
 		BlockPos bottomCorner = pos;
 		BlockPos topCorner;
+		int width = config.width - 1;
+		int height = config.height - 1;
 		if (config.axis.equals(Direction.Axis.X)) {
-			topCorner = bottomCorner.add(3, 4, 0);
+			topCorner = bottomCorner.add(width, height, 0);
 		} else {
-			topCorner = bottomCorner.add(0, 4, 3);
+			topCorner = bottomCorner.add(0, height, width);
 		}
 		
 		for(BlockPos position : BlockPos.iterate(bottomCorner, topCorner)) {

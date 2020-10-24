@@ -33,6 +33,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -192,8 +193,9 @@ public class EntityEndSlime extends SlimeEntity {
 			float yaw = EntityEndSlime.this.getHeadYaw();
 			float speed = EntityEndSlime.this.getMovementSpeed();
 			if (speed > 0.1) {
-				Vec3d dir = Vec3d.fromPolar(0, yaw);
-				BlockPos pos = EntityEndSlime.this.getBlockPos().add(dir.getX() * speed * 4, 0, dir.getZ() * speed * 4);
+				float dx = MathHelper.sin(-yaw * 0.017453292F - 3.1415927F);
+				float dz = MathHelper.cos(-yaw * 0.017453292F - 3.1415927F);
+				BlockPos pos = EntityEndSlime.this.getBlockPos().add(dx * speed * 4, 0, dz * speed * 4);
 				int down = BlocksHelper.downRay(EntityEndSlime.this.world, pos, 16);
 				return down < 5;
 			}

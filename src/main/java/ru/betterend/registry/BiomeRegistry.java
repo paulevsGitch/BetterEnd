@@ -3,9 +3,11 @@ package ru.betterend.registry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 import com.google.common.collect.Maps;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -26,6 +28,7 @@ public class BiomeRegistry {
 	private static final Map<EndBiome, RegistryKey<Biome>> KEYS = Maps.newHashMap();
 	private static final HashMap<Identifier, EndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, EndBiome> MUTABLE = Maps.newHashMap();
+	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
@@ -70,6 +73,8 @@ public class BiomeRegistry {
 				}
 			}
 		});
+		
+		CLIENT.clear();
 	}
 	
 	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
@@ -92,6 +97,12 @@ public class BiomeRegistry {
 		parent.addSubBiome(endBiome);
 		makeLink(endBiome);
 		return endBiome;
+	}
+	
+	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent, float genChance) {
+		parent.addSubBiome(biome);
+		makeLink(biome);
+		return biome;
 	}
 	
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
@@ -124,11 +135,21 @@ public class BiomeRegistry {
 	}
 	
 	public static EndBiome getFromBiome(Biome biome) {
-		EndBiome endBiome = MUTABLE.get(biome);
+		return ID_MAP.getOrDefault(biomeRegistry.getId(biome), END);
+	}
+	
+	@Environment(EnvType.CLIENT)
+	public static EndBiome getRenderBiome(Biome biome) {
+		EndBiome endBiome = CLIENT.get(biome);
 		if (endBiome == null) {
-			endBiome = ID_MAP.getOrDefault(biomeRegistry.getId(biome), END);
-			MUTABLE.put(biome, END);
-			return END;
+			Identifier id = MinecraftClient.getInstance().world.getRegistryManager().get(Registry.BIOME_KEY).getId(biome);
+			if (id == null) {
+				endBiome = END;
+			}
+			else {
+				endBiome = ID_MAP.getOrDefault(id, END);
+			}
+			CLIENT.put(biome, endBiome);
 		}
 		return endBiome;
 	}

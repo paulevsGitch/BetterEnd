@@ -19,6 +19,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import ru.betterend.registry.BiomeRegistry;
@@ -47,7 +48,7 @@ public class BackgroundRendererMixin {
 		if (lerp > 1) lerp = 1;
 		
 		FluidState fluidState = camera.getSubmergedFluidState();
-		if (fluidState.isEmpty() && world.getDimension().hasEnderDragonFight()) {
+		if (fluidState.isEmpty() && world.getRegistryKey().equals(World.END)) {
 			Entity entity = camera.getFocusedEntity();
 			boolean skip = false;
 			if (entity instanceof LivingEntity) {
@@ -72,7 +73,7 @@ public class BackgroundRendererMixin {
 		Biome biome = entity.world.getBiome(entity.getBlockPos());
 		FluidState fluidState = camera.getSubmergedFluidState();
 		if (biome.getCategory() == Category.THEEND && fluidState.isEmpty()) {
-			EndBiome endBiome = BiomeRegistry.getFromBiome(biome);
+			EndBiome endBiome = BiomeRegistry.getRenderBiome(biome);
 			
 			if (fogDensity == 0) {
 				fogDensity = endBiome.getFogDensity();

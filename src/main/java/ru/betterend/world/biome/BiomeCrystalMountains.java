@@ -8,6 +8,7 @@ import ru.betterend.registry.StructureRegistry;
 public class BiomeCrystalMountains extends EndBiome {
 	public BiomeCrystalMountains() {
 		super(new BiomeDefinition("crystal_mountains")
+				.setPlantsColor(255, 133, 211)
 				.setMusic(SoundRegistry.MUSIC_CRYSTAL_MOUNTAINS)
 				.addStructureFeature(StructureRegistry.MOUNTAIN)
 				.addFeature(FeatureRegistry.ROUND_CAVE)

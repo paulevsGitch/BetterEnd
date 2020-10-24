@@ -11,6 +11,7 @@ import ru.betterend.registry.StructureRegistry;
 public class BiomeMegalake extends EndBiome {
 	public BiomeMegalake() {
 		super(new BiomeDefinition("megalake")
+				.setPlantsColor(73, 210, 209)
 				.setFogColor(178, 209, 248)
 				.setWaterColor(96, 163, 255)
 				.setWaterFogColor(96, 163, 255)

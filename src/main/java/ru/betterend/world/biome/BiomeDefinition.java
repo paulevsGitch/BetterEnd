@@ -37,6 +37,8 @@ import ru.betterend.world.structures.EndStructureFeature;
 import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
 
 public class BiomeDefinition {
+	private static final int DEF_FOLIAGE = MHelper.color(197, 210, 112);
+	
 	private final List<ConfiguredStructureFeature<?, ?>> structures = Lists.newArrayList();
 	private final List<FeatureInfo> features = Lists.newArrayList();
 	private final List<SpawnInfo> mobs = Lists.newArrayList();
@@ -50,6 +52,8 @@ public class BiomeDefinition {
 	private int waterFogColor = 329011;
 	private int waterColor = 4159204;
 	private int fogColor = 10518688;
+	private int foliageColor = DEF_FOLIAGE;
+	private int grassColor = DEF_FOLIAGE;
 	private float fogDensity = 1F;
 
 	private final Identifier id;
@@ -128,12 +132,16 @@ public class BiomeDefinition {
 		features.add(info);
 		return this;
 	}
-
-	public BiomeDefinition setFogColor(int r, int g, int b) {
+	
+	private int getColor(int r, int g, int b) {
 		r = MathHelper.clamp(r, 0, 255);
 		g = MathHelper.clamp(g, 0, 255);
 		b = MathHelper.clamp(b, 0, 255);
-		this.fogColor = MHelper.color(r, g, b);
+		return MHelper.color(r, g, b);
+	}
+
+	public BiomeDefinition setFogColor(int r, int g, int b) {
+		this.fogColor = getColor(r, g, b);
 		return this;
 	}
 
@@ -143,19 +151,27 @@ public class BiomeDefinition {
 	}
 
 	public BiomeDefinition setWaterColor(int r, int g, int b) {
-		r = MathHelper.clamp(r, 0, 255);
-		g = MathHelper.clamp(g, 0, 255);
-		b = MathHelper.clamp(b, 0, 255);
-		this.waterColor = MHelper.color(r, g, b);
+		this.waterColor = getColor(r, g, b);
 		return this;
 	}
 
 	public BiomeDefinition setWaterFogColor(int r, int g, int b) {
-		r = MathHelper.clamp(r, 0, 255);
-		g = MathHelper.clamp(g, 0, 255);
-		b = MathHelper.clamp(b, 0, 255);
-		this.waterFogColor = MHelper.color(r, g, b);
+		this.waterFogColor = getColor(r, g, b);
 		return this;
+	}
+	
+	public BiomeDefinition setFoliageColor(int r, int g, int b) {
+		this.foliageColor = getColor(r, g, b);
+		return this;
+	}
+	
+	public BiomeDefinition setGrassColor(int r, int g, int b) {
+		this.grassColor = getColor(r, g, b);
+		return this;
+	}
+	
+	public BiomeDefinition setPlantsColor(int r, int g, int b) {
+		return this.setFoliageColor(r, g, b).setGrassColor(r, g, b);
 	}
 
 	public BiomeDefinition setLoop(SoundEvent loop) {
@@ -191,7 +207,7 @@ public class BiomeDefinition {
 		structures.forEach((structure) -> generationSettings.structureFeature(structure));
 		features.forEach((info) -> generationSettings.feature(info.featureStep, info.feature));
 
-		effects.skyColor(0).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor);
+		effects.skyColor(0).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor).foliageColor(foliageColor).grassColor(grassColor);
 		if (loop != null) effects.loopSound(loop);
 		if (mood != null) effects.moodSound(mood);
 		if (additions != null) effects.additionsSound(additions);

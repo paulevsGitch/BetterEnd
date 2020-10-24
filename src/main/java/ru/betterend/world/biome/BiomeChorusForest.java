@@ -15,6 +15,7 @@ public class BiomeChorusForest extends EndBiome {
 		super(new BiomeDefinition("chorus_forest")
 				.setFogColor(87, 26, 87)
 				.setFogDensity(1.5F)
+				.setPlantsColor(122, 45, 122)
 				.setSurface(BlockRegistry.CHORUS_NYLIUM)
 				.setParticles(ParticleTypes.PORTAL, 0.01F)
 				.setLoop(SoundRegistry.AMBIENT_CHORUS_FOREST)

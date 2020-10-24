@@ -12,6 +12,7 @@ import ru.betterend.registry.StructureRegistry;
 public class BiomeFoggyMushroomland extends EndBiome {
 	public BiomeFoggyMushroomland() {
 		super(new BiomeDefinition("foggy_mushroomland")
+				.setPlantsColor(73, 210, 209)
 				.setFogColor(41, 122, 173)
 				.setFogDensity(3)
 				.setWaterColor(119, 227, 250)

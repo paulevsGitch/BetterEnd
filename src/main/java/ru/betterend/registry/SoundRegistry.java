@@ -9,10 +9,12 @@ public class SoundRegistry {
 	public static final SoundEvent MUSIC_FOGGY_MUSHROOMLAND = register("music", "foggy_mushroomland");
 	public static final SoundEvent MUSIC_CHORUS_FOREST = register("music", "chorus_forest");
 	public static final SoundEvent MUSIC_CRYSTAL_MOUNTAINS = register("music", "crystal_mountains");
+	public static final SoundEvent MUSIC_MEGALAKE = register("music", "megalake");
 	
 	// Ambient
 	public static final SoundEvent AMBIENT_FOGGY_MUSHROOMLAND = register("ambient", "foggy_mushroomland");
 	public static final SoundEvent AMBIENT_CHORUS_FOREST = register("ambient", "chorus_forest");
+	public static final SoundEvent AMBIENT_MEGALAKE = register("ambient", "megalake");
 	
 	// Entity
 	public static final SoundEvent ENTITY_DRAGONFLY = register("entity", "dragonfly");

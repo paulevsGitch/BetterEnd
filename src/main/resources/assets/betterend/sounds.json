@@ -44,6 +44,21 @@
 			}
 		]
 	},
+	"betterend.music.megalake": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/jesse_gallagher-the_blue_pearl",
+				"volume": 0.25,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jesse_gallagher-venkatesananda",
+				"volume": 0.25,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",
@@ -59,6 +74,15 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/chorus_forest",
+				"stream": false
+			}
+		]
+	},
+	"betterend.ambient.megalake": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/megalake",
 				"stream": false
 			}
 		]

@@ -41,7 +41,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	private ChorusPlantBlock plantBlock;
 	
 	@Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
-	private void canPlace(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
+	private void beCanPlace(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		if (world.getBlockState(pos.down()).isOf(BlockRegistry.CHORUS_NYLIUM)) {
 			info.setReturnValue(true);
 			info.cancel();
@@ -49,7 +49,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	}
 	
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-	private void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo info) {
+	private void beOnTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo info) {
 		if (world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
 			BlockPos up = pos.up();
 			if (world.isAir(up) && up.getY() < 256) {

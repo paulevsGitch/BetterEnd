@@ -13,7 +13,6 @@
 		"ChorusFlowerBlockMixin",
 		"ChorusPlantBlockMixin",
 		"RecipeManagerAccessor",
-		"ChunkSerializerMixin",
 		"MinecraftServerMixin",
 		"TagGroupLoaderMixin",
 		"EndermanEntityMixin",

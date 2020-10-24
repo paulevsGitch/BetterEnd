@@ -73,7 +73,11 @@ public class FeatureRegistry {
 			if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands")) {
 				int pos = GenerationStep.Feature.VEGETAL_DECORATION.ordinal();
 				if (pos < features.size()) {
-					features.get(pos).clear();
+					List<Supplier<ConfiguredFeature<?, ?>>> list = features.get(pos);
+					// If only chorus plants are enabled
+					if (list.size() < 2) {
+						features.get(pos).clear();
+					}
 				}
 			}
 		}

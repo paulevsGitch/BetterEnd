@@ -7,7 +7,9 @@ import java.util.Set;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.ChunkRandom;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.StructureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
@@ -21,11 +23,21 @@ public class StructureHelper {
 		int z2 = chunkZ + radius;
 
 		POSITIONS.clear();
+		ChunkGenerator generator = world.getChunkManager().getChunkGenerator();
 		for (int x = x1; x <= x2; x += 8) {
 			for (int z = z1; z <= z2; z += 8) {
 				ChunkPos chunk = feature.getStartChunk(config, worldSeed, chunkRandom, x, z);
 				if (world.getBiome(chunk.getStartPos()).getGenerationSettings().hasStructureFeature(feature))
-					POSITIONS.add(chunk);
+				{
+					if (feature.getName().equals("endcity")) {
+						if (generator.getHeight((x << 16) | 8, (z << 16) | 8, Heightmap.Type.WORLD_SURFACE_WG) > 60) {
+							POSITIONS.add(chunk);
+						}
+					}
+					else {
+						POSITIONS.add(chunk);
+					}
+				}
 			}
 		}
 	}

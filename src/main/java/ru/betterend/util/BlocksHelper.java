@@ -147,8 +147,36 @@ public class BlocksHelper {
 						doubleCheck.add(POS.toImmutable());
 					}
 					
+					// Chorus
+					if (state.isOf(Blocks.CHORUS_PLANT)) {
+						Set<BlockPos> ends = Sets.newHashSet();
+						Set<BlockPos> add = Sets.newHashSet();
+						Set<BlockPos> remove = Sets.newHashSet();
+						ends.add(POS.toImmutable());
+						
+						while (!ends.isEmpty()) {
+							ends.forEach((pos) -> {
+								setWithoutUpdate(world, pos, AIR);
+								for (Direction dir: HORIZONTAL) {
+									BlockPos p = pos.offset(dir);
+									if (world.getBlockState(p).isOf(Blocks.CHORUS_PLANT)) {
+										add.add(p);
+									}
+								}
+								BlockPos p = pos.up();
+								if (world.getBlockState(p).isOf(Blocks.CHORUS_PLANT)) {
+									add.add(p);
+								}
+								remove.add(pos);
+							});
+							ends.removeAll(remove);
+							ends.addAll(add);
+							remove.clear();
+							add.clear();
+						}
+					}
 					// Liquids
-					if (!state.getFluidState().isEmpty()) {
+					else if (!state.getFluidState().isEmpty()) {
 						POS.setY(y - 1);
 						if (world.isAir(POS)) {
 							POS.setY(y);

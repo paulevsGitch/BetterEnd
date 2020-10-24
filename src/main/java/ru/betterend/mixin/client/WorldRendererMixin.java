@@ -51,7 +51,7 @@ public class WorldRendererMixin {
 	private static Vector3f axis2;
 	private static Vector3f axis3;
 	private static float time;
-	private static boolean optifine = false;
+	private static boolean directOpenGL = false;
 	
 	@Shadow
 	@Final
@@ -78,19 +78,18 @@ public class WorldRendererMixin {
 		axis2.normalize();
 		axis3.normalize();
 		
-		optifine = FabricLoader.getInstance().isModLoaded("optifabric");
+		directOpenGL = FabricLoader.getInstance().isModLoaded("optifabric") || FabricLoader.getInstance().isModLoaded("immersive_portals");
 	}
 	
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
 	private void renderBetterEndSky(MatrixStack matrices, float tickDelta, CallbackInfo info) {
 		if (client.world.getSkyProperties().getSkyType() == SkyProperties.SkyType.END) {
 			time = (ticks % 360000) * 0.001F;
-			//if (time > 360) time -= 360;
 			
 			BackgroundRenderer.setFogBlack();
 			RenderSystem.enableTexture();
 			
-			if (optifine) {
+			if (directOpenGL) {
 				GL11.glEnable(GL11.GL_ALPHA_TEST);
 				GL11.glAlphaFunc(516, 0.0F);
 				GL11.glEnable(GL11.GL_BLEND);

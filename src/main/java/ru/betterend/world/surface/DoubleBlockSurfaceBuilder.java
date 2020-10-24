@@ -2,34 +2,36 @@ package ru.betterend.world.surface;
 
 import java.util.Random;
 
-import com.mojang.serialization.Codec;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 
 public class DoubleBlockSurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
-	public static final DoubleBlockSurfaceBuilder INSTANCE = new DoubleBlockSurfaceBuilder(TernarySurfaceConfig.CODEC);
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(4141);
 	private TernarySurfaceConfig config1;
 	private TernarySurfaceConfig config2;
 	
-	public DoubleBlockSurfaceBuilder(Codec<TernarySurfaceConfig> codec) {
-		super(codec);
+	private DoubleBlockSurfaceBuilder() {
+		super(TernarySurfaceConfig.CODEC);
 	}
 	
-	public DoubleBlockSurfaceBuilder setConfigUpper(TernarySurfaceConfig config) {
-		config1 = config;
+	public DoubleBlockSurfaceBuilder setBlock1(Block block) {
+		BlockState stone = Blocks.END_STONE.getDefaultState();
+		config1 = new TernarySurfaceConfig(block.getDefaultState(), stone, stone);
 		return this;
 	}
 	
-	public DoubleBlockSurfaceBuilder setConfigLower(TernarySurfaceConfig config) {
-		config2 = config;
+	public DoubleBlockSurfaceBuilder setBlock2(Block block) {
+		BlockState stone = Blocks.END_STONE.getDefaultState();
+		config2 = new TernarySurfaceConfig(block.getDefaultState(), stone, stone);
 		return this;
 	}
 
@@ -39,7 +41,12 @@ public class DoubleBlockSurfaceBuilder extends SurfaceBuilder<TernarySurfaceConf
 		SurfaceBuilder.DEFAULT.generate(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, noise > 0 ? config1 : config2);
 	}
 	
-	public static void register() {
-		Registry.register(Registry.SURFACE_BUILDER, "double_block_surface_builder", INSTANCE);
+	public static DoubleBlockSurfaceBuilder register(String name) {
+		return Registry.register(Registry.SURFACE_BUILDER, name, new DoubleBlockSurfaceBuilder());
+	}
+	
+	public ConfiguredSurfaceBuilder<TernarySurfaceConfig> configured() {
+		BlockState stone = Blocks.END_STONE.getDefaultState();
+		return this.withConfig(new TernarySurfaceConfig(config1.getTopMaterial(), stone, stone));
 	}
 }

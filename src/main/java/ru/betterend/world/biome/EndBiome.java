@@ -12,7 +12,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 
 public class EndBiome {
-	protected List<Subbiome> subbiomes = Lists.newArrayList();
+	protected List<EndBiome> subbiomes = Lists.newArrayList();
 
 	protected final Biome biome;
 	protected final Identifier mcID;
@@ -33,11 +33,11 @@ public class EndBiome {
 		genChanceUnmutable = definition.getGenChance();
 	}
 
-	public EndBiome(Biome biome) {
+	public EndBiome(Biome biome, float genChance) {
 		this.biome = biome;
 		mcID = BuiltinRegistries.BIOME.getId(biome);
 		fogDensity = 1;
-		genChanceUnmutable = 1;
+		genChanceUnmutable = genChance;
 	}
 
 	public void genSurfColumn(WorldAccess world, BlockPos pos, Random random) {
@@ -60,17 +60,17 @@ public class EndBiome {
 		edgeSize = size;
 	}
 
-	public void addSubBiome(EndBiome biome, float chance) {
-		maxSubBiomeChance += chance;
+	public void addSubBiome(EndBiome biome) {
+		maxSubBiomeChance += biome.mutateGenChance(maxSubBiomeChance);
 		biome.biomeParent = this;
-		subbiomes.add(new Subbiome(biome, maxSubBiomeChance));
+		subbiomes.add(biome);
 	}
 
 	public EndBiome getSubBiome(Random random) {
 		float chance = random.nextFloat() * maxSubBiomeChance;
-		for (Subbiome biome : subbiomes)
+		for (EndBiome biome : subbiomes)
 			if (biome.canGenerate(chance))
-				return biome.biome;
+				return biome;
 		return this;
 	}
 
@@ -90,25 +90,11 @@ public class EndBiome {
 		return biome == this || (biome.hasParentBiome() && biome.getParentBiome() == this);
 	}
 
-	protected final class Subbiome {
-		EndBiome biome;
-		float chance;
-
-		Subbiome(EndBiome biome, float chance) {
-			this.biome = biome;
-			this.chance = chance;
-		}
-
-		public boolean canGenerate(float chance) {
-			return chance < this.chance;
-		}
-	}
-
 	public boolean canGenerate(float chance) {
 		return chance <= this.genChance;
 	}
 
-	public float setGenChance(float chance) {
+	public float mutateGenChance(float chance) {
 		genChance = genChanceUnmutable;
 		genChance += chance;
 		return genChance;

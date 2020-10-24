@@ -32,12 +32,16 @@ public class BiomeRegistry {
 	
 	private static Registry<Biome> biomeRegistry;
 	
-	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, true);
-	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS, BiomeType.VOID, true);
-	public static final EndBiome END_HIGHLANDS = registerBiome(BiomeKeys.END_HIGHLANDS, BiomeType.LAND, false);
-	public static final EndBiome END_MIDLANDS = registerBiome(BiomeKeys.END_MIDLANDS, BiomeType.LAND, false);
-	public static final EndBiome SMALL_END_ISLANDS = registerBiome(BiomeKeys.SMALL_END_ISLANDS, BiomeType.VOID, true);
+	// Vanilla Land
+	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, 1F);
+	public static final EndBiome END_MIDLANDS = registerSubBiome(BiomeKeys.END_MIDLANDS, END, 0.5F);
+	public static final EndBiome END_HIGHLANDS = registerSubBiome(BiomeKeys.END_HIGHLANDS, END, 0.5F);
 	
+	// Vanilla Void
+	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS, BiomeType.VOID, 1F);
+	public static final EndBiome SMALL_END_ISLANDS = registerBiome(BiomeKeys.SMALL_END_ISLANDS, BiomeType.VOID, 1);
+	
+	// Better End Land
 	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new BiomeFoggyMushroomland(), BiomeType.LAND);
 	public static final EndBiome CHORUS_FOREST = registerBiome(new BiomeChorusForest(), BiomeType.LAND);
 	public static final EndBiome DUST_WASTELANDS = registerBiome(new BiomeDustWastelands(), BiomeType.LAND);
@@ -60,7 +64,7 @@ public class BiomeRegistry {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				if (!MUTABLE.containsKey(biome) && !biomeRegistry.getId(biome).getNamespace().equals("minecraft")) {
-					EndBiome endBiome = new EndBiome(biome);
+					EndBiome endBiome = new EndBiome(biome, 1);
 					LAND_BIOMES.addBiomeMutable(endBiome);
 					KEYS.put(endBiome, biomeRegistry.getKey(biome).get());
 				}
@@ -68,16 +72,24 @@ public class BiomeRegistry {
 		});
 	}
 	
-	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, boolean addToGen) {
-		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.get(key));
-		if (addToGen) addToPicker(endBiome, type);
+	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
+		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
+	}
+	
+	public static EndBiome registerBiome(Biome biome, BiomeType type, float genChance) {
+		EndBiome endBiome = new EndBiome(biome, genChance);
+		addToPicker(endBiome, type);
 		makeLink(endBiome);
 		return endBiome;
 	}
 	
-	public static EndBiome registerBiome(Biome biome, BiomeType type) {
-		EndBiome endBiome = new EndBiome(biome);
-		addToPicker(endBiome, type);
+	public static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
+		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance);
+	}
+	
+	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float genChance) {
+		EndBiome endBiome = new EndBiome(biome, genChance);
+		parent.addSubBiome(endBiome);
 		makeLink(endBiome);
 		return endBiome;
 	}

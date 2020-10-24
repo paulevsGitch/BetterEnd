@@ -61,27 +61,22 @@ public class BiomeDefinition {
 		this.id = BetterEnd.makeID(name);
 	}
 
-	public BiomeDefinition setSurface(Block surfaceBlock) {
-		this.surface = SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
-				surfaceBlock.getDefaultState(),
+	public BiomeDefinition setSurface(Block block) {
+		setSurface(SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
+				block.getDefaultState(),
 				Blocks.END_STONE.getDefaultState(),
 				Blocks.END_STONE.getDefaultState()
-		));
+		)));
 		return this;
 	}
 	
-	public BiomeDefinition setSurface(Block surfaceBlock1, Block surfaceBlock2) {
-		this.surface = DoubleBlockSurfaceBuilder.INSTANCE.setConfigUpper(new TernarySurfaceConfig(
-				surfaceBlock1.getDefaultState(),
-				Blocks.END_STONE.getDefaultState(),
-				Blocks.END_STONE.getDefaultState()
-		)).setConfigLower(new TernarySurfaceConfig(
-				surfaceBlock2.getDefaultState(),
-				Blocks.END_STONE.getDefaultState(),
-				Blocks.END_STONE.getDefaultState()
-		)).withConfig(new TernarySurfaceConfig(surfaceBlock1.getDefaultState(),
-				Blocks.END_STONE.getDefaultState(),
-				Blocks.END_STONE.getDefaultState()));
+	public BiomeDefinition setSurface(Block block1, Block block2) {
+		setSurface(DoubleBlockSurfaceBuilder.register("be_" + id.getPath() + "_surface").setBlock1(block1).setBlock2(block2).configured());
+		return this;
+	}
+	
+	public BiomeDefinition setSurface(ConfiguredSurfaceBuilder<?> builder) {
+		this.surface = builder;
 		return this;
 	}
 

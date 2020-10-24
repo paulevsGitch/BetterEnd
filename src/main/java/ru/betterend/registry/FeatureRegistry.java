@@ -71,7 +71,10 @@ public class FeatureRegistry {
 		if (id.getNamespace().equals("minecraft")) {
 			String path = id.getPath();
 			if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands")) {
-				features.get(GenerationStep.Feature.VEGETAL_DECORATION.ordinal()).clear();
+				int pos = GenerationStep.Feature.VEGETAL_DECORATION.ordinal();
+				if (pos < features.size()) {
+					features.get(pos).clear();
+				}
 			}
 		}
 		

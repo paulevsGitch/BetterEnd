@@ -16,14 +16,14 @@ public class BiomePicker {
 	
 	public void addBiome(EndBiome biome) {
 		biomes.add(biome);
-		maxChance = biome.setGenChance(maxChance);
+		maxChance = biome.mutateGenChance(maxChance);
 		biomeCount ++;
 		maxChanceUnmutable = maxChance;
 	}
 	
 	public void addBiomeMutable(EndBiome biome) {
 		biomes.add(biome);
-		maxChance = biome.setGenChance(maxChance);
+		maxChance = biome.mutateGenChance(maxChance);
 	}
 	
 	public void clearMutables() {

@@ -18,6 +18,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.dimension.DimensionType;
@@ -28,7 +29,6 @@ import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.BlockTagRegistry;
 import ru.betterend.registry.ParticleRegistry;
 import ru.betterend.util.PortalFrameHelper;
-import ru.betterend.world.features.DefaultFeature;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
 	public EndPortalBlock() {
@@ -91,16 +91,13 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	private BlockPos findExitPos(ServerWorld world, BlockPos pos, Entity entity) {
 		Registry<DimensionType> registry = world.getRegistryManager().getDimensionTypes();
 		double mult = registry.get(DimensionType.THE_END_ID).getCoordinateScale();
-		int topY;
 		BlockPos.Mutable basePos;
 		if (world.getRegistryKey().equals(World.OVERWORLD)) {
 			basePos = pos.mutableCopy().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
-			topY = DefaultFeature.getPosOnSurface(world, basePos).getY();
 		} else {
 			basePos = pos.mutableCopy().set(pos.getX() * mult, pos.getY(), pos.getZ() * mult);
-			topY = world.getHeight();
 		}
-		BlockPos top = basePos.mutableCopy().set(basePos.getX() + 32, topY, basePos.getZ() + 32);
+		BlockPos top = basePos.mutableCopy().set(basePos.getX() + 32, world.getHeight(), basePos.getZ() + 32);
 		BlockPos.Mutable bottom = basePos.mutableCopy().set(basePos.getX() - 32, 5, basePos.getZ() - 32);
 		for(BlockPos position : BlockPos.iterate(bottom, top)) {
 			BlockState state = world.getBlockState(position);
@@ -141,7 +138,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		if (world.getRegistryKey().equals(World.END)) {
 			ConfiguredFeatures.END_ISLAND.generate(world, world.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos);
 		} else {
-			basePos.setY(topY);
+			basePos.setY(world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()));
 		}
 		PortalFrameHelper.generatePortalFrame(world, basePos, axis, true);
 		if (axis.equals(Direction.Axis.X)) {

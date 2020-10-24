@@ -15,6 +15,10 @@ public class EndPortalFeatureConfig implements FeatureConfig {
 			return Registry.BLOCK.getId(endPortalFeatureConfig.frameBlock).toString();
 		}), Codec.STRING.fieldOf("axis").forGetter(endPortalFeatureConfig -> {
 			return endPortalFeatureConfig.axis.getName();
+		}), Codec.INT.fieldOf("width").forGetter(endPortalFeatureConfig -> {
+			return endPortalFeatureConfig.width;
+		}), Codec.INT.fieldOf("heigth").forGetter(endPortalFeatureConfig -> {
+			return endPortalFeatureConfig.height;
 		}), Codec.BOOL.fieldOf("activated").forGetter(endPortalFeatureConfig -> {
 			return endPortalFeatureConfig.activated;
 		})).apply(instance, EndPortalFeatureConfig::new);
@@ -23,20 +27,26 @@ public class EndPortalFeatureConfig implements FeatureConfig {
 	public final RunedFlavolite frameBlock;
 	public final Direction.Axis axis;
 	public final boolean activated;
+	public final int width;
+	public final int height;
 	
-	private EndPortalFeatureConfig(String frameBlock, String axis, boolean active) {
+	private EndPortalFeatureConfig(String frameBlock, String axis, int width, int height, boolean active) {
 		this.frameBlock = (RunedFlavolite) Registry.BLOCK.get(new Identifier(frameBlock));
 		this.axis = Direction.Axis.fromName(axis);
 		this.activated = active;
+		this.width = width;
+		this.height = height;
 	}
 	
-	private EndPortalFeatureConfig(RunedFlavolite frameBlock, Direction.Axis axis, boolean active) {
+	private EndPortalFeatureConfig(RunedFlavolite frameBlock, Direction.Axis axis, int width, int height, boolean active) {
 		this.frameBlock = frameBlock;
 		this.axis = axis;
 		this.activated = active;
+		this.width = width;
+		this.height = height;
 	}
 	
-	public static EndPortalFeatureConfig create(RunedFlavolite block, Direction.Axis axis, boolean active) {
-		return new EndPortalFeatureConfig(block, axis, active);
+	public static EndPortalFeatureConfig create(RunedFlavolite block, Direction.Axis axis, int width, int height, boolean active) {
+		return new EndPortalFeatureConfig(block, axis, width, height, active);
 	}
 }

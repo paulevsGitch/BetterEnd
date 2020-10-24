@@ -14,8 +14,13 @@ public class EndPortalFeature extends EndFeature {
 		this.frameBlock = frameBlock;
 	}
 	
+	public EndPortalFeature configure(Direction.Axis axis, int width, int height, boolean active) {
+		this.featureConfigured = ((DefaultEndPortalFeature) this.feature).configure(EndPortalFeatureConfig.create(frameBlock, axis, width, height, active));
+		return this;
+	}
+	
 	public EndPortalFeature configure(Direction.Axis axis, boolean active) {
-		this.featureConfigured = ((DefaultEndPortalFeature) this.feature).configure(EndPortalFeatureConfig.create(frameBlock, axis, active));
+		this.featureConfigured = ((DefaultEndPortalFeature) this.feature).configure(EndPortalFeatureConfig.create(frameBlock, axis, 4, 5, active));
 		return this;
 	}
 }

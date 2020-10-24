@@ -4,12 +4,12 @@
 		"sounds": [
 			{
 				"name": "betterend:music/dan_henig-eternal_garden",
-				"volume": 0.1,
+				"volume": 0.25,
 				"stream": false
 			},
 			{
 				"name": "betterend:music/dan_henig-nebular_focus",
-				"volume": 0.1,
+				"volume": 0.25,
 				"stream": false
 			}
 		]
@@ -19,12 +19,27 @@
 		"sounds": [
 			{
 				"name": "betterend:music/emmit_fenn-creep",
-				"volume": 0.1,
+				"volume": 0.25,
 				"stream": false
 			},
 			{
 				"name": "betterend:music/jesse_gallagher-the_anunnaki_return",
-				"volume": 0.1,
+				"volume": 0.25,
+				"stream": false
+			}
+		]
+	},
+	"betterend.music.crystal_mountains": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/jesse_gallagher-spenta_mainyu",
+				"volume": 0.25,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jesse_gallagher-obelisks",
+				"volume": 0.25,
 				"stream": false
 			}
 		]

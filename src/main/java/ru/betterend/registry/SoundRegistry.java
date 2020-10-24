@@ -4,8 +4,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 
-public class SoundRegistry
-{
+public class SoundRegistry {
 	// Music
 	public static final SoundEvent MUSIC_FOGGY_MUSHROOMLAND = register("music", "foggy_mushroomland");
 	public static final SoundEvent MUSIC_CHORUS_FOREST = register("music", "chorus_forest");
@@ -20,8 +19,7 @@ public class SoundRegistry
 	
 	public static void register() {}
 	
-	private static SoundEvent register(String type, String id)
-	{
+	private static SoundEvent register(String type, String id) {
 		id = "betterend." + type + "." + id;
 		return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(BetterEnd.makeID(id)));
 	}

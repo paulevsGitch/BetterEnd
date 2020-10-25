@@ -1,9 +1,5 @@
 package ru.betterend;
 
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
@@ -26,6 +22,7 @@ import ru.betterend.registry.ItemTagRegistry;
 import ru.betterend.registry.SoundRegistry;
 import ru.betterend.registry.StructureRegistry;
 import ru.betterend.util.Logger;
+import ru.betterend.util.TranslationHelper;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 
 public class BetterEnd implements ModInitializer {
@@ -56,7 +53,7 @@ public class BetterEnd implements ModInitializer {
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 		
 		if (isDevEnvironment()) {
-			printMissingNames();
+			TranslationHelper.printMissingNames();
 		}
 	}
 	
@@ -68,35 +65,7 @@ public class BetterEnd implements ModInitializer {
 		return String.format("%s:%s", MOD_ID, id);
 	}
 	
-	private static boolean isDevEnvironment() {
+	public static boolean isDevEnvironment() {
 		return FabricLoader.getInstance().isDevelopmentEnvironment();
-	}
-	
-	private static void printMissingNames() {
-		List<String> missingNames = Lists.newArrayList();
-		
-		ItemRegistry.getModBlocks().forEach((block) -> {
-			String name = block.getName().asString();
-			if (name.contains(".betterend.")) {
-				missingNames.add(name);
-			}
-		});
-		
-		ItemRegistry.getModItems().forEach((item) -> {
-			String name = item.getName().asString();
-			if (name.contains(".betterend.")) {
-				missingNames.add(name);
-			}
-		});
-		
-		if (!missingNames.isEmpty()) {
-			System.out.println("========================================");
-			System.out.println("           MISSING NAMES LIST           ");
-			System.out.println("========================================");
-			missingNames.forEach((name) -> {
-				System.out.println(name);
-			});
-			System.out.println("========================================");
-		}
 	}
 }

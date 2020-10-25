@@ -26,7 +26,7 @@ dependencies {
 	
 	optional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	optional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
-	optional "grondag:canvas-mc116:${project.canvas_version}"
+	// optional "grondag:canvas-mc116:${project.canvas_version}"
 }
 
 def optional(String dep) {

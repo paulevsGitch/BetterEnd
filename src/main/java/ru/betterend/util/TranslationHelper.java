@@ -54,7 +54,7 @@ public class TranslationHelper {
 				System.out.println("                 ENGLISH");
 				System.out.println("========================================");
 				missingNamesEn.forEach((name) -> {
-					System.out.println(name);
+					System.out.println("	\"" + name + "\": \"" + fastTranslateEn(name) + "\",");
 				});
 				
 			}
@@ -65,11 +65,25 @@ public class TranslationHelper {
 				System.out.println("                 RUSSIAN");
 				System.out.println("========================================");
 				missingNamesRu.forEach((name) -> {
-					System.out.println(name);
+					System.out.println("	\"" + name + "\": \"\",");
 				});
 			}
 			
 			System.out.println("========================================");
 		}
+	}
+	
+	public static String fastTranslateEn(String text) {
+		String[] words = text.substring(text.lastIndexOf('.') + 1).split("_");
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < words.length; i++) {
+			String word = words[i];
+			builder.append(Character.toUpperCase(word.charAt(0)));
+			builder.append(word, 1, word.length());
+			if (i < words.length - 1) {
+				builder.append(' ');
+			}
+		}
+		return builder.toString();
 	}
 }

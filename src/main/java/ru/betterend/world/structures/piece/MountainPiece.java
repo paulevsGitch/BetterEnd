@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
@@ -37,6 +38,7 @@ public class MountainPiece extends BasePiece {
 	private float height;
 	private float r2;
 	private Identifier biomeID;
+	private BlockState top;
 	
 	public MountainPiece(BlockPos center, float radius, float height, int id, Biome biome) {
 		super(StructureRegistry.MOUNTAIN_PIECE, id);
@@ -46,6 +48,7 @@ public class MountainPiece extends BasePiece {
 		this.r2 = radius * radius;
 		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 		this.biomeID = BiomeRegistry.getBiomeID(biome);
+		top = biome.getGenerationSettings().getSurfaceConfig().getTopMaterial();
 		makeBoundingBox();
 	}
 
@@ -70,6 +73,7 @@ public class MountainPiece extends BasePiece {
 		biomeID = new Identifier(tag.getString("biome"));
 		r2 = radius * radius;
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		top = BiomeRegistry.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
 	}
 
 	@Override
@@ -99,9 +103,11 @@ public class MountainPiece extends BasePiece {
 							maxY *= (float) noise.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
 							maxY *= (float) noise.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
 							maxY += 56;
+							int cover = (int) (maxY - 1);
+							boolean needCover = noise.eval(px * 0.3, pz * 0.3) > 0 && (noise.eval(px * 0.03, pz * 0.03) - (maxY - 60) * 0.2) > 0;
 							for (int y = minY; y < maxY; y++) {
 								pos.setY(y);
-								chunk.setBlockState(pos, Blocks.END_STONE.getDefaultState(), false);
+								chunk.setBlockState(pos, needCover && y >= cover ? top : Blocks.END_STONE.getDefaultState(), false);
 							}
 						}
 					}

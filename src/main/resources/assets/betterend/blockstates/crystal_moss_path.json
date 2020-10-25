@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/crystal_moss_path" },
+			{ "model": "betterend:block/crystal_moss_path", "y": 90 },
+			{ "model": "betterend:block/crystal_moss_path", "y": 180 },
+			{ "model": "betterend:block/crystal_moss_path", "y": 270 }
+		]
+	}
+}

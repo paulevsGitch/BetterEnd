@@ -154,4 +154,8 @@ public class BiomeRegistry {
 		Identifier id = biomeRegistry.getId(biome);
 		return id == null ? END.getID() : id;
 	}
+
+	public static EndBiome getBiome(Identifier biomeID) {
+		return ID_MAP.getOrDefault(biomeID, END);
+	}
 }

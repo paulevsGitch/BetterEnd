@@ -154,7 +154,7 @@ public class BlocksHelper {
 						Set<BlockPos> remove = Sets.newHashSet();
 						ends.add(POS.toImmutable());
 						
-						while (!ends.isEmpty()) {
+						for (int i = 0; i < 128 && !ends.isEmpty(); i++) {
 							ends.forEach((pos) -> {
 								setWithoutUpdate(world, pos, AIR);
 								for (Direction dir: HORIZONTAL) {
@@ -169,8 +169,8 @@ public class BlocksHelper {
 								}
 								remove.add(pos);
 							});
-							ends.removeAll(remove);
 							ends.addAll(add);
+							ends.removeAll(remove);
 							remove.clear();
 							add.clear();
 						}

@@ -8,6 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.FeatureRegistry;
 
@@ -22,34 +23,29 @@ public class PortalFrameHelper {
 		boolean valid = true;
 		int width = 1, height = 1;
 		Direction.Axis axis = Direction.Axis.X;
-		BlockPos checkPos = bottomCorner.up();
+		BlockPos.Mutable checkPos = bottomCorner.up().mutableCopy();
 		Direction moveDir = Direction.UP;
 		while(valid && !checkPos.equals(bottomCorner)) {
 			valid = world.getBlockState(checkPos).isOf(frameBlock);
 			if (!valid) {
+				checkPos = checkPos.move(moveDir.getOpposite());
 				switch(moveDir) {
 					case UP: {
-						checkPos = checkPos.down();
 						if (world.getBlockState(checkPos.east()).isOf(frameBlock)) {
-							checkPos = checkPos.east();
 							moveDir = Direction.EAST;
 							valid = true;
 						} else if (world.getBlockState(checkPos.south()).isOf(frameBlock)) {
 							axis = Direction.Axis.Z;
-							checkPos = checkPos.south();
 							moveDir = Direction.SOUTH;
 							valid = true;
 						}
 						break;
 					}
 					case DOWN: {
-						checkPos = checkPos.up();
 						if (world.getBlockState(checkPos.west()).isOf(frameBlock)) {
-							checkPos = checkPos.west();
 							moveDir = Direction.WEST;
 							valid = true;
 						} else if (world.getBlockState(checkPos.north()).isOf(frameBlock)) {
-							checkPos = checkPos.north();
 							moveDir = Direction.NORTH;
 							valid = true;
 						}
@@ -57,9 +53,7 @@ public class PortalFrameHelper {
 					}
 					case SOUTH:
 					case EAST: {
-						checkPos = moveDir.equals(Direction.SOUTH) ? checkPos.north() : checkPos.west();
 						if (world.getBlockState(checkPos.down()).isOf(frameBlock)) {
-							checkPos = checkPos.down();
 							moveDir = Direction.DOWN;
 							valid = true;
 						}
@@ -69,39 +63,17 @@ public class PortalFrameHelper {
 						return false;
 				}
 				if (!valid) return false;
+				checkPos = checkPos.move(moveDir);
 			} else {
-				switch(moveDir) {
-					case UP: {
-						height++;
-						checkPos = checkPos.up();
-						break;
-					}
-					case DOWN: {
-						checkPos = checkPos.down();
-						break;
-					}
-					case NORTH: {
-						checkPos = checkPos.north();
-						break;
-					}
-					case SOUTH: {
-						width++;
-						checkPos = checkPos.south();
-						break;
-					}
-					case EAST: {
-						width++;
-						checkPos = checkPos.east();
-						break;
-					}
-					case WEST: {
-						checkPos = checkPos.west();
-						break;
-					}
+				if (moveDir.equals(Direction.EAST) || moveDir.equals(Direction.SOUTH)) {
+					width++;
+				} else if (moveDir.equals(Direction.UP)) {
+					height++;
 				}
+				checkPos = checkPos.move(moveDir);
 			}
 		}
-		if (width < 4 || height < 5 || width > 40 || height > 40) return false;
+		if (width < 4 || height < 5 || width > 20 || height > 25) return false;
 		if (axis.equals(Direction.Axis.X)) {
 			if(!checkIsAreaEmpty(world, bottomCorner.add(1, 1, 0), topCorner.add(-1, -1, 0))) return false;
 		} else {
@@ -124,27 +96,28 @@ public class PortalFrameHelper {
 		BlockState south = world.getBlockState(pos.south());
 		BlockState west = world.getBlockState(pos.west());
 		BlockState east = world.getBlockState(pos.east());
+		BlockPos.Mutable mutable = pos instanceof BlockPos.Mutable ? (BlockPos.Mutable) pos : pos.mutableCopy();
 		if (up.isOf(frameBlock) && !down.isOf(frameBlock)) {
 			if (south.isOf(frameBlock) || east.isOf(frameBlock)) {
-				return pos;
+				return pos.toImmutable();
 			} else if (west.isOf(frameBlock)) {
-				return findBottomCorner(world, pos.west(), frameBlock);
+				return findBottomCorner(world, mutable.move(Direction.WEST), frameBlock);
 			} else if (north.isOf(frameBlock)){
-				return findBottomCorner(world, pos.north(), frameBlock);
+				return findBottomCorner(world, mutable.move(Direction.NORTH), frameBlock);
 			}
 			return null;
 		} else if (down.isOf(frameBlock)) {
 			if (west.isOf(frameBlock)) {
-				return findBottomCorner(world, pos.west(), frameBlock);
+				return findBottomCorner(world, mutable.move(Direction.WEST), frameBlock);
 			} else if (north.isOf(frameBlock)) {
-				return findBottomCorner(world, pos.north(), frameBlock);
+				return findBottomCorner(world, mutable.move(Direction.NORTH), frameBlock);
 			} else {
-				return findBottomCorner(world, pos.down(), frameBlock);
+				return findBottomCorner(world, mutable.move(Direction.DOWN), frameBlock);
 			}
 		} else if (west.isOf(frameBlock)) {
-			return findBottomCorner(world, pos.west(), frameBlock);
+			return findBottomCorner(world, mutable.move(Direction.WEST), frameBlock);
 		} else if (north.isOf(frameBlock)) {
-			return findBottomCorner(world, pos.north(), frameBlock);
+			return findBottomCorner(world, mutable.move(Direction.NORTH), frameBlock);
 		}
 		return null;
 	}
@@ -156,27 +129,28 @@ public class PortalFrameHelper {
 		BlockState south = world.getBlockState(pos.south());
 		BlockState west = world.getBlockState(pos.west());
 		BlockState east = world.getBlockState(pos.east());
+		BlockPos.Mutable mutable = pos instanceof BlockPos.Mutable ? (BlockPos.Mutable) pos : pos.mutableCopy();
 		if (!up.isOf(frameBlock) && down.isOf(frameBlock)) {
 			if (north.isOf(frameBlock) || west.isOf(frameBlock)) {
-				return pos;
+				return pos.toImmutable();
 			} else if (east.isOf(frameBlock)) {
-				return findTopCorner(world, pos.east(), frameBlock);
+				return findTopCorner(world, mutable.move(Direction.EAST), frameBlock);
 			} else if (south.isOf(frameBlock)){
-				return findTopCorner(world, pos.south(), frameBlock);
+				return findTopCorner(world, mutable.move(Direction.SOUTH), frameBlock);
 			}
 			return null;
 		} else if (up.isOf(frameBlock)) {
 			if (east.isOf(frameBlock)) {
-				return findTopCorner(world, pos.east(), frameBlock);
+				return findTopCorner(world, mutable.move(Direction.EAST), frameBlock);
 			} else if (south.isOf(frameBlock)){
-				return findTopCorner(world, pos.south(), frameBlock);
+				return findTopCorner(world, mutable.move(Direction.SOUTH), frameBlock);
 			} else {
-				return findTopCorner(world, pos.up(), frameBlock);
+				return findTopCorner(world, mutable.move(Direction.UP), frameBlock);
 			}
 		} else if (east.isOf(frameBlock)) {
-			return findTopCorner(world, pos.east(), frameBlock);
+			return findTopCorner(world, mutable.move(Direction.EAST), frameBlock);
 		} else if (south.isOf(frameBlock)){
-			return findTopCorner(world, pos.south(), frameBlock);
+			return findTopCorner(world, mutable.move(Direction.SOUTH), frameBlock);
 		}
 		return null;
 	}

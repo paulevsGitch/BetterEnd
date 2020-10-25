@@ -1,5 +1,9 @@
 package ru.betterend;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
@@ -50,6 +54,10 @@ public class BetterEnd implements ModInitializer {
 		StructureRegistry.register();
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
+		
+		if (isDevEnvironment()) {
+			printMissingNames();
+		}
 	}
 	
 	public static Identifier makeID(String path) {
@@ -58,5 +66,37 @@ public class BetterEnd implements ModInitializer {
 	
 	public static String getStringId(String id) {
 		return String.format("%s:%s", MOD_ID, id);
+	}
+	
+	private static boolean isDevEnvironment() {
+		return FabricLoader.getInstance().isDevelopmentEnvironment();
+	}
+	
+	private static void printMissingNames() {
+		List<String> missingNames = Lists.newArrayList();
+		
+		ItemRegistry.getModBlocks().forEach((block) -> {
+			String name = block.getName().asString();
+			if (name.contains(".betterend.")) {
+				missingNames.add(name);
+			}
+		});
+		
+		ItemRegistry.getModItems().forEach((item) -> {
+			String name = item.getName().asString();
+			if (name.contains(".betterend.")) {
+				missingNames.add(name);
+			}
+		});
+		
+		if (!missingNames.isEmpty()) {
+			System.out.println("========================================");
+			System.out.println("           MISSING NAMES LIST           ");
+			System.out.println("========================================");
+			missingNames.forEach((name) -> {
+				System.out.println(name);
+			});
+			System.out.println("========================================");
+		}
 	}
 }

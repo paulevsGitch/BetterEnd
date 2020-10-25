@@ -144,12 +144,7 @@ public class BiomeRegistry {
 		EndBiome endBiome = CLIENT.get(biome);
 		if (endBiome == null) {
 			Identifier id = MinecraftClient.getInstance().world.getRegistryManager().get(Registry.BIOME_KEY).getId(biome);
-			if (id == null) {
-				endBiome = END;
-			}
-			else {
-				endBiome = ID_MAP.getOrDefault(id, END);
-			}
+			endBiome = id == null ? END : ID_MAP.getOrDefault(id, END);
 			CLIENT.put(biome, endBiome);
 		}
 		return endBiome;

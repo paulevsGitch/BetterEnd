@@ -189,5 +189,14 @@
 	"block.betterend.end_portal_block": "Портал Края",
 	"block.betterend.cave_moss": "Пещерный мох",
 	"block.betterend.cave_grass": "Пещерная трава",
-	"block.betterend.cave_bush": "Пещерный куст"
+	"block.betterend.cave_bush": "Пещерный куст",
+	
+ 	"block.betterend.cave_moss_path": "Тропа из пещерного мха",
+ 	"block.betterend.crystal_moss": "Кристаллический мох",
+ 	"block.betterend.crystal_moss_path": "Тропа из кристаллический мох",
+ 	"block.betterend.pythadendron_leaves": "Листья пифодендрона",
+ 	"block.betterend.violecite_polished": "Полированный виолецит",
+ 	"block.betterend.violecite_tiles": "Виолецитовая плитка",
+ 	"item.betterend.eternal_crystal": "Вечный кристалл",
+ 	"item.betterend.spawn_egg_end_fish": "Яйцо призыва рыбы Края"
 }

@@ -189,5 +189,12 @@
 	"block.betterend.end_portal_block": "End Portal",
 	"block.betterend.cave_moss": "Cave Moss",
 	"block.betterend.cave_grass": "Cave Grass",
-	"block.betterend.cave_bush": "Cave Bush"
+	"block.betterend.cave_bush": "Cave Bush",
+	
+ 	"block.betterend.cave_moss_path": "Cave Moss Path",
+ 	"block.betterend.crystal_moss": "Crystal Moss",
+ 	"block.betterend.crystal_moss_path": "Crystal Moss Path",
+ 	"block.betterend.pythadendron_leaves": "Pythadendron Leaves",
+ 	"item.betterend.eternal_crystal": "Eternal Crystal",
+ 	"item.betterend.spawn_egg_end_fish": "End Fish Spawn Egg"
 }

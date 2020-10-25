@@ -56,7 +56,6 @@ public class TranslationHelper {
 				missingNamesEn.forEach((name) -> {
 					System.out.println("	\"" + name + "\": \"" + fastTranslateEn(name) + "\",");
 				});
-				
 			}
 			
 			if (!missingNamesRu.isEmpty()) {

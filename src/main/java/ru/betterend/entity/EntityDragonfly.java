@@ -34,15 +34,15 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class EntityDragonfly extends AnimalEntity implements Flutterer {
-    public EntityDragonfly(EntityType<EntityDragonfly> entityType, World world) {
-        super(entityType, world);
-        this.moveControl = new FlightMoveControl(this, 20, true);
-        this.lookControl = new DragonflyLookControl(this);
-        this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
+	public EntityDragonfly(EntityType<EntityDragonfly> entityType, World world) {
+		super(entityType, world);
+		this.moveControl = new FlightMoveControl(this, 20, true);
+		this.lookControl = new DragonflyLookControl(this);
+		this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
 		this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
-        this.experiencePoints = 1;
-    }
-    
+		this.experiencePoints = 1;
+	}
+
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
 		return LivingEntity.createLivingAttributes()
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
@@ -50,7 +50,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 				.add(EntityAttributes.GENERIC_FLYING_SPEED, 1.0D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1D);
 	}
-	
+
 	@Override
 	protected EntityNavigation createNavigation(World world) {
 		BirdNavigation birdNavigation = new BirdNavigation(this, world) {
@@ -68,12 +68,12 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 		birdNavigation.setCanEnterOpenDoors(true);
 		return birdNavigation;
 	}
-	
+
 	@Override
 	public float getPathfindingFavor(BlockPos pos, WorldView world) {
 		return world.getBlockState(pos).isAir() ? 10.0F : 0.0F;
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		this.goalSelector.add(1, new SwimGoal(this));
@@ -81,7 +81,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 		this.goalSelector.add(3, new FollowParentGoal(this, 1.0D));
 		this.goalSelector.add(4, new WanderAroundGoal());
 	}
-	
+
 	@Override
 	public boolean isPushable() {
 		return false;
@@ -91,12 +91,12 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 	protected boolean hasWings() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canClimb() {
 		return false;
@@ -106,7 +106,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 	public boolean hasNoGravity() {
 		return true;
 	}
-	
+
 	@Override
 	public SoundEvent getAmbientSound() {
 		return SoundRegistry.ENTITY_DRAGONFLY;
@@ -116,7 +116,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 	protected float getSoundVolume() {
 		return MHelper.randRange(0.25F, 0.5F, random);
 	}
-	
+
 	class DragonflyLookControl extends LookControl {
 		DragonflyLookControl(MobEntity entity) {
 			super(entity);
@@ -126,28 +126,33 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 			return true;
 		}
 	}
-	
+
 	class WanderAroundGoal extends Goal {
-	      WanderAroundGoal() {
-	         this.setControls(EnumSet.of(Goal.Control.MOVE));
-	      }
+		WanderAroundGoal() {
+			this.setControls(EnumSet.of(Goal.Control.MOVE));
+		}
 
-	      public boolean canStart() {
-	         return EntityDragonfly.this.navigation.isIdle() && EntityDragonfly.this.random.nextInt(10) == 0;
-	      }
+		public boolean canStart() {
+			return EntityDragonfly.this.navigation.isIdle() && EntityDragonfly.this.random.nextInt(10) == 0;
+		}
 
-	      public boolean shouldContinue() {
-	         return EntityDragonfly.this.navigation.isFollowingPath();
-	      }
+		public boolean shouldContinue() {
+			return EntityDragonfly.this.navigation.isFollowingPath();
+		}
 
-	      public void start() {
-	         Vec3d vec3d = this.getRandomLocation();
-	         if (vec3d != null) {
-	        	 Path path = EntityDragonfly.this.navigation.findPathTo(new BlockPos(vec3d), 1);
-	        	 EntityDragonfly.this.navigation.startMovingAlong(path, 1.0D);
-	         }
-	         super.start();
-	      }
+		public void start() {
+			Vec3d vec3d = this.getRandomLocation();
+			if (vec3d != null) {
+				BlockPos pos = new BlockPos(vec3d);
+				if (!pos.equals(EntityDragonfly.this.getBlockPos())) {
+					Path path = EntityDragonfly.this.navigation.findPathTo(new BlockPos(vec3d), 1);
+					if (path != null) {
+						EntityDragonfly.this.navigation.startMovingAlong(path, 1.0D);
+					}
+				}
+			}
+			super.start();
+		}
 
 		private Vec3d getRandomLocation() {
 			int h = BlocksHelper.downRay(EntityDragonfly.this.world, EntityDragonfly.this.getBlockPos(), 16);
@@ -170,7 +175,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 			}
 			return TargetFinder.findGroundTarget(EntityDragonfly.this, 8, 4, -2, rotation, 1.5707963705062866D);
 		}
-		
+
 		private boolean isInVoid(Vec3d pos) {
 			int h = BlocksHelper.downRay(EntityDragonfly.this.world, new BlockPos(pos), 128);
 			return h > 100;

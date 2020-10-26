@@ -31,6 +31,7 @@ public class RunedFlavolite extends BlockBase {
 	
 	@Override
 	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		super.onBreak(world, pos, state, player);
 		BlockPos bottom = PortalFrameHelper.findBottomCorner((World) world, pos, this);
 		BlockPos top = PortalFrameHelper.findTopCorner((World) world, pos, this);
 		if (bottom == null || top == null) return;
@@ -43,6 +44,5 @@ public class RunedFlavolite extends BlockBase {
 				world.removeBlock(position, false);
 			}
 		}
-		super.onBreak(world, pos, state, player);
 	}
 }

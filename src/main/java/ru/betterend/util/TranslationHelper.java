@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import ru.betterend.BetterEnd;
+import ru.betterend.registry.BiomeRegistry;
 import ru.betterend.registry.ItemRegistry;
 
 public class TranslationHelper {
@@ -40,6 +41,18 @@ public class TranslationHelper {
 			}
 			if (!translationRu.has(name)) {
 				missingNamesRu.add(name);
+			}
+		});
+		
+		BiomeRegistry.getModBiomes().forEach((endBiome) -> {
+			if (endBiome.getID().getNamespace().equals(BetterEnd.MOD_ID)) {
+				String name = "biome." + BetterEnd.MOD_ID + "." + endBiome.getID().getPath();
+				if (!translationEn.has(name)) {
+					missingNamesEn.add(name);
+				}
+				if (!translationRu.has(name)) {
+					missingNamesRu.add(name);
+				}
 			}
 		});
 		

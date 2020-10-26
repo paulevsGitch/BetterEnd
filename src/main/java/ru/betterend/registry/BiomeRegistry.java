@@ -1,9 +1,11 @@
 package ru.betterend.registry;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import net.fabricmc.api.EnvType;
@@ -160,5 +162,12 @@ public class BiomeRegistry {
 
 	public static EndBiome getBiome(Identifier biomeID) {
 		return ID_MAP.getOrDefault(biomeID, END);
+	}
+
+	public static List<EndBiome> getModBiomes() {
+		List<EndBiome> result = Lists.newArrayList();
+		result.addAll(BiomeRegistry.LAND_BIOMES.getBiomes());
+		result.addAll(BiomeRegistry.VOID_BIOMES.getBiomes());
+		return result;
 	}
 }

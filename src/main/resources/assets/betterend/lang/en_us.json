@@ -197,5 +197,8 @@
  	"block.betterend.pythadendron_leaves": "Pythadendron Leaves",
  	"item.betterend.eternal_crystal": "Eternal Crystal",
  	"item.betterend.spawn_egg_end_fish": "End Fish Spawn Egg",
-	"block.betterend.crystal_grass": "Crystal Grass"
+	"block.betterend.crystal_grass": "Crystal Grass",
+	
+ 	"biome.betterend.crystal_mountains": "Crystal Mountains",
+ 	"block.betterend.eternal_pedestal": "Eternal Pedestal"
 }

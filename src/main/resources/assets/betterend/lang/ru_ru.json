@@ -199,5 +199,8 @@
  	"block.betterend.violecite_tiles": "Виолецитовая плитка",
  	"item.betterend.eternal_crystal": "Вечный кристалл",
  	"item.betterend.spawn_egg_end_fish": "Яйцо призыва рыбы Края",
-	"block.betterend.crystal_grass": "Кристальная трава"
+	"block.betterend.crystal_grass": "Кристальная трава",
+	
+ 	"biome.betterend.crystal_mountains": "Клисталлические горы",
+ 	"block.betterend.eternal_pedestal": "Вечный пьедестал"
 }

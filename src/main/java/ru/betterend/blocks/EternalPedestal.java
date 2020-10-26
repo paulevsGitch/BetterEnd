@@ -15,7 +15,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.explosion.Explosion;
-
 import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.registry.BlockRegistry;
 

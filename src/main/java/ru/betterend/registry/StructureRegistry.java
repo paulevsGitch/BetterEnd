@@ -14,9 +14,11 @@ import ru.betterend.world.structures.EndStructureFeature;
 import ru.betterend.world.structures.features.StructureGiantMossyGlowshroom;
 import ru.betterend.world.structures.features.StructureMegaLake;
 import ru.betterend.world.structures.features.StructureMountain;
+import ru.betterend.world.structures.features.StructurePaintedMountain;
 import ru.betterend.world.structures.piece.CavePiece;
 import ru.betterend.world.structures.piece.LakePiece;
 import ru.betterend.world.structures.piece.MountainPiece;
+import ru.betterend.world.structures.piece.PaintedMountainPiece;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
 public class StructureRegistry {
@@ -24,10 +26,12 @@ public class StructureRegistry {
 	public static final StructurePieceType MOUNTAIN_PIECE = register("mountain_piece", MountainPiece::new);
 	public static final StructurePieceType CAVE_PIECE = register("cave_piece", CavePiece::new);
 	public static final StructurePieceType LAKE_PIECE = register("lake_piece", LakePiece::new);
+	public static final StructurePieceType PAINTED_MOUNTAIN_PIECE = register("painted_mountain_piece", PaintedMountainPiece::new);
 	
 	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new StructureGiantMossyGlowshroom(), Feature.SURFACE_STRUCTURES, 16, 8);
 	public static final EndStructureFeature MEGALAKE = new EndStructureFeature("megalake", new StructureMegaLake(), Feature.RAW_GENERATION, 4, 1);
 	public static final EndStructureFeature MOUNTAIN = new EndStructureFeature("mountain", new StructureMountain(), Feature.RAW_GENERATION, 3, 2);
+	public static final EndStructureFeature PAINTED_MOUNTAIN = new EndStructureFeature("painted_mountain", new StructurePaintedMountain(), Feature.RAW_GENERATION, 3, 2);
 	
 	public static void register() {}
 	

@@ -21,6 +21,7 @@ import ru.betterend.world.biome.BiomeCrystalMountains;
 import ru.betterend.world.biome.BiomeDustWastelands;
 import ru.betterend.world.biome.BiomeFoggyMushroomland;
 import ru.betterend.world.biome.BiomeMegalake;
+import ru.betterend.world.biome.BiomePaintedMountains;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
@@ -51,6 +52,7 @@ public class BiomeRegistry {
 	public static final EndBiome DUST_WASTELANDS = registerBiome(new BiomeDustWastelands(), BiomeType.LAND);
 	public static final EndBiome MEGALAKE = registerBiome(new BiomeMegalake(), BiomeType.LAND);
 	public static final EndBiome CRYSTAL_MOUNTAINS = registerBiome(new BiomeCrystalMountains(), BiomeType.LAND);
+	public static final EndBiome PAINTED_MOUNTAINS = registerSubBiome(new BiomePaintedMountains(), DUST_WASTELANDS);
 	
 	public static void register() {}
 	
@@ -100,7 +102,8 @@ public class BiomeRegistry {
 		return endBiome;
 	}
 	
-	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent, float genChance) {
+	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
+		registerBiomeDirect(biome);
 		parent.addSubBiome(biome);
 		makeLink(biome);
 		return biome;

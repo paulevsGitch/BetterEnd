@@ -10,6 +10,7 @@ public class SoundRegistry {
 	public static final SoundEvent MUSIC_CHORUS_FOREST = register("music", "chorus_forest");
 	public static final SoundEvent MUSIC_CRYSTAL_MOUNTAINS = register("music", "crystal_mountains");
 	public static final SoundEvent MUSIC_MEGALAKE = register("music", "megalake");
+	public static final SoundEvent DUST_WASTELANDS = register("music", "dust_wastelands");
 	
 	// Ambient
 	public static final SoundEvent AMBIENT_FOGGY_MUSHROOMLAND = register("ambient", "foggy_mushroomland");

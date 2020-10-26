@@ -59,6 +59,21 @@
 			}
 		]
 	},
+	"betterend.music.dust_wastelands": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/letter_box-far_the_days_come",
+				"volume": 0.25,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jade_wii-sahara_desert",
+				"volume": 0.25,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",

@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.SoundRegistry;
 
 public class BiomeDustWastelands extends EndBiome {
 	public BiomeDustWastelands() {
@@ -15,7 +16,7 @@ public class BiomeDustWastelands extends EndBiome {
 				.setSurface(BlockRegistry.ENDSTONE_DUST)
 				.setParticles(ParticleTypes.WHITE_ASH, 0.01F)
 				//.setLoop(SoundRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
-				//.setMusic(SoundRegistry.MUSIC_FOGGY_MUSHROOMLAND)
+				.setMusic(SoundRegistry.DUST_WASTELANDS)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}

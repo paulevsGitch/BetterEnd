@@ -99,7 +99,10 @@ public class LakePiece extends BasePiece {
 								lerp = 1;
 							}
 							minY = MathHelper.lerp(lerp, maxY - minY, 56 - minY);
-							//System.out.println(minY + " " + maxY);
+							pos.setY(maxY);
+							while (chunk.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+								pos.setY(maxY ++);
+							}
 							for (int y = maxY; y >= minY; y--) {
 								pos.setY(y - 1);
 								BlockState state = chunk.getBlockState(pos);

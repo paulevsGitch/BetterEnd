@@ -44,11 +44,13 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	private void beConnectionProperties(BlockView world, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.isOf(Blocks.CHORUS_PLANT)) {
-			if (!plant.get(Properties.DOWN) && world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+			if (world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
 				info.setReturnValue(plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true));
+				info.cancel();
 			}
 			else {
 				info.setReturnValue(plant.with(BlocksHelper.ROOTS, false));
+				info.cancel();
 			}
 		}
 	}
@@ -68,9 +70,11 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		if (plant.isOf(Blocks.CHORUS_PLANT)) {
 			if (world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
 				plant = plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true);
+				info.cancel();
 			}
 			else {
 				plant = plant.with(BlocksHelper.ROOTS, false);
+				info.cancel();
 			}
 			info.setReturnValue(plant);
 			info.cancel();
@@ -81,12 +85,10 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	private void beGetPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> info) {
 		BlockPos pos = ctx.getBlockPos();
 		World world = ctx.getWorld();
-		if (ctx.canPlace() && world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
-			BlockState plant = info.getReturnValue();
-			if (plant.isOf(Blocks.CHORUS_PLANT)) {
-				info.setReturnValue(plant.with(BlocksHelper.ROOTS, true).with(Properties.DOWN, true));
-				info.cancel();
-			}
+		BlockState plant = info.getReturnValue();
+		if (ctx.canPlace() && plant.isOf(Blocks.CHORUS_PLANT) && world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+			info.setReturnValue(plant.with(BlocksHelper.ROOTS, true).with(Properties.DOWN, true));
+			info.cancel();
 		}
 	}
 }

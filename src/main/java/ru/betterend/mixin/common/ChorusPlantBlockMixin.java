@@ -84,7 +84,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		if (ctx.canPlace() && world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
 			BlockState plant = info.getReturnValue();
 			if (plant.isOf(Blocks.CHORUS_PLANT)) {
-				info.setReturnValue(plant.with(BlocksHelper.ROOTS, true));
+				info.setReturnValue(plant.with(BlocksHelper.ROOTS, true).with(Properties.DOWN, true));
 				info.cancel();
 			}
 		}

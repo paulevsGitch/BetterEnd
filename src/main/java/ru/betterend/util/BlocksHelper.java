@@ -151,27 +151,26 @@ public class BlocksHelper {
 					if (state.isOf(Blocks.CHORUS_PLANT)) {
 						Set<BlockPos> ends = Sets.newHashSet();
 						Set<BlockPos> add = Sets.newHashSet();
-						Set<BlockPos> remove = Sets.newHashSet();
 						ends.add(POS.toImmutable());
 						
-						for (int i = 0; i < 128 && !ends.isEmpty(); i++) {
+						for (int i = 0; i < 64 && !ends.isEmpty(); i++) {
 							ends.forEach((pos) -> {
 								setWithoutUpdate(world, pos, AIR);
 								for (Direction dir: HORIZONTAL) {
 									BlockPos p = pos.offset(dir);
-									if (world.getBlockState(p).isOf(Blocks.CHORUS_PLANT)) {
+									BlockState st = world.getBlockState(p);
+									if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER)) && !st.canPlaceAt(world, p)) {
 										add.add(p);
 									}
 								}
 								BlockPos p = pos.up();
-								if (world.getBlockState(p).isOf(Blocks.CHORUS_PLANT)) {
+								BlockState st = world.getBlockState(p);
+								if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER)) && !st.canPlaceAt(world, p)) {
 									add.add(p);
 								}
-								remove.add(pos);
 							});
+							ends.clear();
 							ends.addAll(add);
-							ends.removeAll(remove);
-							remove.clear();
 							add.clear();
 						}
 					}

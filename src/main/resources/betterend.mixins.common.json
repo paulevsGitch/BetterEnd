@@ -16,7 +16,6 @@
 		"MinecraftServerMixin",
 		"TagGroupLoaderMixin",
 		"EndermanEntityMixin",
-		"LocateCommandMixin",
 		"DimensionTypeMixin",
 		"RecipeManagerMixin",
 		"AbstractBlockMixin",

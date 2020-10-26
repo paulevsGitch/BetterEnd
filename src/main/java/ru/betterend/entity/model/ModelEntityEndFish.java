@@ -1,8 +1,7 @@
 package ru.betterend.entity.model;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import ru.betterend.entity.BlockBenchModel;
@@ -17,6 +16,8 @@ public class ModelEntityEndFish extends BlockBenchModel<EntityEndFish> {
 	private final ModelPart fin_left;
 
 	public ModelEntityEndFish() {
+		super(RenderLayer::getEntityCutout);
+		
 		textureWidth = 32;
 		textureHeight = 32;
 
@@ -69,8 +70,6 @@ public class ModelEntityEndFish extends BlockBenchModel<EntityEndFish> {
 
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		RenderSystem.enableCull();
 		model.render(matrices, vertices, light, overlay);
-		RenderSystem.disableCull();
 	}
 }

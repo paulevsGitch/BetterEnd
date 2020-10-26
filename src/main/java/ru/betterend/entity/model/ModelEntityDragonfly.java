@@ -1,8 +1,7 @@
 package ru.betterend.entity.model;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import ru.betterend.entity.BlockBenchModel;
@@ -21,6 +20,8 @@ public class ModelEntityDragonfly extends BlockBenchModel<EntityDragonfly> {
 	private final ModelPart legs_2;
 
 	public ModelEntityDragonfly() {
+		super(RenderLayer::getEntityCutout);
+		
 		textureWidth = 64;
 		textureHeight = 64;
 
@@ -99,8 +100,6 @@ public class ModelEntityDragonfly extends BlockBenchModel<EntityDragonfly> {
 
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		RenderSystem.enableCull();
 		model.render(matrices, vertices, light, overlay);
-		RenderSystem.disableCull();
 	}
 }

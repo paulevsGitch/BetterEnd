@@ -15,6 +15,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.BlockRegistry;
 import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
@@ -42,6 +43,12 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		
 		SDF function = SplineHelper.buildSDF(spline, 1.7F, 1.1F, (bpos) -> {
 			return BlockRegistry.PYTHADENDRON.bark.getDefaultState();
+		});
+		function.setPostProcess((info) -> {
+			if (BlockRegistry.PYTHADENDRON.isTreeLog(info.getStateUp()) && BlockRegistry.PYTHADENDRON.isTreeLog(info.getStateDown())) {
+				return BlockRegistry.PYTHADENDRON.log.getDefaultState();
+			}
+			return info.getState();
 		});
 		
 		function.setReplaceFunction(REPLACE);
@@ -78,22 +85,40 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
 		if (depth < 3) {
 			if (s1) {
-				float radius = MHelper.randRange(4.5F, 6.5F, random);
+				leavesBall(world, pos.add(pos1.getX(), pos1.getY(), pos1.getZ()), random, noise);
+				/*float radius = MHelper.randRange(4.5F, 6.5F, random);
+				
+				if (radius > 5) {
+					for (int i = 0; i < 10; i++) {
+						BlockPos p = pos.add(pos1.getX() + random.nextGaussian() * 2, pos1.getY() + random.nextGaussian() * 2, pos1.getZ() + random.nextGaussian() * 2);
+						BlocksHelper.setWithoutUpdate(world, p, BlockRegistry.PYTHADENDRON.bark);
+					}
+				}
+				
 				SDF sphere = new SDFSphere().setRadius(radius).setBlock(BlockRegistry.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
 				sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
 				sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 				sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 				sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
-				sphere.fillRecursive(world, new BlockPos(pos1.getX() + pos.getX(), pos1.getY() + pos.getY() + 1, pos1.getZ() + pos.getZ()));
+				sphere.fillRecursive(world, new BlockPos(pos1.getX() + pos.getX(), pos1.getY() + pos.getY() + 1, pos1.getZ() + pos.getZ()));*/
 			}
 			if (s2) {
-				float radius = MHelper.randRange(4.5F, 6.5F, random);
+				leavesBall(world, pos.add(pos2.getX(), pos2.getY(), pos2.getZ()), random, noise);
+				/*float radius = MHelper.randRange(4.5F, 6.5F, random);
+				
+				if (radius > 5) {
+					for (int i = 0; i < 10; i++) {
+						BlockPos p = pos.add(pos1.getX() + random.nextGaussian() * 2, pos1.getY() + random.nextGaussian() * 2, pos1.getZ() + random.nextGaussian() * 2);
+						BlocksHelper.setWithoutUpdate(world, p, BlockRegistry.PYTHADENDRON.bark);
+					}
+				}
+				
 				SDF sphere = new SDFSphere().setRadius(radius).setBlock(BlockRegistry.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
 				sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
 				sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 				sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 				sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
-				sphere.fillRecursive(world, new BlockPos(pos2.getX() + pos.getX(), pos2.getY() + pos.getY() + 1, pos2.getZ() + pos.getZ()));
+				sphere.fillRecursive(world, new BlockPos(pos2.getX() + pos.getX(), pos2.getY() + pos.getY() + 1, pos2.getZ() + pos.getZ()));*/
 			}
 		}
 		
@@ -107,6 +132,26 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		}
 		if (s2) {
 			branch(pos2.getX(), pos2.getY(), pos2.getZ(), size2, angle2, random, depth - 1, world, pos);
+		}
+	}
+	
+	private void leavesBall(StructureWorldAccess world, BlockPos pos, Random random, OpenSimplexNoise noise) {
+		float radius = MHelper.randRange(4.5F, 6.5F, random);
+		
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(BlockRegistry.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+		sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
+		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
+		BlocksHelper.setWithoutUpdate(world, pos.up(), AIR);
+		sphere.fillRecursive(world, pos.up());
+		
+		if (radius > 5) {
+			int count = (int) (radius * 2.5F);
+			for (int i = 0; i < count; i++) {
+				BlockPos p = pos.add(random.nextGaussian() * 1.5, random.nextGaussian() * 1.5, random.nextGaussian() * 1.5);
+				BlocksHelper.setWithoutUpdate(world, p, BlockRegistry.PYTHADENDRON.bark);
+			}
 		}
 	}
 	

@@ -104,8 +104,8 @@ public class MountainPiece extends BasePiece {
 							maxY *= (float) noise.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
 							maxY += 56;
 							int cover = (int) (maxY - 1);
-							boolean needCover = noise.eval(px * 0.3, pz * 0.3) > 0 && (noise.eval(px * 0.03, pz * 0.03) - (maxY - 60) * 0.2) > 0;
-							for (int y = minY; y < maxY; y++) {
+							boolean needCover = (noise.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random) - (maxY - 70) * 0.1) > 0;
+							for (int y = minY - 1; y < maxY; y++) {
 								pos.setY(y);
 								chunk.setBlockState(pos, needCover && y >= cover ? top : Blocks.END_STONE.getDefaultState(), false);
 							}

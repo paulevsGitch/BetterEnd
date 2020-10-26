@@ -42,6 +42,7 @@ public class FeatureRegistry {
 	public static final EndFeature BLUE_VINE = new EndFeature("blue_vine", new BlueVineFeature(), 1);
 	public static final EndFeature CHORUS_GRASS = new EndFeature("chorus_grass", new SinglePlantFeature(BlockRegistry.CHORUS_GRASS, 4), 5);
 	public static final EndFeature CAVE_GRASS = new EndFeature("cave_grass", new CavePlantFeature(BlockRegistry.CAVE_GRASS, 7), 7);
+	public static final EndFeature CRYSTAL_GRASS = new EndFeature("crystal_grass", new SinglePlantFeature(BlockRegistry.CRYSTAL_GRASS, 8, false), 5);
 	
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(BlockRegistry.DENSE_VINE, 24), 3);
 	
@@ -75,7 +76,7 @@ public class FeatureRegistry {
 				if (pos < features.size()) {
 					List<Supplier<ConfiguredFeature<?, ?>>> list = features.get(pos);
 					// If only chorus plants are enabled
-					if (list.size() < 2) {
+					if (list.size() == 1) {
 						features.get(pos).clear();
 					}
 				}

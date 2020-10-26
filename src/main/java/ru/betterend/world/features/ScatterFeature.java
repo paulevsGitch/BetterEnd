@@ -39,7 +39,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 	
 	protected boolean getGroundPlant(StructureWorldAccess world, Mutable pos) {
 		int down = BlocksHelper.downRay(world, pos, 16);
-		if (down > 10) {
+		if (down > Math.abs(getYOffset() * 2)) {
 			return false;
 		}
 		pos.setY(pos.getY() - down);

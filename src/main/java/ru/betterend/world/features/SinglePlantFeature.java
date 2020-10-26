@@ -11,10 +11,21 @@ import ru.betterend.util.BlocksHelper;
 
 public class SinglePlantFeature extends ScatterFeature {
 	private final Block plant;
+	private final boolean rawHeightmap;
 	
 	public SinglePlantFeature(Block plant, int radius) {
+		this(plant, radius, true);
+	}
+	
+	public SinglePlantFeature(Block plant, int radius, boolean rawHeightmap) {
 		super(radius);
 		this.plant = plant;
+		this.rawHeightmap = rawHeightmap;
+	}
+	
+	@Override
+	protected BlockPos getCenterGround(StructureWorldAccess world, BlockPos pos) {
+		return rawHeightmap ? getPosOnSurfaceWG(world, pos) : getPosOnSurface(world, pos);
 	}
 	
 	@Override

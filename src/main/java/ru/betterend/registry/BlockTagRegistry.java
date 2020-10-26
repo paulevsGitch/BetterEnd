@@ -3,6 +3,7 @@ package ru.betterend.registry;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItem;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
@@ -11,6 +12,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.BetterEnd;
+import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.util.TagHelper;
 
 public class BlockTagRegistry {
@@ -22,14 +24,17 @@ public class BlockTagRegistry {
 	}
 	
 	public static void register() {
-		addSurfaceBlock(BlockRegistry.END_MOSS);
-		addSurfaceBlock(BlockRegistry.END_MYCELIUM);
-		addSurfaceBlock(BlockRegistry.CHORUS_NYLIUM);
 		addSurfaceBlock(BlockRegistry.ENDSTONE_DUST);
-		addSurfaceBlock(BlockRegistry.CAVE_MOSS);
+		
+		ItemRegistry.getModBlocks().forEach((item) -> {
+			Block block = ((BlockItem) item).getBlock();
+			if (block instanceof BlockTerrain) {
+				addSurfaceBlock(block);
+				TagHelper.addTag(BlockTags.NYLIUM, block);
+			}
+		});
 		
 		TagHelper.addTag(GEN_TERRAIN, BlockRegistry.ENDER_ORE, BlockRegistry.FLAVOLITE.stone, BlockRegistry.VIOLECITE.stone);
-		TagHelper.addTag(BlockTags.NYLIUM, BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM, BlockRegistry.CHORUS_NYLIUM, BlockRegistry.CAVE_MOSS);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

@@ -196,5 +196,6 @@
  	"block.betterend.crystal_moss_path": "Crystal Moss Path",
  	"block.betterend.pythadendron_leaves": "Pythadendron Leaves",
  	"item.betterend.eternal_crystal": "Eternal Crystal",
- 	"item.betterend.spawn_egg_end_fish": "End Fish Spawn Egg"
+ 	"item.betterend.spawn_egg_end_fish": "End Fish Spawn Egg",
+	"block.betterend.crystal_grass": "Crystal Grass"
 }

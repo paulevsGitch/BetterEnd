@@ -36,8 +36,8 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 
 public class BlockUnderwaterPlant extends BlockBaseNotFull implements IRenderTypeable, Fertilizable, FluidFillable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
@@ -82,7 +82,7 @@ public class BlockUnderwaterPlant extends BlockBaseNotFull implements IRenderTyp
 	}
 	
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(BlockTagRegistry.END_GROUND) || state.getBlock() == BlockRegistry.ENDSTONE_DUST;
+		return state.isIn(EndTags.END_GROUND) || state.getBlock() == EndBlocks.ENDSTONE_DUST;
 	}
 
 	@Override

@@ -10,14 +10,14 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Lazy;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 
 public enum EndArmorMaterial implements ArmorMaterial {
 	TERMINITE("terminite", 26, new int[] { 3, 6, 7, 3 }, 14, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {
-		return Ingredient.ofItems(ItemRegistry.TERMINITE_INGOT);
+		return Ingredient.ofItems(EndItems.TERMINITE_INGOT);
 	}),
 	AETERNIUM("aeternium", 40, new int[] { 4, 7, 9, 4 }, 18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, 0.2F, () -> {
-		return Ingredient.ofItems(ItemRegistry.AETERNIUM_INGOT);
+		return Ingredient.ofItems(EndItems.AETERNIUM_INGOT);
 	});
 
 	private static final int[] BASE_DURABILITY = new int[] { 13, 15, 16, 11 };

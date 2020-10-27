@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import ru.betterend.blocks.basis.BlockPlant;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 
 public class BlockGlowingMoss extends BlockPlant {
 	public BlockGlowingMoss(int light) {
@@ -15,7 +15,7 @@ public class BlockGlowingMoss extends BlockPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == BlockRegistry.END_MOSS || state.getBlock() == BlockRegistry.END_MYCELIUM;
+		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;
 	}
 	
 	@Environment(EnvType.CLIENT)

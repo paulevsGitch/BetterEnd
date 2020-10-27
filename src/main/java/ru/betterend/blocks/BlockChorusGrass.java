@@ -2,7 +2,7 @@ package ru.betterend.blocks;
 
 import net.minecraft.block.BlockState;
 import ru.betterend.blocks.basis.BlockPlant;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 
 public class BlockChorusGrass extends BlockPlant {
 	public BlockChorusGrass() {
@@ -11,6 +11,6 @@ public class BlockChorusGrass extends BlockPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == BlockRegistry.CHORUS_NYLIUM;
+		return state.getBlock() == EndBlocks.CHORUS_NYLIUM;
 	}
 }

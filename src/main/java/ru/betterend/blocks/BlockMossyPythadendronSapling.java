@@ -2,7 +2,7 @@ package ru.betterend.blocks;
 
 import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.blocks.basis.BlockFeatureSapling;
-import ru.betterend.registry.FeatureRegistry;
+import ru.betterend.registry.EndFeatures;
 
 public class BlockMossyPythadendronSapling extends BlockFeatureSapling {
 	public BlockMossyPythadendronSapling() {
@@ -11,6 +11,6 @@ public class BlockMossyPythadendronSapling extends BlockFeatureSapling {
 
 	@Override
 	protected Feature<?> getFeature() {
-		return FeatureRegistry.PYTHADENDRON_TREE.getFeature();
+		return EndFeatures.PYTHADENDRON_TREE.getFeature();
 	}
 }

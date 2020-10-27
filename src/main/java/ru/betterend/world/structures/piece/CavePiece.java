@@ -14,8 +14,8 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.BlockTagRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndStructures;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -25,7 +25,7 @@ public class CavePiece extends BasePiece {
 	private float radius;
 	
 	public CavePiece(BlockPos center, float radius, int id) {
-		super(StructureRegistry.CAVE_PIECE, id);
+		super(EndStructures.CAVE_PIECE, id);
 		this.center = center;
 		this.radius = radius;
 		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
@@ -33,7 +33,7 @@ public class CavePiece extends BasePiece {
 	}
 
 	public CavePiece(StructureManager manager, CompoundTag tag) {
-		super(StructureRegistry.CAVE_PIECE, tag);
+		super(EndStructures.CAVE_PIECE, tag);
 		makeBoundingBox();
 	}
 	
@@ -66,7 +66,7 @@ public class CavePiece extends BasePiece {
 					double r2 = r - 4.5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r2 * r2) {
-						if (world.getBlockState(pos).isIn(BlockTagRegistry.END_GROUND)) {
+						if (world.getBlockState(pos).isIn(EndTags.END_GROUND)) {
 							BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						}
 					}

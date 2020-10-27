@@ -39,7 +39,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.interfaces.ISlime;
-import ru.betterend.registry.BiomeRegistry;
+import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -74,7 +74,7 @@ public class EntityEndSlime extends SlimeEntity {
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
-		if (BiomeRegistry.getFromBiome(world.getBiome(getBlockPos())) == BiomeRegistry.FOGGY_MUSHROOMLAND) {
+		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.FOGGY_MUSHROOMLAND) {
 			this.setMossy(true);
 		}
 		this.calculateDimensions();
@@ -154,7 +154,7 @@ public class EntityEndSlime extends SlimeEntity {
 	
 	private static boolean isPermanentBiome(ServerWorldAccess world, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
-		return BiomeRegistry.getFromBiome(biome) == BiomeRegistry.CHORUS_FOREST;
+		return EndBiomes.getFromBiome(biome) == EndBiomes.CHORUS_FOREST;
 	}
 	
 	private static boolean notManyEntities(ServerWorldAccess world, BlockPos pos, int radius, int maxCount) {

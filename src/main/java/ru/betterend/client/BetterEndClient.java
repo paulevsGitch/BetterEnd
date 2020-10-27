@@ -4,19 +4,19 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.registry.BlockEntityRenderRegistry;
-import ru.betterend.registry.EntityRenderRegistry;
-import ru.betterend.registry.ParticleRegistry;
-import ru.betterend.registry.ScreensRegistry;
+import ru.betterend.registry.EndBlockEntityRenders;
+import ru.betterend.registry.EndEntitiesRenders;
+import ru.betterend.registry.EndParticles;
+import ru.betterend.registry.EndScreens;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		registerRenderLayers();
-		BlockEntityRenderRegistry.register();
-		ScreensRegistry.register();
-		ParticleRegistry.register();
-		EntityRenderRegistry.register();
+		EndBlockEntityRenders.register();
+		EndScreens.register();
+		EndParticles.register();
+		EndEntitiesRenders.register();
 	}
 
 	private void registerRenderLayers() {

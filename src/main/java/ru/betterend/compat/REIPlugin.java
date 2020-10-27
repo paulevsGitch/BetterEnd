@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilSmithingRecipe;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 
 @Environment(EnvType.CLIENT)
 public class REIPlugin implements REIPluginV0 {
@@ -20,7 +20,7 @@ public class REIPlugin implements REIPluginV0 {
 	public final static Identifier ALLOYING = AlloyingRecipe.ID;
 	public final static Identifier SMITHING = AnvilSmithingRecipe.ID;
 	
-	public final static EntryStack END_STONE_SMELTER = EntryStack.create(BlockRegistry.END_STONE_SMELTER);
+	public final static EntryStack END_STONE_SMELTER = EntryStack.create(EndBlocks.END_STONE_SMELTER);
 	public final static EntryStack ANVIL = EntryStack.create(Blocks.ANVIL);
 	
 	@Override

@@ -13,8 +13,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import ru.betterend.mixin.common.GenerationSettingsAccessor;
-import ru.betterend.registry.FeatureRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndStructures;
 
 public class FeaturesHelper {
 	private static final Set<Biome> INJECTED = Sets.newHashSet();
@@ -30,8 +30,8 @@ public class FeaturesHelper {
 					features.add(Lists.newArrayList(list));
 				});
 
-				FeatureRegistry.registerBiomeFeatures(biomeRegistry.getId(biome), biome, features);
-				StructureRegistry.registerBiomeStructures(biomeRegistry.getId(biome), biome, structures);
+				EndFeatures.registerBiomeFeatures(biomeRegistry.getId(biome), biome, features);
+				EndStructures.registerBiomeStructures(biomeRegistry.getId(biome), biome, structures);
 
 				accessor.setFeatures(features);
 				accessor.setStructures(structures);

@@ -6,7 +6,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockUpDownPlant;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 
 public class BlockBlueVine extends BlockUpDownPlant {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
@@ -18,6 +18,6 @@ public class BlockBlueVine extends BlockUpDownPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == BlockRegistry.END_MOSS || state.getBlock() == BlockRegistry.END_MYCELIUM;
+		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;
 	}
 }

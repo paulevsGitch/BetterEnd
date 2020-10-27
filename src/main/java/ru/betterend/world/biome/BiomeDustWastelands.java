@@ -3,8 +3,8 @@ package ru.betterend.world.biome;
 import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.SoundRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndSounds;
 
 public class BiomeDustWastelands extends EndBiome {
 	public BiomeDustWastelands() {
@@ -13,10 +13,10 @@ public class BiomeDustWastelands extends EndBiome {
 				.setFogDensity(2)
 				.setWaterColor(192, 180, 131)
 				.setWaterFogColor(192, 180, 131)
-				.setSurface(BlockRegistry.ENDSTONE_DUST)
+				.setSurface(EndBlocks.ENDSTONE_DUST)
 				.setParticles(ParticleTypes.WHITE_ASH, 0.01F)
-				//.setLoop(SoundRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
-				.setMusic(SoundRegistry.DUST_WASTELANDS)
+				.setLoop(EndSounds.AMBIENT_DUST_WASTELANDS)
+				.setMusic(EndSounds.DUST_WASTELANDS)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}

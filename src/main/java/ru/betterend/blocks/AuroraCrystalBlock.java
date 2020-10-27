@@ -22,7 +22,7 @@ import net.minecraft.util.math.Vec3i;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.interfaces.IColorProvider;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
 public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTypeable, IColorProvider {
@@ -88,13 +88,13 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 				int min = MathHelper.clamp(MIN_DROP + enchant, MIN_DROP, MAX_DROP);
 				int max = MAX_DROP + (enchant / Enchantments.FORTUNE.getMaxLevel());
 				if (min == max) {
-					return Lists.newArrayList(new ItemStack(ItemRegistry.CRYSTAL_SHARDS, max));
+					return Lists.newArrayList(new ItemStack(EndItems.CRYSTAL_SHARDS, max));
 				}
 				count = MHelper.randRange(min, max, MHelper.RANDOM);
 			} else {
 				count = MHelper.randRange(MIN_DROP, MAX_DROP, MHelper.RANDOM);
 			}
-			return Lists.newArrayList(new ItemStack(ItemRegistry.CRYSTAL_SHARDS, count));
+			return Lists.newArrayList(new ItemStack(EndItems.CRYSTAL_SHARDS, count));
 		}
 		return Lists.newArrayList();
 	}

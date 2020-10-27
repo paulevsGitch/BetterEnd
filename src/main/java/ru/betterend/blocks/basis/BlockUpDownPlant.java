@@ -28,7 +28,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndTags;
 
 public class BlockUpDownPlant extends BlockBaseNotFull implements IRenderTypeable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 16, 12);
@@ -54,7 +54,7 @@ public class BlockUpDownPlant extends BlockBaseNotFull implements IRenderTypeabl
 	}
 	
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(BlockTagRegistry.END_GROUND);
+		return state.isIn(EndTags.END_GROUND);
 	}
 	
 	protected boolean isSupport(BlockState state, WorldView world, BlockPos pos) {

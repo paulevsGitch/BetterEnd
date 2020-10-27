@@ -2,9 +2,9 @@ package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleTypes;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.SoundRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndSounds;
+import ru.betterend.registry.EndStructures;
 
 public class BiomePaintedMountains extends EndBiome {
 	public BiomePaintedMountains() {
@@ -13,10 +13,11 @@ public class BiomePaintedMountains extends EndBiome {
 				.setFogDensity(2)
 				.setWaterColor(192, 180, 131)
 				.setWaterFogColor(192, 180, 131)
-				.setMusic(SoundRegistry.DUST_WASTELANDS)
-				.setSurface(BlockRegistry.ENDSTONE_DUST)
+				.setMusic(EndSounds.DUST_WASTELANDS)
+				.setLoop(EndSounds.AMBIENT_DUST_WASTELANDS)
+				.setSurface(EndBlocks.ENDSTONE_DUST)
 				.setParticles(ParticleTypes.WHITE_ASH, 0.01F)
-				.addStructureFeature(StructureRegistry.PAINTED_MOUNTAIN)
+				.addStructureFeature(EndStructures.PAINTED_MOUNTAIN)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

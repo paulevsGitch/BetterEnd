@@ -10,14 +10,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.RunedFlavolite;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.PortalFrameHelper;
 
 public class EternalCrystal extends Item {
 
 	public EternalCrystal() {
-		super(ItemRegistry.makeSettings());
+		super(EndItems.makeSettings());
 	}
 	
 	public ActionResult useOnBlock(ItemUsageContext context) {

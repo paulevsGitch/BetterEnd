@@ -6,7 +6,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.registry.ParticleRegistry;
+import ru.betterend.registry.EndParticles;
 
 public class GlowingSphereParticleEffect implements ParticleEffect {
 	private final float red;
@@ -21,7 +21,7 @@ public class GlowingSphereParticleEffect implements ParticleEffect {
 
 	@Override
 	public ParticleType<?> getType() {
-		return ParticleRegistry.GLOWING_SPHERE;
+		return EndParticles.GLOWING_SPHERE;
 	}
 
 	@Override

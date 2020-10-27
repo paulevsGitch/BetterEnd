@@ -28,8 +28,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import ru.betterend.registry.EntityRegistry;
-import ru.betterend.registry.SoundRegistry;
+import ru.betterend.registry.EndEntities;
+import ru.betterend.registry.EndSounds;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -109,7 +109,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 
 	@Override
 	public SoundEvent getAmbientSound() {
-		return SoundRegistry.ENTITY_DRAGONFLY;
+		return EndSounds.ENTITY_DRAGONFLY;
 	}
 
 	@Override
@@ -184,6 +184,6 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-		return EntityRegistry.DRAGONFLY.create(world);
+		return EndEntities.DRAGONFLY.create(world);
 	}
 }

@@ -14,7 +14,7 @@ import ru.betterend.blocks.basis.BlockStoneButton;
 import ru.betterend.blocks.basis.BlockStonePressurePlate;
 import ru.betterend.blocks.basis.BlockWall;
 import ru.betterend.recipe.builders.RecipeBuilder;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.TagHelper;
 
 public class StoneMaterial {
@@ -37,20 +37,20 @@ public class StoneMaterial {
 	public StoneMaterial(String name, MaterialColor color) {
 		FabricBlockSettings material = FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color);
 		
-		stone = BlockRegistry.registerBlock(name, new BlockBase(material));
-		polished = BlockRegistry.registerBlock(name + "_polished", new BlockBase(material));
-		tiles = BlockRegistry.registerBlock(name + "_tiles", new BlockBase(material));
-		pillar = BlockRegistry.registerBlock(name + "_pillar", new BlockPillar(material));
-		stairs = BlockRegistry.registerBlock(name + "_stairs", new BlockStairs(stone));
-		slab = BlockRegistry.registerBlock(name + "_slab", new BlockSlab(stone));
-		wall = BlockRegistry.registerBlock(name + "_wall", new BlockWall(stone));
-		button = BlockRegistry.registerBlock(name + "_button", new BlockStoneButton(stone));
-		pressure_plate = BlockRegistry.registerBlock(name + "_plate", new BlockStonePressurePlate(stone));
+		stone = EndBlocks.registerBlock(name, new BlockBase(material));
+		polished = EndBlocks.registerBlock(name + "_polished", new BlockBase(material));
+		tiles = EndBlocks.registerBlock(name + "_tiles", new BlockBase(material));
+		pillar = EndBlocks.registerBlock(name + "_pillar", new BlockPillar(material));
+		stairs = EndBlocks.registerBlock(name + "_stairs", new BlockStairs(stone));
+		slab = EndBlocks.registerBlock(name + "_slab", new BlockSlab(stone));
+		wall = EndBlocks.registerBlock(name + "_wall", new BlockWall(stone));
+		button = EndBlocks.registerBlock(name + "_button", new BlockStoneButton(stone));
+		pressure_plate = EndBlocks.registerBlock(name + "_plate", new BlockStonePressurePlate(stone));
 		
-		bricks = BlockRegistry.registerBlock(name + "_bricks", new BlockBase(material));
-		brick_stairs = BlockRegistry.registerBlock(name + "_bricks_stairs", new BlockStairs(bricks));
-		brick_slab = BlockRegistry.registerBlock(name + "_bricks_slab", new BlockSlab(bricks));
-		brick_wall = BlockRegistry.registerBlock(name + "_bricks_wall", new BlockWall(bricks));
+		bricks = EndBlocks.registerBlock(name + "_bricks", new BlockBase(material));
+		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new BlockStairs(bricks));
+		brick_slab = EndBlocks.registerBlock(name + "_bricks_slab", new BlockSlab(bricks));
+		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new BlockWall(bricks));
 		
 		// Recipes //
 		RecipeBuilder.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', stone).setGroup("end_bricks").build();

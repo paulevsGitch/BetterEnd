@@ -21,7 +21,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import ru.betterend.blocks.basis.BlockBarrel;
-import ru.betterend.registry.BlockEntityRegistry;
+import ru.betterend.registry.EndBlockEntities;
 
 public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 	private DefaultedList<ItemStack> inventory;
@@ -33,7 +33,7 @@ public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 	}
 
 	public EBarrelBlockEntity() {
-		this(BlockEntityRegistry.BARREL);
+		this(EndBlockEntities.BARREL);
 	}
 
 	public CompoundTag toTag(CompoundTag tag) {

@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import ru.betterend.blocks.basis.BlockPlant;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
 public class BlockEndLotusFlower extends BlockPlant {
@@ -29,7 +29,7 @@ public class BlockEndLotusFlower extends BlockPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isOf(BlockRegistry.END_LOTUS_STEM);
+		return state.isOf(EndBlocks.END_LOTUS_STEM);
 	}
 	
 	@Override
@@ -50,6 +50,6 @@ public class BlockEndLotusFlower extends BlockPlant {
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		int count = MHelper.randRange(1, 2, MHelper.RANDOM);
-		return Lists.newArrayList(new ItemStack(BlockRegistry.END_LOTUS_SEED, count));
+		return Lists.newArrayList(new ItemStack(EndBlocks.END_LOTUS_SEED, count));
 	}
 }

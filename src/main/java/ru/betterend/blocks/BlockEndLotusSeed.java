@@ -10,17 +10,17 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockUnderwaterPlantWithAge;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 	@Override
 	public void grow(StructureWorldAccess world, Random random, BlockPos pos) {
 		if (canGrow(world, pos)) {
-			BlockState startLeaf = BlockRegistry.END_LOTUS_STEM.getDefaultState().with(BlockEndLotusStem.LEAF, true);
-			BlockState roots = BlockRegistry.END_LOTUS_STEM.getDefaultState().with(BlockEndLotusStem.SHAPE, TripleShape.BOTTOM).with(BlockEndLotusStem.WATERLOGGED, true);
-			BlockState stem = BlockRegistry.END_LOTUS_STEM.getDefaultState();
-			BlockState flower = BlockRegistry.END_LOTUS_FLOWER.getDefaultState();
+			BlockState startLeaf = EndBlocks.END_LOTUS_STEM.getDefaultState().with(BlockEndLotusStem.LEAF, true);
+			BlockState roots = EndBlocks.END_LOTUS_STEM.getDefaultState().with(BlockEndLotusStem.SHAPE, TripleShape.BOTTOM).with(BlockEndLotusStem.WATERLOGGED, true);
+			BlockState stem = EndBlocks.END_LOTUS_STEM.getDefaultState();
+			BlockState flower = EndBlocks.END_LOTUS_FLOWER.getDefaultState();
 			
 			BlocksHelper.setWithoutUpdate(world, pos, roots);
 			Mutable bpos = new Mutable().set(pos);
@@ -63,14 +63,14 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 			BlocksHelper.setWithoutUpdate(world, bpos, flower);
 			bpos.setY(bpos.getY() - 1);
 			stem = world.getBlockState(bpos);
-			if (!stem.isOf(BlockRegistry.END_LOTUS_STEM)) {
-				stem = BlockRegistry.END_LOTUS_STEM.getDefaultState();
+			if (!stem.isOf(EndBlocks.END_LOTUS_STEM)) {
+				stem = EndBlocks.END_LOTUS_STEM.getDefaultState();
 				if (!world.getBlockState(bpos.north()).getFluidState().isEmpty()) {
 					stem = stem.with(BlockEndLotusStem.WATERLOGGED, true);
 				}
 			}
 			
-			if (world.getBlockState(bpos.offset(dir)).isOf(BlockRegistry.END_LOTUS_LEAF)) {
+			if (world.getBlockState(bpos.offset(dir)).isOf(EndBlocks.END_LOTUS_LEAF)) {
 				stem = stem.with(BlockEndLotusStem.LEAF, true).with(BlockEndLotusStem.FACING, dir);
 			}
 			
@@ -89,7 +89,7 @@ public class BlockEndLotusSeed extends BlockUnderwaterPlantWithAge {
 	
 	private void generateLeaf(StructureWorldAccess world, BlockPos pos) {
 		Mutable p = new Mutable();
-		BlockState leaf = BlockRegistry.END_LOTUS_LEAF.getDefaultState();
+		BlockState leaf = EndBlocks.END_LOTUS_LEAF.getDefaultState();
 		BlocksHelper.setWithoutUpdate(world, pos, leaf.with(BlockEndLotusLeaf.SHAPE, TripleShape.BOTTOM));
 		for (Direction move: BlocksHelper.HORIZONTAL) {
 			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(move), leaf.with(BlockEndLotusLeaf.HORIZONTAL_FACING, move).with(BlockEndLotusLeaf.SHAPE, TripleShape.MIDDLE));

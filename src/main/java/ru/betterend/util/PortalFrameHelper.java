@@ -8,8 +8,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.FeatureRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndFeatures;
 
 public class PortalFrameHelper {
 	
@@ -79,7 +79,7 @@ public class PortalFrameHelper {
 			if(!checkIsAreaEmpty(world, bottomCorner.add(0, 1, 1), topCorner.add(0, -1, -1))) return false;
 		}
 		if (valid) {
-			if (world.getBlockState(bottomCorner).isOf(BlockRegistry.FLAVOLITE_RUNED)) {
+			if (world.getBlockState(bottomCorner).isOf(EndBlocks.FLAVOLITE_RUNED)) {
 				generatePortalFrame(world, bottomCorner, axis, width, height, true);
 			} else {
 				generateEternalPortalFrame(world, bottomCorner, axis, width, height, true);
@@ -164,18 +164,18 @@ public class PortalFrameHelper {
 	}
 
 	public static void generatePortalFrame(ServerWorld world, BlockPos pos, Direction.Axis axis, int width, int height, boolean active) {
-		FeatureRegistry.END_PORTAL.configure(axis, width, height, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
+		EndFeatures.END_PORTAL.configure(axis, width, height, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
 	}
 	
 	public static void generateEternalPortalFrame(ServerWorld world, BlockPos pos, Direction.Axis axis, int width, int height, boolean active) {
-		FeatureRegistry.END_PORTAL_ETERNAL.configure(axis, width, height, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
+		EndFeatures.END_PORTAL_ETERNAL.configure(axis, width, height, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
 	}
 	
 	public static void generatePortalFrame(ServerWorld world, BlockPos pos, Direction.Axis axis, boolean active) {
-		FeatureRegistry.END_PORTAL.configure(axis, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
+		EndFeatures.END_PORTAL.configure(axis, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
 	}
 	
 	public static void generateEternalPortalFrame(ServerWorld world, BlockPos pos, Direction.Axis axis, boolean active) {
-		FeatureRegistry.END_PORTAL_ETERNAL.configure(axis, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
+		EndFeatures.END_PORTAL_ETERNAL.configure(axis, active).getFeatureConfigured().generate(world, world.getChunkManager().getChunkGenerator(), new Random(), pos);
 	}
 }

@@ -22,7 +22,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.RecipeHelper;
 
 public class AlloyingRecipe implements Recipe<Inventory> {
@@ -113,7 +113,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	
 	@Environment(EnvType.CLIENT)
 	public ItemStack getRecipeKindIcon() {
-		return new ItemStack(BlockRegistry.END_STONE_SMELTER);
+		return new ItemStack(EndBlocks.END_STONE_SMELTER);
 	}
 	
 	public static class Builder {

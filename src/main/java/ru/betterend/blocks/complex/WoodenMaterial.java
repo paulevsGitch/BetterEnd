@@ -27,7 +27,7 @@ import ru.betterend.blocks.basis.BlockStairs;
 import ru.betterend.blocks.basis.BlockTrapdoor;
 import ru.betterend.blocks.basis.BlockWoodenButton;
 import ru.betterend.recipe.builders.RecipeBuilder;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.TagHelper;
 
 public class WoodenMaterial {
@@ -58,28 +58,28 @@ public class WoodenMaterial {
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);
 		
-		log_stripped = BlockRegistry.registerBlock(name + "_stripped_log", new BlockPillar(materialPlanks));
-		bark_stripped = BlockRegistry.registerBlock(name + "_stripped_bark", new BlockBark(materialPlanks));
+		log_stripped = EndBlocks.registerBlock(name + "_stripped_log", new BlockPillar(materialPlanks));
+		bark_stripped = EndBlocks.registerBlock(name + "_stripped_bark", new BlockBark(materialPlanks));
 		
-		log = BlockRegistry.registerBlock(name + "_log", new BlockLogStripable(woodColor, log_stripped));
-		bark = BlockRegistry.registerBlock(name + "_bark", new BlockBarkStripable(woodColor, bark_stripped));
+		log = EndBlocks.registerBlock(name + "_log", new BlockLogStripable(woodColor, log_stripped));
+		bark = EndBlocks.registerBlock(name + "_bark", new BlockBarkStripable(woodColor, bark_stripped));
 		
-		planks = BlockRegistry.registerBlock(name + "_planks", new BlockBase(materialPlanks));
-		stairs = BlockRegistry.registerBlock(name + "_stairs", new BlockStairs(planks));
-		slab = BlockRegistry.registerBlock(name + "_slab", new BlockSlab(planks));
-		fence = BlockRegistry.registerBlock(name + "_fence", new BlockFence(planks));
-		gate = BlockRegistry.registerBlock(name + "_gate", new BlockGate(planks));
-		button = BlockRegistry.registerBlock(name + "_button", new BlockWoodenButton(planks));
-		pressure_plate = BlockRegistry.registerBlock(name + "_plate", new BlockPressurePlate(planks));
-		trapdoor = BlockRegistry.registerBlock(name + "_trapdoor", new BlockTrapdoor(planks));
-		door = BlockRegistry.registerBlock(name + "_door", new BlockDoor(planks));
+		planks = EndBlocks.registerBlock(name + "_planks", new BlockBase(materialPlanks));
+		stairs = EndBlocks.registerBlock(name + "_stairs", new BlockStairs(planks));
+		slab = EndBlocks.registerBlock(name + "_slab", new BlockSlab(planks));
+		fence = EndBlocks.registerBlock(name + "_fence", new BlockFence(planks));
+		gate = EndBlocks.registerBlock(name + "_gate", new BlockGate(planks));
+		button = EndBlocks.registerBlock(name + "_button", new BlockWoodenButton(planks));
+		pressure_plate = EndBlocks.registerBlock(name + "_plate", new BlockPressurePlate(planks));
+		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new BlockTrapdoor(planks));
+		door = EndBlocks.registerBlock(name + "_door", new BlockDoor(planks));
 		
-		crafting_table = BlockRegistry.registerBlock(name + "_crafting_table", new BlockCraftingTable(planks));
-		ladder = BlockRegistry.registerBlock(name + "_ladder", new BlockLadder(planks));
-		sign = BlockRegistry.registerBlock(name + "_sign", new BlockSign(planks));
+		crafting_table = EndBlocks.registerBlock(name + "_crafting_table", new BlockCraftingTable(planks));
+		ladder = EndBlocks.registerBlock(name + "_ladder", new BlockLadder(planks));
+		sign = EndBlocks.registerBlock(name + "_sign", new BlockSign(planks));
 		
-		chest = BlockRegistry.registerBlock(name + "_chest", new BlockChest(planks));
-		barrel = BlockRegistry.registerBlock(name + "_barrel", new BlockBarrel(planks));
+		chest = EndBlocks.registerBlock(name + "_chest", new BlockChest(planks));
+		barrel = EndBlocks.registerBlock(name + "_barrel", new BlockBarrel(planks));
 		
 		// Recipes //
 		RecipeBuilder.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();

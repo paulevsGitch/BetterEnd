@@ -27,7 +27,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.interfaces.Patterned;
-import ru.betterend.registry.BlockEntityRegistry;
+import ru.betterend.registry.EndBlockEntities;
 
 public class BlockBarrel extends BarrelBlock implements Patterned {
 	public BlockBarrel(Block source) {
@@ -36,7 +36,7 @@ public class BlockBarrel extends BarrelBlock implements Patterned {
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
-		return BlockEntityRegistry.BARREL.instantiate();
+		return EndBlockEntities.BARREL.instantiate();
 	}
 
 	@Override

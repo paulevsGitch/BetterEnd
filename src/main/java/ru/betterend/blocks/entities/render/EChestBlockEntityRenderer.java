@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.BlockChest;
 import ru.betterend.blocks.entities.EChestBlockEntity;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 
 public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEntity> {
 	private static final HashMap<Integer, RenderLayer[]> LAYERS = Maps.newHashMap();
@@ -162,7 +162,7 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 			RenderLayer.getEntitySolid(new Identifier("textures/entity/chest/normal_right.png"))
 		};
 		
-		ItemRegistry.getModBlocks().forEach((item) -> {
+		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof BlockChest) {

@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -31,7 +31,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 		if (pos.getY() < 5) {
 			return false;
 		}
-		else if (!world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+		else if (!world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
 			return false;
 		}
 		return true;

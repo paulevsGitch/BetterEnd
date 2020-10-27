@@ -10,7 +10,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class DefaultEndPortalFeature extends Feature<EndPortalFeatureConfig> {
@@ -24,7 +24,7 @@ public class DefaultEndPortalFeature extends Feature<EndPortalFeatureConfig> {
 			EndPortalFeatureConfig config) {
 		
 		BlockState portalFrame = config.frameBlock.getDefaultState().with(RunedFlavolite.ACTIVATED, config.activated);
-		BlockState portalBlock = BlockRegistry.END_PORTAL_BLOCK.getDefaultState().with(EndPortalBlock.AXIS, config.axis);
+		BlockState portalBlock = EndBlocks.END_PORTAL_BLOCK.getDefaultState().with(EndPortalBlock.AXIS, config.axis);
 		BlockPos bottomCorner = pos;
 		BlockPos topCorner;
 		int width = config.width - 1;

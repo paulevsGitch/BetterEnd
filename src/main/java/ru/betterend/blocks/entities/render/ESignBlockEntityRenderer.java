@@ -30,7 +30,7 @@ import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.BlockSign;
 import ru.betterend.blocks.entities.ESignBlockEntity;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 
 public class ESignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEntity> {
 	private static final HashMap<Integer, RenderLayer> LAYERS = Maps.newHashMap();
@@ -106,7 +106,7 @@ public class ESignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEnti
 	static {
 		defaultLayer = RenderLayer.getEntitySolid(new Identifier("textures/entity/sign/oak.png"));
 			
-		ItemRegistry.getModBlocks().forEach((item) -> {
+		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof BlockSign) {

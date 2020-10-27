@@ -102,6 +102,15 @@
 			}
 		]
 	},
+	"betterend.ambient.dust_wastelands": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/dust_wastelands",
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.entity.dragonfly": {
 		"category": "entity",

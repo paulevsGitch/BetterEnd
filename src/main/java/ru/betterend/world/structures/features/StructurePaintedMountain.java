@@ -12,7 +12,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.structures.piece.PaintedMountainPiece;
 
@@ -51,8 +51,8 @@ public class StructurePaintedMountain extends StructureFeatureBase {
 	static {
 		VARIANTS = new BlockState[] {
 				Blocks.END_STONE.getDefaultState(),
-				BlockRegistry.FLAVOLITE.stone.getDefaultState(),
-				BlockRegistry.VIOLECITE.stone.getDefaultState(),
+				EndBlocks.FLAVOLITE.stone.getDefaultState(),
+				EndBlocks.VIOLECITE.stone.getDefaultState(),
 		};
 	}
 }

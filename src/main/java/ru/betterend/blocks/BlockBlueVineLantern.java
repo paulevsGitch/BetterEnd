@@ -14,7 +14,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockBase;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 
 public class BlockBlueVineLantern extends BlockBase {
 	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
@@ -26,7 +26,7 @@ public class BlockBlueVineLantern extends BlockBase {
 	
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		return state.get(NATURAL) ? world.getBlockState(pos.down()).getBlock() == BlockRegistry.BLUE_VINE : true;
+		return state.get(NATURAL) ? world.getBlockState(pos.down()).getBlock() == EndBlocks.BLUE_VINE : true;
 	}
 	
 	@Override

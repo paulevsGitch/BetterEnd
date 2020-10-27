@@ -2,12 +2,12 @@ package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.EntityRegistry;
-import ru.betterend.registry.FeatureRegistry;
-import ru.betterend.registry.ParticleRegistry;
-import ru.betterend.registry.SoundRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndEntities;
+import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndParticles;
+import ru.betterend.registry.EndSounds;
+import ru.betterend.registry.EndStructures;
 
 public class BiomeFoggyMushroomland extends EndBiome {
 	public BiomeFoggyMushroomland() {
@@ -17,23 +17,23 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.setFogDensity(3)
 				.setWaterColor(119, 227, 250)
 				.setWaterFogColor(119, 227, 250)
-				.setSurface(BlockRegistry.END_MOSS, BlockRegistry.END_MYCELIUM)
-				.setParticles(ParticleRegistry.GLOWING_SPHERE, 0.001F)
-				.setLoop(SoundRegistry.AMBIENT_FOGGY_MUSHROOMLAND)
-				.setMusic(SoundRegistry.MUSIC_FOGGY_MUSHROOMLAND)
-				.addStructureFeature(StructureRegistry.GIANT_MOSSY_GLOWSHROOM)
-				.addFeature(FeatureRegistry.END_LAKE)
-				.addFeature(FeatureRegistry.MOSSY_GLOWSHROOM)
-				.addFeature(FeatureRegistry.BLUE_VINE)
-				.addFeature(FeatureRegistry.UMBRELLA_MOSS)
-				.addFeature(FeatureRegistry.CREEPING_MOSS)
-				.addFeature(FeatureRegistry.DENSE_VINE)
-				.addFeature(FeatureRegistry.END_LILY)
-				.addFeature(FeatureRegistry.BUBBLE_CORAL)
+				.setSurface(EndBlocks.END_MOSS, EndBlocks.END_MYCELIUM)
+				.setParticles(EndParticles.GLOWING_SPHERE, 0.001F)
+				.setLoop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
+				.setMusic(EndSounds.MUSIC_FOGGY_MUSHROOMLAND)
+				.addStructureFeature(EndStructures.GIANT_MOSSY_GLOWSHROOM)
+				.addFeature(EndFeatures.END_LAKE)
+				.addFeature(EndFeatures.MOSSY_GLOWSHROOM)
+				.addFeature(EndFeatures.BLUE_VINE)
+				.addFeature(EndFeatures.UMBRELLA_MOSS)
+				.addFeature(EndFeatures.CREEPING_MOSS)
+				.addFeature(EndFeatures.DENSE_VINE)
+				.addFeature(EndFeatures.END_LILY)
+				.addFeature(EndFeatures.BUBBLE_CORAL)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
-				.addMobSpawn(EntityRegistry.DRAGONFLY, 80, 2, 5)
-				.addMobSpawn(EntityRegistry.END_FISH, 20, 2, 5)
-				.addMobSpawn(EntityRegistry.END_SLIME, 10, 1, 2)
+				.addMobSpawn(EndEntities.DRAGONFLY, 80, 2, 5)
+				.addMobSpawn(EndEntities.END_FISH, 20, 2, 5)
+				.addMobSpawn(EndEntities.END_SLIME, 10, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));
 	}
 }

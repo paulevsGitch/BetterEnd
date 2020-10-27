@@ -10,7 +10,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockEndLotusLeaf;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class EndLotusLeafFeature extends ScatterFeature {
@@ -37,7 +37,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 	
 	private void generateLeaf(StructureWorldAccess world, BlockPos pos) {
 		Mutable p = new Mutable();
-		BlockState leaf = BlockRegistry.END_LOTUS_LEAF.getDefaultState();
+		BlockState leaf = EndBlocks.END_LOTUS_LEAF.getDefaultState();
 		BlocksHelper.setWithoutUpdate(world, pos, leaf.with(BlockEndLotusLeaf.SHAPE, TripleShape.BOTTOM));
 		for (Direction move: BlocksHelper.HORIZONTAL) {
 			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(move), leaf.with(BlockEndLotusLeaf.HORIZONTAL_FACING, move).with(BlockEndLotusLeaf.SHAPE, TripleShape.MIDDLE));

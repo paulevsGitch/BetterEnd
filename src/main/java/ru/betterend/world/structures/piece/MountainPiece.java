@@ -24,10 +24,10 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.BiomeRegistry;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndStructures;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
 public class MountainPiece extends BasePiece {
@@ -41,19 +41,19 @@ public class MountainPiece extends BasePiece {
 	private BlockState top;
 	
 	public MountainPiece(BlockPos center, float radius, float height, int id, Biome biome) {
-		super(StructureRegistry.MOUNTAIN_PIECE, id);
+		super(EndStructures.MOUNTAIN_PIECE, id);
 		this.center = center;
 		this.radius = radius;
 		this.height = height;
 		this.r2 = radius * radius;
 		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
-		this.biomeID = BiomeRegistry.getBiomeID(biome);
+		this.biomeID = EndBiomes.getBiomeID(biome);
 		top = biome.getGenerationSettings().getSurfaceConfig().getTopMaterial();
 		makeBoundingBox();
 	}
 
 	public MountainPiece(StructureManager manager, CompoundTag tag) {
-		super(StructureRegistry.MOUNTAIN_PIECE, tag);
+		super(EndStructures.MOUNTAIN_PIECE, tag);
 		makeBoundingBox();
 	}
 
@@ -73,7 +73,7 @@ public class MountainPiece extends BasePiece {
 		biomeID = new Identifier(tag.getString("biome"));
 		r2 = radius * radius;
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
-		top = BiomeRegistry.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
+		top = EndBiomes.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class MountainPiece extends BasePiece {
 			return h;
 		}
 		
-		if (!BiomeRegistry.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
+		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, -4);
 			return -4;
 		}
@@ -175,7 +175,7 @@ public class MountainPiece extends BasePiece {
 		
 		Mutable m = new Mutable();
 		m.set(pos.getX(), h - 1, pos.getZ());
-		while (h > 56 && world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+		while (h > 56 && world.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
 			m.setY(m.getY() - 1);
 		}
 		h = m.getY();
@@ -245,7 +245,7 @@ public class MountainPiece extends BasePiece {
 							int h = coefX * x + coefZ * z + height;
 							for (int y = minY; y < h; y++) {
 								mut.setY(y);
-								chunk.setBlockState(mut, BlockRegistry.AURORA_CRYSTAL.getDefaultState(), false);
+								chunk.setBlockState(mut, EndBlocks.AURORA_CRYSTAL.getDefaultState(), false);
 							}
 						}
 					}

@@ -20,8 +20,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
@@ -44,7 +44,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	private void beConnectionProperties(BlockView world, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.isOf(Blocks.CHORUS_PLANT)) {
-			if (world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+			if (world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
 				info.setReturnValue(plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true));
 				info.cancel();
 			}
@@ -58,7 +58,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	@Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
 	private void beCanPlace(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		BlockState down = world.getBlockState(pos.down());
-		if (down.isOf(BlockRegistry.CHORUS_NYLIUM) || down.isOf(Blocks.END_STONE)) {
+		if (down.isOf(EndBlocks.CHORUS_NYLIUM) || down.isOf(Blocks.END_STONE)) {
 			info.setReturnValue(true);
 			info.cancel();
 		}
@@ -68,7 +68,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	private void beStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.isOf(Blocks.CHORUS_PLANT)) {
-			if (world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+			if (world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
 				plant = plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true);
 				info.cancel();
 			}
@@ -86,7 +86,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockPos pos = ctx.getBlockPos();
 		World world = ctx.getWorld();
 		BlockState plant = info.getReturnValue();
-		if (ctx.canPlace() && plant.isOf(Blocks.CHORUS_PLANT) && world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+		if (ctx.canPlace() && plant.isOf(Blocks.CHORUS_PLANT) && world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
 			info.setReturnValue(plant.with(BlocksHelper.ROOTS, true).with(Properties.DOWN, true));
 			info.cancel();
 		}

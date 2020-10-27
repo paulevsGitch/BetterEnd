@@ -12,8 +12,8 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -108,18 +108,18 @@ public class EndLakeFeature extends DefaultFeature {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.isIn(BlockTagRegistry.GEN_TERRAIN)) {
+								if (state.isIn(EndTags.GEN_TERRAIN)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								}
 								pos = POS.down();
-								if (world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+								if (world.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
 									state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
 									if (y > waterLevel + 1)
 										BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
-										BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
+										BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.getDefaultState());
 									else
-										BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.ENDSTONE_DUST.getDefaultState());
+										BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.getDefaultState());
 								}
 							}
 						}
@@ -163,8 +163,8 @@ public class EndLakeFeature extends DefaultFeature {
 								}*/
 							}
 							pos = POS.down();
-							if (world.getBlockState(pos).getBlock().isIn(BlockTagRegistry.GEN_TERRAIN)) {
-								BlocksHelper.setWithoutUpdate(world, POS.down(), BlockRegistry.ENDSTONE_DUST.getDefaultState());
+							if (world.getBlockState(pos).getBlock().isIn(EndTags.GEN_TERRAIN)) {
+								BlocksHelper.setWithoutUpdate(world, POS.down(), EndBlocks.ENDSTONE_DUST.getDefaultState());
 							}
 							pos = POS.up();
 							while (canReplace(state = world.getBlockState(pos)) && !state.isAir() && state.getFluidState().isEmpty()) {
@@ -180,11 +180,11 @@ public class EndLakeFeature extends DefaultFeature {
 							//if (world.getBlockState(POS).getMaterial().isReplaceable()) {
 							if (world.isAir(POS.up())) {
 								state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.getDefaultState());
 								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
 							}
 							else {
-								BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.ENDSTONE_DUST.getDefaultState());
 								BlocksHelper.setWithoutUpdate(world, POS.down(), END_STONE);
 							}
 							//}
@@ -216,8 +216,8 @@ public class EndLakeFeature extends DefaultFeature {
 	
 	private boolean canReplace(BlockState state) {
 		return state.getMaterial().isReplaceable()
-				|| state.isIn(BlockTagRegistry.GEN_TERRAIN)
-				|| state.isOf(BlockRegistry.ENDSTONE_DUST)
+				|| state.isIn(EndTags.GEN_TERRAIN)
+				|| state.isOf(EndBlocks.ENDSTONE_DUST)
 				|| state.getMaterial().equals(Material.PLANT)
 				|| state.getMaterial().equals(Material.UNDERWATER_PLANT)
 				|| state.getMaterial().equals(Material.UNUSED_PLANT);

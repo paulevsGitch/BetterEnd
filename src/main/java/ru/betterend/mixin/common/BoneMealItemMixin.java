@@ -17,8 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 @Mixin(BoneMealItem.class)
@@ -31,7 +31,7 @@ public class BoneMealItemMixin {
 		World world = context.getWorld();
 		BlockPos blockPos = context.getBlockPos();
 		if (!world.isClient) {
-			if (world.getBlockState(blockPos).isIn(BlockTagRegistry.END_GROUND)) {
+			if (world.getBlockState(blockPos).isIn(EndTags.END_GROUND)) {
 				boolean consume = false;
 				if (world.getBlockState(blockPos).getBlock() == Blocks.END_STONE) {
 					BlockState nylium = beGetNylium(world, blockPos);
@@ -82,14 +82,14 @@ public class BoneMealItemMixin {
 	private BlockState beGetGrassState(World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (block == BlockRegistry.END_MOSS || block == BlockRegistry.END_MYCELIUM) {
-			return world.random.nextBoolean() ? BlockRegistry.CREEPING_MOSS.getDefaultState() : BlockRegistry.UMBRELLA_MOSS.getDefaultState();
+		if (block == EndBlocks.END_MOSS || block == EndBlocks.END_MYCELIUM) {
+			return world.random.nextBoolean() ? EndBlocks.CREEPING_MOSS.getDefaultState() : EndBlocks.UMBRELLA_MOSS.getDefaultState();
 		}
-		else if (block == BlockRegistry.CAVE_MOSS) {
-			return BlockRegistry.CAVE_GRASS.getDefaultState();
+		else if (block == EndBlocks.CAVE_MOSS) {
+			return EndBlocks.CAVE_GRASS.getDefaultState();
 		}
-		else if (block == BlockRegistry.CHORUS_NYLIUM) {
-			return BlockRegistry.CHORUS_GRASS.getDefaultState();
+		else if (block == EndBlocks.CHORUS_NYLIUM) {
+			return EndBlocks.CHORUS_GRASS.getDefaultState();
 		}
 		return null;
 	}

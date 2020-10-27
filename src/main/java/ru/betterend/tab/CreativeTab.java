@@ -5,16 +5,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import ru.betterend.BetterEnd;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndItems;
 
 public class CreativeTab {
 	public static final ItemGroup END_TAB = FabricItemGroupBuilder.create(BetterEnd.makeID("items"))
-			.icon(() -> new ItemStack(BlockRegistry.END_MYCELIUM)).appendItems(stacks -> {
-				for (Item i : ItemRegistry.getModBlocks()) {
+			.icon(() -> new ItemStack(EndBlocks.END_MYCELIUM)).appendItems(stacks -> {
+				for (Item i : EndItems.getModBlocks()) {
 					stacks.add(new ItemStack(i));
 				}
-				for (Item i : ItemRegistry.getModItems()) {
+				for (Item i : EndItems.getModItems()) {
 					stacks.add(new ItemStack(i));
 				}
 			}).build();

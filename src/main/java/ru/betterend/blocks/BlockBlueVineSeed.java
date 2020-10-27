@@ -9,7 +9,7 @@ import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.blocks.basis.BlockPlantWithAge;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -21,29 +21,29 @@ public class BlockBlueVineSeed extends BlockPlantWithAge {
 		if (h < height + 1) {
 			return;
 		}
-		BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.BLUE_VINE.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.BLUE_VINE.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		for (int i = 1; i < height; i++) {
-			BlocksHelper.setWithoutUpdate(world, pos.up(i), BlockRegistry.BLUE_VINE.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(world, pos.up(i), EndBlocks.BLUE_VINE.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 		}
-		BlocksHelper.setWithoutUpdate(world, pos.up(height), BlockRegistry.BLUE_VINE.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+		BlocksHelper.setWithoutUpdate(world, pos.up(height), EndBlocks.BLUE_VINE.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 		placeLantern(world, pos.up(height + 1));
 	}
 	
 	private void placeLantern(StructureWorldAccess world, BlockPos pos) {
-		BlocksHelper.setWithoutUpdate(world, pos, BlockRegistry.BLUE_VINE_LANTERN.getDefaultState().with(BlockBlueVineLantern.NATURAL, true));
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.BLUE_VINE_LANTERN.getDefaultState().with(BlockBlueVineLantern.NATURAL, true));
 		for (Direction dir: BlocksHelper.HORIZONTAL) {
 			BlockPos p = pos.offset(dir);
 			if (world.isAir(p)) {
-				BlocksHelper.setWithoutUpdate(world, p, BlockRegistry.BLUE_VINE_FUR.getDefaultState().with(BlockGlowingFur.FACING, dir));
+				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.BLUE_VINE_FUR.getDefaultState().with(BlockGlowingFur.FACING, dir));
 			}
 		}
 		if (world.isAir(pos.up())) {
-			BlocksHelper.setWithoutUpdate(world, pos.up(), BlockRegistry.BLUE_VINE_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.UP));
+			BlocksHelper.setWithoutUpdate(world, pos.up(), EndBlocks.BLUE_VINE_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.UP));
 		}
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == BlockRegistry.END_MOSS || state.getBlock() == BlockRegistry.END_MYCELIUM;
+		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;
 	}
 }

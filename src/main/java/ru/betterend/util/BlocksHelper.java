@@ -24,8 +24,8 @@ import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.basis.BlockDoublePlant;
 import ru.betterend.blocks.basis.BlockGlowingFur;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 
 public class BlocksHelper {
 	public static final BooleanProperty ROOTS = BooleanProperty.of("roots");
@@ -229,7 +229,7 @@ public class BlocksHelper {
 					else if (!state.canPlaceAt(world, POS)) {
 						// Blue Vine
 						if (state.getBlock() instanceof BlockBlueVine) {
-							while (state.isOf(BlockRegistry.BLUE_VINE) || state.isOf(BlockRegistry.BLUE_VINE_LANTERN) || state.isOf(BlockRegistry.BLUE_VINE_FUR)) {
+							while (state.isOf(EndBlocks.BLUE_VINE) || state.isOf(EndBlocks.BLUE_VINE_LANTERN) || state.isOf(EndBlocks.BLUE_VINE_FUR)) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								for (Direction dir : HORIZONTAL) {
 									BlockPos p = POS.offset(dir);
@@ -266,7 +266,7 @@ public class BlocksHelper {
 	}
 	
 	public static boolean isEndNylium(Block block) {
-		return block.isIn(BlockTags.NYLIUM) && block.isIn(BlockTagRegistry.END_GROUND);
+		return block.isIn(BlockTags.NYLIUM) && block.isIn(EndTags.END_GROUND);
 	}
 	
 	public static boolean isEndNylium(BlockState state) {

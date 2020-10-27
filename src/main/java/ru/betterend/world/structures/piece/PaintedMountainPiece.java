@@ -24,9 +24,9 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.BiomeRegistry;
-import ru.betterend.registry.BlockTagRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndStructures;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
 public class PaintedMountainPiece extends BasePiece {
@@ -40,19 +40,19 @@ public class PaintedMountainPiece extends BasePiece {
 	private BlockState[] slises;
 	
 	public PaintedMountainPiece(BlockPos center, float radius, float height, int id, Biome biome, BlockState[] slises) {
-		super(StructureRegistry.PAINTED_MOUNTAIN_PIECE, id);
+		super(EndStructures.PAINTED_MOUNTAIN_PIECE, id);
 		this.center = center;
 		this.radius = radius;
 		this.height = height;
 		this.r2 = radius * radius;
 		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
-		this.biomeID = BiomeRegistry.getBiomeID(biome);
+		this.biomeID = EndBiomes.getBiomeID(biome);
 		this.slises = slises;
 		makeBoundingBox();
 	}
 
 	public PaintedMountainPiece(StructureManager manager, CompoundTag tag) {
-		super(StructureRegistry.PAINTED_MOUNTAIN_PIECE, tag);
+		super(EndStructures.PAINTED_MOUNTAIN_PIECE, tag);
 		makeBoundingBox();
 	}
 
@@ -139,7 +139,7 @@ public class PaintedMountainPiece extends BasePiece {
 			return h;
 		}
 		
-		if (!BiomeRegistry.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
+		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, -6);
 			return -6;
 		}
@@ -151,7 +151,7 @@ public class PaintedMountainPiece extends BasePiece {
 		
 		Mutable m = new Mutable();
 		m.set(pos.getX(), h - 1, pos.getZ());
-		while (h > 56 && world.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+		while (h > 56 && world.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
 			m.setY(m.getY() - 1);
 		}
 		h = m.getY();

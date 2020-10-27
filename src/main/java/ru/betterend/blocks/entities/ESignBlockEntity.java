@@ -25,7 +25,7 @@ import net.minecraft.text.Texts;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
-import ru.betterend.registry.BlockEntityRegistry;
+import ru.betterend.registry.EndBlockEntities;
 
 public class ESignBlockEntity extends BlockEntity {
 	private final Text[] text;
@@ -35,7 +35,7 @@ public class ESignBlockEntity extends BlockEntity {
 	private DyeColor textColor;
 
 	public ESignBlockEntity() {
-		super(BlockEntityRegistry.SIGN);
+		super(EndBlockEntities.SIGN);
 		this.text = new Text[] { LiteralText.EMPTY, LiteralText.EMPTY, LiteralText.EMPTY, LiteralText.EMPTY };
 		this.editable = true;
 		this.textBeingEdited = new OrderedText[4];

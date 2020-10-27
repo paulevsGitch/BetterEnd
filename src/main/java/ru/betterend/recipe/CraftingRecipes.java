@@ -4,85 +4,85 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import ru.betterend.recipe.builders.RecipeBuilder;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndItems;
 
 public class CraftingRecipes {
 	
 	public static void register() {
-		RecipeBuilder.make("ender_pearl_to_block", BlockRegistry.ENDER_BLOCK)
+		RecipeBuilder.make("ender_pearl_to_block", EndBlocks.ENDER_BLOCK)
 			.setShape(new String[] { "OO", "OO" })
 			.addMaterial('O', Items.ENDER_PEARL)
 			.build();
 		RecipeBuilder.make("ender_block_to_pearl", Items.ENDER_PEARL)
-			.addMaterial('#', BlockRegistry.ENDER_BLOCK)
+			.addMaterial('#', EndBlocks.ENDER_BLOCK)
 			.setOutputCount(4)
 			.setList("#")
 			.build();
 		
-		RecipeBuilder.make("end_stone_smelter", BlockRegistry.END_STONE_SMELTER)
+		RecipeBuilder.make("end_stone_smelter", EndBlocks.END_STONE_SMELTER)
 			.setShape(new String[] { "###", "V V", "###" })
 			.addMaterial('#', Blocks.END_STONE_BRICKS)
 			.addMaterial('V', Items.BUCKET)
 			.build();
 		
 		String material = "terminite";
-		RecipeBuilder.make(material + "_block", BlockRegistry.TERMINITE_BLOCK)
+		RecipeBuilder.make(material + "_block", EndBlocks.TERMINITE_BLOCK)
 			.setShape(new String[] { "III", "III", "III" })
-			.addMaterial('I', ItemRegistry.TERMINITE_INGOT)
+			.addMaterial('I', EndItems.TERMINITE_INGOT)
 			.build();
-		RecipeBuilder.make(material + "_block_to_ingot", ItemRegistry.TERMINITE_INGOT)
-			.addMaterial('#', BlockRegistry.TERMINITE_BLOCK)
+		RecipeBuilder.make(material + "_block_to_ingot", EndItems.TERMINITE_INGOT)
+			.addMaterial('#', EndBlocks.TERMINITE_BLOCK)
 			.setOutputCount(9)
 			.setList("#")
 			.build();
 		
-		registerHelmet(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HELMET);
-		registerChestplate(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_CHESTPLATE);
-		registerLeggings(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_LEGGINGS);
-		registerBoots(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_BOOTS);
-		registerShovel(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_SHOVEL);
-		registerSword(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_SWORD);
-		registerPickaxe(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_PICKAXE);
-		registerAxe(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_AXE);
-		registerHoe(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HOE);
-		registerHammer(material, ItemRegistry.TERMINITE_INGOT, ItemRegistry.TERMINITE_HAMMER);
+		registerHelmet(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_HELMET);
+		registerChestplate(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_CHESTPLATE);
+		registerLeggings(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_LEGGINGS);
+		registerBoots(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_BOOTS);
+		registerShovel(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_SHOVEL);
+		registerSword(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_SWORD);
+		registerPickaxe(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_PICKAXE);
+		registerAxe(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_AXE);
+		registerHoe(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_HOE);
+		registerHammer(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_HAMMER);
 		
 		material = "aeternium";
-		RecipeBuilder.make(material + "_block", BlockRegistry.AETERNIUM_BLOCK)
+		RecipeBuilder.make(material + "_block", EndBlocks.AETERNIUM_BLOCK)
 			.setShape(new String[] { "III", "III", "III" })
-			.addMaterial('I', ItemRegistry.AETERNIUM_INGOT)
+			.addMaterial('I', EndItems.AETERNIUM_INGOT)
 			.build();
-		RecipeBuilder.make(material + "_block_to_ingot", ItemRegistry.AETERNIUM_INGOT)
-			.addMaterial('#', BlockRegistry.AETERNIUM_BLOCK)
+		RecipeBuilder.make(material + "_block_to_ingot", EndItems.AETERNIUM_INGOT)
+			.addMaterial('#', EndBlocks.AETERNIUM_BLOCK)
 			.setOutputCount(9)
 			.setList("#")
 			.build();
 		
-		registerHelmet(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_HELMET);
-		registerChestplate(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_CHESTPLATE);
-		registerLeggings(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_LEGGINGS);
-		registerBoots(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_BOOTS);
-		registerShovel(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_SHOVEL);
-		registerSword(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_SWORD);
-		registerPickaxe(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_PICKAXE);
-		registerAxe(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_AXE);
-		registerHoe(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_HOE);
-		registerHammer(material, ItemRegistry.AETERNIUM_INGOT, ItemRegistry.AETERNIUM_HAMMER);
+		registerHelmet(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_HELMET);
+		registerChestplate(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_CHESTPLATE);
+		registerLeggings(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_LEGGINGS);
+		registerBoots(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_BOOTS);
+		registerShovel(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_SHOVEL);
+		registerSword(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_SWORD);
+		registerPickaxe(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_PICKAXE);
+		registerAxe(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_AXE);
+		registerHoe(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_HOE);
+		registerHammer(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_HAMMER);
 		
-		registerHammer("iron", Items.IRON_INGOT, ItemRegistry.IRON_HAMMER);
-		registerHammer("golden", Items.GOLD_INGOT, ItemRegistry.GOLDEN_HAMMER);
-		registerHammer("diamond", Items.DIAMOND, ItemRegistry.DIAMOND_HAMMER);
-		registerHammer("netherite", Items.NETHERITE_INGOT, ItemRegistry.NETHERITE_HAMMER);
+		registerHammer("iron", Items.IRON_INGOT, EndItems.IRON_HAMMER);
+		registerHammer("golden", Items.GOLD_INGOT, EndItems.GOLDEN_HAMMER);
+		registerHammer("diamond", Items.DIAMOND, EndItems.DIAMOND_HAMMER);
+		registerHammer("netherite", Items.NETHERITE_INGOT, EndItems.NETHERITE_HAMMER);
 		
-		RecipeBuilder.make("blue_vine_seed_dye", Items.BLUE_DYE).setList("#").addMaterial('#', BlockRegistry.BLUE_VINE_SEED).build();
-		RecipeBuilder.make("creeping_moss_dye", Items.CYAN_DYE).setList("#").addMaterial('#', BlockRegistry.CREEPING_MOSS).build();
-		RecipeBuilder.make("umbrella_moss_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', BlockRegistry.UMBRELLA_MOSS).build();
-		RecipeBuilder.make("umbrella_moss_tall_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', BlockRegistry.UMBRELLA_MOSS_TALL).build();
+		RecipeBuilder.make("blue_vine_seed_dye", Items.BLUE_DYE).setList("#").addMaterial('#', EndBlocks.BLUE_VINE_SEED).build();
+		RecipeBuilder.make("creeping_moss_dye", Items.CYAN_DYE).setList("#").addMaterial('#', EndBlocks.CREEPING_MOSS).build();
+		RecipeBuilder.make("umbrella_moss_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', EndBlocks.UMBRELLA_MOSS).build();
+		RecipeBuilder.make("umbrella_moss_tall_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', EndBlocks.UMBRELLA_MOSS_TALL).build();
 		
-		RecipeBuilder.make("paper", Items.PAPER).setShape("###").addMaterial('#', ItemRegistry.END_LILY_LEAF_DRIED).setOutputCount(3).build();
+		RecipeBuilder.make("paper", Items.PAPER).setShape("###").addMaterial('#', EndItems.END_LILY_LEAF_DRIED).setOutputCount(3).build();
 		
-		RecipeBuilder.make("aurora_block", BlockRegistry.AURORA_CRYSTAL).setShape("##", "##").addMaterial('#', ItemRegistry.CRYSTAL_SHARDS).build();
+		RecipeBuilder.make("aurora_block", EndBlocks.AURORA_CRYSTAL).setShape("##", "##").addMaterial('#', EndItems.CRYSTAL_SHARDS).build();
 	}
 	
 	private static void registerHelmet(String name, Item material, Item result) {

@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
-import ru.betterend.registry.BiomeRegistry;
+import ru.betterend.registry.EndBiomes;
 import ru.betterend.world.biome.EndBiome;
 
 public class BiomePicker {
@@ -37,7 +37,7 @@ public class BiomePicker {
 		for (EndBiome biome: biomes)
 			if (biome.canGenerate(chance))
 				return biome;
-		return BiomeRegistry.END;
+		return EndBiomes.END;
 	}
 	
 	public List<EndBiome> getBiomes() {

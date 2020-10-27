@@ -16,14 +16,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.explosion.Explosion;
 import ru.betterend.blocks.basis.BlockSlab;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 
 public class EternalPedestal extends BlockSlab {
 	public static final BooleanProperty ACTIVATED = BooleanProperty.of("active");
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
 	
 	public EternalPedestal() {
-		super(BlockRegistry.FLAVOLITE_RUNED_ETERNAL);
+		super(EndBlocks.FLAVOLITE_RUNED_ETERNAL);
 		this.setDefaultState(stateManager.getDefaultState().with(ACTIVATED, false).with(HAS_ITEM, false));
 	}
 	

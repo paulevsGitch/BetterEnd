@@ -3,7 +3,7 @@ package ru.betterend.recipe;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import ru.betterend.recipe.builders.AlloyingRecipe;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 
 public class AlloyingRecipes {
 	public static void register() {
@@ -24,14 +24,14 @@ public class AlloyingRecipes {
 			.setSmeltTime(500)
 			.build();
 		AlloyingRecipe.Builder.create("terminite_ingot")
-			.setInput(Items.IRON_INGOT, ItemRegistry.ENDER_DUST)
-			.setOutput(ItemRegistry.TERMINITE_INGOT, 1)
+			.setInput(Items.IRON_INGOT, EndItems.ENDER_DUST)
+			.setOutput(EndItems.TERMINITE_INGOT, 1)
 			.setExpiriense(2.5F)
 			.setSmeltTime(450)
 			.build();
 		AlloyingRecipe.Builder.create("aeternium_ingot")
-			.setInput(ItemRegistry.TERMINITE_INGOT, Items.NETHERITE_INGOT)
-			.setOutput(ItemRegistry.AETERNIUM_INGOT, 1)
+			.setInput(EndItems.TERMINITE_INGOT, Items.NETHERITE_INGOT)
+			.setOutput(EndItems.AETERNIUM_INGOT, 1)
 			.setExpiriense(4.5F)
 			.setSmeltTime(600)
 			.build();

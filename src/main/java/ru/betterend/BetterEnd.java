@@ -11,16 +11,15 @@ import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.SmeltigRecipes;
 import ru.betterend.recipe.SmithingRecipes;
-import ru.betterend.registry.BiomeRegistry;
-import ru.betterend.registry.BlockEntityRegistry;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
-import ru.betterend.registry.EntityRegistry;
-import ru.betterend.registry.FeatureRegistry;
-import ru.betterend.registry.ItemRegistry;
-import ru.betterend.registry.ItemTagRegistry;
-import ru.betterend.registry.SoundRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndBlockEntities;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndEntities;
+import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndSounds;
+import ru.betterend.registry.EndStructures;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.Logger;
 import ru.betterend.util.TranslationHelper;
 import ru.betterend.world.generator.BetterEndBiomeSource;
@@ -32,23 +31,22 @@ public class BetterEnd implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
-		SoundRegistry.register();
-		ItemRegistry.register();
-		BlockRegistry.register();
-		BlockEntityRegistry.register();
-		FeatureRegistry.register();
-		EntityRegistry.register();
-		BiomeRegistry.register();
+		EndSounds.register();
+		EndItems.register();
+		EndBlocks.register();
+		EndBlockEntities.register();
+		EndFeatures.register();
+		EndEntities.register();
+		EndBiomes.register();
 		BetterEndBiomeSource.register();
-		ItemTagRegistry.register();
-		BlockTagRegistry.register();
+		EndTags.register();
 		EndEnchantments.register();
 		EndPotions.register();
 		CraftingRecipes.register();
 		SmeltigRecipes.register();
 		AlloyingRecipes.register();
 		SmithingRecipes.register();
-		StructureRegistry.register();
+		EndStructures.register();
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 		

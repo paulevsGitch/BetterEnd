@@ -23,7 +23,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
-import ru.betterend.registry.ItemTagRegistry;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.RecipeHelper;
 
 public class AnvilSmithingRecipe implements Recipe<Inventory> {
@@ -81,7 +81,7 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	
 	public boolean matches(Inventory craftingInventory) {
 		ItemStack hammer = craftingInventory.getStack(0);
-		if (hammer.isEmpty() || !ItemTagRegistry.HAMMERS.contains(hammer.getItem())) {
+		if (hammer.isEmpty() || !EndTags.HAMMERS.contains(hammer.getItem())) {
 			return false;
 		}
 		int level = ((ToolItem) hammer.getItem()).getMaterial().getMiningLevel();
@@ -95,7 +95,7 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	@Override
 	public DefaultedList<Ingredient> getPreviewInputs() {
 		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-		defaultedList.add(Ingredient.ofStacks(ItemTagRegistry.HAMMERS.values().stream().filter(hammer -> {
+		defaultedList.add(Ingredient.ofStacks(EndTags.HAMMERS.values().stream().filter(hammer -> {
 			return ((ToolItem) hammer).getMaterial().getMiningLevel() >= level;
 		}).map(ItemStack::new)));
 		defaultedList.add(input);

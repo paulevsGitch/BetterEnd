@@ -8,7 +8,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.mixin.common.BrewingAccessor;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 
 public class EndPotions {
 	public final static Potion END_VEIL = registerPotion("end_veil", EndStatusEffects.END_VEIL, 3600);
@@ -23,7 +23,7 @@ public class EndPotions {
 	}
 	
 	public static void register() {
-		BrewingAccessor.callRegisterPotionRecipe(Potions.AWKWARD, ItemRegistry.ENDER_DUST, END_VEIL);
+		BrewingAccessor.callRegisterPotionRecipe(Potions.AWKWARD, EndItems.ENDER_DUST, END_VEIL);
 		BrewingAccessor.callRegisterPotionRecipe(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
 	}
 }

@@ -28,8 +28,8 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockUnderwaterPlant;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
 public class BlockEndLily extends BlockUnderwaterPlant {
@@ -91,7 +91,7 @@ public class BlockEndLily extends BlockUnderwaterPlant {
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		if (state.get(SHAPE) == TripleShape.TOP) {
-			return Lists.newArrayList(new ItemStack(ItemRegistry.END_LILY_LEAF, MHelper.randRange(1, 2, MHelper.RANDOM)), new ItemStack(BlockRegistry.END_LILY_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
+			return Lists.newArrayList(new ItemStack(EndItems.END_LILY_LEAF, MHelper.randRange(1, 2, MHelper.RANDOM)), new ItemStack(EndBlocks.END_LILY_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
 		}
 		return Collections.emptyList();
 	}

@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import ru.betterend.blocks.basis.BlockDoublePlant;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 
 public class BlockUmbrellaMossTall extends BlockDoublePlant {
 	public BlockUmbrellaMossTall() {
@@ -17,12 +17,12 @@ public class BlockUmbrellaMossTall extends BlockDoublePlant {
 	
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(BlockRegistry.UMBRELLA_MOSS));
+		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(EndBlocks.UMBRELLA_MOSS));
 		world.spawnEntity(item);
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == BlockRegistry.END_MOSS || state.getBlock() == BlockRegistry.END_MYCELIUM;
+		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;
 	}
 }

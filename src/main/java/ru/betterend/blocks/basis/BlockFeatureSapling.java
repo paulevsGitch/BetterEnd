@@ -25,7 +25,7 @@ import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.interfaces.Patterned;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
@@ -59,7 +59,7 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		return world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND);
+		return world.getBlockState(pos.down()).isIn(EndTags.END_GROUND);
 	}
 
 	@Override

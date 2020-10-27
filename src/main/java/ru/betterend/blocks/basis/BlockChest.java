@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import ru.betterend.interfaces.Patterned;
-import ru.betterend.registry.BlockEntityRegistry;
+import ru.betterend.registry.EndBlockEntities;
 
 public class BlockChest extends ChestBlock implements Patterned {
 
@@ -22,7 +22,7 @@ public class BlockChest extends ChestBlock implements Patterned {
 	
 	public BlockChest(Block source) {
 		super(FabricBlockSettings.copyOf(source).nonOpaque(), () -> {
-			return BlockEntityRegistry.CHEST;
+			return EndBlockEntities.CHEST;
 		});
 		this.parent = source;
 	}
@@ -30,7 +30,7 @@ public class BlockChest extends ChestBlock implements Patterned {
 	@Override
 	public BlockEntity createBlockEntity(BlockView world)
 	{
-		return BlockEntityRegistry.CHEST.instantiate();
+		return EndBlockEntities.CHEST.instantiate();
 	}
 	
 	@Override

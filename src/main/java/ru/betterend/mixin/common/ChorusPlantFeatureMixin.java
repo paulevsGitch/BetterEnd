@@ -16,7 +16,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ChorusPlantFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -24,7 +24,7 @@ import ru.betterend.util.MHelper;
 public class ChorusPlantFeatureMixin {
 	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
 	private void onGenerate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
-		if (structureWorldAccess.isAir(blockPos) && structureWorldAccess.getBlockState(blockPos.down()).isOf(BlockRegistry.CHORUS_NYLIUM)) {
+		if (structureWorldAccess.isAir(blockPos) && structureWorldAccess.getBlockState(blockPos.down()).isOf(EndBlocks.CHORUS_NYLIUM)) {
 			ChorusFlowerBlock.generate(structureWorldAccess, blockPos, random, MHelper.randRange(8, 16, random));
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
 			if (bottom.isOf(Blocks.CHORUS_PLANT)) {

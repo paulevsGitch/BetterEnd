@@ -17,8 +17,8 @@ import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
 import ru.betterend.BetterEnd;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.BiomeRegistry;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.FeaturesHelper;
 import ru.betterend.world.biome.EndBiome;
 
@@ -42,8 +42,8 @@ public class BetterEndBiomeSource extends BiomeSource {
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 		super(getBiomes(biomeRegistry));
 		
-		this.mapLand = new BiomeMap(seed, 256, BiomeRegistry.LAND_BIOMES);
-		this.mapVoid = new BiomeMap(seed, 256, BiomeRegistry.VOID_BIOMES);
+		this.mapLand = new BiomeMap(seed, 256, EndBiomes.LAND_BIOMES);
+		this.mapVoid = new BiomeMap(seed, 256, EndBiomes.VOID_BIOMES);
 		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
 		this.barrens = biomeRegistry.getOrThrow(BiomeKeys.END_BARRENS);
 		this.biomeRegistry = biomeRegistry;
@@ -53,8 +53,8 @@ public class BetterEndBiomeSource extends BiomeSource {
 		chunkRandom.consume(17292);
 		this.noise = new SimplexNoiseSampler(chunkRandom);
 
-		BiomeRegistry.mutateRegistry(biomeRegistry);
-		BlockTagRegistry.addTerrainTags(biomeRegistry);
+		EndBiomes.mutateRegistry(biomeRegistry);
+		EndTags.addTerrainTags(biomeRegistry);
 		FeaturesHelper.addFeatures(biomeRegistry);
 	}
 	
@@ -86,7 +86,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 			mapVoid.clearCache();
 		}
 		
-		return biomeRegistry.getOrThrow(BiomeRegistry.getBiomeKey(netherBiome));
+		return biomeRegistry.getOrThrow(EndBiomes.getBiomeKey(netherBiome));
 	}
 
 	@Override

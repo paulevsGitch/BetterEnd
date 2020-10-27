@@ -26,7 +26,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import ru.betterend.registry.ItemTagRegistry;
+import ru.betterend.registry.EndTags;
 
 public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	
@@ -93,7 +93,7 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	
 	@Override
 	public float getMiningSpeedMultiplier(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(ItemTagRegistry.HAMMERS)) {
+		if (tag.equals(EndTags.HAMMERS)) {
 			return this.getMiningSpeedMultiplier(stack, state);
 		}
 		return 1.0F;
@@ -101,7 +101,7 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	
 	@Override
 	public int getMiningLevel(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(ItemTagRegistry.HAMMERS)) {
+		if (tag.equals(EndTags.HAMMERS)) {
 			return this.getMaterial().getMiningLevel();
 		}
 		return 0;

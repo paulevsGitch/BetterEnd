@@ -26,8 +26,8 @@ import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
-import ru.betterend.registry.BlockTagRegistry;
-import ru.betterend.registry.ParticleRegistry;
+import ru.betterend.registry.EndParticles;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.PortalFrameHelper;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
@@ -54,7 +54,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			z = pos.getZ() + 0.5D + 0.25D * k;
 		}
 
-		world.addParticle(ParticleRegistry.PORTAL_SPHERE, x, y, z, 0, 0, 0);
+		world.addParticle(EndParticles.PORTAL_SPHERE, x, y, z, 0, 0, 0);
 	}
 
 	@Override
@@ -164,7 +164,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			BlockState state = world.getBlockState(position);
 			if (state.isAir()) airBlocks++;
 			if (world.getRegistryKey().equals(World.END)) {
-				free &= state.isAir() || BlockTagRegistry.validGenBlock(state);
+				free &= state.isAir() || EndTags.validGenBlock(state);
 			} else {
 				BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
 				free &= this.validBlock(state, surfaceBlock.getBlock());

@@ -25,8 +25,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 @Mixin(value = ChorusFlowerBlock.class, priority = 100)
@@ -44,7 +44,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	
 	@Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
 	private void beCanPlace(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
-		if (world.getBlockState(pos.down()).isOf(BlockRegistry.CHORUS_NYLIUM)) {
+		if (world.getBlockState(pos.down()).isOf(EndBlocks.CHORUS_NYLIUM)) {
 			info.setReturnValue(true);
 			info.cancel();
 		}
@@ -52,7 +52,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
 	private void beOnTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo info) {
-		if (world.getBlockState(pos.down()).isIn(BlockTagRegistry.END_GROUND)) {
+		if (world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
 			BlockPos up = pos.up();
 			if (world.isAir(up) && up.getY() < 256) {
 				int i = state.get(ChorusFlowerBlock.AGE);

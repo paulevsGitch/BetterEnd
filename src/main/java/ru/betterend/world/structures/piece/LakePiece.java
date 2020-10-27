@@ -22,10 +22,10 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.BiomeRegistry;
-import ru.betterend.registry.BlockRegistry;
-import ru.betterend.registry.BlockTagRegistry;
-import ru.betterend.registry.StructureRegistry;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndStructures;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
 public class LakePiece extends BasePiece {
@@ -38,7 +38,7 @@ public class LakePiece extends BasePiece {
 	private float r2;
 	
 	public LakePiece(BlockPos center, float radius, float depth, int id) {
-		super(StructureRegistry.LAKE_PIECE, id);
+		super(EndStructures.LAKE_PIECE, id);
 		this.center = center;
 		this.radius = radius;
 		this.depth = depth;
@@ -48,7 +48,7 @@ public class LakePiece extends BasePiece {
 	}
 
 	public LakePiece(StructureManager manager, CompoundTag tag) {
-		super(StructureRegistry.LAKE_PIECE, tag);
+		super(EndStructures.LAKE_PIECE, tag);
 		makeBoundingBox();
 	}
 
@@ -100,13 +100,13 @@ public class LakePiece extends BasePiece {
 							}
 							minY = MathHelper.lerp(lerp, maxY - minY, 56 - minY);
 							pos.setY(maxY);
-							while (chunk.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+							while (chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
 								pos.setY(maxY ++);
 							}
 							for (int y = maxY; y >= minY; y--) {
 								pos.setY(y - 1);
 								BlockState state = chunk.getBlockState(pos);
-								if (state.getMaterial().isReplaceable() || state.isIn(BlockTagRegistry.GEN_TERRAIN)) {
+								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
 									pos.setY(y);
 									chunk.setBlockState(pos, y > 56 ? AIR : WATER, false);
 								}
@@ -117,15 +117,15 @@ public class LakePiece extends BasePiece {
 							}
 							if (pos.getY() < 57) {
 								BlockState state = chunk.getBlockState(pos);
-								if (state.getMaterial().isReplaceable() || state.isIn(BlockTagRegistry.GEN_TERRAIN)) {
-									chunk.setBlockState(pos, BlockRegistry.ENDSTONE_DUST.getDefaultState(), false);
+								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
+									chunk.setBlockState(pos, EndBlocks.ENDSTONE_DUST.getDefaultState(), false);
 									pos.setY(pos.getY() - 1);
 									state = chunk.getBlockState(pos);
-									if (state.getMaterial().isReplaceable() || state.isIn(BlockTagRegistry.GEN_TERRAIN)) {
-										chunk.setBlockState(pos, BlockRegistry.ENDSTONE_DUST.getDefaultState(), false);
+									if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
+										chunk.setBlockState(pos, EndBlocks.ENDSTONE_DUST.getDefaultState(), false);
 										pos.setY(pos.getY() - 1);
 									}
-									if (!chunk.getBlockState(pos).isIn(BlockTagRegistry.GEN_TERRAIN)) {
+									if (!chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
 										
 										chunk.setBlockState(pos, Blocks.END_STONE.getDefaultState(), false);
 									}
@@ -149,7 +149,7 @@ public class LakePiece extends BasePiece {
 			return h;
 		}
 		
-		if (BiomeRegistry.getFromBiome(world.getBiome(pos)) != BiomeRegistry.MEGALAKE) {
+		if (EndBiomes.getFromBiome(world.getBiome(pos)) != EndBiomes.MEGALAKE) {
 			heightmap.put(p, -4);
 			return -4;
 		}

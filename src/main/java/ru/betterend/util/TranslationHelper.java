@@ -10,8 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import ru.betterend.BetterEnd;
-import ru.betterend.registry.BiomeRegistry;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndItems;
 
 public class TranslationHelper {
 	public static void printMissingNames() {
@@ -24,7 +24,7 @@ public class TranslationHelper {
 		JsonObject translationEn = gson.fromJson(new InputStreamReader(streamEn), JsonObject.class);
 		JsonObject translationRu = gson.fromJson(new InputStreamReader(streamRu), JsonObject.class);
 		
-		ItemRegistry.getModBlocks().forEach((block) -> {
+		EndItems.getModBlocks().forEach((block) -> {
 			String name = block.getName().getString();
 			if (!translationEn.has(name)) {
 				missingNamesEn.add(name);
@@ -34,7 +34,7 @@ public class TranslationHelper {
 			}
 		});
 		
-		ItemRegistry.getModItems().forEach((item) -> {
+		EndItems.getModItems().forEach((item) -> {
 			String name = item.getName().getString();
 			if (!translationEn.has(name)) {
 				missingNamesEn.add(name);
@@ -44,7 +44,7 @@ public class TranslationHelper {
 			}
 		});
 		
-		BiomeRegistry.getModBiomes().forEach((endBiome) -> {
+		EndBiomes.getModBiomes().forEach((endBiome) -> {
 			if (endBiome.getID().getNamespace().equals(BetterEnd.MOD_ID)) {
 				String name = "biome." + BetterEnd.MOD_ID + "." + endBiome.getID().getPath();
 				if (!translationEn.has(name)) {

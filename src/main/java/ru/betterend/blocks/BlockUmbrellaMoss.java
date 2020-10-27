@@ -11,7 +11,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockDoublePlant;
 import ru.betterend.blocks.basis.BlockPlant;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockUmbrellaMoss extends BlockPlant {
@@ -21,7 +21,7 @@ public class BlockUmbrellaMoss extends BlockPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == BlockRegistry.END_MOSS || state.getBlock() == BlockRegistry.END_MYCELIUM;
+		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;
 	}
 	
 	@Environment(EnvType.CLIENT)
@@ -42,7 +42,7 @@ public class BlockUmbrellaMoss extends BlockPlant {
     @Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
     	int rot = world.random.nextInt(4);
-		BlockState bs = BlockRegistry.UMBRELLA_MOSS_TALL.getDefaultState().with(BlockDoublePlant.ROTATION, rot);
+		BlockState bs = EndBlocks.UMBRELLA_MOSS_TALL.getDefaultState().with(BlockDoublePlant.ROTATION, rot);
 		BlocksHelper.setWithoutUpdate(world, pos, bs);
 		BlocksHelper.setWithoutUpdate(world, pos.up(), bs.with(BlockDoublePlant.TOP, true));
 	}

@@ -36,7 +36,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
@@ -93,7 +93,7 @@ public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeabl
 	}
 
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(BlockTagRegistry.END_GROUND);
+		return state.isIn(EndTags.END_GROUND);
 	}
 	
 	@Override

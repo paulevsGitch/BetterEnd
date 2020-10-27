@@ -22,7 +22,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import ru.betterend.recipe.builders.AlloyingRecipe;
-import ru.betterend.registry.BlockRegistry;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.LangUtil;
 
 public class REIAlloyingCategory implements TransferRecipeCategory<REIAlloyingDisplay> {
@@ -34,7 +34,7 @@ public class REIAlloyingCategory implements TransferRecipeCategory<REIAlloyingDi
 
 	@Override
 	public @NotNull String getCategoryName() {
-		return LangUtil.translate(BlockRegistry.END_STONE_SMELTER.getTranslationKey());
+		return LangUtil.translate(EndBlocks.END_STONE_SMELTER.getTranslationKey());
 	}
 	
 	@Override

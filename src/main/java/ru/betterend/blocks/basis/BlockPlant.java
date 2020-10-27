@@ -32,7 +32,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.ERenderLayer;
 import ru.betterend.client.IRenderTypeable;
-import ru.betterend.registry.BlockTagRegistry;
+import ru.betterend.registry.EndTags;
 
 public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
@@ -84,7 +84,7 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 	}
 	
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(BlockTagRegistry.END_GROUND);
+		return state.isIn(EndTags.END_GROUND);
 	}
 
 	@Override

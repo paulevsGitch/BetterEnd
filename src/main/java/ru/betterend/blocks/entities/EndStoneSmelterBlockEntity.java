@@ -45,7 +45,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
 import ru.betterend.recipe.builders.AlloyingRecipe;
-import ru.betterend.registry.BlockEntityRegistry;
+import ru.betterend.registry.EndBlockEntities;
 
 public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider, Tickable {
 
@@ -64,7 +64,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	private int fuelTime;
 	
 	public EndStoneSmelterBlockEntity() {
-		super(BlockEntityRegistry.END_STONE_SMELTER);
+		super(EndBlockEntities.END_STONE_SMELTER);
 		this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 		this.recipesUsed = new Object2IntOpenHashMap<Identifier>();
 		 this.propertyDelegate = new PropertyDelegate() {

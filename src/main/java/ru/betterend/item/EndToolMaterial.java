@@ -5,14 +5,14 @@ import java.util.function.Supplier;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Lazy;
-import ru.betterend.registry.ItemRegistry;
+import ru.betterend.registry.EndItems;
 
 public enum EndToolMaterial implements ToolMaterial {
 	TERMINITE(3, 1230, 8.5F, 3.0F, 14, () -> {
-		return Ingredient.ofItems(ItemRegistry.TERMINITE_INGOT);
+		return Ingredient.ofItems(EndItems.TERMINITE_INGOT);
 	}),
 	AETERNIUM(5, 2196, 10.0F, 4.5F, 18, () -> {
-		return Ingredient.ofItems(ItemRegistry.AETERNIUM_INGOT);
+		return Ingredient.ofItems(EndItems.AETERNIUM_INGOT);
 	});
 
 	private final int durability;

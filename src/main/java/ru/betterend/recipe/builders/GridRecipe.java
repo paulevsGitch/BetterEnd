@@ -19,8 +19,8 @@ import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.util.RecipeHelper;
 
-public class RecipeBuilder {
-	private static final RecipeBuilder INSTANCE = new RecipeBuilder();
+public class GridRecipe {
+	private static final GridRecipe INSTANCE = new GridRecipe();
 	
 	private String name;
 	private ItemConvertible output;
@@ -33,9 +33,9 @@ public class RecipeBuilder {
 	private int count;
 	private boolean exist = true;
 	
-	private RecipeBuilder() {}
+	private GridRecipe() {}
 	
-	public static RecipeBuilder make(String name, ItemConvertible output) {
+	public static GridRecipe make(String name, ItemConvertible output) {
 		INSTANCE.name = name;
 		INSTANCE.output = output;
 		
@@ -51,39 +51,39 @@ public class RecipeBuilder {
 		return INSTANCE;
 	}
 
-	public RecipeBuilder setGroup(String group) {
+	public GridRecipe setGroup(String group) {
 		this.group = group;
 		return this;
 	}
 	
-	public RecipeBuilder setShape(String... shape) {
+	public GridRecipe setShape(String... shape) {
 		this.shape = shape;
 		return this;
 	}
 	
-	public RecipeBuilder setList(String shape) {
+	public GridRecipe setList(String shape) {
 		this.shape = new String[] {shape};
 		this.shaped = false;
 		return this;
 	}
 	
-	public RecipeBuilder addMaterial(char key, Tag<Item> value) {
+	public GridRecipe addMaterial(char key, Tag<Item> value) {
 		return addMaterial(key, Ingredient.fromTag(value));
 	}
 	
-	public RecipeBuilder addMaterial(char key, ItemConvertible... values) {
+	public GridRecipe addMaterial(char key, ItemConvertible... values) {
 		for (ItemConvertible item: values) {
 			exist &= RecipeHelper.exists(item);
 		}
 		return addMaterial(key, Ingredient.ofItems(values));
 	}
 	
-	private RecipeBuilder addMaterial(char key, Ingredient value) {
+	private GridRecipe addMaterial(char key, Ingredient value) {
 		materialKeys.put(key, value);
 		return this;
 	}
 	
-	public RecipeBuilder setOutputCount(int count) {
+	public GridRecipe setOutputCount(int count) {
 		this.count = count;
 		return this;
 	}

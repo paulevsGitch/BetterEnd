@@ -26,7 +26,7 @@ import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockStairs;
 import ru.betterend.blocks.basis.BlockTrapdoor;
 import ru.betterend.blocks.basis.BlockWoodenButton;
-import ru.betterend.recipe.builders.RecipeBuilder;
+import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.TagHelper;
 
@@ -82,20 +82,20 @@ public class WoodenMaterial {
 		barrel = EndBlocks.registerBlock(name + "_barrel", new BlockBarrel(planks));
 		
 		// Recipes //
-		RecipeBuilder.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();
-		RecipeBuilder.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
-		RecipeBuilder.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', planks).setGroup("end_planks_slabs").build();
-		RecipeBuilder.make(name + "_fence", fence).setOutputCount(3).setShape("#I#", "#I#").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_fences").build();
-		RecipeBuilder.make(name + "_gate", gate).setShape("I#I", "I#I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_gates").build();
-		RecipeBuilder.make(name + "_button", button).setList("#").addMaterial('#', planks).setGroup("end_planks_buttons").build();
-		RecipeBuilder.make(name + "_pressure_plate", pressure_plate).setShape("##").addMaterial('#', planks).setGroup("end_planks_plates").build();
-		RecipeBuilder.make(name + "_trapdoor", trapdoor).setOutputCount(2).setShape("###", "###").addMaterial('#', planks).setGroup("end_trapdoors").build();
-		RecipeBuilder.make(name + "_door", door).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', planks).setGroup("end_doors").build();
-		RecipeBuilder.make(name + "_crafting_table", crafting_table).setShape("##", "##").addMaterial('#', planks).setGroup("end_tables").build();
-		RecipeBuilder.make(name + "_ladder", ladder).setOutputCount(3).setShape("I I", "I#I", "I I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_ladders").build();
-		RecipeBuilder.make(name + "_sign", sign).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
-		RecipeBuilder.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
-		RecipeBuilder.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
+		GridRecipe.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();
+		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
+		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', planks).setGroup("end_planks_slabs").build();
+		GridRecipe.make(name + "_fence", fence).setOutputCount(3).setShape("#I#", "#I#").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_fences").build();
+		GridRecipe.make(name + "_gate", gate).setShape("I#I", "I#I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_gates").build();
+		GridRecipe.make(name + "_button", button).setList("#").addMaterial('#', planks).setGroup("end_planks_buttons").build();
+		GridRecipe.make(name + "_pressure_plate", pressure_plate).setShape("##").addMaterial('#', planks).setGroup("end_planks_plates").build();
+		GridRecipe.make(name + "_trapdoor", trapdoor).setOutputCount(2).setShape("###", "###").addMaterial('#', planks).setGroup("end_trapdoors").build();
+		GridRecipe.make(name + "_door", door).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', planks).setGroup("end_doors").build();
+		GridRecipe.make(name + "_crafting_table", crafting_table).setShape("##", "##").addMaterial('#', planks).setGroup("end_tables").build();
+		GridRecipe.make(name + "_ladder", ladder).setOutputCount(3).setShape("I I", "I#I", "I I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_ladders").build();
+		GridRecipe.make(name + "_sign", sign).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
+		GridRecipe.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
+		GridRecipe.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
 		
 		// Item Tags //
 		TagHelper.addTag(ItemTags.PLANKS, planks);

@@ -33,8 +33,8 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.client.ERenderLayer;
-import ru.betterend.client.IRenderTypeable;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockVine extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {

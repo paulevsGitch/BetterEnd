@@ -27,8 +27,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBase;
-import ru.betterend.client.ERenderLayer;
-import ru.betterend.client.IRenderTypeable;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockEndLotusStem extends BlockBase implements Waterloggable, IRenderTypeable {

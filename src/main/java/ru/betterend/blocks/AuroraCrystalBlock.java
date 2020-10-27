@@ -19,9 +19,9 @@ import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
-import ru.betterend.client.ERenderLayer;
-import ru.betterend.client.IRenderTypeable;
+import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 

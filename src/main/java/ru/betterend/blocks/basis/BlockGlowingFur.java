@@ -31,8 +31,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.client.ERenderLayer;
-import ru.betterend.client.IRenderTypeable;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.MHelper;
 
 public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable {

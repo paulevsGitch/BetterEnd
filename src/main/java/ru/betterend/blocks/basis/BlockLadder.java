@@ -25,8 +25,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.client.ERenderLayer;
-import ru.betterend.client.IRenderTypeable;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.Patterned;
 import ru.betterend.util.BlocksHelper;
 

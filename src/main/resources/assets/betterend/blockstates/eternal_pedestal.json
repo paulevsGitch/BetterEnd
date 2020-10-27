@@ -1,0 +1,198 @@
+{
+	"variants": {
+		"type=bottom,active=false": [
+			{
+				"model": "betterend:block/eternal_pedestal_1", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_2", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_3", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_4", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_5", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_6", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_7",
+				"uvlock": true
+			}
+		],
+		"type=bottom,active=true": [
+			{
+				"model": "betterend:block/eternal_pedestal_active_1", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_2", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_3", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_4", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_5", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_6", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_7", 
+				"uvlock": true
+			}
+		],
+		"type=top,active=false": [
+			{
+				"model": "betterend:block/eternal_pedestal_1", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_2", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_3", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_4", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_5", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_6", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_7",
+				"uvlock": true, 
+				"x": 180
+			}
+		],
+		"type=top,active=true": [
+			{
+				"model": "betterend:block/eternal_pedestal_active_1", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_2", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_3", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_4", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_5", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_6", 
+				"uvlock": true, 
+				"x": 180
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_active_7", 
+				"uvlock": true, 
+				"x": 180
+			}
+		],
+		"type=double,active=false": [
+			{
+				"model": "betterend:block/eternal_pedestal_double_1", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_2", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_3", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_4", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_5", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_6", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_7",
+				"uvlock": true
+			}
+		],
+		"type=double,active=true": [
+			{
+				"model": "betterend:block/eternal_pedestal_double_active_1", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_active_2", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_active_3", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_active_4", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_active_5", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_active_6", 
+				"uvlock": true
+			},
+			{
+				"model": "betterend:block/eternal_pedestal_double_active_7", 
+				"uvlock": true
+			}
+		]
+	}
+}

@@ -1,17 +1,15 @@
 package ru.betterend.item;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ru.betterend.blocks.EternalPedestal;
+
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.registry.EndItems;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.PortalFrameHelper;
 
 public class EternalCrystal extends Item {
@@ -27,16 +25,10 @@ public class EternalCrystal extends Item {
 		if (world instanceof ServerWorld) {
 			if (usedBlock.getBlock() instanceof RunedFlavolite && !usedBlock.get(RunedFlavolite.ACTIVATED)) {
 				if (PortalFrameHelper.checkPortalFrame((ServerWorld) world, usedPos, usedBlock.getBlock())) {
-					return ActionResult.PASS;
+					return ActionResult.SUCCESS;
 				}
-			} else if (usedBlock.getBlock() instanceof EternalPedestal && !usedBlock.get(EternalPedestal.HAS_ITEM)) {
-				BlockPos upPos = usedPos.up();
-				EndCrystalEntity endCrystalEntity = new EndCrystalEntity(world, upPos.getX() + 0.5D, upPos.getY(), upPos.getZ() + 0.5D);
-                endCrystalEntity.setShowBottom(false);
-                world.spawnEntity(endCrystalEntity);
-                BlocksHelper.setWithoutUpdate(world, usedPos, usedBlock.with(EternalPedestal.HAS_ITEM, true).with(EternalPedestal.ACTIVATED, true));
 			}
 		}
-		return ActionResult.FAIL;
+		return ActionResult.PASS;
 	}
 }

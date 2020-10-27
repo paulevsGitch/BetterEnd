@@ -18,10 +18,13 @@ import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.blocks.entities.EChestBlockEntity;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
+import ru.betterend.blocks.entities.EternalPedestalBlockEntity;
 
 public class EndBlockEntities {
 	public final static BlockEntityType<EndStoneSmelterBlockEntity> END_STONE_SMELTER = registerBlockEntity(EndStoneSmelter.ID,
 			BlockEntityType.Builder.create(EndStoneSmelterBlockEntity::new, EndBlocks.END_STONE_SMELTER));
+	public final static BlockEntityType<EternalPedestalBlockEntity> ETERNAL_PEDESTAL = registerBlockEntity("eternal_pedestal",
+			BlockEntityType.Builder.create(EternalPedestalBlockEntity::new, EndBlocks.ETERNAL_PEDESTAL));
 	public static final BlockEntityType<EChestBlockEntity> CHEST = registerBlockEntity("chest", 
 			BlockEntityType.Builder.create(EChestBlockEntity::new, getChests()));
 	public static final BlockEntityType<EBarrelBlockEntity> BARREL = registerBlockEntity("barrel",

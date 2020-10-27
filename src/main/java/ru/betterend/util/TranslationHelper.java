@@ -47,6 +47,7 @@ public class TranslationHelper {
 		EndBiomes.getModBiomes().forEach((endBiome) -> {
 			if (endBiome.getID().getNamespace().equals(BetterEnd.MOD_ID)) {
 				String name = "biome." + BetterEnd.MOD_ID + "." + endBiome.getID().getPath();
+				System.out.println(name);
 				if (!translationEn.has(name)) {
 					missingNamesEn.add(name);
 				}

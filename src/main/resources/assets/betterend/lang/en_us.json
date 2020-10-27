@@ -222,5 +222,8 @@
  	"block.betterend.lacugrove_trapdoor": "Lacugrove Trapdoor",
 	
  	"block.betterend.lacugrove_leaves": "Lacugrove Leaves",
- 	"block.betterend.lacugrove_sapling": "Lacugrove Sapling"
+ 	"block.betterend.lacugrove_sapling": "Lacugrove Sapling",
+	
+ 	"biome.betterend.megalake_grove": "Megalake Grove",
+ 	"biome.betterend.painted_mountains": "Painted Mountains"
 }

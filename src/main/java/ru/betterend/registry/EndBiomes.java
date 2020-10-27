@@ -37,6 +37,7 @@ public class EndBiomes {
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
+	public static final List<EndBiome> SUBBIOMES = Lists.newArrayList();
 	
 	private static Registry<Biome> biomeRegistry;
 	
@@ -103,6 +104,7 @@ public class EndBiomes {
 		EndBiome endBiome = new EndBiome(biome, genChance);
 		parent.addSubBiome(endBiome);
 		makeLink(endBiome);
+		SUBBIOMES.add(endBiome);
 		return endBiome;
 	}
 	
@@ -110,6 +112,7 @@ public class EndBiomes {
 		registerBiomeDirect(biome);
 		parent.addSubBiome(biome);
 		makeLink(biome);
+		SUBBIOMES.add(biome);
 		return biome;
 	}
 	
@@ -170,6 +173,7 @@ public class EndBiomes {
 		List<EndBiome> result = Lists.newArrayList();
 		result.addAll(EndBiomes.LAND_BIOMES.getBiomes());
 		result.addAll(EndBiomes.VOID_BIOMES.getBiomes());
+		result.addAll(SUBBIOMES);
 		return result;
 	}
 }

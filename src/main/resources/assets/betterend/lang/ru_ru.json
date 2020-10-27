@@ -224,5 +224,8 @@
  	"block.betterend.lacugrove_trapdoor": "Люк из оземангра",
 	
  	"block.betterend.lacugrove_leaves": "Листья оземангра",
- 	"block.betterend.lacugrove_sapling": "Саженец оземангра"
+ 	"block.betterend.lacugrove_sapling": "Саженец оземангра",
+	
+ 	"biome.betterend.megalake_grove": "Мегаозёрная роща",
+ 	"biome.betterend.painted_mountains": "Окрашенные горы"
 }

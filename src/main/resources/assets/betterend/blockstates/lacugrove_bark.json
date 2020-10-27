@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "axis=x": [
+			{ "model": "betterend:block/lacugrove_bark", "x": 90, "y": 90 },
+			{ "model": "betterend:block/lacugrove_bark_2", "x": 90, "y": 90 },
+			{ "model": "betterend:block/lacugrove_bark_3", "x": 90, "y": 90 },
+			{ "model": "betterend:block/lacugrove_bark_4", "x": 90, "y": 90 }
+		],
+        "axis=y": [
+			{ "model": "betterend:block/lacugrove_bark" },
+			{ "model": "betterend:block/lacugrove_bark_2" },
+			{ "model": "betterend:block/lacugrove_bark_3" },
+			{ "model": "betterend:block/lacugrove_bark_4" }
+		],
+        "axis=z": [
+			{ "model": "betterend:block/lacugrove_bark", "x": 90 },
+			{ "model": "betterend:block/lacugrove_bark_2", "x": 90 },
+			{ "model": "betterend:block/lacugrove_bark_3", "x": 90 },
+			{ "model": "betterend:block/lacugrove_bark_4", "x": 90 }
+		]
+    }
+}

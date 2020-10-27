@@ -21,6 +21,7 @@ public class BiomeMegalake extends EndBiome {
 				.setSurface(EndBlocks.ENDSTONE_DUST, EndBlocks.END_MOSS)
 				.addStructureFeature(EndStructures.MEGALAKE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
+				.addFeature(EndFeatures.LACUGROVE)
 				.addFeature(EndFeatures.END_LOTUS)
 				.addFeature(EndFeatures.END_LOTUS_LEAF)
 				.addFeature(EndFeatures.BUBBLE_CORAL_RARE)

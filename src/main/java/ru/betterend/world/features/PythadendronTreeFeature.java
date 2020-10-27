@@ -18,6 +18,7 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
+import ru.betterend.util.sdf.PosInfo;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFDisplacement;
 import ru.betterend.util.sdf.operator.SDFScale3D;
@@ -27,6 +28,7 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class PythadendronTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
+	private static final Function<PosInfo, BlockState> POST;
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
@@ -44,14 +46,8 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		SDF function = SplineHelper.buildSDF(spline, 1.7F, 1.1F, (bpos) -> {
 			return EndBlocks.PYTHADENDRON.bark.getDefaultState();
 		});
-		function.setPostProcess((info) -> {
-			if (EndBlocks.PYTHADENDRON.isTreeLog(info.getStateUp()) && EndBlocks.PYTHADENDRON.isTreeLog(info.getStateDown())) {
-				return EndBlocks.PYTHADENDRON.log.getDefaultState();
-			}
-			return info.getState();
-		});
-		
 		function.setReplaceFunction(REPLACE);
+		function.setPostProcess(POST);
 		function.fillRecursive(world, pos);
 		
 		return true;
@@ -86,39 +82,9 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		if (depth < 3) {
 			if (s1) {
 				leavesBall(world, pos.add(pos1.getX(), pos1.getY(), pos1.getZ()), random, noise);
-				/*float radius = MHelper.randRange(4.5F, 6.5F, random);
-				
-				if (radius > 5) {
-					for (int i = 0; i < 10; i++) {
-						BlockPos p = pos.add(pos1.getX() + random.nextGaussian() * 2, pos1.getY() + random.nextGaussian() * 2, pos1.getZ() + random.nextGaussian() * 2);
-						BlocksHelper.setWithoutUpdate(world, p, BlockRegistry.PYTHADENDRON.bark);
-					}
-				}
-				
-				SDF sphere = new SDFSphere().setRadius(radius).setBlock(BlockRegistry.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
-				sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
-				sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
-				sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
-				sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
-				sphere.fillRecursive(world, new BlockPos(pos1.getX() + pos.getX(), pos1.getY() + pos.getY() + 1, pos1.getZ() + pos.getZ()));*/
 			}
 			if (s2) {
 				leavesBall(world, pos.add(pos2.getX(), pos2.getY(), pos2.getZ()), random, noise);
-				/*float radius = MHelper.randRange(4.5F, 6.5F, random);
-				
-				if (radius > 5) {
-					for (int i = 0; i < 10; i++) {
-						BlockPos p = pos.add(pos1.getX() + random.nextGaussian() * 2, pos1.getY() + random.nextGaussian() * 2, pos1.getZ() + random.nextGaussian() * 2);
-						BlocksHelper.setWithoutUpdate(world, p, BlockRegistry.PYTHADENDRON.bark);
-					}
-				}
-				
-				SDF sphere = new SDFSphere().setRadius(radius).setBlock(BlockRegistry.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
-				sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
-				sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
-				sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
-				sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
-				sphere.fillRecursive(world, new BlockPos(pos2.getX() + pos.getX(), pos2.getY() + pos.getY() + 1, pos2.getZ() + pos.getZ()));*/
 			}
 		}
 		
@@ -167,6 +133,13 @@ public class PythadendronTreeFeature extends DefaultFeature {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();
+		};
+		
+		POST = (info) -> {
+			if (EndBlocks.PYTHADENDRON.isTreeLog(info.getStateUp()) && EndBlocks.PYTHADENDRON.isTreeLog(info.getStateDown())) {
+				return EndBlocks.PYTHADENDRON.log.getDefaultState();
+			}
+			return info.getState();
 		};
 	}
 }

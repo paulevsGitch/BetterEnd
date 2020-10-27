@@ -8,9 +8,11 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.Patterned;
 
-public class BlockLeaves extends LeavesBlock implements Patterned {
+public class BlockLeaves extends LeavesBlock implements Patterned, IRenderTypeable {
 	public BlockLeaves(MaterialColor color) {
 		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).materialColor(color));
 	}
@@ -34,5 +36,10 @@ public class BlockLeaves extends LeavesBlock implements Patterned {
 	@Override
 	public Identifier statePatternId() {
 		return Patterned.BLOCK_STATES_PATTERN;
+	}
+	
+	@Override
+	public ERenderLayer getRenderLayer() {
+		return ERenderLayer.CUTOUT;
 	}
 }

@@ -135,4 +135,66 @@ public class SplineHelper {
 			return false;
 		}
 	}
+	
+	public static boolean canGenerate(List<Vector3f> spline, float scale, BlockPos start, StructureWorldAccess world, Function<BlockState, Boolean> canReplace) {
+		int count = spline.size();
+		Vector3f vec = spline.get(0);
+		Mutable mut = new Mutable();
+		float x1 = start.getX() + vec.getX() * scale;
+		float y1 = start.getY() + vec.getY() * scale;
+		float z1 = start.getZ() + vec.getZ() * scale;
+		for (int i = 1; i < count; i++) {
+			vec = spline.get(i);
+			float x2 = start.getX() + vec.getX() * scale;
+			float y2 = start.getY() + vec.getY() * scale;
+			float z2 = start.getZ() + vec.getZ() * scale;
+			
+			for (float py = y1; py < y2; py += 3) {
+				if (py - start.getY() < 10) continue;
+				float lerp = (py - y1) / (y2 - y1);
+				float x = MathHelper.lerp(lerp, x1, x2);
+				float z = MathHelper.lerp(lerp, z1, z2);
+				mut.set(x, py, z);
+				if (!canReplace.apply(world.getBlockState(mut))) {
+					return false;
+				}
+			}
+			
+			x1 = x2;
+			y1 = y2;
+			z1 = z2;
+		}
+		return true;
+	}
+	
+	public static boolean canGenerate(List<Vector3f> spline, BlockPos start, StructureWorldAccess world, Function<BlockState, Boolean> canReplace) {
+		int count = spline.size();
+		Vector3f vec = spline.get(0);
+		Mutable mut = new Mutable();
+		float x1 = start.getX() + vec.getX();
+		float y1 = start.getY() + vec.getY();
+		float z1 = start.getZ() + vec.getZ();
+		for (int i = 1; i < count; i++) {
+			vec = spline.get(i);
+			float x2 = start.getX() + vec.getX();
+			float y2 = start.getY() + vec.getY();
+			float z2 = start.getZ() + vec.getZ();
+			
+			for (float py = y1; py < y2; py += 3) {
+				if (py - start.getY() < 10) continue;
+				float lerp = (py - y1) / (y2 - y1);
+				float x = MathHelper.lerp(lerp, x1, x2);
+				float z = MathHelper.lerp(lerp, z1, z2);
+				mut.set(x, py, z);
+				if (!canReplace.apply(world.getBlockState(mut))) {
+					return false;
+				}
+			}
+			
+			x1 = x2;
+			y1 = y2;
+			z1 = z2;
+		}
+		return true;
+	}
 }

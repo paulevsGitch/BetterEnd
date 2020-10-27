@@ -2,7 +2,6 @@ package ru.betterend.blocks.entities.render;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.client.MinecraftClient;
@@ -18,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.entities.EternalPedestalBlockEntity;
 import ru.betterend.client.render.BeamRenderer;

@@ -219,5 +219,8 @@
  	"block.betterend.lacugrove_stairs": "Lacugrove Stairs",
  	"block.betterend.lacugrove_stripped_bark": "Lacugrove Stripped Bark",
  	"block.betterend.lacugrove_stripped_log": "Lacugrove Stripped Log",
- 	"block.betterend.lacugrove_trapdoor": "Lacugrove Trapdoor"
+ 	"block.betterend.lacugrove_trapdoor": "Lacugrove Trapdoor",
+	
+ 	"block.betterend.lacugrove_leaves": "Lacugrove Leaves",
+ 	"block.betterend.lacugrove_sapling": "Lacugrove Sapling"
 }

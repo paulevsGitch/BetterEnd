@@ -21,12 +21,13 @@ import ru.betterend.blocks.BlockEndLotusSeed;
 import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
+import ru.betterend.blocks.BlockLacugroveSapling;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
 import ru.betterend.blocks.BlockMossyGlowshroomHymenophore;
 import ru.betterend.blocks.BlockMossyGlowshroomSapling;
-import ru.betterend.blocks.BlockMossyPythadendronSapling;
 import ru.betterend.blocks.BlockOre;
 import ru.betterend.blocks.BlockPath;
+import ru.betterend.blocks.BlockPythadendronSapling;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockTerrainPlant;
 import ru.betterend.blocks.BlockUmbrellaMoss;
@@ -75,7 +76,7 @@ public class EndBlocks {
 	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new BlockGlowingFur(MOSSY_GLOWSHROOM_SAPLING, 16));
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	
-	public static final Block PYTHADENDRON_SAPLING = registerBlock("pythadendron_sapling", new BlockMossyPythadendronSapling());
+	public static final Block PYTHADENDRON_SAPLING = registerBlock("pythadendron_sapling", new BlockPythadendronSapling());
 	public static final Block PYTHADENDRON_LEAVES = registerBlock("pythadendron_leaves", new BlockLeaves(MaterialColor.MAGENTA));
 	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
 	
@@ -85,6 +86,8 @@ public class EndBlocks {
 	public static final Block END_LOTUS_FLOWER = registerBlockNI("end_lotus_flower", new BlockEndLotusFlower());
 	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.LIGHT_BLUE, MaterialColor.CYAN);
 	
+	public static final Block LACUGROVE_SAPLING = registerBlock("lacugrove_sapling", new BlockLacugroveSapling());
+	public static final Block LACUGROVE_LEAVES = registerBlock("lacugrove_leaves", new BlockLeaves(MaterialColor.CYAN));
 	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
 	
 	// Small Plants //

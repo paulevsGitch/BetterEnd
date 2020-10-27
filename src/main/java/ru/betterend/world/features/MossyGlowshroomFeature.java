@@ -8,9 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -48,8 +46,6 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 	private static final SDFPrimitive CONE_GLOW;
 	private static final SDFPrimitive ROOTS;
 	
-	private static final Mutable POS = new Mutable();
-	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig featureConfig) {
 		blockPos = getPosOnSurface(world, blockPos);
@@ -75,33 +71,10 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		Vector3f pos = spline.get(spline.size() - 1);
 		float scale = MHelper.randRange(0.75F, 1.1F, random);
 		
-		Vector3f vec = spline.get(0);
-		float x1 = blockPos.getX() + vec.getX() * scale;
-		float y1 = blockPos.getY() + vec.getY() * scale;
-		float z1 = blockPos.getZ() + vec.getZ() * scale;
-		for (int i = 1; i < count; i++) {
-			vec = spline.get(i);
-			float x2 = blockPos.getX() + vec.getX() * scale;
-			float y2 = blockPos.getY() + vec.getY() * scale;
-			float z2 = blockPos.getZ() + vec.getZ() * scale;
-			
-			for (float py = y1; py < y2; py += 3) {
-				if (py - blockPos.getY() < 10) continue;
-				float lerp = (py - y1) / (y2 - y1);
-				float x = MathHelper.lerp(lerp, x1, x2);
-				float z = MathHelper.lerp(lerp, z1, z2);
-				POS.set(x, py, z);
-				BlockState state = world.getBlockState(POS);
-				boolean generate = state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT);
-				if (!generate) {
-					return false;
-				}
-			}
-			
-			x1 = x2;
-			y1 = y2;
-			z1 = z2;
+		if (!SplineHelper.canGenerate(spline, scale, blockPos, world, REPLACE)) {
+			return false;
 		}
+		
 		BlocksHelper.setWithoutUpdate(world, blockPos, AIR);
 		
 		CENTER.set(blockPos.getX(), 0, blockPos.getZ());

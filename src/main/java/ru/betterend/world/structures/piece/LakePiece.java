@@ -10,6 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.structure.StructureManager;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -36,14 +38,16 @@ public class LakePiece extends BasePiece {
 	private float radius;
 	private float depth;
 	private float r2;
+	private Identifier biomeID;
 	
-	public LakePiece(BlockPos center, float radius, float depth, int id) {
+	public LakePiece(BlockPos center, float radius, float depth, int id, Biome biome) {
 		super(EndStructures.LAKE_PIECE, id);
 		this.center = center;
 		this.radius = radius;
 		this.depth = depth;
 		this.r2 = radius * radius;
 		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		this.biomeID = EndBiomes.getBiomeID(biome);
 		makeBoundingBox();
 	}
 
@@ -57,6 +61,7 @@ public class LakePiece extends BasePiece {
 		tag.put("center", NbtHelper.fromBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("depth", depth);
+		tag.putString("biome", biomeID.toString());
 	}
 
 	@Override
@@ -66,6 +71,7 @@ public class LakePiece extends BasePiece {
 		depth = tag.getFloat("depth");
 		r2 = radius * radius;
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		biomeID = new Identifier(tag.getString("biome"));
 	}
 
 	@Override
@@ -157,7 +163,7 @@ public class LakePiece extends BasePiece {
 			return h;
 		}
 		
-		if (EndBiomes.getFromBiome(world.getBiome(pos)) != EndBiomes.MEGALAKE) {
+		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, -4);
 			return -4;
 		}

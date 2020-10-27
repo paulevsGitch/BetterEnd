@@ -4,12 +4,12 @@
 		"sounds": [
 			{
 				"name": "betterend:music/dan_henig-eternal_garden",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			},
 			{
 				"name": "betterend:music/dan_henig-nebular_focus",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			}
 		]
@@ -19,12 +19,12 @@
 		"sounds": [
 			{
 				"name": "betterend:music/emmit_fenn-creep",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			},
 			{
 				"name": "betterend:music/jesse_gallagher-the_anunnaki_return",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			}
 		]
@@ -34,12 +34,12 @@
 		"sounds": [
 			{
 				"name": "betterend:music/jesse_gallagher-spenta_mainyu",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			},
 			{
 				"name": "betterend:music/jesse_gallagher-obelisks",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			}
 		]
@@ -49,12 +49,12 @@
 		"sounds": [
 			{
 				"name": "betterend:music/jesse_gallagher-the_blue_pearl",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			},
 			{
 				"name": "betterend:music/jesse_gallagher-venkatesananda",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			}
 		]
@@ -64,12 +64,12 @@
 		"sounds": [
 			{
 				"name": "betterend:music/letter_box-far_the_days_come",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			},
 			{
 				"name": "betterend:music/jade_wii-sahara_desert",
-				"volume": 0.25,
+				"volume": 0.2,
 				"stream": false
 			}
 		]

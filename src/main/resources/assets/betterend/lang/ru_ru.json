@@ -202,5 +202,24 @@
 	"block.betterend.crystal_grass": "Кристальная трава",
 	
  	"biome.betterend.crystal_mountains": "Клисталлические горы",
- 	"block.betterend.eternal_pedestal": "Вечный пьедестал"
+ 	"block.betterend.eternal_pedestal": "Вечный пьедестал",
+	
+ 	"block.betterend.lacugrove_bark": "Кора оземангра",
+ 	"block.betterend.lacugrove_barrel": "Бочка",
+ 	"block.betterend.lacugrove_button": "Кнопка",
+ 	"block.betterend.lacugrove_chest": "Сундук",
+ 	"block.betterend.lacugrove_crafting_table": "Верстак",
+ 	"block.betterend.lacugrove_door": "Дверь",
+ 	"block.betterend.lacugrove_fence": "Забор",
+ 	"block.betterend.lacugrove_gate": "Калитка",
+ 	"block.betterend.lacugrove_ladder": "Лестница",
+ 	"block.betterend.lacugrove_log": "Бревно",
+ 	"block.betterend.lacugrove_planks": "Доски",
+ 	"block.betterend.lacugrove_plate": "Плита",
+ 	"block.betterend.lacugrove_sign": "Табличка",
+ 	"block.betterend.lacugrove_slab": "Плита",
+ 	"block.betterend.lacugrove_stairs": "Ступени",
+ 	"block.betterend.lacugrove_stripped_bark": "Обтёсанная кора",
+ 	"block.betterend.lacugrove_stripped_log": "Обтёсанное бревно",
+ 	"block.betterend.lacugrove_trapdoor": "Люк"
 }

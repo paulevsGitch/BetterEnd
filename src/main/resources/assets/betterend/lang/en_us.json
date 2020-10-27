@@ -200,5 +200,24 @@
 	"block.betterend.crystal_grass": "Crystal Grass",
 	
  	"biome.betterend.crystal_mountains": "Crystal Mountains",
- 	"block.betterend.eternal_pedestal": "Eternal Pedestal"
+ 	"block.betterend.eternal_pedestal": "Eternal Pedestal",
+	
+ 	"block.betterend.lacugrove_bark": "Lacugrove Bark",
+ 	"block.betterend.lacugrove_barrel": "Lacugrove Barrel",
+ 	"block.betterend.lacugrove_button": "Lacugrove Button",
+ 	"block.betterend.lacugrove_chest": "Lacugrove Chest",
+ 	"block.betterend.lacugrove_crafting_table": "Lacugrove Crafting Table",
+ 	"block.betterend.lacugrove_door": "Lacugrove Door",
+ 	"block.betterend.lacugrove_fence": "Lacugrove Fence",
+ 	"block.betterend.lacugrove_gate": "Lacugrove Gate",
+ 	"block.betterend.lacugrove_ladder": "Lacugrove Ladder",
+ 	"block.betterend.lacugrove_log": "Lacugrove Log",
+ 	"block.betterend.lacugrove_planks": "Lacugrove Planks",
+ 	"block.betterend.lacugrove_plate": "Lacugrove Plate",
+ 	"block.betterend.lacugrove_sign": "Lacugrove Sign",
+ 	"block.betterend.lacugrove_slab": "Lacugrove Slab",
+ 	"block.betterend.lacugrove_stairs": "Lacugrove Stairs",
+ 	"block.betterend.lacugrove_stripped_bark": "Lacugrove Stripped Bark",
+ 	"block.betterend.lacugrove_stripped_log": "Lacugrove Stripped Log",
+ 	"block.betterend.lacugrove_trapdoor": "Lacugrove Trapdoor"
 }

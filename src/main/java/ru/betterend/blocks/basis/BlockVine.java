@@ -92,10 +92,10 @@ public class BlockVine extends BlockBaseNotFull implements IRenderTypeable, Fert
 			return Blocks.AIR.getDefaultState();
 		}
 		else {
-			if (world.getBlockState(pos.up()).getBlock() != this)
-				return state.with(SHAPE, TripleShape.TOP);
-			else if (world.getBlockState(pos.down()).getBlock() != this)
+			if (world.getBlockState(pos.down()).getBlock() != this)
 				return state.with(SHAPE, TripleShape.BOTTOM);
+			else if (world.getBlockState(pos.up()).getBlock() != this)
+				return state.with(SHAPE, TripleShape.TOP);
 			return state.with(SHAPE, TripleShape.MIDDLE);
 		}
 	}

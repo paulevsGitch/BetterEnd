@@ -17,6 +17,7 @@ public class EndSounds {
 	public static final SoundEvent AMBIENT_CHORUS_FOREST = register("ambient", "chorus_forest");
 	public static final SoundEvent AMBIENT_MEGALAKE = register("ambient", "megalake");
 	public static final SoundEvent AMBIENT_DUST_WASTELANDS = register("ambient", "dust_wastelands");
+	public static final SoundEvent AMBIENT_MEGALAKE_GROVE = register("ambient", "megalake_grove");
 	
 	// Entity
 	public static final SoundEvent ENTITY_DRAGONFLY = register("entity", "dragonfly");

@@ -111,6 +111,15 @@
 			}
 		]
 	},
+	"betterend.ambient.megalake_grove": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/megalake_grove",
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.entity.dragonfly": {
 		"category": "entity",

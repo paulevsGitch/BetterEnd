@@ -5,7 +5,6 @@ import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 
@@ -17,7 +16,6 @@ public class BiomeMegalake extends EndBiome {
 				.setWaterColor(96, 163, 255)
 				.setWaterFogColor(96, 163, 255)
 				.setFogDensity(1.75F)
-				.setParticles(EndParticles.GLOWING_SPHERE, 0.0003F)
 				.setMusic(EndSounds.MUSIC_MEGALAKE)
 				.setLoop(EndSounds.AMBIENT_MEGALAKE)
 				.setSurface(EndBlocks.END_MOSS, EndBlocks.ENDSTONE_DUST)

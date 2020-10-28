@@ -48,7 +48,7 @@ public class EndStructures {
 		}*/
 	}
 	
-	private static void addStructure(EndStructureFeature feature, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> collection) {
+	protected static void addStructure(EndStructureFeature feature, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> collection) {
 		collection.add(() -> { return feature.getFeatureConfigured(); });
 	}
 }

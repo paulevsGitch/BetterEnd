@@ -13,12 +13,12 @@ public class BiomeConfig extends Config {
 
 	private final static Path BIOME_CONFIG_DIR = ConfigWriter.MOD_CONFIG_DIR.toPath().resolve("biomes");
 	
-	private EndBiome biome;
+	//private EndBiome biome;
 	private ConfigWriter configWriter;
 	private File configFile;
 	
 	public BiomeConfig(EndBiome biome) {
-		this.biome = biome;
+		//this.biome = biome;
 		Identifier biomeId = biome.getID();
 		String folder = ConfigWriter.scrubFileName(biomeId.toString());
 		this.configFile = new File(BIOME_CONFIG_DIR.toFile(), folder + ".json");

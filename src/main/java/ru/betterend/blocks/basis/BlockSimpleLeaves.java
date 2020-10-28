@@ -29,7 +29,7 @@ public class BlockSimpleLeaves extends BlockBaseNotFull implements IRenderTypeab
 				.strength(0.2F)
 				.sounds(BlockSoundGroup.GRASS)
 				.nonOpaque()
-				.lightLevel(light)
+				.luminance(light)
 				.allowsSpawning((state, world, pos, type) -> { return false; })
 				.suffocates((state, world, pos) -> { return false; })
 				.blockVision((state, world, pos) -> { return false; })

@@ -57,7 +57,7 @@ public class BlockPlant extends BlockBaseNotFull implements IRenderTypeable, Fer
 		super(FabricBlockSettings.of(replaceable ? Material.REPLACEABLE_PLANT : Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
-				.lightLevel(light)
+				.luminance(light)
 				.breakByHand(true)
 				.noCollision());
 	}

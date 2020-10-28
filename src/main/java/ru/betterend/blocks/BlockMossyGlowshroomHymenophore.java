@@ -8,6 +8,6 @@ import ru.betterend.blocks.basis.BlockBase;
 
 public class BlockMossyGlowshroomHymenophore extends BlockBase {
 	public BlockMossyGlowshroomHymenophore() {
-		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sounds(BlockSoundGroup.WART_BLOCK).lightLevel(15));
+		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sounds(BlockSoundGroup.WART_BLOCK).luminance(15));
 	}
 }

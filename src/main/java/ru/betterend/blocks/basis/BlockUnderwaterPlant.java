@@ -54,7 +54,7 @@ public class BlockUnderwaterPlant extends BlockBaseNotFull implements IRenderTyp
 		super(FabricBlockSettings.of(Material.UNDERWATER_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
-				.lightLevel(light)
+				.luminance(light)
 				.breakByHand(true)
 				.noCollision());
 	}

@@ -57,7 +57,7 @@ public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeabl
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
-				.lightLevel((state) -> { return state.get(TOP) ? light : 0; })
+				.luminance((state) -> { return state.get(TOP) ? light : 0; })
 				.breakByHand(true)
 				.noCollision());
 		this.setDefaultState(this.stateManager.getDefaultState().with(TOP, false));

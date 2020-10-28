@@ -18,7 +18,7 @@ public class BlockLeaves extends LeavesBlock implements Patterned, IRenderTypeab
 	}
 	
 	public BlockLeaves(MaterialColor color, int light) {
-		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).materialColor(color).lightLevel(light));
+		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).materialColor(color).luminance(light));
 	}
 	
 	@Override

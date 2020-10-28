@@ -37,7 +37,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 				.hardness(1F)
 				.resistance(1F)
 				.sounds(BlockSoundGroup.GLASS)
-				.lightLevel(15)
+				.luminance(15)
 				.nonOpaque());
 	}
 

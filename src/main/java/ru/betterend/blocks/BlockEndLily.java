@@ -42,7 +42,7 @@ public class BlockEndLily extends BlockUnderwaterPlant {
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
 				.breakByHand(true)
-				.lightLevel((state) -> { return state.get(SHAPE) == TripleShape.TOP ? 13 : 0; })
+				.luminance((state) -> { return state.get(SHAPE) == TripleShape.TOP ? 13 : 0; })
 				.noCollision());
 	}
 	

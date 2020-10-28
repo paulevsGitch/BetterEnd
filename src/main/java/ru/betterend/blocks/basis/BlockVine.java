@@ -53,7 +53,7 @@ public class BlockVine extends BlockBaseNotFull implements IRenderTypeable, Fert
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
-				.lightLevel((state) -> {
+				.luminance((state) -> {
 					return bottomOnly ? state.get(SHAPE) == TripleShape.BOTTOM ? light : 0 : light;
 				})
 				.breakByHand(true)

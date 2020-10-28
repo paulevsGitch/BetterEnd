@@ -46,7 +46,7 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 				.collidable(false)
 				.breakInstantly()
 				.sounds(BlockSoundGroup.GRASS)
-				.lightLevel(light)
+				.luminance(light)
 				.ticksRandomly());
 	}
 	

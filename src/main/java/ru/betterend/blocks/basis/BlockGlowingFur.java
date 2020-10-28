@@ -45,7 +45,7 @@ public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
-				.lightLevel(15)
+				.luminance(15)
 				.breakByHand(true)
 				.noCollision());
 		this.drop = drop;

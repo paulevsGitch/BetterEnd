@@ -1,8 +1,0 @@
-{
-	"parent": "minecraft:block/slab",
-	"textures": {
-		"top": "betterend:block/flavolite_runed_2",
-		"side": "betterend:block/flavolite_tiles",
-		"bottom": "betterend:block/flavolite_runed_2"
-	}
-}

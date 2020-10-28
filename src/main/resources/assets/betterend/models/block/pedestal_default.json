@@ -1,0 +1,57 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#base"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "basin_1",
+			"from": [ 0, 0, 0 ],
+			"to": [ 16, 3, 16 ],
+			"faces": {
+				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom" },
+				"north": { "uv": [ 0, 0, 16, 3 ], "texture": "#base" },
+				"south": { "uv": [ 0, 0, 16, 3 ], "texture": "#base" },
+				"west": { "uv": [ 0, 0, 16, 3 ], "texture": "#base" },
+				"east": { "uv": [ 0, 0, 16, 3 ], "texture": "#base" }
+			}
+		},
+		{
+			"__comment": "basin_2",
+			"from": [ 2, 3, 2 ],
+			"to": [ 14, 4, 14 ],
+			"faces": {
+				"up": { "uv": [ 2, 2, 14, 14 ], "texture": "#bottom" },
+				"north": { "uv": [ 3, 3, 14, 4 ], "texture": "#base" },
+				"south": { "uv": [ 3, 3, 14, 4 ], "texture": "#base" },
+				"west": { "uv": [ 3, 3, 14, 4 ], "texture": "#base" },
+				"east": { "uv": [ 3, 3, 14, 4 ], "texture": "#base" }
+			}
+		},
+		{
+			"__comment": "pillar",
+			"from": [ 3, 4, 3 ],
+			"to": [ 13, 12, 13 ],
+			"faces": {
+				"north": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" },
+				"south": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" },
+				"west": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" },
+				"east": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" }
+			}
+		},
+		{
+			"__comment": "top",
+			"from": [ 1, 12, 1 ],
+			"to": [ 15, 14, 15 ],
+			"faces": {
+				"down": { "uv": [ 1, 1, 15, 15 ], "texture": "#bottom" },
+				"up": { "uv": [ 1, 1, 15, 15 ], "texture": "#top" },
+				"north": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
+				"south": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
+				"west": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
+				"east": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" }
+			}
+		}
+	]
+}

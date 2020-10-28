@@ -1,0 +1,32 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#base"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "pillar",
+			"from": [ 3, 0, 3 ],
+			"to": [ 13, 12, 13 ],
+			"faces": {
+				"north": { "uv": [ 3, 0, 13, 12 ], "texture": "#pillar" },
+				"south": { "uv": [ 3, 0, 13, 12 ], "texture": "#pillar" },
+				"west": { "uv": [ 3, 0, 13, 12 ], "texture": "#pillar" },
+				"east": { "uv": [ 3, 0, 13, 12 ], "texture": "#pillar" }
+			}
+		},
+		{
+			"__comment": "top",
+			"from": [ 1, 12, 1 ],
+			"to": [ 15, 14, 15 ],
+			"faces": {
+				"down": { "uv": [ 1, 1, 15, 15 ], "texture": "#base" },
+				"up": { "uv": [ 1, 1, 15, 15 ], "texture": "#top" },
+				"north": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
+				"south": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
+				"west": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
+				"east": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" }
+			}
+		}
+	]
+}

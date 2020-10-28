@@ -7,6 +7,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.PortalFrameHelper;
@@ -19,13 +20,12 @@ public class EternalCrystal extends Item {
 	
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
+		if (world.isClient) return ActionResult.CONSUME;
 		BlockPos usedPos = context.getBlockPos();
 		BlockState usedBlock = world.getBlockState(usedPos);
-		if (world instanceof ServerWorld) {
-			if (usedBlock.getBlock() instanceof RunedFlavolite && !usedBlock.get(RunedFlavolite.ACTIVATED)) {
-				if (PortalFrameHelper.checkPortalFrame((ServerWorld) world, usedPos, usedBlock.getBlock())) {
-					return ActionResult.SUCCESS;
-				}
+		if (usedBlock.getBlock() instanceof RunedFlavolite && !usedBlock.get(RunedFlavolite.ACTIVATED)) {
+			if (PortalFrameHelper.checkPortalFrame((ServerWorld) world, usedPos, usedBlock.getBlock())) {
+				return ActionResult.SUCCESS;
 			}
 		}
 		return ActionResult.PASS;

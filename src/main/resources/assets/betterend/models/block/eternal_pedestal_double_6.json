@@ -1,7 +1,0 @@
-{
-	"parent": "minecraft:block/cube_column",
-	"textures": {
-		"end": "betterend:block/flavolite_runed_6",
-		"side": "betterend:block/flavolite_pillar_side"
-	}
-}

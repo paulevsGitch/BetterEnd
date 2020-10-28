@@ -16,7 +16,7 @@ import net.minecraft.network.packet.s2c.play.SignEditorOpenS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.thread.ThreadExecutor;
 import ru.betterend.blocks.entities.ESignBlockEntity;
-import ru.betterend.blocks.entities.EternalPedestalBlockEntity;
+import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.gui.BlockSignEditScreen;
 
 @Mixin(ClientPlayNetworkHandler.class)
@@ -46,7 +46,7 @@ public class ClientPlayNetworkHandlerMixin
 				(ThreadExecutor<?>) client);
 		BlockPos blockPos = packet.getPos();
 		BlockEntity blockEntity = this.client.world.getBlockEntity(blockPos);
-		if (blockEntity instanceof ESignBlockEntity || blockEntity instanceof EternalPedestalBlockEntity) {
+		if (blockEntity instanceof ESignBlockEntity || blockEntity instanceof PedestalBlockEntity) {
 			blockEntity.fromTag(this.client.world.getBlockState(blockPos), packet.getCompoundTag());
 			info.cancel();
 		}

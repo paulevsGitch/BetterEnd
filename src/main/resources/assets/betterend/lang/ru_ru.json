@@ -145,6 +145,7 @@
 	"block.betterend.violecite_stairs": "Виолецитовые ступени",
 	"block.betterend.violecite_tile": "Полированный Виолецит",
 	"block.betterend.violecite_wall": "Виолецитовая стена",
+	"block.betterend.violecite_pedestal": "Виолецитовый пьедестал",
 	
 	"block.betterend.flavolite": "Флаволит",
 	"block.betterend.flavolite_bricks": "Флаволитовые кирпичи",
@@ -159,6 +160,13 @@
 	"block.betterend.flavolite_stairs": "Флаволитовые ступени",
 	"block.betterend.flavolite_polished": "Полированный Флаволит",
 	"block.betterend.flavolite_wall": "Флаволитовая стена",
+	"block.betterend.flavolite_pedestal": "Флаволитовый пьедестал",
+	
+	"block.betterend.andesite_pedestal": "Пьедестал из андезита",
+	"block.betterend.diorite_pedestal": "Пьедестал из диорита",
+	"block.betterend.granite_pedestal": "Пьедестал из гранита",
+	"block.betterend.purpur_pedestal": "Пьедестал из пурпура",
+	"block.betterend.quartz_pedestal": "Пьедестал из кварца",
 	
 	"block.betterend.end_lotus_seed": "Семя лотоса края",
 	"block.betterend.end_lotus_stem": "Стебель лотоса края",

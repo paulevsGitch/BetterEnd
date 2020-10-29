@@ -14,6 +14,7 @@ import ru.betterend.blocks.basis.BlockStairs;
 import ru.betterend.blocks.basis.BlockStoneButton;
 import ru.betterend.blocks.basis.BlockStonePressurePlate;
 import ru.betterend.blocks.basis.BlockWall;
+import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.TagHelper;
@@ -60,7 +61,6 @@ public class StoneMaterial {
 		GridRecipe.make(name + "_polished", polished).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
 		GridRecipe.make(name + "_tiles", tiles).setOutputCount(4).setShape("##", "##").addMaterial('#', polished).setGroup("end_small_tile").build();
 		GridRecipe.make(name + "_pillar", pillar).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar").build();
-		GridRecipe.make(name + "_pedestal", pedestal).setOutputCount(2).setShape("S", "#", "S").addMaterial('S', slab).addMaterial('#', pillar).setGroup("end_pedestal").build();
 		
 		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', stone).setGroup("end_stone_stairs").build();
 		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', stone).setGroup("end_stone_slabs").build();
@@ -72,6 +72,8 @@ public class StoneMaterial {
 		
 		GridRecipe.make(name + "_button", button).setList("#").addMaterial('#', stone).setGroup("end_stone_buttons").build();
 		GridRecipe.make(name + "_pressure_plate", pressure_plate).setShape("##").addMaterial('#', stone).setGroup("end_stone_plates").build();
+		
+		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		
 		// Item Tags //
 		TagHelper.addTag(ItemTags.SLABS, slab, brick_slab);

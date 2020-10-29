@@ -145,6 +145,7 @@
 	"block.betterend.violecite_stairs": "Violecite Stairs",
 	"block.betterend.violecite_polished": "Polished Violecite",
 	"block.betterend.violecite_wall": "Violecite Wall",
+	"block.betterend.violecite_pedestal": "Violecite Pedestal",
 	
 	"block.betterend.flavolite": "Flavolite",
 	"block.betterend.flavolite_bricks": "Flavolite Bricks",
@@ -159,6 +160,13 @@
 	"block.betterend.flavolite_stairs": "Flavolite Stairs",
 	"block.betterend.flavolite_polished": "Polished Flavolite",
 	"block.betterend.flavolite_wall": "Flavolite Wall",
+	"block.betterend.flavolite_pedestal": "Flavolite Pedestal",
+	
+	"block.betterend.andesite_pedestal": "Andesite Pedestal",
+	"block.betterend.diorite_pedestal": "Diorite Pedestal",
+	"block.betterend.granite_pedestal": "Granite Pedestal",
+	"block.betterend.purpur_pedestal": "Purpur Pedestal",
+	"block.betterend.quartz_pedestal": "Quartz Pedestal",
 	
 	"block.betterend.end_lotus_seed": "End Lotus Seed",
 	"block.betterend.end_lotus_stem": "End Lotus Stem",

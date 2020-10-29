@@ -37,9 +37,9 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
 	
-	private static final VoxelShape SHAPE_PILLAR = Block.createCuboidShape(3, 0, 3, 13, 16, 13);
 	private static final VoxelShape SHAPE_DEFAULT;
 	private static final VoxelShape SHAPE_COLUMN;
+	private static final VoxelShape SHAPE_PILLAR;
 	private static final VoxelShape SHAPE_PEDESTAL_TOP;
 	private static final VoxelShape SHAPE_COLUMN_TOP;
 	private static final VoxelShape SHAPE_BOTTOM;
@@ -261,14 +261,19 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	}
 	
 	static {
-		VoxelShape basin = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
-		VoxelShape pedestal_top = Block.createCuboidShape(1, 12, 1, 15, 14, 15);
-		VoxelShape column_top = Block.createCuboidShape(1, 14, 1, 15, 16, 15);
-		VoxelShape pillar = Block.createCuboidShape(3, 0, 3, 13, 14, 13);
-		SHAPE_DEFAULT = VoxelShapes.union(basin, pillar, pedestal_top);
-		SHAPE_PEDESTAL_TOP = VoxelShapes.union(pillar, pedestal_top);
-		SHAPE_COLUMN_TOP = VoxelShapes.union(SHAPE_PILLAR, column_top);
-		SHAPE_COLUMN = VoxelShapes.union(basin, SHAPE_PILLAR, column_top);
+		VoxelShape basinUp = Block.createCuboidShape(2, 3, 2, 14, 4, 14);
+		VoxelShape basinDown = Block.createCuboidShape(0, 0, 0, 16, 3, 16);
+		VoxelShape basin = VoxelShapes.union(basinDown, basinUp);
+		VoxelShape columnTop = Block.createCuboidShape(1, 14, 1, 15, 16, 15);
+		VoxelShape pedestalTop = Block.createCuboidShape(1, 8, 1, 15, 10, 15);
+		VoxelShape pedestalDefault = Block.createCuboidShape(1, 12, 1, 15, 14, 15);
+		VoxelShape pillar = Block.createCuboidShape(3, 0, 3, 13, 8, 13);
+		VoxelShape pillarDefault = Block.createCuboidShape(3, 0, 3, 13, 12, 13);
+		SHAPE_PILLAR = Block.createCuboidShape(3, 0, 3, 13, 16, 13);
+		SHAPE_DEFAULT = VoxelShapes.union(basin, pillarDefault, pedestalDefault);
+		SHAPE_PEDESTAL_TOP = VoxelShapes.union(pillar, pedestalTop);
+		SHAPE_COLUMN_TOP = VoxelShapes.union(SHAPE_PILLAR, columnTop);
+		SHAPE_COLUMN = VoxelShapes.union(basin, SHAPE_PILLAR, columnTop);
 		SHAPE_BOTTOM = VoxelShapes.union(basin, SHAPE_PILLAR);
 	}
 }

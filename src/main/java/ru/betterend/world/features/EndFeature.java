@@ -97,6 +97,11 @@ public class EndFeature {
 		return new EndFeature(name, feature, GenerationStep.Feature.LOCAL_MODIFICATIONS, configured);
 	}
 	
+	public static EndFeature makeChancedFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
+		return new EndFeature(name, feature, GenerationStep.Feature.SURFACE_STRUCTURES, configured);
+	}
+	
 	public Feature<?> getFeature() {
 		return feature;
 	}

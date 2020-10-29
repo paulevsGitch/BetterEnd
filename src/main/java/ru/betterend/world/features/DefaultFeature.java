@@ -17,6 +17,14 @@ public abstract class DefaultFeature extends Feature<DefaultFeatureConfig> {
 		super(DefaultFeatureConfig.CODEC);
 	}
 	
+	public static int getYOnSurface(StructureWorldAccess world, int x, int z) {
+		return world.getTopY(Type.WORLD_SURFACE, x, z);
+	}
+	
+	public static int getYOnSurfaceWG(StructureWorldAccess world, int x, int z) {
+		return world.getTopY(Type.WORLD_SURFACE_WG, x, z);
+	}
+	
 	public static BlockPos getPosOnSurface(StructureWorldAccess world, BlockPos pos) {
 		return world.getTopPosition(Type.WORLD_SURFACE, pos);
 	}

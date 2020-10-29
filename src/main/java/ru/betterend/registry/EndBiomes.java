@@ -85,14 +85,6 @@ public class EndBiomes {
 		CLIENT.clear();
 	}
 	
-	private static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
-		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
-	}
-	
-	private static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
-		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance);
-	}
-	
 	/**
 	 * Registers new {@link EndBiome} and adds it to picker, can be used to add existing mod biomes into the End.
 	 * @param biome - {@link Biome} instance
@@ -171,6 +163,14 @@ public class EndBiomes {
 		addToPicker(biome, type);
 		ID_MAP.put(biome.getID(), biome);
 		return biome;
+	}
+	
+	private static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
+		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
+	}
+	
+	private static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
+		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance);
 	}
 	
 	private static void addToPicker(EndBiome biome, BiomeType type) {

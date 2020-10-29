@@ -1,14 +1,16 @@
 package ru.betterend.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
@@ -30,8 +32,7 @@ public class RunedFlavolite extends BlockBase {
 	}
 	
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		super.onBreak(world, pos, state, player);
+	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
 		BlockPos bottom = PortalFrameHelper.findBottomCorner((World) world, pos, this);
 		BlockPos top = PortalFrameHelper.findTopCorner((World) world, pos, this);
 		if (bottom == null || top == null) return;

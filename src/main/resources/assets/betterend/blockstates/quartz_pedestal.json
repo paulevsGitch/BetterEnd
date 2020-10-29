@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"state=default": {
+			"model": "betterend:block/quartz_pedestal_default"
+		},
+		"state=column": {
+			"model": "betterend:block/quartz_pedestal_column"
+		},
+		"state=column_top": {
+			"model": "betterend:block/quartz_pedestal_column_top"
+		},
+		"state=pedestal_top": {
+			"model": "betterend:block/quartz_pedestal_top"
+		},
+		"state=bottom": {
+			"model": "betterend:block/quartz_pedestal_bottom"
+		},
+		"state=pillar": {
+			"model": "betterend:block/quartz_pedestal_pillar"
+		}
+	}
+}

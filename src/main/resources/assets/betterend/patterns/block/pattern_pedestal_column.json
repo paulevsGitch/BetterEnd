@@ -1,0 +1,8 @@
+{
+	"parent": "betterend:block/pedestal_column",
+	"textures": {
+		"base": "%mod%:block/%base%",
+		"pillar": "%mod%:block/%pillar%",
+		"bottom": "%mod%:block/%bottom%"
+	}
+}

@@ -26,6 +26,37 @@ public class CraftingRecipes {
 			.addMaterial('V', Items.BUCKET)
 			.build();
 		
+		GridRecipe.make("andesite_pedestal", EndBlocks.ANDESITE_PEDESTAL)
+			.setShape(new String[] { "S", "#", "S" })
+			.addMaterial('S', Blocks.POLISHED_ANDESITE_SLAB)
+			.addMaterial('#', Blocks.POLISHED_ANDESITE)
+			.setOutputCount(2)
+			.build();
+		GridRecipe.make("diorite_pedestal", EndBlocks.DIORITE_PEDESTAL)
+			.setShape(new String[] { "S", "#", "S" })
+			.addMaterial('S', Blocks.POLISHED_DIORITE_SLAB)
+			.addMaterial('#', Blocks.POLISHED_DIORITE)
+			.setOutputCount(2)
+			.build();
+		GridRecipe.make("granite_pedestal", EndBlocks.GRANITE_PEDESTAL)
+			.setShape(new String[] { "S", "#", "S" })
+			.addMaterial('S', Blocks.POLISHED_GRANITE_SLAB)
+			.addMaterial('#', Blocks.POLISHED_GRANITE)
+			.setOutputCount(2)
+			.build();
+		GridRecipe.make("quartz_pedestal", EndBlocks.QUARTZ_PEDESTAL)
+			.setShape(new String[] { "S", "#", "S" })
+			.addMaterial('S', Blocks.QUARTZ_SLAB)
+			.addMaterial('#', Blocks.QUARTZ_PILLAR)
+			.setOutputCount(2)
+			.build();
+		GridRecipe.make("purpur_pedestal", EndBlocks.PURPUR_PEDESTAL)
+			.setShape(new String[] { "S", "#", "S" })
+			.addMaterial('S', Blocks.PURPUR_SLAB)
+			.addMaterial('#', Blocks.PURPUR_PILLAR)
+			.setOutputCount(2)
+			.build();
+		
 		String material = "terminite";
 		GridRecipe.make(material + "_block", EndBlocks.TERMINITE_BLOCK)
 			.setShape(new String[] { "III", "III", "III" })

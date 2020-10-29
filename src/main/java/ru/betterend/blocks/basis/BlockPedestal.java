@@ -1,10 +1,14 @@
 package ru.betterend.blocks.basis;
 
+import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -20,17 +24,21 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
+import ru.betterend.interfaces.Patterned;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvider {
@@ -44,9 +52,12 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	private static final VoxelShape SHAPE_COLUMN_TOP;
 	private static final VoxelShape SHAPE_BOTTOM;
 	
+	protected final Block parent;
+	
 	public BlockPedestal(Block parent) {
 		super(FabricBlockSettings.copyOf(parent));
 		this.setDefaultState(stateManager.getDefaultState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false));
+		this.parent = parent;
 	}
 	
 	@Override
@@ -131,9 +142,9 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 			return state.with(STATE, PedestalState.COLUMN);
 		} else if (hasPedestalUnder && hasPedestalOver) {
 			return state.with(STATE, PedestalState.PILLAR);
-		} else if (hasPedestalUnder && !hasPedestalOver) {
+		} else if (hasPedestalUnder) {
 			return state.with(STATE, PedestalState.PEDESTAL_TOP);
-		} else if (hasPedestalOver && !hasPedestalUnder) {
+		} else if (hasPedestalOver) {
 			return state.with(STATE, PedestalState.BOTTOM);
 		}
 		return state.with(STATE, PedestalState.DEFAULT);
@@ -260,15 +271,56 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 		return new PedestalBlockEntity();
 	}
 	
+	@Override
+	public String getStatesPattern(Reader data) {
+		Identifier blockId = Registry.BLOCK.getId(this);
+		return Patterned.createJson(data, blockId, blockId.getPath());
+	}
+	
+	@Override
+	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(parent);
+		String name = blockId.getPath();
+		Map<String, String> textures = new HashMap<String, String>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("%mod%", blockId.getNamespace() );
+				put("%top%", name + "_top");
+				put("%base%", name + "_base");
+				put("%pillar%", name + "_pillar");
+				put("%bottom%", name + "_bottom");
+			}
+		};
+		if (block.contains("column_top")) {
+			return Patterned.createJson(Patterned.PEDESTAL_MODEL_COLUMN_TOP, textures);
+		} else if (block.contains("column")) {
+			return Patterned.createJson(Patterned.PEDESTAL_MODEL_COLUMN, textures);
+		} else if (block.contains("top")) {
+			return Patterned.createJson(Patterned.PEDESTAL_MODEL_TOP, textures);
+		} else if (block.contains("bottom")) {
+			return Patterned.createJson(Patterned.PEDESTAL_MODEL_BOTTOM, textures);
+		} else if (block.contains("pillar")) {
+			return Patterned.createJson(Patterned.PEDESTAL_MODEL_PILLAR, textures);
+		}
+		return Patterned.createJson(Patterned.PEDESTAL_MODEL_DEFAULT, textures);
+	}
+	
+	@Override
+	public Identifier statePatternId() {
+		return Patterned.PEDESTAL_STATES_PATTERN;
+	}
+	
 	static {
 		VoxelShape basinUp = Block.createCuboidShape(2, 3, 2, 14, 4, 14);
 		VoxelShape basinDown = Block.createCuboidShape(0, 0, 0, 16, 3, 16);
-		VoxelShape basin = VoxelShapes.union(basinDown, basinUp);
-		VoxelShape columnTop = Block.createCuboidShape(1, 14, 1, 15, 16, 15);
+		VoxelShape columnTopUp = Block.createCuboidShape(1, 14, 1, 15, 16, 15);
+		VoxelShape columnTopDown = Block.createCuboidShape(2, 13, 2, 14, 14, 14);
 		VoxelShape pedestalTop = Block.createCuboidShape(1, 8, 1, 15, 10, 15);
 		VoxelShape pedestalDefault = Block.createCuboidShape(1, 12, 1, 15, 14, 15);
 		VoxelShape pillar = Block.createCuboidShape(3, 0, 3, 13, 8, 13);
 		VoxelShape pillarDefault = Block.createCuboidShape(3, 0, 3, 13, 12, 13);
+		VoxelShape columnTop = VoxelShapes.union(columnTopDown, columnTopUp);
+		VoxelShape basin = VoxelShapes.union(basinDown, basinUp);
 		SHAPE_PILLAR = Block.createCuboidShape(3, 0, 3, 13, 16, 13);
 		SHAPE_DEFAULT = VoxelShapes.union(basin, pillarDefault, pedestalDefault);
 		SHAPE_PEDESTAL_TOP = VoxelShapes.union(pillar, pedestalTop);

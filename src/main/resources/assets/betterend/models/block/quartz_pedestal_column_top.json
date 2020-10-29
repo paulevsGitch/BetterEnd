@@ -1,0 +1,7 @@
+{
+	"parent": "betterend:block/pedestal_column_top",
+	"textures": {
+		"base": "minecraft:block/quartz_block_side",
+		"pillar": "minecraft:block/quartz_pillar"
+	}
+}

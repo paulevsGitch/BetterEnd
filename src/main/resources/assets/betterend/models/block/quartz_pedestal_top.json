@@ -1,0 +1,8 @@
+{
+	"parent": "betterend:block/pedestal_top",
+	"textures": {
+		"top": "minecraft:block/quartz_pillar_top",
+		"base": "minecraft:block/quartz_block_side",
+		"pillar": "minecraft:block/quartz_pillar"
+	}
+}

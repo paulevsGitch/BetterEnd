@@ -1,0 +1,9 @@
+{
+	"parent": "betterend:block/pedestal_default",
+	"textures": {
+		"top": "%mod%:block/%top%",
+		"base": "%mod%:block/%base%",
+		"pillar": "%mod%:block/%pillar%",
+		"bottom": "%mod%:block/%bottom%"
+	}
+}

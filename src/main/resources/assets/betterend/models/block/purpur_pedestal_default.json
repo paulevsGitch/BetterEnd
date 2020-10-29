@@ -1,0 +1,9 @@
+{
+	"parent": "betterend:block/pedestal_default",
+	"textures": {
+		"top": "minecraft:block/purpur_pillar_top",
+		"base": "minecraft:block/purpur_block",
+		"pillar": "minecraft:block/purpur_pillar",
+		"bottom": "minecraft:block/purpur_block"
+	}
+}

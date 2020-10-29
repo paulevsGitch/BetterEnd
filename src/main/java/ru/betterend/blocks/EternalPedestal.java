@@ -23,6 +23,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.explosion.Explosion;
+
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.registry.EndBlocks;

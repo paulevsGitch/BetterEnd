@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
+import ru.betterend.blocks.EndPedestal;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.BlockPillar;
 import ru.betterend.blocks.basis.BlockSlab;
@@ -28,6 +29,7 @@ public class StoneMaterial {
 	public final Block wall;
 	public final Block button;
 	public final Block pressure_plate;
+	public final Block pedestal;
 	
 	public final Block bricks;
 	public final Block brick_stairs;
@@ -46,6 +48,7 @@ public class StoneMaterial {
 		wall = EndBlocks.registerBlock(name + "_wall", new BlockWall(stone));
 		button = EndBlocks.registerBlock(name + "_button", new BlockStoneButton(stone));
 		pressure_plate = EndBlocks.registerBlock(name + "_plate", new BlockStonePressurePlate(stone));
+		pedestal = EndBlocks.registerBlock(name + "_pedestal", new EndPedestal(stone));
 		
 		bricks = EndBlocks.registerBlock(name + "_bricks", new BlockBase(material));
 		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new BlockStairs(bricks));
@@ -57,6 +60,7 @@ public class StoneMaterial {
 		GridRecipe.make(name + "_polished", polished).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
 		GridRecipe.make(name + "_tiles", tiles).setOutputCount(4).setShape("##", "##").addMaterial('#', polished).setGroup("end_small_tile").build();
 		GridRecipe.make(name + "_pillar", pillar).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar").build();
+		GridRecipe.make(name + "_pedestal", pedestal).setOutputCount(2).setShape("S", "#", "S").addMaterial('S', slab).addMaterial('#', pillar).setGroup("end_pedestal").build();
 		
 		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', stone).setGroup("end_stone_stairs").build();
 		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', stone).setGroup("end_stone_slabs").build();

@@ -16,7 +16,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	private int age;
 	
 	public PedestalBlockEntity() {
-		super(EndBlockEntities.ETERNAL_PEDESTAL);
+		super(EndBlockEntities.PEDESTAL);
 	}
 	
 	public int getAge() {

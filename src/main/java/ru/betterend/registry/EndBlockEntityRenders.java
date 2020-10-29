@@ -12,6 +12,6 @@ public class EndBlockEntityRenders {
 	public static void register() {
 		BlockEntityRendererRegistry.INSTANCE.register(EndBlockEntities.CHEST, EChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(EndBlockEntities.SIGN, ESignBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(EndBlockEntities.ETERNAL_PEDESTAL, PedestalItemRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(EndBlockEntities.PEDESTAL, PedestalItemRenderer::new);
 	}
 }

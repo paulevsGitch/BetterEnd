@@ -30,6 +30,7 @@ public interface Patterned {
 	public final static Identifier TRAPDOOR_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_trapdoor.json");
 	public final static Identifier LADDER_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_ladder.json");
 	public final static Identifier BARREL_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_barrel.json");
+	public final static Identifier PEDESTAL_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_pedestal.json");
 	
 	//Models Block
 	public final static Identifier EMPTY_MODEL = BetterEnd.makeID("patterns/block/pattern_empty.json");
@@ -62,6 +63,12 @@ public interface Patterned {
 	public final static Identifier TRAPDOOR_MODEL = BetterEnd.makeID("patterns/block/pattern_trapdoor.json");
 	public final static Identifier LADDER_MODEL = BetterEnd.makeID("patterns/block/pattern_ladder.json");
 	public final static Identifier BARREL_MODEL_OPEN = BetterEnd.makeID("patterns/block/pattern_barrel_open.json");
+	public final static Identifier PEDESTAL_MODEL_DEFAULT = BetterEnd.makeID("patterns/block/pattern_pedestal_default.json");
+	public final static Identifier PEDESTAL_MODEL_COLUMN = BetterEnd.makeID("patterns/block/pattern_pedestal_column.json");
+	public final static Identifier PEDESTAL_MODEL_COLUMN_TOP = BetterEnd.makeID("patterns/block/pattern_pedestal_column_top.json");
+	public final static Identifier PEDESTAL_MODEL_TOP = BetterEnd.makeID("patterns/block/pattern_pedestal_top.json");
+	public final static Identifier PEDESTAL_MODEL_BOTTOM = BetterEnd.makeID("patterns/block/pattern_pedestal_bottom.json");
+	public final static Identifier PEDESTAL_MODEL_PILLAR = BetterEnd.makeID("patterns/block/pattern_pedestal_pillar.json");
 	
 	//Models Item
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");

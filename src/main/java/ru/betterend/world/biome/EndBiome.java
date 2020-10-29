@@ -33,11 +33,11 @@ public class EndBiome {
 		genChanceUnmutable = definition.getGenChance();
 	}
 
-	public EndBiome(Biome biome, float genChance) {
+	public EndBiome(Biome biome, float fogDensity, float genChance) {
 		this.biome = biome;
-		mcID = BuiltinRegistries.BIOME.getId(biome);
-		fogDensity = 1;
-		genChanceUnmutable = genChance;
+		this.mcID = BuiltinRegistries.BIOME.getId(biome);
+		this.fogDensity = fogDensity;
+		this.genChanceUnmutable = genChance;
 	}
 
 	public void genSurfColumn(WorldAccess world, BlockPos pos, Random random) {

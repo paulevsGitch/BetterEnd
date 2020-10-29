@@ -75,7 +75,7 @@ public class EndBiomes {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				if (!MUTABLE.containsKey(biome) && !biomeRegistry.getId(biome).getNamespace().equals("minecraft")) {
-					EndBiome endBiome = new EndBiome(biome, 1);
+					EndBiome endBiome = new EndBiome(biome, 1, 1);
 					LAND_BIOMES.addBiomeMutable(endBiome);
 					KEYS.put(endBiome, biomeRegistry.getKey(biome).get());
 				}
@@ -85,15 +85,12 @@ public class EndBiomes {
 		CLIENT.clear();
 	}
 	
-	/**
-	 * Registers new {@link EndBiome} and adds it to picker, actually used for vanilla biomes.
-	 * @param key - {@link RegistryKey} for the biome
-	 * @param type - {@link BiomeType}
-	 * @param genChance - generation chance [0.0F - Infinity]
-	 * @return registered {@link EndBiome}
-	 */
-	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
+	private static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
 		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
+	}
+	
+	private static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
+		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance);
 	}
 	
 	/**
@@ -104,21 +101,22 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float genChance) {
-		EndBiome endBiome = new EndBiome(biome, genChance);
-		addToPicker(endBiome, type);
-		makeLink(endBiome);
-		return endBiome;
+		return registerBiome(biome, type, 1, genChance);
 	}
 	
 	/**
-	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
-	 * @param key - {@link RegistryKey} for the biome
-	 * @param parent - {@link EndBiome}
+	 * Registers new {@link EndBiome} and adds it to picker, can be used to add existing mod biomes into the End.
+	 * @param biome - {@link Biome} instance
+	 * @param type - {@link BiomeType}
+	 * @param fogDensity - density of fog (def: 1F) [0.0F - Infinity]
 	 * @param genChance - generation chance [0.0F - Infinity]
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
-		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance);
+	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
+		EndBiome endBiome = new EndBiome(biome, fogDensity, genChance);
+		addToPicker(endBiome, type);
+		makeLink(endBiome);
+		return endBiome;
 	}
 	
 	/**
@@ -129,7 +127,19 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float genChance) {
-		EndBiome endBiome = new EndBiome(biome, genChance);
+		return registerSubBiome(biome, parent, 1, genChance);
+	}
+	
+	/**
+	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
+	 * @param biome - {@link Biome} instance
+	 * @param parent - {@link EndBiome} to be linked with
+	 * @param fogDensity - density of fog (def: 1F) [0.0F - Infinity]
+	 * @param genChance - generation chance [0.0F - Infinity]
+	 * @return registered {@link EndBiome}
+	 */
+	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance) {
+		EndBiome endBiome = new EndBiome(biome, fogDensity, genChance);
 		parent.addSubBiome(endBiome);
 		makeLink(endBiome);
 		SUBBIOMES.add(endBiome);

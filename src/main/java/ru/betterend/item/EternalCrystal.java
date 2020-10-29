@@ -8,6 +8,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ru.betterend.blocks.RunedFlavolite;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.PortalFrameHelper;
 
@@ -22,8 +23,9 @@ public class EternalCrystal extends Item {
 		if (world.isClient) return ActionResult.CONSUME;
 		BlockPos usedPos = context.getBlockPos();
 		BlockState usedBlock = world.getBlockState(usedPos);
-		if (usedBlock.getBlock() instanceof RunedFlavolite && !usedBlock.get(RunedFlavolite.ACTIVATED)) {
+		if (usedBlock.isOf(EndBlocks.FLAVOLITE_RUNED) && !usedBlock.get(RunedFlavolite.ACTIVATED)) {
 			if (PortalFrameHelper.checkPortalFrame((ServerWorld) world, usedPos, usedBlock.getBlock())) {
+				context.getStack().decrement(1);
 				return ActionResult.SUCCESS;
 			}
 		}

@@ -4,7 +4,7 @@
 	"version": "${version}",
 
 	"name": "Better End",
-	"description": "More content for The End",
+	"description": "More content for The End.",
 	"authors": [
 		"paulevs",
 		"Bulldog83"
@@ -38,8 +38,8 @@
 	],
 
 	"depends": {
-		"fabricloader": ">=0.7.4",
-		"fabric": "*",
+		"fabricloader": ">=0.10.0",
+		"fabric": ">=0.24.3",
 		"minecraft": "1.16.x"
 	}
 }

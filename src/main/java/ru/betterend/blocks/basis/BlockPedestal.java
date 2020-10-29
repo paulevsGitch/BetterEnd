@@ -29,29 +29,31 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.BlockProperties.State;
+import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvider {
-	public final static EnumProperty<State> STATE = BlockProperties.STATE;
+	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
 	
-	private static final VoxelShape SHAPE_DEFAULT = VoxelShapes.cuboid(0, 0, 0, 16, 14, 16);
-	private static final VoxelShape SHAPE_PILLAR = VoxelShapes.cuboid(3, 0, 3, 13, 16, 13);
+	private static final VoxelShape SHAPE_PILLAR = Block.createCuboidShape(3, 0, 3, 13, 16, 13);
+	private static final VoxelShape SHAPE_DEFAULT;
+	private static final VoxelShape SHAPE_COLUMN;
+	private static final VoxelShape SHAPE_PEDESTAL_TOP;
+	private static final VoxelShape SHAPE_COLUMN_TOP;
 	private static final VoxelShape SHAPE_BOTTOM;
-	private static final VoxelShape SHAPE_TOP;
 	
 	public BlockPedestal(Block parent) {
 		super(FabricBlockSettings.copyOf(parent));
-		this.setDefaultState(stateManager.getDefaultState().with(STATE, State.DEFAULT).with(HAS_ITEM, false));
+		this.setDefaultState(stateManager.getDefaultState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false));
 	}
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient || !state.isOf(this)) return ActionResult.CONSUME;
-		State currentState = state.get(STATE);
-		if (currentState.equals(State.BOTTOM) || currentState.equals(State.PILLAR)) {
+		PedestalState currentState = state.get(STATE);
+		if (currentState.equals(PedestalState.BOTTOM) || currentState.equals(PedestalState.PILLAR)) {
 			return ActionResult.PASS;
 		}
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -79,47 +81,73 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	@Override
 	@Nullable
 	public BlockState getPlacementState(ItemPlacementContext context) {
+		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
-		Block down = context.getWorld().getBlockState(pos.down()).getBlock();
-		Block up = context.getWorld().getBlockState(pos.up()).getBlock();
-		if (down instanceof BlockPedestal && up instanceof BlockPedestal) {
-			return this.getDefaultState().with(STATE, State.PILLAR);
-		} else if (down instanceof BlockPedestal) {
-			return this.getDefaultState().with(STATE, State.TOP);
-		} else if (up instanceof BlockPedestal) {
-			return this.getDefaultState().with(STATE, State.BOTTOM);
+		BlockState upState = world.getBlockState(pos.up());
+		Block down = world.getBlockState(pos.down()).getBlock();
+		boolean upSideSolid = upState.isSideSolidFullSquare(world, pos.up(), Direction.DOWN);
+		boolean hasPedestalOver = upState.getBlock() instanceof BlockPedestal;
+		boolean hasPedestalUnder = down instanceof BlockPedestal;
+		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
+			return this.getDefaultState().with(STATE, PedestalState.COLUMN_TOP);
+		} else if (!hasPedestalUnder && upSideSolid) {
+			return this.getDefaultState().with(STATE, PedestalState.COLUMN);
+		} else if (hasPedestalUnder && hasPedestalOver) {
+			return this.getDefaultState().with(STATE, PedestalState.PILLAR);
+		} else if (hasPedestalUnder) {
+			return this.getDefaultState().with(STATE, PedestalState.PEDESTAL_TOP);
+		} else if (hasPedestalOver) {
+			return this.getDefaultState().with(STATE, PedestalState.BOTTOM);
 		}
 		return this.getDefaultState();
 	}
 	
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+		BlockState updated = this.getUpdatedState(state, direction, newState, world, pos, posFrom);
+		if (!updated.isOf(this)) return updated;
+		if (!this.isPlaceable(updated)) {
+			this.moveStoredStack(world, updated, pos);
+		}
+		return updated;
+	}
+	
+	private BlockState getUpdatedState(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+		if (!state.isOf(this)) return state.getStateForNeighborUpdate(direction, newState, world, pos, posFrom);
+		PedestalState currentState = state.get(STATE);
 		if (newState.getBlock() instanceof BlockPedestal) {
 			if (direction.equals(Direction.DOWN)) {
-				if (world.getBlockState(pos.up()).getBlock() instanceof BlockPedestal) {
-					this.moveStoredStack(world, state, pos);
-					return state.with(STATE, State.PILLAR);
+				if (currentState == PedestalState.BOTTOM) {
+					return state.with(STATE, PedestalState.PILLAR);
+				} else if (currentState == PedestalState.COLUMN) {
+					return state.with(STATE, PedestalState.COLUMN_TOP);
 				}
-				return state.with(STATE, State.TOP);
+				return state.with(STATE, PedestalState.PEDESTAL_TOP);
 			} else if (direction.equals(Direction.UP)) {
-				this.moveStoredStack(world, state, pos);
-				if (world.getBlockState(pos.down()).getBlock() instanceof BlockPedestal) {
-					return state.with(STATE, State.PILLAR);
+				if (currentState == PedestalState.PEDESTAL_TOP) {
+					return state.with(STATE, PedestalState.PILLAR);
 				}
-				return state.with(STATE, State.BOTTOM);
+				return state.with(STATE, PedestalState.BOTTOM);
 			}
 		} else {
 			if (direction.equals(Direction.DOWN)) {
-				if (world.getBlockState(pos.up()).getBlock() instanceof BlockPedestal) {
-					this.moveStoredStack(world, state, pos);
-					return state.with(STATE, State.BOTTOM);
+				if (currentState == PedestalState.COLUMN_TOP) {
+					return state.with(STATE, PedestalState.COLUMN);
 				}
-				return state.with(STATE, State.DEFAULT);
+				if (currentState == PedestalState.PILLAR) {
+					return state.with(STATE, PedestalState.BOTTOM);
+				}
+				return state.with(STATE, PedestalState.DEFAULT);
 			} else if (direction.equals(Direction.UP)) {
-				if (world.getBlockState(pos.down()).getBlock() instanceof BlockPedestal) {
-					return state.with(STATE, State.TOP);
+				boolean upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN);
+				if (currentState == PedestalState.PEDESTAL_TOP && upSideSolid) {
+					return state.with(STATE, PedestalState.COLUMN_TOP);
+				} else if (currentState == PedestalState.COLUMN_TOP || currentState == PedestalState.PILLAR) {
+					return state.with(STATE, PedestalState.PEDESTAL_TOP);
+				} else if (upSideSolid) {
+					return state.with(STATE, PedestalState.COLUMN);
 				}
-				return state.with(STATE, State.DEFAULT);
+				return state.with(STATE, PedestalState.DEFAULT);
 			}
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
@@ -129,8 +157,8 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drop = super.getDroppedStacks(state, builder);
 		if (state.isOf(this)) {
-			State currentState = state.get(STATE);
-			if (currentState.equals(State.BOTTOM) || currentState.equals(State.PILLAR)) {
+			PedestalState currentState = state.get(STATE);
+			if (currentState.equals(PedestalState.BOTTOM) || currentState.equals(PedestalState.PILLAR)) {
 				return drop;
 			} else {
 				BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
@@ -162,9 +190,11 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	
 	private void moveStoredStack(WorldAccess world, ItemStack stack, BlockState state, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (state.get(STATE).equals(State.PILLAR)) {
+		if (state.get(STATE).equals(PedestalState.PILLAR)) {
 			BlockPos upPos = pos.up();
 			this.moveStoredStack(world, stack, world.getBlockState(upPos), upPos);
+		} else if (!this.isPlaceable(state)) {
+			this.dropStoredStack(world, stack, pos);
 		} else if (blockEntity instanceof PedestalBlockEntity) {
 			PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
 			if (pedestal.isEmpty()) {
@@ -193,6 +223,15 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 		return this.getDropPos(world, pos.up());
 	}
 	
+	protected boolean isPlaceable(BlockState state) {
+		if (!state.isOf(this)) return false;
+		PedestalState currentState = state.get(STATE);
+		return currentState != PedestalState.BOTTOM &&
+			   currentState != PedestalState.COLUMN &&
+			   currentState != PedestalState.PILLAR &&
+			   currentState != PedestalState.COLUMN_TOP;
+	}
+	
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (state.isOf(this)) {
@@ -200,11 +239,17 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 				case BOTTOM: {
 					return SHAPE_BOTTOM;
 				}
-				case TOP: {
-					return SHAPE_TOP;
+				case PEDESTAL_TOP: {
+					return SHAPE_PEDESTAL_TOP;
+				}
+				case COLUMN_TOP: {
+					return SHAPE_COLUMN_TOP;
 				}
 				case PILLAR: {
 					return SHAPE_PILLAR;
+				}
+				case COLUMN: {
+					return SHAPE_COLUMN;
 				}
 				default: {
 					return SHAPE_DEFAULT;
@@ -225,10 +270,14 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	}
 	
 	static {
-		VoxelShape basin = VoxelShapes.cuboid(0, 0, 0, 16, 4, 16);
-		VoxelShape top = VoxelShapes.cuboid(1, 12, 1, 15, 14, 15);
-		VoxelShape pillar = VoxelShapes.cuboid(3, 0, 3, 13, 14, 13);
+		VoxelShape basin = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
+		VoxelShape pedestal_top = Block.createCuboidShape(1, 12, 1, 15, 14, 15);
+		VoxelShape column_top = Block.createCuboidShape(1, 14, 1, 15, 16, 15);
+		VoxelShape pillar = Block.createCuboidShape(3, 0, 3, 13, 14, 13);
+		SHAPE_DEFAULT = VoxelShapes.union(basin, pillar, pedestal_top);
+		SHAPE_PEDESTAL_TOP = VoxelShapes.union(pillar, pedestal_top);
+		SHAPE_COLUMN_TOP = VoxelShapes.union(SHAPE_PILLAR, column_top);
+		SHAPE_COLUMN = VoxelShapes.union(basin, SHAPE_PILLAR, column_top);
 		SHAPE_BOTTOM = VoxelShapes.union(basin, SHAPE_PILLAR);
-		SHAPE_TOP = VoxelShapes.union(top, pillar);
 	}
 }

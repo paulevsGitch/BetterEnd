@@ -60,8 +60,8 @@ public class EternalPedestal extends BlockPedestal {
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		BlockState updated = super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
-		BlockProperties.State updatedState = state.get(BlockProperties.STATE);
-		if (updatedState.equals(BlockProperties.State.BOTTOM) || updatedState.equals(BlockProperties.State.PILLAR)) {
+		if (!updated.isOf(this)) return updated;
+		if (!this.isPlaceable(updated)) {
 			return updated.with(ACTIVATED, false);
 		}
 		return updated;
@@ -85,8 +85,8 @@ public class EternalPedestal extends BlockPedestal {
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		if (state.isOf(this)) {
-			BlockProperties.State currentState = state.get(BlockProperties.STATE);
-			if (currentState.equals(BlockProperties.State.BOTTOM) || currentState.equals(BlockProperties.State.PILLAR)) {
+			BlockProperties.PedestalState currentState = state.get(BlockProperties.PEDESTAL_STATE);
+			if (currentState.equals(BlockProperties.PedestalState.BOTTOM) || currentState.equals(BlockProperties.PedestalState.PILLAR)) {
 				return Lists.newArrayList();
 			}
 		}

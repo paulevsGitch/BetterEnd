@@ -1,0 +1,7 @@
+{
+	"parent": "betterend:block/pedestal_column_top",
+	"textures": {
+		"base": "betterend:block/flavolite_polished",
+		"pillar": "betterend:block/flavolite_pillar_side"
+	}
+}

@@ -46,7 +46,7 @@
 				"model": "betterend:block/eternal_pedestal_default_active_7"
 			}
 		],
-		"state=top,active=false": [
+		"state=pedestal_top,active=false": [
 			{
 				"model": "betterend:block/eternal_pedestal_top_1"
 			},
@@ -69,7 +69,7 @@
 				"model": "betterend:block/eternal_pedestal_top_7"
 			}
 		],
-		"state=top,active=true": [
+		"state=pedestal_top,active=true": [
 			{
 				"model": "betterend:block/eternal_pedestal_top_active_1"
 			},
@@ -92,15 +92,17 @@
 				"model": "betterend:block/eternal_pedestal_top_active_7"
 			}
 		],
-		"state=bottom": [
-			{
-				"model": "betterend:block/eternal_pedestal_bottom"
-			}
-		],
-		"state=pillar": [
-			{
-				"model": "betterend:block/eternal_pedestal_pillar"
-			}
-		]
+		"state=column": {
+			"model": "betterend:block/eternal_pedestal_column"
+		},
+		"state=column_top": {
+			"model": "betterend:block/eternal_pedestal_column_top"
+		},
+		"state=bottom": {
+			"model": "betterend:block/eternal_pedestal_bottom"
+		},
+		"state=pillar": {
+			"model": "betterend:block/eternal_pedestal_pillar"
+		}
 	}
 }

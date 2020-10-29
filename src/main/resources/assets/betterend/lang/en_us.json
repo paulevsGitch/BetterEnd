@@ -5,6 +5,7 @@
 	"biome.betterend.dust_wastelands": "Dust Wastelands",
 	"biome.betterend.chorus_forest": "Chorus Forest",
 	"biome.betterend.megalake": "Megalake",
+ 	"biome.betterend.crystal_mountains": "Crystal Mountains",
 	
 	"entity.betterend.dragonfly": "Dragonfly",
 	"item.betterend.spawn_egg_dragonfly": "Dragonfly Spawn Egg",
@@ -192,9 +193,6 @@
 	"block.betterend.end_lotus_stripped_log": "End Lotus Stripped Log",
 	"block.betterend.end_lotus_trapdoor": "End Lotus Trapdoor",
 	
-	"block.betterend.flavolite_runed": "Runed Flavolite",
-	"block.betterend.flavolite_runed_eternal": "Eternal Runed Flavolite",
-	"block.betterend.end_portal_block": "End Portal",
 	"block.betterend.cave_moss": "Cave Moss",
 	"block.betterend.cave_grass": "Cave Grass",
 	"block.betterend.cave_bush": "Cave Bush",
@@ -203,12 +201,14 @@
  	"block.betterend.crystal_moss": "Crystal Moss",
  	"block.betterend.crystal_moss_path": "Crystal Moss Path",
  	"block.betterend.pythadendron_leaves": "Pythadendron Leaves",
- 	"item.betterend.eternal_crystal": "Eternal Crystal",
  	"item.betterend.spawn_egg_end_fish": "End Fish Spawn Egg",
 	"block.betterend.crystal_grass": "Crystal Grass",
 	
- 	"biome.betterend.crystal_mountains": "Crystal Mountains",
+	"block.betterend.flavolite_runed": "Runed Flavolite",
+	"block.betterend.end_portal_block": "End Portal",
  	"block.betterend.eternal_pedestal": "Eternal Pedestal",
+	"block.betterend.flavolite_runed_eternal": "Eternal Runed Flavolite",
+ 	"item.betterend.eternal_crystal": "Eternal Crystal",
 	
  	"block.betterend.lacugrove_bark": "Lacugrove Bark",
  	"block.betterend.lacugrove_barrel": "Lacugrove Barrel",

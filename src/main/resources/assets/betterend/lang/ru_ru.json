@@ -5,6 +5,7 @@
 	"biome.betterend.dust_wastelands": "Пыльные пустоши",
 	"biome.betterend.chorus_forest": "Хорусовый лес",
 	"biome.betterend.megalake": "Мегаозеро",
+ 	"biome.betterend.crystal_mountains": "Клисталлические горы",
 	
 	"entity.betterend.dragonfly": "Стрекоза",
 	"item.betterend.spawn_egg_dragonfly": "Яйцо призыва стрекозы",
@@ -192,9 +193,6 @@
 	"block.betterend.end_lotus_stripped_log": "Обтёсанное бревно лотоса края",
 	"block.betterend.end_lotus_trapdoor": "Люк из лотоса края",
 	
-	"block.betterend.flavolite_runed": "Рунный флаволит",
-	"block.betterend.flavolite_runed_eternal": "Вечный рунный флаволит",
-	"block.betterend.end_portal_block": "Портал Края",
 	"block.betterend.cave_moss": "Пещерный мох",
 	"block.betterend.cave_grass": "Пещерная трава",
 	"block.betterend.cave_bush": "Пещерный куст",
@@ -205,12 +203,14 @@
  	"block.betterend.pythadendron_leaves": "Листья пифодендрона",
  	"block.betterend.violecite_polished": "Полированный виолецит",
  	"block.betterend.violecite_tiles": "Виолецитовая плитка",
- 	"item.betterend.eternal_crystal": "Вечный кристалл",
  	"item.betterend.spawn_egg_end_fish": "Яйцо призыва рыбы Края",
 	"block.betterend.crystal_grass": "Кристальная трава",
 	
- 	"biome.betterend.crystal_mountains": "Клисталлические горы",
- 	"block.betterend.eternal_pedestal": "Вечный пьедестал",
+	"block.betterend.flavolite_runed": "Рунный флаволит",
+	"block.betterend.end_portal_block": "Портал Края",
+ 	"block.betterend.eternal_pedestal": "Пьедестал Вечности",
+	"block.betterend.flavolite_runed_eternal": "Вечный рунный флаволит",
+ 	"item.betterend.eternal_crystal": "Кристалл Вечности",
 	
  	"block.betterend.lacugrove_bark": "Кора оземангра",
  	"block.betterend.lacugrove_barrel": "Бочка из оземангра",

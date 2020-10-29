@@ -52,8 +52,7 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient || !state.isOf(this)) return ActionResult.CONSUME;
-		PedestalState currentState = state.get(STATE);
-		if (currentState.equals(PedestalState.BOTTOM) || currentState.equals(PedestalState.PILLAR)) {
+		if (!this.isPlaceable(state)) {
 			return ActionResult.PASS;
 		}
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -84,13 +83,13 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
 		BlockState upState = world.getBlockState(pos.up());
-		Block down = world.getBlockState(pos.down()).getBlock();
+		BlockState downState = world.getBlockState(pos.down());
 		boolean upSideSolid = upState.isSideSolidFullSquare(world, pos.up(), Direction.DOWN);
 		boolean hasPedestalOver = upState.getBlock() instanceof BlockPedestal;
-		boolean hasPedestalUnder = down instanceof BlockPedestal;
+		boolean hasPedestalUnder = downState.getBlock() instanceof BlockPedestal;
 		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
 			return this.getDefaultState().with(STATE, PedestalState.COLUMN_TOP);
-		} else if (!hasPedestalUnder && upSideSolid) {
+		} else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
 			return this.getDefaultState().with(STATE, PedestalState.COLUMN);
 		} else if (hasPedestalUnder && hasPedestalOver) {
 			return this.getDefaultState().with(STATE, PedestalState.PILLAR);
@@ -114,43 +113,30 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	
 	private BlockState getUpdatedState(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (!state.isOf(this)) return state.getStateForNeighborUpdate(direction, newState, world, pos, posFrom);
-		PedestalState currentState = state.get(STATE);
-		if (newState.getBlock() instanceof BlockPedestal) {
-			if (direction.equals(Direction.DOWN)) {
-				if (currentState == PedestalState.BOTTOM) {
-					return state.with(STATE, PedestalState.PILLAR);
-				} else if (currentState == PedestalState.COLUMN) {
-					return state.with(STATE, PedestalState.COLUMN_TOP);
-				}
-				return state.with(STATE, PedestalState.PEDESTAL_TOP);
-			} else if (direction.equals(Direction.UP)) {
-				if (currentState == PedestalState.PEDESTAL_TOP) {
-					return state.with(STATE, PedestalState.PILLAR);
-				}
-				return state.with(STATE, PedestalState.BOTTOM);
-			}
-		} else {
-			if (direction.equals(Direction.DOWN)) {
-				if (currentState == PedestalState.COLUMN_TOP) {
-					return state.with(STATE, PedestalState.COLUMN);
-				}
-				if (currentState == PedestalState.PILLAR) {
-					return state.with(STATE, PedestalState.BOTTOM);
-				}
-				return state.with(STATE, PedestalState.DEFAULT);
-			} else if (direction.equals(Direction.UP)) {
-				boolean upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN);
-				if (currentState == PedestalState.PEDESTAL_TOP && upSideSolid) {
-					return state.with(STATE, PedestalState.COLUMN_TOP);
-				} else if (currentState == PedestalState.COLUMN_TOP || currentState == PedestalState.PILLAR) {
-					return state.with(STATE, PedestalState.PEDESTAL_TOP);
-				} else if (upSideSolid) {
-					return state.with(STATE, PedestalState.COLUMN);
-				}
-				return state.with(STATE, PedestalState.DEFAULT);
-			}
+		if (direction != Direction.UP && direction != Direction.DOWN) return state;
+		BlockState upState = world.getBlockState(pos.up());
+		BlockState downState = world.getBlockState(pos.down());
+		boolean upSideSolid = upState.isSideSolidFullSquare(world, pos.up(), Direction.DOWN);
+		boolean hasPedestalOver = upState.getBlock() instanceof BlockPedestal;
+		boolean hasPedestalUnder = downState.getBlock() instanceof BlockPedestal;
+		if (direction == Direction.UP) {
+			upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN);
+			hasPedestalOver = newState.getBlock() instanceof BlockPedestal;
+		} else if (direction == Direction.DOWN) {
+			hasPedestalUnder = newState.getBlock() instanceof BlockPedestal;
 		}
-		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
+		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
+			return state.with(STATE, PedestalState.COLUMN_TOP);
+		} else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
+			return state.with(STATE, PedestalState.COLUMN);
+		} else if (hasPedestalUnder && hasPedestalOver) {
+			return state.with(STATE, PedestalState.PILLAR);
+		} else if (hasPedestalUnder && !hasPedestalOver) {
+			return state.with(STATE, PedestalState.PEDESTAL_TOP);
+		} else if (hasPedestalOver && !hasPedestalUnder) {
+			return state.with(STATE, PedestalState.BOTTOM);
+		}
+		return state.with(STATE, PedestalState.DEFAULT);
 	}
 	
 	@Override
@@ -190,7 +176,9 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	
 	private void moveStoredStack(WorldAccess world, ItemStack stack, BlockState state, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (state.get(STATE).equals(PedestalState.PILLAR)) {
+		if (!state.isOf(this)) {
+			this.dropStoredStack(world, stack, pos);
+		} else if (state.get(STATE).equals(PedestalState.PILLAR)) {
 			BlockPos upPos = pos.up();
 			this.moveStoredStack(world, stack, world.getBlockState(upPos), upPos);
 		} else if (!this.isPlaceable(state)) {
@@ -219,6 +207,9 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 			if (world.getBlockState(dropPos).isAir()) {
 				return dropPos.toImmutable();
 			}
+		}
+		if (world.getBlockState(pos.up()).isAir()) {
+			return pos.up();
 		}
 		return this.getDropPos(world, pos.up());
 	}

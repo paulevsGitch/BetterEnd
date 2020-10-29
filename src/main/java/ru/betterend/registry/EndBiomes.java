@@ -85,10 +85,24 @@ public class EndBiomes {
 		CLIENT.clear();
 	}
 	
+	/**
+	 * Registers new {@link EndBiome} and adds it to picker, actually used for vanilla biomes.
+	 * @param key - {@link RegistryKey} for the biome
+	 * @param type - {@link BiomeType}
+	 * @param genChance - generation chance [0.0F - Infinity]
+	 * @return registered {@link EndBiome}
+	 */
 	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
 		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
 	}
 	
+	/**
+	 * Registers new {@link EndBiome} and adds it to picker, can be used to add existing mod biomes into the End.
+	 * @param biome - {@link Biome} instance
+	 * @param type - {@link BiomeType}
+	 * @param genChance - generation chance [0.0F - Infinity]
+	 * @return registered {@link EndBiome}
+	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float genChance) {
 		EndBiome endBiome = new EndBiome(biome, genChance);
 		addToPicker(endBiome, type);
@@ -96,10 +110,24 @@ public class EndBiomes {
 		return endBiome;
 	}
 	
+	/**
+	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
+	 * @param key - {@link RegistryKey} for the biome
+	 * @param parent - {@link EndBiome}
+	 * @param genChance - generation chance [0.0F - Infinity]
+	 * @return registered {@link EndBiome}
+	 */
 	public static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
 		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance);
 	}
 	
+	/**
+	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
+	 * @param biome - {@link Biome} instance
+	 * @param parent - {@link EndBiome} to be linked with
+	 * @param genChance - generation chance [0.0F - Infinity]
+	 * @return registered {@link EndBiome}
+	 */
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float genChance) {
 		EndBiome endBiome = new EndBiome(biome, genChance);
 		parent.addSubBiome(endBiome);
@@ -108,6 +136,12 @@ public class EndBiomes {
 		return endBiome;
 	}
 	
+	/**
+	 * Put existing {@link EndBiome} as a sub-biome into selected parent.
+	 * @param biome - {@link EndBiome} instance
+	 * @param parent - {@link EndBiome} to be linked with
+	 * @return registered {@link EndBiome}
+	 */
 	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
 		registerBiomeDirect(biome);
 		parent.addSubBiome(biome);
@@ -116,6 +150,12 @@ public class EndBiomes {
 		return biome;
 	}
 	
+	/**
+	 * Registers {@link EndBiome} and adds it into worldgen.
+	 * @param biome - {@link EndBiome} instance
+	 * @param type - {@link BiomeType}
+	 * @return registered {@link EndBiome}
+	 */
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
 		registerBiomeDirect(biome);
 		addToPicker(biome, type);

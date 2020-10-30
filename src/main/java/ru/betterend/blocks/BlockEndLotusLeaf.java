@@ -1,11 +1,14 @@
 package ru.betterend.blocks;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.fluid.WaterFluid;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -21,6 +24,7 @@ import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockEndLotusLeaf extends BlockBaseNotFull implements IRenderTypeable {
@@ -61,5 +65,11 @@ public class BlockEndLotusLeaf extends BlockBaseNotFull implements IRenderTypeab
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		return new ItemStack(EndBlocks.END_LOTUS_SEED);
 	}
 }

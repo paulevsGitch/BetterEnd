@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -51,5 +53,11 @@ public class BlockEndLotusFlower extends BlockPlant {
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		int count = MHelper.randRange(1, 2, MHelper.RANDOM);
 		return Lists.newArrayList(new ItemStack(EndBlocks.END_LOTUS_SEED, count));
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		return new ItemStack(EndBlocks.END_LOTUS_SEED);
 	}
 }

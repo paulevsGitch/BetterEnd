@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -94,5 +96,11 @@ public class BlockEndLily extends BlockUnderwaterPlant {
 			return Lists.newArrayList(new ItemStack(EndItems.END_LILY_LEAF, MHelper.randRange(1, 2, MHelper.RANDOM)), new ItemStack(EndBlocks.END_LILY_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
 		}
 		return Collections.emptyList();
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		return new ItemStack(EndBlocks.END_LILY_SEED);
 	}
 }

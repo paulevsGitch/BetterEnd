@@ -20,7 +20,7 @@ import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
 import ru.betterend.world.features.EndPortalFeature;
-import ru.betterend.world.features.EteranlPortalFeature;
+import ru.betterend.world.features.EternalPortalFeature;
 import ru.betterend.world.features.LacugroveFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
 import ru.betterend.world.features.PythadendronBushFeature;
@@ -71,7 +71,7 @@ public class EndFeatures {
 	public static final EndPortalFeature END_PORTAL = new EndPortalFeature(new DefaultEndPortalFeature(), (RunedFlavolite) EndBlocks.FLAVOLITE_RUNED);
 	public static final EndPortalFeature END_PORTAL_ETERNAL = new EndPortalFeature(new DefaultEndPortalFeature(), (RunedFlavolite) EndBlocks.FLAVOLITE_RUNED_ETERNAL);
 	
-	public static final EndFeature ETERNAL_PORTAL = EndFeature.makeChancedFeature("eternal_portal", new EteranlPortalFeature(), 500);
+	public static final EndFeature ETERNAL_PORTAL = EndFeature.makeChansedFeature("eternal_portal", new EternalPortalFeature(), 500);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals("minecraft")) {

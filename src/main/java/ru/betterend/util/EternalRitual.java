@@ -79,7 +79,8 @@ public class EternalRitual {
 	
 	private boolean isValid() {
 		return world != null && !world.isClient() &&
-			   center != null && axis != null;
+			   center != null && axis != null &&
+			   world.getRegistryKey() != World.NETHER;
 	}
 	
 	public void checkStructure() {

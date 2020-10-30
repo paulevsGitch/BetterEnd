@@ -73,6 +73,10 @@ public class MHelper {
 		return max(a, max(b, c));
 	}
 	
+	public static boolean isEven(int num) {
+		return (num & 1) == 0;
+	}
+	
 	public static float lengthSqr(float x, float y, float z) {
 		return x * x + y * y + z * z;
 	}

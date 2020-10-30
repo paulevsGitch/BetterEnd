@@ -18,18 +18,14 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
 
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.registry.EndTags;
-import ru.betterend.util.EternalRitual;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
 	public EndPortalBlock() {
@@ -71,15 +67,18 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		if (world instanceof ServerWorld && entity instanceof LivingEntity && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
 			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entity);
 			if (teleEntity.hasCooldown()) return;
-			teleEntity.beSetCooldown(300);
 			boolean isOverworld = world.getRegistryKey().equals(World.OVERWORLD);
 			ServerWorld destination = ((ServerWorld) world).getServer().getWorld(isOverworld ? World.END : World.OVERWORLD);
 			BlockPos exitPos = this.findExitPos(destination, pos, entity);
+			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
-				((ServerPlayerEntity) entity).teleport(destination, exitPos.getX(), exitPos.getY(), exitPos.getZ(), entity.yaw, entity.pitch);
+				ServerPlayerEntity player = (ServerPlayerEntity) entity;
+				player.teleport(destination, exitPos.getX(), exitPos.getY(), exitPos.getZ(), entity.yaw, entity.pitch);
+				teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
 			} else {
 				teleEntity.beSetExitPos(exitPos);
 				entity.moveToWorld(destination);
+				teleEntity.beSetCooldown(300);
 			}
 		}
 	}
@@ -98,89 +97,26 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		} else {
 			basePos = pos.mutableCopy().set(pos.getX() * mult, pos.getY(), pos.getZ() * mult);
 		}
-		BlockPos top = basePos.mutableCopy().set(basePos.getX() + 32, world.getHeight(), basePos.getZ() + 32);
-		BlockPos.Mutable bottom = basePos.mutableCopy().set(basePos.getX() - 32, 5, basePos.getZ() - 32);
-		for(BlockPos position : BlockPos.iterate(bottom, top)) {
-			BlockState state = world.getBlockState(position);
-			if(state.isOf(this)) {
-				if (state.get(AXIS).equals(Direction.Axis.X)) {
-					return position.add(0, 0, 1);
-				} else {
-					return position.add(1, 0, 0);
-				}
-			}
-		}
-		bottom.setY(basePos.getY());
-		Direction.Axis axis = entity.getMovementDirection().getAxis();
-		if (checkIsAreaValid(world, bottom, axis)) {
-			EternalRitual.generatePortal(world, bottom, axis);
-			if (axis.equals(Direction.Axis.X)) {
-				return bottom.add(0, 1, 1);
-			} else {
-				return bottom.add(1, 1, 0);
-			}
-		} else {
-			if (bottom.getY() > top.getY()) {
-				BlockPos buff = bottom;
-				bottom = top.mutableCopy();
-				top = buff;
-			}
-			for(BlockPos position : BlockPos.iterate(bottom, top)) {
-				if (checkIsAreaValid(world, position, axis)) {
-					EternalRitual.generatePortal(world, position, axis);
-					if (axis.equals(Direction.Axis.X)) {
-						return position.add(0, 1, 1);
-					} else {
-						return position.add(1, 1, 0);
+		Direction direction = Direction.EAST;
+		BlockPos.Mutable checkPos = basePos.mutableCopy();
+		for (int step = 1; step < 64; step++) {
+			for (int i = 0; i < step; i++) {
+				checkPos.setY(5);
+				while(checkPos.getY() < world.getHeight()) {
+					BlockState state = world.getBlockState(checkPos);
+					if(state.isOf(this)) {
+						if (state.get(AXIS).equals(Direction.Axis.X)) {
+							return checkPos.add(0, 0, 1);
+						} else {
+							return checkPos.add(1, 0, 0);
+						}
 					}
+					checkPos.move(Direction.UP);
 				}
+				checkPos.move(direction);
 			}
+			direction = direction.rotateYClockwise();
 		}
-		if (world.getRegistryKey().equals(World.END)) {
-			ConfiguredFeatures.END_ISLAND.generate(world, world.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos);
-		} else {
-			basePos.setY(world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()));
-		}
-		EternalRitual.generatePortal(world, basePos, axis);
-		if (axis.equals(Direction.Axis.X)) {
-			return basePos.add(0, 1, 1);
-		} else {
-			return basePos.add(1, 1, 0);
-		}
-	}
-	
-	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {
-		if (!isBaseValid(world, pos, axis)) return false;
-		return EternalRitual.checkArea(world, pos, axis);
-	}
-	
-	private boolean isBaseValid(World world, BlockPos pos, Direction.Axis axis) {
-		boolean solid = true;
-		if (axis.equals(Direction.Axis.X)) {
-			pos = pos.down().add(0, 0, -3);
-			for (int i = 0; i < 7; i++) {
-				BlockPos checkPos = pos.add(0, 0, i);
-				BlockState state = world.getBlockState(checkPos);
-				solid &= this.validBlock(world, checkPos, state);
-			}
-		} else {
-			pos = pos.down().add(-3, 0, 0);
-			for (int i = 0; i < 7; i++) {
-				BlockPos checkPos = pos.add(i, 0, 0);
-				BlockState state = world.getBlockState(checkPos);
-				solid &= this.validBlock(world, checkPos, state);
-			}
-		}
-		return solid;
-	}
-	
-	private boolean validBlock(World world, BlockPos pos, BlockState state) {
-		BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-		return state.isSolidBlock(world, pos) &&
-			   (EndTags.validGenBlock(state) ||
-			   state.isOf(surfaceBlock.getBlock()) ||
-			   state.isOf(Blocks.STONE) ||
-			   state.isOf(Blocks.SAND) ||
-			   state.isOf(Blocks.GRAVEL));
+		return null;
 	}
 }

@@ -9,17 +9,15 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import ru.betterend.blocks.RunedFlavolite;
+
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
-import ru.betterend.world.features.DefaultEndPortalFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
-import ru.betterend.world.features.EndPortalFeature;
 import ru.betterend.world.features.EternalPortalFeature;
 import ru.betterend.world.features.LacugroveFeature;
 import ru.betterend.world.features.MossyGlowshroomFeature;
@@ -68,9 +66,6 @@ public class EndFeatures {
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", EndBlocks.FLAVOLITE, 12, 4, 96, 6);
 	
 	// Other //
-	public static final EndPortalFeature END_PORTAL = new EndPortalFeature(new DefaultEndPortalFeature(), (RunedFlavolite) EndBlocks.FLAVOLITE_RUNED);
-	public static final EndPortalFeature END_PORTAL_ETERNAL = new EndPortalFeature(new DefaultEndPortalFeature(), (RunedFlavolite) EndBlocks.FLAVOLITE_RUNED_ETERNAL);
-	
 	public static final EndFeature ETERNAL_PORTAL = EndFeature.makeChansedFeature("eternal_portal", new EternalPortalFeature(), 500);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {

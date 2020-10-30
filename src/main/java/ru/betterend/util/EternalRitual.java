@@ -7,18 +7,24 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
-
+import net.minecraft.world.dimension.DimensionType;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 
 public class EternalRitual {
 	private final static Set<Point> structureMap = Sets.newHashSet(
@@ -47,6 +53,7 @@ public class EternalRitual {
 	private World world;
 	private Direction.Axis axis;
 	private BlockPos center;
+	private BlockPos exit;
 	private boolean active = false;
 	
 	public EternalRitual(World world) {
@@ -66,8 +73,13 @@ public class EternalRitual {
 		this.world = world;
 	}
 	
+	private boolean isValid() {
+		return world != null && !world.isClient() &&
+			   center != null && axis != null;
+	}
+	
 	public void checkStructure() {
-		if (center == null || axis == null) return;
+		if (!isValid()) return;
 		Direction moveX, moveY;
 		if (Direction.Axis.X == axis) {
 			moveX = Direction.EAST;
@@ -108,18 +120,29 @@ public class EternalRitual {
 	
 	private void activatePortal() {
 		if (active) return;
+		this.activatePortal(world, center);
+		if (exit == null) {
+			this.exit = this.findPortalPos();
+		} else {
+			World overworld = world.getServer().getWorld(World.OVERWORLD);
+			this.activatePortal(overworld, exit);
+		}
+		this.active = true;
+	}
+	
+	private void activatePortal(World world, BlockPos center) {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
 		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
 		frameMap.forEach(point -> {
 			BlockPos pos = framePos.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			BlockState state = world.getBlockState(pos);
-			if (!state.get(ACTIVE)) {
+			if (state.contains(ACTIVE) && !state.get(ACTIVE)) {
 				world.setBlockState(pos, frame);
 			}
 			pos = framePos.offset(moveDir, -point.x).offset(Direction.UP, point.y);
 			state = world.getBlockState(pos);
-			if (!state.get(ACTIVE)) {
+			if (state.contains(ACTIVE) && !state.get(ACTIVE)) {
 				world.setBlockState(pos, frame);
 			}
 		});
@@ -135,11 +158,16 @@ public class EternalRitual {
 				world.setBlockState(pos, portal);
 			}
 		});
-		this.active = true;
 	}
 	
 	public void removePortal() {
-		if (!active) return;
+		if (!active || !isValid()) return;
+		World overworld = world.getServer().getWorld(World.OVERWORLD);
+		this.removePortal(world, center);
+		this.removePortal(overworld, exit);
+	}
+	
+	private void removePortal(World world, BlockPos center) {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
 		frameMap.forEach(point -> {
@@ -167,9 +195,89 @@ public class EternalRitual {
 		this.active = false;
 	}
 	
+	private BlockPos findPortalPos() {
+		MinecraftServer server = world.getServer();
+		ServerWorld overworld = server.getWorld(World.OVERWORLD);
+		Registry<DimensionType> registry = server.getRegistryManager().getDimensionTypes();
+		double mult = registry.get(DimensionType.THE_END_ID).getCoordinateScale();
+		BlockPos.Mutable basePos = center.mutableCopy().set(center.getX() / mult, center.getY(), center.getZ() / mult);
+		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
+		if (checkIsAreaValid(overworld, basePos, portalAxis)) {
+			EternalRitual.generatePortal(overworld, basePos, portalAxis);
+			if (portalAxis.equals(Direction.Axis.X)) {
+				return basePos.toImmutable();
+			} else {
+				return basePos.toImmutable();
+			}
+		} else {
+			Direction direction = Direction.EAST;
+			BlockPos.Mutable checkPos = basePos.mutableCopy();
+			for (int step = 1; step < 64; step++) {
+				for (int i = 0; i < step; i++) {
+					checkPos.setY(5);
+					while(checkPos.getY() < world.getHeight()) {
+						if(checkIsAreaValid(overworld, checkPos, portalAxis)) {
+							EternalRitual.generatePortal(overworld, checkPos, portalAxis);
+							if (portalAxis.equals(Direction.Axis.X)) {
+								return checkPos.toImmutable();
+							} else {
+								return checkPos.toImmutable();
+							}
+						}
+						checkPos.move(Direction.UP);
+					}
+					checkPos.move(direction);
+				}
+				direction = direction.rotateYClockwise();
+			}
+		}
+		basePos.setY(overworld.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()));
+		EternalRitual.generatePortal(overworld, basePos, portalAxis);
+		if (portalAxis.equals(Direction.Axis.X)) {
+			return basePos.toImmutable();
+		} else {
+			return basePos.toImmutable();
+		}
+	}
+	
+	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {
+		if (!isBaseValid(world, pos, axis)) return false;
+		return EternalRitual.checkArea(world, pos, axis);
+	}
+	
+	private boolean isBaseValid(World world, BlockPos pos, Direction.Axis axis) {
+		boolean solid = true;
+		if (axis.equals(Direction.Axis.X)) {
+			pos = pos.down().add(0, 0, -3);
+			for (int i = 0; i < 7; i++) {
+				BlockPos checkPos = pos.add(0, 0, i);
+				BlockState state = world.getBlockState(checkPos);
+				solid &= this.validBlock(world, checkPos, state);
+			}
+		} else {
+			pos = pos.down().add(-3, 0, 0);
+			for (int i = 0; i < 7; i++) {
+				BlockPos checkPos = pos.add(i, 0, 0);
+				BlockState state = world.getBlockState(checkPos);
+				solid &= this.validBlock(world, checkPos, state);
+			}
+		}
+		return solid;
+	}
+	
+	private boolean validBlock(World world, BlockPos pos, BlockState state) {
+		BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+		return state.isSolidBlock(world, pos) &&
+			   (EndTags.validGenBlock(state) ||
+			   state.isOf(surfaceBlock.getBlock()) ||
+			   state.isOf(Blocks.STONE) ||
+			   state.isOf(Blocks.SAND) ||
+			   state.isOf(Blocks.GRAVEL));
+	}
+	
 	public static void generatePortal(World world, BlockPos center, Direction.Axis axis) {
 		BlockPos framePos = center.down();
-		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
+		Direction moveDir = Direction.Axis.X == axis ? Direction.EAST: Direction.NORTH;
 		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
 		frameMap.forEach(point -> {
 			BlockPos pos = framePos.offset(moveDir, point.x).offset(Direction.UP, point.y);
@@ -177,8 +285,7 @@ public class EternalRitual {
 			pos = framePos.offset(moveDir, -point.x).offset(Direction.UP, point.y);
 			world.setBlockState(pos, frame);
 		});
-		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
-		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis);
+		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, axis);
 		portalMap.forEach(point -> {
 			BlockPos pos = center.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			world.setBlockState(pos, portal);
@@ -214,7 +321,6 @@ public class EternalRitual {
 				if (!world.getBlockState(pos).isAir()) return false;
 			}
 		}
-		
 		return true;
 	}
 	
@@ -311,6 +417,9 @@ public class EternalRitual {
 	
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.put("center", NbtHelper.fromBlockPos(center));
+		if (exit != null) {
+			tag.put("exit", NbtHelper.fromBlockPos(exit));
+		}
 		tag.putString("axis", axis.getName());
 		tag.putBoolean("active", active);
 		return tag;
@@ -320,5 +429,8 @@ public class EternalRitual {
 		this.axis = Direction.Axis.fromName(tag.getString("axis"));
 		this.center = NbtHelper.toBlockPos(tag.getCompound("center"));
 		this.active = tag.getBoolean("active");
+		if (tag.contains("exit")) {
+			this.exit = NbtHelper.toBlockPos(tag.getCompound("exit"));
+		}
 	}
 }

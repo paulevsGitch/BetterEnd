@@ -10,6 +10,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.util.EternalRitual;
 

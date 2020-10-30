@@ -11,8 +11,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -133,6 +138,13 @@ public class EternalRitual {
 		this.active = true;
 	}
 	
+	private void openEffect(BlockPos center) {
+		for (Point pos : STRUCTURE_MAP) {
+			BlockPos p = center.add(pos.getX(), 0, pos.getY());
+			
+		}
+	}
+	
 	private void activatePortal(World world, BlockPos center) {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
@@ -151,14 +163,39 @@ public class EternalRitual {
 		});
 		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
 		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis);
+		ParticleEffect effect = new BlockStateParticleEffect(ParticleTypes.BLOCK, portal);
+		ServerWorld serverWorld = (ServerWorld) world;
+		/*serverWorld.getPlayers((player) -> {
+			double dx = player.getPos().getX() - center.getX();
+			double dy = player.getPos().getY() - center.getY();
+			double dz = player.getPos().getZ() - center.getZ();
+			return dx * dx + dy * dy + dz * dz < 1600;
+		}).forEach((player) -> {
+			double dx = player.getPos().getX() - center.getX();
+			double dy = player.getPos().getY() - center.getY();
+			double dz = player.getPos().getZ() - center.getZ();
+			double d = 1 - Math.sqrt(MHelper.lengthSqr(dx, dy, dz)) / 40.0;
+			//player.playSound(SoundEvents.BLOCK_END_PORTAL_SPAWN, (float) d, 1);
+			serverWorld.playSound(player, player.getPos().getX(), player.getPos().getY(), player.getPos().getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.HOSTILE, 1, 1);
+		});*/
+		
+		serverWorld.playSound(center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 10, 1, true);
+		
+		double deltaX = portalAxis == Direction.Axis.X ? 0.5 : 0.1;
+		double deltaZ = portalAxis == Direction.Axis.Z ? 0.5 : 0.1;
+		
 		PORTAL_MAP.forEach(point -> {
 			BlockPos pos = center.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			if (!world.getBlockState(pos).isOf(PORTAL)) {
 				world.setBlockState(pos, portal);
+				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0);
+				serverWorld.spawnParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0.3);
 			}
 			pos = center.offset(moveDir, -point.x).offset(Direction.UP, point.y);
 			if (!world.getBlockState(pos).isOf(PORTAL)) {
 				world.setBlockState(pos, portal);
+				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0);
+				serverWorld.spawnParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0.3);
 			}
 		});
 	}
@@ -324,8 +361,7 @@ public class EternalRitual {
 	
 	public static boolean checkArea(World world, BlockPos center, Direction.Axis axis) {
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
-		for (BlockPos checkPos : BlockPos.iterate(center.offset(moveDir.rotateYClockwise()),
-												  center.offset(moveDir.rotateYCounterclockwise()))) {
+		for (BlockPos checkPos : BlockPos.iterate(center.offset(moveDir.rotateYClockwise()), center.offset(moveDir.rotateYCounterclockwise()))) {
 			for (Point point : PORTAL_MAP) {
 				BlockPos pos = checkPos.offset(moveDir, point.x).offset(Direction.UP, point.y);
 				if (!world.getBlockState(pos).isAir()) return false;

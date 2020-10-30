@@ -22,7 +22,6 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
-
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
@@ -31,20 +30,20 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 
 public class EternalRitual {
-	private final static Set<Point> structureMap = Sets.newHashSet(
+	private final static Set<Point> STRUCTURE_MAP = Sets.newHashSet(
 			new Point(-4, -5), new Point(-4, 5), new Point(-6, 0),
 			new Point(4, -5), new Point(4, 5), new Point(6, 0));
-	private final static Set<Point> frameMap = Sets.newHashSet(
+	private final static Set<Point> FRAME_MAP = Sets.newHashSet(
 			new Point(0, 0), new Point(0, 6), new Point(1, 0),
 			new Point(1, 6), new Point(2, 1), new Point(2, 5),
 			new Point(3, 2), new Point(3, 3), new Point(3, 4));
-	private final static Set<Point> portalMap = Sets.newHashSet(
+	private final static Set<Point> PORTAL_MAP = Sets.newHashSet(
 			new Point(0, 0), new Point(0, 1), new Point(0, 2),
 			new Point(0, 3), new Point(0, 4), new Point(1, 0),
 			new Point(1, 1), new Point(1, 2), new Point(1, 3),
 			new Point(1, 4), new Point(2, 1), new Point(2, 2),
 			new Point(2, 3));
-	private final static Set<Point> baseMap = Sets.newHashSet(
+	private final static Set<Point> BASE_MAP = Sets.newHashSet(
 			new Point(3, 0), new Point(2, 0), new Point(2, 1), new Point(1, 1),
 			new Point(1, 2), new Point(0, 1), new Point(0, 2));
 	
@@ -94,7 +93,7 @@ public class EternalRitual {
 			moveY = Direction.EAST;
 		}
 		boolean valid = this.checkFrame();
-		for (Point pos : structureMap) {
+		for (Point pos : STRUCTURE_MAP) {
 			BlockPos.Mutable checkPos = center.mutableCopy();
 			checkPos.move(moveX, pos.x).move(moveY, pos.y);
 			valid &= this.isActive(checkPos);
@@ -108,7 +107,7 @@ public class EternalRitual {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
 		boolean valid = true;
-		for (Point point : frameMap) {
+		for (Point point : FRAME_MAP) {
 			BlockPos pos = framePos.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			BlockState state = world.getBlockState(pos);
 			valid &= state.getBlock() instanceof RunedFlavolite;
@@ -139,7 +138,7 @@ public class EternalRitual {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
 		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
-		frameMap.forEach(point -> {
+		FRAME_MAP.forEach(point -> {
 			BlockPos pos = framePos.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			BlockState state = world.getBlockState(pos);
 			if (state.contains(ACTIVE) && !state.get(ACTIVE)) {
@@ -153,7 +152,7 @@ public class EternalRitual {
 		});
 		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
 		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis);
-		portalMap.forEach(point -> {
+		PORTAL_MAP.forEach(point -> {
 			BlockPos pos = center.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			if (!world.getBlockState(pos).isOf(PORTAL)) {
 				world.setBlockState(pos, portal);
@@ -175,7 +174,7 @@ public class EternalRitual {
 	private void removePortal(World world, BlockPos center) {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
-		frameMap.forEach(point -> {
+		FRAME_MAP.forEach(point -> {
 			BlockPos pos = framePos.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			BlockState state = world.getBlockState(pos);
 			if (state.isOf(FRAME) && state.get(ACTIVE)) {
@@ -187,7 +186,7 @@ public class EternalRitual {
 				world.setBlockState(pos, state.with(ACTIVE, false));
 			}
 		});
-		portalMap.forEach(point -> {
+		PORTAL_MAP.forEach(point -> {
 			BlockPos pos = center.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			if (world.getBlockState(pos).isOf(PORTAL)) {
 				world.removeBlock(pos, false);
@@ -293,14 +292,14 @@ public class EternalRitual {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.EAST: Direction.NORTH;
 		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
-		frameMap.forEach(point -> {
+		FRAME_MAP.forEach(point -> {
 			BlockPos pos = framePos.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			world.setBlockState(pos, frame);
 			pos = framePos.offset(moveDir, -point.x).offset(Direction.UP, point.y);
 			world.setBlockState(pos, frame);
 		});
 		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, axis);
-		portalMap.forEach(point -> {
+		PORTAL_MAP.forEach(point -> {
 			BlockPos pos = center.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			world.setBlockState(pos, portal);
 			pos = center.offset(moveDir, -point.x).offset(Direction.UP, point.y);
@@ -312,7 +311,7 @@ public class EternalRitual {
 	private static void generateBase(World world, BlockPos center, Direction moveX) {
 		BlockState base = BASE.getDefaultState();
 		Direction moveY = moveX.rotateYClockwise();
-		baseMap.forEach(point -> {
+		BASE_MAP.forEach(point -> {
 			BlockPos pos = center.offset(moveX, point.x).offset(moveY, point.y);
 			world.setBlockState(pos, base);
 			pos = center.offset(moveX, -point.x).offset(moveY, point.y);
@@ -328,7 +327,7 @@ public class EternalRitual {
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
 		for (BlockPos checkPos : BlockPos.iterate(center.offset(moveDir.rotateYClockwise()),
 												  center.offset(moveDir.rotateYCounterclockwise()))) {
-			for (Point point : portalMap) {
+			for (Point point : PORTAL_MAP) {
 				BlockPos pos = checkPos.offset(moveDir, point.x).offset(Direction.UP, point.y);
 				if (!world.getBlockState(pos).isAir()) return false;
 				pos = checkPos.offset(moveDir, -point.x).offset(Direction.UP, point.y);

@@ -1,8 +1,8 @@
 package ru.betterend.world.processors;
 
-import net.minecraft.structure.Structure.StructureBlockInfo;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.structure.Structure.StructureBlockInfo;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;

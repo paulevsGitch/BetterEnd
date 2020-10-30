@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
@@ -137,10 +138,14 @@ public class EndBlocks {
 	
 	public static void register() {}
 	
-	public static Block registerBlock(String name, Block block) {
-		Registry.register(Registry.BLOCK, BetterEnd.makeID(name), block);
-		EndItems.registerItem(name, new BlockItem(block, new Item.Settings().group(CreativeTab.END_TAB)));
+	public static Block registerBlock(Identifier id, Block block) {
+		Registry.register(Registry.BLOCK, id, block);
+		EndItems.registerItem(id, new BlockItem(block, new Item.Settings().group(CreativeTab.END_TAB)));
 		return block;
+	}
+	
+	public static Block registerBlock(String name, Block block) {
+		return registerBlock(BetterEnd.makeID(name), block);
 	}
 	
 	public static Block registerBlockNI(String name, Block block) {

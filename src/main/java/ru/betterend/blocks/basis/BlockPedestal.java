@@ -39,6 +39,7 @@ import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.interfaces.Patterned;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvider {
@@ -51,6 +52,30 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	private static final VoxelShape SHAPE_PEDESTAL_TOP;
 	private static final VoxelShape SHAPE_COLUMN_TOP;
 	private static final VoxelShape SHAPE_BOTTOM;
+	
+	/**
+	 * 
+	 * Register new Pedestal block with Better End mod id.
+	 * 
+	 * @param name
+	 * @param source
+	 * @return new Pedestal block with Better End id.
+	 */
+	public static Block registerPedestal(String name, Block source) {
+		return EndBlocks.registerBlock(name, new BlockPedestal(source));
+	}
+	
+	/**
+	 * 
+	 * Register new Pedestal block with specified mod id.
+	 * 
+	 * @param id
+	 * @param source
+	 * @return new Pedestal block with specified id.
+	 */
+	public static Block registerPedestal(Identifier id, Block source) {
+		return EndBlocks.registerBlock(id, new BlockPedestal(source));
+	}
 	
 	protected final Block parent;
 	

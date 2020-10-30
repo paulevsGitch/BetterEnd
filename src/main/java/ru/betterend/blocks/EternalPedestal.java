@@ -28,6 +28,7 @@ import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+import ru.betterend.util.EternalRitual;
 
 public class EternalPedestal extends BlockPedestal {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
@@ -46,11 +47,21 @@ public class EternalPedestal extends BlockPedestal {
 				PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
 				BlockState updatedState = world.getBlockState(pos);
 				if (pedestal.isEmpty() && updatedState.get(ACTIVATED)) {
+					if (pedestal.hasRitual()) {
+						EternalRitual ritual = pedestal.getRitual();
+						ritual.removePortal();
+					}
 					world.setBlockState(pos, updatedState.with(ACTIVATED, false));
 				} else {
 					ItemStack itemStack = pedestal.getStack(0);
 					if (itemStack.getItem() == EndItems.ETERNAL_CRYSTAL) {
 						world.setBlockState(pos, updatedState.with(ACTIVATED, true));
+						if (pedestal.hasRitual()) {
+							pedestal.getRitual().checkStructure();
+						} else {
+							EternalRitual ritual = new EternalRitual(world, pos);
+							ritual.checkStructure();
+						}
 					}
 				}
 			}

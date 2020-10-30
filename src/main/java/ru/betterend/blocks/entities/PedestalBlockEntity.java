@@ -8,15 +8,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import ru.betterend.registry.EndBlockEntities;
+import ru.betterend.util.EternalRitual;
 
 public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable {
 	private ItemStack activeItem = ItemStack.EMPTY;
 	
+	private EternalRitual linkedRitual;
 	private int age;
 	
 	public PedestalBlockEntity() {
 		super(EndBlockEntities.PEDESTAL);
+	}
+	
+	public boolean hasRitual() {
+		return this.linkedRitual != null;
+	}
+	
+	public void linkRitual(EternalRitual ritual) {
+		this.linkedRitual = ritual;
+	}
+	
+	public EternalRitual getRitual() {
+		return this.linkedRitual;
 	}
 	
 	public int getAge() {
@@ -74,17 +90,32 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	}
 	
 	@Override
+	public void setLocation(World world, BlockPos pos) {
+		super.setLocation(world, pos);
+		if (hasRitual()) {
+			this.linkedRitual.setWorld(world);
+		}
+	}
+	
+	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
 		super.fromTag(state, tag);
 		if (tag.contains("active_item")) {
 			CompoundTag itemTag = tag.getCompound("active_item");
 			this.activeItem = ItemStack.fromTag(itemTag);
 		}
+		if (tag.contains("ritual")) {
+			this.linkedRitual = new EternalRitual(world);
+			this.linkedRitual.fromTag(tag.getCompound("ritual"));
+		}
 	}
 
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.put("active_item", activeItem.toTag(new CompoundTag()));
+		if (this.hasRitual()) {
+			tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
+		}
 		return super.toTag(tag);
 	}
 

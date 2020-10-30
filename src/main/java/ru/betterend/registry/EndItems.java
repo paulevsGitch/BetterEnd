@@ -22,6 +22,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -80,8 +81,12 @@ public class EndItems {
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
 	
 	protected static Item registerItem(String name, Item item) {
+		return registerItem(BetterEnd.makeID(name), item);
+	}
+	
+	public static Item registerItem(Identifier id, Item item) {
 		if (item != Items.AIR) {
-			Registry.register(Registry.ITEM, BetterEnd.makeID(name), item);
+			Registry.register(Registry.ITEM, id, item);
 			if (item instanceof BlockItem)
 				MOD_BLOCKS.add(item);
 			else

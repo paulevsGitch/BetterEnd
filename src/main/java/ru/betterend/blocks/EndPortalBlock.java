@@ -5,7 +5,7 @@ import java.util.Random;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.NetherPortalBlock;
@@ -23,12 +23,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
+
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.PortalFrameHelper;
+import ru.betterend.util.EternalRitual;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
 	public EndPortalBlock() {
@@ -112,7 +113,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		bottom.setY(basePos.getY());
 		Direction.Axis axis = entity.getMovementDirection().getAxis();
 		if (checkIsAreaValid(world, bottom, axis)) {
-			PortalFrameHelper.generatePortalFrame(world, bottom, axis, true);
+			EternalRitual.generatePortal(world, bottom, axis);
 			if (axis.equals(Direction.Axis.X)) {
 				return bottom.add(0, 1, 1);
 			} else {
@@ -126,7 +127,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			}
 			for(BlockPos position : BlockPos.iterate(bottom, top)) {
 				if (checkIsAreaValid(world, position, axis)) {
-					PortalFrameHelper.generatePortalFrame(world, position, axis, true);
+					EternalRitual.generatePortal(world, position, axis);
 					if (axis.equals(Direction.Axis.X)) {
 						return position.add(0, 1, 1);
 					} else {
@@ -140,7 +141,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		} else {
 			basePos.setY(world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()));
 		}
-		PortalFrameHelper.generatePortalFrame(world, basePos, axis, true);
+		EternalRitual.generatePortal(world, basePos, axis);
 		if (axis.equals(Direction.Axis.X)) {
 			return basePos.add(0, 1, 1);
 		} else {
@@ -149,51 +150,37 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	}
 	
 	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {
-		BlockPos topCorner, bottomCorner;
-		if (axis.equals(Direction.Axis.X)) {
-			bottomCorner = pos.add(0, 0, -1);
-			topCorner = bottomCorner.add(0, 4, 4);
-		} else {
-			bottomCorner = pos.add(-1, 0, 0);
-			topCorner = bottomCorner.add(4, 4, 0);
-		}
-		if (!isBaseSolid(world, bottomCorner, axis)) return false;
-		int airBlocks = 0;
-		boolean free = true;
-		for (BlockPos position : BlockPos.iterate(bottomCorner, topCorner)) {
-			BlockState state = world.getBlockState(position);
-			if (state.isAir()) airBlocks++;
-			if (world.getRegistryKey().equals(World.END)) {
-				free &= state.isAir() || EndTags.validGenBlock(state);
-			} else {
-				BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-				free &= this.validBlock(state, surfaceBlock.getBlock());
-			}
-		}
-		return free && airBlocks >= 48;
+		if (!isBaseValid(world, pos, axis)) return false;
+		return EternalRitual.checkArea(world, pos, axis);
 	}
 	
-	private boolean isBaseSolid(World world, BlockPos pos, Direction.Axis axis) {
+	private boolean isBaseValid(World world, BlockPos pos, Direction.Axis axis) {
 		boolean solid = true;
 		if (axis.equals(Direction.Axis.X)) {
-			for (int i = 0; i < 4; i++) {
-				BlockPos checkPos = pos.down().add(0, 0, i);
-				solid &= world.getBlockState(checkPos).isSolidBlock(world, checkPos);
+			pos = pos.down().add(0, 0, -3);
+			for (int i = 0; i < 7; i++) {
+				BlockPos checkPos = pos.add(0, 0, i);
+				BlockState state = world.getBlockState(checkPos);
+				solid &= this.validBlock(world, checkPos, state);
 			}
 		} else {
-			for (int i = 0; i < 4; i++) {
-				BlockPos checkPos = pos.down().add(i, 0, 0);
-				solid &= world.getBlockState(checkPos).isSolidBlock(world, checkPos);
+			pos = pos.down().add(-3, 0, 0);
+			for (int i = 0; i < 7; i++) {
+				BlockPos checkPos = pos.add(i, 0, 0);
+				BlockState state = world.getBlockState(checkPos);
+				solid &= this.validBlock(world, checkPos, state);
 			}
 		}
 		return solid;
 	}
 	
-	private boolean validBlock(BlockState state, Block surfaceBlock) {
-		return state.isAir() ||
-			   state.isOf(surfaceBlock) ||
+	private boolean validBlock(World world, BlockPos pos, BlockState state) {
+		BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+		return state.isSolidBlock(world, pos) &&
+			   (EndTags.validGenBlock(state) ||
+			   state.isOf(surfaceBlock.getBlock()) ||
 			   state.isOf(Blocks.STONE) ||
 			   state.isOf(Blocks.SAND) ||
-			   state.isOf(Blocks.GRAVEL);
+			   state.isOf(Blocks.GRAVEL));
 	}
 }

@@ -1,6 +1,7 @@
 package ru.betterend.util;
 
 import java.awt.Point;
+import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -16,9 +17,12 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.feature.ConfiguredFeatures;
+
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
@@ -124,8 +128,8 @@ public class EternalRitual {
 		if (exit == null) {
 			this.exit = this.findPortalPos();
 		} else {
-			World overworld = world.getServer().getWorld(World.OVERWORLD);
-			this.activatePortal(overworld, exit);
+			World targetWorld = this.getTargetWorld();
+			this.activatePortal(targetWorld, exit);
 		}
 		this.active = true;
 	}
@@ -162,9 +166,9 @@ public class EternalRitual {
 	
 	public void removePortal() {
 		if (!active || !isValid()) return;
-		World overworld = world.getServer().getWorld(World.OVERWORLD);
+		World targetWorld = this.getTargetWorld();
 		this.removePortal(world, center);
-		this.removePortal(overworld, exit);
+		this.removePortal(targetWorld, exit);
 	}
 	
 	private void removePortal(World world, BlockPos center) {
@@ -197,13 +201,13 @@ public class EternalRitual {
 	
 	private BlockPos findPortalPos() {
 		MinecraftServer server = world.getServer();
-		ServerWorld overworld = server.getWorld(World.OVERWORLD);
+		ServerWorld targetWorld = (ServerWorld) this.getTargetWorld();
 		Registry<DimensionType> registry = server.getRegistryManager().getDimensionTypes();
 		double mult = registry.get(DimensionType.THE_END_ID).getCoordinateScale();
 		BlockPos.Mutable basePos = center.mutableCopy().set(center.getX() / mult, center.getY(), center.getZ() / mult);
 		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
-		if (checkIsAreaValid(overworld, basePos, portalAxis)) {
-			EternalRitual.generatePortal(overworld, basePos, portalAxis);
+		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) {
+			EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
 			if (portalAxis.equals(Direction.Axis.X)) {
 				return basePos.toImmutable();
 			} else {
@@ -216,8 +220,8 @@ public class EternalRitual {
 				for (int i = 0; i < step; i++) {
 					checkPos.setY(5);
 					while(checkPos.getY() < world.getHeight()) {
-						if(checkIsAreaValid(overworld, checkPos, portalAxis)) {
-							EternalRitual.generatePortal(overworld, checkPos, portalAxis);
+						if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
+							EternalRitual.generatePortal(targetWorld, checkPos, portalAxis);
 							if (portalAxis.equals(Direction.Axis.X)) {
 								return checkPos.toImmutable();
 							} else {
@@ -231,13 +235,22 @@ public class EternalRitual {
 				direction = direction.rotateYClockwise();
 			}
 		}
-		basePos.setY(overworld.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()));
-		EternalRitual.generatePortal(overworld, basePos, portalAxis);
+		if (targetWorld.getRegistryKey() == World.END) {
+			ConfiguredFeatures.END_ISLAND.generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.down());
+		} else {
+			basePos.setY(targetWorld.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()));
+		}
+		EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
 		if (portalAxis.equals(Direction.Axis.X)) {
 			return basePos.toImmutable();
 		} else {
 			return basePos.toImmutable();
 		}
+	}
+	
+	private World getTargetWorld() {
+		RegistryKey<World> target = world.getRegistryKey() == World.END ? World.OVERWORLD : World.END;
+		return world.getServer().getWorld(target);
 	}
 	
 	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {

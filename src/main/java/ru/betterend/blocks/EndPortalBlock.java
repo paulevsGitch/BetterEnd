@@ -64,7 +64,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (world instanceof ServerWorld && entity instanceof LivingEntity && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
+		if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
 			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entity);
 			if (teleEntity.hasCooldown()) return;
 			boolean isOverworld = world.getRegistryKey().equals(World.OVERWORLD);

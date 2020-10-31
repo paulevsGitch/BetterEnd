@@ -16,7 +16,6 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
@@ -130,6 +129,7 @@ public class EternalRitual {
 	private void activatePortal() {
 		if (active) return;
 		this.activatePortal(world, center);
+		openEffect((ServerWorld) world, center);
 		if (exit == null) {
 			this.exit = this.findPortalPos();
 		} else {
@@ -139,11 +139,29 @@ public class EternalRitual {
 		this.active = true;
 	}
 	
-	private void openEffect(BlockPos center) {
-		for (Point pos : STRUCTURE_MAP) {
-			BlockPos p = center.add(pos.getX(), 0, pos.getY());
-			
+	private void openEffect(ServerWorld serverWorld, BlockPos center) {
+		Direction moveX, moveY;
+		if (Direction.Axis.X == axis) {
+			moveX = Direction.EAST;
+			moveY = Direction.NORTH;
+		} else {
+			moveX = Direction.SOUTH;
+			moveY = Direction.EAST;
 		}
+		
+		for (Point pos : STRUCTURE_MAP) {
+			BlockPos.Mutable p = center.mutableCopy();
+			p.move(moveX, pos.x).move(moveY, pos.y);
+			serverWorld.spawnParticles(ParticleTypes.PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 1);
+			serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 0.3);
+		}
+		
+		serverWorld.getPlayers().forEach((player) -> {
+			//serverWorld.playSound(player, center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.HOSTILE, 10, 1);
+			player.playSound(SoundEvents.BLOCK_END_PORTAL_SPAWN, 16, 1);
+		});
+		//ServerPlayerEntity player = serverWorld.getPlayers().get(0);
+		//serverWorld.playSound(player, center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 10, 1);
 	}
 	
 	private void activatePortal(World world, BlockPos center) {
@@ -166,37 +184,22 @@ public class EternalRitual {
 		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis);
 		ParticleEffect effect = new BlockStateParticleEffect(ParticleTypes.BLOCK, portal);
 		ServerWorld serverWorld = (ServerWorld) world;
-		/*serverWorld.getPlayers((player) -> {
-			double dx = player.getPos().getX() - center.getX();
-			double dy = player.getPos().getY() - center.getY();
-			double dz = player.getPos().getZ() - center.getZ();
-			return dx * dx + dy * dy + dz * dz < 1600;
-		}).forEach((player) -> {
-			double dx = player.getPos().getX() - center.getX();
-			double dy = player.getPos().getY() - center.getY();
-			double dz = player.getPos().getZ() - center.getZ();
-			double d = 1 - Math.sqrt(MHelper.lengthSqr(dx, dy, dz)) / 40.0;
-			//player.playSound(SoundEvents.BLOCK_END_PORTAL_SPAWN, (float) d, 1);
-			serverWorld.playSound(player, player.getPos().getX(), player.getPos().getY(), player.getPos().getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.HOSTILE, 1, 1);
-		});*/
 		
-		serverWorld.playSound(center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 10, 1, true);
-		
-		double deltaX = portalAxis == Direction.Axis.X ? 0.5 : 0.1;
-		double deltaZ = portalAxis == Direction.Axis.Z ? 0.5 : 0.1;
+		//double deltaX = portalAxis == Direction.Axis.X ? 0.5 : 0.1;
+		//double deltaZ = portalAxis == Direction.Axis.Z ? 0.5 : 0.1;
 		
 		PORTAL_MAP.forEach(point -> {
 			BlockPos pos = center.offset(moveDir, point.x).offset(Direction.UP, point.y);
 			if (!world.getBlockState(pos).isOf(PORTAL)) {
 				world.setBlockState(pos, portal);
-				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0);
-				serverWorld.spawnParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0.3);
+				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
+				serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.3);
 			}
 			pos = center.offset(moveDir, -point.x).offset(Direction.UP, point.y);
 			if (!world.getBlockState(pos).isOf(PORTAL)) {
 				world.setBlockState(pos, portal);
-				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0);
-				serverWorld.spawnParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, deltaX, 0.5, deltaZ, 0.3);
+				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
+				serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.3);
 			}
 		});
 	}

@@ -235,5 +235,24 @@
  	"block.betterend.lacugrove_sapling": "Саженец оземангра",
 	
  	"biome.betterend.megalake_grove": "Мегаозёрная роща",
- 	"biome.betterend.painted_mountains": "Окрашенные горы"
+ 	"biome.betterend.painted_mountains": "Окрашенные горы",
+	
+ 	"block.betterend.dragon_tree_bark": "Кора драконова древа",
+ 	"block.betterend.dragon_tree_barrel": "Бочка из драконова древа",
+ 	"block.betterend.dragon_tree_button": "Кнопка из драконова древа",
+ 	"block.betterend.dragon_tree_chest": "Сундук из драконова древа",
+ 	"block.betterend.dragon_tree_crafting_table": "Верстак из драконова древа",
+ 	"block.betterend.dragon_tree_door": "Дверь из драконова древа",
+ 	"block.betterend.dragon_tree_fence": "Забор из драконова древа",
+ 	"block.betterend.dragon_tree_gate": "Калитка из драконова древа",
+ 	"block.betterend.dragon_tree_ladder": "Лестница из драконова древа",
+ 	"block.betterend.dragon_tree_log": "Бревно драконова древа",
+ 	"block.betterend.dragon_tree_planks": "Доски из драконова древа",
+ 	"block.betterend.dragon_tree_plate": "Нажимная плита из драконова древа",
+ 	"block.betterend.dragon_tree_sign": "Табличка из драконова древа",
+ 	"block.betterend.dragon_tree_slab": "",
+ 	"block.betterend.dragon_tree_stairs": "",
+ 	"block.betterend.dragon_tree_stripped_bark": "",
+ 	"block.betterend.dragon_tree_stripped_log": "",
+ 	"block.betterend.dragon_tree_trapdoor": ""
 }

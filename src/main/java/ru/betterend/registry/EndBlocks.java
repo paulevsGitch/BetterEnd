@@ -15,6 +15,7 @@ import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
 import ru.betterend.blocks.BlockBubbleCoral;
 import ru.betterend.blocks.BlockChorusGrass;
+import ru.betterend.blocks.BlockDragonTreeSapling;
 import ru.betterend.blocks.BlockEndLily;
 import ru.betterend.blocks.BlockEndLilySeed;
 import ru.betterend.blocks.BlockEndLotusFlower;
@@ -97,6 +98,10 @@ public class EndBlocks {
 	public static final Block LACUGROVE_SAPLING = registerBlock("lacugrove_sapling", new BlockLacugroveSapling());
 	public static final Block LACUGROVE_LEAVES = registerBlock("lacugrove_leaves", new BlockLeaves(MaterialColor.CYAN));
 	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
+	
+	public static final Block DRAGON_TREE_SAPLING = registerBlock("dragon_tree_sapling", new BlockDragonTreeSapling());
+	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new BlockLeaves(MaterialColor.MAGENTA));
+	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
 	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());

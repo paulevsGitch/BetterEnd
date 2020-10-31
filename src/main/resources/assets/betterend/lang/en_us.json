@@ -233,5 +233,24 @@
  	"block.betterend.lacugrove_sapling": "Lacugrove Sapling",
 	
  	"biome.betterend.megalake_grove": "Megalake Grove",
- 	"biome.betterend.painted_mountains": "Painted Mountains"
+ 	"biome.betterend.painted_mountains": "Painted Mountains",
+	
+ 	"block.betterend.dragon_tree_bark": "Dragon Tree Bark",
+ 	"block.betterend.dragon_tree_barrel": "Dragon Tree Barrel",
+ 	"block.betterend.dragon_tree_button": "Dragon Tree Button",
+ 	"block.betterend.dragon_tree_chest": "Dragon Tree Chest",
+ 	"block.betterend.dragon_tree_crafting_table": "Dragon Tree Crafting Table",
+ 	"block.betterend.dragon_tree_door": "Dragon Tree Door",
+ 	"block.betterend.dragon_tree_fence": "Dragon Tree Fence",
+ 	"block.betterend.dragon_tree_gate": "Dragon Tree Gate",
+ 	"block.betterend.dragon_tree_ladder": "Dragon Tree Ladder",
+ 	"block.betterend.dragon_tree_log": "Dragon Tree Log",
+ 	"block.betterend.dragon_tree_planks": "Dragon Tree Planks",
+ 	"block.betterend.dragon_tree_plate": "Dragon Tree Plate",
+ 	"block.betterend.dragon_tree_sign": "Dragon Tree Sign",
+ 	"block.betterend.dragon_tree_slab": "Dragon Tree Slab",
+ 	"block.betterend.dragon_tree_stairs": "Dragon Tree Stairs",
+ 	"block.betterend.dragon_tree_stripped_bark": "Dragon Tree Stripped Bark",
+ 	"block.betterend.dragon_tree_stripped_log": "Dragon Tree Stripped Log",
+ 	"block.betterend.dragon_tree_trapdoor": "Dragon Tree Trapdoor"
 }

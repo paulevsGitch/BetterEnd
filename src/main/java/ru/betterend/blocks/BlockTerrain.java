@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -29,7 +31,7 @@ public class BlockTerrain extends BlockBase {
 	private Block pathBlock;
 	
 	public BlockTerrain(MaterialColor color) {
-		super(FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color).sounds(BlockSounds.TERRAIN_SOUND));
+		super(FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color).sounds(BlockSounds.TERRAIN_SOUND).ticksRandomly());
 	}
 	
 	public void setPathBlock(Block roadBlock) {
@@ -58,5 +60,12 @@ public class BlockTerrain extends BlockBase {
 			return Collections.singletonList(new ItemStack(this));
 		}
 		return Collections.singletonList(new ItemStack(Blocks.END_STONE));
+	}
+	
+	@Override
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		if (random.nextInt(16) == 0 && world.getBlockState(pos.up()).getMaterial().blocksLight()) {
+			world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
+		}
 	}
 }

@@ -250,9 +250,9 @@
  	"block.betterend.dragon_tree_planks": "Доски из драконова древа",
  	"block.betterend.dragon_tree_plate": "Нажимная плита из драконова древа",
  	"block.betterend.dragon_tree_sign": "Табличка из драконова древа",
- 	"block.betterend.dragon_tree_slab": "",
- 	"block.betterend.dragon_tree_stairs": "",
- 	"block.betterend.dragon_tree_stripped_bark": "",
- 	"block.betterend.dragon_tree_stripped_log": "",
- 	"block.betterend.dragon_tree_trapdoor": ""
+ 	"block.betterend.dragon_tree_slab": "Плита из драконова древа",
+ 	"block.betterend.dragon_tree_stairs": "Ступени из драконова древа",
+ 	"block.betterend.dragon_tree_stripped_bark": "Обтёсанная кора драконова древа",
+ 	"block.betterend.dragon_tree_stripped_log": "Обтёсанное бревно драконова древа",
+ 	"block.betterend.dragon_tree_trapdoor": "Люк из драконова древа"
 }

@@ -197,4 +197,15 @@ public class SplineHelper {
 		}
 		return true;
 	}
+	
+	public static Vector3f getPos(List<Vector3f> spline, float index) {
+		int i = (int) index;
+		float delta = index - i;
+		Vector3f p1 = spline.get(i);
+		Vector3f p2 = spline.get(i + 1);
+		float x = MathHelper.lerp(delta, p1.getX(), p2.getX());
+		float y = MathHelper.lerp(delta, p1.getY(), p2.getY());
+		float z = MathHelper.lerp(delta, p1.getZ(), p2.getZ());
+		return new Vector3f(x, y, z);
+	}
 }

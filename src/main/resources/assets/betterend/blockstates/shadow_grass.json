@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterend:block/shadow_grass"
+				},
+				{
+					"model": "betterend:block/shadow_grass",
+					"y": 90
+				},
+				{
+					"model": "betterend:block/shadow_grass",
+					"y": 180
+				},
+				{
+					"model": "betterend:block/shadow_grass",
+					"y": 270
+				}
+		]
+	}
+}

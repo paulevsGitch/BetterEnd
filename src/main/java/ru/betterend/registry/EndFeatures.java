@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
 import ru.betterend.world.features.DoublePlantFeature;
+import ru.betterend.world.features.DragonTreeFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLakeFeature;
 import ru.betterend.world.features.EndLilyFeature;
@@ -32,6 +33,7 @@ public class EndFeatures {
 	public static final EndFeature MOSSY_GLOWSHROOM = new EndFeature("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
 	public static final EndFeature PYTHADENDRON_TREE = new EndFeature("pythadendron_tree", new PythadendronTreeFeature(), 2);
 	public static final EndFeature LACUGROVE = new EndFeature("lacugrove", new LacugroveFeature(), 4);
+	public static final EndFeature DRAGON_TREE = new EndFeature("dragon_tree", new DragonTreeFeature(), 3);
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new PythadendronBushFeature(), 4);

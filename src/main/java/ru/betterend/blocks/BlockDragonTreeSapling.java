@@ -11,6 +11,6 @@ public class BlockDragonTreeSapling extends BlockFeatureSapling {
 
 	@Override
 	protected Feature<?> getFeature() {
-		return EndFeatures.PYTHADENDRON_TREE.getFeature();
+		return EndFeatures.DRAGON_TREE.getFeature();
 	}
 }

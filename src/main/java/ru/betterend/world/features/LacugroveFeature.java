@@ -45,13 +45,7 @@ public class LacugroveFeature extends DefaultFeature {
 		}
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
-		/*Vector3f center = null;
-		for (int i = 3; i < 6; i++) {
-			center = spline.get(i);
-			float radius = MathHelper.lerp((i - 3F) / 2F, 6.5F, 3.7F) + MHelper.randRange(-0.5F, 0.5F, random);
-			radius *= (size - 15F) / 20F + 1F;
-			leavesBall(world, pos.add(center.getX(), center.getY(), center.getZ()), radius, random, noise);
-		}*/
+		
 		float radius = MHelper.randRange(6F, 8F, random);
 		radius *= (size - 15F) / 20F + 1F;
 		Vector3f center = spline.get(4);

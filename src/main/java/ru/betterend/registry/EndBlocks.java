@@ -113,6 +113,7 @@ public class EndBlocks {
 	public static final Block CHORUS_GRASS = registerBlock("chorus_grass", new BlockChorusGrass());
 	public static final Block CAVE_GRASS = registerBlock("cave_grass", new BlockTerrainPlant(CAVE_MOSS));
 	public static final Block CRYSTAL_GRASS = registerBlock("crystal_grass", new BlockTerrainPlant(CRYSTAL_MOSS));
+	public static final Block SHADOW_PLANT = registerBlock("shadow_plant", new BlockTerrainPlant(SHADOW_GRASS));
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlockBlueVineSeed());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());

@@ -11,6 +11,7 @@ public class EndSounds {
 	public static final SoundEvent MUSIC_CRYSTAL_MOUNTAINS = register("music", "crystal_mountains");
 	public static final SoundEvent MUSIC_MEGALAKE = register("music", "megalake");
 	public static final SoundEvent DUST_WASTELANDS = register("music", "dust_wastelands");
+	public static final SoundEvent SHADOW_FOREST = register("music", "shadow_forest");
 	
 	// Ambient
 	public static final SoundEvent AMBIENT_FOGGY_MUSHROOMLAND = register("ambient", "foggy_mushroomland");

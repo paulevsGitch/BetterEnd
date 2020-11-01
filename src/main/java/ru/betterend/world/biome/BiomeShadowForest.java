@@ -16,10 +16,11 @@ public class BiomeShadowForest extends EndBiome {
 				.setSurface(EndBlocks.SHADOW_GRASS)
 				.setParticles(ParticleTypes.MYCELIUM, 0.01F)
 				.setLoop(EndSounds.AMBIENT_CHORUS_FOREST)
-				//.setMusic(EndSounds.MUSIC_CHORUS_FOREST)
+				.setMusic(EndSounds.SHADOW_FOREST)
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(EndFeatures.DRAGON_TREE)
-				//.addFeature(EndFeatures.PYTHADENDRON_BUSH)
+				.addFeature(EndFeatures.DRAGON_TREE_BUSH)
+				.addFeature(EndFeatures.SHADOW_PLANT)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 80, 1, 4));
 	}

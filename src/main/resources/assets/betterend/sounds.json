@@ -74,6 +74,21 @@
 			}
 		]
 	},
+	"betterend.music.shadow_forest": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/i_think_i_can_help_you-the_six_realms",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jesse_gallagher-maestro_tlakaelel",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",

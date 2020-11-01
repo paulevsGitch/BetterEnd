@@ -38,7 +38,7 @@ public class EndFeatures {
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new PythadendronBushFeature(), 4);
-	public static final EndFeature DRAGON_TREE_BUSH = new EndFeature("dragon_tree_bush", new DragonTreeBushFeature(), 4);
+	public static final EndFeature DRAGON_TREE_BUSH = new EndFeature("dragon_tree_bush", new DragonTreeBushFeature(), 12);
 	
 	// Plants //
 	public static final EndFeature UMBRELLA_MOSS = new EndFeature("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);

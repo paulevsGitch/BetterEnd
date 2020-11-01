@@ -1,5 +1,6 @@
 package ru.betterend.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
@@ -207,5 +208,35 @@ public class SplineHelper {
 		float y = MathHelper.lerp(delta, p1.getY(), p2.getY());
 		float z = MathHelper.lerp(delta, p1.getZ(), p2.getZ());
 		return new Vector3f(x, y, z);
+	}
+	
+	public static void rotateSpline(List<Vector3f> spline, float angle) {
+		for (Vector3f v: spline) {
+			float sin = (float) Math.sin(angle);
+			float cos = (float) Math.cos(angle);
+			float x = v.getX() * cos + v.getZ() * sin;
+			float z = v.getX() * sin + v.getZ() * cos;
+			v.set(x, v.getY(), z);
+		}
+	}
+	
+	public static List<Vector3f> copySpline(List<Vector3f> spline) {
+		List<Vector3f> result = new ArrayList<Vector3f>(spline.size());
+		for (Vector3f v: spline) {
+			result.add(v.copy());
+		}
+		return result;
+	}
+	
+	public static void scale(List<Vector3f> spline, float scale) {
+		for (Vector3f v: spline) {
+			v.set(v.getX() * scale, v.getY() * scale, v.getZ() * scale);
+		}
+	}
+	
+	public static void offset(List<Vector3f> spline, Vector3f offset) {
+		for (Vector3f v: spline) {
+			v.add(offset);
+		}
 	}
 }

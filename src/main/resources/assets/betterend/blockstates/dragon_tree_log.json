@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"axis=x": [
+			{ "model": "betterend:block/dragon_tree_log", "x": 90, "y": 90 },
+			{ "model": "betterend:block/dragon_tree_log_2", "x": 90, "y": 90 },
+			{ "model": "betterend:block/dragon_tree_log_3", "x": 90, "y": 90 },
+			{ "model": "betterend:block/dragon_tree_log_4", "x": 90, "y": 90 }
+		],
+		"axis=y": [
+			{ "model": "betterend:block/dragon_tree_log" },
+			{ "model": "betterend:block/dragon_tree_log_2" },
+			{ "model": "betterend:block/dragon_tree_log_3" },
+			{ "model": "betterend:block/dragon_tree_log_4" }
+		],
+		"axis=z": [
+			{ "model": "betterend:block/dragon_tree_log", "x": 90 },
+			{ "model": "betterend:block/dragon_tree_log_2", "x": 90 },
+			{ "model": "betterend:block/dragon_tree_log_3", "x": 90 },
+			{ "model": "betterend:block/dragon_tree_log_4", "x": 90 }
+		]
+	}
+}

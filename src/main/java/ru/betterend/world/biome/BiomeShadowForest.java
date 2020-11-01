@@ -22,6 +22,7 @@ public class BiomeShadowForest extends EndBiome {
 				.addFeature(EndFeatures.DRAGON_TREE_BUSH)
 				.addFeature(EndFeatures.SHADOW_PLANT)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
-				.addMobSpawn(EntityType.ENDERMAN, 80, 1, 4));
+				.addMobSpawn(EntityType.ENDERMAN, 80, 1, 4)
+				.addMobSpawn(EntityType.PHANTOM, 1, 1, 2));
 	}
 }

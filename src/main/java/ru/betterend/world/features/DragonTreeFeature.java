@@ -117,6 +117,18 @@ public class DragonTreeFeature extends DefaultFeature {
 		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 1.5F; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
+		sphere.setPostProcess((info) -> {
+			if (random.nextInt(5) == 0) {
+				for (Direction dir: Direction.values()) {
+					BlockState state = info.getState(dir, 2);
+					if (state.isAir()) {
+						return info.getState();
+					}
+				}
+				return EndBlocks.DRAGON_TREE.bark.getDefaultState();
+			}
+			return info.getState();
+		});
 		sphere.fillRecursiveIgnore(world, pos, IGNORE);
 		
 		if (radius > 5) {

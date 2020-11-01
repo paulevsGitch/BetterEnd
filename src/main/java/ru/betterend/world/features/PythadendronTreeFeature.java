@@ -9,6 +9,7 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -28,6 +29,7 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class PythadendronTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
+	private static final Function<BlockState, Boolean> IGNORE;
 	private static final Function<PosInfo, BlockState> POST;
 	
 	@Override
@@ -109,8 +111,19 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
-		BlocksHelper.setWithoutUpdate(world, pos.up(), AIR);
-		sphere.fillRecursive(world, pos.up());
+		sphere.setPostProcess((info) -> {
+			if (random.nextInt(5) == 0) {
+				for (Direction dir: Direction.values()) {
+					BlockState state = info.getState(dir, 2);
+					if (state.isAir()) {
+						return info.getState();
+					}
+				}
+				return EndBlocks.PYTHADENDRON.bark.getDefaultState();
+			}
+			return info.getState();
+		});
+		sphere.fillRecursiveIgnore(world, pos.up(), IGNORE);
 		
 		if (radius > 5) {
 			int count = (int) (radius * 2.5F);
@@ -133,6 +146,10 @@ public class PythadendronTreeFeature extends DefaultFeature {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();
+		};
+		
+		IGNORE = (state) -> {
+			return EndBlocks.PYTHADENDRON.isTreeLog(state);
 		};
 		
 		POST = (info) -> {

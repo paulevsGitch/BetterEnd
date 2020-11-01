@@ -15,7 +15,6 @@ public class TerrainStructureProcessor extends StructureProcessor {
 		BlockPos bpos = structureBlockInfo2.pos;
 		if (structureBlockInfo2.state.isOf(Blocks.END_STONE) && worldView.isAir(bpos.up())) {
 			BlockState top = worldView.getBiome(structureBlockInfo2.pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-			System.out.println(top);
 			return new StructureBlockInfo(bpos, top, structureBlockInfo2.tag);
 		}
 		return structureBlockInfo2;

@@ -4,15 +4,17 @@
 	"package": "ru.betterend.mixin.client",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
-		"WorldRendererMixin",
-		"BackgroundRendererMixin",
-		"ClientRecipeBookMixin",
-		"ModelLoaderMixin",
-		"ModelVariantMapMixin",
-		"DeserializationContextMixin",
+		"AbstractSoundInstanceAccessor",
 		"ClientPlayNetworkHandlerMixin",
 		"NamespaceResourceManagerMixin",
-		"MinecraftClientMixin"
+		"DeserializationContextMixin",
+		"BackgroundRendererMixin",
+		"ClientRecipeBookMixin",
+		"ModelVariantMapMixin",
+		"MinecraftClientMixin",
+		"WorldRendererMixin",
+		"MusicTrackerMixin",
+		"ModelLoaderMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

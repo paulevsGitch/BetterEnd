@@ -16,7 +16,6 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.PosInfo;
@@ -125,13 +124,13 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		});
 		sphere.fillRecursiveIgnore(world, pos.up(), IGNORE);
 		
-		if (radius > 5) {
+		/*if (radius > 5) {
 			int count = (int) (radius * 2.5F);
 			for (int i = 0; i < count; i++) {
 				BlockPos p = pos.add(random.nextGaussian() * 1.5, random.nextGaussian() * 1.5, random.nextGaussian() * 1.5);
 				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.PYTHADENDRON.bark);
 			}
-		}
+		}*/
 	}
 	
 	static {

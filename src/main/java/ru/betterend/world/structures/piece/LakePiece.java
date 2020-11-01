@@ -110,39 +110,50 @@ public class LakePiece extends BasePiece {
 								pos.setY(maxY ++);
 							}
 							for (int y = maxY; y >= minY; y--) {
-								pos.setY(y - 1);
+								pos.setY(y);
 								BlockState state = chunk.getBlockState(pos);
 								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-									pos.setY(y);
 									chunk.setBlockState(pos, y > 56 ? AIR : WATER, false);
 								}
 								else {
-									pos.setY(y);
 									break;
 								}
 							}
-							pos.setY(MHelper.floor(minY - 1));
-							if (pos.getY() == 57 && chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
-								BlockState state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-								chunk.setBlockState(pos, state, false);
-							}
-							if (pos.getY() < 57) {
+							maxY = MHelper.randRange(2, 3, random);
+							for (int i = 0; i < maxY; i++) {
+								pos.setY(pos.getY() - 1);
 								BlockState state = chunk.getBlockState(pos);
 								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-									state = EndBlocks.ENDSTONE_DUST.getDefaultState();
-									if (pos.getY() == 56 && random.nextBoolean()) {
-										state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-									}
-									chunk.setBlockState(pos, state, false);
-									pos.setY(pos.getY() - 1);
-									state = chunk.getBlockState(pos);
-									if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-										chunk.setBlockState(pos, EndBlocks.ENDSTONE_DUST.getDefaultState(), false);
+									if (pos.getY() > 56) {
+										pos.setY(pos.getY() + 1);
+										state = chunk.getBlockState(pos);
 										pos.setY(pos.getY() - 1);
+										if (state.getMaterial().isReplaceable()) {
+											state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+										}
+										else {
+											state = EndBlocks.ENDSTONE_DUST.getDefaultState();
+										}
+										chunk.setBlockState(pos, state, false);
 									}
-									if (!chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
+									else if (pos.getY() == 56) {
+										if (random.nextBoolean()) {
+											state = EndBlocks.ENDSTONE_DUST.getDefaultState();
+										}
+										else {
+											state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+										}
+										chunk.setBlockState(pos, state, false);
+									}
+									else {
+										chunk.setBlockState(pos, EndBlocks.ENDSTONE_DUST.getDefaultState(), false);
+									}
+								}
+								else {
+									if (state.getMaterial().isReplaceable()) {
 										chunk.setBlockState(pos, Blocks.END_STONE.getDefaultState(), false);
 									}
+									break;
 								}
 							}
 						}

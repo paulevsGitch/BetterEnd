@@ -254,5 +254,12 @@
  	"block.betterend.dragon_tree_stairs": "Ступени из драконова древа",
  	"block.betterend.dragon_tree_stripped_bark": "Обтёсанная кора драконова древа",
  	"block.betterend.dragon_tree_stripped_log": "Обтёсанное бревно драконова древа",
- 	"block.betterend.dragon_tree_trapdoor": "Люк из драконова древа"
+ 	"block.betterend.dragon_tree_trapdoor": "Люк из драконова древа",
+	
+	"biome.betterend.shadow_forest": "Лес теней",
+ 	"block.betterend.dragon_tree_leaves": "Листья драконова древа",
+ 	"block.betterend.dragon_tree_sapling": "Саженец драконова древа",
+ 	"block.betterend.shadow_grass": "Теневая трава",
+ 	"block.betterend.shadow_grass_path": "Тропа из теневой травы",
+ 	"block.betterend.shadow_plant": "Теневое растение"
 }

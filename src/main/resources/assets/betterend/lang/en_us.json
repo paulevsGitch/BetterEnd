@@ -252,5 +252,12 @@
  	"block.betterend.dragon_tree_stairs": "Dragon Tree Stairs",
  	"block.betterend.dragon_tree_stripped_bark": "Dragon Tree Stripped Bark",
  	"block.betterend.dragon_tree_stripped_log": "Dragon Tree Stripped Log",
- 	"block.betterend.dragon_tree_trapdoor": "Dragon Tree Trapdoor"
+ 	"block.betterend.dragon_tree_trapdoor": "Dragon Tree Trapdoor",
+	
+	"biome.betterend.shadow_forest": "Shadow Forest",
+ 	"block.betterend.dragon_tree_leaves": "Dragon Tree Leaves",
+ 	"block.betterend.dragon_tree_sapling": "Dragon Tree Sapling",
+ 	"block.betterend.shadow_grass": "Shadow Grass",
+ 	"block.betterend.shadow_grass_path": "Shadow Grass Path",
+ 	"block.betterend.shadow_plant": "Shadow Plant"
 }

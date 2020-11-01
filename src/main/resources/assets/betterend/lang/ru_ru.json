@@ -261,5 +261,11 @@
  	"block.betterend.dragon_tree_sapling": "Саженец драконова древа",
  	"block.betterend.shadow_grass": "Теневая трава",
  	"block.betterend.shadow_grass_path": "Тропа из теневой травы",
- 	"block.betterend.shadow_plant": "Теневое растение"
+ 	"block.betterend.shadow_plant": "Теневое растение",
+	
+ 	"block.betterend.dragon_tree_bookshelf": "Книжные полки из драконова древа",
+ 	"block.betterend.end_lotus_bookshelf": "Книжные полки из лотоса края",
+ 	"block.betterend.lacugrove_bookshelf": "Книжные полки из оземангра",
+ 	"block.betterend.mossy_glowshroom_bookshelf": "Книжные полки из мшистого светогриба",
+ 	"block.betterend.pythadendron_bookshelf": "Книжные полки из пифадендрона"
 }

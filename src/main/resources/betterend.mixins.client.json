@@ -8,6 +8,7 @@
 		"ClientPlayNetworkHandlerMixin",
 		"NamespaceResourceManagerMixin",
 		"DeserializationContextMixin",
+		"EnchantingTableBlockMixin",
 		"BackgroundRendererMixin",
 		"ClientRecipeBookMixin",
 		"ModelVariantMapMixin",

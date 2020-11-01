@@ -25,12 +25,21 @@ public class EndTags {
 	// Block Tags
 	public static final Tag.Identified<Block> END_GROUND = makeTag("end_ground");
 	public static final Tag.Identified<Block> GEN_TERRAIN = makeTag("gen_terrain");
+	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonTag("bookshelves");
 	
 	// Item Tags
 	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
 	
 	private static Tag.Identified<Block> makeTag(String name) {
-		return (Identified<Block>) TagRegistry.block(BetterEnd.makeID(name));
+		Identifier id = BetterEnd.makeID(name);
+		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
+		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
+	}
+	
+	private static Tag.Identified<Block> makeCommonTag(String name) {
+		Identifier id = new Identifier("c", name);
+		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
+		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
 	}
 	
 	public static void register() {

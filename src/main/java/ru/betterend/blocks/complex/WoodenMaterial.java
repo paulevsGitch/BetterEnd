@@ -29,6 +29,7 @@ import ru.betterend.blocks.basis.BlockTrapdoor;
 import ru.betterend.blocks.basis.BlockWoodenButton;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.TagHelper;
 
 public class WoodenMaterial {
@@ -99,6 +100,7 @@ public class WoodenMaterial {
 		GridRecipe.make(name + "_sign", sign).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
 		GridRecipe.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
 		GridRecipe.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
+		GridRecipe.make(name + "_bookshelf", shelf).setShape("###", "PPP", "###").addMaterial('#', planks).addMaterial('P', Items.PAPER).setGroup("end_bookshelves").build();
 		
 		// Item Tags //
 		TagHelper.addTag(ItemTags.PLANKS, planks);
@@ -125,6 +127,7 @@ public class WoodenMaterial {
 		TagHelper.addTags(slab, BlockTags.WOODEN_SLABS, BlockTags.SLABS);
 		TagHelper.addTags(stairs, BlockTags.WOODEN_STAIRS, BlockTags.STAIRS);
 		TagHelper.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
+		TagHelper.addTag(EndTags.BOOKSHELVES, shelf);
 	}
 	
 	public boolean isTreeLog(Block block) {

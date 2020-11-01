@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFLine;
@@ -78,6 +79,22 @@ public class SplineHelper {
 		Vector3f startPos = spline.get(0);
 		for (int i = 1; i < spline.size(); i++) {
 			Vector3f endPos = spline.get(i);
+			if (!(fillLine(startPos, endPos, world, state, pos, replace))) {
+				return false;
+			}
+			startPos = endPos;
+		}
+		
+		return true;
+	}
+	
+	public static boolean fillSplineRoot(List<Vector3f> spline, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+		Vector3f startPos = spline.get(0);
+		for (int i = 1; i < spline.size(); i++) {
+			Vector3f endPos = spline.get(i);
+			if (i > 3 && !world.getBlockState(pos.add(endPos.getX(), endPos.getY(), endPos.getZ())).isIn(EndTags.END_GROUND)) {
+				return false;
+			}
 			if (!(fillLine(startPos, endPos, world, state, pos, replace))) {
 				return false;
 			}

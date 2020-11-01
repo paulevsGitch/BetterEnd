@@ -108,8 +108,19 @@ public class LacugroveFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius - 2, 0).setSource(sphere));
+		sphere.setPostProcess((info) -> {
+			if (random.nextInt(5) == 0) {
+				for (Direction dir: Direction.values()) {
+					BlockState state = info.getState(dir, 2);
+					if (state.isAir()) {
+						return info.getState();
+					}
+				}
+				return EndBlocks.LACUGROVE.bark.getDefaultState();
+			}
+			return info.getState();
+		});
 		sphere.fillRecursiveIgnore(world, pos, IGNORE);
-		//sphere.fillArea(world, pos, new Box(pos).expand(radius));
 		
 		if (radius > 5) {
 			int count = (int) (radius * 2.5F);

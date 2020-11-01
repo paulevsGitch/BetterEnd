@@ -71,7 +71,6 @@ public class MusicTrackerMixin {
 			if (this.current == null && this.timeUntilNextSong-- <= 0) {
 				this.play(musicSound);
 			}
-			System.out.println(volume);
 			info.cancel();
 		}
 		else {

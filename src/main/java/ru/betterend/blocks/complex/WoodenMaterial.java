@@ -12,6 +12,7 @@ import ru.betterend.blocks.basis.BlockBark;
 import ru.betterend.blocks.basis.BlockBarkStripable;
 import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.BlockBookshelf;
 import ru.betterend.blocks.basis.BlockChest;
 import ru.betterend.blocks.basis.BlockCraftingTable;
 import ru.betterend.blocks.basis.BlockDoor;
@@ -54,6 +55,7 @@ public class WoodenMaterial {
 	
 	public final Block chest;
 	public final Block barrel;
+	public final Block shelf;
 	
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);
@@ -80,6 +82,7 @@ public class WoodenMaterial {
 		
 		chest = EndBlocks.registerBlock(name + "_chest", new BlockChest(planks));
 		barrel = EndBlocks.registerBlock(name + "_barrel", new BlockBarrel(planks));
+		shelf = EndBlocks.registerBlock(name + "_bookshelf", new BlockBookshelf(planks));
 		
 		// Recipes //
 		GridRecipe.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();

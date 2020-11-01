@@ -69,6 +69,7 @@ public interface Patterned {
 	public final static Identifier PEDESTAL_MODEL_TOP = BetterEnd.makeID("patterns/block/pattern_pedestal_top.json");
 	public final static Identifier PEDESTAL_MODEL_BOTTOM = BetterEnd.makeID("patterns/block/pattern_pedestal_bottom.json");
 	public final static Identifier PEDESTAL_MODEL_PILLAR = BetterEnd.makeID("patterns/block/pattern_pedestal_pillar.json");
+	public final static Identifier BOOKSHELF = BetterEnd.makeID("patterns/block/bookshelf.json");
 	
 	//Models Item
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");

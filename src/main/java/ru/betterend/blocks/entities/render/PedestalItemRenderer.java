@@ -16,6 +16,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -70,7 +71,11 @@ public class PedestalItemRenderer extends BlockEntityRenderer<PedestalBlockEntit
 			BeamRenderer.renderLightBeam(matrices, vertexConsumer, tickDelta, -y, 1024 - y, colors, 0.25F, 0.15F, 0.2F);
 		}
 		
-		minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, overlay, model);
+		if (activeItem.getItem() == Items.END_CRYSTAL) {
+			EndCrystalRenderer.render(blockEntity.getAge(), tickDelta, rotation, matrices, vertexConsumers, light);
+		} else {
+			minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, overlay, model);
+		}
 		matrices.pop();
 	}
 }

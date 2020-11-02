@@ -125,16 +125,7 @@ public class LakePiece extends BasePiece {
 								BlockState state = chunk.getBlockState(pos);
 								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
 									if (pos.getY() > 56) {
-										pos.setY(pos.getY() + 1);
-										state = chunk.getBlockState(pos);
-										pos.setY(pos.getY() - 1);
-										if (state.getMaterial().isReplaceable()) {
-											state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-										}
-										else {
-											state = EndBlocks.ENDSTONE_DUST.getDefaultState();
-										}
-										chunk.setBlockState(pos, state, false);
+										chunk.setBlockState(pos, AIR, false);
 									}
 									else if (pos.getY() == 56) {
 										if (random.nextBoolean()) {

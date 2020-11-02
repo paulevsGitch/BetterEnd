@@ -91,6 +91,7 @@ public class CraftingRecipes {
 		GridRecipe.make("paper", Items.PAPER).setShape("###").addMaterial('#', EndItems.END_LILY_LEAF_DRIED).setOutputCount(3).build();
 		
 		GridRecipe.make("aurora_block", EndBlocks.AURORA_CRYSTAL).setShape("##", "##").addMaterial('#', EndItems.CRYSTAL_SHARDS).build();
+		GridRecipe.make("lotus_block", EndBlocks.END_LOTUS.log).setShape("##", "##").addMaterial('#', EndBlocks.END_LOTUS_STEM).build();
 	}
 	
 	public static void registerPedestal(String name, Block pedestal, Block slab, Block pillar) {

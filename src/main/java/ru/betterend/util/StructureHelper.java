@@ -1,74 +1,73 @@
 package ru.betterend.util;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Random;
 
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.gen.ChunkRandom;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.StructureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.StructureWorldAccess;
 
 public class StructureHelper {
-	private static final Set<ChunkPos> POSITIONS = new HashSet<ChunkPos>(64);
+	public static Structure readStructure(Identifier resource) {
+		String ns = resource.getNamespace();
+		String nm = resource.getPath();
 
-	private static void collectNearby(ServerWorld world, StructureFeature<?> feature, int chunkX, int chunkZ, int radius, StructureConfig config, long worldSeed, ChunkRandom chunkRandom) {
-		int x1 = chunkX - radius;
-		int x2 = chunkX + radius;
-		int z1 = chunkZ - radius;
-		int z2 = chunkZ + radius;
-
-		POSITIONS.clear();
-		ChunkGenerator generator = world.getChunkManager().getChunkGenerator();
-		for (int x = x1; x <= x2; x += 8) {
-			for (int z = z1; z <= z2; z += 8) {
-				ChunkPos chunk = feature.getStartChunk(config, worldSeed, chunkRandom, x, z);
-				if (world.getBiome(chunk.getStartPos()).getGenerationSettings().hasStructureFeature(feature))
-				{
-					if (feature.getName().equals("endcity")) {
-						if (generator.getHeight((x << 16) | 8, (z << 16) | 8, Heightmap.Type.WORLD_SURFACE_WG) > 60) {
-							POSITIONS.add(chunk);
-						}
-					}
-					else {
-						POSITIONS.add(chunk);
-					}
-				}
-			}
+		try {
+			InputStream inputstream = MinecraftServer.class.getResourceAsStream("/data/" + ns + "/structures/" + nm + ".nbt");
+			return readStructureFromStream(inputstream);
 		}
-	}
-
-	private static long sqr(int x) {
-		return (long) x * (long) x;
-	}
-
-	public static BlockPos getNearestStructure(StructureFeature<?> feature, ServerWorld world, BlockPos pos, int radius) {
-		int cx = pos.getX() >> 4;
-		int cz = pos.getZ() >> 4;
-
-		StructureConfig config = world.getChunkManager().getChunkGenerator().getStructuresConfig().getForType(feature);
-		if (config == null)
-			return null;
-
-		collectNearby(world, feature, cx, cz, radius, config, world.getSeed(), new ChunkRandom());
-		Iterator<ChunkPos> iterator = POSITIONS.iterator();
-		if (iterator.hasNext()) {
-			ChunkPos nearest = POSITIONS.iterator().next();
-			long d = sqr(nearest.x - cx) + sqr(nearest.z - cz);
-			while (iterator.hasNext()) {
-				ChunkPos n = iterator.next();
-				long d2 = sqr(n.x - cx) + sqr(n.z - cz);
-				if (d2 < d) {
-					d = d2;
-					nearest = n;
-				}
-			}
-			return nearest.getStartPos();
+		catch (IOException e) {
+			e.printStackTrace();
 		}
+
 		return null;
+	}
+	
+	private static Structure readStructureFromStream(InputStream stream) throws IOException {
+		CompoundTag nbttagcompound = NbtIo.readCompressed(stream);
+
+		Structure template = new Structure();
+		template.fromTag(nbttagcompound);
+
+		return template;
+	}
+	
+	public static BlockPos offsetPos(BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror) {
+		BlockPos offset = Structure.transformAround(structure.getSize(), mirror, rotation, BlockPos.ORIGIN);
+		return pos.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
+	}
+	
+	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror, Random random) {
+		placeCenteredBottom(world, pos, structure, rotation, mirror, makeBox(pos), random);
+	}
+	
+	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror, BlockBox bounds, Random random) {
+		BlockPos offset = offsetPos(pos, structure, rotation, mirror);
+		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
+		structure.place(world, offset, placementData, random);
+	}
+	
+	private static BlockBox makeBox(BlockPos pos) {
+		int sx = ((pos.getX() >> 4) << 4) - 16;
+		int sz = ((pos.getZ() >> 4) << 4) - 16;
+		int ex = sx + 47;
+		int ez = sz + 47;
+		return BlockBox.create(sx, 0, sz, ex, 255, ez);
+	}
+	
+	public static BlockBox getStructureBounds(BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror) {
+		BlockPos max = structure.getSize();
+		BlockPos min = Structure.transformAround(structure.getSize(), mirror, rotation, BlockPos.ORIGIN);
+		max = max.subtract(min);
+		return new BlockBox(min.add(pos), max.add(pos));
 	}
 }

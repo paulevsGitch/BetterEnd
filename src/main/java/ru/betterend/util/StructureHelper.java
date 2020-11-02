@@ -179,7 +179,8 @@ public class StructureHelper {
 	}
 	
 	private static boolean ignore(BlockState state) {
-		return state.isAir()
+		return state.getMaterial().isReplaceable()
+				|| !state.getFluidState().isEmpty()
 				|| state.isIn(EndTags.END_GROUND)
 				|| state.isOf(EndBlocks.ETERNAL_PEDESTAL)
 				|| state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL)

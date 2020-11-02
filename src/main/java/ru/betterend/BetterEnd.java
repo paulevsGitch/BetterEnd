@@ -21,7 +21,6 @@ import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.Logger;
-import ru.betterend.util.TranslationHelper;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 
 public class BetterEnd implements ModInitializer {
@@ -49,10 +48,6 @@ public class BetterEnd implements ModInitializer {
 		EndStructures.register();
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
-		
-		if (isDevEnvironment()) {
-			TranslationHelper.printMissingNames();
-		}
 	}
 	
 	public static Identifier makeID(String path) {

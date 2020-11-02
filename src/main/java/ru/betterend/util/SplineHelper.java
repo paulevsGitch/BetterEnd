@@ -240,7 +240,7 @@ public class SplineHelper {
 	public static List<Vector3f> copySpline(List<Vector3f> spline) {
 		List<Vector3f> result = new ArrayList<Vector3f>(spline.size());
 		for (Vector3f v: spline) {
-			result.add(v.copy());
+			result.add(new Vector3f(v.getX(), v.getY(), v.getZ()));
 		}
 		return result;
 	}
@@ -253,7 +253,7 @@ public class SplineHelper {
 	
 	public static void offset(List<Vector3f> spline, Vector3f offset) {
 		for (Vector3f v: spline) {
-			v.add(offset);
+			v.set(offset.getX() + v.getX(), offset.getY() + v.getY(), offset.getZ() + v.getZ());
 		}
 	}
 }

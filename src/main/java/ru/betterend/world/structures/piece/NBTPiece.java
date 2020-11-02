@@ -25,14 +25,18 @@ public class NBTPiece extends BasePiece {
 	private BlockMirror mirror;
 	private Structure structure;
 	private BlockPos pos;
+	private int erosion;
+	private boolean cover;
 	
-	public NBTPiece(Identifier structureID, Structure structure, BlockPos pos, Random random) {
+	public NBTPiece(Identifier structureID, Structure structure, BlockPos pos, int erosion, boolean cover, Random random) {
 		super(EndStructures.NBT_PIECE, random.nextInt());
 		this.structureID = structureID;
 		this.structure = structure;
 		this.rotation = BlockRotation.random(random);
 		this.mirror = BlockMirror.values()[random.nextInt(3)];
 		this.pos = StructureHelper.offsetPos(pos, structure, rotation, mirror);
+		this.erosion = erosion;
+		this.cover = cover;
 		makeBoundingBox();
 	}
 
@@ -46,7 +50,9 @@ public class NBTPiece extends BasePiece {
 		tag.putString("id", structureID.toString());
 		tag.putInt("rotation", rotation.ordinal());
 		tag.putInt("mirror", mirror.ordinal());
+		tag.putInt("erosion", erosion);
 		tag.put("pos", NbtHelper.fromBlockPos(pos));
+		tag.putBoolean("cover", cover);
 	}
 
 	@Override
@@ -54,14 +60,25 @@ public class NBTPiece extends BasePiece {
 		structureID = new Identifier(tag.getString("id"));
 		rotation = BlockRotation.values()[tag.getInt("rotation")];
 		mirror = BlockMirror.values()[tag.getInt("mirror")];
+		erosion = tag.getInt("erosion");
 		pos = NbtHelper.toBlockPos(tag.getCompound("pos"));
+		cover = tag.getBoolean("cover");
 		structure = StructureHelper.readStructure(structureID);
 	}
 
 	@Override
 	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(blockBox);
+		BlockBox bounds = new BlockBox(blockBox);
+		bounds.maxY = this.boundingBox.maxY;
+		bounds.minY = this.boundingBox.minY;
+		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		structure.place(world, pos, placementData, random);
+		if (erosion > 0) {
+			StructureHelper.erode(world, bounds, erosion, random);
+		}
+		if (cover) {
+			StructureHelper.cover(world, bounds, random);
+		}
 		return true;
 	}
 	

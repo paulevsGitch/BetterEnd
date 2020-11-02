@@ -35,8 +35,8 @@ import ru.betterend.blocks.basis.BlockChest;
 import ru.betterend.blocks.entities.EChestBlockEntity;
 import ru.betterend.registry.EndItems;
 
-public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEntity> {
-	private static final HashMap<Integer, RenderLayer[]> LAYERS = Maps.newHashMap();
+public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEntity> {
+	private static final HashMap<Block, RenderLayer[]> LAYERS = Maps.newHashMap();
 	private static RenderLayer[] defaultLayer;
 
 	private static final int ID_NORMAL = 0;
@@ -53,7 +53,7 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 	private final ModelPart partLeftC;
 	private final ModelPart partLeftB;
 
-	public EChestBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
+	public EndChestBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
 		super(blockEntityRenderDispatcher);
 
 		this.partC = new ModelPart(64, 64, 0, 19);
@@ -151,7 +151,7 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 	}
 
 	public static VertexConsumer getConsumer(VertexConsumerProvider provider, Block block, ChestType chestType) {
-		RenderLayer[] layers = LAYERS.getOrDefault(Block.getRawIdFromState(block.getDefaultState()), defaultLayer);
+		RenderLayer[] layers = LAYERS.getOrDefault(block, defaultLayer);
 		return provider.getBuffer(getChestTexture(chestType, layers));
 	}
 
@@ -167,7 +167,7 @@ public class EChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlockEn
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof BlockChest) {
 					String name = Registry.BLOCK.getId(block).getPath();
-					LAYERS.put(Block.getRawIdFromState(block.getDefaultState()), new RenderLayer[] {
+					LAYERS.put(block, new RenderLayer[] {
 						RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/chest/" + name + ".png")),
 						RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/chest/" + name + "_left.png")),
 						RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/chest/" + name + "_right.png"))

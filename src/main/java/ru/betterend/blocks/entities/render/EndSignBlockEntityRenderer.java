@@ -32,12 +32,12 @@ import ru.betterend.blocks.basis.BlockSign;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.registry.EndItems;
 
-public class ESignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEntity> {
-	private static final HashMap<Integer, RenderLayer> LAYERS = Maps.newHashMap();
+public class EndSignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEntity> {
+	private static final HashMap<Block, RenderLayer> LAYERS = Maps.newHashMap();
 	private static RenderLayer defaultLayer;
 	private final SignModel model = new SignBlockEntityRenderer.SignModel();
 
-	public ESignBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
+	public EndSignBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);
 	}
 
@@ -100,19 +100,19 @@ public class ESignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEnti
 	}
 	
 	public static VertexConsumer getConsumer(VertexConsumerProvider provider, Block block) {
-		return provider.getBuffer(LAYERS.getOrDefault(Block.getRawIdFromState(block.getDefaultState()), defaultLayer));
+		return provider.getBuffer(LAYERS.getOrDefault(block, defaultLayer));
 	}
 
 	static {
 		defaultLayer = RenderLayer.getEntitySolid(new Identifier("textures/entity/sign/oak.png"));
-			
+		
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof BlockSign) {
 					String name = Registry.BLOCK.getId(block).getPath();
 					RenderLayer layer = RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/sign/" + name + ".png"));
-					LAYERS.put(Block.getRawIdFromState(block.getDefaultState()), layer);
+					LAYERS.put(block, layer);
 				}
 			}
 		});

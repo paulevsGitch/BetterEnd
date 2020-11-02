@@ -31,7 +31,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.Matrix4f;
 import ru.betterend.blocks.basis.BlockSign;
 import ru.betterend.blocks.entities.ESignBlockEntity;
-import ru.betterend.blocks.entities.render.ESignBlockEntityRenderer;
+import ru.betterend.blocks.entities.render.EndSignBlockEntityRenderer;
 
 @Environment(EnvType.CLIENT)
 public class BlockSignEditScreen extends Screen {
@@ -136,7 +136,7 @@ public class BlockSignEditScreen extends Screen {
 		matrices.push();
 		matrices.scale(0.6666667F, -0.6666667F, -0.6666667F);
 		VertexConsumerProvider.Immediate immediate = this.client.getBufferBuilders().getEntityVertexConsumers();
-		VertexConsumer vertexConsumer = ESignBlockEntityRenderer.getConsumer(immediate, blockState.getBlock());
+		VertexConsumer vertexConsumer = EndSignBlockEntityRenderer.getConsumer(immediate, blockState.getBlock());
 		this.model.field.render(matrices, vertexConsumer, 15728880, OverlayTexture.DEFAULT_UV);
 
 		if (bl) {

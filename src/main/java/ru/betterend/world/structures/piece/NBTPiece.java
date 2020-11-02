@@ -17,6 +17,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.util.MHelper;
 import ru.betterend.util.StructureHelper;
 
 public class NBTPiece extends BasePiece {
@@ -74,6 +75,10 @@ public class NBTPiece extends BasePiece {
 		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		structure.place(world, pos, placementData, random);
 		if (erosion > 0) {
+			bounds.maxX = MHelper.min(bounds.maxX, boundingBox.maxX);
+			bounds.minX = MHelper.max(bounds.minX, boundingBox.minX);
+			bounds.maxZ = MHelper.min(bounds.maxZ, boundingBox.maxZ);
+			bounds.minZ = MHelper.max(bounds.minZ, boundingBox.minZ);
 			StructureHelper.erode(world, bounds, erosion, random);
 		}
 		if (cover) {

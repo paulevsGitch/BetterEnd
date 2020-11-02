@@ -6,11 +6,13 @@ import java.util.Random;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
@@ -81,6 +83,7 @@ public class StructureHelper {
 	
 	public static void erode(StructureWorldAccess world, BlockBox bounds, int iterations, Random random) {
 		Mutable mut = new Mutable();
+		boolean canDestruct = true;
 		for (int i = 0; i < iterations; i++) {
 			for (int x = bounds.minX; x <= bounds.maxX; x++) {
 				mut.setX(x);
@@ -89,17 +92,17 @@ public class StructureHelper {
 					for (int y = bounds.maxY; y >= bounds.minY; y--) {
 						mut.setY(y);
 						BlockState state = world.getBlockState(mut);
-						if (state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL) && random.nextInt(8) == 0 && world.isAir(mut.down(2))) {
-							int r = MHelper.randRange(1, 3, random);
+						if (canDestruct && state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL) && random.nextInt(8) == 0 && world.isAir(mut.down(2))) {
+							int r = MHelper.randRange(1, 4, random);
 							int cx = mut.getX();
 							int cy = mut.getY();
 							int cz = mut.getZ();
-							int x1 = mut.getX() - r;
-							int y1 = mut.getY() - r;
-							int z1 = mut.getZ() - r;
-							int x2 = mut.getX() - r;
-							int y2 = mut.getY() - r;
-							int z2 = mut.getZ() - r;
+							int x1 = cx - r;
+							int y1 = cy - r;
+							int z1 = cz - r;
+							int x2 = cx + r;
+							int y2 = cy + r;
+							int z2 = cz + r;
 							for (int px = x1; px <= x2; px++) {
 								int dx = px - cx;
 								dx *= dx;
@@ -121,9 +124,10 @@ public class StructureHelper {
 							mut.setX(cx);
 							mut.setY(cy);
 							mut.setZ(cz);
+							canDestruct = false;
 							continue;
 						}
-						else if (state.isIn(EndTags.END_GROUND) || state.isOf(EndBlocks.ETERNAL_PEDESTAL) || state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL)) {
+						else if (ignore(state)) {
 							continue;
 						}
 						if (!state.isAir() && random.nextBoolean()) {
@@ -158,7 +162,7 @@ public class StructureHelper {
 				for (int y = bounds.maxY; y >= bounds.minY; y--) {
 					mut.setY(y);
 					BlockState state = world.getBlockState(mut);
-					if (!state.isIn(EndTags.END_GROUND) && !state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL) && !state.isAir() && world.isAir(mut.down())) {
+					if (!ignore(state) && world.isAir(mut.down())) {
 						BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
 						for (int py = mut.getY(); y >= bounds.minY - 10; y--) {
 							mut.setY(py - 1);
@@ -172,6 +176,16 @@ public class StructureHelper {
 				}
 			}
 		}
+	}
+	
+	private static boolean ignore(BlockState state) {
+		return state.isAir()
+				|| state.isIn(EndTags.END_GROUND)
+				|| state.isOf(EndBlocks.ETERNAL_PEDESTAL)
+				|| state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL)
+				|| state.isIn(BlockTags.LOGS)
+				|| state.isIn(BlockTags.LEAVES)
+				|| state.getMaterial().equals(Material.PLANT);
 	}
 	
 	private static void shuffle(Random random) {

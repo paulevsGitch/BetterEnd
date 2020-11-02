@@ -183,11 +183,17 @@ public class BlocksHelper {
 								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 							}
+							continue;
 						}
-						else for (Direction dir: HORIZONTAL) {
-							if (world.getBlockState(POS.offset(dir)).getMaterial().isReplaceable()) {
+						BlockState st;
+						for (Direction dir: HORIZONTAL) {
+							if ((st = world.getBlockState(POS.offset(dir))).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
 								world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
+								break;
 							}
+						}
+						if ((st = world.getBlockState(POS.up())).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
+							world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
 						}
 					}
 					// Falling blocks

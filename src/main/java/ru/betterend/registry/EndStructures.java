@@ -44,7 +44,7 @@ public class EndStructures {
 	}
 	
 	public static void registerBiomeStructures(Identifier id, Biome biome, Collection<Supplier<ConfiguredStructureFeature<?, ?>>> structures) {
-		if (!id.getPath().contains("mountain")) {
+		if (!id.getPath().contains("mountain") && !id.getPath().contains("lake")) {
 			addStructure(ETERNAL_PORTAL, structures);
 		}
 	}

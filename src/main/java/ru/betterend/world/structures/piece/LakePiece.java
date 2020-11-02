@@ -120,12 +120,17 @@ public class LakePiece extends BasePiece {
 								}
 							}
 							maxY = MHelper.randRange(2, 3, random);
+							int last = maxY - 1;
 							for (int i = 0; i < maxY; i++) {
 								pos.setY(pos.getY() - 1);
 								BlockState state = chunk.getBlockState(pos);
 								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
 									if (pos.getY() > 56) {
 										chunk.setBlockState(pos, AIR, false);
+										if (pos.getY() == last) {
+											state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+											chunk.setBlockState(pos.down(), state, false);
+										}
 									}
 									else if (pos.getY() == 56) {
 										if (random.nextBoolean()) {

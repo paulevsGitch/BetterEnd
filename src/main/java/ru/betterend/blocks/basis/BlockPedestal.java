@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.google.common.collect.Lists;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -175,12 +177,9 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		List<ItemStack> drop = super.getDroppedStacks(state, builder);
+		List<ItemStack> drop = Lists.newArrayList(super.getDroppedStacks(state, builder));
 		if (state.isOf(this)) {
-			PedestalState currentState = state.get(STATE);
-			if (currentState.equals(PedestalState.BOTTOM) || currentState.equals(PedestalState.PILLAR)) {
-				return drop;
-			} else {
+			if (isPlaceable(state)) {
 				BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
 				if (blockEntity != null && blockEntity instanceof PedestalBlockEntity) {
 					PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
@@ -188,6 +187,8 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 						drop.add(pedestal.getStack(0));
 					}
 				}
+			} else {
+				return drop;
 			}
 		}
 		return drop;

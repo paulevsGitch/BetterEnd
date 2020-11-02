@@ -23,6 +23,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -83,7 +84,8 @@ public class BlockVine extends BlockBaseNotFull implements IRenderTypeable, Fert
 	}
 	
 	protected boolean isSupport(BlockState state, WorldView world, BlockPos pos) {
-		return world.getBlockState(pos.up()).getBlock() == this || sideCoversSmallSquare(world, pos.up(), Direction.UP);
+		BlockState up = world.getBlockState(pos.up());
+		return up.isOf(this) || up.isIn(BlockTags.LEAVES) || sideCoversSmallSquare(world, pos.up(), Direction.UP);
 	}
 
 	@Override

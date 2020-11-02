@@ -25,7 +25,7 @@ public abstract class InvertedScatterFeature extends DefaultFeature {
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center, DefaultFeatureConfig featureConfig) {
-		int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, center.getX(), center.getZ());
+		int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlocksHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		for (int y = maxY; y > minY; y--) {
 			POS.set(center.getX(), y, center.getZ());
@@ -38,9 +38,9 @@ public abstract class InvertedScatterFeature extends DefaultFeature {
 					float x = pr * (float) Math.cos(theta);
 					float z = pr * (float) Math.sin(theta);
 					
-					POS.set(center.getX() + x, center.getY() - 5, center.getZ() + z);
+					POS.set(center.getX() + x, center.getY() - 7, center.getZ() + z);
 					int up = BlocksHelper.upRay(world, POS, 16);
-					if (up > 10) continue;
+					if (up > 14) continue;
 					POS.setY(POS.getY() + up);
 					
 					if (canGenerate(world, random, center, POS, r)) {

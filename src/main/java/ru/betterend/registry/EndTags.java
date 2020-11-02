@@ -7,6 +7,7 @@ import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tag.BlockTags;
@@ -19,6 +20,7 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockTerrain;
+import ru.betterend.blocks.basis.BlockSimpleLeaves;
 import ru.betterend.util.TagHelper;
 
 public class EndTags {
@@ -50,6 +52,9 @@ public class EndTags {
 			if (block instanceof BlockTerrain) {
 				addSurfaceBlock(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);
+			}
+			else if (block instanceof LeavesBlock || block instanceof BlockSimpleLeaves) {
+				TagHelper.addTag(BlockTags.LEAVES, block);
 			}
 		});
 		

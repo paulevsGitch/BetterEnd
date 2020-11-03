@@ -1,0 +1,14 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/twisted_vine_bottom",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/twisted_vine",
+				"material": "betterend:waving"
+			}
+		]
+	}
+}

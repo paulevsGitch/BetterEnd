@@ -8,6 +8,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.mixin.common.BrewingAccessor;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public class EndPotions {
@@ -25,5 +26,6 @@ public class EndPotions {
 	public static void register() {
 		BrewingAccessor.callRegisterPotionRecipe(Potions.AWKWARD, EndItems.ENDER_DUST, END_VEIL);
 		BrewingAccessor.callRegisterPotionRecipe(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
+		BrewingAccessor.callRegisterPotionRecipe(Potions.AWKWARD, EndBlocks.MURKWEED.asItem(), Potions.NIGHT_VISION);
 	}
 }

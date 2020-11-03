@@ -265,5 +265,9 @@
  	"block.betterend.end_lotus_bookshelf": "End Lotus Bookshelf",
  	"block.betterend.lacugrove_bookshelf": "Lacugrove Bookshelf",
  	"block.betterend.mossy_glowshroom_bookshelf": "Mossy Glowshroom Bookshelf",
- 	"block.betterend.pythadendron_bookshelf": "Pythadendron Bookshelf"
+ 	"block.betterend.pythadendron_bookshelf": "Pythadendron Bookshelf",
+	
+ 	"block.betterend.murkweed": "Murkweed",
+ 	"block.betterend.needlegrass": "Needlegrass",
+ 	"block.betterend.twisted_vine": "Twisted Vine"
 }

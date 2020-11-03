@@ -28,7 +28,7 @@ public class BlockMurkweed extends BlockPlant {
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity && !((LivingEntity) entity).hasStatusEffect(StatusEffects.BLINDNESS)) {
-			((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100));
+			((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 50));
 		}
 	}
 }

@@ -267,5 +267,9 @@
  	"block.betterend.end_lotus_bookshelf": "Книжные полки из лотоса края",
  	"block.betterend.lacugrove_bookshelf": "Книжные полки из оземангра",
  	"block.betterend.mossy_glowshroom_bookshelf": "Книжные полки из мшистого светогриба",
- 	"block.betterend.pythadendron_bookshelf": "Книжные полки из пифадендрона"
+ 	"block.betterend.pythadendron_bookshelf": "Книжные полки из пифадендрона",
+	
+ 	"block.betterend.murkweed": "Мракотрава",
+ 	"block.betterend.needlegrass": "Иголкоцвет",
+ 	"block.betterend.twisted_vine": "Закрученная лоза"
 }

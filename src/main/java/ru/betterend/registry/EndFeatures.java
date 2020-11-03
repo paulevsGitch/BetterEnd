@@ -37,7 +37,7 @@ public class EndFeatures {
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new PythadendronBushFeature(), 4);
-	public static final EndFeature DRAGON_TREE_BUSH = new EndFeature("dragon_tree_bush", new DragonTreeBushFeature(), 12);
+	public static final EndFeature DRAGON_TREE_BUSH = new EndFeature("dragon_tree_bush", new DragonTreeBushFeature(), 15);
 	
 	// Plants //
 	public static final EndFeature UMBRELLA_MOSS = new EndFeature("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);
@@ -46,7 +46,9 @@ public class EndFeatures {
 	public static final EndFeature CHORUS_GRASS = new EndFeature("chorus_grass", new SinglePlantFeature(EndBlocks.CHORUS_GRASS, 4), 5);
 	public static final EndFeature CAVE_GRASS = new EndFeature("cave_grass", new CavePlantFeature(EndBlocks.CAVE_GRASS, 7), 7);
 	public static final EndFeature CRYSTAL_GRASS = new EndFeature("crystal_grass", new SinglePlantFeature(EndBlocks.CRYSTAL_GRASS, 8, false), 5);
-	public static final EndFeature SHADOW_PLANT = new EndFeature("shadow_plant", new SinglePlantFeature(EndBlocks.SHADOW_PLANT, 4), 7);
+	public static final EndFeature SHADOW_PLANT = new EndFeature("shadow_plant", new SinglePlantFeature(EndBlocks.SHADOW_PLANT, 6), 7);
+	public static final EndFeature MURKWEED = new EndFeature("murkweed", new SinglePlantFeature(EndBlocks.MURKWEED, 4), 2);
+	public static final EndFeature NEEDLEGRASS = new EndFeature("needlegrass", new SinglePlantFeature(EndBlocks.NEEDLEGRASS, 4), 2);
 	
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);
 	

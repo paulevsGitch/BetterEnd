@@ -92,6 +92,7 @@ public class CraftingRecipes {
 		
 		GridRecipe.make("aurora_block", EndBlocks.AURORA_CRYSTAL).setShape("##", "##").addMaterial('#', EndItems.CRYSTAL_SHARDS).build();
 		GridRecipe.make("lotus_block", EndBlocks.END_LOTUS.log).setShape("##", "##").addMaterial('#', EndBlocks.END_LOTUS_STEM).build();
+		GridRecipe.make("needlegrass_stick", Items.STICK).setList("#").setOutputCount(2).addMaterial('#', EndBlocks.NEEDLEGRASS).build();
 	}
 	
 	public static void registerPedestal(String name, Block pedestal, Block slab, Block pillar) {

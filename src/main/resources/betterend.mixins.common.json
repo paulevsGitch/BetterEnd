@@ -12,6 +12,7 @@
 		"ServerPlayerEntityMixin",
 		"ChorusPlantFeatureMixin",
 		"ChorusFlowerBlockMixin",
+		"LandPathNodeMakerMixin",
 		"ChorusPlantBlockMixin",
 		"RecipeManagerAccessor",
 		"MinecraftServerMixin",

@@ -23,6 +23,7 @@ public class BiomeShadowForest extends EndBiome {
 				.addFeature(EndFeatures.SHADOW_PLANT)
 				.addFeature(EndFeatures.MURKWEED)
 				.addFeature(EndFeatures.NEEDLEGRASS)
+				.addFeature(EndFeatures.SHADOW_BERRY)
 				.addFeature(EndFeatures.TWISTED_VINE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 80, 1, 4)

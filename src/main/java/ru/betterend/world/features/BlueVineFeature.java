@@ -30,7 +30,7 @@ public class BlueVineFeature extends ScatterFeature {
 		}
 		else {
 			BlockPlantWithAge seed = ((BlockPlantWithAge) EndBlocks.BLUE_VINE_SEED);
-			seed.grow(world, random, blockPos);
+			seed.growAdult(world, random, blockPos);
 		}
 	}
 }

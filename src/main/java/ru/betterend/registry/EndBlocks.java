@@ -28,10 +28,11 @@ import ru.betterend.blocks.BlockLacugroveSapling;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
 import ru.betterend.blocks.BlockMossyGlowshroomHymenophore;
 import ru.betterend.blocks.BlockMossyGlowshroomSapling;
-import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockMurkweed;
 import ru.betterend.blocks.BlockNeedlegrass;
+import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockPythadendronSapling;
+import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockTerrainPlant;
@@ -130,6 +131,9 @@ public class EndBlocks {
 	
 	public static final Block MURKWEED = registerBlock("murkweed", new BlockMurkweed());
 	public static final Block NEEDLEGRASS = registerBlock("needlegrass", new BlockNeedlegrass());
+	
+	// Crops //
+	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new BlockShadowBerry());
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));

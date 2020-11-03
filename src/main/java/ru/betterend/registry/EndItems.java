@@ -12,6 +12,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.ItemStack;
@@ -77,6 +78,10 @@ public class EndItems {
 	public static final ToolItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammer(ToolMaterials.DIAMOND, 5.5F, -3.1F, 0.2D, makeSettings()));
 	public static final ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammer(ToolMaterials.NETHERITE, 5.0F, -3.0F, 0.2D, makeSettings()));
 	
+	// Food //
+	public final static Item SHADOW_BERRY_RAW = registerFood("shadow_berry_raw", 4, 0.5F);
+	public final static Item SHADOW_BERRY_COOKED = registerFood("shadow_berry_cooked", 6, 0.7F);
+	
 	// Other //
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
 	
@@ -129,6 +134,14 @@ public class EndItems {
 		};
 		DispenserBlock.registerBehavior(item, behavior);
 		return registerItem(name, item);
+	}
+	
+	public static Item registerFood(String name, int hunger, float saturation) {
+		return registerFood(name, new FoodComponent.Builder().hunger(hunger).saturationModifier(saturation).build());
+	}
+	
+	public static Item registerFood(String name, FoodComponent foodComponent) {
+		return registerItem(name, new Item(makeSettings().food(foodComponent)));
 	}
 
 	public static Settings makeSettings() {

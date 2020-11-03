@@ -9,7 +9,7 @@ import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
 import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;
-import ru.betterend.recipe.SmeltigRecipes;
+import ru.betterend.recipe.FurnaceRecipes;
 import ru.betterend.recipe.SmithingRecipes;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlockEntities;
@@ -42,7 +42,7 @@ public class BetterEnd implements ModInitializer {
 		EndEnchantments.register();
 		EndPotions.register();
 		CraftingRecipes.register();
-		SmeltigRecipes.register();
+		FurnaceRecipes.register();
 		AlloyingRecipes.register();
 		SmithingRecipes.register();
 		EndStructures.register();

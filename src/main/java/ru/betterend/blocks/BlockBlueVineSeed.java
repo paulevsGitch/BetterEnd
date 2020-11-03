@@ -15,7 +15,7 @@ import ru.betterend.util.MHelper;
 
 public class BlockBlueVineSeed extends BlockPlantWithAge {
 	@Override
-	public void grow(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(2, 5, random);
 		int h = BlocksHelper.upRay(world, pos, height + 2);
 		if (h < height + 1) {

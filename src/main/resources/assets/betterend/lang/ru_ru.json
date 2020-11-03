@@ -271,5 +271,9 @@
 	
  	"block.betterend.murkweed": "Мракотрава",
  	"block.betterend.needlegrass": "Иголкоцвет",
- 	"block.betterend.twisted_vine": "Закрученная лоза"
+ 	"block.betterend.twisted_vine": "Закрученная лоза",
+	
+	"block.betterend.shadow_berry": "Семена теневой ягоды",
+	"item.betterend.shadow_berry_cooked": "Приготовленная теневая ягода",
+	"item.betterend.shadow_berry_raw": "Теневая ягода"
 }

@@ -31,7 +31,7 @@ public abstract class BlockPlantWithAge extends BlockPlant {
 		stateManager.add(AGE);
 	}
 	
-	public abstract void grow(StructureWorldAccess world, Random random, BlockPos pos);
+	public abstract void growAdult(StructureWorldAccess world, Random random, BlockPos pos);
 	
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
@@ -41,7 +41,7 @@ public abstract class BlockPlantWithAge extends BlockPlant {
 				world.setBlockState(pos, state.with(AGE, age + 1));
 			}
 			else {
-				grow(world, random, pos);
+				growAdult(world, random, pos);
 			}
 		}
 	}

@@ -36,13 +36,13 @@ public class StructurePaintedMountain extends StructureFeatureBase {
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 50) {
 				float radius = MHelper.randRange(50, 100, random);
-				float height = radius * MHelper.randRange(0.2F, 0.4F, random);
+				float height = radius * MHelper.randRange(0.4F, 0.6F, random);
 				int count = MHelper.floor(height * MHelper.randRange(0.1F, 0.35F, random) + 1);
 				BlockState[] slises = new BlockState[count];
 				for (int i = 0; i < count; i++) {
 					slises[i] = VARIANTS[random.nextInt(VARIANTS.length)];
 				}
-				this.children.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random.nextInt(), biome, slises ));
+				this.children.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises ));
 			}
 			this.setBoundingBoxFromChildren();
 		}

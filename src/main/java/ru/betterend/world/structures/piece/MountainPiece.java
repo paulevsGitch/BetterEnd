@@ -27,26 +27,31 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
 public class MountainPiece extends BasePiece {
 	private Map<Integer, Integer> heightmap = Maps.newHashMap();
-	private OpenSimplexNoise noise;
+	private OpenSimplexNoise noise1;
+	private OpenSimplexNoise noise2;
 	private BlockPos center;
 	private float radius;
 	private float height;
 	private float r2;
 	private Identifier biomeID;
 	private BlockState top;
+	private int seed1;
+	private int seed2;
 	
-	public MountainPiece(BlockPos center, float radius, float height, int id, Biome biome) {
-		super(EndStructures.MOUNTAIN_PIECE, id);
+	public MountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
+		super(EndStructures.MOUNTAIN_PIECE, random.nextInt());
 		this.center = center;
 		this.radius = radius;
 		this.height = height;
 		this.r2 = radius * radius;
-		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		this.seed1 = random.nextInt();
+		this.seed2 = random.nextInt();
+		this.noise1 = new OpenSimplexNoise(this.seed1);
+		this.noise2 = new OpenSimplexNoise(this.seed2);
 		this.biomeID = EndBiomes.getBiomeID(biome);
 		top = biome.getGenerationSettings().getSurfaceConfig().getTopMaterial();
 		makeBoundingBox();
@@ -63,6 +68,8 @@ public class MountainPiece extends BasePiece {
 		tag.putFloat("radius", radius);
 		tag.putFloat("height", height);
 		tag.putString("biome", biomeID.toString());
+		tag.putInt("seed1", seed1);
+		tag.putInt("seed2", seed2);
 	}
 
 	@Override
@@ -72,7 +79,10 @@ public class MountainPiece extends BasePiece {
 		height = tag.getFloat("height");
 		biomeID = new Identifier(tag.getString("biome"));
 		r2 = radius * radius;
-		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		seed1 = tag.getInt("seed1");
+		seed2 = tag.getInt("seed2");
+		noise1 = new OpenSimplexNoise(seed1);
+		noise2 = new OpenSimplexNoise(seed2);
 		top = EndBiomes.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
 	}
 
@@ -100,14 +110,15 @@ public class MountainPiece extends BasePiece {
 					if (minY > 56) {
 						float maxY = dist * height * getHeightClamp(world, 8, px, pz);
 						if (maxY > 0) {
-							maxY *= (float) noise.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
-							maxY *= (float) noise.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
+							maxY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
+							maxY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
 							maxY += 56;
-							int cover = (int) (maxY - 1);
-							boolean needCover = (noise.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random) - (maxY - 70) * 0.1) > 0;
-							for (int y = minY - 1; y < maxY; y++) {
+							int maxYI = (int) (maxY);
+							int cover = maxYI - 1;
+							boolean needCover = (noise1.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random) - (maxY - 70) * 0.1) > 0;
+							for (int y = minY - 1; y < maxYI; y++) {
 								pos.setY(y);
-								chunk.setBlockState(pos, needCover && y >= cover ? top : Blocks.END_STONE.getDefaultState(), false);
+								chunk.setBlockState(pos, needCover && y == cover ? top : Blocks.END_STONE.getDefaultState(), false);
 							}
 						}
 					}
@@ -169,18 +180,10 @@ public class MountainPiece extends BasePiece {
 		}
 		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		if (h < 57) {
-			heightmap.put(p, 0);
-			return 0;
+			heightmap.put(p, -4);
+			return -4;
 		}
-		
-		Mutable m = new Mutable();
-		m.set(pos.getX(), h - 1, pos.getZ());
-		while (h > 56 && world.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
-			m.setY(m.getY() - 1);
-		}
-		h = m.getY();
-		
-		h -= 57;
+		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
 		
 		if (h < 0) {
 			heightmap.put(p, 0);
@@ -194,7 +197,6 @@ public class MountainPiece extends BasePiece {
 	
 	private float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {
 		Mutable mut = new Mutable();
-		int r2 = radius * radius;
 		float height = 0;
 		float max = 0;
 		for (int x = -radius; x <= radius; x++) {
@@ -203,8 +205,8 @@ public class MountainPiece extends BasePiece {
 			for (int z = -radius; z <= radius; z++) {
 				mut.setZ(posZ + z);
 				int z2 = z * z;
-				if (x2 + z2 < r2) {
-					float mult = 1 - (float) Math.sqrt(x2 + z2) / radius;
+				float mult = 1 - (float) Math.sqrt(x2 + z2) / radius;
+				if (mult > 0) {
 					max += mult;
 					height += getHeight(world, mut) * mult;
 				}

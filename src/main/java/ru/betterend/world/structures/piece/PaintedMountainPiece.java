@@ -26,26 +26,31 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
 public class PaintedMountainPiece extends BasePiece {
 	private Map<Integer, Integer> heightmap = Maps.newHashMap();
-	private OpenSimplexNoise noise;
+	private OpenSimplexNoise noise1;
+	private OpenSimplexNoise noise2;
 	private BlockPos center;
 	private float radius;
 	private float height;
 	private float r2;
 	private Identifier biomeID;
 	private BlockState[] slises;
+	private int seed1;
+	private int seed2;
 	
-	public PaintedMountainPiece(BlockPos center, float radius, float height, int id, Biome biome, BlockState[] slises) {
-		super(EndStructures.PAINTED_MOUNTAIN_PIECE, id);
+	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome, BlockState[] slises) {
+		super(EndStructures.PAINTED_MOUNTAIN_PIECE, random.nextInt());
 		this.center = center;
 		this.radius = radius;
 		this.height = height;
 		this.r2 = radius * radius;
-		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		this.seed1 = random.nextInt();
+		this.seed2 = random.nextInt();
+		this.noise1 = new OpenSimplexNoise(this.seed1);
+		this.noise2 = new OpenSimplexNoise(this.seed2);
 		this.biomeID = EndBiomes.getBiomeID(biome);
 		this.slises = slises;
 		makeBoundingBox();
@@ -62,6 +67,8 @@ public class PaintedMountainPiece extends BasePiece {
 		tag.putFloat("radius", radius);
 		tag.putFloat("height", height);
 		tag.putString("biome", biomeID.toString());
+		tag.putInt("seed1", seed1);
+		tag.putInt("seed2", seed2);
 		
 		ListTag slise = new ListTag();
 		for (BlockState state: slises) {
@@ -77,7 +84,10 @@ public class PaintedMountainPiece extends BasePiece {
 		height = tag.getFloat("height");
 		biomeID = new Identifier(tag.getString("biome"));
 		r2 = radius * radius;
-		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		seed1 = tag.getInt("seed1");
+		seed2 = tag.getInt("seed2");
+		noise1 = new OpenSimplexNoise(seed1);
+		noise2 = new OpenSimplexNoise(seed2);
 		ListTag slise = tag.getList("slises", 10);
 		slises = new BlockState[slise.size()];
 		for (int i = 0; i < slises.length; i++) {
@@ -112,12 +122,12 @@ public class PaintedMountainPiece extends BasePiece {
 							pos.setY(minY --);
 						}
 						
-						float maxY = dist * height * getHeightClamp(world, 4, px, pz);
+						float maxY = dist * height * getHeightClamp(world, 8, px, pz);
 						if (maxY > 0) {
-							maxY *= (float) noise.eval(px * 0.05, pz * 0.05) * 0.03F + 0.97F;
-							maxY *= (float) noise.eval(px * 0.1, pz * 0.1) * 0.01F + 0.99F;
+							maxY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
+							maxY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.9F;
 							maxY += 56;
-							float offset = (float) (noise.eval(px * 0.07, pz * 0.07) * 5 + noise.eval(px * 0.2, pz * 0.2) * 2 + 7);
+							float offset = (float) (noise1.eval(px * 0.07, pz * 0.07) * 5 + noise1.eval(px * 0.2, pz * 0.2) * 2 + 7);
 							for (int y = minY - 1; y < maxY; y++) {
 								pos.setY(y);
 								int index = MHelper.floor((y + offset) * 0.65F) % slises.length;
@@ -140,23 +150,15 @@ public class PaintedMountainPiece extends BasePiece {
 		}
 		
 		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
-			heightmap.put(p, -6);
-			return -6;
+			heightmap.put(p, -4);
+			return -4;
 		}
 		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		if (h < 57) {
-			heightmap.put(p, 0);
-			return 0;
+			heightmap.put(p, -4);
+			return -4;
 		}
-		
-		Mutable m = new Mutable();
-		m.set(pos.getX(), h - 1, pos.getZ());
-		while (h > 56 && world.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
-			m.setY(m.getY() - 1);
-		}
-		h = m.getY();
-		
-		h -= 57;
+		h = MHelper.floor(noise2.eval(pos.getX() * 0.005, pos.getZ() * 0.005) * noise2.eval(pos.getX() * 0.001, pos.getZ() * 0.001) * 8 + 8);
 		
 		if (h < 0) {
 			heightmap.put(p, 0);
@@ -170,7 +172,6 @@ public class PaintedMountainPiece extends BasePiece {
 	
 	private float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {
 		Mutable mut = new Mutable();
-		int r2 = radius * radius;
 		float height = 0;
 		float max = 0;
 		for (int x = -radius; x <= radius; x++) {
@@ -179,8 +180,8 @@ public class PaintedMountainPiece extends BasePiece {
 			for (int z = -radius; z <= radius; z++) {
 				mut.setZ(posZ + z);
 				int z2 = z * z;
-				if (x2 + z2 < r2) {
-					float mult = 1 - (float) Math.sqrt(x2 + z2) / radius;
+				float mult = 1 - (float) Math.sqrt(x2 + z2) / radius;
+				if (mult > 0) {
 					max += mult;
 					height += getHeight(world, mut) * mult;
 				}

@@ -133,6 +133,7 @@ public class EndBlocks {
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));
+	public static final Block TWISTED_VINE = registerBlock("twisted_vine", new BlockVine());
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_DUST, 1, 3));

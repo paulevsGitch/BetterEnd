@@ -31,7 +31,7 @@ public abstract class InvertedScatterFeature extends DefaultFeature {
 			POS.set(center.getX(), y, center.getZ());
 			if (world.getBlockState(POS).isAir() && !world.getBlockState(POS.up()).isAir()) {
 				float r = MHelper.randRange(radius * 0.5F, radius, random);
-				int count = MHelper.floor(r * r * MHelper.randRange(1.5F, 3F, random));
+				int count = MHelper.floor(r * r * MHelper.randRange(0.5F, 1.5F, random));
 				for (int i = 0; i < count; i++) {
 					float pr = r * (float) Math.sqrt(random.nextFloat());
 					float theta = random.nextFloat() * MHelper.PI2;

@@ -21,6 +21,7 @@ import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.basis.BlockSimpleLeaves;
+import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.util.TagHelper;
 
 public class EndTags {
@@ -55,6 +56,9 @@ public class EndTags {
 			}
 			else if (block instanceof LeavesBlock || block instanceof BlockSimpleLeaves) {
 				TagHelper.addTag(BlockTags.LEAVES, block);
+			}
+			else if (block instanceof BlockVine) {
+				TagHelper.addTag(BlockTags.CLIMBABLE, block);
 			}
 		});
 		

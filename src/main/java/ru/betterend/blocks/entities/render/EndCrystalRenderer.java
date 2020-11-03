@@ -18,11 +18,8 @@ public class EndCrystalRenderer {
 	private static final ModelPart FRAME;
 	
 	public static void render(int age, float tickDelta, float rotation, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light) {
-		float rotation2 = (age + tickDelta) * 3.0F;
-//		System.out.println("=====");
-//		System.out.println("A: " + age);
-//		System.out.println("R1: " + rotation);
-//		System.out.println("R2: " + rotation2);
+		float k = 240F / 314F;
+		float rotation2 = (age * k + tickDelta) * 3.0F;
 		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(END_CRYSTAL);
 		matrices.push();
 		matrices.scale(0.8F, 0.8F, 0.8F);

@@ -70,7 +70,7 @@ public class PedestalItemRenderer extends BlockEntityRenderer<PedestalBlockEntit
 		}
 		
 		if (activeItem.getItem() == Items.END_CRYSTAL) {
-			EndCrystalRenderer.render(blockEntity.getAge(), tickDelta, rotation, matrices, vertexConsumers, light);
+			EndCrystalRenderer.render(blockEntity.getAge(), blockEntity.getMaxAge(), tickDelta, matrices, vertexConsumers, light);
 		} else {
 			minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, overlay, model);
 		}

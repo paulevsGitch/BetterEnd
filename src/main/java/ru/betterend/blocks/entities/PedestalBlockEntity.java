@@ -17,6 +17,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	private ItemStack activeItem = ItemStack.EMPTY;
 	
 	private EternalRitual linkedRitual;
+	private final int maxAge = 314;
 	private int age;
 	
 	public PedestalBlockEntity() {
@@ -37,6 +38,10 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	
 	public int getAge() {
 		return this.age;
+	}
+	
+	public int getMaxAge() {
+		return this.maxAge;
 	}
 
 	@Override
@@ -123,7 +128,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	public void tick() {
 		if (!isEmpty()) {
 			this.age++;
-			if (age > 314) {
+			if (age > maxAge) {
 				this.age = 0;
 			}
 		}

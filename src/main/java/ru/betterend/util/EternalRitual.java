@@ -155,7 +155,7 @@ public class EternalRitual {
 			serverWorld.spawnParticles(ParticleTypes.PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 1);
 			serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 0.3);
 		}
-		serverWorld.playSound(null, center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.NEUTRAL, 16, 1);
+		serverWorld.playSound(null, center, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.NEUTRAL, 16, 1);
 	}
 	
 	private void activatePortal(World world, BlockPos center) {

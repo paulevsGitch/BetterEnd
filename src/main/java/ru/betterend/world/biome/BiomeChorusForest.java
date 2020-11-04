@@ -24,6 +24,7 @@ public class BiomeChorusForest extends EndBiome {
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(EndFeatures.PYTHADENDRON_TREE)
 				.addFeature(EndFeatures.PYTHADENDRON_BUSH)
+				.addFeature(EndFeatures.PURPLE_POLYPORE)
 				.addFeature(Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.addFeature(Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.addFeature(EndFeatures.CHORUS_GRASS)

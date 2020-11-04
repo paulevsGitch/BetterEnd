@@ -51,6 +51,7 @@ import ru.betterend.blocks.basis.BlockLeaves;
 import ru.betterend.blocks.basis.BlockOre;
 import ru.betterend.blocks.basis.BlockSimpleLeaves;
 import ru.betterend.blocks.basis.BlockVine;
+import ru.betterend.blocks.basis.BlockWallMushroom;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.tab.CreativeTab;
@@ -131,6 +132,9 @@ public class EndBlocks {
 	
 	public static final Block MURKWEED = registerBlock("murkweed", new BlockMurkweed());
 	public static final Block NEEDLEGRASS = registerBlock("needlegrass", new BlockNeedlegrass());
+	
+	// Wall Plants //
+	public static final Block PURPLE_POLYPORE = registerBlock("purple_polypore", new BlockWallMushroom(13));
 	
 	// Crops //
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new BlockShadowBerry());

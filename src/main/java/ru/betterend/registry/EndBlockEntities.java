@@ -19,6 +19,7 @@ import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.blocks.entities.EChestBlockEntity;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
+import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 
 public class EndBlockEntities {
@@ -26,6 +27,8 @@ public class EndBlockEntities {
 			BlockEntityType.Builder.create(EndStoneSmelterBlockEntity::new, EndBlocks.END_STONE_SMELTER));
 	public final static BlockEntityType<PedestalBlockEntity> PEDESTAL = registerBlockEntity("pedestal",
 			BlockEntityType.Builder.create(PedestalBlockEntity::new, getPedestals()));
+	public final static BlockEntityType<PedestalBlockEntity> ETERNAL_PEDESTAL = registerBlockEntity("eternal_pedestal",
+			BlockEntityType.Builder.create(EternalPedestalEntity::new, EndBlocks.ETERNAL_PEDESTAL));
 	public static final BlockEntityType<EChestBlockEntity> CHEST = registerBlockEntity("chest", 
 			BlockEntityType.Builder.create(EChestBlockEntity::new, getChests()));
 	public static final BlockEntityType<EBarrelBlockEntity> BARREL = registerBlockEntity("barrel",

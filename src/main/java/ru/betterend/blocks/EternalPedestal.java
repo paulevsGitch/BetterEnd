@@ -23,11 +23,12 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.explosion.Explosion;
+
 import ru.betterend.blocks.basis.BlockPedestal;
-import ru.betterend.blocks.entities.PedestalBlockEntity;
+import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-import ru.betterend.util.EternalRitual;
+import ru.betterend.rituals.EternalRitual;
 
 public class EternalPedestal extends BlockPedestal {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
@@ -42,8 +43,8 @@ public class EternalPedestal extends BlockPedestal {
 		ActionResult result = super.onUse(state, world, pos, player, hand, hit);
 		if (result.equals(ActionResult.SUCCESS)) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof PedestalBlockEntity) {
-				PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
+			if (blockEntity instanceof EternalPedestalEntity) {
+				EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
 				BlockState updatedState = world.getBlockState(pos);
 				if (pedestal.isEmpty() && updatedState.get(ACTIVATED)) {
 					if (pedestal.hasRitual()) {
@@ -103,8 +104,8 @@ public class EternalPedestal extends BlockPedestal {
 		}
 		List<ItemStack> drop = Lists.newArrayList();
 		BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
-		if (blockEntity != null && blockEntity instanceof PedestalBlockEntity) {
-			PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
+		if (blockEntity != null && blockEntity instanceof EternalPedestalEntity) {
+			EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
 			if (!pedestal.isEmpty()) {
 				drop.add(pedestal.getStack(0));
 			}
@@ -116,5 +117,10 @@ public class EternalPedestal extends BlockPedestal {
 	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
 		super.appendProperties(stateManager);
 		stateManager.add(ACTIVATED);
+	}
+
+	@Override
+	public BlockEntity createBlockEntity(BlockView world) {
+		return new EternalPedestalEntity();
 	}
 }

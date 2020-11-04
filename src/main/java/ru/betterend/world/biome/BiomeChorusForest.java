@@ -29,6 +29,7 @@ public class BiomeChorusForest extends EndBiome {
 				.addFeature(Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.addFeature(EndFeatures.CHORUS_GRASS)
 				.addFeature(EndFeatures.TAIL_MOSS)
+				.addFeature(EndFeatures.TAIL_MOSS_WOOD)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EndEntities.END_SLIME, 5, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));

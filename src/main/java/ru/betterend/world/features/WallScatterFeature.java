@@ -28,6 +28,9 @@ public abstract class WallScatterFeature extends DefaultFeature {
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center, DefaultFeatureConfig featureConfig) {
 		int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlocksHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
+		if (maxY < 10 || maxY < minY) {
+			return false;
+		}
 		int py = MHelper.randRange(minY, maxY, random);
 		
 		Mutable mut = new Mutable();

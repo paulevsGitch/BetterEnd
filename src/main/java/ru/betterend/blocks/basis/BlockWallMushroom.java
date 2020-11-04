@@ -14,16 +14,13 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class BlockWallMushroom extends BlockWallPlant {
 	public BlockWallMushroom(int light) {
-		super(FabricBlockSettings.of(Material.WOOD)
+		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.AXES)
 				.sounds(BlockSoundGroup.GRASS)
 				.luminance(light)
 				.sounds(BlockSoundGroup.WOOD)
 				.hardness(0.2F)
 				.breakByHand(true)
-				.allowsSpawning((state, world, pos, type) -> { return false; })
-				.suffocates((state, world, pos) -> { return false; })
-				.blockVision((state, world, pos) -> { return false; })
 				.noCollision());
 	}
 	

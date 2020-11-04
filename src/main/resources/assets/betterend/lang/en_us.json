@@ -274,5 +274,8 @@
 	"block.betterend.shadow_berry": "Shadow Berry Seeds",
 	"item.betterend.shadow_berry_cooked": "Shadow Berry Cooked",
 	"item.betterend.shadow_berry_raw": "Shadow Berry",
-	"block.betterend.purple_polypore": "Purple Polypore"
+	"block.betterend.purple_polypore": "Purple Polypore",
+	
+	"block.betterend.cyan_moss": "Cyan Moss",
+ 	"block.betterend.tail_moss": "Tail Moss"
 }

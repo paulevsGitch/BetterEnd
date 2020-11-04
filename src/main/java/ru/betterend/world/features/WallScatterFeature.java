@@ -37,7 +37,7 @@ public abstract class WallScatterFeature extends DefaultFeature {
 				mut.setY(py + y);
 				for (int z = -radius; z <= radius; z++) {
 					mut.setZ(center.getZ() + z);
-					if (random.nextInt(8) == 0 && world.isAir(mut)) {
+					if (random.nextInt(4) == 0 && world.isAir(mut)) {
 						shuffle(random);
 						for (Direction dir: DIR) {
 							if (canGenerate(world, random, mut, dir)) {

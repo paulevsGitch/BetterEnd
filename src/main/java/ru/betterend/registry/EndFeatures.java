@@ -27,6 +27,7 @@ import ru.betterend.world.features.RoundCaveFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
+import ru.betterend.world.features.WallPlantFeature;
 import ru.betterend.world.features.WallPlantOnLogFeature;
 
 public class EndFeatures {
@@ -59,7 +60,8 @@ public class EndFeatures {
 	// Wall Plants //
 	public static final EndFeature PURPLE_POLYPORE = new EndFeature("purple_polypore", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 3), 5);
 	public static final EndFeature PURPLE_POLYPORE_DENSE = new EndFeature("purple_polypore_dense", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 5), 15);
-	//public static final EndFeature TAIL_MOSS = new EndFeature("tail_moss", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 3), 5);
+	public static final EndFeature TAIL_MOSS = new EndFeature("tail_moss", new WallPlantFeature(EndBlocks.TAIL_MOSS, 5), 30);
+	public static final EndFeature CYAN_MOSS = new EndFeature("cyan_moss", new WallPlantFeature(EndBlocks.CYAN_MOSS, 5), 30);
 	
 	// Water //
 	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 10), 10);

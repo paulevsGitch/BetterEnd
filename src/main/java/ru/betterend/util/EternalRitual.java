@@ -16,6 +16,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
@@ -129,7 +130,7 @@ public class EternalRitual {
 	private void activatePortal() {
 		if (active) return;
 		this.activatePortal(world, center);
-		openEffect((ServerWorld) world, center);
+		this.doEffects((ServerWorld) world, center);
 		if (exit == null) {
 			this.exit = this.findPortalPos();
 		} else {
@@ -139,7 +140,7 @@ public class EternalRitual {
 		this.active = true;
 	}
 	
-	private void openEffect(ServerWorld serverWorld, BlockPos center) {
+	private void doEffects(ServerWorld serverWorld, BlockPos center) {
 		Direction moveX, moveY;
 		if (Direction.Axis.X == axis) {
 			moveX = Direction.EAST;
@@ -148,20 +149,13 @@ public class EternalRitual {
 			moveX = Direction.SOUTH;
 			moveY = Direction.EAST;
 		}
-		
 		for (Point pos : STRUCTURE_MAP) {
 			BlockPos.Mutable p = center.mutableCopy();
 			p.move(moveX, pos.x).move(moveY, pos.y);
 			serverWorld.spawnParticles(ParticleTypes.PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 1);
 			serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 0.3);
 		}
-		
-		serverWorld.getPlayers().forEach((player) -> {
-			//serverWorld.playSound(player, center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.HOSTILE, 10, 1);
-			player.playSound(SoundEvents.BLOCK_END_PORTAL_SPAWN, 16, 1);
-		});
-		//ServerPlayerEntity player = serverWorld.getPlayers().get(0);
-		//serverWorld.playSound(player, center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 10, 1);
+		serverWorld.playSound(null, center.getX(), center.getY(), center.getZ(), SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.NEUTRAL, 16, 1);
 	}
 	
 	private void activatePortal(World world, BlockPos center) {

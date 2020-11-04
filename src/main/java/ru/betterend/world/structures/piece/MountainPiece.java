@@ -27,6 +27,7 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
 public class MountainPiece extends BasePiece {
@@ -92,7 +93,7 @@ public class MountainPiece extends BasePiece {
 		int sz = chunkPos.getStartZ();
 		Mutable pos = new Mutable();
 		Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
-		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
+		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
 		for (int x = 0; x < 16; x++) {
 			int px = x + sx;
 			int px2 = px - center.getX();
@@ -107,6 +108,14 @@ public class MountainPiece extends BasePiece {
 					pos.setZ(z);
 					dist = 1 - (float) Math.pow(dist / r2, 0.3);
 					int minY = map.get(x, z);
+					if (minY < 56) {
+						continue;
+					}
+					pos.setY(minY);
+					while (!chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN) && pos.getY() > 56) {
+						pos.setY(pos.getY() - 1);
+					}
+					minY = pos.getY();
 					if (minY > 56) {
 						float maxY = dist * height * getHeightClamp(world, 8, px, pz);
 						if (maxY > 0) {
@@ -175,8 +184,8 @@ public class MountainPiece extends BasePiece {
 		}
 		
 		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
-			heightmap.put(p, -4);
-			return -4;
+			heightmap.put(p, -10);
+			return -10;
 		}
 		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		if (h < 57) {

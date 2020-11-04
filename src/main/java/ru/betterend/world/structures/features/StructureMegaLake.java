@@ -32,7 +32,7 @@ public class StructureMegaLake extends StructureFeatureBase {
 			if (y > 5) {
 				float radius = MHelper.randRange(50, 100, random);
 				float depth = MHelper.randRange(10, 16, random);
-				LakePiece piece = new LakePiece(new BlockPos(x, y, z), radius, depth, random.nextInt(), biome);
+				LakePiece piece = new LakePiece(new BlockPos(x, y, z), radius, depth, random, biome);
 				this.children.add(piece);
 			}
 			this.setBoundingBoxFromChildren();

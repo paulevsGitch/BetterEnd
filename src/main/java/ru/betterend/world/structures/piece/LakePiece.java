@@ -33,20 +33,26 @@ import ru.betterend.util.MHelper;
 public class LakePiece extends BasePiece {
 	private static final BlockState WATER = Blocks.WATER.getDefaultState();
 	private Map<Integer, Integer> heightmap = Maps.newHashMap();
-	private OpenSimplexNoise noise;
+	private OpenSimplexNoise noise1;
+	private OpenSimplexNoise noise2;
 	private BlockPos center;
 	private float radius;
 	private float depth;
 	private float r2;
 	private Identifier biomeID;
+	private int seed1;
+	private int seed2;
 	
-	public LakePiece(BlockPos center, float radius, float depth, int id, Biome biome) {
-		super(EndStructures.LAKE_PIECE, id);
+	public LakePiece(BlockPos center, float radius, float depth, Random random, Biome biome) {
+		super(EndStructures.LAKE_PIECE, random.nextInt());
 		this.center = center;
 		this.radius = radius;
 		this.depth = depth;
 		this.r2 = radius * radius;
-		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		this.seed1 = random.nextInt();
+		this.seed2 = random.nextInt();
+		this.noise1 = new OpenSimplexNoise(this.seed1);
+		this.noise2 = new OpenSimplexNoise(this.seed2);
 		this.biomeID = EndBiomes.getBiomeID(biome);
 		makeBoundingBox();
 	}
@@ -62,6 +68,8 @@ public class LakePiece extends BasePiece {
 		tag.putFloat("radius", radius);
 		tag.putFloat("depth", depth);
 		tag.putString("biome", biomeID.toString());
+		tag.putInt("seed1", seed1);
+		tag.putInt("seed2", seed2);
 	}
 
 	@Override
@@ -70,7 +78,10 @@ public class LakePiece extends BasePiece {
 		radius = tag.getFloat("radius");
 		depth = tag.getFloat("depth");
 		r2 = radius * radius;
-		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
+		seed1 = tag.getInt("seed1");
+		seed2 = tag.getInt("seed2");
+		noise1 = new OpenSimplexNoise(seed1);
+		noise2 = new OpenSimplexNoise(seed2);
 		biomeID = new Identifier(tag.getString("biome"));
 	}
 
@@ -96,10 +107,10 @@ public class LakePiece extends BasePiece {
 					dist = 1 - dist / r2;
 					int maxY = map.get(x, z);
 					if (maxY > 55) {
-						float minY = dist * depth * getHeightClamp(world, 4, px, pz);
+						float minY = dist * depth * getHeightClamp(world, 8, px, pz);
 						if (minY > 0) {
-							minY *= (float) noise.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
-							minY *= (float) noise.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
+							minY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
+							minY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
 							float lerp = minY / 2F;
 							if (lerp > 1) {
 								lerp = 1;
@@ -171,15 +182,15 @@ public class LakePiece extends BasePiece {
 		}
 		
 		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
-			heightmap.put(p, -4);
-			return -4;
+			heightmap.put(p, -20);
+			return -20;
 		}
 		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		if (h < 57) {
-			heightmap.put(p, 0);
-			return 0;
+			heightmap.put(p, -20);
+			return -20;
 		}
-		h -= 57;
+		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
 		
 		if (h < 0) {
 			heightmap.put(p, 0);

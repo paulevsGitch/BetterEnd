@@ -59,6 +59,7 @@ public class EndFeatures {
 	// Wall Plants //
 	public static final EndFeature PURPLE_POLYPORE = new EndFeature("purple_polypore", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 3), 5);
 	public static final EndFeature PURPLE_POLYPORE_DENSE = new EndFeature("purple_polypore_dense", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 5), 15);
+	//public static final EndFeature TAIL_MOSS = new EndFeature("tail_moss", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 3), 5);
 	
 	// Water //
 	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 10), 10);

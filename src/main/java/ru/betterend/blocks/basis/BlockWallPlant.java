@@ -114,11 +114,6 @@ public class BlockWallPlant extends BlockPlant {
 	}
 	
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		return Lists.newArrayList(new ItemStack(this));
-	}
-	
-	@Override
 	public BlockState rotate(BlockState state, BlockRotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
 	}

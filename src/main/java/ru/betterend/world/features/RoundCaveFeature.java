@@ -31,6 +31,8 @@ import ru.betterend.util.sdf.primitive.SDFHexPrism;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class RoundCaveFeature extends DefaultFeature {
+	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
+	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) {
@@ -48,7 +50,7 @@ public class RoundCaveFeature extends DefaultFeature {
 		while (top > bottom && !world.getBlockState(bpos).isIn(EndTags.GEN_TERRAIN)) {
 			bpos.setY(--top);
 		}
-		top -= radius + 5;
+		top -= radius * 1.3F + 5;
 		
 		if (top <= bottom) {
 			return false;
@@ -89,17 +91,17 @@ public class RoundCaveFeature extends DefaultFeature {
 					if (dist < r * r) {
 						BlockState state = world.getBlockState(bpos);
 						if (isReplaceable(state)) {
-							BlocksHelper.setWithoutUpdate(world, bpos, AIR);
+							BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 							
 							while (state.getMaterial().equals(Material.LEAVES)) {
-								BlocksHelper.setWithoutUpdate(world, bpos, AIR);
+								BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 								bpos.setY(bpos.getY() + 1);
 								state = world.getBlockState(bpos);
 							}
 							
 							bpos.setY(y - 1);
 							while (state.getMaterial().equals(Material.LEAVES)) {
-								BlocksHelper.setWithoutUpdate(world, bpos, AIR);
+								BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 								bpos.setY(bpos.getY() - 1);
 								state = world.getBlockState(bpos);
 							}

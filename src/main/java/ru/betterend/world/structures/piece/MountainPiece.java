@@ -94,6 +94,7 @@ public class MountainPiece extends BasePiece {
 		Mutable pos = new Mutable();
 		Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
 		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
+		Heightmap map2 = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
 		for (int x = 0; x < 16; x++) {
 			int px = x + sx;
 			int px2 = px - center.getX();
@@ -112,10 +113,11 @@ public class MountainPiece extends BasePiece {
 						continue;
 					}
 					pos.setY(minY);
-					while (!chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN) && pos.getY() > 56) {
+					while (!chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(pos.down()).isOf(Blocks.CAVE_AIR)) {
 						pos.setY(pos.getY() - 1);
 					}
 					minY = pos.getY();
+					minY = Math.max(minY, map2.get(x, z));
 					if (minY > 10) {
 						float maxY = dist * height * getHeightClamp(world, 8, px, pz);
 						if (maxY > 0) {

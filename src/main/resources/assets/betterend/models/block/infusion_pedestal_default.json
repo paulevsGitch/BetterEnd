@@ -1,9 +1,25 @@
 {
 	"parent": "minecraft:block/block",
 	"textures": {
+		"top": "betterend:block/infusion_pedestal_top",
+		"base": "betterend:block/infusion_pedestal_base",
+		"pillar": "betterend:block/infusion_pedestal_pillar",
+		"bottom": "betterend:block/infusion_pedestal_base",
 		"particle": "#base"
 	},
 	"elements": [
+		{
+			"__comment": "eye",
+			"from": [ 4, 15, 4 ],
+			"to": [ 12, 16, 12 ],
+			"faces": {
+				"up": { "uv": [ 4, 4, 12, 12 ], "texture": "#top" },
+				"north": { "uv": [ 4, 4, 12, 5 ], "texture": "#top" },
+				"south": { "uv": [ 4, 4, 12, 5 ], "texture": "#top" },
+				"west": { "uv": [ 4, 4, 12, 5 ], "texture": "#top" },
+				"east": { "uv": [ 4, 4, 12, 5 ], "texture": "#top" }
+			}
+		},
 		{
 			"__comment": "basin_1",
 			"from": [ 0, 0, 0 ],
@@ -32,25 +48,25 @@
 		{
 			"__comment": "pillar",
 			"from": [ 3, 4, 3 ],
-			"to": [ 13, 12, 13 ],
+			"to": [ 13, 13, 13 ],
 			"faces": {
-				"north": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" },
-				"south": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" },
-				"west": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" },
-				"east": { "uv": [ 3, 4, 13, 12 ], "texture": "#pillar" }
+				"north": { "uv": [ 3, 4, 13, 13 ], "texture": "#pillar" },
+				"south": { "uv": [ 3, 4, 13, 13 ], "texture": "#pillar" },
+				"west": { "uv": [ 3, 4, 13, 13 ], "texture": "#pillar" },
+				"east": { "uv": [ 3, 4, 13, 13 ], "texture": "#pillar" }
 			}
 		},
 		{
 			"__comment": "top",
-			"from": [ 1, 12, 1 ],
-			"to": [ 15, 14, 15 ],
+			"from": [ 1, 13, 1 ],
+			"to": [ 15, 15, 15 ],
 			"faces": {
 				"down": { "uv": [ 1, 1, 15, 15 ], "texture": "#base" },
 				"up": { "uv": [ 1, 1, 15, 15 ], "texture": "#top" },
-				"north": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
-				"south": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
-				"west": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" },
-				"east": { "uv": [ 1, 12, 15, 14 ], "texture": "#base" }
+				"north": { "uv": [ 1, 14, 15, 16 ], "texture": "#top" },
+				"south": { "uv": [ 1, 14, 15, 16 ], "texture": "#top" },
+				"west": { "uv": [ 1, 14, 15, 16 ], "texture": "#top" },
+				"east": { "uv": [ 15, 16, 1, 14 ], "texture": "#top" }
 			}
 		}
 	]

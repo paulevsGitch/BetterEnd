@@ -43,6 +43,7 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.EternalRunedFlavolite;
+import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.PedestalVanilla;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.TerminiteBlock;
@@ -158,6 +159,7 @@ public class EndBlocks {
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
 	public static final Block ETERNAL_PEDESTAL = registerBlock("eternal_pedestal", new EternalPedestal());
+	public static final Block INFUSION_PEDESTAL = registerBlock("infusion_pedestal", new InfusionPedestal());
 	
 	//Technical
 	public static final Block END_PORTAL_BLOCK = registerBlock("end_portal_block", new EndPortalBlock());

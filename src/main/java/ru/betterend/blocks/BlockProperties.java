@@ -33,21 +33,27 @@ public class BlockProperties {
 	}
 
 	public static enum PedestalState implements StringIdentifiable {
-		PEDESTAL_TOP,
-		COLUMN_TOP,
-		BOTTOM,
-		PILLAR,
-		COLUMN,
-		DEFAULT;
+		PEDESTAL_TOP("pedestal_top"),
+		COLUMN_TOP("column_top"),
+		BOTTOM("bottom"),
+		PILLAR("pillar"),
+		COLUMN("column"),
+		DEFAULT("default");
+		
+		private final String name;
+		
+		PedestalState(String name) {
+			this.name = name;
+		}
 	
 		@Override
 		public String asString() {
-			return this.name().toLowerCase();
+			return this.name;
 		}
 		
 		@Override
 		public String toString() {
-			return this.asString();
+			return this.name;
 		}
 	}
 }

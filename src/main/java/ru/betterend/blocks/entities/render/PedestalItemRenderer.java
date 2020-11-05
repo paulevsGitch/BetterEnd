@@ -2,6 +2,7 @@ package ru.betterend.blocks.entities.render;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
@@ -19,7 +20,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import ru.betterend.blocks.BlockProperties.PedestalState;
+
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
@@ -46,12 +47,9 @@ public class PedestalItemRenderer extends BlockEntityRenderer<PedestalBlockEntit
 		MinecraftClient minecraft = MinecraftClient.getInstance();
 		BakedModel model = minecraft.getItemRenderer().getHeldItemModel(activeItem, blockEntity.getWorld(), null);
 		Vector3f translate = model.getTransformation().ground.translation;
+		BlockPedestal pedestal = (BlockPedestal) state.getBlock();
 		matrices.translate(translate.getX(), translate.getY(), translate.getZ());
-		if (state.get(BlockPedestal.STATE) == PedestalState.DEFAULT) {
-			matrices.translate(0.5, 1.0, 0.5);
-		} else {
-			matrices.translate(0.5, 0.8, 0.5);
-		}
+		matrices.translate(0.5, pedestal.getHeight(state), 0.5);
 		if (activeItem.getItem() instanceof BlockItem) {
 			matrices.scale(1.5F, 1.5F, 1.5F);
 		} else {

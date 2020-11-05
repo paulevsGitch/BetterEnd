@@ -3,11 +3,9 @@ package ru.betterend.rituals;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Tickable;
 
-public class InfusionRitual implements Tickable, Inventory {
+public class InfusionRitual implements Inventory {
 
-	@Override
 	public void tick() {
 		// TODO
 	}

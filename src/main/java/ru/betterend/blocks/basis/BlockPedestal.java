@@ -78,11 +78,19 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	}
 	
 	protected final Block parent;
+	protected float height = 1.0F;
 	
 	public BlockPedestal(Block parent) {
 		super(FabricBlockSettings.copyOf(parent));
 		this.setDefaultState(stateManager.getDefaultState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false));
 		this.parent = parent;
+	}
+	
+	public float getHeight(BlockState state) {
+		if (state.getBlock() instanceof BlockPedestal && state.get(STATE) == PedestalState.PEDESTAL_TOP) {
+			return this.height - 0.2F;
+		}
+		return this.height;
 	}
 	
 	@Override

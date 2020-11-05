@@ -1,0 +1,8 @@
+{
+	"parent": "betterend:block/pedestal_bottom",
+	"textures": {
+		"base": "betterend:block/infusion_pedestal_base",
+		"pillar": "betterend:block/infusion_pedestal_pillar",
+		"bottom": "betterend:block/infusion_pedestal_base"
+	}
+}

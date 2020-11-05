@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -85,6 +86,16 @@ public class EndBiomes {
 		});
 		
 		CLIENT.clear();
+	}
+	
+	/**
+	 * Initialize registry if it was not initialized in world generation (when using mods/datapacks, that overrides the End generation)
+	 * @param server
+	 */
+	public static void initRegistry(MinecraftServer server) {
+		if (biomeRegistry == null) {
+			biomeRegistry = server.getRegistryManager().get(Registry.BIOME_KEY);
+		}
 	}
 	
 	/**

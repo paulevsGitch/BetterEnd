@@ -108,7 +108,7 @@ public class MountainPiece extends BasePiece {
 					pos.setZ(z);
 					dist = 1 - (float) Math.pow(dist / r2, 0.3);
 					int minY = map.get(x, z);
-					if (minY < 56) {
+					if (minY < 10) {
 						continue;
 					}
 					pos.setY(minY);
@@ -116,7 +116,7 @@ public class MountainPiece extends BasePiece {
 						pos.setY(pos.getY() - 1);
 					}
 					minY = pos.getY();
-					if (minY > 56) {
+					if (minY > 10) {
 						float maxY = dist * height * getHeightClamp(world, 8, px, pz);
 						if (maxY > 0) {
 							maxY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;

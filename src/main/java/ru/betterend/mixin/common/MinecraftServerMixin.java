@@ -14,6 +14,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.ServerResourceManager;
 import net.minecraft.server.MinecraftServer;
 import ru.betterend.recipe.EndRecipeManager;
+import ru.betterend.registry.EndBiomes;
 
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {
@@ -28,6 +29,7 @@ public class MinecraftServerMixin {
 	@Inject(method = "loadWorld", at = @At(value = "RETURN"), cancellable = true)
 	private void beOnLoadWorld(CallbackInfo info) {
 		beInjectRecipes();
+		EndBiomes.initRegistry((MinecraftServer) (Object) this);
 	}
 
 	private void beInjectRecipes() {

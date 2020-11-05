@@ -14,8 +14,7 @@ import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 
 @Mixin(value = DimensionType.class, priority = 100)
-public class DimensionTypeMixin
-{
+public class DimensionTypeMixin {
 	@Inject(method = "createEndGenerator", at = @At("HEAD"), cancellable = true)
 	private static void replaceGenerator(Registry<Biome> biomeRegistry, Registry<ChunkGeneratorSettings> chunkGeneratorSettingsRegistry, long seed, CallbackInfoReturnable<ChunkGenerator> info) {
 		info.setReturnValue(new NoiseChunkGenerator(new BetterEndBiomeSource(biomeRegistry, seed), seed, () -> {

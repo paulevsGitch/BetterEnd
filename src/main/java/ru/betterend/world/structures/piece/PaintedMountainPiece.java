@@ -101,7 +101,8 @@ public class PaintedMountainPiece extends BasePiece {
 		int sz = chunkPos.getStartZ();
 		Mutable pos = new Mutable();
 		Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
-		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
+		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
+		Heightmap map2 = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
 		for (int x = 0; x < 16; x++) {
 			int px = x + sx;
 			int px2 = px - center.getX();
@@ -116,12 +117,13 @@ public class PaintedMountainPiece extends BasePiece {
 					pos.setZ(z);
 					dist = 1 - dist / r2;
 					int minY = map.get(x, z);
+					pos.setY(minY - 1);
+					while (chunk.getBlockState(pos).isAir() && pos.getY() > 50) {
+						pos.setY(minY --);
+					}
+					minY = pos.getY();
+					minY = Math.max(minY, map2.get(x, z));
 					if (minY > 56) {
-						pos.setY(minY - 1);
-						while (chunk.getBlockState(pos).isAir() && pos.getY() > 50) {
-							pos.setY(minY --);
-						}
-						
 						float maxY = dist * height * getHeightClamp(world, 8, px, pz);
 						if (maxY > 0) {
 							maxY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;

@@ -27,7 +27,6 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
-
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;

@@ -1,7 +1,6 @@
 package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
@@ -20,7 +19,6 @@ public class BiomeMegalake extends EndBiome {
 				.setLoop(EndSounds.AMBIENT_MEGALAKE)
 				.setSurface(EndBlocks.END_MOSS, EndBlocks.ENDSTONE_DUST)
 				.addStructureFeature(EndStructures.MEGALAKE)
-				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addFeature(EndFeatures.END_LOTUS)
 				.addFeature(EndFeatures.END_LOTUS_LEAF)
 				.addFeature(EndFeatures.BUBBLE_CORAL_RARE)

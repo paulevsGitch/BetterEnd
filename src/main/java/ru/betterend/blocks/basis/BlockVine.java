@@ -85,7 +85,7 @@ public class BlockVine extends BlockBaseNotFull implements IRenderTypeable, Fert
 	
 	protected boolean isSupport(BlockState state, WorldView world, BlockPos pos) {
 		BlockState up = world.getBlockState(pos.up());
-		return up.isOf(this) || up.isIn(BlockTags.LEAVES) || sideCoversSmallSquare(world, pos.up(), Direction.UP);
+		return up.isOf(this) || up.isIn(BlockTags.LEAVES) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN);
 	}
 
 	@Override

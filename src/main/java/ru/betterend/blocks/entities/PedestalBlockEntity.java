@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Tickable;
-
 import ru.betterend.registry.EndBlockEntities;
 
 public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable {

@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import ru.betterend.rituals.EternalRitual;
 
 public class EternalPedestalEntity extends PedestalBlockEntity {

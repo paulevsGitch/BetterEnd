@@ -50,6 +50,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		if (!SplineHelper.canGenerate(spline, pos, world, REPLACE)) {
 			return false;
 		}
+		BlocksHelper.setWithoutUpdate(world, pos, AIR);
 		
 		Vector3f last = SplineHelper.getPos(spline, 3.5F);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());

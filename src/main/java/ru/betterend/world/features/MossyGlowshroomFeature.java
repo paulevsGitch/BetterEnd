@@ -48,13 +48,8 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig featureConfig) {
-		blockPos = getPosOnSurface(world, blockPos);
-		if (blockPos.getY() < 5) {
-			return false;
-		}
-		if (!world.getBlockState(blockPos.down()).isIn(EndTags.END_GROUND)) {
-			return false;
-		}
+		BlockState down = world.getBlockState(blockPos.down());
+		if (!down.isOf(EndBlocks.END_MYCELIUM) && !down.isOf(EndBlocks.END_MOSS)) return false;
 		
 		CONE1.setBlock(EndBlocks.MOSSY_GLOWSHROOM_CAP);
 		CONE2.setBlock(EndBlocks.MOSSY_GLOWSHROOM_CAP);
@@ -74,7 +69,6 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		if (!SplineHelper.canGenerate(spline, scale, blockPos, world, REPLACE)) {
 			return false;
 		}
-		
 		BlocksHelper.setWithoutUpdate(world, blockPos, AIR);
 		
 		CENTER.set(blockPos.getX(), 0, blockPos.getZ());

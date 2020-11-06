@@ -26,7 +26,6 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.Patterned;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.BlocksHelper;
 
 public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
@@ -82,10 +81,7 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-		BlocksHelper.setWithoutUpdate(world, pos, Blocks.AIR.getDefaultState());
-		if (!getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, null)) {
-			BlocksHelper.setWithoutUpdate(world, pos, this.getDefaultState());
-		}
+		getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, null);
 	}
 
 	@Override

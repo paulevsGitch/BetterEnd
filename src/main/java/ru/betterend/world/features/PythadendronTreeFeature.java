@@ -16,6 +16,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.PosInfo;
@@ -34,6 +35,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		if (world.getBlockState(pos.down()).getBlock() != EndBlocks.CHORUS_NYLIUM) return false;
+		BlocksHelper.setWithoutUpdate(world, pos, AIR);
 		
 		float size = MHelper.randRange(10, 20, random);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, size, 0, 4);

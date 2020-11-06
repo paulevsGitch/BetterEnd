@@ -110,7 +110,7 @@ public class DragonTreeFeature extends DefaultFeature {
 	}
 	
 	private void leavesBall(StructureWorldAccess world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.DRAGON_TREE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.DRAGON_TREE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);

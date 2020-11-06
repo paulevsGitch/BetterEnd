@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.server.MinecraftServer;
@@ -16,19 +16,24 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.processors.DestructionStructureProcessor;
 
 public abstract class NBTStructureFeature extends DefaultFeature {
 	protected static final DestructionStructureProcessor DESTRUCTION = new DestructionStructureProcessor();
 	
-	protected abstract Structure getStructure();
+	protected abstract Structure getStructure(StructureWorldAccess world, BlockPos pos, Random random);
 	
-	protected abstract boolean canSpawn(StructureWorldAccess world, BlockPos pos);
+	protected abstract boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random);
 	
 	protected abstract BlockRotation getRotation(StructureWorldAccess world, BlockPos pos, Random random);
 	
@@ -36,14 +41,37 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 	
 	protected abstract int getYOffset(Structure structure, StructureWorldAccess world, BlockPos pos, Random random);
 	
-	protected abstract boolean hasErosion();
-	
-	protected abstract boolean hasTerrainOverlay();
-	
-	protected abstract void addProcessors(StructurePlacementData placementData, Random random);
+	protected abstract boolean adjustSurface(StructureWorldAccess world, BlockPos pos, Random random);
 	
 	protected BlockPos getGround(StructureWorldAccess world, BlockPos center) {
-		return getPosOnSurface(world, center);
+		Biome biome = world.getBiome(center);
+		Identifier id = EndBiomes.getBiomeID(biome);
+		if (id.getNamespace().contains("moutain") || id.getNamespace().contains("lake")) {
+			int y = getAverageY(world, center);
+			return new BlockPos(center.getX(), y, center.getZ());
+		}
+		else {
+			int y = getAverageYWG(world, center);
+			return new BlockPos(center.getX(), y, center.getZ());
+		}
+	}
+	
+	protected int getAverageY(StructureWorldAccess world, BlockPos center) {
+		int y = getYOnSurface(world, center.getX(), center.getZ());
+		y += getYOnSurface(world, center.getX() - 2, center.getZ() - 2);
+		y += getYOnSurface(world, center.getX() + 2, center.getZ() - 2);
+		y += getYOnSurface(world, center.getX() - 2, center.getZ() + 2);
+		y += getYOnSurface(world, center.getX() + 2, center.getZ() + 2);
+		return y / 5;
+	}
+	
+	protected int getAverageYWG(StructureWorldAccess world, BlockPos center) {
+		int y = getYOnSurfaceWG(world, center.getX(), center.getZ());
+		y += getYOnSurfaceWG(world, center.getX() - 2, center.getZ() - 2);
+		y += getYOnSurfaceWG(world, center.getX() + 2, center.getZ() - 2);
+		y += getYOnSurfaceWG(world, center.getX() - 2, center.getZ() + 2);
+		y += getYOnSurfaceWG(world, center.getX() + 2, center.getZ() + 2);
+		return y / 5;
 	}
 	
 	@Override
@@ -51,11 +79,12 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
 		center = getGround(world, center);
 		
-		if (!canSpawn(world, center)) {
+		if (!canSpawn(world, center, random)) {
 			return false;
 		}
 		
-		Structure structure = getStructure();
+		int posY = center.getY() + 1;
+		Structure structure = getStructure(world, center, random);
 		BlockRotation rotation = getRotation(world, center, random);
 		BlockMirror mirror = getMirror(world, center, random);
 		BlockPos offset = Structure.transformAround(structure.getSize(), mirror, rotation, BlockPos.ORIGIN);
@@ -63,44 +92,39 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		
 		BlockBox bounds = makeBox(center);
 		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
-		addProcessors(placementData, random);
-		structure.place(world, center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5), placementData, random);
+		center = center.add(-offset.getX() * 0.5, 1, -offset.getZ() * 0.5);
+		structure.place(world, center, placementData, random);
 		
-		int x1 = center.getX();
-		int y1 = center.getX();
-		int z1 = center.getX();
-		int x2 = x1 + offset.getX();
-		int y2 = y1 + offset.getY();
-		int z2 = z1 + offset.getZ();
-		
-		boolean erosion = hasErosion();
-		boolean overlay = hasTerrainOverlay();
-
-		if (erosion || overlay) {
+		if (adjustSurface(world, center, random)) {
 			Mutable mut = new Mutable();
+			int x1 = center.getX();
+			int z1 = center.getZ();
+			int x2 = x1 + offset.getX();
+			int z2 = z1 + offset.getZ();
+			
+			int surfMax = posY - 1;
 			for (int x = x1; x <= x2; x++) {
 				mut.setX(x);
 				for (int z = z1; z <= z2; z++) {
 					mut.setZ(z);
-					for (int y = y1; y <= y2; y++) {
-						mut.setY(y);
-						if (bounds.contains(mut)) {
-							if (overlay) {
-								if (world.getBlockState(mut).isOf(Blocks.END_STONE) && world.isAir(mut.up())) {
-									BlockState terrain = world.getBiome(mut).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-									BlocksHelper.setWithoutUpdate(world, mut, terrain);
-								}
+					mut.setY(posY);
+					BlockState state = world.getBlockState(mut);
+					if (!state.isIn(EndTags.GEN_TERRAIN) && Block.sideCoversSmallSquare(world, mut, Direction.DOWN)) {
+						for (int i = 0; i < 10; i--) {
+							mut.setY(mut.getY() - 1);
+							BlockState stateSt = world.getBlockState(mut);
+							if (!stateSt.isIn(EndTags.GEN_TERRAIN) && stateSt.getMaterial().isReplaceable()) {
+								SurfaceConfig config = world.getBiome(mut).getGenerationSettings().getSurfaceConfig();
+								boolean isTop = mut.getY() == surfMax && state.getMaterial().blocksLight();
+								BlockState top = isTop ? config.getTopMaterial() : config.getUnderMaterial();
+								BlocksHelper.setWithoutUpdate(world, mut, top);
 							}
-							if (erosion) {
-								mut.setY(mut.getY() - 1);
-								int down = BlocksHelper.downRay(world, mut, 32);
-								if (down > 0) {
-									mut.setY(mut.getY() + 1);
-									BlockState state = world.getBlockState(mut);
-									BlocksHelper.setWithoutUpdate(world, mut, AIR);
-									mut.setY(mut.getY() - down);
-									BlocksHelper.setWithoutUpdate(world, mut, state);
+							else {
+								if (stateSt.isIn(EndTags.END_GROUND) && state.getMaterial().blocksLight()) {
+									SurfaceConfig config = world.getBiome(mut).getGenerationSettings().getSurfaceConfig();
+									BlocksHelper.setWithoutUpdate(world, mut, config.getUnderMaterial());
 								}
+								break;
 							}
 						}
 					}

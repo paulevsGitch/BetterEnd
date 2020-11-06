@@ -3,7 +3,6 @@ package ru.betterend.blocks;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.BlockView;
-
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 

@@ -9,7 +9,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.tag.BlockTags;
@@ -30,15 +29,17 @@ public class StructureHelper {
 	public static Structure readStructure(Identifier resource) {
 		String ns = resource.getNamespace();
 		String nm = resource.getPath();
-
+		return readStructure("/data/" + ns + "/structures/" + nm + ".nbt");
+	}
+	
+	public static Structure readStructure(String path) {
 		try {
-			InputStream inputstream = MinecraftServer.class.getResourceAsStream("/data/" + ns + "/structures/" + nm + ".nbt");
+			InputStream inputstream = StructureHelper.class.getResourceAsStream(path);
 			return readStructureFromStream(inputstream);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 	

@@ -1,0 +1,17 @@
+{
+	"structures": [
+		{ "nbt": "stump_1", "offsetY": 0, "adjustTerrain": false },
+		{ "nbt": "stump_2", "offsetY": 0, "adjustTerrain": false },
+		{ "nbt": "fallen_log_1", "offsetY": 0, "adjustTerrain": false },
+		{ "nbt": "fallen_log_2", "offsetY": 0, "adjustTerrain": false },
+		{ "nbt": "ruins_1", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "ruins_2", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "ruins_3", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "ruins_4", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "ruins_5", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "ruins_6", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "ruins_7", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "ruins_8", "offsetY": 0, "adjustTerrain": true },
+		{ "nbt": "small_mansion", "offsetY": -1, "adjustTerrain": false }
+	]
+}

@@ -77,8 +77,9 @@ public class EndBiomes {
 		
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
-				if (!MUTABLE.containsKey(biome) && !biomeRegistry.getId(biome).getNamespace().equals("minecraft")) {
-					EndBiome endBiome = new EndBiome(biome, 1, 1);
+				Identifier id = biomeRegistry.getId(biome);
+				if (!MUTABLE.containsKey(biome) && !ID_MAP.containsKey(id)) {
+					EndBiome endBiome = new EndBiome(id, biome, 1, 1);
 					LAND_BIOMES.addBiomeMutable(endBiome);
 					KEYS.put(endBiome, biomeRegistry.getKey(biome).get());
 				}
@@ -118,7 +119,7 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
-		EndBiome endBiome = new EndBiome(biome, fogDensity, genChance);
+		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance);
 		addToPicker(endBiome, type);
 		makeLink(endBiome);
 		return endBiome;
@@ -144,10 +145,11 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance) {
-		EndBiome endBiome = new EndBiome(biome, fogDensity, genChance);
+		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance);
 		parent.addSubBiome(endBiome);
 		makeLink(endBiome);
 		SUBBIOMES.add(endBiome);
+		ID_MAP.put(endBiome.getID(), endBiome);
 		return endBiome;
 	}
 	
@@ -162,6 +164,7 @@ public class EndBiomes {
 		parent.addSubBiome(biome);
 		makeLink(biome);
 		SUBBIOMES.add(biome);
+		ID_MAP.put(biome.getID(), biome);
 		return biome;
 	}
 	

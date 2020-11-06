@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
+import net.minecraft.block.SnowBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +25,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.chunk.light.ChunkLightProvider;
 import ru.betterend.blocks.basis.BlockBase;
 
 public class BlockTerrain extends BlockBase {
@@ -64,8 +68,21 @@ public class BlockTerrain extends BlockBase {
 	
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		if (random.nextInt(16) == 0 && world.getBlockState(pos.up()).getMaterial().blocksLight()) {
+		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
 			world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 		}
 	}
+	
+	public static boolean canSurvive(BlockState state, WorldView worldView, BlockPos pos) {
+	      BlockPos blockPos = pos.up();
+	      BlockState blockState = worldView.getBlockState(blockPos);
+	      if (blockState.isOf(Blocks.SNOW) && (Integer)blockState.get(SnowBlock.LAYERS) == 1) {
+	         return true;
+	      } else if (blockState.getFluidState().getLevel() == 8) {
+	         return false;
+	      } else {
+	         int i = ChunkLightProvider.getRealisticOpacity(worldView, state, pos, blockState, blockPos, Direction.UP, blockState.getOpacity(worldView, blockPos));
+	         return i < 5;
+	      }
+	   }
 }

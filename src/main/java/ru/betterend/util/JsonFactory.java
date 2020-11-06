@@ -49,6 +49,20 @@ public class JsonFactory {
 		return new JsonObject();
 	}
 	
+	public static JsonObject getJsonObject(InputStream stream) {
+		try {
+			Reader reader = new InputStreamReader(stream);
+			JsonObject jsonObject = loadJson(reader).getAsJsonObject();
+			if (jsonObject == null) {
+				return new JsonObject();
+			}
+			return jsonObject;
+		} catch (Exception ex) {
+			BetterEnd.LOGGER.catching(ex);
+			return new JsonObject();
+		}
+	}
+	
 	public static JsonObject getJsonObject(File jsonFile) {
 		if (jsonFile.exists()) {
 			JsonObject jsonObject = loadJson(jsonFile).getAsJsonObject();

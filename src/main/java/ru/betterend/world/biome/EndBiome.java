@@ -1,15 +1,23 @@
 package ru.betterend.world.biome;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import net.minecraft.structure.Structure;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
+import ru.betterend.util.JsonFactory;
+import ru.betterend.util.StructureHelper;
+import ru.betterend.world.features.EndFeature;
+import ru.betterend.world.features.ListFeature;
+import ru.betterend.world.features.ListFeature.StructureInfo;
 
 public class EndBiome {
 	protected List<EndBiome> subbiomes = Lists.newArrayList();
@@ -25,19 +33,22 @@ public class EndBiome {
 	protected float genChance = 1;
 
 	private final float fogDensity;
+	private EndFeature structuresFeature;
 
 	public EndBiome(BiomeDefinition definition) {
 		biome = definition.build();
 		mcID = definition.getID();
 		fogDensity = definition.getFodDensity();
 		genChanceUnmutable = definition.getGenChance();
+		readStructureList();
 	}
 
-	public EndBiome(Biome biome, float fogDensity, float genChance) {
+	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance) {
 		this.biome = biome;
-		this.mcID = BuiltinRegistries.BIOME.getId(biome);
+		this.mcID = id;
 		this.fogDensity = fogDensity;
 		this.genChanceUnmutable = genChance;
+		readStructureList();
 	}
 
 	public void genSurfColumn(WorldAccess world, BlockPos pos, Random random) {
@@ -115,5 +126,34 @@ public class EndBiome {
 
 	public float getFogDensity() {
 		return fogDensity;
+	}
+	
+	protected void readStructureList() {
+		String ns = mcID.getNamespace();
+		String nm = mcID.getPath();
+
+		String path = "/data/" + ns + "/structures/biome/" + nm + "/";
+		InputStream inputstream = StructureHelper.class.getResourceAsStream(path + "structures.json");
+		if (inputstream != null) {
+			JsonObject obj = JsonFactory.getJsonObject(inputstream);
+			JsonArray enties = obj.getAsJsonArray("structures");
+			if (enties != null) {
+				List<StructureInfo> list = Lists.newArrayList();
+				enties.forEach((entry) -> {
+					JsonObject e = entry.getAsJsonObject();
+					Structure structure = StructureHelper.readStructure(path + e.get("nbt").getAsString() + ".nbt");
+					boolean adjustTerrain = e.get("adjustTerrain").getAsBoolean();
+					int offsetY = e.get("offsetY").getAsInt();
+					list.add(new StructureInfo(structure, offsetY, adjustTerrain));
+				});
+				if (!list.isEmpty()) {
+					structuresFeature = EndFeature.makeChansedFeature(nm + "_structures", new ListFeature(list), 50);
+				}
+			}
+		}
+	}
+	
+	public EndFeature getStructuresFeature() {
+		return structuresFeature;
 	}
 }

@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
 import ru.betterend.world.features.DoublePlantFeature;
@@ -103,6 +104,12 @@ public class EndFeatures {
 		addFeature(ENDER_ORE, features);
 		addFeature(ROUND_CAVE_RARE, features);
 		addFeature(CAVE_GRASS, features);
+		
+		EndBiome endBiome = EndBiomes.getBiome(id);
+		EndFeature feature = endBiome.getStructuresFeature();
+		if (feature != null) {
+			addFeature(feature, features);
+		}
 	}
 	
 	private static void addFeature(EndFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {

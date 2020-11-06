@@ -48,7 +48,7 @@ public class StructureEternalPortal extends StructureFeatureBase {
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 50) {
-				this.children.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 3, z), random.nextInt(5), true, random));
+				this.children.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), random.nextInt(5), true, random));
 			}
 			this.setBoundingBoxFromChildren();
 		}

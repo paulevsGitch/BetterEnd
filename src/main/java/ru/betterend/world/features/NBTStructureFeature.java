@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.server.MinecraftServer;
@@ -102,6 +103,18 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 			int x2 = x1 + offset.getX();
 			int z2 = z1 + offset.getZ();
 			
+			if (x2 < x1) {
+				int a = x1;
+				x1 = x2;
+				x2 = a;
+			}
+			
+			if (z2 < z1) {
+				int a = z1;
+				z1 = z2;
+				z2 = a;
+			}
+			
 			int surfMax = posY - 1;
 			for (int x = x1; x <= x2; x++) {
 				mut.setX(x);
@@ -109,11 +122,11 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 					mut.setZ(z);
 					mut.setY(posY);
 					BlockState state = world.getBlockState(mut);
-					if (!state.isIn(EndTags.GEN_TERRAIN) && Block.sideCoversSmallSquare(world, mut, Direction.DOWN)) {
+					if (!state.isIn(EndTags.GEN_TERRAIN) && state.isSideSolidFullSquare(world, mut, Direction.DOWN)) {
 						for (int i = 0; i < 10; i--) {
 							mut.setY(mut.getY() - 1);
 							BlockState stateSt = world.getBlockState(mut);
-							if (!stateSt.isIn(EndTags.GEN_TERRAIN) && stateSt.getMaterial().isReplaceable()) {
+							if (!stateSt.isIn(EndTags.GEN_TERRAIN)) {
 								SurfaceConfig config = world.getBiome(mut).getGenerationSettings().getSurfaceConfig();
 								boolean isTop = mut.getY() == surfMax && state.getMaterial().blocksLight();
 								BlockState top = isTop ? config.getTopMaterial() : config.getUnderMaterial();

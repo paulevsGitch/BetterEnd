@@ -103,7 +103,6 @@ public class EndFeatures {
 		addFeature(ENDER_ORE, features);
 		addFeature(ROUND_CAVE_RARE, features);
 		addFeature(CAVE_GRASS, features);
-		//addFeature(ETERNAL_PORTAL, features);
 	}
 	
 	private static void addFeature(EndFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {

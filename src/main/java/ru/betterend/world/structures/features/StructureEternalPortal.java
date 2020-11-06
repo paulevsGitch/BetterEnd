@@ -6,9 +6,12 @@ import net.minecraft.structure.StructureStart;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.source.BiomeSource;
+import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
@@ -20,6 +23,14 @@ import ru.betterend.world.structures.piece.NBTPiece;
 public class StructureEternalPortal extends StructureFeatureBase {
 	private static final Identifier STRUCTURE_ID = BetterEnd.makeID("portal/eternal_portal");
 	private static final Structure STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
+	
+	@Override
+	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, ChunkRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, DefaultFeatureConfig featureConfig) {
+		long x = chunkPos.x * chunkPos.x;
+		long z = chunkPos.z * chunkPos.z;
+		long d = x * x + z * z;
+		return d > 1024 && super.shouldStartAt(chunkGenerator, biomeSource, worldSeed, chunkRandom, chunkX, chunkZ, biome, chunkPos, featureConfig);
+	}
 	
 	@Override
 	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {

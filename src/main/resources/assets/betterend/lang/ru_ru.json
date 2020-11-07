@@ -280,5 +280,9 @@
 	"block.betterend.purple_polypore": "Пурпурный трутовик",
 	
 	"block.betterend.cyan_moss": "Циановый мох",
- 	"block.betterend.tail_moss": "Хвостовидный мох"
+ 	"block.betterend.tail_moss": "Хвостовидный мох",
+	
+ 	"block.betterend.flavolite_lantern": "Флаволитовый фонарь",
+ 	"block.betterend.lantern_end_stone": "Фонарь из камня края",
+ 	"block.betterend.violecite_lantern": "Виолецитовый фонарь"
 }

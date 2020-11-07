@@ -278,5 +278,9 @@
 	"block.betterend.purple_polypore": "Purple Polypore",
 	
 	"block.betterend.cyan_moss": "Cyan Moss",
- 	"block.betterend.tail_moss": "Tail Moss"
+ 	"block.betterend.tail_moss": "Tail Moss",
+	
+ 	"block.betterend.flavolite_lantern": "Flavolite Lantern",
+ 	"block.betterend.lantern_end_stone": "End Stone Lantern",
+ 	"block.betterend.violecite_lantern": "Violecite Lantern"
 }

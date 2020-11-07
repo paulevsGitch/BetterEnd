@@ -51,6 +51,7 @@ import ru.betterend.blocks.basis.BlockGlowingFur;
 import ru.betterend.blocks.basis.BlockLeaves;
 import ru.betterend.blocks.basis.BlockOre;
 import ru.betterend.blocks.basis.BlockSimpleLeaves;
+import ru.betterend.blocks.basis.BlockStoneLantern;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.basis.BlockWallMushroom;
 import ru.betterend.blocks.basis.BlockWallPlant;
@@ -155,6 +156,8 @@ public class EndBlocks {
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
+	
+	public static final Block LANTERN_END_STONE = registerBlock("lantern_end_stone", new BlockStoneLantern(Blocks.END_STONE));
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());

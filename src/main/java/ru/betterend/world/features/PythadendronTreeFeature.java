@@ -124,15 +124,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 			}
 			return info.getState();
 		});
-		sphere.fillRecursiveIgnore(world, pos.up(), IGNORE);
-		
-		/*if (radius > 5) {
-			int count = (int) (radius * 2.5F);
-			for (int i = 0; i < count; i++) {
-				BlockPos p = pos.add(random.nextGaussian() * 1.5, random.nextGaussian() * 1.5, random.nextGaussian() * 1.5);
-				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.PYTHADENDRON.bark);
-			}
-		}*/
+		sphere.fillRecursiveIgnore(world, pos, IGNORE);
 	}
 	
 	static {

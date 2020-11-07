@@ -14,11 +14,20 @@ import ru.betterend.interfaces.Patterned;
 
 public class BlockLeaves extends LeavesBlock implements Patterned, IRenderTypeable {
 	public BlockLeaves(MaterialColor color) {
-		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).materialColor(color));
+		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)
+				.allowsSpawning((state, world, pos, type) -> { return false; })
+				.suffocates((state, world, pos) -> { return false; })
+				.blockVision((state, world, pos) -> { return false; })
+				.materialColor(color));
 	}
 	
 	public BlockLeaves(MaterialColor color, int light) {
-		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).materialColor(color).luminance(light));
+		super(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)
+				.allowsSpawning((state, world, pos, type) -> { return false; })
+				.suffocates((state, world, pos) -> { return false; })
+				.blockVision((state, world, pos) -> { return false; })
+				.materialColor(color)
+				.luminance(light));
 	}
 	
 	@Override

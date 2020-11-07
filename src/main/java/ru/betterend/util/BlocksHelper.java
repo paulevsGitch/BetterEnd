@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Property;
 import net.minecraft.tag.BlockTags;
@@ -285,5 +286,32 @@ public class BlocksHelper {
 	
 	public static Direction randomHorizontal(Random random) {
 		return HORIZONTAL[random.nextInt(4)];
+	}
+	
+	public static BlockState getLeavesState(BlockState state, WorldAccess world, BlockPos pos) {
+		int i = 7;
+		BlockPos.Mutable mutable = new BlockPos.Mutable();
+		Direction[] var5 = Direction.values();
+		int var6 = var5.length;
+
+		for (int var7 = 0; var7 < var6; ++var7) {
+			Direction direction = var5[var7];
+			mutable.set(pos, direction);
+			i = Math.min(i, getDistanceFromLog(world.getBlockState(mutable)) + 1);
+			if (i == 1) {
+				break;
+			}
+		}
+
+		return (BlockState) state.with(LeavesBlock.DISTANCE, i);
+	}
+
+	private static int getDistanceFromLog(BlockState state) {
+		if (BlockTags.LOGS.contains(state.getBlock())) {
+			return 0;
+		}
+		else {
+			return state.getBlock() instanceof LeavesBlock ? (Integer) state.get(LeavesBlock.DISTANCE) : 7;
+		}
 	}
 }

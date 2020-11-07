@@ -1,4 +1,4 @@
-package ru.betterend.world.features;
+package ru.betterend.world.features.terrain;
 
 import java.util.Random;
 
@@ -14,6 +14,7 @@ import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFCoordModify;
 import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.primitive.SDFSphere;
+import ru.betterend.world.features.DefaultFeature;
 
 public class OreLayerFeature extends DefaultFeature {
 	private static final SDFSphere SPHERE;

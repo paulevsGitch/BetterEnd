@@ -29,8 +29,24 @@ public class PosInfo implements Comparable<PosInfo> {
 		return state;
 	}
 	
+	public BlockState getState(BlockPos pos) {
+		PosInfo info = blocks.get(pos);
+		if (info == null) {
+			info = add.get(pos);
+			return info == null ? AIR : info.getState();
+		}
+		return info.getState();
+	}
+	
 	public void setState(BlockState state) {
 		this.state = state;
+	}
+	
+	public void setState(BlockPos pos, BlockState state) {
+		PosInfo info = blocks.get(pos);
+		if (info != null) {
+			info.setState(state);
+		}
 	}
 	
 	public BlockState getState(Direction dir) {

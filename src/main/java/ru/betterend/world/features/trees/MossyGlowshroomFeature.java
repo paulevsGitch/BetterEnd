@@ -1,4 +1,4 @@
-package ru.betterend.world.features;
+package ru.betterend.world.features.trees;
 
 import java.util.List;
 import java.util.Random;
@@ -33,6 +33,7 @@ import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFCapedCone;
 import ru.betterend.util.sdf.primitive.SDFPrimitive;
 import ru.betterend.util.sdf.primitive.SDFSphere;
+import ru.betterend.world.features.DefaultFeature;
 
 public class MossyGlowshroomFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;

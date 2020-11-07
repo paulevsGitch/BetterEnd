@@ -13,23 +13,23 @@ import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
 import ru.betterend.world.features.DoublePlantFeature;
-import ru.betterend.world.features.DragonTreeBushFeature;
-import ru.betterend.world.features.DragonTreeFeature;
 import ru.betterend.world.features.EndFeature;
-import ru.betterend.world.features.EndLakeFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
-import ru.betterend.world.features.LacugroveFeature;
-import ru.betterend.world.features.MossyGlowshroomFeature;
-import ru.betterend.world.features.PythadendronBushFeature;
-import ru.betterend.world.features.PythadendronTreeFeature;
-import ru.betterend.world.features.RoundCaveFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
 import ru.betterend.world.features.WallPlantFeature;
 import ru.betterend.world.features.WallPlantOnLogFeature;
+import ru.betterend.world.features.bushes.DragonTreeBushFeature;
+import ru.betterend.world.features.bushes.PythadendronBushFeature;
+import ru.betterend.world.features.terrain.EndLakeFeature;
+import ru.betterend.world.features.terrain.RoundCaveFeature;
+import ru.betterend.world.features.trees.DragonTreeFeature;
+import ru.betterend.world.features.trees.LacugroveFeature;
+import ru.betterend.world.features.trees.MossyGlowshroomFeature;
+import ru.betterend.world.features.trees.PythadendronTreeFeature;
 
 public class EndFeatures {
 	// Trees //

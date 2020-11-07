@@ -1,4 +1,4 @@
-package ru.betterend.world.features;
+package ru.betterend.world.features.terrain;
 
 import java.util.Random;
 import java.util.Set;
@@ -29,6 +29,7 @@ import ru.betterend.util.sdf.operator.SDFSubtraction;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.primitive.SDFHexPrism;
 import ru.betterend.util.sdf.primitive.SDFSphere;
+import ru.betterend.world.features.DefaultFeature;
 
 public class RoundCaveFeature extends DefaultFeature {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();

@@ -1,4 +1,4 @@
-package ru.betterend.world.features;
+package ru.betterend.world.features.terrain;
 
 import java.util.Random;
 
@@ -16,6 +16,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
+import ru.betterend.world.features.DefaultFeature;
 
 public class EndLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.getDefaultState();

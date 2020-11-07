@@ -1,16 +1,12 @@
-package ru.betterend.world.features;
+package ru.betterend.world.features.bushes;
 
 import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
@@ -21,33 +17,32 @@ import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.primitive.SDFSphere;
+import ru.betterend.world.features.FullHeightScatterFeature;
 
-public class DragonTreeBushFeature extends DefaultFeature {
+public class CaveBushFeature extends FullHeightScatterFeature {
+	public CaveBushFeature(int radius) {
+		super(radius);
+	}
+
 	private static final Function<BlockState, Boolean> REPLACE;
-	
+
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
-		if (world.getBlockState(pos.down()).getBlock() != EndBlocks.SHADOW_GRASS) return false;
-		
-		BlockState leaves = EndBlocks.DRAGON_TREE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1);
-		float radius = MHelper.randRange(1.8F, 4.5F, random);
+	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+		return world.getBlockState(blockPos.down()).isOf(EndBlocks.CAVE_MOSS);
+	}
+
+	@Override
+	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+		float radius = MHelper.randRange(0.8F, 2.5F, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.DRAGON_TREE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
-		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.CAVE_BUSH);
+		sphere = new SDFScale3D().setScale(MHelper.randRange(0.8F, 1.2F, random), MHelper.randRange(0.8F, 1.2F, random), MHelper.randRange(0.8F, 1.2F, random)).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		sphere.setReplaceFunction(REPLACE);
-		sphere.fillRecursive(world, pos);
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.DRAGON_TREE.bark);
-		for (Direction d: Direction.values()) {
-			BlockPos p = pos.offset(d);
-			if (world.isAir(p)) {
-				BlocksHelper.setWithoutUpdate(world, p, leaves);
-			}
-		}
-		
-		return true;
+		sphere.fillRecursive(world, blockPos);
+		BlocksHelper.setWithoutUpdate(world, blockPos, EndBlocks.CAVE_BUSH);
 	}
 	
 	static {

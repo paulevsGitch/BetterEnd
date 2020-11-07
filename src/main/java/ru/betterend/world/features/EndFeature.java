@@ -20,6 +20,7 @@ import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.complex.StoneMaterial;
+import ru.betterend.world.features.terrain.OreLayerFeature;
 
 public class EndFeature {
 	protected Feature<?> feature;

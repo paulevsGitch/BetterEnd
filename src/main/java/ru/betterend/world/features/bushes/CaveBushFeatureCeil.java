@@ -1,4 +1,4 @@
-package ru.betterend.world.features;
+package ru.betterend.world.features.bushes;
 
 import java.util.Random;
 import java.util.function.Function;
@@ -18,6 +18,7 @@ import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.primitive.SDFSphere;
+import ru.betterend.world.features.InvertedScatterFeature;
 
 public class CaveBushFeatureCeil extends InvertedScatterFeature {
 	public CaveBushFeatureCeil(int radius) {

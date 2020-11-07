@@ -1,4 +1,4 @@
-package ru.betterend.world.features;
+package ru.betterend.world.features.trees;
 
 import java.util.List;
 import java.util.Random;
@@ -9,6 +9,7 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -26,6 +27,7 @@ import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.primitive.SDFSphere;
+import ru.betterend.world.features.DefaultFeature;
 
 public class PythadendronTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -112,6 +114,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
+		Mutable mut = new Mutable();
 		sphere.setPostProcess((info) -> {
 			if (random.nextInt(5) == 0) {
 				for (Direction dir: Direction.values()) {
@@ -120,7 +123,29 @@ public class PythadendronTreeFeature extends DefaultFeature {
 						return info.getState();
 					}
 				}
-				return EndBlocks.PYTHADENDRON.bark.getDefaultState();
+				info.setState(EndBlocks.PYTHADENDRON.bark.getDefaultState());
+				for (int x = -6; x < 7; x++) {
+					int ax = Math.abs(x);
+					mut.setX(x + info.getPos().getX());
+					for (int z = -6; z < 7; z++) {
+						int az = Math.abs(z);
+						mut.setZ(z + info.getPos().getZ());
+						for (int y = -6; y < 7; y++) {
+							int ay = Math.abs(y);
+							int d = ax + ay + az;
+							if (d < 7) {
+								mut.setY(y + info.getPos().getY());
+								BlockState state = info.getState(mut);
+								if (state.getBlock() instanceof LeavesBlock) {
+									int distance = state.get(LeavesBlock.DISTANCE);
+									if (d < distance) {
+										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 			return info.getState();
 		});

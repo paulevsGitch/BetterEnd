@@ -18,6 +18,7 @@ import ru.betterend.blocks.basis.BlockWall;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndItems;
 import ru.betterend.util.TagHelper;
 
 public class StoneMaterial {
@@ -75,7 +76,7 @@ public class StoneMaterial {
 		
 		GridRecipe.make(name + "_button", button).setList("#").addMaterial('#', stone).setGroup("end_stone_buttons").build();
 		GridRecipe.make(name + "_pressure_plate", pressure_plate).setShape("##").addMaterial('#', stone).setGroup("end_stone_plates").build();
-		GridRecipe.make(name + "_lantern", lantern).setShape("S", "#", "S").addMaterial('#', EndBlocks.AURORA_CRYSTAL).addMaterial('S', slab, brick_slab).setGroup("end_stone_lanterns").build();
+		GridRecipe.make(name + "_lantern", lantern).setShape("S", "#", "S").addMaterial('#', EndItems.CRYSTAL_SHARDS).addMaterial('S', slab, brick_slab).setGroup("end_stone_lanterns").build();
 		
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		

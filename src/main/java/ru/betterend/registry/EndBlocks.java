@@ -77,12 +77,6 @@ public class EndBlocks {
 	public static final Block CRYSTAL_MOSS_PATH = registerBlock("crystal_moss_path", new BlockPath(CRYSTAL_MOSS));
 	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new BlockPath(SHADOW_GRASS));
 	
-	// Materials //
-	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());
-	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
-	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
-	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
-	
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
 	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
@@ -156,6 +150,12 @@ public class EndBlocks {
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_DUST, 1, 3));
+	
+	// Materials //
+	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());
+	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
+	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
+	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	
 	public static final Block LANTERN_END_STONE = registerBlock("lantern_end_stone", new BlockStoneLantern(Blocks.END_STONE));
 	

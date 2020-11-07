@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 

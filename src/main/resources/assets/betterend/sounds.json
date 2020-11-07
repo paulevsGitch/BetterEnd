@@ -152,5 +152,36 @@
 				"stream": false
 			}
 		]
+	},
+	"betterend.entity.shadow_walker": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterend:entity/shadow_walker/shadow_walker_1",
+				"stream": false
+			},
+			{
+				"name": "betterend:entity/shadow_walker/shadow_walker_2",
+				"stream": false
+			}
+		]
+	},
+	"betterend.entity.shadow_walker_damage": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterend:entity/shadow_walker/shadow_walker_damage",
+				"stream": false
+			}
+		]
+	},
+	"betterend.entity.shadow_walker_death": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterend:entity/shadow_walker/shadow_walker_death",
+				"stream": false
+			}
+		]
 	}
 }

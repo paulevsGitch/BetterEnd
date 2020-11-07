@@ -22,6 +22,9 @@ public class EndSounds {
 	
 	// Entity
 	public static final SoundEvent ENTITY_DRAGONFLY = register("entity", "dragonfly");
+	public static final SoundEvent ENTITY_SHADOW_WALKER = register("entity", "shadow_walker");
+	public static final SoundEvent ENTITY_SHADOW_WALKER_DAMAGE = register("entity", "shadow_walker_damage");
+	public static final SoundEvent ENTITY_SHADOW_WALKER_DEATH = register("entity", "shadow_walker_death");
 	
 	public static void register() {}
 	

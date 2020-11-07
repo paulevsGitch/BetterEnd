@@ -22,6 +22,8 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
@@ -168,5 +170,15 @@ public class BlockSign extends AbstractSignBlock implements Patterned {
 	@Override
 	public Identifier statePatternId() {
 		return Patterned.BLOCK_STATES_PATTERN;
+	}
+	
+	@Override
+	public BlockState rotate(BlockState state, BlockRotation rotation) {
+		return (BlockState) state.with(ROTATION, rotation.rotate((Integer) state.get(ROTATION), 16));
+	}
+
+	@Override
+	public BlockState mirror(BlockState state, BlockMirror mirror) {
+		return (BlockState) state.with(ROTATION, mirror.mirror((Integer) state.get(ROTATION), 16));
 	}
 }

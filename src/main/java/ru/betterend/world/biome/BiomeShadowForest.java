@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
@@ -31,7 +32,8 @@ public class BiomeShadowForest extends EndBiome {
 				.addFeature(EndFeatures.TAIL_MOSS)
 				.addFeature(EndFeatures.TAIL_MOSS_WOOD)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
-				.addMobSpawn(EntityType.ENDERMAN, 80, 1, 4)
+				.addMobSpawn(EntityType.ENDERMAN, 40, 1, 4)
+				.addMobSpawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
 				.addMobSpawn(EntityType.PHANTOM, 1, 1, 2));
 	}
 }

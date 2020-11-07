@@ -165,7 +165,7 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 		boolean hasPedestalOver = upState.getBlock() instanceof BlockPedestal;
 		boolean hasPedestalUnder = downState.getBlock() instanceof BlockPedestal;
 		if (direction == Direction.UP) {
-			upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN);
+			upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN) || newState.isIn(BlockTags.WALLS);
 			hasPedestalOver = newState.getBlock() instanceof BlockPedestal;
 		} else if (direction == Direction.DOWN) {
 			hasPedestalUnder = newState.getBlock() instanceof BlockPedestal;

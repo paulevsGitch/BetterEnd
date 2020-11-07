@@ -26,7 +26,7 @@ import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
 public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTypeable, IColorProvider {
-	private static final Vec3i[] COLORS;
+	public static final Vec3i[] COLORS;
 	private static final int MIN_DROP = 1;
 	private static final int MAX_DROP = 4;
 	

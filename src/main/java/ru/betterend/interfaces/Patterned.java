@@ -31,6 +31,7 @@ public interface Patterned {
 	public final static Identifier LADDER_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_ladder.json");
 	public final static Identifier BARREL_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_barrel.json");
 	public final static Identifier PEDESTAL_STATES_PATTERN = BetterEnd.makeID("patterns/blockstate/pattern_pedestal.json");
+	public final static Identifier BLOCKSTATE_STONE_LANTERN = BetterEnd.makeID("patterns/blockstate/stone_lantern.json");
 	
 	//Models Block
 	public final static Identifier EMPTY_MODEL = BetterEnd.makeID("patterns/block/pattern_empty.json");
@@ -70,6 +71,8 @@ public interface Patterned {
 	public final static Identifier PEDESTAL_MODEL_BOTTOM = BetterEnd.makeID("patterns/block/pattern_pedestal_bottom.json");
 	public final static Identifier PEDESTAL_MODEL_PILLAR = BetterEnd.makeID("patterns/block/pattern_pedestal_pillar.json");
 	public final static Identifier BOOKSHELF = BetterEnd.makeID("patterns/block/bookshelf.json");
+	public final static Identifier STONE_LANTERN_CEIL = BetterEnd.makeID("patterns/block/stone_lantern_ceil.json");
+	public final static Identifier STONE_LANTERN_FLOOR = BetterEnd.makeID("patterns/block/stone_lantern_floor.json");
 	
 	//Models Item
 	public final static Identifier WALL_ITEM_MODEL = BetterEnd.makeID("patterns/item/pattern_wall.json");

@@ -102,6 +102,8 @@ public class CraftingRecipes {
 		GridRecipe.make("needlegrass_stick", Items.STICK).setList("#").setOutputCount(2).addMaterial('#', EndBlocks.NEEDLEGRASS).build();
 		GridRecipe.make("shadow_berry_seeds", EndBlocks.SHADOW_BERRY).setList("#").setOutputCount(4).addMaterial('#', EndItems.SHADOW_BERRY_RAW).build();
 		GridRecipe.make("purple_polypore_dye", Items.PURPLE_DYE).setList("#").addMaterial('#', EndBlocks.PURPLE_POLYPORE).build();
+		
+		GridRecipe.make("end_stone_lantern", EndBlocks.LANTERN_END_STONE).setShape("S", "#", "S").addMaterial('#', EndBlocks.AURORA_CRYSTAL).addMaterial('S', Blocks.END_STONE_BRICK_SLAB).setGroup("end_stone_lanterns").build();
 	}
 	
 	public static void registerPedestal(String name, Block pedestal, Block slab, Block pillar) {

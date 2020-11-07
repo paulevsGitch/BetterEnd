@@ -2,7 +2,6 @@ package ru.betterend.blocks.entities;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
-
 import ru.betterend.rituals.InfusionRitual;
 
 public class InfusionPedestalEntity extends PedestalBlockEntity {

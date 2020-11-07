@@ -28,7 +28,7 @@ public class EndEntities {
 	public static void register() {
 		SpawnHelper.restrictionLand(END_SLIME, EntityEndSlime::canSpawn);
 		SpawnHelper.restrictionWater(END_FISH, EntityEndFish::canSpawn);
-		SpawnHelper.restrictionWater(SHADOW_WALKER, HostileEntity::canSpawnInDark);
+		SpawnHelper.restrictionLand(SHADOW_WALKER, HostileEntity::canSpawnInDark);
 	}
 	
 	protected static <T extends Entity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity) {

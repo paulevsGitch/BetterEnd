@@ -33,6 +33,13 @@ public class CraftingRecipes {
 		registerPedestal("quartz_pedestal", EndBlocks.QUARTZ_PEDESTAL, Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR);
 		registerPedestal("purpur_pedestal", EndBlocks.PURPUR_PEDESTAL, Blocks.PURPUR_SLAB, Blocks.PURPUR_PILLAR);
 		
+		GridRecipe.make("infusion_pedestal", EndBlocks.INFUSION_PEDESTAL)
+			.setShape(new String[] { " Y ", "O#O", " # " })
+			.addMaterial('O', Items.ENDER_PEARL)
+			.addMaterial('Y', Items.ENDER_EYE)
+			.addMaterial('#', Blocks.OBSIDIAN)
+			.build();
+		
 		String material = "terminite";
 		GridRecipe.make(material + "_block", EndBlocks.TERMINITE_BLOCK)
 			.setShape(new String[] { "III", "III", "III" })

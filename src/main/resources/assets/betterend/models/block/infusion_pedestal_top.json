@@ -9,8 +9,8 @@
 	"elements": [
 		{
 			"__comment": "eye",
-			"from": [ 4, 10, 4 ],
-			"to": [ 12, 11, 12 ],
+			"from": [ 4, 11, 4 ],
+			"to": [ 12, 12, 12 ],
 			"faces": {
 				"up": { "uv": [ 4, 4, 12, 12 ], "texture": "#top" },
 				"north": { "uv": [ 4, 4, 12, 5 ], "texture": "#top" },
@@ -22,18 +22,18 @@
 		{
 			"__comment": "pillar",
 			"from": [ 3, 0, 3 ],
-			"to": [ 13, 8, 13 ],
+			"to": [ 13, 9, 13 ],
 			"faces": {
-				"north": { "uv": [ 3, 0, 13, 8 ], "texture": "#pillar" },
-				"south": { "uv": [ 3, 0, 13, 8 ], "texture": "#pillar" },
-				"west": { "uv": [ 3, 0, 13, 8 ], "texture": "#pillar" },
-				"east": { "uv": [ 3, 0, 13, 8 ], "texture": "#pillar" }
+				"north": { "uv": [ 3, 0, 13, 9 ], "texture": "#pillar" },
+				"south": { "uv": [ 3, 0, 13, 9 ], "texture": "#pillar" },
+				"west": { "uv": [ 3, 0, 13, 9 ], "texture": "#pillar" },
+				"east": { "uv": [ 3, 0, 13, 9 ], "texture": "#pillar" }
 			}
 		},
 		{
 			"__comment": "top",
-			"from": [ 1, 8, 1 ],
-			"to": [ 15, 10, 15 ],
+			"from": [ 1, 9, 1 ],
+			"to": [ 15, 11, 15 ],
 			"faces": {
 				"down": { "uv": [ 1, 1, 15, 15 ], "texture": "#base" },
 				"up": { "uv": [ 1, 1, 15, 15 ], "texture": "#top" },

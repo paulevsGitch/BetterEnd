@@ -26,7 +26,9 @@ public class ListFeature extends NBTStructureFeature {
 
 	@Override
 	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random) {
-		return pos.getY() > 58 && world.getBlockState(pos.down()).isIn(EndTags.GEN_TERRAIN);
+		int cx = pos.getX() >> 4;
+		int cz = pos.getZ() >> 4;
+		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.down()).isIn(EndTags.GEN_TERRAIN);
 	}
 
 	@Override
@@ -43,19 +45,19 @@ public class ListFeature extends NBTStructureFeature {
 	protected int getYOffset(Structure structure, StructureWorldAccess world, BlockPos pos, Random random) {
 		return selected.offsetY;
 	}
-	
-	@Override
-	protected boolean adjustSurface(StructureWorldAccess world, BlockPos pos, Random random) {
-		return selected.adjustTerrain;
-	}
 
+	@Override
+	protected TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random) {
+		return selected.terrainMerge;
+	}
+	
 	public static final class StructureInfo {
-		public final boolean adjustTerrain;
+		public final TerrainMerge terrainMerge;
 		public final Structure structure;
 		public final int offsetY;
 		
-		public StructureInfo(Structure structure, int offsetY, boolean adjustTerrain) {
-			this.adjustTerrain = adjustTerrain;
+		public StructureInfo(Structure structure, int offsetY, TerrainMerge terrainMerge) {
+			this.terrainMerge = terrainMerge;
 			this.structure = structure;
 			this.offsetY = offsetY;
 		}

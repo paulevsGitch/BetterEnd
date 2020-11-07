@@ -24,6 +24,8 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -33,6 +35,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable {
@@ -113,6 +116,16 @@ public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
+	}
+	
+	@Override
+	public BlockState rotate(BlockState state, BlockRotation rotation) {
+		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
+	}
+
+	@Override
+	public BlockState mirror(BlockState state, BlockMirror mirror) {
+		return BlocksHelper.mirrorHorizontal(state, mirror, FACING);
 	}
 	
 	static {

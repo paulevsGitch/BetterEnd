@@ -18,6 +18,7 @@ import ru.betterend.util.StructureHelper;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.ListFeature;
 import ru.betterend.world.features.ListFeature.StructureInfo;
+import ru.betterend.world.features.NBTStructureFeature.TerrainMerge;
 
 public class EndBiome {
 	protected List<EndBiome> subbiomes = Lists.newArrayList();
@@ -142,12 +143,12 @@ public class EndBiome {
 				enties.forEach((entry) -> {
 					JsonObject e = entry.getAsJsonObject();
 					Structure structure = StructureHelper.readStructure(path + e.get("nbt").getAsString() + ".nbt");
-					boolean adjustTerrain = e.get("adjustTerrain").getAsBoolean();
+					TerrainMerge terrainMerge = TerrainMerge.getFromString(e.get("terrainMerge").getAsString());
 					int offsetY = e.get("offsetY").getAsInt();
-					list.add(new StructureInfo(structure, offsetY, adjustTerrain));
+					list.add(new StructureInfo(structure, offsetY, terrainMerge));
 				});
 				if (!list.isEmpty()) {
-					structuresFeature = EndFeature.makeChansedFeature(nm + "_structures", new ListFeature(list), 30);
+					structuresFeature = EndFeature.makeChansedFeature(nm + "_structures", new ListFeature(list), 15);
 				}
 			}
 		}

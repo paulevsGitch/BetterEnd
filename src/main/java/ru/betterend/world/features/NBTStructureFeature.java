@@ -40,7 +40,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 	
 	protected abstract int getYOffset(Structure structure, StructureWorldAccess world, BlockPos pos, Random random);
 	
-	protected abstract boolean adjustSurface(StructureWorldAccess world, BlockPos pos, Random random);
+	protected abstract TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random);
 	
 	protected BlockPos getGround(StructureWorldAccess world, BlockPos center) {
 		Biome biome = world.getBiome(center);
@@ -87,14 +87,15 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		BlockRotation rotation = getRotation(world, center, random);
 		BlockMirror mirror = getMirror(world, center, random);
 		BlockPos offset = Structure.transformAround(structure.getSize(), mirror, rotation, BlockPos.ORIGIN);
-		center = center.add(0, getYOffset(structure, world, center, random), 0);
+		center = center.add(0, getYOffset(structure, world, center, random) + 0.5, 0);
 		
 		BlockBox bounds = makeBox(center);
 		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
-		center = center.add(-offset.getX() * 0.5, 1, -offset.getZ() * 0.5);
+		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
 		structure.place(world, center, placementData, random);
 		
-		if (adjustSurface(world, center, random)) {
+		TerrainMerge merge = getTerrainMerge(world, center, random);
+		if (merge != TerrainMerge.NONE) {
 			Mutable mut = new Mutable();
 			int x1 = center.getX();
 			int z1 = center.getZ();
@@ -125,15 +126,25 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 							mut.setY(mut.getY() - 1);
 							BlockState stateSt = world.getBlockState(mut);
 							if (!stateSt.isIn(EndTags.GEN_TERRAIN)) {
-								SurfaceConfig config = world.getBiome(mut).getGenerationSettings().getSurfaceConfig();
-								boolean isTop = mut.getY() == surfMax && state.getMaterial().blocksLight();
-								BlockState top = isTop ? config.getTopMaterial() : config.getUnderMaterial();
-								BlocksHelper.setWithoutUpdate(world, mut, top);
+								if (merge == TerrainMerge.SURFACE) {
+									SurfaceConfig config = world.getBiome(mut).getGenerationSettings().getSurfaceConfig();
+									boolean isTop = mut.getY() == surfMax && state.getMaterial().blocksLight();
+									BlockState top = isTop ? config.getTopMaterial() : config.getUnderMaterial();
+									BlocksHelper.setWithoutUpdate(world, mut, top);
+								}
+								else {
+									BlocksHelper.setWithoutUpdate(world, mut, state);
+								}
 							}
 							else {
 								if (stateSt.isIn(EndTags.END_GROUND) && state.getMaterial().blocksLight()) {
-									SurfaceConfig config = world.getBiome(mut).getGenerationSettings().getSurfaceConfig();
-									BlocksHelper.setWithoutUpdate(world, mut, config.getUnderMaterial());
+									if (merge == TerrainMerge.SURFACE) {
+										SurfaceConfig config = world.getBiome(mut).getGenerationSettings().getSurfaceConfig();
+										BlocksHelper.setWithoutUpdate(world, mut, config.getUnderMaterial());
+									}
+									else {
+										BlocksHelper.setWithoutUpdate(world, mut, state);
+									}
 								}
 								break;
 							}
@@ -176,5 +187,23 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		template.fromTag(nbttagcompound);
 
 		return template;
+	}
+	
+	public static enum TerrainMerge {
+		NONE,
+		SURFACE,
+		OBJECT;
+		
+		public static TerrainMerge getFromString(String type) {
+			if (type.equals("surface")) {
+				return SURFACE;
+			}
+			else if (type.equals("object")) {
+				return OBJECT;
+			}
+			else {
+				return NONE;
+			}
+		}
 	}
 }

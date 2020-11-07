@@ -105,7 +105,7 @@ public class LacugroveFeature extends DefaultFeature {
 	}
 	
 	private void leavesBall(StructureWorldAccess world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.LACUGROVE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.LACUGROVE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius - 2, 0).setSource(sphere));

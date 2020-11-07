@@ -109,7 +109,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	private void leavesBall(StructureWorldAccess world, BlockPos pos, Random random, OpenSimplexNoise noise) {
 		float radius = MHelper.randRange(4.5F, 6.5F, random);
 		
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.PYTHADENDRON_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);

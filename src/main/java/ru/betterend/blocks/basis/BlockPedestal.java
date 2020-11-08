@@ -23,6 +23,7 @@ import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -128,7 +129,7 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 		BlockPos pos = context.getBlockPos();
 		BlockState upState = world.getBlockState(pos.up());
 		BlockState downState = world.getBlockState(pos.down());
-		boolean upSideSolid = upState.isSideSolidFullSquare(world, pos.up(), Direction.DOWN);
+		boolean upSideSolid = upState.isSideSolidFullSquare(world, pos.up(), Direction.DOWN) || upState.isIn(BlockTags.WALLS);
 		boolean hasPedestalOver = upState.getBlock() instanceof BlockPedestal;
 		boolean hasPedestalUnder = downState.getBlock() instanceof BlockPedestal;
 		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
@@ -160,11 +161,11 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 		if (direction != Direction.UP && direction != Direction.DOWN) return state;
 		BlockState upState = world.getBlockState(pos.up());
 		BlockState downState = world.getBlockState(pos.down());
-		boolean upSideSolid = upState.isSideSolidFullSquare(world, pos.up(), Direction.DOWN);
+		boolean upSideSolid = upState.isSideSolidFullSquare(world, pos.up(), Direction.DOWN) || upState.isIn(BlockTags.WALLS);
 		boolean hasPedestalOver = upState.getBlock() instanceof BlockPedestal;
 		boolean hasPedestalUnder = downState.getBlock() instanceof BlockPedestal;
 		if (direction == Direction.UP) {
-			upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN);
+			upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN) || newState.isIn(BlockTags.WALLS);
 			hasPedestalOver = newState.getBlock() instanceof BlockPedestal;
 		} else if (direction == Direction.DOWN) {
 			hasPedestalUnder = newState.getBlock() instanceof BlockPedestal;

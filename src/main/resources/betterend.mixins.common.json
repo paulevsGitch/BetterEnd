@@ -26,6 +26,7 @@
 		"BoneMealItemMixin",
 		"SlimeEntityMixin",
 		"BrewingAccessor",
+		"IngredientMixin",
 		"EntityMixin"
 	],
 	"injectors": {

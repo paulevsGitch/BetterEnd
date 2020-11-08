@@ -12,7 +12,7 @@ import ru.betterend.blocks.basis.BlockPillar;
 import ru.betterend.blocks.basis.BlockSlab;
 import ru.betterend.blocks.basis.BlockStairs;
 import ru.betterend.blocks.basis.BlockStoneButton;
-import ru.betterend.blocks.basis.BlockStoneLantern;
+//import ru.betterend.blocks.basis.BlockStoneLantern;
 import ru.betterend.blocks.basis.BlockStonePressurePlate;
 import ru.betterend.blocks.basis.BlockWall;
 import ru.betterend.recipe.CraftingRecipes;
@@ -33,7 +33,7 @@ public class StoneMaterial {
 	public final Block button;
 	public final Block pressure_plate;
 	public final Block pedestal;
-	public final Block lantern;
+	//public final Block lantern;
 	
 	public final Block bricks;
 	public final Block brick_stairs;
@@ -53,7 +53,7 @@ public class StoneMaterial {
 		button = EndBlocks.registerBlock(name + "_button", new BlockStoneButton(stone));
 		pressure_plate = EndBlocks.registerBlock(name + "_plate", new BlockStonePressurePlate(stone));
 		pedestal = EndBlocks.registerBlock(name + "_pedestal", new EndPedestal(stone));
-		lantern = EndBlocks.registerBlock(name + "_lantern", new BlockStoneLantern(stone));
+		//lantern = EndBlocks.registerBlock(name + "_lantern", new BlockStoneLantern(stone));
 		
 		bricks = EndBlocks.registerBlock(name + "_bricks", new BlockBase(material));
 		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new BlockStairs(bricks));
@@ -76,7 +76,7 @@ public class StoneMaterial {
 		
 		GridRecipe.make(name + "_button", button).setList("#").addMaterial('#', stone).setGroup("end_stone_buttons").build();
 		GridRecipe.make(name + "_pressure_plate", pressure_plate).setShape("##").addMaterial('#', stone).setGroup("end_stone_plates").build();
-		GridRecipe.make(name + "_lantern", lantern).setShape("S", "#", "S").addMaterial('#', EndItems.CRYSTAL_SHARDS).addMaterial('S', slab, brick_slab).setGroup("end_stone_lanterns").build();
+		//GridRecipe.make(name + "_lantern", lantern).setShape("S", "#", "S").addMaterial('#', EndItems.CRYSTAL_SHARDS).addMaterial('S', slab, brick_slab).setGroup("end_stone_lanterns").build();
 		
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		

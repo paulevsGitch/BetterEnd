@@ -16,6 +16,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
+import ru.betterend.rituals.InfusionRitual;
 
 public class InfusionPedestal extends BlockPedestal {
 	private static final VoxelShape SHAPE_DEFAULT;
@@ -28,7 +29,28 @@ public class InfusionPedestal extends BlockPedestal {
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		InfusionPedestalEntity pedestal = null;
+		if (blockEntity instanceof InfusionPedestalEntity) {
+			pedestal = (InfusionPedestalEntity) blockEntity;
+			if (!pedestal.isEmpty() && pedestal.hasRitual()) {
+				if (pedestal.getRitual().checkRecipe()) {
+					return ActionResult.SUCCESS;
+				}
+			}
+		}
 		ActionResult result = super.onUse(state, world, pos, player, hand, hit);
+		if (result == ActionResult.SUCCESS) {
+			if (pedestal != null) {
+				if (pedestal.hasRitual()) {
+					pedestal.getRitual().checkRecipe();
+				} else {
+					InfusionRitual ritual = new InfusionRitual(world, pos);
+					pedestal.linkRitual(ritual);
+					ritual.checkRecipe();
+				}
+			}
+		}
 		return result;
 	}
 	

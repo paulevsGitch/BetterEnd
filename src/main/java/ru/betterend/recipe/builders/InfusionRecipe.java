@@ -55,8 +55,8 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 	public boolean matches(InfusionRitual inv, World world) {
 		boolean valid = this.input.test(inv.getStack(0));
 		if (!valid) return false;
-		for (int i = 1; i < 9; i++) {
-			valid &= this.catalysts[i].test(inv.getStack(i));
+		for (int i = 0; i < 8; i++) {
+			valid &= this.catalysts[i].test(inv.getStack(i + 1));
 		}
 		return valid;
 	}
@@ -91,7 +91,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 		return TYPE;
 	}
 	
-	public InfusionRecipe fromTag(CompoundTag tag) {
+	public static InfusionRecipe fromTag(CompoundTag tag) {
 		return SERIALIZER.fromTag(tag);
 	}
 
@@ -132,8 +132,8 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 			return this;
 		}
 		
-		public Builder setOutput(ItemStack output) {
-			this.output = output;
+		public Builder setOutput(ItemConvertible output) {
+			this.output = new ItemStack(output);
 			this.output.setCount(1);
 			return this;
 		}

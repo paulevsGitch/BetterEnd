@@ -10,6 +10,7 @@ import ru.betterend.effects.EndPotions;
 import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.FurnaceRecipes;
+import ru.betterend.recipe.InfusionRecipes;
 import ru.betterend.recipe.SmithingRecipes;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlockEntities;
@@ -45,6 +46,7 @@ public class BetterEnd implements ModInitializer {
 		FurnaceRecipes.register();
 		AlloyingRecipes.register();
 		SmithingRecipes.register();
+		InfusionRecipes.register();
 		EndStructures.register();
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);

@@ -282,5 +282,11 @@
 	
  	"block.betterend.flavolite_lantern": "Flavolite Lantern",
  	"block.betterend.lantern_end_stone": "End Stone Lantern",
- 	"block.betterend.violecite_lantern": "Violecite Lantern"
+ 	"block.betterend.violecite_lantern": "Violecite Lantern",
+
+ 	"biome.betterend.dragonfly": "Dragonfly",
+ 	"biome.betterend.end_fish": "End Fish",
+ 	"biome.betterend.end_slime": "End Slime",
+ 	"biome.betterend.shadow_walker": "Shadow Walker",
+ 	"item.betterend.spawn_egg_shadow_walker": "Shadow Walker Spawn Egg"
 }

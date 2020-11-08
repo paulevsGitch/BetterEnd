@@ -9,6 +9,8 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
@@ -47,6 +49,19 @@ public class TranslationHelper {
 		EndBiomes.getModBiomes().forEach((endBiome) -> {
 			if (endBiome.getID().getNamespace().equals(BetterEnd.MOD_ID)) {
 				String name = "biome." + BetterEnd.MOD_ID + "." + endBiome.getID().getPath();
+				if (!translationEn.has(name)) {
+					missingNamesEn.add(name);
+				}
+				if (!translationRu.has(name)) {
+					missingNamesRu.add(name);
+				}
+			}
+		});
+		
+		Registry.ENTITY_TYPE.forEach((entity) -> {
+			Identifier id = Registry.ENTITY_TYPE.getId(entity);
+			if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
+				String name = "biome." + BetterEnd.MOD_ID + "." + id.getPath();
 				if (!translationEn.has(name)) {
 					missingNamesEn.add(name);
 				}

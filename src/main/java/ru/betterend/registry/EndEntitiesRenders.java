@@ -6,7 +6,7 @@ import net.minecraft.entity.EntityType;
 import ru.betterend.entity.render.RendererEntityDragonfly;
 import ru.betterend.entity.render.RendererEntityEndFish;
 import ru.betterend.entity.render.RendererEntityEndSlime;
-//import ru.betterend.entity.render.RendererEntityShadowWalker;
+import ru.betterend.entity.render.RendererEntityShadowWalker;
 
 public class EndEntitiesRenders {
 	
@@ -14,7 +14,7 @@ public class EndEntitiesRenders {
 		register(EndEntities.DRAGONFLY, RendererEntityDragonfly.class);
 		register(EndEntities.END_SLIME, RendererEntityEndSlime.class);
 		register(EndEntities.END_FISH, RendererEntityEndFish.class);
-		//register(EndEntities.SHADOW_WALKER, RendererEntityShadowWalker.class);
+		register(EndEntities.SHADOW_WALKER, RendererEntityShadowWalker.class);
 	}
 	
 	private static void register(EntityType<?> type, Class<? extends MobEntityRenderer<?, ?>> renderer) {

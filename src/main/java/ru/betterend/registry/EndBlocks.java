@@ -157,7 +157,12 @@ public class EndBlocks {
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	
-	public static final Block LANTERN_END_STONE = registerBlock("lantern_end_stone", new BlockStoneLantern(Blocks.END_STONE));
+	public static final Block ANDESITE_LANTERN = registerBlock("andesite_lantern", new BlockStoneLantern(Blocks.ANDESITE));
+	public static final Block DIORITE_LANTERN = registerBlock("diorite_lantern", new BlockStoneLantern(Blocks.DIORITE));
+	public static final Block GRANITE_LANTERN = registerBlock("granite_lantern", new BlockStoneLantern(Blocks.GRANITE));
+	public static final Block QUARTZ_LANTERN = registerBlock("quartz_lantern", new BlockStoneLantern(Blocks.QUARTZ_BLOCK));
+	public static final Block PURPUR_LANTERN = registerBlock("purpur_lantern", new BlockStoneLantern(Blocks.PURPUR_BLOCK));
+	public static final Block END_STONE_LANTERN = registerBlock("end_stone_lantern", new BlockStoneLantern(Blocks.END_STONE));
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());

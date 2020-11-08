@@ -102,8 +102,22 @@ public class CraftingRecipes {
 		GridRecipe.make("needlegrass_stick", Items.STICK).setList("#").setOutputCount(2).addMaterial('#', EndBlocks.NEEDLEGRASS).build();
 		GridRecipe.make("shadow_berry_seeds", EndBlocks.SHADOW_BERRY).setList("#").setOutputCount(4).addMaterial('#', EndItems.SHADOW_BERRY_RAW).build();
 		GridRecipe.make("purple_polypore_dye", Items.PURPLE_DYE).setList("#").addMaterial('#', EndBlocks.PURPLE_POLYPORE).build();
-		
-		GridRecipe.make("end_stone_lantern", EndBlocks.LANTERN_END_STONE).setShape("S", "#", "S").addMaterial('#', EndItems.CRYSTAL_SHARDS).addMaterial('S', Blocks.END_STONE_BRICK_SLAB).setGroup("end_stone_lanterns").build();
+
+		registerLantern("end_stone_lantern", EndBlocks.END_STONE_LANTERN, Blocks.END_STONE_BRICK_SLAB);
+		registerLantern("andesite_lantern", EndBlocks.ANDESITE_LANTERN, Blocks.ANDESITE_SLAB);
+		registerLantern("diorite_lantern", EndBlocks.DIORITE_LANTERN, Blocks.DIORITE_SLAB);
+		registerLantern("granite_lantern", EndBlocks.GRANITE_LANTERN, Blocks.GRANITE_SLAB);
+		registerLantern("quartz_lantern", EndBlocks.QUARTZ_LANTERN, Blocks.QUARTZ_SLAB);
+		registerLantern("purpur_lantern", EndBlocks.PURPUR_LANTERN, Blocks.PURPUR_SLAB);
+	}
+	
+	private static void registerLantern(String name, Block lantern, Block slab) {
+		GridRecipe.make(name, lantern)
+		.setShape("S", "#", "S")
+		.addMaterial('#', EndItems.CRYSTAL_SHARDS)
+		.addMaterial('S', slab)
+		.setGroup("end_stone_lanterns")
+		.build();
 	}
 	
 	public static void registerPedestal(String name, Block pedestal, Block slab, Block pillar) {

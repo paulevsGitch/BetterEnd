@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "is_floor=false": { "model": "betterend:pattern/%block%/%block%_ceil" },
+        "is_floor=true": { "model": "betterend:pattern/%block%/%block%_floor" }
+    }
+}

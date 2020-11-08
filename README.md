@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/paulevsGitch/BetterEnd.svg)](https://jitpack.io/#paulevsGitch/BetterEnd)
 # Better End
-Better End Mod for Fabric, MC 1.16.3
+Better End Mod for Fabric, MC 1.16.4
 
 Importing:
 * Clone repo
@@ -14,4 +14,4 @@ Building:
 * Mod .jar will be in ./build/libs
 
 Mappings:
-* https://modmuss50.me/fabric.html?&version=1.16.3
+* https://modmuss50.me/fabric.html?&version=1.16.4

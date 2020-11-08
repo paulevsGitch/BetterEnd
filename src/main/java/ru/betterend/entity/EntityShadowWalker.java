@@ -86,7 +86,7 @@ public class EntityShadowWalker extends HostileEntity {
 	
 	@Override
 	protected float getSoundVolume() {
-		return MHelper.randRange(0.4F, 0.6F, random);
+		return MHelper.randRange(0.25F, 0.5F, random);
 	}
 	
 	@Override

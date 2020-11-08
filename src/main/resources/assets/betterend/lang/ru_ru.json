@@ -283,12 +283,19 @@
  	"block.betterend.tail_moss": "Хвостовидный мох",
 	
  	"block.betterend.flavolite_lantern": "Флаволитовый фонарь",
- 	"block.betterend.lantern_end_stone": "Фонарь из камня края",
+ 	"block.betterend.end_stone_lantern": "Фонарь из камня края",
  	"block.betterend.violecite_lantern": "Виолецитовый фонарь",
 
  	"biome.betterend.dragonfly": "Стрекоза",
  	"biome.betterend.end_fish": "Рыба края",
  	"biome.betterend.end_slime": "Слизень края",
  	"biome.betterend.shadow_walker": "Теневой ходок",
- 	"item.betterend.spawn_egg_shadow_walker": "Яйцо призыва теневого ходока"
+ 	"item.betterend.spawn_egg_shadow_walker": "Яйцо призыва теневого ходока",
+
+ 	"block.betterend.andesite_lantern": "Андезитовый фонарь",
+ 	"block.betterend.blackstone_lantern": "Чернитовый фонарь",
+ 	"block.betterend.diorite_lantern": "Диоритовый фонарь",
+ 	"block.betterend.granite_lantern": "Гранитный фонарь",
+ 	"block.betterend.purpur_lantern": "Пурпуровый фонарь",
+ 	"block.betterend.quartz_lantern": "Кварцевый фонарь"
 }

@@ -281,12 +281,19 @@
  	"block.betterend.tail_moss": "Tail Moss",
 	
  	"block.betterend.flavolite_lantern": "Flavolite Lantern",
- 	"block.betterend.lantern_end_stone": "End Stone Lantern",
+ 	"block.betterend.end_stone_lantern": "End Stone Lantern",
  	"block.betterend.violecite_lantern": "Violecite Lantern",
 
  	"biome.betterend.dragonfly": "Dragonfly",
  	"biome.betterend.end_fish": "End Fish",
  	"biome.betterend.end_slime": "End Slime",
  	"biome.betterend.shadow_walker": "Shadow Walker",
- 	"item.betterend.spawn_egg_shadow_walker": "Shadow Walker Spawn Egg"
+ 	"item.betterend.spawn_egg_shadow_walker": "Shadow Walker Spawn Egg",
+
+ 	"block.betterend.andesite_lantern": "Andesite Lantern",
+ 	"block.betterend.blackstone_lantern": "Blackstone Lantern",
+ 	"block.betterend.diorite_lantern": "Diorite Lantern",
+ 	"block.betterend.granite_lantern": "Granite Lantern",
+ 	"block.betterend.purpur_lantern": "Purpur Lantern",
+ 	"block.betterend.quartz_lantern": "Quartz Lantern"
 }

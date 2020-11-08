@@ -31,14 +31,26 @@ public class DragonTreeBushFeature extends DefaultFeature {
 		if (world.getBlockState(pos.down()).getBlock() != EndBlocks.SHADOW_GRASS) return false;
 		
 		BlockState leaves = EndBlocks.DRAGON_TREE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1);
-		float radius = MHelper.randRange(1.8F, 4.5F, random);
+		float radius = MHelper.randRange(1.8F, 3.5F, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.DRAGON_TREE_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
 		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return MHelper.randRange(-2F, 2F, random); }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		sphere.setReplaceFunction(REPLACE);
+		sphere.setPostProcess((info) -> {
+			if (info.getState().getBlock() instanceof LeavesBlock) {
+				int distance = info.getPos().getManhattanDistance(pos);
+				if (distance < 7) {
+					return info.getState().with(LeavesBlock.DISTANCE, distance);
+				}
+				else {
+					return AIR;
+				}
+			}
+			return info.getState();
+		});
 		sphere.fillRecursive(world, pos);
 		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.DRAGON_TREE.bark);
 		for (Direction d: Direction.values()) {

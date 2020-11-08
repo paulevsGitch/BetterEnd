@@ -24,6 +24,7 @@ import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.basis.BlockDoublePlant;
 import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 
@@ -147,117 +148,127 @@ public class BlocksHelper {
 						doubleCheck.add(POS.toImmutable());
 					}
 					
-					// Chorus
-					if (state.isOf(Blocks.CHORUS_PLANT)) {
-						Set<BlockPos> ends = Sets.newHashSet();
-						Set<BlockPos> add = Sets.newHashSet();
-						ends.add(POS.toImmutable());
-						
-						for (int i = 0; i < 64 && !ends.isEmpty(); i++) {
-							ends.forEach((pos) -> {
-								setWithoutUpdate(world, pos, AIR);
-								for (Direction dir: HORIZONTAL) {
-									BlockPos p = pos.offset(dir);
+					if (!state.canPlaceAt(world, POS)) {
+
+						// Chorus
+						if (state.isOf(Blocks.CHORUS_PLANT)) {
+							Set<BlockPos> ends = Sets.newHashSet();
+							Set<BlockPos> add = Sets.newHashSet();
+							ends.add(POS.toImmutable());
+
+							for (int i = 0; i < 64 && !ends.isEmpty(); i++) {
+								ends.forEach((pos) -> {
+									setWithoutUpdate(world, pos, AIR);
+									for (Direction dir : HORIZONTAL) {
+										BlockPos p = pos.offset(dir);
+										BlockState st = world.getBlockState(p);
+										if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER)) && !st.canPlaceAt(world, p)) {
+											add.add(p);
+										}
+									}
+									BlockPos p = pos.up();
 									BlockState st = world.getBlockState(p);
 									if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER)) && !st.canPlaceAt(world, p)) {
 										add.add(p);
 									}
-								}
-								BlockPos p = pos.up();
-								BlockState st = world.getBlockState(p);
-								if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER)) && !st.canPlaceAt(world, p)) {
-									add.add(p);
-								}
-							});
-							ends.clear();
-							ends.addAll(add);
-							add.clear();
+								});
+								ends.clear();
+								ends.addAll(add);
+								add.clear();
+							}
 						}
-					}
-					// Liquids
-					else if (!state.getFluidState().isEmpty()) {
-						POS.setY(y - 1);
-						if (world.isAir(POS)) {
-							POS.setY(y);
-							while (!world.getFluidState(POS).isEmpty()) {
+						// Vines
+						else if (state.getBlock() instanceof BlockVine) {
+							while (world.getBlockState(POS).getBlock() instanceof BlockVine) {
 								setWithoutUpdate(world, POS, AIR);
-								POS.setY(POS.getY() + 1);
-							}
-							continue;
-						}
-						BlockState st;
-						for (Direction dir: HORIZONTAL) {
-							if ((st = world.getBlockState(POS.offset(dir))).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
-								world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
-								break;
-							}
-						}
-						if ((st = world.getBlockState(POS.up())).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
-							world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
-						}
-					}
-					// Falling blocks
-					else if (state.getBlock() instanceof FallingBlock) {
-						BlockState falling = state;
-						
-						POS.setY(POS.getY() - 1);
-						state = world.getBlockState(POS);
-						
-						int ray = downRayRep(world, POS.toImmutable(), 64);
-						if (ray > 32) {
-							BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
-							if (world.getRandom().nextBoolean()) {
 								POS.setY(POS.getY() - 1);
-								state = world.getBlockState(POS);
-								BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
 							}
 						}
-						else {
-							POS.setY(y);
-							boolean place = true;
-							for (Direction dir: HORIZONTAL) {
-								state = world.getBlockState(POS.offset(dir));
-								if (!state.getFluidState().isEmpty()) {
-									BlocksHelper.setWithoutUpdate(world, POS, state);
-									place = false;
+						// Liquids
+						else if (!state.getFluidState().isEmpty()) {
+							POS.setY(y - 1);
+							if (world.isAir(POS)) {
+								POS.setY(y);
+								while (!world.getFluidState(POS).isEmpty()) {
+									setWithoutUpdate(world, POS, AIR);
+									POS.setY(POS.getY() + 1);
+								}
+								continue;
+							}
+							BlockState st;
+							for (Direction dir : HORIZONTAL) {
+								if ((st = world.getBlockState(POS.offset(dir))).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
+									world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
 									break;
 								}
 							}
-							if (place) {
-								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							if ((st = world.getBlockState(POS.up())).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
+								world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
 							}
-							
-							POS.setY(y - ray);
-							BlocksHelper.setWithoutUpdate(world, POS, falling);
 						}
-					}
-					// Blocks without support
-					else if (!state.canPlaceAt(world, POS)) {
-						// Blue Vine
-						if (state.getBlock() instanceof BlockBlueVine) {
-							while (state.isOf(EndBlocks.BLUE_VINE) || state.isOf(EndBlocks.BLUE_VINE_LANTERN) || state.isOf(EndBlocks.BLUE_VINE_FUR)) {
-								BlocksHelper.setWithoutUpdate(world, POS, AIR);
-								for (Direction dir : HORIZONTAL) {
-									BlockPos p = POS.offset(dir);
-									state = world.getBlockState(p);
-									if (state.getBlock() instanceof BlockGlowingFur) {
-										BlocksHelper.setWithoutUpdate(world, p, AIR);
-									}
-									world.getBlockTickScheduler().schedule(p, world.getBlockState(p).getBlock(), 0);
+						// Falling blocks
+						else if (state.getBlock() instanceof FallingBlock) {
+							BlockState falling = state;
+
+							POS.setY(POS.getY() - 1);
+							state = world.getBlockState(POS);
+
+							int ray = downRayRep(world, POS.toImmutable(), 64);
+							if (ray > 32) {
+								BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
+								if (world.getRandom().nextBoolean()) {
+									POS.setY(POS.getY() - 1);
+									state = world.getBlockState(POS);
+									BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
 								}
-								POS.setY(POS.getY() + 1);
-								state = world.getBlockState(POS);
+							}
+							else {
+								POS.setY(y);
+								boolean place = true;
+								for (Direction dir : HORIZONTAL) {
+									state = world.getBlockState(POS.offset(dir));
+									if (!state.getFluidState().isEmpty()) {
+										BlocksHelper.setWithoutUpdate(world, POS, state);
+										place = false;
+										break;
+									}
+								}
+								if (place) {
+									BlocksHelper.setWithoutUpdate(world, POS, AIR);
+								}
+
+								POS.setY(y - ray);
+								BlocksHelper.setWithoutUpdate(world, POS, falling);
 							}
 						}
-						// Double plants
-						if (state.getBlock() instanceof BlockDoublePlant) {
-							BlocksHelper.setWithoutUpdate(world, POS, AIR);
-							POS.setY(POS.getY() + 1);
-							BlocksHelper.setWithoutUpdate(world, POS, AIR);
-						}
-						// Other blocks
+						// Blocks without support
 						else {
-							BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							// Blue Vine
+							if (state.getBlock() instanceof BlockBlueVine) {
+								while (state.isOf(EndBlocks.BLUE_VINE) || state.isOf(EndBlocks.BLUE_VINE_LANTERN) || state.isOf(EndBlocks.BLUE_VINE_FUR)) {
+									BlocksHelper.setWithoutUpdate(world, POS, AIR);
+									for (Direction dir : HORIZONTAL) {
+										BlockPos p = POS.offset(dir);
+										state = world.getBlockState(p);
+										if (state.getBlock() instanceof BlockGlowingFur) {
+											BlocksHelper.setWithoutUpdate(world, p, AIR);
+										}
+										world.getBlockTickScheduler().schedule(p, world.getBlockState(p).getBlock(), 0);
+									}
+									POS.setY(POS.getY() + 1);
+									state = world.getBlockState(POS);
+								}
+							}
+							// Double plants
+							if (state.getBlock() instanceof BlockDoublePlant) {
+								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+								POS.setY(POS.getY() + 1);
+								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							}
+							// Other blocks
+							else {
+								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+							}
 						}
 					}
 				}

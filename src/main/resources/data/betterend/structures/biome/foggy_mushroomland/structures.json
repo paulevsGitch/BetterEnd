@@ -1,0 +1,13 @@
+{
+	"structures": [
+		{ "nbt": "fallen_tree_1", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "fallen_tree_2", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "stump_1", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "stump_2", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "library", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_1", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_2", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_3", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "tree_house", "offsetY": 0, "terrainMerge": "surface" }
+	]
+}

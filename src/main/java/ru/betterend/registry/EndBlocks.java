@@ -163,6 +163,7 @@ public class EndBlocks {
 	public static final Block QUARTZ_LANTERN = registerBlock("quartz_lantern", new BlockStoneLantern(Blocks.QUARTZ_BLOCK));
 	public static final Block PURPUR_LANTERN = registerBlock("purpur_lantern", new BlockStoneLantern(Blocks.PURPUR_BLOCK));
 	public static final Block END_STONE_LANTERN = registerBlock("end_stone_lantern", new BlockStoneLantern(Blocks.END_STONE));
+	public static final Block BLACKSTONE_LANTERN = registerBlock("blackstone_lantern", new BlockStoneLantern(Blocks.BLACKSTONE));
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());

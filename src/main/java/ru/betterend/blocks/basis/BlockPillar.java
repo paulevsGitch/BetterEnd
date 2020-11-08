@@ -31,11 +31,11 @@ public class BlockPillar extends PillarBlock implements Patterned {
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(Patterned.PILLAR_BLOCK_MODEL, blockId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_PILLAR, blockId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.PILLAR_STATES_PATTERN;
+		return Patterned.STATE_PILLAR;
 	}
 }

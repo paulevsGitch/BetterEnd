@@ -37,14 +37,14 @@ public class BlockBookshelf extends BlockBase {
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BLOCK_STATES_PATTERN;
+		return Patterned.STATE_SIMPLE;
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		String name = getName(blockId);
-		return Patterned.createJson(Patterned.BOOKSHELF, BetterEnd.makeID(name), blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_BOOKSHELF, BetterEnd.makeID(name), blockId.getPath());
 	}
 	
 	@Override

@@ -16,7 +16,7 @@ public class BlockBark extends BlockPillar {
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		String name = getName(blockId);
-		return Patterned.createJson(Patterned.BASE_BLOCK_MODEL, BetterEnd.makeID(name), blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_BASE, BetterEnd.makeID(name), blockId.getPath());
 	}
 	
 	@Override

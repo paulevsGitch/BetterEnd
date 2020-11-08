@@ -31,16 +31,16 @@ public class EndPedestal extends BlockPedestal {
 			}
 		};
 		if (block.contains("column_top")) {
-			return Patterned.createJson(Patterned.PEDESTAL_MODEL_COLUMN_TOP, textures);
+			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_COLUMN_TOP, textures);
 		} else if (block.contains("column")) {
-			return Patterned.createJson(Patterned.PEDESTAL_MODEL_COLUMN, textures);
+			return Patterned.createJson(Patterned.BLOKC_PEDESTAL_COLUMN, textures);
 		} else if (block.contains("top")) {
-			return Patterned.createJson(Patterned.PEDESTAL_MODEL_TOP, textures);
+			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_TOP, textures);
 		} else if (block.contains("bottom")) {
-			return Patterned.createJson(Patterned.PEDESTAL_MODEL_BOTTOM, textures);
+			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_BOTTOM, textures);
 		} else if (block.contains("pillar")) {
-			return Patterned.createJson(Patterned.PEDESTAL_MODEL_PILLAR, textures);
+			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_PILLAR, textures);
 		}
-		return Patterned.createJson(Patterned.PEDESTAL_MODEL_DEFAULT, textures);
+		return Patterned.createJson(Patterned.BLOCK_PEDESTAL_DEFAULT, textures);
 	}
 }

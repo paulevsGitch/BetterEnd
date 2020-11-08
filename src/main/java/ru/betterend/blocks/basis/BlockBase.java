@@ -31,11 +31,11 @@ public class BlockBase extends Block implements Patterned {
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(Patterned.BASE_BLOCK_MODEL, blockId, block);
+		return Patterned.createJson(Patterned.BLOCK_BASE, blockId, block);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BLOCK_STATES_PATTERN;
+		return Patterned.STATE_SIMPLE;
 	}
 }

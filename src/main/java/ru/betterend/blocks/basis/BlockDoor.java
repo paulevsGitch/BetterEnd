@@ -48,19 +48,19 @@ public class BlockDoor extends DoorBlock implements IRenderTypeable, Patterned {
 			return Patterned.createJson(Patterned.ITEM_MODEL, blockId.getPath());
 		}
 		if (block.contains("top_hinge")) {
-			return Patterned.createJson(Patterned.DOOR_MODEL_TOP_HINGE, blockId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_DOOR_TOP_HINGE, blockId, blockId.getPath());
 		}
 		if (block.contains("bottom_hinge")) {
-			return Patterned.createJson(Patterned.DOOR_MODEL_BOTTOM_HINGE, blockId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_DOOR_BOTTOM_HINGE, blockId, blockId.getPath());
 		}
 		if (block.contains("top")) {
-			return Patterned.createJson(Patterned.DOOR_MODEL_TOP, blockId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_DOOR_TOP, blockId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.DOOR_MODEL_BOTTOM, blockId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_DOOR_BOTTOM, blockId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.DOOR_STATES_PATTERN;
+		return Patterned.STATE_DOOR;
 	}
 }

@@ -42,7 +42,7 @@ public class BlockTrapdoor extends TrapdoorBlock implements IRenderTypeable, Pat
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		String name = blockId.getPath();
-		return Patterned.createJson(Patterned.TRAPDOOR_MODEL, new HashMap<String, String>() {
+		return Patterned.createJson(Patterned.BLOCK_TRAPDOOR, new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
 			{
 				put("%block%", name);
@@ -53,6 +53,6 @@ public class BlockTrapdoor extends TrapdoorBlock implements IRenderTypeable, Pat
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.TRAPDOOR_STATES_PATTERN;
+		return Patterned.STATE_TRAPDOOR;
 	}
 }

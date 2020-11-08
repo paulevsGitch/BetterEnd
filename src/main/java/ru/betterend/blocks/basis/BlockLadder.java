@@ -146,13 +146,13 @@ public class BlockLadder extends BlockBaseNotFull implements IRenderTypeable, Pa
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.BLOCK_ITEM_MODEL, blockId.getPath());
+			return Patterned.createJson(Patterned.ITEM_BLOCK, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.LADDER_MODEL, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_LADDER, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.LADDER_STATES_PATTERN;
+		return Patterned.STATE_LADDER;
 	}
 }

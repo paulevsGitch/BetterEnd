@@ -97,13 +97,13 @@ public class BlockBarrel extends BarrelBlock implements Patterned {
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		if (block.contains("open")) {
-			return Patterned.createJson(Patterned.BARREL_MODEL_OPEN, blockId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_BARREL_OPEN, blockId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_BOTTOM_TOP_MODEL, blockId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_BOTTOM_TOP, blockId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BARREL_STATES_PATTERN;
+		return Patterned.STATE_BARREL;
 	}
 }

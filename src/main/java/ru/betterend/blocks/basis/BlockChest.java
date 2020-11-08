@@ -53,13 +53,13 @@ public class BlockChest extends ChestBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (path.contains("item")) {
-			return Patterned.createJson(Patterned.CHEST_ITEM_MODEL, blockId.getPath());
+			return Patterned.createJson(Patterned.ITEM_CHEST, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.EMPTY_MODEL, parentId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_EMPTY, parentId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BLOCK_STATES_PATTERN;
+		return Patterned.STATE_SIMPLE;
 	}
 }

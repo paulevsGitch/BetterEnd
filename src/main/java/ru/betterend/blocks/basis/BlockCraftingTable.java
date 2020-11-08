@@ -35,7 +35,7 @@ public class BlockCraftingTable extends CraftingTableBlock implements Patterned 
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		String blockName = blockId.getPath();
-		return Patterned.createJson(Patterned.SIDED_BLOCK_MODEL, new HashMap<String, String>() {
+		return Patterned.createJson(Patterned.BLOCK_SIDED, new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
 			{
 				put("%particle%", blockName + "_front");
@@ -51,6 +51,6 @@ public class BlockCraftingTable extends CraftingTableBlock implements Patterned 
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BLOCK_STATES_PATTERN;
+		return Patterned.STATE_SIMPLE;
 	}
 }

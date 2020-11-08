@@ -41,19 +41,19 @@ public class BlockGate extends FenceGateBlock implements Patterned {
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("wall")) {
 			if (block.contains("open")) {
-				return Patterned.createJson(Patterned.GATE_MODEL_WALL_OPEN, parentId, blockId.getPath());
+				return Patterned.createJson(Patterned.BLOCK_GATE_OPEN_WALL, parentId, blockId.getPath());
 			} else {
-				return Patterned.createJson(Patterned.GATE_MODEL_WALL_CLOSED, parentId, blockId.getPath());
+				return Patterned.createJson(Patterned.BLOCK_GATE_CLOSED_WALL, parentId, blockId.getPath());
 			}
 		}
 		if (block.contains("open")) {
-			return Patterned.createJson(Patterned.GATE_MODEL_OPEN, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_GATE_OPEN, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.GATE_MODEL_CLOSED, parentId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_GATE_CLOSED, parentId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.GATE_STATES_PATTERN;
+		return Patterned.STATE_GATE;
 	}
 }

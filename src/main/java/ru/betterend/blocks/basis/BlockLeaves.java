@@ -39,12 +39,12 @@ public class BlockLeaves extends LeavesBlock implements Patterned, IRenderTypeab
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(Patterned.BASE_BLOCK_MODEL, blockId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_BASE, blockId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BLOCK_STATES_PATTERN;
+		return Patterned.STATE_SIMPLE;
 	}
 	
 	@Override

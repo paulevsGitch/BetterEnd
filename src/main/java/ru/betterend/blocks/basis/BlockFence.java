@@ -40,16 +40,16 @@ public class BlockFence extends FenceBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.FENCE_ITEM_MODEL, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.ITEM_FENCE, parentId, blockId.getPath());
 		}
 		if (block.contains("side")) {
-			return Patterned.createJson(Patterned.FENCE_SIDE_MODEL, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_FENCE_SIDE, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.FENCE_POST_MODEL, parentId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_FENCE_POST, parentId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.FENCE_STATES_PATTERN;
+		return Patterned.STATE_FENCE;
 	}
 }

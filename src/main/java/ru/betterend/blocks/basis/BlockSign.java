@@ -164,12 +164,12 @@ public class BlockSign extends AbstractSignBlock implements Patterned {
 		if (path.contains("item")) {
 			return Patterned.createJson(Patterned.ITEM_MODEL, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.EMPTY_MODEL, parentId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_EMPTY, parentId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BLOCK_STATES_PATTERN;
+		return Patterned.STATE_SIMPLE;
 	}
 	
 	@Override

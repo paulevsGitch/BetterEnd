@@ -40,16 +40,16 @@ public class BlockStoneButton extends StoneButtonBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.BUTTON_ITEM_MODEL, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.ITEM_BUTTON, parentId, blockId.getPath());
 		}
 		if (block.contains("pressed")) {
-			return Patterned.createJson(Patterned.BUTTON_PRESSED_MODEL, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_BUTTON_PRESSED, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BUTTON_BLOCK_MODEL, parentId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_BUTTON, parentId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.BUTTON_STATES_PATTERN;
+		return Patterned.STATE_BUTTON;
 	}
 }

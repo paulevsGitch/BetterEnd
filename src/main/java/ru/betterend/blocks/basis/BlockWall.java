@@ -40,19 +40,19 @@ public class BlockWall extends WallBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.WALL_ITEM_MODEL, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.ITEM_WALL, parentId, blockId.getPath());
 		}
 		if (block.contains("side_tall")) {
-			return Patterned.createJson(Patterned.WALL_SIDE_TALL_MODEL, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_WALL_SIDE_TALL, parentId, blockId.getPath());
 		}
 		if (block.contains("side")) {
-			return Patterned.createJson(Patterned.WALL_SIDE_MODEL, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_WALL_SIDE, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.WALL_POST_MODEL, parentId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_WALL_POST, parentId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.WALL_STATES_PATTERN;
+		return Patterned.STATE_WALL;
 	}
 }

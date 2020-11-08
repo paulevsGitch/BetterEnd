@@ -40,16 +40,16 @@ public class BlockStairs extends StairsBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("inner")) {
-			return Patterned.createJson(Patterned.STAIRS_MODEL_INNER, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_STAIR_INNER, parentId, blockId.getPath());
 		}
 		if (block.contains("outer")) {
-			return Patterned.createJson(Patterned.STAIRS_MODEL_OUTER, parentId, blockId.getPath());
+			return Patterned.createJson(Patterned.BLOCK_STAIR_OUTER, parentId, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.STAIRS_MODEL, parentId, blockId.getPath());
+		return Patterned.createJson(Patterned.BLOCK_STAIR, parentId, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STAIRS_STATES_PATTERN;
+		return Patterned.STATE_STAIRS;
 	}
 }

@@ -29,6 +29,7 @@ public class InfusionPedestal extends BlockPedestal {
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if (world.isClient || !state.isOf(this)) return ActionResult.CONSUME;
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		InfusionPedestalEntity pedestal = null;
 		if (blockEntity instanceof InfusionPedestalEntity) {

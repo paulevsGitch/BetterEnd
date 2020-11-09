@@ -11,6 +11,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
+import ru.betterend.blocks.EternalPedestal;
+import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockChest;
 import ru.betterend.blocks.basis.BlockPedestal;
@@ -28,9 +30,9 @@ public class EndBlockEntities {
 			BlockEntityType.Builder.create(EndStoneSmelterBlockEntity::new, EndBlocks.END_STONE_SMELTER));
 	public final static BlockEntityType<PedestalBlockEntity> PEDESTAL = registerBlockEntity("pedestal",
 			BlockEntityType.Builder.create(PedestalBlockEntity::new, getPedestals()));
-	public final static BlockEntityType<PedestalBlockEntity> ETERNAL_PEDESTAL = registerBlockEntity("eternal_pedestal",
+	public final static BlockEntityType<EternalPedestalEntity> ETERNAL_PEDESTAL = registerBlockEntity("eternal_pedestal",
 			BlockEntityType.Builder.create(EternalPedestalEntity::new, EndBlocks.ETERNAL_PEDESTAL));
-	public final static BlockEntityType<PedestalBlockEntity> INFUSION_PEDESTAL = registerBlockEntity("infusion_pedestal",
+	public final static BlockEntityType<InfusionPedestalEntity> INFUSION_PEDESTAL = registerBlockEntity("infusion_pedestal",
 			BlockEntityType.Builder.create(InfusionPedestalEntity::new, EndBlocks.INFUSION_PEDESTAL));
 	public static final BlockEntityType<EChestBlockEntity> CHEST = registerBlockEntity("chest", 
 			BlockEntityType.Builder.create(EChestBlockEntity::new, getChests()));
@@ -89,6 +91,8 @@ public class EndBlockEntities {
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
+				if (block instanceof EternalPedestal ||
+					block instanceof InfusionPedestal) return;
 				if (block instanceof BlockPedestal) {
 					result.add(block);
 				}

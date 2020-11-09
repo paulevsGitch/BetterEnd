@@ -4,11 +4,16 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.rituals.InfusionRitual;
 
 public class InfusionPedestalEntity extends PedestalBlockEntity {
 
 	private InfusionRitual linkedRitual;
+	
+	public InfusionPedestalEntity() {
+		super(EndBlockEntities.INFUSION_PEDESTAL);
+	}
 	
 	@Override
 	public void setLocation(World world, BlockPos pos) {
@@ -36,6 +41,11 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 			this.linkedRitual.tick();
 		}
 		super.tick();
+	}
+	
+	@Override
+	public CompoundTag toInitialChunkDataTag() {
+		return this.toTag(new CompoundTag());
 	}
 	
 	@Override

@@ -4,10 +4,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.rituals.EternalRitual;
 
 public class EternalPedestalEntity extends PedestalBlockEntity {
 	private EternalRitual linkedRitual;
+	
+	public EternalPedestalEntity() {
+		super(EndBlockEntities.ETERNAL_PEDESTAL);
+	}
 	
 	public boolean hasRitual() {
 		return this.linkedRitual != null;

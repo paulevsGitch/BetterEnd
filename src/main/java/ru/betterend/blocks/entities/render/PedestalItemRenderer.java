@@ -26,7 +26,7 @@ import ru.betterend.client.render.BeamRenderer;
 import ru.betterend.registry.EndBlocks;
 
 @Environment(EnvType.CLIENT)
-public class PedestalItemRenderer extends BlockEntityRenderer<PedestalBlockEntity> {
+public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEntityRenderer<T> {
 	private static final Identifier BEAM_TEXTURE = new Identifier("textures/entity/end_gateway_beam.png");
 	
 	public PedestalItemRenderer(BlockEntityRenderDispatcher dispatcher) {
@@ -34,7 +34,7 @@ public class PedestalItemRenderer extends BlockEntityRenderer<PedestalBlockEntit
 	}
 
 	@Override
-	public void render(PedestalBlockEntity blockEntity, float tickDelta, MatrixStack matrices,
+	public void render(T blockEntity, float tickDelta, MatrixStack matrices,
 			VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		
 		if (blockEntity.isEmpty()) return;

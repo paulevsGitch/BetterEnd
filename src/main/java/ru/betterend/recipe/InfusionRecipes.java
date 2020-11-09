@@ -14,6 +14,7 @@ public class InfusionRecipes {
 			.addCatalyst(2, EndItems.CRYSTAL_SHARDS)
 			.addCatalyst(4, EndItems.CRYSTAL_SHARDS)
 			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
+			.setTime(100)
 			.build();
 		
 		InfusionRecipe.Builder.create("eternal_crystal")
@@ -27,6 +28,7 @@ public class InfusionRecipes {
 			.addCatalyst(3, EndItems.ENDER_DUST)
 			.addCatalyst(5, EndItems.ENDER_DUST)
 			.addCatalyst(7, EndItems.ENDER_DUST)
+			.setTime(250)
 			.build();
 	}
 }

@@ -7,10 +7,15 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.ItemStackParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.recipe.builders.InfusionRecipe;
@@ -57,6 +62,20 @@ public class InfusionRitual implements Inventory {
 	
 	public boolean checkRecipe() {
 		if (!isValid()) return false;
+		if (hasRecipe()) {
+			InfusionRecipe recipe = this.world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
+			if (recipe == null) {
+				this.activeRecipe = null;
+				this.progress = 0;
+				this.time = 0;
+				return false;
+			} else if (recipe != activeRecipe) {
+				this.activeRecipe = recipe;
+				this.time = this.activeRecipe.getInfusionTime();
+				this.progress = 0;
+			}
+			return true;
+		}
 		this.activeRecipe = this.world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
 		if (activeRecipe != null) {
 			this.time = this.activeRecipe.getInfusionTime();
@@ -68,6 +87,7 @@ public class InfusionRitual implements Inventory {
 	
 	public void tick() {
 		if (!isValid() || !hasRecipe()) return;
+		if (!checkRecipe()) return;
 		this.progress++;
 		if (progress == time) {
 			BlockState inputState = world.getBlockState(input.getPos());
@@ -79,7 +99,22 @@ public class InfusionRitual implements Inventory {
 			this.activeRecipe = null;
 			this.progress = 0;
 			this.time = 0;
+		} else {
+			ServerWorld world = (ServerWorld) this.world;
+			BlockPos target = this.worldPos.up();
+			double tx = target.getX() + 0.5;
+			double ty = target.getY() + 1.75;
+			double tz = target.getZ() + 0.5;
+			for (PedestalBlockEntity catalyst : catalysts) {
+				BlockPos start = catalyst.getPos().up();
+				double sx = start.getX() + 0.5;
+				double sy = start.getY() + 0.25;
+				double sz = start.getZ() + 0.5;
+				ItemStackParticleEffect catalystParticle = new ItemStackParticleEffect(ParticleTypes.ITEM, catalyst.getStack(0));
+				world.spawnParticles(catalystParticle, sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.125);
+			}
 		}
+		
 	}
 	
 	@Override

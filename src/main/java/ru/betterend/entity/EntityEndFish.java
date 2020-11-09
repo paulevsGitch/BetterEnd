@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -114,5 +115,11 @@ public class EntityEndFish extends SchoolingFishEntity {
 		Box box = new Box(pos).expand(16);
 		List<EntityEndFish> list = world.getEntitiesByClass(EntityEndFish.class, box, (entity) -> { return true; });
 		return list.size() < 9;
+	}
+	
+	@Override
+	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
+		ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(EndItems.END_FISH_RAW));
+		this.world.spawnEntity(drop);
 	}
 }

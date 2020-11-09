@@ -10,9 +10,12 @@ import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.FishBucketItem;
 import net.minecraft.item.FoodComponent;
+import net.minecraft.item.FoodComponents;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.ItemStack;
@@ -43,12 +46,12 @@ public class EndItems {
 	private static final List<Item> MOD_ITEMS = Lists.newArrayList();
 	
 	// Materials //
-	public final static Item ENDER_DUST = registerItem("ender_dust", new Item(makeSettings()));
-	public final static Item TERMINITE_INGOT = registerItem("terminite_ingot", new Item(makeSettings()));
-	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot", new Item(makeSettings()));
-	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf", new Item(makeSettings()));
-	public final static Item END_LILY_LEAF_DRIED = registerItem("end_lily_leaf_dried", new Item(makeSettings()));
-	public final static Item CRYSTAL_SHARDS = registerItem("crystal_shards", new Item(makeSettings()));
+	public final static Item ENDER_DUST = registerItem("ender_dust");
+	public final static Item TERMINITE_INGOT = registerItem("terminite_ingot");
+	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot");
+	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
+	public final static Item END_LILY_LEAF_DRIED = registerItem("end_lily_leaf_dried");
+	public final static Item CRYSTAL_SHARDS = registerItem("crystal_shards");
 	
 	// Armor //
 	public static final Item TERMINITE_HELMET = registerItem("terminite_helmet", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.HEAD, makeSettings()));
@@ -81,9 +84,16 @@ public class EndItems {
 	// Food //
 	public final static Item SHADOW_BERRY_RAW = registerFood("shadow_berry_raw", 4, 0.5F);
 	public final static Item SHADOW_BERRY_COOKED = registerFood("shadow_berry_cooked", 6, 0.7F);
+	public final static Item END_FISH_RAW = registerFood("end_fish_raw", FoodComponents.SALMON);
+	public final static Item END_FISH_COOKED = registerFood("end_fish_cooked", FoodComponents.COOKED_SALMON);
+	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new FishBucketItem(EndEntities.END_FISH, Fluids.WATER, makeSettings()));
 	
 	// Other //
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
+	
+	protected static Item registerItem(String name) {
+		return registerItem(BetterEnd.makeID(name), new Item(makeSettings()));
+	}
 	
 	protected static Item registerItem(String name, Item item) {
 		return registerItem(BetterEnd.makeID(name), item);

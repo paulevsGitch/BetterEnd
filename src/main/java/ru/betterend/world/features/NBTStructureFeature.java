@@ -95,12 +95,12 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		structure.place(world, center, placementData, random);
 		
 		TerrainMerge merge = getTerrainMerge(world, center, random);
+		int x1 = center.getX();
+		int z1 = center.getZ();
+		int x2 = x1 + offset.getX();
+		int z2 = z1 + offset.getZ();
 		if (merge != TerrainMerge.NONE) {
 			Mutable mut = new Mutable();
-			int x1 = center.getX();
-			int z1 = center.getZ();
-			int x2 = x1 + offset.getX();
-			int z2 = z1 + offset.getZ();
 			
 			if (x2 < x1) {
 				int a = x1;
@@ -119,10 +119,10 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 				mut.setX(x);
 				for (int z = z1; z <= z2; z++) {
 					mut.setZ(z);
-					mut.setY(posY);
+					mut.setY(surfMax);
 					BlockState state = world.getBlockState(mut);
 					if (!state.isIn(EndTags.GEN_TERRAIN) && state.isSideSolidFullSquare(world, mut, Direction.DOWN)) {
-						for (int i = 0; i < 10; i--) {
+						for (int i = 0; i < 10; i++) {
 							mut.setY(mut.getY() - 1);
 							BlockState stateSt = world.getBlockState(mut);
 							if (!stateSt.isIn(EndTags.GEN_TERRAIN)) {
@@ -153,6 +153,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 				}
 			}
 		}
+		BlocksHelper.fixBlocks(world, new BlockPos(x1, center.getY(), z1), new BlockPos(x2, center.getY() + offset.getY(), z2));
 		
 		return true;
 	}

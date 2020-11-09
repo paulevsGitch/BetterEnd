@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -15,7 +16,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import ru.betterend.registry.EndItems;
 
 public class EntityEndFish extends SchoolingFishEntity {
 	public static final int VARIANTS = 5;
@@ -61,7 +62,7 @@ public class EntityEndFish extends SchoolingFishEntity {
 
 	@Override
 	protected ItemStack getFishBucketItem() {
-		return new ItemStack(Items.WATER_BUCKET);
+		return new ItemStack(EndItems.BUCKET_END_FISH);
 	}
 
 	@Override
@@ -114,5 +115,11 @@ public class EntityEndFish extends SchoolingFishEntity {
 		Box box = new Box(pos).expand(16);
 		List<EntityEndFish> list = world.getEntitiesByClass(EntityEndFish.class, box, (entity) -> { return true; });
 		return list.size() < 9;
+	}
+	
+	@Override
+	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
+		ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(EndItems.END_FISH_RAW));
+		this.world.spawnEntity(drop);
 	}
 }

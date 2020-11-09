@@ -9,6 +9,7 @@ public class FurnaceRecipes {
 	public static void register() {
 		FurnaceRecipe.make("end_lily_leaf_dried", EndItems.END_LILY_LEAF, EndItems.END_LILY_LEAF_DRIED).build();
 		FurnaceRecipe.make("end_glass", EndBlocks.ENDSTONE_DUST, Blocks.GLASS).build();
-		FurnaceRecipe.make("end_glass", EndItems.SHADOW_BERRY_RAW, EndItems.SHADOW_BERRY_COOKED).build();
+		FurnaceRecipe.make("end_berry", EndItems.SHADOW_BERRY_RAW, EndItems.SHADOW_BERRY_COOKED).build();
+		FurnaceRecipe.make("end_fish", EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED).build();
 	}
 }

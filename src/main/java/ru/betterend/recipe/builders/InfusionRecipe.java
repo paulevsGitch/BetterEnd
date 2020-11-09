@@ -17,7 +17,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.CompoundSerializer;
 import ru.betterend.recipe.EndRecipeManager;

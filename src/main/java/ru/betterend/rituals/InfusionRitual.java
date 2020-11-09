@@ -2,6 +2,7 @@ package ru.betterend.rituals;
 
 import java.awt.Point;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -60,6 +61,7 @@ public class InfusionRitual implements Inventory {
 		this.activeRecipe = this.world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
 		if (activeRecipe != null) {
 			this.time = this.activeRecipe.getInfusionTime();
+			this.progress = 0;
 			return true;
 		}
 		return false;
@@ -69,9 +71,11 @@ public class InfusionRitual implements Inventory {
 		if (!isValid() || !hasRecipe()) return;
 		this.progress++;
 		if (progress == time) {
-			this.input.setStack(0, activeRecipe.craft(this));
+			BlockState inputState = world.getBlockState(input.getPos());
+			this.input.removeStack(world, inputState);
+			this.input.setStack(world, inputState, activeRecipe.craft(this));
 			for (PedestalBlockEntity catalyst : catalysts) {
-				catalyst.clear();
+				catalyst.removeStack(world, world.getBlockState(catalyst.getPos()));
 			}
 			this.activeRecipe = null;
 			this.progress = 0;

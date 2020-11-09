@@ -217,29 +217,28 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 		public InfusionRecipe fromTag(CompoundTag tag) {
 			Identifier id = new Identifier(tag.getString("id"));
 			InfusionRecipe recipe = new InfusionRecipe(id);
-			CompoundSerializer<Ingredient> inputSerializer = this.toSerializer(recipe.input);
-			recipe.input = inputSerializer.fromTag(tag.getCompound("input"));
+			CompoundSerializer<Ingredient> ingredientSerializer = this.toSerializer(Ingredient.EMPTY);
+			recipe.input = ingredientSerializer.beFromTag(tag.getCompound("input"));
 			recipe.output = ItemStack.fromTag(tag.getCompound("output"));
 			recipe.time = tag.getInt("time");
 			CompoundTag catalysts = tag.getCompound("catalysts");
 			for(int i = 0; i < recipe.catalysts.length; i++) {
 				String key = Integer.toString(i);
-				CompoundSerializer<Ingredient> cataSerializer = this.toSerializer(recipe.catalysts[i]);
-				recipe.catalysts[i] = cataSerializer.fromTag(catalysts.getCompound(key));
+				recipe.catalysts[i] = ingredientSerializer.beFromTag(catalysts.getCompound(key));
 			}
 			return recipe;
 		}
 
 		public CompoundTag toTag(InfusionRecipe recipe, CompoundTag tag) {
 			CompoundSerializer<?> inputSerializer = this.toSerializer(recipe.input);
-			tag.put("input", inputSerializer.toTag(new CompoundTag()));
+			tag.put("input", inputSerializer.beToTag(new CompoundTag()));
 			tag.put("output", recipe.output.toTag(new CompoundTag()));
 			tag.putInt("time", recipe.time);
 			CompoundTag catalysts = new CompoundTag();
 			for(int i = 0; i < recipe.catalysts.length; i++) {
 				String key = Integer.toString(i);
 				CompoundSerializer<?> cataSerializer = this.toSerializer(recipe.catalysts[i]);
-				catalysts.put(key, cataSerializer.toTag(new CompoundTag()));
+				catalysts.put(key, cataSerializer.beToTag(new CompoundTag()));
 			}
 			tag.put("catalysts", catalysts);
 			return tag;

@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Tickable;
+import net.minecraft.world.World;
+import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.registry.EndBlockEntities;
 
 public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable {
@@ -57,10 +59,20 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	public ItemStack removeStack(int slot) {
 		return this.activeItem = ItemStack.EMPTY;
 	}
+	
+	public void removeStack(World world, BlockState state) {
+		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, false));
+		this.removeStack(0);
+	}
 
 	@Override
 	public void setStack(int slot, ItemStack stack) {
 		this.activeItem = stack;
+	}
+	
+	public void setStack(World world, BlockState state, ItemStack stack) {
+		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, true));
+		this.setStack(0, stack);
 	}
 
 	@Override
@@ -89,8 +101,9 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
+		super.toTag(tag);
 		tag.put("active_item", activeItem.toTag(new CompoundTag()));
-		return super.toTag(tag);
+		return tag;
 	}
 
 	@Override

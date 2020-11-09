@@ -106,14 +106,12 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 			if (pedestal.isEmpty()) {
 				ItemStack itemStack = player.getStackInHand(hand);
 				if (itemStack.isEmpty()) return ActionResult.CONSUME;
-				world.setBlockState(pos, state.with(HAS_ITEM, true));
-				pedestal.setStack(0, itemStack.split(1));
+				pedestal.setStack(world, state, itemStack.split(1));
 				return ActionResult.SUCCESS;
 			} else {
 				ItemStack itemStack = pedestal.getStack(0);
 				if (player.giveItemStack(itemStack)) {
-					world.setBlockState(pos, state.with(HAS_ITEM, false));
-					pedestal.removeStack(0);
+					pedestal.removeStack(world, state);
 					return ActionResult.SUCCESS;
 				}
 				return ActionResult.FAIL;

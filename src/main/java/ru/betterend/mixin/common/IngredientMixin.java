@@ -21,7 +21,7 @@ public abstract class IngredientMixin implements CompoundSerializer<Ingredient> 
 	protected abstract void cacheMatchingStacks();
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
+	public CompoundTag beToTag(CompoundTag tag) {
 		this.cacheMatchingStacks();
 		int i = 0; 
 		tag.putInt("length", matchingStacks.length);
@@ -34,7 +34,7 @@ public abstract class IngredientMixin implements CompoundSerializer<Ingredient> 
 	}
 
 	@Override
-	public Ingredient fromTag(CompoundTag tag) {
+	public Ingredient beFromTag(CompoundTag tag) {
 		int length = tag.getInt("length");
 		ItemStack[] stacks = new ItemStack[length];
 		for (int i = 0; i < length; i++) {

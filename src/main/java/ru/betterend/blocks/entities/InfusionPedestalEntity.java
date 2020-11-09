@@ -41,18 +41,19 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	
 	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
+		super.fromTag(state, tag);
 		if (tag.contains("ritual")) {
 			this.linkedRitual = new InfusionRitual(world, pos);
 			this.linkedRitual.fromTag(tag.getCompound("ritual"));
 		}
-		super.fromTag(state, tag);
 	}
 
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
+		super.toTag(tag);
 		if (hasRitual()) {
 			tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
 		}
-		return super.toTag(tag);
+		return tag;
 	}
 }

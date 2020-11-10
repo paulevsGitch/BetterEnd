@@ -108,7 +108,10 @@ public class DragonTreeFeature extends DefaultFeature {
 			List<Vector3f> branch = SplineHelper.copySpline(ROOT);
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
-			SplineHelper.fillSplineRoot(branch, world, EndBlocks.DRAGON_TREE.bark.getDefaultState(), pos, REPLACE);
+			Vector3f last = branch.get(branch.size() - 1);
+			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(EndTags.GEN_TERRAIN)) {
+				SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.bark.getDefaultState(), pos, REPLACE);
+			}
 		}
 	}
 	

@@ -2,7 +2,6 @@ package ru.betterend.blocks.entities.render;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -15,7 +14,6 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 

@@ -8,7 +8,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.client.render.BeamRenderer;

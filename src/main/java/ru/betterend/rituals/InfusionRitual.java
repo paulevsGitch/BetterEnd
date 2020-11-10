@@ -66,11 +66,13 @@ public class InfusionRitual implements Inventory {
 				this.activeRecipe = null;
 				this.progress = 0;
 				this.time = 0;
+				this.markDirty();
 				return false;
 			} else if (recipe != activeRecipe) {
 				this.activeRecipe = recipe;
 				this.time = this.activeRecipe.getInfusionTime();
 				this.progress = 0;
+				this.markDirty();
 			}
 			return true;
 		}
@@ -78,6 +80,7 @@ public class InfusionRitual implements Inventory {
 		if (activeRecipe != null) {
 			this.time = this.activeRecipe.getInfusionTime();
 			this.progress = 0;
+			this.markDirty();
 			return true;
 		}
 		return false;
@@ -97,6 +100,7 @@ public class InfusionRitual implements Inventory {
 			this.activeRecipe = null;
 			this.progress = 0;
 			this.time = 0;
+			this.markDirty();
 		} else {
 			ServerWorld world = (ServerWorld) this.world;
 			BlockPos target = this.worldPos.up();
@@ -193,7 +197,14 @@ public class InfusionRitual implements Inventory {
 	}
 
 	@Override
-	public void markDirty() {}
+	public void markDirty() {
+		if (isValid()) {
+			this.input.markDirty();
+			for (PedestalBlockEntity catalyst : catalysts) {
+				catalyst.markDirty();
+			}
+		}
+	}
 
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {

@@ -38,6 +38,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	@Override
 	public void clear() {
 		this.activeItem = ItemStack.EMPTY;
+		this.markDirty();
 	}
 
 	@Override
@@ -62,7 +63,10 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 
 	@Override
 	public ItemStack removeStack(int slot) {
-		return this.activeItem = ItemStack.EMPTY;
+		ItemStack stored = this.activeItem;
+		this.activeItem = ItemStack.EMPTY;
+		this.markDirty();
+		return stored;
 	}
 	
 	public void removeStack(World world, BlockState state) {
@@ -73,6 +77,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	@Override
 	public void setStack(int slot, ItemStack stack) {
 		this.activeItem = stack;
+		this.markDirty();
 	}
 	
 	public void setStack(World world, BlockState state, ItemStack stack) {

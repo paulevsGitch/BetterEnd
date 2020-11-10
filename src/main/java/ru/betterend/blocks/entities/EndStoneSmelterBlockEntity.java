@@ -238,7 +238,6 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	@Override
 	public void tick() {
 		boolean initialBurning = this.isBurning();
-		boolean smelting = false;
 		if (initialBurning) {
 			this.burnTime--;
 		}
@@ -261,7 +260,6 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 					this.fuelTime = this.burnTime;
 					burning = this.isBurning();
 					if (burning) {
-						smelting = true;
 						if (!fuel.isEmpty()) {
 							Item item = fuel.getItem();
 							fuel.decrement(1);
@@ -270,6 +268,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 								this.inventory.set(2, remainFuel == null ? ItemStack.EMPTY : new ItemStack(remainFuel));
 							}
 						}
+						this.markDirty();
 					}
 				}
 
@@ -279,7 +278,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 						this.smeltTime = 0;
 						this.smeltTimeTotal = this.getSmeltTime();
 						this.craftRecipe(recipe);
-						smelting = true;
+						this.markDirty();
 					}
 				} else {
 					this.smeltTime = 0;
@@ -287,13 +286,9 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 			}
 
 			if (initialBurning != burning) {
-				smelting = true;
 				this.world.setBlockState(pos, world.getBlockState(pos).with(EndStoneSmelter.LIT, burning), 3);
+				this.markDirty();
 			}
-		}
-
-		if (smelting) {
-			this.markDirty();
 		}
 	}
 	

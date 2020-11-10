@@ -1,6 +1,9 @@
 {
 	"itemGroup.betterend.items": "Улучшенный Край",
 	
+	"category.rei.damage.amount&dmg": "Износ инструмента: %s",
+	"category.rei.infusion.time&val": "Время наполнения: %s",
+	
 	"biome.betterend.foggy_mushroomland": "Туманное гриболесье",
 	"biome.betterend.dust_wastelands": "Пыльные пустоши",
 	"biome.betterend.chorus_forest": "Хорусовый лес",
@@ -101,8 +104,6 @@
 	"block.betterend.bubble_coral": "Пузырчатый коралл",
 	"block.betterend.aurora_crystal": "Кристалл авроры",
 	"item.betterend.crystal_shards": "Осколки кристаллов",
-	
-	"category.rei.damage.amount&dmg": "Износ инструмента: %s",
 	
 	"block.betterend.pythadendron_sapling": "Саженец пифадендрона",
 	"block.betterend.pythadendron_bark": "Кора пифадендрона",

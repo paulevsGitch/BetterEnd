@@ -18,12 +18,12 @@ public class InfusionRecipes {
 			.build();
 		
 		InfusionRecipe.Builder.create("eternal_crystal")
-			.setInput(EndItems.CRYSTAL_SHARDS)
+			.setInput(Items.END_CRYSTAL)
 			.setOutput(EndItems.ETERNAL_CRYSTAL)
-			.addCatalyst(0, Items.END_CRYSTAL)
-			.addCatalyst(2, Items.END_CRYSTAL)
-			.addCatalyst(4, Items.END_CRYSTAL)
-			.addCatalyst(6, Items.END_CRYSTAL)
+			.addCatalyst(0, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(2, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(4, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
 			.addCatalyst(1, EndItems.ENDER_DUST)
 			.addCatalyst(3, EndItems.ENDER_DUST)
 			.addCatalyst(5, EndItems.ENDER_DUST)

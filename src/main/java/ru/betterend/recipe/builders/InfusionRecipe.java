@@ -14,6 +14,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -67,6 +68,16 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 	@Override
 	public boolean fits(int width, int height) {
 		return true;
+	}
+	
+	@Override
+	public DefaultedList<Ingredient> getPreviewInputs() {
+		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
+		defaultedList.add(input);
+		for (Ingredient catalyst : catalysts) {
+			defaultedList.add(catalyst);
+		}
+		return defaultedList;
 	}
 
 	@Override

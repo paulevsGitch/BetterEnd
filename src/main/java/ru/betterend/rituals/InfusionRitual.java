@@ -120,12 +120,15 @@ public class InfusionRitual implements Inventory {
 			double ty = target.getY() + 1.75;
 			double tz = target.getZ() + 0.5;
 			for (PedestalBlockEntity catalyst : catalysts) {
-				BlockPos start = catalyst.getPos().up();
-				double sx = start.getX() + 0.5;
-				double sy = start.getY() + 0.25;
-				double sz = start.getZ() + 0.5;
-				ItemStackParticleEffect catalystParticle = new ItemStackParticleEffect(ParticleTypes.ITEM, catalyst.getStack(0));
-				world.spawnParticles(catalystParticle, sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.125);
+				ItemStack stack = catalyst.getStack(0);
+				if (!stack.isEmpty()) {
+					BlockPos start = catalyst.getPos();
+					double sx = start.getX() + 0.5;
+					double sy = start.getY() + 1.25;
+					double sz = start.getZ() + 0.5;
+					ItemStackParticleEffect catalystParticle = new ItemStackParticleEffect(ParticleTypes.ITEM, stack);
+					world.spawnParticles(catalystParticle, sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.125);
+				}
 			}
 		}
 		

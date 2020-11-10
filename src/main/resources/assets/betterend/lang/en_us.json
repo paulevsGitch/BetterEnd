@@ -1,6 +1,9 @@
 {
 	"itemGroup.betterend.items": "Better End",
 	
+	"category.rei.damage.amount&dmg": "Tool damage: %s",
+	"category.rei.infusion.time&val": "Infusion Time: %s",
+	
 	"biome.betterend.foggy_mushroomland": "Foggy Mushroomland",
 	"biome.betterend.dust_wastelands": "Dust Wastelands",
 	"biome.betterend.chorus_forest": "Chorus Forest",
@@ -101,8 +104,6 @@
 	"block.betterend.bubble_coral": "Bubble Coral",
 	"block.betterend.aurora_crystal": "Aurora Crystal",
 	"item.betterend.crystal_shards": "Crystal Shards",
-	
-	"category.rei.damage.amount&dmg": "Tool damage: %s",
 	
 	"block.betterend.pythadendron_sapling": "Pythadendron Sapling",
 	"block.betterend.pythadendron_bark": "Pythadendron Bark",

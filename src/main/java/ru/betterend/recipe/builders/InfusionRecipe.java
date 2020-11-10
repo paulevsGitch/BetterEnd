@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -17,8 +16,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.CompoundSerializer;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -88,14 +87,6 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 	@Override
 	public RecipeType<?> getType() {
 		return TYPE;
-	}
-	
-	public static InfusionRecipe fromTag(CompoundTag tag) {
-		return SERIALIZER.fromTag(tag);
-	}
-
-	public CompoundTag toTag(CompoundTag tag) {
-		return SERIALIZER.toTag(this, tag);
 	}
 	
 	public static class Builder {
@@ -197,7 +188,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 			recipe.input = Ingredient.fromPacket(buffer);
 			recipe.output = buffer.readItemStack();
 			recipe.time = buffer.readVarInt();
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < 8; i++) {
 				recipe.catalysts[i] = Ingredient.fromPacket(buffer);
 			}
 			return recipe;
@@ -208,44 +199,9 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 			recipe.input.write(buffer);
 			buffer.writeItemStack(recipe.output);
 			buffer.writeVarInt(recipe.time);
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < 8; i++) {
 				recipe.catalysts[i].write(buffer);
 			}
-		}
-		
-		public InfusionRecipe fromTag(CompoundTag tag) {
-			Identifier id = new Identifier(tag.getString("id"));
-			InfusionRecipe recipe = new InfusionRecipe(id);
-			CompoundSerializer<Ingredient> ingredientSerializer = this.toSerializer(Ingredient.EMPTY);
-			recipe.input = ingredientSerializer.beFromTag(tag.getCompound("input"));
-			recipe.output = ItemStack.fromTag(tag.getCompound("output"));
-			recipe.time = tag.getInt("time");
-			CompoundTag catalysts = tag.getCompound("catalysts");
-			for(int i = 0; i < recipe.catalysts.length; i++) {
-				String key = Integer.toString(i);
-				recipe.catalysts[i] = ingredientSerializer.beFromTag(catalysts.getCompound(key));
-			}
-			return recipe;
-		}
-
-		public CompoundTag toTag(InfusionRecipe recipe, CompoundTag tag) {
-			CompoundSerializer<?> inputSerializer = this.toSerializer(recipe.input);
-			tag.put("input", inputSerializer.beToTag(new CompoundTag()));
-			tag.put("output", recipe.output.toTag(new CompoundTag()));
-			tag.putInt("time", recipe.time);
-			CompoundTag catalysts = new CompoundTag();
-			for(int i = 0; i < recipe.catalysts.length; i++) {
-				String key = Integer.toString(i);
-				CompoundSerializer<?> cataSerializer = this.toSerializer(recipe.catalysts[i]);
-				catalysts.put(key, cataSerializer.beToTag(new CompoundTag()));
-			}
-			tag.put("catalysts", catalysts);
-			return tag;
-		}
-		
-		@SuppressWarnings("unchecked")
-		private CompoundSerializer<Ingredient> toSerializer(Ingredient ingredient) {
-			return CompoundSerializer.class.cast(ingredient);
 		}
 	}
 }

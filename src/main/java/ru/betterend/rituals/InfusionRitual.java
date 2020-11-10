@@ -14,6 +14,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.recipe.builders.InfusionRecipe;
@@ -27,6 +28,8 @@ public class InfusionRitual implements Inventory {
 	private World world;
 	private BlockPos worldPos;
 	private InfusionRecipe activeRecipe;
+	private boolean isDirty = false;
+	private boolean hasRecipe = false;
 	private int progress = 0;
 	private int time = 0;
 	
@@ -60,25 +63,29 @@ public class InfusionRitual implements Inventory {
 	
 	public boolean checkRecipe() {
 		if (!isValid()) return false;
+		InfusionRecipe recipe = this.world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
 		if (hasRecipe()) {
-			InfusionRecipe recipe = this.world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
 			if (recipe == null) {
 				this.activeRecipe = null;
+				this.hasRecipe = false;
 				this.progress = 0;
 				this.time = 0;
 				this.markDirty();
 				return false;
-			} else if (recipe != activeRecipe) {
+			} else if (recipe.getInfusionTime() != time) {
 				this.activeRecipe = recipe;
 				this.time = this.activeRecipe.getInfusionTime();
 				this.progress = 0;
 				this.markDirty();
+			} else if (activeRecipe == null) {
+				this.activeRecipe = recipe;
 			}
 			return true;
 		}
-		this.activeRecipe = this.world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
-		if (activeRecipe != null) {
+		if (recipe != null) {
+			this.activeRecipe = recipe;
 			this.time = this.activeRecipe.getInfusionTime();
+			this.hasRecipe = true;
 			this.progress = 0;
 			this.markDirty();
 			return true;
@@ -87,6 +94,7 @@ public class InfusionRitual implements Inventory {
 	}
 	
 	public void tick() {
+		if (isDirty) this.configure();
 		if (!isValid() || !hasRecipe()) return;
 		if (!checkRecipe()) return;
 		this.progress++;
@@ -98,6 +106,7 @@ public class InfusionRitual implements Inventory {
 				catalyst.removeStack(world, world.getBlockState(catalyst.getPos()));
 			}
 			this.activeRecipe = null;
+			this.hasRecipe = false;
 			this.progress = 0;
 			this.time = 0;
 			this.markDirty();
@@ -133,13 +142,13 @@ public class InfusionRitual implements Inventory {
 	}
 	
 	public boolean hasRecipe() {
-		return this.activeRecipe != null;
+		return this.hasRecipe;
 	}
 
 	public void setLocation(World world, BlockPos pos) {
 		this.world = world;
 		this.worldPos = pos;
-		this.configure();
+		this.isDirty = true;
 	}
 
 	@Override
@@ -213,7 +222,7 @@ public class InfusionRitual implements Inventory {
 	
 	public void fromTag(CompoundTag tag) {
 		if (tag.contains("recipe")) {
-			this.activeRecipe = InfusionRecipe.fromTag(tag.getCompound("recipe"));
+			this.hasRecipe = tag.getBoolean("recipe");
 			this.progress = tag.getInt("progress");
 			this.time = tag.getInt("time");
 		}
@@ -221,7 +230,7 @@ public class InfusionRitual implements Inventory {
 
 	public CompoundTag toTag(CompoundTag tag) {
 		if (hasRecipe()) {
-			tag.put("recipe", activeRecipe.toTag(new CompoundTag()));
+			tag.putBoolean("recipe", this.hasRecipe);
 			tag.putInt("progress", progress);
 			tag.putInt("time", time);
 		}

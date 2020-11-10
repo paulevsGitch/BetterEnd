@@ -45,13 +45,11 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 			matrices.scale(1.25F, 1.25F, 1.25F);
 		}
 		
-		float rotation = (blockEntity.getAge() + tickDelta) / 25.0F + 6.0F;
-		matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(rotation));
-		
-		
 		if (activeItem.getItem() == Items.END_CRYSTAL) {
 			EndCrystalRenderer.render(blockEntity.getAge(), blockEntity.getMaxAge(), tickDelta, matrices, vertexConsumers, light);
 		} else {
+			float rotation = (blockEntity.getAge() + tickDelta) / 25.0F + 6.0F;
+			matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(rotation));
 			minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, overlay, model);
 		}
 		matrices.pop();

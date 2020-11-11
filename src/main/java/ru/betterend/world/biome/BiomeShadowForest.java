@@ -20,6 +20,7 @@ public class BiomeShadowForest extends EndBiome {
 				.setParticles(ParticleTypes.MYCELIUM, 0.01F)
 				.setLoop(EndSounds.AMBIENT_CHORUS_FOREST)
 				.setMusic(EndSounds.SHADOW_FOREST)
+				.addFeature(EndFeatures.VIOLECITE_LAYER)
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(EndFeatures.DRAGON_TREE)
 				.addFeature(EndFeatures.DRAGON_TREE_BUSH)

@@ -99,4 +99,19 @@ public class JsonFactory {
 			BetterEnd.LOGGER.catching(ex);
 		}
 	}
+	
+	public static float getFloat(JsonObject object, String member, float def) {
+		JsonElement elem = object.get(member);
+		return elem == null ? def : elem.getAsFloat();
+	}
+	
+	public static boolean getBoolean(JsonObject object, String member, boolean def) {
+		JsonElement elem = object.get(member);
+		return elem == null ? def : elem.getAsBoolean();
+	}
+	
+	public static String getString(JsonObject object, String member, String def) {
+		JsonElement elem = object.get(member);
+		return elem == null ? def : elem.getAsString();
+	}
 }

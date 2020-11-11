@@ -74,6 +74,7 @@ public class EndBiomes {
 		
 		EndBiomes.MUTABLE.clear();
 		LAND_BIOMES.clearMutables();
+		VOID_BIOMES.clearMutables();
 		
 		for (EndBiome biome : EndBiomes.LAND_BIOMES.getBiomes())
 			EndBiomes.MUTABLE.put(biomeRegistry.getOrThrow(EndBiomes.getBiomeKey(biome)), biome);
@@ -92,14 +93,22 @@ public class EndBiomes {
 					}
 					float fog = 1F;
 					float chance = 1F;
+					boolean isVoid = false;
 					JsonElement element = config.get(id.getPath());
-					if (element != null) {
-						fog = element.getAsJsonObject().get("fogDensity").getAsFloat();
-						chance = element.getAsJsonObject().get("genChance").getAsFloat();
+					if (element != null && element.isJsonObject()) {
+						fog = JsonFactory.getFloat(element.getAsJsonObject(), "fogDensity", 1);
+						chance = JsonFactory.getFloat(element.getAsJsonObject(), "genChance", 1);
+						isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
 					}
 					EndBiome endBiome = new EndBiome(id, biome, fog, chance);
-					LAND_BIOMES.addBiomeMutable(endBiome);
+					if (isVoid) {
+						VOID_BIOMES.addBiomeMutable(endBiome);
+					}
+					else {
+						LAND_BIOMES.addBiomeMutable(endBiome);
+					}
 					KEYS.put(endBiome, biomeRegistry.getKey(biome).get());
+					ID_MAP.put(id, endBiome);
 				}
 			}
 		});

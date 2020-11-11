@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.DynamicRegistryManager;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -29,7 +30,13 @@ public class StructureEternalPortal extends StructureFeatureBase {
 		long x = chunkPos.x * chunkPos.x;
 		long z = chunkPos.z * chunkPos.z;
 		long d = x * x + z * z;
-		return d > 1024 && super.shouldStartAt(chunkGenerator, biomeSource, worldSeed, chunkRandom, chunkX, chunkZ, biome, chunkPos, featureConfig);
+		if (d < 1024) {
+			return false;
+		}
+		if (chunkGenerator.getHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Heightmap.Type.WORLD_SURFACE_WG) < 58) {
+			return false;
+		}
+		return super.shouldStartAt(chunkGenerator, biomeSource, worldSeed, chunkRandom, chunkX, chunkZ, biome, chunkPos, featureConfig);
 	}
 	
 	@Override
@@ -47,7 +54,7 @@ public class StructureEternalPortal extends StructureFeatureBase {
 			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
-			if (y > 50) {
+			if (y > 10) {
 				this.children.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), random.nextInt(5), true, random));
 			}
 			this.setBoundingBoxFromChildren();

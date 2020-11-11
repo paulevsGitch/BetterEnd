@@ -3,7 +3,6 @@ package ru.betterend.registry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-
 import ru.betterend.blocks.entities.render.EndChestBlockEntityRenderer;
 import ru.betterend.blocks.entities.render.EndSignBlockEntityRenderer;
 import ru.betterend.blocks.entities.render.PedestalItemRenderer;

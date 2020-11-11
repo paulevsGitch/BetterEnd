@@ -1,5 +1,6 @@
 package ru.betterend.registry;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,8 @@ import java.util.Optional;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -19,6 +22,7 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
+import ru.betterend.util.JsonFactory;
 import ru.betterend.world.biome.BiomeChorusForest;
 import ru.betterend.world.biome.BiomeCrystalMountains;
 import ru.betterend.world.biome.BiomeDustWastelands;
@@ -40,6 +44,7 @@ public class EndBiomes {
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
 	public static final List<EndBiome> SUBBIOMES = Lists.newArrayList();
+	private static final JsonObject EMPTY_JSON = new JsonObject();
 	
 	private static Registry<Biome> biomeRegistry;
 	
@@ -75,11 +80,24 @@ public class EndBiomes {
 		for (EndBiome biome : EndBiomes.VOID_BIOMES.getBiomes())
 			EndBiomes.MUTABLE.put(biomeRegistry.getOrThrow(EndBiomes.getBiomeKey(biome)), biome);
 		
+		Map<String, JsonObject> configs = Maps.newHashMap();
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				Identifier id = biomeRegistry.getId(biome);
 				if (!MUTABLE.containsKey(biome) && !ID_MAP.containsKey(id)) {
-					EndBiome endBiome = new EndBiome(id, biome, 1, 1);
+					JsonObject config = configs.get(id.getNamespace());
+					if (config == null) {
+						config = loadJsonConfig(id.getNamespace());
+						configs.put(id.getNamespace(), config);
+					}
+					float fog = 1F;
+					float chance = 1F;
+					JsonElement element = config.get(id.getPath());
+					if (element != null) {
+						fog = element.getAsJsonObject().get("fogDensity").getAsFloat();
+						chance = element.getAsJsonObject().get("genChance").getAsFloat();
+					}
+					EndBiome endBiome = new EndBiome(id, biome, fog, chance);
 					LAND_BIOMES.addBiomeMutable(endBiome);
 					KEYS.put(endBiome, biomeRegistry.getKey(biome).get());
 				}
@@ -87,6 +105,16 @@ public class EndBiomes {
 		});
 		
 		CLIENT.clear();
+	}
+	
+	private static JsonObject loadJsonConfig(String namespace) {
+		InputStream inputstream = EndBiomes.class.getResourceAsStream("/data/" + namespace + "/end_biome_properties.json");
+		if (inputstream != null) {
+			return JsonFactory.getJsonObject(inputstream);
+		}
+		else {
+			return EMPTY_JSON;
+		}
 	}
 	
 	/**

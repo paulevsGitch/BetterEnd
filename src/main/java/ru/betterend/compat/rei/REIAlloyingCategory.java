@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import com.google.common.collect.Lists;
 
 import it.unimi.dsi.fastutil.ints.IntList;
-
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.EntryStack;
@@ -17,12 +16,10 @@ import me.shedaniel.rei.api.widgets.Widgets;
 import me.shedaniel.rei.gui.entries.RecipeEntry;
 import me.shedaniel.rei.gui.entries.SimpleRecipeEntry;
 import me.shedaniel.rei.gui.widget.Widget;
-
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.LangUtil;

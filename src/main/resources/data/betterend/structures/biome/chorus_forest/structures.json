@@ -1,17 +1,19 @@
 {
-	{ "nbt": "fallen_tree_1", "offsetY": 0, "terrainMerge": "object" },
-	{ "nbt": "fallen_tree_2", "offsetY": 0, "terrainMerge": "object" },
-	{ "nbt": "fallen_tree_3", "offsetY": 0, "terrainMerge": "object" },
-	{ "nbt": "fallen_tree_4", "offsetY": 0, "terrainMerge": "object" },
-	{ "nbt": "stump_1", "offsetY": 0, "terrainMerge": "object" },
-	{ "nbt": "stump_2", "offsetY": 0, "terrainMerge": "object" },
-	{ "nbt": "stump_3", "offsetY": 0, "terrainMerge": "object" },
-	{ "nbt": "ruins_1", "offsetY": 0, "terrainMerge": "surface" },
-	{ "nbt": "ruins_2", "offsetY": 0, "terrainMerge": "surface" },
-	{ "nbt": "ruins_3", "offsetY": 0, "terrainMerge": "surface" },
-	{ "nbt": "ruins_4", "offsetY": 0, "terrainMerge": "surface" },
-	{ "nbt": "ruins_5", "offsetY": 0, "terrainMerge": "surface" },
-	{ "nbt": "ruins_6", "offsetY": 0, "terrainMerge": "surface" },
-	{ "nbt": "ruins_7", "offsetY": 0, "terrainMerge": "surface" },
-	{ "nbt": "ruins_8", "offsetY": 0, "terrainMerge": "surface" }
+	"structures": [
+		{ "nbt": "fallen_tree_1", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "fallen_tree_2", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "fallen_tree_3", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "fallen_tree_4", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "stump_1", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "stump_2", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "stump_3", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "ruins_1", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_2", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_3", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_4", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_5", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_6", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_7", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_8", "offsetY": 0, "terrainMerge": "surface" }
+	]
 }

@@ -51,7 +51,7 @@ public class EndBiomes {
 	
 	private static Registry<Biome> biomeRegistry;
 	private static Set<Integer> occupiedIDs = Sets.newHashSet();
-	private static int incID = 2048;
+	private static int incID = 8196;
 	
 	// Vanilla Land
 	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, 1F);

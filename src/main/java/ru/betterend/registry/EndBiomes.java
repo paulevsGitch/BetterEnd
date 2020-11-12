@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -22,6 +24,7 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
+import ru.betterend.BetterEnd;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.world.biome.BiomeChorusForest;
 import ru.betterend.world.biome.BiomeCrystalMountains;
@@ -47,6 +50,8 @@ public class EndBiomes {
 	private static final JsonObject EMPTY_JSON = new JsonObject();
 	
 	private static Registry<Biome> biomeRegistry;
+	private static Set<Integer> occupiedIDs = Sets.newHashSet();
+	private static int incID = 2048;
 	
 	// Vanilla Land
 	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, 1F);
@@ -232,9 +237,27 @@ public class EndBiomes {
 		else
 			VOID_BIOMES.addBiome(biome);
 	}
+	
+	private static void fillSet() {
+		if (occupiedIDs.isEmpty()) {
+			BuiltinRegistries.BIOME.getEntries().forEach((entry) -> {
+				int id = BuiltinRegistries.BIOME.getRawId(entry.getValue());
+				occupiedIDs.add(id);
+			});
+		}
+	}
 
 	private static void registerBiomeDirect(EndBiome biome) {
-		Registry.register(BuiltinRegistries.BIOME, biome.getID(), biome.getBiome());
+		fillSet();
+		int possibleID = incID++;
+		if (occupiedIDs.contains(possibleID)) {
+			String message = "ID for biome " + biome.getID() + " is already occupied, changing biome ID from " + possibleID + " to ";
+			while (occupiedIDs.contains(possibleID)) {
+				possibleID ++;
+			}
+			BetterEnd.LOGGER.info(message + possibleID);
+		}
+		Registry.register(BuiltinRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
 		makeLink(biome);
 	}
 	

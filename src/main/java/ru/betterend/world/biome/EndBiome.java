@@ -148,7 +148,7 @@ public class EndBiome {
 					list.add(new StructureInfo(structure, offsetY, terrainMerge));
 				});
 				if (!list.isEmpty()) {
-					structuresFeature = EndFeature.makeChansedFeature(nm + "_structures", new ListFeature(list), 15);
+					structuresFeature = EndFeature.makeChansedFeature(nm + "_structures", new ListFeature(list), 10);
 				}
 			}
 		}

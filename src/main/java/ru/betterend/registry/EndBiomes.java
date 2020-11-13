@@ -231,7 +231,6 @@ public class EndBiomes {
 				int id = BuiltinRegistries.BIOME.getRawId(entry.getValue());
 				occupiedIDs.add(id);
 			});
-			System.out.println("Existing biomes: " + occupiedIDs);
 		}
 	}
 

@@ -61,7 +61,7 @@ public class TagHelper {
 		}
 	}
 	
-	public static Tag.Builder apply( Tag.Builder builder, Set<Identifier> ids) {
+	public static Tag.Builder apply(Tag.Builder builder, Set<Identifier> ids) {
 		ids.forEach((value) -> {
 			builder.add(value, "Better End Code");
 		});

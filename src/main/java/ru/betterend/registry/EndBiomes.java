@@ -81,7 +81,7 @@ public class EndBiomes {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				Identifier id = biomeRegistry.getId(biome);
-				if (!ID_MAP.containsKey(id)) {
+				if (!ID_MAP.containsKey(id) && !LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id)) {
 					JsonObject config = configs.get(id.getNamespace());
 					if (config == null) {
 						config = loadJsonConfig(id.getNamespace());
@@ -108,6 +108,9 @@ public class EndBiomes {
 				}
 			}
 		});
+		
+		System.out.println("Land");
+		LAND_BIOMES.debug();
 		
 		CLIENT.clear();
 	}

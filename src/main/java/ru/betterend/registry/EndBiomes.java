@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
@@ -39,9 +38,7 @@ import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
 
 public class EndBiomes {
-	private static final Map<EndBiome, RegistryKey<Biome>> KEYS = Maps.newHashMap();
 	private static final HashMap<Identifier, EndBiome> ID_MAP = Maps.newHashMap();
-	private static final HashMap<Biome, EndBiome> MUTABLE = Maps.newHashMap();
 	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
@@ -77,20 +74,14 @@ public class EndBiomes {
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
 		EndBiomes.biomeRegistry = biomeRegistry;
 		
-		EndBiomes.MUTABLE.clear();
 		LAND_BIOMES.clearMutables();
 		VOID_BIOMES.clearMutables();
-		
-		for (EndBiome biome : EndBiomes.LAND_BIOMES.getBiomes())
-			EndBiomes.MUTABLE.put(biomeRegistry.getOrThrow(EndBiomes.getBiomeKey(biome)), biome);
-		for (EndBiome biome : EndBiomes.VOID_BIOMES.getBiomes())
-			EndBiomes.MUTABLE.put(biomeRegistry.getOrThrow(EndBiomes.getBiomeKey(biome)), biome);
 		
 		Map<String, JsonObject> configs = Maps.newHashMap();
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				Identifier id = biomeRegistry.getId(biome);
-				if (!MUTABLE.containsKey(biome) && !ID_MAP.containsKey(id)) {
+				if (!ID_MAP.containsKey(id)) {
 					JsonObject config = configs.get(id.getNamespace());
 					if (config == null) {
 						config = loadJsonConfig(id.getNamespace());
@@ -106,13 +97,13 @@ public class EndBiomes {
 						isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
 					}
 					EndBiome endBiome = new EndBiome(id, biome, fog, chance);
+					System.out.println("Adding: " + id + " " + chance);
 					if (isVoid) {
 						VOID_BIOMES.addBiomeMutable(endBiome);
 					}
 					else {
 						LAND_BIOMES.addBiomeMutable(endBiome);
 					}
-					KEYS.put(endBiome, biomeRegistry.getKey(biome).get());
 					ID_MAP.put(id, endBiome);
 				}
 			}
@@ -163,7 +154,6 @@ public class EndBiomes {
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance);
 		addToPicker(endBiome, type);
-		makeLink(endBiome);
 		return endBiome;
 	}
 	
@@ -189,7 +179,6 @@ public class EndBiomes {
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance);
 		parent.addSubBiome(endBiome);
-		makeLink(endBiome);
 		SUBBIOMES.add(endBiome);
 		ID_MAP.put(endBiome.getID(), endBiome);
 		return endBiome;
@@ -204,7 +193,6 @@ public class EndBiomes {
 	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
 		registerBiomeDirect(biome);
 		parent.addSubBiome(biome);
-		makeLink(biome);
 		SUBBIOMES.add(biome);
 		ID_MAP.put(biome.getID(), biome);
 		return biome;
@@ -244,6 +232,7 @@ public class EndBiomes {
 				int id = BuiltinRegistries.BIOME.getRawId(entry.getValue());
 				occupiedIDs.add(id);
 			});
+			System.out.println("Existing biomes: " + occupiedIDs);
 		}
 	}
 
@@ -258,17 +247,6 @@ public class EndBiomes {
 			BetterEnd.LOGGER.info(message + possibleID);
 		}
 		Registry.register(BuiltinRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
-		makeLink(biome);
-	}
-	
-	private static void makeLink(EndBiome biome) {
-		Optional<RegistryKey<Biome>> optional = BuiltinRegistries.BIOME.getKey(biome.getBiome());
-		RegistryKey<Biome> key = optional.isPresent() ? optional.get() : RegistryKey.of(Registry.BIOME_KEY, biome.getID());
-		KEYS.put(biome, key);
-	}
-
-	public static RegistryKey<Biome> getBiomeKey(EndBiome biome) {
-		return KEYS.get(biome);
 	}
 	
 	public static EndBiome getFromBiome(Biome biome) {

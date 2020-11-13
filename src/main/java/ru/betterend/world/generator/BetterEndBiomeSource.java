@@ -80,13 +80,14 @@ public class BetterEndBiomeSource extends BiomeSource {
 			return barrens;
 		}
 		
-		EndBiome netherBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
+		EndBiome endBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		if (biomeX == 0 && biomeZ == 0) {
 			mapLand.clearCache();
 			mapVoid.clearCache();
 		}
 		
-		return biomeRegistry.getOrThrow(EndBiomes.getBiomeKey(netherBiome));
+		System.out.println(endBiome.getID());
+		return biomeRegistry.get(endBiome.getID());//EndBiomes.getActualBiome(endBiome);
 	}
 
 	@Override

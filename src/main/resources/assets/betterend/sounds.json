@@ -63,12 +63,12 @@
 		"category": "music",
 		"sounds": [
 			{
-				"name": "betterend:music/letter_box-far_the_days_come",
+				"name": "betterend:music/the-tides-ammil",
 				"volume": 0.2,
 				"stream": false
 			},
 			{
-				"name": "betterend:music/jade_wii-sahara_desert",
+				"name": "betterend:music/vyen-amber",
 				"volume": 0.2,
 				"stream": false
 			}

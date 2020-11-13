@@ -61,7 +61,7 @@ public class TagHelper {
 		}
 	}
 	
-	private static Tag.Builder apply(String entry, Set<Identifier> ids, Tag.Builder builder) {
+	public static Tag.Builder apply( Tag.Builder builder, Set<Identifier> ids) {
 		ids.forEach((value) -> {
 			builder.add(value, "Better End Code");
 		});
@@ -78,9 +78,9 @@ public class TagHelper {
 		if (endTags != null) {
 			endTags.forEach((id, ids) -> {
 				if (tagsMap.containsKey(id)) {
-					apply(entry, ids, tagsMap.get(id));
+					apply(tagsMap.get(id), ids);
 				} else {
-					tagsMap.put(id, apply(entry, ids, Tag.Builder.create()));
+					tagsMap.put(id, apply(Tag.Builder.create(), ids));
 				}
 			});
 		}

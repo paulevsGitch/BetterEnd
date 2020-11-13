@@ -48,12 +48,6 @@ public class BiomePicker {
 	public List<EndBiome> getBiomes() {
 		return biomes;
 	}
-
-	public void debug() {
-		for (EndBiome b: biomes) {
-			System.out.println(b.debug());
-		}
-	}
 	
 	public boolean containsImmutable(Identifier id) {
 		return immutableIDs.contains(id);

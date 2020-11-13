@@ -14,7 +14,6 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.TagGroupLoader;
 import net.minecraft.util.Identifier;
-
 import ru.betterend.util.TagHelper;
 
 @Mixin(TagGroupLoader.class)

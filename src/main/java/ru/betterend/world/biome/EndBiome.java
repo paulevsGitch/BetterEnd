@@ -111,10 +111,6 @@ public class EndBiome {
 		genChance += chance;
 		return genChance;
 	}
-	
-	public String debug() {
-		return this.mcID + " " + this.genChanceUnmutable + " " + this.genChance;
-	}
 
 	public Biome getBiome() {
 		return biome;

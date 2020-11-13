@@ -85,8 +85,10 @@ public class BetterEndBiomeSource extends BiomeSource {
 			mapLand.clearCache();
 			mapVoid.clearCache();
 		}
-		
-		System.out.println(endBiome.getID());
+		String space = endBiome.getID().getNamespace();
+		if (space.equals("byg")) {
+			System.out.println(biomeX * 4 + " 100 " + biomeZ * 4);
+		}
 		return biomeRegistry.get(endBiome.getID());//EndBiomes.getActualBiome(endBiome);
 	}
 

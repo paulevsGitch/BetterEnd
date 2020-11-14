@@ -35,6 +35,7 @@ public class EndBiome {
 
 	private final float fogDensity;
 	private EndFeature structuresFeature;
+	private Biome actualBiome;
 
 	public EndBiome(BiomeDefinition definition) {
 		biome = definition.build();
@@ -156,5 +157,13 @@ public class EndBiome {
 	
 	public EndFeature getStructuresFeature() {
 		return structuresFeature;
+	}
+	
+	public void setActualBiome(Biome biome) {
+		this.actualBiome = biome;
+	}
+	
+	public Biome getActualBiome() {
+		return this.actualBiome;
 	}
 }

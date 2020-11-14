@@ -108,6 +108,21 @@ public class EndBiomes {
 			}
 		});
 		
+		LAND_BIOMES.getBiomes().forEach((endBiome) -> {
+			Biome biome = biomeRegistry.get(endBiome.getID());
+			endBiome.setActualBiome(biome);
+		});
+		
+		VOID_BIOMES.getBiomes().forEach((endBiome) -> {
+			Biome biome = biomeRegistry.get(endBiome.getID());
+			endBiome.setActualBiome(biome);
+		});
+		
+		SUBBIOMES.forEach((endBiome) -> {
+			Biome biome = biomeRegistry.get(endBiome.getID());
+			endBiome.setActualBiome(biome);
+		});
+		
 		CLIENT.clear();
 	}
 	

@@ -85,7 +85,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 			mapLand.clearCache();
 			mapVoid.clearCache();
 		}
-		return biomeRegistry.get(endBiome.getID());
+		return endBiome.getActualBiome();
 	}
 
 	@Override

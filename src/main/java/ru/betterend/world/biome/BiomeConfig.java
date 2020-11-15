@@ -1,11 +1,11 @@
 package ru.betterend.world.biome;
 
-import java.io.File;
 import java.nio.file.Path;
 
 import com.google.gson.JsonObject;
 
 import net.minecraft.util.Identifier;
+
 import ru.betterend.config.Config;
 import ru.betterend.config.ConfigWriter;
 
@@ -13,34 +13,37 @@ public class BiomeConfig extends Config {
 
 	private final static Path BIOME_CONFIG_DIR = ConfigWriter.MOD_CONFIG_DIR.toPath().resolve("biomes");
 	
-	//private EndBiome biome;
-	private ConfigWriter configWriter;
-	private File configFile;
+	public static BiomeConfig getConfig(EndBiome biome) {
+		return new BiomeConfig(biome);
+	}
+	
+	private final EndBiome biome;
+	private final ConfigWriter writer;
 	
 	public BiomeConfig(EndBiome biome) {
-		//this.biome = biome;
+		this.biome = biome;
 		Identifier biomeId = biome.getID();
-		String folder = ConfigWriter.scrubFileName(biomeId.toString());
-		this.configFile = new File(BIOME_CONFIG_DIR.toFile(), folder + ".json");
-		this.configWriter = new ConfigWriter();
+		String file = ConfigWriter.scrubFileName(biomeId.toString());
+		this.writer = new ConfigWriter("biomes/" + file);
+		this.settings = writer.load();
 		this.registerEntries();
-		JsonObject config = configWriter.loadConfig(configFile);
-		if (config.size() > 0) {
-			this.configKeeper.fromJson(config);
+		if (settings.size() > 0) {
+			this.configKeeper.fromJson(settings);
 		} else {
-			this.configKeeper.toJson(config);
-			this.configWriter.saveConfig();
+			this.configKeeper.toJson(settings);
+			this.writer.save();
 		}
 	}
 	
-	private void registerEntries() {
+	@Override
+	protected void registerEntries() {
 		//TODO: Need to register config params in the Keeper
 	}
 	
 	@Override
 	public void saveChanges() {
-		this.configKeeper.toJson(configWriter.getConfig());
-		this.configWriter.saveConfig();
+		this.configKeeper.toJson(settings);
+		this.writer.saveConfig();
 	}
 	
 	static {

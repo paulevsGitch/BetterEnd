@@ -1,6 +1,7 @@
 package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import ru.betterend.api.BetterEndPlugin;
@@ -50,6 +51,9 @@ public class BetterEnd implements ModInitializer {
 		EndStructures.register();
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
+		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+			CONFIG.saveChanges();
+		});
 	}
 	
 	public static Identifier makeID(String path) {

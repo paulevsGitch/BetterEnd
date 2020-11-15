@@ -1,10 +1,10 @@
 package ru.betterend.config;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
+import org.jetbrains.annotations.Nullable;
+
+import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -13,71 +13,76 @@ import ru.betterend.BetterEnd;
 
 public final class ConfigKeeper {
 	
-	private Map<String, Entry<?>> configEntries = new HashMap<>();
+	private Map<String, Map<String, Entry<?>>> configEntries = Maps.newHashMap();
 	
 	public JsonElement toJson(JsonObject jsonObject) {
-		for (String param : configEntries.keySet()) {
-			jsonObject.addProperty(param, configEntries.get(param).asString());
+		for (String category : configEntries.keySet()) {
+			Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
+			JsonObject jsonCategory = new JsonObject();
+			entryCategory.forEach((key, param) -> {
+				key += " [default: " + param.getDefault() + "]";
+				jsonCategory.addProperty(key, param.asString());
+			});
+			jsonObject.add(category, jsonCategory);
 		}
 		
 		return jsonObject;
 	}
 	
 	public void fromJson(JsonObject jsonObject) {
-		for (String param : configEntries.keySet()) {
-			if (jsonObject.has(param)) {
-				Entry<?> entry = configEntries.get(param);
-				entry.fromString(JsonHelper.getString(jsonObject, param));
-			}
+		if (jsonObject.size() == 0) return;
+		for (String category : configEntries.keySet()) {
+			Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
+			if (!jsonObject.has(category)) continue;
+			JsonObject jsonCategory = jsonObject.getAsJsonObject(category);
+			entryCategory.forEach((key, param) -> {
+				key += " [default: " + param.getDefault() + "]";
+				if (!jsonCategory.has(key)) return;
+				param.fromString(JsonHelper.getString(jsonCategory, key));
+			});
 		}
 	}
 	
+	@Nullable
 	@SuppressWarnings("unchecked")
-	public <E extends Entry<?>> E getEntry(String key) {
-		Entry<?> entry = this.configEntries.get(key);
-		if (entry == null) {
-			BetterEnd.LOGGER.warning(String.format("Entry '%s' doesn't exists.", key));			
+	public <E extends Entry<?>> E getEntry(String category, String key) {
+		Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
+		if (entryCategory == null) {
 			return null;
 		}
-		return (E) entry;
+		return (E) entryCategory.get(key);
 	}
 	
-	public <T> T getValue(String key) {
-		Entry<T> entry = this.getEntry(key);
+	@Nullable
+	public <T> T getValue(String category, String key) {
+		Entry<T> entry = this.getEntry(category, key);
 		if (entry == null) {
-			BetterEnd.LOGGER.warning("Empty value will be returned.");
 			return null;
 		}
 		return entry.getValue();
 	}
 	
-	public void set(String key, Entry<?> entry) {
-		configEntries.put(key, entry);
+	public void set(String category, String key, Entry<?> entry) {
+		Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
+		if (entryCategory != null) {
+			entryCategory.put(key, entry);
+		}
 	}
 	
-	public <T extends Entry<?>> void registerEntry(String key, T entry) {
-		configEntries.put(key, entry);
+	public <T extends Entry<?>> T registerEntry(String category, String key, T entry) {
+		Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
+		if (entryCategory == null) {
+			entryCategory = Maps.newHashMap();
+			this.configEntries.put(category, entryCategory);
+		}
+		entryCategory.put(key, entry);
+		return entry;
 	}
 	
 	public static class BooleanEntry extends Entry<Boolean> {
 
-		public BooleanEntry(Boolean defaultValue, Consumer<Boolean> consumer, Supplier<Boolean> supplier) {
-			super(defaultValue, consumer, supplier);
-		}
-
-		@Override
-		public Boolean getValue() {
-			return this.getter.get();
-		}
-
-		@Override
-		public void setValue(Boolean value) {
-			this.setter.accept(value);
-		}
-
-		@Override
-		public Boolean getDefault() {
-			return this.defaultValue;
+		public BooleanEntry(Boolean defaultValue) {
+			super(defaultValue);
 		}
 
 		@Override
@@ -94,23 +99,8 @@ public final class ConfigKeeper {
 	
 	public static class FloatEntry extends Entry<Float> {
 
-		public FloatEntry(Float defaultValue, Consumer<Float> consumer, Supplier<Float> supplier) {
-			super(defaultValue, consumer, supplier);
-		}
-
-		@Override
-		public Float getValue() {
-			return this.getter.get();
-		}
-
-		@Override
-		public void setValue(Float value) {
-			this.setter.accept(value);
-		}
-
-		@Override
-		public Float getDefault() {
-			return this.defaultValue;
+		public FloatEntry(Float defaultValue) {
+			super(defaultValue);
 		}
 
 		@Override
@@ -127,18 +117,8 @@ public final class ConfigKeeper {
 	
 	public static class FloatRange extends RangeEntry<Float> {
 
-		public FloatRange(Float defaultValue, Consumer<Float> consumer, Supplier<Float> supplier, Float minVal, Float maxVal) {
-			super(defaultValue, consumer, supplier, minVal, maxVal);
-		}
-
-		@Override
-		public Float getValue() {
-			return this.getter.get();
-		}
-
-		@Override
-		public Float getDefault() {
-			return this.defaultValue;
+		public FloatRange(Float defaultValue, float minVal, float maxVal) {
+			super(defaultValue, minVal, maxVal);
 		}
 
 		@Override
@@ -155,18 +135,8 @@ public final class ConfigKeeper {
 	
 	public static class IntegerEntry extends Entry<Integer> {
 
-		public IntegerEntry(Integer defaultValue, Consumer<Integer> consumer, Supplier<Integer> supplier) {
-			super(defaultValue, consumer, supplier);
-		}
-
-		@Override
-		public Integer getValue() {
-			return this.getter.get();
-		}
-
-		@Override
-		public void setValue(Integer value) {
-			this.setter.accept(value);
+		public IntegerEntry(Integer defaultValue) {
+			super(defaultValue);
 		}
 
 		@Override
@@ -188,56 +158,31 @@ public final class ConfigKeeper {
 	
 	public static class IntegerRange extends RangeEntry<Integer> {
 
-		public IntegerRange(Integer defaultValue, Consumer<Integer> consumer, Supplier<Integer> supplier, Integer minVal, Integer maxVal) {
-			super(defaultValue, consumer, supplier, minVal, maxVal);
-		}
-
-		@Override
-		public Integer getValue() {
-			return this.getter.get();
-		}
-
-		@Override
-		public Integer getDefault() {
-			return this.defaultValue;
-		}
-
-		@Override
-		public void fromString(String value) {
-			this.setValue(Integer.valueOf(value));
+		public IntegerRange(Integer defaultValue, int minVal, int maxVal) {
+			super(defaultValue, minVal, maxVal);
 		}
 
 		@Override
 		public String asString() {
 			return Integer.toString(getValue());
 		}
+
+		@Override
+		public void fromString(String value) {
+			this.setValue(Integer.valueOf(value));
+		}
 		
 	}
 	
 	public static class StringEntry extends Entry<String> {
 
-		public StringEntry(String defaultValue, Consumer<String> consumer, Supplier<String> supplier) {
-			super(defaultValue, consumer, supplier);
-		}
-
-		@Override
-		public String getValue() {
-			return this.getter.get();
-		}
-
-		@Override
-		public void setValue(String value) {
-			this.setter.accept(value);
-		}
-
-		@Override
-		public String getDefault() {
-			return this.defaultValue;
+		public StringEntry(String defaultValue) {
+			super(defaultValue);
 		}
 
 		@Override
 		public String asString() {
-			return getValue();
+			return this.getValue();
 		}
 
 		@Override
@@ -249,24 +194,14 @@ public final class ConfigKeeper {
 	
 	public static class EnumEntry<T extends Enum<T>> extends Entry<T> {
 
-		public EnumEntry(T defaultValue, Consumer<T> consumer, Supplier<T> supplier) {
-			super(defaultValue, consumer, supplier);
+		public EnumEntry(T defaultValue) {
+			super(defaultValue);
 		}
 
-		@Override
-		public T getValue() {
-			return this.getter.get();
-		}
-
-		@Override
-		public void setValue(T value) {
-			this.setter.accept(value);
-		}
-		
 		@SuppressWarnings("unchecked")
 		public boolean setValue(String name) {
 			try {
-				this.setter.accept((T) Enum.valueOf(this.defaultValue.getClass(), name));
+				this.setValue((T) Enum.valueOf(this.defaultValue.getClass(), name));
 				return true;
 			} catch(IllegalArgumentException ex) {
 				BetterEnd.LOGGER.catching(ex);
@@ -295,16 +230,15 @@ public final class ConfigKeeper {
 
 		private final T min, max;
 
-		public RangeEntry(T defaultValue, Consumer<T> consumer, Supplier<T> supplier, T minVal, T maxVal) {
-			super(defaultValue, consumer, supplier);
-			
+		public RangeEntry(T defaultValue, T minVal, T maxVal) {
+			super(defaultValue);
 			this.min = minVal;
 			this.max = maxVal;
 		}
 
 		@Override
 		public void setValue(T value) {
-			this.setter.accept(value.compareTo(min) < 0 ? min : value.compareTo(max) > 0 ? max : value);
+			this.value = (value.compareTo(min) < 0 ? min : value.compareTo(max) > 0 ? max : value);
 		}
 		
 		public T minValue() {
@@ -319,24 +253,30 @@ public final class ConfigKeeper {
 	public static abstract class Entry<T> {
 		
 		protected final T defaultValue;
+		protected T value;
 		
-		protected final Consumer<T> setter;
-		protected final Supplier<T> getter;
-		
-		public Entry (T defaultValue, Consumer<T> consumer, Supplier<T> supplier) {
-			this.defaultValue = defaultValue;
-			this.setter = consumer;
-			this.getter = supplier;
-		}
-
-		public abstract T getValue();
-		public abstract void setValue(T value);	
-		public abstract T getDefault();
 		public abstract void fromString(String value);
 		public abstract String asString();
 		
+		public Entry (T defaultValue) {
+			this.defaultValue = defaultValue;
+			this.value = defaultValue;
+		}
+
+		public T getValue() {
+			return this.value;
+		}
+		
+		public void setValue(T value) {
+			this.value = value;
+		}
+		
+		public T getDefault() {
+			return this.defaultValue;
+		}
+		
 		public void setDefault() {
-			this.setter.accept(defaultValue);
+			this.value = defaultValue;
 		}
 	}
 }

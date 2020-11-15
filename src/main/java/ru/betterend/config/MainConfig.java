@@ -1,6 +1,7 @@
 package ru.betterend.config;
 
 import com.google.gson.JsonObject;
+import ru.betterend.config.ConfigKeeper.*;
 
 public class MainConfig extends Config {
 	
@@ -14,21 +15,36 @@ public class MainConfig extends Config {
 		return instance;
 	}
 	
+	private final ConfigWriter writer;
+	
 	private MainConfig() {
-		//TODO: Need to register config params in the Keeper
-		
-		JsonObject config = ConfigWriter.load();
-		if (config.size() > 0) {
-			this.configKeeper.fromJson(config);
+		this.writer = new ConfigWriter("settings");
+		this.settings = this.writer.load();
+		this.registerEntries();
+		if (settings.size() > 0) {
+			this.configKeeper.fromJson(settings);
 		} else {
-			this.configKeeper.toJson(config);
-			ConfigWriter.save();
+			this.configKeeper.toJson(settings);
+			this.writer.save();
 		}
 	}
 	
 	@Override
+	protected void registerEntries() {
+//		this.configKeeper.registerEntry("add_armor_and_equipment", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_terminite", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_terminite_armor", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_terminite_tools", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_aeternuim", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_aeternuim_armor", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_aeternuim_tools", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_pedestals", new BooleanEntry(true));
+//		this.configKeeper.registerEntry("add_hammers", new BooleanEntry(true));
+	}
+	
+	@Override
 	public void saveChanges() {
-		this.configKeeper.toJson(ConfigWriter.load());
-		ConfigWriter.save();
+		this.configKeeper.toJson(settings);
+		this.writer.save();
 	}
 }

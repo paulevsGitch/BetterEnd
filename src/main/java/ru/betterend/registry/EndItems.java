@@ -31,6 +31,7 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.MainConfig;
 import ru.betterend.item.EndArmorMaterial;
 import ru.betterend.item.EndAxe;
 import ru.betterend.item.EndHammer;
@@ -42,6 +43,8 @@ import ru.betterend.tab.CreativeTab;
 import ru.betterend.util.TagHelper;
 
 public class EndItems {
+	
+	private static final MainConfig CONFIG = MainConfig.getInstance();
 	private static final List<Item> MOD_BLOCKS = Lists.newArrayList();
 	private static final List<Item> MOD_ITEMS = Lists.newArrayList();
 	
@@ -100,6 +103,9 @@ public class EndItems {
 	}
 	
 	public static Item registerItem(Identifier id, Item item) {
+		if (!(item instanceof BlockItem) && !CONFIG.getBoolean("items", id.getPath(), true)) {
+			return item;
+		}
 		if (item != Items.AIR) {
 			Registry.register(Registry.ITEM, id, item);
 			if (item instanceof BlockItem)
@@ -111,6 +117,9 @@ public class EndItems {
 	}
 	
 	protected static ToolItem registerTool(String name, ToolItem item) {
+		if (!CONFIG.getBoolean("items", name, true)) {
+			return item;
+		}
 		Registry.register(Registry.ITEM, BetterEnd.makeID(name), item);
 		MOD_ITEMS.add(item);
 		

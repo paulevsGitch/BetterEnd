@@ -2,10 +2,7 @@ package ru.betterend.world.biome;
 
 import java.nio.file.Path;
 
-import com.google.gson.JsonObject;
-
 import net.minecraft.util.Identifier;
-
 import ru.betterend.config.Config;
 import ru.betterend.config.ConfigWriter;
 

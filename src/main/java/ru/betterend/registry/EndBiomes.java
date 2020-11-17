@@ -25,6 +25,7 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.JsonFactory;
+import ru.betterend.world.biome.BiomeAmberLand;
 import ru.betterend.world.biome.BiomeChorusForest;
 import ru.betterend.world.biome.BiomeCrystalMountains;
 import ru.betterend.world.biome.BiomeDustWastelands;
@@ -33,6 +34,7 @@ import ru.betterend.world.biome.BiomeMegalake;
 import ru.betterend.world.biome.BiomeMegalakeGrove;
 import ru.betterend.world.biome.BiomePaintedMountains;
 import ru.betterend.world.biome.BiomeShadowForest;
+import ru.betterend.world.biome.BlossomingSpires;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
@@ -68,6 +70,8 @@ public class EndBiomes {
 	public static final EndBiome CRYSTAL_MOUNTAINS = registerBiome(new BiomeCrystalMountains(), BiomeType.LAND);
 	public static final EndBiome PAINTED_MOUNTAINS = registerSubBiome(new BiomePaintedMountains(), DUST_WASTELANDS);
 	public static final EndBiome SHADOW_FOREST = registerBiome(new BiomeShadowForest(), BiomeType.LAND);
+	public static final EndBiome AMBER_LAND = registerBiome(new BiomeAmberLand(), BiomeType.LAND);
+	public static final EndBiome BLOSSOMING_SPIRES = registerBiome(new BlossomingSpires(), BiomeType.LAND);
 	
 	public static void register() {}
 	

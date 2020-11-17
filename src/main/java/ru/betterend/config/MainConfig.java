@@ -1,8 +1,5 @@
 package ru.betterend.config;
 
-import com.google.gson.JsonObject;
-import ru.betterend.config.ConfigKeeper.*;
-
 public class MainConfig extends Config {
 	
 	private static MainConfig instance;

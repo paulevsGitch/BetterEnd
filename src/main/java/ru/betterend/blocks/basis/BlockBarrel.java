@@ -26,10 +26,11 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
-public class BlockBarrel extends BarrelBlock implements Patterned {
+public class BlockBarrel extends BarrelBlock implements BlockPatterned {
 	public BlockBarrel(Block source) {
 		super(FabricBlockSettings.copyOf(source).nonOpaque());
 	}
@@ -89,21 +90,21 @@ public class BlockBarrel extends BarrelBlock implements Patterned {
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String block = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, block, block);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		String texture = Registry.BLOCK.getId(this).getPath();
 		if (block.contains("open")) {
-			return Patterned.createJson(Patterned.BLOCK_BARREL_OPEN, blockId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
 		}
-		return Patterned.createJson(Patterned.BLOCK_BOTTOM_TOP, blockId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_BARREL;
+		return Patterns.STATE_BARREL;
 	}
 }

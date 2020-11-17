@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockGate extends FenceGateBlock implements Patterned {
+public class BlockGate extends FenceGateBlock implements BlockPatterned {
 
 	private final Block parent;
 	
@@ -32,7 +33,7 @@ public class BlockGate extends FenceGateBlock implements Patterned {
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
@@ -41,19 +42,19 @@ public class BlockGate extends FenceGateBlock implements Patterned {
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("wall")) {
 			if (block.contains("open")) {
-				return Patterned.createJson(Patterned.BLOCK_GATE_OPEN_WALL, parentId, blockId.getPath());
+				return Patterns.createJson(Patterns.BLOCK_GATE_OPEN_WALL, parentId.getPath(), blockId.getPath());
 			} else {
-				return Patterned.createJson(Patterned.BLOCK_GATE_CLOSED_WALL, parentId, blockId.getPath());
+				return Patterns.createJson(Patterns.BLOCK_GATE_CLOSED_WALL, parentId.getPath(), blockId.getPath());
 			}
 		}
 		if (block.contains("open")) {
-			return Patterned.createJson(Patterned.BLOCK_GATE_OPEN, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_GATE_OPEN, parentId.getPath(), blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_GATE_CLOSED, parentId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_GATE_CLOSED, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_GATE;
+		return Patterns.STATE_GATE;
 	}
 }

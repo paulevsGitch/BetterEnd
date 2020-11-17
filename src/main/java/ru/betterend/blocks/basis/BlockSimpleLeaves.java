@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.Patterns;
 
 public class BlockSimpleLeaves extends BlockBaseNotFull implements IRenderTypeable {
 	public BlockSimpleLeaves(MaterialColor color) {
@@ -38,19 +38,19 @@ public class BlockSimpleLeaves extends BlockBaseNotFull implements IRenderTypeab
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String texture = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, texture, texture);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(Patterned.BLOCK_BASE, blockId, blockId.getPath());
+		String texture = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(Patterns.BLOCK_BASE, texture, texture);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_SIMPLE;
+		return Patterns.STATE_SIMPLE;
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import net.minecraft.client.render.model.json.ModelVariantMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.interfaces.IdentifiedContext;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
 
 @Mixin(ModelVariantMap.class)
 public abstract class ModelVariantMapMixin {
@@ -33,8 +33,8 @@ public abstract class ModelVariantMapMixin {
 			Identifier blockId = new Identifier(id.getNamespace(), data[1]);
 			Block block = Registry.BLOCK.get(blockId);
 			idContext.removeId();
-			if (block instanceof Patterned) {
-				String pattern = ((Patterned) block).getStatesPattern(reader);
+			if (block instanceof BlockPatterned) {
+				String pattern = ((BlockPatterned) block).getStatesPattern(reader);
 				info.setReturnValue(deserialize(context, new StringReader(pattern)));
 				info.cancel();
 			}

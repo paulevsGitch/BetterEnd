@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockPressurePlate extends PressurePlateBlock implements Patterned {
+public class BlockPressurePlate extends PressurePlateBlock implements BlockPatterned {
 	
 	private final Block parent;
 	
@@ -32,7 +33,7 @@ public class BlockPressurePlate extends PressurePlateBlock implements Patterned 
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
@@ -40,13 +41,13 @@ public class BlockPressurePlate extends PressurePlateBlock implements Patterned 
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("down")) {
-			return Patterned.createJson(Patterned.BLOCK_PLATE_DOWN, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_PLATE_DOWN, parentId.getPath(), blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_PLATE_UP, parentId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_PLATE_UP, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_PLATE;
+		return Patterns.STATE_PLATE;
 	}
 }

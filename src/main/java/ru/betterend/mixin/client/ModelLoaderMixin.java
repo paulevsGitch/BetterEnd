@@ -3,6 +3,7 @@ package ru.betterend.mixin.client;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,13 +18,15 @@ import net.minecraft.block.Block;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelVariantMap.DeserializationContext;
+import net.minecraft.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.IdentifiedContext;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.Patterned;
 
 @Mixin(ModelLoader.class)
 public class ModelLoaderMixin {
@@ -50,27 +53,44 @@ public class ModelLoaderMixin {
 			} catch (Exception ex) {
 				String data[] = id.getPath().split("/");
 				if (data.length > 1) {
-					Identifier blockId = new Identifier(id.getNamespace(), data[1]);
-					Block block = Registry.BLOCK.get(blockId);
-					if (block instanceof Patterned) {
-						String pattern;
-						if (id.getPath().contains("item")) {
-							pattern = ((Patterned) block).getModelPattern(id.getPath());
-						} else {
-							if (data.length > 2) {
-								pattern = ((Patterned) block).getModelPattern(data[2]);
-							} else {
-								pattern = ((Patterned) block).getModelPattern(data[1]);
-							}
+					Identifier itemId = new Identifier(id.getNamespace(), data[1]);
+					Optional<Block> block = Registry.BLOCK.getOrEmpty(itemId);
+					if (block.isPresent()) {
+						if (block.get() instanceof Patterned) {
+							Patterned patterned = (Patterned) block.get();
+							model = this.be_getModel(data, id, patterned);
+							info.setReturnValue(model);
+							info.cancel();
 						}
-						model = JsonUnbakedModel.deserialize(pattern);
-						model.id = id.toString();
-						info.setReturnValue(model);
-						info.cancel();
+					} else {
+						Optional<Item> item = Registry.ITEM.getOrEmpty(itemId);
+						if (item.isPresent() && item.get() instanceof Patterned) {
+							Patterned patterned = (Patterned) item.get();
+							model = this.be_getModel(data, id, patterned);
+							info.setReturnValue(model);
+							info.cancel();
+						}
 					}
 				}
 			}
 		}
+	}
+	
+	private JsonUnbakedModel be_getModel(String data[], Identifier id, Patterned patterned) {
+		String pattern;
+		if (id.getPath().contains("item")) {
+			pattern = patterned.getModelPattern(id.getPath());
+		} else {
+			if (data.length > 2) {
+				pattern = patterned.getModelPattern(data[2]);
+			} else {
+				pattern = patterned.getModelPattern(data[1]);
+			}
+		}
+		JsonUnbakedModel model = JsonUnbakedModel.deserialize(pattern);
+		model.id = id.toString();
+		
+		return model;
 	}
 	
 	@Inject(method = "loadModel", at = @At(

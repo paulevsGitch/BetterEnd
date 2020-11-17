@@ -24,7 +24,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndTags;
 
 public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
@@ -100,20 +100,20 @@ public abstract class BlockFeatureSapling extends BlockBaseNotFull implements Fe
 	@Override
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
 		if (block.contains("item")) {
 			block = block.split("/")[1];
-			return Patterned.createJson(Patterned.ITEM_BLOCK, block);
+			return Patterns.createJson(Patterns.ITEM_BLOCK, block);
 		}
-		return Patterned.createJson(Patterned.BLOCK_SAPLING, block);
+		return Patterns.createJson(Patterns.BLOCK_SAPLING, block);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_SAPLING;
+		return Patterns.STATE_SAPLING;
 	}
 }

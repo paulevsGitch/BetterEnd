@@ -13,10 +13,11 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
-public class BlockChest extends ChestBlock implements Patterned {
+public class BlockChest extends ChestBlock implements BlockPatterned {
 
 	private final Block parent;
 	
@@ -45,7 +46,7 @@ public class BlockChest extends ChestBlock implements Patterned {
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
@@ -53,13 +54,13 @@ public class BlockChest extends ChestBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (path.contains("item")) {
-			return Patterned.createJson(Patterned.ITEM_CHEST, blockId.getPath());
+			return Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_EMPTY, parentId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_SIMPLE;
+		return Patterns.STATE_SIMPLE;
 	}
 }

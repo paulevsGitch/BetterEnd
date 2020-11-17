@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockSlab extends SlabBlock implements Patterned {
+public class BlockSlab extends SlabBlock implements BlockPatterned {
 	
 	private final Block parent;
 	
@@ -32,18 +33,18 @@ public class BlockSlab extends SlabBlock implements Patterned {
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(Patterned.BLOCK_SLAB, parentId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_SLAB, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_SLAB;
+		return Patterns.STATE_SLAB;
 	}
 }

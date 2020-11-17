@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockWall extends WallBlock implements Patterned {
+public class BlockWall extends WallBlock implements BlockPatterned {
 	
 	private final Block parent;
 	
@@ -32,7 +33,7 @@ public class BlockWall extends WallBlock implements Patterned {
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
@@ -40,19 +41,19 @@ public class BlockWall extends WallBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.ITEM_WALL, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.ITEM_WALL, parentId.getPath(), blockId.getPath());
 		}
 		if (block.contains("side_tall")) {
-			return Patterned.createJson(Patterned.BLOCK_WALL_SIDE_TALL, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_WALL_SIDE_TALL, parentId.getPath(), blockId.getPath());
 		}
 		if (block.contains("side")) {
-			return Patterned.createJson(Patterned.BLOCK_WALL_SIDE, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_WALL_SIDE, parentId.getPath(), blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_WALL_POST, parentId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_WALL_POST, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_WALL;
+		return Patterns.STATE_WALL;
 	}
 }

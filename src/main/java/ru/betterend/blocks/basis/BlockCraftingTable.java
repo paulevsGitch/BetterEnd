@@ -13,9 +13,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockCraftingTable extends CraftingTableBlock implements Patterned {
+public class BlockCraftingTable extends CraftingTableBlock implements BlockPatterned {
 	public BlockCraftingTable(Block source) {
 		super(FabricBlockSettings.copyOf(source));
 	}
@@ -27,15 +28,15 @@ public class BlockCraftingTable extends CraftingTableBlock implements Patterned 
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String blockId = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, blockId, blockId);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		String blockName = blockId.getPath();
-		return Patterned.createJson(Patterned.BLOCK_SIDED, new HashMap<String, String>() {
+		return Patterns.createJson(Patterns.BLOCK_SIDED, new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
 			{
 				put("%particle%", blockName + "_front");
@@ -51,6 +52,6 @@ public class BlockCraftingTable extends CraftingTableBlock implements Patterned 
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_SIMPLE;
+		return Patterns.STATE_SIMPLE;
 	}
 }

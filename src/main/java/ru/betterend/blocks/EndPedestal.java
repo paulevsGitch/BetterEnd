@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.BlockPedestal;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.Patterns;
 
 public class EndPedestal extends BlockPedestal {
 
@@ -31,16 +31,16 @@ public class EndPedestal extends BlockPedestal {
 			}
 		};
 		if (block.contains("column_top")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_COLUMN_TOP, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
 		} else if (block.contains("column")) {
-			return Patterned.createJson(Patterned.BLOKC_PEDESTAL_COLUMN, textures);
+			return Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
 		} else if (block.contains("top")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_TOP, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
 		} else if (block.contains("bottom")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_BOTTOM, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
 		} else if (block.contains("pillar")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_PILLAR, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
 		}
-		return Patterned.createJson(Patterned.BLOCK_PEDESTAL_DEFAULT, textures);
+		return Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
 	}
 }

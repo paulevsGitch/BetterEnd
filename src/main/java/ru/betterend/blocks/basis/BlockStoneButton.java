@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockStoneButton extends StoneButtonBlock implements Patterned {
+public class BlockStoneButton extends StoneButtonBlock implements BlockPatterned {
 	
 	private final Block parent;
 	
@@ -32,7 +33,7 @@ public class BlockStoneButton extends StoneButtonBlock implements Patterned {
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
@@ -40,16 +41,16 @@ public class BlockStoneButton extends StoneButtonBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.ITEM_BUTTON, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.ITEM_BUTTON, parentId.getPath(), blockId.getPath());
 		}
 		if (block.contains("pressed")) {
-			return Patterned.createJson(Patterned.BLOCK_BUTTON_PRESSED, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_BUTTON_PRESSED, parentId.getPath(), blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_BUTTON, parentId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_BUTTON, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_BUTTON;
+		return Patterns.STATE_BUTTON;
 	}
 }

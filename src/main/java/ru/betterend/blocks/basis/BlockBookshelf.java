@@ -15,8 +15,8 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.Patterned;
+
+import ru.betterend.patterns.Patterns;
 
 public class BlockBookshelf extends BlockBase {
 	public BlockBookshelf(Block source) {
@@ -37,21 +37,19 @@ public class BlockBookshelf extends BlockBase {
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_SIMPLE;
+		return Patterns.STATE_SIMPLE;
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		String name = getName(blockId);
-		return Patterned.createJson(Patterned.BLOCK_BOOKSHELF, BetterEnd.makeID(name), blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_BOOKSHELF, getName(blockId), blockId.getPath());
 	}
 	
 	@Override
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		String name = getName(blockId);
-		return Patterned.createJson(data, BetterEnd.makeID(name), blockId.getPath());
+		return Patterns.createJson(data, getName(blockId), blockId.getPath());
 	}
 	
 	private String getName(Identifier blockId) {

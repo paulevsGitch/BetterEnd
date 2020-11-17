@@ -15,9 +15,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockDoor extends DoorBlock implements IRenderTypeable, Patterned {
+public class BlockDoor extends DoorBlock implements IRenderTypeable, BlockPatterned {
 	public BlockDoor(Block block) {
 		super(FabricBlockSettings.copy(block).nonOpaque());
 	}
@@ -37,30 +38,30 @@ public class BlockDoor extends DoorBlock implements IRenderTypeable, Patterned {
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String blockId = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, blockId, blockId);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		String blockId = Registry.BLOCK.getId(this).getPath();
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.ITEM_MODEL, blockId.getPath());
+			return Patterns.createJson(Patterns.ITEM_MODEL, blockId);
 		}
 		if (block.contains("top_hinge")) {
-			return Patterned.createJson(Patterned.BLOCK_DOOR_TOP_HINGE, blockId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_DOOR_TOP_HINGE, blockId, blockId);
 		}
 		if (block.contains("bottom_hinge")) {
-			return Patterned.createJson(Patterned.BLOCK_DOOR_BOTTOM_HINGE, blockId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM_HINGE, blockId, blockId);
 		}
 		if (block.contains("top")) {
-			return Patterned.createJson(Patterned.BLOCK_DOOR_TOP, blockId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_DOOR_TOP, blockId, blockId);
 		}
-		return Patterned.createJson(Patterned.BLOCK_DOOR_BOTTOM, blockId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM, blockId, blockId);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_DOOR;
+		return Patterns.STATE_DOOR;
 	}
 }

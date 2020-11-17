@@ -27,10 +27,11 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class BlockLadder extends BlockBaseNotFull implements IRenderTypeable, Patterned {
+public class BlockLadder extends BlockBaseNotFull implements IRenderTypeable, BlockPatterned {
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 16.0D);
@@ -138,21 +139,21 @@ public class BlockLadder extends BlockBaseNotFull implements IRenderTypeable, Pa
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String blockId = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, blockId, blockId);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		if (block.contains("item")) {
-			return Patterned.createJson(Patterned.ITEM_BLOCK, blockId.getPath());
+			return Patterns.createJson(Patterns.ITEM_BLOCK, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_LADDER, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_LADDER;
+		return Patterns.STATE_LADDER;
 	}
 }

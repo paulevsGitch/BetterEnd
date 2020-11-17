@@ -39,7 +39,7 @@ import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
@@ -304,8 +304,8 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String texture = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, texture, texture);
 	}
 	
 	@Override
@@ -323,22 +323,22 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 			}
 		};
 		if (block.contains("column_top")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_COLUMN_TOP, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
 		} else if (block.contains("column")) {
-			return Patterned.createJson(Patterned.BLOKC_PEDESTAL_COLUMN, textures);
+			return Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
 		} else if (block.contains("top")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_TOP, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
 		} else if (block.contains("bottom")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_BOTTOM, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
 		} else if (block.contains("pillar")) {
-			return Patterned.createJson(Patterned.BLOCK_PEDESTAL_PILLAR, textures);
+			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
 		}
-		return Patterned.createJson(Patterned.BLOCK_PEDESTAL_DEFAULT, textures);
+		return Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_PEDESTAL;
+		return Patterns.STATE_PEDESTAL;
 	}
 	
 	static {

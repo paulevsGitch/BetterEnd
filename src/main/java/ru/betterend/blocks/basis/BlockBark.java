@@ -4,8 +4,8 @@ import java.io.Reader;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.Patterned;
+
+import ru.betterend.patterns.Patterns;
 
 public class BlockBark extends BlockPillar {
 	public BlockBark(Settings settings) {
@@ -15,15 +15,13 @@ public class BlockBark extends BlockPillar {
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		String name = getName(blockId);
-		return Patterned.createJson(Patterned.BLOCK_BASE, BetterEnd.makeID(name), blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_BASE, getName(blockId), blockId.getPath());
 	}
 	
 	@Override
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		String name = getName(blockId);
-		return Patterned.createJson(data, BetterEnd.makeID(name), blockId.getPath());
+		return Patterns.createJson(data, getName(blockId), blockId.getPath());
 	}
 	
 	private String getName(Identifier blockId) {

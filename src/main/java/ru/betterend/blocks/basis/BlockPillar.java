@@ -10,9 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockPillar extends PillarBlock implements Patterned {
+public class BlockPillar extends PillarBlock implements BlockPatterned {
 	public BlockPillar(Settings settings) {
 		super(settings);
 	}
@@ -24,18 +25,18 @@ public class BlockPillar extends PillarBlock implements Patterned {
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String texture = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, texture, texture);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(Patterned.BLOCK_PILLAR, blockId, blockId.getPath());
+		String texture = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(Patterns.BLOCK_PILLAR, texture, texture);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_PILLAR;
+		return Patterns.STATE_PILLAR;
 	}
 }

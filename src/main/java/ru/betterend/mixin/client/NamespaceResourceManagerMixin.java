@@ -17,7 +17,7 @@ import net.minecraft.resource.Resource;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
 
 @Mixin(NamespaceResourceManager.class)
 public abstract class NamespaceResourceManagerMixin {
@@ -35,9 +35,9 @@ public abstract class NamespaceResourceManagerMixin {
 			if (data.length > 1) {
 				Identifier blockId = BetterEnd.makeID(data[1].replace(".json", ""));
 				Block block = Registry.BLOCK.get(blockId);
-				if (block instanceof Patterned) {
+				if (block instanceof BlockPatterned) {
 					List<Resource> resources = Lists.newArrayList();
-					resources.add(this.getResource(((Patterned) block).statePatternId()));
+					resources.add(this.getResource(((BlockPatterned) block).statePatternId()));
 					info.setReturnValue(resources);
 					info.cancel();
 				}

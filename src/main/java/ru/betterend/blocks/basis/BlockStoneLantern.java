@@ -27,7 +27,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.interfaces.IColorProvider;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
 
 public class BlockStoneLantern extends BlockBaseNotFull implements IColorProvider, Waterloggable {
@@ -126,21 +126,21 @@ public class BlockStoneLantern extends BlockBaseNotFull implements IColorProvide
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_STONE_LANTERN;
+		return Patterns.STATE_STONE_LANTERN;
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		String texture = Registry.BLOCK.getId(this).getPath();
 		if (block.contains("ceil")) {
-			return Patterned.createJson(Patterned.BLOCK_STONE_LANTERN_CEIL, blockId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_CEIL, texture, texture);
 		}
-		return Patterned.createJson(Patterned.BLOCK_STONE_LANTERN_FLOOR, blockId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_FLOOR, texture, texture);
 	}
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterned.createJson(data, blockId, blockId.getPath());
+		String block = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, block, block);
 	}
 }

@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockStairs extends StairsBlock implements Patterned {
+public class BlockStairs extends StairsBlock implements BlockPatterned {
 	
 	private final Block parent;
 	
@@ -32,7 +33,7 @@ public class BlockStairs extends StairsBlock implements Patterned {
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
@@ -40,16 +41,16 @@ public class BlockStairs extends StairsBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (block.contains("inner")) {
-			return Patterned.createJson(Patterned.BLOCK_STAIR_INNER, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_STAIR_INNER, parentId.getPath(), blockId.getPath());
 		}
 		if (block.contains("outer")) {
-			return Patterned.createJson(Patterned.BLOCK_STAIR_OUTER, parentId, blockId.getPath());
+			return Patterns.createJson(Patterns.BLOCK_STAIR_OUTER, parentId.getPath(), blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_STAIR, parentId, blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_STAIR, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_STAIRS;
+		return Patterns.STATE_STAIRS;
 	}
 }

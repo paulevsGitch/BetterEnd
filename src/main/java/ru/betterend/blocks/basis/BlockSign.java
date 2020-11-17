@@ -38,9 +38,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.entities.ESignBlockEntity;
-import ru.betterend.interfaces.Patterned;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 
-public class BlockSign extends AbstractSignBlock implements Patterned {
+public class BlockSign extends AbstractSignBlock implements BlockPatterned {
 	public static final IntProperty ROTATION = Properties.ROTATION;
 	public static final BooleanProperty FLOOR = BooleanProperty.of("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
@@ -154,7 +155,7 @@ public class BlockSign extends AbstractSignBlock implements Patterned {
 	public String getStatesPattern(Reader data) {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
-		return Patterned.createJson(data, parentId, blockId.getPath());
+		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
@@ -162,14 +163,14 @@ public class BlockSign extends AbstractSignBlock implements Patterned {
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (path.contains("item")) {
-			return Patterned.createJson(Patterned.ITEM_MODEL, blockId.getPath());
+			return Patterns.createJson(Patterns.ITEM_MODEL, blockId.getPath());
 		}
-		return Patterned.createJson(Patterned.BLOCK_EMPTY, parentId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterned.STATE_SIMPLE;
+		return Patterns.STATE_SIMPLE;
 	}
 	
 	@Override

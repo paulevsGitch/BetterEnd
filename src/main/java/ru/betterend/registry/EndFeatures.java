@@ -25,6 +25,7 @@ import ru.betterend.world.features.WallPlantOnLogFeature;
 import ru.betterend.world.features.bushes.BushFeature;
 import ru.betterend.world.features.terrain.EndLakeFeature;
 import ru.betterend.world.features.terrain.RoundCaveFeature;
+import ru.betterend.world.features.terrain.SpireFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
 import ru.betterend.world.features.trees.LacugroveFeature;
 import ru.betterend.world.features.trees.MossyGlowshroomFeature;
@@ -73,11 +74,12 @@ public class EndFeatures {
 	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(7), 5);
 	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(20), 25);
 	
-	// Features //
+	// Terrain //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);
 	public static final EndFeature END_LAKE_RARE = EndFeature.makeLakeFeature("end_lake_rare", new EndLakeFeature(), 40);
 	public static final EndFeature ROUND_CAVE = EndFeature.makeRawGenFeature("round_cave", new RoundCaveFeature(), 2);
 	public static final EndFeature ROUND_CAVE_RARE = EndFeature.makeRawGenFeature("round_cave_rare", new RoundCaveFeature(), 25);
+	public static final EndFeature SPIRE = EndFeature.makeRawGenFeature("spire", new SpireFeature(), 2);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 6, 3, 0, 4, 96);

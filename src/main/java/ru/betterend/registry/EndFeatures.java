@@ -17,6 +17,7 @@ import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
+import ru.betterend.world.features.FloatingSpireFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
@@ -80,6 +81,7 @@ public class EndFeatures {
 	public static final EndFeature ROUND_CAVE = EndFeature.makeRawGenFeature("round_cave", new RoundCaveFeature(), 2);
 	public static final EndFeature ROUND_CAVE_RARE = EndFeature.makeRawGenFeature("round_cave_rare", new RoundCaveFeature(), 25);
 	public static final EndFeature SPIRE = EndFeature.makeRawGenFeature("spire", new SpireFeature(), 2);
+	public static final EndFeature FLOATING_SPIRE = EndFeature.makeRawGenFeature("floating_spire", new FloatingSpireFeature(), 8);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 6, 3, 0, 4, 96);

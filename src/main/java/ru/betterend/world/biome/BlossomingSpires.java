@@ -12,6 +12,7 @@ public class BlossomingSpires extends EndBiome {
 				.setPlantsColor(122, 45, 122)
 				.setSurface(EndBlocks.END_MOSS)
 				.addFeature(EndFeatures.SPIRE)
+				.addFeature(EndFeatures.FLOATING_SPIRE)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

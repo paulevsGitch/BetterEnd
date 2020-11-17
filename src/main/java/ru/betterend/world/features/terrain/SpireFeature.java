@@ -23,7 +23,7 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 import ru.betterend.world.features.DefaultFeature;
 
 public class SpireFeature extends DefaultFeature {
-	private static final Function<BlockState, Boolean> REPLACE;
+	protected static final Function<BlockState, Boolean> REPLACE;
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
@@ -49,7 +49,7 @@ public class SpireFeature extends DefaultFeature {
 		return false;
 	}
 	
-	private SDF addSegment(SDF sdf, float radius, Random random) {
+	protected SDF addSegment(SDF sdf, float radius, Random random) {
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(Blocks.END_STONE);
 		SDF offseted = new SDFTranslate().setTranslate(0, radius + random.nextFloat() * 0.25F * radius, 0).setSource(sdf);
 		return new SDFSmoothUnion().setRadius(radius * 0.5F).setSourceA(sphere).setSourceB(offseted);

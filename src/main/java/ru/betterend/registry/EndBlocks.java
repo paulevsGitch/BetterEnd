@@ -116,6 +116,8 @@ public class EndBlocks {
 	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new BlockLeaves(MaterialColor.MAGENTA));
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
 	
+	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.PINK, MaterialColor.PINK);
+	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());
 	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new BlockUmbrellaMossTall());

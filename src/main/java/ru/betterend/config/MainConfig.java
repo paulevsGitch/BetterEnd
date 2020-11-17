@@ -1,5 +1,7 @@
 package ru.betterend.config;
 
+import ru.betterend.config.ConfigKeeper.*;
+
 public class MainConfig extends Config {
 	
 	private static MainConfig instance;

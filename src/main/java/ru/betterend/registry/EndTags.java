@@ -11,6 +11,7 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
 import net.minecraft.util.Identifier;
@@ -26,20 +27,26 @@ import ru.betterend.util.TagHelper;
 
 public class EndTags {
 	// Block Tags
-	public static final Tag.Identified<Block> END_GROUND = makeTag("end_ground");
-	public static final Tag.Identified<Block> GEN_TERRAIN = makeTag("gen_terrain");
+	public static final Tag.Identified<Block> END_GROUND = makeBlockTag("end_ground");
+	public static final Tag.Identified<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
 	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonTag("bookshelves");
 	
 	// Item Tags
 	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
 	
-	private static Tag.Identified<Block> makeTag(String name) {
+	public static Tag.Identified<Block> makeBlockTag(String name) {
 		Identifier id = BetterEnd.makeID(name);
 		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
 	}
 	
-	private static Tag.Identified<Block> makeCommonTag(String name) {
+	public static Tag.Identified<Item> makeItemTag(String name) {
+		Identifier id = BetterEnd.makeID(name);
+		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
+		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
+	}
+	
+	public static Tag.Identified<Block> makeCommonTag(String name) {
 		Identifier id = new Identifier("c", name);
 		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;

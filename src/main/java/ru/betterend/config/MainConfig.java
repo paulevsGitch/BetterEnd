@@ -1,7 +1,5 @@
 package ru.betterend.config;
 
-import ru.betterend.config.ConfigKeeper.*;
-
 public class MainConfig extends Config {
 	
 	private static MainConfig instance;
@@ -29,17 +27,7 @@ public class MainConfig extends Config {
 	}
 	
 	@Override
-	protected void registerEntries() {
-//		this.configKeeper.registerEntry("add_armor_and_equipment", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_terminite", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_terminite_armor", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_terminite_tools", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_aeternuim", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_aeternuim_armor", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_aeternuim_tools", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_pedestals", new BooleanEntry(true));
-//		this.configKeeper.registerEntry("add_hammers", new BooleanEntry(true));
-	}
+	protected void registerEntries() {}
 	
 	@Override
 	public void saveChanges() {

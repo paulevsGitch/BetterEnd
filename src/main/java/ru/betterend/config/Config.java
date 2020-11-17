@@ -48,10 +48,9 @@ public abstract class Config {
 		return str != null ? str : defaultValue;
 	}
 	
-	@Nullable
 	public String getString(String category, String key) {
 		String str = configKeeper.getValue(category, key);
-		return str != null ? str : null;
+		return str != null ? str : "";
 	}
 	
 	public boolean setString(String category, String key, String value) {

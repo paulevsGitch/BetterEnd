@@ -7,6 +7,7 @@ import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -53,6 +54,7 @@ public class EndTags {
 	}
 	
 	public static void register() {
+		addSurfaceBlock(Blocks.END_STONE);
 		addSurfaceBlock(EndBlocks.ENDSTONE_DUST);
 		
 		EndItems.getModBlocks().forEach((item) -> {

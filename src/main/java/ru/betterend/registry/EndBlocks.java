@@ -34,6 +34,7 @@ import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockPythadendronSapling;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
+import ru.betterend.blocks.BlockTenaneaSapling;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockTerrainPlant;
 import ru.betterend.blocks.BlockUmbrellaMoss;
@@ -116,6 +117,8 @@ public class EndBlocks {
 	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new BlockLeaves(MaterialColor.MAGENTA));
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
 	
+	public static final Block TENANEA_SAPLING = registerBlock("tenanea_sapling", new BlockTenaneaSapling());
+	public static final Block TENANEA_LEAVES = registerBlock("tenanea_leaves", new BlockLeaves(MaterialColor.PINK));
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.PINK, MaterialColor.PINK);
 	
 	// Small Plants //

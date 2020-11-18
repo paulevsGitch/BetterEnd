@@ -124,4 +124,13 @@ public class MHelper {
 		h = (h ^ (h >> 13)) * 1274126177;
 		return h ^ (h >> 16);
 	}
+	
+	public static <T> void shuffle(T[] array, Random random) {
+		for (int i = 0; i < array.length; i++) {
+			int i2 = random.nextInt(array.length);
+			T element = array[i];
+			array[i] = array[i2];
+			array[i2] = element;
+		}
+	}
 }

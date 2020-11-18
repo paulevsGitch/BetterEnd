@@ -87,6 +87,15 @@ public class BlocksHelper {
 		}
 		return pos.getY() - POS.getY();
 	}
+	
+	public static int raycastSqr(WorldAccess world, BlockPos pos, int dx, int dy, int dz, int maxDist) {
+		POS.set(pos);
+		for (int j = 1; j < maxDist && (world.getBlockState(POS)).getMaterial().isReplaceable(); j++)
+		{
+			POS.move(dx, dy, dz);
+		}
+		return (int) pos.getSquaredDistance(POS);
+	}
 
 	public static BlockState rotateHorizontal(BlockState state, BlockRotation rotation, Property<Direction> facing) {
 		return (BlockState) state.with(facing, rotation.rotate((Direction) state.get(facing)));

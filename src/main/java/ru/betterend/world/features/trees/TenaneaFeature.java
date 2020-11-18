@@ -1,6 +1,9 @@
 package ru.betterend.world.features.trees;
 
 import java.util.Random;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -21,21 +24,24 @@ public class TenaneaFeature extends DefaultFeature {
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
-		branch(world, pos, UP, 100, random);
+		Set<BlockPos> set = branch(Sets.newHashSet(), world, pos, UP, 100, random);
+		set.forEach((bpos) -> {
+			BlocksHelper.setWithoutUpdate(world, bpos, Blocks.DIAMOND_BLOCK);
+		});
 		return true;
 	}
 	
-	private void branch(StructureWorldAccess world, BlockPos pos, Vec3i dir, int length, Random random) {
+	private Set<BlockPos> branch(Set<BlockPos> set, StructureWorldAccess world, BlockPos pos, Vec3i dir, int length, Random random) {
 		Mutable mut = new Mutable().set(pos);
 		int upCount = 0;
 		for (int i = 0; i < length; i++) {
 			MHelper.shuffle(DIRECTIONS, random);
 			boolean up = false;
 			
-			BlocksHelper.setWithoutUpdate(world, mut, Blocks.DIAMOND_BLOCK);
+			set.add(mut.toImmutable());
 			
 			for (Direction hor: BlocksHelper.HORIZONTAL) {
-				if (!isReplaceable(world.getBlockState(mut.offset(hor)))) {
+				if (!isReplaceable(world.getBlockState(mut.offset(hor))) || !isReplaceable(world.getBlockState(mut.offset(hor).down()))) {
 					upCount = -1;
 					up = true;
 					break;
@@ -47,18 +53,37 @@ public class TenaneaFeature extends DefaultFeature {
 				if (upCount > 8) {
 					break;
 				}
+				
+				if (random.nextInt(4) == 0) {
+					Direction d = BlocksHelper.randomHorizontal(random);
+					mut.move(d);
+				}
+				
+				/*if (random.nextInt(16) == 0) {
+					int l = length - i;
+					if (l > 5) {
+						l = MHelper.randRange(l / 2, l, random);
+						Vec3i d = DIRECTIONS[random.nextInt(DIRECTIONS.length)];
+						if (d != dir) {
+							branch(set, world, mut.add(d), d, l, random);
+						}
+					}
+				}*/
+				
 				continue;
 			}
 			else {
 				up = true;
 				for (Vec3i d: DIRECTIONS) {
 					BlockPos offseted = mut.add(d.getX(), d.getY(), d.getZ());
-					if (isReplaceable(world.getBlockState(offseted))) {
-						int dist = BlocksHelper.raycastSqr(world, offseted, d.getX(), d.getY(), d.getZ(), 18);
+					boolean canOffset = Math.abs(offseted.getX() - pos.getX()) < 16 && Math.abs(offseted.getZ() - pos.getZ()) < 16;
+					if (canOffset && isReplaceable(world.getBlockState(offseted))) {
+						int dist = BlocksHelper.raycastSqr(world, offseted, d.getX(), d.getY(), d.getZ(), 10);
 						if (dist < 64) {
 							mut.move(d.getX(), d.getY(), d.getZ());
 							upCount = 0;
 							up = false;
+							dir = d;
 							break;
 						}
 					}
@@ -85,6 +110,8 @@ public class TenaneaFeature extends DefaultFeature {
 				}
 			}
 		}
+		
+		return set;
 	}
 	
 	private boolean isReplaceable(BlockState state) {

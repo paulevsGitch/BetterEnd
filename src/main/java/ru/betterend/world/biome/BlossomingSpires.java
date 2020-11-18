@@ -13,6 +13,7 @@ public class BlossomingSpires extends EndBiome {
 				.setSurface(EndBlocks.END_MOSS)
 				.addFeature(EndFeatures.SPIRE)
 				.addFeature(EndFeatures.FLOATING_SPIRE)
+				.addFeature(EndFeatures.TENANEA)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

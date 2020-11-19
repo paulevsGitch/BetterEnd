@@ -13,6 +13,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockPlant;
+import ru.betterend.registry.EndBlocks;
 
 public class BlockMurkweed extends BlockPlant {
 	@Override
@@ -30,5 +31,10 @@ public class BlockMurkweed extends BlockPlant {
 		if (entity instanceof LivingEntity && !((LivingEntity) entity).hasStatusEffect(StatusEffects.BLINDNESS)) {
 			((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 50));
 		}
+	}
+	
+	@Override
+	protected boolean isTerrain(BlockState state) {
+		return state.isOf(EndBlocks.SHADOW_GRASS);
 	}
 }

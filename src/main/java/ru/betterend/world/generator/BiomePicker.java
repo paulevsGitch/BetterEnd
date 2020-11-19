@@ -8,7 +8,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import net.minecraft.util.Identifier;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.world.biome.EndBiome;
 
 public class BiomePicker {
@@ -17,6 +16,7 @@ public class BiomePicker {
 	private float maxChanceUnmutable = 0;
 	private float maxChance = 0;
 	private int biomeCount = 0;
+	private WeighTree tree;
 	
 	public void addBiome(EndBiome biome) {
 		maxChance = biome.mutateGenChance(maxChance);
@@ -38,11 +38,7 @@ public class BiomePicker {
 	}
 	
 	public EndBiome getBiome(Random random) {
-		float chance = random.nextFloat() * maxChance;
-		for (EndBiome biome: biomes)
-			if (biome.canGenerate(chance))
-				return biome;
-		return EndBiomes.END;
+		return tree.getBiome(random.nextFloat() * maxChance);
 	}
 	
 	public List<EndBiome> getBiomes() {
@@ -51,5 +47,9 @@ public class BiomePicker {
 	
 	public boolean containsImmutable(Identifier id) {
 		return immutableIDs.contains(id);
+	}
+	
+	public void rebuild() {
+		tree = new WeighTree(biomes);
 	}
 }

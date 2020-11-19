@@ -4,7 +4,6 @@ import java.io.Reader;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.patterns.Patterns;
 
 public class BlockBark extends BlockPillar {

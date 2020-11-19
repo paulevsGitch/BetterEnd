@@ -3,10 +3,9 @@ package ru.betterend.world.biome;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
-
 import ru.betterend.config.Config;
-import ru.betterend.config.ConfigWriter;
 import ru.betterend.config.ConfigKeeper.Entry;
+import ru.betterend.config.ConfigWriter;
 
 public class BiomeConfig extends Config {
 

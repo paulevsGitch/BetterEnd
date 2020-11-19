@@ -15,7 +15,6 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.patterns.Patterns;
 
 public class BlockBookshelf extends BlockBase {

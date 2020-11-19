@@ -18,6 +18,7 @@ import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockPlant;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
 public class BlockNeedlegrass extends BlockPlant {
@@ -37,5 +38,10 @@ public class BlockNeedlegrass extends BlockPlant {
 		else {
 			return Lists.newArrayList(new ItemStack(Items.STICK, MHelper.randRange(0, 2, MHelper.RANDOM)));
 		}
+	}
+	
+	@Override
+	protected boolean isTerrain(BlockState state) {
+		return state.isOf(EndBlocks.SHADOW_GRASS);
 	}
 }

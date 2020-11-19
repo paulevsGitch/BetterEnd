@@ -17,6 +17,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockPlantWithAge;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
@@ -54,5 +55,10 @@ public class BlockShadowBerry extends BlockPlantWithAge {
 	@Override
 	public AbstractBlock.OffsetType getOffsetType() {
 		return AbstractBlock.OffsetType.NONE;
+	}
+	
+	@Override
+	protected boolean isTerrain(BlockState state) {
+		return state.isOf(EndBlocks.SHADOW_GRASS);
 	}
 }

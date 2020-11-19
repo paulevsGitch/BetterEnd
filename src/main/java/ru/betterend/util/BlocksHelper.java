@@ -156,9 +156,25 @@ public class BlocksHelper {
 					if (state.getBlock() instanceof BlockGlowingFur) {
 						doubleCheck.add(POS.toImmutable());
 					}
-					
-					if (!state.canPlaceAt(world, POS)) {
-
+					// Liquids
+					else if (!state.getFluidState().isEmpty()) {
+						POS.setY(y - 1);
+						if (world.isAir(POS)) {
+							POS.setY(y);
+							while (!world.getFluidState(POS).isEmpty()) {
+								setWithoutUpdate(world, POS, AIR);
+								POS.setY(POS.getY() + 1);
+							}
+							continue;
+						}
+						for (Direction dir : HORIZONTAL) {
+							if (world.isAir(POS.offset(dir))) {
+								world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
+								break;
+							}
+						}
+					}
+					else if (!state.canPlaceAt(world, POS)) {
 						// Chorus
 						if (state.isOf(Blocks.CHORUS_PLANT)) {
 							Set<BlockPos> ends = Sets.newHashSet();
@@ -193,28 +209,6 @@ public class BlocksHelper {
 								POS.setY(POS.getY() - 1);
 							}
 						}
-						// Liquids
-						else if (!state.getFluidState().isEmpty()) {
-							POS.setY(y - 1);
-							if (world.isAir(POS)) {
-								POS.setY(y);
-								while (!world.getFluidState(POS).isEmpty()) {
-									setWithoutUpdate(world, POS, AIR);
-									POS.setY(POS.getY() + 1);
-								}
-								continue;
-							}
-							BlockState st;
-							for (Direction dir : HORIZONTAL) {
-								if ((st = world.getBlockState(POS.offset(dir))).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
-									world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
-									break;
-								}
-							}
-							if ((st = world.getBlockState(POS.up())).getMaterial().isReplaceable() && st.getFluidState().isEmpty()) {
-								world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
-							}
-						}
 						// Falling blocks
 						else if (state.getBlock() instanceof FallingBlock) {
 							BlockState falling = state;
@@ -233,19 +227,15 @@ public class BlocksHelper {
 							}
 							else {
 								POS.setY(y);
-								boolean place = true;
+								BlockState replacement = AIR;
 								for (Direction dir : HORIZONTAL) {
 									state = world.getBlockState(POS.offset(dir));
 									if (!state.getFluidState().isEmpty()) {
-										BlocksHelper.setWithoutUpdate(world, POS, state);
-										place = false;
+										replacement = state;
 										break;
 									}
 								}
-								if (place) {
-									BlocksHelper.setWithoutUpdate(world, POS, AIR);
-								}
-
+								BlocksHelper.setWithoutUpdate(world, POS, replacement);
 								POS.setY(y - ray);
 								BlocksHelper.setWithoutUpdate(world, POS, falling);
 							}
@@ -256,14 +246,6 @@ public class BlocksHelper {
 							if (state.getBlock() instanceof BlockBlueVine) {
 								while (state.isOf(EndBlocks.BLUE_VINE) || state.isOf(EndBlocks.BLUE_VINE_LANTERN) || state.isOf(EndBlocks.BLUE_VINE_FUR)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
-									for (Direction dir : HORIZONTAL) {
-										BlockPos p = POS.offset(dir);
-										state = world.getBlockState(p);
-										if (state.getBlock() instanceof BlockGlowingFur) {
-											BlocksHelper.setWithoutUpdate(world, p, AIR);
-										}
-										world.getBlockTickScheduler().schedule(p, world.getBlockState(p).getBlock(), 0);
-									}
 									POS.setY(POS.getY() + 1);
 									state = world.getBlockState(POS);
 								}
@@ -276,7 +258,7 @@ public class BlocksHelper {
 							}
 							// Other blocks
 							else {
-								BlocksHelper.setWithoutUpdate(world, POS, AIR);
+								BlocksHelper.setWithoutUpdate(world, POS, getAirOrFluid(state));
 							}
 						}
 					}
@@ -289,6 +271,10 @@ public class BlocksHelper {
 				BlocksHelper.setWithoutUpdate(world, pos, AIR);
 			}
 		});
+	}
+	
+	private static BlockState getAirOrFluid(BlockState state) {
+		return state.getFluidState().isEmpty() ? AIR : state.getFluidState().getBlockState();
 	}
 	
 	public static boolean isEndNylium(Block block) {

@@ -19,7 +19,7 @@ public class UnderwaterPlantFeature extends UnderwaterPlantScatter {
 	
 	@Override
 	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return plant.canPlaceAt(plant.getDefaultState(), world, blockPos);
+		return super.canSpawn(world, blockPos) && plant.canPlaceAt(plant.getDefaultState(), world, blockPos);
 	}
 
 	@Override

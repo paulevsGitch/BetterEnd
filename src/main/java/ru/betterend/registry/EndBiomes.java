@@ -112,6 +112,9 @@ public class EndBiomes {
 			}
 		});
 		
+		LAND_BIOMES.rebuild();
+		VOID_BIOMES.rebuild();
+		
 		LAND_BIOMES.getBiomes().forEach((endBiome) -> {
 			Biome biome = biomeRegistry.get(endBiome.getID());
 			endBiome.setActualBiome(biome);

@@ -61,7 +61,7 @@ public class TranslationHelper {
 		Registry.ENTITY_TYPE.forEach((entity) -> {
 			Identifier id = Registry.ENTITY_TYPE.getId(entity);
 			if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
-				String name = "biome." + BetterEnd.MOD_ID + "." + id.getPath();
+				String name = "entity." + BetterEnd.MOD_ID + "." + id.getPath();
 				if (!translationEn.has(name)) {
 					missingNamesEn.add(name);
 				}

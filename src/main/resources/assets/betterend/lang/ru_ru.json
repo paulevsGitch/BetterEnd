@@ -287,10 +287,10 @@
  	"block.betterend.end_stone_lantern": "Фонарь из камня Края",
  	"block.betterend.violecite_lantern": "Виолецитовый фонарь",
 
- 	"biome.betterend.dragonfly": "Стрекоза",
- 	"biome.betterend.end_fish": "Рыба Края",
- 	"biome.betterend.end_slime": "Слизень Края",
- 	"biome.betterend.shadow_walker": "Теневой ходок",
+ 	"entity.betterend.dragonfly": "Стрекоза",
+ 	"entity.betterend.end_fish": "Рыба Края",
+ 	"entity.betterend.end_slime": "Слизень Края",
+ 	"entity.betterend.shadow_walker": "Теневой ходок",
  	"item.betterend.spawn_egg_shadow_walker": "Яйцо призыва теневого ходока",
 
  	"block.betterend.andesite_lantern": "Андезитовый фонарь",

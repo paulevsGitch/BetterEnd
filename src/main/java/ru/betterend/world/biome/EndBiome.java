@@ -10,8 +10,6 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.structure.Structure;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.StructureHelper;
@@ -51,9 +49,6 @@ public class EndBiome {
 		this.fogDensity = fogDensity;
 		this.genChanceUnmutable = genChance;
 		readStructureList();
-	}
-
-	public void genSurfColumn(WorldAccess world, BlockPos pos, Random random) {
 	}
 
 	public EndBiome getEdge() {
@@ -165,5 +160,9 @@ public class EndBiome {
 	
 	public Biome getActualBiome() {
 		return this.actualBiome;
+	}
+
+	public float getGenChance() {
+		return this.genChance;
 	}
 }

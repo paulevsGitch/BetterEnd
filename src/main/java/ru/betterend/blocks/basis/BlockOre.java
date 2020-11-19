@@ -51,11 +51,15 @@ public class BlockOre extends OreBlock {
 			if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 				return Collections.singletonList(new ItemStack(this));
 			}
+			int enchantment = EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool);
+			if (enchantment > 0) {
+				return Lists.newArrayList(new ItemStack(this));
+			}
 			int count = 0;
-			int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
-			if (fortune > 0) {
-				int min = MathHelper.clamp(minCount + fortune, minCount, maxCount);
-				int max = maxCount + (fortune / Enchantments.FORTUNE.getMaxLevel());
+			enchantment = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
+			if (enchantment > 0) {
+				int min = MathHelper.clamp(minCount + enchantment, minCount, maxCount);
+				int max = maxCount + (enchantment / Enchantments.FORTUNE.getMaxLevel());
 				if (min == max) {
 					return Lists.newArrayList(new ItemStack(dropItem, max));
 				}

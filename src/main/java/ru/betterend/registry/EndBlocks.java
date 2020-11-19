@@ -114,7 +114,7 @@ public class EndBlocks {
 	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
 	
 	public static final Block DRAGON_TREE_SAPLING = registerBlock("dragon_tree_sapling", new BlockDragonTreeSapling());
-	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new BlockLeaves(LACUGROVE_SAPLING, MaterialColor.MAGENTA));
+	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new BlockLeaves(DRAGON_TREE_SAPLING, MaterialColor.MAGENTA));
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
 	
 	public static final Block TENANEA_SAPLING = registerBlock("tenanea_sapling", new BlockTenaneaSapling());

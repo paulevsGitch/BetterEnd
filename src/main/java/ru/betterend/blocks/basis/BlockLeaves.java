@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -33,7 +34,8 @@ public class BlockLeaves extends LeavesBlock implements BlockPatterned, IRenderT
 				.allowsSpawning((state, world, pos, type) -> { return false; })
 				.suffocates((state, world, pos) -> { return false; })
 				.blockVision((state, world, pos) -> { return false; })
-				.materialColor(color));
+				.materialColor(color)
+				.breakByTool(FabricToolTags.SHEARS));
 		this.sapling = sapling;
 	}
 	
@@ -43,7 +45,8 @@ public class BlockLeaves extends LeavesBlock implements BlockPatterned, IRenderT
 				.suffocates((state, world, pos) -> { return false; })
 				.blockVision((state, world, pos) -> { return false; })
 				.materialColor(color)
-				.luminance(light));
+				.luminance(light)
+				.breakByTool(FabricToolTags.SHEARS));
 		this.sapling = sapling;
 	}
 	
@@ -73,7 +76,7 @@ public class BlockLeaves extends LeavesBlock implements BlockPatterned, IRenderT
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.get(LootContextParameters.TOOL);
 		if (tool != null) {
-			if (tool.isEffectiveOn(state) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+			if (tool.getItem().isIn(FabricToolTags.SHEARS) || tool.isEffectiveOn(state) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 				return Collections.singletonList(new ItemStack(this));
 			}
 			int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);

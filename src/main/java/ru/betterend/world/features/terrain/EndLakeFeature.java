@@ -159,26 +159,19 @@ public class EndLakeFeature extends DefaultFeature {
 								state = world.getBlockState(POS.up());
 								state = canReplace(state) ? (y < waterLevel ? WATER : AIR) : state;
 								BlocksHelper.setWithoutUpdate(world, POS, state);
-								/*if (y == waterLevel - 1 && !state.getFluidState().isEmpty()) {
-									world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
-								}*/
 							}
 							pos = POS.down();
 							if (world.getBlockState(pos).getBlock().isIn(EndTags.GEN_TERRAIN)) {
-								BlocksHelper.setWithoutUpdate(world, POS.down(), EndBlocks.ENDSTONE_DUST.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.getDefaultState());
 							}
 							pos = POS.up();
 							while (canReplace(state = world.getBlockState(pos)) && !state.isAir() && state.getFluidState().isEmpty()) {
 								BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
-								/*if (y == waterLevel - 1) {
-									world.getFluidTickScheduler().schedule(POS, WATER.getFluidState().getFluid(), 0);
-								}*/
 								pos = pos.up();
 							}
 						}
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
-							//if (world.getBlockState(POS).getMaterial().isReplaceable()) {
 							if (world.isAir(POS.up())) {
 								state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
 								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.getDefaultState());
@@ -199,21 +192,6 @@ public class EndLakeFeature extends DefaultFeature {
 		
 		return true;
 	}
-	
-	/*private void generateFoggyMushroomland(WorldAccess world, int x, int z, int waterLevel) {
-		if (NOISE.eval(x * 0.1, z * 0.1, 0) > 0) {
-			BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.BUBBLE_CORAL.getDefaultState());
-		}
-		else if (NOISE.eval(x * 0.1, z * 0.1, 1) > 0) {
-			BlocksHelper.setWithoutUpdate(world, POS, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.BOTTOM));
-			BlockPos up = POS.up();
-			while (up.getY() < waterLevel) {
-				BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.MIDDLE));
-				up = up.up();
-			}
-			BlocksHelper.setWithoutUpdate(world, up, BlockRegistry.END_LILY.getDefaultState().with(BlockEndLily.SHAPE, TripleShape.TOP));
-		}
-	}*/
 	
 	private boolean canReplace(BlockState state) {
 		return state.getMaterial().isReplaceable()

@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -57,14 +55,14 @@ public class BlockOre extends OreBlock {
 				int min = MathHelper.clamp(minCount + enchantment, minCount, maxCount);
 				int max = maxCount + (enchantment / Enchantments.FORTUNE.getMaxLevel());
 				if (min == max) {
-					return Lists.newArrayList(new ItemStack(dropItem, max));
+					return Collections.singletonList(new ItemStack(dropItem, max));
 				}
 				count = MHelper.randRange(min, max, MHelper.RANDOM);
 			} else {
 				count = MHelper.randRange(minCount, maxCount, MHelper.RANDOM);
 			}
-			return Lists.newArrayList(new ItemStack(dropItem, count));
+			return Collections.singletonList(new ItemStack(dropItem, count));
 		}
-		return Lists.newArrayList();
+		return Collections.emptyList();
 	}
 }

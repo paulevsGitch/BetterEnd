@@ -157,7 +157,7 @@ public class EndBlocks {
 	public static final Block TWISTED_VINE = registerBlock("twisted_vine", new BlockVine());
 	
 	// Ores //
-	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_DUST, 1, 3));
+	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_DUST, 1, 3, 5));
 	
 	// Materials //
 	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());

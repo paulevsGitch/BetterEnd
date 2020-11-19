@@ -1,6 +1,8 @@
 package ru.betterend.blocks.basis;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import com.google.common.collect.Lists;
 
@@ -23,8 +25,9 @@ public class BlockOre extends OreBlock {
 	private final Item dropItem;
 	private final int minCount;
 	private final int maxCount;
+	private final int expirience;
 	
-	public BlockOre(Item drop, int minCount, int maxCount) {
+	public BlockOre(Item drop, int minCount, int maxCount, int expirience) {
 		super(FabricBlockSettings.of(Material.STONE, MaterialColor.SAND)
 				.hardness(3F)
 				.resistance(9F)
@@ -33,12 +36,21 @@ public class BlockOre extends OreBlock {
 		this.dropItem = drop;
 		this.minCount = minCount;
 		this.maxCount = maxCount;
+		this.expirience = expirience;
+	}
+	
+	@Override
+	protected int getExperienceWhenMined(Random random) {
+		return this.expirience > 0 ? random.nextInt(expirience) + 1 : 0;
 	}
 
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.get(LootContextParameters.TOOL);
 		if (tool != null && tool.isEffectiveOn(state)) {
+			if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+				return Collections.singletonList(new ItemStack(this));
+			}
 			int count = 0;
 			int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
 			if (fortune > 0) {

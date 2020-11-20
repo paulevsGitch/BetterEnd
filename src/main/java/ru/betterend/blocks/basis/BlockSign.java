@@ -160,10 +160,9 @@ public class BlockSign extends AbstractSignBlock implements BlockPatterned {
 	
 	@Override
 	public String getModelPattern(String path) {
-		Identifier blockId = Registry.BLOCK.getId(this);
 		Identifier parentId = Registry.BLOCK.getId(parent);
 		if (path.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_MODEL, blockId.getPath());
+			return Patterns.createJson(Patterns.ITEM_GENERATED, path);
 		}
 		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
 	}

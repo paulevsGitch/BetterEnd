@@ -26,9 +26,11 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndTags;
 
-public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
+public class EndHammer extends MiningToolItem implements DynamicAttributeTool, Patterned {
 	
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = MathHelper.randomUuid(ThreadLocalRandom.current());
 	
@@ -131,5 +133,10 @@ public class EndHammer extends MiningToolItem implements DynamicAttributeTool {
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
 		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
+	}
+	
+	@Override
+	public String getModelPattern(String name) {
+		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

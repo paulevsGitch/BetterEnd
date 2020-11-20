@@ -46,7 +46,7 @@ public class BlockDoor extends DoorBlock implements IRenderTypeable, BlockPatter
 	public String getModelPattern(String block) {
 		String blockId = Registry.BLOCK.getId(this).getPath();
 		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_MODEL, blockId);
+			return Patterns.createJson(Patterns.ITEM_GENERATED, block);
 		}
 		if (block.contains("top_hinge")) {
 			return Patterns.createJson(Patterns.BLOCK_DOOR_TOP_HINGE, blockId, blockId);

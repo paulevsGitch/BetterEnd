@@ -9,8 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.tag.Tag;
+import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.Patterns;
 
-public class EndPickaxe extends PickaxeItem implements DynamicAttributeTool {
+public class EndPickaxe extends PickaxeItem implements DynamicAttributeTool, Patterned {
 
 	public EndPickaxe(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
 		super(material, attackDamage, attackSpeed, settings);
@@ -22,5 +24,10 @@ public class EndPickaxe extends PickaxeItem implements DynamicAttributeTool {
 			return this.getMaterial().getMiningLevel();
 		}
 		return 0;
+	}
+	
+	@Override
+	public String getModelPattern(String name) {
+		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

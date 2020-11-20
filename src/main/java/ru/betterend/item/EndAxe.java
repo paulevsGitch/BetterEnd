@@ -9,8 +9,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.tag.Tag;
+import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.Patterns;
 
-public class EndAxe extends AxeItem implements DynamicAttributeTool {
+public class EndAxe extends AxeItem implements DynamicAttributeTool, Patterned {
 
 	public EndAxe(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
 		super(material, attackDamage, attackSpeed, settings);
@@ -22,5 +24,10 @@ public class EndAxe extends AxeItem implements DynamicAttributeTool {
 			return this.getMaterial().getMiningLevel();
 		}
 		return 0;
+	}
+	
+	@Override
+	public String getModelPattern(String name) {
+		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

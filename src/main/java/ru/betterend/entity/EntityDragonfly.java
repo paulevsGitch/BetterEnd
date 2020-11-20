@@ -144,12 +144,13 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 			Vec3d vec3d = this.getRandomLocation();
 			if (vec3d != null) {
 				BlockPos pos = new BlockPos(vec3d);
-				if (!pos.equals(EntityDragonfly.this.getBlockPos())) {
-					Path path = EntityDragonfly.this.navigation.findPathTo(new BlockPos(vec3d), 1);
+				try {
+					Path path = EntityDragonfly.this.navigation.findPathTo(pos, 1);
 					if (path != null) {
 						EntityDragonfly.this.navigation.startMovingAlong(path, 1.0D);
 					}
 				}
+				catch (Exception e) {}
 			}
 			super.start();
 		}

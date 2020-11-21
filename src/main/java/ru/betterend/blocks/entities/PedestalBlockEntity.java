@@ -72,7 +72,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	
 	public void removeStack(World world, BlockState state) {
 		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, false)
-				.with(BlockPedestal.HAS_LIGHT, false));
+									  .with(BlockPedestal.HAS_LIGHT, false));
 		this.removeStack(0);
 	}
 
@@ -83,12 +83,11 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	}
 	
 	public void setStack(World world, BlockState state, ItemStack stack) {
-		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, true));
+		state = state.with(BlockPedestal.HAS_ITEM, true);
 		if (stack.getItem() == EndItems.ETERNAL_CRYSTAL) {
-			world.setBlockState(pos, state.with(BlockPedestal.HAS_LIGHT, true));
-		} else {
-			world.setBlockState(pos, state.with(BlockPedestal.HAS_LIGHT, false));
+			state = state.with(BlockPedestal.HAS_LIGHT, true);
 		}
+		world.setBlockState(pos, state);
 		this.setStack(0, stack);
 	}
 

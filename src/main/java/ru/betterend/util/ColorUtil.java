@@ -1,8 +1,18 @@
 package ru.betterend.util;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.indigo.renderer.helper.ColorHelper;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.NativeImage;
+import net.minecraft.resource.Resource;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 import ru.betterend.BetterEnd;
@@ -164,5 +174,48 @@ public class ColorUtil {
 	
 	public static int applyTint(int color, int tint) {
 		return colorBrigtness(ColorHelper.multiplyColor(color, tint), 1.5F);
+	}
+	
+	public static int colorDistance(int color1, int color2) {
+		int r1 = (color1 >> 16) & 255;
+		int g1 = (color1 >> 8) & 255;
+		int b1 = color1 & 255;
+		int r2 = (color2 >> 16) & 255;
+		int g2 = (color2 >> 8) & 255;
+		int b2 = color2 & 255;
+		return MHelper.pow2(r1 - r2) + MHelper.pow2(g1 - g2) + MHelper.pow2(b1 - b2);
+	}
+	
+	public static int extractColor(Identifier texture) {
+		NativeImage image = loadImage(texture, 16, 16);
+		List<Integer> colors = new ArrayList<>();
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < 16; j++) {
+				int col = image.getPixelColor(i, j);
+				if (((col >> 24) & 255) > 0) {
+					colors.add(ABGRtoARGB(col));
+				}
+			}
+		}
+		image.close();
+		
+		if (colors.size() == 0) return -1;
+		
+		ColorExtractor extractor = new ColorExtractor(colors);
+		return extractor.analize();
+	}
+	
+	public static NativeImage loadImage(Identifier image, int w, int h) {
+		MinecraftClient minecraft = MinecraftClient.getInstance();
+		ResourceManager resourceManager = minecraft.getResourceManager();
+		if (resourceManager.containsResource(image)) {
+			try (Resource resource = resourceManager.getResource(image)) {
+				return NativeImage.read(resource.getInputStream());			
+			} catch (IOException e) {
+				BetterEnd.LOGGER.warning("Can't load texture image: {}. Will be created empty image.", image);
+				BetterEnd.LOGGER.warning("Cause: {}.", e.getMessage());
+			}
+		}		
+		return new NativeImage(w, h, false);
 	}
 }

@@ -133,4 +133,8 @@ public class MHelper {
 			array[i2] = element;
 		}
 	}
+
+	public static int pow2(int i) {
+		return i * i;
+	}
 }

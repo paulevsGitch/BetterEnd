@@ -35,7 +35,10 @@ public class InfusionPedestal extends BlockPedestal {
 		if (blockEntity instanceof InfusionPedestalEntity) {
 			pedestal = (InfusionPedestalEntity) blockEntity;
 			if (!pedestal.isEmpty() && pedestal.hasRitual()) {
-				if (pedestal.getRitual().checkRecipe()) {
+				if (pedestal.getRitual().hasRecipe()) {
+					pedestal.getRitual().stop();
+					return ActionResult.SUCCESS;
+				} else if (pedestal.getRitual().checkRecipe()) {
 					return ActionResult.SUCCESS;
 				}
 			}

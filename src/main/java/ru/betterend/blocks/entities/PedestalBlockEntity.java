@@ -12,6 +12,7 @@ import net.minecraft.util.Tickable;
 import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.registry.EndBlockEntities;
+import ru.betterend.registry.EndItems;
 
 public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable {
 	private ItemStack activeItem = ItemStack.EMPTY;
@@ -70,7 +71,8 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	}
 	
 	public void removeStack(World world, BlockState state) {
-		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, false));
+		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, false)
+				.with(BlockPedestal.HAS_LIGHT, false));
 		this.removeStack(0);
 	}
 
@@ -82,6 +84,11 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	
 	public void setStack(World world, BlockState state, ItemStack stack) {
 		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, true));
+		if (stack.getItem() == EndItems.ETERNAL_CRYSTAL) {
+			world.setBlockState(pos, state.with(BlockPedestal.HAS_LIGHT, true));
+		} else {
+			world.setBlockState(pos, state.with(BlockPedestal.HAS_LIGHT, false));
+		}
 		this.setStack(0, stack);
 	}
 

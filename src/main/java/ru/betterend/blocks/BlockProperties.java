@@ -8,6 +8,7 @@ public class BlockProperties {
 	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.of("shape", TripleShape.class);
 	public final static EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.of("state", PedestalState.class);
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
+	public static final BooleanProperty HAS_LIGHT = BooleanProperty.of("has_light");
 	public static final BooleanProperty ACTIVATED = BooleanProperty.of("active");
 	
 	public static enum TripleShape implements StringIdentifiable {

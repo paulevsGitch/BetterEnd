@@ -46,6 +46,7 @@ import ru.betterend.util.BlocksHelper;
 public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvider {
 	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
+	public static final BooleanProperty HAS_LIGHT = BlockProperties.HAS_LIGHT;
 	
 	private static final VoxelShape SHAPE_DEFAULT;
 	private static final VoxelShape SHAPE_COLUMN;
@@ -82,8 +83,10 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	protected float height = 1.0F;
 	
 	public BlockPedestal(Block parent) {
-		super(FabricBlockSettings.copyOf(parent));
-		this.setDefaultState(stateManager.getDefaultState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false));
+		super(FabricBlockSettings.copyOf(parent).luminance(state -> {
+			return state.get(HAS_LIGHT) ? 12 : 0;
+		}));
+		this.setDefaultState(stateManager.getDefaultState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false).with(HAS_LIGHT, false));
 		this.parent = parent;
 	}
 	
@@ -294,7 +297,7 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
-		stateManager.add(STATE, HAS_ITEM);
+		stateManager.add(STATE, HAS_ITEM, HAS_LIGHT);
 	}
 
 	@Override

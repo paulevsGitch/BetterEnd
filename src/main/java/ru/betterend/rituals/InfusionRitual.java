@@ -8,14 +8,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
+import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
 
 public class InfusionRitual implements Inventory {
@@ -65,11 +65,7 @@ public class InfusionRitual implements Inventory {
 		InfusionRecipe recipe = this.world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
 		if (hasRecipe()) {
 			if (recipe == null) {
-				this.activeRecipe = null;
-				this.hasRecipe = false;
-				this.progress = 0;
-				this.time = 0;
-				this.markDirty();
+				this.stop();
 				return false;
 			} else if (recipe.getInfusionTime() != time) {
 				this.activeRecipe = recipe;
@@ -115,16 +111,12 @@ public class InfusionRitual implements Inventory {
 			for (PedestalBlockEntity catalyst : catalysts) {
 				catalyst.removeStack(world, world.getBlockState(catalyst.getPos()));
 			}
-			this.activeRecipe = null;
-			this.hasRecipe = false;
-			this.progress = 0;
-			this.time = 0;
-			this.markDirty();
+			this.stop();
 		} else {
 			ServerWorld world = (ServerWorld) this.world;
 			BlockPos target = this.worldPos.up();
 			double tx = target.getX() + 0.5;
-			double ty = target.getY() + 1.75;
+			double ty = target.getY() + 0.5;
 			double tz = target.getZ() + 0.5;
 			for (PedestalBlockEntity catalyst : catalysts) {
 				ItemStack stack = catalyst.getStack(0);
@@ -133,8 +125,7 @@ public class InfusionRitual implements Inventory {
 					double sx = start.getX() + 0.5;
 					double sy = start.getY() + 1.25;
 					double sz = start.getZ() + 0.5;
-					ItemStackParticleEffect catalystParticle = new ItemStackParticleEffect(ParticleTypes.ITEM, stack);
-					world.spawnParticles(catalystParticle, sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.125);
+					world.spawnParticles(new InfusionParticleType(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
 				}
 			}
 		}

@@ -3,6 +3,9 @@ package ru.betterend.util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,10 +13,13 @@ import net.fabricmc.fabric.impl.client.indigo.renderer.helper.ColorHelper;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.NativeImage;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
 
 import ru.betterend.BetterEnd;
 
@@ -186,7 +192,20 @@ public class ColorUtil {
 		return MHelper.pow2(r1 - r2) + MHelper.pow2(g1 - g2) + MHelper.pow2(b1 - b2);
 	}
 	
-	public static int extractColor(Identifier texture) {
+	private static Map<Identifier, Integer> colorPalette = Maps.newHashMap();
+	
+	public static int extractColor(Item item) {
+		Identifier id = Registry.ITEM.getId(item);
+		if (id.equals(Registry.ITEM.getDefaultId())) return -1;
+		if (colorPalette.containsKey(id)) {
+			return colorPalette.get(id);
+		}
+		Identifier texture;
+		if (item instanceof BlockItem) {
+			texture = new Identifier(id.getNamespace(), "textures/block/" + id.getPath() + ".png");
+		} else {
+			texture = new Identifier(id.getNamespace(), "textures/item/" + id.getPath() + ".png");
+		}
 		NativeImage image = loadImage(texture, 16, 16);
 		List<Integer> colors = new ArrayList<>();
 		for (int i = 0; i < image.getWidth(); i++) {
@@ -202,7 +221,10 @@ public class ColorUtil {
 		if (colors.size() == 0) return -1;
 		
 		ColorExtractor extractor = new ColorExtractor(colors);
-		return extractor.analize();
+		int color = extractor.analize();
+		colorPalette.put(id, color);
+		
+		return color;
 	}
 	
 	public static NativeImage loadImage(Identifier image, int w, int h) {

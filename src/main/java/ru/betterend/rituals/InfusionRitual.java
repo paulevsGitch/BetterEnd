@@ -107,7 +107,7 @@ public class InfusionRitual implements Inventory {
 		if (progress == time) {
 			BlockState inputState = world.getBlockState(input.getPos());
 			this.input.removeStack(world, inputState);
-			this.input.setStack(world, inputState, activeRecipe.craft(this));
+			this.input.setStack(0, activeRecipe.craft(this));
 			for (PedestalBlockEntity catalyst : catalysts) {
 				catalyst.removeStack(world, world.getBlockState(catalyst.getPos()));
 			}

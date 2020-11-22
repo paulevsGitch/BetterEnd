@@ -61,6 +61,11 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	public ItemStack removeStack(int slot, int amount) {
 		return this.removeStack(slot);
 	}
+	
+	@Override
+	public boolean isValid(int slot, ItemStack stack) {
+		return this.isEmpty();
+	}
 
 	@Override
 	public ItemStack removeStack(int slot) {
@@ -82,15 +87,23 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 		this.markDirty();
 	}
 	
-	public void setStack(World world, BlockState state, ItemStack stack) {
-		state = state.with(BlockPedestal.HAS_ITEM, true);
-		if (stack.getItem() == EndItems.ETERNAL_CRYSTAL) {
-			state = state.with(BlockPedestal.HAS_LIGHT, true);
+	@Override
+	public void markDirty() {
+		if (world != null && !world.isClient) {
+			BlockState state = world.getBlockState(pos);
+			if (state.getBlock() instanceof BlockPedestal) {
+				state = state.with(BlockPedestal.HAS_ITEM, !isEmpty());
+				if (activeItem.getItem() == EndItems.ETERNAL_CRYSTAL) {
+					state = state.with(BlockPedestal.HAS_LIGHT, true);
+				} else {
+					state = state.with(BlockPedestal.HAS_LIGHT, false);
+				}
+				world.setBlockState(pos, state);
+			}
 		}
-		world.setBlockState(pos, state);
-		this.setStack(0, stack);
+		super.markDirty();
 	}
-
+	
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
 		return true;

@@ -109,7 +109,7 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 			if (pedestal.isEmpty()) {
 				ItemStack itemStack = player.getStackInHand(hand);
 				if (itemStack.isEmpty()) return ActionResult.CONSUME;
-				pedestal.setStack(world, state, itemStack.split(1));
+				pedestal.setStack(0, itemStack.split(1));
 				return ActionResult.SUCCESS;
 			} else {
 				ItemStack itemStack = pedestal.getStack(0);
@@ -303,6 +303,17 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
 		return new PedestalBlockEntity();
+	}
+	
+	@Override
+	public boolean hasComparatorOutput(BlockState state) {
+		return state.getBlock() instanceof BlockPedestal;
+	}
+	
+	@Override
+	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+		System.out.println(state.get(HAS_ITEM));
+		return state.get(HAS_ITEM) ? 15 : 0;
 	}
 	
 	@Override

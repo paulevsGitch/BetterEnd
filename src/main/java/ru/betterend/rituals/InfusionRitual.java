@@ -92,6 +92,14 @@ public class InfusionRitual implements Inventory {
 		return false;
 	}
 	
+	public void stop() {
+		this.activeRecipe = null;
+		this.hasRecipe = false;
+		this.progress = 0;
+		this.time = 0;
+		this.markDirty();
+	}
+	
 	public void tick() {
 		if (isDirty) {
 			this.configure();

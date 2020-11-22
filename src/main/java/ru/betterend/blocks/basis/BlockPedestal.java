@@ -312,7 +312,6 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	
 	@Override
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-		System.out.println(state.get(HAS_ITEM));
 		return state.get(HAS_ITEM) ? 15 : 0;
 	}
 	

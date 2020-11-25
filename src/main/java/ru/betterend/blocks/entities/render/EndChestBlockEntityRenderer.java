@@ -57,7 +57,7 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 		super(blockEntityRenderDispatcher);
 
 		this.partC = new ModelPart(64, 64, 0, 19);
-		this.partC.addCuboid(1.0F, 0.0F, 1.0F, 14.0F, 10.0F, 14.0F, 0.0F);
+		this.partC.addCuboid(1.0F, 0.0F, 1.0F, 14.0F, 9.0F, 14.0F, 0.0F);
 		this.partA = new ModelPart(64, 64, 0, 0);
 		this.partA.addCuboid(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
 		this.partA.pivotY = 9.0F;
@@ -66,7 +66,7 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 		this.partB.addCuboid(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
 		this.partB.pivotY = 8.0F;
 		this.partRightC = new ModelPart(64, 64, 0, 19);
-		this.partRightC.addCuboid(1.0F, 0.0F, 1.0F, 15.0F, 10.0F, 14.0F, 0.0F);
+		this.partRightC.addCuboid(1.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
 		this.partRightA = new ModelPart(64, 64, 0, 0);
 		this.partRightA.addCuboid(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
 		this.partRightA.pivotY = 9.0F;
@@ -75,7 +75,7 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 		this.partRightB.addCuboid(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
 		this.partRightB.pivotY = 8.0F;
 		this.partLeftC = new ModelPart(64, 64, 0, 19);
-		this.partLeftC.addCuboid(0.0F, 0.0F, 1.0F, 15.0F, 10.0F, 14.0F, 0.0F);
+		this.partLeftC.addCuboid(0.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
 		this.partLeftA = new ModelPart(64, 64, 0, 0);
 		this.partLeftA.addCuboid(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
 		this.partLeftA.pivotY = 9.0F;
@@ -157,9 +157,9 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 
 	static {
 		defaultLayer = new RenderLayer[] {
-			RenderLayer.getEntitySolid(new Identifier("textures/entity/chest/normal.png")),
-			RenderLayer.getEntitySolid(new Identifier("textures/entity/chest/normal_left.png")),
-			RenderLayer.getEntitySolid(new Identifier("textures/entity/chest/normal_right.png"))
+			RenderLayer.getEntityCutout(new Identifier("textures/entity/chest/normal.png")),
+			RenderLayer.getEntityCutout(new Identifier("textures/entity/chest/normal_left.png")),
+			RenderLayer.getEntityCutout(new Identifier("textures/entity/chest/normal_right.png"))
 		};
 		
 		EndItems.getModBlocks().forEach((item) -> {
@@ -168,9 +168,9 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 				if (block instanceof BlockChest) {
 					String name = Registry.BLOCK.getId(block).getPath();
 					LAYERS.put(block, new RenderLayer[] {
-						RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/chest/" + name + ".png")),
-						RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/chest/" + name + "_left.png")),
-						RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/chest/" + name + "_right.png"))
+						RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + ".png")),
+						RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + "_left.png")),
+						RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + "_right.png"))
 					});
 				}
 			}

@@ -55,6 +55,8 @@ public class EndItems {
 	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
 	public final static Item END_LILY_LEAF_DRIED = registerItem("end_lily_leaf_dried");
 	public final static Item CRYSTAL_SHARDS = registerItem("crystal_shards");
+	public final static Item RAW_AMBER = registerItem("raw_amber");
+	public final static Item AMBER_GEM = registerItem("amber_gem");
 	
 	// Armor //
 	public static final Item TERMINITE_HELMET = registerItem("terminite_helmet", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.HEAD, makeSettings()));

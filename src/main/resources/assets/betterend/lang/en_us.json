@@ -326,5 +326,10 @@
 	"block.betterend.tenanea_stairs": "Tenanea Stairs",
 	"block.betterend.tenanea_stripped_bark": "Tenanea Stripped Bark",
 	"block.betterend.tenanea_stripped_log": "Tenanea Stripped Log",
-	"block.betterend.tenanea_trapdoor": "Tenanea Trapdoor"
+	"block.betterend.tenanea_trapdoor": "Tenanea Trapdoor",
+	
+	"block.betterend.amber_block": "Amber Block",
+	"block.betterend.amber_ore": "Amber Ore",
+	"item.betterend.amber_gem": "Amber Gem",
+	"item.betterend.raw_amber": "Raw Amber"
 }

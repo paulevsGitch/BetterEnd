@@ -87,6 +87,7 @@ public class EndFeatures {
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 6, 3, 0, 4, 96);
+	public static final EndFeature AMBER_ORE = EndFeature.makeOreFeature("amber_ore", EndBlocks.AMBER_ORE, 12, 6, 0, 4, 96);
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", EndBlocks.VIOLECITE, 15, 4, 96, 8);
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", EndBlocks.FLAVOLITE, 12, 4, 96, 6);
 	

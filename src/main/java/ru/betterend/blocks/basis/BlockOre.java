@@ -1,5 +1,6 @@
 package ru.betterend.blocks.basis;
 
+import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -16,10 +17,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
 
-public class BlockOre extends OreBlock {
+public class BlockOre extends OreBlock implements BlockPatterned {
 	private final Item dropItem;
 	private final int minCount;
 	private final int maxCount;
@@ -64,5 +69,22 @@ public class BlockOre extends OreBlock {
 			return Collections.singletonList(new ItemStack(dropItem, count));
 		}
 		return Collections.emptyList();
+	}
+	
+	@Override
+	public String getStatesPattern(Reader data) {
+		String block = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, block, block);
+	}
+	
+	@Override
+	public String getModelPattern(String block) {
+		Identifier blockId = Registry.BLOCK.getId(this);
+		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
+	}
+	
+	@Override
+	public Identifier statePatternId() {
+		return Patterns.STATE_SIMPLE;
 	}
 }

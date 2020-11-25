@@ -10,6 +10,7 @@ import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
+import ru.betterend.blocks.BlockAmber;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
@@ -160,12 +161,14 @@ public class EndBlocks {
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_DUST, 1, 3, 5));
+	public static final Block AMBER_ORE = registerBlock("amber_ore", new BlockOre(EndItems.RAW_AMBER, 1, 2, 4));
 	
 	// Materials //
 	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
+	public static final Block AMBER_BLOCK = registerBlock("amber_block", new BlockAmber());
 	
 	public static final Block ANDESITE_LANTERN = registerBlock("andesite_lantern", new BlockStoneLantern(Blocks.ANDESITE));
 	public static final Block DIORITE_LANTERN = registerBlock("diorite_lantern", new BlockStoneLantern(Blocks.DIORITE));

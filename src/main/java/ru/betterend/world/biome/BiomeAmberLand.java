@@ -12,6 +12,7 @@ public class BiomeAmberLand extends EndBiome {
 				.setFogDensity(2.0F)
 				.setPlantsColor(122, 45, 122)
 				.setSurface(EndBlocks.AMBER_GRASS)
+				.addFeature(EndFeatures.AMBER_ORE)
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));

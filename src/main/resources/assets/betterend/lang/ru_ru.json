@@ -328,5 +328,10 @@
 	"block.betterend.tenanea_stairs": "Ступени из тенанеи",
 	"block.betterend.tenanea_stripped_bark": "Обтёсанная кора тенанеи",
 	"block.betterend.tenanea_stripped_log": "Обтёсанное бревно тенанеи",
-	"block.betterend.tenanea_trapdoor": "Дверь из тенанеи"
+	"block.betterend.tenanea_trapdoor": "Дверь из тенанеи",
+	
+	"block.betterend.amber_block": "Блок янтаря",
+	"block.betterend.amber_ore": "Янтарная руда",
+	"item.betterend.amber_gem": "Огранённый янтарь",
+	"item.betterend.raw_amber": "Необработанный янтарь"
 }

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/amber_grass" },
+			{ "model": "betterend:block/amber_grass", "y": 90 },
+			{ "model": "betterend:block/amber_grass", "y": 180 },
+			{ "model": "betterend:block/amber_grass", "y": 270 }
+		]
+	}
+}

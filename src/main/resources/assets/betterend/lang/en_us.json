@@ -300,5 +300,31 @@
 	
 	"item.betterend.bucket_end_fish": "End Fish Bucket",
 	"item.betterend.end_fish_cooked": "Cooked End Fish",
-	"item.betterend.end_fish_raw": "End Fish"
+	"item.betterend.end_fish_raw": "End Fish",
+	
+	"biome.betterend.amber_land": "Amber Land",
+	"biome.betterend.blossoming_spires": "Blossoming Spires",
+	"block.betterend.amber_grass": "Amber Grass",
+	"block.betterend.amber_grass_path": "Amber Grass Path",
+	"block.betterend.tenanea_bark": "Tenanea Bark",
+	"block.betterend.tenanea_barrel": "Tenanea Barrel",
+	"block.betterend.tenanea_bookshelf": "Tenanea Bookshelf",
+	"block.betterend.tenanea_button": "Tenanea Button",
+	"block.betterend.tenanea_chest": "Tenanea Chest",
+	"block.betterend.tenanea_crafting_table": "Tenanea Crafting Table",
+	"block.betterend.tenanea_door": "Tenanea Door",
+	"block.betterend.tenanea_fence": "Tenanea Fence",
+	"block.betterend.tenanea_gate": "Tenanea Gate",
+	"block.betterend.tenanea_ladder": "Tenanea Ladder",
+	"block.betterend.tenanea_leaves": "Tenanea Leaves",
+	"block.betterend.tenanea_log": "Tenanea Log",
+	"block.betterend.tenanea_planks": "Tenanea Planks",
+	"block.betterend.tenanea_plate": "Tenanea Plate",
+	"block.betterend.tenanea_sapling": "Tenanea Sapling",
+	"block.betterend.tenanea_sign": "Tenanea Sign",
+	"block.betterend.tenanea_slab": "Tenanea Slab",
+	"block.betterend.tenanea_stairs": "Tenanea Stairs",
+	"block.betterend.tenanea_stripped_bark": "Tenanea Stripped Bark",
+	"block.betterend.tenanea_stripped_log": "Tenanea Stripped Log",
+	"block.betterend.tenanea_trapdoor": "Tenanea Trapdoor"
 }

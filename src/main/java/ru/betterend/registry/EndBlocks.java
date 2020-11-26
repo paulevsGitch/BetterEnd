@@ -15,6 +15,8 @@ import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
 import ru.betterend.blocks.BlockBubbleCoral;
+import ru.betterend.blocks.BlockBulbVine;
+import ru.betterend.blocks.BlockBulbVineSeed;
 import ru.betterend.blocks.BlockChorusGrass;
 import ru.betterend.blocks.BlockDragonTreeSapling;
 import ru.betterend.blocks.BlockEndLily;
@@ -164,7 +166,8 @@ public class EndBlocks {
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));
 	public static final Block TWISTED_VINE = registerBlock("twisted_vine", new BlockVine());
-	public static final Block BULB_VINE = registerBlock("bulb_vine", new BlockVine(15, true));
+	public static final Block BULB_VINE_SEED = registerBlock("bulb_vine_seed", new BlockBulbVineSeed());
+	public static final Block BULB_VINE = registerBlock("bulb_vine", new BlockBulbVine());
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_DUST, 1, 3, 5));

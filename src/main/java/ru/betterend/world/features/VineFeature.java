@@ -26,11 +26,13 @@ public class VineFeature extends InvertedScatterFeature {
 
 	@Override
 	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		int h = BlocksHelper.downRay(world, blockPos, random.nextInt(maxLength));
-		BlocksHelper.setWithoutUpdate(world, blockPos, vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
-		for (int i = 1; i < h; i++) {
-			BlocksHelper.setWithoutUpdate(world, blockPos.down(i), vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+		int h = BlocksHelper.downRay(world, blockPos, random.nextInt(maxLength)) - 1;
+		if (h > 2) {
+			BlocksHelper.setWithoutUpdate(world, blockPos, vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+			for (int i = 1; i < h; i++) {
+				BlocksHelper.setWithoutUpdate(world, blockPos.down(i), vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			}
+			BlocksHelper.setWithoutUpdate(world, blockPos.down(h), vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		}
-		BlocksHelper.setWithoutUpdate(world, blockPos.down(h), vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 	}
 }

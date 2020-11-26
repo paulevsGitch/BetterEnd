@@ -62,6 +62,7 @@ public class EndFeatures {
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);
 	public static final EndFeature TWISTED_VINE = new EndFeature("twisted_vine", new VineFeature(EndBlocks.TWISTED_VINE, 24), 3);
+	public static final EndFeature BULB_VINE = new EndFeature("bulb_vine", new VineFeature(EndBlocks.BULB_VINE, 24), 5);
 	
 	// Wall Plants //
 	public static final EndFeature PURPLE_POLYPORE = new EndFeature("purple_polypore", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 3), 5);

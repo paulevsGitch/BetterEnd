@@ -340,5 +340,10 @@
 	"block.betterend.pink_moss": "Розовый мох",
 	"block.betterend.pink_moss_path": "Тропа из розового мха",
 	
-	"block.betterend.twisted_moss": "Закрученный мох"
+	"block.betterend.twisted_moss": "Закрученный мох",
+	
+	"block.betterend.bulb_vine": "Луковичная лоза",
+	"block.betterend.bulb_vine_lantern": "Фонарь из светящейся луковицы",
+	"block.betterend.bulb_vine_seed": "Семя луковичной лозы",
+	"item.betterend.glowing_bulb": "Светящаяся луковица"
 }

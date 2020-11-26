@@ -338,5 +338,10 @@
 	"block.betterend.pink_moss": "Pink Moss",
 	"block.betterend.pink_moss_path": "Pink Moss Path",
 	
-	"block.betterend.twisted_moss": "Twisted Moss"
+	"block.betterend.twisted_moss": "Twisted Moss",
+	
+	"block.betterend.bulb_vine": "Bulb Vine",
+	"block.betterend.bulb_vine_lantern": "Bulb Vine Lantern",
+	"block.betterend.bulb_vine_seed": "Bulb Vine Seed",
+	"item.betterend.glowing_bulb": "Glowing Bulb"
 }

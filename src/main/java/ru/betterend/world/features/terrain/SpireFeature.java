@@ -15,6 +15,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
+import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
@@ -56,7 +57,9 @@ public class SpireFeature extends DefaultFeature {
 			sdf.fillRecursive(world, center);
 			
 			support.forEach((bpos) -> {
-				EndFeatures.TENANEA_BUSH.getFeature().generate(world, chunkGenerator, random, bpos, null);
+				if (EndBiomes.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
+					EndFeatures.TENANEA_BUSH.getFeature().generate(world, chunkGenerator, random, bpos, null);
+				}
 			});
 			
 			return true;

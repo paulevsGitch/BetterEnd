@@ -17,6 +17,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
+import ru.betterend.blocks.basis.BlockFur;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -32,6 +33,7 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class TenaneaBushFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
+	private static final Direction[] DIRECTIONS = Direction.values();
 	
 	public TenaneaBushFeature() {}
 	
@@ -57,6 +59,14 @@ public class TenaneaBushFeature extends DefaultFeature {
 						BlockPos d = info.getPos().down();
 						support.add(d);
 					}
+					
+					MHelper.shuffle(DIRECTIONS, random);
+					for (Direction d: DIRECTIONS) {
+						if (info.getState(d).isAir()) {
+							info.setBlockPos(info.getPos().offset(d), EndBlocks.TENANEA_OUTER_LEAVES.getDefaultState().with(BlockFur.FACING, d));
+						}
+					}
+					
 					return info.getState().with(LeavesBlock.DISTANCE, distance);
 				}
 				else {

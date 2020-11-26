@@ -113,8 +113,11 @@ public class EndFeatures {
 		
 		addFeature(FLAVOLITE_LAYER, features);
 		addFeature(ENDER_ORE, features);
-		addFeature(ROUND_CAVE_RARE, features);
-		addFeature(CAVE_GRASS, features);
+		
+		if (!id.getPath().equals("blossoming_spires")) {
+			addFeature(ROUND_CAVE_RARE, features);
+			addFeature(CAVE_GRASS, features);
+		}
 		
 		EndBiome endBiome = EndBiomes.getBiome(id);
 		EndFeature feature = endBiome.getStructuresFeature();

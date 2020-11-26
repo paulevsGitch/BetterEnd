@@ -335,5 +335,8 @@
 	"item.betterend.amber_gem": "Огранённый янтарь",
 	"item.betterend.raw_amber": "Необработанный янтарь",
 	"block.betterend.tenanea_flowers": "Цветы тенанеи",
-	"block.betterend.tenanea_outer_leaves": "Внешние листья тенанеи"
+	"block.betterend.tenanea_outer_leaves": "Внешние листья тенанеи",
+	
+	"block.betterend.pink_moss": "Розовый мох",
+	"block.betterend.pink_moss_path": "Тропа из розового мха"
 }

@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterend:block/pink_moss"
+				},
+				{
+					"model": "betterend:block/pink_moss",
+					"y": 90
+				},
+				{
+					"model": "betterend:block/pink_moss",
+					"y": 180
+				},
+				{
+					"model": "betterend:block/pink_moss",
+					"y": 270
+				}
+		]
+	}
+}

@@ -74,6 +74,7 @@ public class EndBlocks {
 	public static final Block CAVE_MOSS = registerBlock("cave_moss", new BlockTerrain(MaterialColor.PURPLE));
 	public static final Block CRYSTAL_MOSS = registerBlock("crystal_moss", new BlockTerrain(MaterialColor.PINK));
 	public static final Block SHADOW_GRASS = registerBlock("shadow_grass", new BlockShadowGrass());
+	public static final Block PINK_MOSS = registerBlock("pink_moss", new BlockTerrain(MaterialColor.PINK));
 	public static final Block AMBER_GRASS = registerBlock("amber_grass", new BlockTerrain(MaterialColor.ORANGE));
 	
 	// Roads //
@@ -83,6 +84,7 @@ public class EndBlocks {
 	public static final Block CAVE_MOSS_PATH = registerBlock("cave_moss_path", new BlockPath(CAVE_MOSS));
 	public static final Block CRYSTAL_MOSS_PATH = registerBlock("crystal_moss_path", new BlockPath(CRYSTAL_MOSS));
 	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new BlockPath(SHADOW_GRASS));
+	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new BlockPath(PINK_MOSS));
 	public static final Block AMBER_GRASS_PATH = registerBlock("amber_grass_path", new BlockPath(AMBER_GRASS));
 	
 	// Rocks //

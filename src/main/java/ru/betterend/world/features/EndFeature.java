@@ -23,9 +23,9 @@ import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.world.features.terrain.OreLayerFeature;
 
 public class EndFeature {
-	protected Feature<?> feature;
-	protected ConfiguredFeature<?, ?> featureConfigured;
-	protected GenerationStep.Feature featureStep;
+	private Feature<?> feature;
+	private ConfiguredFeature<?, ?> featureConfigured;
+	private GenerationStep.Feature featureStep;
 	
 	protected EndFeature() {}
 	

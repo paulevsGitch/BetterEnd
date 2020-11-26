@@ -1,7 +1,10 @@
 package ru.betterend.world.features.terrain;
 
+import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,7 +15,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
@@ -40,10 +43,22 @@ public class SpireFeature extends DefaultFeature {
 				return (float) (Math.abs(noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1)) * 3F + Math.abs(noise.eval(vec.getX() * 0.3, vec.getY() * 0.3 + 100, vec.getZ() * 0.3)) * 1.3F);
 			}).setSource(sdf);
 			final BlockPos center = pos;
+			List<BlockPos> support = Lists.newArrayList();
 			sdf.setReplaceFunction(REPLACE).setPostProcess((info) -> {
-				return info.getStateUp().isAir() ? EndBlocks.END_MOSS.getDefaultState() : info.getState();
+				if (info.getStateUp().isAir()) {
+					if (random.nextInt(16) == 0) {
+						support.add(info.getPos().up());
+					}
+					return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+				}
+				return info.getState();
 			});
 			sdf.fillRecursive(world, center);
+			
+			support.forEach((bpos) -> {
+				EndFeatures.TENANEA_BUSH.getFeature().generate(world, chunkGenerator, random, bpos, null);
+			});
+			
 			return true;
 		}
 		return false;

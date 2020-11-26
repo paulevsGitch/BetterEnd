@@ -17,14 +17,15 @@ import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
-import ru.betterend.world.features.FloatingSpireFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
 import ru.betterend.world.features.WallPlantFeature;
 import ru.betterend.world.features.WallPlantOnLogFeature;
 import ru.betterend.world.features.bushes.BushFeature;
+import ru.betterend.world.features.bushes.TenaneaBushFeature;
 import ru.betterend.world.features.terrain.EndLakeFeature;
+import ru.betterend.world.features.terrain.FloatingSpireFeature;
 import ru.betterend.world.features.terrain.RoundCaveFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
@@ -44,6 +45,7 @@ public class EndFeatures {
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark), 4);
 	public static final EndFeature DRAGON_TREE_BUSH = new EndFeature("dragon_tree_bush", new BushFeature(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.bark), 15);
+	public static final EndFeature TENANEA_BUSH = new EndFeature("tenanea_bush", new TenaneaBushFeature(), 10);
 	
 	// Plants //
 	public static final EndFeature UMBRELLA_MOSS = new EndFeature("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);

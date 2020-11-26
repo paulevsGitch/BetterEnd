@@ -334,5 +334,6 @@
 	"block.betterend.amber_ore": "Янтарная руда",
 	"item.betterend.amber_gem": "Огранённый янтарь",
 	"item.betterend.raw_amber": "Необработанный янтарь",
-	"block.betterend.tenanea_flowers": "Цветы тенанеи"
+	"block.betterend.tenanea_flowers": "Цветы тенанеи",
+	"block.betterend.tenanea_outer_leaves": "Внешние листья тенанеи"
 }

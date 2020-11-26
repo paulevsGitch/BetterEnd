@@ -38,6 +38,7 @@ public class TenaneaFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
 	private static final List<Vector3f> SPLINE;
+	private static final Direction[] DIRECTIONS = Direction.values();
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
@@ -82,16 +83,16 @@ public class TenaneaFeature extends DefaultFeature {
 			}
 		}
 		
+		BlockState top = EndBlocks.TENANEA_FLOWERS.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		BlockState middle = EndBlocks.TENANEA_FLOWERS.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
+		BlockState bottom = EndBlocks.TENANEA_FLOWERS.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
 		BlockState outer = EndBlocks.TENANEA_OUTER_LEAVES.getDefaultState();
+		
 		List<BlockPos> support = Lists.newArrayList();
 		sphere.setPostProcess((info) -> {
-			if (info.getStateDown().isAir()) {
-				if (random.nextBoolean()) {
-					support.add(info.getPos().toImmutable());
-				}
-				else {
-					info.setState(info.getPos().down(), outer.with(BlockFur.FACING, Direction.DOWN));
-				}
+			if (random.nextBoolean() && info.getStateDown().isAir()) {
+				BlockPos d = info.getPos().down();
+				support.add(d);
 			}
 			if (random.nextInt(5) == 0) {
 				for (Direction dir: Direction.values()) {
@@ -103,14 +104,14 @@ public class TenaneaFeature extends DefaultFeature {
 				info.setState(EndBlocks.TENANEA.bark.getDefaultState());
 			}
 			
-			if (info.getState().isOf(EndBlocks.TENANEA_LEAVES)) {
-				for (Direction d: BlocksHelper.HORIZONTAL) {
-					if (info.getState(d).isAir()) {
-						info.setState(info.getPos().offset(d), outer.with(BlockFur.FACING, Direction.DOWN));
-					}
+			MHelper.shuffle(DIRECTIONS, random);
+			for (Direction d: DIRECTIONS) {
+				if (info.getState(d).isAir()) {
+					info.setBlockPos(info.getPos().offset(d), outer.with(BlockFur.FACING, d));
 				}
 			}
-			else if (EndBlocks.TENANEA.isTreeLog(info.getState())) {
+			
+			if (EndBlocks.TENANEA.isTreeLog(info.getState())) {
 				for (int x = -6; x < 7; x++) {
 					int ax = Math.abs(x);
 					mut.setX(x + info.getPos().getX());
@@ -137,16 +138,11 @@ public class TenaneaFeature extends DefaultFeature {
 			return info.getState();
 		});
 		sphere.fillRecursiveIgnore(world, pos, IGNORE);
-		
 		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.TENANEA.bark);
 		
-		BlockState top = EndBlocks.TENANEA_FLOWERS.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
-		BlockState middle = EndBlocks.TENANEA_FLOWERS.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
-		BlockState bottom = EndBlocks.TENANEA_FLOWERS.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
-		
 		support.forEach((bpos) -> {
-			int count = MHelper.randRange(5, 9, random);
-			mut.set(bpos).move(Direction.DOWN);
+			int count = MHelper.randRange(3, 8, random);
+			mut.set(bpos);
 			BlocksHelper.setWithoutUpdate(world, mut, top);
 			for (int i = 1; i < count; i++) {
 				mut.setY(mut.getY() - 1);

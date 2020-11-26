@@ -60,7 +60,6 @@ public class BlockFur extends BlockBaseNotFull implements IRenderTypeable {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
-				.luminance(15)
 				.breakByHand(true)
 				.noCollision());
 		this.drop = drop;
@@ -98,7 +97,7 @@ public class BlockFur extends BlockBaseNotFull implements IRenderTypeable {
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		Direction direction = (Direction) state.get(FACING);
 		BlockPos blockPos = pos.offset(direction.getOpposite());
-		return sideCoversSmallSquare(world, blockPos, direction) || world.getBlockState(pos).isIn(BlockTags.LEAVES);
+		return sideCoversSmallSquare(world, blockPos, direction) || world.getBlockState(blockPos).isIn(BlockTags.LEAVES);
 	}
 
 	@Override

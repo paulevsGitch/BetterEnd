@@ -10,7 +10,6 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.util.ColorUtil;

@@ -6,7 +6,6 @@ import com.mojang.serialization.Codec;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStringReader;
 import net.minecraft.item.ItemStack;
@@ -14,7 +13,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.registry.EndParticles;
 import ru.betterend.util.ColorUtil;
 

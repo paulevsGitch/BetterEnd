@@ -19,7 +19,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;

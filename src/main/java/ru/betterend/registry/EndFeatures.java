@@ -39,7 +39,7 @@ public class EndFeatures {
 	public static final EndFeature PYTHADENDRON_TREE = new EndFeature("pythadendron_tree", new PythadendronTreeFeature(), 2);
 	public static final EndFeature LACUGROVE = new EndFeature("lacugrove", new LacugroveFeature(), 4);
 	public static final EndFeature DRAGON_TREE = new EndFeature("dragon_tree", new DragonTreeFeature(), 3);
-	public static final EndFeature TENANEA = new EndFeature("tenanea", new TenaneaFeature(), 7);
+	public static final EndFeature TENANEA = new EndFeature("tenanea", new TenaneaFeature(), 3);
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark), 4);

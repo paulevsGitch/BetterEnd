@@ -49,8 +49,9 @@ public class BlockTenaneaFlowers extends BlockVine implements IColorProvider {
 			int r = MHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
 			int g = MHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
 			int b = MHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
+			float[] hsb = MHelper.fromRGBtoHSB(r, g, b);
 			
-			return MHelper.color(r, g, b);
+			return MHelper.fromHSBtoRGB(hsb[0], MHelper.max(0.5F, hsb[1]), hsb[2]);
 		};
 		
 		ITEM_PROVIDER = (stack, tintIndex) -> {

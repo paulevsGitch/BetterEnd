@@ -57,6 +57,10 @@ public class MHelper {
 		return a < b ? a : b;
 	}
 	
+	public static int min(int a, int b, int c) {
+		return min(a, min(b, c));
+	}
+	
 	public static int max(int a, int b) {
 		return a > b ? a : b;
 	}
@@ -70,6 +74,10 @@ public class MHelper {
 	}
 	
 	public static float max(float a, float b, float c) {
+		return max(a, max(b, c));
+	}
+	
+	public static int max(int a, int b, int c) {
 		return max(a, max(b, c));
 	}
 	
@@ -142,5 +150,96 @@ public class MHelper {
 
 	public static int pow2(int i) {
 		return i * i;
+	}
+	
+	public static int fromHSBtoRGB(float hue, float saturation, float brightness) {
+		int red = 0;
+		int green = 0;
+		int blue = 0;
+		if (saturation == 0.0F) {
+			red = green = blue = (int) (brightness * 255.0F + 0.5F);
+		} else {
+			float var6 = (hue - (float) Math.floor((double) hue)) * 6.0F;
+			float var7 = var6 - (float) Math.floor((double) var6);
+			float var8 = brightness * (1.0F - saturation);
+			float var9 = brightness * (1.0F - saturation * var7);
+			float var10 = brightness * (1.0F - saturation * (1.0F - var7));
+			switch ((int) var6) {
+				case 0 :
+					red = (int) (brightness * 255.0F + 0.5F);
+					green = (int) (var10 * 255.0F + 0.5F);
+					blue = (int) (var8 * 255.0F + 0.5F);
+					break;
+				case 1 :
+					red = (int) (var9 * 255.0F + 0.5F);
+					green = (int) (brightness * 255.0F + 0.5F);
+					blue = (int) (var8 * 255.0F + 0.5F);
+					break;
+				case 2 :
+					red = (int) (var8 * 255.0F + 0.5F);
+					green = (int) (brightness * 255.0F + 0.5F);
+					blue = (int) (var10 * 255.0F + 0.5F);
+					break;
+				case 3 :
+					red = (int) (var8 * 255.0F + 0.5F);
+					green = (int) (var9 * 255.0F + 0.5F);
+					blue = (int) (brightness * 255.0F + 0.5F);
+					break;
+				case 4 :
+					red = (int) (var10 * 255.0F + 0.5F);
+					green = (int) (var8 * 255.0F + 0.5F);
+					blue = (int) (brightness * 255.0F + 0.5F);
+					break;
+				case 5 :
+					red = (int) (brightness * 255.0F + 0.5F);
+					green = (int) (var8 * 255.0F + 0.5F);
+					blue = (int) (var9 * 255.0F + 0.5F);
+			}
+		}
+
+		return ALPHA | red << 16 | green << 8 | blue << 0;
+	}
+
+	public static float[] fromRGBtoHSB(int r, int g, int b) {
+		float[] values = new float[3];
+
+		int max = max(r, g, b);
+		int min = min(r, g, b);
+
+		float brightness = (float) max / 255.0F;
+		float saturation;
+		if (max != 0) {
+			saturation = (float) (max - min) / (float) max;
+		} else {
+			saturation = 0.0F;
+		}
+
+		float hue;
+		if (saturation == 0.0F) {
+			hue = 0.0F;
+		}
+		else {
+			float var9 = (float) (max - r) / (float) (max - min);
+			float var10 = (float) (max - g) / (float) (max - min);
+			float var11 = (float) (max - b) / (float) (max - min);
+			if (r == max) {
+				hue = var11 - var10;
+			} else if (g == max) {
+				hue = 2.0F + var9 - var11;
+			} else {
+				hue = 4.0F + var10 - var9;
+			}
+
+			hue /= 6.0F;
+			if (hue < 0.0F) {
+				++hue;
+			}
+		}
+
+		values[0] = hue;
+		values[1] = saturation;
+		values[2] = brightness;
+		
+		return values;
 	}
 }

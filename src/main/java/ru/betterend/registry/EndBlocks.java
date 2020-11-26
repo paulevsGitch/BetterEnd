@@ -16,6 +16,7 @@ import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
 import ru.betterend.blocks.BlockBubbleCoral;
 import ru.betterend.blocks.BlockBulbVine;
+import ru.betterend.blocks.BlockBulbVineLantern;
 import ru.betterend.blocks.BlockBulbVineSeed;
 import ru.betterend.blocks.BlockChorusGrass;
 import ru.betterend.blocks.BlockDragonTreeSapling;
@@ -180,6 +181,7 @@ public class EndBlocks {
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new BlockAmber());
 	
+	// Lanterns
 	public static final Block ANDESITE_LANTERN = registerBlock("andesite_lantern", new BlockStoneLantern(Blocks.ANDESITE));
 	public static final Block DIORITE_LANTERN = registerBlock("diorite_lantern", new BlockStoneLantern(Blocks.DIORITE));
 	public static final Block GRANITE_LANTERN = registerBlock("granite_lantern", new BlockStoneLantern(Blocks.GRANITE));
@@ -187,6 +189,7 @@ public class EndBlocks {
 	public static final Block PURPUR_LANTERN = registerBlock("purpur_lantern", new BlockStoneLantern(Blocks.PURPUR_BLOCK));
 	public static final Block END_STONE_LANTERN = registerBlock("end_stone_lantern", new BlockStoneLantern(Blocks.END_STONE));
 	public static final Block BLACKSTONE_LANTERN = registerBlock("blackstone_lantern", new BlockStoneLantern(Blocks.BLACKSTONE));
+	public static final Block BULB_VINE_LANTERN = registerBlock("bulb_vine_lantern", new BlockBulbVineLantern());
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
@@ -194,7 +197,7 @@ public class EndBlocks {
 	public static final Block INFUSION_PEDESTAL = registerBlock("infusion_pedestal", new InfusionPedestal());
 	
 	//Technical
-	public static final Block END_PORTAL_BLOCK = registerBlock("end_portal_block", new EndPortalBlock());
+	public static final Block END_PORTAL_BLOCK = registerBlockNI("end_portal_block", new EndPortalBlock());
 	
 	public static void register() {}
 	

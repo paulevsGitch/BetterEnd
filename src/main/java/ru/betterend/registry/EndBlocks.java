@@ -156,6 +156,7 @@ public class EndBlocks {
 	public static final Block PURPLE_POLYPORE = registerBlock("purple_polypore", new BlockWallMushroom(13));
 	public static final Block TAIL_MOSS = registerBlock("tail_moss", new BlockWallPlant());
 	public static final Block CYAN_MOSS = registerBlock("cyan_moss", new BlockWallPlant());
+	public static final Block TWISTED_MOSS = registerBlock("twisted_moss", new BlockWallPlant());
 	
 	// Crops //
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new BlockShadowBerry());

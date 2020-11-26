@@ -17,6 +17,7 @@ import ru.betterend.blocks.BlockBlueVineSeed;
 import ru.betterend.blocks.BlockBubbleCoral;
 import ru.betterend.blocks.BlockBulbVine;
 import ru.betterend.blocks.BlockBulbVineLantern;
+import ru.betterend.blocks.BlockBulbVineLanternColored;
 import ru.betterend.blocks.BlockBulbVineSeed;
 import ru.betterend.blocks.BlockChorusGrass;
 import ru.betterend.blocks.BlockDragonTreeSapling;
@@ -61,6 +62,7 @@ import ru.betterend.blocks.basis.BlockStoneLantern;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.basis.BlockWallMushroom;
 import ru.betterend.blocks.basis.BlockWallPlant;
+import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.MainConfig;
@@ -189,7 +191,9 @@ public class EndBlocks {
 	public static final Block PURPUR_LANTERN = registerBlock("purpur_lantern", new BlockStoneLantern(Blocks.PURPUR_BLOCK));
 	public static final Block END_STONE_LANTERN = registerBlock("end_stone_lantern", new BlockStoneLantern(Blocks.END_STONE));
 	public static final Block BLACKSTONE_LANTERN = registerBlock("blackstone_lantern", new BlockStoneLantern(Blocks.BLACKSTONE));
-	public static final Block BULB_VINE_LANTERN = registerBlock("bulb_vine_lantern", new BlockBulbVineLantern());
+	
+	public static final Block BULB_LANTERN = registerBlock("bulb_lantern", new BlockBulbVineLantern());
+	public static final ColoredMaterial BULB_LANTERN_COLORED = new ColoredMaterial(BlockBulbVineLanternColored::new, BULB_LANTERN);
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());

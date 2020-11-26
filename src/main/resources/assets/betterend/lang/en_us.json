@@ -341,7 +341,24 @@
 	"block.betterend.twisted_moss": "Twisted Moss",
 	
 	"block.betterend.bulb_vine": "Bulb Vine",
-	"block.betterend.bulb_vine_lantern": "Bulb Vine Lantern",
+	"block.betterend.bulb_lantern": "Bulb Lantern",
 	"block.betterend.bulb_vine_seed": "Bulb Vine Seed",
-	"item.betterend.glowing_bulb": "Glowing Bulb"
+	"item.betterend.glowing_bulb": "Glowing Bulb",
+	
+	"block.betterend.bulb_lantern_black": "Black Bulb Lantern",
+	"block.betterend.bulb_lantern_blue": "Blue Bulb Lantern",
+	"block.betterend.bulb_lantern_brown": "Brown Bulb Lantern",
+	"block.betterend.bulb_lantern_cyan": "Cyan Bulb Lantern",
+	"block.betterend.bulb_lantern_gray": "Gray Bulb Lantern",
+	"block.betterend.bulb_lantern_green": "Green Bulb Lantern",
+	"block.betterend.bulb_lantern_light_blue": "Light Blue Bulb Lantern",
+	"block.betterend.bulb_lantern_light_gray": "Light Gray Bulb Lantern",
+	"block.betterend.bulb_lantern_lime": "Lime Bulb Lantern",
+	"block.betterend.bulb_lantern_magenta": "Magenta Bulb Lantern",
+	"block.betterend.bulb_lantern_orange": "Orange Bulb Lantern",
+	"block.betterend.bulb_lantern_pink": "Pink Bulb Lantern",
+	"block.betterend.bulb_lantern_purple": "Purple Bulb Lantern",
+	"block.betterend.bulb_lantern_red": "Red Bulb Lantern",
+	"block.betterend.bulb_lantern_white": "White Bulb Lantern",
+	"block.betterend.bulb_lantern_yellow": "Yellow Bulb Lantern"
 }

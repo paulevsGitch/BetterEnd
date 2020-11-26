@@ -1,0 +1,10 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/bulb_vine_lantern_overlay",
+				"material": "betterend:glow_all"
+			}
+		]
+	}
+}

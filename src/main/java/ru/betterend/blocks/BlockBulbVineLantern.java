@@ -30,7 +30,7 @@ public class BlockBulbVineLantern extends BlockBaseNotFull implements IRenderTyp
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	
 	public BlockBulbVineLantern() {
-		super(FabricBlockSettings.of(Material.METAL)
+		this(FabricBlockSettings.of(Material.METAL)
 				.sounds(BlockSoundGroup.LANTERN)
 				.hardness(1)
 				.resistance(1)
@@ -38,6 +38,10 @@ public class BlockBulbVineLantern extends BlockBaseNotFull implements IRenderTyp
 				.materialColor(MaterialColor.LIGHT_GRAY)
 				.requiresTool()
 				.luminance(15));
+	}
+	
+	public BlockBulbVineLantern(FabricBlockSettings settings) {
+		super(settings);
 	}
 	
 	@Override

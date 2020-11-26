@@ -343,7 +343,24 @@
 	"block.betterend.twisted_moss": "Закрученный мох",
 	
 	"block.betterend.bulb_vine": "Луковичная лоза",
-	"block.betterend.bulb_vine_lantern": "Фонарь из светящейся луковицы",
+	"block.betterend.bulb_lantern": "Луковичный фонарь",
 	"block.betterend.bulb_vine_seed": "Семя луковичной лозы",
-	"item.betterend.glowing_bulb": "Светящаяся луковица"
+	"item.betterend.glowing_bulb": "Светящаяся луковица",
+	
+	"block.betterend.bulb_lantern_black": "Чёрный луковичный фонарь",
+	"block.betterend.bulb_lantern_blue": "Синий луковичный фонарь",
+	"block.betterend.bulb_lantern_brown": "Коричневый луковичный фонарь",
+	"block.betterend.bulb_lantern_cyan": "Циановый луковичный фонарь",
+	"block.betterend.bulb_lantern_gray": "Серый луковичный фонарь",
+	"block.betterend.bulb_lantern_green": "Зелёный луковичный фонарь",
+	"block.betterend.bulb_lantern_light_blue": "Голубой луковичный фонарь",
+	"block.betterend.bulb_lantern_light_gray": "Светло-серый луковичный фонарь",
+	"block.betterend.bulb_lantern_lime": "Лаймовый луковичный фонарь",
+	"block.betterend.bulb_lantern_magenta": "Фиолетовый луковичный фонарь",
+	"block.betterend.bulb_lantern_orange": "Оранжевый луковичный фонарь",
+	"block.betterend.bulb_lantern_pink": "Розовый луковичный фонарь",
+	"block.betterend.bulb_lantern_purple": "Пурпурный луковичный фонарь",
+	"block.betterend.bulb_lantern_red": "Красный луковичный фонарь",
+	"block.betterend.bulb_lantern_white": "Белый луковичный фонарь",
+	"block.betterend.bulb_lantern_yellow": "Жёлтый луковичный фонарь"
 }

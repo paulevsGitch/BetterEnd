@@ -18,6 +18,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
+import ru.betterend.blocks.basis.BlockFur;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -54,7 +55,7 @@ public class TenaneaFeature extends DefaultFeature {
 			SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
 			SplineHelper.fillSpline(spline, world, EndBlocks.TENANEA.bark.getDefaultState(), pos, REPLACE);
 			Vector3f last = spline.get(spline.size() - 1);
-			float leavesRadius = (size * 0.3F + MHelper.randRange(0.8F, 1.5F, random));
+			float leavesRadius = (size * 0.3F + MHelper.randRange(0.8F, 1.5F, random)) * 1.4F;
 			OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 			leavesBall(world, pos.add(last.getX(), last.getY(), last.getZ()), leavesRadius, random, noise);
 		}
@@ -67,14 +68,30 @@ public class TenaneaFeature extends DefaultFeature {
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
-		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 1F; }).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
+		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 2F; }).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return MHelper.randRange(-1.5F, 1.5F, random); }).setSource(sphere);
+		
 		Mutable mut = new Mutable();
+		for (Direction d1: BlocksHelper.HORIZONTAL) {
+			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).toImmutable();
+			BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TENANEA.bark.getDefaultState());
+			for (Direction d2: BlocksHelper.HORIZONTAL) {
+				mut.set(p).move(Direction.UP).move(d2);
+				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TENANEA.bark.getDefaultState());
+			}
+		}
+		
+		BlockState outer = EndBlocks.TENANEA_OUTER_LEAVES.getDefaultState();
 		List<BlockPos> support = Lists.newArrayList();
 		sphere.setPostProcess((info) -> {
-			if (random.nextBoolean() && info.getStateDown().isAir()) {
-				support.add(info.getPos().toImmutable());
+			if (info.getStateDown().isAir()) {
+				if (random.nextBoolean()) {
+					support.add(info.getPos().toImmutable());
+				}
+				else {
+					info.setState(info.getPos().down(), outer.with(BlockFur.FACING, Direction.DOWN));
+				}
 			}
 			if (random.nextInt(5) == 0) {
 				for (Direction dir: Direction.values()) {
@@ -84,6 +101,16 @@ public class TenaneaFeature extends DefaultFeature {
 					}
 				}
 				info.setState(EndBlocks.TENANEA.bark.getDefaultState());
+			}
+			
+			if (info.getState().isOf(EndBlocks.TENANEA_LEAVES)) {
+				for (Direction d: BlocksHelper.HORIZONTAL) {
+					if (info.getState(d).isAir()) {
+						info.setState(info.getPos().offset(d), outer.with(BlockFur.FACING, Direction.DOWN));
+					}
+				}
+			}
+			else if (EndBlocks.TENANEA.isTreeLog(info.getState())) {
 				for (int x = -6; x < 7; x++) {
 					int ax = Math.abs(x);
 					mut.setX(x + info.getPos().getX());

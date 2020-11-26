@@ -24,6 +24,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
@@ -38,13 +39,24 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable {
+public class BlockFur extends BlockBaseNotFull implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final DirectionProperty FACING = Properties.FACING;
 	private final ItemConvertible drop;
 	private final int dropChance;
 	
-	public BlockGlowingFur(ItemConvertible drop, int dropChance) {
+	public BlockFur(ItemConvertible drop, int light, int dropChance) {
+		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
+				.breakByTool(FabricToolTags.SHEARS)
+				.sounds(BlockSoundGroup.WET_GRASS)
+				.luminance(light)
+				.breakByHand(true)
+				.noCollision());
+		this.drop = drop;
+		this.dropChance = dropChance;
+	}
+	
+	public BlockFur(ItemConvertible drop, int dropChance) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.WET_GRASS)
@@ -86,7 +98,7 @@ public class BlockGlowingFur extends BlockBaseNotFull implements IRenderTypeable
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		Direction direction = (Direction) state.get(FACING);
 		BlockPos blockPos = pos.offset(direction.getOpposite());
-		return sideCoversSmallSquare(world, blockPos, direction);
+		return sideCoversSmallSquare(world, blockPos, direction) || world.getBlockState(pos).isIn(BlockTags.LEAVES);
 	}
 
 	@Override

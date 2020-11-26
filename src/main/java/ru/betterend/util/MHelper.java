@@ -113,6 +113,12 @@ public class MHelper {
 		return x1 * x2 + y1 * y2;
 	}
 	
+	public static int getRandom(int x, int z) {
+		int h = x * 374761393 + z * 668265263;
+		h = (h ^ (h >> 13)) * 1274126177;
+		return h ^ (h >> 16);
+	}
+	
 	public static int getSeed(int seed, int x, int y) {
 		int h = seed + x * 374761393 + y * 668265263;
 		h = (h ^ (h >> 13)) * 1274126177;

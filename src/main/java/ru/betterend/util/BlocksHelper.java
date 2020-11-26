@@ -23,7 +23,7 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.basis.BlockDoublePlant;
-import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockFur;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -153,7 +153,7 @@ public class BlocksHelper {
 					POS.setY(y);
 					state = world.getBlockState(POS);
 					
-					if (state.getBlock() instanceof BlockGlowingFur) {
+					if (state.getBlock() instanceof BlockFur) {
 						doubleCheck.add(POS.toImmutable());
 					}
 					// Liquids

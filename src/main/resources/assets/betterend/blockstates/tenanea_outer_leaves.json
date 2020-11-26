@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=up":    { "model": "betterend:block/tenanea_outer_leaves" },
+        "facing=down":  { "model": "betterend:block/tenanea_outer_leaves", "x": 180 },
+        "facing=north": { "model": "betterend:block/tenanea_outer_leaves", "x": 90 },
+        "facing=south": { "model": "betterend:block/tenanea_outer_leaves", "x": 90, "y": 180 },
+        "facing=east":  { "model": "betterend:block/tenanea_outer_leaves", "x": 90, "y": 90 },
+        "facing=west":  { "model": "betterend:block/tenanea_outer_leaves", "x": 90, "y": 270 }
+    }
+}

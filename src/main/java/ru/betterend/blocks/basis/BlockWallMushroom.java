@@ -11,6 +11,9 @@ import net.minecraft.block.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.WorldView;
 
 public class BlockWallMushroom extends BlockWallPlant {
 	public BlockWallMushroom(int light) {
@@ -27,5 +30,10 @@ public class BlockWallMushroom extends BlockWallPlant {
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		return Lists.newArrayList(new ItemStack(this));
+	}
+	
+	@Override
+	public boolean isSupport(WorldView world, BlockPos pos, BlockState blockState, Direction direction) {
+		return blockState.getMaterial().isSolid() && blockState.isSideSolidFullSquare(world, pos, direction);
 	}
 }

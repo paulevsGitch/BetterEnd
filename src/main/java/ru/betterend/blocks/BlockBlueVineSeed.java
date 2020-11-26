@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockFur;
 import ru.betterend.blocks.basis.BlockPlantWithAge;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
@@ -34,11 +34,11 @@ public class BlockBlueVineSeed extends BlockPlantWithAge {
 		for (Direction dir: BlocksHelper.HORIZONTAL) {
 			BlockPos p = pos.offset(dir);
 			if (world.isAir(p)) {
-				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.BLUE_VINE_FUR.getDefaultState().with(BlockGlowingFur.FACING, dir));
+				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.BLUE_VINE_FUR.getDefaultState().with(BlockFur.FACING, dir));
 			}
 		}
 		if (world.isAir(pos.up())) {
-			BlocksHelper.setWithoutUpdate(world, pos.up(), EndBlocks.BLUE_VINE_FUR.getDefaultState().with(BlockGlowingFur.FACING, Direction.UP));
+			BlocksHelper.setWithoutUpdate(world, pos.up(), EndBlocks.BLUE_VINE_FUR.getDefaultState().with(BlockFur.FACING, Direction.UP));
 		}
 	}
 	

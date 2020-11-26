@@ -35,6 +35,7 @@ import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockPythadendronSapling;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
+import ru.betterend.blocks.BlockTenaneaFlowers;
 import ru.betterend.blocks.BlockTenaneaSapling;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockTerrainPlant;
@@ -49,7 +50,7 @@ import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.PedestalVanilla;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.TerminiteBlock;
-import ru.betterend.blocks.basis.BlockGlowingFur;
+import ru.betterend.blocks.basis.BlockFur;
 import ru.betterend.blocks.basis.BlockLeaves;
 import ru.betterend.blocks.basis.BlockOre;
 import ru.betterend.blocks.basis.BlockSimpleLeaves;
@@ -95,11 +96,11 @@ public class EndBlocks {
 	public static final Block QUARTZ_PEDESTAL = registerBlock("quartz_pedestal", new PedestalVanilla(Blocks.QUARTZ_BLOCK));
 	public static final Block PURPUR_PEDESTAL = registerBlock("purpur_pedestal", new PedestalVanilla(Blocks.PURPUR_BLOCK));
 	
-	// Wooden Materials //
+	// Wooden Materials And Trees //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());
 	public static final Block MOSSY_GLOWSHROOM_CAP = registerBlock("mossy_glowshroom_cap", new BlockMossyGlowshroomCap());
 	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new BlockMossyGlowshroomHymenophore());
-	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new BlockGlowingFur(MOSSY_GLOWSHROOM_SAPLING, 16));
+	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new BlockFur(MOSSY_GLOWSHROOM_SAPLING, 15, 16));
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	
 	public static final Block PYTHADENDRON_SAPLING = registerBlock("pythadendron_sapling", new BlockPythadendronSapling());
@@ -122,7 +123,8 @@ public class EndBlocks {
 	
 	public static final Block TENANEA_SAPLING = registerBlock("tenanea_sapling", new BlockTenaneaSapling());
 	public static final Block TENANEA_LEAVES = registerBlock("tenanea_leaves", new BlockLeaves(TENANEA_SAPLING, MaterialColor.PINK));
-	public static final Block TENANEA_FLOWERS = registerBlock("tenanea_flowers", new BlockVine(15));
+	public static final Block TENANEA_FLOWERS = registerBlock("tenanea_flowers", new BlockTenaneaFlowers());
+	public static final Block TENANEA_OUTER_LEAVES = registerBlock("tenanea_outer_leaves", new BlockFur(TENANEA_SAPLING, 32));
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.PINK, MaterialColor.PINK);
 	
 	// Small Plants //
@@ -137,7 +139,7 @@ public class EndBlocks {
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlockBlueVineSeed());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());
 	public static final Block BLUE_VINE_LANTERN = registerBlock("blue_vine_lantern", new BlockBlueVineLantern());
-	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new BlockGlowingFur(BLUE_VINE_SEED, 3));
+	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new BlockFur(BLUE_VINE_SEED, 15, 3));
 	
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockBubbleCoral());
 	public static final Block END_LILY = registerBlockNI("end_lily", new BlockEndLily());

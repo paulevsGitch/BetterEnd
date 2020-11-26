@@ -122,6 +122,7 @@ public class EndBlocks {
 	
 	public static final Block TENANEA_SAPLING = registerBlock("tenanea_sapling", new BlockTenaneaSapling());
 	public static final Block TENANEA_LEAVES = registerBlock("tenanea_leaves", new BlockLeaves(TENANEA_SAPLING, MaterialColor.PINK));
+	public static final Block TENANEA_FLOWERS = registerBlock("tenanea_flowers", new BlockVine(15));
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.PINK, MaterialColor.PINK);
 	
 	// Small Plants //

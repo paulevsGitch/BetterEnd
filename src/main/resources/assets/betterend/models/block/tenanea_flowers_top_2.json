@@ -1,10 +1,4 @@
 {
-	"parent": "betterend:block/cross_no_distortion_inverted_tinted",
-	"textures": {
-		"texture": "betterend:block/tenanea_flowers_top"
-	}
-}
-{
 	"textures": {
 		"texture": "betterend:block/tenanea_flowers_top",
 		"stem": "betterend:block/tenanea_flowers_top_stem",

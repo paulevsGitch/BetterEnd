@@ -90,7 +90,7 @@ public class TenaneaFeature extends DefaultFeature {
 		
 		List<BlockPos> support = Lists.newArrayList();
 		sphere.setPostProcess((info) -> {
-			if (random.nextBoolean() && info.getStateDown().isAir()) {
+			if (random.nextInt(6) == 0 && info.getStateDown().isAir()) {
 				BlockPos d = info.getPos().down();
 				support.add(d);
 			}
@@ -141,20 +141,23 @@ public class TenaneaFeature extends DefaultFeature {
 		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.TENANEA.bark);
 		
 		support.forEach((bpos) -> {
-			int count = MHelper.randRange(3, 8, random);
-			mut.set(bpos);
-			if (world.isAir(mut) && world.getBlockState(mut.up()).isOf(EndBlocks.TENANEA_LEAVES)) {
-				BlocksHelper.setWithoutUpdate(world, mut, top);
-				for (int i = 1; i < count; i++) {
-					mut.setY(mut.getY() - 1);
-					if (world.isAir(mut.down())) {
-						BlocksHelper.setWithoutUpdate(world, mut, middle);
+			BlockState state = world.getBlockState(bpos);
+			if (state.isAir() || state.isOf(EndBlocks.TENANEA_OUTER_LEAVES)) {
+				int count = MHelper.randRange(3, 8, random);
+				mut.set(bpos);
+				if (world.getBlockState(mut.up()).isOf(EndBlocks.TENANEA_LEAVES)) {
+					BlocksHelper.setWithoutUpdate(world, mut, top);
+					for (int i = 1; i < count; i++) {
+						mut.setY(mut.getY() - 1);
+						if (world.isAir(mut.down())) {
+							BlocksHelper.setWithoutUpdate(world, mut, middle);
+						}
+						else {
+							break;
+						}
 					}
-					else {
-						break;
-					}
+					BlocksHelper.setWithoutUpdate(world, mut, bottom);
 				}
-				BlocksHelper.setWithoutUpdate(world, mut, bottom);
 			}
 		});
 	}

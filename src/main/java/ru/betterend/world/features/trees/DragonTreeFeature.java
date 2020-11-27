@@ -159,15 +159,6 @@ public class DragonTreeFeature extends DefaultFeature {
 			return info.getState();
 		});
 		sphere.fillRecursiveIgnore(world, pos, IGNORE);
-		/*Collection<PosInfo> list = sphere.fillRecursiveIgnore(world, pos, IGNORE);
-		list.forEach((info) -> {
-			if (info.getState().getBlock() instanceof LeavesBlock && info.getState().get(LeavesBlock.DISTANCE) == 6) {
-				BlockState state = BlocksHelper.getLeavesState(info.getState(), world, info.getPos());
-				if (!state.equals(info.getState())) {
-					BlocksHelper.setWithoutUpdate(world, info.getPos(), state);
-				}
-			}
-		});*/
 		
 		
 		if (radius > 5) {

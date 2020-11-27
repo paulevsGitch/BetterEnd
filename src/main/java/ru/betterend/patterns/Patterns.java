@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.Maps;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -101,24 +103,16 @@ public class Patterns {
 	public static String createJson(Identifier patternId, String parent, String block) {
 		ResourceManager resourceManager = MinecraftClient.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
-			return new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))
-					.lines().collect(Collectors.joining())
-						.replace("%parent%", parent)
-						.replace("%block%", block);
+			return createJson(new InputStreamReader(input, StandardCharsets.UTF_8), parent, block);
 		} catch (Exception ex) {
 			return null;
 		}
 	}
 
 	public static String createJson(Identifier patternId, String texture) {
-		ResourceManager resourceManager = MinecraftClient.getInstance().getResourceManager();
-		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
-			return new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))
-					.lines().collect(Collectors.joining())
-					.replace("%texture%", texture);
-		} catch (Exception ex) {
-			return null;
-		}
+		Map<String, String> textures = Maps.newHashMap();
+		textures.put("%texture%", texture);
+		return createJson(patternId, textures);
 	}
 
 	public static String createJson(Identifier patternId, Map<String, String> textures) {

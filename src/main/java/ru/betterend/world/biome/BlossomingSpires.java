@@ -17,6 +17,7 @@ public class BlossomingSpires extends EndBiome {
 				.addFeature(EndFeatures.TENANEA_BUSH)
 				.addFeature(EndFeatures.BULB_VINE)
 				.addFeature(EndFeatures.BUSHY_GRASS)
+				.addFeature(EndFeatures.BUSHY_GRASS_WG)
 				.addFeature(EndFeatures.TWISTED_MOSS)
 				.addFeature(EndFeatures.TWISTED_MOSS_WOOD)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));

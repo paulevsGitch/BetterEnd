@@ -1,4 +1,4 @@
-package ru.betterend.blocks;
+package ru.betterend.blocks.basis;
 
 import java.io.Reader;
 
@@ -44,11 +44,17 @@ public class BlockBulbVineLanternColored extends BlockBulbVineLantern implements
 	
 	@Override
 	public String getModelPattern(String block) {
-		return Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_COLORED, "", "");
+		String path = "betterend:block/bulb_lantern_colored";
+		if (block.contains("item") || block.contains("ceil")) {
+			return Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_COLORED_CEIL, path, path);
+		}
+		else {
+			return Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_COLORED_FLOOR, path, path);
+		}
 	}
 	
 	@Override
 	public Identifier statePatternId() {
-		return Patterns.STATE_DIRECT;
+		return Patterns.STATE_BULB_LANTERN;
 	}
 }

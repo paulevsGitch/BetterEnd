@@ -143,7 +143,7 @@ public class TenaneaFeature extends DefaultFeature {
 		support.forEach((bpos) -> {
 			int count = MHelper.randRange(3, 8, random);
 			mut.set(bpos);
-			if (world.getBlockState(mut.up()).isOf(EndBlocks.TENANEA_LEAVES)) {
+			if (world.isAir(mut) && world.getBlockState(mut.up()).isOf(EndBlocks.TENANEA_LEAVES)) {
 				BlocksHelper.setWithoutUpdate(world, mut, top);
 				for (int i = 1; i < count; i++) {
 					mut.setY(mut.getY() - 1);

@@ -16,7 +16,7 @@ public class BiomeDustWastelands extends EndBiome {
 				.setSurface(EndBlocks.ENDSTONE_DUST)
 				.setParticles(ParticleTypes.WHITE_ASH, 0.01F)
 				.setLoop(EndSounds.AMBIENT_DUST_WASTELANDS)
-				.setMusic(EndSounds.DUST_WASTELANDS)
+				.setMusic(EndSounds.MUSIC_DUST_WASTELANDS)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}

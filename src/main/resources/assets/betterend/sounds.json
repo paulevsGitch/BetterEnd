@@ -89,6 +89,21 @@
 			}
 		]
 	},
+	"betterend.music.blossoming_spires": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/benjamin_martins-verve",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/the_tides-somnolent",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",
@@ -131,6 +146,15 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/megalake_grove",
+				"stream": false
+			}
+		]
+	},
+	"betterend.ambient.blossoming_spires": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/blossoming_spires",
 				"stream": false
 			}
 		]

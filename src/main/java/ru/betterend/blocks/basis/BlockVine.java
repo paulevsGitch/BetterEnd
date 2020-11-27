@@ -120,7 +120,10 @@ public class BlockVine extends BlockBaseNotFull implements IRenderTypeable, Fert
 
 	@Override
 	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
-		return true;
+		while (world.getBlockState(pos).getBlock() == this) {
+			pos = pos.down();
+		}
+		return world.getBlockState(pos).isAir();
 	}
 
 	@Override

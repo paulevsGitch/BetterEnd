@@ -7,6 +7,8 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.registry.EndBlocks;
@@ -29,5 +31,10 @@ public class BlockBulbVine extends BlockVine {
 		else {
 			return Lists.newArrayList();
 		}
+	}
+	
+	@Override
+	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
+		return false;
 	}
 }

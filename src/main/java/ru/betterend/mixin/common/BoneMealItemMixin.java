@@ -97,6 +97,9 @@ public class BoneMealItemMixin {
 		else if (block == EndBlocks.SHADOW_GRASS) {
 			return EndBlocks.SHADOW_PLANT.getDefaultState();
 		}
+		else if (block == EndBlocks.PINK_MOSS) {
+			return EndBlocks.BUSHY_GRASS.getDefaultState();
+		}
 		return null;
 	}
 

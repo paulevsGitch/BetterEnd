@@ -11,29 +11,22 @@ import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
 public class BlockBulbVineLanternColored extends BlockBulbVineLantern implements IColorProvider, BlockPatterned {
-	private final BlockColorProvider blockProvider;
-	private final ItemColorProvider itemProvider;
-	
 	public BlockBulbVineLanternColored(FabricBlockSettings settings) {
 		super(settings);
-		
-		blockProvider = (state, world, pos, tintIndex) -> {
-			return this.getDefaultMaterialColor().color;
-		};
-		
-		itemProvider = (stack, tintIndex) -> {
-			return this.getDefaultMaterialColor().color;
-		};
 	}
 
 	@Override
 	public BlockColorProvider getProvider() {
-		return blockProvider;
+		return (state, world, pos, tintIndex) -> {
+			return this.getDefaultMaterialColor().color;
+		};
 	}
 
 	@Override
 	public ItemColorProvider getItemProvider() {
-		return itemProvider;
+		return (stack, tintIndex) -> {
+			return this.getDefaultMaterialColor().color;
+		};
 	}
 	
 	@Override

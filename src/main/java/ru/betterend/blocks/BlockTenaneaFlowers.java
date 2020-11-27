@@ -12,8 +12,6 @@ import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.util.MHelper;
 
 public class BlockTenaneaFlowers extends BlockVine implements IColorProvider {
-	private static final BlockColorProvider BLOCK_PROVIDER;
-	private static final ItemColorProvider ITEM_PROVIDER;
 	public static final Vec3i[] COLORS;
 	
 	public BlockTenaneaFlowers() {
@@ -22,28 +20,7 @@ public class BlockTenaneaFlowers extends BlockVine implements IColorProvider {
 
 	@Override
 	public BlockColorProvider getProvider() {
-		return BLOCK_PROVIDER;
-	}
-
-	@Override
-	public ItemColorProvider getItemProvider() {
-		return ITEM_PROVIDER;
-	}
-	
-	@Override
-	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
-		return false;
-	}
-	
-	static {
-		COLORS = new Vec3i[] {
-			new Vec3i(250, 111, 222),
-			new Vec3i(167, 89, 255),
-			new Vec3i(120, 207, 239),
-			new Vec3i(255, 87, 182)
-		};
-		
-		BLOCK_PROVIDER = (state, world, pos, tintIndex) -> {
+		return (state, world, pos, tintIndex) -> {
 			long i = (MHelper.getRandom(pos.getX(), pos.getZ()) & 63) + pos.getY();
 			double delta = i * 0.1;
 			int index = MHelper.floor(delta);
@@ -61,9 +38,26 @@ public class BlockTenaneaFlowers extends BlockVine implements IColorProvider {
 			
 			return MHelper.fromHSBtoRGB(hsb[0], MHelper.max(0.5F, hsb[1]), hsb[2]);
 		};
-		
-		ITEM_PROVIDER = (stack, tintIndex) -> {
+	}
+
+	@Override
+	public ItemColorProvider getItemProvider() {
+		return (stack, tintIndex) -> {
 			return MHelper.color(COLORS[0].getX(), COLORS[0].getY(), COLORS[0].getZ());
+		};
+	}
+	
+	@Override
+	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
+		return false;
+	}
+	
+	static {
+		COLORS = new Vec3i[] {
+			new Vec3i(250, 111, 222),
+			new Vec3i(167, 89, 255),
+			new Vec3i(120, 207, 239),
+			new Vec3i(255, 87, 182)
 		};
 	}
 }

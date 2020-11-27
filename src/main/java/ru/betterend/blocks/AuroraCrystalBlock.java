@@ -29,8 +29,6 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 	public static final Vec3i[] COLORS;
 	private static final int MIN_DROP = 1;
 	private static final int MAX_DROP = 4;
-	private static final BlockColorProvider BLOCK_PROVIDER;
-	private static final ItemColorProvider ITEM_PROVIDER;
 	
 	public AuroraCrystalBlock() {
 		super(FabricBlockSettings.of(Material.GLASS)
@@ -45,12 +43,30 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 
 	@Override
 	public BlockColorProvider getProvider() {
-		return BLOCK_PROVIDER;
+		return (state, world, pos, tintIndex) -> {
+			long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
+			double delta = i * 0.1;
+			int index = MHelper.floor(delta);
+			int index2 = (index + 1) & 3;
+			delta -= index;
+			index &= 3;
+			
+			Vec3i color1 = COLORS[index];
+			Vec3i color2 = COLORS[index2];
+			
+			int r = MHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
+			int g = MHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
+			int b = MHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
+			
+			return MHelper.color(r, g, b);
+		};
 	}
 
 	@Override
 	public ItemColorProvider getItemProvider() {
-		return ITEM_PROVIDER;
+		return (stack, tintIndex) -> {
+			return MHelper.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
+		};
 	}
 
 	@Override
@@ -89,28 +105,6 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 			new Vec3i(120, 184, 255),
 			new Vec3i(120, 255, 168),
 			new Vec3i(243,  58, 255)
-		};
-		
-		BLOCK_PROVIDER = (state, world, pos, tintIndex) -> {
-			long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
-			double delta = i * 0.1;
-			int index = MHelper.floor(delta);
-			int index2 = (index + 1) & 3;
-			delta -= index;
-			index &= 3;
-			
-			Vec3i color1 = COLORS[index];
-			Vec3i color2 = COLORS[index2];
-			
-			int r = MHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
-			int g = MHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
-			int b = MHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
-			
-			return MHelper.color(r, g, b);
-		};
-		
-		ITEM_PROVIDER = (stack, tintIndex) -> {
-			return MHelper.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
 		};
 	}
 }

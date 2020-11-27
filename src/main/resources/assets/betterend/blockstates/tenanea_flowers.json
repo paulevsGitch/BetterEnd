@@ -1,16 +1,7 @@
 {
 	"variants": {
-		"shape=top": [
-			{ "model": "betterend:block/tenanea_flowers_top_1" },
-			{ "model": "betterend:block/tenanea_flowers_top_2" }
-		],
-		"shape=middle": [
-			{ "model": "betterend:block/tenanea_flowers_middle_1" },
-			{ "model": "betterend:block/tenanea_flowers_middle_2" }
-		],
-		"shape=bottom": [
-			{ "model": "betterend:block/tenanea_flowers_bottom_1" },
-			{ "model": "betterend:block/tenanea_flowers_bottom_2" }
-		]
+		"shape=top": { "model": "betterend:block/tenanea_flowers_middle" },
+		"shape=middle": { "model": "betterend:block/tenanea_flowers_middle" },
+		"shape=bottom": { "model": "betterend:block/tenanea_flowers_bottom" }
 	}
 }

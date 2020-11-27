@@ -1,8 +1,8 @@
 {
 	"textures": {
-		"texture": "betterend:block/tenanea_flowers_top",
-		"stem": "betterend:block/tenanea_flowers_top_stem",
-		"particle": "#texture"
+		"flowers": "betterend:block/tenanea_flowers",
+		"vine": "betterend:block/tenanea_flowers_stem",
+		"particle": "#flowers"
 	},
 	"elements": [ 	 
 		{
@@ -12,8 +12,8 @@
 			"rotation": { "origin": [ 2.375, 0, 2.25 ], "axis": "y", "angle": 45 },
 			"shade": false,
 			"faces": {
-				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "tintindex": 0 },
-				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "tintindex": 0 }
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#flowers", "tintindex": 0 },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#flowers", "tintindex": 0 }
 			}
 		},
 		{
@@ -23,8 +23,8 @@
 			"rotation": { "origin": [ 13.75, 0, 2.25 ], "axis": "y", "angle": -45 },
 			"shade": false,
 			"faces": {
-				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "tintindex": 0 },
-				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture", "tintindex": 0 }
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#flowers", "tintindex": 0 },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#flowers", "tintindex": 0 }
 			}
 		},
 		{
@@ -34,8 +34,8 @@
 			"rotation": { "origin": [ 2.375, 0, 2.25 ], "axis": "y", "angle": 45 },
 			"shade": false,
 			"faces": {
-				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#stem" },
-				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#stem" }
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine" }
 			}
 		},
 		{
@@ -45,8 +45,8 @@
 			"rotation": { "origin": [ 13.75, 0, 2.25 ], "axis": "y", "angle": -45 },
 			"shade": false,
 			"faces": {
-				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#stem" },
-				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#stem" }
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine" }
 			}
 		}
 	]

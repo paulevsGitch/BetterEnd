@@ -1,6 +1,0 @@
-{
-	"parent": "betterend:block/cross_no_distortion_inverted_tinted",
-	"textures": {
-		"texture": "betterend:block/tenanea_flowers"
-	}
-}

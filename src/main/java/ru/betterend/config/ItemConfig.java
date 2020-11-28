@@ -21,12 +21,6 @@ public class ItemConfig extends Config {
 		}
 	}
 	
-	private ConfigKey createKey(Identifier item, String category) {
-		Identifier groupId = new Identifier(group, item.getNamespace());
-		Identifier categoryId = new Identifier(category, item.getPath());
-		return new ConfigKey(groupId, categoryId);
-	}
-	
 	@Override
 	protected void registerEntries() {}
 	
@@ -34,6 +28,12 @@ public class ItemConfig extends Config {
 	public void saveChanges() {
 		this.configKeeper.toJson(settings);
 		this.writer.save();
+	}
+	
+	private ConfigKey createKey(Identifier item, String category) {
+		Identifier groupId = new Identifier(group, item.getNamespace());
+		Identifier categoryId = new Identifier(category, item.getPath());
+		return new ConfigKey(groupId, categoryId);
 	}
 	
 	@Nullable

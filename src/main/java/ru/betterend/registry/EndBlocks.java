@@ -65,11 +65,12 @@ import ru.betterend.blocks.basis.BlockWallPlant;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
+import ru.betterend.config.ItemConfig;
 import ru.betterend.config.MainConfig;
 import ru.betterend.tab.CreativeTab;
 
 public class EndBlocks {
-	private static final MainConfig CONFIG = MainConfig.getInstance();
+	private static final ItemConfig CONFIG = MainConfig.ITEM_CONFIG;
 	
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new BlockEndstoneDust());
@@ -207,7 +208,7 @@ public class EndBlocks {
 	public static void register() {}
 	
 	public static Block registerBlock(Identifier id, Block block) {
-		if (!CONFIG.getBoolean("blocks", id.getPath(), true)) {
+		if (!CONFIG.getBoolean(id, "blocks", true)) {
 			return block;
 		}
 		Registry.register(Registry.BLOCK, id, block);

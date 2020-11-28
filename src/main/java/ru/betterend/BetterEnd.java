@@ -1,9 +1,10 @@
 package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
+
 import net.minecraft.util.Identifier;
+
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.MainConfig;
 import ru.betterend.effects.EndEnchantments;
@@ -28,8 +29,6 @@ import ru.betterend.world.generator.BetterEndBiomeSource;
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
 	public static final Logger LOGGER = Logger.get();
-	public static final MainConfig CONFIG = MainConfig.getInstance();
-	
 	@Override
 	public void onInitialize() {
 		EndSounds.register();
@@ -51,9 +50,7 @@ public class BetterEnd implements ModInitializer {
 		EndStructures.register();
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
-		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
-			CONFIG.saveChanges();
-		});
+		MainConfig.saveConfig();
 	}
 	
 	public static Identifier makeID(String path) {

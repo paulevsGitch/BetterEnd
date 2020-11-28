@@ -1,37 +1,28 @@
 package ru.betterend.config;
 
-public class MainConfig extends Config {
+public class MainConfig {
+	public static final ItemConfig ITEM_CONFIG = getItemConfig();
+	public static final BiomeConfig BIOME_CONFIG = getBiomeConfig();
 	
-	private static MainConfig instance;
+	private static ItemConfig itemConfig;
+	private static BiomeConfig biomeConfig;
 	
-	public static MainConfig getInstance() {
-		if (instance == null) {
-			instance = new MainConfig();
+	public static ItemConfig getItemConfig() {
+		if (itemConfig == null) {
+			itemConfig = new ItemConfig();
 		}
-		
-		return instance;
+		return itemConfig;
 	}
 	
-	private final ConfigWriter writer;
-	
-	private MainConfig() {
-		this.writer = new ConfigWriter("settings");
-		this.settings = this.writer.load();
-		this.registerEntries();
-		if (settings.size() > 0) {
-			this.configKeeper.fromJson(settings);
-		} else {
-			this.configKeeper.toJson(settings);
-			this.writer.save();
+	public static BiomeConfig getBiomeConfig() {
+		if (biomeConfig == null) {
+			biomeConfig = new BiomeConfig();
 		}
+		return biomeConfig;
 	}
 	
-	@Override
-	protected void registerEntries() {}
-	
-	@Override
-	public void saveChanges() {
-		this.configKeeper.toJson(settings);
-		this.writer.save();
+	public static void saveConfig() {
+		itemConfig.saveChanges();
+		biomeConfig.saveChanges();
 	}
 }

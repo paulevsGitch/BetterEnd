@@ -8,74 +8,83 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+
 import ru.betterend.BetterEnd;
 
 public final class ConfigKeeper {
 	
-	private Map<String, Map<String, Entry<?>>> configEntries = Maps.newHashMap();
+	private Map<ConfigKey, Entry<?>> configEntries = Maps.newHashMap();
 	
 	public JsonElement toJson(JsonObject jsonObject) {
-		for (String category : configEntries.keySet()) {
-			Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
-			JsonObject jsonCategory = new JsonObject();
-			entryCategory.forEach((key, param) -> {
-				key += " [default: " + param.getDefault() + "]";
-				jsonCategory.addProperty(key, param.asString());
-			});
-			jsonObject.add(category, jsonCategory);
-		}
+		this.configEntries.forEach((key, entry) -> {
+			Identifier categoryId = key.getCategory();
+			Identifier paramId = key.getParameter();
+			String group = categoryId.getPath();
+			JsonObject jsonGroup;
+			if (jsonObject.has(group)) {
+				jsonGroup = JsonHelper.getObject(jsonObject, group);
+			} else {
+				jsonGroup = new JsonObject();
+				jsonObject.add(group, jsonGroup);
+			}
+			String category = paramId.getNamespace();
+			JsonObject jsonCategory;
+			if (jsonGroup.has(category)) {
+				jsonCategory = JsonHelper.getObject(jsonGroup, category);
+			} else {
+				jsonCategory = new JsonObject();
+				jsonGroup.add(category, jsonCategory);
+			}
+			String paramKey = paramId.getPath();
+			paramKey += " [default: " + entry.getDefault() + "]";
+			jsonCategory.addProperty(paramKey, entry.asString());
+		});
 		
 		return jsonObject;
 	}
 	
 	public void fromJson(JsonObject jsonObject) {
 		if (jsonObject.size() == 0) return;
-		for (String category : configEntries.keySet()) {
-			Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
-			if (!jsonObject.has(category)) continue;
-			JsonObject jsonCategory = jsonObject.getAsJsonObject(category);
-			entryCategory.forEach((key, param) -> {
-				key += " [default: " + param.getDefault() + "]";
-				if (!jsonCategory.has(key)) return;
-				param.fromString(JsonHelper.getString(jsonCategory, key));
-			});
-		}
+		this.configEntries.forEach((key, entry) -> {
+			this.loadFromJson(jsonObject, key, entry);
+		});
+	}
+	
+	public <E extends Entry<?>> void loadFromJson(JsonObject jsonObject, ConfigKey key, E entry) {
+		Identifier categoryId = key.getCategory();
+		Identifier paramId = key.getParameter();
+		String group = categoryId.getPath();
+		if (!jsonObject.has(group)) return;
+		
+		JsonObject jsonGroup = JsonHelper.getObject(jsonObject, group);
+		String category = paramId.getNamespace();
+		if (jsonGroup.has(category)) return;
+		
+		JsonObject jsonCategory = JsonHelper.getObject(jsonGroup, category);
+		String paramKey = paramId.getPath();
+		paramKey += " [default: " + entry.getDefault() + "]";
+		entry.fromString(JsonHelper.getString(jsonCategory, paramKey));
 	}
 	
 	@Nullable
 	@SuppressWarnings("unchecked")
-	public <E extends Entry<?>> E getEntry(String category, String key) {
-		Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
-		if (entryCategory == null) {
-			return null;
-		}
-		return (E) entryCategory.get(key);
+	public <E extends Entry<?>> E getEntry(ConfigKey key) {
+		return (E) this.configEntries.get(key);
 	}
 	
 	@Nullable
-	public <T> T getValue(String category, String key) {
-		Entry<T> entry = this.getEntry(category, key);
+	public <T> T getValue(ConfigKey key) {
+		Entry<T> entry = this.getEntry(key);
 		if (entry == null) {
 			return null;
 		}
 		return entry.getValue();
 	}
-	
-	public void set(String category, String key, Entry<?> entry) {
-		Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
-		if (entryCategory != null) {
-			entryCategory.put(key, entry);
-		}
-	}
-	
-	public <T extends Entry<?>> T registerEntry(String category, String key, T entry) {
-		Map<String, Entry<?>> entryCategory = this.configEntries.get(category);
-		if (entryCategory == null) {
-			entryCategory = Maps.newHashMap();
-			this.configEntries.put(category, entryCategory);
-		}
-		entryCategory.put(key, entry);
+
+	public <T extends Entry<?>> T registerEntry(ConfigKey key, T entry) {
+		this.configEntries.put(key, entry);
 		return entry;
 	}
 	

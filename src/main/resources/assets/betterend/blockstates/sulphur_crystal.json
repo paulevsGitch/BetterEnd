@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"age=0,facing=up":    { "model": "betterend:block/sulphur_crystal_0" },
+		"age=0,facing=down":  { "model": "betterend:block/sulphur_crystal_0", "x": 180 },
+		"age=0,facing=north": { "model": "betterend:block/sulphur_crystal_0", "x": 90 },
+		"age=0,facing=south": { "model": "betterend:block/sulphur_crystal_0", "x": 90, "y": 180 },
+		"age=0,facing=east":  { "model": "betterend:block/sulphur_crystal_0", "x": 90, "y": 90 },
+		"age=0,facing=west":  { "model": "betterend:block/sulphur_crystal_0", "x": 90, "y": 270 },
+		"age=1,facing=up":    { "model": "betterend:block/sulphur_crystal_1" },
+		"age=1,facing=down":  { "model": "betterend:block/sulphur_crystal_1", "x": 180 },
+		"age=1,facing=north": { "model": "betterend:block/sulphur_crystal_1", "x": 90 },
+		"age=1,facing=south": { "model": "betterend:block/sulphur_crystal_1", "x": 90, "y": 180 },
+		"age=1,facing=east":  { "model": "betterend:block/sulphur_crystal_1", "x": 90, "y": 90 },
+		"age=1,facing=west":  { "model": "betterend:block/sulphur_crystal_1", "x": 90, "y": 270 },
+		"age=2,facing=up":    { "model": "betterend:block/sulphur_crystal_2" },
+		"age=2,facing=down":  { "model": "betterend:block/sulphur_crystal_2", "x": 180 },
+		"age=2,facing=north": { "model": "betterend:block/sulphur_crystal_2", "x": 90 },
+		"age=2,facing=south": { "model": "betterend:block/sulphur_crystal_2", "x": 90, "y": 180 },
+		"age=2,facing=east":  { "model": "betterend:block/sulphur_crystal_2", "x": 90, "y": 90 },
+		"age=2,facing=west":  { "model": "betterend:block/sulphur_crystal_2", "x": 90, "y": 270 }
+	}
+}

@@ -293,4 +293,8 @@ public class BlocksHelper {
 	public static Direction randomHorizontal(Random random) {
 		return HORIZONTAL[random.nextInt(4)];
 	}
+	
+	public static Direction randomDirection(Random random) {
+		return DIRECTIONS[random.nextInt(6)];
+	}
 }

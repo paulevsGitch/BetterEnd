@@ -14,6 +14,7 @@ import ru.betterend.blocks.BlockAmber;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
+import ru.betterend.blocks.BlockBrimstone;
 import ru.betterend.blocks.BlockBubbleCoral;
 import ru.betterend.blocks.BlockBulbVine;
 import ru.betterend.blocks.BlockBulbVineSeed;
@@ -37,6 +38,7 @@ import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockPythadendronSapling;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
+import ru.betterend.blocks.BlockSulphurCrystal;
 import ru.betterend.blocks.BlockTenaneaFlowers;
 import ru.betterend.blocks.BlockTenaneaSapling;
 import ru.betterend.blocks.BlockTerrain;
@@ -96,8 +98,13 @@ public class EndBlocks {
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
 	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
+	public static final StoneMaterial SULFURIC_ROCK = new StoneMaterial("sulfuric_rock", MaterialColor.BROWN);
+	public static final Block BRIMSTONE = registerBlock("brimstone", new BlockBrimstone());
+	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new BlockSulphurCrystal());
+	
 	public static final Block FLAVOLITE_RUNED = registerBlock("flavolite_runed", new RunedFlavolite());
 	public static final Block FLAVOLITE_RUNED_ETERNAL = registerBlock("flavolite_runed_eternal", new EternalRunedFlavolite());
+	
 	public static final Block ANDESITE_PEDESTAL = registerBlock("andesite_pedestal", new PedestalVanilla(Blocks.ANDESITE));
 	public static final Block DIORITE_PEDESTAL = registerBlock("diorite_pedestal", new PedestalVanilla(Blocks.DIORITE));
 	public static final Block GRANITE_PEDESTAL = registerBlock("granite_pedestal", new PedestalVanilla(Blocks.GRANITE));

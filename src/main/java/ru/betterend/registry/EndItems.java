@@ -59,6 +59,7 @@ public class EndItems {
 	public final static Item RAW_AMBER = registerItem("raw_amber");
 	public final static Item AMBER_GEM = registerItem("amber_gem");
 	public final static Item GLOWING_BULB = registerItem("glowing_bulb");
+	public final static Item CRYSTALLINE_SULFUR = registerItem("crystalline_sulfur");
 	
 	// Armor //
 	public static final Item TERMINITE_HELMET = registerItem("terminite_helmet", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.HEAD, makeSettings()));

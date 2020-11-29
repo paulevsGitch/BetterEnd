@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"active=true":  { "model": "betterend:block/brimstone_active" },
+		"active=false": { "model": "betterend:block/brimstone_normal" }
+	}
+}

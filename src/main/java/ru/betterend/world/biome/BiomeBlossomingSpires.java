@@ -5,8 +5,8 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
-public class BlossomingSpires extends EndBiome {
-	public BlossomingSpires() {
+public class BiomeBlossomingSpires extends EndBiome {
+	public BiomeBlossomingSpires() {
 		super(new BiomeDefinition("blossoming_spires")
 				.setFogColor(241, 146, 229)
 				.setFogDensity(1.7F)

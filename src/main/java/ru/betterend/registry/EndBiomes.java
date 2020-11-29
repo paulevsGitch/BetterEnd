@@ -34,8 +34,9 @@ import ru.betterend.world.biome.BiomeMegalake;
 import ru.betterend.world.biome.BiomeMegalakeGrove;
 import ru.betterend.world.biome.BiomePaintedMountains;
 import ru.betterend.world.biome.BiomeShadowForest;
-import ru.betterend.world.biome.BlossomingSpires;
+import ru.betterend.world.biome.BiomeBlossomingSpires;
 import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.BiomeSulfurSprings;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
 
@@ -71,7 +72,8 @@ public class EndBiomes {
 	public static final EndBiome PAINTED_MOUNTAINS = registerSubBiome(new BiomePaintedMountains(), DUST_WASTELANDS);
 	public static final EndBiome SHADOW_FOREST = registerBiome(new BiomeShadowForest(), BiomeType.LAND);
 	public static final EndBiome AMBER_LAND = registerBiome(new BiomeAmberLand(), BiomeType.LAND);
-	public static final EndBiome BLOSSOMING_SPIRES = registerBiome(new BlossomingSpires(), BiomeType.LAND);
+	public static final EndBiome BLOSSOMING_SPIRES = registerBiome(new BiomeBlossomingSpires(), BiomeType.LAND);
+	public static final EndBiome SULFUR_SPRINGS = registerBiome(new BiomeSulfurSprings(), BiomeType.LAND);
 	
 	public static void register() {}
 	

@@ -39,6 +39,7 @@ public class BlocksHelper {
 
 	public static final int SET_SILENT = FLAG_UPDATE_BLOCK | FLAG_IGNORE_OBSERVERS | FLAG_SEND_CLIENT_CHANGES;
 	public static final Direction[] HORIZONTAL = makeHorizontal();
+	public static final Direction[] DIRECTIONS = Direction.values();
 	
 	private static final Mutable POS = new Mutable();
 	protected static final BlockState AIR = Blocks.AIR.getDefaultState();

@@ -42,6 +42,8 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 	
 	protected abstract TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random);
 	
+	protected abstract void addStructureData(StructurePlacementData data);
+	
 	protected BlockPos getGround(StructureWorldAccess world, BlockPos center) {
 		Biome biome = world.getBiome(center);
 		Identifier id = EndBiomes.getBiomeID(biome);
@@ -91,6 +93,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		
 		BlockBox bounds = makeBox(center);
 		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
+		addStructureData(placementData);
 		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
 		structure.place(world, center, placementData, random);
 		
@@ -158,7 +161,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		return true;
 	}
 	
-	private BlockBox makeBox(BlockPos pos) {
+	protected BlockBox makeBox(BlockPos pos) {
 		int sx = ((pos.getX() >> 4) << 4) - 16;
 		int sz = ((pos.getZ() >> 4) << 4) - 16;
 		int ex = sx + 47;

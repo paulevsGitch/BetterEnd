@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
@@ -50,6 +51,9 @@ public class ListFeature extends NBTStructureFeature {
 	protected TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random) {
 		return selected.terrainMerge;
 	}
+	
+	@Override
+	protected void addStructureData(StructurePlacementData data) {}
 	
 	public static final class StructureInfo {
 		public final TerrainMerge terrainMerge;

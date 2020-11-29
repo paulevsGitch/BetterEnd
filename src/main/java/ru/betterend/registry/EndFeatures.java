@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
+import ru.betterend.world.features.CrashedShipFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLilyFeature;
@@ -98,6 +99,9 @@ public class EndFeatures {
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", EndBlocks.VIOLECITE, 15, 4, 96, 8);
 	public static final EndFeature FLAVOLITE_LAYER = EndFeature.makeLayerFeature("flavolite_layer", EndBlocks.FLAVOLITE, 12, 4, 96, 6);
 	
+	// Buildings
+	public static final EndFeature CRASHED_SHIP = EndFeature.makeChansedFeature("crashed_ship", new CrashedShipFeature(), 500);
+	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals("minecraft")) {
 			String path = id.getPath();
@@ -115,6 +119,7 @@ public class EndFeatures {
 		
 		addFeature(FLAVOLITE_LAYER, features);
 		addFeature(ENDER_ORE, features);
+		addFeature(CRASHED_SHIP, features);
 		
 		if (!id.getPath().equals("blossoming_spires")) {
 			addFeature(ROUND_CAVE_RARE, features);

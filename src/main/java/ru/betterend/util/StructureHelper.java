@@ -3,6 +3,9 @@ package ru.betterend.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -165,7 +168,7 @@ public class StructureHelper {
 					BlockState state = world.getBlockState(mut);
 					if (!ignore(state) && world.isAir(mut.down())) {
 						BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
-						for (int py = mut.getY(); y >= bounds.minY - 10; y--) {
+						for (int py = mut.getY(); py >= bounds.minY - 10; py--) {
 							mut.setY(py - 1);
 							if (!world.isAir(mut)) {
 								mut.setY(py);
@@ -178,7 +181,124 @@ public class StructureHelper {
 			}
 		}
 	}
+
+	public static void erodeIntense(StructureWorldAccess world, BlockBox bounds, Random random) {
+		Mutable mut = new Mutable();
+		Mutable mut2 = new Mutable();
+		int minY = bounds.minY - 10;
+		for (int x = bounds.minX; x <= bounds.maxX; x++) {
+			mut.setX(x);
+			for (int z = bounds.minZ; z <= bounds.maxZ; z++) {
+				mut.setZ(z);
+				for (int y = bounds.maxY; y >= bounds.minY; y--) {
+					mut.setY(y);
+					BlockState state = world.getBlockState(mut);
+					if (!ignore(state)) {
+						if (random.nextInt(6) == 0) {
+							BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
+							if (random.nextBoolean()) {
+								int px = MHelper.floor(random.nextGaussian() * 2 + x + 0.5);
+								int pz = MHelper.floor(random.nextGaussian() * 2 + z + 0.5);
+								mut2.set(px, y, pz);
+								while (world.getBlockState(mut2).getMaterial().isReplaceable() && mut2.getY() > minY) {
+									mut2.setY(mut2.getY() - 1);
+								}
+								if (y > 50 && state.canPlaceAt(world, mut2)) {
+									mut2.setY(mut2.getY() + 1);
+									BlocksHelper.setWithoutUpdate(world, mut2, state);
+								}
+							}
+						}
+						else if (random.nextInt(8) == 0 && !world.getBlockState(mut.up()).isOf(EndBlocks.ETERNAL_PEDESTAL)) {
+							BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
+						}
+					}
+				}
+			}
+		}
+
+		drop(world, bounds);
+	}
 	
+	private static boolean isTerrainNear(StructureWorldAccess world, BlockPos pos) {
+		for (Direction dir: BlocksHelper.DIRECTIONS) {
+			if (world.getBlockState(pos.offset(dir)).isIn(EndTags.GEN_TERRAIN)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static void drop(StructureWorldAccess world, BlockBox bounds) {
+		Mutable mut = new Mutable();
+		
+		Set<BlockPos> blocks = Sets.newHashSet();
+		Set<BlockPos> edge = Sets.newHashSet();
+		Set<BlockPos> add = Sets.newHashSet();
+		
+		for (int x = bounds.minX; x <= bounds.maxX; x++) {
+			mut.setX(x);
+			for (int z = bounds.minZ; z <= bounds.maxZ; z++) {
+				mut.setZ(z);
+				for (int y = bounds.minY; y <= bounds.maxY; y++) {
+					mut.setY(y);
+					BlockState state = world.getBlockState(mut);
+					if (!ignore(state) && isTerrainNear(world, mut)) {
+						edge.add(mut.toImmutable());
+					}
+				}
+			}
+		}
+		
+		if (edge.isEmpty()) {
+			return;
+		}
+		
+		while (!edge.isEmpty()) {
+			for (BlockPos center: edge) {
+				for (Direction dir: BlocksHelper.DIRECTIONS) {
+					BlockState state = world.getBlockState(center);
+					if (state.isFullCube(world, center)) {
+						mut.set(center).move(dir);
+						if (bounds.contains(mut)) {
+							state = world.getBlockState(mut);
+							if (!ignore(state) && !blocks.contains(mut)) {
+								add.add(mut.toImmutable());
+							}
+						}
+					}
+				}
+			}
+			
+			blocks.addAll(edge);
+			edge.clear();
+			edge.addAll(add);
+			add.clear();
+		}
+		
+		int minY = bounds.minY - 10;
+		for (int x = bounds.minX; x <= bounds.maxX; x++) {
+			mut.setX(x);
+			for (int z = bounds.minZ; z <= bounds.maxZ; z++) {
+				mut.setZ(z);
+				for (int y = bounds.minY; y <= bounds.maxY; y++) {
+					mut.setY(y);
+					BlockState state = world.getBlockState(mut);
+					if (!ignore(state) && !blocks.contains(mut)) {
+						BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
+						while (world.getBlockState(mut).getMaterial().isReplaceable() && mut.getY() > minY) {
+							mut.setY(mut.getY() - 1);
+						}
+						if (mut.getY() > minY) {
+							mut.setY(mut.getY() + 1);
+							BlocksHelper.setWithoutUpdate(world, mut, state);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	private static boolean ignore(BlockState state) {
 		return state.getMaterial().isReplaceable()
 				|| !state.getFluidState().isEmpty()

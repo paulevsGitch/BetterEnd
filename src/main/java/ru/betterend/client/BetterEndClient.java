@@ -9,6 +9,7 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlockEntityRenders;
 import ru.betterend.registry.EndEntitiesRenders;
+import ru.betterend.registry.EndModelProviders;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndScreens;
 import ru.betterend.util.TranslationHelper;
@@ -21,6 +22,7 @@ public class BetterEndClient implements ClientModInitializer {
 		EndScreens.register();
 		EndParticles.register();
 		EndEntitiesRenders.register();
+		EndModelProviders.register();
 		
 		if (BetterEnd.isDevEnvironment()) {
 			TranslationHelper.printMissingNames();

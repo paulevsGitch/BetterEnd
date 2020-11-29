@@ -18,6 +18,9 @@ public enum EndArmorMaterial implements ArmorMaterial {
 	}),
 	AETERNIUM("aeternium", 40, new int[] { 4, 7, 9, 4 }, 18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, 0.2F, () -> {
 		return Ingredient.ofItems(EndItems.AETERNIUM_INGOT);
+	}),
+	CRYSTALITE("crystalite", 30, new int[] { 3, 6, 8, 3 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.2F, 0.1F, () -> {
+		return Ingredient.ofItems(EndItems.TERMINITE_INGOT);
 	});
 
 	private static final int[] BASE_DURABILITY = new int[] { 13, 15, 16, 11 };

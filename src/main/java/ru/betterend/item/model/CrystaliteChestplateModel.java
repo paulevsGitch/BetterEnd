@@ -5,6 +5,7 @@ import java.util.Collections;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
 
@@ -14,7 +15,7 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 	public ModelPart rightShoulder;
 	
 	public CrystaliteChestplateModel(float scale, boolean thinArms) {
-		super(scale);
+		super(RenderLayer::getEntityTranslucent, scale, 0.0F, 64, 32);
 		this.torso = new ModelPart(this, 16, 16);
 		this.torso.addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
 		this.torso.setPivot(0.0F, 0.0F, 0.0F);

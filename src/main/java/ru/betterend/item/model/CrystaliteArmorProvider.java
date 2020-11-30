@@ -43,24 +43,9 @@ public class CrystaliteArmorProvider implements ModelProvider, TextureProvider {
 	public @NotNull BipedEntityModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack,
 			EquipmentSlot slot, BipedEntityModel<LivingEntity> defaultModel) {
 		if (!isStackValid(stack)) return defaultModel;
-		if (entity instanceof AbstractClientPlayerEntity &&
-			((AbstractClientPlayerEntity) entity).getModel().equals("slim") &&
-			slot == EquipmentSlot.CHEST) {
-			
-			return CHEST_MODEL_SLIM;
-		}
 		switch(slot) {
 			case HEAD: {
-				return new CrystaliteHelmetModel(1.0F);
-			}
-			case CHEST: {
-				return new CrystaliteChestplateModel(1.0F, false);
-			}
-			case LEGS: {
-				return new CrystaliteChestplateModel(1.0F, true);
-			}
-			case FEET: {
-				return new CrystaliteBootsModel(1.0F);
+				return HELMET_MODEL;
 			}
 			default: {
 				return defaultModel;

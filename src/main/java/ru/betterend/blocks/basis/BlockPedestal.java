@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -36,6 +37,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
@@ -222,27 +224,29 @@ public class BlockPedestal extends BlockBaseNotFull implements BlockEntityProvid
 	private void moveStoredStack(WorldAccess world, ItemStack stack, BlockState state, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (!state.isOf(this)) {
-			this.dropStoredStack(world, stack, pos);
+			this.dropStoredStack(blockEntity, stack, pos);
 		} else if (state.get(STATE).equals(PedestalState.PILLAR)) {
 			BlockPos upPos = pos.up();
 			this.moveStoredStack(world, stack, world.getBlockState(upPos), upPos);
 		} else if (!this.isPlaceable(state)) {
-			this.dropStoredStack(world, stack, pos);
+			this.dropStoredStack(blockEntity, stack, pos);
 		} else if (blockEntity instanceof PedestalBlockEntity) {
 			PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
 			if (pedestal.isEmpty()) {
 				pedestal.setStack(0, stack);
-				BlocksHelper.setWithoutUpdate(world, pos, state.with(HAS_ITEM, true));
 			} else {
-				this.dropStoredStack(world, stack, pos);
+				this.dropStoredStack(blockEntity, stack, pos);
 			}
 		} else {
-			this.dropStoredStack(world, stack, pos);
+			this.dropStoredStack(blockEntity, stack, pos);
 		}
 	}
 	
-	private void dropStoredStack(WorldAccess world, ItemStack stack, BlockPos pos) {
-		Block.dropStack((World) world, this.getDropPos(world, pos), stack);
+	private void dropStoredStack(BlockEntity blockEntity, ItemStack stack, BlockPos pos) {
+		if (blockEntity != null && blockEntity.getWorld() != null) {
+			World world = blockEntity.getWorld();
+			Block.dropStack(world, this.getDropPos(world, pos), stack);
+		}
 	}
 	
 	private BlockPos getDropPos(WorldAccess world, BlockPos pos) {

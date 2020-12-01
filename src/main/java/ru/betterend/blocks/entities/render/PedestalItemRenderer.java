@@ -43,6 +43,8 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 		if (blockEntity.isEmpty()) return;
 		
 		BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
+		if (!(state.getBlock() instanceof BlockPedestal)) return;
+		
 		ItemStack activeItem = blockEntity.getStack(0);
 		matrices.push();
 		MinecraftClient minecraft = MinecraftClient.getInstance();

@@ -29,7 +29,7 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 			this.leftShoulder.setPivot(5.0F, 2.5F, 0.0F);
 			this.leftShoulder.mirror = true;
 			this.rightShoulder = new ModelPart(this, 41, 16);
-			this.rightShoulder.addCuboid(-2.0F, -2.5F, -12.0F, 3.0F, 12.0F, 4.0F, scale + 0.3F);
+			this.rightShoulder.addCuboid(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.3F);
 			this.rightShoulder.setPivot(-5.0F, 2.5F, 10.0F);
 		} else {
 			this.leftShoulder = new ModelPart(this, 40, 32);
@@ -37,7 +37,7 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 			this.leftShoulder.setPivot(5.0F, 2.0F, 0.0F);
 			this.leftShoulder.mirror = true;
 			this.rightShoulder = new ModelPart(this, 40, 16);
-			this.rightShoulder.addCuboid(-3.0F, -2.5F, -12.1F, 4.0F, 12.0F, 4.0F, scale + 0.4F);
+			this.rightShoulder.addCuboid(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.4F);
 			this.rightShoulder.setPivot(-5.0F, 2.0F, 10.0F);
 		}
 	}
@@ -53,8 +53,10 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 	}
 	
 	@Override
-	public void setAngles(LivingEntity livingEntity, float f, float g, float h, float i, float j) {
-		super.setAngles(livingEntity, f, g, h, i, j);
+	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
+		this.torso.copyPositionAndRotation(bipedEntityModel.torso);
+		this.leftArm.copyPositionAndRotation(bipedEntityModel.leftArm);
+		this.rightArm.copyPositionAndRotation(bipedEntityModel.rightArm);
 		this.leftShoulder.copyPositionAndRotation(leftArm);
 		this.rightShoulder.copyPositionAndRotation(rightArm);
 	}

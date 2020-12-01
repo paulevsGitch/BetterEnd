@@ -48,17 +48,19 @@ public class CrystaliteArmorProvider implements ModelProvider, TextureProvider {
 				return HELMET_MODEL;
 			}
 			case CHEST: {
-				
 				if (entity instanceof AbstractClientPlayerEntity &&
 					((AbstractClientPlayerEntity) entity).getModel().equals("slim")) {
+					CHEST_MODEL_SLIM.setAttributes(defaultModel);
 					return CHEST_MODEL_SLIM;
 				}
+				CHEST_MODEL.setAttributes(defaultModel);
 				return CHEST_MODEL;
 			}
 			case LEGS: {
 				return LEGGINGS_MODEL;
 			}
 			case FEET: {
+				BOOTS_MODEL.setAttributes(defaultModel);
 				return BOOTS_MODEL;
 			}
 			default: {

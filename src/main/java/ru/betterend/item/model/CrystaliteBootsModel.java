@@ -35,8 +35,9 @@ public class CrystaliteBootsModel extends BipedEntityModel<LivingEntity> {
 	}
 	
 	@Override
-	public void setAngles(LivingEntity livingEntity, float f, float g, float h, float i, float j) {
-		super.setAngles(livingEntity, f, g, h, i, j);
+	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
+		this.leftLeg.copyPositionAndRotation(bipedEntityModel.leftLeg);
+		this.rightLeg.copyPositionAndRotation(bipedEntityModel.rightLeg);
 		this.leftBoot.copyPositionAndRotation(leftLeg);
 		this.rightBoot.copyPositionAndRotation(rightLeg);
 	}

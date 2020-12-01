@@ -16,7 +16,7 @@ import net.minecraft.entity.LivingEntity;
 public class CrystaliteHelmetModel extends BipedEntityModel<LivingEntity> {
 
 	public CrystaliteHelmetModel(float scale) {
-		super(RenderLayer::getEntityTranslucent, scale, 0.0F, 64, 32);
+		super(RenderLayer::getEntityTranslucent, scale, 0.0F, 64, 48);
 		this.helmet = new ModelPart(this, 0, 0);
 		this.helmet.addCuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, scale + 0.5F);
 		this.helmet.setPivot(0.0F, 0.0F, 0.0F);

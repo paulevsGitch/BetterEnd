@@ -7,31 +7,37 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Arm;
 
 public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 
 	public ModelPart leftShoulder;
 	public ModelPart rightShoulder;
+	private boolean thinArms;
 	
 	public CrystaliteChestplateModel(float scale, boolean thinArms) {
-		super(RenderLayer::getEntityTranslucent, scale, 0.0F, 64, 32);
+		super(RenderLayer::getEntityTranslucent, scale, 0.0F, 64, 48);
+		this.thinArms = thinArms;
 		this.torso = new ModelPart(this, 16, 16);
-		this.torso.addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
+		this.torso.addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale + 0.25F);
 		this.torso.setPivot(0.0F, 0.0F, 0.0F);
 		if (thinArms) {
-			this.leftShoulder = new ModelPart(this, 40, 16);
-			this.leftShoulder.addCuboid(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.25F);
+			this.leftShoulder = new ModelPart(this, 41, 32);
+			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.3F);
 			this.leftShoulder.setPivot(5.0F, 2.5F, 0.0F);
-			this.rightShoulder = new ModelPart(this, 40, 16);
-			this.rightShoulder.addCuboid(-2.0F, -2.0F, -12.0F, 3.0F, 12.0F, 4.0F, scale + 0.25F);
+			this.leftShoulder.mirror = true;
+			this.rightShoulder = new ModelPart(this, 41, 16);
+			this.rightShoulder.addCuboid(-2.0F, -2.5F, -12.0F, 3.0F, 12.0F, 4.0F, scale + 0.3F);
 			this.rightShoulder.setPivot(-5.0F, 2.5F, 10.0F);
 		} else {
-			this.leftShoulder = new ModelPart(this, 40, 16);
-			this.leftShoulder.addCuboid(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.25F);
+			this.leftShoulder = new ModelPart(this, 40, 32);
+			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.4F);
 			this.leftShoulder.setPivot(5.0F, 2.0F, 0.0F);
+			this.leftShoulder.mirror = true;
 			this.rightShoulder = new ModelPart(this, 40, 16);
-			this.rightShoulder.addCuboid(-3.0F, -2.0F, -12.0F, 4.0F, 12.0F, 4.0F, scale + 0.25F);
+			this.rightShoulder.addCuboid(-3.0F, -2.5F, -12.1F, 4.0F, 12.0F, 4.0F, scale + 0.4F);
 			this.rightShoulder.setPivot(-5.0F, 2.0F, 10.0F);
 		}
 	}
@@ -51,5 +57,18 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 		super.setAngles(livingEntity, f, g, h, i, j);
 		this.leftShoulder.copyPositionAndRotation(leftArm);
 		this.rightShoulder.copyPositionAndRotation(rightArm);
+	}
+	
+	@Override
+	public void setArmAngle(Arm arm, MatrixStack matrices) {
+		ModelPart modelPart = this.getArm(arm);
+		if (this.thinArms) {
+			float f = 0.5F * (float)(arm == Arm.RIGHT ? 1 : -1);
+			modelPart.pivotX += f;
+			modelPart.rotate(matrices);
+			modelPart.pivotX -= f;
+		} else {
+			modelPart.rotate(matrices);
+		}
 	}
 }

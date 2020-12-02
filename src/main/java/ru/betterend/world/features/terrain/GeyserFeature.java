@@ -39,7 +39,7 @@ public class GeyserFeature extends DefaultFeature {
 			int halfHeight = MHelper.randRange(10, 20, random);
 			float radius1 = halfHeight * 0.5F;
 			float radius2 = halfHeight * 0.1F + 0.5F;
-			SDF sdf = new SDFCapedCone().setHeight(halfHeight).setRadius1(radius1).setRadius2(radius2).setBlock(EndBlocks.SULFURIC_ROCK.stone);
+			SDF sdf = new SDFCapedCone().setHeight(halfHeight).setRadius1(radius1).setRadius2(radius2).setBlock(EndBlocks.SULPHURIC_ROCK.stone);
 			sdf = new SDFTranslate().setTranslate(0, halfHeight - 3, 0).setSource(sdf);
 			
 			int count = halfHeight;
@@ -61,7 +61,7 @@ public class GeyserFeature extends DefaultFeature {
 				SDF water = new SDFCapedCone().setHeight(radius - 4).setRadius1(0).setRadius2(radius - 3).setBlock(Blocks.WATER);
 				bowl = new SDFUnion().setSourceA(water).setSourceB(bowl);*/
 				
-				SDF bowl = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.SULFURIC_ROCK.stone);
+				SDF bowl = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.SULPHURIC_ROCK.stone);
 				
 				SDF brimstone = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.BRIMSTONE);
 				brimstone = new SDFTranslate().setTranslate(0, 2F, 0).setSource(brimstone);

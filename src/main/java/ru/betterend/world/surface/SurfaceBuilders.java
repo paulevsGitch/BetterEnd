@@ -12,7 +12,7 @@ public class SurfaceBuilders {
 	public static final TernarySurfaceConfig DEFAULT_END_CONFIG = makeSimpleConfig(Blocks.END_STONE);
 	public static final TernarySurfaceConfig FLAVOLITE_CONFIG = makeSimpleConfig(EndBlocks.FLAVOLITE.stone);
 	public static final TernarySurfaceConfig BRIMSTONE_CONFIG = makeSimpleConfig(EndBlocks.BRIMSTONE);
-	public static final TernarySurfaceConfig SULFURIC_ROCK_CONFIG = makeSimpleConfig(EndBlocks.SULFURIC_ROCK.stone);
+	public static final TernarySurfaceConfig SULFURIC_ROCK_CONFIG = makeSimpleConfig(EndBlocks.SULPHURIC_ROCK.stone);
 	
 	public static final SurfaceBuilder<TernarySurfaceConfig> SULPHURIC_SURFACE = register("sulphuric_surface", new SulphuricSurfaceBuilder());
 	

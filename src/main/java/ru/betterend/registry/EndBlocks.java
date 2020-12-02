@@ -98,7 +98,7 @@ public class EndBlocks {
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
 	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
-	public static final StoneMaterial SULFURIC_ROCK = new StoneMaterial("sulfuric_rock", MaterialColor.BROWN);
+	public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
 	public static final Block BRIMSTONE = registerBlock("brimstone", new BlockBrimstone());
 	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new BlockSulphurCrystal());
 	

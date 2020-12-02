@@ -1,6 +1,7 @@
 package ru.betterend.config;
 
 import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.util.Identifier;
 import ru.betterend.config.ConfigKeeper.Entry;
 

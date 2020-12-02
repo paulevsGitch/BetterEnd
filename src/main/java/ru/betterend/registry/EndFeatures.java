@@ -30,6 +30,7 @@ import ru.betterend.world.features.terrain.FloatingSpireFeature;
 import ru.betterend.world.features.terrain.GeyserFeature;
 import ru.betterend.world.features.terrain.RoundCaveFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
+import ru.betterend.world.features.terrain.SulphuricLakeFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
 import ru.betterend.world.features.trees.LacugroveFeature;
 import ru.betterend.world.features.trees.MossyGlowshroomFeature;
@@ -94,6 +95,7 @@ public class EndFeatures {
 	public static final EndFeature SPIRE = EndFeature.makeRawGenFeature("spire", new SpireFeature(), 2);
 	public static final EndFeature FLOATING_SPIRE = EndFeature.makeRawGenFeature("floating_spire", new FloatingSpireFeature(), 8);
 	public static final EndFeature GEYSER = EndFeature.makeRawGenFeature("geyser", new GeyserFeature(), 8);
+	public static final EndFeature SULPHURIC_LAKE = EndFeature.makeLakeFeature("sulphuric_lake", new SulphuricLakeFeature(), 8);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 6, 3, 0, 4, 96);

@@ -19,7 +19,6 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFCoordModify;
-import ru.betterend.util.sdf.operator.SDFDisplacement;
 import ru.betterend.util.sdf.operator.SDFInvert;
 import ru.betterend.util.sdf.operator.SDFRotation;
 import ru.betterend.util.sdf.operator.SDFSubtraction;

@@ -2,9 +2,7 @@ package ru.betterend;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-
 import net.minecraft.util.Identifier;
-
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.MainConfig;
 import ru.betterend.effects.EndEnchantments;
@@ -25,6 +23,7 @@ import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
+import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
@@ -37,6 +36,7 @@ public class BetterEnd implements ModInitializer {
 		EndBlockEntities.register();
 		EndFeatures.register();
 		EndEntities.register();
+		SurfaceBuilders.register();
 		EndBiomes.register();
 		BetterEndBiomeSource.register();
 		EndTags.register();

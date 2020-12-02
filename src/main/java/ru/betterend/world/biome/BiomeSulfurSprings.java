@@ -1,14 +1,19 @@
 package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
-import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndParticles;
+import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BiomeSulfurSprings extends EndBiome {
 	public BiomeSulfurSprings() {
 		super(new BiomeDefinition("sulfur_springs")
-				.setSurface(EndBlocks.SULFURIC_ROCK.stone)
+				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE)
+				.setFogColor(207, 194, 62)
+				.setFogDensity(1.5F)
+				.setParticles(EndParticles.SULPHUR_PARTICLE, 0.001F)
 				.addFeature(EndFeatures.GEYSER)
+				.addFeature(EndFeatures.SULPHURIC_LAKE)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

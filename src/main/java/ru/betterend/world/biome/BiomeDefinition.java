@@ -35,6 +35,7 @@ import ru.betterend.util.MHelper;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.structures.EndStructureFeature;
 import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
+import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BiomeDefinition {
 	private static final int DEF_FOLIAGE = MHelper.color(197, 210, 112);
@@ -82,6 +83,10 @@ public class BiomeDefinition {
 	public BiomeDefinition setSurface(ConfiguredSurfaceBuilder<?> builder) {
 		this.surface = builder;
 		return this;
+	}
+	
+	public BiomeDefinition setSurface(SurfaceBuilder<TernarySurfaceConfig> builder) {
+		return setSurface(builder.withConfig(SurfaceBuilders.DEFAULT_END_CONFIG));
 	}
 
 	public BiomeDefinition setParticles(ParticleEffect particle, float probability) {

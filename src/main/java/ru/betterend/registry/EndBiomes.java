@@ -26,6 +26,7 @@ import net.minecraft.world.biome.BiomeKeys;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.world.biome.BiomeAmberLand;
+import ru.betterend.world.biome.BiomeBlossomingSpires;
 import ru.betterend.world.biome.BiomeChorusForest;
 import ru.betterend.world.biome.BiomeCrystalMountains;
 import ru.betterend.world.biome.BiomeDustWastelands;
@@ -34,9 +35,8 @@ import ru.betterend.world.biome.BiomeMegalake;
 import ru.betterend.world.biome.BiomeMegalakeGrove;
 import ru.betterend.world.biome.BiomePaintedMountains;
 import ru.betterend.world.biome.BiomeShadowForest;
-import ru.betterend.world.biome.BiomeBlossomingSpires;
-import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.BiomeSulfurSprings;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
 

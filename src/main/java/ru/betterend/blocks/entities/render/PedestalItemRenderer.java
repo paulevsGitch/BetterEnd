@@ -2,6 +2,7 @@ package ru.betterend.blocks.entities.render;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
@@ -16,9 +17,9 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
@@ -58,20 +59,21 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 		} else {
 			matrices.scale(1.25F, 1.25F, 1.25F);
 		}
+		int age = blockEntity.getAge();
 		if (state.isOf(EndBlocks.ETERNAL_PEDESTAL) && state.get(EternalPedestal.ACTIVATED)) {
-			float[] colors = DyeColor.MAGENTA.getColorComponents();
+			float[] colors = EternalCrystalRenderer.colors(age);
 			int y = blockEntity.getPos().getY();
 			VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getBeaconBeam(BEAM_TEXTURE, true));
-			BeamRenderer.renderLightBeam(matrices, vertexConsumer, tickDelta, -y, 1024 - y, colors, 0.25F, 0.15F, 0.2F);
+			BeamRenderer.renderLightBeam(matrices, vertexConsumer, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.15F, 0.18F);
 			float altitude = MathHelper.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
 			matrices.translate(0.0D, altitude, 0.0D);
 		}
 		if (activeItem.getItem() == Items.END_CRYSTAL) {
-			EndCrystalRenderer.render(blockEntity.getAge(), blockEntity.getMaxAge(), tickDelta, matrices, vertexConsumers, light);
+			EndCrystalRenderer.render(age, blockEntity.getMaxAge(), tickDelta, matrices, vertexConsumers, light);
 		} else if (activeItem.getItem() == EndItems.ETERNAL_CRYSTAL) {
-			EternalCrystalRenderer.render(blockEntity.getAge(), tickDelta, matrices, vertexConsumers, light);
+			EternalCrystalRenderer.render(age, tickDelta, matrices, vertexConsumers, light);
 		} else {
-			float rotation = (blockEntity.getAge() + tickDelta) / 25.0F + 6.0F;
+			float rotation = (age + tickDelta) / 25.0F + 6.0F;
 			matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(rotation));
 			minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, overlay, model);
 		}

@@ -33,7 +33,7 @@ public class EternalCrystalRenderer {
 		matrices.pop();
 	}
 	
-	private static float[] colors(int age) {
+	public static float[] colors(int age) {
 		double delta = age * 0.01;
 		int index = MHelper.floor(delta);
 		int index2 = (index + 1) & 3;

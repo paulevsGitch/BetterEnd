@@ -13,6 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -70,7 +71,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
 				ServerPlayerEntity player = (ServerPlayerEntity) entity;
-				player.teleport(destination, exitPos.getX(), exitPos.getY(), exitPos.getZ(), entity.yaw, entity.pitch);
+				player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, entity.yaw, entity.pitch);
 				teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
 			} else {
 				teleEntity.beSetExitPos(exitPos);
@@ -102,10 +103,26 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 				while(checkPos.getY() < world.getHeight()) {
 					BlockState state = world.getBlockState(checkPos);
 					if(state.isOf(this)) {
+						int offStep;
+						checkPos = this.findCenter(world, checkPos, state.get(AXIS));
 						if (state.get(AXIS).equals(Direction.Axis.X)) {
-							return checkPos.add(0, 0, 1);
+							if (entity.getMovementDirection().getAxis() == Direction.Axis.X) {
+								offStep = entity.getMovementDirection() == Direction.EAST ? -1 : 1;
+								float rotation = entity.applyRotation(BlockRotation.CLOCKWISE_90);
+								entity.yaw = rotation;
+							} else {
+								offStep = entity.getMovementDirection() == Direction.NORTH ? 1 : -1;
+							}
+							return checkPos.add(0, 0, offStep);
 						} else {
-							return checkPos.add(1, 0, 0);
+							if (entity.getMovementDirection().getAxis() == Direction.Axis.Z) {
+								offStep = entity.getMovementDirection() == Direction.SOUTH ? -1 : 1;
+								float rotation = entity.applyRotation(BlockRotation.CLOCKWISE_90);
+								entity.yaw = rotation;
+							} else {
+								offStep = entity.getMovementDirection() == Direction.EAST ? 1 : -1;
+							}
+							return checkPos.add(offStep, 0, 0);
 						}
 					}
 					checkPos.move(Direction.UP);
@@ -115,5 +132,32 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			direction = direction.rotateYClockwise();
 		}
 		return null;
+	}
+	
+	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis) {
+		BlockState right, left;
+		Direction rightDir, leftDir;
+		if (axis == Direction.Axis.X) {
+			right = world.getBlockState(pos.east());
+			left = world.getBlockState(pos.west());
+			rightDir = Direction.EAST;
+			leftDir = Direction.WEST;
+		} else {
+			right = world.getBlockState(pos.south());
+			left = world.getBlockState(pos.north());
+			rightDir = Direction.SOUTH;
+			leftDir = Direction.NORTH;
+		}
+		BlockState down = world.getBlockState(pos.down());
+		if (down.isOf(this)) {
+			return findCenter(world, pos.move(Direction.DOWN), axis);
+		} else if (right.isOf(this) && left.isOf(this)) {
+			return pos;
+		} else if (right.isOf(this)) {
+			return findCenter(world, pos.move(rightDir), axis);
+		} else if (left.isOf(this)) {
+			return findCenter(world, pos.move(leftDir), axis);
+		}
+		return pos;
 	}
 }

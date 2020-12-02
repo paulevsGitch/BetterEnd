@@ -16,7 +16,7 @@ import ru.betterend.util.MHelper;
 public class BiomeColorsMixin {
 	private static final int POISON_COLOR = MHelper.color(92, 160, 78);
 	
-	@Inject(method = "getWaterColor", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void beGetWaterColor(BlockRenderView world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
 		int x1 = pos.getX() - 1;
 		int y1 = pos.getY() - 1;
@@ -25,19 +25,21 @@ public class BiomeColorsMixin {
 		int y2 = pos.getY() + 2;
 		int z2 = pos.getZ() + 2;
 		Mutable mut = new Mutable();
-		for (int x = x1; x < x2; x++) {
+		int color = info.getReturnValue();
+		boolean cont = true;
+		for (int x = x1; x < x2 && cont; x++) {
 			mut.setX(x);
-			for (int y = y1; y < y2; y++) {
+			for (int y = y1; y < y2 && cont; y++) {
 				mut.setY(y);
-				for (int z = z1; z < z2; z++) {
+				for (int z = z1; z < z2 && cont; z++) {
 					mut.setZ(z);
 					if (world.getBlockState(mut).isOf(EndBlocks.BRIMSTONE)) {
-						info.setReturnValue(POISON_COLOR);
-						info.cancel();
-						return;
+						color = POISON_COLOR;
+						cont = false;
 					}
 				}
 			}
 		}
+		info.setReturnValue(color);
 	}
 }

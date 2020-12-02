@@ -166,6 +166,10 @@ public class BiomeDefinition {
 		return this;
 	}
 	
+	public BiomeDefinition setWaterAndFogColor(int r, int g, int b) {
+		return setWaterColor(r, g, b).setWaterFogColor(r, g, b);
+	}
+	
 	public BiomeDefinition setFoliageColor(int r, int g, int b) {
 		this.foliageColor = getColor(r, g, b);
 		return this;

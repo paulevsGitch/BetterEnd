@@ -15,7 +15,8 @@
 		"MinecraftClientMixin",
 		"WorldRendererMixin",
 		"MusicTrackerMixin",
-		"ModelLoaderMixin"
+		"ModelLoaderMixin",
+		"BiomeColorsMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -9,7 +9,7 @@ public class BiomeSulfurSprings extends EndBiome {
 	public BiomeSulfurSprings() {
 		super(new BiomeDefinition("sulfur_springs")
 				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE)
-				.setWaterAndFogColor(105, 213, 244)
+				.setWaterAndFogColor(25, 90, 157)
 				.setFogColor(207, 194, 62)
 				.setFogDensity(1.5F)
 				.setCaves(false)

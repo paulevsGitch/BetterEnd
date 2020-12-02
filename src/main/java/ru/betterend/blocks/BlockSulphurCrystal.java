@@ -82,10 +82,14 @@ public class BlockSulphurCrystal extends BlockAttached implements IRenderTypeabl
 	
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		WorldView worldView = ctx.getWorld();
-		BlockPos blockPos = ctx.getBlockPos();
-		boolean water = worldView.getFluidState(blockPos).getFluid() == Fluids.WATER;
-		return super.getPlacementState(ctx).with(WATERLOGGED, water);
+		BlockState state = super.getPlacementState(ctx);
+		if (state != null) {
+			WorldView worldView = ctx.getWorld();
+			BlockPos blockPos = ctx.getBlockPos();
+			boolean water = worldView.getFluidState(blockPos).getFluid() == Fluids.WATER;
+			return state.with(WATERLOGGED, water);
+		}
+		return null;
 	}
 	
 	@Override

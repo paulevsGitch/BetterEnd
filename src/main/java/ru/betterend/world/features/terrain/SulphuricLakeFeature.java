@@ -92,8 +92,22 @@ public class SulphuricLakeFeature extends DefaultFeature {
 						}
 						else {
 							BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
+							brimstone.remove(POS);
+							for (Direction dir: BlocksHelper.HORIZONTAL) {
+								BlockPos offseted = POS.offset(dir);
+								if (world.getBlockState(offseted).isIn(EndTags.GEN_TERRAIN)) {
+									brimstone.add(offseted);
+								}
+							}
 							if (isDeepWater(world, POS)) {
 								BlocksHelper.setWithoutUpdate(world, POS.move(Direction.DOWN), Blocks.WATER);
+								brimstone.remove(POS);
+								for (Direction dir: BlocksHelper.HORIZONTAL) {
+									BlockPos offseted = POS.offset(dir);
+									if (world.getBlockState(offseted).isIn(EndTags.GEN_TERRAIN)) {
+										brimstone.add(offseted);
+									}
+								}
 							}
 							brimstone.add(POS.down());
 							if (random.nextBoolean()) {
@@ -179,9 +193,9 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private void makeShards(StructureWorldAccess world, BlockPos pos, Random random) {
 		for (Direction dir: BlocksHelper.DIRECTIONS) {
 			BlockPos side;
-			if (random.nextInt(4) == 0 && world.getBlockState((side = pos.offset(dir))).getMaterial().isReplaceable()) {
+			if (random.nextInt(3) == 0 && world.getBlockState((side = pos.offset(dir))).isOf(Blocks.WATER)) {
 				BlockState state = EndBlocks.SULPHUR_CRYSTAL.getDefaultState()
-						.with(BlockSulphurCrystal.WATERLOGGED, world.getBlockState(side).isOf(Blocks.WATER))
+						.with(BlockSulphurCrystal.WATERLOGGED, true)
 						.with(BlockSulphurCrystal.FACING, dir)
 						.with(BlockSulphurCrystal.AGE, random.nextInt(3));
 				BlocksHelper.setWithoutUpdate(world, side, state);

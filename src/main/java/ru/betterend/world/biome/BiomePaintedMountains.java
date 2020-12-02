@@ -11,6 +11,7 @@ public class BiomePaintedMountains extends EndBiome {
 		super(new BiomeDefinition("painted_mountains")
 				.setFogColor(226, 239, 168)
 				.setFogDensity(2)
+				.setCaves(false)
 				.setWaterColor(192, 180, 131)
 				.setWaterFogColor(192, 180, 131)
 				.setMusic(EndSounds.MUSIC_DUST_WASTELANDS)

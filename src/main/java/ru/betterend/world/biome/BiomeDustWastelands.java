@@ -11,6 +11,7 @@ public class BiomeDustWastelands extends EndBiome {
 		super(new BiomeDefinition("dust_wastelands")
 				.setFogColor(226, 239, 168)
 				.setFogDensity(2)
+				.setCaves(false)
 				.setWaterColor(192, 180, 131)
 				.setWaterFogColor(192, 180, 131)
 				.setSurface(EndBlocks.ENDSTONE_DUST)

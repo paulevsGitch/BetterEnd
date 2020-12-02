@@ -48,16 +48,15 @@ public class BlockBrimstone extends BlockBase {
 				BlockPos side = pos.offset(dir);
 				BlockState sideState = world.getBlockState(side);
 				if (sideState.getBlock() instanceof BlockSulphurCrystal) {
-					if (sideState.get(BlockSulphurCrystal.AGE) < 2) {
+					if (sideState.get(BlockSulphurCrystal.AGE) < 2 && sideState.get(BlockSulphurCrystal.WATERLOGGED)) {
 						int age = sideState.get(BlockSulphurCrystal.AGE) + 1;
 						world.setBlockState(side, sideState.with(BlockSulphurCrystal.AGE, age));
 					}
 				}
-				else if (sideState.isAir() || !sideState.getFluidState().isEmpty()) {
-					boolean water = sideState.getFluidState().getFluid().equals(Fluids.WATER);
+				else if (sideState.getFluidState().getFluid() == Fluids.WATER) {
 					BlockState crystal = EndBlocks.SULPHUR_CRYSTAL.getDefaultState()
 							.with(BlockSulphurCrystal.FACING, dir)
-							.with(BlockSulphurCrystal.WATERLOGGED, water)
+							.with(BlockSulphurCrystal.WATERLOGGED, true)
 							.with(BlockSulphurCrystal.AGE, 0);
 					world.setBlockState(side, crystal);
 				}

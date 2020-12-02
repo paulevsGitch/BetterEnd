@@ -125,7 +125,7 @@ public class EndFeatures {
 		addFeature(ENDER_ORE, features);
 		addFeature(CRASHED_SHIP, features);
 		
-		if (!id.getPath().equals("blossoming_spires")) {
+		if (EndBiomes.getBiome(id).hasCaves()) {
 			addFeature(ROUND_CAVE_RARE, features);
 			addFeature(CAVE_GRASS, features);
 		}

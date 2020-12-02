@@ -96,13 +96,15 @@ public class EndBiomes {
 					float fog = 1F;
 					float chance = 1F;
 					boolean isVoid = false;
+					boolean hasCaves = true;
 					JsonElement element = config.get(id.getPath());
 					if (element != null && element.isJsonObject()) {
 						fog = JsonFactory.getFloat(element.getAsJsonObject(), "fogDensity", 1);
 						chance = JsonFactory.getFloat(element.getAsJsonObject(), "genChance", 1);
 						isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
+						hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "hasCaves", true);
 					}
-					EndBiome endBiome = new EndBiome(id, biome, fog, chance);
+					EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
 					if (isVoid) {
 						VOID_BIOMES.addBiomeMutable(endBiome);
 					}
@@ -175,7 +177,7 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
-		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance);
+		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance, true);
 		addToPicker(endBiome, type);
 		return endBiome;
 	}
@@ -187,8 +189,8 @@ public class EndBiomes {
 	 * @param genChance - generation chance [0.0F - Infinity]
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float genChance) {
-		return registerSubBiome(biome, parent, 1, genChance);
+	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float genChance, boolean hasCaves) {
+		return registerSubBiome(biome, parent, 1, genChance, hasCaves);
 	}
 	
 	/**
@@ -199,8 +201,8 @@ public class EndBiomes {
 	 * @param genChance - generation chance [0.0F - Infinity]
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance) {
-		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance);
+	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance, boolean hasCaves) {
+		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance, hasCaves);
 		parent.addSubBiome(endBiome);
 		SUBBIOMES.add(endBiome);
 		ID_MAP.put(endBiome.getID(), endBiome);
@@ -239,7 +241,7 @@ public class EndBiomes {
 	}
 	
 	private static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
-		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance);
+		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance, true);
 	}
 	
 	private static void addToPicker(EndBiome biome, BiomeType type) {

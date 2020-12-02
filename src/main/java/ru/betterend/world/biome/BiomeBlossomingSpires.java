@@ -11,6 +11,7 @@ public class BiomeBlossomingSpires extends EndBiome {
 				.setFogColor(241, 146, 229)
 				.setFogDensity(1.7F)
 				.setPlantsColor(122, 45, 122)
+				.setCaves(false)
 				.setSurface(EndBlocks.PINK_MOSS)
 				.setMusic(EndSounds.MUSIC_BLOSSOMING_SPIRES)
 				.setLoop(EndSounds.AMBIENT_BLOSSOMING_SPIRES)

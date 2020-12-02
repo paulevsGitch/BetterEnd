@@ -11,6 +11,7 @@ public class BiomeSulfurSprings extends EndBiome {
 				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE)
 				.setFogColor(207, 194, 62)
 				.setFogDensity(1.5F)
+				.setCaves(false)
 				.setParticles(EndParticles.SULPHUR_PARTICLE, 0.001F)
 				.addFeature(EndFeatures.GEYSER)
 				.addFeature(EndFeatures.SULPHURIC_LAKE)

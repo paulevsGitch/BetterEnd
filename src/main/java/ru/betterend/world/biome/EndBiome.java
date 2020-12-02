@@ -32,6 +32,7 @@ public class EndBiome {
 	protected float genChance = 1;
 
 	private final float fogDensity;
+	private final boolean hasCaves;
 	private EndFeature structuresFeature;
 	private Biome actualBiome;
 
@@ -40,14 +41,16 @@ public class EndBiome {
 		mcID = definition.getID();
 		fogDensity = definition.getFodDensity();
 		genChanceUnmutable = definition.getGenChance();
+		hasCaves = definition.hasCaves();
 		readStructureList();
 	}
 
-	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance) {
+	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
 		this.biome = biome;
 		this.mcID = id;
 		this.fogDensity = fogDensity;
 		this.genChanceUnmutable = genChance;
+		this.hasCaves = hasCaves;
 		readStructureList();
 	}
 
@@ -164,5 +167,9 @@ public class EndBiome {
 
 	public float getGenChance() {
 		return this.genChance;
+	}
+	
+	public boolean hasCaves() {
+		return hasCaves;
 	}
 }

@@ -59,6 +59,7 @@ public class BiomeDefinition {
 
 	private final Identifier id;
 	private float genChance = 1F;
+	private boolean hasCaves = true;
 	
 	private ConfiguredSurfaceBuilder<?> surface;
 
@@ -198,6 +199,11 @@ public class BiomeDefinition {
 		this.music = music;
 		return this;
 	}
+	
+	public BiomeDefinition setCaves(boolean hasCaves) {
+		this.hasCaves = hasCaves;
+		return this;
+	}
 
 	public Biome build() {
 		SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
@@ -254,5 +260,9 @@ public class BiomeDefinition {
 
 	public float getGenChance() {
 		return genChance;
+	}
+
+	public boolean hasCaves() {
+		return hasCaves;
 	}
 }

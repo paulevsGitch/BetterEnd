@@ -5,8 +5,6 @@ import net.fabricmc.api.Environment;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -17,7 +15,6 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 import ru.betterend.blocks.EternalPedestal;
@@ -31,7 +28,6 @@ import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
 public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEntityRenderer<T> {
-	private static final Identifier BEAM_TEXTURE = new Identifier("textures/entity/end_gateway_beam.png");
 	
 	public PedestalItemRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);
@@ -63,8 +59,8 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 		if (state.isOf(EndBlocks.ETERNAL_PEDESTAL) && state.get(EternalPedestal.ACTIVATED)) {
 			float[] colors = EternalCrystalRenderer.colors(age);
 			int y = blockEntity.getPos().getY();
-			VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getBeaconBeam(BEAM_TEXTURE, true));
-			BeamRenderer.renderLightBeam(matrices, vertexConsumer, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.15F, 0.18F);
+			
+			BeamRenderer.renderLightBeam(matrices, vertexConsumers, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.13F, 0.16F);
 			float altitude = MathHelper.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
 			matrices.translate(0.0D, altitude, 0.0D);
 		}

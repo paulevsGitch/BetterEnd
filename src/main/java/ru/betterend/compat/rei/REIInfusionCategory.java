@@ -18,11 +18,14 @@ import me.shedaniel.rei.gui.widget.Widget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import ru.betterend.BetterEnd;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.LangUtil;
 
 public class REIInfusionCategory implements TransferRecipeCategory<REIInfusionDisplay> {
+	
+	private final static Identifier COMPASS_IMG = BetterEnd.makeID("textures/gui/compass.png");
 
 	@Override
 	public @NotNull Identifier getIdentifier() {
@@ -46,11 +49,13 @@ public class REIInfusionCategory implements TransferRecipeCategory<REIInfusionDi
 	
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIInfusionDisplay display, Rectangle bounds) {
-		Point centerPoint = new Point(bounds.getCenterX() - 36, bounds.getCenterY() - 4);
+		Point centerPoint = new Point(bounds.getCenterX() - 34, bounds.getCenterY() - 6);
 		List<Widget> widgets = Lists.newArrayList();
 		widgets.add(Widgets.createRecipeBase(bounds));
 		List<List<EntryStack>> inputEntries = display.getInputEntries();
 		List<List<EntryStack>> outputEntries = display.getResultingEntries();
+		widgets.add(Widgets.createArrow(new Point(centerPoint.x + 48, centerPoint.y)));
+		widgets.add(Widgets.createTexturedWidget(COMPASS_IMG, centerPoint.x - 40, centerPoint.y - 40, 0.0F, 0.0F, 96, 96, 512, 512, 512, 512));
 		widgets.add(Widgets.createSlot(centerPoint).entries(inputEntries.get(0)).markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x, centerPoint.y - 28)).entries(inputEntries.get(1)).markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 28, centerPoint.y)).entries(inputEntries.get(3)).markInput());
@@ -60,7 +65,6 @@ public class REIInfusionCategory implements TransferRecipeCategory<REIInfusionDi
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 24, centerPoint.y + 24)).entries(inputEntries.get(4)).markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y + 24)).entries(inputEntries.get(6)).markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y - 24)).entries(inputEntries.get(8)).markInput());
-		widgets.add(Widgets.createArrow(new Point(centerPoint.x + 48, centerPoint.y)));
 		widgets.add(Widgets.createResultSlotBackground(new Point(centerPoint.x + 80, centerPoint.y)));
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 80, centerPoint.y)).entries(outputEntries.get(0)).disableBackground().markOutput());
 		widgets.add(Widgets.createLabel(new Point(bounds.getMaxX() - 5, bounds.y + 6), new TranslatableText("category.rei.infusion.time&val", display.getInfusionTime()))

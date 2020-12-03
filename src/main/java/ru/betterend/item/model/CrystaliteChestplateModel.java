@@ -25,21 +25,28 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 		this.torso.setPivot(0.0F, 0.0F, 0.0F);
 		if (thinArms) {
 			this.leftShoulder = new ModelPart(this, 41, 32);
-			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.3F);
+			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
 			this.leftShoulder.setPivot(5.0F, 2.5F, 0.0F);
 			this.leftShoulder.mirror = true;
 			this.rightShoulder = new ModelPart(this, 41, 16);
-			this.rightShoulder.addCuboid(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.3F);
+			this.rightShoulder.addCuboid(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
 			this.rightShoulder.setPivot(-5.0F, 2.5F, 10.0F);
 		} else {
 			this.leftShoulder = new ModelPart(this, 40, 32);
-			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.4F);
+			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
 			this.leftShoulder.setPivot(5.0F, 2.0F, 0.0F);
 			this.leftShoulder.mirror = true;
 			this.rightShoulder = new ModelPart(this, 40, 16);
-			this.rightShoulder.addCuboid(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.4F);
+			this.rightShoulder.addCuboid(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
 			this.rightShoulder.setPivot(-5.0F, 2.0F, 10.0F);
 		}
+	}
+	
+	@Override
+	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
+		super.setAttributes(bipedEntityModel);
+		this.leftShoulder.copyPositionAndRotation(leftArm);
+		this.rightShoulder.copyPositionAndRotation(rightArm);
 	}
 	
 	@Override
@@ -50,15 +57,6 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return Lists.newArrayList(torso, leftShoulder, rightShoulder);
-	}
-	
-	@Override
-	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
-		this.torso.copyPositionAndRotation(bipedEntityModel.torso);
-		this.leftArm.copyPositionAndRotation(bipedEntityModel.leftArm);
-		this.rightArm.copyPositionAndRotation(bipedEntityModel.rightArm);
-		this.leftShoulder.copyPositionAndRotation(leftArm);
-		this.rightShoulder.copyPositionAndRotation(rightArm);
 	}
 	
 	@Override

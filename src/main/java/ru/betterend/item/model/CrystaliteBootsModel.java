@@ -23,6 +23,13 @@ public class CrystaliteBootsModel extends BipedEntityModel<LivingEntity> {
 		this.rightBoot.addCuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.25F);
 		this.rightBoot.setPivot(-1.9F, 12.0F, 0.0F);
 	}
+	
+	@Override
+	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
+		super.setAttributes(bipedEntityModel);
+		this.leftBoot.copyPositionAndRotation(leftLeg);
+		this.rightBoot.copyPositionAndRotation(rightLeg);
+	}
 
 	@Override
 	protected Iterable<ModelPart> getHeadParts() {
@@ -32,13 +39,5 @@ public class CrystaliteBootsModel extends BipedEntityModel<LivingEntity> {
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return Lists.newArrayList(leftBoot, rightBoot);
-	}
-	
-	@Override
-	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
-		this.leftLeg.copyPositionAndRotation(bipedEntityModel.leftLeg);
-		this.rightLeg.copyPositionAndRotation(bipedEntityModel.rightLeg);
-		this.leftBoot.copyPositionAndRotation(leftLeg);
-		this.rightBoot.copyPositionAndRotation(rightLeg);
 	}
 }

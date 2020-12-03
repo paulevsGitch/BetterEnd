@@ -23,7 +23,10 @@ import net.minecraft.world.biome.BiomeEffects.Builder;
 import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.gen.GenerationStep.Carver;
 import net.minecraft.world.gen.GenerationStep.Feature;
+import net.minecraft.world.gen.ProbabilityConfig;
+import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
@@ -42,6 +45,7 @@ public class BiomeDefinition {
 	
 	private final List<ConfiguredStructureFeature<?, ?>> structures = Lists.newArrayList();
 	private final List<FeatureInfo> features = Lists.newArrayList();
+	private final List<CarverInfo> carvers = Lists.newArrayList();
 	private final List<SpawnInfo> mobs = Lists.newArrayList();
 
 	private BiomeParticleConfig particleConfig;
@@ -221,6 +225,7 @@ public class BiomeDefinition {
 		generationSettings.surfaceBuilder(surface == null ? ConfiguredSurfaceBuilders.END : surface);
 		structures.forEach((structure) -> generationSettings.structureFeature(structure));
 		features.forEach((info) -> generationSettings.feature(info.featureStep, info.feature));
+		carvers.forEach((info) -> generationSettings.carver(info.carverStep, info.carver));
 
 		effects.skyColor(0).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor).foliageColor(foliageColor).grassColor(grassColor);
 		if (loop != null) effects.loopSound(loop);
@@ -253,6 +258,11 @@ public class BiomeDefinition {
 		Feature featureStep;
 		ConfiguredFeature<?, ?> feature;
 	}
+	
+	private static final class CarverInfo {
+		Carver carverStep;
+		ConfiguredCarver<ProbabilityConfig> carver;
+	}
 
 	public Identifier getID() {
 		return id;
@@ -268,5 +278,13 @@ public class BiomeDefinition {
 
 	public boolean hasCaves() {
 		return hasCaves;
+	}
+
+	public BiomeDefinition addCarver(Carver carverStep, ConfiguredCarver<ProbabilityConfig> carver) {
+		CarverInfo info = new CarverInfo();
+		info.carverStep = carverStep;
+		info.carver = carver;
+		carvers.add(info);
+		return this;
 	}
 }

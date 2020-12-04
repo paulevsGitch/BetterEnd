@@ -140,7 +140,7 @@ public class GeyserFeature extends DefaultFeature {
 			BlocksHelper.setWithoutUpdate(world, pos, WATER);
 			Mutable mut = new Mutable().set(pos);
 			count = getYOnSurface(world, pos.getX(), pos.getZ()) - pos.getY();
-			for (int i = 0; i <= count; i++) {
+			for (int i = 0; i < count; i++) {
 				BlocksHelper.setWithoutUpdate(world, mut, WATER);
 				for (Direction dir: BlocksHelper.HORIZONTAL) {
 					BlocksHelper.setWithoutUpdate(world, mut.offset(dir), WATER);
@@ -151,24 +151,26 @@ public class GeyserFeature extends DefaultFeature {
 			for (int i = 0; i < 150; i++) {
 				mut.set(pos).move(MHelper.floor(random.nextGaussian() * 4 + 0.5), -halfHeight - 10, MHelper.floor(random.nextGaussian() * 4 + 0.5));
 				int dist = MHelper.floor(6 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
-				BlockState state = world.getBlockState(mut);
-				while (state.isOf(Blocks.WATER)) {
-					mut.setY(mut.getY() - 1);
-					state = world.getBlockState(mut);
-				}
-				if (state.isIn(EndTags.GEN_TERRAIN))  {
-					for (int j = 0; j < dist; j++) {
-						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
-						mut.setY(mut.getY() + 1);
-					}
-					BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
-					mut.setY(mut.getY() + 1);
-					state = world.getBlockState(mut);
+				if (dist >= 0) {
+					BlockState state = world.getBlockState(mut);
 					while (state.isOf(Blocks.WATER)) {
-						BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
-						world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+						mut.setY(mut.getY() - 1);
+						state = world.getBlockState(mut);
+					}
+					if (state.isIn(EndTags.GEN_TERRAIN))  {
+						for (int j = 0; j <= dist; j++) {
+							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
+							mut.setY(mut.getY() + 1);
+						}
+						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
+						while (state.isOf(Blocks.WATER)) {
+							BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
+							world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							mut.setY(mut.getY() + 1);
+							state = world.getBlockState(mut);
+						}
 					}
 				}
 			}

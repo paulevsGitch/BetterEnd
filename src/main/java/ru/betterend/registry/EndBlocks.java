@@ -168,7 +168,7 @@ public class EndBlocks {
 	public static final Block END_LILY_SEED = registerBlock("end_lily_seed", new BlockEndLilySeed());
 	
 	public static final Block HYDRALUX_SAPLING = registerBlock("hydralux_sapling", new BlockHydraluxSapling());	
-	public static final Block HYDRALUX = registerBlock("hydralux", new BlockHydralux());
+	public static final Block HYDRALUX = registerBlockNI("hydralux", new BlockHydralux());
 	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new HydraluxPetalBlock());
 	
 	public static final Block CAVE_BUSH = registerBlock("cave_bush", new BlockSimpleLeaves(MaterialColor.MAGENTA));

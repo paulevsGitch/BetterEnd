@@ -7,14 +7,14 @@
 	"elements": [ 	 
 		{
 			"__comment": "Box3",
-			"from": [ 4, 0, 4 ],
-			"to": [ 12, 3, 12 ],
+			"from": [ 5, 0, 5 ],
+			"to": [ 11, 2, 11 ],
 			"faces": {
-				"up": { "uv": [ 0, 0, 8, 8 ], "texture": "#texture" },
-				"north": { "uv": [ 0, 8, 8, 11 ], "texture": "#texture" },
-				"south": { "uv": [ 0, 8, 8, 11 ], "texture": "#texture" },
-				"west": { "uv": [ 0, 8, 8, 11 ], "texture": "#texture" },
-				"east": { "uv": [ 0, 8, 8, 11 ], "texture": "#texture" }
+				"up": { "uv": [ 1, 1, 7, 7 ], "texture": "#texture" },
+				"north": { "uv": [ 1, 8, 7, 10 ], "texture": "#texture" },
+				"south": { "uv": [ 1, 8, 7, 10 ], "texture": "#texture" },
+				"west": { "uv": [ 1, 8, 7, 10 ], "texture": "#texture" },
+				"east": { "uv": [ 1, 8, 7, 10 ], "texture": "#texture" }
 			}
 		},
 		{

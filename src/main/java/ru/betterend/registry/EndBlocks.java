@@ -29,7 +29,7 @@ import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockHydralux;
-import ru.betterend.blocks.BlockHydraluxSpore;
+import ru.betterend.blocks.BlockHydraluxSapling;
 import ru.betterend.blocks.BlockHydrothermalVent;
 import ru.betterend.blocks.BlockLacugroveSapling;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
@@ -166,7 +166,7 @@ public class EndBlocks {
 	public static final Block END_LILY = registerBlockNI("end_lily", new BlockEndLily());
 	public static final Block END_LILY_SEED = registerBlock("end_lily_seed", new BlockEndLilySeed());
 	
-	public static final Block HYDRALUX_SPORE = registerBlock("hydralux_spore", new BlockHydraluxSpore());	
+	public static final Block HYDRALUX_SAPLING = registerBlock("hydralux_sapling", new BlockHydraluxSapling());	
 	public static final Block HYDRALUX = registerBlock("hydralux", new BlockHydralux());
 	
 	public static final Block CAVE_BUSH = registerBlock("cave_bush", new BlockSimpleLeaves(MaterialColor.MAGENTA));

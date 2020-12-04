@@ -1,0 +1,42 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/hydralux_flower_petal",
+				"material": "betterend:waving_glow_inc"
+			},
+			{
+				"sprite": "betterend:block/hydralux_flower_bud_petal_side",
+				"material": "betterend:waving_glow_inc"
+			},
+			{
+				"sprite": "betterend:block/hydralux_flower_bud_petal_top",
+				"material": "betterend:waving_glow_inc"
+			},
+			{
+				"sprite": "betterend:block/hydralux_bloom_bottom",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/hydralux_bloom_top",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/hydralux_vine",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/hydralux_flower_bottom",
+				"material": "betterend:waving_glow_inc"
+			},
+			{
+				"sprite": "betterend:block/hydralux_flower_bud",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/hydralux_vine_bottom",
+				"material": "betterend:waving_floor"
+			}
+		]
+	}
+}

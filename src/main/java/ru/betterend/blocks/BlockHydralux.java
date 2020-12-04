@@ -1,12 +1,20 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -17,6 +25,7 @@ import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.HydraluxShape;
 import ru.betterend.blocks.basis.BlockUnderwaterPlant;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.util.MHelper;
 
 public class BlockHydralux extends BlockUnderwaterPlant {
 	public static final EnumProperty<HydraluxShape> SHAPE = BlockProperties.HYDRALUX_SHAPE;
@@ -58,5 +67,20 @@ public class BlockHydralux extends BlockUnderwaterPlant {
 	@Override
 	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
 		return false;
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		return new ItemStack(EndBlocks.HYDRALUX_SAPLING);
+	}
+	
+	@Override
+	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+		HydraluxShape shape = state.get(SHAPE);
+		if (shape == HydraluxShape.ROOTS) {
+			return Lists.newArrayList(new ItemStack(EndBlocks.HYDRALUX_SAPLING, MHelper.randRange(1, 2, MHelper.RANDOM)));
+		}
+		return Collections.emptyList();
 	}
 }

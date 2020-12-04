@@ -3,7 +3,7 @@
 	"textures": {
 		"particle": "betterend:block/hydralux_flower_bottom",
 		"texture": "betterend:block/hydralux_flower_bottom",
-		"petal_bottom": "betterend:block/hydralux_flower_bud_petal_bottom",
+		"petal_bottom": "betterend:block/hydralux_bloom_bottom",
 		"petal_side": "betterend:block/hydralux_flower_bud_petal_side",
 		"petal": "betterend:block/hydralux_flower_petal",
 		"top": "betterend:block/hydralux_bloom_top"
@@ -49,7 +49,7 @@
 			"to": [ 13, 16, 13 ],
 			"shade": false,
 			"faces": {
-				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#texture" },
+				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#petal_bottom" },
 				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#top" },
 				"north": { "uv": [ 3, 0, 13, 8 ], "texture": "#texture" },
 				"south": { "uv": [ 3, 0, 13, 8 ], "texture": "#texture" },

@@ -13,7 +13,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class BlockHydraluxSpore extends BlockUnderwaterPlantWithAge {
+public class BlockHydraluxSapling extends BlockUnderwaterPlantWithAge {
 	@Override
 	public void grow(StructureWorldAccess world, Random random, BlockPos pos) {
 		int h = MHelper.randRange(4, 8, random);

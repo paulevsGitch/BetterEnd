@@ -53,6 +53,7 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.EternalRunedFlavolite;
+import ru.betterend.blocks.HydraluxPetalBlock;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.PedestalVanilla;
 import ru.betterend.blocks.RunedFlavolite;
@@ -168,6 +169,7 @@ public class EndBlocks {
 	
 	public static final Block HYDRALUX_SAPLING = registerBlock("hydralux_sapling", new BlockHydraluxSapling());	
 	public static final Block HYDRALUX = registerBlock("hydralux", new BlockHydralux());
+	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new HydraluxPetalBlock());
 	
 	public static final Block CAVE_BUSH = registerBlock("cave_bush", new BlockSimpleLeaves(MaterialColor.MAGENTA));
 	

@@ -103,25 +103,27 @@ public class SulphuricCaveFeature extends DefaultFeature {
 			int count = MHelper.randRange(5, 20, random);
 			for (int i = 0; i < count; i++) {
 				mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 0, MHelper.floor(random.nextGaussian() * 2 + 0.5));
-				int dist = MHelper.floor(6 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
-				state = world.getBlockState(mut);
-				while (state.isOf(Blocks.WATER)) {
-					mut.setY(mut.getY() - 1);
-					state = world.getBlockState(mut);
-				}
-				if (state.isIn(EndTags.GEN_TERRAIN))  {
-					for (int j = 0; j <= dist; j++) {
-						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
-						mut.setY(mut.getY() + 1);
-					}
-					BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
-					mut.setY(mut.getY() + 1);
+				int dist = MHelper.floor(3 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
+				if (dist > 0) {
 					state = world.getBlockState(mut);
 					while (state.isOf(Blocks.WATER)) {
-						BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
-						world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+						mut.setY(mut.getY() - 1);
+						state = world.getBlockState(mut);
+					}
+					if (state.isIn(EndTags.GEN_TERRAIN)) {
+						for (int j = 0; j <= dist; j++) {
+							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
+							mut.setY(mut.getY() + 1);
+						}
+						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
+						while (state.isOf(Blocks.WATER)) {
+							BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
+							world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							mut.setY(mut.getY() + 1);
+							state = world.getBlockState(mut);
+						}
 					}
 				}
 			}

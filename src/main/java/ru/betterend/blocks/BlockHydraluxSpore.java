@@ -31,14 +31,19 @@ public class BlockHydraluxSpore extends BlockUnderwaterPlantWithAge {
 		BlocksHelper.setWithoutUpdate(world, pos, state.with(BlockProperties.HYDRALUX_SHAPE, HydraluxShape.ROOTS));
 		for (int i = 1; i < h - 2; i++) {
 			mut.setY(pos.getY() + i);
-			BlocksHelper.setWithoutUpdate(world, pos, state.with(BlockProperties.HYDRALUX_SHAPE, HydraluxShape.VINE));
+			BlocksHelper.setWithoutUpdate(world, mut, state.with(BlockProperties.HYDRALUX_SHAPE, HydraluxShape.VINE));
 		}
 		
 		mut.setY(mut.getY() + 1);
 		boolean big = random.nextBoolean();
-		BlocksHelper.setWithoutUpdate(world, pos, state.with(BlockProperties.HYDRALUX_SHAPE, big ? HydraluxShape.FLOWER_BIG_BOTTOM : HydraluxShape.FLOWER_SMALL_BOTTOM));
+		BlocksHelper.setWithoutUpdate(world, mut, state.with(BlockProperties.HYDRALUX_SHAPE, big ? HydraluxShape.FLOWER_BIG_BOTTOM : HydraluxShape.FLOWER_SMALL_BOTTOM));
 		
 		mut.setY(mut.getY() + 1);
-		BlocksHelper.setWithoutUpdate(world, pos, state.with(BlockProperties.HYDRALUX_SHAPE, big ? HydraluxShape.FLOWER_BIG_TOP : HydraluxShape.FLOWER_SMALL_TOP));
+		BlocksHelper.setWithoutUpdate(world, mut, state.with(BlockProperties.HYDRALUX_SHAPE, big ? HydraluxShape.FLOWER_BIG_TOP : HydraluxShape.FLOWER_SMALL_TOP));
+	}
+	
+	@Override
+	protected boolean isTerrain(BlockState state) {
+		return state.isOf(EndBlocks.SULPHURIC_ROCK.stone);
 	}
 }

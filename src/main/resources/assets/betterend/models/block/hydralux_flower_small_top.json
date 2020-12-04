@@ -13,10 +13,10 @@
 			"shade": false,
 			"faces": {
 				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#petal_top" },
-				"north": { "uv": [ 3, 8, 13, 16 ], "texture": "#texture" },
-				"south": { "uv": [ 3, 8, 13, 16 ], "texture": "#texture" },
-				"west": { "uv": [ 3, 8, 13, 16 ], "texture": "#texture" },
-				"east": { "uv": [ 3, 8, 13, 16 ], "texture": "#texture" }
+				"north": { "uv": [ 3, 0, 13, 8 ], "texture": "#texture" },
+				"south": { "uv": [ 3, 0, 13, 8 ], "texture": "#texture" },
+				"west": { "uv": [ 3, 0, 13, 8 ], "texture": "#texture" },
+				"east": { "uv": [ 3, 0, 13, 8 ], "texture": "#texture" }
 			}
 		}
 	]

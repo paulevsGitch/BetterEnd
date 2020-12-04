@@ -2,7 +2,7 @@
 	"itemGroup.betterend.items": "Better End",
 	
 	"category.rei.damage.amount&dmg": "Tool damage: %s",
-	"category.rei.infusion.time&val": "Infusion Time: %s",
+	"category.rei.infusion.time&val": "Time: %s",
 	
 	"biome.betterend.foggy_mushroomland": "Foggy Mushroomland",
 	"biome.betterend.dust_wastelands": "Dust Wastelands",
@@ -285,9 +285,7 @@
 	"block.betterend.end_stone_lantern": "End Stone Lantern",
 	"block.betterend.violecite_lantern": "Violecite Lantern",
 
-	"entity.betterend.dragonfly": "Dragonfly",
 	"entity.betterend.end_fish": "End Fish",
-	"entity.betterend.end_slime": "End Slime",
 	"entity.betterend.shadow_walker": "Shadow Walker",
 	"item.betterend.spawn_egg_shadow_walker": "Shadow Walker Spawn Egg",
 

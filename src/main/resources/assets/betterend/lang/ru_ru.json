@@ -2,7 +2,7 @@
 	"itemGroup.betterend.items": "Улучшенный Край",
 	
 	"category.rei.damage.amount&dmg": "Износ инструмента: %s",
-	"category.rei.infusion.time&val": "Время наполнения: %s",
+	"category.rei.infusion.time&val": "Время: %s",
 	
 	"biome.betterend.foggy_mushroomland": "Туманное гриболесье",
 	"biome.betterend.dust_wastelands": "Пыльные пустоши",
@@ -287,9 +287,7 @@
  	"block.betterend.end_stone_lantern": "Фонарь из камня Края",
  	"block.betterend.violecite_lantern": "Виолецитовый фонарь",
 
- 	"entity.betterend.dragonfly": "Стрекоза",
  	"entity.betterend.end_fish": "Рыба Края",
- 	"entity.betterend.end_slime": "Слизень Края",
  	"entity.betterend.shadow_walker": "Теневой ходок",
  	"item.betterend.spawn_egg_shadow_walker": "Яйцо призыва теневого ходока",
 

@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.BubbleColumnBlock;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -38,7 +39,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 			return false;
 		}
 		
-		Mutable bpos = new Mutable();
+		Mutable mut = new Mutable();
 		pos = new BlockPos(pos.getX(), MHelper.randRange(bottom, top, random), pos.getZ());
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(MHelper.getSeed(534, pos.getX(), pos.getZ()));
@@ -59,33 +60,33 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - pos.getX();
 			xsq *= xsq;
-			bpos.setX(x);
+			mut.setX(x);
 			for (int z = z1; z <= z2; z++) {
 				int zsq = z - pos.getZ();
 				zsq *= zsq;
-				bpos.setZ(z);
+				mut.setZ(z);
 				for (int y = y1; y <= y2; y++) {
 					int ysq = y - pos.getY();
 					ysq *= 1.6;
 					ysq *= ysq;
-					bpos.setY(y);
+					mut.setY(y);
 					double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
 					double r2 = r + 5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
-						BlockState state = world.getBlockState(bpos);
+						BlockState state = world.getBlockState(mut);
 						if (isReplaceable(state)) {
-							BlocksHelper.setWithoutUpdate(world, bpos, y < waterLevel ? WATER : CAVE_AIR);
+							BlocksHelper.setWithoutUpdate(world, mut, y < waterLevel ? WATER : CAVE_AIR);
 						}
 					}
 					else if (dist < r2 * r2) {
-						if (world.getBlockState(bpos).isIn(EndTags.GEN_TERRAIN)) {
+						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
 							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1) + noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
 							if (v > 0.4) {
-								brimstone.add(bpos.toImmutable());
+								brimstone.add(mut.toImmutable());
 							}
 							else {
-								BlocksHelper.setWithoutUpdate(world, bpos, rock);
+								BlocksHelper.setWithoutUpdate(world, mut, rock);
 							}
 						}
 					}
@@ -96,6 +97,34 @@ public class SulphuricCaveFeature extends DefaultFeature {
 			placeBrimstone(world, blockPos, random);
 		});
 		
+		if (random.nextInt(4) == 0) {
+			int count = MHelper.randRange(5, 20, random);
+			for (int i = 0; i < count; i++) {
+				mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 0, MHelper.floor(random.nextGaussian() * 2 + 0.5));
+				int dist = MHelper.floor(6 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
+				BlockState state = world.getBlockState(mut);
+				while (state.isOf(Blocks.WATER)) {
+					mut.setY(mut.getY() - 1);
+					state = world.getBlockState(mut);
+				}
+				if (state.isIn(EndTags.GEN_TERRAIN) || state.isOf(Blocks.AIR))  {
+					for (int j = 0; j <= dist; j++) {
+						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
+						mut.setY(mut.getY() + 1);
+					}
+					BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
+					mut.setY(mut.getY() + 1);
+					state = world.getBlockState(mut);
+					while (state.isOf(Blocks.WATER)) {
+						BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
+						world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+						mut.setY(mut.getY() + 1);
+						state = world.getBlockState(mut);
+					}
+				}
+			}
+		}
+		
 		BlocksHelper.fixBlocks(world, new BlockPos(x1, y1, z1), new BlockPos(x2, y2, z2));
 		
 		return true;
@@ -104,6 +133,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	private boolean isReplaceable(BlockState state) {
 		return state.isIn(EndTags.GEN_TERRAIN)
 				|| state.isOf(EndBlocks.HYDROTHERMAL_VENT)
+				|| state.isOf(Blocks.BUBBLE_COLUMN)
 				|| state.isOf(EndBlocks.SULPHUR_CRYSTAL)
 				|| state.getMaterial().isReplaceable()
 				|| state.getMaterial().equals(Material.PLANT)

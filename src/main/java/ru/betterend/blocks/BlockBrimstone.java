@@ -43,7 +43,7 @@ public class BlockBrimstone extends BlockBase {
 			if (deactivate) {
 				world.setBlockState(pos, getDefaultState().with(ACTIVATED, false));
 			}
-			else if (state.get(ACTIVATED)) {
+			else if (state.get(ACTIVATED) && random.nextInt(16) == 0) {
 				Direction dir = BlocksHelper.randomDirection(random);
 				BlockPos side = pos.offset(dir);
 				BlockState sideState = world.getBlockState(side);

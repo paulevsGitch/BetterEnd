@@ -38,6 +38,7 @@ import ru.betterend.world.features.DefaultFeature;
 public class GeyserFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE1;
 	protected static final Function<BlockState, Boolean> REPLACE2;
+	private static final Function<BlockState, Boolean> IGNORE;
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
@@ -56,19 +57,6 @@ public class GeyserFeature extends DefaultFeature {
 				float delta = (float) i / (float) (count - 1);
 				float radius = MathHelper.lerp(delta, radius1, radius2) * 1.3F;
 				
-				/*SDF bowl = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.SULFURIC_ROCK.stone);
-				SDF cut = new SDFTranslate().setTranslate(0, 2, 0).setSource(bowl);
-				bowl = new SDFSubtraction().setSourceA(bowl).setSourceB(cut);
-				
-				SDF inner = new SDFCapedCone().setHeight(radius - 2).setRadius1(0).setRadius2(radius - 1).setBlock(EndBlocks.BRIMSTONE);
-				cut = new SDFTranslate().setTranslate(0, 4, 0).setSource(inner);
-				inner = new SDFSubtraction().setSourceA(inner).setSourceB(cut);
-				inner = new SDFTranslate().setTranslate(0, 1.99F, 0).setSource(inner);
-				bowl = new SDFUnion().setSourceA(inner).setSourceB(bowl);
-				
-				SDF water = new SDFCapedCone().setHeight(radius - 4).setRadius1(0).setRadius2(radius - 3).setBlock(Blocks.WATER);
-				bowl = new SDFUnion().setSourceA(water).setSourceB(bowl);*/
-				
 				SDF bowl = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.SULPHURIC_ROCK.stone);
 				
 				SDF brimstone = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.BRIMSTONE);
@@ -83,9 +71,7 @@ public class GeyserFeature extends DefaultFeature {
 				
 				final OpenSimplexNoise noise1 = new OpenSimplexNoise(random.nextLong());
 				final OpenSimplexNoise noise2 = new OpenSimplexNoise(random.nextLong());
-				/*bowl = new SDFDisplacement().setFunction((vec) -> {
-					return (float) noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
-				}).setSource(bowl);*/
+				
 				bowl = new SDFCoordModify().setFunction((vec) -> {
 					float dx = (float) noise1.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
 					float dz = (float) noise2.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
@@ -99,7 +85,7 @@ public class GeyserFeature extends DefaultFeature {
 				
 				bowl = new SDFTranslate().setTranslate(radius, py - radius, 0).setSource(bowl);
 				bowl = new SDFRotation().setRotation(Vector3f.POSITIVE_Y, i * 4F).setSource(bowl);
-				sdf = /*new SDFSmoothUnion()*/new SDFUnion()/*.setRadius(3)*/.setSourceA(sdf).setSourceB(bowl);
+				sdf = new SDFUnion().setSourceA(sdf).setSourceB(bowl);
 			}
 			sdf.setReplaceFunction(REPLACE2).fillRecursive(world, pos);
 			
@@ -127,22 +113,28 @@ public class GeyserFeature extends DefaultFeature {
 			
 			sdf = new SDFSmoothUnion().setRadius(5).setSourceA(cave).setSourceB(sdf);
 			
-			obj1.setBlock(EndBlocks.SULPHURIC_ROCK.stone);
-			obj2.setBlock(EndBlocks.SULPHURIC_ROCK.stone);
-			new SDFDisplacement().setFunction((vec) -> {
-				return -4F;
-			}).setSource(sdf).setReplaceFunction(REPLACE1).fillRecursive(world, pos);
+			obj1.setBlock(WATER);
+			obj2.setBlock(WATER);
+			sdf.setReplaceFunction(REPLACE2);
+			sdf.fillRecursive(world, pos);
 			
 			obj1.setBlock(EndBlocks.BRIMSTONE);
 			obj2.setBlock(EndBlocks.BRIMSTONE);
 			new SDFDisplacement().setFunction((vec) -> {
 				return -2F;
-			}).setSource(sdf).setReplaceFunction(REPLACE1).fillRecursive(world, pos);
+			}).setSource(sdf).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
 			
-			obj1.setBlock(WATER);
-			obj2.setBlock(WATER);
-			sdf.setReplaceFunction(REPLACE2);
-			sdf.fillRecursive(world, pos);
+			obj1.setBlock(EndBlocks.SULPHURIC_ROCK.stone);
+			obj2.setBlock(EndBlocks.SULPHURIC_ROCK.stone);
+			new SDFDisplacement().setFunction((vec) -> {
+				return -4F;
+			}).setSource(sdf).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
+			
+			obj1.setBlock(Blocks.END_STONE);
+			obj2.setBlock(Blocks.END_STONE);
+			new SDFDisplacement().setFunction((vec) -> {
+				return -6F;
+			}).setSource(sdf).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
 			
 			Mutable mut = new Mutable().set(pos);
 			for (int i = 0; i < halfHeight + 5; i++) {
@@ -164,7 +156,7 @@ public class GeyserFeature extends DefaultFeature {
 	
 	static {
 		REPLACE1 = (state) -> {
-			return state.isAir() || (state.isIn(EndTags.GEN_TERRAIN) && !state.isOf(EndBlocks.SULPHURIC_ROCK.stone) && !state.isOf(EndBlocks.BRIMSTONE));
+			return state.isAir() || (state.isIn(EndTags.GEN_TERRAIN));
 		};
 		
 		REPLACE2 = (state) -> {
@@ -178,6 +170,10 @@ public class GeyserFeature extends DefaultFeature {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();
+		};
+		
+		IGNORE = (state) -> {
+			return state.isOf(Blocks.WATER) || state.isOf(Blocks.CAVE_AIR) || state.isOf(EndBlocks.SULPHURIC_ROCK.stone) || state.isOf(EndBlocks.BRIMSTONE);
 		};
 	}
 }

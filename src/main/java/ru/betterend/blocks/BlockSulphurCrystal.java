@@ -37,6 +37,7 @@ import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockAttached;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
@@ -100,6 +101,13 @@ public class BlockSulphurCrystal extends BlockAttached implements IRenderTypeabl
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
 		return BOUNDING_SHAPES.get(state.get(FACING));
+	}
+	
+	@Override
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+		Direction direction = (Direction) state.get(FACING);
+		BlockPos blockPos = pos.offset(direction.getOpposite());
+		return world.getBlockState(blockPos).isOf(EndBlocks.BRIMSTONE);
 	}
 	
 	static {

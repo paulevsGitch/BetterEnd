@@ -97,7 +97,7 @@ public class EndFeatures {
 	public static final EndFeature FLOATING_SPIRE = EndFeature.makeRawGenFeature("floating_spire", new FloatingSpireFeature(), 8);
 	public static final EndFeature GEYSER = EndFeature.makeRawGenFeature("geyser", new GeyserFeature(), 8);
 	public static final EndFeature SULPHURIC_LAKE = EndFeature.makeLakeFeature("sulphuric_lake", new SulphuricLakeFeature(), 8);
-	public static final EndFeature SULPHURIC_CAVE = EndFeature.makeRawGenFeature("sulphuric_cave", new SulphuricCaveFeature(), 1);
+	public static final EndFeature SULPHURIC_CAVE = EndFeature.makeCountRawFeature("sulphuric_cave", new SulphuricCaveFeature(), 2);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 6, 3, 0, 4, 96);

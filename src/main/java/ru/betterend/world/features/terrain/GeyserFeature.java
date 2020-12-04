@@ -148,8 +148,8 @@ public class GeyserFeature extends DefaultFeature {
 				mut.setY(mut.getY() + 1);
 			}
 			
-			for (int i = 0; i < 30; i++) {
-				mut.set(pos).add(random.nextGaussian() * 2, -halfHeight - 10, random.nextGaussian() * 2);
+			for (int i = 0; i < 50; i++) {
+				mut.set(pos).add(random.nextGaussian() * 4, -halfHeight - 10, random.nextGaussian() * 4);
 				int dist = MHelper.floor(6 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
 				BlockState state = world.getBlockState(mut);
 				while (state.isOf(Blocks.WATER)) {

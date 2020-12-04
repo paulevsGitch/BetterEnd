@@ -18,9 +18,6 @@ public class ParticleGeyser extends SpriteBillboardParticle {
 		setSprite(sprites);
 		this.maxAge = MHelper.randRange(600, 1200, random);
 		this.scale = MHelper.randRange(0.5F, 1.0F, random);
-		this.velocityX = vx;
-		this.velocityY = vy;
-		this.velocityY = vz;
 	}
 	
 	@Override
@@ -28,8 +25,6 @@ public class ParticleGeyser extends SpriteBillboardParticle {
 		if (this.age >= this.maxAge + 40) {
 			this.setColorAlpha((this.maxAge - this.age) / 40F);
 		}
-		//this.velocityX = 0;
-		//this.velocityZ = 0;
 		this.velocityY = 0.125;
 		super.tick();
 	}

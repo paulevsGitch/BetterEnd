@@ -1,6 +1,8 @@
 package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.carver.ConfiguredCarvers;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.world.surface.SurfaceBuilders;
@@ -16,6 +18,8 @@ public class BiomeSulfurSprings extends EndBiome {
 				.setParticles(EndParticles.SULPHUR_PARTICLE, 0.001F)
 				.addFeature(EndFeatures.GEYSER)
 				.addFeature(EndFeatures.SULPHURIC_LAKE)
+				.addFeature(EndFeatures.SULPHURIC_CAVE)
+				.addCarver(GenerationStep.Carver.AIR, ConfiguredCarvers.CAVE)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

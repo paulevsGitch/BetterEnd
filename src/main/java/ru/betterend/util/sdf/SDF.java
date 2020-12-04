@@ -140,8 +140,10 @@ public abstract class SDF {
 		if (infos.size() > 0) {
 			Collections.sort(infos);
 			infos.forEach((info) -> {
-				BlockState state = postProcess.apply(info);
-				BlocksHelper.setWithoutUpdate(world, info.getPos(), state);
+				info.setState(postProcess.apply(info));
+			});
+			infos.forEach((info) -> {
+				BlocksHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 			});
 
 			infos.clear();
@@ -181,8 +183,10 @@ public abstract class SDF {
 		if (infos.size() > 0) {
 			Collections.sort(infos);
 			infos.forEach((info) -> {
-				BlockState state = postProcess.apply(info);
-				BlocksHelper.setWithoutUpdate(world, info.getPos(), state);
+				info.setState(postProcess.apply(info));
+			});
+			infos.forEach((info) -> {
+				BlocksHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 			});
 
 			infos.clear();

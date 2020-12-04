@@ -103,6 +103,11 @@ public class EndFeature {
 		return new EndFeature(name, feature, GenerationStep.Feature.SURFACE_STRUCTURES, configured);
 	}
 	
+	public static EndFeature makeCountRawFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(chance)));
+		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
+	}
+	
 	public Feature<?> getFeature() {
 		return feature;
 	}

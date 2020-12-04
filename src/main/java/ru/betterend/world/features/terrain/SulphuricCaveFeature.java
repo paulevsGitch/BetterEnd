@@ -9,8 +9,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -103,6 +103,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	
 	private boolean isReplaceable(BlockState state) {
 		return state.isIn(EndTags.GEN_TERRAIN)
+				|| state.isOf(EndBlocks.HYDROTHERMAL_VENT)
 				|| state.isOf(EndBlocks.SULPHUR_CRYSTAL)
 				|| state.getMaterial().isReplaceable()
 				|| state.getMaterial().equals(Material.PLANT)

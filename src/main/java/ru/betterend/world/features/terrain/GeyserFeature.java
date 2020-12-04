@@ -5,7 +5,6 @@ import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
@@ -148,8 +147,8 @@ public class GeyserFeature extends DefaultFeature {
 				mut.setY(mut.getY() + 1);
 			}
 			
-			for (int i = 0; i < 50; i++) {
-				mut.set(pos).add(random.nextGaussian() * 4, -halfHeight - 10, random.nextGaussian() * 4);
+			for (int i = 0; i < 150; i++) {
+				mut.set(pos).move(MHelper.floor(random.nextGaussian() * 4 + 0.5), -halfHeight - 10, MHelper.floor(random.nextGaussian() * 4 + 0.5));
 				int dist = MHelper.floor(6 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
 				BlockState state = world.getBlockState(mut);
 				while (state.isOf(Blocks.WATER)) {
@@ -177,10 +176,7 @@ public class GeyserFeature extends DefaultFeature {
 		};
 		
 		REPLACE2 = (state) -> {
-			if (state.isIn(EndTags.GEN_TERRAIN)) {
-				return true;
-			}
-			if (state.getBlock() instanceof LeavesBlock) {
+			if (state.isIn(EndTags.GEN_TERRAIN) || state.isOf(EndBlocks.HYDROTHERMAL_VENT) || state.isOf(EndBlocks.SULPHUR_CRYSTAL)) {
 				return true;
 			}
 			if (state.getMaterial().equals(Material.PLANT)) {

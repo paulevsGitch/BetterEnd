@@ -58,7 +58,7 @@ public class ParticleSulphur extends SpriteBillboardParticle {
 		if (this.age <= 40) {
 			this.setColorAlpha(this.age / 40F);
 		}
-		else if (this.age >= this.maxAge + 40) {
+		else if (this.age >= this.maxAge - 40) {
 			this.setColorAlpha((this.maxAge - this.age) / 40F);
 		}
 		

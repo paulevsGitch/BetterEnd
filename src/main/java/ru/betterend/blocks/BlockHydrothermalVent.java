@@ -1,20 +1,28 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.BubbleColumnBlock;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -23,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
@@ -73,9 +82,10 @@ public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEnti
 		if (!canPlaceAt(state, world, pos)) {
 			return Blocks.WATER.getDefaultState();
 		}
-		else {
-			return state;
+		else if (state.get(WATERLOGGED) && facing == Direction.UP && neighborState.isOf(Blocks.WATER)) {
+			world.getBlockTickScheduler().schedule(pos, this, 20);
 		}
+		return state;
 	}
 	
 	@Override
@@ -93,5 +103,17 @@ public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEnti
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
 		return new BlockEntityHydrothermalVent();
+	}
+
+	@Override
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		BubbleColumnBlock.update(world, pos.up(), false);
+	}
+	
+	@Override
+	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+		if (world instanceof ServerWorld && state.get(WATERLOGGED) && world.getBlockState(pos.up()).isOf(Blocks.WATER)) {
+			scheduledTick(state,(ServerWorld) world, pos, world.random);
+		}
 	}
 }

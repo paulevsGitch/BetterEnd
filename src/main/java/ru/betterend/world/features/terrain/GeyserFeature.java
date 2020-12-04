@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.BubbleColumnBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
@@ -161,6 +162,13 @@ public class GeyserFeature extends DefaultFeature {
 						mut.setY(mut.getY() + 1);
 					}
 					BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
+					mut.setY(mut.getY() + 1);
+					state = world.getBlockState(mut);
+					while (state.isOf(Blocks.WATER)) {
+						BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
+						mut.setY(mut.getY() + 1);
+						state = world.getBlockState(mut);
+					}
 				}
 			}
 			

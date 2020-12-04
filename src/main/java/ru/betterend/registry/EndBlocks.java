@@ -39,6 +39,7 @@ import ru.betterend.blocks.BlockPythadendronSapling;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
 import ru.betterend.blocks.BlockSulphurCrystal;
+import ru.betterend.blocks.BlockSulphuricGeyser;
 import ru.betterend.blocks.BlockTenaneaFlowers;
 import ru.betterend.blocks.BlockTenaneaSapling;
 import ru.betterend.blocks.BlockTerrain;
@@ -110,6 +111,8 @@ public class EndBlocks {
 	public static final Block GRANITE_PEDESTAL = registerBlock("granite_pedestal", new PedestalVanilla(Blocks.GRANITE));
 	public static final Block QUARTZ_PEDESTAL = registerBlock("quartz_pedestal", new PedestalVanilla(Blocks.QUARTZ_BLOCK));
 	public static final Block PURPUR_PEDESTAL = registerBlock("purpur_pedestal", new PedestalVanilla(Blocks.PURPUR_BLOCK));
+	
+	public static final Block SULPHURIC_GEYSER = registerBlock("sulphuric_geyser", new BlockSulphuricGeyser());
 	
 	// Wooden Materials And Trees //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());
@@ -209,7 +212,7 @@ public class EndBlocks {
 	public static final Block ETERNAL_PEDESTAL = registerBlock("eternal_pedestal", new EternalPedestal());
 	public static final Block INFUSION_PEDESTAL = registerBlock("infusion_pedestal", new InfusionPedestal());
 	
-	//Technical
+	// Technical
 	public static final Block END_PORTAL_BLOCK = registerBlockNI("end_portal_block", new EndPortalBlock());
 	
 	public static void register() {}

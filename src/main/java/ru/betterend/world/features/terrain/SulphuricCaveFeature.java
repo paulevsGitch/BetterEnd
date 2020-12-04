@@ -81,7 +81,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 					else if (dist < r2 * r2) {
 						if (world.getBlockState(bpos).isIn(EndTags.GEN_TERRAIN)) {
 							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1) + noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
-							if (v < 0) {
+							if (v > 0.4) {
 								brimstone.add(bpos.toImmutable());
 							}
 							else {
@@ -129,7 +129,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	private void makeShards(StructureWorldAccess world, BlockPos pos, Random random) {
 		for (Direction dir: BlocksHelper.DIRECTIONS) {
 			BlockPos side;
-			if (random.nextInt(3) == 0 && world.getBlockState((side = pos.offset(dir))).isOf(Blocks.WATER)) {
+			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.offset(dir))).isOf(Blocks.WATER)) {
 				BlockState state = EndBlocks.SULPHUR_CRYSTAL.getDefaultState()
 						.with(BlockSulphurCrystal.WATERLOGGED, true)
 						.with(BlockSulphurCrystal.FACING, dir)

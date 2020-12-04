@@ -193,7 +193,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private void makeShards(StructureWorldAccess world, BlockPos pos, Random random) {
 		for (Direction dir: BlocksHelper.DIRECTIONS) {
 			BlockPos side;
-			if (random.nextInt(3) == 0 && world.getBlockState((side = pos.offset(dir))).isOf(Blocks.WATER)) {
+			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.offset(dir))).isOf(Blocks.WATER)) {
 				BlockState state = EndBlocks.SULPHUR_CRYSTAL.getDefaultState()
 						.with(BlockSulphurCrystal.WATERLOGGED, true)
 						.with(BlockSulphurCrystal.FACING, dir)

@@ -16,13 +16,13 @@ public class BlockEntityHydrothermalVent extends BlockEntity implements Tickable
 
 	@Override
 	public void tick() {
-		if (world.random.nextInt(32) == 0) {
+		if (world.random.nextInt(20) == 0) {
 			double x = pos.getX() + world.random.nextDouble();
 			double y = pos.getY() + 0.9 + world.random.nextDouble() * 0.3;
 			double z = pos.getZ() + world.random.nextDouble();
 			BlockState state = getCachedState();
-			if (state.isOf(EndBlocks.HYDROTHERMAL_VENT)) {
-				if (getCachedState().get(BlockHydrothermalVent.WATERLOGGED)) {
+			if (state.isOf(EndBlocks.HYDROTHERMAL_VENT) && state.get(BlockHydrothermalVent.ACTIVATED)) {
+				if (state.get(BlockHydrothermalVent.WATERLOGGED)) {
 					world.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
 				}
 				else {

@@ -25,6 +25,7 @@ import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.HydraluxShape;
 import ru.betterend.blocks.basis.BlockUnderwaterPlant;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
 public class BlockHydralux extends BlockUnderwaterPlant {
@@ -78,7 +79,10 @@ public class BlockHydralux extends BlockUnderwaterPlant {
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		HydraluxShape shape = state.get(SHAPE);
-		if (shape == HydraluxShape.ROOTS) {
+		if (shape == HydraluxShape.FLOWER_BIG_BOTTOM || shape == HydraluxShape.FLOWER_SMALL_BOTTOM) {
+			return Lists.newArrayList(new ItemStack(EndItems.HYDRALUX_PETAL, MHelper.randRange(1, 4, MHelper.RANDOM)));
+		}
+		else if (shape == HydraluxShape.ROOTS) {
 			return Lists.newArrayList(new ItemStack(EndBlocks.HYDRALUX_SAPLING, MHelper.randRange(1, 2, MHelper.RANDOM)));
 		}
 		return Collections.emptyList();

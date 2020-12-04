@@ -19,8 +19,8 @@
 		},
 		{
 			"__comment": "PlaneX9",
-			"from": [ 5.5, 3, 5.5 ],
-			"to": [ 5.501, 11, 13.5 ],
+			"from": [ 5.5, 2, 5.5 ],
+			"to": [ 5.501, 10, 13.5 ],
 			"rotation": { "origin": [ 5.5, 3, 5.5 ], "axis": "y", "angle": 45 },
 			"shade": false,
 			"faces": {
@@ -30,8 +30,8 @@
 		},
 		{
 			"__comment": "PlaneX9",
-			"from": [ 10.5, 3, 5.5 ],
-			"to": [ 10.501, 11, 13.5 ],
+			"from": [ 10.5, 2, 5.5 ],
+			"to": [ 10.501, 10, 13.5 ],
 			"rotation": { "origin": [ 10.5, 3, 5.5 ], "axis": "y", "angle": -45 },
 			"shade": false,
 			"faces": {

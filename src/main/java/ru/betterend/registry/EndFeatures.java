@@ -18,6 +18,7 @@ import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
+import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
@@ -87,6 +88,7 @@ public class EndFeatures {
 	public static final EndFeature END_LILY_RARE = new EndFeature("end_lily_rare", new EndLilyFeature(3), 4);
 	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(7), 5);
 	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(20), 25);
+	public static final EndFeature HYDRALUX = new EndFeature("hydralux", new HydraluxFeature(5), 5);
 	
 	// Terrain //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

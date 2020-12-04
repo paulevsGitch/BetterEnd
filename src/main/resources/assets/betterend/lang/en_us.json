@@ -1,5 +1,10 @@
 {
-	"itemGroup.betterend.items": "Better End",
+	"itemGroup.betterend.end_items": "Better End: Items",
+	"itemGroup.betterend.end_blocks": "Better End: Blocks",
+	
+	"item.betterend.guidebook": "The End For Dummies",
+	"book.betterend.landing_text": "A short guide about surviving in the extreme conditions of The End.",
+	"book.betterend.subtitle": "Surviving in The End",
 	
 	"category.rei.damage.amount&dmg": "Tool damage: %s",
 	"category.rei.infusion.time&val": "Time: %s",

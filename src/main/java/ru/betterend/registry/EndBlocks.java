@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
@@ -70,7 +70,6 @@ import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.ItemConfig;
 import ru.betterend.config.MainConfig;
-import ru.betterend.tab.CreativeTab;
 
 public class EndBlocks {
 	private static final ItemConfig CONFIG = MainConfig.ITEM_CONFIG;
@@ -222,7 +221,7 @@ public class EndBlocks {
 			return block;
 		}
 		Registry.register(Registry.BLOCK, id, block);
-		EndItems.registerItem(id, new BlockItem(block, new Item.Settings().group(CreativeTab.END_TAB)));
+		EndItems.registerItem(id, new BlockItem(block, EndItems.makeBlockItemSettings()));
 		return block;
 	}
 	

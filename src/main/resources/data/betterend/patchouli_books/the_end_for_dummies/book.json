@@ -1,0 +1,11 @@
+{
+	"name": "item.betterend.guidebook",
+	"landing_text": "book.betterend.landing_text",
+	"subtitle": "book.betterend.subtitle",
+	"creative_tab": "betterend.end_items",
+	"custom_book_item": "betterend:guidebook",
+	"model": "betterend:guide_book",
+	"dont_generate_book": true,
+	"show_progress": false,
+	"version": 1
+}

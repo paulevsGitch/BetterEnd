@@ -22,10 +22,12 @@ repositories {
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_mappings}:v2"
+	
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "vazkii.patchouli:Patchouli:${project.minecraft_version}-${project.patchouli_version}"
 	
+	optional "vazkii.patchouli:Patchouli:${project.minecraft_version}-${project.patchouli_version}:api"
 	optional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	optional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 	optional "grondag:canvas-mc116:${project.canvas_version}"

@@ -1,5 +1,10 @@
 {
-	"itemGroup.betterend.items": "Улучшенный Край",
+	"itemGroup.betterend.end_items": "Better End: Предметы",
+	"itemGroup.betterend.end_blocks": "Better End: Блоки",
+
+	"item.betterend.guidebook": "Край для чайников",
+	"book.betterend.landing_text": "Короткое руководство по выживанию в экстримальных условиях Края.",
+	"book.betterend.subtitle": "Выживание в Краю",
 	
 	"category.rei.damage.amount&dmg": "Износ инструмента: %s",
 	"category.rei.infusion.time&val": "Время: %s",

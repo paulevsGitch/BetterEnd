@@ -40,6 +40,7 @@ import ru.betterend.item.EndHoe;
 import ru.betterend.item.EndPickaxe;
 import ru.betterend.item.EndToolMaterial;
 import ru.betterend.item.EternalCrystal;
+import ru.betterend.item.PatternedItem;
 import ru.betterend.tab.CreativeTab;
 import ru.betterend.util.TagHelper;
 
@@ -51,6 +52,7 @@ public class EndItems {
 	
 	// Materials //
 	public final static Item ENDER_DUST = registerItem("ender_dust");
+	public final static Item ENDER_SHARD = registerItem("ender_shard");
 	public final static Item TERMINITE_INGOT = registerItem("terminite_ingot");
 	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot");
 	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
@@ -104,7 +106,7 @@ public class EndItems {
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
 	
 	protected static Item registerItem(String name) {
-		return registerItem(BetterEnd.makeID(name), new Item(makeSettings()));
+		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeSettings()));
 	}
 	
 	protected static Item registerItem(String name, Item item) {

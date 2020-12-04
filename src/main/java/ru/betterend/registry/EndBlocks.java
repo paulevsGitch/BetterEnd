@@ -182,7 +182,7 @@ public class EndBlocks {
 	public static final Block BULB_VINE = registerBlock("bulb_vine", new BlockBulbVine());
 	
 	// Ores //
-	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_DUST, 1, 3, 5));
+	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_SHARD, 1, 3, 5));
 	public static final Block AMBER_ORE = registerBlock("amber_ore", new BlockOre(EndItems.RAW_AMBER, 1, 2, 4));
 	
 	// Materials //

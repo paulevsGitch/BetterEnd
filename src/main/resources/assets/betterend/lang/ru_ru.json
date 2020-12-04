@@ -30,6 +30,7 @@
 	"block.betterend.end_stone_smelter": "Плавильня из камня Края",
 	
 	"item.betterend.ender_dust": "Пыль Края",
+	"item.betterend.ender_shard": "Осколок Края",
 	"item.betterend.terminite_ingot": "Слиток Терминита",
 	"item.betterend.aeternium_ingot": "Этериевый слиток",
 	"item.betterend.terminite_helmet": "Шлем из Терминита",
@@ -56,6 +57,10 @@
 	"item.betterend.golden_hammer": "Золотой Кузнечный Молот",
 	"item.betterend.diamond_hammer": "Алмазный Кузнечный Молот",
 	"item.betterend.netherite_hammer": "Кузнечный Молот из Незерита",
+	"item.betterend.crystalite_boots": "Кристалитовые сапоги",
+	"item.betterend.crystalite_chestplate": "Кристалитовая кираса",
+	"item.betterend.crystalite_helmet": "Кристалитовый шлем",
+	"item.betterend.crystalite_leggings": "Кристалитовые поножи",
 	
 	"effect.betterend.end_veil": "Вуаль Края",
 	"enchantment.betterend.end_veil": "Вуаль Края",

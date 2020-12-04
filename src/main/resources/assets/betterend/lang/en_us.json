@@ -30,6 +30,7 @@
 	"block.betterend.end_stone_smelter": "End Stone Smelter",
 	
 	"item.betterend.ender_dust": "Ender Dust",
+	"item.betterend.ender_shard": "Ender Shard",
 	"item.betterend.terminite_ingot": "Terminite Ingot",
 	"item.betterend.aeternium_ingot": "Aeternium Ingot",
 	"item.betterend.terminite_helmet": "Terminite Helmet",
@@ -56,6 +57,10 @@
 	"item.betterend.golden_hammer": "Golden Smith Hammer",
 	"item.betterend.diamond_hammer": "Diamond Smith Hammer",
 	"item.betterend.netherite_hammer": "Netherite Smith Hammer",
+	"item.betterend.crystalite_boots": "Crystalite Boots",
+	"item.betterend.crystalite_chestplate": "Crystalite Chestplate",
+	"item.betterend.crystalite_helmet": "Crystalite Helmet",
+	"item.betterend.crystalite_leggings": "Crystalite Leggings",
 	
 	"effect.betterend.end_veil": "End Veil",
 	"enchantment.betterend.end_veil": "End Veil",

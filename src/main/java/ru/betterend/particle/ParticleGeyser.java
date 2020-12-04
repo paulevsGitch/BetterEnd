@@ -44,12 +44,14 @@ public class ParticleGeyser extends SpriteBillboardParticle {
 			
 			if (changeDir) {
 				changeDir = false;
+				check = false;
 				this.velocityX += MHelper.randRange(-0.2, 0.2, random);
 				this.velocityZ += MHelper.randRange(-0.2, 0.2, random);
 			}
 			else if (check) {
-				changeDir = world.getBlockState(mut).getFluidState().isEmpty();
-				check = !changeDir;
+				changeDir = world.getBlockState(mut.set(x, y, z)).getFluidState().isEmpty();
+				this.velocityX = 0;
+				this.velocityZ = 0;
 			}
 		}
 		super.tick();

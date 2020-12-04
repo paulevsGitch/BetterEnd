@@ -7,12 +7,14 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -30,10 +32,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
+import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
 
-public class BlockHydrothermalVent extends BlockBaseNotFull implements FluidFillable, Waterloggable {
+public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEntityProvider, FluidFillable, Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	private static final VoxelShape SHAPE = Block.createCuboidShape(1, 1, 1, 15, 16, 15);
 	
@@ -106,5 +109,10 @@ public class BlockHydrothermalVent extends BlockBaseNotFull implements FluidFill
 		else {
 			world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
 		}
+	}
+
+	@Override
+	public BlockEntity createBlockEntity(BlockView world) {
+		return new BlockEntityHydrothermalVent();
 	}
 }

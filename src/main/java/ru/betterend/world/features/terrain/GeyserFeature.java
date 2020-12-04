@@ -10,6 +10,7 @@ import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -128,23 +129,39 @@ public class GeyserFeature extends DefaultFeature {
 			obj2.setBlock(EndBlocks.SULPHURIC_ROCK.stone);
 			new SDFDisplacement().setFunction((vec) -> {
 				return -4F;
-			}).setSource(sdf).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
+			}).setSource(cave).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
 			
 			obj1.setBlock(Blocks.END_STONE);
 			obj2.setBlock(Blocks.END_STONE);
 			new SDFDisplacement().setFunction((vec) -> {
 				return -6F;
-			}).setSource(sdf).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
+			}).setSource(cave).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
 			
+			BlocksHelper.setWithoutUpdate(world, pos, WATER);
 			Mutable mut = new Mutable().set(pos);
-			for (int i = 0; i < halfHeight + 5; i++) {
-				BlockState state = world.getBlockState(mut);
-				if (state.isIn(EndTags.GEN_TERRAIN) || state.isOf(Blocks.WATER)) {
-					BlocksHelper.setWithoutUpdate(world, mut, WATER);
-					mut.setY(mut.getY() + 1);
+			count = getYOnSurface(world, pos.getX(), pos.getZ()) - pos.getY();
+			for (int i = 0; i < count; i++) {
+				BlocksHelper.setWithoutUpdate(world, mut, WATER);
+				for (Direction dir: BlocksHelper.HORIZONTAL) {
+					BlocksHelper.setWithoutUpdate(world, mut.offset(dir), WATER);
 				}
-				else {
-					break;
+				mut.setY(mut.getY() + 1);
+			}
+			
+			for (int i = 0; i < 30; i++) {
+				mut.set(pos).add(random.nextGaussian() * 2, -halfHeight - 10, random.nextGaussian() * 2);
+				int dist = MHelper.floor(6 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
+				BlockState state = world.getBlockState(mut);
+				while (state.isOf(Blocks.WATER)) {
+					mut.setY(mut.getY() - 1);
+					state = world.getBlockState(mut);
+				}
+				if (state.isIn(EndTags.GEN_TERRAIN))  {
+					for (int j = 0; j < dist; j++) {
+						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
+						mut.setY(mut.getY() + 1);
+					}
+					BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
 				}
 			}
 			

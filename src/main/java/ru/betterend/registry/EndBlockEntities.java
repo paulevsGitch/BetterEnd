@@ -17,6 +17,7 @@ import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockChest;
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.basis.BlockSign;
+import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.blocks.entities.EChestBlockEntity;
 import ru.betterend.blocks.entities.ESignBlockEntity;
@@ -40,6 +41,8 @@ public class EndBlockEntities {
 			BlockEntityType.Builder.create(EBarrelBlockEntity::new, getBarrels()));
 	public static final BlockEntityType<ESignBlockEntity> SIGN = registerBlockEntity("sign",
 			BlockEntityType.Builder.create(ESignBlockEntity::new, getSigns()));
+	public final static BlockEntityType<BlockEntityHydrothermalVent> HYDROTHERMAL_VENT = registerBlockEntity("hydrother_malvent",
+			BlockEntityType.Builder.create(BlockEntityHydrothermalVent::new, EndBlocks.HYDROTHERMAL_VENT));
 
 	public static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, BlockEntityType.Builder<T> builder) {
 		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BetterEnd.makeID(id), builder.build(null));

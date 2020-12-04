@@ -28,8 +28,8 @@ public class ParticleGeyser extends SpriteBillboardParticle {
 		if (this.age >= this.maxAge + 40) {
 			this.setColorAlpha((this.maxAge - this.age) / 40F);
 		}
-		this.velocityX = 0;
-		this.velocityZ = 0;
+		//this.velocityX = 0;
+		//this.velocityZ = 0;
 		this.velocityY = 0.125;
 		super.tick();
 	}

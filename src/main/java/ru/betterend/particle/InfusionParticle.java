@@ -48,10 +48,10 @@ public class InfusionParticle extends SpriteBillboardParticle {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static class DefaultFactory implements ParticleFactory<InfusionParticleType> {
+	public static class InfusionFactory implements ParticleFactory<InfusionParticleType> {
 		private final SpriteProvider spriteProvider;
 	
-		public DefaultFactory(SpriteProvider spriteProvider) {
+		public InfusionFactory(SpriteProvider spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
 	

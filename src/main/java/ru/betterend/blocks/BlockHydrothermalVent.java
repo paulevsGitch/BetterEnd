@@ -31,12 +31,13 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndParticles;
 
-public class BlockSulphuricGeyser extends BlockBaseNotFull implements FluidFillable, Waterloggable {
+public class BlockHydrothermalVent extends BlockBaseNotFull implements FluidFillable, Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	private static final VoxelShape SHAPE = Block.createCuboidShape(1, 1, 1, 15, 16, 15);
 	
-	public BlockSulphuricGeyser() {
+	public BlockHydrothermalVent() {
 		super(FabricBlockSettings.of(Material.STONE)
 				.breakByTool(FabricToolTags.PICKAXES)
 				.sounds(BlockSoundGroup.STONE)
@@ -99,6 +100,11 @@ public class BlockSulphuricGeyser extends BlockBaseNotFull implements FluidFilla
 		double x = pos.getX() + random.nextDouble();
 		double y = pos.getY() + 0.9 + random.nextDouble() * 0.3;
 		double z = pos.getZ() + random.nextDouble();
-		world.addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, x, y, z, 0, 0, 0);
+		if (state.get(WATERLOGGED)) {
+			world.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
+		}
+		else {
+			world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
+		}
 	}
 }

@@ -39,7 +39,7 @@ import ru.betterend.blocks.BlockPythadendronSapling;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
 import ru.betterend.blocks.BlockSulphurCrystal;
-import ru.betterend.blocks.BlockSulphuricGeyser;
+import ru.betterend.blocks.BlockHydrothermalVent;
 import ru.betterend.blocks.BlockTenaneaFlowers;
 import ru.betterend.blocks.BlockTenaneaSapling;
 import ru.betterend.blocks.BlockTerrain;
@@ -112,7 +112,7 @@ public class EndBlocks {
 	public static final Block QUARTZ_PEDESTAL = registerBlock("quartz_pedestal", new PedestalVanilla(Blocks.QUARTZ_BLOCK));
 	public static final Block PURPUR_PEDESTAL = registerBlock("purpur_pedestal", new PedestalVanilla(Blocks.PURPUR_BLOCK));
 	
-	public static final Block SULPHURIC_GEYSER = registerBlock("sulphuric_geyser", new BlockSulphuricGeyser());
+	public static final Block HYDROTHERMAL_VENT = registerBlock("hydrothermal_vent", new BlockHydrothermalVent());
 	
 	// Wooden Materials And Trees //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());

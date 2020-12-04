@@ -47,4 +47,14 @@ public class BlockBubbleCoral extends BlockUnderwaterPlant {
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
 		return SHAPE;
 	}
+	
+	@Override
+	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
+		return false;
+	}
+
+	@Override
+	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+		return false;
+	}
 }

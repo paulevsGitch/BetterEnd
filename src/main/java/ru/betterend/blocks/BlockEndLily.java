@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import com.google.common.collect.Lists;
 
@@ -26,6 +27,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
@@ -102,5 +104,15 @@ public class BlockEndLily extends BlockUnderwaterPlant {
 	@Environment(EnvType.CLIENT)
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
 		return new ItemStack(EndBlocks.END_LILY_SEED);
+	}
+	
+	@Override
+	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
+		return false;
+	}
+
+	@Override
+	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+		return false;
 	}
 }

@@ -4,6 +4,8 @@ import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -22,6 +24,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
@@ -37,9 +40,11 @@ import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndParticles;
 
 public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEntityProvider, FluidFillable, Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
 	private static final VoxelShape SHAPE = Block.createCuboidShape(1, 1, 1, 15, 16, 15);
 	
 	public BlockHydrothermalVent() {
@@ -48,12 +53,12 @@ public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEnti
 				.sounds(BlockSoundGroup.STONE)
 				.noCollision()
 				.requiresTool());
-		this.setDefaultState(getDefaultState().with(WATERLOGGED, true));
+		this.setDefaultState(getDefaultState().with(WATERLOGGED, true).with(ACTIVATED, false));
 	}
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(WATERLOGGED);
+		builder.add(WATERLOGGED, ACTIVATED);
 	}
 	
 	@Override
@@ -114,6 +119,22 @@ public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEnti
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		if (world instanceof ServerWorld && state.get(WATERLOGGED) && world.getBlockState(pos.up()).isOf(Blocks.WATER)) {
 			scheduledTick(state,(ServerWorld) world, pos, world.random);
+		}
+	}
+	
+	@Environment(EnvType.CLIENT)
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+		if (!state.get(ACTIVATED) && random.nextBoolean()) {
+			super.randomDisplayTick(state, world, pos, random);
+			double x = pos.getX() + random.nextDouble();
+			double y = pos.getY() + 0.9 + random.nextDouble() * 0.3;
+			double z = pos.getZ() + random.nextDouble();
+			if (state.get(WATERLOGGED)) {
+				world.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
+			}
+			else {
+				world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
+			}
 		}
 	}
 }

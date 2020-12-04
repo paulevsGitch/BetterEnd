@@ -54,6 +54,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		
+		BlockState state;
 		Set<BlockPos> brimstone = Sets.newHashSet();
 		BlockState rock = EndBlocks.SULPHURIC_ROCK.stone.getDefaultState();
 		int waterLevel = pos.getY() + MHelper.randRange(MHelper.floor(radius * 0.8), radius, random);
@@ -74,13 +75,14 @@ public class SulphuricCaveFeature extends DefaultFeature {
 					double r2 = r + 5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
-						BlockState state = world.getBlockState(mut);
+						state = world.getBlockState(mut);
 						if (isReplaceable(state)) {
 							BlocksHelper.setWithoutUpdate(world, mut, y < waterLevel ? WATER : CAVE_AIR);
 						}
 					}
 					else if (dist < r2 * r2) {
-						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
+						state = world.getBlockState(mut);
+						if (state.isIn(EndTags.GEN_TERRAIN) || state.isOf(Blocks.AIR)) {
 							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1) + noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
 							if (v > 0.4) {
 								brimstone.add(mut.toImmutable());
@@ -101,25 +103,27 @@ public class SulphuricCaveFeature extends DefaultFeature {
 			int count = MHelper.randRange(5, 20, random);
 			for (int i = 0; i < count; i++) {
 				mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 0, MHelper.floor(random.nextGaussian() * 2 + 0.5));
-				int dist = MHelper.floor(6 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
-				BlockState state = world.getBlockState(mut);
-				while (state.isOf(Blocks.WATER)) {
-					mut.setY(mut.getY() - 1);
-					state = world.getBlockState(mut);
-				}
-				if (state.isIn(EndTags.GEN_TERRAIN) || state.isOf(Blocks.AIR))  {
-					for (int j = 0; j <= dist; j++) {
-						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
-						mut.setY(mut.getY() + 1);
-					}
-					BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
-					mut.setY(mut.getY() + 1);
+				int dist = MHelper.floor(3 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
+				if (dist > 0) {
 					state = world.getBlockState(mut);
 					while (state.isOf(Blocks.WATER)) {
-						BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
-						world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+						mut.setY(mut.getY() - 1);
+						state = world.getBlockState(mut);
+					}
+					if (state.isIn(EndTags.GEN_TERRAIN)) {
+						for (int j = 0; j <= dist; j++) {
+							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
+							mut.setY(mut.getY() + 1);
+						}
+						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
+						while (state.isOf(Blocks.WATER)) {
+							BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
+							world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							mut.setY(mut.getY() + 1);
+							state = world.getBlockState(mut);
+						}
 					}
 				}
 			}

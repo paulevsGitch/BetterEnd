@@ -30,5 +30,41 @@ public class InfusionRecipes {
 			.addCatalyst(7, EndItems.ENDER_DUST)
 			.setTime(250)
 			.build();
+		
+		InfusionRecipe.Builder.create("crystalite_helmet")
+			.setInput(EndItems.TERMINITE_HELMET)
+			.setOutput(EndItems.CRYSTALITE_HELMET)
+			.addCatalyst(0, EndItems.AMBER_GEM)
+			.addCatalyst(2, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
+			.setTime(150)
+			.build();
+		InfusionRecipe.Builder.create("crystalite_chestplate")
+			.setInput(EndItems.TERMINITE_CHESTPLATE)
+			.setOutput(EndItems.CRYSTALITE_CHESTPLATE)
+			.addCatalyst(0, EndItems.AMBER_GEM)
+			.addCatalyst(1, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(3, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(5, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(7, EndItems.CRYSTAL_SHARDS)
+			.setTime(300)
+			.build();
+		InfusionRecipe.Builder.create("crystalite_leggings")
+			.setInput(EndItems.TERMINITE_LEGGINGS)
+			.setOutput(EndItems.CRYSTALITE_LEGGINGS)
+			.addCatalyst(0, EndItems.AMBER_GEM)
+			.addCatalyst(2, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(4, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
+			.setTime(225)
+			.build();
+		InfusionRecipe.Builder.create("crystalite_boots")
+			.setInput(EndItems.TERMINITE_BOOTS)
+			.setOutput(EndItems.CRYSTALITE_BOOTS)
+			.addCatalyst(0, EndItems.AMBER_GEM)
+			.addCatalyst(2, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
+			.setTime(150)
+			.build();
 	}
 }

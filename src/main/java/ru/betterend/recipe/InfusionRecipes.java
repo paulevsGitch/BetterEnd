@@ -24,10 +24,10 @@ public class InfusionRecipes {
 			.addCatalyst(2, EndItems.CRYSTAL_SHARDS)
 			.addCatalyst(4, EndItems.CRYSTAL_SHARDS)
 			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
-			.addCatalyst(1, EndItems.ENDER_DUST)
-			.addCatalyst(3, EndItems.ENDER_DUST)
-			.addCatalyst(5, EndItems.ENDER_DUST)
-			.addCatalyst(7, EndItems.ENDER_DUST)
+			.addCatalyst(1, EndItems.ENDER_SHARD)
+			.addCatalyst(3, EndItems.ENDER_SHARD)
+			.addCatalyst(5, EndItems.ENDER_SHARD)
+			.addCatalyst(7, EndItems.ENDER_SHARD)
 			.setTime(250)
 			.build();
 		

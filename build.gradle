@@ -25,29 +25,37 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
-	implementation "vazkii.patchouli:Patchouli:${project.minecraft_version}-${project.patchouli_version}"
+	useApi "vazkii.patchouli:Patchouli:${project.minecraft_version}-${project.patchouli_version}"
 	
-	optional "vazkii.patchouli:Patchouli:${project.minecraft_version}-${project.patchouli_version}:api"
-	optional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-	optional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
-	optional "grondag:canvas-mc116:${project.canvas_version}"
+	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+	useOptional "grondag:canvas-mc116:${project.canvas_version}"
 }
 
-def optional(String dep) {
+def useOptional(String dep) {
 	dependencies.modRuntime (dep) {
 		exclude group: "net.fabricmc.fabric-api"
-		exclude module: "fabric-loader"
+		exclude group: "net.fabricmc"
+		if (!dep.contains("me.shedaniel")) {
+			exclude group: "me.shedaniel"
+		}
 	}
 	dependencies.modCompileOnly (dep) {
 		exclude group: "net.fabricmc.fabric-api"
-		exclude module: "fabric-loader"
+		exclude group: "net.fabricmc"
+		if (!dep.contains("me.shedaniel")) {
+			exclude group: "me.shedaniel"
+		}
 	}
 }
 
-def implementation(String dep) {
-	dependencies.modImplementation (dep) {
+def useApi(String dep) {
+	dependencies.modApi (dep) {
 		exclude group: "net.fabricmc.fabric-api"
-		exclude module: "fabric-loader"
+		exclude group: "net.fabricmc"
+		if (!dep.contains("me.shedaniel")) {
+			exclude group: "me.shedaniel"
+		}
 	}
 }
 

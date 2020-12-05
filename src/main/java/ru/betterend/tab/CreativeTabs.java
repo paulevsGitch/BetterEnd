@@ -9,19 +9,19 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public class CreativeTabs {
-	public static final ItemGroup TAB_ITEMS;
 	public static final ItemGroup TAB_BLOCKS;
+	public static final ItemGroup TAB_ITEMS;
 
 	static {
-		TAB_ITEMS = FabricItemGroupBuilder.create(BetterEnd.makeID("end_items"))
-				.icon(() -> new ItemStack(EndItems.ETERNAL_CRYSTAL)).appendItems(stacks -> {
-					for (Item i : EndItems.getModItems()) {
-						stacks.add(new ItemStack(i));
-					}
-				}).build();
 		TAB_BLOCKS = FabricItemGroupBuilder.create(BetterEnd.makeID("end_blocks"))
 				.icon(() -> new ItemStack(EndBlocks.END_MYCELIUM)).appendItems(stacks -> {
 					for (Item i : EndItems.getModBlocks()) {
+						stacks.add(new ItemStack(i));
+					}
+				}).build();
+		TAB_ITEMS = FabricItemGroupBuilder.create(BetterEnd.makeID("end_items"))
+				.icon(() -> new ItemStack(EndItems.ETERNAL_CRYSTAL)).appendItems(stacks -> {
+					for (Item i : EndItems.getModItems()) {
 						stacks.add(new ItemStack(i));
 					}
 				}).build();

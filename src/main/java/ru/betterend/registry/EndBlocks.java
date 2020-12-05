@@ -6,7 +6,6 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
@@ -29,6 +28,8 @@ import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockHydralux;
+import ru.betterend.blocks.BlockHydraluxPetal;
+import ru.betterend.blocks.BlockHydraluxPetalColored;
 import ru.betterend.blocks.BlockHydraluxSapling;
 import ru.betterend.blocks.BlockHydrothermalVent;
 import ru.betterend.blocks.BlockLacugroveSapling;
@@ -53,7 +54,6 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.EternalRunedFlavolite;
-import ru.betterend.blocks.HydraluxPetalBlock;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.PedestalVanilla;
 import ru.betterend.blocks.RunedFlavolite;
@@ -168,7 +168,8 @@ public class EndBlocks {
 	
 	public static final Block HYDRALUX_SAPLING = registerBlock("hydralux_sapling", new BlockHydraluxSapling());	
 	public static final Block HYDRALUX = registerBlockNI("hydralux", new BlockHydralux());
-	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new HydraluxPetalBlock());
+	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new BlockHydraluxPetal());
+	public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial(BlockHydraluxPetalColored::new, HYDRALUX_PETAL_BLOCK);
 	
 	public static final Block CAVE_BUSH = registerBlock("cave_bush", new BlockSimpleLeaves(MaterialColor.MAGENTA));
 	

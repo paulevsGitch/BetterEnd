@@ -117,6 +117,8 @@ public class CraftingRecipes {
 		GridRecipe.make("twisted_moss_dye", Items.PINK_DYE).setList("#").addMaterial('#', EndBlocks.TWISTED_MOSS).build();
 		GridRecipe.make("byshy_grass_dye", Items.MAGENTA_DYE).setList("#").addMaterial('#', EndBlocks.BUSHY_GRASS).build();
 		GridRecipe.make("tail_moss_dye", Items.GRAY_DYE).setList("#").addMaterial('#', EndBlocks.TAIL_MOSS).build();
+		GridRecipe.make("petal_block", EndBlocks.HYDRALUX_PETAL_BLOCK).setShape("##", "##").addMaterial('#', EndItems.HYDRALUX_PETAL).build();
+		GridRecipe.make("petal_white_dye", Items.WHITE_DYE).setList("#").addMaterial('#', EndItems.HYDRALUX_PETAL).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

@@ -106,7 +106,8 @@ public class EndItems {
 	
 	// Other //
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
-	public static final Item GUIDE_BOOK = registerItem(GuideBook.BOOK_ID, new GuideBook());
+	public static final Item GUIDE_BOOK = EndItems.registerItem(GuideBook.BOOK_ID, new GuideBook());
+	
 	
 	protected static Item registerItem(String name) {
 		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));

@@ -3,7 +3,7 @@
 	"itemGroup.betterend.end_blocks": "Better End: Блоки",
 
 	"item.betterend.guidebook": "Край для чайников",
-	"book.betterend.landing_text": "Краткое руководство по выживанию в экстремальных условиях Края.",
+	"book.betterend.landing": "Краткое руководство по выживанию в экстремальных условиях Края.",
 	"book.betterend.subtitle": "Выживание в Краю",
 	
 	"category.rei.damage.amount&dmg": "Износ инструмента: %s",

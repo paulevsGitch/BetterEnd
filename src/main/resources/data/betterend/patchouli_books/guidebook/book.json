@@ -1,10 +1,11 @@
 {
 	"name": "item.betterend.guidebook",
-	"landing_text": "book.betterend.landing_text",
 	"subtitle": "book.betterend.subtitle",
-	"creative_tab": "betterend.end_items",
+	"landing_text": "book.betterend.landing",
 	"custom_book_item": "betterend:guidebook",
-	"model": "betterend:guide_book",
+	"book_texture": "patchouli:textures/gui/book_green.png",
+	"creative_tab": "betterend.end_items",
+	"model": "betterend:guidebook",
 	"dont_generate_book": true,
 	"show_progress": false,
 	"version": 1

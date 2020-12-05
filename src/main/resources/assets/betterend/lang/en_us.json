@@ -3,7 +3,7 @@
 	"itemGroup.betterend.end_blocks": "Better End: Blocks",
 	
 	"item.betterend.guidebook": "The End for Dummies",
-	"book.betterend.landing_text": "A short guide about surviving in the extreme conditions of The End.",
+	"book.betterend.landing": "A short guide about surviving in the extreme conditions of The End.",
 	"book.betterend.subtitle": "Survive in The End",
 	
 	"category.rei.damage.amount&dmg": "Tool damage: %s",

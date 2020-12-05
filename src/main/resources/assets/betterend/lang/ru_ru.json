@@ -391,5 +391,27 @@
 	"block.betterend.sulphuric_rock_tiles": "Плитка из серного камня",
 	"block.betterend.sulphuric_rock_wall": "Стена из серного камня",
 	"block.betterend.sulphur_crystal": "Кристалл серы",
-	"item.betterend.crystalline_sulphur": "Кристаллическая сера"
+	"item.betterend.crystalline_sulphur": "Кристаллическая сера",
+	
+	"biome.betterend.sulfur_springs": "Серные источники",
+	"block.betterend.hydralux_petal_block": "Блок лепестков гидралюкса",
+	"block.betterend.hydralux_petal_block_black": "Чёрный блок лепестков",
+	"block.betterend.hydralux_petal_block_blue": "Синий блок лепестков",
+	"block.betterend.hydralux_petal_block_brown": "Коричневый блок лепестков",
+	"block.betterend.hydralux_petal_block_cyan": "Циановый блок лепестков",
+	"block.betterend.hydralux_petal_block_gray": "Серый блок лепестков",
+	"block.betterend.hydralux_petal_block_green": "Зелёный блок лепестков",
+	"block.betterend.hydralux_petal_block_light_blue": "Голубой блок лепестков",
+	"block.betterend.hydralux_petal_block_light_gray": "Светло-серый блок лепестков",
+	"block.betterend.hydralux_petal_block_lime": "Лаймовый блок лепестков",
+	"block.betterend.hydralux_petal_block_magenta": "Фиолетовый блок лепестков",
+	"block.betterend.hydralux_petal_block_orange": "Оранжевый блок лепестков",
+	"block.betterend.hydralux_petal_block_pink": "Розовый блок лепестков",
+	"block.betterend.hydralux_petal_block_purple": "Пурпурный блок лепестков",
+	"block.betterend.hydralux_petal_block_red": "Красный блок лепестков",
+	"block.betterend.hydralux_petal_block_white": "Белый блок лепестков",
+	"block.betterend.hydralux_petal_block_yellow": "Жёлтый блок лепестков",
+	"block.betterend.hydralux_sapling": "Саженец гидралюкса",
+	"block.betterend.hydrothermal_vent": "Гидротермальный источник",
+	"item.betterend.hydralux_petal": "Лепесток гидралюкса"
 }

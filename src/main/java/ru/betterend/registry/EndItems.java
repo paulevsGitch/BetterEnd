@@ -42,7 +42,7 @@ import ru.betterend.item.EndToolMaterial;
 import ru.betterend.item.EternalCrystal;
 import ru.betterend.item.GuideBook;
 import ru.betterend.item.PatternedItem;
-import ru.betterend.tab.CreativeTab;
+import ru.betterend.tab.CreativeTabs;
 import ru.betterend.util.TagHelper;
 
 public class EndItems {
@@ -179,11 +179,11 @@ public class EndItems {
 	}
 
 	public static Settings makeItemSettings() {
-		return new Item.Settings().group(CreativeTab.TAB_ITEMS);
+		return new Item.Settings().group(CreativeTabs.TAB_ITEMS);
 	}
 	
 	public static Settings makeBlockItemSettings() {
-		return new Item.Settings().group(CreativeTab.TAB_BLOCKS);
+		return new Item.Settings().group(CreativeTabs.TAB_BLOCKS);
 	}
 
 	public static void register() {}

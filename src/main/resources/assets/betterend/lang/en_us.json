@@ -389,5 +389,27 @@
 	"block.betterend.sulphuric_rock_tiles": "Sulfuric Rock Tiles",
 	"block.betterend.sulphuric_rock_wall": "Sulfuric Rock Wall",
 	"block.betterend.sulphur_crystal": "Sulfur Crystal",
-	"item.betterend.crystalline_sulphur": "Sulfur"
+	"item.betterend.crystalline_sulphur": "Sulfur",
+	
+	"biome.betterend.sulfur_springs": "Sulfur Springs",
+	"block.betterend.hydralux_petal_block": "Hydralux Petal Block",
+	"block.betterend.hydralux_petal_block_black": "Black Petal Block",
+	"block.betterend.hydralux_petal_block_blue": "Blue Petal Block",
+	"block.betterend.hydralux_petal_block_brown": "Brown Petal Block",
+	"block.betterend.hydralux_petal_block_cyan": "Cyan Petal Block",
+	"block.betterend.hydralux_petal_block_gray": "Gray Petal Block",
+	"block.betterend.hydralux_petal_block_green": "Green Petal Block",
+	"block.betterend.hydralux_petal_block_light_blue": "Light Blue Petal Block",
+	"block.betterend.hydralux_petal_block_light_gray": "Light Gray Petal Block",
+	"block.betterend.hydralux_petal_block_lime": "Lime Petal Block",
+	"block.betterend.hydralux_petal_block_magenta": "Magenta Petal Block",
+	"block.betterend.hydralux_petal_block_orange": "Orange Petal Block",
+	"block.betterend.hydralux_petal_block_pink": "Pink Petal Block",
+	"block.betterend.hydralux_petal_block_purple": "Purple Petal Block",
+	"block.betterend.hydralux_petal_block_red": "Red Petal Block",
+	"block.betterend.hydralux_petal_block_white": "White Petal Block",
+	"block.betterend.hydralux_petal_block_yellow": "Yellow Petal Block",
+	"block.betterend.hydralux_sapling": "Hydralux Sapling",
+	"block.betterend.hydrothermal_vent": "Hydrothermal Vent",
+	"item.betterend.hydralux_petal": "Hydralux Petal"
 }

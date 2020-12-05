@@ -8,7 +8,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
-public class CreativeTab {
+public class CreativeTabs {
 	public static final ItemGroup TAB_ITEMS;
 	public static final ItemGroup TAB_BLOCKS;
 

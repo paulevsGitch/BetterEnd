@@ -20,6 +20,8 @@ public class JsonFactory {
 	
 	public final static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	
+	// Unused
+	@Deprecated
 	public static JsonObject getJsonObject(String path) throws IOException {
 		try (InputStream is = JsonFactory.class.getResourceAsStream(path)) {
 			Reader reader = new InputStreamReader(is);
@@ -31,36 +33,38 @@ public class JsonFactory {
 		}
 	}
 	
+	// Unused
+	@Deprecated
 	public static JsonObject getJsonObject(Resource jsonSource) {
 		if (jsonSource != null) {
 			try (InputStream is = jsonSource.getInputStream()) {
 				Reader reader = new InputStreamReader(is);
-				JsonObject jsonObject = loadJson(reader).getAsJsonObject();
-				if (jsonObject == null) {
-					return new JsonObject();
+				JsonElement json = loadJson(reader);
+				if (json != null && json.isJsonObject()) {
+					JsonObject jsonObject = json.getAsJsonObject();
+					return jsonObject != null ? jsonObject : new JsonObject();
 				}
-				return jsonObject;
-			} catch (IOException ex) {
+			}
+			catch (IOException ex) {
 				BetterEnd.LOGGER.catching(ex);
-				return new JsonObject();
 			}
 		}
-		
 		return new JsonObject();
 	}
-	
+
 	public static JsonObject getJsonObject(InputStream stream) {
 		try {
 			Reader reader = new InputStreamReader(stream);
-			JsonObject jsonObject = loadJson(reader).getAsJsonObject();
-			if (jsonObject == null) {
-				return new JsonObject();
+			JsonElement json = loadJson(reader);
+			if (json != null && json.isJsonObject()) {
+				JsonObject jsonObject = json.getAsJsonObject();
+				return jsonObject != null ? jsonObject : new JsonObject();
 			}
-			return jsonObject;
-		} catch (Exception ex) {
-			BetterEnd.LOGGER.catching(ex);
-			return new JsonObject();
 		}
+		catch (Exception ex) {
+			BetterEnd.LOGGER.catching(ex);
+		}
+		return new JsonObject();
 	}
 	
 	public static JsonObject getJsonObject(File jsonFile) {
@@ -68,10 +72,7 @@ public class JsonFactory {
 			JsonElement json = loadJson(jsonFile);
 			if (json != null && json.isJsonObject()) {
 				JsonObject jsonObject = json.getAsJsonObject();
-				if (jsonObject == null) {
-					return new JsonObject();
-				}
-				return jsonObject;
+				return jsonObject != null ? jsonObject : new JsonObject();
 			}
 		}
 		

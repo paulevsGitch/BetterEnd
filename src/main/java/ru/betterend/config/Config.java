@@ -36,10 +36,8 @@ public abstract class Config {
 		if (str == null) {
 			StringEntry entry = this.configKeeper.registerEntry(key, new StringEntry(defaultValue));
 			if (settings != null) {
-				if (settings != null) {
-					this.configKeeper.loadFromJson(settings, key, entry);
-					return entry.getValue();
-				}
+				this.configKeeper.loadFromJson(settings, key, entry);
+				return entry.getValue();
 			}
 		}
 		return str != null ? str : defaultValue;
@@ -67,10 +65,8 @@ public abstract class Config {
 		if (val == null) {
 			IntegerEntry entry = this.configKeeper.registerEntry(key, new IntegerEntry(defaultValue));
 			if (settings != null) {
-				if (settings != null) {
-					this.configKeeper.loadFromJson(settings, key, entry);
-					return entry.getValue();
-				}
+				this.configKeeper.loadFromJson(settings, key, entry);
+				return entry.getValue();
 			}
 		}
 		return val != null ? val : defaultValue;
@@ -110,10 +106,8 @@ public abstract class Config {
 		if (val == null) {
 			FloatEntry entry = this.configKeeper.registerEntry(key, new FloatEntry(defaultValue));
 			if (settings != null) {
-				if (settings != null) {
-					this.configKeeper.loadFromJson(settings, key, entry);
-					return entry.getValue();
-				}
+				this.configKeeper.loadFromJson(settings, key, entry);
+				return entry.getValue();
 			}
 		}
 		return val != null ? val : defaultValue;

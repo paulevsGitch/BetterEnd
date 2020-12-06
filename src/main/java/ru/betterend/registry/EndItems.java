@@ -41,6 +41,7 @@ import ru.betterend.item.EndPickaxe;
 import ru.betterend.item.EndToolMaterial;
 import ru.betterend.item.EternalCrystal;
 import ru.betterend.item.GuideBook;
+import ru.betterend.item.ItemSpawnEgg;
 import ru.betterend.item.PatternedItem;
 import ru.betterend.tab.CreativeTabs;
 import ru.betterend.util.TagHelper;
@@ -157,7 +158,7 @@ public class EndItems {
 	}
 	
 	public static Item registerEgg(String name, EntityType<?> type, int background, int dots) {
-		SpawnEggItem item = new SpawnEggItem(type, background, dots, makeItemSettings());
+		SpawnEggItem item = new ItemSpawnEgg(type, background, dots, makeItemSettings());
 		ItemDispenserBehavior behavior = new ItemDispenserBehavior() {
 			public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
 				Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);

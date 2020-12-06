@@ -90,6 +90,7 @@ public class Patterns {
 	public final static Identifier ITEM_BLOCK = BetterEnd.makeID("patterns/item/pattern_block_item.json");
 	public final static Identifier ITEM_GENERATED = BetterEnd.makeID("patterns/item/pattern_item_generated.json");
 	public final static Identifier ITEM_HANDHELD = BetterEnd.makeID("patterns/item/pattern_item_handheld.json");
+	public final static Identifier ITEM_SPAWN_EGG = BetterEnd.makeID("patterns/item/pattern_item_spawn_egg.json");
 	
 	public static String createJson(Reader data, String parent, String block) {
 		try (BufferedReader buffer = new BufferedReader(data)) {

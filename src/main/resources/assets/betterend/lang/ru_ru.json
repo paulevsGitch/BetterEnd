@@ -423,5 +423,8 @@
 	"block.betterend.charnia_light_blue": "Голубая чарния",
 	"block.betterend.charnia_orange": "Оранжевая чарния",
 	"block.betterend.charnia_purple": "Пурпурная чарния",
-	"block.betterend.charnia_red": "Красная чарния"
+	"block.betterend.charnia_red": "Красная чарния",
+	
+	"entity.betterend.jello": "Желе",
+	"item.betterend.spawn_egg_jello": "Яйцо призыва желе"
 }

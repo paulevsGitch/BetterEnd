@@ -1,31 +1,30 @@
 package ru.betterend.registry;
 
+import java.util.function.Function;
+
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.entity.EntityType;
 import ru.betterend.entity.render.RendererEntityDragonfly;
 import ru.betterend.entity.render.RendererEntityEndFish;
 import ru.betterend.entity.render.RendererEntityEndSlime;
+import ru.betterend.entity.render.RendererEntityJello;
 import ru.betterend.entity.render.RendererEntityShadowWalker;
 
 public class EndEntitiesRenders {
 	
 	public static void register() {
-		register(EndEntities.DRAGONFLY, RendererEntityDragonfly.class);
-		register(EndEntities.END_SLIME, RendererEntityEndSlime.class);
-		register(EndEntities.END_FISH, RendererEntityEndFish.class);
-		register(EndEntities.SHADOW_WALKER, RendererEntityShadowWalker.class);
+		register(EndEntities.DRAGONFLY, RendererEntityDragonfly::new);
+		register(EndEntities.END_SLIME, RendererEntityEndSlime::new);
+		register(EndEntities.END_FISH, RendererEntityEndFish::new);
+		register(EndEntities.SHADOW_WALKER, RendererEntityShadowWalker::new);
+		register(EndEntities.JELLO, RendererEntityJello::new);
 	}
 	
-	private static void register(EntityType<?> type, Class<? extends MobEntityRenderer<?, ?>> renderer) {
+	private static void register(EntityType<?> type, Function<EntityRenderDispatcher, MobEntityRenderer<?, ?>> render) {
 		EntityRendererRegistry.INSTANCE.register(type, (entityRenderDispatcher, context) -> {
-			MobEntityRenderer<?, ?> render = null;
-			try {
-				render = renderer.getConstructor(entityRenderDispatcher.getClass()).newInstance(entityRenderDispatcher);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return render;
+			return render.apply(entityRenderDispatcher);
 		});
 	}
 }

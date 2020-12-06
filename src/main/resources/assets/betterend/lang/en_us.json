@@ -421,5 +421,8 @@
 	"block.betterend.charnia_light_blue": "Light Blue Charnia",
 	"block.betterend.charnia_orange": "Orange Charnia",
 	"block.betterend.charnia_purple": "Purple Charnia",
-	"block.betterend.charnia_red": "Red Charnia"
+	"block.betterend.charnia_red": "Red Charnia",
+	
+	"entity.betterend.jello": "Jello",
+	"item.betterend.spawn_egg_jello": "Jello Spawn Egg"
 }

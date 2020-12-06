@@ -36,6 +36,10 @@
 			{
 				"sprite": "betterend:block/hydralux_vine_bottom",
 				"material": "betterend:waving_floor"
+			},
+			{
+				"sprite": "betterend:block/hydralux_flower_bud_petal_bottom",
+				"material": "betterend:waving_glow_inc"
 			}
 		]
 	}

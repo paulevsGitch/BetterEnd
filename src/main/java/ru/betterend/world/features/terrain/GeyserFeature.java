@@ -6,6 +6,7 @@ import java.util.function.Function;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.BubbleColumnBlock;
+import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
@@ -41,6 +42,7 @@ public class GeyserFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE1;
 	protected static final Function<BlockState, Boolean> REPLACE2;
 	private static final Function<BlockState, Boolean> IGNORE;
+	private static final Direction[] HORIZONTAL = BlocksHelper.makeHorizontal();
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
@@ -155,13 +157,20 @@ public class GeyserFeature extends DefaultFeature {
 				int dist = MHelper.floor(6 - distRaw) + random.nextInt(2);
 				if (dist >= 0) {
 					BlockState state = world.getBlockState(mut);
-					while (state.isOf(Blocks.WATER)) {
+					while (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.UNDERWATER_PLANT)) {
 						mut.setY(mut.getY() - 1);
 						state = world.getBlockState(mut);
 					}
-					if (state.isIn(EndTags.GEN_TERRAIN))  {
+					if (state.isIn(EndTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).isOf(EndBlocks.HYDROTHERMAL_VENT)) {
 						for (int j = 0; j <= dist; j++) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
+							MHelper.shuffle(HORIZONTAL, random);
+							for (Direction dir: HORIZONTAL) {
+								BlockPos p = mut.offset(dir);
+								if (random.nextBoolean() && world.getBlockState(p).isOf(Blocks.WATER)) {
+									BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TUBE_WORM.getDefaultState().with(HorizontalFacingBlock.FACING, dir));
+								}
+							}
 							mut.setY(mut.getY() + 1);
 						}
 						state = EndBlocks.HYDROTHERMAL_VENT.getDefaultState().with(BlockHydrothermalVent.ACTIVATED, distRaw < 2);

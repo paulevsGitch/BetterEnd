@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.BubbleColumnBlock;
+import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -28,6 +29,7 @@ import ru.betterend.world.features.DefaultFeature;
 public class SulphuricCaveFeature extends DefaultFeature {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
 	private static final BlockState WATER = Blocks.WATER.getDefaultState();
+	private static final Direction[] HORIZONTAL = BlocksHelper.makeHorizontal();
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
@@ -106,13 +108,20 @@ public class SulphuricCaveFeature extends DefaultFeature {
 				int dist = MHelper.floor(3 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
 				if (dist > 0) {
 					state = world.getBlockState(mut);
-					while (state.isOf(Blocks.WATER)) {
+					while (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.UNDERWATER_PLANT)) {
 						mut.setY(mut.getY() - 1);
 						state = world.getBlockState(mut);
 					}
-					if (state.isIn(EndTags.GEN_TERRAIN)) {
+					if (state.isIn(EndTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).isOf(EndBlocks.HYDROTHERMAL_VENT)) {
 						for (int j = 0; j <= dist; j++) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
+							MHelper.shuffle(HORIZONTAL, random);
+							for (Direction dir: HORIZONTAL) {
+								BlockPos p = mut.offset(dir);
+								if (random.nextBoolean() && world.getBlockState(p).isOf(Blocks.WATER)) {
+									BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TUBE_WORM.getDefaultState().with(HorizontalFacingBlock.FACING, dir));
+								}
+							}
 							mut.setY(mut.getY() + 1);
 						}
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.HYDROTHERMAL_VENT);
@@ -141,6 +150,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 				|| state.isOf(EndBlocks.SULPHUR_CRYSTAL)
 				|| state.getMaterial().isReplaceable()
 				|| state.getMaterial().equals(Material.PLANT)
+				|| state.getMaterial().equals(Material.UNDERWATER_PLANT)
 				|| state.getMaterial().equals(Material.LEAVES);
 	}
 	

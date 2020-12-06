@@ -162,6 +162,14 @@ public class BlocksHelper {
 					else if (!state.getFluidState().isEmpty()) {
 						if (!state.canPlaceAt(world, POS)) {
 							setWithoutUpdate(world, POS, WATER);
+							POS.setY(POS.getY() - 1);
+							state = world.getBlockState(POS);
+							while (!state.canPlaceAt(world, POS)) {
+								state = state.getFluidState().isEmpty() ? AIR : WATER;
+								setWithoutUpdate(world, POS, state);
+								POS.setY(POS.getY() - 1);
+								state = world.getBlockState(POS);
+							}
 						}
 						POS.setY(y - 1);
 						if (world.isAir(POS)) {

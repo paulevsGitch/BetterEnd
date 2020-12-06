@@ -65,11 +65,14 @@ public class JsonFactory {
 	
 	public static JsonObject getJsonObject(File jsonFile) {
 		if (jsonFile.exists()) {
-			JsonObject jsonObject = loadJson(jsonFile).getAsJsonObject();
-			if (jsonObject == null) {
-				return new JsonObject();
+			JsonElement json = loadJson(jsonFile);
+			if (json != null && json.isJsonObject()) {
+				JsonObject jsonObject = json.getAsJsonObject();
+				if (jsonObject == null) {
+					return new JsonObject();
+				}
+				return jsonObject;
 			}
-			return jsonObject;
 		}
 		
 		return new JsonObject();

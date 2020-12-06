@@ -29,6 +29,7 @@ public class BiomeMegalake extends EndBiome {
 				.addFeature(EndFeatures.MENGER_SPONGE)
 				.addMobSpawn(EndEntities.DRAGONFLY, 50, 1, 3)
 				.addMobSpawn(EndEntities.END_FISH, 50, 3, 8)
+				.addMobSpawn(EndEntities.JELLO, 50, 3, 8)
 				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));
 	}
 }

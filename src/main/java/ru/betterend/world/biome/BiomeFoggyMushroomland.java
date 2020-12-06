@@ -36,6 +36,7 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EndEntities.DRAGONFLY, 80, 2, 5)
 				.addMobSpawn(EndEntities.END_FISH, 20, 2, 5)
+				.addMobSpawn(EndEntities.JELLO, 10, 3, 8)
 				.addMobSpawn(EndEntities.END_SLIME, 10, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));
 	}

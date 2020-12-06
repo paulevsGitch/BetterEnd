@@ -417,5 +417,11 @@
 	
 	"block.betterend.menger_sponge": "Губка Менгера",
 	"block.betterend.menger_sponge_wet": "Мокрая губка Менгера",
-	"block.betterend.tube_worm": "Трубчатый червь"
+	"block.betterend.tube_worm": "Трубчатый червь",
+	
+	"block.betterend.charnia_cyan": "Циановая чарния",
+	"block.betterend.charnia_light_blue": "Голубая чарния",
+	"block.betterend.charnia_orange": "Оранжевая чарния",
+	"block.betterend.charnia_purple": "Пурпурная чарния",
+	"block.betterend.charnia_red": "Красная чарния"
 }

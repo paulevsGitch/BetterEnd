@@ -8,20 +8,22 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class BlockMengerSpongeWet extends BlockBase implements IRenderTypeable {
+public class BlockMengerSpongeWet extends BlockBaseNotFull implements IRenderTypeable {
 	public BlockMengerSpongeWet() {
-		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE));
+		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).nonOpaque());
 	}
 
 	@Override
@@ -79,5 +81,10 @@ public class BlockMengerSpongeWet extends BlockBase implements IRenderTypeable {
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
+	}
+	
+	@Override
+	public FluidState getFluidState(BlockState state) {
+		return Fluids.WATER.getStill(false);
 	}
 }

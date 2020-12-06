@@ -415,5 +415,11 @@
 	
 	"block.betterend.menger_sponge": "Menger Sponge",
 	"block.betterend.menger_sponge_wet": "Wet Menger Sponge",
-	"block.betterend.tube_worm": "Tube Worm"
+	"block.betterend.tube_worm": "Tube Worm",
+	
+	"block.betterend.charnia_cyan": "Cyan Charnia",
+	"block.betterend.charnia_light_blue": "Light Blue Charnia",
+	"block.betterend.charnia_orange": "Orange Charnia",
+	"block.betterend.charnia_purple": "Purple Charnia",
+	"block.betterend.charnia_red": "Red Charnia"
 }

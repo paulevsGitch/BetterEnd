@@ -19,14 +19,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class BlockMengerSponge extends BlockBase implements IRenderTypeable {
+public class BlockMengerSponge extends BlockBaseNotFull implements IRenderTypeable {
 	public BlockMengerSponge() {
-		super(FabricBlockSettings.copyOf(Blocks.SPONGE));
+		super(FabricBlockSettings.copyOf(Blocks.SPONGE).nonOpaque());
 	}
 	
 	@Override

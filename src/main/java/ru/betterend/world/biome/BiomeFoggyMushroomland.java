@@ -31,6 +31,8 @@ public class BiomeFoggyMushroomland extends EndBiome {
 				.addFeature(EndFeatures.CYAN_MOSS_WOOD)
 				.addFeature(EndFeatures.END_LILY)
 				.addFeature(EndFeatures.BUBBLE_CORAL)
+				.addFeature(EndFeatures.CHARNIA_CYAN)
+				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EndEntities.DRAGONFLY, 80, 2, 5)
 				.addMobSpawn(EndEntities.END_FISH, 20, 2, 5)

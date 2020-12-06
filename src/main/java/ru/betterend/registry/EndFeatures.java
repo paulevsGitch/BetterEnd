@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
+import ru.betterend.world.features.CharniaFeature;
 import ru.betterend.world.features.CrashedShipFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
@@ -19,6 +20,7 @@ import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
 import ru.betterend.world.features.HydraluxFeature;
+import ru.betterend.world.features.MengerSpongeFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
@@ -82,13 +84,20 @@ public class EndFeatures {
 	public static final EndFeature TWISTED_MOSS_WOOD = new EndFeature("twisted_moss_wood", new WallPlantOnLogFeature(EndBlocks.TWISTED_MOSS, 6), 25);
 	
 	// Water //
-	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 10), 10);
+	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 6), 10);
 	public static final EndFeature BUBBLE_CORAL_RARE = new EndFeature("bubble_coral_rare", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 3), 4);
-	public static final EndFeature END_LILY = new EndFeature("end_lily", new EndLilyFeature(10), 10);
+	public static final EndFeature END_LILY = new EndFeature("end_lily", new EndLilyFeature(6), 10);
 	public static final EndFeature END_LILY_RARE = new EndFeature("end_lily_rare", new EndLilyFeature(3), 4);
 	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(7), 5);
 	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(20), 25);
 	public static final EndFeature HYDRALUX = new EndFeature("hydralux", new HydraluxFeature(5), 5);
+	
+	public static final EndFeature CHARNIA_RED = new EndFeature("charnia_red", new CharniaFeature(EndBlocks.CHARNIA_RED), 10);
+	public static final EndFeature CHARNIA_PURPLE = new EndFeature("charnia_purple", new CharniaFeature(EndBlocks.CHARNIA_PURPLE), 10);
+	public static final EndFeature CHARNIA_CYAN = new EndFeature("charnia_cyan", new CharniaFeature(EndBlocks.CHARNIA_CYAN), 10);
+	public static final EndFeature CHARNIA_LIGHT_BLUE = new EndFeature("charnia_light_blue", new CharniaFeature(EndBlocks.CHARNIA_LIGHT_BLUE), 10);
+	public static final EndFeature CHARNIA_ORANGE = new EndFeature("charnia_orange", new CharniaFeature(EndBlocks.CHARNIA_ORANGE), 10);
+	public static final EndFeature MENGER_SPONGE = new EndFeature("menger_sponge", new MengerSpongeFeature(5), 1);
 	
 	// Terrain //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

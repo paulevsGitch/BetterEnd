@@ -27,6 +27,9 @@ public class BiomeMegalakeGrove extends EndBiome {
 				.addFeature(EndFeatures.END_LILY_RARE)
 				.addFeature(EndFeatures.UMBRELLA_MOSS)
 				.addFeature(EndFeatures.CREEPING_MOSS)
+				.addFeature(EndFeatures.CHARNIA_CYAN)
+				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
+				.addFeature(EndFeatures.MENGER_SPONGE)
 				.addMobSpawn(EndEntities.DRAGONFLY, 20, 1, 3)
 				.addMobSpawn(EndEntities.END_FISH, 20, 3, 8)
 				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));

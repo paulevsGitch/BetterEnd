@@ -24,6 +24,9 @@ public class BiomeMegalake extends EndBiome {
 				.addFeature(EndFeatures.END_LILY_RARE)
 				.addFeature(EndFeatures.UMBRELLA_MOSS)
 				.addFeature(EndFeatures.CREEPING_MOSS)
+				.addFeature(EndFeatures.CHARNIA_CYAN)
+				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
+				.addFeature(EndFeatures.MENGER_SPONGE)
 				.addMobSpawn(EndEntities.DRAGONFLY, 50, 1, 3)
 				.addMobSpawn(EndEntities.END_FISH, 50, 3, 8)
 				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));

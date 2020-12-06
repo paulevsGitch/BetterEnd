@@ -16,6 +16,7 @@ public class BiomeChorusForest extends EndBiome {
 				.setFogColor(87, 26, 87)
 				.setFogDensity(1.5F)
 				.setPlantsColor(122, 45, 122)
+				.setWaterAndFogColor(73, 30, 73)
 				.setSurface(EndBlocks.CHORUS_NYLIUM)
 				.setParticles(ParticleTypes.PORTAL, 0.01F)
 				.setLoop(EndSounds.AMBIENT_CHORUS_FOREST)
@@ -30,6 +31,7 @@ public class BiomeChorusForest extends EndBiome {
 				.addFeature(EndFeatures.CHORUS_GRASS)
 				.addFeature(EndFeatures.TAIL_MOSS)
 				.addFeature(EndFeatures.TAIL_MOSS_WOOD)
+				.addFeature(EndFeatures.CHARNIA_PURPLE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EndEntities.END_SLIME, 5, 1, 2)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));

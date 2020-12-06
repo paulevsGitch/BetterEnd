@@ -391,7 +391,7 @@
 	"block.betterend.sulphur_crystal": "Sulfur Crystal",
 	"item.betterend.crystalline_sulphur": "Sulfur",
 	
-	"biome.betterend.sulfur_springs": "Sulfur Springs",
+	"biome.betterend.sulphur_springs": "Sulfur Springs",
 	"block.betterend.hydralux_petal_block": "Hydralux Petal Block",
 	"block.betterend.hydralux_petal_block_black": "Black Petal Block",
 	"block.betterend.hydralux_petal_block_blue": "Blue Petal Block",
@@ -411,5 +411,9 @@
 	"block.betterend.hydralux_petal_block_yellow": "Yellow Petal Block",
 	"block.betterend.hydralux_sapling": "Hydralux Sapling",
 	"block.betterend.hydrothermal_vent": "Hydrothermal Vent",
-	"item.betterend.hydralux_petal": "Hydralux Petal"
+	"item.betterend.hydralux_petal": "Hydralux Petal",
+	
+	"block.betterend.menger_sponge": "Menger Sponge",
+	"block.betterend.menger_sponge_wet": "Wet Menger Sponge",
+	"block.betterend.tube_worm": "Tube Worm"
 }

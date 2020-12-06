@@ -393,7 +393,7 @@
 	"block.betterend.sulphur_crystal": "Кристалл серы",
 	"item.betterend.crystalline_sulphur": "Кристаллическая сера",
 	
-	"biome.betterend.sulfur_springs": "Серные источники",
+	"biome.betterend.sulphur_springs": "Серные источники",
 	"block.betterend.hydralux_petal_block": "Блок лепестков гидралюкса",
 	"block.betterend.hydralux_petal_block_black": "Чёрный блок лепестков",
 	"block.betterend.hydralux_petal_block_blue": "Синий блок лепестков",
@@ -413,5 +413,9 @@
 	"block.betterend.hydralux_petal_block_yellow": "Жёлтый блок лепестков",
 	"block.betterend.hydralux_sapling": "Саженец гидралюкса",
 	"block.betterend.hydrothermal_vent": "Гидротермальный источник",
-	"item.betterend.hydralux_petal": "Лепесток гидралюкса"
+	"item.betterend.hydralux_petal": "Лепесток гидралюкса",
+	
+	"block.betterend.menger_sponge": "Губка Менгера",
+	"block.betterend.menger_sponge_wet": "Мокрая губка Менгера",
+	"block.betterend.tube_worm": "Трубчатый червь"
 }

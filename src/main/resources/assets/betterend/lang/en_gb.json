@@ -15,5 +15,6 @@
 	"block.betterend.sulphuric_rock_tiles": "Sulphuric Rock Tiles",
 	"block.betterend.sulphuric_rock_wall": "Sulphuric Rock Wall",
 	"block.betterend.sulphur_crystal": "Sulphur Crystal",
-	"item.betterend.crystalline_sulphur": "Sulphur"
+	"item.betterend.crystalline_sulphur": "Sulphur",
+	"biome.betterend.sulphur_springs": "Sulphur Springs",
 }

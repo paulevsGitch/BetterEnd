@@ -5,8 +5,8 @@ import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.world.surface.SurfaceBuilders;
 
-public class BiomeSulfurSprings extends EndBiome {
-	public BiomeSulfurSprings() {
+public class BiomeSulphurSprings extends EndBiome {
+	public BiomeSulphurSprings() {
 		super(new BiomeDefinition("sulfur_springs")
 				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE)
 				.setWaterColor(25, 90, 157)

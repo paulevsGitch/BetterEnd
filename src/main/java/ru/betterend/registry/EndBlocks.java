@@ -17,6 +17,7 @@ import ru.betterend.blocks.BlockBrimstone;
 import ru.betterend.blocks.BlockBubbleCoral;
 import ru.betterend.blocks.BlockBulbVine;
 import ru.betterend.blocks.BlockBulbVineSeed;
+import ru.betterend.blocks.BlockCharnia;
 import ru.betterend.blocks.BlockChorusGrass;
 import ru.betterend.blocks.BlockDragonTreeSapling;
 import ru.betterend.blocks.BlockEndLily;
@@ -168,6 +169,9 @@ public class EndBlocks {
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockBubbleCoral());
 	public static final Block MENGER_SPONGE = registerBlock("menger_sponge", new BlockMengerSponge());
 	public static final Block MENGER_SPONGE_WET = registerBlock("menger_sponge_wet", new BlockMengerSpongeWet());
+	public static final Block CHARNIA_RED = registerBlock("charnia_red", new BlockCharnia());
+	public static final Block CHARNIA_PURPLE = registerBlock("charnia_purple", new BlockCharnia());
+	public static final Block CHARNIA_ORANGE = registerBlock("charnia_orange", new BlockCharnia());
 	
 	public static final Block END_LILY = registerBlockNI("end_lily", new BlockEndLily());
 	public static final Block END_LILY_SEED = registerBlock("end_lily_seed", new BlockEndLilySeed());

@@ -19,6 +19,7 @@ public class BiomeSulfurSprings extends EndBiome {
 				.addFeature(EndFeatures.SULPHURIC_LAKE)
 				.addFeature(EndFeatures.SULPHURIC_CAVE)
 				.addFeature(EndFeatures.HYDRALUX)
+				.addFeature(EndFeatures.TUBE_WORM)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

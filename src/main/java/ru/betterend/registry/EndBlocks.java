@@ -65,6 +65,7 @@ import ru.betterend.blocks.basis.BlockLeaves;
 import ru.betterend.blocks.basis.BlockOre;
 import ru.betterend.blocks.basis.BlockSimpleLeaves;
 import ru.betterend.blocks.basis.BlockStoneLantern;
+import ru.betterend.blocks.basis.BlockUnderwaterWallPlant;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.blocks.basis.BlockWallMushroom;
 import ru.betterend.blocks.basis.BlockWallPlant;
@@ -169,7 +170,7 @@ public class EndBlocks {
 	public static final Block HYDRALUX_SAPLING = registerBlock("hydralux_sapling", new BlockHydraluxSapling());	
 	public static final Block HYDRALUX = registerBlockNI("hydralux", new BlockHydralux());
 	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new BlockHydraluxPetal());
-	public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial(BlockHydraluxPetalColored::new, HYDRALUX_PETAL_BLOCK);
+	public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial(BlockHydraluxPetalColored::new, HYDRALUX_PETAL_BLOCK, true);
 	
 	public static final Block CAVE_BUSH = registerBlock("cave_bush", new BlockSimpleLeaves(MaterialColor.MAGENTA));
 	
@@ -181,6 +182,7 @@ public class EndBlocks {
 	public static final Block TAIL_MOSS = registerBlock("tail_moss", new BlockWallPlant());
 	public static final Block CYAN_MOSS = registerBlock("cyan_moss", new BlockWallPlant());
 	public static final Block TWISTED_MOSS = registerBlock("twisted_moss", new BlockWallPlant());
+	public static final Block TUBE_WORM = registerBlock("tube_worm", new BlockUnderwaterWallPlant());
 	
 	// Crops //
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new BlockShadowBerry());
@@ -212,7 +214,7 @@ public class EndBlocks {
 	public static final Block BLACKSTONE_LANTERN = registerBlock("blackstone_lantern", new BlockStoneLantern(Blocks.BLACKSTONE));
 	
 	public static final Block BULB_LANTERN = registerBlock("bulb_lantern", new BlockBulbVineLantern());
-	public static final ColoredMaterial BULB_LANTERN_COLORED = new ColoredMaterial(BlockBulbVineLanternColored::new, BULB_LANTERN);
+	public static final ColoredMaterial BULB_LANTERN_COLORED = new ColoredMaterial(BlockBulbVineLanternColored::new, BULB_LANTERN, false);
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());

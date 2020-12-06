@@ -20,13 +20,13 @@ public class WallPlantFeature extends WallScatterFeature {
 
 	@Override
 	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
-		BlockPos blockPos = pos.offset(dir.getOpposite());
-		BlockState blockState = world.getBlockState(blockPos);
-		return ((BlockWallPlant) block).isSupport(world, blockPos, blockState, dir);
+		BlockState state = block.getDefaultState().with(BlockWallPlant.FACING, dir);
+		return block.canPlaceAt(state, world, pos);
 	}
 
 	@Override
 	public void generate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
-		BlocksHelper.setWithoutUpdate(world, pos, block.getDefaultState().with(BlockWallPlant.FACING, dir));
+		BlockState state = block.getDefaultState().with(BlockWallPlant.FACING, dir);
+		BlocksHelper.setWithoutUpdate(world, pos, state);
 	}
 }

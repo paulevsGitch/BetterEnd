@@ -37,7 +37,11 @@ public class BlockWallPlant extends BlockPlant {
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 	
 	public BlockWallPlant() {
-		this(0);
+		this(FabricBlockSettings.of(Material.PLANT)
+				.breakByTool(FabricToolTags.SHEARS)
+				.sounds(BlockSoundGroup.GRASS)
+				.breakByHand(true)
+				.noCollision());
 	}
 	
 	public BlockWallPlant(int light) {

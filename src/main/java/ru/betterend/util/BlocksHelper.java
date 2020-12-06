@@ -43,6 +43,7 @@ public class BlocksHelper {
 	
 	private static final Mutable POS = new Mutable();
 	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
+	protected static final BlockState WATER = Blocks.WATER.getDefaultState();
 
 	private static final Vec3i[] OFFSETS = new Vec3i[] {
 			new Vec3i(-1, -1, -1), new Vec3i(-1, -1, 0), new Vec3i(-1, -1, 1),
@@ -159,6 +160,9 @@ public class BlocksHelper {
 					}
 					// Liquids
 					else if (!state.getFluidState().isEmpty()) {
+						if (!state.canPlaceAt(world, POS)) {
+							setWithoutUpdate(world, POS, WATER);
+						}
 						POS.setY(y - 1);
 						if (world.isAir(POS)) {
 							POS.setY(y);

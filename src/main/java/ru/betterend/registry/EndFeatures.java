@@ -89,6 +89,7 @@ public class EndFeatures {
 	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(7), 5);
 	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(20), 25);
 	public static final EndFeature HYDRALUX = new EndFeature("hydralux", new HydraluxFeature(5), 5);
+	public static final EndFeature TUBE_WORM = new EndFeature("tube_worm", new WallPlantFeature(EndBlocks.TUBE_WORM, 6), 15);
 	
 	// Terrain //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

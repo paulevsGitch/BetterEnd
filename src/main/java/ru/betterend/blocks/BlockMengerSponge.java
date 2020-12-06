@@ -20,9 +20,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class BlockMengerSponge extends BlockBase {
+public class BlockMengerSponge extends BlockBase implements IRenderTypeable {
 	public BlockMengerSponge() {
 		super(FabricBlockSettings.copyOf(Blocks.SPONGE));
 	}
@@ -92,5 +94,10 @@ public class BlockMengerSponge extends BlockBase {
 		}
 
 		return i > 0;
+	}
+	
+	@Override
+	public ERenderLayer getRenderLayer() {
+		return ERenderLayer.CUTOUT;
 	}
 }

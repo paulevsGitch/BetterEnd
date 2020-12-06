@@ -15,9 +15,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class BlockMengerSpongeWet extends BlockBase {
+public class BlockMengerSpongeWet extends BlockBase implements IRenderTypeable {
 	public BlockMengerSpongeWet() {
 		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE));
 	}
@@ -72,5 +74,10 @@ public class BlockMengerSpongeWet extends BlockBase {
 				world.addParticle(ParticleTypes.DRIPPING_WATER, x, y, z, 0, 0, 0);
 			}
 		}
+	}
+	
+	@Override
+	public ERenderLayer getRenderLayer() {
+		return ERenderLayer.CUTOUT;
 	}
 }

@@ -1,0 +1,7 @@
+{
+	"parent": "betterend:block/menger_sponge",
+	"textures": {
+		"particle": "betterend:block/menger_sponge_wet",
+		"texture": "betterend:block/menger_sponge_wet"
+	}
+}

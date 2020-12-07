@@ -3,6 +3,7 @@ package ru.betterend.entity;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
@@ -22,18 +23,22 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.util.MHelper;
 
 public class EntityCubozoa extends WaterCreatureEntity {
 	public static final int VARIANTS = 2;
 	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
 	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
+	private int moveTicks = 0;
+	private double moveX;
+	private double moveY;
+	private double moveZ;
+	private int timer;
 
 	public EntityCubozoa(EntityType<EntityCubozoa> entityType, World world) {
 		super(entityType, world);
+		timer = MHelper.randRange(20, 40, random);
 	}
-
-	@Override
-	protected void initGoals() {}
 
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
@@ -95,5 +100,36 @@ public class EntityCubozoa extends WaterCreatureEntity {
 
 	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
 		return dimensions.height * 0.5F;
+	}
+
+	@Override
+	public void tickMovement() {
+		super.tickMovement();
+		if (moveTicks >= timer) {
+			if (random.nextInt(4) == 0 && world.getBlockState(getBlockPos().down()).isOf(Blocks.WATER)) {
+				moveX = 0;
+				moveZ = 0;
+				moveY = -0.05;
+			}
+			else if (random.nextBoolean()) {
+				moveX = random.nextGaussian();
+				moveZ = random.nextGaussian();
+				moveY = (moveX == 0 && moveZ == 0) ? 1 : random.nextDouble();
+				double l = MHelper.lengthSqr(moveX, moveY, moveZ) / 0.05;
+				moveX /= l;
+				moveY /= l;
+				moveZ /= l;
+			}
+			moveTicks = 0;
+			timer = MHelper.randRange(20, 40, random);
+			this.yaw = (float) Math.atan2(moveX, moveZ);
+			this.bodyYaw = this.yaw;
+			this.pitch = (float) Math.asin(-moveY);
+		}
+		moveX *= 0.98;
+		moveY *= 0.98;
+		moveZ *= 0.98;
+		this.setVelocity(moveX, moveY, moveZ);
+		moveTicks ++;
 	}
 }

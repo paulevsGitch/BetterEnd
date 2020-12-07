@@ -10,6 +10,8 @@ import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
@@ -106,7 +108,7 @@ public class EndItems {
 	public final static Item END_FISH_COOKED = registerFood("end_fish_cooked", FoodComponents.COOKED_SALMON);
 	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new FishBucketItem(EndEntities.END_FISH, Fluids.WATER, makeItemSettings().maxCount(1)));
 	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 3, 0.75F);
-	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 4, 0.75F);
+	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 4, 0.75F, new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400));
 	
 	// Other //
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
@@ -175,8 +177,12 @@ public class EndItems {
 		return registerItem(name, item);
 	}
 	
-	public static Item registerFood(String name, int hunger, float saturation) {
-		return registerFood(name, new FoodComponent.Builder().hunger(hunger).saturationModifier(saturation).build());
+	public static Item registerFood(String name, int hunger, float saturation, StatusEffectInstance... effects) {
+		FoodComponent.Builder builder = new FoodComponent.Builder().hunger(hunger).saturationModifier(saturation);
+		for (StatusEffectInstance effect: effects) {
+			builder.statusEffect(effect, 1F);
+		}
+		return registerFood(name, builder.build());
 	}
 	
 	public static Item registerFood(String name, FoodComponent foodComponent) {

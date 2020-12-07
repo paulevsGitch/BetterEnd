@@ -3,7 +3,10 @@ package ru.betterend.recipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -119,6 +122,20 @@ public class CraftingRecipes {
 		GridRecipe.make("tail_moss_dye", Items.GRAY_DYE).setList("#").addMaterial('#', EndBlocks.TAIL_MOSS).build();
 		GridRecipe.make("petal_block", EndBlocks.HYDRALUX_PETAL_BLOCK).setShape("##", "##").addMaterial('#', EndItems.HYDRALUX_PETAL).build();
 		GridRecipe.make("petal_white_dye", Items.WHITE_DYE).setList("#").addMaterial('#', EndItems.HYDRALUX_PETAL).build();
+		
+		GridRecipe.make("sweet_berry_jelly", EndItems.SWEET_BERRY_JELLY)
+		.setList("JWSB")
+		.addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
+		.build();
+		
+		GridRecipe.make("shadow_berry_jelly", EndItems.SHADOW_BERRY_JELLY)
+		.setList("JWSB").addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR)
+		.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
+		.build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

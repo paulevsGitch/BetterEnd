@@ -65,6 +65,7 @@ public class EndItems {
 	public final static Item GLOWING_BULB = registerItem("glowing_bulb");
 	public final static Item CRYSTALLINE_SULPHUR = registerItem("crystalline_sulphur");
 	public final static Item HYDRALUX_PETAL = registerItem("hydralux_petal");
+	public final static Item GELATINE = registerItem("gelatine");
 	
 	// Armor //
 	public static final Item TERMINITE_HELMET = registerItem("terminite_helmet", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.HEAD, makeItemSettings()));
@@ -104,6 +105,8 @@ public class EndItems {
 	public final static Item END_FISH_RAW = registerFood("end_fish_raw", FoodComponents.SALMON);
 	public final static Item END_FISH_COOKED = registerFood("end_fish_cooked", FoodComponents.COOKED_SALMON);
 	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new FishBucketItem(EndEntities.END_FISH, Fluids.WATER, makeItemSettings().maxCount(1)));
+	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 3, 0.75F);
+	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 4, 0.75F);
 	
 	// Other //
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
@@ -177,7 +180,7 @@ public class EndItems {
 	}
 	
 	public static Item registerFood(String name, FoodComponent foodComponent) {
-		return registerItem(name, new Item(makeItemSettings().food(foodComponent)));
+		return registerItem(name, new PatternedItem(makeItemSettings().food(foodComponent)));
 	}
 
 	public static Settings makeItemSettings() {

@@ -426,5 +426,9 @@
 	"block.betterend.charnia_red": "Красная чарния",
 	
 	"entity.betterend.cubozoa": "Кубомедуза",
-	"item.betterend.spawn_egg_cubozoa": "Яйцо призыва кубомедузы"
+	"item.betterend.spawn_egg_cubozoa": "Яйцо призыва кубомедузы",
+	
+	"item.betterend.gelatine": "Желатин",
+	"item.betterend.sweet_berry_jelly": "Желе из сладких ягод",
+	"item.betterend.shadow_berry_jelly": "Желе из теневой ягоды"
 }

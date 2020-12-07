@@ -424,5 +424,9 @@
 	"block.betterend.charnia_red": "Red Charnia",
 	
 	"entity.betterend.cubozoa": "Cubozoa",
-	"item.betterend.spawn_egg_cubozoa": "Cubozoa Spawn Egg"
+	"item.betterend.spawn_egg_cubozoa": "Cubozoa Spawn Egg",
+	
+	"item.betterend.gelatine": "Gelatine",
+	"item.betterend.sweet_berry_jelly": "Sweet Berry Jelly",
+	"item.betterend.shadow_berry_jelly": "Shadow Berry Jelly"
 }

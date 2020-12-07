@@ -8,14 +8,17 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -23,6 +26,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
 public class EntityCubozoa extends WaterCreatureEntity {
@@ -122,14 +126,23 @@ public class EntityCubozoa extends WaterCreatureEntity {
 			}
 			moveTicks = 0;
 			timer = MHelper.randRange(20, 40, random);
-			this.yaw = (float) Math.atan2(moveX, moveZ);
+			this.yaw = MHelper.radiandToDegrees((float) Math.atan2(moveX, moveZ)) - 90;
 			this.bodyYaw = this.yaw;
-			this.pitch = (float) Math.asin(-moveY);
+			this.pitch = MHelper.radiandToDegrees((float) Math.asin(-moveY));
 		}
 		moveX *= 0.98;
 		moveY *= 0.98;
 		moveZ *= 0.98;
 		this.setVelocity(moveX, moveY, moveZ);
 		moveTicks ++;
+	}
+	
+	@Override
+	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
+		int count = random.nextInt(3);
+		if (count > 0) {
+			ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(EndItems.GELATINE, count));
+			this.world.spawnEntity(drop);
+		}
 	}
 }

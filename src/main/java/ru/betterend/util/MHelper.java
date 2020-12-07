@@ -6,6 +6,7 @@ public class MHelper {
 	public static final float PI2 = (float) (Math.PI * 2);
 	private static final int ALPHA = 255 << 24;
 	public static final Random RANDOM = new Random();
+	private static final float RAD_TO_DEG = 57.295779513082320876798154814105F;
 
 	public static int color(int r, int g, int b) {
 		return ALPHA | (r << 16) | (g << 8) | b;
@@ -241,5 +242,9 @@ public class MHelper {
 		values[2] = brightness;
 		
 		return values;
+	}
+	
+	public static final float radiandToDegrees(float value) {
+		return value * RAD_TO_DEG;
 	}
 }

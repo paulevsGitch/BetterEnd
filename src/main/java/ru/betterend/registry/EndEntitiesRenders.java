@@ -6,10 +6,10 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.entity.EntityType;
+import ru.betterend.entity.render.RendererEntityCubozoa;
 import ru.betterend.entity.render.RendererEntityDragonfly;
 import ru.betterend.entity.render.RendererEntityEndFish;
 import ru.betterend.entity.render.RendererEntityEndSlime;
-import ru.betterend.entity.render.RendererEntityCubozoa;
 import ru.betterend.entity.render.RendererEntityShadowWalker;
 
 public class EndEntitiesRenders {

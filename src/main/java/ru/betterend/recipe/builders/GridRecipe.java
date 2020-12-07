@@ -1,5 +1,6 @@
 package ru.betterend.recipe.builders;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
@@ -69,6 +70,10 @@ public class GridRecipe {
 	
 	public GridRecipe addMaterial(char key, Tag<Item> value) {
 		return addMaterial(key, Ingredient.fromTag(value));
+	}
+	
+	public GridRecipe addMaterial(char key, ItemStack... value) {
+		return addMaterial(key, Ingredient.ofStacks(Arrays.stream(value)));
 	}
 	
 	public GridRecipe addMaterial(char key, ItemConvertible... values) {

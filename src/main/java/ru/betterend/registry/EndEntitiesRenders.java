@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityType;
 import ru.betterend.entity.render.RendererEntityDragonfly;
 import ru.betterend.entity.render.RendererEntityEndFish;
 import ru.betterend.entity.render.RendererEntityEndSlime;
-import ru.betterend.entity.render.RendererEntityJello;
+import ru.betterend.entity.render.RendererEntityCubozoa;
 import ru.betterend.entity.render.RendererEntityShadowWalker;
 
 public class EndEntitiesRenders {
@@ -19,7 +19,7 @@ public class EndEntitiesRenders {
 		register(EndEntities.END_SLIME, RendererEntityEndSlime::new);
 		register(EndEntities.END_FISH, RendererEntityEndFish::new);
 		register(EndEntities.SHADOW_WALKER, RendererEntityShadowWalker::new);
-		register(EndEntities.JELLO, RendererEntityJello::new);
+		register(EndEntities.CUBOZOA, RendererEntityCubozoa::new);
 	}
 	
 	private static void register(EntityType<?> type, Function<EntityRenderDispatcher, MobEntityRenderer<?, ?>> render) {

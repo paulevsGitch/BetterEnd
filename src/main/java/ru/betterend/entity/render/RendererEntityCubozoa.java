@@ -7,16 +7,16 @@ import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
-import ru.betterend.entity.EntityJello;
-import ru.betterend.entity.model.ModelEntityJello;
+import ru.betterend.entity.EntityCubozoa;
+import ru.betterend.entity.model.ModelEntityCubozoa;
 
-public class RendererEntityJello extends MobEntityRenderer<EntityJello, ModelEntityJello> {
-	private static final Identifier TEXTURE = BetterEnd.makeID("textures/entity/jello.png");
-	private static final RenderLayer GLOW = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/jello_glow.png"));
+public class RendererEntityCubozoa extends MobEntityRenderer<EntityCubozoa, ModelEntityCubozoa> {
+	private static final Identifier TEXTURE = BetterEnd.makeID("textures/entity/cubozoa/cubozoa.png");
+	private static final RenderLayer GLOW = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/cubozoa/cubozoa_glow.png"));
 
-	public RendererEntityJello(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new ModelEntityJello(), 0.5f);
-		this.addFeature(new EyesFeatureRenderer<EntityJello, ModelEntityJello>(this) {
+	public RendererEntityCubozoa(EntityRenderDispatcher entityRenderDispatcher) {
+		super(entityRenderDispatcher, new ModelEntityCubozoa(), 0.5f);
+		this.addFeature(new EyesFeatureRenderer<EntityCubozoa, ModelEntityCubozoa>(this) {
 			@Override
 			public RenderLayer getEyesTexture() {
 				return GLOW;
@@ -25,13 +25,13 @@ public class RendererEntityJello extends MobEntityRenderer<EntityJello, ModelEnt
 	}
 
 	@Override
-	protected void scale(EntityJello entity, MatrixStack matrixStack, float f) {
+	protected void scale(EntityCubozoa entity, MatrixStack matrixStack, float f) {
 		float scale = entity.getScale();
 		matrixStack.scale(scale, scale, scale);
 	}
 
 	@Override
-	public Identifier getTexture(EntityJello entity) {
+	public Identifier getTexture(EntityCubozoa entity) {
 		return TEXTURE;
 	}
 

@@ -23,12 +23,12 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import ru.betterend.registry.EndBiomes;
 
-public class EntityJello extends WaterCreatureEntity {
+public class EntityCubozoa extends WaterCreatureEntity {
 	public static final int VARIANTS = 2;
-	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityJello.class, TrackedDataHandlerRegistry.BYTE);
-	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EntityJello.class, TrackedDataHandlerRegistry.BYTE);
+	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
+	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
 
-	public EntityJello(EntityType<EntityJello> entityType, World world) {
+	public EntityCubozoa(EntityType<EntityCubozoa> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -85,9 +85,9 @@ public class EntityJello extends WaterCreatureEntity {
 		return this.dataTracker.get(SCALE) / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<EntityJello> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+	public static boolean canSpawn(EntityType<EntityCubozoa> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		Box box = new Box(pos).expand(16);
-		List<EntityJello> list = world.getEntitiesByClass(EntityJello.class, box, (entity) -> {
+		List<EntityCubozoa> list = world.getEntitiesByClass(EntityCubozoa.class, box, (entity) -> {
 			return true;
 		});
 		return list.size() < 9;

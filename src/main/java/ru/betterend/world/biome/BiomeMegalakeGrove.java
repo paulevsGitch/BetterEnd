@@ -32,7 +32,7 @@ public class BiomeMegalakeGrove extends EndBiome {
 				.addFeature(EndFeatures.MENGER_SPONGE)
 				.addMobSpawn(EndEntities.DRAGONFLY, 20, 1, 3)
 				.addMobSpawn(EndEntities.END_FISH, 20, 3, 8)
-				.addMobSpawn(EndEntities.JELLO, 50, 3, 8)
+				.addMobSpawn(EndEntities.CUBOZOA, 50, 3, 8)
 				.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));
 	}
 }

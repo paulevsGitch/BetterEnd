@@ -6,9 +6,9 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.entity.BlockBenchModel;
-import ru.betterend.entity.EntityJello;
+import ru.betterend.entity.EntityCubozoa;
 
-public class ModelEntityJello extends BlockBenchModel<EntityJello> {
+public class ModelEntityCubozoa extends BlockBenchModel<EntityCubozoa> {
 	private final ModelPart model;
 	private final ModelPart main_cube_r1;
 	private final ModelPart tentacle_center_1;
@@ -22,7 +22,7 @@ public class ModelEntityJello extends BlockBenchModel<EntityJello> {
 	private float scaleY;
 	private float scaleXZ;
 
-	public ModelEntityJello() {
+	public ModelEntityCubozoa() {
 		super(RenderLayer::getEntityTranslucent);
 		
 		textureWidth = 48;
@@ -83,7 +83,7 @@ public class ModelEntityJello extends BlockBenchModel<EntityJello> {
 	}
 	
 	@Override
-	public void setAngles(EntityJello entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+	public void setAngles(EntityCubozoa entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		float sin = MathHelper.sin(animationProgress * 0.13F);
 		scaleY = sin * 0.1F + 0.9F;
 		scaleXZ = MathHelper.sin(animationProgress * 0.13F + 3.14F) * 0.1F + 0.9F;

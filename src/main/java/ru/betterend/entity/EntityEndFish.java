@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -22,12 +23,16 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
 
 public class EntityEndFish extends SchoolingFishEntity {
-	public static final int VARIANTS = 5;
+	public static final int VARIANTS_NORMAL = 5;
+	public static final int VARIANTS_SULPHUR = 3;
+	public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
 	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityEndFish.class, TrackedDataHandlerRegistry.BYTE);
 	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EntityEndFish.class, TrackedDataHandlerRegistry.BYTE);
 	
@@ -36,9 +41,19 @@ public class EntityEndFish extends SchoolingFishEntity {
 	}
 	
 	@Override
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
+		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
+		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.SULPHUR_SPRINGS) {
+			this.dataTracker.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
+		}
+		this.calculateDimensions();
+		return data;
+	}
+	
+	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
-		this.dataTracker.startTracking(VARIANT, (byte) this.getRandom().nextInt(VARIANTS));
+		this.dataTracker.startTracking(VARIANT, (byte) this.getRandom().nextInt(VARIANTS_NORMAL));
 		this.dataTracker.startTracking(SCALE, (byte) this.getRandom().nextInt(16));
 	}
 	

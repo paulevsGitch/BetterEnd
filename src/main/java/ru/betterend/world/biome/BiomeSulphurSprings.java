@@ -1,6 +1,7 @@
 package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
+import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.world.surface.SurfaceBuilders;
@@ -21,6 +22,8 @@ public class BiomeSulphurSprings extends EndBiome {
 				.addFeature(EndFeatures.HYDRALUX)
 				.addFeature(EndFeatures.CHARNIA_ORANGE)
 				.addFeature(EndFeatures.CHARNIA_RED)
+				.addMobSpawn(EndEntities.END_FISH, 50, 3, 8)
+				.addMobSpawn(EndEntities.CUBOZOA, 50, 3, 8)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

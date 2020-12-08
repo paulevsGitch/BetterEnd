@@ -7,6 +7,7 @@ import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.MainConfig;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
+import ru.betterend.item.GuideBook;
 import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.FurnaceRecipes;
@@ -49,8 +50,16 @@ public class BetterEnd implements ModInitializer {
 		InfusionRecipes.register();
 		EndStructures.register();
 		
+		if (hasGuideBook()) {
+			GuideBook.register();
+		}
+		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 		MainConfig.saveConfig();
+	}
+	
+	public static boolean hasGuideBook() {
+		return FabricLoader.getInstance().isModLoaded("patchouli");
 	}
 	
 	public static Identifier makeID(String path) {

@@ -57,7 +57,6 @@ def useApi(String dep) {
 			exclude group: "me.shedaniel"
 		}
 	}
-	dependencies.include(dep)
 }
 
 processResources {

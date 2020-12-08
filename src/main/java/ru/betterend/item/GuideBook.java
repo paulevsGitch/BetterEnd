@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -15,11 +16,15 @@ import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.LangUtil;
+
 import vazkii.patchouli.api.PatchouliAPI;
 
 public class GuideBook extends PatternedItem {
 
 	public final static Identifier BOOK_ID = BetterEnd.makeID("guidebook");
+	public static final Item GUIDE_BOOK = EndItems.registerItem(BOOK_ID, new GuideBook());
+	
+	public static void register() {}
 	
 	public GuideBook() {
 		super(EndItems.makeItemSettings().maxCount(1));

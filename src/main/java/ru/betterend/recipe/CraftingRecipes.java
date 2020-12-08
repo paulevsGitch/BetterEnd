@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
+import ru.betterend.BetterEnd;
+import ru.betterend.item.GuideBook;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -15,7 +17,7 @@ public class CraftingRecipes {
 	
 	public static void register() {
 		GridRecipe.make("ender_pearl_to_block", EndBlocks.ENDER_BLOCK)
-			.setShape(new String[] { "OO", "OO" })
+			.setShape("OO", "OO")
 			.addMaterial('O', Items.ENDER_PEARL)
 			.build();
 		GridRecipe.make("ender_block_to_pearl", Items.ENDER_PEARL)
@@ -25,7 +27,7 @@ public class CraftingRecipes {
 			.build();
 		
 		GridRecipe.make("end_stone_smelter", EndBlocks.END_STONE_SMELTER)
-			.setShape(new String[] { "###", "V V", "###" })
+			.setShape("###", "V V", "###")
 			.addMaterial('#', Blocks.END_STONE_BRICKS)
 			.addMaterial('V', Items.BUCKET)
 			.build();
@@ -37,7 +39,7 @@ public class CraftingRecipes {
 		registerPedestal("purpur_pedestal", EndBlocks.PURPUR_PEDESTAL, Blocks.PURPUR_SLAB, Blocks.PURPUR_PILLAR);
 		
 		GridRecipe.make("infusion_pedestal", EndBlocks.INFUSION_PEDESTAL)
-			.setShape(new String[] { " Y ", "O#O", " # " })
+			.setShape(" Y ", "O#O", " # ")
 			.addMaterial('O', Items.ENDER_PEARL)
 			.addMaterial('Y', Items.ENDER_EYE)
 			.addMaterial('#', Blocks.OBSIDIAN)
@@ -45,7 +47,7 @@ public class CraftingRecipes {
 		
 		String material = "terminite";
 		GridRecipe.make(material + "_block", EndBlocks.TERMINITE_BLOCK)
-			.setShape(new String[] { "III", "III", "III" })
+			.setShape("III", "III", "III")
 			.addMaterial('I', EndItems.TERMINITE_INGOT)
 			.build();
 		GridRecipe.make(material + "_block_to_ingot", EndItems.TERMINITE_INGOT)
@@ -67,7 +69,7 @@ public class CraftingRecipes {
 		
 		material = "aeternium";
 		GridRecipe.make(material + "_block", EndBlocks.AETERNIUM_BLOCK)
-			.setShape(new String[] { "III", "III", "III" })
+			.setShape("III", "III", "III")
 			.addMaterial('I', EndItems.AETERNIUM_INGOT)
 			.build();
 		GridRecipe.make(material + "_block_to_ingot", EndItems.AETERNIUM_INGOT)
@@ -124,18 +126,27 @@ public class CraftingRecipes {
 		GridRecipe.make("petal_white_dye", Items.WHITE_DYE).setList("#").addMaterial('#', EndItems.HYDRALUX_PETAL).build();
 		
 		GridRecipe.make("sweet_berry_jelly", EndItems.SWEET_BERRY_JELLY)
-		.setList("JWSB")
-		.addMaterial('J', EndItems.GELATINE)
-		.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
-		.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
-		.build();
+			.setList("JWSB")
+			.addMaterial('J', EndItems.GELATINE)
+			.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+			.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
+			.build();
 		
 		GridRecipe.make("shadow_berry_jelly", EndItems.SHADOW_BERRY_JELLY)
-		.setList("JWSB").addMaterial('J', EndItems.GELATINE)
-		.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
-		.addMaterial('S', Items.SUGAR)
-		.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
-		.build();
+			.setList("JWSB").addMaterial('J', EndItems.GELATINE)
+			.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+			.addMaterial('S', Items.SUGAR)
+			.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
+			.build();
+		
+		if (BetterEnd.hasGuideBook()) {
+			GridRecipe.make("guide_book", GuideBook.GUIDE_BOOK)
+				.setShape("D", "B", "C")
+				.addMaterial('D', EndItems.ENDER_DUST)
+				.addMaterial('B', Items.BOOK)
+				.addMaterial('C', EndItems.CRYSTAL_SHARDS)
+				.build();
+		}
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {
@@ -149,7 +160,7 @@ public class CraftingRecipes {
 	
 	public static void registerPedestal(String name, Block pedestal, Block slab, Block pillar) {
 		GridRecipe.make(name, pedestal)
-			.setShape(new String[] { "S", "#", "S" })
+			.setShape("S", "#", "S")
 			.addMaterial('S', slab)
 			.addMaterial('#', pillar)
 			.setOutputCount(2)
@@ -158,35 +169,35 @@ public class CraftingRecipes {
 	
 	private static void registerHelmet(String name, Item material, Item result) {
 		GridRecipe.make(name + "_helmet", result)
-			.setShape(new String[] { "III", "I I" })
+			.setShape("III", "I I")
 			.addMaterial('I', material)
 			.build();
 	}
 	
 	private static void registerChestplate(String name, Item material, Item result) {
 		GridRecipe.make(name + "_chestplate", result)
-			.setShape(new String[] { "I I", "III", "III" })
+			.setShape("I I", "III", "III")
 			.addMaterial('I', material)
 			.build();
 	}
 	
 	private static void registerLeggings(String name, Item material, Item result) {
 		GridRecipe.make(name + "_leggings", result)
-			.setShape(new String[] { "III", "I I", "I I" })
+			.setShape("III", "I I", "I I")
 			.addMaterial('I', material)
 			.build();
 	}
 	
 	private static void registerBoots(String name, Item material, Item result) {
 		GridRecipe.make(name + "_boots", result)
-			.setShape(new String[] { "I I", "I I" })
+			.setShape("I I", "I I")
 			.addMaterial('I', material)
 			.build();
 	}
 	
 	private static void registerShovel(String name, Item material, Item result) {
 		GridRecipe.make(name + "_shovel", result)
-			.setShape(new String[] { "I", "#", "#" })
+			.setShape("I", "#", "#")
 			.addMaterial('I', material)
 			.addMaterial('#', Items.STICK)
 			.build();
@@ -202,7 +213,7 @@ public class CraftingRecipes {
 	
 	private static void registerPickaxe(String name, Item material, Item result) {
 		GridRecipe.make(name + "_pickaxe", result)
-			.setShape(new String[] { "III", " # ", " # " })
+			.setShape("III", " # ", " # ")
 			.addMaterial('I', material)
 			.addMaterial('#', Items.STICK)
 			.build();
@@ -210,7 +221,7 @@ public class CraftingRecipes {
 	
 	private static void registerAxe(String name, Item material, Item result) {
 		GridRecipe.make(name + "_axe", result)
-			.setShape(new String[] { "II", "#I", "# " })
+			.setShape("II", "#I", "# ")
 			.addMaterial('I', material)
 			.addMaterial('#', Items.STICK)
 			.build();
@@ -218,7 +229,7 @@ public class CraftingRecipes {
 	
 	private static void registerHoe(String name, Item material, Item result) {
 		GridRecipe.make(name + "_hoe", result)
-			.setShape(new String[] { "II", "# ", "# " })
+			.setShape("II", "# ", "# ")
 			.addMaterial('I', material)
 			.addMaterial('#', Items.STICK)
 			.build();
@@ -226,7 +237,7 @@ public class CraftingRecipes {
 	
 	private static void registerHammer(String name, Item material, Item result) {
 		GridRecipe.make(name + "_hammer", result)
-			.setShape(new String[] { "I I", "I#I", " # " })
+			.setShape("I I", "I#I", " # ")
 			.addMaterial('I', material)
 			.addMaterial('#', Items.STICK)
 			.build();

@@ -32,6 +32,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.config.ItemConfig;
 import ru.betterend.config.MainConfig;
@@ -42,7 +43,6 @@ import ru.betterend.item.EndHoe;
 import ru.betterend.item.EndPickaxe;
 import ru.betterend.item.EndToolMaterial;
 import ru.betterend.item.EternalCrystal;
-import ru.betterend.item.GuideBook;
 import ru.betterend.item.ItemSpawnEgg;
 import ru.betterend.item.PatternedItem;
 import ru.betterend.tab.CreativeTabs;
@@ -112,8 +112,6 @@ public class EndItems {
 	
 	// Other //
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
-	public static final Item GUIDE_BOOK = EndItems.registerItem(GuideBook.BOOK_ID, new GuideBook());
-	
 	
 	protected static Item registerItem(String name) {
 		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));

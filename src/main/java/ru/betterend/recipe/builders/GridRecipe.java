@@ -63,7 +63,7 @@ public class GridRecipe {
 	}
 	
 	public GridRecipe setList(String shape) {
-		this.shape = new String[] {shape};
+		this.shape = new String[] { shape };
 		this.shaped = false;
 		return this;
 	}

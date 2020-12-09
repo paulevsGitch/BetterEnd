@@ -151,6 +151,9 @@ public class EndBlocks {
 	public static final Block TENANEA_OUTER_LEAVES = registerBlock("tenanea_outer_leaves", new BlockFur(TENANEA_SAPLING, 32));
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
 	
+	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new BlockLeaves(TENANEA_SAPLING, MaterialColor.ORANGE));
+	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
+	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());
 	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new BlockUmbrellaMossTall());

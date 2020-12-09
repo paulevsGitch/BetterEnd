@@ -96,7 +96,7 @@ public class SplineHelper {
 		}
 	}
 	
-	private static boolean fillLine(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+	public static boolean fillLine(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
 		float dx = end.getX() - start.getX();
 		float dy = end.getY() - start.getY();
 		float dz = end.getZ() - start.getZ();
@@ -146,7 +146,7 @@ public class SplineHelper {
 		}
 	}
 	
-	private static void fillLineForce(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+	public static void fillLineForce(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
 		float dx = end.getX() - start.getX();
 		float dy = end.getY() - start.getY();
 		float dz = end.getZ() - start.getZ();

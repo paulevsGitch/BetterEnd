@@ -14,6 +14,7 @@ public class BiomeAmberLand extends EndBiome {
 				.setSurface(EndBlocks.AMBER_GRASS)
 				.addFeature(EndFeatures.AMBER_ORE)
 				.addFeature(EndFeatures.END_LAKE_RARE)
+				.addFeature(EndFeatures.HELIX_TREE)
 				.addFeature(EndFeatures.CHARNIA_ORANGE)
 				.addFeature(EndFeatures.CHARNIA_RED)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)

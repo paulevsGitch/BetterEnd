@@ -31,6 +31,7 @@ public class HelixTreeFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
+		BlocksHelper.setWithoutUpdate(world, pos, AIR);
 		
 		float angle = random.nextFloat() * MHelper.PI2;
 		float radiusRange = MHelper.randRange(4.5F, 6F, random);
@@ -137,9 +138,9 @@ public class HelixTreeFeature extends DefaultFeature {
 		
 		Mutable bPos = new Mutable();
 		for (int i = 0; i < count; i++) {
+			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
 			int color = MHelper.floor((float) i / (float) count * 7F + 0.5F) + offset;
 			color = MathHelper.clamp(color, 0, 7);
-			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
 			if (world.getBlockState(bPos).getMaterial().isReplaceable()) {
 				BlocksHelper.setWithoutUpdate(world, bPos, state.with(BlockHelixTreeLeaves.COLOR, color));
 			}

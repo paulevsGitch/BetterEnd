@@ -29,6 +29,7 @@ import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockHelixTreeLeaves;
+import ru.betterend.blocks.BlockHelixTreeLuminophor;
 import ru.betterend.blocks.BlockHelixTreeSapling;
 import ru.betterend.blocks.BlockHydralux;
 import ru.betterend.blocks.BlockHydraluxPetal;
@@ -157,6 +158,7 @@ public class EndBlocks {
 	
 	public static final Block HELIX_TREE_SAPLING = registerBlock("helix_tree_sapling", new BlockHelixTreeSapling());
 	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new BlockHelixTreeLeaves());
+	public static final Block HELIX_TREE_LUMINOPHOR = registerBlock("helix_tree_luminophor", new BlockHelixTreeLuminophor());
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
 	
 	// Small Plants //

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -28,6 +29,7 @@ public class BlockHelixTreeLeaves extends BlockBase implements IColorProvider {
 	public BlockHelixTreeLeaves() {
 		super(FabricBlockSettings.of(Material.LEAVES)
 				.strength(0.2F)
+				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.materialColor(MaterialColor.ORANGE));
 	}

@@ -1,0 +1,26 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/lanceleaf_stem",
+				"material": "betterend:waving_floor"
+			},
+			{
+				"sprite": "betterend:block/lanceleaf_leaf_bottom",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/lanceleaf_leaf_middle",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/lanceleaf_leaf_pre_top",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/lanceleaf_leaf_top",
+				"material": "betterend:waving"
+			}
+		]
+	}
+}

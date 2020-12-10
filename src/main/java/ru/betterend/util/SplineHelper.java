@@ -169,7 +169,7 @@ public class SplineHelper {
 				BlocksHelper.setWithoutUpdate(world, bPos, state);
 				bPos.setY(bPos.getY() - 1);
 				bState = world.getBlockState(bPos);
-				if (down && bState.equals(state) || replace.apply(bState)) {
+				if (down && replace.apply(bState)) {
 					BlocksHelper.setWithoutUpdate(world, bPos, state);
 				}
 			}
@@ -183,7 +183,7 @@ public class SplineHelper {
 			BlocksHelper.setWithoutUpdate(world, bPos, state);
 			bPos.setY(bPos.getY() - 1);
 			bState = world.getBlockState(bPos);
-			if (down && bState.equals(state) || replace.apply(bState)) {
+			if (down && replace.apply(bState)) {
 				BlocksHelper.setWithoutUpdate(world, bPos, state);
 			}
 		}

@@ -461,5 +461,7 @@
 	"block.betterend.glowing_pillar_leaves": "Glowing Pillar Leaves",
 	"block.betterend.glowing_pillar_luminophor": "Glowing Pillar Luminophor",
 	"block.betterend.glowing_pillar_roots": "Glowing Pillar Roots",
-	"block.betterend.glowing_pillar_seed": "Glowing Pillar Seed"
+	"block.betterend.glowing_pillar_seed": "Glowing Pillar Seed",
+	
+	"biome.betterend.ice_starfield": "Ice Starfield"
 }

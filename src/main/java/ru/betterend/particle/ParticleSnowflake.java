@@ -27,7 +27,7 @@ public class ParticleSnowflake extends SpriteBillboardParticle {
 		setSprite(sprites);
 		
 		this.maxAge = MHelper.randRange(150, 300, random);
-		this.scale = MHelper.randRange(0.05F, 0.3F, random);
+		this.scale = MHelper.randRange(0.05F, 0.2F, random);
 		this.setColorAlpha(0F);
 		
 		preVX = random.nextGaussian() * 0.015;

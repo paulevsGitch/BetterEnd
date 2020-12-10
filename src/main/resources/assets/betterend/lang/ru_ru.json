@@ -463,5 +463,7 @@
 	"block.betterend.glowing_pillar_leaves": "Листья светящейся колонны",
 	"block.betterend.glowing_pillar_luminophor": "Люминофор светящейся колонны",
 	"block.betterend.glowing_pillar_roots": "Корни светящейся колонны",
-	"block.betterend.glowing_pillar_seed": "Семя светящейся колонны"
+	"block.betterend.glowing_pillar_seed": "Семя светящейся колонны",
+	
+	"biome.betterend.ice_starfield": "Поле ледяных звёзд"
 }

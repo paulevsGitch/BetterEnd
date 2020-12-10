@@ -9,7 +9,7 @@ import ru.betterend.registry.EndBlocks;
 
 public class LanceleafFeature extends ScatterFeature {
 	public LanceleafFeature() {
-		super(5);
+		super(7);
 	}
 
 	@Override
@@ -21,5 +21,10 @@ public class LanceleafFeature extends ScatterFeature {
 	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
 		BlockPlantWithAge seed = ((BlockPlantWithAge) EndBlocks.LANCELEAF_SEED);
 		seed.growAdult(world, random, blockPos);
+	}
+	
+	@Override
+	protected int getChance() {
+		return 5;
 	}
 }

@@ -13,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import ru.betterend.util.MHelper;
 
 @Environment(EnvType.CLIENT)
-public class ParticleSulphur extends SpriteBillboardParticle {
+public class ParticleSnowflake extends SpriteBillboardParticle {
 	private int ticks;
 	private double preVX;
 	private double preVY;
@@ -22,13 +22,13 @@ public class ParticleSulphur extends SpriteBillboardParticle {
 	private double nextVY;
 	private double nextVZ;
 	
-	protected ParticleSulphur(ClientWorld world, double x, double y, double z, double r, double g, double b, SpriteProvider sprites) {
+	protected ParticleSnowflake(ClientWorld world, double x, double y, double z, double r, double g, double b, SpriteProvider sprites) {
 		super(world, x, y, z, r, g, b);
 		setSprite(sprites);
 		
 		this.maxAge = MHelper.randRange(150, 300, random);
-		this.scale = MHelper.randRange(0.05F, 0.15F, random);
-		this.setColorAlpha(0);
+		this.scale = MHelper.randRange(0.05F, 0.3F, random);
+		this.setColorAlpha(0F);
 		
 		preVX = random.nextGaussian() * 0.015;
 		preVY = random.nextGaussian() * 0.015;
@@ -80,17 +80,17 @@ public class ParticleSulphur extends SpriteBillboardParticle {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static class FactorySulphur implements ParticleFactory<DefaultParticleType> {
+	public static class FactorySnowflake implements ParticleFactory<DefaultParticleType> {
 
 		private final SpriteProvider sprites;
 
-		public FactorySulphur(SpriteProvider sprites) {
+		public FactorySnowflake(SpriteProvider sprites) {
 			this.sprites = sprites;
 		}
 
 		@Override
 		public Particle createParticle(DefaultParticleType type, ClientWorld world, double x, double y, double z, double vX, double vY, double vZ) {
-			return new ParticleSulphur(world, x, y, z, 1, 1, 1, sprites);
+			return new ParticleSnowflake(world, x, y, z, 1, 1, 1, sprites);
 		}
 	}
 }

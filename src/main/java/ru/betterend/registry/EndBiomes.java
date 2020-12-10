@@ -31,6 +31,7 @@ import ru.betterend.world.biome.BiomeChorusForest;
 import ru.betterend.world.biome.BiomeCrystalMountains;
 import ru.betterend.world.biome.BiomeDustWastelands;
 import ru.betterend.world.biome.BiomeFoggyMushroomland;
+import ru.betterend.world.biome.BiomeIceStarfield;
 import ru.betterend.world.biome.BiomeMegalake;
 import ru.betterend.world.biome.BiomeMegalakeGrove;
 import ru.betterend.world.biome.BiomePaintedMountains;
@@ -74,6 +75,9 @@ public class EndBiomes {
 	public static final EndBiome AMBER_LAND = registerBiome(new BiomeAmberLand(), BiomeType.LAND);
 	public static final EndBiome BLOSSOMING_SPIRES = registerBiome(new BiomeBlossomingSpires(), BiomeType.LAND);
 	public static final EndBiome SULPHUR_SPRINGS = registerBiome(new BiomeSulphurSprings(), BiomeType.LAND);
+	
+	// Better End Void
+	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);
 	
 	public static void register() {}
 	

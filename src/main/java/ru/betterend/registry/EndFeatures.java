@@ -19,6 +19,7 @@ import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
+import ru.betterend.world.features.GlowPillarFeature;
 import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.LanceleafFeature;
 import ru.betterend.world.features.MengerSpongeFeature;
@@ -72,6 +73,7 @@ public class EndFeatures {
 	public static final EndFeature BUSHY_GRASS_WG = new EndFeature("bushy_grass_wg", new SinglePlantFeature(EndBlocks.BUSHY_GRASS, 5), 10);
 	public static final EndFeature AMBER_GRASS = new EndFeature("amber_grass", new SinglePlantFeature(EndBlocks.AMBER_GRASS, 6), 9);
 	public static final EndFeature LANCELEAF = new EndFeature("lanceleaf", new LanceleafFeature(), 3);
+	public static final EndFeature GLOW_PILLAR = new EndFeature("glow_pillar", new GlowPillarFeature(), 1);
 	
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);

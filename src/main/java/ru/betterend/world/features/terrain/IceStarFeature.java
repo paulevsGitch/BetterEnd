@@ -22,10 +22,22 @@ import ru.betterend.util.sdf.primitive.SDFCapedCone;
 import ru.betterend.world.features.DefaultFeature;
 
 public class IceStarFeature extends DefaultFeature {
+	private final float minSize;
+	private final float maxSize;
+	private final int minCount;
+	private final int maxCount;
+	
+	public IceStarFeature(float minSize, float maxSize, int minCount, int maxCount) {
+		this.minSize = minSize;
+		this.maxSize = maxSize;
+		this.minCount = minCount;
+		this.maxCount = maxCount;
+	}
+	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
-		float size = MHelper.randRange(5F, 15F, random);
-		int count = MHelper.randRange(10, 25, random);
+		float size = MHelper.randRange(minSize, maxSize, random);
+		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);
 		SDF sdf = null;
 		SDF spike = new SDFCapedCone().setRadius1(3 + (size - 5) * 0.2F).setRadius2(0).setHeight(size).setBlock(Blocks.ICE);
@@ -58,24 +70,23 @@ public class IceStarFeature extends DefaultFeature {
 		BlockState packed = Blocks.PACKED_ICE.getDefaultState();
 		sdf.setPostProcess((info) -> {
 			BlockPos bpos = info.getPos();
-			
-			if (hasSnow && !info.getState().isOf(Blocks.SNOW) && info.getStateUp().isAir()) {
-				info.setBlockPos(bpos.up(), layer.with(Properties.LAYERS, MHelper.randRange(1, 3, random)));
-				//info.setBlockPos(bpos.up(), layer);
-				return snow;
+
+			if (!info.getState().isOf(Blocks.SNOW)) {
+				if (hasSnow && info.getStateUp().isAir()) {
+					info.setBlockPos(bpos.up(), layer.with(Properties.LAYERS, MHelper.randRange(1, 3, random)));
+					return snow;
+				}
+
+				if (noise1.eval(bpos.getX() * 0.1, bpos.getY() * 0.1, bpos.getZ() * 0.1) > 0.3) {
+					return packed;
+				}
+				else if (noise2.eval(bpos.getX() * 0.1, bpos.getY() * 0.1, bpos.getZ() * 0.1) > 0.3) {
+					return blue;
+				}
 			}
-			
-			if (noise1.eval(bpos.getX(), bpos.getY(), bpos.getZ()) > 0.3) {
-				return packed;
-			}
-			else if (noise2.eval(bpos.getX(), bpos.getY(), bpos.getZ()) > 0.3) {
-				return blue;
-			}
-			else {
-				return info.getState();
-			}
+			return info.getState();
 		}).fillRecursive(world, pos);
-		
+
 		return true;
 	}
 

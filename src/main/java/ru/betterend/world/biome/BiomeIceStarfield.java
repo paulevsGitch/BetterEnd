@@ -12,6 +12,7 @@ public class BiomeIceStarfield extends EndBiome {
 				.setFoliageColor(193, 244, 244)
 				.setParticles(EndParticles.SNOWFLAKE, 0.001F)
 				.addFeature(EndFeatures.ICE_STAR)
+				.addFeature(EndFeatures.ICE_STAR_SMALL)
 				.addMobSpawn(EntityType.ENDERMAN, 20, 1, 4));
 	}
 }

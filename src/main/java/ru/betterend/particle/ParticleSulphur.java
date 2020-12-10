@@ -28,6 +28,7 @@ public class ParticleSulphur extends SpriteBillboardParticle {
 		
 		this.maxAge = MHelper.randRange(150, 300, random);
 		this.scale = MHelper.randRange(0.05F, 0.15F, random);
+		this.setColor(1, 1, 1);
 		this.setColorAlpha(0);
 		
 		preVX = random.nextGaussian() * 0.015;

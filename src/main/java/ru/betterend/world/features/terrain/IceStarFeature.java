@@ -25,7 +25,7 @@ public class IceStarFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		float size = MHelper.randRange(5F, 15F, random);
-		int count = MHelper.randRange(7, 25, random);
+		int count = MHelper.randRange(10, 25, random);
 		List<Vector3f> points = getFibonacciPoints(count);
 		SDF sdf = null;
 		SDF spike = new SDFCapedCone().setRadius1(3 + (size - 5) * 0.2F).setRadius2(0).setHeight(size).setBlock(Blocks.ICE);

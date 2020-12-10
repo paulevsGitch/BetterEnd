@@ -29,7 +29,9 @@ import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
 import ru.betterend.blocks.BlockHelixTreeLeaves;
-import ru.betterend.blocks.BlockHelixTreeLuminophor;
+import ru.betterend.blocks.BlockGlowingPillarLuminophor;
+import ru.betterend.blocks.BlockGlowingPillarRoots;
+import ru.betterend.blocks.BlockGlowingPillarSeed;
 import ru.betterend.blocks.BlockHelixTreeSapling;
 import ru.betterend.blocks.BlockHydralux;
 import ru.betterend.blocks.BlockHydraluxPetal;
@@ -158,7 +160,6 @@ public class EndBlocks {
 	
 	public static final Block HELIX_TREE_SAPLING = registerBlock("helix_tree_sapling", new BlockHelixTreeSapling());
 	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new BlockHelixTreeLeaves());
-	public static final Block HELIX_TREE_LUMINOPHOR = registerBlock("helix_tree_luminophor", new BlockHelixTreeLuminophor());
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
 	
 	// Small Plants //
@@ -179,6 +180,11 @@ public class EndBlocks {
 	
 	public static final Block LANCELEAF_SEED = registerBlock("lanceleaf_seed", new BlockLanceleafSeed());
 	public static final Block LANCELEAF = registerBlockNI("lanceleaf", new BlockLanceleaf());
+	
+	public static final Block GLOWING_PILLAR_SEED = registerBlock("glowing_pillar_seed", new BlockGlowingPillarSeed());
+	public static final Block GLOWING_PILLAR_ROOTS = registerBlockNI("glowing_pillar_roots", new BlockGlowingPillarRoots());
+	public static final Block GLOWING_PILLAR_LUMINOPHOR = registerBlock("glowing_pillar_luminophor", new BlockGlowingPillarLuminophor());
+	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new BlockFur(GLOWING_PILLAR_SEED, 15, 3));
 	
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockBubbleCoral());
 	public static final Block MENGER_SPONGE = registerBlock("menger_sponge", new BlockMengerSponge());

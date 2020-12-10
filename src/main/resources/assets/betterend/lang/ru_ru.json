@@ -458,5 +458,10 @@
 	"block.betterend.lanceleaf": "Ланцелист",
 	"block.betterend.lanceleaf_seed": "Семечко ланцелиста",
 	"block.betterend.hydralux": "Гидралюкс",
-	"block.betterend.helix_tree_luminophor": "Люминофор закрученного дерева"
+	"block.betterend.helix_tree_luminophor": "Люминофор закрученного дерева",
+	
+	"block.betterend.glowing_pillar_leaves": "Листья светящейся колонны",
+	"block.betterend.glowing_pillar_luminophor": "Люминофор светящейся колонны",
+	"block.betterend.glowing_pillar_roots": "Корни светящейся колонны",
+	"block.betterend.glowing_pillar_seed": "Семя светящейся колонны"
 }

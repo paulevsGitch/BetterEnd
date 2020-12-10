@@ -456,5 +456,10 @@
 	"block.betterend.lanceleaf": "Lanceleaf",
 	"block.betterend.lanceleaf_seed": "Lanceleaf Seed",
 	"block.betterend.hydralux": "Hydralux",
-	"block.betterend.helix_tree_luminophor": "Helix Tree Luminophor"
+	"block.betterend.helix_tree_luminophor": "Helix Tree Luminophor",
+	
+	"block.betterend.glowing_pillar_leaves": "Glowing Pillar Leaves",
+	"block.betterend.glowing_pillar_luminophor": "Glowing Pillar Luminophor",
+	"block.betterend.glowing_pillar_roots": "Glowing Pillar Roots",
+	"block.betterend.glowing_pillar_seed": "Glowing Pillar Seed"
 }

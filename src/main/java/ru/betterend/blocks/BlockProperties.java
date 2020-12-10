@@ -2,15 +2,18 @@ package ru.betterend.blocks;
 
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.StringIdentifiable;
 
 public class BlockProperties {
 	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.of("shape", TripleShape.class);
 	public final static EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.of("state", PedestalState.class);
 	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.of("shape", HydraluxShape.class);
+	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.of("shape", PentaShape.class);
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.of("has_light");
 	public static final BooleanProperty ACTIVATED = BooleanProperty.of("active");
+	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
 	
 	public static enum TripleShape implements StringIdentifiable {
 		TOP("top"),
@@ -87,6 +90,30 @@ public class BlockProperties {
 		
 		public boolean hasGlow() {
 			return glow;
+		}
+	}
+	
+	public static enum PentaShape implements StringIdentifiable {
+		BOTTOM("bottom"),
+		PRE_BOTTOM("pre_bottom"),
+		MIDDLE("middle"),
+		PRE_TOP("pre_top"),
+		TOP("top");
+		
+		private final String name;
+		
+		PentaShape(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String asString() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 }

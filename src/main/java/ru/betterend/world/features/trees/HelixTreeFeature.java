@@ -74,10 +74,10 @@ public class HelixTreeFeature extends DefaultFeature {
 		for (int i = 0; i <= 20; i++) {
 			float radius = i * 0.1F - 1;
 			radius *= radius;
-			radius = (1 - radius) * 4F * scale;
+			radius = (1 - radius) * 8F * scale;
 			dx = (float) Math.sin(i * 0.25F + angle) * radius;
 			dz = (float) Math.cos(i * 0.25F + angle) * radius;
-			spline.add(new Vector3f(dx, i * scale, dz));
+			spline.add(new Vector3f(dx, i * scale * 1.2F, dz));
 		}
 		
 		Vector3f start = new Vector3f();

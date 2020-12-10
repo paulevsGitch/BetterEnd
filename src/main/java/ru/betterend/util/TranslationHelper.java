@@ -26,13 +26,15 @@ public class TranslationHelper {
 		JsonObject translationEn = gson.fromJson(new InputStreamReader(streamEn), JsonObject.class);
 		JsonObject translationRu = gson.fromJson(new InputStreamReader(streamRu), JsonObject.class);
 		
-		EndItems.getModBlocks().forEach((block) -> {
-			String name = block.getName().getString();
-			if (!translationEn.has(name)) {
-				missingNamesEn.add(name);
-			}
-			if (!translationRu.has(name)) {
-				missingNamesRu.add(name);
+		Registry.BLOCK.forEach((block) -> {
+			if (Registry.BLOCK.getId(block).getNamespace().equals(BetterEnd.MOD_ID)) {
+				String name = block.getName().getString();
+				if (!translationEn.has(name)) {
+					missingNamesEn.add(name);
+				}
+				if (!translationRu.has(name)) {
+					missingNamesRu.add(name);
+				}
 			}
 		});
 		

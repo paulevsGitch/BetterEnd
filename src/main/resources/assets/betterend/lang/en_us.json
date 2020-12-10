@@ -428,5 +428,32 @@
 	
 	"item.betterend.gelatine": "Gelatine",
 	"item.betterend.sweet_berry_jelly": "Sweet Berry Jelly",
-	"item.betterend.shadow_berry_jelly": "Shadow Berry Jelly"
+	"item.betterend.shadow_berry_jelly": "Shadow Berry Jelly",
+	
+	"block.betterend.amber_moss": "Amber Moss",
+	"block.betterend.amber_moss_path": "Amber Moss Path",
+	"block.betterend.helix_tree_bark": "Helix Tree Bark",
+	"block.betterend.helix_tree_barrel": "Helix Tree Barrel",
+	"block.betterend.helix_tree_bookshelf": "Helix Tree Bookshelf",
+	"block.betterend.helix_tree_button": "Helix Tree Button",
+	"block.betterend.helix_tree_chest": "Helix Tree Chest",
+	"block.betterend.helix_tree_crafting_table": "Helix Tree Crafting Table",
+	"block.betterend.helix_tree_door": "Helix Tree Door",
+	"block.betterend.helix_tree_fence": "Helix Tree Fence",
+	"block.betterend.helix_tree_gate": "Helix Tree Gate",
+	"block.betterend.helix_tree_ladder": "Helix Tree Ladder",
+	"block.betterend.helix_tree_leaves": "Helix Tree Leaves",
+	"block.betterend.helix_tree_log": "Helix Tree Log",
+	"block.betterend.helix_tree_planks": "Helix Tree Planks",
+	"block.betterend.helix_tree_plate": "Helix Tree Plate",
+	"block.betterend.helix_tree_sapling": "Helix Tree Sapling",
+	"block.betterend.helix_tree_sign": "Helix Tree Sign",
+	"block.betterend.helix_tree_slab": "Helix Tree Slab",
+	"block.betterend.helix_tree_stairs": "Helix Tree Stairs",
+	"block.betterend.helix_tree_stripped_bark": "Helix Tree Stripped Bark",
+	"block.betterend.helix_tree_stripped_log": "Helix Tree Stripped Log",
+	"block.betterend.helix_tree_trapdoor": "Helix Tree Trapdoor",
+	"block.betterend.lanceleaf": "Lanceleaf",
+	"block.betterend.lanceleaf_seed": "Lanceleaf Seed",
+	"block.betterend.hydralux": "Hydralux"
 }

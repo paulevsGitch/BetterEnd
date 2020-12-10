@@ -36,6 +36,8 @@ import ru.betterend.blocks.BlockHydraluxPetalColored;
 import ru.betterend.blocks.BlockHydraluxSapling;
 import ru.betterend.blocks.BlockHydrothermalVent;
 import ru.betterend.blocks.BlockLacugroveSapling;
+import ru.betterend.blocks.BlockLanceleaf;
+import ru.betterend.blocks.BlockLanceleafSeed;
 import ru.betterend.blocks.BlockMengerSponge;
 import ru.betterend.blocks.BlockMengerSpongeWet;
 import ru.betterend.blocks.BlockMossyGlowshroomCap;
@@ -172,6 +174,9 @@ public class EndBlocks {
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());
 	public static final Block BLUE_VINE_LANTERN = registerBlock("blue_vine_lantern", new BlockBlueVineLantern());
 	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new BlockFur(BLUE_VINE_SEED, 15, 3));
+	
+	public static final Block LANCELEAF_SEED = registerBlock("lanceleaf_seed", new BlockLanceleafSeed());
+	public static final Block LANCELEAF = registerBlockNI("lanceleaf", new BlockLanceleaf());
 	
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockBubbleCoral());
 	public static final Block MENGER_SPONGE = registerBlock("menger_sponge", new BlockMengerSponge());

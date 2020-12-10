@@ -430,5 +430,32 @@
 	
 	"item.betterend.gelatine": "Желатин",
 	"item.betterend.sweet_berry_jelly": "Желе из сладких ягод",
-	"item.betterend.shadow_berry_jelly": "Желе из теневой ягоды"
+	"item.betterend.shadow_berry_jelly": "Желе из теневой ягоды",
+	
+	"block.betterend.amber_moss": "Янтарный мох",
+	"block.betterend.amber_moss_path": "Тропа из янтарного мха",
+	"block.betterend.helix_tree_bark": "Кора закрученного дерева",
+	"block.betterend.helix_tree_barrel": "Бочка из закрученного дерева",
+	"block.betterend.helix_tree_bookshelf": "Книжные полки из закрученного дерева",
+	"block.betterend.helix_tree_button": "Кнопка из закрученного дерева",
+	"block.betterend.helix_tree_chest": "Сундук из закрученного дерева",
+	"block.betterend.helix_tree_crafting_table": "Верстак из закрученного дерева",
+	"block.betterend.helix_tree_door": "Дверь из закрученного дерева",
+	"block.betterend.helix_tree_fence": "Забор из закрученного дерева",
+	"block.betterend.helix_tree_gate": "Калитка из закрученного дерева",
+	"block.betterend.helix_tree_ladder": "Лестница из закрученного дерева",
+	"block.betterend.helix_tree_leaves": "Листья из закрученного дерева",
+	"block.betterend.helix_tree_log": "Бревно закрученного дерева",
+	"block.betterend.helix_tree_planks": "Доски закрученного дерева",
+	"block.betterend.helix_tree_plate": "Нажимная плита из закрученного дерева",
+	"block.betterend.helix_tree_sapling": "Саженец закрученного дерева",
+	"block.betterend.helix_tree_sign": "Табличка из закрученного дерева",
+	"block.betterend.helix_tree_slab": "Плита из закрученного дерева",
+	"block.betterend.helix_tree_stairs": "Ступени из закрученного дерева",
+	"block.betterend.helix_tree_stripped_bark": "Обтёсанная кора закрученного дерева",
+	"block.betterend.helix_tree_stripped_log": "Обтёсанное бревно закрученного дерева",
+	"block.betterend.helix_tree_trapdoor": "Люк из закрученного дерева",
+	"block.betterend.lanceleaf": "Ланцелист",
+	"block.betterend.lanceleaf_seed": "Семечко ланцелиста",
+	"block.betterend.hydralux": "Гидралюкс"
 }

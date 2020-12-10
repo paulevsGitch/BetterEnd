@@ -34,6 +34,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndTags;
@@ -41,7 +42,7 @@ import ru.betterend.util.BlocksHelper;
 
 public class BlockDoublePlant extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 2, 4, 12, 16, 12);
-	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
+	public static final IntProperty ROTATION = BlockProperties.ROTATION;
 	public static final BooleanProperty TOP = BooleanProperty.of("top");
 	
 	public BlockDoublePlant() {

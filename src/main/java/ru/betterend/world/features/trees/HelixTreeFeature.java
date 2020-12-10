@@ -95,12 +95,23 @@ public class HelixTreeFeature extends DefaultFeature {
 			int minY = MHelper.floor(lastPoint.getY());
 			int maxY = MHelper.floor(point.getY());
 			float div = point.getY() - lastPoint.getY();
-			for (float py = minY; py <= maxY; py += 0.1F) {
+			for (float py = minY; py <= maxY; py += 0.2F) {
 				start.set(0, py, 0);
 				float delta = (float) (py - minY) / div;
 				float px = MathHelper.lerp(delta, lastPoint.getX(), point.getX());
 				float pz = MathHelper.lerp(delta, lastPoint.getZ(), point.getZ());
 				end.set(px, py, pz);
+				fillLine(start, end, world, leaf, leafStart, i / 2 - 1);
+				float ax = Math.abs(px);
+				float az = Math.abs(pz);
+				if (ax > az) {
+					start.add(0, 0, az > 0 ? 1 : -1);
+					end.add(0, 0, az > 0 ? 1 : -1);
+				}
+				else {
+					start.add(ax > 0 ? 1 : -1, 0, 0);
+					end.add(ax > 0 ? 1 : -1, 0, 0);
+				}
 				fillLine(start, end, world, leaf, leafStart, i / 2 - 1);
 			}
 			lastPoint = point;

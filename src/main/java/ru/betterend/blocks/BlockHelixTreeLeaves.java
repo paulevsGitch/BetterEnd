@@ -65,6 +65,6 @@ public class BlockHelixTreeLeaves extends BlockBase implements IColorProvider {
 	
 	private int getGreen(int color) {
 		float delta = color / 7F;
-		return (int) MathHelper.lerp(delta, 35, 102);
+		return (int) MathHelper.lerp(delta, 80, 158);
 	}
 }

@@ -1,5 +1,5 @@
 {
-    "parent": "betterend:block/crop_block",
+    "parent": "betterend:block/crop_block_inverted",
     "textures": {
         "texture": "betterend:block/bushy_grass_1"
     }

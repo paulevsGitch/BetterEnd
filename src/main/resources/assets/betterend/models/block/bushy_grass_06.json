@@ -1,5 +1,5 @@
 {
-    "parent": "block/cross",
+    "parent": "betterend:block/cross_inverted",
     "textures": {
         "cross": "betterend:block/bushy_grass_2"
     }

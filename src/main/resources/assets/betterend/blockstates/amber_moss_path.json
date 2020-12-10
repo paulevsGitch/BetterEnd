@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/amber_moss_path" },
+			{ "model": "betterend:block/amber_moss_path", "y": 90 },
+			{ "model": "betterend:block/amber_moss_path", "y": 180 },
+			{ "model": "betterend:block/amber_moss_path", "y": 270 }
+		]
+	}
+}

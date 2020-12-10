@@ -28,6 +28,8 @@ import ru.betterend.blocks.BlockEndLotusSeed;
 import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
+import ru.betterend.blocks.BlockHelixTreeLeaves;
+import ru.betterend.blocks.BlockHelixTreeSapling;
 import ru.betterend.blocks.BlockHydralux;
 import ru.betterend.blocks.BlockHydraluxPetal;
 import ru.betterend.blocks.BlockHydraluxPetalColored;
@@ -90,7 +92,7 @@ public class EndBlocks {
 	public static final Block CRYSTAL_MOSS = registerBlock("crystal_moss", new BlockTerrain(MaterialColor.PINK));
 	public static final Block SHADOW_GRASS = registerBlock("shadow_grass", new BlockShadowGrass());
 	public static final Block PINK_MOSS = registerBlock("pink_moss", new BlockTerrain(MaterialColor.PINK));
-	public static final Block AMBER_GRASS = registerBlock("amber_grass", new BlockTerrain(MaterialColor.ORANGE));
+	public static final Block AMBER_MOSS = registerBlock("amber_moss", new BlockTerrain(MaterialColor.ORANGE));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BlockPath(END_MYCELIUM));
@@ -100,7 +102,7 @@ public class EndBlocks {
 	public static final Block CRYSTAL_MOSS_PATH = registerBlock("crystal_moss_path", new BlockPath(CRYSTAL_MOSS));
 	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new BlockPath(SHADOW_GRASS));
 	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new BlockPath(PINK_MOSS));
-	public static final Block AMBER_GRASS_PATH = registerBlock("amber_grass_path", new BlockPath(AMBER_GRASS));
+	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new BlockPath(AMBER_MOSS));
 	
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
@@ -151,7 +153,8 @@ public class EndBlocks {
 	public static final Block TENANEA_OUTER_LEAVES = registerBlock("tenanea_outer_leaves", new BlockFur(TENANEA_SAPLING, 32));
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
 	
-	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new BlockLeaves(TENANEA_SAPLING, MaterialColor.ORANGE));
+	public static final Block HELIX_TREE_SAPLING = registerBlock("helix_tree_sapling", new BlockHelixTreeSapling());
+	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new BlockHelixTreeLeaves());
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
 	
 	// Small Plants //
@@ -163,6 +166,7 @@ public class EndBlocks {
 	public static final Block CRYSTAL_GRASS = registerBlock("crystal_grass", new BlockTerrainPlant(CRYSTAL_MOSS));
 	public static final Block SHADOW_PLANT = registerBlock("shadow_plant", new BlockTerrainPlant(SHADOW_GRASS));
 	public static final Block BUSHY_GRASS = registerBlock("bushy_grass", new BlockTerrainPlant(PINK_MOSS));
+	public static final Block AMBER_GRASS = registerBlock("amber_grass", new BlockTerrainPlant(AMBER_MOSS));
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlockBlueVineSeed());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());

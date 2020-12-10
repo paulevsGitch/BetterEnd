@@ -1,7 +1,0 @@
-{   "parent": "betterend:block/path",
-    "textures": {
-        "top": "betterend:block/amber_grass_path_top",
-        "side": "betterend:block/amber_grass_side",
-        "bottom": "block/end_stone"
-    }
-}

@@ -18,12 +18,16 @@ public abstract class BlockPlantWithAge extends BlockPlant {
 	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
 	
 	public BlockPlantWithAge() {
-		super(FabricBlockSettings.of(Material.PLANT)
+		this(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
 				.breakByHand(true)
 				.ticksRandomly()
 				.noCollision());
+	}
+	
+	public BlockPlantWithAge(FabricBlockSettings settings) {
+		super(settings);
 	}
 	
 	@Override

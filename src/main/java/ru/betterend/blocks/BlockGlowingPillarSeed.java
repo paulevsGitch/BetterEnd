@@ -2,7 +2,11 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -15,6 +19,16 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class BlockGlowingPillarSeed extends BlockPlantWithAge {
+	public BlockGlowingPillarSeed() {
+		super(FabricBlockSettings.of(Material.PLANT)
+				.luminance((state) -> { return state.get(AGE) * 3 + 3; })
+				.breakByTool(FabricToolTags.SHEARS)
+				.sounds(BlockSoundGroup.GRASS)
+				.breakByHand(true)
+				.ticksRandomly()
+				.noCollision());
+	}
+	
 	@Override
 	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(1, 2, random);

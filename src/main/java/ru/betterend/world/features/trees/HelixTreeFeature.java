@@ -13,6 +13,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
@@ -72,12 +73,13 @@ public class HelixTreeFeature extends DefaultFeature {
 		
 		spline.clear();
 		for (int i = 0; i <= 20; i++) {
-			float radius = i * 0.1F - 1;
+			float radius = 1 - i * 0.05F;
+			radius = radius * radius * 2 - 1;
 			radius *= radius;
-			radius = (1 - radius) * 8F * scale;
-			dx = (float) Math.sin(i * 0.25F + angle) * radius;
-			dz = (float) Math.cos(i * 0.25F + angle) * radius;
-			spline.add(new Vector3f(dx, i * scale * 1.2F, dz));
+			radius = (1 - radius) * 10F * scale;
+			dx = (float) Math.sin(i * 0.45F + angle) * radius;
+			dz = (float) Math.cos(i * 0.45F + angle) * radius;
+			spline.add(new Vector3f(dx, i * scale * 1.75F, dz));
 		}
 		
 		Vector3f start = new Vector3f();
@@ -88,8 +90,7 @@ public class HelixTreeFeature extends DefaultFeature {
 			int minY = MHelper.floor(lastPoint.getY());
 			int maxY = MHelper.floor(point.getY());
 			float div = point.getY() - lastPoint.getY();
-			for (float py = minY; py <= maxY; py += 0.25F) {
-			//for (int py = minY; py <= maxY; py ++) {
+			for (float py = minY; py <= maxY; py += 0.2F) {
 				start.set(0, py, 0);
 				float delta = (float) (py - minY) / div;
 				float px = MathHelper.lerp(delta, lastPoint.getX(), point.getX());
@@ -100,6 +101,19 @@ public class HelixTreeFeature extends DefaultFeature {
 				});
 			}
 			lastPoint = point;
+		}
+		
+		leafStart = leafStart.add(0, lastPoint.getY() + 1, 0);
+		if (world.getBlockState(leafStart).isAir()) {
+			BlocksHelper.setWithoutUpdate(world, leafStart, EndBlocks.HELIX_TREE_LEAVES);
+			leafStart = leafStart.up();
+			if (world.getBlockState(leafStart).isAir()) {
+				BlocksHelper.setWithoutUpdate(world, leafStart, EndBlocks.HELIX_TREE_LEAVES);
+				leafStart = leafStart.up();
+						if (world.getBlockState(leafStart).isAir()) {
+							BlocksHelper.setWithoutUpdate(world, leafStart, EndBlocks.HELIX_TREE_LEAVES);
+						}
+			}
 		}
 		
 		return true;

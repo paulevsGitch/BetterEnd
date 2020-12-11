@@ -58,8 +58,8 @@ public class IceStarFeature extends DefaultFeature {
 		int z1 = (pos.getZ() >> 4) << 4;
 		pos = new BlockPos(x1 + random.nextInt(16), MHelper.randRange(32, 128, random), z1 + random.nextInt(16));
 		
-		final float ancientRadius = size * 0.45F;
-		final float denseRadius = size * 0.8F;
+		final float ancientRadius = size * 0.7F;
+		final float denseRadius = size * 0.9F;
 		final float iceRadius = size < 7 ? size * 5 : size * 1.3F;
 		final float randScale = size * 0.3F;
 		
@@ -74,7 +74,7 @@ public class IceStarFeature extends DefaultFeature {
 			float px = bpos.getX() - center.getX();
 			float py = bpos.getY() - center.getY();
 			float pz = bpos.getZ() - center.getZ();
-			float distance = MHelper.length(px, py, pz) + sdfCopy.getDistance(px, py, pz) * 0.1F + random.nextFloat() * randScale;
+			float distance = MHelper.length(px, py, pz) + sdfCopy.getDistance(px, py, pz) * 0.4F + random.nextFloat() * randScale;
 			if (distance < ancientRadius) {
 				return ancient;
 			}

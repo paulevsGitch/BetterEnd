@@ -14,11 +14,21 @@ import ru.betterend.config.ConfigKeeper.StringEntry;
 
 public abstract class Config {
 	
-	protected final ConfigKeeper configKeeper = new ConfigKeeper();
-	protected JsonObject settings;
+	protected final ConfigKeeper configKeeper;
+	protected final ConfigWriter writer;
+	protected final String group;
 	
 	public abstract void saveChanges();
 	protected abstract void registerEntries();
+	
+	public Config(String group) {
+		this.group = group;
+		this.writer = new ConfigWriter(group);
+		JsonObject settings = writer.load();
+		this.configKeeper = new ConfigKeeper(settings);
+		this.registerEntries();
+		this.writer.save();
+	}
 	
 	@Nullable
 	public <E extends Entry<?>> E getEntry(ConfigKey key) {
@@ -34,11 +44,8 @@ public abstract class Config {
 	public String getString(ConfigKey key, String defaultValue) {
 		String str = configKeeper.getValue(key);
 		if (str == null) {
-			StringEntry entry = this.configKeeper.registerEntry(key, new StringEntry(defaultValue));
-			if (settings != null) {
-				this.configKeeper.loadFromJson(settings, key, entry);
-				return entry.getValue();
-			}
+			StringEntry entry = configKeeper.registerEntry(key, new StringEntry(defaultValue));
+			return entry.getValue();
 		}
 		return str != null ? str : defaultValue;
 	}
@@ -63,11 +70,8 @@ public abstract class Config {
 	public int getInt(ConfigKey key, int defaultValue) {
 		Integer val = configKeeper.getValue(key);		
 		if (val == null) {
-			IntegerEntry entry = this.configKeeper.registerEntry(key, new IntegerEntry(defaultValue));
-			if (settings != null) {
-				this.configKeeper.loadFromJson(settings, key, entry);
-				return entry.getValue();
-			}
+			IntegerEntry entry = configKeeper.registerEntry(key, new IntegerEntry(defaultValue));
+			return entry.getValue();
 		}
 		return val != null ? val : defaultValue;
 	}
@@ -104,11 +108,8 @@ public abstract class Config {
 	public float getFloat(ConfigKey key, float defaultValue) {
 		Float val = configKeeper.getValue(key);
 		if (val == null) {
-			FloatEntry entry = this.configKeeper.registerEntry(key, new FloatEntry(defaultValue));
-			if (settings != null) {
-				this.configKeeper.loadFromJson(settings, key, entry);
-				return entry.getValue();
-			}
+			FloatEntry entry = configKeeper.registerEntry(key, new FloatEntry(defaultValue));
+			return entry.getValue();
 		}
 		return val != null ? val : defaultValue;
 	}
@@ -133,11 +134,8 @@ public abstract class Config {
 	public boolean getBoolean(ConfigKey key, boolean defaultValue) {
 		Boolean val = configKeeper.getValue(key);
 		if (val == null) {
-			BooleanEntry entry = this.configKeeper.registerEntry(key, new BooleanEntry(defaultValue));
-			if (settings != null) {
-				this.configKeeper.loadFromJson(settings, key, entry);
-				return entry.getValue();
-			}
+			BooleanEntry entry = configKeeper.registerEntry(key, new BooleanEntry(defaultValue));
+			return entry.getValue();
 		}
 		return val != null ? val : defaultValue;
 	}

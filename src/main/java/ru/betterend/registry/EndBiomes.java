@@ -268,7 +268,7 @@ public class EndBiomes {
 	private static void registerBiomeDirect(EndBiome biome) {
 		fillSet();
 		int possibleID = incID++;
-		Configs.BIOME_CONFIG.getBoolean(biome, "enabled");
+		Configs.BIOME_CONFIG.getBoolean(biome, "enabled", true);
 		if (occupiedIDs.contains(possibleID)) {
 			String message = "ID for biome " + biome.getID() + " is already occupied, changing biome ID from " + possibleID + " to ";
 			while (occupiedIDs.contains(possibleID)) {
@@ -287,7 +287,8 @@ public class EndBiomes {
 	public static EndBiome getRenderBiome(Biome biome) {
 		EndBiome endBiome = CLIENT.get(biome);
 		if (endBiome == null) {
-			Identifier id = MinecraftClient.getInstance().world.getRegistryManager().get(Registry.BIOME_KEY).getId(biome);
+			MinecraftClient minecraft = MinecraftClient.getInstance();
+			Identifier id = minecraft.world.getRegistryManager().get(Registry.BIOME_KEY).getId(biome);
 			endBiome = id == null ? END : ID_MAP.getOrDefault(id, END);
 			CLIENT.put(biome, endBiome);
 		}

@@ -7,19 +7,8 @@ import ru.betterend.config.ConfigKeeper.Entry;
 
 public class ItemConfig extends Config {
 	
-	private final ConfigWriter writer;
-	private final String group = "settings";
-	
 	protected ItemConfig() {
-		this.writer = new ConfigWriter(group);
-		this.settings = this.writer.load();
-		this.registerEntries();
-		if (settings.size() > 0) {
-			this.configKeeper.fromJson(settings);
-		} else {
-			this.configKeeper.toJson(settings);
-			this.writer.save();
-		}
+		super("settings");
 	}
 	
 	@Override
@@ -27,7 +16,6 @@ public class ItemConfig extends Config {
 	
 	@Override
 	public void saveChanges() {
-		this.configKeeper.toJson(settings);
 		this.writer.save();
 	}
 	

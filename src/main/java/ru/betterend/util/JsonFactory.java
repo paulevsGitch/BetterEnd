@@ -13,45 +13,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.resource.Resource;
 import ru.betterend.BetterEnd;
 
 public class JsonFactory {
 	
 	public final static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	
-	// Unused
-	@Deprecated
-	public static JsonObject getJsonObject(String path) throws IOException {
-		try (InputStream is = JsonFactory.class.getResourceAsStream(path)) {
-			Reader reader = new InputStreamReader(is);
-			JsonObject jsonObject = loadJson(reader).getAsJsonObject();
-			if (jsonObject == null) {
-				return new JsonObject();
-			}
-			return jsonObject;
-		}
-	}
-	
-	// Unused
-	@Deprecated
-	public static JsonObject getJsonObject(Resource jsonSource) {
-		if (jsonSource != null) {
-			try (InputStream is = jsonSource.getInputStream()) {
-				Reader reader = new InputStreamReader(is);
-				JsonElement json = loadJson(reader);
-				if (json != null && json.isJsonObject()) {
-					JsonObject jsonObject = json.getAsJsonObject();
-					return jsonObject != null ? jsonObject : new JsonObject();
-				}
-			}
-			catch (IOException ex) {
-				BetterEnd.LOGGER.catching(ex);
-			}
-		}
-		return new JsonObject();
-	}
-
 	public static JsonObject getJsonObject(InputStream stream) {
 		try {
 			Reader reader = new InputStreamReader(stream);
@@ -60,8 +27,7 @@ public class JsonFactory {
 				JsonObject jsonObject = json.getAsJsonObject();
 				return jsonObject != null ? jsonObject : new JsonObject();
 			}
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			BetterEnd.LOGGER.catching(ex);
 		}
 		return new JsonObject();
@@ -75,7 +41,6 @@ public class JsonFactory {
 				return jsonObject != null ? jsonObject : new JsonObject();
 			}
 		}
-		
 		return new JsonObject();
 	}
 	

@@ -8,19 +8,8 @@ import ru.betterend.world.biome.EndBiome;
 
 public class BiomeConfig extends Config {
 
-	private final ConfigWriter writer;
-	private final String group = "biomes";
-	
 	protected BiomeConfig() {
-		this.writer = new ConfigWriter(group);
-		this.settings = writer.load();
-		this.registerEntries();
-		if (settings.size() > 0) {
-			this.configKeeper.fromJson(settings);
-		} else {
-			this.configKeeper.toJson(settings);
-			this.writer.save();
-		}
+		super("biomes");
 	}
 	
 	@Override
@@ -28,7 +17,6 @@ public class BiomeConfig extends Config {
 	
 	@Override
 	public void saveChanges() {
-		this.configKeeper.toJson(settings);
 		this.writer.saveConfig();
 	}
 	

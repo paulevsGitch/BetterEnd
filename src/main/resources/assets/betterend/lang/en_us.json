@@ -463,5 +463,10 @@
 	"block.betterend.glowing_pillar_roots": "Glowing Pillar Roots",
 	"block.betterend.glowing_pillar_seed": "Glowing Pillar Seed",
 	
-	"biome.betterend.ice_starfield": "Ice Starfield"
+	"biome.betterend.ice_starfield": "Ice Starfield",
+	
+	"block.betterend.ancient_emerald_ice": "Ancient Emerald Ice",
+	"block.betterend.dense_emerald_ice": "Dense Emerald Ice",
+	"block.betterend.dense_snow": "Dense Snow",
+	"block.betterend.emerald_ice": "Emerald Ice"
 }

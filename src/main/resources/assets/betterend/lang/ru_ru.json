@@ -465,5 +465,10 @@
 	"block.betterend.glowing_pillar_roots": "Корни светящейся колонны",
 	"block.betterend.glowing_pillar_seed": "Семя светящейся колонны",
 	
-	"biome.betterend.ice_starfield": "Поле ледяных звёзд"
+	"biome.betterend.ice_starfield": "Поле ледяных звёзд",
+	
+	"block.betterend.ancient_emerald_ice": "Древний изумрудный лёд",
+	"block.betterend.dense_emerald_ice": "Плотный изумрудный лёд",
+	"block.betterend.dense_snow": "Плотный снег",
+	"block.betterend.emerald_ice": "Изумрудный лёд"
 }

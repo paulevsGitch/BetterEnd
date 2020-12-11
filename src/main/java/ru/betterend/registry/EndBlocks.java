@@ -10,6 +10,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.blocks.BlockAmber;
+import ru.betterend.blocks.BlockAncientEmeraldIce;
 import ru.betterend.blocks.BlockBlueVine;
 import ru.betterend.blocks.BlockBlueVineLantern;
 import ru.betterend.blocks.BlockBlueVineSeed;
@@ -19,7 +20,10 @@ import ru.betterend.blocks.BlockBulbVine;
 import ru.betterend.blocks.BlockBulbVineSeed;
 import ru.betterend.blocks.BlockCharnia;
 import ru.betterend.blocks.BlockChorusGrass;
+import ru.betterend.blocks.BlockDenseEmeraldIce;
+import ru.betterend.blocks.BlockDenseSnow;
 import ru.betterend.blocks.BlockDragonTreeSapling;
+import ru.betterend.blocks.BlockEmeraldIce;
 import ru.betterend.blocks.BlockEndLily;
 import ru.betterend.blocks.BlockEndLilySeed;
 import ru.betterend.blocks.BlockEndLotusFlower;
@@ -126,6 +130,11 @@ public class EndBlocks {
 	public static final Block PURPUR_PEDESTAL = registerBlock("purpur_pedestal", new PedestalVanilla(Blocks.PURPUR_BLOCK));
 	
 	public static final Block HYDROTHERMAL_VENT = registerBlock("hydrothermal_vent", new BlockHydrothermalVent());
+	
+	public static final Block DENSE_SNOW = registerBlock("dense_snow", new BlockDenseSnow());
+	public static final Block EMERALD_ICE = registerBlock("emerald_ice", new BlockEmeraldIce());
+	public static final Block DENSE_EMERALD_ICE = registerBlock("dense_emerald_ice", new BlockDenseEmeraldIce());
+	public static final Block ANCIENT_EMERALD_ICE = registerBlock("ancient_emerald_ice", new BlockAncientEmeraldIce());
 	
 	// Wooden Materials And Trees //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new BlockMossyGlowshroomSapling());

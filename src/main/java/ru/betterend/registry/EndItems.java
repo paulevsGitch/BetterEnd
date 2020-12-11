@@ -35,7 +35,7 @@ import net.minecraft.util.registry.Registry;
 
 import ru.betterend.BetterEnd;
 import ru.betterend.config.ItemConfig;
-import ru.betterend.config.MainConfig;
+import ru.betterend.config.Configs;
 import ru.betterend.item.EndArmorMaterial;
 import ru.betterend.item.EndAxe;
 import ru.betterend.item.EndHammer;
@@ -50,7 +50,7 @@ import ru.betterend.util.TagHelper;
 
 public class EndItems {
 	
-	private static final ItemConfig CONFIG = MainConfig.ITEM_CONFIG;
+	private static final ItemConfig CONFIG = Configs.ITEM_CONFIG;
 	private static final List<Item> MOD_BLOCKS = Lists.newArrayList();
 	private static final List<Item> MOD_ITEMS = Lists.newArrayList();
 	

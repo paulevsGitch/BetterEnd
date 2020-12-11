@@ -4,7 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import ru.betterend.api.BetterEndPlugin;
-import ru.betterend.config.MainConfig;
+import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
 import ru.betterend.item.GuideBook;
@@ -55,7 +55,7 @@ public class BetterEnd implements ModInitializer {
 		}
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
-		MainConfig.saveConfig();
+		Configs.saveConfigs();
 	}
 	
 	public static boolean hasGuideBook() {

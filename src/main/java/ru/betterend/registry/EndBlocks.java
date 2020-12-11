@@ -87,10 +87,10 @@ import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.ItemConfig;
-import ru.betterend.config.MainConfig;
+import ru.betterend.config.Configs;
 
 public class EndBlocks {
-	private static final ItemConfig CONFIG = MainConfig.ITEM_CONFIG;
+	private static final ItemConfig CONFIG = Configs.ITEM_CONFIG;
 	
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new BlockEndstoneDust());

@@ -24,6 +24,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.world.biome.BiomeAmberLand;
 import ru.betterend.world.biome.BiomeBlossomingSpires;
@@ -267,6 +268,7 @@ public class EndBiomes {
 	private static void registerBiomeDirect(EndBiome biome) {
 		fillSet();
 		int possibleID = incID++;
+		Configs.BIOME_CONFIG.getBoolean(biome, "enabled");
 		if (occupiedIDs.contains(possibleID)) {
 			String message = "ID for biome " + biome.getID() + " is already occupied, changing biome ID from " + possibleID + " to ";
 			while (occupiedIDs.contains(possibleID)) {

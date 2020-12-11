@@ -147,6 +147,8 @@ public class CraftingRecipes {
 				.addMaterial('C', EndItems.CRYSTAL_SHARDS)
 				.build();
 		}
+		
+		GridRecipe.make("sulphur_gunpowder", Items.GUNPOWDER).setList("SC").addMaterial('S', EndItems.CRYSTALLINE_SULPHUR).addMaterial('C', Items.COAL, Items.CHARCOAL).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

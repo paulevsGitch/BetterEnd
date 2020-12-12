@@ -14,11 +14,6 @@ public class BiomeConfig extends Config {
 	@Override
 	protected void registerEntries() {}
 	
-	@Override
-	public void saveChanges() {
-		this.writer.saveConfig();
-	}
-	
 	private ConfigKey createKey(Identifier biome, String key) {
 		Identifier groupId = new Identifier(group, biome.getNamespace());
 		Identifier categoryId = new Identifier(biome.getPath(), key);

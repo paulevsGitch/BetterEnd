@@ -18,7 +18,6 @@ public abstract class Config {
 	protected final ConfigWriter writer;
 	protected final String group;
 	
-	public abstract void saveChanges();
 	protected abstract void registerEntries();
 	
 	public Config(String group) {
@@ -28,6 +27,10 @@ public abstract class Config {
 		this.configKeeper = new ConfigKeeper(settings);
 		this.registerEntries();
 		this.writer.save();
+	}
+	
+	public void saveChanges() {
+		this.writer.saveConfig();
 	}
 	
 	@Nullable

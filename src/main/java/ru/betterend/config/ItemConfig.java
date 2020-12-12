@@ -14,11 +14,6 @@ public class ItemConfig extends Config {
 	@Override
 	protected void registerEntries() {}
 	
-	@Override
-	public void saveChanges() {
-		this.writer.save();
-	}
-	
 	private ConfigKey createKey(Identifier item, String category) {
 		Identifier groupId = new Identifier(group, item.getNamespace());
 		Identifier categoryId = new Identifier(category, item.getPath());

@@ -1,5 +1,6 @@
 package ru.betterend.config;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -7,10 +8,14 @@ import java.util.function.Supplier;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Maps;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+
+import ru.betterend.util.JsonFactory;
 
 public final class ConfigKeeper {
 	
@@ -44,43 +49,35 @@ public final class ConfigKeeper {
 		}
 		String paramKey = paramId.getPath();
 		paramKey += " [default: " + entry.getDefault() + "]";
-		if (value instanceof Boolean) {
-			jsonCategory.addProperty(paramKey, (Boolean) value);
-		} else if (value instanceof Number) {
-			jsonCategory.addProperty(paramKey, (Number) value);
-		} else {
-			jsonCategory.addProperty(paramKey, entry.asString(value));
-		}
+		entry.toJson(jsonCategory, paramKey, value);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private <T, E extends Entry<T>> T getValue(ConfigKey key, E entry) {
-		T defaultVal = entry.getDefault();
-		if (configObject == null) return defaultVal;
+		if (configObject == null) {
+			return entry.getDefault();
+		}
 		
 		Identifier categoryId = key.getCategory();
 		Identifier paramId = key.getParameter();
 		String group = categoryId.getPath();
-		if (!configObject.has(group)) return defaultVal;
+		if (!configObject.has(group)) {
+			return entry.getDefault();
+		}
 		
 		JsonObject jsonGroup = JsonHelper.getObject(configObject, group);
 		String category = paramId.getNamespace();
-		if (!jsonGroup.has(category)) return defaultVal;
+		if (!jsonGroup.has(category)) {
+			return entry.getDefault();
+		}
 		
 		JsonObject jsonCategory = JsonHelper.getObject(jsonGroup, category);
 		String paramKey = paramId.getPath();
 		paramKey += " [default: " + entry.getDefault() + "]";
-		if (!jsonCategory.has(paramKey)) return defaultVal;
-		
-		
-		if (defaultVal instanceof Boolean) {
-			return (T) (Object) jsonCategory.get(paramKey).getAsBoolean();
-		} else if (defaultVal instanceof Integer) {
-			return (T) (Object) jsonCategory.get(paramKey).getAsInt();
-		} else if (defaultVal instanceof Float) {
-			return (T) (Object) jsonCategory.get(paramKey).getAsFloat();
+		if (!jsonCategory.has(paramKey)) {
+			return entry.getDefault();
 		}
-		return entry.fromString(JsonHelper.getString(jsonCategory, paramKey));
+		
+		return entry.fromJson(jsonCategory.get(paramKey));
 	}
 	
 	@Nullable
@@ -113,13 +110,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public String asString(Boolean value) {
-			return value ? "true" : "false";
+		public Boolean fromJson(JsonElement json) {
+			return json.getAsBoolean();
 		}
 
 		@Override
-		public Boolean fromString(String value) {
-			return value.equals("true") ? true : false;
+		public void toJson(JsonObject json, String key, Boolean value) {
+			json.addProperty(key, value);
 		}
 	}
 	
@@ -130,13 +127,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Float fromString(String value) {
-			return Float.valueOf(value);
+		public Float fromJson(JsonElement json) {
+			return json.getAsFloat();
 		}
 
 		@Override
-		public String asString(Float value) {
-			return Float.toString(value);
+		public void toJson(JsonObject json, String key, Float value) {
+			json.addProperty(key, value);
 		}
 	}
 	
@@ -147,13 +144,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Float fromString(String value) {
-			return Float.valueOf(value);
+		public Float fromJson(JsonElement json) {
+			return json.getAsFloat();
 		}
 
 		@Override
-		public String asString(Float value) {
-			return Float.toString(value);
+		public void toJson(JsonObject json, String key, Float value) {
+			json.addProperty(key, value);
 		}
 	}
 	
@@ -169,13 +166,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Integer fromString(String value) {
-			return Integer.parseInt(value);
+		public Integer fromJson(JsonElement json) {
+			return json.getAsInt();
 		}
 
 		@Override
-		public String asString(Integer value) {
-			return Integer.toString(value);
+		public void toJson(JsonObject json, String key, Integer value) {
+			json.addProperty(key, value);
 		}
 	}
 	
@@ -186,13 +183,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Integer fromString(String value) {
-			return Integer.parseInt(value);
+		public Integer fromJson(JsonElement json) {
+			return json.getAsInt();
 		}
 
 		@Override
-		public String asString(Integer value) {
-			return Integer.toString(value);
+		public void toJson(JsonObject json, String key, Integer value) {
+			json.addProperty(key, value);
 		}
 	}
 	
@@ -203,21 +200,25 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public String fromString(String value) {
-			return value;
+		public String fromJson(JsonElement json) {
+			return json.getAsString();
 		}
 
 		@Override
-		public String asString(String value) {
-			return value;
+		public void toJson(JsonObject json, String key, String value) {
+			json.addProperty(key, value);
 		}
 
 	}
 	
 	public static class EnumEntry<T extends Enum<T>> extends Entry<T> {
 
+		private Type type;
+		
 		public EnumEntry(T defaultValue) {
 			super(defaultValue);
+			this.type = new TypeToken<T>(){
+				private static final long serialVersionUID = 1L;}.getType();
 		}
 
 		@Override
@@ -226,14 +227,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
-		public T fromString(String value) {
-			return (T) Enum.valueOf(defaultValue.getClass(), value);
+		public T fromJson(JsonElement json) {
+			return JsonFactory.GSON.fromJson(json, type);
 		}
 
 		@Override
-		public String asString(T value) {
-			return value.name();
+		public void toJson(JsonObject json, String key, T value) {
+			json.addProperty(key, JsonFactory.GSON.toJson(json, type));
 		}		
 	}
 	
@@ -267,8 +267,8 @@ public final class ConfigKeeper {
 		protected Consumer<T> writer;
 		protected Supplier<T> reader;
 		
-		public abstract T fromString(String value);
-		public abstract String asString(T value);
+		public abstract T fromJson(JsonElement json);
+		public abstract void toJson(JsonObject json, String key, T value);
 		
 		public Entry (T defaultValue) {
 			this.defaultValue = defaultValue;

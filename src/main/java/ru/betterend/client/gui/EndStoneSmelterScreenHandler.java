@@ -62,7 +62,6 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 	
 	@Override
 	public ScreenHandlerType<?> getType() {
-		BetterEnd.LOGGER.info("End Stone Smelter: requested Handler Type: {}", HANDLER_TYPE);
 		return HANDLER_TYPE;
 	}
 

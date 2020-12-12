@@ -3,13 +3,9 @@ package ru.betterend.config;
 import java.util.function.BiFunction;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.Identifier;
-import ru.betterend.config.ConfigKeeper.BooleanEntry;
 import ru.betterend.config.ConfigKeeper.Entry;
-import ru.betterend.config.ConfigKeeper.FloatEntry;
 import ru.betterend.config.ConfigKeeper.FloatRange;
-import ru.betterend.config.ConfigKeeper.IntegerEntry;
 import ru.betterend.config.ConfigKeeper.IntegerRange;
-import ru.betterend.config.ConfigKeeper.StringEntry;
 
 public class IdConfig extends Config {
 	

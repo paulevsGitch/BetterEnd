@@ -18,12 +18,14 @@ import ru.betterend.registry.EndBiomes;
 public class InternalBiomeDataMixin {
 	@Inject(method = "addEndBiomeReplacement", at = @At("TAIL"))
 	private static void beAddIslandsBiomeFromFabric(RegistryKey<Biome> replaced, RegistryKey<Biome> variant, double weight, CallbackInfo info) {
-		if (replaced == BiomeKeys.SMALL_END_ISLANDS) {
+		if (replaced.equals(BiomeKeys.SMALL_END_ISLANDS)) {
 			Biome biome = BuiltinRegistries.BIOME.get(variant);
 			Identifier id = BuiltinRegistries.BIOME.getId(biome);
-			EndBiomes.FABRIC_VOID.add(id);
-			if (BetterEnd.isDevEnvironment()) {
-				System.out.println("Added " + id + " from Fabric small islands biome map");
+			if (!id.getNamespace().equals(BetterEnd.MOD_ID)) {
+				EndBiomes.FABRIC_VOID.add(id);
+				if (BetterEnd.isDevEnvironment()) {
+					System.out.println("Added " + id + " from Fabric small islands biome map");
+				}
 			}
 		}
 	}

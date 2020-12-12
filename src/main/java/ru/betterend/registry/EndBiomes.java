@@ -158,7 +158,7 @@ public class EndBiomes {
 	
 	/**
 	 * Initialize registry if it was not initialized in world generation (when using mods/datapacks, that overrides the End generation)
-	 * @param server
+	 * @param server - {@link MinecraftServer}
 	 */
 	public static void initRegistry(MinecraftServer server) {
 		if (biomeRegistry == null) {
@@ -187,7 +187,9 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance, true);
-		addToPicker(endBiome, type);
+		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
+			addToPicker(endBiome, type);
+		}
 		return endBiome;
 	}
 	
@@ -212,9 +214,11 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance, boolean hasCaves) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance, hasCaves);
-		parent.addSubBiome(endBiome);
-		SUBBIOMES.add(endBiome);
-		ID_MAP.put(endBiome.getID(), endBiome);
+		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
+			parent.addSubBiome(endBiome);
+			SUBBIOMES.add(endBiome);
+			ID_MAP.put(endBiome.getID(), endBiome);
+		}
 		return endBiome;
 	}
 	
@@ -226,9 +230,11 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
 		registerBiomeDirect(biome);
-		parent.addSubBiome(biome);
-		SUBBIOMES.add(biome);
-		ID_MAP.put(biome.getID(), biome);
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			parent.addSubBiome(biome);
+			SUBBIOMES.add(biome);
+			ID_MAP.put(biome.getID(), biome);
+		}
 		return biome;
 	}
 	
@@ -240,8 +246,10 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
 		registerBiomeDirect(biome);
-		addToPicker(biome, type);
-		ID_MAP.put(biome.getID(), biome);
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			addToPicker(biome, type);
+			ID_MAP.put(biome.getID(), biome);
+		}
 		return biome;
 	}
 	

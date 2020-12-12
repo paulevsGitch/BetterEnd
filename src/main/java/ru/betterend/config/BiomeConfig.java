@@ -4,7 +4,6 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
 import ru.betterend.config.ConfigKeeper.Entry;
-import ru.betterend.world.biome.EndBiome;
 
 public class BiomeConfig extends Config {
 
@@ -27,64 +26,64 @@ public class BiomeConfig extends Config {
 	}
 	
 	@Nullable
-	public <E extends Entry<?>> E getEntry(EndBiome biome, String key) {
-		return this.getEntry(createKey(biome.getID(), key));
+	public <E extends Entry<?>> E getEntry(Identifier biome, String key) {
+		return this.getEntry(createKey(biome, key));
 	}
 	
 	@Nullable
-	public <T> T getDefault(EndBiome biome, String key) {
-		return this.getDefault(createKey(biome.getID(), key));
+	public <T> T getDefault(Identifier biome, String key) {
+		return this.getDefault(createKey(biome, key));
 	}
 	
-	public String getString(EndBiome biome, String key, String defaultValue) {
-		return this.getString(createKey(biome.getID(), key), defaultValue);
+	public String getString(Identifier biome, String key, String defaultValue) {
+		return this.getString(createKey(biome, key), defaultValue);
 	}
 	
-	public String getString(EndBiome biome, String key) {
-		return this.getString(createKey(biome.getID(), key));
+	public String getString(Identifier biome, String key) {
+		return this.getString(createKey(biome, key));
 	}
 	
-	public boolean setString(EndBiome biome, String key, String value) {
-		return this.setString(createKey(biome.getID(), key), value);
+	public boolean setString(Identifier biome, String key, String value) {
+		return this.setString(createKey(biome, key), value);
 	}
 	
-	public int getInt(EndBiome biome, String key, int defaultValue) {
-		return this.getInt(createKey(biome.getID(), key), defaultValue);
+	public int getInt(Identifier biome, String key, int defaultValue) {
+		return this.getInt(createKey(biome, key), defaultValue);
 	}
 	
-	public int getInt(EndBiome biome, String key) {
-		return this.getInt(createKey(biome.getID(), key));
+	public int getInt(Identifier biome, String key) {
+		return this.getInt(createKey(biome, key));
 	}
 	
-	public boolean setInt(EndBiome biome, String key, int value) {
-		return this.setInt(createKey(biome.getID(), key), value);
+	public boolean setInt(Identifier biome, String key, int value) {
+		return this.setInt(createKey(biome, key), value);
 	}
 	
-	public <T extends Comparable<T>> boolean setRanged(EndBiome biome, String key, T value) {
-		return this.setRanged(createKey(biome.getID(), key), value);
+	public <T extends Comparable<T>> boolean setRanged(Identifier biome, String key, T value) {
+		return this.setRanged(createKey(biome, key), value);
 	}
 	
-	public float getFloat(EndBiome biome, String key, float defaultValue) {
-		return this.getFloat(createKey(biome.getID(), key), defaultValue);
+	public float getFloat(Identifier biome, String key, float defaultValue) {
+		return this.getFloat(createKey(biome, key), defaultValue);
 	}
 	
-	public float getFloat(EndBiome biome, String key) {
-		return this.getFloat(createKey(biome.getID(), key));
+	public float getFloat(Identifier biome, String key) {
+		return this.getFloat(createKey(biome, key));
 	}
 	
-	public boolean setFloat(EndBiome biome, String key, float value) {
-		return this.setFloat(createKey(biome.getID(), key), value);
+	public boolean setFloat(Identifier biome, String key, float value) {
+		return this.setFloat(createKey(biome, key), value);
 	}
 	
-	public boolean getBoolean(EndBiome biome, String key, boolean defaultValue) {
-		return this.getBoolean(createKey(biome.getID(), key), defaultValue);
+	public boolean getBoolean(Identifier biome, String key, boolean defaultValue) {
+		return this.getBoolean(createKey(biome, key), defaultValue);
 	}
 	
-	public boolean getBoolean(EndBiome biome, String key) {
-		return this.getBoolean(createKey(biome.getID(), key));
+	public boolean getBoolean(Identifier biome, String key) {
+		return this.getBoolean(createKey(biome, key));
 	}
 	
-	public boolean setBoolean(EndBiome biome, String key, boolean value) {
-		return this.setBoolean(createKey(biome.getID(), key), value);
+	public boolean setBoolean(Identifier biome, String key, boolean value) {
+		return this.setBoolean(createKey(biome, key), value);
 	}
 }

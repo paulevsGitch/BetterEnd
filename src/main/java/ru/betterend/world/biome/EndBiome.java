@@ -170,6 +170,10 @@ public class EndBiome {
 		return this.genChance;
 	}
 	
+	public float getGenChanceImmutable() {
+		return this.genChanceUnmutable;
+	}
+	
 	public boolean hasCaves() {
 		return hasCaves;
 	}

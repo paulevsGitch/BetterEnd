@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.impl.biome.InternalBiomeData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
@@ -45,6 +46,7 @@ import ru.betterend.world.generator.BiomeType;
 public class EndBiomes {
 	private static final HashMap<Identifier, EndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
+	public static final Set<Identifier> FABRIC_VOID = Sets.newHashSet();
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
@@ -89,6 +91,7 @@ public class EndBiomes {
 		VOID_BIOMES.clearMutables();
 		
 		Map<String, JsonObject> configs = Maps.newHashMap();
+		
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				Identifier id = biomeRegistry.getId(biome);
@@ -101,7 +104,7 @@ public class EndBiomes {
 						}
 						float fog = 1F;
 						float chance = 1F;
-						boolean isVoid = false;
+						boolean isVoid = FABRIC_VOID.contains(id);
 						boolean hasCaves = true;
 						JsonElement element = config.get(id.getPath());
 						if (element != null && element.isJsonObject()) {
@@ -234,6 +237,7 @@ public class EndBiomes {
 			parent.addSubBiome(biome);
 			SUBBIOMES.add(biome);
 			ID_MAP.put(biome.getID(), biome);
+			addLandBiomeToFabricApi(biome);
 		}
 		return biome;
 	}
@@ -249,6 +253,12 @@ public class EndBiomes {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			addToPicker(biome, type);
 			ID_MAP.put(biome.getID(), biome);
+			if (type == BiomeType.LAND) {
+				addLandBiomeToFabricApi(biome);
+			}
+			else {
+				addVoidBiomeToFabricApi(biome);
+			}
 		}
 		return biome;
 	}
@@ -290,6 +300,18 @@ public class EndBiomes {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			Registry.register(BuiltinRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
 		}
+	}
+	
+	private static void addLandBiomeToFabricApi(EndBiome biome) {
+		float weight = biome.getGenChanceImmutable();
+		RegistryKey<Biome> key = BuiltinRegistries.BIOME.getKey(biome.getBiome()).get();
+		InternalBiomeData.addEndBiomeReplacement(BiomeKeys.END_HIGHLANDS, key, weight);
+	}
+	
+	private static void addVoidBiomeToFabricApi(EndBiome biome) {
+		float weight = biome.getGenChanceImmutable();
+		RegistryKey<Biome> key = BuiltinRegistries.BIOME.getKey(biome.getBiome()).get();
+		InternalBiomeData.addEndBiomeReplacement(BiomeKeys.SMALL_END_ISLANDS, key, weight);
 	}
 	
 	public static EndBiome getFromBiome(Biome biome) {

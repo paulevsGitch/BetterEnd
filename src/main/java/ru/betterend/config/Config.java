@@ -44,7 +44,7 @@ public abstract class Config {
 		return entry != null ? entry.getDefault() : null;
 	}
 	
-	public String getString(ConfigKey key, String defaultValue) {
+	protected String getString(ConfigKey key, String defaultValue) {
 		String str = configKeeper.getValue(key);
 		if (str == null) {
 			StringEntry entry = configKeeper.registerEntry(key, new StringEntry(defaultValue));
@@ -53,12 +53,12 @@ public abstract class Config {
 		return str != null ? str : defaultValue;
 	}
 	
-	public String getString(ConfigKey key) {
+	protected String getString(ConfigKey key) {
 		String str = configKeeper.getValue(key);
 		return str != null ? str : "";
 	}
 	
-	public boolean setString(ConfigKey key, String value) {
+	protected boolean setString(ConfigKey key, String value) {
 		try {
 			StringEntry entry = configKeeper.getEntry(key);
 			if (entry == null) return false;
@@ -70,7 +70,7 @@ public abstract class Config {
 		return false;
 	}
 	
-	public int getInt(ConfigKey key, int defaultValue) {
+	protected int getInt(ConfigKey key, int defaultValue) {
 		Integer val = configKeeper.getValue(key);		
 		if (val == null) {
 			IntegerEntry entry = configKeeper.registerEntry(key, new IntegerEntry(defaultValue));
@@ -79,12 +79,12 @@ public abstract class Config {
 		return val != null ? val : defaultValue;
 	}
 	
-	public int getInt(ConfigKey key) {
+	protected int getInt(ConfigKey key) {
 		Integer val = configKeeper.getValue(key);		
 		return val != null ? val : 0;
 	}
 	
-	public boolean setInt(ConfigKey key, int value) {
+	protected boolean setInt(ConfigKey key, int value) {
 		try {
 			IntegerEntry entry = configKeeper.getEntry(key);
 			if (entry == null) return false;
@@ -96,7 +96,7 @@ public abstract class Config {
 		return false;
 	}
 	
-	public <T extends Comparable<T>> boolean setRanged(ConfigKey key, T value) {
+	protected <T extends Comparable<T>> boolean setRanged(ConfigKey key, T value) {
 		try {
 			RangeEntry<T> entry = configKeeper.getEntry(key);
 			if (entry == null) return false;
@@ -108,7 +108,7 @@ public abstract class Config {
 		return false;
 	}
 	
-	public float getFloat(ConfigKey key, float defaultValue) {
+	protected float getFloat(ConfigKey key, float defaultValue) {
 		Float val = configKeeper.getValue(key);
 		if (val == null) {
 			FloatEntry entry = configKeeper.registerEntry(key, new FloatEntry(defaultValue));
@@ -117,12 +117,12 @@ public abstract class Config {
 		return val != null ? val : defaultValue;
 	}
 	
-	public float getFloat(ConfigKey key) {
+	protected float getFloat(ConfigKey key) {
 		Float val = configKeeper.getValue(key);
 		return val != null ? val : 0.0F;
 	}
 	
-	public boolean setFloat(ConfigKey key, float value) {
+	protected boolean setFloat(ConfigKey key, float value) {
 		try {
 			FloatEntry entry = configKeeper.getEntry(key);
 			if (entry == null) return false;
@@ -134,7 +134,7 @@ public abstract class Config {
 		return false;
 	}
 	
-	public boolean getBoolean(ConfigKey key, boolean defaultValue) {
+	protected boolean getBoolean(ConfigKey key, boolean defaultValue) {
 		Boolean val = configKeeper.getValue(key);
 		if (val == null) {
 			BooleanEntry entry = configKeeper.registerEntry(key, new BooleanEntry(defaultValue));
@@ -143,12 +143,12 @@ public abstract class Config {
 		return val != null ? val : defaultValue;
 	}
 	
-	public boolean getBoolean(ConfigKey key) {
+	protected boolean getBoolean(ConfigKey key) {
 		Boolean val = configKeeper.getValue(key);
 		return val != null ? val : false;
 	}
 	
-	public boolean setBoolean(ConfigKey key, boolean value) {
+	protected boolean setBoolean(ConfigKey key, boolean value) {
 		try {
 			BooleanEntry entry = configKeeper.getEntry(key);
 			if (entry == null) return false;

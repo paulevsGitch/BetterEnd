@@ -32,10 +32,10 @@ import ru.betterend.blocks.BlockEndLotusSeed;
 import ru.betterend.blocks.BlockEndLotusStem;
 import ru.betterend.blocks.BlockEndstoneDust;
 import ru.betterend.blocks.BlockGlowingMoss;
-import ru.betterend.blocks.BlockHelixTreeLeaves;
 import ru.betterend.blocks.BlockGlowingPillarLuminophor;
 import ru.betterend.blocks.BlockGlowingPillarRoots;
 import ru.betterend.blocks.BlockGlowingPillarSeed;
+import ru.betterend.blocks.BlockHelixTreeLeaves;
 import ru.betterend.blocks.BlockHelixTreeSapling;
 import ru.betterend.blocks.BlockHydralux;
 import ru.betterend.blocks.BlockHydraluxPetal;
@@ -86,12 +86,9 @@ import ru.betterend.blocks.basis.BlockWallPlant;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
-import ru.betterend.config.ItemConfig;
 import ru.betterend.config.Configs;
 
 public class EndBlocks {
-	private static final ItemConfig CONFIG = Configs.ITEM_CONFIG;
-	
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new BlockEndstoneDust());
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new BlockTerrain(MaterialColor.LIGHT_BLUE));
@@ -267,7 +264,7 @@ public class EndBlocks {
 	public static void register() {}
 	
 	public static Block registerBlock(Identifier id, Block block) {
-		if (!CONFIG.getBoolean(id, "blocks", true)) {
+		if (!Configs.BLOCK_CONFIG.getBoolean(id, "blocks", true)) {
 			return block;
 		}
 		Registry.register(Registry.BLOCK, id, block);

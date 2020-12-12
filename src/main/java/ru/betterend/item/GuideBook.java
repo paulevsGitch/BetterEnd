@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.LangUtil;
-
 import vazkii.patchouli.api.PatchouliAPI;
 
 public class GuideBook extends PatternedItem {

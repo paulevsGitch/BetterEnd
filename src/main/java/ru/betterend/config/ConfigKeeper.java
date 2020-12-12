@@ -14,7 +14,6 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-
 import ru.betterend.util.JsonFactory;
 
 public final class ConfigKeeper {

@@ -4,8 +4,8 @@ import java.util.Random;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.PentaShape;
 import ru.betterend.blocks.basis.BlockPlantWithAge;

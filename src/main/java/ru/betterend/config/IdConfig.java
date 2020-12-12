@@ -1,22 +1,24 @@
 package ru.betterend.config;
 
+import java.util.function.BiFunction;
 import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.util.Identifier;
 import ru.betterend.config.ConfigKeeper.Entry;
 
-public class IdentifierConfig extends Config {
-	public IdentifierConfig(String group) {
+public class IdConfig extends Config {
+	
+	private final BiFunction<Identifier, String, ConfigKey> keyFactory;
+	
+	public IdConfig(String group, BiFunction<Identifier, String, ConfigKey> keyFactory) {
 		super(group);
+		this.keyFactory = keyFactory;
 	}
 
 	@Override
 	protected void registerEntries() {}
 
 	private ConfigKey createKey(Identifier id, String key) {
-		Identifier groupId = new Identifier(group, id.getNamespace());
-		Identifier categoryId = new Identifier(id.getPath(), key);
-		return new ConfigKey(groupId, categoryId);
+		return this.keyFactory.apply(id, key);
 	}
 
 	@Nullable

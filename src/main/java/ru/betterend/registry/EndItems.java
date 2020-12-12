@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.entity.EntityType;
@@ -14,7 +15,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.FishBucketItem;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.FoodComponents;
@@ -32,6 +32,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.item.EndArmorMaterial;
@@ -118,26 +119,42 @@ public class EndItems {
 	}
 	
 	public static Item registerItem(Identifier id, Item item) {
-		if (!Configs.ITEM_CONFIG.getBoolean(id, "enabled", true)) {
+		if (item instanceof ArmorItem) {
+			return registerArmor(id, item);
+		}
+		if (!Configs.ITEM_CONFIG.getBoolean(id, "items", true)) {
 			return item;
 		}
-		if (item != Items.AIR) {
-			Registry.register(Registry.ITEM, id, item);
-			if (item instanceof BlockItem)
-				MOD_BLOCKS.add(item);
-			else
-				MOD_ITEMS.add(item);
-		}
+		registerItem(id, item, MOD_ITEMS);
 		return item;
 	}
 	
-	protected static ToolItem registerTool(String name, ToolItem item) {
-		Identifier id = BetterEnd.makeID(name);
-		if (!Configs.ITEM_CONFIG.getBoolean(id, "enabled", true)) {
+	public static Item registerBlockItem(Identifier id, Item item) {
+		registerItem(id, item, MOD_BLOCKS);
+		return item;
+	}
+	
+	private static void registerItem(Identifier id, Item item, List<Item> registry) {
+		if (item != Items.AIR) {
+			Registry.register(Registry.ITEM, id, item);
+			registry.add(item);
+		}
+	}
+	
+	private static Item registerArmor(Identifier id, Item item) {
+		if (!Configs.ITEM_CONFIG.getBoolean(id, "armor", true)) {
 			return item;
 		}
-		Registry.register(Registry.ITEM, id, item);
-		MOD_ITEMS.add(item);
+		registerItem(id, item, MOD_ITEMS);
+		return item;
+	}
+	
+	private static ToolItem registerTool(String name, ToolItem item) {
+		Identifier id = BetterEnd.makeID(name);
+		if (!Configs.ITEM_CONFIG.getBoolean(id, "tools", true)) {
+			return item;
+		}
+		registerItem(id, item, MOD_ITEMS);
 		
 		if (item instanceof ShovelItem) {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.SHOVELS, item);

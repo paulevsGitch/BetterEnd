@@ -265,11 +265,11 @@ public class EndBlocks {
 	public static void register() {}
 	
 	public static Block registerBlock(Identifier id, Block block) {
-		if (!Configs.BLOCK_CONFIG.getBoolean(id, "enabled", true)) {
+		if (!Configs.BLOCK_CONFIG.getBoolean(id, "blocks", true)) {
 			return block;
 		}
 		Registry.register(Registry.BLOCK, id, block);
-		EndItems.registerItem(id, new BlockItem(block, EndItems.makeBlockItemSettings()));
+		EndItems.registerBlockItem(id, new BlockItem(block, EndItems.makeBlockItemSettings()));
 		return block;
 	}
 	

@@ -12,7 +12,6 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import ru.betterend.util.JsonFactory;
 
@@ -28,9 +27,7 @@ public final class ConfigKeeper {
 	private <T, E extends Entry<T>> void storeValue(ConfigKey key, E entry, T value) {
 		if (configObject == null) return;
 		
-		Identifier categoryId = key.getCategory();
-		Identifier paramId = key.getParameter();
-		String group = categoryId.getPath();
+		String group = key.getOwner();
 		JsonObject jsonGroup;
 		if (configObject.has(group)) {
 			jsonGroup = JsonHelper.getObject(configObject, group);
@@ -38,7 +35,7 @@ public final class ConfigKeeper {
 			jsonGroup = new JsonObject();
 			configObject.add(group, jsonGroup);
 		}
-		String category = paramId.getNamespace();
+		String category = key.getCategory();
 		JsonObject jsonCategory;
 		if (jsonGroup.has(category)) {
 			jsonCategory = JsonHelper.getObject(jsonGroup, category);
@@ -46,7 +43,7 @@ public final class ConfigKeeper {
 			jsonCategory = new JsonObject();
 			jsonGroup.add(category, jsonCategory);
 		}
-		String paramKey = paramId.getPath();
+		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
 		entry.toJson(jsonCategory, paramKey, value);
 	}
@@ -56,21 +53,19 @@ public final class ConfigKeeper {
 			return entry.getDefault();
 		}
 		
-		Identifier categoryId = key.getCategory();
-		Identifier paramId = key.getParameter();
-		String group = categoryId.getPath();
+		String group = key.getOwner();
 		if (!configObject.has(group)) {
 			return entry.getDefault();
 		}
 		
 		JsonObject jsonGroup = JsonHelper.getObject(configObject, group);
-		String category = paramId.getNamespace();
+		String category = key.getCategory();
 		if (!jsonGroup.has(category)) {
 			return entry.getDefault();
 		}
 		
 		JsonObject jsonCategory = JsonHelper.getObject(jsonGroup, category);
-		String paramKey = paramId.getPath();
+		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
 		if (!jsonCategory.has(paramKey)) {
 			return entry.getDefault();

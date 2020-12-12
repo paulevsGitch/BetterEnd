@@ -1,30 +1,38 @@
 package ru.betterend.config;
 
-import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public class ConfigKey {
-	private final Identifier category;
-	private final Identifier parameter;
+	private final String owner;
+	private final String category;
+	private final String entry;
 	
-	public ConfigKey(Identifier category, Identifier parameter) {
+	public ConfigKey(@NotNull String owner, @NotNull String category, @NotNull String entry) {
+		this.validate(owner, category, entry);
+		this.owner = owner;
 		this.category = category;
-		this.parameter = parameter;
+		this.entry = entry;
 	}
 
-	public Identifier getCategory() {
+	public String getOwner() {
+		return owner;
+	}
+
+	public String getCategory() {
 		return category;
 	}
 
-	public Identifier getParameter() {
-		return parameter;
+	public String getEntry() {
+		return entry;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + ((parameter == null) ? 0 : parameter.hashCode());
+		result = prime * result + category.hashCode();
+		result = prime * result + entry.hashCode();
+		result = prime * result + owner.hashCode();
 		return result;
 	}
 
@@ -44,13 +52,32 @@ public class ConfigKey {
 		} else if (!category.equals(other.category)) {
 			return false;
 		}
-		if (parameter == null) {
-			if (other.parameter != null) {
+		if (entry == null) {
+			if (other.entry != null) {
 				return false;
 			}
-		} else if (!parameter.equals(other.parameter)) {
+		} else if (!entry.equals(other.entry)) {
+			return false;
+		}
+		if (owner == null) {
+			if (other.owner != null) {
+				return false;
+			}
+		} else if (!owner.equals(other.owner)) {
 			return false;
 		}
 		return true;
+	}
+	
+	private void validate(String owner, String category, String entry) {
+		if (owner == null) {
+			throw new NullPointerException("Failed to create ConfigKey: 'owner' can't be null.");
+		}
+		if (category == null) {
+			throw new NullPointerException("Failed to create ConfigKey: 'category' can't be null.");
+		}
+		if (entry == null) {
+			throw new NullPointerException("Failed to create ConfigKey: 'entry' can't be null.");
+		}
 	}
 }

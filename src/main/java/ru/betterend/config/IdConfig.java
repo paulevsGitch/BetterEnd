@@ -3,8 +3,13 @@ package ru.betterend.config;
 import java.util.function.BiFunction;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.Identifier;
+import ru.betterend.config.ConfigKeeper.BooleanEntry;
 import ru.betterend.config.ConfigKeeper.Entry;
-import ru.betterend.config.ConfigKeeper.RangeEntry;
+import ru.betterend.config.ConfigKeeper.FloatEntry;
+import ru.betterend.config.ConfigKeeper.FloatRange;
+import ru.betterend.config.ConfigKeeper.IntegerEntry;
+import ru.betterend.config.ConfigKeeper.IntegerRange;
+import ru.betterend.config.ConfigKeeper.StringEntry;
 
 public class IdConfig extends Config {
 	
@@ -22,6 +27,26 @@ public class IdConfig extends Config {
 		return this.keyFactory.apply(id, key);
 	}
 
+	@Nullable
+	public IntegerEntry getIntEntry(Identifier id, String key) {
+		return this.getEntry(createKey(id, key), IntegerEntry.class);
+	}
+	
+	@Nullable
+	public FloatEntry getFloatEntry(Identifier id, String key) {
+		return this.getEntry(createKey(id, key), FloatEntry.class);
+	}
+	
+	@Nullable
+	public BooleanEntry getBoolEntry(Identifier id, String key) {
+		return this.getEntry(createKey(id, key), BooleanEntry.class);
+	}
+	
+	@Nullable
+	public StringEntry getStringEntry(Identifier id, String key) {
+		return this.getEntry(createKey(id, key), StringEntry.class);
+	}
+	
 	@Nullable
 	public <T, E extends Entry<T>> E getEntry(Identifier id, String key, Class<E> type) {
 		return this.getEntry(createKey(id, key), type);
@@ -56,8 +81,12 @@ public class IdConfig extends Config {
 		return this.setInt(createKey(id, key), value);
 	}
 
-	public <T extends Comparable<T>, RE extends RangeEntry<T>> boolean setRanged(Identifier id, String key, T value, Class<RE> type) {
-		return this.setRanged(createKey(id, key), value, type);
+	public boolean setRangedInt(Identifier id, String key, int value) {
+		return this.setRanged(createKey(id, key), value, IntegerRange.class);
+	}
+	
+	public boolean setRangedFloat(Identifier id, String key, float value) {
+		return this.setRanged(createKey(id, key), value, FloatRange.class);
 	}
 
 	public float getFloat(Identifier id, String key, float defaultValue) {

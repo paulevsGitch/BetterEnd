@@ -1,0 +1,6 @@
+{
+    "name": "End Veil",
+    "description": "Look without fear into the eyes of Enderman.",
+    "icon": "betterend:textures/mob_effect/end_veil.png",
+    "sortnum": 3
+}

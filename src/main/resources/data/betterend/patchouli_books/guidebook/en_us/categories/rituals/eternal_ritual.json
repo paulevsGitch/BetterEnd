@@ -1,0 +1,6 @@
+{
+    "name": "Eternal Ritual",
+    "description": "A not so simple way to return to the Overworld.",
+    "icon": "betterend:eternal_pedestal",
+    "parent": "betterend:rituals"
+}

@@ -75,14 +75,17 @@ public final class ConfigKeeper {
 	}
 	
 	@Nullable
-	@SuppressWarnings("unchecked")
-	public <E extends Entry<?>> E getEntry(ConfigKey key) {
-		return (E) this.configEntries.get(key);
+	public <T, E extends Entry<T>> E getEntry(ConfigKey key, Class<E> type) {
+		Entry<?> entry = this.configEntries.get(key);
+		if (type.isInstance(entry)) {
+			return type.cast(entry);
+		}
+		return null;
 	}
 	
 	@Nullable
-	public <T> T getValue(ConfigKey key) {
-		Entry<T> entry = this.getEntry(key);
+	public <T, E extends Entry<T>> T getValue(ConfigKey key, Class<E> type) {
+		Entry<T> entry = this.getEntry(key, type);
 		if (entry == null) {
 			return null;
 		}
@@ -207,11 +210,8 @@ public final class ConfigKeeper {
 	
 	public static class EnumEntry<T extends Enum<T>> extends Entry<T> {
 
-		private final Type type;
-		
 		public EnumEntry(T defaultValue) {
 			super(defaultValue);
-			this.type = new EntryType().getType();
 		}
 
 		@Override
@@ -227,10 +227,6 @@ public final class ConfigKeeper {
 		@Override
 		public void toJson(JsonObject json, String key, T value) {
 			json.addProperty(key, JsonFactory.GSON.toJson(json, type));
-		}
-		
-		private class EntryType extends TypeToken<T> {
-			private static final long serialVersionUID = 1L;
 		}
 	}
 	
@@ -261,6 +257,7 @@ public final class ConfigKeeper {
 	public static abstract class Entry<T> {
 		
 		protected final T defaultValue;
+		protected final Type type;
 		protected Consumer<T> writer;
 		protected Supplier<T> reader;
 		
@@ -269,6 +266,7 @@ public final class ConfigKeeper {
 		
 		public Entry (T defaultValue) {
 			this.defaultValue = defaultValue;
+			this.type = new EntryType().getType();
 		}
 		
 		protected void setWriter(Consumer<T> writer) {
@@ -277,6 +275,10 @@ public final class ConfigKeeper {
 		
 		protected void setReader(Supplier<T> reader) {
 			this.reader = reader;
+		}
+		
+		public Type getType() {
+			return this.type;
 		}
 
 		public T getValue() {
@@ -293,6 +295,10 @@ public final class ConfigKeeper {
 		
 		public void setDefault() {
 			this.setValue(defaultValue);
+		}
+		
+		protected class EntryType extends TypeToken<T> {
+			private static final long serialVersionUID = 1L;
 		}
 	}
 }

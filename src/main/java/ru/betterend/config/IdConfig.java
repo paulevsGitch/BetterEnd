@@ -4,6 +4,7 @@ import java.util.function.BiFunction;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.Identifier;
 import ru.betterend.config.ConfigKeeper.Entry;
+import ru.betterend.config.ConfigKeeper.RangeEntry;
 
 public class IdConfig extends Config {
 	
@@ -22,13 +23,13 @@ public class IdConfig extends Config {
 	}
 
 	@Nullable
-	public <E extends Entry<?>> E getEntry(Identifier id, String key) {
-		return this.getEntry(createKey(id, key));
+	public <T, E extends Entry<T>> E getEntry(Identifier id, String key, Class<E> type) {
+		return this.getEntry(createKey(id, key), type);
 	}
 
 	@Nullable
-	public <T> T getDefault(Identifier id, String key) {
-		return this.getDefault(createKey(id, key));
+	public <T, E extends Entry<T>> T getDefault(Identifier id, String key, Class<E> type) {
+		return this.getDefault(createKey(id, key), type);
 	}
 
 	public String getString(Identifier id, String key, String defaultValue) {
@@ -55,8 +56,8 @@ public class IdConfig extends Config {
 		return this.setInt(createKey(id, key), value);
 	}
 
-	public <T extends Comparable<T>> boolean setRanged(Identifier id, String key, T value) {
-		return this.setRanged(createKey(id, key), value);
+	public <T extends Comparable<T>, RE extends RangeEntry<T>> boolean setRanged(Identifier id, String key, T value, Class<RE> type) {
+		return this.setRanged(createKey(id, key), value, type);
 	}
 
 	public float getFloat(Identifier id, String key, float defaultValue) {

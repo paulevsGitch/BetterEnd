@@ -27,7 +27,7 @@ public class ConfigWriter {
 		return configObject;
 	}
 	
-	public void saveConfig() {
+	public void save() {
 		if (configObject == null) {
 			return;
 		}
@@ -39,10 +39,6 @@ public class ConfigWriter {
 			configObject = load(configFile);
 		}
 		return configObject;
-	}
-	
-	public void save() {
-		save(configFile, configObject);
 	}
 	
 	public void save(JsonElement config) {

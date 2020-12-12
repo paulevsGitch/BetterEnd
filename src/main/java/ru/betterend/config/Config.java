@@ -14,53 +14,51 @@ import ru.betterend.config.ConfigKeeper.StringEntry;
 
 public abstract class Config {
 	
-	protected final ConfigKeeper configKeeper;
+	protected final ConfigKeeper keeper;
 	protected final ConfigWriter writer;
-	protected final String group;
 	
 	protected abstract void registerEntries();
 	
 	public Config(String group) {
-		this.group = group;
 		this.writer = new ConfigWriter(group);
 		JsonObject settings = writer.load();
-		this.configKeeper = new ConfigKeeper(settings);
+		this.keeper = new ConfigKeeper(settings);
 		this.registerEntries();
 		this.writer.save();
 	}
 	
 	public void saveChanges() {
-		this.writer.saveConfig();
+		this.writer.save();
 	}
 	
 	@Nullable
-	public <E extends Entry<?>> E getEntry(ConfigKey key) {
-		return this.configKeeper.getEntry(key);
+	public <T, E extends Entry<T>> E getEntry(ConfigKey key, Class<E> type) {
+		return this.keeper.getEntry(key, type);
 	}
 	
 	@Nullable
-	public <T> T getDefault(ConfigKey key) {
-		Entry<T> entry = configKeeper.getEntry(key);
+	public <T, E extends Entry<T>> T getDefault(ConfigKey key, Class<E> type) {
+		Entry<T> entry = keeper.getEntry(key, type);
 		return entry != null ? entry.getDefault() : null;
 	}
 	
 	protected String getString(ConfigKey key, String defaultValue) {
-		String str = configKeeper.getValue(key);
+		String str = keeper.getValue(key, StringEntry.class);
 		if (str == null) {
-			StringEntry entry = configKeeper.registerEntry(key, new StringEntry(defaultValue));
+			StringEntry entry = keeper.registerEntry(key, new StringEntry(defaultValue));
 			return entry.getValue();
 		}
 		return str != null ? str : defaultValue;
 	}
 	
 	protected String getString(ConfigKey key) {
-		String str = configKeeper.getValue(key);
+		String str = keeper.getValue(key, StringEntry.class);
 		return str != null ? str : "";
 	}
 	
 	protected boolean setString(ConfigKey key, String value) {
 		try {
-			StringEntry entry = configKeeper.getEntry(key);
+			StringEntry entry = keeper.getEntry(key, StringEntry.class);
 			if (entry == null) return false;
 			entry.setValue(value);
 			return true;
@@ -71,22 +69,22 @@ public abstract class Config {
 	}
 	
 	protected int getInt(ConfigKey key, int defaultValue) {
-		Integer val = configKeeper.getValue(key);		
+		Integer val = keeper.getValue(key, IntegerEntry.class);		
 		if (val == null) {
-			IntegerEntry entry = configKeeper.registerEntry(key, new IntegerEntry(defaultValue));
+			IntegerEntry entry = keeper.registerEntry(key, new IntegerEntry(defaultValue));
 			return entry.getValue();
 		}
 		return val != null ? val : defaultValue;
 	}
 	
 	protected int getInt(ConfigKey key) {
-		Integer val = configKeeper.getValue(key);		
+		Integer val = keeper.getValue(key, IntegerEntry.class);		
 		return val != null ? val : 0;
 	}
 	
 	protected boolean setInt(ConfigKey key, int value) {
 		try {
-			IntegerEntry entry = configKeeper.getEntry(key);
+			IntegerEntry entry = keeper.getEntry(key, IntegerEntry.class);
 			if (entry == null) return false;
 			entry.setValue(value);
 			return true;
@@ -96,9 +94,9 @@ public abstract class Config {
 		return false;
 	}
 	
-	protected <T extends Comparable<T>> boolean setRanged(ConfigKey key, T value) {
+	protected <T extends Comparable<T>, RE extends RangeEntry<T>> boolean setRanged(ConfigKey key, T value, Class<RE> type) {
 		try {
-			RangeEntry<T> entry = configKeeper.getEntry(key);
+			RangeEntry<T> entry = keeper.getEntry(key, type);
 			if (entry == null) return false;
 			entry.setValue(value);
 			return true;
@@ -109,22 +107,22 @@ public abstract class Config {
 	}
 	
 	protected float getFloat(ConfigKey key, float defaultValue) {
-		Float val = configKeeper.getValue(key);
+		Float val = keeper.getValue(key, FloatEntry.class);
 		if (val == null) {
-			FloatEntry entry = configKeeper.registerEntry(key, new FloatEntry(defaultValue));
+			FloatEntry entry = keeper.registerEntry(key, new FloatEntry(defaultValue));
 			return entry.getValue();
 		}
 		return val != null ? val : defaultValue;
 	}
 	
 	protected float getFloat(ConfigKey key) {
-		Float val = configKeeper.getValue(key);
+		Float val = keeper.getValue(key, FloatEntry.class);
 		return val != null ? val : 0.0F;
 	}
 	
 	protected boolean setFloat(ConfigKey key, float value) {
 		try {
-			FloatEntry entry = configKeeper.getEntry(key);
+			FloatEntry entry = keeper.getEntry(key, FloatEntry.class);
 			if (entry == null) return false;
 			entry.setValue(value);
 			return true;
@@ -135,22 +133,22 @@ public abstract class Config {
 	}
 	
 	protected boolean getBoolean(ConfigKey key, boolean defaultValue) {
-		Boolean val = configKeeper.getValue(key);
+		Boolean val = keeper.getValue(key, BooleanEntry.class);
 		if (val == null) {
-			BooleanEntry entry = configKeeper.registerEntry(key, new BooleanEntry(defaultValue));
+			BooleanEntry entry = keeper.registerEntry(key, new BooleanEntry(defaultValue));
 			return entry.getValue();
 		}
 		return val != null ? val : defaultValue;
 	}
 	
 	protected boolean getBoolean(ConfigKey key) {
-		Boolean val = configKeeper.getValue(key);
+		Boolean val = keeper.getValue(key, BooleanEntry.class);
 		return val != null ? val : false;
 	}
 	
 	protected boolean setBoolean(ConfigKey key, boolean value) {
 		try {
-			BooleanEntry entry = configKeeper.getEntry(key);
+			BooleanEntry entry = keeper.getEntry(key, BooleanEntry.class);
 			if (entry == null) return false;
 			entry.setValue(value);
 			return true;

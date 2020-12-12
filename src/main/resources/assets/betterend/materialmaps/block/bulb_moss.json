@@ -1,0 +1,14 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/bulb_moss_bulbs",
+				"material": "betterend:waving_wall_glow_inc"
+			},
+			{
+				"sprite": "betterend:block/bulb_moss_leaves",
+				"material": "betterend:waving_wall"
+			}
+		]
+	}
+}

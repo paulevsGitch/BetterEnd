@@ -220,6 +220,7 @@ public class EndBlocks {
 	public static final Block CYAN_MOSS = registerBlock("cyan_moss", new BlockWallPlant());
 	public static final Block TWISTED_MOSS = registerBlock("twisted_moss", new BlockWallPlant());
 	public static final Block TUBE_WORM = registerBlock("tube_worm", new BlockUnderwaterWallPlant());
+	public static final Block BULB_MOSS = registerBlock("bulb_moss", new BlockWallPlant(12));
 	
 	// Crops //
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new BlockShadowBerry());

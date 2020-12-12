@@ -470,5 +470,7 @@
 	"block.betterend.ancient_emerald_ice": "Древний изумрудный лёд",
 	"block.betterend.dense_emerald_ice": "Плотный изумрудный лёд",
 	"block.betterend.dense_snow": "Плотный снег",
-	"block.betterend.emerald_ice": "Изумрудный лёд"
+	"block.betterend.emerald_ice": "Изумрудный лёд",
+	
+	"block.betterend.bulb_moss": "Луковичный мох"
 }

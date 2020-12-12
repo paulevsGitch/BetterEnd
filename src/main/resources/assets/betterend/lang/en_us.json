@@ -468,5 +468,7 @@
 	"block.betterend.ancient_emerald_ice": "Ancient Emerald Ice",
 	"block.betterend.dense_emerald_ice": "Dense Emerald Ice",
 	"block.betterend.dense_snow": "Dense Snow",
-	"block.betterend.emerald_ice": "Emerald Ice"
+	"block.betterend.emerald_ice": "Emerald Ice",
+	
+	"block.betterend.bulb_moss": "Bulb Moss"
 }

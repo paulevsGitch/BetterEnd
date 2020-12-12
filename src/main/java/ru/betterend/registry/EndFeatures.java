@@ -90,6 +90,8 @@ public class EndFeatures {
 	public static final EndFeature CYAN_MOSS_WOOD = new EndFeature("cyan_moss_wood", new WallPlantOnLogFeature(EndBlocks.CYAN_MOSS, 4), 25);
 	public static final EndFeature TWISTED_MOSS = new EndFeature("twisted_moss", new WallPlantFeature(EndBlocks.TWISTED_MOSS, 6), 15);
 	public static final EndFeature TWISTED_MOSS_WOOD = new EndFeature("twisted_moss_wood", new WallPlantOnLogFeature(EndBlocks.TWISTED_MOSS, 6), 25);
+	public static final EndFeature BULB_MOSS = new EndFeature("bulb_moss", new WallPlantFeature(EndBlocks.BULB_MOSS, 6), 1);
+	public static final EndFeature BULB_MOSS_WOOD = new EndFeature("bulb_moss_wood", new WallPlantOnLogFeature(EndBlocks.BULB_MOSS, 6), 15);
 	
 	// Water //
 	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 6), 10);

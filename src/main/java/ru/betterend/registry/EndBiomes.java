@@ -110,16 +110,19 @@ public class EndBiomes {
 						hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "hasCaves", true);
 					}
 					EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
-					if (isVoid) {
-						VOID_BIOMES.addBiomeMutable(endBiome);
+					if (Configs.BIOME_CONFIG.getBoolean(endBiome, "enabled", true)) {
+						if (isVoid) {
+							VOID_BIOMES.addBiomeMutable(endBiome);
+						}
+						else {
+							LAND_BIOMES.addBiomeMutable(endBiome);
+						}
+						ID_MAP.put(id, endBiome);
 					}
-					else {
-						LAND_BIOMES.addBiomeMutable(endBiome);
-					}
-					ID_MAP.put(id, endBiome);
 				}
 			}
 		});
+		Configs.BIOME_CONFIG.saveChanges();
 		
 		LAND_BIOMES.rebuild();
 		VOID_BIOMES.rebuild();
@@ -268,7 +271,6 @@ public class EndBiomes {
 	private static void registerBiomeDirect(EndBiome biome) {
 		fillSet();
 		int possibleID = incID++;
-		Configs.BIOME_CONFIG.getBoolean(biome, "enabled", true);
 		if (occupiedIDs.contains(possibleID)) {
 			String message = "ID for biome " + biome.getID() + " is already occupied, changing biome ID from " + possibleID + " to ";
 			while (occupiedIDs.contains(possibleID)) {
@@ -276,7 +278,9 @@ public class EndBiomes {
 			}
 			BetterEnd.LOGGER.info(message + possibleID);
 		}
-		Registry.register(BuiltinRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
+		if (Configs.BIOME_CONFIG.getBoolean(biome, "enabled", true)) {
+			Registry.register(BuiltinRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
+		}
 	}
 	
 	public static EndBiome getFromBiome(Biome biome) {

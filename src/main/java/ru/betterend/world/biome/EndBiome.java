@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.structure.Structure;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
+import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.StructureHelper;
 import ru.betterend.world.features.EndFeature;
@@ -39,18 +40,18 @@ public class EndBiome {
 	public EndBiome(BiomeDefinition definition) {
 		biome = definition.build();
 		mcID = definition.getID();
-		fogDensity = definition.getFodDensity();
-		genChanceUnmutable = definition.getGenChance();
-		hasCaves = definition.hasCaves();
+		fogDensity = Configs.BIOME_CONFIG.getFloat(this, "fogDensity", definition.getFodDensity());
+		genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(this, "generationChance", definition.getGenChance());
+		hasCaves = Configs.BIOME_CONFIG.getBoolean(this, "hasCaves", definition.hasCaves());
 		readStructureList();
 	}
 
 	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
 		this.biome = biome;
 		this.mcID = id;
-		this.fogDensity = fogDensity;
-		this.genChanceUnmutable = genChance;
-		this.hasCaves = hasCaves;
+		this.fogDensity = Configs.BIOME_CONFIG.getFloat(this, "fogDensity", fogDensity);
+		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(this, "generationChance", genChance);
+		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(this, "hasCaves", hasCaves);
 		readStructureList();
 	}
 

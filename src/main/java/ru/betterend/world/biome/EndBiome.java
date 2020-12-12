@@ -40,18 +40,18 @@ public class EndBiome {
 	public EndBiome(BiomeDefinition definition) {
 		biome = definition.build();
 		mcID = definition.getID();
-		fogDensity = Configs.BIOME_CONFIG.getFloat(this, "fogDensity", definition.getFodDensity());
-		genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(this, "generationChance", definition.getGenChance());
-		hasCaves = Configs.BIOME_CONFIG.getBoolean(this, "hasCaves", definition.hasCaves());
+		fogDensity = Configs.BIOME_CONFIG.getFloat(this, "fog_density", definition.getFodDensity());
+		genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(this, "generation_chance", definition.getGenChance());
+		hasCaves = Configs.BIOME_CONFIG.getBoolean(this, "has_caves", definition.hasCaves());
 		readStructureList();
 	}
 
 	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
 		this.biome = biome;
 		this.mcID = id;
-		this.fogDensity = Configs.BIOME_CONFIG.getFloat(this, "fogDensity", fogDensity);
-		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(this, "generationChance", genChance);
-		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(this, "hasCaves", hasCaves);
+		this.fogDensity = Configs.BIOME_CONFIG.getFloat(this, "fog_density", fogDensity);
+		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(this, "generation_chance", genChance);
+		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(this, "has_caves", hasCaves);
 		readStructureList();
 	}
 

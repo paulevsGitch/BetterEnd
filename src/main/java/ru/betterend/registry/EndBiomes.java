@@ -104,10 +104,10 @@ public class EndBiomes {
 					boolean hasCaves = true;
 					JsonElement element = config.get(id.getPath());
 					if (element != null && element.isJsonObject()) {
-						fog = JsonFactory.getFloat(element.getAsJsonObject(), "fogDensity", 1);
-						chance = JsonFactory.getFloat(element.getAsJsonObject(), "genChance", 1);
+						fog = JsonFactory.getFloat(element.getAsJsonObject(), "fog_density", 1);
+						chance = JsonFactory.getFloat(element.getAsJsonObject(), "generation_chance", 1);
 						isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
-						hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "hasCaves", true);
+						hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
 					}
 					EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
 					if (Configs.BIOME_CONFIG.getBoolean(endBiome, "enabled", true)) {

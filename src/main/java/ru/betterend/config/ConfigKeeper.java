@@ -213,12 +213,11 @@ public final class ConfigKeeper {
 	
 	public static class EnumEntry<T extends Enum<T>> extends Entry<T> {
 
-		private Type type;
+		private final Type type;
 		
 		public EnumEntry(T defaultValue) {
 			super(defaultValue);
-			this.type = new TypeToken<T>(){
-				private static final long serialVersionUID = 1L;}.getType();
+			this.type = new EntryType().getType();
 		}
 
 		@Override
@@ -234,7 +233,11 @@ public final class ConfigKeeper {
 		@Override
 		public void toJson(JsonObject json, String key, T value) {
 			json.addProperty(key, JsonFactory.GSON.toJson(json, type));
-		}		
+		}
+		
+		private class EntryType extends TypeToken<T> {
+			private static final long serialVersionUID = 1L;
+		}
 	}
 	
 	public static abstract class RangeEntry<T extends Comparable<T>> extends Entry<T> {

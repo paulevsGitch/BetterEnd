@@ -210,8 +210,14 @@ public final class ConfigKeeper {
 	
 	public static class EnumEntry<T extends Enum<T>> extends Entry<T> {
 
+		private final Type type;
+		
 		public EnumEntry(T defaultValue) {
 			super(defaultValue);
+			TypeToken<T> token = new TypeToken<T>(){
+				private static final long serialVersionUID = 1L;
+			};
+			this.type = token.getType();
 		}
 
 		@Override
@@ -257,7 +263,6 @@ public final class ConfigKeeper {
 	public static abstract class Entry<T> {
 		
 		protected final T defaultValue;
-		protected final Type type;
 		protected Consumer<T> writer;
 		protected Supplier<T> reader;
 		
@@ -266,7 +271,6 @@ public final class ConfigKeeper {
 		
 		public Entry (T defaultValue) {
 			this.defaultValue = defaultValue;
-			this.type = new EntryType().getType();
 		}
 		
 		protected void setWriter(Consumer<T> writer) {
@@ -277,10 +281,6 @@ public final class ConfigKeeper {
 			this.reader = reader;
 		}
 		
-		public Type getType() {
-			return this.type;
-		}
-
 		public T getValue() {
 			return this.reader.get();
 		}
@@ -295,10 +295,6 @@ public final class ConfigKeeper {
 		
 		public void setDefault() {
 			this.setValue(defaultValue);
-		}
-		
-		protected class EntryType extends TypeToken<T> {
-			private static final long serialVersionUID = 1L;
 		}
 	}
 }

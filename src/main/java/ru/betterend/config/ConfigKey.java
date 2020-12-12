@@ -69,6 +69,11 @@ public class ConfigKey {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("%s:%s:%s", owner, category, entry);
+	}
+
 	private void validate(String owner, String category, String entry) {
 		if (owner == null) {
 			throw new NullPointerException("Failed to create ConfigKey: 'owner' can't be null.");

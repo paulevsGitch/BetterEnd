@@ -28,26 +28,6 @@ public class IdConfig extends Config {
 	}
 
 	@Nullable
-	public IntegerEntry getIntEntry(Identifier id, String key) {
-		return this.getEntry(createKey(id, key), IntegerEntry.class);
-	}
-	
-	@Nullable
-	public FloatEntry getFloatEntry(Identifier id, String key) {
-		return this.getEntry(createKey(id, key), FloatEntry.class);
-	}
-	
-	@Nullable
-	public BooleanEntry getBoolEntry(Identifier id, String key) {
-		return this.getEntry(createKey(id, key), BooleanEntry.class);
-	}
-	
-	@Nullable
-	public StringEntry getStringEntry(Identifier id, String key) {
-		return this.getEntry(createKey(id, key), StringEntry.class);
-	}
-	
-	@Nullable
 	public <T, E extends Entry<T>> E getEntry(Identifier id, String key, Class<E> type) {
 		return this.getEntry(createKey(id, key), type);
 	}

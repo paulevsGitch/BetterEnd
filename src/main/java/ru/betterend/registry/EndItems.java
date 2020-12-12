@@ -118,7 +118,7 @@ public class EndItems {
 	}
 	
 	public static Item registerItem(Identifier id, Item item) {
-		if (!Configs.ITEM_CONFIG.getBoolean(id, "items", true)) {
+		if (!Configs.ITEM_CONFIG.getBoolean(id, "enabled", true)) {
 			return item;
 		}
 		if (item != Items.AIR) {
@@ -133,7 +133,7 @@ public class EndItems {
 	
 	protected static ToolItem registerTool(String name, ToolItem item) {
 		Identifier id = BetterEnd.makeID(name);
-		if (!Configs.ITEM_CONFIG.getBoolean(id, "items", true)) {
+		if (!Configs.ITEM_CONFIG.getBoolean(id, "enabled", true)) {
 			return item;
 		}
 		Registry.register(Registry.ITEM, id, item);

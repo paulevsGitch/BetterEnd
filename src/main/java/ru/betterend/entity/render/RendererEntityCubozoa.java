@@ -8,9 +8,7 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.EntityCubozoa;
 import ru.betterend.entity.model.ModelEntityCubozoa;
@@ -44,25 +42,6 @@ public class RendererEntityCubozoa extends MobEntityRenderer<EntityCubozoa, Mode
 	@Override
 	public Identifier getTexture(EntityCubozoa entity) {
 		return TEXTURE[entity.getVariant()];
-	}
-
-	/*@Override
-	protected void setupTransforms(EntityJello squidEntity, MatrixStack matrixStack, float f, float g, float h) {
-		float i = MathHelper.lerp(h, squidEntity.prevTiltAngle, squidEntity.tiltAngle);
-		float j = MathHelper.lerp(h, squidEntity.prevRollAngle, squidEntity.rollAngle);
-		matrixStack.translate(0, -0.5F, 0);
-		matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F - g));
-		matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(i));
-		matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(j));
-	}*/
-	
-	@Override
-	protected void setupTransforms(EntityCubozoa squidEntity, MatrixStack matrixStack, float f, float g, float h) {
-		Vec3d velocity = squidEntity.getVelocity();
-		Vec3d flat = new Vec3d(velocity.getX(), 0, velocity.getZ());
-		float angle = (float) Math.acos(velocity.dotProduct(flat) / (velocity.length() * flat.length()));
-		matrixStack.multiply(Vector3f.POSITIVE_X.getRadialQuaternion(angle));
-		//matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(squidEntity.yaw));
 	}
 	
 	static {

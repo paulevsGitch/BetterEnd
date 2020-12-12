@@ -3,7 +3,6 @@ package ru.betterend.entity;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
@@ -11,37 +10,37 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
-import ru.betterend.util.MHelper;
 
-public class EntityCubozoa extends WaterCreatureEntity {
+public class EntityCubozoa extends SchoolingFishEntity {
 	public static final int VARIANTS = 2;
 	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
 	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
-	private int moveTicks = 0;
-	private double moveX;
-	private double moveY;
-	private double moveZ;
-	private int timer;
 
 	public EntityCubozoa(EntityType<EntityCubozoa> entityType, World world) {
 		super(entityType, world);
-		timer = MHelper.randRange(20, 40, random);
+		//this.moveControl = new CubozoaMoveControl(this);
 	}
 
 	@Override
@@ -83,7 +82,7 @@ public class EntityCubozoa extends WaterCreatureEntity {
 		return LivingEntity.createLivingAttributes()
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0)
 				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.05);
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5);
 	}
 
 	public int getVariant() {
@@ -105,37 +104,6 @@ public class EntityCubozoa extends WaterCreatureEntity {
 	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
 		return dimensions.height * 0.5F;
 	}
-
-	@Override
-	public void tickMovement() {
-		super.tickMovement();
-		if (moveTicks >= timer) {
-			if (random.nextInt(4) == 0 && world.getBlockState(getBlockPos().down()).isOf(Blocks.WATER)) {
-				moveX = 0;
-				moveZ = 0;
-				moveY = -0.05;
-			}
-			else if (random.nextBoolean()) {
-				moveX = random.nextGaussian();
-				moveZ = random.nextGaussian();
-				moveY = (moveX == 0 && moveZ == 0) ? 1 : random.nextDouble();
-				double l = MHelper.lengthSqr(moveX, moveY, moveZ) / 0.05;
-				moveX /= l;
-				moveY /= l;
-				moveZ /= l;
-			}
-			moveTicks = 0;
-			timer = MHelper.randRange(20, 40, random);
-			this.yaw = MHelper.radiandToDegrees((float) Math.atan2(moveX, moveZ)) - 90;
-			this.bodyYaw = this.yaw;
-			this.pitch = MHelper.radiandToDegrees((float) Math.asin(-moveY));
-		}
-		moveX *= 0.98;
-		moveY *= 0.98;
-		moveZ *= 0.98;
-		this.setVelocity(moveX, moveY, moveZ);
-		moveTicks ++;
-	}
 	
 	@Override
 	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
@@ -143,6 +111,50 @@ public class EntityCubozoa extends WaterCreatureEntity {
 		if (count > 0) {
 			ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(EndItems.GELATINE, count));
 			this.world.spawnEntity(drop);
+		}
+	}
+
+	@Override
+	protected ItemStack getFishBucketItem() {
+		return new ItemStack(Items.WATER_BUCKET);
+	}
+
+	@Override
+	protected SoundEvent getFlopSound() {
+		return SoundEvents.ENTITY_SALMON_FLOP;
+	}
+	
+	static class CubozoaMoveControl extends MoveControl {
+		CubozoaMoveControl(EntityCubozoa owner) {
+			super(owner);
+		}
+
+		public void tick() {
+			if (this.entity.isSubmergedIn(FluidTags.WATER)) {
+				this.entity.setVelocity(this.entity.getVelocity().add(0.0D, 0.005D, 0.0D));
+			}
+
+			if (this.state == MoveControl.State.MOVE_TO && !this.entity.getNavigation().isIdle()) {
+				float f = (float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+				this.entity.setMovementSpeed(MathHelper.lerp(0.125F, this.entity.getMovementSpeed(), f));
+				double d = this.targetX - this.entity.getX();
+				double e = this.targetY - this.entity.getY();
+				double g = this.targetZ - this.entity.getZ();
+				if (e != 0.0D) {
+					double h = (double) MathHelper.sqrt(d * d + e * e + g * g);
+					this.entity.setVelocity(this.entity.getVelocity().add(0.0D, (double) this.entity.getMovementSpeed() * (e / h) * 0.1D, 0.0D));
+				}
+
+				if (d != 0.0D || g != 0.0D) {
+					float i = (float) (MathHelper.atan2(g, d) * 57.2957763671875D) - 90.0F;
+					this.entity.yaw = this.changeAngle(this.entity.yaw, i, 90.0F);
+					this.entity.bodyYaw = this.entity.yaw;
+				}
+
+			}
+			else {
+				this.entity.setMovementSpeed(0.0F);
+			}
 		}
 	}
 }

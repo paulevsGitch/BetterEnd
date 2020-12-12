@@ -3,6 +3,8 @@ package ru.betterend.blocks;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -11,9 +13,12 @@ import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
@@ -28,15 +33,11 @@ public class BlockHelixTreeLeaves extends BlockBase implements IColorProvider {
 	
 	public BlockHelixTreeLeaves() {
 		super(FabricBlockSettings.of(Material.LEAVES)
-				.strength(0.2F)
+				.materialColor(MaterialColor.ORANGE)
 				.breakByTool(FabricToolTags.SHEARS)
+				.sounds(BlockSoundGroup.WART_BLOCK)
 				.sounds(BlockSoundGroup.GRASS)
-				.materialColor(MaterialColor.ORANGE));
-	}
-	
-	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(EndBlocks.HELIX_TREE_SAPLING));
+				.strength(0.2F));
 	}
 	
 	@Override
@@ -66,5 +67,21 @@ public class BlockHelixTreeLeaves extends BlockBase implements IColorProvider {
 	private int getGreen(int color) {
 		float delta = color / 7F;
 		return (int) MathHelper.lerp(delta, 80, 158);
+	}
+	
+	@Override
+	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+		ItemStack tool = builder.get(LootContextParameters.TOOL);
+		if (tool != null) {
+			if (tool.getItem().isIn(FabricToolTags.SHEARS) || tool.isEffectiveOn(state) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+				return Collections.singletonList(new ItemStack(this));
+			}
+			int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
+			if (MHelper.RANDOM.nextInt(16) <= fortune) {
+				return Lists.newArrayList(new ItemStack(EndBlocks.HELIX_TREE_SAPLING));
+			}
+			return Lists.newArrayList();
+		}
+		return MHelper.RANDOM.nextInt(32) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.HELIX_TREE_SAPLING)) : Lists.newArrayList();
 	}
 }

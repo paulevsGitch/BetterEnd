@@ -92,25 +92,26 @@ public class EndBiomes {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				Identifier id = biomeRegistry.getId(biome);
-				if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id)) {
-					JsonObject config = configs.get(id.getNamespace());
-					if (config == null) {
-						config = loadJsonConfig(id.getNamespace());
-						configs.put(id.getNamespace(), config);
-					}
-					float fog = 1F;
-					float chance = 1F;
-					boolean isVoid = false;
-					boolean hasCaves = true;
-					JsonElement element = config.get(id.getPath());
-					if (element != null && element.isJsonObject()) {
-						fog = JsonFactory.getFloat(element.getAsJsonObject(), "fog_density", 1);
-						chance = JsonFactory.getFloat(element.getAsJsonObject(), "generation_chance", 1);
-						isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
-						hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
-					}
-					EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
-					if (Configs.BIOME_CONFIG.getBoolean(endBiome, "enabled", true)) {
+				if (Configs.BIOME_CONFIG.getBoolean(id, "enabled", true)) {
+					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id)) {
+						JsonObject config = configs.get(id.getNamespace());
+						if (config == null) {
+							config = loadJsonConfig(id.getNamespace());
+							configs.put(id.getNamespace(), config);
+						}
+						float fog = 1F;
+						float chance = 1F;
+						boolean isVoid = false;
+						boolean hasCaves = true;
+						JsonElement element = config.get(id.getPath());
+						if (element != null && element.isJsonObject()) {
+							fog = JsonFactory.getFloat(element.getAsJsonObject(), "fog_density", 1);
+							chance = JsonFactory.getFloat(element.getAsJsonObject(), "generation_chance", 1);
+							isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
+							hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
+						}
+						EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
+
 						if (isVoid) {
 							VOID_BIOMES.addBiomeMutable(endBiome);
 						}
@@ -278,7 +279,7 @@ public class EndBiomes {
 			}
 			BetterEnd.LOGGER.info(message + possibleID);
 		}
-		if (Configs.BIOME_CONFIG.getBoolean(biome, "enabled", true)) {
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			Registry.register(BuiltinRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
 		}
 	}

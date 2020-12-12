@@ -4,6 +4,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndParticles;
+import ru.betterend.registry.EndSounds;
 
 public class BiomeAmberLand extends EndBiome {
 	public BiomeAmberLand() {
@@ -12,6 +14,8 @@ public class BiomeAmberLand extends EndBiome {
 				.setFogDensity(2.0F)
 				.setPlantsColor(219, 115, 38)
 				.setWaterAndFogColor(145, 108, 72)
+				.setMusic(EndSounds.MUSIC_AMBER_LAND)
+				.setParticles(EndParticles.AMBER_SPHERE, 0.001F)
 				.setSurface(EndBlocks.AMBER_MOSS)
 				.addFeature(EndFeatures.AMBER_ORE)
 				.addFeature(EndFeatures.END_LAKE_RARE)

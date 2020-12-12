@@ -22,6 +22,7 @@ public class EndParticles {
 	public static final DefaultParticleType SULPHUR_PARTICLE = register("sulphur_particle");
 	public static final DefaultParticleType GEYSER_PARTICLE = registerFar("geyser_particle");
 	public static final DefaultParticleType SNOWFLAKE = register("snowflake");
+	public static final DefaultParticleType AMBER_SPHERE = register("amber_sphere");
 	
 	public static void register() {
 		ParticleFactoryRegistry.getInstance().register(GLOWING_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
@@ -30,6 +31,7 @@ public class EndParticles {
 		ParticleFactoryRegistry.getInstance().register(SULPHUR_PARTICLE, ParticleSulphur.FactorySulphur::new);
 		ParticleFactoryRegistry.getInstance().register(GEYSER_PARTICLE, ParticleGeyser.FactoryGeyser::new);
 		ParticleFactoryRegistry.getInstance().register(SNOWFLAKE, ParticleSnowflake.FactorySnowflake::new);
+		ParticleFactoryRegistry.getInstance().register(AMBER_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
 	}
 	
 	private static DefaultParticleType register(String name) {

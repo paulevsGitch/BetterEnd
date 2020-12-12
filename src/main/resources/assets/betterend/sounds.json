@@ -104,6 +104,21 @@
 			}
 		]
 	},
+	"betterend.music.amber_land": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/bobby_richards-two_moons",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/astron-peaceful_mind",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",

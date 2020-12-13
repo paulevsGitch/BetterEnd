@@ -43,7 +43,7 @@ public class BlockTenaneaFlowers extends BlockVine implements IColorProvider {
 	@Override
 	public ItemColorProvider getItemProvider() {
 		return (stack, tintIndex) -> {
-			return MHelper.color(COLORS[0].getX(), COLORS[0].getY(), COLORS[0].getZ());
+			return MHelper.color(255, 255, 255);
 		};
 	}
 	

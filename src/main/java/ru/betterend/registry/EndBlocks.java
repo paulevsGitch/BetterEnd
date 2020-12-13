@@ -63,6 +63,7 @@ import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockTerrainPlant;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
+import ru.betterend.blocks.BlockVentBubbleColumn;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EnderBlock;
@@ -127,6 +128,7 @@ public class EndBlocks {
 	public static final Block PURPUR_PEDESTAL = registerBlock("purpur_pedestal", new PedestalVanilla(Blocks.PURPUR_BLOCK));
 	
 	public static final Block HYDROTHERMAL_VENT = registerBlock("hydrothermal_vent", new BlockHydrothermalVent());
+	public static final Block VENT_BUBBLE_COLUMN = registerBlockNI("vent_bubble_column", new BlockVentBubbleColumn());
 	
 	public static final Block DENSE_SNOW = registerBlock("dense_snow", new BlockDenseSnow());
 	public static final Block EMERALD_ICE = registerBlock("emerald_ice", new BlockEmeraldIce());

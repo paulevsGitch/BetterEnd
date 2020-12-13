@@ -5,7 +5,6 @@ import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.BubbleColumnBlock;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
@@ -178,8 +177,7 @@ public class GeyserFeature extends DefaultFeature {
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
 						while (state.isOf(Blocks.WATER)) {
-							BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
-							world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.VENT_BUBBLE_COLUMN.getDefaultState());
 							mut.setY(mut.getY() + 1);
 							state = world.getBlockState(mut);
 						}
@@ -207,8 +205,7 @@ public class GeyserFeature extends DefaultFeature {
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
 						while (state.isOf(Blocks.WATER)) {
-							BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
-							world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.VENT_BUBBLE_COLUMN.getDefaultState());
 							mut.setY(mut.getY() + 1);
 							state = world.getBlockState(mut);
 						}

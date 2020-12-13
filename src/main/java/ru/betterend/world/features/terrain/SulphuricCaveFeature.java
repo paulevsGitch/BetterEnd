@@ -7,7 +7,6 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.BubbleColumnBlock;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
@@ -128,8 +127,8 @@ public class SulphuricCaveFeature extends DefaultFeature {
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
 						while (state.isOf(Blocks.WATER)) {
-							BlocksHelper.setWithoutUpdate(world, mut, Blocks.BUBBLE_COLUMN.getDefaultState().with(BubbleColumnBlock.DRAG, false));
-							world.getBlockTickScheduler().schedule(mut, Blocks.BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.VENT_BUBBLE_COLUMN.getDefaultState());
+							world.getBlockTickScheduler().schedule(mut, EndBlocks.VENT_BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
 							mut.setY(mut.getY() + 1);
 							state = world.getBlockState(mut);
 						}
@@ -146,7 +145,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	private boolean isReplaceable(BlockState state) {
 		return state.isIn(EndTags.GEN_TERRAIN)
 				|| state.isOf(EndBlocks.HYDROTHERMAL_VENT)
-				|| state.isOf(Blocks.BUBBLE_COLUMN)
+				|| state.isOf(EndBlocks.VENT_BUBBLE_COLUMN)
 				|| state.isOf(EndBlocks.SULPHUR_CRYSTAL)
 				|| state.getMaterial().isReplaceable()
 				|| state.getMaterial().equals(Material.PLANT)

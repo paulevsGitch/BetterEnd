@@ -12,7 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.BubbleColumnBlock;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
@@ -41,6 +40,7 @@ import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
+import ru.betterend.util.BlocksHelper;
 
 public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEntityProvider, FluidFillable, Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -112,7 +112,11 @@ public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEnti
 
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		BubbleColumnBlock.update(world, pos.up(), false);
+		BlockPos up = pos.up();
+		if (world.getBlockState(up).isOf(Blocks.WATER)) {
+			BlocksHelper.setWithoutUpdate(world, up, EndBlocks.VENT_BUBBLE_COLUMN);
+			world.getBlockTickScheduler().schedule(up, EndBlocks.VENT_BUBBLE_COLUMN, 5);
+		}
 	}
 	
 	@Override

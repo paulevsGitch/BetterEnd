@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.entity.EntityType;
@@ -32,7 +31,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.item.EndArmorMaterial;

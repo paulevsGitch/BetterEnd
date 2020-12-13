@@ -1,7 +1,9 @@
 package ru.betterend.config;
 
 import java.util.function.BiFunction;
+
 import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.util.Identifier;
 import ru.betterend.config.ConfigKeeper.Entry;
 import ru.betterend.config.ConfigKeeper.FloatRange;

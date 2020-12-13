@@ -36,6 +36,7 @@ import ru.betterend.world.features.terrain.GeyserFeature;
 import ru.betterend.world.features.terrain.IceStarFeature;
 import ru.betterend.world.features.terrain.RoundCaveFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
+import ru.betterend.world.features.terrain.SulphurHillFeature;
 import ru.betterend.world.features.terrain.SulphuricCaveFeature;
 import ru.betterend.world.features.terrain.SulphuricLakeFeature;
 import ru.betterend.world.features.terrain.SurfaceVentFeature;
@@ -124,8 +125,8 @@ public class EndFeatures {
 	public static final EndFeature SULPHURIC_CAVE = EndFeature.makeCountRawFeature("sulphuric_cave", new SulphuricCaveFeature(), 2);
 	public static final EndFeature ICE_STAR = EndFeature.makeRawGenFeature("ice_star", new IceStarFeature(5, 15, 10, 25), 15);
 	public static final EndFeature ICE_STAR_SMALL = EndFeature.makeRawGenFeature("ice_star_small", new IceStarFeature(3, 5, 7, 12), 8);
-	public static final EndFeature ICE_STAR_GIANT = EndFeature.makeRawGenFeature("ice_star_giant", new IceStarFeature(15, 25, 20, 40), 512);
 	public static final EndFeature SURFACE_VENT = EndFeature.makeChansedFeature("surface_vent", new SurfaceVentFeature(), 4);
+	public static final EndFeature SULPHUR_HILL = EndFeature.makeChansedFeature("sulphur_hill", new SulphurHillFeature(), 8);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 6, 3, 0, 4, 96);

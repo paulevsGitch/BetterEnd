@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.structures.EndStructureFeature;
 import ru.betterend.world.structures.features.StructureEternalPortal;
+import ru.betterend.world.structures.features.StructureGiantIceStar;
 import ru.betterend.world.structures.features.StructureGiantMossyGlowshroom;
 import ru.betterend.world.structures.features.StructureMegaLake;
 import ru.betterend.world.structures.features.StructureMountain;
@@ -36,6 +37,7 @@ public class EndStructures {
 	public static final EndStructureFeature MOUNTAIN = new EndStructureFeature("mountain", new StructureMountain(), Feature.RAW_GENERATION, 3, 2);
 	public static final EndStructureFeature PAINTED_MOUNTAIN = new EndStructureFeature("painted_mountain", new StructurePaintedMountain(), Feature.RAW_GENERATION, 3, 2);
 	public static final EndStructureFeature ETERNAL_PORTAL = new EndStructureFeature("eternal_portal", new StructureEternalPortal(), Feature.SURFACE_STRUCTURES, 16, 6);
+	public static final EndStructureFeature GIANT_ICE_STAR = new EndStructureFeature("giant_ice_star", new StructureGiantIceStar(), Feature.SURFACE_STRUCTURES, 16, 8);
 	
 	public static void register() {}
 	

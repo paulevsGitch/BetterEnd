@@ -18,6 +18,7 @@ public class BiomeSulphurSprings extends EndBiome {
 				.setParticles(EndParticles.SULPHUR_PARTICLE, 0.001F)
 				.addFeature(EndFeatures.GEYSER)
 				.addFeature(EndFeatures.SURFACE_VENT)
+				//.addFeature(EndFeatures.SULPHUR_HILL)
 				.addFeature(EndFeatures.SULPHURIC_LAKE)
 				.addFeature(EndFeatures.SULPHURIC_CAVE)
 				.addFeature(EndFeatures.HYDRALUX)

@@ -18,11 +18,14 @@ import ru.betterend.world.features.DefaultFeature;
 public class SurfaceVentFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
+		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+		if (pos.getY() < 57) {
+			return false;
+		}
+		
 		Mutable mut = new Mutable();
 		int count = MHelper.randRange(15, 30, random);
 		BlockState vent = EndBlocks.HYDROTHERMAL_VENT.getDefaultState().with(BlockHydrothermalVent.WATERLOGGED, false);
-		
-		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		for (int i = 0; i < count; i++) {
 			mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 5, MHelper.floor(random.nextGaussian() * 2 + 0.5));
 			int dist = MHelper.floor(2 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);

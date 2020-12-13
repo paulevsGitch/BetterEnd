@@ -159,14 +159,18 @@ public class EndBiomes {
 	private static void loadFabricAPIBiomes() {
 		WeightedBiomePicker picker = InternalBiomeData.getEndBiomesMap().get(BiomeKeys.SMALL_END_ISLANDS);
 		LayerRandomnessSource random = new BELayerRandomSource();
-		for (int i = 0; i < 1000; i++) {
-			RegistryKey<Biome> key = picker.pickRandom(random);
-			FABRIC_VOID.add(key.getValue());
+		if (picker != null) {
+			for (int i = 0; i < 1000; i++) {
+				RegistryKey<Biome> key = picker.pickRandom(random);
+				FABRIC_VOID.add(key.getValue());
+			}
 		}
 		picker = InternalBiomeData.getEndBiomesMap().get(BiomeKeys.END_BARRENS);
-		for (int i = 0; i < 1000; i++) {
-			RegistryKey<Biome> key = picker.pickRandom(random);
-			FABRIC_VOID.add(key.getValue());
+		if (picker != null) {
+			for (int i = 0; i < 1000; i++) {
+				RegistryKey<Biome> key = picker.pickRandom(random);
+				FABRIC_VOID.add(key.getValue());
+			}
 		}
 		if (BetterEnd.isDevEnvironment()) {
 			System.out.println("Added void biomes from Fabric API:");

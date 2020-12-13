@@ -79,7 +79,7 @@ public class GeyserFeature extends DefaultFeature {
 				bowl = new SDFCoordModify().setFunction((vec) -> {
 					float dx = (float) noise1.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
 					float dz = (float) noise2.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
-					vec.add(dx, 0, dz);
+					vec.set(vec.getX() + dx, vec.getY(), vec.getZ() + dz);
 				}).setSource(bowl);
 				
 				SDF cut = new SDFFlatland().setBlock(Blocks.AIR);

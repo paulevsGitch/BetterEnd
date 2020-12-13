@@ -105,12 +105,12 @@ public class HelixTreeFeature extends DefaultFeature {
 				float ax = Math.abs(px);
 				float az = Math.abs(pz);
 				if (ax > az) {
-					start.add(0, 0, az > 0 ? 1 : -1);
-					end.add(0, 0, az > 0 ? 1 : -1);
+					start.set(start.getX(), start.getY(), start.getZ() + az > 0 ? 1 : -1);
+					end.set(end.getX(), end.getY(), end.getZ() + az > 0 ? 1 : -1);
 				}
 				else {
-					start.add(ax > 0 ? 1 : -1, 0, 0);
-					end.add(ax > 0 ? 1 : -1, 0, 0);
+					start.set(start.getX() + ax > 0 ? 1 : -1, start.getY(), start.getZ());
+					end.set(end.getX() + ax > 0 ? 1 : -1, end.getY(), end.getZ());
 				}
 				fillLine(start, end, world, leaf, leafStart, i / 2 - 1);
 			}

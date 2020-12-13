@@ -152,6 +152,13 @@ public class CraftingRecipes {
 		
 		GridRecipe.make("dense_emerald_ice", EndBlocks.DENSE_EMERALD_ICE).setShape("##", "##").addMaterial('#', EndBlocks.EMERALD_ICE).build();
 		GridRecipe.make("ancient_emerald_ice", EndBlocks.ANCIENT_EMERALD_ICE).setShape("###", "###", "###").addMaterial('#', EndBlocks.DENSE_EMERALD_ICE).build();
+		
+		GridRecipe.make("charnia_cyan_dye", Items.CYAN_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_CYAN).build();
+		GridRecipe.make("charnia_green_dye", Items.GREEN_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_GREEN).build();
+		GridRecipe.make("charnia_light_blue_dye", Items.LIGHT_BLUE_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_LIGHT_BLUE).build();
+		GridRecipe.make("charnia_orange_dye", Items.ORANGE_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_ORANGE).build();
+		GridRecipe.make("charnia_purple_dye", Items.PURPLE_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_PURPLE).build();
+		GridRecipe.make("charnia_red_dye", Items.RED_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_RED).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

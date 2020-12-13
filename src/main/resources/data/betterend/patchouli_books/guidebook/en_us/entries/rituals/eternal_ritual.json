@@ -1,0 +1,12 @@
+{
+    "name": "Eternal Ritual",
+    "icon": "betterend:eternal_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "A not so simple way to return to the Overworld."
+        }
+    ]
+}

@@ -1,6 +1,0 @@
-{
-    "name": "Smelting",
-    "description": "",
-    "icon": "betterend:end_stone_smelter",
-    "parent": "betterend:crafting"
-}

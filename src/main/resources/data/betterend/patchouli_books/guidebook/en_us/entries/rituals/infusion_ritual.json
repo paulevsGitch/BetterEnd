@@ -1,0 +1,64 @@
+{
+    "name": "Infusion Ritual",
+    "icon": "betterend:infusion_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Infuse items with the power of the elements."
+        },
+        {
+            "type": "crafting",
+            "title": "Preparing structure",
+            "text": "At first, you need to craft $(bold)Infusion Pedestal$() and 8 pedestals of $(bold)any$() other type.",
+            "recipe": "betterend:infusion_pedestal"
+        },
+        {
+            "type": "image",
+            "text": "Then you need to place Infusion Pedestal at the center and other pedestals around.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/infusion_ritual_start.png",
+                "betterend:textures/images/infusion_ritual/infusion_ritual_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "title": "Infusion",
+            "text": "When ritual structure is ready you can start infusion.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_structure.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Place main ingredient to the $(bold)Infusion Pedestal$() and catalists to others.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_ready.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "You can look recipes in the $(l:https://www.curseforge.com/minecraft/mc-mods/roughly-enough-items)REI$(/l).$(br2)To start the Infusion just place main ingredient last or right click the $(bold)Infusion Pedestal$()."
+        },
+        {
+            "type": "image",
+            "text": "Then you need to wait until the ritual is completed.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_started.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "And to take the result.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_finished.png"
+            ]
+        }
+    ]
+}

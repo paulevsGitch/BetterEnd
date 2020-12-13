@@ -17,10 +17,15 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.SchoolingFishEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
@@ -124,6 +129,18 @@ public class EntityCubozoa extends SchoolingFishEntity {
 		return SoundEvents.ENTITY_SALMON_FLOP;
 	}
 	
+	@Override
+	public void onPlayerCollision(PlayerEntity player) {
+		if (player instanceof ServerPlayerEntity && player.damage(DamageSource.mob(this), 0.5F)) {
+			if (!this.isSilent()) {
+				((ServerPlayerEntity) player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
+			}
+			if (random.nextBoolean()) {
+				player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 0));
+			}
+		}
+	}
+
 	static class CubozoaMoveControl extends MoveControl {
 		CubozoaMoveControl(EntityCubozoa owner) {
 			super(owner);

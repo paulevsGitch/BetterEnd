@@ -137,7 +137,7 @@ public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEnti
 				world.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
 			}
 			else {
-				world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
+				world.addParticle(ParticleTypes.SMOKE, x, y, z, 0, 0, 0);
 			}
 		}
 	}

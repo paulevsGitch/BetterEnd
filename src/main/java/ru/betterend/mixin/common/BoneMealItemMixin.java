@@ -34,9 +34,12 @@ public class BoneMealItemMixin {
 		World world = context.getWorld();
 		BlockPos blockPos = context.getBlockPos();
 		if (!world.isClient) {
+			BlockPos offseted = blockPos.offset(context.getSide());
+			boolean endBiome = world.getBiome(offseted).getCategory() == Category.THEEND;
+			
 			if (world.getBlockState(blockPos).isIn(EndTags.END_GROUND)) {
 				boolean consume = false;
-				if (world.getBlockState(blockPos).getBlock() == Blocks.END_STONE) {
+				if (world.getBlockState(blockPos).isOf(Blocks.END_STONE)) {
 					BlockState nylium = beGetNylium(world, blockPos);
 					if (nylium != null) {
 						BlocksHelper.setWithoutUpdate(world, blockPos, nylium);
@@ -44,8 +47,7 @@ public class BoneMealItemMixin {
 					}
 				}
 				else {
-					BlockPos offseted = blockPos.offset(context.getSide().getOpposite());
-					if (world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
+					if (!world.getFluidState(offseted).isEmpty() && endBiome) {
 						consume = beGrowWaterGrass(world, blockPos);
 					}
 					else {
@@ -60,17 +62,9 @@ public class BoneMealItemMixin {
 					info.cancel();
 				}
 			}
-			else {
-				BlockPos offseted = blockPos.offset(context.getSide().getOpposite());
-				if (world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
-					if (beGrowWaterGrass(world, blockPos)) {
-						if (!context.getPlayer().isCreative())
-							context.getStack().decrement(1);
-						world.syncWorldEvent(2005, blockPos, 0);
-						info.setReturnValue(ActionResult.SUCCESS);
-						info.cancel();
-					}
-				}
+			else if (!world.getFluidState(offseted).isEmpty() && endBiome) {
+				info.setReturnValue(ActionResult.FAIL);
+				info.cancel();
 			}
 		}
 	}

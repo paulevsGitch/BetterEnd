@@ -38,6 +38,7 @@ import ru.betterend.world.features.terrain.RoundCaveFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
 import ru.betterend.world.features.terrain.SulphuricCaveFeature;
 import ru.betterend.world.features.terrain.SulphuricLakeFeature;
+import ru.betterend.world.features.terrain.SurfaceVentFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
 import ru.betterend.world.features.trees.HelixTreeFeature;
 import ru.betterend.world.features.trees.LacugroveFeature;
@@ -124,6 +125,7 @@ public class EndFeatures {
 	public static final EndFeature ICE_STAR = EndFeature.makeRawGenFeature("ice_star", new IceStarFeature(5, 15, 10, 25), 15);
 	public static final EndFeature ICE_STAR_SMALL = EndFeature.makeRawGenFeature("ice_star_small", new IceStarFeature(3, 5, 7, 12), 8);
 	public static final EndFeature ICE_STAR_GIANT = EndFeature.makeRawGenFeature("ice_star_giant", new IceStarFeature(15, 25, 20, 40), 512);
+	public static final EndFeature SURFACE_VENT = EndFeature.makeChansedFeature("surface_vent", new SurfaceVentFeature(), 4);
 	
 	// Ores //
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 6, 3, 0, 4, 96);

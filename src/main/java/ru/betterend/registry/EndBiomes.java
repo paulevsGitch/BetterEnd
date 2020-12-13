@@ -163,6 +163,11 @@ public class EndBiomes {
 			RegistryKey<Biome> key = picker.pickRandom(random);
 			FABRIC_VOID.add(key.getValue());
 		}
+		picker = InternalBiomeData.getEndBiomesMap().get(BiomeKeys.END_BARRENS);
+		for (int i = 0; i < 1000; i++) {
+			RegistryKey<Biome> key = picker.pickRandom(random);
+			FABRIC_VOID.add(key.getValue());
+		}
 		if (BetterEnd.isDevEnvironment()) {
 			System.out.println("Added void biomes from Fabric API:");
 			FABRIC_VOID.forEach((id) -> {
@@ -329,6 +334,7 @@ public class EndBiomes {
 		float weight = biome.getGenChanceImmutable();
 		RegistryKey<Biome> key = BuiltinRegistries.BIOME.getKey(biome.getBiome()).get();
 		InternalBiomeData.addEndBiomeReplacement(BiomeKeys.END_HIGHLANDS, key, weight);
+		InternalBiomeData.addEndBiomeReplacement(BiomeKeys.END_MIDLANDS, key, weight);
 	}
 	
 	private static void addVoidBiomeToFabricApi(EndBiome biome) {

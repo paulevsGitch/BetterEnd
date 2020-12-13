@@ -1,6 +1,0 @@
-{
-    "name": "Smithing",
-    "description": "",
-    "icon": "minecraft:anvil",
-    "parent": "betterend:crafting"
-}

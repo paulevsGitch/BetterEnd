@@ -1,6 +1,0 @@
-{
-    "name": "Infusion Ritual",
-    "description": "Infuse items with the power of the elements.",
-    "icon": "betterend:infusion_pedestal",
-    "parent": "betterend:rituals"
-}

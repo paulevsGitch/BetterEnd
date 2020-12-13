@@ -17,9 +17,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome.Category;
+import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
+import ru.betterend.world.biome.EndBiome;
 
 @Mixin(BoneMealItem.class)
 public class BoneMealItemMixin {
@@ -41,7 +44,13 @@ public class BoneMealItemMixin {
 					}
 				}
 				else {
-					consume = beGrowGrass(world, blockPos);
+					BlockPos offseted = blockPos.offset(context.getSide().getOpposite());
+					if (!world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
+						consume = beGrowWaterGrass(world, blockPos);
+					}
+					else {
+						consume = beGrowGrass(world, blockPos);
+					}
 				}
 				if (consume) {
 					if (!context.getPlayer().isCreative())
@@ -49,6 +58,18 @@ public class BoneMealItemMixin {
 					world.syncWorldEvent(2005, blockPos, 0);
 					info.setReturnValue(ActionResult.SUCCESS);
 					info.cancel();
+				}
+			}
+			else {
+				BlockPos offseted = blockPos.offset(context.getSide().getOpposite());
+				if (!world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
+					if (beGrowWaterGrass(world, blockPos)) {
+						if (!context.getPlayer().isCreative())
+							context.getStack().decrement(1);
+						world.syncWorldEvent(2005, blockPos, 0);
+						info.setReturnValue(ActionResult.SUCCESS);
+						info.cancel();
+					}
 				}
 			}
 		}
@@ -68,6 +89,31 @@ public class BoneMealItemMixin {
 				BlockPos down = POS.down();
 				if (world.isAir(POS) && !world.isAir(down)) {
 					BlockState grass = beGetGrassState(world, down);
+					if (grass != null) {
+						BlocksHelper.setWithoutUpdate(world, POS, grass);
+						result = true;
+					}
+					break;
+				}
+			}
+		}
+		return result;
+	}
+	
+	private boolean beGrowWaterGrass(World world, BlockPos pos) {
+		int y1 = pos.getY() + 3;
+		int y2 = pos.getY() - 3;
+		boolean result = false;
+		for (int i = 0; i < 64; i++) {
+			int x = (int) (pos.getX() + world.random.nextGaussian() * 2);
+			int z = (int) (pos.getZ() + world.random.nextGaussian() * 2);
+			POS.setX(x);
+			POS.setZ(z);
+			for (int y = y1; y >= y2; y--) {
+				POS.setY(y);
+				BlockPos down = POS.down();
+				if (world.getBlockState(POS).isOf(Blocks.WATER) && world.getBlockState(down).isIn(EndTags.END_GROUND)) {
+					BlockState grass = beGetWaterGrassState(world, down);
 					if (grass != null) {
 						BlocksHelper.setWithoutUpdate(world, POS, grass);
 						result = true;
@@ -99,6 +145,23 @@ public class BoneMealItemMixin {
 		}
 		else if (block == EndBlocks.PINK_MOSS) {
 			return EndBlocks.BUSHY_GRASS.getDefaultState();
+		}
+		return null;
+	}
+	
+	private BlockState beGetWaterGrassState(World world, BlockPos pos) {
+		EndBiome biome = EndBiomes.getFromBiome(world.getBiome(pos));
+		if (world.random.nextInt(16) == 0) {
+			return EndBlocks.CHARNIA_RED.getDefaultState();
+		}
+		else if (biome == EndBiomes.FOGGY_MUSHROOMLAND || biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
+			return world.random.nextBoolean() ? EndBlocks.CHARNIA_LIGHT_BLUE.getDefaultState() : EndBlocks.CHARNIA_LIGHT_BLUE.getDefaultState();
+		}
+		else if (biome == EndBiomes.AMBER_LAND) {
+			return world.random.nextBoolean() ? EndBlocks.CHARNIA_ORANGE.getDefaultState() : EndBlocks.CHARNIA_RED.getDefaultState();
+		}
+		else if (biome == EndBiomes.CHORUS_FOREST || biome == EndBiomes.SHADOW_FOREST) {
+			return EndBlocks.CHARNIA_PURPLE.getDefaultState();
 		}
 		return null;
 	}

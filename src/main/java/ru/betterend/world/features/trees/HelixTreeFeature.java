@@ -3,6 +3,7 @@ package ru.betterend.world.features.trees;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.Vector3f;
@@ -19,6 +20,7 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
+import ru.betterend.util.sdf.PosInfo;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFRotation;
 import ru.betterend.util.sdf.operator.SDFScale;
@@ -28,6 +30,8 @@ import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.world.features.DefaultFeature;
 
 public class HelixTreeFeature extends DefaultFeature {
+	private static final Function<PosInfo, BlockState> POST;
+	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
@@ -60,7 +64,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		dx = 30 * scale;
 		float dy1 = -20 * scale;
 		float dy2 = 100 * scale;
-		sdf.fillArea(world, pos, new Box(pos.add(-dx, dy1, -dx), pos.add(dx, dy2, dx)));
+		sdf.setPostProcess(POST).fillArea(world, pos, new Box(pos.add(-dx, dy1, -dx), pos.add(dx, dy2, dx)));
 		SplineHelper.scale(spline, scale);
 		SplineHelper.fillSplineForce(spline, world, EndBlocks.HELIX_TREE.bark.getDefaultState(), pos, (state) -> {
 			return state.getMaterial().isReplaceable();
@@ -71,7 +75,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		});
 		SplineHelper.scale(spline2, scale);
 		BlockPos leafStart = pos.add(lastPoint.getX() + 0.5, lastPoint.getY() + 0.5, lastPoint.getZ() + 0.5);
-		SplineHelper.fillSplineForce(spline2, world, EndBlocks.HELIX_TREE.bark.getDefaultState(), leafStart, (state) -> {
+		SplineHelper.fillSplineForce(spline2, world, EndBlocks.HELIX_TREE.log.getDefaultState(), leafStart, (state) -> {
 			return state.getMaterial().isReplaceable();
 		});
 		
@@ -163,5 +167,14 @@ public class HelixTreeFeature extends DefaultFeature {
 		if (world.getBlockState(bPos).getMaterial().isReplaceable()) {
 			BlocksHelper.setWithoutUpdate(world, bPos, state.with(BlockHelixTreeLeaves.COLOR, 7));
 		}
+	}
+	
+	static {
+		POST = (info) -> {
+			if (EndBlocks.HELIX_TREE.isTreeLog(info.getStateUp()) && EndBlocks.HELIX_TREE.isTreeLog(info.getStateDown())) {
+				return EndBlocks.HELIX_TREE.log.getDefaultState();
+			}
+			return info.getState();
+		};
 	}
 }

@@ -20,6 +20,7 @@ import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.util.BlocksHelper;
 
 public class BlockMengerSpongeWet extends BlockBaseNotFull implements IRenderTypeable {
 	public BlockMengerSpongeWet() {
@@ -76,6 +77,12 @@ public class BlockMengerSpongeWet extends BlockBaseNotFull implements IRenderTyp
 				world.addParticle(ParticleTypes.DRIPPING_WATER, x, y, z, 0, 0, 0);
 			}
 		}
+	}
+	
+	@Override
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		super.onBreak(world, pos, state, player);
+		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
 	}
 	
 	@Override

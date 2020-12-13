@@ -32,6 +32,7 @@ public class BiomeShadowForest extends EndBiome {
 				.addFeature(EndFeatures.TAIL_MOSS)
 				.addFeature(EndFeatures.TAIL_MOSS_WOOD)
 				.addFeature(EndFeatures.CHARNIA_PURPLE)
+				.addFeature(EndFeatures.CHARNIA_RED_RARE)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
 				.addMobSpawn(EntityType.ENDERMAN, 40, 1, 4)

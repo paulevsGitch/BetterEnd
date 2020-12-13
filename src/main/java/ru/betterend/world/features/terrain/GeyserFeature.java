@@ -18,6 +18,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockHydrothermalVent;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
@@ -212,6 +213,13 @@ public class GeyserFeature extends DefaultFeature {
 					}
 				}
 			}
+			
+			EndFeatures.SULPHURIC_LAKE.getFeature().generate(world, chunkGenerator, random, pos, null);
+			
+			double distance = radius1 * 1.7;
+			BlockPos start = pos.add(-distance, -halfHeight - 15 - distance, -distance);
+			BlockPos end = pos.add(distance, -halfHeight - 5 + distance, distance);
+			BlocksHelper.fixBlocks(world, start, end);
 			
 			return true;
 		}

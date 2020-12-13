@@ -202,6 +202,7 @@ public class EndBlocks {
 	public static final Block CHARNIA_ORANGE = registerBlock("charnia_orange", new BlockCharnia());
 	public static final Block CHARNIA_LIGHT_BLUE = registerBlock("charnia_light_blue", new BlockCharnia());
 	public static final Block CHARNIA_CYAN = registerBlock("charnia_cyan", new BlockCharnia());
+	public static final Block CHARNIA_GREEN = registerBlock("charnia_green", new BlockCharnia());
 	
 	public static final Block END_LILY = registerBlockNI("end_lily", new BlockEndLily());
 	public static final Block END_LILY_SEED = registerBlock("end_lily_seed", new BlockEndLilySeed());

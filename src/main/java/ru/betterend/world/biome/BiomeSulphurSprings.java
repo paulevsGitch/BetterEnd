@@ -20,8 +20,9 @@ public class BiomeSulphurSprings extends EndBiome {
 				.addFeature(EndFeatures.SULPHURIC_LAKE)
 				.addFeature(EndFeatures.SULPHURIC_CAVE)
 				.addFeature(EndFeatures.HYDRALUX)
+				.addFeature(EndFeatures.CHARNIA_GREEN)
 				.addFeature(EndFeatures.CHARNIA_ORANGE)
-				.addFeature(EndFeatures.CHARNIA_RED)
+				.addFeature(EndFeatures.CHARNIA_RED_RARE)
 				.addMobSpawn(EndEntities.END_FISH, 50, 3, 8)
 				.addMobSpawn(EndEntities.CUBOZOA, 50, 3, 8)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));

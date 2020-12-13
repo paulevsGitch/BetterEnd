@@ -76,10 +76,12 @@ public class BlockVentBubbleColumn extends BlockBaseNotFull implements FluidDrai
 
 	@Environment(EnvType.CLIENT)
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-		double px = pos.getX() + random.nextDouble();
-		double py = pos.getY() + random.nextDouble();
-		double pz = pos.getZ() + random.nextDouble();
-		world.addImportantParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
+		if (random.nextInt(4) == 0) {
+			double px = pos.getX() + random.nextDouble();
+			double py = pos.getY() + random.nextDouble();
+			double pz = pos.getZ() + random.nextDouble();
+			world.addImportantParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
+		}
 		if (random.nextInt(200) == 0) {
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
 		}

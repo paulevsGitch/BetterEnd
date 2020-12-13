@@ -470,5 +470,8 @@
 	"block.betterend.dense_snow": "Dense Snow",
 	"block.betterend.emerald_ice": "Emerald Ice",
 	
-	"block.betterend.bulb_moss": "Bulb Moss"
+	"block.betterend.bulb_moss": "Bulb Moss",
+	
+	"block.betterend.charnia_green": "Charnia Green",
+	"block.betterend.vent_bubble_column": "Vent Bubble Column"
 }

@@ -45,7 +45,7 @@ public class BoneMealItemMixin {
 				}
 				else {
 					BlockPos offseted = blockPos.offset(context.getSide().getOpposite());
-					if (!world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
+					if (world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
 						consume = beGrowWaterGrass(world, blockPos);
 					}
 					else {
@@ -62,7 +62,7 @@ public class BoneMealItemMixin {
 			}
 			else {
 				BlockPos offseted = blockPos.offset(context.getSide().getOpposite());
-				if (!world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
+				if (world.getBlockState(offseted).isOf(Blocks.WATER) && world.getBiome(offseted).getCategory() == Category.THEEND) {
 					if (beGrowWaterGrass(world, blockPos)) {
 						if (!context.getPlayer().isCreative())
 							context.getStack().decrement(1);

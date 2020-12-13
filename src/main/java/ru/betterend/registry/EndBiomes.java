@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.biome.InternalBiomeData;
+import net.fabricmc.fabric.impl.biome.WeightedBiomePicker;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
@@ -24,6 +25,7 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
@@ -40,6 +42,7 @@ import ru.betterend.world.biome.BiomePaintedMountains;
 import ru.betterend.world.biome.BiomeShadowForest;
 import ru.betterend.world.biome.BiomeSulphurSprings;
 import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.generator.BELayerRandomSource;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
 
@@ -89,6 +92,10 @@ public class EndBiomes {
 		
 		LAND_BIOMES.clearMutables();
 		VOID_BIOMES.clearMutables();
+		
+		if (FABRIC_VOID.isEmpty()) {
+			loadFabricAPIBiomes();
+		}
 		
 		Map<String, JsonObject> configs = Maps.newHashMap();
 		
@@ -147,6 +154,22 @@ public class EndBiomes {
 		});
 		
 		CLIENT.clear();
+	}
+	
+	private static void loadFabricAPIBiomes() {
+		WeightedBiomePicker picker = InternalBiomeData.getEndBiomesMap().get(BiomeKeys.SMALL_END_ISLANDS);
+		LayerRandomnessSource random = new BELayerRandomSource();
+		for (int i = 0; i < 1000; i++) {
+			RegistryKey<Biome> key = picker.pickRandom(random);
+			FABRIC_VOID.add(key.getValue());
+		}
+		if (BetterEnd.isDevEnvironment()) {
+			System.out.println("Added void biomes from Fabric API:");
+			FABRIC_VOID.forEach((id) -> {
+				System.out.println(id);
+			});
+			System.out.println("==================================");
+		}
 	}
 	
 	private static JsonObject loadJsonConfig(String namespace) {

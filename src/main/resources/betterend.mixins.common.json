@@ -12,7 +12,6 @@
 		"ServerPlayerEntityMixin",
 		"ChorusPlantFeatureMixin",
 		"BubbleColumnBlockMixin",
-		"InternalBiomeDataMixin",
 		"ChorusFlowerBlockMixin",
 		"LandPathNodeMakerMixin",
 		"ChorusPlantBlockMixin",

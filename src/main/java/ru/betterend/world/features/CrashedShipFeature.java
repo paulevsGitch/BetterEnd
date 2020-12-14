@@ -61,8 +61,6 @@ public class CrashedShipFeature extends NBTStructureFeature {
 			return false;
 		}
 		
-		System.out.println(center);
-		
 		Structure structure = getStructure(world, center, random);
 		BlockRotation rotation = getRotation(world, center, random);
 		BlockMirror mirror = getMirror(world, center, random);

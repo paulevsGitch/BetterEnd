@@ -119,6 +119,21 @@
 			}
 		]
 	},
+	"betterend.music.sulphur_springs": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/godmode-melancholia",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/asher_fulero-elegy",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",
@@ -170,6 +185,16 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/blossoming_spires",
+				"stream": false
+			}
+		]
+	},
+	"betterend.ambient.sulphur_springs": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/sulphur_springs",
+				"volume": 0.3,
 				"stream": false
 			}
 		]

@@ -14,6 +14,7 @@ public class EndSounds {
 	public static final SoundEvent MUSIC_SHADOW_FOREST = register("music", "shadow_forest");
 	public static final SoundEvent MUSIC_BLOSSOMING_SPIRES = register("music", "blossoming_spires");
 	public static final SoundEvent MUSIC_AMBER_LAND = register("music", "amber_land");
+	public static final SoundEvent MUSIC_SULPHUR_SPRINGS = register("music", "sulphur_springs");
 	
 	// Ambient
 	public static final SoundEvent AMBIENT_FOGGY_MUSHROOMLAND = register("ambient", "foggy_mushroomland");
@@ -22,6 +23,7 @@ public class EndSounds {
 	public static final SoundEvent AMBIENT_DUST_WASTELANDS = register("ambient", "dust_wastelands");
 	public static final SoundEvent AMBIENT_MEGALAKE_GROVE = register("ambient", "megalake_grove");
 	public static final SoundEvent AMBIENT_BLOSSOMING_SPIRES = register("ambient", "blossoming_spires");
+	public static final SoundEvent AMBIENT_SULPHUR_SPRINGS = register("ambient", "sulphur_springs");
 	
 	// Entity
 	public static final SoundEvent ENTITY_DRAGONFLY = register("entity", "dragonfly");

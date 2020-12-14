@@ -19,6 +19,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -39,6 +40,7 @@ import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.BlocksHelper;
@@ -159,17 +161,38 @@ public class BlockRespawnObelisk extends BlockBase implements IColorProvider, IR
 		ItemStack itemStack = player.getStackInHand(hand);
 		boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 5;
 		if (hand != Hand.MAIN_HAND || !canActivate) {
-			if (!world.isClient && !(itemStack.getItem() instanceof BlockItem)) {
+			if (!world.isClient && !(itemStack.getItem() instanceof BlockItem) && !player.isCreative()) {
 				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
 				serverPlayerEntity.sendMessage(new TranslatableText("message.betterend.fail_spawn"), true);
 			}
 			return ActionResult.FAIL;
 		}
-		if (!world.isClient) {
+		else if (!world.isClient) {
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
 			serverPlayerEntity.setSpawnPoint(world.getRegistryKey(), pos, 0.0F, false, false);
 			serverPlayerEntity.sendMessage(new TranslatableText("message.betterend.set_spawn"), true);
-            world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			double px = pos.getX() + 0.5;
+			double py = pos.getY() + 0.5;
+			double pz = pos.getZ() + 0.5;
+			InfusionParticleType particle = new InfusionParticleType(new ItemStack(EndItems.AMBER_GEM));
+			if (world instanceof ServerWorld) {
+				double py1 = py;
+				double py2 = py - 0.2;
+				if (state.get(SHAPE) == TripleShape.BOTTOM) {
+					py1 += 1;
+					py2 += 2;
+				}
+				else if (state.get(SHAPE) == TripleShape.MIDDLE) {
+					py1 += 0;
+					py2 += 1;
+				}
+				else {
+					py1 -= 2;
+				}
+				((ServerWorld) world).spawnParticles(particle, px, py1, pz, 20, 0.14, 0.5, 0.14, 0.1);
+				((ServerWorld) world).spawnParticles(particle, px, py2, pz, 20, 0.14, 0.3, 0.14, 0.1);
+			}
+            world.playSound(null, px, py, py, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundCategory.BLOCKS, 1F, 1F);
             if (!player.isCreative()) {
             	itemStack.decrement(6);
             }

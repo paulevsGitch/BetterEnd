@@ -27,7 +27,7 @@
             "type": "image",
             "title": "Infusion",
             "text": "When ritual structure is ready you can start infusion.",
-            "border": true,
+            "border": false,
             "images": [
                 "betterend:textures/images/infusion_ritual/ritual_structure.png"
             ]
@@ -35,7 +35,7 @@
         {
             "type": "image",
             "text": "Place main ingredient to the $(bold)Infusion Pedestal$() and catalists to others.",
-            "border": true,
+            "border": false,
             "images": [
                 "betterend:textures/images/infusion_ritual/ritual_ready.png"
             ]
@@ -47,15 +47,15 @@
         {
             "type": "image",
             "text": "Then you need to wait until the ritual is completed.",
-            "border": true,
+            "border": false,
             "images": [
                 "betterend:textures/images/infusion_ritual/ritual_started.png"
             ]
         },
         {
             "type": "image",
-            "text": "And to take the result.",
-            "border": true,
+            "text": "And take the result.",
+            "border": false,
             "images": [
                 "betterend:textures/images/infusion_ritual/ritual_finished.png"
             ]

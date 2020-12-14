@@ -1,9 +1,13 @@
 package ru.betterend.entity;
 
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.FollowTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
@@ -19,6 +23,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.util.MHelper;
@@ -104,6 +110,15 @@ public class EntityShadowWalker extends HostileEntity {
 			}
 		}
 		return attack;
+	}
+	
+	public static boolean canSpawn(EntityType<EntityShadowWalker> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+		if (HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random)) {
+			Box box = new Box(pos).expand(16);
+			List<EntityShadowWalker> entities = world.getEntitiesByClass(EntityShadowWalker.class, box, (entity) -> { return true; });
+			return entities.size() < 6;
+		}
+		return false;
 	}
 	
 	private final class AttackGoal extends MeleeAttackGoal {

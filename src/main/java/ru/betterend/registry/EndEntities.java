@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityType.EntityFactory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer.Builder;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.EntityCubozoa;
@@ -30,7 +29,7 @@ public class EndEntities {
 	public static void register() {
 		SpawnHelper.restrictionLand(END_SLIME, EntityEndSlime::canSpawn);
 		SpawnHelper.restrictionWater(END_FISH, EntityEndFish::canSpawn);
-		SpawnHelper.restrictionLand(SHADOW_WALKER, HostileEntity::canSpawnInDark);
+		SpawnHelper.restrictionLand(SHADOW_WALKER, EntityShadowWalker::canSpawn);
 		SpawnHelper.restrictionWater(CUBOZOA, EntityCubozoa::canSpawn);
 	}
 	

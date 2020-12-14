@@ -21,7 +21,7 @@ public class HostileEntityMixin {
 	@Inject(method = "canSpawnInDark", at = @At(value = "RETURN"), cancellable = true)
 	private static void endermenCheck(EntityType<? extends HostileEntity> type, ServerWorldAccess serverWorldAccess, SpawnReason spawnReason, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> info) {
 		boolean canSpawn = info.getReturnValue();
-		if (canSpawn && spawnReason == SpawnReason.NATURAL) {
+		if (canSpawn && spawnReason == SpawnReason.NATURAL && type == EntityType.ENDERMAN) {
 			Box box = new Box(pos).expand(16);
 			List<EndermanEntity> entities = serverWorldAccess.getEntitiesByClass(EndermanEntity.class, box, (entity) -> { return true; });
 			info.setReturnValue(entities.size() < 6);

@@ -18,6 +18,7 @@ import net.minecraft.block.ChorusFlowerBlock;
 import net.minecraft.block.ChorusPlantBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -85,5 +86,15 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
 		return state.get(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;
+	}
+
+	@Inject(method = "die", at = @At("HEAD"), cancellable = true)
+	private void beOnDie(World world, BlockPos pos, CallbackInfo info) {
+		BlockState down = world.getBlockState(pos.down());
+		if (down.isOf(Blocks.CHORUS_PLANT) || down.isIn(EndTags.GEN_TERRAIN)) {
+			world.setBlockState(pos, this.getDefaultState().with(Properties.AGE_5, 5), 2);
+			world.syncWorldEvent(1034, pos, 0);
+		}
+		info.cancel();
 	}
 }

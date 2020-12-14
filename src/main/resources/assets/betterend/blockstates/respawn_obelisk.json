@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterend:block/respawn_obelisk_top" },
+		"shape=middle": { "model": "betterend:block/respawn_obelisk_middle" },
+		"shape=bottom": { "model": "betterend:block/respawn_obelisk_bottom" }
+	}
+}

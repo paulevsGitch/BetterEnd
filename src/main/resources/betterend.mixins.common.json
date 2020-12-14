@@ -24,6 +24,7 @@
 		"HostileEntityMixin",
 		"LivingEntityMixin",
 		"BoneMealItemMixin",
+		"PlayerEntityMixin",
 		"SlimeEntityMixin",
 		"BrewingAccessor",
 		"EntityMixin"

@@ -54,6 +54,7 @@ import ru.betterend.blocks.BlockMurkweed;
 import ru.betterend.blocks.BlockNeedlegrass;
 import ru.betterend.blocks.BlockPath;
 import ru.betterend.blocks.BlockPythadendronSapling;
+import ru.betterend.blocks.BlockRespawnObelisk;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
 import ru.betterend.blocks.BlockSulphurCrystal;
@@ -244,6 +245,8 @@ public class EndBlocks {
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new BlockAmber());
+	
+	public static final Block RESPAWN_OBELISK = registerBlock("respawn_obelisk", new BlockRespawnObelisk());
 	
 	// Lanterns
 	public static final Block ANDESITE_LANTERN = registerBlock("andesite_lantern", new BlockStoneLantern(Blocks.ANDESITE));

@@ -1,0 +1,47 @@
+{
+	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+	"textures": {
+		"particle": "betterend:block/amber_block",
+		"texture": "betterend:block/respawn_obelisk_top_and_side",
+		"crystal": "betterend:block/aurora_crystal"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "Box1",
+			"from": [ 2, 12, 2 ],
+			"to": [ 14, 14, 14 ],
+			"faces": {
+				"down": { "uv": [ 2, 2, 14, 14 ], "texture": "#texture" },
+				"up": { "uv": [ 2, 2, 14, 14 ], "texture": "#texture" },
+				"north": { "uv": [ 2, 0, 14, 2 ], "texture": "#texture" },
+				"south": { "uv": [ 2, 0, 14, 2 ], "texture": "#texture" },
+				"west": { "uv": [ 2, 0, 14, 2 ], "texture": "#texture" },
+				"east": { "uv": [ 2, 0, 14, 2 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "Box1",
+			"from": [ 3, 0, 3 ],
+			"to": [ 13, 12, 13 ],
+			"shade": false,
+			"faces": {
+				"north": { "uv": [ 3, 4, 13, 16 ], "texture": "#crystal", "tintindex": 0 },
+				"south": { "uv": [ 3, 4, 13, 16 ], "texture": "#crystal", "tintindex": 0 },
+				"west": { "uv": [ 3, 4, 13, 16 ], "texture": "#crystal", "tintindex": 0 },
+				"east": { "uv": [ 3, 4, 13, 16 ], "texture": "#crystal", "tintindex": 0 }
+			}
+		},
+		{
+			"__comment": "Box1",
+			"from": [ 3, 14, 3 ],
+			"to": [ 13, 16, 13 ],
+			"faces": {
+				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#texture", "cullface": "up" },
+				"north": { "uv": [ 3, 0, 13, 2 ], "texture": "#texture" },
+				"south": { "uv": [ 3, 0, 13, 2 ], "texture": "#texture" },
+				"west": { "uv": [ 3, 0, 13, 2 ], "texture": "#texture" },
+				"east": { "uv": [ 3, 0, 13, 2 ], "texture": "#texture" }
+			}
+		}
+	]
+}

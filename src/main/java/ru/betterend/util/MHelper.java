@@ -201,7 +201,7 @@ public class MHelper {
 			}
 		}
 
-		return ALPHA | red << 16 | green << 8 | blue << 0;
+		return ALPHA | red << 16 | green << 8 | blue;
 	}
 
 	public static float[] fromRGBtoHSB(int r, int g, int b) {

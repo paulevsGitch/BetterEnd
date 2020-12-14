@@ -1,5 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
@@ -7,8 +11,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.interfaces.IColorProvider;
+import ru.betterend.registry.EndParticles;
 import ru.betterend.util.MHelper;
 
 public class BlockTenaneaFlowers extends BlockVine implements IColorProvider {
@@ -50,6 +56,17 @@ public class BlockTenaneaFlowers extends BlockVine implements IColorProvider {
 	@Override
 	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
+	}
+	
+	@Environment(EnvType.CLIENT)
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+		super.randomDisplayTick(state, world, pos, random);
+		if (random.nextInt(32) == 0) {
+			double x = (double) pos.getX() + random.nextGaussian() + 0.5;
+			double z = (double) pos.getZ() + random.nextGaussian() + 0.5;
+			double y = (double) pos.getY() + random.nextDouble();
+			world.addParticle(EndParticles.TENANEA_PETAL, x, y, z, 0, 0, 0);
+		}
 	}
 	
 	static {

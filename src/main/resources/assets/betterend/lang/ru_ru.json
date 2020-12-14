@@ -475,5 +475,8 @@
 	"block.betterend.bulb_moss": "Луковичный мох",
 	
 	"block.betterend.charnia_green": "Зелёная чарния",
-	"block.betterend.vent_bubble_column": "Колонна пузырьков гейзера"
+	"block.betterend.vent_bubble_column": "Колонна пузырьков гейзера",
+	"block.betterend.respawn_obelisk": "Обелиск возрождения",
+	"message.betterend.set_spawn": "\u00A7b\u00A7lВаша точка возрождения установлена здесь",
+	"message.betterend.fail_spawn": "\u00A7c\u00A7lДержите 4 штуки огранённого янтаря для установки точки возрождения"
 }

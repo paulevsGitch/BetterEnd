@@ -15,6 +15,7 @@ import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -158,11 +159,15 @@ public class BlockRespawnObelisk extends BlockBase implements IColorProvider, IR
 		ItemStack itemStack = player.getStackInHand(hand);
 		boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 3;
 		if (hand != Hand.MAIN_HAND || !canActivate) {
+			if (!world.isClient && !(itemStack.getItem() instanceof BlockItem)) {
+				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
+				serverPlayerEntity.sendMessage(new TranslatableText("message.betterend.fail_spawn"), true);
+			}
 			return ActionResult.FAIL;
 		}
 		if (!world.isClient) {
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-			serverPlayerEntity.setSpawnPoint(world.getRegistryKey(), pos, 0.0F, false, true);
+			serverPlayerEntity.setSpawnPoint(world.getRegistryKey(), pos, 0.0F, false, false);
 			serverPlayerEntity.sendMessage(new TranslatableText("message.betterend.set_spawn"), true);
             world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (!player.isCreative()) {

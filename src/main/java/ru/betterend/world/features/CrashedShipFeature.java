@@ -27,9 +27,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 
 	@Override
 	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random) {
-		int cx = pos.getX() >> 4;
-		int cz = pos.getZ() >> 4;
-		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.down()).isIn(EndTags.GEN_TERRAIN);
+		return pos.getY() > 58 && world.getBlockState(pos.down()).isIn(EndTags.GEN_TERRAIN);
 	}
 
 	@Override
@@ -63,6 +61,8 @@ public class CrashedShipFeature extends NBTStructureFeature {
 			return false;
 		}
 		
+		System.out.println(center);
+		
 		Structure structure = getStructure(world, center, random);
 		BlockRotation rotation = getRotation(world, center, random);
 		BlockMirror mirror = getMirror(world, center, random);
@@ -70,6 +70,9 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		center = center.add(0, getYOffset(structure, world, center, random) + 0.5, 0);
 		
 		BlockBox bounds = makeBox(center);
+		BlockBox structB = StructureHelper.getStructureBounds(center, structure, rotation, mirror);
+		bounds = StructureHelper.intersectBoxes(bounds, structB);
+		
 		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		addStructureData(placementData);
 		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);

@@ -85,6 +85,18 @@ public class StructureHelper {
 		return new BlockBox(min.add(pos), max.add(pos));
 	}
 	
+	public static BlockBox intersectBoxes(BlockBox box1, BlockBox box2) {
+		int x1 = MHelper.max(box1.minX, box2.minX);
+		int y1 = MHelper.max(box1.minY, box2.minY);
+		int z1 = MHelper.max(box1.minZ, box2.minZ);
+		
+		int x2 = MHelper.min(box1.maxX, box2.maxX);
+		int y2 = MHelper.min(box1.maxY, box2.maxY);
+		int z2 = MHelper.min(box1.maxZ, box2.maxZ);
+		
+		return BlockBox.create(x1, y1, z1, x2, y2, z2);
+	}
+	
 	public static void erode(StructureWorldAccess world, BlockBox bounds, int iterations, Random random) {
 		Mutable mut = new Mutable();
 		boolean canDestruct = true;
@@ -209,7 +221,7 @@ public class StructureHelper {
 								}
 							}
 						}
-						else if (random.nextInt(8) == 0 && !world.getBlockState(mut.up()).isOf(EndBlocks.ETERNAL_PEDESTAL)) {
+						else if (random.nextInt(8) == 0) {
 							BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
 						}
 					}
@@ -307,7 +319,9 @@ public class StructureHelper {
 				|| state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL)
 				|| state.isIn(BlockTags.LOGS)
 				|| state.isIn(BlockTags.LEAVES)
-				|| state.getMaterial().equals(Material.PLANT);
+				|| state.getMaterial().equals(Material.PLANT)
+				|| state.getMaterial().equals(Material.LEAVES)
+				|| state.getMaterial().equals(Material.WOOD);
 	}
 	
 	private static void shuffle(Random random) {

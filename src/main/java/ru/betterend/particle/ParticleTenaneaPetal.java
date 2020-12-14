@@ -26,7 +26,6 @@ public class ParticleTenaneaPetal extends SpriteBillboardParticle {
 	private double nextVX;
 	private double nextVY;
 	private double nextVZ;
-	private float angleSpeed;
 	
 	protected ParticleTenaneaPetal(ClientWorld world, double x, double y, double z, double r, double g, double b, SpriteProvider sprites) {
 		super(world, x, y, z, r, g, b);
@@ -44,7 +43,6 @@ public class ParticleTenaneaPetal extends SpriteBillboardParticle {
 		this.maxAge = MHelper.randRange(120, 200, random);
 		this.scale = MHelper.randRange(0.05F, 0.15F, random);
 		this.setColorAlpha(0);
-		this.angle = 0.1F;//random.nextFloat() * MHelper.PI2;
 		
 		preVX = 0;
 		preVY = 0;
@@ -53,11 +51,6 @@ public class ParticleTenaneaPetal extends SpriteBillboardParticle {
 		nextVX = random.nextGaussian() * 0.02;
 		nextVY = -random.nextDouble() * 0.02 - 0.02;
 		nextVZ = random.nextGaussian() * 0.02;
-		
-		angleSpeed = random.nextFloat() * 0.0001F + 0.0001F;
-		if (random.nextBoolean()) {
-			angleSpeed = -angleSpeed;
-		}
 	}
 
 	@Override
@@ -92,7 +85,6 @@ public class ParticleTenaneaPetal extends SpriteBillboardParticle {
 		this.velocityX = MathHelper.lerp(delta, preVX, nextVX);
 		this.velocityY = MathHelper.lerp(delta, preVY, nextVY);
 		this.velocityZ = MathHelper.lerp(delta, preVZ, nextVZ);
-		//this.angle += angleSpeed;
 		
 		super.tick();
 	}

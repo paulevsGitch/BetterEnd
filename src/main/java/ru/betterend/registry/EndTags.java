@@ -22,6 +22,7 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockTerrain;
+import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.basis.BlockSimpleLeaves;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.util.TagHelper;
@@ -31,6 +32,7 @@ public class EndTags {
 	public static final Tag.Identified<Block> END_GROUND = makeBlockTag("end_ground");
 	public static final Tag.Identified<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
 	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonTag("bookshelves");
+	public static final Tag.Identified<Block> PEDESTALS = makeBlockTag("pedestal");
 	
 	// Item Tags
 	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
@@ -62,12 +64,12 @@ public class EndTags {
 			if (block instanceof BlockTerrain) {
 				addSurfaceBlock(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);
-			}
-			else if (block instanceof LeavesBlock || block instanceof BlockSimpleLeaves) {
+			} else if (block instanceof LeavesBlock || block instanceof BlockSimpleLeaves) {
 				TagHelper.addTag(BlockTags.LEAVES, block);
-			}
-			else if (block instanceof BlockVine) {
+			} else if (block instanceof BlockVine) {
 				TagHelper.addTag(BlockTags.CLIMBABLE, block);
+			} else if (block instanceof BlockPedestal) {
+				TagHelper.addTag(PEDESTALS, block);
 			}
 		});
 		

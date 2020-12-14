@@ -159,6 +159,13 @@ public class CraftingRecipes {
 		GridRecipe.make("charnia_orange_dye", Items.ORANGE_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_ORANGE).build();
 		GridRecipe.make("charnia_purple_dye", Items.PURPLE_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_PURPLE).build();
 		GridRecipe.make("charnia_red_dye", Items.RED_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_RED).build();
+		
+		GridRecipe.make("respawn_obelisk", EndBlocks.RESPAWN_OBELISK)
+		.setShape("CSC", "CSC", "AAA")
+		.addMaterial('C', EndBlocks.AURORA_CRYSTAL)
+		.addMaterial('S', EndItems.ETERNAL_CRYSTAL)
+		.addMaterial('A', EndBlocks.AMBER_BLOCK)
+		.build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

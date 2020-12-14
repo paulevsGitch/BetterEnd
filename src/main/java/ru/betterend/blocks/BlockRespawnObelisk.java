@@ -157,7 +157,7 @@ public class BlockRespawnObelisk extends BlockBase implements IColorProvider, IR
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		ItemStack itemStack = player.getStackInHand(hand);
-		boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 3;
+		boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 5;
 		if (hand != Hand.MAIN_HAND || !canActivate) {
 			if (!world.isClient && !(itemStack.getItem() instanceof BlockItem)) {
 				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
@@ -171,7 +171,7 @@ public class BlockRespawnObelisk extends BlockBase implements IColorProvider, IR
 			serverPlayerEntity.sendMessage(new TranslatableText("message.betterend.set_spawn"), true);
             world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (!player.isCreative()) {
-            	itemStack.decrement(4);
+            	itemStack.decrement(6);
             }
 		}
 		return player.isCreative() ? ActionResult.PASS : ActionResult.success(world.isClient);

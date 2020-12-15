@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "\"A not so simple way to return to the Overworld.\"$(br2)Traveling around the world of the End, you can come across ancient ruins."
+            "text": "\"A not so simple way to return to the Overworld.\"$(br2)While traveling around the world of the End, you can come across ancient ruins."
         },
         {
             "type": "image",

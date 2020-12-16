@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tag.BlockTags;
@@ -75,6 +76,9 @@ public class EndTags {
 			}
 			else if (block instanceof BlockPedestal) {
 				TagHelper.addTag(PEDESTALS, block);
+			}
+			if (block.getDefaultState().getMaterial().equals(Material.PLANT)) {
+				ComposterBlockAccessor.callRegisterCompostableItem(0.1F, block);
 			}
 		});
 		

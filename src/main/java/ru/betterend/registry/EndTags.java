@@ -25,6 +25,7 @@ import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.basis.BlockPedestal;
 import ru.betterend.blocks.basis.BlockSimpleLeaves;
 import ru.betterend.blocks.basis.BlockVine;
+import ru.betterend.mixin.common.ComposterBlockAccessor;
 import ru.betterend.util.TagHelper;
 
 public class EndTags {
@@ -64,11 +65,15 @@ public class EndTags {
 			if (block instanceof BlockTerrain) {
 				addSurfaceBlock(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);
-			} else if (block instanceof LeavesBlock || block instanceof BlockSimpleLeaves) {
+			}
+			else if (block instanceof LeavesBlock || block instanceof BlockSimpleLeaves) {
 				TagHelper.addTag(BlockTags.LEAVES, block);
-			} else if (block instanceof BlockVine) {
+				ComposterBlockAccessor.callRegisterCompostableItem(0.3F, block);
+			}
+			else if (block instanceof BlockVine) {
 				TagHelper.addTag(BlockTags.CLIMBABLE, block);
-			} else if (block instanceof BlockPedestal) {
+			}
+			else if (block instanceof BlockPedestal) {
 				TagHelper.addTag(PEDESTALS, block);
 			}
 		});

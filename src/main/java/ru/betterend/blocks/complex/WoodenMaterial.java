@@ -16,6 +16,7 @@ import ru.betterend.blocks.basis.BlockBarrel;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.BlockBookshelf;
 import ru.betterend.blocks.basis.BlockChest;
+import ru.betterend.blocks.basis.BlockComposter;
 import ru.betterend.blocks.basis.BlockCraftingTable;
 import ru.betterend.blocks.basis.BlockDoor;
 import ru.betterend.blocks.basis.BlockFence;
@@ -59,6 +60,7 @@ public class WoodenMaterial {
 	public final Block chest;
 	public final Block barrel;
 	public final Block shelf;
+	public final Block composter;
 	
 	public final Tag.Identified<Block> logBlockTag;
 	public final Tag.Identified<Item> logItemTag;
@@ -89,6 +91,7 @@ public class WoodenMaterial {
 		chest = EndBlocks.registerBlock(name + "_chest", new BlockChest(planks));
 		barrel = EndBlocks.registerBlock(name + "_barrel", new BlockBarrel(planks));
 		shelf = EndBlocks.registerBlock(name + "_bookshelf", new BlockBookshelf(planks));
+		composter = EndBlocks.registerBlock(name + "_composter", new BlockComposter(planks));
 		
 		// Recipes //
 		GridRecipe.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();
@@ -108,6 +111,7 @@ public class WoodenMaterial {
 		GridRecipe.make(name + "_bookshelf", shelf).setShape("###", "PPP", "###").addMaterial('#', planks).addMaterial('P', Items.PAPER).setGroup("end_bookshelves").build();
 		GridRecipe.make(name + "_bark", bark).setShape("##", "##").addMaterial('#', log).setOutputCount(3).build();
 		GridRecipe.make(name + "_log", log).setShape("##", "##").addMaterial('#', bark).setOutputCount(3).build();
+		GridRecipe.make(name + "_composter", composter).setShape("# #", "# #", "###").addMaterial('#', slab).build();
 		
 		// Item Tags //
 		TagHelper.addTag(ItemTags.PLANKS, planks);

@@ -11,6 +11,7 @@
 		"AnvilScreenHandlerMixin",
 		"ServerPlayerEntityMixin",
 		"ChorusPlantFeatureMixin",
+		"ComposterBlockAccessor",
 		"ChorusFlowerBlockMixin",
 		"LandPathNodeMakerMixin",
 		"ChorusPlantBlockMixin",

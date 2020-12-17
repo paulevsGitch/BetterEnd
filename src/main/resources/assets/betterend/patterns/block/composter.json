@@ -1,11 +1,11 @@
 {
 	"parent": "block/block",
 	"textures": {
-		"particle": "block/%texture%_side",
-		"top": "block/%texture%_top",
-		"bottom": "block/%texture%_bottom",
-		"side": "block/%texture%_side",
-		"inside": "block/%texture%_bottom"
+		"particle": "betterend:block/%texture%_side",
+		"top": "betterend:block/%texture%_top",
+		"bottom": "betterend:block/%texture%_bottom",
+		"side": "betterend:block/%texture%_side",
+		"inside": "betterend:block/%texture%_bottom"
 	},
 	"elements": [
 		{

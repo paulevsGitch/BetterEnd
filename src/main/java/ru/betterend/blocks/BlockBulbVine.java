@@ -42,6 +42,6 @@ public class BlockBulbVine extends BlockVine {
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		boolean canPlace = super.canPlaceAt(state, world, pos);
-		return state.get(SHAPE) == TripleShape.BOTTOM ? canPlace : canPlace && world.getBlockState(pos.down()).isOf(this);
+		return (state.isOf(this) && state.get(SHAPE) == TripleShape.BOTTOM) ? canPlace : canPlace && world.getBlockState(pos.down()).isOf(this);
 	}
 }

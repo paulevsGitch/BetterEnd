@@ -148,7 +148,7 @@ public class CraftingRecipes {
 				.build();
 		}
 		
-		GridRecipe.make("sulphur_gunpowder", Items.GUNPOWDER).setList("SC").addMaterial('S', EndItems.CRYSTALLINE_SULPHUR).addMaterial('C', Items.COAL, Items.CHARCOAL).build();
+		GridRecipe.make("sulphur_gunpowder", Items.GUNPOWDER).setList("SCB").addMaterial('S', EndItems.CRYSTALLINE_SULPHUR).addMaterial('C', Items.COAL, Items.CHARCOAL).addMaterial('B', Items.BONE_MEAL).build();
 		
 		GridRecipe.make("dense_emerald_ice", EndBlocks.DENSE_EMERALD_ICE).setShape("##", "##").addMaterial('#', EndBlocks.EMERALD_ICE).build();
 		GridRecipe.make("ancient_emerald_ice", EndBlocks.ANCIENT_EMERALD_ICE).setShape("###", "###", "###").addMaterial('#', EndBlocks.DENSE_EMERALD_ICE).build();

@@ -57,6 +57,7 @@ import ru.betterend.blocks.BlockPythadendronSapling;
 import ru.betterend.blocks.BlockRespawnObelisk;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
+import ru.betterend.blocks.BlockSilkMothNest;
 import ru.betterend.blocks.BlockSulphurCrystal;
 import ru.betterend.blocks.BlockTenaneaFlowers;
 import ru.betterend.blocks.BlockTenaneaSapling;
@@ -234,6 +235,9 @@ public class EndBlocks {
 	public static final Block TWISTED_VINE = registerBlock("twisted_vine", new BlockVine());
 	public static final Block BULB_VINE_SEED = registerBlock("bulb_vine_seed", new BlockBulbVineSeed());
 	public static final Block BULB_VINE = registerBlock("bulb_vine", new BlockBulbVine());
+	
+	// Mob-Related
+	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new BlockSilkMothNest()); 
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new BlockOre(EndItems.ENDER_SHARD, 1, 3, 5));

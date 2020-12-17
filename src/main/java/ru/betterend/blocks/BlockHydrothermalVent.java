@@ -44,7 +44,7 @@ import ru.betterend.util.BlocksHelper;
 
 public class BlockHydrothermalVent extends BlockBaseNotFull implements BlockEntityProvider, FluidFillable, Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
+	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	private static final VoxelShape SHAPE = Block.createCuboidShape(1, 1, 1, 15, 16, 15);
 	
 	public BlockHydrothermalVent() {

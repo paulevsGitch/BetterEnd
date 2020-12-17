@@ -56,7 +56,7 @@ public class EternalRitual {
 	private final static Block PEDESTAL = EndBlocks.ETERNAL_PEDESTAL;
 	private final static Block FRAME = EndBlocks.FLAVOLITE_RUNED_ETERNAL;
 	private final static Block PORTAL = EndBlocks.END_PORTAL_BLOCK;
-	private final static BooleanProperty ACTIVE = BlockProperties.ACTIVATED;
+	private final static BooleanProperty ACTIVE = BlockProperties.ACTIVE;
 	
 	private World world;
 	private Direction.Axis axis;

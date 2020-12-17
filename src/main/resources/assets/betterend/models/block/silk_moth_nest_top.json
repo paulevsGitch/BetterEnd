@@ -1,0 +1,6 @@
+{
+	"parent": "betterend:block/cross_no_distortion",
+	"textures": {
+		"texture": "betterend:block/silk_moth_nest_connect"
+	}
+}

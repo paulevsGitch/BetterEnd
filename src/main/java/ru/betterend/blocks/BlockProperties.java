@@ -12,7 +12,7 @@ public class BlockProperties {
 	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.of("shape", PentaShape.class);
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.of("has_light");
-	public static final BooleanProperty ACTIVATED = BooleanProperty.of("active");
+	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
 	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
 	
 	public static enum TripleShape implements StringIdentifiable {

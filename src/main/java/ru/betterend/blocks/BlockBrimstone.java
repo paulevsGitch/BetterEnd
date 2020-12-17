@@ -18,7 +18,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockBrimstone extends BlockBase {
-	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
+	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	
 	public BlockBrimstone() {
 		super(FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(MaterialColor.BROWN).ticksRandomly());

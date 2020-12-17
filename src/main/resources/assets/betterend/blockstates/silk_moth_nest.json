@@ -1,0 +1,9 @@
+{
+	"variants": {
+		"active=false": { "model": "betterend:block/silk_moth_nest_top" },
+		"active=true,facing=north": { "model": "betterend:block/silk_moth_nest_bottom" },
+		"active=true,facing=south": { "model": "betterend:block/silk_moth_nest_bottom", "y": 180 },
+		"active=true,facing=east": { "model": "betterend:block/silk_moth_nest_bottom", "y": 90 },
+		"active=true,facing=west": { "model": "betterend:block/silk_moth_nest_bottom", "y": 270 }
+	}
+}

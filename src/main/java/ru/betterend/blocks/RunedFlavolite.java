@@ -10,7 +10,7 @@ import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
 public class RunedFlavolite extends BlockBase {
-	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
+	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 
 	public RunedFlavolite() {
 		super(FabricBlockSettings.copyOf(EndBlocks.FLAVOLITE.polished).resistance(Blocks.OBSIDIAN.getBlastResistance()).luminance(state -> {

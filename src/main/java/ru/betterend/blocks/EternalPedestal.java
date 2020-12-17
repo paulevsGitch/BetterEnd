@@ -30,7 +30,7 @@ import ru.betterend.registry.EndItems;
 import ru.betterend.rituals.EternalRitual;
 
 public class EternalPedestal extends BlockPedestal {
-	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
+	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	
 	public EternalPedestal() {
 		super(EndBlocks.FLAVOLITE_RUNED_ETERNAL);

@@ -45,7 +45,7 @@ public class SulphurHillFeature extends DefaultFeature {
 		int max = radius + 4;
 		Mutable mut = new Mutable();
 		BlockState rock = EndBlocks.SULPHURIC_ROCK.stone.getDefaultState();
-		BlockState brimstone = EndBlocks.BRIMSTONE.getDefaultState().with(BlockProperties.ACTIVATED, true);
+		BlockState brimstone = EndBlocks.BRIMSTONE.getDefaultState().with(BlockProperties.ACTIVE, true);
 		for (int x = min; x < max; x++) {
 			int x2 = x * x;
 			int px = pos.getX() + x;

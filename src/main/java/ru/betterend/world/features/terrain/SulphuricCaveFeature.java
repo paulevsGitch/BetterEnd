@@ -156,7 +156,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	private void placeBrimstone(StructureWorldAccess world, BlockPos pos, Random random) {
 		BlockState state = getBrimstone(world, pos);
 		BlocksHelper.setWithoutUpdate(world, pos, state);
-		if (state.get(BlockProperties.ACTIVATED)) {
+		if (state.get(BlockProperties.ACTIVE)) {
 			makeShards(world, pos, random);
 		}
 	}
@@ -164,7 +164,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	private BlockState getBrimstone(StructureWorldAccess world, BlockPos pos) {
 		for (Direction dir: BlocksHelper.DIRECTIONS) {
 			if (world.getBlockState(pos.offset(dir)).isOf(Blocks.WATER)) {
-				return EndBlocks.BRIMSTONE.getDefaultState().with(BlockProperties.ACTIVATED, true);
+				return EndBlocks.BRIMSTONE.getDefaultState().with(BlockProperties.ACTIVE, true);
 			}
 		}
 		return EndBlocks.BRIMSTONE.getDefaultState();

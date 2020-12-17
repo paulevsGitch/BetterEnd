@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -25,7 +26,7 @@ public class BlockSilkMothNest extends BlockBase implements IRenderTypeable {
 	private static final VoxelShape BOTTOM = createCuboidShape(0, 0, 0, 16, 16, 16);
 	
 	public BlockSilkMothNest() {
-		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).nonOpaque());
+		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sounds(BlockSoundGroup.WOOL).nonOpaque());
 		this.setDefaultState(getDefaultState().with(ACTIVE, true));
 	}
 	

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockVine;
 import ru.betterend.registry.EndBlocks;
@@ -36,5 +37,11 @@ public class BlockBulbVine extends BlockVine {
 	@Override
 	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
+	}
+	
+	@Override
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+		boolean canPlace = super.canPlaceAt(state, world, pos);
+		return state.get(SHAPE) == TripleShape.BOTTOM ? canPlace : canPlace && world.getBlockState(pos.down()).isOf(this);
 	}
 }

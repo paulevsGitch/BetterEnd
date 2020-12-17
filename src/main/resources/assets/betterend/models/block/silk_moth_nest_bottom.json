@@ -11,14 +11,14 @@
 		{
 			"__comment": "Box1",
 			"from": [ 0, 0, 0 ],
-			"to": [ 16, 12, 16 ],
+			"to": [ 16, 13, 16 ],
 			"faces": {
 				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "cullface": "down" },
 				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
-				"north": { "uv": [ 0, 4, 16, 16 ], "texture": "#front", "cullface": "north" },
-				"south": { "uv": [ 0, 4, 16, 16 ], "texture": "#texture", "cullface": "south" },
-				"west": { "uv": [ 0, 4, 16, 16 ], "texture": "#texture", "cullface": "west" },
-				"east": { "uv": [ 0, 4, 16, 16 ], "texture": "#texture", "cullface": "east" }
+				"north": { "uv": [ 0, 3, 16, 16 ], "texture": "#front", "cullface": "north" },
+				"south": { "uv": [ 0, 3, 16, 16 ], "texture": "#texture", "cullface": "south" },
+				"west": { "uv": [ 0, 3, 16, 16 ], "texture": "#texture", "cullface": "west" },
+				"east": { "uv": [ 0, 3, 16, 16 ], "texture": "#texture", "cullface": "east" }
 			}
 		},
 		{

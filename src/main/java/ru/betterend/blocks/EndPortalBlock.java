@@ -107,7 +107,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 						checkPos = this.findCenter(world, checkPos, state.get(AXIS));
 						if (state.get(AXIS).equals(Direction.Axis.X)) {
 							if (entity.getMovementDirection().getAxis() == Direction.Axis.X) {
-								offStep = entity.getMovementDirection() == Direction.EAST ? -1 : 1;
+								offStep = entity.getMovementDirection() == Direction.EAST ? 1 : -1;
 								float rotation = entity.applyRotation(BlockRotation.CLOCKWISE_90);
 								entity.yaw = rotation;
 							} else {

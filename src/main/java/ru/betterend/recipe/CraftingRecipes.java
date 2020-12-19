@@ -161,20 +161,20 @@ public class CraftingRecipes {
 		GridRecipe.make("charnia_red_dye", Items.RED_DYE).setList("#").addMaterial('#', EndBlocks.CHARNIA_RED).build();
 		
 		GridRecipe.make("respawn_obelisk", EndBlocks.RESPAWN_OBELISK)
-		.setShape("CSC", "CSC", "AAA")
-		.addMaterial('C', EndBlocks.AURORA_CRYSTAL)
-		.addMaterial('S', EndItems.ETERNAL_CRYSTAL)
-		.addMaterial('A', EndBlocks.AMBER_BLOCK)
-		.build();
+			.setShape("CSC", "CSC", "AAA")
+			.addMaterial('C', EndBlocks.AURORA_CRYSTAL)
+			.addMaterial('S', EndItems.ETERNAL_CRYSTAL)
+			.addMaterial('A', EndBlocks.AMBER_BLOCK)
+			.build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {
 		GridRecipe.make(name, lantern)
-		.setShape("S", "#", "S")
-		.addMaterial('#', EndItems.CRYSTAL_SHARDS)
-		.addMaterial('S', slab)
-		.setGroup("end_stone_lanterns")
-		.build();
+			.setShape("S", "#", "S")
+			.addMaterial('#', EndItems.CRYSTAL_SHARDS)
+			.addMaterial('S', slab)
+			.setGroup("end_stone_lanterns")
+			.build();
 	}
 	
 	public static void registerPedestal(String name, Block pedestal, Block slab, Block pillar) {

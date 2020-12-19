@@ -7,7 +7,6 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.structure.StructureManager;
@@ -136,7 +135,6 @@ public class LakePiece extends BasePiece {
 							for (int i = 0; i < maxY; i++) {
 								pos.setY(pos.getY() - 1);
 								BlockState state = chunk.getBlockState(pos);
-								//boolean isReplaceable = state.getMaterial().isReplaceable();
 								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
 									if (pos.getY() > 56) {
 										chunk.setBlockState(pos, AIR, false);
@@ -174,15 +172,6 @@ public class LakePiece extends BasePiece {
 										break;
 									}
 								}
-								/*if (pos.getY() < 57 && !state.isIn(EndTags.GEN_TERRAIN)) {
-									state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
-									int count = MHelper.randRange(2, 4, random);
-									for (int n = 0; n < count; n++) {
-										chunk.setBlockState(pos, state, false);
-										pos.setY(pos.getY() - 1);
-									}
-									break;
-								}*/
 							}
 						}
 					}

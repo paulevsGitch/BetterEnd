@@ -295,11 +295,11 @@ public class EndBiomes {
 		return biome;
 	}
 	
-	private static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
+	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
 		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
 	}
 	
-	private static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
+	public static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
 		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance, true);
 	}
 	

@@ -7,6 +7,7 @@ import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
+import ru.betterend.integration.Integrations;
 import ru.betterend.item.GuideBook;
 import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;
@@ -49,6 +50,7 @@ public class BetterEnd implements ModInitializer {
 		SmithingRecipes.register();
 		InfusionRecipes.register();
 		EndStructures.register();
+		Integrations.register();
 		
 		if (hasGuideBook()) {
 			GuideBook.register();

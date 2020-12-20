@@ -2,10 +2,13 @@ package ru.betterend.integration.byg;
 
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import ru.betterend.integration.Integrations;
@@ -20,10 +23,7 @@ public class OldBulbisGardens extends EndBiome {
 	
 	private static BiomeDefinition makeDef() {
 		Biome biome = Integrations.BYG.getBiome("bulbis_gardens");
-		SoundEvent loop = biome.getLoopSound().get();
-		SoundEvent music = biome.getMusic().get().getSound();
-		SoundEvent additions = biome.getAdditionsSound().get().getSound();
-		SoundEvent mood = biome.getMoodSound().get().getSound();
+		BiomeEffects effects = biome.getEffects();
 		
 		BiomeDefinition def = new BiomeDefinition("old_bulbis_gardens")
 				.setFogColor(215, 132, 207)
@@ -32,10 +32,6 @@ public class OldBulbisGardens extends EndBiome {
 				.setFoliageColor(122, 17, 155)
 				.setParticles(ParticleTypes.REVERSE_PORTAL, 0.002F)
 				.setSurface(Integrations.BYG.getBlock("ivis_phylium"))
-				.setLoop(loop)
-				.setMusic(music)
-				.setAdditions(additions)
-				.setMood(mood)
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(BYGFeatures.OLD_BULBIS_TREE)
 				.addFeature(Feature.VEGETAL_DECORATION, BYGFeatures.BULBIS_TREES)
@@ -47,6 +43,14 @@ public class OldBulbisGardens extends EndBiome {
 				.addFeature(BYGFeatures.IVIS_SPROUT)
 				.addFeature(BYGFeatures.BULBIS_ODDITY)
 				.addFeature(BYGFeatures.PURPLE_BULBIS_ODDITY);
+		
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			SoundEvent loop = effects.getLoopSound().get();
+			SoundEvent music = effects.getMusic().get().getSound();
+			SoundEvent additions = effects.getAdditionsSound().get().getSound();
+			SoundEvent mood = effects.getMoodSound().get().getSound();
+			def.setLoop(loop).setMusic(music).setAdditions(additions).setMood(mood);
+		}
 		
 		for (SpawnGroup group: SpawnGroup.values()) {
 			List<SpawnEntry> list = biome.getSpawnSettings().getSpawnEntry(group);

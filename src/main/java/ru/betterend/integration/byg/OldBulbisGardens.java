@@ -1,6 +1,12 @@
 package ru.betterend.integration.byg;
 
+import java.util.List;
+
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndFeatures;
@@ -9,12 +15,27 @@ import ru.betterend.world.biome.EndBiome;
 
 public class OldBulbisGardens extends EndBiome {
 	public OldBulbisGardens() {
-		super(new BiomeDefinition("old_bulbis_gardens")
+		super(makeDef());
+	}
+	
+	private static BiomeDefinition makeDef() {
+		Biome biome = Integrations.BYG.getBiome("bulbis_gardens");
+		SoundEvent loop = biome.getLoopSound().get();
+		SoundEvent music = biome.getMusic().get().getSound();
+		SoundEvent additions = biome.getAdditionsSound().get().getSound();
+		SoundEvent mood = biome.getMoodSound().get().getSound();
+		
+		BiomeDefinition def = new BiomeDefinition("old_bulbis_gardens")
 				.setFogColor(132, 0, 202)
 				.setFogDensity(2F)
 				.setWaterAndFogColor(40, 0, 56)
+				.setFoliageColor(122, 17, 155)
 				.setParticles(ParticleTypes.REVERSE_PORTAL, 0.002F)
 				.setSurface(Integrations.BYG.getBlock("ivis_phylium"))
+				.setLoop(loop)
+				.setMusic(music)
+				.setAdditions(additions)
+				.setMood(mood)
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(BYGFeatures.OLD_BULBIS_TREE)
 				.addFeature(Feature.VEGETAL_DECORATION, BYGFeatures.BULBIS_TREES)
@@ -25,6 +46,15 @@ public class OldBulbisGardens extends EndBiome {
 				.addFeature(BYGFeatures.IVIS_VINE)
 				.addFeature(BYGFeatures.IVIS_SPROUT)
 				.addFeature(BYGFeatures.BULBIS_ODDITY)
-				.addFeature(BYGFeatures.PURPLE_BULBIS_ODDITY));
+				.addFeature(BYGFeatures.PURPLE_BULBIS_ODDITY);
+		
+		for (SpawnGroup group: SpawnGroup.values()) {
+			List<SpawnEntry> list = biome.getSpawnSettings().getSpawnEntry(group);
+			list.forEach((entry) -> {
+				def.addMobSpawn(entry);
+			});
+		}
+		
+		return def;
 	}
 }

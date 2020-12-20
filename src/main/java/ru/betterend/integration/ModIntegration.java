@@ -56,4 +56,8 @@ public abstract class ModIntegration {
 	public ConfiguredFeature<?, ?> getConfiguredFeature(String name) {
 		return BuiltinRegistries.CONFIGURED_FEATURE.get(getID(name));
 	}
+	
+	public Biome getBiome(String name) {
+		return BuiltinRegistries.BIOME.get(getID(name));
+	}
 }

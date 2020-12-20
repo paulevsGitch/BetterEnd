@@ -23,6 +23,7 @@ import net.minecraft.world.biome.BiomeEffects.Builder;
 import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import net.minecraft.world.gen.GenerationStep.Carver;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.ProbabilityConfig;
@@ -47,6 +48,7 @@ public class BiomeDefinition {
 	private final List<FeatureInfo> features = Lists.newArrayList();
 	private final List<CarverInfo> carvers = Lists.newArrayList();
 	private final List<SpawnInfo> mobs = Lists.newArrayList();
+	private final List<SpawnEntry> spawns = Lists.newArrayList();
 
 	private BiomeParticleConfig particleConfig;
 	private BiomeAdditionsSound additions;
@@ -114,6 +116,11 @@ public class BiomeDefinition {
 			info.maxGroupSize = maxGroupSize;
 			mobs.add(info);
 		}
+		return this;
+	}
+	
+	public BiomeDefinition addMobSpawn(SpawnEntry entry) {
+		spawns.add(entry);
 		return this;
 	}
 
@@ -220,6 +227,10 @@ public class BiomeDefinition {
 
 		mobs.forEach((spawn) -> {
 			spawnSettings.spawn(spawn.type.getSpawnGroup(), new SpawnSettings.SpawnEntry(spawn.type, spawn.weight, spawn.minGroupSize, spawn.maxGroupSize));
+		});
+		
+		spawns.forEach((entry) -> {
+			spawnSettings.spawn(entry.type.getSpawnGroup(), entry);
 		});
 
 		generationSettings.surfaceBuilder(surface == null ? ConfiguredSurfaceBuilders.END : surface);

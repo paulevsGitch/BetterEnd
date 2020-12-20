@@ -5,6 +5,7 @@ import java.util.Random;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -28,11 +29,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
-public class BlockVentBubbleColumn extends BlockBaseNotFull implements FluidDrainable, FluidFillable {
+public class BlockVentBubbleColumn extends Block implements FluidDrainable, FluidFillable {
 	public BlockVentBubbleColumn() {
 		super(FabricBlockSettings.of(Material.BUBBLE_COLUMN).nonOpaque().noCollision().dropsNothing());
 	}

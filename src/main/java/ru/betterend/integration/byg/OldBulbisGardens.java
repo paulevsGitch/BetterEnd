@@ -2,8 +2,6 @@ package ru.betterend.integration.byg;
 
 import java.util.List;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
@@ -11,6 +9,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import net.minecraft.world.gen.GenerationStep.Feature;
+import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.BiomeDefinition;
@@ -44,7 +43,7 @@ public class OldBulbisGardens extends EndBiome {
 				.addFeature(BYGFeatures.BULBIS_ODDITY)
 				.addFeature(BYGFeatures.PURPLE_BULBIS_ODDITY);
 		
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+		if (BetterEnd.isClient()) {
 			SoundEvent loop = effects.getLoopSound().get();
 			SoundEvent music = effects.getMusic().get().getSound();
 			SoundEvent additions = effects.getAdditionsSound().get().getSound();

@@ -13,6 +13,7 @@ public class BYGIntegration extends ModIntegration {
 	@Override
 	public void register() {
 		TagHelper.addTags(Integrations.BYG.getBlock("ivis_phylium"), EndTags.END_GROUND, EndTags.GEN_TERRAIN);
+		BYGBlocks.register();
 		BYGFeatures.register();
 		BYGBiomes.register();
 	}

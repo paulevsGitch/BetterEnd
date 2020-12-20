@@ -28,7 +28,7 @@ public class BlockLantern extends BlockBaseNotFull implements Waterloggable, Flu
 	}
 	
 	public BlockLantern(FabricBlockSettings settings) {
-		super(settings);
+		super(settings.nonOpaque());
 	}
 	
 	@Override

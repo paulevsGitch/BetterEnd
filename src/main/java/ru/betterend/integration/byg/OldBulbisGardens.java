@@ -26,7 +26,7 @@ public class OldBulbisGardens extends EndBiome {
 		SoundEvent mood = biome.getMoodSound().get().getSound();
 		
 		BiomeDefinition def = new BiomeDefinition("old_bulbis_gardens")
-				.setFogColor(215, 132, 182)
+				.setFogColor(215, 132, 207)
 				.setFogDensity(1.8F)
 				.setWaterAndFogColor(40, 0, 56)
 				.setFoliageColor(122, 17, 155)

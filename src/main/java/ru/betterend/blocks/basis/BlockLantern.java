@@ -24,7 +24,7 @@ public class BlockLantern extends BlockBaseNotFull implements Waterloggable, Flu
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	
 	public BlockLantern(Block source) {
-		this(FabricBlockSettings.copyOf(source).luminance(15));
+		this(FabricBlockSettings.copyOf(source).luminance(15).nonOpaque());
 	}
 	
 	public BlockLantern(FabricBlockSettings settings) {

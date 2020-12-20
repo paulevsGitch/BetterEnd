@@ -281,8 +281,12 @@ public class SplineHelper {
 	}
 	
 	public static void scale(List<Vector3f> spline, float scale) {
+		scale(spline, scale, scale, scale);
+	}
+	
+	public static void scale(List<Vector3f> spline, float x, float y, float z) {
 		for (Vector3f v: spline) {
-			v.set(v.getX() * scale, v.getY() * scale, v.getZ() * scale);
+			v.set(v.getX() * x, v.getY() * y, v.getZ() * z);
 		}
 	}
 	

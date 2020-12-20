@@ -29,6 +29,12 @@ public class EndFeature {
 	
 	protected EndFeature() {}
 	
+	public EndFeature(Feature<?> feature, ConfiguredFeature<?, ?> configuredFeature, GenerationStep.Feature featureStep) {
+		this.featureStep = featureStep;
+		this.feature = feature;
+		this.featureConfigured = configuredFeature;
+	}
+	
 	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, GenerationStep.Feature featureStep, ConfiguredFeature<?, ?> configuredFeature) {
 		Identifier id = BetterEnd.makeID(name);
 		this.featureStep = featureStep;

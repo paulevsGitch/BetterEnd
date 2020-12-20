@@ -486,5 +486,10 @@
 	"block.betterend.lacugrove_composter": "Компостер из озёрного мангра",
 	"block.betterend.mossy_glowshroom_composter": "Компостер из мшистого светогриба",
 	"block.betterend.pythadendron_composter": "Компостер из пифадендрона",
-	"block.betterend.tenanea_composter": "Компостер из тенанеи"
+	"block.betterend.tenanea_composter": "Компостер из тенанеи",
+	
+	"biome.betterend.old_bulbis_gardens": "Древние луковичные сады",
+	"block.betterend.ivis_moss": "Мох ивиса",
+	"block.betterend.ivis_vine": "Лоза ивиса",
+	"block.betterend.silk_moth_nest": "Гнездо шёлковичной моли"
 }

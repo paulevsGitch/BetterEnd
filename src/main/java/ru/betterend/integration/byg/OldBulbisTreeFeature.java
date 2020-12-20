@@ -30,7 +30,6 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 import ru.betterend.world.features.DefaultFeature;
 
 public class OldBulbisTreeFeature extends DefaultFeature {
-	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise("OldBulbisTreeFeature".hashCode());
 	private static final List<Vector3f> SPLINE;
 	private static final List<Vector3f> ROOT;
 	private static final List<Vector3f> LEAF;
@@ -75,7 +74,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 
 			Vector3f vec = spline.get(spline.size() - 1);
 			float radius = (size + MHelper.randRange(0, size * 0.5F, random)) * 0.35F;
-			bigSphere(world, pos.add(vec.getX(), vec.getY(), vec.getZ()), radius, cap, glow, wood, replacement);
+			bigSphere(world, pos.add(vec.getX(), vec.getY(), vec.getZ()), radius, cap, glow, wood, replacement, random);
 			vec = SplineHelper.getPos(spline, 0.3F);
 			makeRoots(world, pos.add(vec.getX(), vec.getY(), vec.getZ()), size * 0.4F + 5, random, wood, replacement);
 
@@ -93,17 +92,18 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		return true;
 	}
 	
-	private void bigSphere(StructureWorldAccess world, BlockPos pos, float radius, BlockState cap, BlockState glow, BlockState wood, Function<BlockState, Boolean> replacement) {
+	private void bigSphere(StructureWorldAccess world, BlockPos pos, float radius, BlockState cap, BlockState glow, BlockState wood, Function<BlockState, Boolean> replacement, Random random) {
+		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(cap);
 		
 		SDF sphereInner = new SDFSphere().setRadius(radius * 0.53F).setBlock(Blocks.AIR);
 		sphereInner = new SDFDisplacement().setFunction((vec) -> {
-			return (float) NOISE.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
+			return (float) noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
 		}).setSource(sphereInner);
 		
 		SDF sphereGlow = new SDFSphere().setRadius(radius * 0.6F).setBlock(glow);
 		sphereGlow = new SDFDisplacement().setFunction((vec) -> {
-			return (float) NOISE.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1) * 2F;
+			return (float) noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1) * 2F;
 		}).setSource(sphereGlow);
 		sphereGlow = new SDFSubtraction().setSourceA(sphereGlow).setSourceB(sphereInner);
 		

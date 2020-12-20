@@ -484,5 +484,10 @@
 	"block.betterend.lacugrove_composter": "Lacugrove Composter",
 	"block.betterend.mossy_glowshroom_composter": "Mossy Glowshroom Composter",
 	"block.betterend.pythadendron_composter": "Pythadendron Composter",
-	"block.betterend.tenanea_composter": "Tenanea Composter"
+	"block.betterend.tenanea_composter": "Tenanea Composter",
+	
+	"biome.betterend.old_bulbis_gardens": "Old Bulbis Gardens",
+	"block.betterend.ivis_moss": "Ivis Moss",
+	"block.betterend.ivis_vine": "Ivis Vine",
+	"block.betterend.silk_moth_nest": "Silk Moth Nest"
 }

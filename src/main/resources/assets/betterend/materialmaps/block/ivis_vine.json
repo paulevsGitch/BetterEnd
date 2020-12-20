@@ -1,0 +1,14 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/ivis_vine",
+				"material": "betterend:waving"
+			},
+			{
+				"sprite": "betterend:block/ivis_vine_bottom",
+				"material": "betterend:waving"
+			}
+		]
+	}
+}

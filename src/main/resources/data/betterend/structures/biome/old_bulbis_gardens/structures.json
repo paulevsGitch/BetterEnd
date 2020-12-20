@@ -1,0 +1,10 @@
+{
+	"structures": [
+		{ "nbt": "fallen_tree_1", "offsetY": 0, "terrainMerge": "none" },
+		{ "nbt": "fallen_tree_2", "offsetY": 0, "terrainMerge": "none" },
+		{ "nbt": "fallen_tree_3", "offsetY": 0, "terrainMerge": "none" },
+		{ "nbt": "tree_stump_1", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "tree_stump_2", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "tree_stump_3", "offsetY": 0, "terrainMerge": "surface" }
+	]
+}

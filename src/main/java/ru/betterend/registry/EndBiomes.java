@@ -50,6 +50,7 @@ public class EndBiomes {
 	private static final HashMap<Identifier, EndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
 	public static final Set<Identifier> FABRIC_VOID = Sets.newHashSet();
+	private static final Set<Identifier> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
@@ -103,7 +104,7 @@ public class EndBiomes {
 			if (biome.getCategory() == Category.THEEND) {
 				Identifier id = biomeRegistry.getId(biome);
 				if (Configs.BIOME_CONFIG.getBoolean(id, "enabled", true)) {
-					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id)) {
+					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) {
 						JsonObject config = configs.get(id.getNamespace());
 						if (config == null) {
 							config = loadJsonConfig(id.getNamespace());
@@ -252,6 +253,7 @@ public class EndBiomes {
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
 			parent.addSubBiome(endBiome);
 			SUBBIOMES.add(endBiome);
+			SUBBIOMES_UNMUTABLES.add(endBiome.getID());
 			ID_MAP.put(endBiome.getID(), endBiome);
 		}
 		return endBiome;
@@ -268,6 +270,7 @@ public class EndBiomes {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			parent.addSubBiome(biome);
 			SUBBIOMES.add(biome);
+			SUBBIOMES_UNMUTABLES.add(biome.getID());
 			ID_MAP.put(biome.getID(), biome);
 			addLandBiomeToFabricApi(biome);
 		}

@@ -46,6 +46,7 @@ import ru.betterend.world.features.trees.LacugroveFeature;
 import ru.betterend.world.features.trees.MossyGlowshroomFeature;
 import ru.betterend.world.features.trees.PythadendronTreeFeature;
 import ru.betterend.world.features.trees.TenaneaFeature;
+import ru.betterend.world.features.trees.UmbrellaTreeFeature;
 
 public class EndFeatures {
 	// Trees //
@@ -55,6 +56,7 @@ public class EndFeatures {
 	public static final EndFeature DRAGON_TREE = new EndFeature("dragon_tree", new DragonTreeFeature(), 3);
 	public static final EndFeature TENANEA = new EndFeature("tenanea", new TenaneaFeature(), 3);
 	public static final EndFeature HELIX_TREE = new EndFeature("helix_tree", new HelixTreeFeature(), 2);
+	public static final EndFeature UMBRELLA_TREE = new EndFeature("umbrella_tree", new UmbrellaTreeFeature(), 2);
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark), 4);

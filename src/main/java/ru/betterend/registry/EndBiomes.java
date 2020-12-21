@@ -41,6 +41,7 @@ import ru.betterend.world.biome.BiomeMegalakeGrove;
 import ru.betterend.world.biome.BiomePaintedMountains;
 import ru.betterend.world.biome.BiomeShadowForest;
 import ru.betterend.world.biome.BiomeSulphurSprings;
+import ru.betterend.world.biome.BiomeUmbrellaJungle;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BELayerRandomSource;
 import ru.betterend.world.generator.BiomePicker;
@@ -58,8 +59,6 @@ public class EndBiomes {
 	private static final JsonObject EMPTY_JSON = new JsonObject();
 	
 	private static Registry<Biome> biomeRegistry;
-	private static Set<Integer> occupiedIDs = Sets.newHashSet();
-	private static int incID = 8196;
 	
 	// Vanilla Land
 	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, 1F);
@@ -82,6 +81,7 @@ public class EndBiomes {
 	public static final EndBiome AMBER_LAND = registerBiome(new BiomeAmberLand(), BiomeType.LAND);
 	public static final EndBiome BLOSSOMING_SPIRES = registerBiome(new BiomeBlossomingSpires(), BiomeType.LAND);
 	public static final EndBiome SULPHUR_SPRINGS = registerBiome(new BiomeSulphurSprings(), BiomeType.LAND);
+	public static final EndBiome UMBRELLA_JUNGLE = registerBiome(new BiomeUmbrellaJungle(), BiomeType.LAND);
 	
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);
@@ -312,28 +312,10 @@ public class EndBiomes {
 		else
 			VOID_BIOMES.addBiome(biome);
 	}
-	
-	private static void fillSet() {
-		if (occupiedIDs.isEmpty()) {
-			BuiltinRegistries.BIOME.getEntries().forEach((entry) -> {
-				int id = BuiltinRegistries.BIOME.getRawId(entry.getValue());
-				occupiedIDs.add(id);
-			});
-		}
-	}
 
 	private static void registerBiomeDirect(EndBiome biome) {
-		fillSet();
-		int possibleID = incID++;
-		if (occupiedIDs.contains(possibleID)) {
-			String message = "ID for biome " + biome.getID() + " is already occupied, changing biome ID from " + possibleID + " to ";
-			while (occupiedIDs.contains(possibleID)) {
-				possibleID ++;
-			}
-			BetterEnd.LOGGER.info(message + possibleID);
-		}
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-			Registry.register(BuiltinRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
+			Registry.register(BuiltinRegistries.BIOME, biome.getID(), biome.getBiome());
 		}
 	}
 	

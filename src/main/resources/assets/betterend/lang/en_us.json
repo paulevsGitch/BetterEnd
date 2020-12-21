@@ -489,5 +489,26 @@
 	"biome.betterend.old_bulbis_gardens": "Old Bulbis Gardens",
 	"block.betterend.ivis_moss": "Ivis Moss",
 	"block.betterend.ivis_vine": "Ivis Vine",
-	"block.betterend.silk_moth_nest": "Silk Moth Nest"
+	"block.betterend.silk_moth_nest": "Silk Moth Nest",
+	
+	"block.betterend.umbrella_tree_bark": "Umbrella Tree Bark",
+	"block.betterend.umbrella_tree_barrel": "Umbrella Tree Barrel",
+	"block.betterend.umbrella_tree_bookshelf": "Umbrella Tree Bookshelf",
+	"block.betterend.umbrella_tree_button": "Umbrella Tree Button",
+	"block.betterend.umbrella_tree_chest": "Umbrella Tree Chest",
+	"block.betterend.umbrella_tree_composter": "Umbrella Tree Composter",
+	"block.betterend.umbrella_tree_crafting_table": "Umbrella Tree Crafting Table",
+	"block.betterend.umbrella_tree_door": "Umbrella Tree Door",
+	"block.betterend.umbrella_tree_fence": "Umbrella Tree Fence",
+	"block.betterend.umbrella_tree_gate": "Umbrella Tree Gate",
+	"block.betterend.umbrella_tree_ladder": "Umbrella Tree Ladder",
+	"block.betterend.umbrella_tree_log": "Umbrella Tree Log",
+	"block.betterend.umbrella_tree_planks": "Umbrella Tree Planks",
+	"block.betterend.umbrella_tree_plate": "Umbrella Tree Plate",
+	"block.betterend.umbrella_tree_sign": "Umbrella Tree Sign",
+	"block.betterend.umbrella_tree_slab": "Umbrella Tree Slab",
+	"block.betterend.umbrella_tree_stairs": "Umbrella Tree Stairs",
+	"block.betterend.umbrella_tree_stripped_bark": "Umbrella Tree Stripped Bark",
+	"block.betterend.umbrella_tree_stripped_log": "Umbrella Tree Stripped Log",
+	"block.betterend.umbrella_tree_trapdoor": "Umbrella Tree Trapdoor"
 }

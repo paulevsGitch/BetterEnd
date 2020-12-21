@@ -491,5 +491,26 @@
 	"biome.betterend.old_bulbis_gardens": "Древние луковичные сады",
 	"block.betterend.ivis_moss": "Мох ивиса",
 	"block.betterend.ivis_vine": "Лоза ивиса",
-	"block.betterend.silk_moth_nest": "Гнездо шёлковичной моли"
+	"block.betterend.silk_moth_nest": "Гнездо шёлковичной моли",
+	
+	"block.betterend.umbrella_tree_bark": "Кора зонтичного дерева",
+	"block.betterend.umbrella_tree_barrel": "Бочка из зонтичного дерева",
+	"block.betterend.umbrella_tree_bookshelf": "Книжные полки из зонтичного дерева",
+	"block.betterend.umbrella_tree_button": "Кнопка из зонтичного дерева",
+	"block.betterend.umbrella_tree_chest": "Сундук из зонтичного дерева",
+	"block.betterend.umbrella_tree_composter": "Компостер из зонтичного дерева",
+	"block.betterend.umbrella_tree_crafting_table": "Верстак из зонтичного дерева",
+	"block.betterend.umbrella_tree_door": "Дверь из зонтичного дерева",
+	"block.betterend.umbrella_tree_fence": "Забор из зонтичного дерева",
+	"block.betterend.umbrella_tree_gate": "Калитка из зонтичного дерева",
+	"block.betterend.umbrella_tree_ladder": "Лестница из зонтичного дерева",
+	"block.betterend.umbrella_tree_log": "Бревно зонтичного дерева",
+	"block.betterend.umbrella_tree_planks": "Доски из зонтичного дерева",
+	"block.betterend.umbrella_tree_plate": "Нажимная плита из зонтичного дерева",
+	"block.betterend.umbrella_tree_sign": "Табличка из зонтичного дерева",
+	"block.betterend.umbrella_tree_slab": "Плита из зонтичного дерева",
+	"block.betterend.umbrella_tree_stairs": "Ступени из зонтичного дерева",
+	"block.betterend.umbrella_tree_stripped_bark": "Обтёсанная кора зонтичного дерева",
+	"block.betterend.umbrella_tree_stripped_log": "Обтёсанное бревно зонтичного дерева",
+	"block.betterend.umbrella_tree_trapdoor": "Люк из зонтичного дерева"
 }

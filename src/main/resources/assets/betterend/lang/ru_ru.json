@@ -512,5 +512,6 @@
 	"block.betterend.umbrella_tree_stairs": "Ступени из зонтичного дерева",
 	"block.betterend.umbrella_tree_stripped_bark": "Обтёсанная кора зонтичного дерева",
 	"block.betterend.umbrella_tree_stripped_log": "Обтёсанное бревно зонтичного дерева",
-	"block.betterend.umbrella_tree_trapdoor": "Люк из зонтичного дерева"
+	"block.betterend.umbrella_tree_trapdoor": "Люк из зонтичного дерева",
+	"block.betterend.umbrella_tree_membrane": "Мембрана зонтичного дерева"
 }

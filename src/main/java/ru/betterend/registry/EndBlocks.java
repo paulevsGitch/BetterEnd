@@ -65,6 +65,7 @@ import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockTerrainPlant;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
+import ru.betterend.blocks.BlockUmbrellaTreeMembrane;
 import ru.betterend.blocks.BlockVentBubbleColumn;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.EndStoneSmelter;
@@ -172,6 +173,7 @@ public class EndBlocks {
 	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new BlockHelixTreeLeaves());
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
 	
+	public static final Block UMBRELLA_TREE_MEMBRANE = registerBlock("umbrella_tree_membrane", new BlockUmbrellaTreeMembrane());
 	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
 	
 	// Small Plants //

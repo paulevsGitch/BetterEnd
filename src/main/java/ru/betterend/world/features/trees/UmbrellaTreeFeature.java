@@ -20,7 +20,13 @@ import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.PosInfo;
 import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFFlatWave;
+import ru.betterend.util.sdf.operator.SDFScale3D;
+import ru.betterend.util.sdf.operator.SDFSmoothUnion;
+import ru.betterend.util.sdf.operator.SDFSubtraction;
+import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.operator.SDFUnion;
+import ru.betterend.util.sdf.primitive.SDFSphere;
 import ru.betterend.world.features.DefaultFeature;
 
 public class UmbrellaTreeFeature extends DefaultFeature {
@@ -33,6 +39,10 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
 		
+		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.getDefaultState();
+		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState();
+		BlockState center = EndBlocks.UMBRELLA_TREE.planks.getDefaultState();
+		
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
 		float var = MHelper.PI2 /  (float) (count * 3);
@@ -41,28 +51,39 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		int x1 = ((pos.getX() >> 4) << 4) - 16;
 		int z1 = ((pos.getZ() >> 4) << 4) - 16;
 		Box limits = new Box(x1, pos.getY() - 5, z1, x1 + 47, pos.getY() + size * 2, z1 + 47);
-		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.getDefaultState();
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2 + MHelper.randRange(0, var, random) + start;
 			List<Vector3f> spline = SplineHelper.copySpline(SPLINE);
 			float sizeXZ = (size + MHelper.randRange(0, size * 0.5F, random)) * 0.7F;
-			SplineHelper.scale(spline, sizeXZ, sizeXZ * 1.5F + MHelper.randRange(0, size * 0.5F, random), sizeXZ);
-			SplineHelper.offset(spline, new Vector3f((20 - size), 0, 0));
+			SplineHelper.scale(spline, sizeXZ, sizeXZ * MHelper.randRange(1F, 2F, random), sizeXZ);
+			SplineHelper.offset(spline, new Vector3f((20 - size) * 0.2F, 0, 0));
 			SplineHelper.rotateSpline(spline, angle);
-			SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
-			SDF branch = SplineHelper.buildSDF(spline, 2.3F, 1.3F, (bpos) -> {
-				return wood;
-			});
-
-			Vector3f vec = spline.get(spline.size() - 1);
-			//float radius = (size + MHelper.randRange(0, size * 0.5F, random)) * 0.35F;
-			vec = SplineHelper.getPos(spline, 0.3F);
+			SplineHelper.offsetParts(spline, random, 0.5F, 0, 0.5F);
 			
-			makeRoots(world, pos.add(vec.getX(), vec.getY(), vec.getZ()), size * 0.4F + 5, random, wood);
-
-			sdf = (sdf == null) ? branch : new SDFUnion().setSourceA(sdf).setSourceB(branch);
+			if (SplineHelper.canGenerate(spline, pos, world, REPLACE)) {
+				SDF branch = SplineHelper.buildSDF(spline, 1.3F, 0.8F, (bpos) -> {
+					return wood;
+				});
+	
+				Vector3f vec = spline.get(spline.size() - 1);
+				float radius = (size + MHelper.randRange(0, size * 0.5F, random)) * 0.4F;
+				
+				sdf = (sdf == null) ? branch : new SDFUnion().setSourceA(sdf).setSourceB(branch);
+				SDF mem = makeMembrane(world, radius, random, membrane, center);
+				
+				float px = MHelper.floor(vec.getX()) + 0.5F;
+				float py = MHelper.floor(vec.getY()) + 0.5F;
+				float pz = MHelper.floor(vec.getZ()) + 0.5F;
+				mem = new SDFTranslate().setTranslate(px, py, pz).setSource(mem);
+				sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(mem);
+			}
 		}
 		
+		if (sdf == null) {
+			return false;
+		}
+		
+		makeRoots(world, pos.add(0, 3, 0), size * 0.4F + 5, random, wood);
 		sdf.setReplaceFunction(REPLACE).setPostProcess(POST).fillArea(world, pos, limits);
 		
 		return true;
@@ -84,6 +105,26 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		}
 	}
 	
+	private SDF makeMembrane(StructureWorldAccess world, float radius, Random random, BlockState membrane, BlockState center) {
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(membrane);
+		SDF sub = new SDFTranslate().setTranslate(0, -4, 0).setSource(sphere);
+		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
+		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
+		sphere = new SDFTranslate().setTranslate(0, 1 - radius * 0.5F, 0).setSource(sphere);
+		
+		float angle = random.nextFloat() * MHelper.PI2;
+		int count = (int) MHelper.randRange(radius, radius * 2, random);
+		if (count < 5) {
+			count = 5;
+		}
+		sphere = new SDFFlatWave().setAngle(angle).setRaysCount(count).setIntensity(0.6F).setSource(sphere);
+		
+		SDF cent = new SDFSphere().setRadius(2.5F).setBlock(center);
+		sphere = new SDFUnion().setSourceA(sphere).setSourceB(cent);
+		
+		return sphere;
+	}
+	
 	static {
 		SPLINE = Lists.newArrayList(
 			new Vector3f(0.00F, 0.00F, 0.00F),
@@ -103,13 +144,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND)) {
-				return true;
-			}
-			if (state.getBlock() == EndBlocks.DRAGON_TREE_LEAVES) {
-				return true;
-			}
-			if (state.getMaterial().equals(Material.PLANT)) {
+			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

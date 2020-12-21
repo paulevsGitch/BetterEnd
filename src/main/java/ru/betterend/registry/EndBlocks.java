@@ -172,6 +172,8 @@ public class EndBlocks {
 	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new BlockHelixTreeLeaves());
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
 	
+	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
+	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());
 	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new BlockUmbrellaMossTall());

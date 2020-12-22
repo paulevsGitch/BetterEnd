@@ -135,6 +135,12 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	}
 	
 	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis) {
+		return this.findCenter(world, pos, axis, 1);
+	}
+	
+	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis, int step) {
+		if (step > 21) return pos;
+		
 		BlockState right, left;
 		Direction rightDir, leftDir;
 		if (axis == Direction.Axis.X) {
@@ -150,13 +156,13 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		}
 		BlockState down = world.getBlockState(pos.down());
 		if (down.isOf(this)) {
-			return findCenter(world, pos.move(Direction.DOWN), axis);
+			return findCenter(world, pos.move(Direction.DOWN), axis, ++step);
 		} else if (right.isOf(this) && left.isOf(this)) {
 			return pos;
 		} else if (right.isOf(this)) {
-			return findCenter(world, pos.move(rightDir), axis);
+			return findCenter(world, pos.move(rightDir), axis, ++step);
 		} else if (left.isOf(this)) {
-			return findCenter(world, pos.move(leftDir), axis);
+			return findCenter(world, pos.move(leftDir), axis, ++step);
 		}
 		return pos;
 	}

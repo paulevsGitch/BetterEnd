@@ -31,12 +31,15 @@ import ru.betterend.util.TagHelper;
 
 public class EndTags {
 	// Block Tags
-	public static final Tag.Identified<Block> END_GROUND = makeBlockTag("end_ground");
+	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonBlockTag("bookshelves");
 	public static final Tag.Identified<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
-	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonTag("bookshelves");
+	public static final Tag.Identified<Block> END_GROUND = makeBlockTag("end_ground");
 	public static final Tag.Identified<Block> PEDESTALS = makeBlockTag("pedestal");
+	public static final Tag.Identified<Block> BLOCK_CHEST = makeCommonBlockTag("chest");
+	public static final Tag.Identified<Block> END_STONES = makeCommonBlockTag("end_stones");
 	
 	// Item Tags
+	public static final Tag.Identified<Item> ITEM_CHEST = makeCommonItemTag("chest");
 	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
 	
 	public static Tag.Identified<Block> makeBlockTag(String name) {
@@ -51,10 +54,16 @@ public class EndTags {
 		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
 	}
 	
-	public static Tag.Identified<Block> makeCommonTag(String name) {
+	public static Tag.Identified<Block> makeCommonBlockTag(String name) {
 		Identifier id = new Identifier("c", name);
 		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
+	}
+	
+	public static Tag.Identified<Item> makeCommonItemTag(String name) {
+		Identifier id = new Identifier("c", name);
+		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
+		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
 	}
 	
 	public static void register() {
@@ -106,8 +115,14 @@ public class EndTags {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
 				SurfaceConfig config = biome.getGenerationSettings().getSurfaceConfig();
-				TagHelper.addTag(GEN_TERRAIN, config.getTopMaterial().getBlock(), config.getUnderMaterial().getBlock());
+				Block under = config.getUnderMaterial().getBlock();
+				Block surface = config.getTopMaterial().getBlock();
+				TagHelper.addTag(GEN_TERRAIN, under, surface);
+				TagHelper.addTag(END_GROUND, surface);
 			}
+		});
+		END_STONES.values().forEach((block) -> {
+			addSurfaceBlock(block);
 		});
 	}
 	

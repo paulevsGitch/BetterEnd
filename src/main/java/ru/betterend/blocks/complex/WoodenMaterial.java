@@ -125,6 +125,7 @@ public class WoodenMaterial {
 		TagHelper.addTags(slab, ItemTags.WOODEN_SLABS, ItemTags.SLABS);
 		TagHelper.addTags(stairs, ItemTags.WOODEN_STAIRS, ItemTags.STAIRS);
 		TagHelper.addTags(trapdoor, ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS);
+		TagHelper.addTag(EndTags.ITEM_CHEST, chest);
 		
 		// Block Tags //
 		TagHelper.addTag(BlockTags.PLANKS, planks);
@@ -139,6 +140,7 @@ public class WoodenMaterial {
 		TagHelper.addTags(stairs, BlockTags.WOODEN_STAIRS, BlockTags.STAIRS);
 		TagHelper.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
 		TagHelper.addTag(EndTags.BOOKSHELVES, shelf);
+		TagHelper.addTag(EndTags.BLOCK_CHEST, chest);
 		
 		logBlockTag = EndTags.makeBlockTag(name + "_logs");
 		logItemTag = EndTags.makeItemTag(name + "_logs");

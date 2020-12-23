@@ -19,6 +19,7 @@ import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.TagHelper;
 
 public class StoneMaterial {
@@ -91,5 +92,6 @@ public class StoneMaterial {
 		TagHelper.addTag(BlockTags.WALLS, wall, brick_wall);
 		TagHelper.addTag(BlockTags.SLABS, slab, brick_slab);
 		TagHelper.addTags(pressure_plate, BlockTags.PRESSURE_PLATES, BlockTags.STONE_PRESSURE_PLATES);
+		TagHelper.addTag(EndTags.END_STONES, stone);
 	}
 }

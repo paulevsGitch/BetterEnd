@@ -12,6 +12,7 @@ import ru.betterend.item.GuideBook;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndTags;
 
 public class CraftingRecipes {
 	
@@ -166,6 +167,18 @@ public class CraftingRecipes {
 			.addMaterial('S', EndItems.ETERNAL_CRYSTAL)
 			.addMaterial('A', EndBlocks.AMBER_BLOCK)
 			.build();
+		
+		GridRecipe.make("hopper", Blocks.HOPPER)
+		.setShape("I I", "ICI", " I ")
+		.addMaterial('I', Items.IRON_INGOT)
+		.addMaterial('C', EndTags.ITEM_CHEST)
+		.build();;
+		
+		GridRecipe.make("shulker_box", Blocks.SHULKER_BOX)
+		.setShape("S", "C", "S")
+		.addMaterial('S', Items.SHULKER_SHELL)
+		.addMaterial('C', EndTags.ITEM_CHEST)
+		.build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

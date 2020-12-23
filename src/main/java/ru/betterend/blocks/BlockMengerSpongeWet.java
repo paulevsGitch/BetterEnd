@@ -81,7 +81,7 @@ public class BlockMengerSpongeWet extends BlockBaseNotFull implements IRenderTyp
 	
 	@Override
 	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		super.onBreak(world, pos, state, player);
+		world.breakBlock(pos, !player.isCreative());
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
 	}
 	

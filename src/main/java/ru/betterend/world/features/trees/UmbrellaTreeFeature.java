@@ -10,7 +10,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -31,6 +30,7 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class UmbrellaTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
+	private static final Function<BlockState, Boolean> IGNORE;
 	private static final Function<PosInfo, BlockState> POST;
 	private static final List<Vector3f> SPLINE;
 	private static final List<Vector3f> ROOT;
@@ -48,9 +48,6 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		float var = MHelper.PI2 /  (float) (count * 3);
 		float start = MHelper.randRange(0, MHelper.PI2, random);
 		SDF sdf = null;
-		int x1 = ((pos.getX() >> 4) << 4) - 16;
-		int z1 = ((pos.getZ() >> 4) << 4) - 16;
-		Box limits = new Box(x1, pos.getY() - 5, z1, x1 + 47, pos.getY() + size * 2, z1 + 47);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2 + MHelper.randRange(0, var, random) + start;
 			List<Vector3f> spline = SplineHelper.copySpline(SPLINE);
@@ -61,7 +58,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			SplineHelper.offsetParts(spline, random, 0.5F, 0, 0.5F);
 			
 			if (SplineHelper.canGenerate(spline, pos, world, REPLACE)) {
-				SDF branch = SplineHelper.buildSDF(spline, 1.3F, 0.8F, (bpos) -> {
+				SDF branch = SplineHelper.buildSDF(spline, 1.2F, 0.8F, (bpos) -> {
 					return wood;
 				});
 	
@@ -83,8 +80,8 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			return false;
 		}
 		
-		makeRoots(world, pos.add(0, 3, 0), size * 0.4F + 5, random, wood);
-		sdf.setReplaceFunction(REPLACE).setPostProcess(POST).fillArea(world, pos, limits);
+		sdf.setReplaceFunction(REPLACE).setPostProcess(POST).fillRecursiveIgnore(world, pos, IGNORE);
+		makeRoots(world, pos.add(0, 2, 0), size * 0.3F + 3, random, wood);
 		
 		return true;
 	}
@@ -148,6 +145,10 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();
+		};
+		
+		IGNORE = (state) -> {
+			return EndBlocks.UMBRELLA_TREE.isTreeLog(state);
 		};
 		
 		POST = (info) -> {

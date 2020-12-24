@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
@@ -124,14 +125,14 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		
 		for (Center c: centers) {
 			if (!world.getBlockState(new BlockPos(c.px, c.py, c.pz)).isAir()) {
-				count = MHelper.floor(MHelper.randRange(1F, 5F, random) * scale);
+				count = MHelper.floor(MHelper.randRange(5F, 10F, random) * scale);
 				float startAngle = random.nextFloat() * MHelper.PI2;
 				for (int i = 0; i < count; i++) {
 					float angle = (float) i / count * MHelper.PI2 + startAngle;
-					float dist = MHelper.randRange(1.8F, 3.4F, random) * scale;
+					float dist = MHelper.randRange(1.5F, 2.5F, random) * scale;
 					double px = c.px + Math.sin(angle) * dist;
 					double pz = c.pz + Math.cos(angle) * dist;
-					makeFruits(world, px, c.py - 1, pz, random, fruit, scale);
+					makeFruits(world, px, c.py - 1, pz, fruit, scale);
 				}
 			}
 		}
@@ -175,18 +176,16 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		return sphere;
 	}
 	
-	private void makeFruits(StructureWorldAccess world, double px, double py, double pz, Random random, BlockState fruit, float scale) {
-		Mutable mut = new Mutable();
-		int length = MHelper.floor(MHelper.randRange(1F, 5F, random) * scale + 0.5F);
-		for (int i = 0; i < length; i++) {
-			mut.setY(MHelper.floor(py - i));
-			double radius = (1 - (double) i / length) * 0.5;
-			for (int j = 0; j < 2; j++) {
-				mut.setX(MHelper.floor(random.nextGaussian() * radius + px + 0.5));
-				mut.setZ(MHelper.floor(random.nextGaussian() * radius + pz + 0.5));
-				if (world.isAir(mut)) {
+	private void makeFruits(StructureWorldAccess world, double px, double py, double pz, BlockState fruit, float scale) {
+		Mutable mut = new Mutable().set(px, py, pz);
+		for (int i = 0; i < 8; i++) {
+			mut.move(Direction.DOWN);
+			if (world.isAir(mut)) {
+				BlockState state = world.getBlockState(mut.up());
+				if (state.isOf(EndBlocks.UMBRELLA_TREE_MEMBRANE) && state.get(BlockUmbrellaTreeMembrane.COLOR) < 2) {
 					BlocksHelper.setWithoutUpdate(world, mut, fruit);
 				}
+				break;
 			}
 		}
 	}

@@ -32,6 +32,7 @@ import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndTags;
 
 public class EternalRitual {
@@ -250,7 +251,9 @@ public class EternalRitual {
 			for (int step = 1; step < 64; step++) {
 				for (int i = 0; i < step; i++) {
 					checkPos.setY(5);
-					while(checkPos.getY() < world.getHeight()) {
+					int ceil = targetWorld.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
+					if (ceil < 5) continue;
+					while(checkPos.getY() < ceil) {
 						if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
 							EternalRitual.generatePortal(targetWorld, checkPos, portalAxis);
 							if (portalAxis.equals(Direction.Axis.X)) {
@@ -270,6 +273,7 @@ public class EternalRitual {
 			ConfiguredFeatures.END_ISLAND.generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.down());
 		} else {
 			basePos.setY(targetWorld.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
+			EndFeatures.OVERWORLD_ISLAND.getFeatureConfigured().generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.down());
 		}
 		EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
 		if (portalAxis.equals(Direction.Axis.X)) {

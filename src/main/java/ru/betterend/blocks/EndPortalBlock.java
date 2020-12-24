@@ -17,6 +17,7 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.dimension.DimensionType;
@@ -100,7 +101,9 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		for (int step = 1; step < 64; step++) {
 			for (int i = 0; i < step; i++) {
 				checkPos.setY(5);
-				while(checkPos.getY() < world.getHeight()) {
+				int ceil = world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
+				if (ceil < 5) continue;
+				while(checkPos.getY() < ceil) {
 					BlockState state = world.getBlockState(checkPos);
 					if(state.isOf(this)) {
 						int offStep;

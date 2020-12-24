@@ -23,6 +23,7 @@ import ru.betterend.world.features.GlowPillarFeature;
 import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.LanceleafFeature;
 import ru.betterend.world.features.MengerSpongeFeature;
+import ru.betterend.world.features.OverworldIslandFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
 import ru.betterend.world.features.VineFeature;
@@ -116,6 +117,7 @@ public class EndFeatures {
 	public static final EndFeature CHARNIA_GREEN = new EndFeature("charnia_green", new CharniaFeature(EndBlocks.CHARNIA_GREEN), 10);
 	public static final EndFeature MENGER_SPONGE = new EndFeature("menger_sponge", new MengerSpongeFeature(5), 1);
 	public static final EndFeature CHARNIA_RED_RARE = new EndFeature("charnia_red_rare", new CharniaFeature(EndBlocks.CHARNIA_RED), 2);
+	public static final EndFeature OVERWORLD_ISLAND = EndFeature.makeOverworldIsland("overworld_island", new OverworldIslandFeature());
 	
 	// Terrain //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

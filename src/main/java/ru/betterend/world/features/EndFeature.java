@@ -114,6 +114,11 @@ public class EndFeature {
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
 	
+	public static EndFeature makeOverworldIsland(String name, Feature<DefaultFeatureConfig> feature) {
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT);
+		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
+	}
+	
 	public Feature<?> getFeature() {
 		return feature;
 	}

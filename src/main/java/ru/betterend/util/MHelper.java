@@ -101,6 +101,10 @@ public class MHelper {
 		return (float) Math.sqrt(lengthSqr(x, y, z));
 	}
 	
+	public static double length(double x, double y, double z) {
+		return Math.sqrt(lengthSqr(x, y, z));
+	}
+	
 	public static float lengthSqr(float x, float y) {
 		return x * x + y * y;
 	}

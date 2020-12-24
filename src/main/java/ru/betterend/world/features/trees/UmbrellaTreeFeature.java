@@ -10,14 +10,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import ru.betterend.blocks.BlockUmbrellaTreeMembrane;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
-import ru.betterend.util.sdf.PosInfo;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFFlatWave;
 import ru.betterend.util.sdf.operator.SDFScale3D;
@@ -31,7 +32,6 @@ import ru.betterend.world.features.DefaultFeature;
 public class UmbrellaTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
-	private static final Function<PosInfo, BlockState> POST;
 	private static final List<Vector3f> SPLINE;
 	private static final List<Vector3f> ROOT;
 	
@@ -40,14 +40,15 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
 		
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.getDefaultState();
-		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState();
-		BlockState center = EndBlocks.UMBRELLA_TREE.planks.getDefaultState();
+		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 1);
+		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 0);
 		
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
 		float var = MHelper.PI2 /  (float) (count * 3);
 		float start = MHelper.randRange(0, MHelper.PI2, random);
 		SDF sdf = null;
+		List<Center> centers = Lists.newArrayList();
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2 + MHelper.randRange(0, var, random) + start;
 			List<Vector3f> spline = SplineHelper.copySpline(SPLINE);
@@ -73,6 +74,10 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				float pz = MHelper.floor(vec.getZ()) + 0.5F;
 				mem = new SDFTranslate().setTranslate(px, py, pz).setSource(mem);
 				sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(mem);
+				centers.add(new Center(pos.getX() + (double) px, pos.getZ() + (double) pz, radius));
+				
+				vec = spline.get(0);
+				makeRoots(world, pos.add(vec.getX(), vec.getY() + 2, vec.getZ()), size * 0.3F + 3, random, wood);
 			}
 		}
 		
@@ -80,8 +85,27 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			return false;
 		}
 		
-		sdf.setReplaceFunction(REPLACE).setPostProcess(POST).fillRecursiveIgnore(world, pos, IGNORE);
-		makeRoots(world, pos.add(0, 2, 0), size * 0.3F + 3, random, wood);
+		sdf.setReplaceFunction(REPLACE).setPostProcess((info) -> {
+			if (EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateUp()) && EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateDown())) {
+				return EndBlocks.UMBRELLA_TREE.log.getDefaultState();
+			}
+			else if (info.getState().equals(membrane)) {
+				Center min = centers.get(0);
+				double d = Double.MAX_VALUE;
+				BlockPos bpos = info.getPos();
+				for (Center c: centers) {
+					double d2 = c.distance(bpos.getX(), bpos.getZ());
+					if (d2 < d) {
+						d = d2;
+						min = c;
+					}
+				}
+				int color = MHelper.floor(d / min.radius * 7);
+				color = MathHelper.clamp(color, 1, 7);
+				return info.getState().with(BlockUmbrellaTreeMembrane.COLOR, color);
+			}
+			return info.getState();
+		}).fillRecursiveIgnore(world, pos, IGNORE);
 		
 		return true;
 	}
@@ -132,7 +156,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			new Vector3f(0.50F, 1.00F, 0.00F)
 		);
 		
-		ROOT = Lists.newArrayList(new Vector3f(0F, 1F, 0),
+		ROOT = Lists.newArrayList(
 			new Vector3f(0.1F,  0.70F, 0),
 			new Vector3f(0.3F,  0.30F, 0),
 			new Vector3f(0.7F,  0.05F, 0),
@@ -150,12 +174,21 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		IGNORE = (state) -> {
 			return EndBlocks.UMBRELLA_TREE.isTreeLog(state);
 		};
+	}
+	
+	private class Center {
+		final double px;
+		final double pz;
+		final float radius;
 		
-		POST = (info) -> {
-			if (EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateUp()) && EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateDown())) {
-				return EndBlocks.UMBRELLA_TREE.log.getDefaultState();
-			}
-			return info.getState();
-		};
+		Center(double x, double z, float radius) {
+			this.px = x;
+			this.pz = z;
+			this.radius = radius;
+		}
+		
+		double distance(float x, float z) {
+			return MHelper.length(px - x, pz - z);
+		}
 	}
 }

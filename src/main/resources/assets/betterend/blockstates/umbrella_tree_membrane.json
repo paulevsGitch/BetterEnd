@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"color=0": { "model": "betterend:block/umbrella_tree_membrane_0" },
+		"color=1": { "model": "betterend:block/umbrella_tree_membrane_1" },
+		"color=2": { "model": "betterend:block/umbrella_tree_membrane_2" },
+		"color=3": { "model": "betterend:block/umbrella_tree_membrane_3" },
+		"color=4": { "model": "betterend:block/umbrella_tree_membrane_4" },
+		"color=5": { "model": "betterend:block/umbrella_tree_membrane_5" },
+		"color=6": { "model": "betterend:block/umbrella_tree_membrane_6" },
+		"color=7": { "model": "betterend:block/umbrella_tree_membrane_7" }
+	}
+}

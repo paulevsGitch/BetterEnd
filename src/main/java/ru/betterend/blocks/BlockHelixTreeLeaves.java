@@ -25,11 +25,13 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.interfaces.IColorProvider;
+import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
 public class BlockHelixTreeLeaves extends BlockBase implements IColorProvider {
 	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
+	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public BlockHelixTreeLeaves() {
 		super(FabricBlockSettings.of(Material.LEAVES)
@@ -61,7 +63,10 @@ public class BlockHelixTreeLeaves extends BlockBase implements IColorProvider {
 	
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return this.getDefaultState().with(COLOR, MHelper.randRange(3, 5, ctx.getWorld().getRandom()));
+		double px = ctx.getBlockPos().getX() * 0.1;
+		double py = ctx.getBlockPos().getY() * 0.1;
+		double pz = ctx.getBlockPos().getZ() * 0.1;
+		return this.getDefaultState().with(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
 	
 	private int getGreen(int color) {

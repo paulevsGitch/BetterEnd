@@ -63,6 +63,8 @@ import ru.betterend.blocks.BlockTenaneaFlowers;
 import ru.betterend.blocks.BlockTenaneaSapling;
 import ru.betterend.blocks.BlockTerrain;
 import ru.betterend.blocks.BlockTerrainPlant;
+import ru.betterend.blocks.BlockTwistedUmbrellaMoss;
+import ru.betterend.blocks.BlockTwistedUmbrellaMossTall;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
 import ru.betterend.blocks.BlockUmbrellaTreeMembrane;
@@ -186,6 +188,8 @@ public class EndBlocks {
 	public static final Block SHADOW_PLANT = registerBlock("shadow_plant", new BlockTerrainPlant(SHADOW_GRASS));
 	public static final Block BUSHY_GRASS = registerBlock("bushy_grass", new BlockTerrainPlant(PINK_MOSS));
 	public static final Block AMBER_GRASS = registerBlock("amber_grass", new BlockTerrainPlant(AMBER_MOSS));
+	public static final Block TWISTED_UMBRELLA_MOSS = registerBlock("twisted_umbrella_moss", new BlockTwistedUmbrellaMoss());
+	public static final Block TWISTED_UMBRELLA_MOSS_TALL = registerBlock("twisted_umbrella_moss_tall", new BlockTwistedUmbrellaMossTall());
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlockBlueVineSeed());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());

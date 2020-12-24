@@ -12,6 +12,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.setFogDensity(2.3F)
 				.setSurface(EndBlocks.END_MOSS)
 				.addFeature(EndFeatures.UMBRELLA_TREE)
+				.addFeature(EndFeatures.TWISTED_UMBRELLA_MOSS)
 				.addFeature(EndFeatures.UMBRELLA_MOSS)
 				.addFeature(EndFeatures.END_LAKE));
 	}

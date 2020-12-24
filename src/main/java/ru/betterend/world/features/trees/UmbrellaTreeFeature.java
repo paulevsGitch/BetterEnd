@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -17,10 +18,12 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockUmbrellaTreeMembrane;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFFlatWave;
+import ru.betterend.util.sdf.operator.SDFScale;
 import ru.betterend.util.sdf.operator.SDFScale3D;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
@@ -31,7 +34,6 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class UmbrellaTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
-	private static final Function<BlockState, Boolean> IGNORE;
 	private static final List<Vector3f> SPLINE;
 	private static final List<Vector3f> ROOT;
 	
@@ -42,6 +44,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.getDefaultState();
 		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 1);
 		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 0);
+		BlockState fruit = EndBlocks.GLOWING_PILLAR_LUMINOPHOR.getDefaultState();
 		
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
@@ -49,17 +52,23 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		float start = MHelper.randRange(0, MHelper.PI2, random);
 		SDF sdf = null;
 		List<Center> centers = Lists.newArrayList();
+		
+		float scale = 1;
+		if (config != null) {
+			scale = MHelper.randRange(1F, 2F, random);
+		}
+		
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2 + MHelper.randRange(0, var, random) + start;
 			List<Vector3f> spline = SplineHelper.copySpline(SPLINE);
 			float sizeXZ = (size + MHelper.randRange(0, size * 0.5F, random)) * 0.7F;
 			SplineHelper.scale(spline, sizeXZ, sizeXZ * MHelper.randRange(1F, 2F, random), sizeXZ);
-			SplineHelper.offset(spline, new Vector3f((20 - size) * 0.2F, 0, 0));
+			//SplineHelper.offset(spline, new Vector3f((20 - size) * 0.2F, 0, 0));
 			SplineHelper.rotateSpline(spline, angle);
 			SplineHelper.offsetParts(spline, random, 0.5F, 0, 0.5F);
 			
 			if (SplineHelper.canGenerate(spline, pos, world, REPLACE)) {
-				SDF branch = SplineHelper.buildSDF(spline, 1.2F, 0.8F, (bpos) -> {
+				SDF branch = SplineHelper.buildSDF(spline, 1.2F * scale, 0.8F * scale, (bpos) -> {
 					return wood;
 				});
 	
@@ -74,15 +83,18 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				float pz = MHelper.floor(vec.getZ()) + 0.5F;
 				mem = new SDFTranslate().setTranslate(px, py, pz).setSource(mem);
 				sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(mem);
-				centers.add(new Center(pos.getX() + (double) px, pos.getZ() + (double) pz, radius));
+				centers.add(new Center(pos.getX() + (double) (px * scale), pos.getY() + (double) (py * scale), pos.getZ() + (double) (pz * scale), radius * scale));
 				
 				vec = spline.get(0);
-				makeRoots(world, pos.add(vec.getX(), vec.getY() + 2, vec.getZ()), size * 0.3F + 3, random, wood);
 			}
 		}
 		
 		if (sdf == null) {
 			return false;
+		}
+		
+		if (scale > 1) {
+			sdf = new SDFScale().setScale(scale).setSource(sdf);
 		}
 		
 		sdf.setReplaceFunction(REPLACE).setPostProcess((info) -> {
@@ -105,7 +117,23 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				return info.getState().with(BlockUmbrellaTreeMembrane.COLOR, color);
 			}
 			return info.getState();
-		}).fillRecursiveIgnore(world, pos, IGNORE);
+		}).fillRecursive(world, pos);
+		
+		for (Center c: centers) {
+			if (!world.getBlockState(new BlockPos(c.px, c.py, c.pz)).isAir()) {
+				count = random.nextInt(4);
+				float startAngle = random.nextFloat() * MHelper.PI2;
+				for (int i = 0; i < count; i++) {
+					float angle = (float) i / count * MHelper.PI2 + startAngle;
+					float dist = MHelper.randRange(1.8F, 3.4F, random) * scale;
+					double px = c.px + Math.sin(angle) * dist;
+					double pz = c.pz + Math.cos(angle) * dist;
+					makeFruits(world, px, c.py - 1, pz, random, fruit, scale);
+				}
+			}
+		}
+		
+		makeRoots(world, pos.add(0, 2, 0), (size * 0.3F + 3) * scale, random, wood);
 		
 		return true;
 	}
@@ -146,6 +174,27 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		return sphere;
 	}
 	
+	private void makeFruits(StructureWorldAccess world, double px, double py, double pz, Random random, BlockState fruit, float scale) {
+		Mutable mut = new Mutable();
+		int length = MHelper.floor(MHelper.randRange(1F, 3F, random) * scale + 0.5F);
+		for (int i = 0; i < length; i++) {
+			mut.setY(MHelper.floor(py - i));
+			//mut.setX(MHelper.floor(px));
+			//mut.setZ(MHelper.floor(pz));
+			/*if (world.isAir(mut)) {
+				BlocksHelper.setWithoutUpdate(world, mut, fruit);
+			}*/
+			double radius = (1 - (double) i / length) * 0.5;
+			for (int j = 0; j < 2; j++) {
+				mut.setX(MHelper.floor(random.nextGaussian() * radius + px + 0.5));
+				mut.setZ(MHelper.floor(random.nextGaussian() * radius + pz + 0.5));
+				if (world.isAir(mut)) {
+					BlocksHelper.setWithoutUpdate(world, mut, fruit);
+				}
+			}
+		}
+	}
+	
 	static {
 		SPLINE = Lists.newArrayList(
 			new Vector3f(0.00F, 0.00F, 0.00F),
@@ -165,24 +214,22 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
+			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.isOf(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();
-		};
-		
-		IGNORE = (state) -> {
-			return EndBlocks.UMBRELLA_TREE.isTreeLog(state);
 		};
 	}
 	
 	private class Center {
 		final double px;
+		final double py;
 		final double pz;
 		final float radius;
 		
-		Center(double x, double z, float radius) {
+		Center(double x, double y, double z, float radius) {
 			this.px = x;
+			this.py = y;
 			this.pz = z;
 			this.radius = radius;
 		}

@@ -1,5 +1,6 @@
 package ru.betterend.blocks;
 
+import java.io.Reader;
 import java.util.Random;
 
 import net.fabricmc.api.EnvType;
@@ -21,18 +22,22 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
-public class BlockVentBubbleColumn extends Block implements FluidDrainable, FluidFillable {
+public class BlockVentBubbleColumn extends Block implements FluidDrainable, FluidFillable, BlockPatterned {
 	public BlockVentBubbleColumn() {
 		super(FabricBlockSettings.of(Material.BUBBLE_COLUMN).nonOpaque().noCollision().dropsNothing());
 	}
@@ -119,5 +124,21 @@ public class BlockVentBubbleColumn extends Block implements FluidDrainable, Flui
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return Fluids.WATER.getStill(false);
+	}
+	
+	@Override
+	public String getStatesPattern(Reader data) {
+		String block = Registry.BLOCK.getId(this).getPath();
+		return Patterns.createJson(data, block, block);
+	}
+	
+	@Override
+	public String getModelPattern(String block) {
+		return Patterns.createJson(Patterns.BLOCK_EMPTY, "stone", "stone");
+	}
+	
+	@Override
+	public Identifier statePatternId() {
+		return Patterns.STATE_SIMPLE;
 	}
 }

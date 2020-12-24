@@ -118,6 +118,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);
+		makeRoots(world, pos.add(0, 2, 0), (size * 0.3F + 3) * scale, random, wood);
 		
 		for (Center c: centers) {
 			if (!world.getBlockState(new BlockPos(c.px, c.py, c.pz)).isAir()) {
@@ -133,8 +134,6 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			}
 		}
 		
-		makeRoots(world, pos.add(0, 2, 0), (size * 0.3F + 3) * scale, random, wood);
-		
 		return true;
 	}
 	
@@ -149,7 +148,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
 			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(EndTags.GEN_TERRAIN)) {
-				SplineHelper.fillSpline(branch, world, wood, pos, REPLACE);
+				SplineHelper.fillSplineForce(branch, world, wood, pos, REPLACE);
 			}
 		}
 	}

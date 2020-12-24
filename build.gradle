@@ -1,7 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
-	id 'maven'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -19,6 +18,8 @@ repositories {
 	maven { url 'https://jitpack.io' }
 	jcenter()
 }
+
+apply plugin: 'maven'
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"

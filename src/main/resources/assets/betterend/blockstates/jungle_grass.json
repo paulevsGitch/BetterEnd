@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/jungle_grass_01" },
+			{ "model": "betterend:block/jungle_grass_02" },
+			{ "model": "betterend:block/jungle_grass_03" },
+			{ "model": "betterend:block/jungle_grass_04" }
+		]
+	}
+}

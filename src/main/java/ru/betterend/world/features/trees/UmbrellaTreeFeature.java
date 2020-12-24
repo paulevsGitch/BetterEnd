@@ -180,11 +180,6 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		int length = MHelper.floor(MHelper.randRange(1F, 5F, random) * scale + 0.5F);
 		for (int i = 0; i < length; i++) {
 			mut.setY(MHelper.floor(py - i));
-			//mut.setX(MHelper.floor(px));
-			//mut.setZ(MHelper.floor(pz));
-			/*if (world.isAir(mut)) {
-				BlocksHelper.setWithoutUpdate(world, mut, fruit);
-			}*/
 			double radius = (1 - (double) i / length) * 0.5;
 			for (int j = 0; j < 2; j++) {
 				mut.setX(MHelper.floor(random.nextGaussian() * radius + px + 0.5));

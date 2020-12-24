@@ -115,7 +115,6 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		sphere = new SDFTranslate().setTranslate(0, offsetY, 0).setSource(sphere);
 		
 		int leafCount = (int) (radius * 0.5F) + 2;
-		System.out.println("Origin " + pos);
 		for (int i = 0; i < 4; i++) {
 			float angle = (float) i / 4 * MHelper.PI2;
 			List<Vector3f> spline = SplineHelper.copySpline(LEAF);

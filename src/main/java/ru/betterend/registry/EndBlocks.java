@@ -194,6 +194,7 @@ public class EndBlocks {
 	public static final Block AMBER_GRASS = registerBlock("amber_grass", new BlockTerrainPlant(AMBER_MOSS));
 	public static final Block TWISTED_UMBRELLA_MOSS = registerBlock("twisted_umbrella_moss", new BlockTwistedUmbrellaMoss());
 	public static final Block TWISTED_UMBRELLA_MOSS_TALL = registerBlock("twisted_umbrella_moss_tall", new BlockTwistedUmbrellaMossTall());
+	public static final Block JUNGLE_GRASS = registerBlock("jungle_grass", new BlockTerrainPlant(JUNGLE_MOSS));
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlockBlueVineSeed());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlockBlueVine());

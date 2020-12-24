@@ -15,6 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import ru.betterend.blocks.BlockUmbrellaTreeCluster;
 import ru.betterend.blocks.BlockUmbrellaTreeMembrane;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -44,7 +45,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.getDefaultState();
 		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 1);
 		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 0);
-		BlockState fruit = EndBlocks.GLOWING_PILLAR_LUMINOPHOR.getDefaultState();
+		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.getDefaultState().with(BlockUmbrellaTreeCluster.NATURAL, true);
 		
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
@@ -55,7 +56,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		
 		float scale = 1;
 		if (config != null) {
-			scale = MHelper.randRange(1F, 2F, random);
+			scale = MHelper.randRange(1F, 1.7F, random);
 		}
 		
 		for (int i = 0; i < count; i++) {
@@ -68,7 +69,8 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			SplineHelper.offsetParts(spline, random, 0.5F, 0, 0.5F);
 			
 			if (SplineHelper.canGenerate(spline, pos, world, REPLACE)) {
-				SDF branch = SplineHelper.buildSDF(spline, 1.2F * scale, 0.8F * scale, (bpos) -> {
+				float rScale = (scale - 1) * 0.4F + 1;
+				SDF branch = SplineHelper.buildSDF(spline, 1.2F * rScale, 0.8F * rScale, (bpos) -> {
 					return wood;
 				});
 	
@@ -118,11 +120,11 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);
-		makeRoots(world, pos.add(0, 2, 0), (size * 0.3F + 3) * scale, random, wood);
+		makeRoots(world, pos, (size * 0.5F + 3) * scale, random, wood);
 		
 		for (Center c: centers) {
 			if (!world.getBlockState(new BlockPos(c.px, c.py, c.pz)).isAir()) {
-				count = random.nextInt(4);
+				count = MHelper.floor(MHelper.randRange(1F, 5F, random) * scale);
 				float startAngle = random.nextFloat() * MHelper.PI2;
 				for (int i = 0; i < count; i++) {
 					float angle = (float) i / count * MHelper.PI2 + startAngle;
@@ -175,7 +177,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 	
 	private void makeFruits(StructureWorldAccess world, double px, double py, double pz, Random random, BlockState fruit, float scale) {
 		Mutable mut = new Mutable();
-		int length = MHelper.floor(MHelper.randRange(1F, 3F, random) * scale + 0.5F);
+		int length = MHelper.floor(MHelper.randRange(1F, 5F, random) * scale + 0.5F);
 		for (int i = 0; i < length; i++) {
 			mut.setY(MHelper.floor(py - i));
 			//mut.setX(MHelper.floor(px));

@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterend:block/jungle_moss"
+				},
+				{
+					"model": "betterend:block/jungle_moss",
+					"y": 90
+				},
+				{
+					"model": "betterend:block/jungle_moss",
+					"y": 180
+				},
+				{
+					"model": "betterend:block/jungle_moss",
+					"y": 270
+				}
+		]
+	}
+}

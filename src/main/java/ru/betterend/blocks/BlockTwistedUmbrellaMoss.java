@@ -21,7 +21,7 @@ public class BlockTwistedUmbrellaMoss extends BlockPlant {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;
+		return state.isOf(EndBlocks.END_MOSS) || state.isOf(EndBlocks.END_MYCELIUM) || state.isOf(EndBlocks.JUNGLE_MOSS);
 	}
 	
 	@Environment(EnvType.CLIENT)

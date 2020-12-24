@@ -67,6 +67,8 @@ import ru.betterend.blocks.BlockTwistedUmbrellaMoss;
 import ru.betterend.blocks.BlockTwistedUmbrellaMossTall;
 import ru.betterend.blocks.BlockUmbrellaMoss;
 import ru.betterend.blocks.BlockUmbrellaMossTall;
+import ru.betterend.blocks.BlockUmbrellaTreeCluster;
+import ru.betterend.blocks.BlockUmbrellaTreeClusterEmpty;
 import ru.betterend.blocks.BlockUmbrellaTreeMembrane;
 import ru.betterend.blocks.BlockVentBubbleColumn;
 import ru.betterend.blocks.EndPortalBlock;
@@ -105,6 +107,7 @@ public class EndBlocks {
 	public static final Block SHADOW_GRASS = registerBlock("shadow_grass", new BlockShadowGrass());
 	public static final Block PINK_MOSS = registerBlock("pink_moss", new BlockTerrain(MaterialColor.PINK));
 	public static final Block AMBER_MOSS = registerBlock("amber_moss", new BlockTerrain(MaterialColor.ORANGE));
+	public static final Block JUNGLE_MOSS = registerBlock("jungle_moss", new BlockTerrain(MaterialColor.ORANGE));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BlockPath(END_MYCELIUM));
@@ -115,6 +118,7 @@ public class EndBlocks {
 	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new BlockPath(SHADOW_GRASS));
 	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new BlockPath(PINK_MOSS));
 	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new BlockPath(AMBER_MOSS));
+	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new BlockPath(JUNGLE_MOSS));
 	
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
@@ -237,6 +241,9 @@ public class EndBlocks {
 	
 	// Crops //
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new BlockShadowBerry());
+	
+	public static final Block UMBRELLA_TREE_CLUSTER = registerBlock("umbrella_tree_cluster", new BlockUmbrellaTreeCluster());
+	public static final Block UMBRELLA_TREE_CLUSTER_EMPTY = registerBlock("umbrella_tree_cluster_empty", new BlockUmbrellaTreeClusterEmpty());
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));

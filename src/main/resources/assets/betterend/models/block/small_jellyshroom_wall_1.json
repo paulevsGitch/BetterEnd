@@ -5,7 +5,7 @@
 		"branch_1": "betterend:block/jellyshroom_wall_stem_1",
 		"branch_2": "betterend:block/jellyshroom_wall_stem_2",
 		"branch_3": "betterend:block/jellyshroom_wall_stem_3",
-		"cap": "betterend:block/jellyshroom_cap"
+		"cap": "betterend:block/jellyshroom_cap_small"
 	},
 	"elements": [ 	 
 		{

@@ -523,5 +523,27 @@
 	"block.betterend.umbrella_tree_cluster": "Umbrella Tree Cluster",
 	"block.betterend.umbrella_tree_cluster_empty": "Empty Umbrella Tree Cluster",
 	"block.betterend.jungle_vine": "Jungle Vine",
-	"block.betterend.jungle_fern": "Jungle Fern"
+	"block.betterend.jungle_fern": "Jungle Fern",
+	
+	"block.betterend.jellyshroom_bark": "Jellyshroom Bark",
+	"block.betterend.jellyshroom_barrel": "Jellyshroom Barrel",
+	"block.betterend.jellyshroom_bookshelf": "Jellyshroom Bookshelf",
+	"block.betterend.jellyshroom_button": "Jellyshroom Button",
+	"block.betterend.jellyshroom_cap_purple": "Purple Jellyshroom Cap",
+	"block.betterend.jellyshroom_chest": "Jellyshroom Chest",
+	"block.betterend.jellyshroom_composter": "Jellyshroom Composter",
+	"block.betterend.jellyshroom_crafting_table": "Jellyshroom Crafting Table",
+	"block.betterend.jellyshroom_door": "Jellyshroom Door",
+	"block.betterend.jellyshroom_fence": "Jellyshroom Fence",
+	"block.betterend.jellyshroom_gate": "Jellyshroom Gate",
+	"block.betterend.jellyshroom_ladder": "Jellyshroom Ladder",
+	"block.betterend.jellyshroom_log": "Jellyshroom Log",
+	"block.betterend.jellyshroom_planks": "Jellyshroom Planks",
+	"block.betterend.jellyshroom_plate": "Jellyshroom Pressure Plate",
+	"block.betterend.jellyshroom_sign": "Jellyshroom Sign",
+	"block.betterend.jellyshroom_slab": "Jellyshroom Slab",
+	"block.betterend.jellyshroom_stairs": "Jellyshroom Stairs",
+	"block.betterend.jellyshroom_stripped_bark": "Stripped Jellyshroom Bark",
+	"block.betterend.jellyshroom_stripped_log": "Stripped Jellyshroom Log",
+	"block.betterend.jellyshroom_trapdoor": "Jellyshroom Trapdoor"
 }

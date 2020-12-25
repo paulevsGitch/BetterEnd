@@ -1,0 +1,6 @@
+{
+	"parent": "betterend:block/tint_cube",
+	"textures": {
+		"texture": "betterend:block/%texture%"
+	}
+}

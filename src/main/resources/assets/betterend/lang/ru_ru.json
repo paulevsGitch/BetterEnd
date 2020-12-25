@@ -525,5 +525,27 @@
 	"block.betterend.umbrella_tree_cluster": "Кластер зонтичного дерева",
 	"block.betterend.umbrella_tree_cluster_empty": "Пустой кластер хонтичного дерева",
 	"block.betterend.jungle_vine": "Лоза джунглей",
-	"block.betterend.jungle_fern": "Папоротник джунглей"
+	"block.betterend.jungle_fern": "Папоротник джунглей",
+	
+	"block.betterend.jellyshroom_bark": "Кора желейного гриба",
+	"block.betterend.jellyshroom_barrel": "Бочка из желейного гриба",
+	"block.betterend.jellyshroom_bookshelf": "Книжные полки из желейного гриба",
+	"block.betterend.jellyshroom_button": "Кнопка из желейного гриба",
+	"block.betterend.jellyshroom_cap_purple": "Пурпурная шляпка желейного гриба",
+	"block.betterend.jellyshroom_chest": "Сундук из желейного гриба",
+	"block.betterend.jellyshroom_composter": "Компостер из желейного гриба",
+	"block.betterend.jellyshroom_crafting_table": "Верстак из желейного гриба",
+	"block.betterend.jellyshroom_door": "Дверь из желейного гриба",
+	"block.betterend.jellyshroom_fence": "Забор из желейного гриба",
+	"block.betterend.jellyshroom_gate": "Калитка из желейного гриба",
+	"block.betterend.jellyshroom_ladder": "Лестница из желейного гриба",
+	"block.betterend.jellyshroom_log": "Бревно желейного гриба",
+	"block.betterend.jellyshroom_planks": "Доски из желейного гриба",
+	"block.betterend.jellyshroom_plate": "Нажимная плита из желейного гриба",
+	"block.betterend.jellyshroom_sign": "Табличка из желейного гриба",
+	"block.betterend.jellyshroom_slab": "Плита из желейного гриба",
+	"block.betterend.jellyshroom_stairs": "Ступени из желейного гриба",
+	"block.betterend.jellyshroom_stripped_bark": "Обтёсанная кора желейного гриба",
+	"block.betterend.jellyshroom_stripped_log": "Обтёсанное бревно желейного гриба",
+	"block.betterend.jellyshroom_trapdoor": "Люк из желейного гриба"
 }

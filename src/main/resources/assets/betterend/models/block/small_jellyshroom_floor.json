@@ -3,7 +3,7 @@
 	"textures": {
 		"particle": "betterend:block/small_jellyshroom_stem",
 		"texture": "betterend:block/small_jellyshroom_stem",
-		"cap": "betterend:block/jellyshroom_cap"
+		"cap": "betterend:block/jellyshroom_cap_small"
 	},
 	"elements": [ 	 
 		{

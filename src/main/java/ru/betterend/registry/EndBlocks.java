@@ -42,6 +42,7 @@ import ru.betterend.blocks.BlockHydraluxPetal;
 import ru.betterend.blocks.BlockHydraluxPetalColored;
 import ru.betterend.blocks.BlockHydraluxSapling;
 import ru.betterend.blocks.BlockHydrothermalVent;
+import ru.betterend.blocks.BlockJellyshroomCap;
 import ru.betterend.blocks.BlockLacugroveSapling;
 import ru.betterend.blocks.BlockLanceleaf;
 import ru.betterend.blocks.BlockLanceleafSeed;
@@ -184,6 +185,9 @@ public class EndBlocks {
 	public static final Block UMBRELLA_TREE_CLUSTER = registerBlock("umbrella_tree_cluster", new BlockUmbrellaTreeCluster());
 	public static final Block UMBRELLA_TREE_CLUSTER_EMPTY = registerBlock("umbrella_tree_cluster_empty", new BlockUmbrellaTreeClusterEmpty());
 	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
+	
+	public static final Block JELLYSHROOM_CAP_PURPLE = registerBlock("jellyshroom_cap_purple", new BlockJellyshroomCap(255, 0, 255));
+	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
 	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new BlockUmbrellaMoss());

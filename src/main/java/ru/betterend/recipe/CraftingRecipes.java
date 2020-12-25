@@ -98,7 +98,7 @@ public class CraftingRecipes {
 		GridRecipe.make("blue_vine_seed_dye", Items.BLUE_DYE).setList("#").addMaterial('#', EndBlocks.BLUE_VINE_SEED).build();
 		GridRecipe.make("creeping_moss_dye", Items.CYAN_DYE).setList("#").addMaterial('#', EndBlocks.CREEPING_MOSS).build();
 		GridRecipe.make("umbrella_moss_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', EndBlocks.UMBRELLA_MOSS).build();
-		GridRecipe.make("umbrella_moss_tall_dye", Items.YELLOW_DYE).setList("#").addMaterial('#', EndBlocks.UMBRELLA_MOSS_TALL).build();
+		GridRecipe.make("umbrella_moss_tall_dye", Items.YELLOW_DYE).setOutputCount(2).setList("#").addMaterial('#', EndBlocks.UMBRELLA_MOSS_TALL).build();
 		GridRecipe.make("shadow_plant_dye", Items.BLACK_DYE).setList("#").addMaterial('#', EndBlocks.SHADOW_PLANT).build();
 		
 		GridRecipe.make("paper", Items.PAPER).setShape("###").addMaterial('#', EndItems.END_LILY_LEAF_DRIED).setOutputCount(3).build();
@@ -179,6 +179,9 @@ public class CraftingRecipes {
 		.addMaterial('S', Items.SHULKER_SHELL)
 		.addMaterial('C', EndTags.ITEM_CHEST)
 		.build();
+		
+		GridRecipe.make("twisted_umbrella_moss_dye", Items.PURPLE_DYE).setList("#").addMaterial('#', EndBlocks.TWISTED_UMBRELLA_MOSS).build();
+		GridRecipe.make("twisted_umbrella_moss_dye_tall", Items.PURPLE_DYE).setOutputCount(2).setList("#").addMaterial('#', EndBlocks.TWISTED_UMBRELLA_MOSS_TALL).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

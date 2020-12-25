@@ -181,6 +181,8 @@ public class EndBlocks {
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
 	
 	public static final Block UMBRELLA_TREE_MEMBRANE = registerBlock("umbrella_tree_membrane", new BlockUmbrellaTreeMembrane());
+	public static final Block UMBRELLA_TREE_CLUSTER = registerBlock("umbrella_tree_cluster", new BlockUmbrellaTreeCluster());
+	public static final Block UMBRELLA_TREE_CLUSTER_EMPTY = registerBlock("umbrella_tree_cluster_empty", new BlockUmbrellaTreeClusterEmpty());
 	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
 	
 	// Small Plants //
@@ -246,9 +248,6 @@ public class EndBlocks {
 	
 	// Crops //
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new BlockShadowBerry());
-	
-	public static final Block UMBRELLA_TREE_CLUSTER = registerBlock("umbrella_tree_cluster", new BlockUmbrellaTreeCluster());
-	public static final Block UMBRELLA_TREE_CLUSTER_EMPTY = registerBlock("umbrella_tree_cluster_empty", new BlockUmbrellaTreeClusterEmpty());
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new BlockVine(15, true));

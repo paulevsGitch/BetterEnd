@@ -22,6 +22,11 @@
 			{ "model": "betterend:block/small_jellyshroom_floor", "y": 180 },
 			{ "model": "betterend:block/small_jellyshroom_floor", "y": 270 }
 		],
-        "facing=down":  { "model": "betterend:block/glowing_pillar_leaves_up", "x": 180 }
+        "facing=down":  [
+			{ "model": "betterend:block/small_jellyshroom_ceil" },
+			{ "model": "betterend:block/small_jellyshroom_ceil", "y": 90 },
+			{ "model": "betterend:block/small_jellyshroom_ceil", "y": 180 },
+			{ "model": "betterend:block/small_jellyshroom_ceil", "y": 270 }
+		]
     }
 }

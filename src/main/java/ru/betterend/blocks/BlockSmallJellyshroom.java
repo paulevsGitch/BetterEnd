@@ -61,7 +61,7 @@ public class BlockSmallJellyshroom extends BlockAttached implements IRenderTypea
 	
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Block.createCuboidShape(3, 0, 3, 13, 16, 13));
-		BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.cuboid(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.DOWN, Block.createCuboidShape(3, 0, 3, 13, 16, 13));
 		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.cuboid(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
 		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.cuboid(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
 		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.cuboid(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));

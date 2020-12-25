@@ -18,13 +18,17 @@ public class BonemealUtil {
 		addBonemealGrass(EndBlocks.END_MOSS, EndBlocks.UMBRELLA_MOSS);
 		addBonemealGrass(EndBlocks.END_MYCELIUM, EndBlocks.CREEPING_MOSS);
 		addBonemealGrass(EndBlocks.END_MYCELIUM, EndBlocks.UMBRELLA_MOSS);
+		
 		addBonemealGrass(EndBlocks.CAVE_MOSS, EndBlocks.CAVE_GRASS);
 		addBonemealGrass(EndBlocks.CHORUS_NYLIUM, EndBlocks.CHORUS_GRASS);
 		addBonemealGrass(EndBlocks.CRYSTAL_MOSS, EndBlocks.CRYSTAL_GRASS);
 		addBonemealGrass(EndBlocks.SHADOW_GRASS, EndBlocks.SHADOW_PLANT);
 		addBonemealGrass(EndBlocks.PINK_MOSS, EndBlocks.BUSHY_GRASS);
 		addBonemealGrass(EndBlocks.AMBER_MOSS, EndBlocks.AMBER_GRASS);
+		
 		addBonemealGrass(EndBlocks.JUNGLE_MOSS, EndBlocks.JUNGLE_GRASS);
+		addBonemealGrass(EndBlocks.JUNGLE_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS);
+		addBonemealGrass(EndBlocks.JUNGLE_MOSS, EndBlocks.SMALL_JELLYSHROOM, 0.1F);
 	}
 	
 	public static void addBonemealGrass(Block terrain, Block plant) {

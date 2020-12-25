@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"shape=top": [
+			{ "model": "betterend:block/jungle_vine_middle_1" },
+			{ "model": "betterend:block/jungle_vine_middle_2" }
+		],
+		"shape=middle": [
+			{ "model": "betterend:block/jungle_vine_middle_1" },
+			{ "model": "betterend:block/jungle_vine_middle_2" }
+		],
+		"shape=bottom": [
+			{ "model": "betterend:block/jungle_vine_bottom_1" },
+			{ "model": "betterend:block/jungle_vine_bottom_2" }
+		]
+	}
+}

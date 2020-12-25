@@ -89,6 +89,7 @@ public class EndFeatures {
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);
 	public static final EndFeature TWISTED_VINE = new EndFeature("twisted_vine", new VineFeature(EndBlocks.TWISTED_VINE, 24), 3);
 	public static final EndFeature BULB_VINE = new EndFeature("bulb_vine", new VineFeature(EndBlocks.BULB_VINE, 24), 5);
+	public static final EndFeature JUNGLE_VINE = new EndFeature("jungle_vine", new VineFeature(EndBlocks.JUNGLE_VINE, 24), 5);
 	
 	// Ceil plants
 	public static final EndFeature SMALL_JELLYSHROOM_CEIL = new EndFeature("small_jellyshroom_ceil", new SingleInvertedScatterFeature(EndBlocks.SMALL_JELLYSHROOM, 8), 8);
@@ -104,8 +105,8 @@ public class EndFeatures {
 	public static final EndFeature TWISTED_MOSS_WOOD = new EndFeature("twisted_moss_wood", new WallPlantOnLogFeature(EndBlocks.TWISTED_MOSS, 6), 25);
 	public static final EndFeature BULB_MOSS = new EndFeature("bulb_moss", new WallPlantFeature(EndBlocks.BULB_MOSS, 6), 1);
 	public static final EndFeature BULB_MOSS_WOOD = new EndFeature("bulb_moss_wood", new WallPlantOnLogFeature(EndBlocks.BULB_MOSS, 6), 15);
-	public static final EndFeature SMALL_JELLYSHROOM_WALL = new EndFeature("small_jellyshroom_wall", new WallPlantFeature(EndBlocks.SMALL_JELLYSHROOM, 6), 4);
-	public static final EndFeature SMALL_JELLYSHROOM_WOOD = new EndFeature("small_jellyshroom_wood", new WallPlantOnLogFeature(EndBlocks.SMALL_JELLYSHROOM, 6), 8);
+	public static final EndFeature SMALL_JELLYSHROOM_WALL = new EndFeature("small_jellyshroom_wall", new WallPlantFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 4);
+	public static final EndFeature SMALL_JELLYSHROOM_WOOD = new EndFeature("small_jellyshroom_wood", new WallPlantOnLogFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 8);
 	
 	// Water //
 	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 6), 10);

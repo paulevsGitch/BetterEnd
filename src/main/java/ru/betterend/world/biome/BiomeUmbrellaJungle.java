@@ -21,6 +21,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.addFeature(EndFeatures.SMALL_JELLYSHROOM_WALL)
 				.addFeature(EndFeatures.SMALL_JELLYSHROOM_WOOD)
 				.addFeature(EndFeatures.SMALL_JELLYSHROOM_CEIL)
+				.addFeature(EndFeatures.JUNGLE_VINE)
 				.addFeature(EndFeatures.CHARNIA_CYAN)
 				.addFeature(EndFeatures.CHARNIA_GREEN)
 				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)

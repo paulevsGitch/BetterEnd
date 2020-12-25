@@ -254,6 +254,7 @@ public class EndBlocks {
 	public static final Block TWISTED_VINE = registerBlock("twisted_vine", new BlockVine());
 	public static final Block BULB_VINE_SEED = registerBlock("bulb_vine_seed", new BlockBulbVineSeed());
 	public static final Block BULB_VINE = registerBlock("bulb_vine", new BlockBulbVine());
+	public static final Block JUNGLE_VINE = registerBlock("jungle_vine", new BlockVine());
 	
 	// Mob-Related
 	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new BlockSilkMothNest()); 

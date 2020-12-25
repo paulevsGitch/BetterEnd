@@ -59,7 +59,8 @@ public class BlockSmallJellyshroom extends BlockAttached implements IRenderTypea
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		Direction direction = (Direction) state.get(FACING);
 		BlockPos blockPos = pos.offset(direction.getOpposite());
-		return sideCoversSmallSquare(world, blockPos, direction) && world.getBlockState(blockPos).isOpaque();
+		BlockState support = world.getBlockState(blockPos);
+		return sideCoversSmallSquare(world, blockPos, direction) && support.isOpaque() && support.getLuminance() == 0;
 	}
 	
 	@Override

@@ -23,6 +23,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.BlockAttached;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -52,6 +53,13 @@ public class BlockSmallJellyshroom extends BlockAttached implements IRenderTypea
 		else {
 			return Lists.newArrayList();
 		}
+	}
+	
+	@Override
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+		Direction direction = (Direction) state.get(FACING);
+		BlockPos blockPos = pos.offset(direction.getOpposite());
+		return sideCoversSmallSquare(world, blockPos, direction) && world.getBlockState(blockPos).isOpaque();
 	}
 	
 	@Override

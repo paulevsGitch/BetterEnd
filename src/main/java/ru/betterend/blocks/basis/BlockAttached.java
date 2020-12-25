@@ -17,11 +17,12 @@ import net.minecraft.world.WorldView;
 import ru.betterend.util.BlocksHelper;
 
 public abstract class BlockAttached extends BlockBaseNotFull {
+	public static final DirectionProperty FACING = Properties.FACING;
+	
 	public BlockAttached(Settings settings) {
 		super(settings);
+		this.setDefaultState(this.getDefaultState().with(FACING, Direction.UP));
 	}
-
-	public static final DirectionProperty FACING = Properties.FACING;
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {

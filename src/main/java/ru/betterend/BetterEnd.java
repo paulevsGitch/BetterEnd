@@ -24,6 +24,7 @@ import ru.betterend.registry.EndItems;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.BonemealUtil;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.surface.SurfaceBuilders;
@@ -52,6 +53,7 @@ public class BetterEnd implements ModInitializer {
 		InfusionRecipes.register();
 		EndStructures.register();
 		Integrations.register();
+		BonemealUtil.init();
 		
 		if (hasGuideBook()) {
 			GuideBook.register();

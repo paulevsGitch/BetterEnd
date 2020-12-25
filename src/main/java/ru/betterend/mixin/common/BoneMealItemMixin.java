@@ -22,6 +22,7 @@ import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.BonemealUtil;
 import ru.betterend.world.biome.EndBiome;
 
 @Mixin(BoneMealItem.class)
@@ -122,25 +123,8 @@ public class BoneMealItemMixin {
 	private BlockState beGetGrassState(World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (block == EndBlocks.END_MOSS || block == EndBlocks.END_MYCELIUM) {
-			return world.random.nextBoolean() ? EndBlocks.CREEPING_MOSS.getDefaultState() : EndBlocks.UMBRELLA_MOSS.getDefaultState();
-		}
-		else if (block == EndBlocks.CAVE_MOSS) {
-			return EndBlocks.CAVE_GRASS.getDefaultState();
-		}
-		else if (block == EndBlocks.CHORUS_NYLIUM) {
-			return EndBlocks.CHORUS_GRASS.getDefaultState();
-		}
-		else if (block == EndBlocks.CRYSTAL_MOSS) {
-			return EndBlocks.CRYSTAL_GRASS.getDefaultState();
-		}
-		else if (block == EndBlocks.SHADOW_GRASS) {
-			return EndBlocks.SHADOW_PLANT.getDefaultState();
-		}
-		else if (block == EndBlocks.PINK_MOSS) {
-			return EndBlocks.BUSHY_GRASS.getDefaultState();
-		}
-		return null;
+		block = BonemealUtil.getGrass(block, world.getRandom());
+		return block == null ? null : block.getDefaultState();
 	}
 	
 	private BlockState beGetWaterGrassState(World world, BlockPos pos) {

@@ -107,7 +107,7 @@ public class EndFeatures {
 	public static final EndFeature BULB_MOSS_WOOD = new EndFeature("bulb_moss_wood", new WallPlantOnLogFeature(EndBlocks.BULB_MOSS, 6), 15);
 	public static final EndFeature SMALL_JELLYSHROOM_WALL = new EndFeature("small_jellyshroom_wall", new WallPlantFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 4);
 	public static final EndFeature SMALL_JELLYSHROOM_WOOD = new EndFeature("small_jellyshroom_wood", new WallPlantOnLogFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 8);
-	public static final EndFeature JUNGLE_FERN_WOOD = new EndFeature("jungle_fern_wood", new WallPlantOnLogFeature(EndBlocks.JUNGLE_FERN, 4), 8);
+	public static final EndFeature JUNGLE_FERN_WOOD = new EndFeature("jungle_fern_wood", new WallPlantOnLogFeature(EndBlocks.JUNGLE_FERN, 3), 12);
 	
 	// Water //
 	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 6), 10);

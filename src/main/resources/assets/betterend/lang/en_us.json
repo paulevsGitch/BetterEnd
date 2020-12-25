@@ -511,5 +511,15 @@
 	"block.betterend.umbrella_tree_stripped_bark": "Stripped Umbrella Tree Bark",
 	"block.betterend.umbrella_tree_stripped_log": "Stripped Umbrella Tree Log",
 	"block.betterend.umbrella_tree_trapdoor": "Umbrella Tree Trapdoor",
-	"block.betterend.umbrella_tree_membrane": "Umbrella Tree Membrane"
+	"block.betterend.umbrella_tree_membrane": "Umbrella Tree Membrane",
+	
+	"biome.betterend.umbrella_jungle": "Umbrella Jungle",
+	"block.betterend.jungle_grass": "Jungle Grass",
+	"block.betterend.jungle_moss": "Jungle Moss",
+	"block.betterend.jungle_moss_path": "Jungle Moss Path",
+	"block.betterend.small_jellyshroom": "Small Jellyshroom",
+	"block.betterend.twisted_umbrella_moss": "Twisted Umbrella Moss",
+	"block.betterend.twisted_umbrella_moss_tall": "Twisted Umbrella Moss Tall",
+	"block.betterend.umbrella_tree_cluster": "Umbrella Tree Cluster",
+	"block.betterend.umbrella_tree_cluster_empty": "Empty Umbrella Tree Cluster"
 }

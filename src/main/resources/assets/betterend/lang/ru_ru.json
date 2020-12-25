@@ -513,5 +513,15 @@
 	"block.betterend.umbrella_tree_stripped_bark": "Обтёсанная кора зонтичного дерева",
 	"block.betterend.umbrella_tree_stripped_log": "Обтёсанное бревно зонтичного дерева",
 	"block.betterend.umbrella_tree_trapdoor": "Люк из зонтичного дерева",
-	"block.betterend.umbrella_tree_membrane": "Мембрана зонтичного дерева"
+	"block.betterend.umbrella_tree_membrane": "Мембрана зонтичного дерева",
+	
+	"biome.betterend.umbrella_jungle": "Зонтичные джунгли",
+	"block.betterend.jungle_grass": "Трава джунглей",
+	"block.betterend.jungle_moss": "Мох джунглей",
+	"block.betterend.jungle_moss_path": "Тропа из мха джунглей",
+	"block.betterend.small_jellyshroom": "Маленький слизнегриб",
+	"block.betterend.twisted_umbrella_moss": "Закрученный зонтичный мох",
+	"block.betterend.twisted_umbrella_moss_tall": "Высокий закрученный зонтичный мох",
+	"block.betterend.umbrella_tree_cluster": "Кластер зонтичного дерева",
+	"block.betterend.umbrella_tree_cluster_empty": "Пустой кластер хонтичного дерева"
 }

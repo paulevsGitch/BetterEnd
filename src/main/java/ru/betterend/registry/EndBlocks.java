@@ -58,6 +58,7 @@ import ru.betterend.blocks.BlockRespawnObelisk;
 import ru.betterend.blocks.BlockShadowBerry;
 import ru.betterend.blocks.BlockShadowGrass;
 import ru.betterend.blocks.BlockSilkMothNest;
+import ru.betterend.blocks.BlockSmallJellyshroom;
 import ru.betterend.blocks.BlockSulphurCrystal;
 import ru.betterend.blocks.BlockTenaneaFlowers;
 import ru.betterend.blocks.BlockTenaneaSapling;
@@ -209,6 +210,9 @@ public class EndBlocks {
 	public static final Block GLOWING_PILLAR_LUMINOPHOR = registerBlock("glowing_pillar_luminophor", new BlockGlowingPillarLuminophor());
 	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new BlockFur(GLOWING_PILLAR_SEED, 15, 3));
 	
+	public static final Block SMALL_JELLYSHROOM = registerBlock("small_jellyshroom", new BlockSmallJellyshroom());
+	
+	// Water plants
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BlockBubbleCoral());
 	public static final Block MENGER_SPONGE = registerBlock("menger_sponge", new BlockMengerSponge());
 	public static final Block MENGER_SPONGE_WET = registerBlock("menger_sponge_wet", new BlockMengerSpongeWet());

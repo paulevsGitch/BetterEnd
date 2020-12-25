@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "betterend:block/jungle_fern", "y": 180 },
+        "facing=south": { "model": "betterend:block/jungle_fern" },
+        "facing=east":  { "model": "betterend:block/jungle_fern", "y": 270 },
+        "facing=west":  { "model": "betterend:block/jungle_fern", "y": 90 }
+    }
+}

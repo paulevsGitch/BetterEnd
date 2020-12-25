@@ -1,0 +1,18 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/jungle_fern_leaf",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_middle",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_spore",
+				"material": "betterend:waving_small"
+			}
+		]
+	}
+}

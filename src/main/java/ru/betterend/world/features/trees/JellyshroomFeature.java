@@ -47,14 +47,14 @@ public class JellyshroomFeature extends DefaultFeature {
 			return bark;
 		});
 		
-		radius = height * MHelper.randRange(0.8F, 1.2F, random);
+		radius = height * MHelper.randRange(0.7F, 0.9F, random);
 		SDF cap = makeCap(radius, random, membrane);
 		Vector3f last = spline.get(spline.size() - 1);
 		cap = new SDFTranslate().setTranslate(last.getX(), last.getY(), last.getZ()).setSource(cap);
 		sdf = new SDFSmoothUnion().setRadius(3F).setSourceA(sdf).setSourceB(cap);
 		sdf.setReplaceFunction(REPLACE).setPostProcess(POST).fillRecursive(world, pos);
-		radius = height * 0.3F;
-		makeRoots(world, pos, radius, random, bark);
+		radius = height * 0.5F;
+		makeRoots(world, pos.add(0, 1, 0), radius, random, bark);
 		
 		return true;
 	}
@@ -70,7 +70,7 @@ public class JellyshroomFeature extends DefaultFeature {
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
 			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(EndTags.GEN_TERRAIN)) {
-				SplineHelper.fillSplineForce(branch, world, wood, pos, REPLACE);
+				SplineHelper.fillSpline(branch, world, wood, pos, REPLACE);
 			}
 		}
 	}

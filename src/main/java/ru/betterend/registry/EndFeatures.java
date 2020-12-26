@@ -60,7 +60,7 @@ public class EndFeatures {
 	public static final EndFeature TENANEA = new EndFeature("tenanea", new TenaneaFeature(), 3);
 	public static final EndFeature HELIX_TREE = new EndFeature("helix_tree", new HelixTreeFeature(), 2);
 	public static final EndFeature UMBRELLA_TREE = new EndFeature("umbrella_tree", new UmbrellaTreeFeature(), 4);
-	public static final EndFeature JELLYSHROOM = new EndFeature("jellyshroom", new JellyshroomFeature(), 2);
+	public static final EndFeature JELLYSHROOM = new EndFeature("jellyshroom", new JellyshroomFeature(), 3);
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark), 4);

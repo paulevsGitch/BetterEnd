@@ -27,6 +27,7 @@ public class EndEntities {
 	public static final EntityType<EntityCubozoa> CUBOZOA = register("cubozoa", SpawnGroup.WATER_AMBIENT, 0.6F, 1F, EntityCubozoa::new, EntityCubozoa.createMobAttributes(), true, MHelper.color(151, 77, 181), MHelper.color(93, 176, 238));
 	
 	public static void register() {
+		SpawnHelper.restrictionAir(DRAGONFLY, EntityDragonfly::canSpawn);
 		SpawnHelper.restrictionLand(END_SLIME, EntityEndSlime::canSpawn);
 		SpawnHelper.restrictionWater(END_FISH, EntityEndFish::canSpawn);
 		SpawnHelper.restrictionLand(SHADOW_WALKER, EntityShadowWalker::canSpawn);

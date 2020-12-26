@@ -1,11 +1,13 @@
 package ru.betterend.entity;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Flutterer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.TargetFinder;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
@@ -26,6 +28,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Heightmap.Type;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import ru.betterend.registry.EndEntities;
@@ -186,5 +190,10 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
 		return EndEntities.DRAGONFLY.create(world);
+	}
+	
+	public static boolean canSpawn(EntityType<EntityDragonfly> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+		int y = world.getChunk(pos).sampleHeightmap(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
+		return y > 0 && pos.getY() >= y;
 	}
 }

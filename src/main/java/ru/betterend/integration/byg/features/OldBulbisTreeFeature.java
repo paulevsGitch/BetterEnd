@@ -1,4 +1,4 @@
-package ru.betterend.integration.byg;
+package ru.betterend.integration.byg.features;
 
 import java.util.List;
 import java.util.Random;

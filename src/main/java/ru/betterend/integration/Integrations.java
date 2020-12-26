@@ -18,6 +18,14 @@ public class Integrations {
 		});
 	}
 	
+	public static void addBiomes() {
+		INTEGRATIONS.forEach((integration) -> {
+			if (integration.modIsInstalled()) {
+				integration.addBiomes();
+			}
+		});
+	}
+	
 	private static ModIntegration register(ModIntegration integration) {
 		INTEGRATIONS.add(integration);
 		return integration;

@@ -2,6 +2,8 @@ package ru.betterend.integration.byg;
 
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.ModIntegration;
+import ru.betterend.integration.byg.biomes.BYGBiomes;
+import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.TagHelper;
 
@@ -16,5 +18,10 @@ public class BYGIntegration extends ModIntegration {
 		BYGBlocks.register();
 		BYGFeatures.register();
 		BYGBiomes.register();
+	}
+
+	@Override
+	public void addBiomes() {
+		BYGBiomes.addBiomes();
 	}
 }

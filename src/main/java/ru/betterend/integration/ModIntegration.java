@@ -18,6 +18,8 @@ public abstract class ModIntegration {
 	
 	public abstract void register();
 	
+	public abstract void addBiomes();
+	
 	public ModIntegration(String modID) {
 		this.modID = modID;
 	}

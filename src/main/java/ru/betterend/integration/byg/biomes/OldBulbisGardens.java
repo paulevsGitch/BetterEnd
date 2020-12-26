@@ -1,4 +1,4 @@
-package ru.betterend.integration.byg;
+package ru.betterend.integration.byg.biomes;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
+import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;

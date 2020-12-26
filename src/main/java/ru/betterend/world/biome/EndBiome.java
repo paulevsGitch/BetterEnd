@@ -77,6 +77,10 @@ public class EndBiome {
 		biome.biomeParent = this;
 		subbiomes.add(biome);
 	}
+	
+	public boolean containsSubBiome(EndBiome biome) {
+		return subbiomes.contains(biome);
+	}
 
 	public EndBiome getSubBiome(Random random) {
 		float chance = random.nextFloat() * maxSubBiomeChance;

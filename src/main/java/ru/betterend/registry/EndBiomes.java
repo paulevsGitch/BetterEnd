@@ -28,6 +28,7 @@ import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
+import ru.betterend.integration.Integrations;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.world.biome.BiomeAmberLand;
 import ru.betterend.world.biome.BiomeBlossomingSpires;
@@ -134,6 +135,7 @@ public class EndBiomes {
 				}
 			}
 		});
+		Integrations.addBiomes();
 		Configs.BIOME_CONFIG.saveChanges();
 		
 		LAND_BIOMES.rebuild();
@@ -266,7 +268,7 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
-		registerBiomeDirect(biome);
+		registerBiomeDirectly(biome);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			parent.addSubBiome(biome);
 			SUBBIOMES.add(biome);
@@ -284,7 +286,7 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
-		registerBiomeDirect(biome);
+		registerBiomeDirectly(biome);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			addToPicker(biome, type);
 			ID_MAP.put(biome.getID(), biome);
@@ -296,6 +298,37 @@ public class EndBiomes {
 			}
 		}
 		return biome;
+	}
+	
+	/**
+	 * Put integration sub-biome {@link EndBiome} into subbiomes list and registers it.
+	 * @param biome - {@link EndBiome} instance
+	 * @return registered {@link EndBiome}
+	 */
+	public static EndBiome registerSubBiomeIntegration(EndBiome biome) {
+		registerBiomeDirectly(biome);
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			SUBBIOMES.add(biome);
+			SUBBIOMES_UNMUTABLES.add(biome.getID());
+			ID_MAP.put(biome.getID(), biome);
+			addLandBiomeToFabricApi(biome);
+		}
+		return biome;
+	}
+	
+	/**
+	 * Link integration sub-biome with parent.
+	 * @param biome - {@link EndBiome} instance
+	 * @param parent - {@link Identifier} parent id
+	 */
+	public static void addSubBiomeIntegration(EndBiome biome, Identifier parent) {
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			EndBiome parentBiome = ID_MAP.get(parent);
+			System.out.println(parentBiome);
+			if (parentBiome != null && !parentBiome.containsSubBiome(biome)) {
+				parentBiome.addSubBiome(biome);
+			}
+		}
 	}
 	
 	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
@@ -313,7 +346,7 @@ public class EndBiomes {
 			VOID_BIOMES.addBiome(biome);
 	}
 
-	private static void registerBiomeDirect(EndBiome biome) {
+	private static void registerBiomeDirectly(EndBiome biome) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			Registry.register(BuiltinRegistries.BIOME, biome.getID(), biome.getBiome());
 		}

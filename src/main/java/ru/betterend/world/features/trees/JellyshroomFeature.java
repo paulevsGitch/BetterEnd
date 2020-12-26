@@ -48,6 +48,9 @@ public class JellyshroomFeature extends DefaultFeature {
 		});
 		
 		radius = height * MHelper.randRange(0.7F, 0.9F, random);
+		if (radius < 1.5F) {
+			radius = 1.5F;
+		}
 		SDF cap = makeCap(radius, random, membrane);
 		Vector3f last = spline.get(spline.size() - 1);
 		cap = new SDFTranslate().setTranslate(last.getX(), last.getY(), last.getZ()).setSource(cap);

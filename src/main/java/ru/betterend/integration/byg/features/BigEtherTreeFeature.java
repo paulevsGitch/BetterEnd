@@ -30,7 +30,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		
 		int height = MHelper.randRange(20, 30, random);
 		List<Vector3f> trunk = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, height / 2);
-		SplineHelper.offsetParts(trunk, random, 0.5F, 0, 0.5F);
+		SplineHelper.offsetParts(trunk, random, 2F, 0, 2F);
 		SDF sdf = SplineHelper.buildSDF(trunk, 2.3F, 0.8F, (bpos) -> { return log;});
 		sdf.setReplaceFunction((state) -> {
 			return state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();

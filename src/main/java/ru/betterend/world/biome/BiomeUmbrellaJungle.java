@@ -13,6 +13,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.setSurface(EndBlocks.JUNGLE_MOSS)
 				.addFeature(EndFeatures.END_LAKE)
 				.addFeature(EndFeatures.UMBRELLA_TREE)
+				.addFeature(EndFeatures.JELLYSHROOM)
 				.addFeature(EndFeatures.TWISTED_UMBRELLA_MOSS)
 				.addFeature(EndFeatures.SMALL_JELLYSHROOM_FLOOR)
 				.addFeature(EndFeatures.JUNGLE_GRASS)

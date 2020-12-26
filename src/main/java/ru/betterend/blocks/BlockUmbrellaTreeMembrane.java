@@ -1,6 +1,7 @@
 package ru.betterend.blocks;
 
 import java.io.Reader;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -27,6 +28,7 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
 public class BlockUmbrellaTreeMembrane extends AbstractGlassBlock implements IRenderTypeable, BlockPatterned {
@@ -57,7 +59,12 @@ public class BlockUmbrellaTreeMembrane extends AbstractGlassBlock implements IRe
 	
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		return Lists.newArrayList(new ItemStack(this));
+		if (state.get(COLOR) > 0) {
+			return Lists.newArrayList(new ItemStack(this));
+		}
+		else {
+			return MHelper.RANDOM.nextInt(4) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.UMBRELLA_TREE_SAPLING)) : Collections.emptyList();
+		}
 	}
 	
 	@Override

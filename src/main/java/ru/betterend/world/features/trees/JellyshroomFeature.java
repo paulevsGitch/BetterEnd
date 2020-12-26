@@ -36,7 +36,6 @@ public class JellyshroomFeature extends DefaultFeature {
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
 		
-		BlockState log = EndBlocks.JELLYSHROOM.log.getDefaultState();
 		BlockState bark = EndBlocks.JELLYSHROOM.bark.getDefaultState();
 		BlockState membrane = EndBlocks.JELLYSHROOM_CAP_PURPLE.getDefaultState();
 		

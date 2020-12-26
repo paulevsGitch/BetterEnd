@@ -21,6 +21,9 @@ public class SingleInvertedScatterFeature extends InvertedScatterFeature {
 
 	@Override
 	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+		if (!world.isAir(blockPos)) {
+			return false;
+		}
 		BlockState state = block.getDefaultState();
 		if (block instanceof BlockAttached) {
 			state = state.with(Properties.FACING, Direction.DOWN);

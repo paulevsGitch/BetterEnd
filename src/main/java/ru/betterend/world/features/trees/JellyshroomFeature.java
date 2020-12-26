@@ -40,8 +40,8 @@ public class JellyshroomFeature extends DefaultFeature {
 		BlockState membrane = EndBlocks.JELLYSHROOM_CAP_PURPLE.getDefaultState();
 		
 		int height = MHelper.randRange(5, 8, random);
-		float radius = height * MHelper.randRange(0.1F, 0.2F, random);
-		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, 5);
+		float radius = height * MHelper.randRange(0.15F, 0.25F, random);
+		List<Vector3f> spline = SplineHelper.makeSpline(0, -1, 0, 0, height, 0, 3);
 		SplineHelper.offsetParts(spline, random, 0.5F, 0, 0.5F);
 		SDF sdf = SplineHelper.buildSDF(spline, radius, 0.8F, (bpos) -> {
 			return bark;
@@ -54,13 +54,13 @@ public class JellyshroomFeature extends DefaultFeature {
 		sdf = new SDFSmoothUnion().setRadius(3F).setSourceA(sdf).setSourceB(cap);
 		sdf.setReplaceFunction(REPLACE).setPostProcess(POST).fillRecursive(world, pos);
 		radius = height * 0.5F;
-		makeRoots(world, pos.add(0, 1, 0), radius, random, bark);
+		makeRoots(world, pos.add(0, 2, 0), radius, random, bark);
 		
 		return true;
 	}
 	
 	private void makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random, BlockState wood) {
-		int count = (int) (radius * 1.5F);
+		int count = (int) (radius * 3.5F);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2;
 			float scale = radius * MHelper.randRange(0.85F, 1.15F, random);
@@ -109,7 +109,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		};
 		
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.isOf(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
+			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

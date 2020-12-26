@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
@@ -33,6 +34,7 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.BlocksHelper;
 
 public class BlockSmallJellyshroom extends BlockAttached implements IRenderTypeable, Fertilizable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
@@ -95,6 +97,7 @@ public class BlockSmallJellyshroom extends BlockAttached implements IRenderTypea
 
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
 		EndFeatures.JELLYSHROOM.getFeature().generate(world, null, random, pos, null);
 	}
 }

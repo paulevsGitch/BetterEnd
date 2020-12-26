@@ -545,5 +545,8 @@
 	"block.betterend.jellyshroom_stairs": "Jellyshroom Stairs",
 	"block.betterend.jellyshroom_stripped_bark": "Stripped Jellyshroom Bark",
 	"block.betterend.jellyshroom_stripped_log": "Stripped Jellyshroom Log",
-	"block.betterend.jellyshroom_trapdoor": "Jellyshroom Trapdoor"
+	"block.betterend.jellyshroom_trapdoor": "Jellyshroom Trapdoor",
+	
+	"biome.betterend.eterial_grove": "Eterial Grove",
+	"block.betterend.umbrella_tree_sapling": "Umbrella Tree Sapling"
 }

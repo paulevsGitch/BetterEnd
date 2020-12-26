@@ -547,5 +547,8 @@
 	"block.betterend.jellyshroom_stairs": "Ступени из желейного гриба",
 	"block.betterend.jellyshroom_stripped_bark": "Обтёсанная кора желейного гриба",
 	"block.betterend.jellyshroom_stripped_log": "Обтёсанное бревно желейного гриба",
-	"block.betterend.jellyshroom_trapdoor": "Люк из желейного гриба"
+	"block.betterend.jellyshroom_trapdoor": "Люк из желейного гриба",
+	
+	"biome.betterend.eterial_grove": "Эфирная роща",
+	"block.betterend.umbrella_tree_sapling": "Саженец зонтичного дерева"
 }

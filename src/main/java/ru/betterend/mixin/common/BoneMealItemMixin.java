@@ -37,7 +37,6 @@ public class BoneMealItemMixin {
 		if (!world.isClient) {
 			BlockPos offseted = blockPos.offset(context.getSide());
 			boolean endBiome = world.getBiome(offseted).getCategory() == Category.THEEND;
-			//boolean skip = false;
 			
 			if (world.getBlockState(blockPos).isIn(EndTags.END_GROUND)) {
 				boolean consume = false;
@@ -53,9 +52,6 @@ public class BoneMealItemMixin {
 						if (world.getBlockState(offseted).equals(Blocks.WATER)) {
 							consume = beGrowWaterGrass(world, blockPos);
 						}
-						/*else {
-							skip = true;
-						}*/
 					}
 					else {
 						consume = beGrowGrass(world, blockPos);

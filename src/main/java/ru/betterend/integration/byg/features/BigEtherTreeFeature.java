@@ -18,9 +18,6 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFSmoothUnion;
-import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.world.features.DefaultFeature;
 
 public class BigEtherTreeFeature extends DefaultFeature {
@@ -41,14 +38,14 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		SplineHelper.offsetParts(trunk, random, 2F, 0, 2F);
 		SDF sdf = SplineHelper.buildSDF(trunk, 2.3F, 0.8F, splinePlacer);
 		
-		int count = height / 10;
+		int count = height / 15;
 		for (int i = 1; i < count; i++) {
-			float splinePos = (float) i / count;
+			float splinePos = (float) i / (float) count;
 			float startAngle = random.nextFloat() * MHelper.PI2;
 			float length = (1 - splinePos) * height * 0.4F;
 			int points = (int) (length / 3);
 			List<Vector3f> branch = SplineHelper.makeSpline(0, 0, 0, length, 0, 0, points < 2 ? 2 : points);
-			SplineHelper.powerOffset(branch, length * 0.5F, 1.5F);
+			SplineHelper.powerOffset(branch, length, 2F);
 			int rotCount = MHelper.randRange(5, 7, random);
 			float startRad = MathHelper.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
 			Vector3f start = SplineHelper.getPos(trunk, splinePos * (trunk.size() - 1));
@@ -58,10 +55,8 @@ public class BigEtherTreeFeature extends DefaultFeature {
 				List<Vector3f> br = SplineHelper.copySpline(branch);
 				SplineHelper.offsetParts(br, random, 0, 1, 1);
 				SplineHelper.rotateSpline(br, angle);
-				//SDF branchSDF = SplineHelper.buildSDF(br, startRad, 0.5F, splinePlacer);
-				//branchSDF = new SDFTranslate().setTranslate(start.getX(), start.getY(), start.getZ()).setSource(branchSDF);
-				//sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(branchSDF);
-				//sdf = new SDFUnion().setSourceA(sdf).setSourceB(branchSDF);
+				
+				SplineHelper.offset(br, start);
 				SplineHelper.fillSpline(br, world, wood, pos, replace);
 			}
 		}

@@ -8,6 +8,7 @@
 		"EnchantmentScreenHandlerMixin",
 		"CraftingScreenHandlerMixin",
 		"GenerationSettingsAccessor",
+		"NoiseChunkGeneratorMixin",
 		"AnvilScreenHandlerMixin",
 		"ServerPlayerEntityMixin",
 		"ChorusPlantFeatureMixin",

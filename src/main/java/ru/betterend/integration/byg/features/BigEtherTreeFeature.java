@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -17,6 +18,9 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFSmoothUnion;
+import ru.betterend.util.sdf.operator.SDFTranslate;
+import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.world.features.DefaultFeature;
 
 public class BigEtherTreeFeature extends DefaultFeature {
@@ -26,20 +30,55 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		
 		BlockState log = Integrations.BYG.getDefaultState("ether_log");
 		BlockState wood = Integrations.BYG.getDefaultState("ether_wood");
-		BlockState leaves = Integrations.BYG.getDefaultState("ether_leaves");
+		//BlockState leaves = Integrations.BYG.getDefaultState("ether_leaves");
+		Function<BlockPos, BlockState> splinePlacer = (bpos) -> { return log; };
+		Function<BlockState, Boolean> replace = (state) -> {
+			return state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
+		};
 		
-		int height = MHelper.randRange(20, 30, random);
-		List<Vector3f> trunk = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, height / 2);
+		int height = MHelper.randRange(40, 60, random);
+		List<Vector3f> trunk = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, height / 4);
 		SplineHelper.offsetParts(trunk, random, 2F, 0, 2F);
-		SDF sdf = SplineHelper.buildSDF(trunk, 2.3F, 0.8F, (bpos) -> { return log;});
+		SDF sdf = SplineHelper.buildSDF(trunk, 2.3F, 0.8F, splinePlacer);
+		
+		int count = height / 10;
+		for (int i = 1; i < count; i++) {
+			float splinePos = (float) i / count;
+			float startAngle = random.nextFloat() * MHelper.PI2;
+			float length = (1 - splinePos) * height * 0.4F;
+			int points = (int) (length / 3);
+			List<Vector3f> branch = SplineHelper.makeSpline(0, 0, 0, length, 0, 0, points < 2 ? 2 : points);
+			SplineHelper.powerOffset(branch, length * 0.5F, 1.5F);
+			int rotCount = MHelper.randRange(5, 7, random);
+			float startRad = MathHelper.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
+			Vector3f start = SplineHelper.getPos(trunk, splinePos * (trunk.size() - 1));
+			System.out.println(start + " " + startRad + " " + branch.size());
+			for (int j = 0; j < rotCount; j++) {
+				float angle = startAngle + (float) j / rotCount * MHelper.PI2;
+				List<Vector3f> br = SplineHelper.copySpline(branch);
+				SplineHelper.offsetParts(br, random, 0, 1, 1);
+				SplineHelper.rotateSpline(br, angle);
+				//SDF branchSDF = SplineHelper.buildSDF(br, startRad, 0.5F, splinePlacer);
+				//branchSDF = new SDFTranslate().setTranslate(start.getX(), start.getY(), start.getZ()).setSource(branchSDF);
+				//sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(branchSDF);
+				//sdf = new SDFUnion().setSourceA(sdf).setSourceB(branchSDF);
+				SplineHelper.fillSpline(br, world, wood, pos, replace);
+			}
+		}
+		
 		sdf.setReplaceFunction((state) -> {
 			return state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
+		}).setPostProcess((info) -> {
+			if (info.getState().equals(log) && (!info.getStateUp().equals(log) || !info.getStateDown().equals(log))) {
+				return wood;
+			}
+			return info.getState();
 		}).fillRecursive(world, pos);
 
 		return true;
 	}
 	
-	private void makeLeavesSphere(StructureWorldAccess world, BlockPos pos, BlockState leaves, Function<BlockState, Boolean> ignore) {
-		
-	}
+	//private void makeLeavesSphere(StructureWorldAccess world, BlockPos pos, BlockState leaves, Function<BlockState, Boolean> ignore) {
+	//	
+	//}
 }

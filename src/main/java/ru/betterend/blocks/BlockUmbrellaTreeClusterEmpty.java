@@ -16,7 +16,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class BlockUmbrellaTreeClusterEmpty extends BlockBase {
-	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
+	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public BlockUmbrellaTreeClusterEmpty() {
 		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK)

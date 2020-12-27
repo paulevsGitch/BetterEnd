@@ -52,7 +52,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
 	private static final int[] SIDE_SLOTS = new int[] { 3 };
-	private static final Map<Item, Integer> availableFuels = Maps.newHashMap();
+	private static final Map<Item, Integer> AVAILABLE_FUELS = Maps.newHashMap();
 	
 	private final Object2IntOpenHashMap<Identifier> recipesUsed;
 	protected DefaultedList<ItemStack> inventory;
@@ -404,7 +404,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 			return 0;
 		} else {
 			Item item = fuel.getItem();
-			return availableFuels.getOrDefault(item, 0);
+			return AVAILABLE_FUELS.getOrDefault(item, 0);
 		}
 	}
 	
@@ -454,14 +454,14 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	}
 
 	public static boolean canUseAsFuel(ItemStack stack) {
-		return availableFuels.containsKey(stack.getItem());
+		return AVAILABLE_FUELS.containsKey(stack.getItem());
 	}
 	
 	public static void registerFuel(ItemConvertible fuel, int time) {
-		if (availableFuels.containsKey(fuel)) {
-			availableFuels.replace(fuel.asItem(), time);
+		if (AVAILABLE_FUELS.containsKey(fuel)) {
+			AVAILABLE_FUELS.replace(fuel.asItem(), time);
 		} else {
-			availableFuels.put(fuel.asItem(), time);
+			AVAILABLE_FUELS.put(fuel.asItem(), time);
 		}
 	}
 	
@@ -471,6 +471,6 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	}
 
 	public static Map<Item, Integer> availableFuels() {
-		return availableFuels;
+		return AVAILABLE_FUELS;
 	}
 }

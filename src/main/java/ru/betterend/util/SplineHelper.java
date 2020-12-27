@@ -253,6 +253,10 @@ public class SplineHelper {
 	
 	public static Vector3f getPos(List<Vector3f> spline, float index) {
 		int i = (int) index;
+		int last = spline.size() - 1;
+		if (i >= last) {
+			return spline.get(last);
+		}
 		float delta = index - i;
 		Vector3f p1 = spline.get(i);
 		Vector3f p2 = spline.get(i + 1);

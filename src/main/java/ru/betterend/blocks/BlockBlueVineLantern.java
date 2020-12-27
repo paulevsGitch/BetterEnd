@@ -17,7 +17,7 @@ import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
 public class BlockBlueVineLantern extends BlockBase {
-	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
+	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public BlockBlueVineLantern() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sounds(BlockSoundGroup.WART_BLOCK).luminance(15));

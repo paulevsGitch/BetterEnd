@@ -37,6 +37,7 @@ public class BoneMealItemMixin {
 		if (!world.isClient) {
 			BlockPos offseted = blockPos.offset(context.getSide());
 			boolean endBiome = world.getBiome(offseted).getCategory() == Category.THEEND;
+			//boolean skip = false;
 			
 			if (world.getBlockState(blockPos).isIn(EndTags.END_GROUND)) {
 				boolean consume = false;
@@ -48,30 +49,32 @@ public class BoneMealItemMixin {
 					}
 				}
 				else {
-					if (!world.getBlockState(offseted).equals(Blocks.WATER)) {
-						info.cancel();
-					}
-					else if (!world.getFluidState(offseted).isEmpty() && endBiome) {
-						consume = beGrowWaterGrass(world, blockPos);
+					if (!world.getFluidState(offseted).isEmpty() && endBiome) {
+						if (world.getBlockState(offseted).equals(Blocks.WATER)) {
+							consume = beGrowWaterGrass(world, blockPos);
+						}
+						/*else {
+							skip = true;
+						}*/
 					}
 					else {
 						consume = beGrowGrass(world, blockPos);
 					}
 				}
 				if (consume) {
-					if (!context.getPlayer().isCreative())
+					if (!context.getPlayer().isCreative()) {
 						context.getStack().decrement(1);
+					}
 					world.syncWorldEvent(2005, blockPos, 0);
 					info.setReturnValue(ActionResult.SUCCESS);
 					info.cancel();
 				}
 			}
-			else if (!world.getBlockState(offseted).equals(Blocks.WATER)) {
-				info.cancel();
-			}
 			else if (!world.getFluidState(offseted).isEmpty() && endBiome) {
-				info.setReturnValue(ActionResult.FAIL);
-				info.cancel();
+				if (world.getBlockState(offseted).equals(Blocks.WATER)) {
+					info.setReturnValue(ActionResult.FAIL);
+					info.cancel();
+				}
 			}
 		}
 	}

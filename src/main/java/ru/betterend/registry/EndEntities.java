@@ -9,8 +9,10 @@ import net.minecraft.entity.EntityType.EntityFactory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer.Builder;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.entity.EntityCubozoa;
 import ru.betterend.entity.EntityDragonfly;
 import ru.betterend.entity.EntityEndFish;
@@ -35,14 +37,22 @@ public class EndEntities {
 	}
 	
 	protected static <T extends Entity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity) {
-		EntityType<T> type = Registry.register(Registry.ENTITY_TYPE, BetterEnd.makeID(name), FabricEntityTypeBuilder.<T>create(group, entity).dimensions(EntityDimensions.fixed(width, height)).build());
+		Identifier id = BetterEnd.makeID(name);
+		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity).dimensions(EntityDimensions.fixed(width, height)).build();
+		if (Configs.ENTITY_CONFIG.getBoolean(id, "entities", true)) {
+			return Registry.register(Registry.ENTITY_TYPE, id, type);
+		}
 		return type;
 	}
 	
 	private static <T extends LivingEntity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity, Builder attributes, boolean fixedSize, int eggColor, int dotsColor) {
-		EntityType<T> type = Registry.register(Registry.ENTITY_TYPE, BetterEnd.makeID(name), FabricEntityTypeBuilder.<T>create(group, entity).dimensions(fixedSize ? EntityDimensions.fixed(width, height) : EntityDimensions.changing(width, height)).build());
-		FabricDefaultAttributeRegistry.register(type, attributes);
-		EndItems.registerEgg("spawn_egg_" + name, type, eggColor, dotsColor);
+		Identifier id = BetterEnd.makeID(name);
+		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity).dimensions(fixedSize ? EntityDimensions.fixed(width, height) : EntityDimensions.changing(width, height)).build();
+		if (Configs.ENTITY_CONFIG.getBoolean(id, "entities", true)) {
+			FabricDefaultAttributeRegistry.register(type, attributes);
+			EndItems.registerEgg("spawn_egg_" + name, type, eggColor, dotsColor);
+			return Registry.register(Registry.ENTITY_TYPE, BetterEnd.makeID(name), type);
+		}
 		return type;
 	}
 }

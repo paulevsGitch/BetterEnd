@@ -40,6 +40,7 @@ import ru.betterend.item.EndHoe;
 import ru.betterend.item.EndPickaxe;
 import ru.betterend.item.EndToolMaterial;
 import ru.betterend.item.EternalCrystal;
+import ru.betterend.item.ItemDrink;
 import ru.betterend.item.ItemSpawnEgg;
 import ru.betterend.item.PatternedItem;
 import ru.betterend.tab.CreativeTabs;
@@ -104,6 +105,9 @@ public class EndItems {
 	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new FishBucketItem(EndEntities.END_FISH, Fluids.WATER, makeItemSettings().maxCount(1)));
 	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 3, 0.75F);
 	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 4, 0.75F, new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400));
+	
+	// Drinks
+	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice");
 	
 	// Other //
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
@@ -196,6 +200,10 @@ public class EndItems {
 	
 	public static Item registerFood(String name, FoodComponent foodComponent) {
 		return registerItem(name, new PatternedItem(makeItemSettings().food(foodComponent)));
+	}
+	
+	public static Item registerDrink(String name) {
+		return registerItem(name, new ItemDrink(makeItemSettings().maxCount(1)));
 	}
 
 	public static Settings makeItemSettings() {

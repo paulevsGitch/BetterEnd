@@ -29,6 +29,7 @@ public class ItemUtil {
 	
 	@Nullable
 	public static ItemStack fromStackString(String stackString) {
+		if (stackString == null || stackString.equals("")) return null;
 		String[] parts = stackString.split(":");
 		Identifier itemId = new Identifier(parts[0], parts[1]);
 		Item item = Registry.ITEM.getOrEmpty(itemId).orElse(null);

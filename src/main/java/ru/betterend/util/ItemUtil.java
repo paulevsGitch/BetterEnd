@@ -55,13 +55,14 @@ public class ItemUtil {
 	
 	@Nullable
 	public static ItemStack fromJsonRecipe(JsonObject recipe) {
-		if (!recipe.has("item")) return null;
 		try {
+			if (!recipe.has("item")) {
+				throw new IllegalStateException("Invalid JsonObject. Entry 'item' does not exists!");
+			}
 			Identifier itemId = new Identifier(JsonHelper.getString(recipe, "item"));
 			Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
 				return new IllegalStateException("Output item " + itemId + " does not exists!");
 			});
-			if (item == null) return null;
 			int count = JsonHelper.getInt(recipe, "count", 1);
 			return new ItemStack(item, count);
 		} catch (Exception ex) {

@@ -6,9 +6,9 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AbstractGlassBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SlimeBlock;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
 
-public class BlockJellyshroomCap extends AbstractGlassBlock implements IRenderTypeable, BlockPatterned, IColorProvider {
+public class BlockJellyshroomCap extends SlimeBlock implements IRenderTypeable, BlockPatterned, IColorProvider {
 	private final int color;
 	
 	public BlockJellyshroomCap(int r, int g, int b) {

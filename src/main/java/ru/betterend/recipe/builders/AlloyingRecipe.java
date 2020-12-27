@@ -238,8 +238,8 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 			JsonArray ingredients = JsonHelper.getArray(json, "ingredients");
 			Ingredient primaryInput = Ingredient.fromJson(ingredients.get(0));
 			Ingredient secondaryInput = Ingredient.fromJson(ingredients.get(1));
-			JsonObject result = JsonHelper.getObject(json, "result");
 			String group = JsonHelper.getString(json, "group", "");
+			JsonObject result = JsonHelper.getObject(json, "result");
 			ItemStack output = ItemUtil.fromJsonRecipe(result);
 			if (output == null) {
 				throw new IllegalStateException("Output item does not exists!");

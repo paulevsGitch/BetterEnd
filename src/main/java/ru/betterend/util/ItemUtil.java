@@ -31,13 +31,17 @@ public class ItemUtil {
 	public static ItemStack fromStackString(String stackString) {
 		if (stackString == null || stackString.equals("")) return null;
 		String[] parts = stackString.split(":");
+		if (parts.length < 2) return null;
+		if (parts.length == 2) {
+			Identifier itemId = new Identifier(stackString);
+			Item item = Registry.ITEM.getOrEmpty(itemId).orElse(null);
+			if (item == null) return null;
+			return new ItemStack(item);
+		}
 		Identifier itemId = new Identifier(parts[0], parts[1]);
 		Item item = Registry.ITEM.getOrEmpty(itemId).orElse(null);
 		if (item == null) return null;
-		if (parts.length > 2) {
-			return new ItemStack(item, Integer.valueOf(parts[2]));
-		}
-		return new ItemStack(item);
+		return new ItemStack(item, Integer.valueOf(parts[2]));
 	}
 	
 	@Nullable

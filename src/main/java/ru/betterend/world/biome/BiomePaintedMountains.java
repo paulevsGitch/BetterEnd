@@ -13,7 +13,7 @@ public class BiomePaintedMountains extends EndBiome {
 				.setFogDensity(2)
 				.setCaves(false)
 				.setWaterAndFogColor(192, 180, 131)
-				.setMusic(EndSounds.MUSIC_DUST_WASTELANDS)
+				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.setLoop(EndSounds.AMBIENT_DUST_WASTELANDS)
 				.setSurface(EndBlocks.ENDSTONE_DUST)
 				.setParticles(ParticleTypes.WHITE_ASH, 0.01F)

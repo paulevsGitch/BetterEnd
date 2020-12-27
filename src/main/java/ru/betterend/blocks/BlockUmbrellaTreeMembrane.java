@@ -9,10 +9,10 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AbstractGlassBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SlimeBlock;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -31,7 +31,7 @@ import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
-public class BlockUmbrellaTreeMembrane extends AbstractGlassBlock implements IRenderTypeable, BlockPatterned {
+public class BlockUmbrellaTreeMembrane extends SlimeBlock implements IRenderTypeable, BlockPatterned {
 	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	

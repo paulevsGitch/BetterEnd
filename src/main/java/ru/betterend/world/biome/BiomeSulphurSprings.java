@@ -11,7 +11,7 @@ public class BiomeSulphurSprings extends EndBiome {
 	public BiomeSulphurSprings() {
 		super(new BiomeDefinition("sulphur_springs")
 				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE)
-				.setMusic(EndSounds.MUSIC_SULPHUR_SPRINGS)
+				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.setLoop(EndSounds.AMBIENT_SULPHUR_SPRINGS)
 				.setWaterColor(25, 90, 157)
 				.setWaterFogColor(30, 65, 61)

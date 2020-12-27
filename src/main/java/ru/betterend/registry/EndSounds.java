@@ -6,15 +6,10 @@ import ru.betterend.BetterEnd;
 
 public class EndSounds {
 	// Music
-	public static final SoundEvent MUSIC_FOGGY_MUSHROOMLAND = register("music", "foggy_mushroomland");
-	public static final SoundEvent MUSIC_CHORUS_FOREST = register("music", "chorus_forest");
-	public static final SoundEvent MUSIC_CRYSTAL_MOUNTAINS = register("music", "crystal_mountains");
-	public static final SoundEvent MUSIC_MEGALAKE = register("music", "megalake");
-	public static final SoundEvent MUSIC_DUST_WASTELANDS = register("music", "dust_wastelands");
-	public static final SoundEvent MUSIC_SHADOW_FOREST = register("music", "shadow_forest");
-	public static final SoundEvent MUSIC_BLOSSOMING_SPIRES = register("music", "blossoming_spires");
-	public static final SoundEvent MUSIC_AMBER_LAND = register("music", "amber_land");
-	public static final SoundEvent MUSIC_SULPHUR_SPRINGS = register("music", "sulphur_springs");
+	public static final SoundEvent MUSIC_FOREST = register("music", "forest");
+	public static final SoundEvent MUSIC_WATER = register("music", "water");
+	public static final SoundEvent MUSIC_DARK = register("music", "dark");
+	public static final SoundEvent MUSIC_OPENSPACE = register("music", "openspace");
 	
 	// Ambient
 	public static final SoundEvent AMBIENT_FOGGY_MUSHROOMLAND = register("ambient", "foggy_mushroomland");

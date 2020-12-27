@@ -22,7 +22,7 @@ public class ItemUtil {
 			Item item = stack.getItem();
 			return Registry.ITEM.getId(item) + ":" + stack.getCount();
 		} catch (Exception ex) {
-			BetterEnd.LOGGER.catching(ex);
+			BetterEnd.LOGGER.error("ItemStack serialization error!", ex);
 		}
 		return "";
 	}
@@ -37,16 +37,18 @@ public class ItemUtil {
 			if (parts.length < 2) return null;
 			if (parts.length == 2) {
 				Identifier itemId = new Identifier(stackString);
-				Item item = Registry.ITEM.getOrEmpty(itemId).orElse(null);
-				if (item == null) return null;
+				Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
+					return new IllegalStateException("Output item " + itemId + " does not exists!");
+				});
 				return new ItemStack(item);
 			}
 			Identifier itemId = new Identifier(parts[0], parts[1]);
-			Item item = Registry.ITEM.getOrEmpty(itemId).orElse(null);
-			if (item == null) return null;
+			Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
+				return new IllegalStateException("Output item " + itemId + " does not exists!");
+			});
 			return new ItemStack(item, Integer.valueOf(parts[2]));
 		} catch (Exception ex) {
-			BetterEnd.LOGGER.catching(ex);
+			BetterEnd.LOGGER.error("ItemStack deserialization error!", ex);
 		}
 		return null;
 	}
@@ -56,12 +58,14 @@ public class ItemUtil {
 		if (!recipe.has("item")) return null;
 		try {
 			Identifier itemId = new Identifier(JsonHelper.getString(recipe, "item"));
-			Item item = Registry.ITEM.getOrEmpty(itemId).orElse(null);
+			Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
+				return new IllegalStateException("Output item " + itemId + " does not exists!");
+			});
 			if (item == null) return null;
 			int count = JsonHelper.getInt(recipe, "count", 1);
 			return new ItemStack(item, count);
 		} catch (Exception ex) {
-			BetterEnd.LOGGER.catching(ex);
+			BetterEnd.LOGGER.error("ItemStack deserialization error!", ex);
 		}
 		return null;
 	}

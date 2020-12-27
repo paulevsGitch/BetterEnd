@@ -20,7 +20,7 @@ public class BiomeChorusForest extends EndBiome {
 				.setSurface(EndBlocks.CHORUS_NYLIUM)
 				.setParticles(ParticleTypes.PORTAL, 0.01F)
 				.setLoop(EndSounds.AMBIENT_CHORUS_FOREST)
-				.setMusic(EndSounds.MUSIC_CHORUS_FOREST)
+				.setMusic(EndSounds.MUSIC_DARK)
 				.addFeature(EndFeatures.VIOLECITE_LAYER)
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(EndFeatures.PYTHADENDRON_TREE)

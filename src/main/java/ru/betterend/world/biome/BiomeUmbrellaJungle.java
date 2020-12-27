@@ -2,6 +2,7 @@ package ru.betterend.world.biome;
 
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndSounds;
 
 public class BiomeUmbrellaJungle extends EndBiome {
 	public BiomeUmbrellaJungle() {
@@ -10,6 +11,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.setWaterAndFogColor(119, 198, 253)
 				.setFoliageColor(27, 183, 194)
 				.setFogDensity(2.3F)
+				.setMusic(EndSounds.MUSIC_FOREST)
 				.setSurface(EndBlocks.JUNGLE_MOSS)
 				.addFeature(EndFeatures.END_LAKE)
 				.addFeature(EndFeatures.UMBRELLA_TREE)

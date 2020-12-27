@@ -548,5 +548,6 @@
 	"block.betterend.jellyshroom_trapdoor": "Jellyshroom Trapdoor",
 	
 	"biome.betterend.eterial_grove": "Eterial Grove",
-	"block.betterend.umbrella_tree_sapling": "Umbrella Tree Sapling"
+	"block.betterend.umbrella_tree_sapling": "Umbrella Tree Sapling",
+	"item.betterend.umbrella_cluster_juice": "Umbrella Cluster Juice"
 }

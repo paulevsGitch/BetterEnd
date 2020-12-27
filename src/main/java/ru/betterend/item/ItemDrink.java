@@ -1,16 +1,30 @@
 package ru.betterend.item;
 
-import net.minecraft.item.PotionItem;
-import ru.betterend.patterns.Patterned;
-import ru.betterend.patterns.Patterns;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsage;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
+import net.minecraft.world.World;
 
-public class ItemDrink extends PotionItem implements Patterned {
+public class ItemDrink extends PatternedItem {
 	public ItemDrink(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
-	public String getModelPattern(String name) {
-		return Patterns.createJson(Patterns.ITEM_GENERATED, name);
+	public int getMaxUseTime(ItemStack stack) {
+		return 32;
+	}
+
+	@Override
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.DRINK;
+	}
+
+	@Override
+	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
 }

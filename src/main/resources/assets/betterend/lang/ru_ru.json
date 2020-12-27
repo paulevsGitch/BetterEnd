@@ -550,5 +550,6 @@
 	"block.betterend.jellyshroom_trapdoor": "Люк из желейного гриба",
 	
 	"biome.betterend.eterial_grove": "Эфирная роща",
-	"block.betterend.umbrella_tree_sapling": "Саженец зонтичного дерева"
+	"block.betterend.umbrella_tree_sapling": "Саженец зонтичного дерева",
+	"item.betterend.umbrella_cluster_juice": "Сок зонтичного кластера"
 }

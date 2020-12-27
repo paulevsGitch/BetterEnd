@@ -19,11 +19,12 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
 public class AnvilSmithingRecipe implements Recipe<Inventory> {
@@ -208,12 +209,12 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	public static class Serializer implements RecipeSerializer<AnvilSmithingRecipe> {
 		@Override
 		public AnvilSmithingRecipe read(Identifier id, JsonObject json) {
-			Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "input"));
-			String resultStr = JsonHelper.getString(json, "result");
-			Identifier resultId = new Identifier(resultStr);
-			ItemStack output = new ItemStack(Registry.ITEM.getOrEmpty(resultId).orElseThrow(() -> {
-				return new IllegalStateException("Item: " + resultStr + " does not exists!");
-			}));
+			Ingredient input = Ingredient.fromJson(json.get("input"));
+			JsonObject result = JsonHelper.getObject(json, "result");
+			ItemStack output = ItemUtil.fromJsonRecipe(result);
+			if (output == null) {
+				throw new IllegalStateException("Output item does not exists!");
+			}
 			int level = JsonHelper.getInt(json, "level", 1);
 			int damage = JsonHelper.getInt(json, "damage", 1);
 			

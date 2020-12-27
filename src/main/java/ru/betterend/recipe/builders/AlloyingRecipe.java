@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -18,11 +19,12 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
 public class AlloyingRecipe implements Recipe<Inventory> {
@@ -236,12 +238,12 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 			JsonArray ingredients = JsonHelper.getArray(json, "ingredients");
 			Ingredient primaryInput = Ingredient.fromJson(ingredients.get(0));
 			Ingredient secondaryInput = Ingredient.fromJson(ingredients.get(1));
-			String resultStr = JsonHelper.getString(json, "result");
+			JsonObject result = JsonHelper.getObject(json, "result");
 			String group = JsonHelper.getString(json, "group", "");
-			Identifier resultId = new Identifier(resultStr);
-			ItemStack output = new ItemStack(Registry.ITEM.getOrEmpty(resultId).orElseThrow(() -> {
-				return new IllegalStateException("Item: " + resultStr + " does not exists!");
-			}));
+			ItemStack output = ItemUtil.fromJsonRecipe(result);
+			if (output == null) {
+				throw new IllegalStateException("Output item does not exists!");
+			}
 			float experience = JsonHelper.getFloat(json, "experience", 0.0F);
 			int smeltTime = JsonHelper.getInt(json, "smelttime", 350);
 			

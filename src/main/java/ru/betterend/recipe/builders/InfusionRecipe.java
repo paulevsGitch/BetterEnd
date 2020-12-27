@@ -2,7 +2,6 @@ package ru.betterend.recipe.builders;
 
 import java.util.Arrays;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import net.minecraft.item.ItemConvertible;
@@ -15,11 +14,12 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.rituals.InfusionRitual;
+import ru.betterend.util.ItemUtil;
 
 public class InfusionRecipe implements Recipe<InfusionRitual> {
 	
@@ -178,17 +178,31 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 		public InfusionRecipe read(Identifier id, JsonObject json) {
 			InfusionRecipe recipe = new InfusionRecipe(id);
 			recipe.input = Ingredient.fromJson(json.get("input"));
-			Identifier outId = new Identifier(JsonHelper.getString(json, "output"));
-			recipe.output = new ItemStack(Registry.ITEM.getOrEmpty(outId).orElseThrow(() -> {
-				return new IllegalStateException("Item: " + outId + " does not exists!");
-			}));
-			recipe.time = JsonHelper.getInt(json, "time", 1);
-			JsonArray catalysts = JsonHelper.asArray(json, "catalysts");
-			for (int i = 0; i < catalysts.size(); i++) {
-				ItemStack stack = new ItemStack(Registry.ITEM.getOrEmpty(outId).orElse(null));
-				recipe.catalysts[i] = Ingredient.ofStacks(
-						Arrays.stream(new ItemStack[] { stack }));
+			JsonObject result = JsonHelper.getObject(json, "result");
+			recipe.output = ItemUtil.fromJsonRecipe(result);
+			if (recipe.output == null) {
+				throw new IllegalStateException("Output item does not exists!");
 			}
+			recipe.time = JsonHelper.getInt(json, "time", 1);
+			
+			JsonObject catalysts = JsonHelper.asObject(json, "catalysts");
+			ItemStack catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "north", ""));
+			recipe.catalysts[0] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "north_east", ""));
+			recipe.catalysts[1] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "east", ""));
+			recipe.catalysts[2] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "south_east", ""));
+			recipe.catalysts[3] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "south", ""));
+			recipe.catalysts[4] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "south_west", ""));
+			recipe.catalysts[5] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "west", ""));
+			recipe.catalysts[6] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			catalyst = ItemUtil.fromStackString(JsonHelper.getString(catalysts, "north_west", ""));
+			recipe.catalysts[7] = Ingredient.ofStacks(Arrays.stream(new ItemStack[] { catalyst }));
+			
 			return recipe;
 		}
 

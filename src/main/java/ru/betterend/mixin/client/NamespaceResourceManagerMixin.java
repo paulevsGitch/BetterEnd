@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
@@ -17,7 +18,6 @@ import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.patterns.BlockPatterned;
 

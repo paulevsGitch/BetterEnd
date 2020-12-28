@@ -20,7 +20,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndTags;

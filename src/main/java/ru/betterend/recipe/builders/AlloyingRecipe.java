@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -20,7 +19,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndBlocks;

@@ -29,6 +29,7 @@ public class IslandLayer {
 	private final int seed;
 	private final int minY;
 	private final int maxY;
+	private final long center;
 	
 	public IslandLayer(int seed, double distance, float scale, int center, int heightVariation) {
 		this.distance = distance;
@@ -37,6 +38,7 @@ public class IslandLayer {
 		this.seed = seed;
 		this.minY = center - heightVariation;
 		this.maxY = center + heightVariation;
+		this.center = MHelper.floor(1000 / distance);
 	}
 	
 	private int getSeed(int x, int z) {
@@ -55,13 +57,15 @@ public class IslandLayer {
 			int px = pox + ix;
 			for (int poz = -1; poz < 2; poz++) {
 				int pz = poz + iz;
-				//if (density.eval(px * distance * 0.002, pz * distance * 0.002) > 0) {
+				if ((long) px + (long) pz > center) {
 					RANDOM.setSeed(getSeed(px, pz));
 					double posX = (px + RANDOM.nextFloat()) * distance;
 					double posY = MHelper.randRange(minY, maxY, RANDOM);
 					double posZ = (pz + RANDOM.nextFloat()) * distance;
-					positions.add(new BlockPos(posX, posY, posZ));
-				//}
+					if (density.eval(posX * 0.01, posZ * 0.01) > 0) {
+						positions.add(new BlockPos(posX, posY, posZ));
+					}
+				}
 			}
 		}
 	}

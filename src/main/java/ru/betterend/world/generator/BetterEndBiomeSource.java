@@ -13,14 +13,12 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
 import ru.betterend.BetterEnd;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.FeaturesHelper;
-import ru.betterend.world.biome.EndBiome;
 
 public class BetterEndBiomeSource extends BiomeSource {
 	public static final Codec<BetterEndBiomeSource> CODEC = RecordCodecBuilder.create((instance) -> {
@@ -38,6 +36,8 @@ public class BetterEndBiomeSource extends BiomeSource {
 	private BiomeMap mapLand;
 	private BiomeMap mapVoid;
 	private final long seed;
+	private int preY = -1;
+	boolean preLand = false;
 
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 		super(getBiomes(biomeRegistry));
@@ -74,6 +74,19 @@ public class BetterEndBiomeSource extends BiomeSource {
 		long j = (long) biomeZ * (long) biomeZ;
 		if (i + j <= 65536L) return this.centerBiome;
 		
+		if (biomeX == 0 && biomeZ == 0) {
+			mapLand.clearCache();
+			mapVoid.clearCache();
+		}
+		
+		if (TerrainGenerator.isLand(biomeX, biomeZ)) {
+			return mapLand.getBiome(biomeX << 2, biomeZ << 2).getActualBiome();
+		}
+		else {
+			return mapVoid.getBiome(biomeX << 2, biomeZ << 2).getActualBiome();
+		}
+		
+		/*
 		float height = TheEndBiomeSource.getNoiseAt(noise, (biomeX >> 1) + 1, (biomeZ >> 1) + 1) + (float) SMALL_NOISE.eval(biomeX, biomeZ) * 5;
 
 		if (height > -20F && height < -5F) {
@@ -85,7 +98,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 			mapLand.clearCache();
 			mapVoid.clearCache();
 		}
-		return endBiome.getActualBiome();
+		return endBiome.getActualBiome();*/
 	}
 
 	@Override

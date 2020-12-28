@@ -3,6 +3,8 @@ package ru.betterend.world.generator;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.minecraft.util.Identifier;
+import ru.betterend.config.Configs;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 
@@ -17,6 +19,13 @@ public class TerrainGenerator {
 	private static IslandLayer smallIslands;
 	private static OpenSimplexNoise noise1;
 	private static OpenSimplexNoise noise2;
+	private static boolean newGenerator;
+	private static boolean noRingVoid;
+	
+	public static void init() {
+		newGenerator = Configs.GENERATOR_CONFIG.getBoolean(new Identifier("generator", "enabled"), "useNewGenerator", true);
+		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean(new Identifier("generator", "enabled"), "noRingVoid", false);
+	}
 	
 	public static void initNoise(long seed) {
 		Random random = new Random(seed);
@@ -28,7 +37,15 @@ public class TerrainGenerator {
 	}
 	
 	public static boolean canGenerate(int x, int z) {
-		return (long) x + (long) z > CENTER;
+		return noRingVoid || (long) x + (long) z > CENTER;
+	}
+	
+	public static boolean noRingVoid() {
+		return noRingVoid;
+	}
+	
+	public static boolean useNewGenerator() {
+		return newGenerator;
 	}
 	
 	public static void fillTerrainDensity(double[] buffer, int x, int z) {

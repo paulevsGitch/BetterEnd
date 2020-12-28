@@ -27,7 +27,7 @@ public abstract class NoiseChunkGeneratorMixin {
 	
 	@Inject(method = "sampleNoiseColumn([DII)V", at = @At("HEAD"), cancellable = true, allow = 2)
 	private void beSampleNoiseColumn(double[] buffer, int x, int z, CallbackInfo info) {
-		if (settings.get().equals(ChunkGeneratorSettings.END)) {
+		if (TerrainGenerator.useNewGenerator() && settings.get().equals(ChunkGeneratorSettings.END)) {
 			if (TerrainGenerator.canGenerate(x, z)) {
 				TerrainGenerator.fillTerrainDensity(buffer, x, z);
 				info.cancel();

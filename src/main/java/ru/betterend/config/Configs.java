@@ -13,15 +13,13 @@ public class Configs {
 	public static final IdConfig ENTITY_CONFIG = new IdConfig("entities", (entityId, category) -> {
 		return new ConfigKey(entityId.getNamespace(), category, entityId.getPath());
 	});
-	public static final IdConfig GENERATOR_CONFIG = new IdConfig("generator", (entityId, category) -> {
-		return new ConfigKey(entityId.getNamespace(), category, entityId.getPath());
-	});
+	public static final SimpleConfig GENERATOR_CONFIG = new SimpleConfig("generator");
 	
 	public static void saveConfigs() {
 		ITEM_CONFIG.saveChanges();
 		BLOCK_CONFIG.saveChanges();
 		BIOME_CONFIG.saveChanges();
 		ENTITY_CONFIG.saveChanges();
-		GENERATOR_CONFIG.saveChanges();
+		GENERATOR_CONFIG.save();
 	}
 }

@@ -3,7 +3,6 @@ package ru.betterend.world.generator;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.minecraft.util.Identifier;
 import ru.betterend.config.Configs;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
@@ -23,8 +22,8 @@ public class TerrainGenerator {
 	private static boolean noRingVoid;
 	
 	public static void init() {
-		newGenerator = Configs.GENERATOR_CONFIG.getBoolean(new Identifier("generator", "enabled"), "useNewGenerator", true);
-		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean(new Identifier("generator", "enabled"), "noRingVoid", false);
+		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("generator", "useNewGenerator", true);
+		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("generator", "noRingVoid", false);
 	}
 	
 	public static void initNoise(long seed) {

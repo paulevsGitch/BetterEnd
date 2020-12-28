@@ -2,19 +2,19 @@ package ru.betterend.noise;
 
 import java.util.Random;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockPos;
 import ru.betterend.util.MHelper;
 
 public class VoronoiNoise {
 	private static final Random RANDOM = new Random();
 	final int seed;
-	final double scale;
-	final double separation;
+	
+	public VoronoiNoise() {
+		this(0);
+	}
 
-	public VoronoiNoise(int seed, double side, double separation) {
+	public VoronoiNoise(int seed) {
 		this.seed = seed;
-		this.scale = 1.0 / side;
-		this.separation = MathHelper.clamp(separation, 0, 1);
 	}
 	
 	private int getSeed(int x, int y, int z) {
@@ -22,38 +22,76 @@ public class VoronoiNoise {
 		h = (h ^ (h >> 13)) * 1274126177;
 		return h ^ (h >> 16);
 	}
-	
-	public double sample(float x, float y, float z) {
-		return sample(MHelper.floor(x), MHelper.floor(y), MHelper.floor(z));
-	}
 
-	public double sample(int x, int y, int z) {
-		double posX = x * scale;
-		double posY = y * scale;
-		double posZ = z * scale;
-		int posXI = MHelper.floor(posX);
-		int posYI = MHelper.floor(posY);
-		int posZI = MHelper.floor(posZ);
-		double distance = Double.MAX_VALUE;
-		for (int px = -1; px < 2; px++) {
-			double pointX = posXI + px;
-			for (int py = -1; py < 2; py++) {
-				double pointY = posYI + py;
-				for (int pz = -1; pz < 2; pz++) {
-					double pointZ = posZI + pz;
-					RANDOM.setSeed(getSeed(posXI + px, posYI + py, posZI + pz));
-					
-					double posXN = pointX + RANDOM.nextDouble() * separation;
-					double posYN = pointY + RANDOM.nextDouble() * separation;
-					double posZN = pointZ + RANDOM.nextDouble() * separation;
-					
-					double dist2 = MHelper.lengthSqr(posXN - posX, posYN - posY, posZN - posZ);
-					if (dist2 < distance) {
-						distance = dist2;
+	public double sample(double x, double y, double z) {
+		int ix = MHelper.floor(x);
+		int iy = MHelper.floor(y);
+		int iz = MHelper.floor(z);
+		
+		float px = (float) (x - ix);
+		float py = (float) (y - iy);
+		float pz = (float) (z - iz);
+		
+		float d = 10;
+		
+		for (int pox = -1; pox < 2; pox++) {
+			for (int poy = -1; poy < 2; poy++) {
+				for (int poz = -1; poz < 2; poz++) {
+					RANDOM.setSeed(getSeed(pox + ix, poy + iy, poz + iz));
+					float pointX = pox + RANDOM.nextFloat();
+					float pointY = poy + RANDOM.nextFloat();
+					float pointZ = poz + RANDOM.nextFloat();
+					float d2 = MHelper.lengthSqr(pointX - px, pointY - py, pointZ - pz);
+					if (d2 < d) {
+						d = d2;
 					}
 				}
 			}
 		}
-		return distance;
+		
+		return Math.sqrt(d);
+	}
+	
+	public BlockPos[] getPos(double x, double y, double z, double scale) {
+		int ix = MHelper.floor(x);
+		int iy = MHelper.floor(y);
+		int iz = MHelper.floor(z);
+		
+		float px = (float) (x - ix);
+		float py = (float) (y - iy);
+		float pz = (float) (z - iz);
+		
+		float d = 10;
+		float selX = 0;
+		float selY = 0;
+		float selZ = 0;
+		float selXPre = 0;
+		float selYPre = 0;
+		float selZPre = 0;
+		
+		for (int pox = -1; pox < 2; pox++) {
+			for (int poy = -1; poy < 2; poy++) {
+				for (int poz = -1; poz < 2; poz++) {
+					RANDOM.setSeed(getSeed(pox + ix, poy + iy, poz + iz));
+					float pointX = pox + RANDOM.nextFloat();
+					float pointY = poy + RANDOM.nextFloat();
+					float pointZ = poz + RANDOM.nextFloat();
+					float d2 = MHelper.lengthSqr(pointX - px, pointY - py, pointZ - pz);
+					if (d2 < d) {
+						d = d2;
+						selXPre = selX;
+						selYPre = selY;
+						selZPre = selZ;
+						selX = pointX;
+						selY = pointY;
+						selZ = pointZ;
+					}
+				}
+			}
+		}
+		
+		BlockPos p1 = new BlockPos((ix + (double) selX) * scale, (iy + (double) selY) * scale, (iz + (double) selZ) * scale);
+		BlockPos p2 = new BlockPos((ix + (double) selXPre) * scale, (iy + (double) selYPre) * scale, (iz + (double) selZPre) * scale);
+		return new BlockPos[] {p1, p2};
 	}
 }

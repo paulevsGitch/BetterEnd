@@ -11,7 +11,7 @@ import ru.betterend.config.ConfigKeeper.IntegerRange;
 
 public class IdConfig extends Config {
 	
-	private final BiFunction<Identifier, String, ConfigKey> keyFactory;
+	protected final BiFunction<Identifier, String, ConfigKey> keyFactory;
 	
 	public IdConfig(String group, BiFunction<Identifier, String, ConfigKey> keyFactory) {
 		super(group);
@@ -21,7 +21,7 @@ public class IdConfig extends Config {
 	@Override
 	protected void registerEntries() {}
 
-	private ConfigKey createKey(Identifier id, String key) {
+	protected ConfigKey createKey(Identifier id, String key) {
 		return this.keyFactory.apply(id, key);
 	}
 

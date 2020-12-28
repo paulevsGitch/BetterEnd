@@ -196,7 +196,7 @@ public class LakePiece extends BasePiece {
 			return -20;
 		}
 		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-		if (h < 57) {
+		if (h < 57 || h > 64) {
 			heightmap.put(p, -20);
 			return -20;
 		}

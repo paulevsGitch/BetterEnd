@@ -22,7 +22,7 @@ public class TerrainGenerator {
 	private static boolean noRingVoid;
 	
 	public static void init() {
-		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("generator", "useNewGenerator", true);
+		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("generator", "useNewGenerator", false);
 		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("generator", "noRingVoid", false);
 	}
 	

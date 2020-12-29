@@ -25,6 +25,8 @@ public class ParticleJungleSpore extends AnimatedParticle {
 	
 	@Override
 	public void tick() {
+		super.tick();
+		
 		int ticks = this.age % 30;
 		if (ticks == 0) {
 			this.velocityX = random.nextGaussian() * 0.02;
@@ -50,8 +52,6 @@ public class ParticleJungleSpore extends AnimatedParticle {
 		this.velocityY -= 0.001F;
 		this.velocityX *= 0.99F;
 		this.velocityZ *= 0.99F;
-		
-		super.tick();
 	}
 
 	@Environment(EnvType.CLIENT)

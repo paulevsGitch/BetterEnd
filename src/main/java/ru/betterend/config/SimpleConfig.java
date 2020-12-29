@@ -1,256 +1,88 @@
 package ru.betterend.config;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import org.jetbrains.annotations.Nullable;
 
 import ru.betterend.BetterEnd;
+import ru.betterend.config.ConfigKeeper.Entry;
+import ru.betterend.config.ConfigKeeper.FloatRange;
+import ru.betterend.config.ConfigKeeper.IntegerRange;
 
-public final class SimpleConfig {
-	private boolean rewrite = false;
-	private final String name;
-	private JsonObject config;
+public class SimpleConfig extends Config {
+
+	public SimpleConfig(String group) {
+		super(group);
+	}
+
+	@Override
+	protected void registerEntries() {}
 	
-	public SimpleConfig(String name) {
-		this.name = name;
+	protected ConfigKey createKey(String category, String key) {
+		return new ConfigKey(BetterEnd.MOD_ID, category, key);
+	}
+	
+	@Nullable
+	public <T, E extends Entry<T>> E getEntry(String category, String key, Class<E> type) {
+		return this.getEntry(createKey(category, key), type);
 	}
 
-	private void load() {
-		if (config == null) {
-			File file = getFolder();
-			if (!file.exists())
-				file.mkdirs();
-			file = getFile();
-			if (file.exists()) {
-				Gson gson = new Gson();
-				try {
-					Reader reader = new FileReader(file);
-					config = gson.fromJson(reader, JsonObject.class);
-					if (config == null) {
-						config = new JsonObject();
-						rewrite = true;
-					}
-					else {
-						rewrite = false;
-					}
-				}
-				catch (FileNotFoundException e) {
-					e.printStackTrace();
-					config = new JsonObject();
-					rewrite = true;
-				}
-			}
-			else {
-				config = new JsonObject();
-				rewrite = true;
-			}
-		}
+	@Nullable
+	public <T, E extends Entry<T>> T getDefault(String category, String key, Class<E> type) {
+		return this.getDefault(createKey(category, key), type);
 	}
 
-	public void save() {
-		if (rewrite) {
-			File file = getFolder();
-			if (!file.exists())
-				file.mkdirs();
-			file = getFile();
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			try {
-				FileWriter writer = new FileWriter(file);
-				String gstring = gson.toJson(config);
-				writer.write(gstring);
-				writer.flush();
-				writer.close();
-				rewrite = false;
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	public String getString(String category, String key, String defaultValue) {
+		return this.getString(createKey(category, key), defaultValue);
 	}
 
-	private File getFile() {
-		return new File(String.format("./config/%s/%s.json", BetterEnd.MOD_ID, name));
+	public String getString(String category, String key) {
+		return this.getString(createKey(category, key));
 	}
 
-	private File getFolder() {
-		return new File("./config/" + BetterEnd.MOD_ID + "/");
+	public boolean setString(String category, String key, String value) {
+		return this.setString(createKey(category, key), value);
 	}
 
-	public boolean getBoolean(String groups, String name, boolean def) {
-		load();
-		name += "[def: " + def + "]";
-
-		JsonObject group = getGroup(groups);
-		JsonElement element = group.get(name);
-
-		if (element != null) {
-			return element.getAsBoolean();
-		}
-		else {
-			group.addProperty(name, def);
-			rewrite = true;
-			return def;
-		}
+	public int getInt(String category, String key, int defaultValue) {
+		return this.getInt(createKey(category, key), defaultValue);
 	}
 
-	public void setBoolean(String groups, String name, boolean def, boolean value) {
-		name += "[def: " + def + "]";
-
-		JsonObject group = getGroup(groups);
-		group.addProperty(name, value);
-
-		rewrite = true;
+	public int getInt(String category, String key) {
+		return this.getInt(createKey(category, key));
 	}
 
-	public float getFloat(String groups, String name, float def) {
-		load();
-		name += "[def: " + def + "]";
-
-		JsonObject group = getGroup(groups);
-		JsonElement element = group.get(name);
-
-		if (element != null) {
-			return element.getAsFloat();
-		}
-		else {
-			group.addProperty(name, def);
-			rewrite = true;
-			return def;
-		}
+	public boolean setInt(String category, String key, int value) {
+		return this.setInt(createKey(category, key), value);
 	}
 
-	public void setFloat(String groups, String name, float def, float value) {
-		name += "[def: " + def + "]";
-
-		JsonObject group = getGroup(groups);
-		group.addProperty(name, value);
-
-		rewrite = true;
+	public boolean setRangedInt(String category, String key, int value) {
+		return this.setRanged(createKey(category, key), value, IntegerRange.class);
+	}
+	
+	public boolean setRangedFloat(String category, String key, float value) {
+		return this.setRanged(createKey(category, key), value, FloatRange.class);
 	}
 
-	public int getInt(String groups, String name, int def) {
-		load();
-		name += "[def: " + def + "]";
-
-		JsonObject group = getGroup(groups);
-		JsonElement element = group.get(name);
-
-		if (element != null) {
-			return element.getAsInt();
-		}
-		else {
-			group.addProperty(name, def);
-			rewrite = true;
-			return def;
-		}
+	public float getFloat(String category, String key, float defaultValue) {
+		return this.getFloat(createKey(category, key), defaultValue);
 	}
 
-	public String getString(String groups, String name, String def) {
-		load();
-		name += "[def: " + def + "]";
-
-		JsonObject group = getGroup(groups);
-		JsonElement element = group.get(name);
-
-		if (element != null) {
-			return element.getAsString();
-		}
-		else {
-			group.addProperty(name, def);
-			rewrite = true;
-			return def;
-		}
+	public float getFloat(String category, String key) {
+		return this.getFloat(createKey(category, key));
 	}
 
-	public void setInt(String groups, String name, int def, int value) {
-		name += "[def: " + def + "]";
-
-		JsonObject group = getGroup(groups);
-		group.addProperty(name, value);
-
-		rewrite = true;
+	public boolean setFloat(String category, String key, float value) {
+		return this.setFloat(createKey(category, key), value);
 	}
 
-	public void setStringLoad(String groups, String name, String value) {
-		JsonObject group = getGroup(groups);
-		group.addProperty(name, value);
+	public boolean getBoolean(String category, String key, boolean defaultValue) {
+		return this.getBoolean(createKey(category, key), defaultValue);
 	}
 
-	public String[] getStringArray(String groups, String name, String[] def) {
-		load();
-
-		JsonObject group = getGroup(groups);
-		JsonElement element = group.get(name);
-
-		if (element != null) {
-			return toStringArray(element.getAsJsonArray());
-		}
-		else {
-			group.add(name, toJsonArray(def));
-			rewrite = true;
-			return def;
-		}
+	public boolean getBoolean(String category, String key) {
+		return this.getBoolean(createKey(category, key));
 	}
 
-	private String[] toStringArray(JsonArray array) {
-		load();
-		String[] result = new String[array.size()];
-		for (int i = 0; i < array.size(); i++)
-			result[i] = array.get(i).getAsString();
-		return result;
-	}
-
-	private JsonArray toJsonArray(String[] array) {
-		load();
-		JsonArray result = new JsonArray();
-		for (String s : array)
-			result.add(s);
-		return result;
-	}
-
-	public JsonObject getGroup(String groups) {
-		JsonObject obj = config;
-		String[] groupsArr = groups.split("\\.");
-		for (String group : groupsArr) {
-			JsonObject jGroup = obj.getAsJsonObject(group);
-			if (jGroup == null) {
-				jGroup = new JsonObject();
-				obj.add(group, jGroup);
-			}
-			obj = jGroup;
-		}
-		return obj;
-	}
-
-	public List<String> getBaseGroups() {
-		List<String> groups = new ArrayList<String>();
-		Iterator<Entry<String, JsonElement>> iterator = config.entrySet().iterator();
-		iterator.forEachRemaining((element) -> {
-			groups.add(element.getKey());
-		});
-		return groups;
-	}
-
-	public List<Entry<String, JsonElement>> getGroupMembers(JsonObject group) {
-		List<Entry<String, JsonElement>> result = new ArrayList<Entry<String, JsonElement>>();
-		result.addAll(group.entrySet());
-		return result;
-	}
-
-	public void markToSave() {
-		rewrite = true;
+	public boolean setBoolean(String category, String key, boolean value) {
+		return this.setBoolean(createKey(category, key), value);
 	}
 }

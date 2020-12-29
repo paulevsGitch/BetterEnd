@@ -18,14 +18,50 @@ import ru.betterend.util.JsonFactory;
 public final class ConfigKeeper {
 	
 	private Map<ConfigKey, Entry<?>> configEntries = Maps.newHashMap();
-	private final JsonObject configObject;
 	
-	public ConfigKeeper(JsonObject config) {
-		this.configObject = config;
+	private final JsonObject configObject;
+	private final ConfigWriter writer;
+	
+	private boolean changed = false;
+	
+	public ConfigKeeper(String group) {
+		this.writer = new ConfigWriter(group);
+		this.configObject = writer.load();
+	}
+	
+	public void save() {
+		if (!changed) return;
+		this.writer.save();
+		this.changed = false;
+	}
+	
+	private <T, E extends Entry<T>> boolean has(ConfigKey key, E entry) {
+		if (configObject == null) {
+			return false;
+		}
+		String group = key.getOwner();
+		if (!configObject.has(group)) {
+			return false;
+		}
+		JsonObject jsonGroup = JsonHelper.getObject(configObject, group);
+		String category = key.getCategory();
+		if (!jsonGroup.has(category)) {
+			return false;
+		}
+		JsonObject jsonCategory = JsonHelper.getObject(jsonGroup, category);
+		String paramKey = key.getEntry();
+		paramKey += " [default: " + entry.getDefault() + "]";
+		return jsonCategory.has(paramKey);
 	}
 	
 	private <T, E extends Entry<T>> void storeValue(ConfigKey key, E entry, T value) {
-		if (configObject == null) return;
+		if (configObject == null) {
+			return;
+		}
+		if (has(key, entry)) {
+			T val = entry.getValue();
+			if (value.equals(val)) return;
+		}
 		
 		String group = key.getOwner();
 		JsonObject jsonGroup;
@@ -46,30 +82,20 @@ public final class ConfigKeeper {
 		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
 		entry.toJson(jsonCategory, paramKey, value);
+		this.changed = true;
 	}
 	
 	private <T, E extends Entry<T>> T getValue(ConfigKey key, E entry) {
-		if (configObject == null) {
+		if (!has(key, entry)) {
 			return entry.getDefault();
 		}
-		
 		String group = key.getOwner();
-		if (!configObject.has(group)) {
-			return entry.getDefault();
-		}
-		
-		JsonObject jsonGroup = JsonHelper.getObject(configObject, group);
 		String category = key.getCategory();
-		if (!jsonGroup.has(category)) {
-			return entry.getDefault();
-		}
-		
+		JsonObject jsonGroup = JsonHelper.getObject(configObject, group);
 		JsonObject jsonCategory = JsonHelper.getObject(jsonGroup, category);
+		
 		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
-		if (!jsonCategory.has(paramKey)) {
-			return entry.getDefault();
-		}
 		
 		return entry.fromJson(jsonCategory.get(paramKey));
 	}

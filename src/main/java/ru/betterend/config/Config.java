@@ -2,8 +2,6 @@ package ru.betterend.config;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.google.gson.JsonObject;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.config.ConfigKeeper.BooleanEntry;
 import ru.betterend.config.ConfigKeeper.Entry;
@@ -15,20 +13,16 @@ import ru.betterend.config.ConfigKeeper.StringEntry;
 public abstract class Config {
 	
 	protected final ConfigKeeper keeper;
-	protected final ConfigWriter writer;
 	
 	protected abstract void registerEntries();
 	
 	public Config(String group) {
-		this.writer = new ConfigWriter(group);
-		JsonObject settings = writer.load();
-		this.keeper = new ConfigKeeper(settings);
+		this.keeper = new ConfigKeeper(group);
 		this.registerEntries();
-		this.writer.save();
 	}
 	
 	public void saveChanges() {
-		this.writer.save();
+		this.keeper.save();
 	}
 	
 	@Nullable

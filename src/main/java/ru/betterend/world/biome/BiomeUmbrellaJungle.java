@@ -1,7 +1,9 @@
 package ru.betterend.world.biome;
 
+import net.minecraft.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 
 public class BiomeUmbrellaJungle extends EndBiome {
@@ -11,6 +13,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.setWaterAndFogColor(119, 198, 253)
 				.setFoliageColor(27, 183, 194)
 				.setFogDensity(2.3F)
+				.setParticles(EndParticles.JUNGLE_SPORE, 0.0001F)
 				.setMusic(EndSounds.MUSIC_FOREST)
 				.setSurface(EndBlocks.JUNGLE_MOSS)
 				.addFeature(EndFeatures.END_LAKE)
@@ -29,6 +32,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.addFeature(EndFeatures.CHARNIA_CYAN)
 				.addFeature(EndFeatures.CHARNIA_GREEN)
 				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
-				.addFeature(EndFeatures.CHARNIA_RED_RARE));
+				.addFeature(EndFeatures.CHARNIA_RED_RARE)
+				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

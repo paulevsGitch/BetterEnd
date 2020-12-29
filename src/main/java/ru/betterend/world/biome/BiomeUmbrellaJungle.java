@@ -13,7 +13,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.setWaterAndFogColor(119, 198, 253)
 				.setFoliageColor(27, 183, 194)
 				.setFogDensity(2.3F)
-				.setParticles(EndParticles.JUNGLE_SPORE, 0.0005F)
+				.setParticles(EndParticles.JUNGLE_SPORE, 0.001F)
 				.setMusic(EndSounds.MUSIC_FOREST)
 				.setSurface(EndBlocks.JUNGLE_MOSS)
 				.addFeature(EndFeatures.END_LAKE)

@@ -10,14 +10,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import ru.betterend.blocks.BlockJellyshroomCap;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
-import ru.betterend.util.sdf.PosInfo;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFFlatWave;
 import ru.betterend.util.sdf.operator.SDFScale3D;
@@ -29,7 +30,6 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class JellyshroomFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
-	private static final Function<PosInfo, BlockState> POST;
 	private static final List<Vector3f> ROOT;
 	
 	@Override
@@ -51,11 +51,26 @@ public class JellyshroomFeature extends DefaultFeature {
 		if (radius < 1.5F) {
 			radius = 1.5F;
 		}
-		SDF cap = makeCap(radius, random, membrane);
-		Vector3f last = spline.get(spline.size() - 1);
+		final float membraneRadius = radius;
+		SDF cap = makeCap(membraneRadius, random, membrane);
+		final Vector3f last = spline.get(spline.size() - 1);
 		cap = new SDFTranslate().setTranslate(last.getX(), last.getY(), last.getZ()).setSource(cap);
 		sdf = new SDFSmoothUnion().setRadius(3F).setSourceA(sdf).setSourceB(cap);
-		sdf.setReplaceFunction(REPLACE).setPostProcess(POST).fillRecursive(world, pos);
+		sdf.setReplaceFunction(REPLACE).setPostProcess((info) -> {
+			if (EndBlocks.JELLYSHROOM.isTreeLog(info.getState())) {
+				if (EndBlocks.JELLYSHROOM.isTreeLog(info.getStateUp()) && EndBlocks.JELLYSHROOM.isTreeLog(info.getStateDown())) {
+					return EndBlocks.JELLYSHROOM.log.getDefaultState();
+				}
+			}
+			else if (info.getState().isOf(EndBlocks.JELLYSHROOM_CAP_PURPLE)) {
+				float dx = info.getPos().getX() - pos.getX() - last.getX();
+				float dz = info.getPos().getZ() - pos.getZ() - last.getZ();
+				float distance = MHelper.length(dx, dz) / membraneRadius * 7F;
+				int color = MathHelper.clamp(MHelper.floor(distance), 0, 7);
+				return info.getState().with(BlockJellyshroomCap.COLOR, color);
+			}
+			return info.getState();
+		}).fillRecursive(world, pos);
 		radius = height * 0.5F;
 		makeRoots(world, pos.add(0, 2, 0), radius, random, bark);
 		
@@ -103,13 +118,6 @@ public class JellyshroomFeature extends DefaultFeature {
 			new Vector3f(0.8F, -0.20F, 0)
 		);
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
-		
-		POST = (info) -> {
-			if (EndBlocks.JELLYSHROOM.isTreeLog(info.getStateUp()) && EndBlocks.JELLYSHROOM.isTreeLog(info.getStateDown())) {
-				return EndBlocks.JELLYSHROOM.log.getDefaultState();
-			}
-			return info.getState();
-		};
 		
 		REPLACE = (state) -> {
 			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {

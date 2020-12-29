@@ -57,7 +57,7 @@ public class IslandLayer {
 			int px = pox + ix;
 			for (int poz = -1; poz < 2; poz++) {
 				int pz = poz + iz;
-				if ((long) px + (long) pz > center) {
+				if (TerrainGenerator.noRingVoid() || (long) px + (long) pz > center) {
 					RANDOM.setSeed(getSeed(px, pz));
 					double posX = (px + RANDOM.nextFloat()) * distance;
 					double posY = MHelper.randRange(minY, maxY, RANDOM);

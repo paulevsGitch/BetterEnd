@@ -3,6 +3,7 @@ package ru.betterend.util;
 import java.util.Random;
 
 import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.util.math.Vec3d;
 
 public class MHelper {
 	public static final float PI2 = (float) (Math.PI * 2);
@@ -249,6 +250,43 @@ public class MHelper {
 		values[2] = brightness;
 		
 		return values;
+	}
+	
+	public static Vec3d fromRGBtoHSBV(int r, int g, int b) {
+		int max = max(r, g, b);
+		int min = min(r, g, b);
+
+		float brightness = (float) max / 255.0F;
+		float saturation;
+		if (max != 0) {
+			saturation = (float) (max - min) / (float) max;
+		} else {
+			saturation = 0.0F;
+		}
+
+		float hue;
+		if (saturation == 0.0F) {
+			hue = 0.0F;
+		}
+		else {
+			float var9 = (float) (max - r) / (float) (max - min);
+			float var10 = (float) (max - g) / (float) (max - min);
+			float var11 = (float) (max - b) / (float) (max - min);
+			if (r == max) {
+				hue = var11 - var10;
+			} else if (g == max) {
+				hue = 2.0F + var9 - var11;
+			} else {
+				hue = 4.0F + var10 - var9;
+			}
+
+			hue /= 6.0F;
+			if (hue < 0.0F) {
+				++hue;
+			}
+		}
+		
+		return new Vec3d(hue, saturation, brightness);
 	}
 	
 	public static final float radiandToDegrees(float value) {

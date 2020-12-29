@@ -33,7 +33,7 @@ public class ParticleJungleSpore extends AnimatedParticle {
 			ticks = 0;
 		}
 		
-		if (this.age < 30) {
+		if (this.age <= 30) {
 			float delta = ticks / 30F;
 			this.setColorAlpha(delta);
 		}

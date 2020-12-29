@@ -17,7 +17,7 @@ public class ParticleJungleSpore extends AnimatedParticle {
 		super(world, x, y, z, sprites, 0);
 		setSprite(sprites.getSprite(random));
 		this.maxAge = MHelper.randRange(150, 300, random);
-		this.scale = MHelper.randRange(0.05F, 0.1F, random);
+		this.scale = MHelper.randRange(0.05F, 0.15F, random);
 		this.setTargetColor(15916745);
 		this.setSpriteForAge(spriteProvider);
 		this.setColorAlpha(0);
@@ -32,13 +32,13 @@ public class ParticleJungleSpore extends AnimatedParticle {
 			this.velocityZ = random.nextGaussian() * 0.02;
 			ticks = 0;
 		}
+		
 		if (this.age < 30) {
 			float delta = ticks / 30F;
 			this.setColorAlpha(delta);
 		}
-		else if (this.age > this.maxAge - 30) {
-			float delta = ticks / 30F;
-			this.setColorAlpha(1 - delta);
+		else if (this.age >= this.maxAge - 30) {
+			this.setColorAlpha((this.maxAge - this.age) / 30F);
 		}
 		
 		this.velocityY -= 0.001F;

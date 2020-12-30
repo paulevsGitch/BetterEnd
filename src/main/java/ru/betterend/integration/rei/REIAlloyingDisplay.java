@@ -1,4 +1,4 @@
-package ru.betterend.compat.rei;
+package ru.betterend.integration.rei;
 
 import java.util.Collections;
 import java.util.List;

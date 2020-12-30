@@ -26,10 +26,10 @@
 			"ru.betterend.client.BetterEndClient"
 		],
 		"rei_plugins": [
-    		"ru.betterend.compat.rei.REIPlugin"
+    		"ru.betterend.integration.rei.REIPlugin"
   		],
 		"rei_containers": [
-			"ru.betterend.compat.rei.REIContainer"
+			"ru.betterend.integration.rei.REIContainer"
 		]
 	},
 	"mixins": [

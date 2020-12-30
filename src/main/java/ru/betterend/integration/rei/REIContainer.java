@@ -1,4 +1,4 @@
-package ru.betterend.compat.rei;
+package ru.betterend.integration.rei;
 
 import me.shedaniel.rei.plugin.containers.CraftingContainerInfoWrapper;
 import me.shedaniel.rei.server.ContainerInfoHandler;

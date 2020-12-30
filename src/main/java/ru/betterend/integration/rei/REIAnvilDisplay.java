@@ -1,4 +1,4 @@
-package ru.betterend.compat.rei;
+package ru.betterend.integration.rei;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,37 +6,28 @@ import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.google.common.collect.Lists;
-
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.TransferRecipeDisplay;
 import me.shedaniel.rei.server.ContainerInfo;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
-import ru.betterend.recipe.builders.AlloyingRecipe;
-import ru.betterend.recipe.builders.InfusionRecipe;
+import ru.betterend.recipe.builders.AnvilSmithingRecipe;
 
-public class REIInfusionDisplay implements TransferRecipeDisplay {
+public class REIAnvilDisplay implements TransferRecipeDisplay {
 	
-	private final InfusionRecipe recipe;
-	private final List<List<EntryStack>> input;
-	private final List<EntryStack> output;
-	private final int time;
+	private AnvilSmithingRecipe recipe;
+	private List<List<EntryStack>> input;
+	private List<EntryStack> output;
 	
-	public REIInfusionDisplay(InfusionRecipe recipe) {
+	public REIAnvilDisplay(AnvilSmithingRecipe recipe) {
 		this.recipe = recipe;
-		this.input = Lists.newArrayList();
+		this.input = EntryStack.ofIngredients(recipe.getPreviewInputs());
 		this.output = Collections.singletonList(EntryStack.create(recipe.getOutput()));
-		this.time = recipe.getInfusionTime();
-		
-		recipe.getPreviewInputs().forEach(ingredient -> {
-			input.add(EntryStack.ofIngredient(ingredient));
-		});
 	}
 	
-	public int getInfusionTime() {
-		return this.time;
+	public int getDamage() {
+		return this.recipe.getDamage();
 	}
 	
 	@Override
@@ -56,7 +47,7 @@ public class REIInfusionDisplay implements TransferRecipeDisplay {
 
 	@Override
 	public @NotNull Identifier getRecipeCategory() {
-		return AlloyingRecipe.ID;
+		return REIPlugin.SMITHING;
 	}
 	
 	@Override
@@ -66,16 +57,17 @@ public class REIInfusionDisplay implements TransferRecipeDisplay {
 
 	@Override
 	public int getWidth() {
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public int getHeight() {
-		return 0;
+		return 1;
 	}
 
 	@Override
-	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo, ScreenHandler container) {
+	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo,
+			ScreenHandler container) {
 		return this.input;
 	}
 }

@@ -1,4 +1,4 @@
-package ru.betterend.compat.rei;
+package ru.betterend.integration.rei;
 
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;

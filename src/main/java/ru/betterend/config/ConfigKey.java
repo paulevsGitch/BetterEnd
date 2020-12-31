@@ -8,7 +8,7 @@ public class ConfigKey {
 	private final boolean root;
 	
 	public ConfigKey(String entry, String... path) {
-		validate(entry, path);
+		this.validate(entry);
 		this.path = path;
 		this.entry = entry;
 		this.root = path.length == 0 || (path.length == 1 && path[0].isEmpty());
@@ -74,7 +74,7 @@ public class ConfigKey {
 		return String.format("%s:%s", p, entry);
 	}
 	
-	private void validate(String entry, String... path) {
+	private void validate(String entry) {
 		if (entry == null) {
 			throw new NullPointerException("Config key must be not null!");
 		}

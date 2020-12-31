@@ -46,7 +46,6 @@ public final class ConfigKeeper {
 			for (String group: path) {
 				JsonElement element = obj.get(group);
 				if (element == null || !element.isJsonObject()) {
-					changed = true;
 					element = new JsonObject();
 					obj.add(group, element);
 				}
@@ -57,7 +56,7 @@ public final class ConfigKeeper {
 		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
 		
-		changed = entry.setLocation(obj, paramKey) || changed;
+		this.changed = entry.setLocation(obj, paramKey);
 	}
 	
 	private <T, E extends Entry<T>> void storeValue(E entry, T value) {

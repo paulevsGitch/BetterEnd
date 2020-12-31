@@ -19,6 +19,10 @@ public class PathConfig extends Config {
 		return new ConfigKey(key, category.split("\\."));
 	}
 	
+	protected ConfigKey createKey(String key) {
+		return new ConfigKey(key, "");
+	}
+	
 	@Nullable
 	public <T, E extends Entry<T>> E getEntry(String category, String key, Class<E> type) {
 		return this.getEntry(createKey(category, key), type);
@@ -88,58 +92,58 @@ public class PathConfig extends Config {
 	// From Root
 	
 	public String getStringRoot(String key, String defaultValue) {
-		return this.getString(createKey("", key), defaultValue);
+		return this.getString(createKey(key), defaultValue);
 	}
 
 	public String getStringRoot(String key) {
-		return this.getString(createKey("", key));
+		return this.getString(createKey(key));
 	}
 
 	public boolean setStringRoot(String key, String value) {
-		return this.setString(createKey("", key), value);
+		return this.setString(createKey(key), value);
 	}
 
 	public int getIntRoot(String key, int defaultValue) {
-		return this.getInt(createKey("", key), defaultValue);
+		return this.getInt(createKey(key), defaultValue);
 	}
 
 	public int getIntRoot(String key) {
-		return this.getInt(createKey("", key));
+		return this.getInt(createKey(key));
 	}
 
 	public boolean setIntRoot(String key, int value) {
-		return this.setInt(createKey("", key), value);
+		return this.setInt(createKey(key), value);
 	}
 
 	public boolean setRangedIntRoot(String key, int value) {
-		return this.setRanged(createKey("", key), value, IntegerRange.class);
+		return this.setRanged(createKey(key), value, IntegerRange.class);
 	}
 	
 	public boolean setRangedFloatRoot(String key, float value) {
-		return this.setRanged(createKey("", key), value, FloatRange.class);
+		return this.setRanged(createKey(key), value, FloatRange.class);
 	}
 
 	public float getFloatRoot(String key, float defaultValue) {
-		return this.getFloat(createKey("", key), defaultValue);
+		return this.getFloat(createKey(key), defaultValue);
 	}
 
 	public float getFloatRoot(String key) {
-		return this.getFloat(createKey("", key));
+		return this.getFloat(createKey(key));
 	}
 
 	public boolean setFloatRoot(String key, float value) {
-		return this.setFloat(createKey("", key), value);
+		return this.setFloat(createKey(key), value);
 	}
 
 	public boolean getBooleanRoot(String key, boolean defaultValue) {
-		return this.getBoolean(createKey("", key), defaultValue);
+		return this.getBoolean(createKey(key), defaultValue);
 	}
 
 	public boolean getBooleanRoot(String key) {
-		return this.getBoolean(createKey("", key));
+		return this.getBoolean(createKey(key));
 	}
 
 	public boolean setBooleanRoot(String key, boolean value) {
-		return this.setBoolean(createKey("", key), value);
+		return this.setBoolean(createKey(key), value);
 	}
 }

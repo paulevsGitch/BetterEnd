@@ -23,6 +23,7 @@ public class BetterEndClient implements ClientModInitializer {
 		EndParticles.register();
 		EndEntitiesRenders.register();
 		EndModelProviders.register();
+		ClientOptions.init();
 		
 		if (BetterEnd.isDevEnvironment()) {
 			TranslationHelper.printMissingNames();

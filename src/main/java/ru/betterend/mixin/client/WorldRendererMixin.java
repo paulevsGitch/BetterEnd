@@ -30,6 +30,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Quaternion;
 import ru.betterend.BetterEnd;
+import ru.betterend.client.ClientOptions;
 import ru.betterend.util.BackgroundInfo;
 import ru.betterend.util.MHelper;
 
@@ -83,7 +84,7 @@ public class WorldRendererMixin {
 	
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
 	private void renderBetterEndSky(MatrixStack matrices, float tickDelta, CallbackInfo info) {
-		if (client.world.getSkyProperties().getSkyType() == SkyProperties.SkyType.END) {
+		if (ClientOptions.isCustomSky() && client.world.getSkyProperties().getSkyType() == SkyProperties.SkyType.END) {
 			time = (ticks % 360000) * 0.001F;
 			
 			BackgroundRenderer.setFogBlack();
@@ -324,8 +325,7 @@ public class WorldRendererMixin {
 	
 	private void makeCylinder(BufferBuilder buffer, int segments, double height, double radius) {
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
-		for (int i = 0; i < segments; i ++)
-		{
+		for (int i = 0; i < segments; i ++) {
 			double a1 = (double) i * Math.PI * 2.0 / (double) segments;
 			double a2 = (double) (i + 1) * Math.PI * 2.0 / (double) segments;
 			double px1 = Math.sin(a1) * radius;

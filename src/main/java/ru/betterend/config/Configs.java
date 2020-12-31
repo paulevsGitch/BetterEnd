@@ -1,11 +1,17 @@
 package ru.betterend.config;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import ru.betterend.BetterEnd;
+
 public class Configs {
 	public static final PathConfig ENTITY_CONFIG = new PathConfig("entities");
 	public static final PathConfig BLOCK_CONFIG = new PathConfig("blocks");
 	public static final PathConfig ITEM_CONFIG = new PathConfig("items");
 	public static final IdConfig BIOME_CONFIG = new EntryConfig("biomes");
 	public static final PathConfig GENERATOR_CONFIG = new PathConfig("generator");
+	
+	@Environment(value = EnvType.CLIENT)
 	public static final PathConfig CLENT_CONFIG = new PathConfig("client");
 	
 	public static void saveConfigs() {
@@ -14,6 +20,9 @@ public class Configs {
 		BIOME_CONFIG.saveChanges();
 		ITEM_CONFIG.saveChanges();
 		GENERATOR_CONFIG.saveChanges();
-		CLENT_CONFIG.saveChanges();
+		
+		if (BetterEnd.isClient()) {
+			CLENT_CONFIG.saveChanges();
+		}
 	}
 }

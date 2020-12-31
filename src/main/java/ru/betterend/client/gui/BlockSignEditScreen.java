@@ -82,7 +82,6 @@ public class BlockSignEditScreen extends Screen {
 		++this.ticksSinceOpened;
 		if (!this.sign.getType().supports(this.sign.getCachedState().getBlock())) {
 			this.finishEditing();
-			System.out.println(this.sign.getType());
 		}
 	}
 

@@ -49,7 +49,6 @@ public class BigEtherTreeFeature extends DefaultFeature {
 			int rotCount = MHelper.randRange(5, 7, random);
 			float startRad = MathHelper.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
 			Vector3f start = SplineHelper.getPos(trunk, splinePos * (trunk.size() - 1));
-			System.out.println(start + " " + startRad + " " + branch.size());
 			for (int j = 0; j < rotCount; j++) {
 				float angle = startAngle + (float) j / rotCount * MHelper.PI2;
 				List<Vector3f> br = SplineHelper.copySpline(branch);

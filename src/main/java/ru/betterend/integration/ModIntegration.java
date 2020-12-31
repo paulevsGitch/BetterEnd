@@ -47,7 +47,6 @@ public abstract class ModIntegration {
 	public EndFeature getFeature(String featureID, String configuredFeatureID, GenerationStep.Feature featureStep) {
 		Feature<?> feature = Registry.FEATURE.get(getID(featureID));
 		ConfiguredFeature<?, ?> featureConfigured = BuiltinRegistries.CONFIGURED_FEATURE.get(getID(configuredFeatureID));
-		System.out.println(feature + " " + featureConfigured);
 		return new EndFeature(feature, featureConfigured, featureStep);
 	}
 	

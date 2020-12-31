@@ -22,6 +22,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
+import ru.betterend.client.ClientOptions;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BackgroundInfo;
 import ru.betterend.world.biome.EndBiome;
@@ -72,7 +73,7 @@ public class BackgroundRendererMixin {
 		Entity entity = camera.getFocusedEntity();
 		Biome biome = entity.world.getBiome(entity.getBlockPos());
 		FluidState fluidState = camera.getSubmergedFluidState();
-		if (biome.getCategory() == Category.THEEND && fluidState.isEmpty()) {
+		if (ClientOptions.useFogDensity() && biome.getCategory() == Category.THEEND && fluidState.isEmpty()) {
 			EndBiome endBiome = EndBiomes.getRenderBiome(biome);
 			
 			if (fogDensity == 0) {

@@ -40,20 +40,15 @@ public final class ConfigKeeper {
 			return;
 		}
 		String[] path = key.getPath();
-		JsonObject obj = null;
+		JsonObject obj = configObject;
 		
 		if (!key.isRoot()) {
 			for (String group: path) {
-				JsonElement element = configObject.get(group);
+				JsonElement element = obj.get(group);
 				if (element == null || !element.isJsonObject()) {
+					changed = true;
 					element = new JsonObject();
-					if (obj == null) {
-						obj = element.getAsJsonObject();
-						configObject.add(group, obj);
-					}
-					else {
-						obj.add(group, element);
-					}
+					obj.add(group, element);
 				}
 				obj = element.getAsJsonObject();
 			}
@@ -61,7 +56,8 @@ public final class ConfigKeeper {
 		
 		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
-		this.changed = entry.setLocation(obj == null ? configObject : obj, paramKey);
+		
+		changed = entry.setLocation(obj, paramKey) || changed;
 	}
 	
 	private <T, E extends Entry<T>> void storeValue(E entry, T value) {

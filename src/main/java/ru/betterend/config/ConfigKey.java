@@ -1,38 +1,41 @@
 package ru.betterend.config;
 
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.Identifier;
 
 public class ConfigKey {
-	private final String owner;
-	private final String category;
+	private final String path[];
 	private final String entry;
+	private final boolean root;
 	
-	public ConfigKey(@NotNull String owner, @NotNull String category, @NotNull String entry) {
-		this.validate(owner, category, entry);
-		this.owner = owner;
-		this.category = category;
+	public ConfigKey(String entry, String... path) {
+		validate(entry, path);
+		this.path = path;
 		this.entry = entry;
+		this.root = path.length == 0 || (path.length == 1 && path[0].isEmpty());
+	}
+	
+	public ConfigKey(String entry, Identifier path) {
+		this(entry, path.getNamespace(), path.getPath());
 	}
 
-	public String getOwner() {
-		return owner;
-	}
-
-	public String getCategory() {
-		return category;
+	public String[] getPath() {
+		return path;
 	}
 
 	public String getEntry() {
 		return entry;
+	}
+	
+	public boolean isRoot() {
+		return root;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + category.hashCode();
+		result = prime * result + path.hashCode();
 		result = prime * result + entry.hashCode();
-		result = prime * result + owner.hashCode();
 		return result;
 	}
 
@@ -45,25 +48,15 @@ public class ConfigKey {
 			return false;
 		}
 		ConfigKey other = (ConfigKey) obj;
-		if (category == null) {
-			if (other.category != null) {
-				return false;
-			}
-		} else if (!category.equals(other.category)) {
+		if (other.path.length != path.length) {
 			return false;
 		}
-		if (entry == null) {
-			if (other.entry != null) {
+		for (int i = 0; i < path.length; i++) {
+			if (!path[i].equals(other.path[i])) {
 				return false;
 			}
-		} else if (!entry.equals(other.entry)) {
-			return false;
 		}
-		if (owner == null) {
-			if (other.owner != null) {
-				return false;
-			}
-		} else if (!owner.equals(other.owner)) {
+		if (!entry.equals(other.entry)) {
 			return false;
 		}
 		return true;
@@ -71,18 +64,22 @@ public class ConfigKey {
 	
 	@Override
 	public String toString() {
-		return String.format("%s:%s:%s", owner, category, entry);
+		if (root) {
+			return String.format("ROOT:%s", entry);
+		}
+		String p = path[0];
+		for (int i = 1; i < path.length; i++) {
+			p += "." + path[i];
+		}
+		return String.format("%s:%s", p, entry);
 	}
-
-	private void validate(String owner, String category, String entry) {
-		if (owner == null) {
-			throw new NullPointerException("Failed to create ConfigKey: 'owner' can't be null.");
-		}
-		if (category == null) {
-			throw new NullPointerException("Failed to create ConfigKey: 'category' can't be null.");
-		}
+	
+	private void validate(String entry, String... path) {
 		if (entry == null) {
-			throw new NullPointerException("Failed to create ConfigKey: 'entry' can't be null.");
+			throw new NullPointerException("Config key must be not null!");
+		}
+		if (entry.isEmpty()) {
+			throw new IndexOutOfBoundsException("Config key must be not empty!");
 		}
 	}
 }

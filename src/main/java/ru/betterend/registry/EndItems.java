@@ -124,7 +124,7 @@ public class EndItems {
 		if (item instanceof ArmorItem) {
 			return registerArmor(id, item);
 		}
-		if (!Configs.ITEM_CONFIG.getBoolean(id, "items", true)) {
+		if (!Configs.ITEM_CONFIG.getBoolean("items", id.getPath(), true)) {
 			return item;
 		}
 		registerItem(id, item, MOD_ITEMS);
@@ -144,7 +144,7 @@ public class EndItems {
 	}
 	
 	private static Item registerArmor(Identifier id, Item item) {
-		if (!Configs.ITEM_CONFIG.getBoolean(id, "armor", true)) {
+		if (!Configs.ITEM_CONFIG.getBoolean("armor", id.getPath(), true)) {
 			return item;
 		}
 		registerItem(id, item, MOD_ITEMS);
@@ -153,7 +153,7 @@ public class EndItems {
 	
 	private static ToolItem registerTool(String name, ToolItem item) {
 		Identifier id = BetterEnd.makeID(name);
-		if (!Configs.ITEM_CONFIG.getBoolean(id, "tools", true)) {
+		if (!Configs.ITEM_CONFIG.getBoolean("tools", id.getPath(), true)) {
 			return item;
 		}
 		registerItem(id, item, MOD_ITEMS);

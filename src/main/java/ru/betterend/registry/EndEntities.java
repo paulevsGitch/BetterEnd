@@ -39,7 +39,7 @@ public class EndEntities {
 	protected static <T extends Entity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity) {
 		Identifier id = BetterEnd.makeID(name);
 		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity).dimensions(EntityDimensions.fixed(width, height)).build();
-		if (Configs.ENTITY_CONFIG.getBoolean(id, "entities", true)) {
+		if (Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			return Registry.register(Registry.ENTITY_TYPE, id, type);
 		}
 		return type;
@@ -48,7 +48,7 @@ public class EndEntities {
 	private static <T extends LivingEntity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity, Builder attributes, boolean fixedSize, int eggColor, int dotsColor) {
 		Identifier id = BetterEnd.makeID(name);
 		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity).dimensions(fixedSize ? EntityDimensions.fixed(width, height) : EntityDimensions.changing(width, height)).build();
-		if (Configs.ENTITY_CONFIG.getBoolean(id, "entities", true)) {
+		if (Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			FabricDefaultAttributeRegistry.register(type, attributes);
 			EndItems.registerEgg("spawn_egg_" + name, type, eggColor, dotsColor);
 			return Registry.register(Registry.ENTITY_TYPE, BetterEnd.makeID(name), type);

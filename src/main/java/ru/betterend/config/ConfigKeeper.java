@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.util.JsonHelper;
@@ -38,25 +39,29 @@ public final class ConfigKeeper {
 		if (configObject == null) {
 			return;
 		}
-		String group = key.getOwner();
-		JsonObject jsonGroup;
-		if (configObject.has(group)) {
-			jsonGroup = JsonHelper.getObject(configObject, group);
-		} else {
-			jsonGroup = new JsonObject();
-			configObject.add(group, jsonGroup);
+		String[] path = key.getPath();
+		JsonObject obj = null;
+		
+		if (!key.isRoot()) {
+			for (String group: path) {
+				JsonElement element = configObject.get(group);
+				if (element == null || !element.isJsonObject()) {
+					element = new JsonObject();
+					if (obj == null) {
+						obj = element.getAsJsonObject();
+						configObject.add(group, obj);
+					}
+					else {
+						obj.add(group, element);
+					}
+				}
+				obj = element.getAsJsonObject();
+			}
 		}
-		String category = key.getCategory();
-		JsonObject jsonCategory;
-		if (jsonGroup.has(category)) {
-			jsonCategory = JsonHelper.getObject(jsonGroup, category);
-		} else {
-			jsonCategory = new JsonObject();
-			jsonGroup.add(category, jsonCategory);
-		}
+		
 		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
-		this.changed = entry.setLocation(jsonCategory, paramKey);
+		this.changed = entry.setLocation(obj == null ? configObject : obj, paramKey);
 	}
 	
 	private <T, E extends Entry<T>> void storeValue(E entry, T value) {

@@ -302,7 +302,7 @@ public class EndBlocks {
 	public static void register() {}
 	
 	public static Block registerBlock(Identifier id, Block block) {
-		if (!Configs.BLOCK_CONFIG.getBoolean(id, "blocks", true)) {
+		if (!Configs.BLOCK_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			return block;
 		}
 		Registry.register(Registry.BLOCK, id, block);

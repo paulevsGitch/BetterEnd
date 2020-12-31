@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -47,7 +46,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 			List<Vector3f> branch = SplineHelper.makeSpline(0, 0, 0, length, 0, 0, points < 2 ? 2 : points);
 			SplineHelper.powerOffset(branch, length, 2F);
 			int rotCount = MHelper.randRange(5, 7, random);
-			float startRad = MathHelper.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
+			//float startRad = MathHelper.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
 			Vector3f start = SplineHelper.getPos(trunk, splinePos * (trunk.size() - 1));
 			for (int j = 0; j < rotCount; j++) {
 				float angle = startAngle + (float) j / rotCount * MHelper.PI2;

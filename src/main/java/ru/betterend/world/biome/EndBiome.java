@@ -8,7 +8,6 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import net.minecraft.structure.Structure;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.config.Configs;
@@ -146,7 +145,7 @@ public class EndBiome {
 				List<StructureInfo> list = Lists.newArrayList();
 				enties.forEach((entry) -> {
 					JsonObject e = entry.getAsJsonObject();
-					Structure structure = StructureHelper.readStructure(path + e.get("nbt").getAsString() + ".nbt");
+					String structure = path + e.get("nbt").getAsString() + ".nbt";
 					TerrainMerge terrainMerge = TerrainMerge.getFromString(e.get("terrainMerge").getAsString());
 					int offsetY = e.get("offsetY").getAsInt();
 					list.add(new StructureInfo(structure, offsetY, terrainMerge));

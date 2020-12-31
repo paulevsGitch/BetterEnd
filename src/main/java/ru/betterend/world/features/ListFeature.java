@@ -10,6 +10,7 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.StructureHelper;
 
 public class ListFeature extends NBTStructureFeature {
 	private final List<StructureInfo> list;
@@ -57,13 +58,22 @@ public class ListFeature extends NBTStructureFeature {
 	
 	public static final class StructureInfo {
 		public final TerrainMerge terrainMerge;
-		public final Structure structure;
+		public final String structurePath;
 		public final int offsetY;
 		
-		public StructureInfo(Structure structure, int offsetY, TerrainMerge terrainMerge) {
+		private Structure structure;
+		
+		public StructureInfo(String structurePath, int offsetY, TerrainMerge terrainMerge) {
 			this.terrainMerge = terrainMerge;
-			this.structure = structure;
+			this.structurePath = structurePath;
 			this.offsetY = offsetY;
+		}
+		
+		public Structure getStructure() {
+			if (structure == null) {
+				structure = StructureHelper.readStructure(structurePath);
+			}
+			return structure;
 		}
 	}
 }

@@ -21,7 +21,7 @@ import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFRotation;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.operator.SDFUnion;
-import ru.betterend.util.sdf.primitive.SDFCapedCone;
+import ru.betterend.util.sdf.primitive.SDFCappedCone;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
 public class StructureGiantIceStar extends SDFStructureFeature {
@@ -36,7 +36,7 @@ public class StructureGiantIceStar extends SDFStructureFeature {
 		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);
 		SDF sdf = null;
-		SDF spike = new SDFCapedCone().setRadius1(3 + (size - 5) * 0.2F).setRadius2(0).setHeight(size).setBlock(EndBlocks.DENSE_SNOW);
+		SDF spike = new SDFCappedCone().setRadius1(3 + (size - 5) * 0.2F).setRadius2(0).setHeight(size).setBlock(EndBlocks.DENSE_SNOW);
 		spike = new SDFTranslate().setTranslate(0, size - 0.5F, 0).setSource(spike);
 		for (Vector3f point: points) {
 			SDF rotated = spike;

@@ -15,7 +15,7 @@ import ru.betterend.util.sdf.operator.SDFScale;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.operator.SDFUnion;
-import ru.betterend.util.sdf.primitive.SDFCapedCone;
+import ru.betterend.util.sdf.primitive.SDFCappedCone;
 
 public class IslandLayer {
 	private static final Random RANDOM = new Random();
@@ -109,7 +109,7 @@ public class IslandLayer {
 	
 	private static SDF makeCone(float radiusBottom, float radiusTop, float height, float minY) {
 		float hh = height * 0.5F;
-		SDF sdf = new SDFCapedCone().setHeight(hh).setRadius1(radiusBottom).setRadius2(radiusTop);
+		SDF sdf = new SDFCappedCone().setHeight(hh).setRadius1(radiusBottom).setRadius2(radiusTop);
 		return new SDFTranslate().setTranslate(0, minY + hh, 0).setSource(sdf);
 	}
 	

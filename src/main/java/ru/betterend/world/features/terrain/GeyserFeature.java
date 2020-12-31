@@ -32,7 +32,7 @@ import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFSubtraction;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.operator.SDFUnion;
-import ru.betterend.util.sdf.primitive.SDFCapedCone;
+import ru.betterend.util.sdf.primitive.SDFCappedCone;
 import ru.betterend.util.sdf.primitive.SDFFlatland;
 import ru.betterend.util.sdf.primitive.SDFPrimitive;
 import ru.betterend.util.sdf.primitive.SDFSphere;
@@ -52,7 +52,7 @@ public class GeyserFeature extends DefaultFeature {
 			int halfHeight = MHelper.randRange(10, 20, random);
 			float radius1 = halfHeight * 0.5F;
 			float radius2 = halfHeight * 0.1F + 0.5F;
-			SDF sdf = new SDFCapedCone().setHeight(halfHeight).setRadius1(radius1).setRadius2(radius2).setBlock(EndBlocks.SULPHURIC_ROCK.stone);
+			SDF sdf = new SDFCappedCone().setHeight(halfHeight).setRadius1(radius1).setRadius2(radius2).setBlock(EndBlocks.SULPHURIC_ROCK.stone);
 			sdf = new SDFTranslate().setTranslate(0, halfHeight - 3, 0).setSource(sdf);
 			
 			int count = halfHeight;
@@ -61,14 +61,14 @@ public class GeyserFeature extends DefaultFeature {
 				float delta = (float) i / (float) (count - 1);
 				float radius = MathHelper.lerp(delta, radius1, radius2) * 1.3F;
 				
-				SDF bowl = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.SULPHURIC_ROCK.stone);
+				SDF bowl = new SDFCappedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.SULPHURIC_ROCK.stone);
 				
-				SDF brimstone = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.BRIMSTONE);
+				SDF brimstone = new SDFCappedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(EndBlocks.BRIMSTONE);
 				brimstone = new SDFTranslate().setTranslate(0, 2F, 0).setSource(brimstone);
 				bowl = new SDFSubtraction().setSourceA(bowl).setSourceB(brimstone);
 				bowl = new SDFUnion().setSourceA(brimstone).setSourceB(bowl);
 				
-				SDF water = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(Blocks.WATER);
+				SDF water = new SDFCappedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(Blocks.WATER);
 				water = new SDFTranslate().setTranslate(0, 4, 0).setSource(water);
 				bowl = new SDFSubtraction().setSourceA(bowl).setSourceB(water);
 				bowl = new SDFUnion().setSourceA(water).setSourceB(bowl);
@@ -102,7 +102,7 @@ public class GeyserFeature extends DefaultFeature {
 			SDFPrimitive obj1;
 			SDFPrimitive obj2;
 			
-			obj1 = new SDFCapedCone().setHeight(halfHeight + 5).setRadius1(radius1 * 0.5F).setRadius2(radius2);
+			obj1 = new SDFCappedCone().setHeight(halfHeight + 5).setRadius1(radius1 * 0.5F).setRadius2(radius2);
 			sdf = new SDFTranslate().setTranslate(0, halfHeight - 13, 0).setSource(obj1);
 			sdf = new SDFDisplacement().setFunction((vec) -> {
 				return (float) noise.eval(vec.getX() * 0.3F, vec.getY() * 0.3F, vec.getZ() * 0.3F) * 0.5F;

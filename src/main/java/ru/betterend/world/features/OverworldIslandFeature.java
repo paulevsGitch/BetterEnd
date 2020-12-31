@@ -12,7 +12,7 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFDisplacement;
 import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.primitive.SDFCapedCone;
+import ru.betterend.util.sdf.primitive.SDFCappedCone;
 
 public class OverworldIslandFeature extends DefaultFeature {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(412);
@@ -27,7 +27,7 @@ public class OverworldIslandFeature extends DefaultFeature {
 	}
 	
 	static {
-		SDF cone = new SDFCapedCone().setRadius1(0).setRadius2(6).setHeight(4).setBlock((pos) -> {
+		SDF cone = new SDFCappedCone().setRadius1(0).setRadius2(6).setHeight(4).setBlock((pos) -> {
 			if (pos.getY() == CENTER.getY()) return Blocks.GRASS_BLOCK.getDefaultState();
 			if (pos.getY() == CENTER.getY() - 1) {
 				return Blocks.DIRT.getDefaultState();

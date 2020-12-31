@@ -164,6 +164,16 @@
 			}
 		]
 	},
+	"betterend.ambient.umbrella_jungle": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/umbrella_jungle",
+				"volume": 1.0,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.entity.dragonfly": {
 		"category": "entity",

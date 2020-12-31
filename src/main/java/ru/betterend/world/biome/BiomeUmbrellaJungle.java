@@ -15,6 +15,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.setFogDensity(2.3F)
 				.setParticles(EndParticles.JUNGLE_SPORE, 0.001F)
 				.setMusic(EndSounds.MUSIC_FOREST)
+				.setLoop(EndSounds.AMBIENT_UMBRELLA_JUNGLE)
 				.setSurface(EndBlocks.JUNGLE_MOSS)
 				.addFeature(EndFeatures.END_LAKE)
 				.addFeature(EndFeatures.UMBRELLA_TREE)

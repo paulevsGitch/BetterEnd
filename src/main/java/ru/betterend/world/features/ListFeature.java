@@ -23,7 +23,7 @@ public class ListFeature extends NBTStructureFeature {
 	@Override
 	protected Structure getStructure(StructureWorldAccess world, BlockPos pos, Random random) {
 		selected = list.get(random.nextInt(list.size()));
-		return selected.structure;
+		return selected.getStructure();
 	}
 
 	@Override

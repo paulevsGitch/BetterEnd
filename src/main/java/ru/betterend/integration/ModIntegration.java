@@ -1,5 +1,9 @@
 package ru.betterend.integration;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,6 +15,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
+import ru.betterend.BetterEnd;
 import ru.betterend.world.features.EndFeature;
 
 public abstract class ModIntegration {
@@ -60,5 +65,107 @@ public abstract class ModIntegration {
 	
 	public Biome getBiome(String name) {
 		return BuiltinRegistries.BIOME.get(getID(name));
+	}
+	
+	public Class<?> getClass(String path) {
+		Class<?> cl = null;
+		try {
+			cl = Class.forName(path);
+		}
+		catch (ClassNotFoundException e) {
+			BetterEnd.LOGGER.error(e.getMessage());
+			if (BetterEnd.isDevEnvironment()) {
+				e.printStackTrace();
+			}
+		}
+		return cl;
+	}
+	
+	public Method getMethod(Class<?> cl, String functionName, Class<?>... args) {
+		if (cl != null) {
+			try {
+				return cl.getMethod(functionName, args);
+			}
+			catch (NoSuchMethodException | SecurityException e) {
+				BetterEnd.LOGGER.error(e.getMessage());
+				if (BetterEnd.isDevEnvironment()) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Method getInstanceMethod(Object instance, String functionName, Class<?>... args) {
+		if (instance != null) {
+			try {
+				return instance.getClass().getDeclaredMethod(functionName, args);
+			}
+			catch (NoSuchMethodException | SecurityException e) {
+				BetterEnd.LOGGER.error(e.getMessage());
+				if (BetterEnd.isDevEnvironment()) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Object executeMethod(Object instance, Method method, Object... args) {
+		if (method != null) {
+			try {
+				return method.invoke(instance, args);
+			}
+			catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				BetterEnd.LOGGER.error(e.getMessage());
+				if (BetterEnd.isDevEnvironment()) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Object getAndExecuteStatic(Class<?> cl, String functionName, Object... args) {
+		if (cl != null) {
+			Class<?>[] classes = new Class<?>[args.length];
+			for (int i = 0; i < args.length; i++) {
+				classes[i] = args[i].getClass();
+			}
+			Method method = getMethod(cl, functionName, classes);
+			return executeMethod(null, method, args);
+		}
+		return null;
+	}
+	
+	public Object getAndExecuteRuntime(Object instance, String functionName, Object... args) {
+		if (instance != null) {
+			Class<?>[] classes = new Class<?>[args.length];
+			for (int i = 0; i < args.length; i++) {
+				classes[i] = args[i].getClass();
+			}
+			Method method = getInstanceMethod(instance, functionName, classes);
+			return executeMethod(instance, method, args);
+		}
+		return null;
+	}
+	
+	public Object newInstance(Class<?> cl, Object... args) {
+		if (cl != null) {
+			for (Constructor<?> constructor: cl.getConstructors()) {
+				if (constructor.getParameterCount() == args.length) {
+					try {
+						return constructor.newInstance(args);
+					}
+					catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						BetterEnd.LOGGER.error(e.getMessage());
+						if (BetterEnd.isDevEnvironment()) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 }

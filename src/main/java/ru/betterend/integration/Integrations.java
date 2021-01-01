@@ -9,6 +9,7 @@ import ru.betterend.integration.byg.BYGIntegration;
 public class Integrations {
 	public static final List<ModIntegration> INTEGRATIONS = Lists.newArrayList();
 	public static final ModIntegration BYG = register(new BYGIntegration());
+	public static final ModIntegration ADORN = register(new AdornIntegration());
 	
 	public static void register() {
 		INTEGRATIONS.forEach((integration) -> {

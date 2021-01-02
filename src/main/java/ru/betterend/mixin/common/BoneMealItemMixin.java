@@ -49,7 +49,7 @@ public class BoneMealItemMixin {
 				}
 				else {
 					if (!world.getFluidState(offseted).isEmpty() && endBiome) {
-						if (world.getBlockState(offseted).equals(Blocks.WATER)) {
+						if (world.getBlockState(offseted).getBlock().equals(Blocks.WATER)) {
 							consume = beGrowWaterGrass(world, blockPos);
 						}
 					}
@@ -67,7 +67,7 @@ public class BoneMealItemMixin {
 				}
 			}
 			else if (!world.getFluidState(offseted).isEmpty() && endBiome) {
-				if (world.getBlockState(offseted).equals(Blocks.WATER)) {
+				if (world.getBlockState(offseted).getBlock().equals(Blocks.WATER)) {
 					info.setReturnValue(ActionResult.FAIL);
 					info.cancel();
 				}

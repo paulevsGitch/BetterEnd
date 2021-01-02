@@ -19,7 +19,7 @@ public class AdornIntegration extends ModIntegration {
 		Method create = getMethod(adornBlockBuilder, "create", blockVariant);
 		Object builder = executeMethod(adornBlockBuilder, create, testVariant);
 		getAndExecuteRuntime(builder, "withEverything");
-		getAndExecuteRuntime(builder, "registerIn", "adorn");
+		getAndExecuteRuntime(builder, "registerIn", BetterEnd.MOD_ID);
 	}
 
 	@Override

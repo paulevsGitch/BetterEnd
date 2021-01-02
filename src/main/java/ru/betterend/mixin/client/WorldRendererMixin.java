@@ -39,11 +39,13 @@ public class WorldRendererMixin {
 	private static final Identifier NEBULA_1 = BetterEnd.makeID("textures/sky/nebula_2.png");
 	private static final Identifier NEBULA_2 = BetterEnd.makeID("textures/sky/nebula_3.png");
 	private static final Identifier HORIZON = BetterEnd.makeID("textures/sky/nebula_1.png");
+	private static final Identifier STARS = BetterEnd.makeID("textures/sky/stars.png");
 	private static final Identifier FOG = BetterEnd.makeID("textures/sky/fog.png");
 	
 	private static VertexBuffer stars1;
 	private static VertexBuffer stars2;
 	private static VertexBuffer stars3;
+	private static VertexBuffer stars4;
 	private static VertexBuffer nebulas1;
 	private static VertexBuffer nebulas2;
 	private static VertexBuffer horizon;
@@ -51,6 +53,7 @@ public class WorldRendererMixin {
 	private static Vector3f axis1;
 	private static Vector3f axis2;
 	private static Vector3f axis3;
+	private static Vector3f axis4;
 	private static float time;
 	private static boolean directOpenGL = false;
 	
@@ -75,9 +78,11 @@ public class WorldRendererMixin {
 		axis1 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
 		axis2 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
 		axis3 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
+		axis4 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
 		axis1.normalize();
 		axis2.normalize();
 		axis3.normalize();
+		axis4.normalize();
 		
 		directOpenGL = FabricLoader.getInstance().isModLoaded("optifabric") || FabricLoader.getInstance().isModLoaded("immersive_portals");
 	}
@@ -122,6 +127,18 @@ public class WorldRendererMixin {
 				textureManager.bindTexture(NEBULA_2);
 				renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F * blindA);
 				matrices.pop();
+				
+				textureManager.bindTexture(STARS);
+				
+				matrices.push();
+				matrices.multiply(axis3.getDegreesQuaternion(time));
+				renderBuffer(matrices, stars3, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.6F * blindA);
+				matrices.pop();
+				
+				matrices.push();
+				matrices.multiply(axis4.getDegreesQuaternion(time * 2));
+				renderBuffer(matrices, stars4, VertexFormats.POSITION_TEXTURE, 1F, 1F, 1F, 0.6F * blindA);
+				matrices.pop();
 			}
 			
 			float a = (BackgroundInfo.fog - 1F);
@@ -143,11 +160,6 @@ public class WorldRendererMixin {
 				matrices.multiply(new Quaternion(axis2, time * 2, true));
 				renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, 0.6F * blindA);
 				matrices.pop();
-				
-				matrices.push();
-				matrices.multiply(new Quaternion(axis3, time, true));
-				renderBuffer(matrices, stars3, VertexFormats.POSITION, 0.77F, 0.31F, 0.73F, 0.6F * blindA);
-				matrices.pop();
 			}
 			
 			RenderSystem.enableTexture();
@@ -168,22 +180,36 @@ public class WorldRendererMixin {
 
 	private void initStars() {
 		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
-		stars1 = buildBuffer(buffer, stars1, 0.1, 0.30, 3500, 41315);
-		stars2 = buildBuffer(buffer, stars2, 0.1, 0.35, 2000, 35151);
-		stars3 = buildBuffer(buffer, stars3, 0.1, 0.40, 1500, 61354);
+		stars1 = buildBufferStars(buffer, stars1, 0.1, 0.30, 3500, 41315);
+		stars2 = buildBufferStars(buffer, stars2, 0.1, 0.35, 2000, 35151);
+		stars3 = buildBufferUVStars(buffer, stars3, 0.4, 1.2, 1000, 61354);
+		stars4 = buildBufferUVStars(buffer, stars4, 0.4, 1.2, 1000, 61355);
 		nebulas1 = buildBufferFarFog(buffer, nebulas1, 40, 60, 30, 11515);
 		nebulas2 = buildBufferFarFog(buffer, nebulas2, 40, 60, 10, 14151);
 		horizon = buildBufferHorizon(buffer, horizon);
 		fog = buildBufferFog(buffer, fog);
 	}
 	 
-	private VertexBuffer buildBuffer(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+	private VertexBuffer buildBufferStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
 		if (buffer != null) {
 			buffer.close();
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION);
 		makeStars(bufferBuilder, minSize, maxSize, count, seed);
+		bufferBuilder.end();
+		buffer.upload(bufferBuilder);
+
+		return buffer;
+	}
+	
+	private VertexBuffer buildBufferUVStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+		if (buffer != null) {
+			buffer.close();
+		}
+
+		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
+		makeUVStars(bufferBuilder, minSize, maxSize, count, seed);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
@@ -267,6 +293,54 @@ public class WorldRendererMixin {
 					double af = ae * n - ab * o;
 					double ah = ab * n + ae * o;
 					buffer.vertex(j + af, k + ad, l + ah).next();
+				}
+			}
+		}
+	}
+	
+	private void makeUVStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
+		Random random = new Random(seed);
+		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
+
+		for (int i = 0; i < count; ++i) {
+			double posX = random.nextDouble() * 2.0 - 1.0;
+			double posY = random.nextDouble() * 2.0 - 1.0;
+			double posZ = random.nextDouble() * 2.0 - 1.0;
+			double size = MHelper.randRange(minSize, maxSize, random);
+			double length = posX * posX + posY * posY + posZ * posZ;
+			if (length < 1.0 && length > 0.001) {
+				length = 1.0 / Math.sqrt(length);
+				posX *= length;
+				posY *= length;
+				posZ *= length;
+				double j = posX * 100.0;
+				double k = posY * 100.0;
+				double l = posZ * 100.0;
+				double m = Math.atan2(posX, posZ);
+				double n = Math.sin(m);
+				double o = Math.cos(m);
+				double p = Math.atan2(Math.sqrt(posX * posX + posZ * posZ), posY);
+				double q = Math.sin(p);
+				double r = Math.cos(p);
+				double s = random.nextDouble() * Math.PI * 2.0;
+				double t = Math.sin(s);
+				double u = Math.cos(s);
+
+				int pos = 0;
+				float minV = random.nextInt(4) / 4F;
+				for (int v = 0; v < 4; ++v) {
+					double x = (double) ((v & 2) - 1) * size;
+					double y = (double) ((v + 1 & 2) - 1) * size;
+					double aa = x * u - y * t;
+					double ab = y * u + x * t;
+					double ad = aa * q + 0.0 * r;
+					double ae = 0.0 * q - aa * r;
+					double af = ae * n - ab * o;
+					double ah = ab * n + ae * o;
+					float texU = (pos >> 1) & 1;
+					float texV = (((pos + 1) >> 1) & 1) / 4F + minV;
+					pos ++;
+					buffer.vertex(j + af, k + ad, l + ah).texture(texU, texV).next();
 				}
 			}
 		}

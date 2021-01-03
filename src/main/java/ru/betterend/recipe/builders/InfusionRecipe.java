@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import com.google.gson.JsonObject;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -15,6 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.rituals.InfusionRitual;
@@ -32,6 +35,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 	private ItemStack output;
 	private int time = 1;
 	private Ingredient[] catalysts = new Ingredient[8];
+	private String group;
 	
 	private InfusionRecipe(Identifier id) {
 		this(id, null, null);
@@ -87,6 +91,12 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 	public Identifier getId() {
 		return this.id;
 	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public String getGroup() {
+		return this.group;
+	}
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
@@ -119,11 +129,17 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 		private Identifier id;
 		private Ingredient input;
 		private ItemStack output;
+		private String group;
 		private int time = 1;
 		private Ingredient[] catalysts = new Ingredient[8];
 		
 		private Builder() {
 			Arrays.fill(catalysts, Ingredient.EMPTY);
+		}
+		
+		public Builder setGroup(String group) {
+			this.group = group;
+			return this;
 		}
 		
 		public Builder setInput(ItemConvertible input) {
@@ -137,14 +153,20 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 			return this;
 		}
 		
+		public Builder setOutput(ItemStack output) {
+			this.output = output;
+			this.output.setCount(1);
+			return this;
+		}
+		
 		public Builder setTime(int time) {
 			this.time = time;
 			return this;
 		}
 		
-		public Builder addCatalyst(int slot, ItemConvertible item) {
+		public Builder addCatalyst(int slot, ItemConvertible... items) {
 			if (slot > 7) return this;
-			this.catalysts[slot] = Ingredient.ofItems(item);
+			this.catalysts[slot] = Ingredient.ofItems(items);
 			return this;
 		}
 		
@@ -158,6 +180,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 				return;
 			}
 			InfusionRecipe recipe = new InfusionRecipe(id, input, output);
+			recipe.group = group != null ? group : GROUP;
 			recipe.time = time;
 			int empty = 0;
 			for (int i = 0; i < catalysts.length; i++) {
@@ -182,6 +205,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 			if (recipe.output == null) {
 				throw new IllegalStateException("Output item does not exists!");
 			}
+			recipe.group = JsonHelper.getString(json, "group", GROUP);
 			recipe.time = JsonHelper.getInt(json, "time", 1);
 			
 			JsonObject catalysts = JsonHelper.asObject(json, "catalysts");
@@ -210,6 +234,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 			InfusionRecipe recipe = new InfusionRecipe(id);
 			recipe.input = Ingredient.fromPacket(buffer);
 			recipe.output = buffer.readItemStack();
+			recipe.group = buffer.readString();
 			recipe.time = buffer.readVarInt();
 			for (int i = 0; i < 8; i++) {
 				recipe.catalysts[i] = Ingredient.fromPacket(buffer);
@@ -221,6 +246,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 		public void write(PacketByteBuf buffer, InfusionRecipe recipe) {
 			recipe.input.write(buffer);
 			buffer.writeItemStack(recipe.output);
+			buffer.writeString(recipe.group);
 			buffer.writeVarInt(recipe.time);
 			for (int i = 0; i < 8; i++) {
 				recipe.catalysts[i].write(buffer);

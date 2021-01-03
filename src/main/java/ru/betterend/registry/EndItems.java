@@ -28,11 +28,13 @@ import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
+import ru.betterend.item.EnchantedPetal;
 import ru.betterend.item.EndArmorMaterial;
 import ru.betterend.item.EndAxe;
 import ru.betterend.item.EndHammer;
@@ -64,6 +66,8 @@ public class EndItems {
 	public final static Item CRYSTALLINE_SULPHUR = registerItem("crystalline_sulphur");
 	public final static Item HYDRALUX_PETAL = registerItem("hydralux_petal");
 	public final static Item GELATINE = registerItem("gelatine");
+	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
+	public final static Item ENCHANTED_PETAL = registerItem("enchanted_petal", new EnchantedPetal());
 	
 	// Armor //
 	public static final Item TERMINITE_HELMET = registerItem("terminite_helmet", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.HEAD, makeItemSettings()));
@@ -74,10 +78,10 @@ public class EndItems {
 	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings()));
 	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings()));
 	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings()));
-	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.HEAD, makeItemSettings()));
-	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings()));
-	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings()));
-	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings()));
+	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.HEAD, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	
 	// Tools //
 	public static final ToolItem TERMINITE_SHOVEL = registerTool("terminite_shovel", new ShovelItem(EndToolMaterial.TERMINITE, 1.5F, -3.0F, makeItemSettings()));
@@ -108,9 +112,6 @@ public class EndItems {
 	
 	// Drinks
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice");
-	
-	// Other //
-	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
 	
 	protected static Item registerItem(String name) {
 		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));

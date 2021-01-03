@@ -20,7 +20,7 @@ public class PathConfig extends Config {
 	}
 	
 	protected ConfigKey createKey(String key) {
-		return new ConfigKey(key, "");
+		return createKey("", key);
 	}
 	
 	@Nullable

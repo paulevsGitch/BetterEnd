@@ -65,7 +65,7 @@ public class ConfigKey {
 	@Override
 	public String toString() {
 		if (root) {
-			return String.format("ROOT:%s", entry);
+			return String.format("[root]:%s", entry);
 		}
 		String p = path[0];
 		for (int i = 1; i < path.length; i++) {

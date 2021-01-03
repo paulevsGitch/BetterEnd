@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.world.ServerWorld;
@@ -69,10 +70,11 @@ public abstract class EntityMixin implements TeleportingEntity {
 				}
 				this.removed = true;
 				this.world.getProfiler().pop();
-				((ServerWorld) this.world).resetIdleTimeout();
+				((ServerWorld) world).resetIdleTimeout();
 				destination.resetIdleTimeout();
 				this.world.getProfiler().pop();
 				this.beExitPos = null;
+				ServerEntityWorldChangeEvents.AFTER_ENTITY_CHANGE_WORLD.invoker().afterChangeWorld(Entity.class.cast(this), entity, (ServerWorld) world, (ServerWorld) entity.world);
 				info.setReturnValue(entity);
 				info.cancel();
 			}

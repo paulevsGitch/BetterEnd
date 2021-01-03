@@ -348,7 +348,7 @@ public class InfusionRecipes {
 			.setOutput(createEnchantedBook(Enchantments.SILK_TOUCH, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Blocks.COBWEB)
-			.addCatalyst(4, Blocks.COBWEB)
+			.addCatalyst(4, EndItems.ETERNAL_CRYSTAL)
 			.addCatalyst(6, Blocks.COBWEB)
 			.addCatalyst(1, Items.LAPIS_LAZULI)
 			.addCatalyst(3, Items.LAPIS_LAZULI)

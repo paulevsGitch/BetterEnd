@@ -22,6 +22,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -102,31 +103,37 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
 		for (int step = 1; step < 128; step++) {
 			for (int i = 0; i < (step >> 1); i++) {
-				checkPos.setY(5);
-				int ceil = world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
-				if (ceil < 5) continue;
-				while(checkPos.getY() < ceil) {
-					BlockState state = world.getBlockState(checkPos);
-					if(state.isOf(this)) {
-						Axis axis = state.get(AXIS);
-						checkPos = this.findCenter(world, checkPos, axis);
-						
-						Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
-						Direction entityDir = entity.getMovementDirection();
-						if (entityDir.getAxis().isVertical()) {
-							entityDir = frontDir;
-						}
-						
-						if (frontDir == entityDir || frontDir.getOpposite() == entityDir) {
-							return checkPos.offset(entityDir);
-						}
-						else {
-							entity.applyRotation(BlockRotation.CLOCKWISE_90);
-							entityDir = entityDir.rotateYClockwise();
-							return checkPos.offset(entityDir);
+				Chunk chunk = world.getChunk(checkPos);
+				if (chunk != null) {
+					int ceil = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
+					if (ceil > 5) {
+						checkPos.setY(ceil);
+						while (checkPos.getY() > 5) {
+							BlockState state = world.getBlockState(checkPos);
+							if (state.isOf(this)) {
+								System.out.println("Out: " + checkPos);
+
+								Axis axis = state.get(AXIS);
+								checkPos = this.findCenter(world, checkPos, axis);
+
+								Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
+								Direction entityDir = entity.getMovementDirection();
+								if (entityDir.getAxis().isVertical()) {
+									entityDir = frontDir;
+								}
+
+								if (frontDir == entityDir || frontDir.getOpposite() == entityDir) {
+									return checkPos.offset(entityDir);
+								}
+								else {
+									entity.applyRotation(BlockRotation.CLOCKWISE_90);
+									entityDir = entityDir.rotateYClockwise();
+									return checkPos.offset(entityDir);
+								}
+							}
+							checkPos.move(Direction.DOWN);
 						}
 					}
-					checkPos.move(Direction.UP);
 				}
 				checkPos.move(direction);
 			}

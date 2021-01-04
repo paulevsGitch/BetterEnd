@@ -143,8 +143,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	}
 	
 	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis, int step) {
-		if (step > 21) return pos;
-		
+		if (step > 4) return pos;
 		BlockState right, left;
 		Direction rightDir, leftDir;
 		rightDir = Direction.from(axis, AxisDirection.POSITIVE);

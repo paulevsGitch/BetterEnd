@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
@@ -146,17 +147,10 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		
 		BlockState right, left;
 		Direction rightDir, leftDir;
-		if (axis == Direction.Axis.X) {
-			right = world.getBlockState(pos.east());
-			left = world.getBlockState(pos.west());
-			rightDir = Direction.EAST;
-			leftDir = Direction.WEST;
-		} else {
-			right = world.getBlockState(pos.south());
-			left = world.getBlockState(pos.north());
-			rightDir = Direction.SOUTH;
-			leftDir = Direction.NORTH;
-		}
+		rightDir = Direction.from(axis, AxisDirection.POSITIVE);
+		leftDir = rightDir.getOpposite();
+		right = world.getBlockState(pos.offset(rightDir));
+		left = world.getBlockState(pos.offset(leftDir));
 		BlockState down = world.getBlockState(pos.down());
 		if (down.isOf(this)) {
 			return findCenter(world, pos.move(Direction.DOWN), axis, ++step);

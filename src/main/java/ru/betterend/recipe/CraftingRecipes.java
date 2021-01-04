@@ -134,7 +134,8 @@ public class CraftingRecipes {
 			.build();
 		
 		GridRecipe.make("shadow_berry_jelly", EndItems.SHADOW_BERRY_JELLY)
-			.setList("JWSB").addMaterial('J', EndItems.GELATINE)
+			.setList("JWSB")
+			.addMaterial('J', EndItems.GELATINE)
 			.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
 			.addMaterial('S', Items.SUGAR)
 			.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
@@ -169,19 +170,34 @@ public class CraftingRecipes {
 			.build();
 		
 		GridRecipe.make("hopper", Blocks.HOPPER)
-		.setShape("I I", "ICI", " I ")
-		.addMaterial('I', Items.IRON_INGOT)
-		.addMaterial('C', EndTags.ITEM_CHEST)
-		.build();;
+			.setShape("I I", "ICI", " I ")
+			.addMaterial('I', Items.IRON_INGOT)
+			.addMaterial('C', EndTags.ITEM_CHEST)
+			.build();
 		
 		GridRecipe.make("shulker_box", Blocks.SHULKER_BOX)
-		.setShape("S", "C", "S")
-		.addMaterial('S', Items.SHULKER_SHELL)
-		.addMaterial('C', EndTags.ITEM_CHEST)
-		.build();
+			.setShape("S", "C", "S")
+			.addMaterial('S', Items.SHULKER_SHELL)
+			.addMaterial('C', EndTags.ITEM_CHEST)
+			.build();
 		
 		GridRecipe.make("twisted_umbrella_moss_dye", Items.PURPLE_DYE).setList("#").addMaterial('#', EndBlocks.TWISTED_UMBRELLA_MOSS).build();
 		GridRecipe.make("twisted_umbrella_moss_dye_tall", Items.PURPLE_DYE).setOutputCount(2).setList("#").addMaterial('#', EndBlocks.TWISTED_UMBRELLA_MOSS_TALL).build();
+		
+		GridRecipe.make("leather_to_stripes", EndItems.LEATHER_STRIPE)
+			.setList("L")
+			.addMaterial('L', Items.LEATHER)
+			.setOutputCount(3)
+			.build();
+		GridRecipe.make("stripes_to_leather", Items.LEATHER)
+			.setList("SSS")
+			.addMaterial('S', EndItems.LEATHER_STRIPE)
+			.build();
+		GridRecipe.make("leather_wrapped_stick", EndItems.LEATHER_WRAPPED_STICK)
+			.setList("SL")
+			.addMaterial('S', Items.STICK)
+			.addMaterial('L', EndItems.LEATHER_STRIPE)
+			.build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

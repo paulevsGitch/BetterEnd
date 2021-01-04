@@ -68,6 +68,8 @@ public class EndItems {
 	public final static Item GELATINE = registerItem("gelatine");
 	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
 	public final static Item ENCHANTED_PETAL = registerItem("enchanted_petal", new EnchantedPetal());
+	public final static Item LEATHER_STRIPE = registerItem("leather_stripe");
+	public final static Item LEATHER_WRAPPED_STICK = registerItem("leather_wrapped_stick");
 	
 	// Armor //
 	public static final Item TERMINITE_HELMET = registerItem("terminite_helmet", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.HEAD, makeItemSettings()));
@@ -109,6 +111,15 @@ public class EndItems {
 	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new FishBucketItem(EndEntities.END_FISH, Fluids.WATER, makeItemSettings().maxCount(1)));
 	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 3, 0.75F);
 	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 4, 0.75F, new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400));
+	
+	// Toolparts //
+	public final static Item AETERNIUM_SHOVEL_HEAD = registerItem("aeternium_shovel_head");
+	public final static Item AETERNIUM_PICKAXE_HEAD = registerItem("aeternium_pickaxe_head");
+	public final static Item AETERNIUM_AXE_HEAD = registerItem("aeternium_axe_head");
+	public final static Item AETERNIUM_HOE_HEAD = registerItem("aeternium_hoe_head");
+	public final static Item AETERNIUM_HAMMER_HEAD = registerItem("aeternium_hammer_head");
+	public final static Item AETERNIUM_SWORD_BLADE = registerItem("aeternium_sword_blade");
+	public final static Item AETERNIUM_SWORD_HANDLE = registerItem("aeternium_sword_handle");
 	
 	// Drinks
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice");

@@ -18,5 +18,30 @@ public class SmithingRecipes {
 			.setLevel(2)
 			.setDamage(3)
 			.build();
+		
+		AnvilSmithingRecipe.Builder.create("aeternium_axe_head")
+			.setInput(EndItems.AETERNIUM_INGOT)
+			.setOutput(EndItems.AETERNIUM_AXE_HEAD, 1)
+			.setLevel(4)
+			.setDamage(6)
+			.build();
+		AnvilSmithingRecipe.Builder.create("aeternium_pickaxe_head")
+			.setInput(EndItems.AETERNIUM_INGOT)
+			.setOutput(EndItems.AETERNIUM_PICKAXE_HEAD, 1)
+			.setLevel(4)
+			.setDamage(6)
+			.build();
+		AnvilSmithingRecipe.Builder.create("aeternium_shovel_head")
+			.setInput(EndItems.AETERNIUM_INGOT)
+			.setOutput(EndItems.AETERNIUM_SHOVEL_HEAD, 1)
+			.setLevel(4)
+			.setDamage(6)
+			.build();
+		AnvilSmithingRecipe.Builder.create("aeternium_hoe_head")
+			.setInput(EndItems.AETERNIUM_INGOT)
+			.setOutput(EndItems.AETERNIUM_HOE_HEAD, 1)
+			.setLevel(4)
+			.setDamage(6)
+			.build();
 	}
 }

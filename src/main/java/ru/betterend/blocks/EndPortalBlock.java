@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
@@ -99,7 +100,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		}
 		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
-		for (int step = 1; step < 64; step++) {
+		for (int step = 1; step < 128; step++) {
 			for (int i = 0; i < (step >> 1); i++) {
 				checkPos.setY(5);
 				int ceil = world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
@@ -107,26 +108,22 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 				while(checkPos.getY() < ceil) {
 					BlockState state = world.getBlockState(checkPos);
 					if(state.isOf(this)) {
-						int offStep;
-						checkPos = this.findCenter(world, checkPos, state.get(AXIS));
-						if (state.get(AXIS).equals(Direction.Axis.X)) {
-							if (entity.getMovementDirection().getAxis() == Direction.Axis.X) {
-								offStep = entity.getMovementDirection() == Direction.EAST ? 1 : -1;
-								float rotation = entity.applyRotation(BlockRotation.CLOCKWISE_90);
-								entity.yaw = rotation;
-							} else {
-								offStep = entity.getMovementDirection() == Direction.NORTH ? -1 : 1;
-							}
-							return checkPos.add(0, 0, offStep);
-						} else {
-							if (entity.getMovementDirection().getAxis() == Direction.Axis.Z) {
-								offStep = entity.getMovementDirection() == Direction.SOUTH ? -1 : 1;
-								float rotation = entity.applyRotation(BlockRotation.CLOCKWISE_90);
-								entity.yaw = rotation;
-							} else {
-								offStep = entity.getMovementDirection() == Direction.EAST ? 1 : -1;
-							}
-							return checkPos.add(offStep, 0, 0);
+						Axis axis = state.get(AXIS);
+						checkPos = this.findCenter(world, checkPos, axis);
+						
+						Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
+						Direction entityDir = entity.getMovementDirection();
+						if (entityDir.getAxis().isVertical()) {
+							entityDir = frontDir;
+						}
+						
+						if (frontDir == entityDir || frontDir.getOpposite() == entityDir) {
+							return checkPos.offset(entityDir);
+						}
+						else {
+							entity.applyRotation(BlockRotation.CLOCKWISE_90);
+							entityDir = entityDir.rotateYClockwise();
+							return checkPos.offset(entityDir);
 						}
 					}
 					checkPos.move(Direction.UP);

@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
@@ -99,7 +100,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
 		for (int step = 1; step < 64; step++) {
-			for (int i = 0; i < step; i++) {
+			for (int i = 0; i < (step >> 1); i++) {
 				checkPos.setY(5);
 				int ceil = world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
 				if (ceil < 5) continue;
@@ -142,24 +143,16 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	}
 	
 	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis, int step) {
-		if (step > 21) return pos;
-		
+		if (step > 8) return pos;
 		BlockState right, left;
 		Direction rightDir, leftDir;
-		if (axis == Direction.Axis.X) {
-			right = world.getBlockState(pos.east());
-			left = world.getBlockState(pos.west());
-			rightDir = Direction.EAST;
-			leftDir = Direction.WEST;
-		} else {
-			right = world.getBlockState(pos.south());
-			left = world.getBlockState(pos.north());
-			rightDir = Direction.SOUTH;
-			leftDir = Direction.NORTH;
-		}
+		rightDir = Direction.from(axis, AxisDirection.POSITIVE);
+		leftDir = rightDir.getOpposite();
+		right = world.getBlockState(pos.offset(rightDir));
+		left = world.getBlockState(pos.offset(leftDir));
 		BlockState down = world.getBlockState(pos.down());
 		if (down.isOf(this)) {
-			return findCenter(world, pos.move(Direction.DOWN), axis, ++step);
+			return findCenter(world, pos.move(Direction.DOWN), axis, step);
 		} else if (right.isOf(this) && left.isOf(this)) {
 			return pos;
 		} else if (right.isOf(this)) {

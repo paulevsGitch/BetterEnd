@@ -99,7 +99,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
 		for (int step = 1; step < 64; step++) {
-			for (int i = 0; i < step; i++) {
+			for (int i = 0; i < (step >> 1); i++) {
 				checkPos.setY(5);
 				int ceil = world.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
 				if (ceil < 5) continue;

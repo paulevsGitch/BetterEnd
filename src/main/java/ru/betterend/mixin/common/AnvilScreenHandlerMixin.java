@@ -1,5 +1,8 @@
 package ru.betterend.mixin.common;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,15 +21,14 @@ import net.minecraft.screen.ForgingScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.tag.BlockTags;
-import net.minecraft.world.World;
+import ru.betterend.interfaces.AnvilScreenHandlerExtended;
 import ru.betterend.recipe.builders.AnvilSmithingRecipe;
 
 @Mixin(AnvilScreenHandler.class)
-public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
+public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler implements AnvilScreenHandlerExtended {
 
-	private final World world = this.player.world;
-	private final RecipeManager recipeManager = this.world.getRecipeManager();
-	private AnvilSmithingRecipe currentRecipe;
+	private List<AnvilSmithingRecipe> be_recipes = Collections.emptyList();
+	private AnvilSmithingRecipe be_currentRecipe;
 	
 	public AnvilScreenHandlerMixin(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory,
 			ScreenHandlerContext context) {
@@ -38,8 +40,8 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 	
 	@Inject(method = "canTakeOutput", at = @At("HEAD"), cancellable = true)
 	protected void canTakeOutput(PlayerEntity player, boolean present, CallbackInfoReturnable<Boolean> info) {
-		if (currentRecipe != null) {
-			ItemStack output = this.currentRecipe.craft(input, player);
+		if (be_currentRecipe != null) {
+			ItemStack output = this.be_currentRecipe.craft(input, player);
 			if (!output.isEmpty()) {
 				info.setReturnValue(true);
 				info.cancel();
@@ -49,7 +51,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 	
 	@Inject(method = "onTakeOutput", at = @At("HEAD"), cancellable = true)
 	protected void onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
-		if (currentRecipe != null) {
+		if (be_currentRecipe != null) {
 			this.input.getStack(1).decrement(1);
 			this.updateResult();
 			this.context.run((world, blockPos) -> {
@@ -66,7 +68,6 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 				} else {
 					world.syncWorldEvent(1030, blockPos, 0);
 				}
-
 			});
 			info.setReturnValue(stack);
 			info.cancel();
@@ -75,18 +76,41 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 	
 	@Inject(method = "updateResult", at = @At("HEAD"), cancellable = true)
 	public void updateOutput(CallbackInfo info) {
-		this.currentRecipe = this.recipeManager.getFirstMatch(AnvilSmithingRecipe.TYPE, input, world).orElse(null);
-		if (currentRecipe != null) {
-			this.output.setStack(0, currentRecipe.craft(input));
-			this.sendContentUpdates();
+		RecipeManager recipeManager = this.player.world.getRecipeManager();
+		this.be_recipes = recipeManager.getAllMatches(AnvilSmithingRecipe.TYPE, input, player.world);
+		if (be_recipes.size() > 0) {
+			this.be_currentRecipe = recipeManager.getFirstMatch(AnvilSmithingRecipe.TYPE, input, player.world).get();
+			this.be_updateResult();
 			info.cancel();
 		}
 	}
 	
 	@Inject(method = "setNewItemName", at = @At("HEAD"), cancellable = true)
 	public void setNewItemName(String string, CallbackInfo info) {
-		if (currentRecipe != null) {
+		if (be_currentRecipe != null) {
 			info.cancel();
 		}
+	}
+	
+	private void be_updateResult() {
+		if (be_currentRecipe == null) return;
+		this.output.setStack(0, be_currentRecipe.craft(input));
+		this.sendContentUpdates();
+	}
+	
+	@Override
+	public void be_updateCurrentRecipe(AnvilSmithingRecipe recipe) {
+		this.be_currentRecipe = recipe;
+		this.be_updateResult();
+	}
+	
+	@Override
+	public AnvilSmithingRecipe be_getCurrentRecipe() {
+		return this.be_currentRecipe;
+	}
+	
+	@Override
+	public List<AnvilSmithingRecipe> be_getRecipes() {
+		return this.be_recipes;
 	}
 }

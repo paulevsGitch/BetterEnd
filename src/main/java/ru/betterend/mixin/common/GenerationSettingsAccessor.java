@@ -13,14 +13,14 @@ import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 @Mixin(GenerationSettings.class)
 public interface GenerationSettingsAccessor {
 	@Accessor("features")
-	List<List<Supplier<ConfiguredFeature<?, ?>>>> getFeatures();
+	List<List<Supplier<ConfiguredFeature<?, ?>>>> beGetFeatures();
 	
 	@Accessor("features")
-	void setFeatures(List<List<Supplier<ConfiguredFeature<?, ?>>>> features);
+	void beSetFeatures(List<List<Supplier<ConfiguredFeature<?, ?>>>> features);
 	
 	@Accessor("structureFeatures")
-	List<Supplier<ConfiguredStructureFeature<?, ?>>> getStructures();
+	List<Supplier<ConfiguredStructureFeature<?, ?>>> beGetStructures();
 	
 	@Accessor("structureFeatures")
-	void setStructures(List<Supplier<ConfiguredStructureFeature<?, ?>>> structures);
+	void beSetStructures(List<Supplier<ConfiguredStructureFeature<?, ?>>> structures);
 }

@@ -23,8 +23,8 @@ public class FeaturesHelper {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Biome.Category.THEEND && !INJECTED.contains(biome)) {
 				GenerationSettingsAccessor accessor = (GenerationSettingsAccessor) biome.getGenerationSettings();
-				List<Supplier<ConfiguredStructureFeature<?, ?>>> structures = Lists.newArrayList(accessor.getStructures());
-				List<List<Supplier<ConfiguredFeature<?, ?>>>> preFeatures = accessor.getFeatures();
+				List<Supplier<ConfiguredStructureFeature<?, ?>>> structures = Lists.newArrayList(accessor.beGetStructures());
+				List<List<Supplier<ConfiguredFeature<?, ?>>>> preFeatures = accessor.beGetFeatures();
 				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = new ArrayList<List<Supplier<ConfiguredFeature<?, ?>>>>(preFeatures.size());
 				preFeatures.forEach((list) -> {
 					features.add(Lists.newArrayList(list));
@@ -33,8 +33,8 @@ public class FeaturesHelper {
 				EndFeatures.registerBiomeFeatures(biomeRegistry.getId(biome), biome, features);
 				EndStructures.registerBiomeStructures(biomeRegistry.getId(biome), biome, structures);
 
-				accessor.setFeatures(features);
-				accessor.setStructures(structures);
+				accessor.beSetFeatures(features);
+				accessor.beSetStructures(structures);
 				INJECTED.add(biome);
 			}
 		}); 

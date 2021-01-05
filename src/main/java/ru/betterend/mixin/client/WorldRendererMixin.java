@@ -55,6 +55,10 @@ public class WorldRendererMixin {
 	private static Vector3f axis3;
 	private static Vector3f axis4;
 	private static float time;
+	private static float time2;
+	private static float time3;
+	private static float blind02;
+	private static float blind06;
 	private static boolean directOpenGL = false;
 	
 	@Shadow
@@ -90,7 +94,9 @@ public class WorldRendererMixin {
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
 	private void renderBetterEndSky(MatrixStack matrices, float tickDelta, CallbackInfo info) {
 		if (ClientOptions.isCustomSky() && client.world.getSkyProperties().getSkyType() == SkyProperties.SkyType.END) {
-			time = (ticks % 360000) * 0.001F;
+			time = (ticks % 360000) * 0.000017453292F;
+			time2 = time * 2;
+			time3 = time * 3;
 			
 			BackgroundRenderer.setFogBlack();
 			RenderSystem.enableTexture();
@@ -108,36 +114,38 @@ public class WorldRendererMixin {
 			}
 			
 			float blindA = 1F - BackgroundInfo.blindness;
+			blind02 = blindA * 0.2F;
+			blind06 = blindA * 0.6F;
 			
 			if (blindA > 0) {
 				matrices.push();
-				matrices.multiply(new Quaternion(0, time, 0, true));
+				matrices.multiply(new Quaternion(0, time, 0, false));
 				textureManager.bindTexture(HORIZON);
 				renderBuffer(matrices, horizon, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
 				matrices.pop();
 				
 				matrices.push();
-				matrices.multiply(new Quaternion(0, -time, 0, true));
+				matrices.multiply(new Quaternion(0, -time, 0, false));
 				textureManager.bindTexture(NEBULA_1);
-				renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F * blindA);
+				renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
 				
 				matrices.push();
-				matrices.multiply(new Quaternion(0, time * 2, 0, true));
+				matrices.multiply(new Quaternion(0, time2, 0, false));
 				textureManager.bindTexture(NEBULA_2);
-				renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.2F * blindA);
+				renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
 				
 				textureManager.bindTexture(STARS);
 				
 				matrices.push();
-				matrices.multiply(axis3.getDegreesQuaternion(time));
-				renderBuffer(matrices, stars3, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.6F * blindA);
+				matrices.multiply(axis3.getRadialQuaternion(time));
+				renderBuffer(matrices, stars3, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind06);
 				matrices.pop();
 				
 				matrices.push();
-				matrices.multiply(axis4.getDegreesQuaternion(time * 2));
-				renderBuffer(matrices, stars4, VertexFormats.POSITION_TEXTURE, 1F, 1F, 1F, 0.6F * blindA);
+				matrices.multiply(axis4.getRadialQuaternion(time2));
+				renderBuffer(matrices, stars4, VertexFormats.POSITION_TEXTURE, 1F, 1F, 1F, blind06);
 				matrices.pop();
 			}
 			
@@ -152,13 +160,13 @@ public class WorldRendererMixin {
 			
 			if (blindA > 0) {
 				matrices.push();
-				matrices.multiply(new Quaternion(axis1, time * 3, true));
-				renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, 0.6F * blindA);
+				matrices.multiply(axis1.getRadialQuaternion(time3));
+				renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, blind06);
 				matrices.pop();
 				
 				matrices.push();
-				matrices.multiply(new Quaternion(axis2, time * 2, true));
-				renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, 0.6F * blindA);
+				matrices.multiply(axis2.getRadialQuaternion(time2));
+				renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, blind06);
 				matrices.pop();
 			}
 			

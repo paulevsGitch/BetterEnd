@@ -7,10 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.basis.BlockPedestal;
+import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.patterns.Patterns;
 
-public class EndPedestal extends BlockPedestal {
+public class EndPedestal extends PedestalBlock {
 
 	public EndPedestal(Block parent) {
 		super(parent);

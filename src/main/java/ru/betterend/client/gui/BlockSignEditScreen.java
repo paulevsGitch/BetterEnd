@@ -29,7 +29,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Matrix4f;
-import ru.betterend.blocks.basis.BlockSign;
+import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.blocks.entities.render.EndSignBlockEntityRenderer;
 
@@ -124,7 +124,7 @@ public class BlockSignEditScreen extends Screen {
 		matrices.scale(93.75F, -93.75F, 93.75F);
 		matrices.translate(0.0D, -1.3125D, 0.0D);
 		BlockState blockState = this.sign.getCachedState();
-		boolean bl = blockState.get(BlockSign.FLOOR);
+		boolean bl = blockState.get(EndSignBlock.FLOOR);
 
 		if (!bl) {
 			matrices.translate(0.0D, -0.3125D, 0.0D);

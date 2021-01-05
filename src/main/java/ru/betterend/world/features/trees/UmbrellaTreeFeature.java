@@ -16,8 +16,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import ru.betterend.blocks.BlockUmbrellaTreeCluster;
-import ru.betterend.blocks.BlockUmbrellaTreeMembrane;
+import ru.betterend.blocks.UmbrellaTreeClusterBlock;
+import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -44,9 +44,9 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
 		
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.getDefaultState();
-		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 1);
-		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(BlockUmbrellaTreeMembrane.COLOR, 0);
-		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.getDefaultState().with(BlockUmbrellaTreeCluster.NATURAL, true);
+		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(UmbrellaTreeMembraneBlock.COLOR, 1);
+		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.getDefaultState().with(UmbrellaTreeMembraneBlock.COLOR, 0);
+		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.getDefaultState().with(UmbrellaTreeClusterBlock.NATURAL, true);
 		
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
@@ -117,7 +117,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				}
 				int color = MHelper.floor(d / min.radius * 7);
 				color = MathHelper.clamp(color, 1, 7);
-				return info.getState().with(BlockUmbrellaTreeMembrane.COLOR, color);
+				return info.getState().with(UmbrellaTreeMembraneBlock.COLOR, color);
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);
@@ -182,7 +182,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			mut.move(Direction.DOWN);
 			if (world.isAir(mut)) {
 				BlockState state = world.getBlockState(mut.up());
-				if (state.isOf(EndBlocks.UMBRELLA_TREE_MEMBRANE) && state.get(BlockUmbrellaTreeMembrane.COLOR) < 2) {
+				if (state.isOf(EndBlocks.UMBRELLA_TREE_MEMBRANE) && state.get(UmbrellaTreeMembraneBlock.COLOR) < 2) {
 					BlocksHelper.setWithoutUpdate(world, mut, fruit);
 				}
 				break;

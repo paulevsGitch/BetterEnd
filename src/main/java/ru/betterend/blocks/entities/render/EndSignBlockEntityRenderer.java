@@ -28,7 +28,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.basis.BlockSign;
+import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.registry.EndItems;
 
@@ -50,7 +50,7 @@ public class EndSignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEn
 		float angle = -((float) ((Integer) state.get(SignBlock.ROTATION) * 360) / 16.0F);
 
 		BlockState blockState = signBlockEntity.getCachedState();
-		if (blockState.get(BlockSign.FLOOR)) {
+		if (blockState.get(EndSignBlock.FLOOR)) {
 			matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(angle));
 			this.model.foot.visible = true;
 		} else {
@@ -109,7 +109,7 @@ public class EndSignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEn
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
-				if (block instanceof BlockSign) {
+				if (block instanceof EndSignBlock) {
 					String name = Registry.BLOCK.getId(block).getPath();
 					RenderLayer layer = RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/sign/" + name + ".png"));
 					LAYERS.put(block, layer);

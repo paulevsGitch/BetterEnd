@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import ru.betterend.blocks.BlockHelixTreeLeaves;
+import ru.betterend.blocks.HelixTreeLeavesBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -121,7 +121,7 @@ public class HelixTreeFeature extends DefaultFeature {
 			lastPoint = point;
 		}
 		
-		leaf = leaf.with(BlockHelixTreeLeaves.COLOR, 7);
+		leaf = leaf.with(HelixTreeLeavesBlock.COLOR, 7);
 		leafStart = leafStart.add(0, lastPoint.getY(), 0);
 		if (world.getBlockState(leafStart).isAir()) {
 			BlocksHelper.setWithoutUpdate(world, leafStart, leaf);
@@ -157,7 +157,7 @@ public class HelixTreeFeature extends DefaultFeature {
 			int color = MHelper.floor((float) i / (float) count * 7F + 0.5F) + offset;
 			color = MathHelper.clamp(color, 0, 7);
 			if (world.getBlockState(bPos).getMaterial().isReplaceable()) {
-				BlocksHelper.setWithoutUpdate(world, bPos, state.with(BlockHelixTreeLeaves.COLOR, color));
+				BlocksHelper.setWithoutUpdate(world, bPos, state.with(HelixTreeLeavesBlock.COLOR, color));
 			}
 			x += dx;
 			y += dy;
@@ -165,7 +165,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		}
 		bPos.set(end.getX() + pos.getX(), end.getY() + pos.getY(), end.getZ() + pos.getZ());
 		if (world.getBlockState(bPos).getMaterial().isReplaceable()) {
-			BlocksHelper.setWithoutUpdate(world, bPos, state.with(BlockHelixTreeLeaves.COLOR, 7));
+			BlocksHelper.setWithoutUpdate(world, bPos, state.with(HelixTreeLeavesBlock.COLOR, 7));
 		}
 	}
 	

@@ -7,14 +7,14 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import ru.betterend.blocks.EndPedestal;
-import ru.betterend.blocks.basis.BlockBase;
-import ru.betterend.blocks.basis.BlockPillar;
-import ru.betterend.blocks.basis.BlockSlab;
-import ru.betterend.blocks.basis.BlockStairs;
-import ru.betterend.blocks.basis.BlockStoneButton;
-import ru.betterend.blocks.basis.BlockStoneLantern;
-import ru.betterend.blocks.basis.BlockStonePressurePlate;
-import ru.betterend.blocks.basis.BlockWall;
+import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.EndPillarBlock;
+import ru.betterend.blocks.basis.EndSlabBlock;
+import ru.betterend.blocks.basis.EndStairsBlock;
+import ru.betterend.blocks.basis.EndStoneButtonBlock;
+import ru.betterend.blocks.basis.StoneLanternBlock;
+import ru.betterend.blocks.basis.EndStonelateBlock;
+import ru.betterend.blocks.basis.EndWallBlock;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
@@ -44,22 +44,22 @@ public class StoneMaterial {
 	public StoneMaterial(String name, MaterialColor color) {
 		FabricBlockSettings material = FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color);
 		
-		stone = EndBlocks.registerBlock(name, new BlockBase(material));
-		polished = EndBlocks.registerBlock(name + "_polished", new BlockBase(material));
-		tiles = EndBlocks.registerBlock(name + "_tiles", new BlockBase(material));
-		pillar = EndBlocks.registerBlock(name + "_pillar", new BlockPillar(material));
-		stairs = EndBlocks.registerBlock(name + "_stairs", new BlockStairs(stone));
-		slab = EndBlocks.registerBlock(name + "_slab", new BlockSlab(stone));
-		wall = EndBlocks.registerBlock(name + "_wall", new BlockWall(stone));
-		button = EndBlocks.registerBlock(name + "_button", new BlockStoneButton(stone));
-		pressure_plate = EndBlocks.registerBlock(name + "_plate", new BlockStonePressurePlate(stone));
+		stone = EndBlocks.registerBlock(name, new BaseBlock(material));
+		polished = EndBlocks.registerBlock(name + "_polished", new BaseBlock(material));
+		tiles = EndBlocks.registerBlock(name + "_tiles", new BaseBlock(material));
+		pillar = EndBlocks.registerBlock(name + "_pillar", new EndPillarBlock(material));
+		stairs = EndBlocks.registerBlock(name + "_stairs", new EndStairsBlock(stone));
+		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(stone));
+		wall = EndBlocks.registerBlock(name + "_wall", new EndWallBlock(stone));
+		button = EndBlocks.registerBlock(name + "_button", new EndStoneButtonBlock(stone));
+		pressure_plate = EndBlocks.registerBlock(name + "_plate", new EndStonelateBlock(stone));
 		pedestal = EndBlocks.registerBlock(name + "_pedestal", new EndPedestal(stone));
-		lantern = EndBlocks.registerBlock(name + "_lantern", new BlockStoneLantern(stone));
+		lantern = EndBlocks.registerBlock(name + "_lantern", new StoneLanternBlock(stone));
 		
-		bricks = EndBlocks.registerBlock(name + "_bricks", new BlockBase(material));
-		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new BlockStairs(bricks));
-		brick_slab = EndBlocks.registerBlock(name + "_bricks_slab", new BlockSlab(bricks));
-		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new BlockWall(bricks));
+		bricks = EndBlocks.registerBlock(name + "_bricks", new BaseBlock(material));
+		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new EndStairsBlock(bricks));
+		brick_slab = EndBlocks.registerBlock(name + "_bricks_slab", new EndSlabBlock(bricks));
+		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new EndWallBlock(bricks));
 		
 		// Recipes //
 		GridRecipe.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', stone).setGroup("end_bricks").build();

@@ -21,10 +21,10 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldAccess;
-import ru.betterend.blocks.BlockBlueVine;
-import ru.betterend.blocks.basis.BlockDoublePlant;
-import ru.betterend.blocks.basis.BlockFur;
-import ru.betterend.blocks.basis.BlockVine;
+import ru.betterend.blocks.BlueVineBlock;
+import ru.betterend.blocks.basis.DoublePlantBlock;
+import ru.betterend.blocks.basis.FurBlock;
+import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 
@@ -164,7 +164,7 @@ public class BlocksHelper {
 					POS.setY(y);
 					state = world.getBlockState(POS);
 					
-					if (state.getBlock() instanceof BlockFur) {
+					if (state.getBlock() instanceof FurBlock) {
 						doubleCheck.add(POS.toImmutable());
 					}
 					// Liquids
@@ -225,8 +225,8 @@ public class BlocksHelper {
 							}
 						}
 						// Vines
-						else if (state.getBlock() instanceof BlockVine) {
-							while (world.getBlockState(POS).getBlock() instanceof BlockVine) {
+						else if (state.getBlock() instanceof VineBlock) {
+							while (world.getBlockState(POS).getBlock() instanceof VineBlock) {
 								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() - 1);
 							}
@@ -265,7 +265,7 @@ public class BlocksHelper {
 						// Blocks without support
 						else {
 							// Blue Vine
-							if (state.getBlock() instanceof BlockBlueVine) {
+							if (state.getBlock() instanceof BlueVineBlock) {
 								while (state.isOf(EndBlocks.BLUE_VINE) || state.isOf(EndBlocks.BLUE_VINE_LANTERN) || state.isOf(EndBlocks.BLUE_VINE_FUR)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 									POS.setY(POS.getY() + 1);
@@ -273,7 +273,7 @@ public class BlocksHelper {
 								}
 							}
 							// Double plants
-							if (state.getBlock() instanceof BlockDoublePlant) {
+							if (state.getBlock() instanceof DoublePlantBlock) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);

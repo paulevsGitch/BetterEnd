@@ -31,7 +31,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.basis.BlockChest;
+import ru.betterend.blocks.basis.EndChestBlock;
 import ru.betterend.blocks.entities.EChestBlockEntity;
 import ru.betterend.registry.EndItems;
 
@@ -165,7 +165,7 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
-				if (block instanceof BlockChest) {
+				if (block instanceof EndChestBlock) {
 					String name = Registry.BLOCK.getId(block).getPath();
 					LAYERS.put(block, new RenderLayer[] {
 						RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + ".png")),

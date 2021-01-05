@@ -13,10 +13,10 @@ import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.InfusionPedestal;
-import ru.betterend.blocks.basis.BlockBarrel;
-import ru.betterend.blocks.basis.BlockChest;
-import ru.betterend.blocks.basis.BlockPedestal;
-import ru.betterend.blocks.basis.BlockSign;
+import ru.betterend.blocks.basis.EndBarrelBlock;
+import ru.betterend.blocks.basis.EndChestBlock;
+import ru.betterend.blocks.basis.PedestalBlock;
+import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.blocks.entities.EChestBlockEntity;
@@ -55,7 +55,7 @@ public class EndBlockEntities {
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
-				if (block instanceof BlockChest) {
+				if (block instanceof EndChestBlock) {
 					result.add(block);
 				}
 			}
@@ -68,7 +68,7 @@ public class EndBlockEntities {
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
-				if (block instanceof BlockBarrel) {
+				if (block instanceof EndBarrelBlock) {
 					result.add(block);
 				}
 			}
@@ -81,7 +81,7 @@ public class EndBlockEntities {
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
-				if (block instanceof BlockSign) {
+				if (block instanceof EndSignBlock) {
 					result.add(block);
 				}
 			}
@@ -96,7 +96,7 @@ public class EndBlockEntities {
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof EternalPedestal ||
 					block instanceof InfusionPedestal) return;
-				if (block instanceof BlockPedestal) {
+				if (block instanceof PedestalBlock) {
 					result.add(block);
 				}
 			}

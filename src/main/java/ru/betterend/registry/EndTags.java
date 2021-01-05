@@ -22,10 +22,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.BlockTerrain;
-import ru.betterend.blocks.basis.BlockPedestal;
-import ru.betterend.blocks.basis.BlockSimpleLeaves;
-import ru.betterend.blocks.basis.BlockVine;
+import ru.betterend.blocks.EndTerrainBlock;
+import ru.betterend.blocks.basis.PedestalBlock;
+import ru.betterend.blocks.basis.SimpleLeavesBlock;
+import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 import ru.betterend.util.TagHelper;
 
@@ -72,18 +72,18 @@ public class EndTags {
 		
 		EndItems.getModBlocks().forEach((item) -> {
 			Block block = ((BlockItem) item).getBlock();
-			if (block instanceof BlockTerrain) {
+			if (block instanceof EndTerrainBlock) {
 				addSurfaceBlock(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);
 			}
-			else if (block instanceof LeavesBlock || block instanceof BlockSimpleLeaves) {
+			else if (block instanceof LeavesBlock || block instanceof SimpleLeavesBlock) {
 				TagHelper.addTag(BlockTags.LEAVES, block);
 				ComposterBlockAccessor.callRegisterCompostableItem(0.3F, block);
 			}
-			else if (block instanceof BlockVine) {
+			else if (block instanceof VineBlock) {
 				TagHelper.addTag(BlockTags.CLIMBABLE, block);
 			}
-			else if (block instanceof BlockPedestal) {
+			else if (block instanceof PedestalBlock) {
 				TagHelper.addTag(PEDESTALS, block);
 			}
 			if (block.getDefaultState().getMaterial().equals(Material.PLANT)) {

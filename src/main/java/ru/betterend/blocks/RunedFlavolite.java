@@ -6,10 +6,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.BaseBlock;
 import ru.betterend.registry.EndBlocks;
 
-public class RunedFlavolite extends BlockBase {
+public class RunedFlavolite extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 
 	public RunedFlavolite() {

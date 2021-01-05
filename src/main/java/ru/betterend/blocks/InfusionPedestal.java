@@ -14,11 +14,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import ru.betterend.blocks.basis.BlockPedestal;
+import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.rituals.InfusionRitual;
 
-public class InfusionPedestal extends BlockPedestal {
+public class InfusionPedestal extends PedestalBlock {
 	private static final VoxelShape SHAPE_DEFAULT;
 	private static final VoxelShape SHAPE_PEDESTAL_TOP;
 

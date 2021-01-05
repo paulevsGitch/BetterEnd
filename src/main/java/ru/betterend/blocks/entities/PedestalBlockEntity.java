@@ -10,7 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Tickable;
 import net.minecraft.world.World;
-import ru.betterend.blocks.basis.BlockPedestal;
+import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndItems;
 
@@ -76,8 +76,8 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	}
 	
 	public void removeStack(World world, BlockState state) {
-		world.setBlockState(pos, state.with(BlockPedestal.HAS_ITEM, false)
-									  .with(BlockPedestal.HAS_LIGHT, false));
+		world.setBlockState(pos, state.with(PedestalBlock.HAS_ITEM, false)
+									  .with(PedestalBlock.HAS_LIGHT, false));
 		this.removeStack(0);
 	}
 
@@ -91,12 +91,12 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	public void markDirty() {
 		if (world != null && !world.isClient) {
 			BlockState state = world.getBlockState(pos);
-			if (state.getBlock() instanceof BlockPedestal) {
-				state = state.with(BlockPedestal.HAS_ITEM, !isEmpty());
+			if (state.getBlock() instanceof PedestalBlock) {
+				state = state.with(PedestalBlock.HAS_ITEM, !isEmpty());
 				if (activeItem.getItem() == EndItems.ETERNAL_CRYSTAL) {
-					state = state.with(BlockPedestal.HAS_LIGHT, true);
+					state = state.with(PedestalBlock.HAS_LIGHT, true);
 				} else {
-					state = state.with(BlockPedestal.HAS_LIGHT, false);
+					state = state.with(PedestalBlock.HAS_LIGHT, false);
 				}
 				world.setBlockState(pos, state);
 			}

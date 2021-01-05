@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import ru.betterend.blocks.BlockJellyshroomCap;
+import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
@@ -67,7 +67,7 @@ public class JellyshroomFeature extends DefaultFeature {
 				float dz = info.getPos().getZ() - pos.getZ() - last.getZ();
 				float distance = MHelper.length(dx, dz) / membraneRadius * 7F;
 				int color = MathHelper.clamp(MHelper.floor(distance), 0, 7);
-				return info.getState().with(BlockJellyshroomCap.COLOR, color);
+				return info.getState().with(JellyshroomCapBlock.COLOR, color);
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);

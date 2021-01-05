@@ -6,8 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.basis.BlockDoublePlant;
-import ru.betterend.blocks.basis.BlockPlantWithAge;
+import ru.betterend.blocks.basis.DoublePlantBlock;
+import ru.betterend.blocks.basis.PlantWithAgeBlock;
 import ru.betterend.util.BlocksHelper;
 
 public class SinglePlantFeature extends ScatterFeature {
@@ -50,15 +50,15 @@ public class SinglePlantFeature extends ScatterFeature {
 
 	@Override
 	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		if (plant instanceof BlockDoublePlant) {
+		if (plant instanceof DoublePlantBlock) {
 			int rot = random.nextInt(4);
-			BlockState state = plant.getDefaultState().with(BlockDoublePlant.ROTATION, rot);
+			BlockState state = plant.getDefaultState().with(DoublePlantBlock.ROTATION, rot);
 			BlocksHelper.setWithoutUpdate(world, blockPos, state);
-			BlocksHelper.setWithoutUpdate(world, blockPos.up(), state.with(BlockDoublePlant.TOP, true));
+			BlocksHelper.setWithoutUpdate(world, blockPos.up(), state.with(DoublePlantBlock.TOP, true));
 		}
-		else if (plant instanceof BlockPlantWithAge) {
+		else if (plant instanceof PlantWithAgeBlock) {
 			int age = random.nextInt(4);
-			BlockState state = plant.getDefaultState().with(BlockPlantWithAge.AGE, age);
+			BlockState state = plant.getDefaultState().with(PlantWithAgeBlock.AGE, age);
 			BlocksHelper.setWithoutUpdate(world, blockPos, state);
 		}
 		else {

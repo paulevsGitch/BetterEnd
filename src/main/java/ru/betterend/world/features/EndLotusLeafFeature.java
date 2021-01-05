@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.BlockEndLotusLeaf;
+import ru.betterend.blocks.EndLotusLeafBlock;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
@@ -38,14 +38,14 @@ public class EndLotusLeafFeature extends ScatterFeature {
 	private void generateLeaf(StructureWorldAccess world, BlockPos pos) {
 		Mutable p = new Mutable();
 		BlockState leaf = EndBlocks.END_LOTUS_LEAF.getDefaultState();
-		BlocksHelper.setWithoutUpdate(world, pos, leaf.with(BlockEndLotusLeaf.SHAPE, TripleShape.BOTTOM));
+		BlocksHelper.setWithoutUpdate(world, pos, leaf.with(EndLotusLeafBlock.SHAPE, TripleShape.BOTTOM));
 		for (Direction move: BlocksHelper.HORIZONTAL) {
-			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(move), leaf.with(BlockEndLotusLeaf.HORIZONTAL_FACING, move).with(BlockEndLotusLeaf.SHAPE, TripleShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(move), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, move).with(EndLotusLeafBlock.SHAPE, TripleShape.MIDDLE));
 		}
 		for (int i = 0; i < 4; i ++) {
 			Direction d1 = BlocksHelper.HORIZONTAL[i];
 			Direction d2 = BlocksHelper.HORIZONTAL[(i + 1) & 3];
-			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(d1).move(d2), leaf.with(BlockEndLotusLeaf.HORIZONTAL_FACING, d1).with(BlockEndLotusLeaf.SHAPE, TripleShape.TOP));
+			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(d1).move(d2), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, d1).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
 		}
 	}
 	

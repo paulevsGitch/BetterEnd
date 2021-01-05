@@ -11,7 +11,6 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.world.BlockView;
 
 public class BaseBlockWithEntity extends BlockWithEntity {
-
 	public BaseBlockWithEntity(Settings settings) {
 		super(settings);
 	}

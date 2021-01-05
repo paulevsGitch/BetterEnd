@@ -6,10 +6,10 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ru.betterend.blocks.basis.BlockPedestal;
+import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.patterns.Patterns;
 
-public class PedestalVanilla extends BlockPedestal {
+public class PedestalVanilla extends PedestalBlock {
 
 	public PedestalVanilla(Block parent) {
 		super(parent);

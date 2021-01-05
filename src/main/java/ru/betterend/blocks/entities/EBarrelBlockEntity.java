@@ -20,7 +20,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
-import ru.betterend.blocks.basis.BlockBarrel;
+import ru.betterend.blocks.basis.EndBarrelBlock;
 import ru.betterend.registry.EndBlockEntities;
 
 public class EBarrelBlockEntity extends LootableContainerBlockEntity {
@@ -104,7 +104,7 @@ public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 			this.scheduleUpdate();
 		} else {
 			BlockState blockState = this.getCachedState();
-			if (!(blockState.getBlock() instanceof BlockBarrel)) {
+			if (!(blockState.getBlock() instanceof EndBarrelBlock)) {
 				this.markRemoved();
 				return;
 			}

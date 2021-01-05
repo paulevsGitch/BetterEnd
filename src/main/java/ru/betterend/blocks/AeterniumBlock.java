@@ -9,9 +9,9 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.BaseBlock;
 
-public class AeterniumBlock extends BlockBase {
+public class AeterniumBlock extends BaseBlock {
 
 	public AeterniumBlock() {
 		super(FabricBlockSettings.of(Material.METAL, MaterialColor.GRAY)

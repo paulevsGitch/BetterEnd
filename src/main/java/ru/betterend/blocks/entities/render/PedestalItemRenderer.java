@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.blocks.EternalPedestal;
-import ru.betterend.blocks.basis.BlockPedestal;
+import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.render.BeamRenderer;
 import ru.betterend.client.render.EndCrystalRenderer;
@@ -38,14 +38,14 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 		if (blockEntity.isEmpty()) return;
 		
 		BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
-		if (!(state.getBlock() instanceof BlockPedestal)) return;
+		if (!(state.getBlock() instanceof PedestalBlock)) return;
 		
 		ItemStack activeItem = blockEntity.getStack(0);
 		matrices.push();
 		MinecraftClient minecraft = MinecraftClient.getInstance();
 		BakedModel model = minecraft.getItemRenderer().getHeldItemModel(activeItem, blockEntity.getWorld(), null);
 		Vector3f translate = model.getTransformation().ground.translation;
-		BlockPedestal pedestal = (BlockPedestal) state.getBlock();
+		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
 		matrices.translate(translate.getX(), translate.getY(), translate.getZ());
 		matrices.translate(0.5, pedestal.getHeight(state), 0.5);
 		if (activeItem.getItem() instanceof BlockItem) {

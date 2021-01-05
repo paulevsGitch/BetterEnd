@@ -17,7 +17,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.BlockSulphurCrystal;
+import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -175,9 +175,9 @@ public class SulphuricCaveFeature extends DefaultFeature {
 			BlockPos side;
 			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.offset(dir))).isOf(Blocks.WATER)) {
 				BlockState state = EndBlocks.SULPHUR_CRYSTAL.getDefaultState()
-						.with(BlockSulphurCrystal.WATERLOGGED, true)
-						.with(BlockSulphurCrystal.FACING, dir)
-						.with(BlockSulphurCrystal.AGE, random.nextInt(3));
+						.with(SulphurCrystalBlock.WATERLOGGED, true)
+						.with(SulphurCrystalBlock.FACING, dir)
+						.with(SulphurCrystalBlock.AGE, random.nextInt(3));
 				BlocksHelper.setWithoutUpdate(world, side, state);
 			}
 		}

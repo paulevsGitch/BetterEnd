@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import ru.betterend.blocks.BlockHydrothermalVent;
+import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -25,7 +25,7 @@ public class SurfaceVentFeature extends DefaultFeature {
 		
 		Mutable mut = new Mutable();
 		int count = MHelper.randRange(15, 30, random);
-		BlockState vent = EndBlocks.HYDROTHERMAL_VENT.getDefaultState().with(BlockHydrothermalVent.WATERLOGGED, false);
+		BlockState vent = EndBlocks.HYDROTHERMAL_VENT.getDefaultState().with(HydrothermalVentBlock.WATERLOGGED, false);
 		for (int i = 0; i < count; i++) {
 			mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 5, MHelper.floor(random.nextGaussian() * 2 + 0.5));
 			int dist = MHelper.floor(2 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);

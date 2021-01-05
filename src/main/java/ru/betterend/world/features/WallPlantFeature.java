@@ -8,8 +8,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.basis.BlockAttached;
-import ru.betterend.blocks.basis.BlockWallPlant;
+import ru.betterend.blocks.basis.AttachedBlock;
+import ru.betterend.blocks.basis.EndWallPlantBlock;
 import ru.betterend.util.BlocksHelper;
 
 public class WallPlantFeature extends WallScatterFeature {
@@ -22,11 +22,11 @@ public class WallPlantFeature extends WallScatterFeature {
 
 	@Override
 	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
-		if (block instanceof BlockWallPlant) {
-			BlockState state = block.getDefaultState().with(BlockWallPlant.FACING, dir);
+		if (block instanceof EndWallPlantBlock) {
+			BlockState state = block.getDefaultState().with(EndWallPlantBlock.FACING, dir);
 			return block.canPlaceAt(state, world, pos);
 		}
-		else if (block instanceof BlockAttached) {
+		else if (block instanceof AttachedBlock) {
 			BlockState state = block.getDefaultState().with(Properties.FACING, dir);
 			return block.canPlaceAt(state, world, pos);
 		}
@@ -36,10 +36,10 @@ public class WallPlantFeature extends WallScatterFeature {
 	@Override
 	public void generate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
 		BlockState state = block.getDefaultState();
-		if (block instanceof BlockWallPlant) {
-			state = state.with(BlockWallPlant.FACING, dir);
+		if (block instanceof EndWallPlantBlock) {
+			state = state.with(EndWallPlantBlock.FACING, dir);
 		}
-		else if (block instanceof BlockAttached) {
+		else if (block instanceof AttachedBlock) {
 			state = state.with(Properties.FACING, dir);
 		}
 		BlocksHelper.setWithoutUpdate(world, pos, state);

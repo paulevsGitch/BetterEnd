@@ -10,6 +10,7 @@ public class Configs {
 	public static final PathConfig ITEM_CONFIG = new PathConfig("items");
 	public static final IdConfig BIOME_CONFIG = new EntryConfig("biomes");
 	public static final PathConfig GENERATOR_CONFIG = new PathConfig("generator");
+	public static final PathConfig RECIPE_CONFIG = new PathConfig("recipes");
 	
 	@Environment(value = EnvType.CLIENT)
 	public static final PathConfig CLENT_CONFIG = new PathConfig("client");
@@ -20,6 +21,7 @@ public class Configs {
 		BIOME_CONFIG.saveChanges();
 		ITEM_CONFIG.saveChanges();
 		GENERATOR_CONFIG.saveChanges();
+		RECIPE_CONFIG.saveChanges();
 		
 		if (BetterEnd.isClient()) {
 			CLENT_CONFIG.saveChanges();

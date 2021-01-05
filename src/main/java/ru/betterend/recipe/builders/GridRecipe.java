@@ -17,6 +17,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.util.RecipeHelper;
 
@@ -47,7 +48,7 @@ public class GridRecipe {
 		INSTANCE.materialKeys.clear();
 		INSTANCE.count = 1;
 		
-		INSTANCE.exist = RecipeHelper.exists(output);
+		INSTANCE.exist = Configs.RECIPE_CONFIG.getBoolean("grid", name, true) && RecipeHelper.exists(output);
 		
 		return INSTANCE;
 	}

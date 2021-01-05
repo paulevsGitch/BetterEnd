@@ -7,6 +7,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.util.RecipeHelper;
 
@@ -15,7 +16,7 @@ public class FurnaceRecipe {
 	
 	private ItemConvertible input;
 	private ItemConvertible output;
-	private boolean exist = true;
+	private boolean exist;
 	private String group;
 	private String name;
 	private int count;
@@ -32,7 +33,7 @@ public class FurnaceRecipe {
 		INSTANCE.count = 1;
 		INSTANCE.time = 200;
 		INSTANCE.xp = 0;
-		INSTANCE.exist = RecipeHelper.exists(output) && RecipeHelper.exists(input);
+		INSTANCE.exist = Configs.RECIPE_CONFIG.getBoolean("furnace", name, true) && RecipeHelper.exists(output) && RecipeHelper.exists(input);
 		return INSTANCE;
 	}
 	

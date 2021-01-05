@@ -20,6 +20,7 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.ItemUtil;
@@ -118,6 +119,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 	
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
+		private static boolean exist;
 		
 		public static Builder create(Identifier id) {
 			INSTANCE.id = id;
@@ -127,6 +129,7 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 			INSTANCE.output = null;
 			INSTANCE.experience = 0.0F;
 			INSTANCE.smeltTime = 350;
+			exist = Configs.RECIPE_CONFIG.getBoolean("alloying", id.getPath(), true);
 			
 			return INSTANCE;
 		}
@@ -206,27 +209,29 @@ public class AlloyingRecipe implements Recipe<Inventory> {
 		}
 		
 		public void build() {
-			if (primaryInput == null) {
-				BetterEnd.LOGGER.warning("Primary input for Alloying recipe can't be 'null', recipe {} will be ignored!", id);
-				return;
+			if (exist) {
+				if (primaryInput == null) {
+					BetterEnd.LOGGER.warning("Primary input for Alloying recipe can't be 'null', recipe {} will be ignored!", id);
+					return;
+				}
+				if(secondaryInput == null) {
+					BetterEnd.LOGGER.warning("Secondary input for Alloying can't be 'null', recipe {} will be ignored!", id);
+					return;
+				}
+				if(output == null) {
+					BetterEnd.LOGGER.warning("Output for Alloying can't be 'null', recipe {} will be ignored!", id);
+					return;
+				}
+				if (EndRecipeManager.getRecipe(TYPE, id) != null) {
+					BetterEnd.LOGGER.warning("Can't add Alloying recipe! Id {} already exists!", id);
+					return;
+				}
+				if (!alright) {
+					BetterEnd.LOGGER.debug("Can't add Alloying recipe {}! Ingeredient or output not exists.", id);
+					return;
+				}
+				EndRecipeManager.addRecipe(TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
 			}
-			if(secondaryInput == null) {
-				BetterEnd.LOGGER.warning("Secondary input for Alloying can't be 'null', recipe {} will be ignored!", id);
-				return;
-			}
-			if(output == null) {
-				BetterEnd.LOGGER.warning("Output for Alloying can't be 'null', recipe {} will be ignored!", id);
-				return;
-			}
-			if (EndRecipeManager.getRecipe(TYPE, id) != null) {
-				BetterEnd.LOGGER.warning("Can't add Alloying recipe! Id {} already exists!", id);
-				return;
-			}
-			if (!alright) {
-				BetterEnd.LOGGER.debug("Can't add Alloying recipe {}! Ingeredient or output not exists.", id);
-				return;
-			}
-			EndRecipeManager.addRecipe(TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
 		}
 	}
 	

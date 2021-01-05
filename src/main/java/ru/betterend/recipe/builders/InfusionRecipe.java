@@ -19,6 +19,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.rituals.InfusionRitual;
 import ru.betterend.util.ItemUtil;
@@ -110,6 +111,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 	
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
+		private static boolean exist;
 		
 		public static Builder create(String id) {
 			return create(BetterEnd.makeID(id));
@@ -120,6 +122,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 			INSTANCE.input = null;
 			INSTANCE.output = null;
 			INSTANCE.time = 1;
+			exist = Configs.RECIPE_CONFIG.getBoolean("infusion", id.getPath(), true);
 			
 			Arrays.fill(INSTANCE.catalysts, Ingredient.EMPTY);
 			
@@ -171,27 +174,29 @@ public class InfusionRecipe implements Recipe<InfusionRitual> {
 		}
 		
 		public void build() {
-			if (input == null) {
-				BetterEnd.LOGGER.warning("Input for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
-				return;
+			if (exist) {
+				if (input == null) {
+					BetterEnd.LOGGER.warning("Input for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
+					return;
+				}
+				if (output == null) {
+					BetterEnd.LOGGER.warning("Output for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
+					return;
+				}
+				InfusionRecipe recipe = new InfusionRecipe(id, input, output);
+				recipe.group = group != null ? group : GROUP;
+				recipe.time = time;
+				int empty = 0;
+				for (int i = 0; i < catalysts.length; i++) {
+					if (catalysts[i].isEmpty()) empty++;
+					else recipe.catalysts[i] = catalysts[i];
+				}
+				if (empty == catalysts.length) {
+					BetterEnd.LOGGER.warning("At least one catalyst must be non empty, recipe {} will be ignored!", id);
+					return;
+				}
+				EndRecipeManager.addRecipe(TYPE, recipe);
 			}
-			if (output == null) {
-				BetterEnd.LOGGER.warning("Output for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
-				return;
-			}
-			InfusionRecipe recipe = new InfusionRecipe(id, input, output);
-			recipe.group = group != null ? group : GROUP;
-			recipe.time = time;
-			int empty = 0;
-			for (int i = 0; i < catalysts.length; i++) {
-				if (catalysts[i].isEmpty()) empty++;
-				else recipe.catalysts[i] = catalysts[i];
-			}
-			if (empty == catalysts.length) {
-				BetterEnd.LOGGER.warning("At least one catalyst must be non empty, recipe {} will be ignored!", id);
-				return;
-			}
-			EndRecipeManager.addRecipe(TYPE, recipe);
 		}
 	}
 	

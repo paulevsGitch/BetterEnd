@@ -21,6 +21,7 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.ItemUtil;
@@ -126,6 +127,7 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 	
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
+		private static boolean exist;
 		
 		public static Builder create(String id) {
 			return create(BetterEnd.makeID(id));
@@ -137,6 +139,7 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 			INSTANCE.output = null;
 			INSTANCE.level = 1;
 			INSTANCE.damage = 1;
+			exist = Configs.RECIPE_CONFIG.getBoolean("anvil", id.getPath(), true);
 			
 			return INSTANCE;
 		}
@@ -185,23 +188,25 @@ public class AnvilSmithingRecipe implements Recipe<Inventory> {
 		}
 		
 		public void build() {
-			if (input == null) {
-				BetterEnd.LOGGER.warning("Input for Smithing recipe can't be 'null', recipe {} will be ignored!", id);
-				return;
+			if (exist) {
+				if (input == null) {
+					BetterEnd.LOGGER.warning("Input for Smithing recipe can't be 'null', recipe {} will be ignored!", id);
+					return;
+				}
+				if(output == null) {
+					BetterEnd.LOGGER.warning("Output for Smithing recipe can't be 'null', recipe {} will be ignored!", id);
+					return;
+				}
+				if (EndRecipeManager.getRecipe(TYPE, id) != null) {
+					BetterEnd.LOGGER.warning("Can't add Smithing recipe! Id {} already exists!", id);
+					return;
+				}
+				if (!alright) {
+					BetterEnd.LOGGER.debug("Can't add Smithing recipe {}! Ingeredient or output not exists.", id);
+					return;
+				}
+				EndRecipeManager.addRecipe(TYPE, new AnvilSmithingRecipe(id, input, output, level, damage));
 			}
-			if(output == null) {
-				BetterEnd.LOGGER.warning("Output for Smithing recipe can't be 'null', recipe {} will be ignored!", id);
-				return;
-			}
-			if (EndRecipeManager.getRecipe(TYPE, id) != null) {
-				BetterEnd.LOGGER.warning("Can't add Smithing recipe! Id {} already exists!", id);
-				return;
-			}
-			if (!alright) {
-				BetterEnd.LOGGER.debug("Can't add Smithing recipe {}! Ingeredient or output not exists.", id);
-				return;
-			}
-			EndRecipeManager.addRecipe(TYPE, new AnvilSmithingRecipe(id, input, output, level, damage));
 		}
 	}
 

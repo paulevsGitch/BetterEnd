@@ -8,6 +8,7 @@ public class GeneratorOptions {
 	private static boolean hasPortal;
 	private static boolean hasPillars;
 	private static boolean hasDragonFights;
+	private static boolean swapOverworldToEnd;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getIntRoot("biomeSizeLand", 256);
@@ -15,6 +16,7 @@ public class GeneratorOptions {
 		hasPortal = Configs.GENERATOR_CONFIG.getBooleanRoot("hasPortal", true);
 		hasPillars = Configs.GENERATOR_CONFIG.getBooleanRoot("hasPillars", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
+		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -35,5 +37,9 @@ public class GeneratorOptions {
 	
 	public static boolean hasDragonFights() {
 		return hasDragonFights;
+	}
+	
+	public static boolean swapOverworldToEnd() {
+		return swapOverworldToEnd;
 	}
 }

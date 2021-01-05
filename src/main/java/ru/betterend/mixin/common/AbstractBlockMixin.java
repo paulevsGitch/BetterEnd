@@ -19,7 +19,7 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.util.math.MathHelper;
-import ru.betterend.item.EndHammer;
+import ru.betterend.item.EndHammerItem;
 import ru.betterend.util.MHelper;
 
 @Mixin(AbstractBlock.class)
@@ -29,7 +29,7 @@ public abstract class AbstractBlockMixin {
 	public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
 		if (state.isOf(Blocks.GLOWSTONE)) {
 			ItemStack tool = builder.get(LootContextParameters.TOOL);
-			if (tool != null && tool.getItem() instanceof EndHammer) {
+			if (tool != null && tool.getItem() instanceof EndHammerItem) {
 				int min = 3;
 				int max = 4;
 				int count = 0;

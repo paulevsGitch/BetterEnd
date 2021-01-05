@@ -5,9 +5,8 @@ import net.minecraft.item.ToolMaterial;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
-public class EndHoe extends HoeItem implements Patterned {
-
-	public EndHoe(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
+public class EndHoeItem extends HoeItem implements Patterned {
+	public EndHoeItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
 		super(material, attackDamage, attackSpeed, settings);
 	}
 	

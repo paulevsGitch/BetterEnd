@@ -5,8 +5,8 @@ import net.minecraft.item.SpawnEggItem;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
-public class ItemSpawnEgg extends SpawnEggItem implements Patterned {
-	public ItemSpawnEgg(EntityType<?> type, int primaryColor, int secondaryColor, Settings settings) {
+public class EndSpawnEggItem extends SpawnEggItem implements Patterned {
+	public EndSpawnEggItem(EntityType<?> type, int primaryColor, int secondaryColor, Settings settings) {
 		super(type, primaryColor, secondaryColor, settings);
 	}
 	

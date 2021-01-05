@@ -8,8 +8,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class ItemDrink extends PatternedItem {
-	public ItemDrink(Settings settings) {
+public class DrinkItem extends PatternedItem {
+	public DrinkItem(Settings settings) {
 		super(settings);
 	}
 

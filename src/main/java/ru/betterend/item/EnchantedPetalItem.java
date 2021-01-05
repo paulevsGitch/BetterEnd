@@ -5,9 +5,8 @@ import net.minecraft.util.Rarity;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndItems;
 
-public class EnchantedPetal extends PatternedItem {
-
-	public EnchantedPetal() {
+public class EnchantedPetalItem extends PatternedItem {
+	public EnchantedPetalItem() {
 		super(EndItems.makeItemSettings().rarity(Rarity.RARE).maxCount(16));
 	}
 

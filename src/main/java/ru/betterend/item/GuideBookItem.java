@@ -18,14 +18,13 @@ import ru.betterend.registry.EndItems;
 import ru.betterend.util.LangUtil;
 import vazkii.patchouli.api.PatchouliAPI;
 
-public class GuideBook extends PatternedItem {
-
+public class GuideBookItem extends PatternedItem {
 	public final static Identifier BOOK_ID = BetterEnd.makeID("guidebook");
-	public static final Item GUIDE_BOOK = EndItems.registerItem(BOOK_ID, new GuideBook());
+	public static final Item GUIDE_BOOK = EndItems.registerItem(BOOK_ID, new GuideBookItem());
 	
 	public static void register() {}
 	
-	public GuideBook() {
+	public GuideBookItem() {
 		super(EndItems.makeItemSettings().maxCount(1));
 	}
 	

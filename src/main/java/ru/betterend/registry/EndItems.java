@@ -34,17 +34,17 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.item.EnchantedPetal;
-import ru.betterend.item.EndArmorMaterial;
-import ru.betterend.item.EndAxe;
-import ru.betterend.item.EndHammer;
-import ru.betterend.item.EndHoe;
-import ru.betterend.item.EndPickaxe;
-import ru.betterend.item.EndToolMaterial;
-import ru.betterend.item.EternalCrystal;
-import ru.betterend.item.ItemDrink;
-import ru.betterend.item.ItemSpawnEgg;
+import ru.betterend.item.EnchantedPetalItem;
+import ru.betterend.item.EndAxeItem;
+import ru.betterend.item.EndHammerItem;
+import ru.betterend.item.EndHoeItem;
+import ru.betterend.item.EndPickaxeItem;
+import ru.betterend.item.EternalCrystalItem;
+import ru.betterend.item.DrinkItem;
+import ru.betterend.item.EndSpawnEggItem;
 import ru.betterend.item.PatternedItem;
+import ru.betterend.item.material.EndArmorMaterial;
+import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
 import ru.betterend.util.TagHelper;
 
@@ -66,8 +66,8 @@ public class EndItems {
 	public final static Item CRYSTALLINE_SULPHUR = registerItem("crystalline_sulphur");
 	public final static Item HYDRALUX_PETAL = registerItem("hydralux_petal");
 	public final static Item GELATINE = registerItem("gelatine");
-	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystal());
-	public final static Item ENCHANTED_PETAL = registerItem("enchanted_petal", new EnchantedPetal());
+	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystalItem());
+	public final static Item ENCHANTED_PETAL = registerItem("enchanted_petal", new EnchantedPetalItem());
 	public final static Item LEATHER_STRIPE = registerItem("leather_stripe");
 	public final static Item LEATHER_WRAPPED_STICK = registerItem("leather_wrapped_stick");
 	
@@ -88,20 +88,20 @@ public class EndItems {
 	// Tools //
 	public static final ToolItem TERMINITE_SHOVEL = registerTool("terminite_shovel", new ShovelItem(EndToolMaterial.TERMINITE, 1.5F, -3.0F, makeItemSettings()));
 	public static final ToolItem TERMINITE_SWORD = registerTool("terminite_sword", new SwordItem(EndToolMaterial.TERMINITE, 3, -2.4F, makeItemSettings()));
-	public static final ToolItem TERMINITE_PICKAXE = registerTool("terminite_pickaxe", new EndPickaxe(EndToolMaterial.TERMINITE, 1, -2.8F, makeItemSettings()));
-	public static final ToolItem TERMINITE_AXE = registerTool("terminite_axe", new EndAxe(EndToolMaterial.TERMINITE, 6.0F, -3.0F, makeItemSettings()));
-	public static final ToolItem TERMINITE_HOE = registerTool("terminite_hoe", new EndHoe(EndToolMaterial.TERMINITE, -3, 0.0F, makeItemSettings()));
-	public static final ToolItem TERMINITE_HAMMER = registerTool("terminite_hammer", new EndHammer(EndToolMaterial.TERMINITE, 5.0F, -3.2F, 0.3D, makeItemSettings()));
+	public static final ToolItem TERMINITE_PICKAXE = registerTool("terminite_pickaxe", new EndPickaxeItem(EndToolMaterial.TERMINITE, 1, -2.8F, makeItemSettings()));
+	public static final ToolItem TERMINITE_AXE = registerTool("terminite_axe", new EndAxeItem(EndToolMaterial.TERMINITE, 6.0F, -3.0F, makeItemSettings()));
+	public static final ToolItem TERMINITE_HOE = registerTool("terminite_hoe", new EndHoeItem(EndToolMaterial.TERMINITE, -3, 0.0F, makeItemSettings()));
+	public static final ToolItem TERMINITE_HAMMER = registerTool("terminite_hammer", new EndHammerItem(EndToolMaterial.TERMINITE, 5.0F, -3.2F, 0.3D, makeItemSettings()));
 	public static final ToolItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new ShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings()));
 	public static final ToolItem AETERNIUM_SWORD = registerTool("aeternium_sword", new SwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_PICKAXE = registerTool("aeternium_pickaxe", new EndPickaxe(EndToolMaterial.AETERNIUM, 1, -2.8F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_AXE = registerTool("aeternium_axe", new EndAxe(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_HOE = registerTool("aeternium_hoe", new EndHoe(EndToolMaterial.AETERNIUM, -3, 0.0F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_HAMMER = registerTool("aeternium_hammer", new EndHammer(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeItemSettings()));
-	public static final ToolItem IRON_HAMMER = registerTool("iron_hammer", new EndHammer(ToolMaterials.IRON, 5.0F, -3.2F, 0.2D, makeItemSettings()));
-	public static final ToolItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammer(ToolMaterials.GOLD, 4.5F, -3.4F, 0.3D, makeItemSettings()));
-	public static final ToolItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammer(ToolMaterials.DIAMOND, 5.5F, -3.1F, 0.2D, makeItemSettings()));
-	public static final ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammer(ToolMaterials.NETHERITE, 5.0F, -3.0F, 0.2D, makeItemSettings()));
+	public static final ToolItem AETERNIUM_PICKAXE = registerTool("aeternium_pickaxe", new EndPickaxeItem(EndToolMaterial.AETERNIUM, 1, -2.8F, makeItemSettings()));
+	public static final ToolItem AETERNIUM_AXE = registerTool("aeternium_axe", new EndAxeItem(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, makeItemSettings()));
+	public static final ToolItem AETERNIUM_HOE = registerTool("aeternium_hoe", new EndHoeItem(EndToolMaterial.AETERNIUM, -3, 0.0F, makeItemSettings()));
+	public static final ToolItem AETERNIUM_HAMMER = registerTool("aeternium_hammer", new EndHammerItem(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeItemSettings()));
+	public static final ToolItem IRON_HAMMER = registerTool("iron_hammer", new EndHammerItem(ToolMaterials.IRON, 5.0F, -3.2F, 0.2D, makeItemSettings()));
+	public static final ToolItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammerItem(ToolMaterials.GOLD, 4.5F, -3.4F, 0.3D, makeItemSettings()));
+	public static final ToolItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammerItem(ToolMaterials.DIAMOND, 5.5F, -3.1F, 0.2D, makeItemSettings()));
+	public static final ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammerItem(ToolMaterials.NETHERITE, 5.0F, -3.0F, 0.2D, makeItemSettings()));
 	
 	// Food //
 	public final static Item SHADOW_BERRY_RAW = registerFood("shadow_berry_raw", 4, 0.5F);
@@ -174,13 +174,13 @@ public class EndItems {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.SHOVELS, item);
 		} else if (item instanceof SwordItem) {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.SWORDS, item);
-		} else if (item instanceof EndPickaxe) {
+		} else if (item instanceof EndPickaxeItem) {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.PICKAXES, item);
-		} else if (item instanceof EndAxe) {
+		} else if (item instanceof EndAxeItem) {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.AXES, item);
-		} else if (item instanceof EndHoe) {
+		} else if (item instanceof EndHoeItem) {
 			TagHelper.addTag((Tag.Identified<Item>) FabricToolTags.HOES, item);
-		} else if (item instanceof EndHammer) {
+		} else if (item instanceof EndHammerItem) {
 			TagHelper.addTag((Tag.Identified<Item>) EndTags.HAMMERS, item);
 		}
 		
@@ -188,7 +188,7 @@ public class EndItems {
 	}
 	
 	public static Item registerEgg(String name, EntityType<?> type, int background, int dots) {
-		SpawnEggItem item = new ItemSpawnEgg(type, background, dots, makeItemSettings());
+		SpawnEggItem item = new EndSpawnEggItem(type, background, dots, makeItemSettings());
 		ItemDispenserBehavior behavior = new ItemDispenserBehavior() {
 			public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
 				Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
@@ -215,7 +215,7 @@ public class EndItems {
 	}
 	
 	public static Item registerDrink(String name) {
-		return registerItem(name, new ItemDrink(makeItemSettings().maxCount(1)));
+		return registerItem(name, new DrinkItem(makeItemSettings().maxCount(1)));
 	}
 
 	public static Settings makeItemSettings() {

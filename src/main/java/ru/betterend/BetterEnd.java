@@ -9,7 +9,7 @@ import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
 import ru.betterend.integration.Integrations;
-import ru.betterend.item.GuideBook;
+import ru.betterend.item.GuideBookItem;
 import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.FurnaceRecipes;
@@ -60,7 +60,7 @@ public class BetterEnd implements ModInitializer {
 		GeneratorOptions.init();
 		
 		if (hasGuideBook()) {
-			GuideBook.register();
+			GuideBookItem.register();
 		}
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);

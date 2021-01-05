@@ -1,4 +1,4 @@
-package ru.betterend.item;
+package ru.betterend.item.material;
 
 import java.util.function.Supplier;
 

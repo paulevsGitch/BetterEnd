@@ -30,13 +30,12 @@ import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndTags;
 
-public class EndHammer extends MiningToolItem implements DynamicAttributeTool, Patterned {
-	
+public class EndHammerItem extends MiningToolItem implements DynamicAttributeTool, Patterned {
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = MathHelper.randomUuid(ThreadLocalRandom.current());
 	
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-	public EndHammer(ToolMaterial material, float attackDamage, float attackSpeed, double knockback, Settings settings) {
+	public EndHammerItem(ToolMaterial material, float attackDamage, float attackSpeed, double knockback, Settings settings) {
 		super(attackDamage, attackSpeed, material, Sets.newHashSet(), settings);
 
 		Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();

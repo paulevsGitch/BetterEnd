@@ -8,7 +8,7 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import ru.betterend.BetterEnd;
-import ru.betterend.item.GuideBook;
+import ru.betterend.item.GuideBookItem;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -142,7 +142,7 @@ public class CraftingRecipes {
 			.build();
 		
 		if (BetterEnd.hasGuideBook()) {
-			GridRecipe.make("guide_book", GuideBook.GUIDE_BOOK)
+			GridRecipe.make("guide_book", GuideBookItem.GUIDE_BOOK)
 				.setShape("D", "B", "C")
 				.addMaterial('D', EndItems.ENDER_DUST)
 				.addMaterial('B', Items.BOOK)

@@ -52,8 +52,8 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 		widgets.add(Widgets.createArrow(new Point(x + 24, y + 3)));
 		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 5, bounds.y + bounds.height - 12),
 				new TranslatableText("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
-		widgets.add(Widgets.createSlot(new Point(x - 20, y + 3)).entries(inputEntries.get(0)).markInput());
-		widgets.add(Widgets.createSlot(new Point(x + 1, y + 3)).entries(inputEntries.get(1)).markInput());
+		widgets.add(Widgets.createSlot(new Point(x - 20, y + 3)).entries(inputEntries.get(1)).markInput());
+		widgets.add(Widgets.createSlot(new Point(x + 1, y + 3)).entries(inputEntries.get(0)).markInput());
 		widgets.add(Widgets.createSlot(new Point(x + 61, y + 4)).entries(display.getResultingEntries().get(0)).disableBackground().markOutput());
 		return widgets;
 	}

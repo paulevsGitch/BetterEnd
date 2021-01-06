@@ -15,6 +15,7 @@ import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.FurnaceRecipes;
 import ru.betterend.recipe.InfusionRecipes;
 import ru.betterend.recipe.SmithingRecipes;
+import ru.betterend.recipe.AnvilRecipes;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
@@ -51,6 +52,7 @@ public class BetterEnd implements ModInitializer {
 		CraftingRecipes.register();
 		FurnaceRecipes.register();
 		AlloyingRecipes.register();
+		AnvilRecipes.register();
 		SmithingRecipes.register();
 		InfusionRecipes.register();
 		EndStructures.register();

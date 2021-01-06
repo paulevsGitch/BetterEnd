@@ -12,4 +12,13 @@ public class RecipeHelper {
 			return Registry.ITEM.getId(item.asItem()) != Registry.ITEM.getDefaultId();
 		}
 	}
+	
+	public static boolean exists(ItemConvertible... items) {
+		for (ItemConvertible item : items) {
+			if (!exists(item)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

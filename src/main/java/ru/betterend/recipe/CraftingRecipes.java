@@ -17,6 +17,15 @@ import ru.betterend.registry.EndTags;
 public class CraftingRecipes {
 	
 	public static void register() {
+		if (BetterEnd.hasGuideBook()) {
+			GridRecipe.make("guide_book", GuideBookItem.GUIDE_BOOK)
+				.setShape("D", "B", "C")
+				.addMaterial('D', EndItems.ENDER_DUST)
+				.addMaterial('B', Items.BOOK)
+				.addMaterial('C', EndItems.CRYSTAL_SHARDS)
+				.build();
+		}
+		
 		GridRecipe.make("ender_pearl_to_block", EndBlocks.ENDER_BLOCK)
 			.setShape("OO", "OO")
 			.addMaterial('O', Items.ENDER_PEARL)
@@ -79,17 +88,6 @@ public class CraftingRecipes {
 			.setList("#")
 			.build();
 		
-		registerHelmet(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_HELMET);
-		registerChestplate(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_CHESTPLATE);
-		registerLeggings(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_LEGGINGS);
-		registerBoots(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_BOOTS);
-		registerShovel(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_SHOVEL);
-		registerSword(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_SWORD);
-		registerPickaxe(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_PICKAXE);
-		registerAxe(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_AXE);
-		registerHoe(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_HOE);
-		registerHammer(material, EndItems.AETERNIUM_INGOT, EndItems.AETERNIUM_HAMMER);
-		
 		registerHammer("iron", Items.IRON_INGOT, EndItems.IRON_HAMMER);
 		registerHammer("golden", Items.GOLD_INGOT, EndItems.GOLDEN_HAMMER);
 		registerHammer("diamond", Items.DIAMOND, EndItems.DIAMOND_HAMMER);
@@ -140,15 +138,6 @@ public class CraftingRecipes {
 			.addMaterial('S', Items.SUGAR)
 			.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
 			.build();
-		
-		if (BetterEnd.hasGuideBook()) {
-			GridRecipe.make("guide_book", GuideBookItem.GUIDE_BOOK)
-				.setShape("D", "B", "C")
-				.addMaterial('D', EndItems.ENDER_DUST)
-				.addMaterial('B', Items.BOOK)
-				.addMaterial('C', EndItems.CRYSTAL_SHARDS)
-				.build();
-		}
 		
 		GridRecipe.make("sulphur_gunpowder", Items.GUNPOWDER).setList("SCB").addMaterial('S', EndItems.CRYSTALLINE_SULPHUR).addMaterial('C', Items.COAL, Items.CHARCOAL).addMaterial('B', Items.BONE_MEAL).build();
 		

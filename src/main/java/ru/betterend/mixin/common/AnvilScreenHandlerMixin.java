@@ -22,13 +22,13 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.tag.BlockTags;
 import ru.betterend.interfaces.AnvilScreenHandlerExtended;
-import ru.betterend.recipe.builders.AnvilSmithingRecipe;
+import ru.betterend.recipe.builders.AnvilRecipe;
 
 @Mixin(AnvilScreenHandler.class)
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler implements AnvilScreenHandlerExtended {
 
-	private List<AnvilSmithingRecipe> be_recipes = Collections.emptyList();
-	private AnvilSmithingRecipe be_currentRecipe;
+	private List<AnvilRecipe> be_recipes = Collections.emptyList();
+	private AnvilRecipe be_currentRecipe;
 	
 	public AnvilScreenHandlerMixin(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory,
 			ScreenHandlerContext context) {
@@ -44,7 +44,6 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 			ItemStack output = this.be_currentRecipe.craft(input, player);
 			if (!output.isEmpty()) {
 				info.setReturnValue(true);
-				info.cancel();
 			}
 		}
 	}
@@ -52,8 +51,8 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	@Inject(method = "onTakeOutput", at = @At("HEAD"), cancellable = true)
 	protected void onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
 		if (be_currentRecipe != null) {
-			this.input.getStack(1).decrement(1);
-			this.updateResult();
+			this.input.getStack(0).decrement(1);
+			this.onContentChanged(input);
 			this.context.run((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
 				if (!player.abilities.creativeMode && anvilState.isIn(BlockTags.ANVIL) && player.getRandom().nextFloat() < 0.12F) {
@@ -70,16 +69,15 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 				}
 			});
 			info.setReturnValue(stack);
-			info.cancel();
 		}
 	}
 	
 	@Inject(method = "updateResult", at = @At("HEAD"), cancellable = true)
 	public void updateOutput(CallbackInfo info) {
 		RecipeManager recipeManager = this.player.world.getRecipeManager();
-		this.be_recipes = recipeManager.getAllMatches(AnvilSmithingRecipe.TYPE, input, player.world);
+		this.be_recipes = recipeManager.getAllMatches(AnvilRecipe.TYPE, input, player.world);
 		if (be_recipes.size() > 0) {
-			this.be_currentRecipe = recipeManager.getFirstMatch(AnvilSmithingRecipe.TYPE, input, player.world).get();
+			this.be_currentRecipe = recipeManager.getFirstMatch(AnvilRecipe.TYPE, input, player.world).get();
 			this.be_updateResult();
 			info.cancel();
 		}
@@ -92,6 +90,18 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 		}
 	}
 	
+	@Override
+	public boolean onButtonClick(PlayerEntity player, int id) {
+		if (id == 0) {
+			this.be_previousRecipe();
+			return true;
+		} else if (id == 1) {
+			this.be_nextRecipe();
+			return true;
+		}
+		return super.onButtonClick(player, id);
+	}
+	
 	private void be_updateResult() {
 		if (be_currentRecipe == null) return;
 		this.output.setStack(0, be_currentRecipe.craft(input));
@@ -99,18 +109,18 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	}
 	
 	@Override
-	public void be_updateCurrentRecipe(AnvilSmithingRecipe recipe) {
+	public void be_updateCurrentRecipe(AnvilRecipe recipe) {
 		this.be_currentRecipe = recipe;
 		this.be_updateResult();
 	}
 	
 	@Override
-	public AnvilSmithingRecipe be_getCurrentRecipe() {
+	public AnvilRecipe be_getCurrentRecipe() {
 		return this.be_currentRecipe;
 	}
 	
 	@Override
-	public List<AnvilSmithingRecipe> be_getRecipes() {
+	public List<AnvilRecipe> be_getRecipes() {
 		return this.be_recipes;
 	}
 }

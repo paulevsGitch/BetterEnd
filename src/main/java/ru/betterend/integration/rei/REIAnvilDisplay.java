@@ -12,15 +12,15 @@ import me.shedaniel.rei.server.ContainerInfo;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
-import ru.betterend.recipe.builders.AnvilSmithingRecipe;
+import ru.betterend.recipe.builders.AnvilRecipe;
 
 public class REIAnvilDisplay implements TransferRecipeDisplay {
 	
-	private AnvilSmithingRecipe recipe;
+	private AnvilRecipe recipe;
 	private List<List<EntryStack>> input;
 	private List<EntryStack> output;
 	
-	public REIAnvilDisplay(AnvilSmithingRecipe recipe) {
+	public REIAnvilDisplay(AnvilRecipe recipe) {
 		this.recipe = recipe;
 		this.input = EntryStack.ofIngredients(recipe.getPreviewInputs());
 		this.output = Collections.singletonList(EntryStack.create(recipe.getOutput()));

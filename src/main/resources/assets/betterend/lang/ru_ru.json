@@ -552,5 +552,7 @@
 	
 	"biome.betterend.eterial_grove": "Эфирная роща",
 	"block.betterend.umbrella_tree_sapling": "Саженец зонтичного дерева",
-	"item.betterend.umbrella_cluster_juice": "Сок зонтичного кластера"
+	"item.betterend.umbrella_cluster_juice": "Сок зонтичного кластера",
+	"block.betterend.blossom_berry_seed": "Семя цветущей ягоды",
+	"item.betterend.blossom_berry": "Цветущая ягода"
 }

@@ -8,12 +8,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.FurBlock;
-import ru.betterend.blocks.basis.PlantWithAgeBlock;
+import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class BlueVineSeedBlock extends PlantWithAgeBlock {
+public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 	@Override
 	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(2, 5, random);

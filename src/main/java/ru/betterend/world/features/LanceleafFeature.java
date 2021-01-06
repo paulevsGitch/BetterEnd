@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.basis.PlantWithAgeBlock;
+import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 
 public class LanceleafFeature extends ScatterFeature {
@@ -19,7 +19,7 @@ public class LanceleafFeature extends ScatterFeature {
 
 	@Override
 	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		PlantWithAgeBlock seed = ((PlantWithAgeBlock) EndBlocks.LANCELEAF_SEED);
+		EndPlantWithAgeBlock seed = ((EndPlantWithAgeBlock) EndBlocks.LANCELEAF_SEED);
 		seed.growAdult(world, random, blockPos);
 	}
 	

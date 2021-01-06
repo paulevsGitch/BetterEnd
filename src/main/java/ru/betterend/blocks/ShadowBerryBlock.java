@@ -16,12 +16,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
-import ru.betterend.blocks.basis.PlantWithAgeBlock;
+import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.MHelper;
 
-public class ShadowBerryBlock extends PlantWithAgeBlock {
+public class ShadowBerryBlock extends EndPlantWithAgeBlock {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 15, 8, 15);
 	
 	@Override

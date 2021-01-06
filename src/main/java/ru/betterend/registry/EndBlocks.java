@@ -86,6 +86,7 @@ import ru.betterend.blocks.PedestalVanilla;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.basis.FurBlock;
+import ru.betterend.blocks.basis.EndCropBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
 import ru.betterend.blocks.basis.EndOreBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
@@ -219,6 +220,9 @@ public class EndBlocks {
 	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new FurBlock(GLOWING_PILLAR_SEED, 15, 3));
 	
 	public static final Block SMALL_JELLYSHROOM = registerBlock("small_jellyshroom", new SmallJellyshroomBlock());
+	
+	// Crops
+	public static final Block BLOSSOM_BERRY = registerBlock("blossom_berry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, PINK_MOSS));
 	
 	// Water plants
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BubbleCoralBlock());

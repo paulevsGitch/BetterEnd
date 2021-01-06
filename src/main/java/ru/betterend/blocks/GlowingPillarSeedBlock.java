@@ -13,12 +13,12 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.PlantWithAgeBlock;
+import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class GlowingPillarSeedBlock extends PlantWithAgeBlock {
+public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 	public GlowingPillarSeedBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.luminance((state) -> { return state.get(AGE) * 3 + 3; })

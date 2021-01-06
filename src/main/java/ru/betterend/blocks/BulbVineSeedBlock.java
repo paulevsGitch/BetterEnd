@@ -8,12 +8,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.PlantWithAgeBlock;
+import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
-public class BulbVineSeedBlock extends PlantWithAgeBlock {
+public class BulbVineSeedBlock extends EndPlantWithAgeBlock {
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockState up = world.getBlockState(pos.up());

@@ -13,11 +13,12 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.World;
 
-public abstract class PlantWithAgeBlock extends EndPlantBlock {
+public abstract class EndPlantWithAgeBlock extends EndPlantBlock {
 	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
 	
-	public PlantWithAgeBlock() {
+	public EndPlantWithAgeBlock() {
 		this(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
 				.sounds(BlockSoundGroup.GRASS)
@@ -26,7 +27,7 @@ public abstract class PlantWithAgeBlock extends EndPlantBlock {
 				.noCollision());
 	}
 	
-	public PlantWithAgeBlock(FabricBlockSettings settings) {
+	public EndPlantWithAgeBlock(FabricBlockSettings settings) {
 		super(settings);
 	}
 	
@@ -39,15 +40,18 @@ public abstract class PlantWithAgeBlock extends EndPlantBlock {
 	
 	@Override
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-		if (random.nextInt(4) == 0) {
-			int age = state.get(AGE);
-			if (age < 3) {
-				world.setBlockState(pos, state.with(AGE, age + 1));
-			}
-			else {
-				growAdult(world, random, pos);
-			}
+		int age = state.get(AGE);
+		if (age < 3) {
+			world.setBlockState(pos, state.with(AGE, age + 1));
 		}
+		else {
+			growAdult(world, random, pos);
+		}
+	}
+	
+	@Override
+	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+		return random.nextInt(8) == 0;
 	}
 	
 	@Override

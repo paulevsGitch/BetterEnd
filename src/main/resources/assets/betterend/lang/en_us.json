@@ -550,5 +550,7 @@
 	
 	"biome.betterend.eterial_grove": "Eterial Grove",
 	"block.betterend.umbrella_tree_sapling": "Umbrella Tree Sapling",
-	"item.betterend.umbrella_cluster_juice": "Umbrella Cluster Juice"
+	"item.betterend.umbrella_cluster_juice": "Umbrella Cluster Juice",
+	"block.betterend.blossom_berry_seed": "Blossom Berry Seed",
+	"item.betterend.blossom_berry": "Blossom Berry"
 }

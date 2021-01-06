@@ -111,6 +111,10 @@ public class EndItems {
 	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new FishBucketItem(EndEntities.END_FISH, Fluids.WATER, makeItemSettings().maxCount(1)));
 	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 3, 0.75F);
 	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 4, 0.75F, new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400));
+	public final static Item BLOSSOM_BERRY = registerFood("blossom_berry", FoodComponents.APPLE);
+	
+	// Drinks
+	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice");
 	
 	// Toolparts //
 	public final static Item AETERNIUM_SHOVEL_HEAD = registerItem("aeternium_shovel_head");
@@ -120,9 +124,6 @@ public class EndItems {
 	public final static Item AETERNIUM_HAMMER_HEAD = registerItem("aeternium_hammer_head");
 	public final static Item AETERNIUM_SWORD_BLADE = registerItem("aeternium_sword_blade");
 	public final static Item AETERNIUM_SWORD_HANDLE = registerItem("aeternium_sword_handle");
-	
-	// Drinks
-	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice");
 	
 	protected static Item registerItem(String name) {
 		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));

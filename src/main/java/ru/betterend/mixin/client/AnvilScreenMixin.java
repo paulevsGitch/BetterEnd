@@ -59,10 +59,9 @@ public class AnvilScreenMixin extends ForgingScreen<AnvilScreenHandler> {
 	
 	@Inject(method = "onSlotUpdate", at = @At("HEAD"), cancellable = true)
 	public void onSlotUpdate(ScreenHandler handler, int slotId, ItemStack stack, CallbackInfo info) {
+		AnvilScreenHandlerExtended anvilHandler = AnvilScreenHandlerExtended.class.cast(handler);
 		if (anvilHandler.be_getCurrentRecipe() != null) {
 			this.nameField.setText("");
-			this.nameField.setEditable(false);
-			this.setFocused(null);
 			info.cancel();
 		}
 	}

@@ -18,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelVariantMap.DeserializationContext;
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
@@ -103,5 +104,12 @@ public class ModelLoaderMixin {
 		} else {
 			context.setContextId(null);
 		}
+	}
+	
+	@Inject(method = "loadModel", at = @At("HEAD"))
+	private void loadModel(Identifier id, CallbackInfo info) throws Exception {
+//		if (!(id instanceof ModelIdentifier)) {
+//			System.out.println(id);
+//		}
 	}
 }

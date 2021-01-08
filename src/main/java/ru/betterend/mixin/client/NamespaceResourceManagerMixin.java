@@ -2,7 +2,6 @@ package ru.betterend.mixin.client;
 
 import java.util.List;
 
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,23 +14,17 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.resource.NamespaceResourceManager;
 import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourcePack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
 import ru.betterend.BetterEnd;
 import ru.betterend.patterns.BlockPatterned;
 
 @Mixin(NamespaceResourceManager.class)
 public abstract class NamespaceResourceManagerMixin {
 	
-	@Final
-	@Shadow
-	protected List<ResourcePack> packList;
-	
 	@Shadow
 	public abstract Resource getResource(Identifier id);
-	@Shadow
-	public abstract List<Resource> getAllResources(Identifier id);
 	
 	@Inject(method = "getAllResources", cancellable = true, at = @At(
 		value = "NEW",

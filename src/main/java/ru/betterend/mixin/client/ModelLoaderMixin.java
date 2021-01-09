@@ -41,7 +41,6 @@ public class ModelLoaderMixin {
 				model = JsonUnbakedModel.deserialize(reader);
 				model.id = id.toString();
 				info.setReturnValue(model);
-				info.cancel();
 			} catch (Exception ex) {
 				String data[] = id.getPath().split("/");
 				if (data.length > 1) {
@@ -52,7 +51,6 @@ public class ModelLoaderMixin {
 							Patterned patterned = (Patterned) block.get();
 							model = this.be_getModel(data, id, patterned);
 							info.setReturnValue(model);
-							info.cancel();
 						}
 					} else {
 						Optional<Item> item = Registry.ITEM.getOrEmpty(itemId);
@@ -60,7 +58,6 @@ public class ModelLoaderMixin {
 							Patterned patterned = (Patterned) item.get();
 							model = this.be_getModel(data, id, patterned);
 							info.setReturnValue(model);
-							info.cancel();
 						}
 					}
 				}

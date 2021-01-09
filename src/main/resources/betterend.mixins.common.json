@@ -4,8 +4,9 @@
 	"package": "ru.betterend.mixin.common",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"ServerPlayNetworkHandlerMixin",
 		"EnchantmentScreenHandlerMixin",
+		"PlayerAdvancementTrackerMixin",
+		"ServerPlayNetworkHandlerMixin",
 		"CraftingScreenHandlerMixin",
 		"GenerationSettingsAccessor",
 		"NoiseChunkGeneratorMixin",

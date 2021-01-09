@@ -43,7 +43,6 @@ public abstract class NamespaceResourceManagerMixin {
 						Resource stateRes = this.getResource(stateId);
 						resources.add(stateRes);
 						info.setReturnValue(resources);
-						info.cancel();
 					} catch (Exception ex) {
 						BetterEnd.LOGGER.catching(ex);
 					}

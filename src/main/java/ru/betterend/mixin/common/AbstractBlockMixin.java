@@ -26,7 +26,7 @@ import ru.betterend.util.MHelper;
 public abstract class AbstractBlockMixin {
 	
 	@Inject(method = "getDroppedStacks", at = @At("HEAD"), cancellable = true)
-	public void getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
+	public void be_getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
 		if (state.isOf(Blocks.GLOWSTONE)) {
 			ItemStack tool = builder.get(LootContextParameters.TOOL);
 			if (tool != null && tool.getItem() instanceof EndHammerItem) {
@@ -39,12 +39,10 @@ public abstract class AbstractBlockMixin {
 					min = MathHelper.clamp(min + fortune, min, max);
 					if (min == max) {
 						info.setReturnValue(Lists.newArrayList(new ItemStack(Items.GLOWSTONE_DUST, max)));
-						info.cancel();
 					}
 				}
 				count = MHelper.randRange(min, max, MHelper.RANDOM);
 				info.setReturnValue(Lists.newArrayList(new ItemStack(Items.GLOWSTONE_DUST, count)));
-				info.cancel();
 			}
 		}
 	}

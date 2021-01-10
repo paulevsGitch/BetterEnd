@@ -15,7 +15,7 @@ public abstract class ServerPlayerEntityMixin implements TeleportingEntity {
 	private long beCooldown;
 	
 	@Inject(method = "tick", at = @At("TAIL"))
-	public void baseTick(CallbackInfo info) {
+	public void be_baseTick(CallbackInfo info) {
 		if (hasCooldown()) {
 			this.beCooldown--;
 		}

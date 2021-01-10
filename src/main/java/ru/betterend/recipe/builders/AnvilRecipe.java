@@ -22,12 +22,13 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
+import ru.betterend.interfaces.BetterEndRecipe;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
-public class AnvilRecipe implements Recipe<Inventory> {
+public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	
 	public final static String GROUP = "smithing";
 	public final static RecipeType<AnvilRecipe> TYPE = EndRecipeManager.registerType(GROUP);

@@ -48,7 +48,7 @@ public class MinecraftClientMixin {
 	private ItemColors itemColors;
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void onInit(RunArgs args, CallbackInfo info) {
+	private void be_onInit(RunArgs args, CallbackInfo info) {
 		Registry.BLOCK.forEach(block -> {
 			if (block instanceof IColorProvider) {
 				IColorProvider provider = (IColorProvider) block;
@@ -59,7 +59,7 @@ public class MinecraftClientMixin {
 	}
 	
 	@Inject(method = "getMusicType", at = @At("HEAD"), cancellable = true)
-	private void getEndMusic(CallbackInfoReturnable<MusicSound> info) {
+	private void be_getEndMusic(CallbackInfoReturnable<MusicSound> info) {
 		if (!(this.currentScreen instanceof CreditsScreen) && this.player != null) {
 			if (this.player.world.getRegistryKey() == World.END) {
 				if (this.inGameHud.getBossBarHud().shouldPlayDragonMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {

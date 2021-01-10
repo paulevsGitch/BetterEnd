@@ -24,6 +24,5 @@ public class LandPathNodeMakerMixin {
 	
 	private static void beCactusDamage(CallbackInfoReturnable<PathNodeType> info) {
 		info.setReturnValue(PathNodeType.DAMAGE_CACTUS);
-		info.cancel();
 	}
 }

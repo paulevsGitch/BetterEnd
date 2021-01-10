@@ -20,7 +20,6 @@ public class EndPortalFeatureMixin {
 	private void bePortalGenerate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPortal()) {
 			info.setReturnValue(false);
-			info.cancel();
 		}
 	}
 }

@@ -32,7 +32,7 @@ public class ModelLoaderMixin {
 	private ResourceManager resourceManager;
 	
 	@Inject(method = "loadModelFromJson", at = @At("HEAD"), cancellable = true)
-	private void loadModelPattern(Identifier id, CallbackInfoReturnable<JsonUnbakedModel> info) {
+	private void be_loadModelPattern(Identifier id, CallbackInfoReturnable<JsonUnbakedModel> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			Identifier modelId = new Identifier(id.getNamespace(), "models/" + id.getPath() + ".json");
 			JsonUnbakedModel model;

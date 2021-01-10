@@ -39,7 +39,7 @@ public class MusicTrackerMixin {
 	private static long time;
 	
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-	public void beOnTick(CallbackInfo info) {
+	public void be_onTick(CallbackInfo info) {
 		if (ClientOptions.blendBiomeMusic()) {
 			MusicSound musicSound = client.getMusicType();
 			if (volume > 0 && beIsInEnd() && beShouldChangeSound(musicSound)) {

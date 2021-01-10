@@ -21,12 +21,13 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
+import ru.betterend.interfaces.BetterEndRecipe;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
-public class AlloyingRecipe implements Recipe<Inventory> {
+public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = EndRecipeManager.registerType(GROUP);

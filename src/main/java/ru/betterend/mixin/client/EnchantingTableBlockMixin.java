@@ -22,7 +22,7 @@ public abstract class EnchantingTableBlockMixin extends Block {
 	}
 
 	@Inject(method = "randomDisplayTick", at = @At(value = "TAIL"))
-	private void beOnRandomDisplayTick(BlockState state, World world, BlockPos pos, Random random, CallbackInfo info) {
+	private void be_onRandomDisplayTick(BlockState state, World world, BlockPos pos, Random random, CallbackInfo info) {
 		for (int px = -2; px <= 2; ++px) {
 			for (int pz = -2; pz <= 2; ++pz) {
 				if (px > -2 && px < 2 && pz == -1) {

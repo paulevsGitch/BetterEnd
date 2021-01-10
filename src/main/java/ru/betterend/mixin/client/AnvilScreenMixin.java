@@ -41,7 +41,7 @@ public class AnvilScreenMixin extends ForgingScreen<AnvilScreenHandler> {
 	}
 
 	@Inject(method = "setup", at = @At("TAIL"))
-	protected void setup(CallbackInfo info) {
+	protected void be_setup(CallbackInfo info) {
 		this.be_buttons.clear();
 		int x = (width - backgroundWidth) / 2;
 	    int y = (height - backgroundHeight) / 2;
@@ -51,14 +51,14 @@ public class AnvilScreenMixin extends ForgingScreen<AnvilScreenHandler> {
 	}
 	
 	@Inject(method = "renderForeground", at = @At("TAIL"))
-	protected void renderForeground(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+	protected void be_renderForeground(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
 		if (anvilHandler.be_getRecipes().size() > 1) {
 			this.be_buttons.forEach(button -> button.render(matrices, mouseX, mouseY, delta));
 		}
 	}
 	
 	@Inject(method = "onSlotUpdate", at = @At("HEAD"), cancellable = true)
-	public void onSlotUpdate(ScreenHandler handler, int slotId, ItemStack stack, CallbackInfo info) {
+	public void be_onSlotUpdate(ScreenHandler handler, int slotId, ItemStack stack, CallbackInfo info) {
 		AnvilScreenHandlerExtended anvilHandler = AnvilScreenHandlerExtended.class.cast(handler);
 		if (anvilHandler.be_getCurrentRecipe() != null) {
 			this.nameField.setText("");

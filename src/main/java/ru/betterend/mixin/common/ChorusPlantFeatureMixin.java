@@ -23,7 +23,7 @@ import ru.betterend.util.MHelper;
 @Mixin(ChorusPlantFeature.class)
 public class ChorusPlantFeatureMixin {
 	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void onGenerate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
+	private void be_onGenerate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (structureWorldAccess.isAir(blockPos) && structureWorldAccess.getBlockState(blockPos.down()).isOf(EndBlocks.CHORUS_NYLIUM)) {
 			ChorusFlowerBlock.generate(structureWorldAccess, blockPos, random, MHelper.randRange(8, 16, random));
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
@@ -31,7 +31,6 @@ public class ChorusPlantFeatureMixin {
 				BlocksHelper.setWithoutUpdate(structureWorldAccess, blockPos, bottom.with(BlocksHelper.ROOTS, true).with(ConnectingBlock.DOWN, true));
 			}
 			info.setReturnValue(true);
-			info.cancel();
 		}
 	}
 }

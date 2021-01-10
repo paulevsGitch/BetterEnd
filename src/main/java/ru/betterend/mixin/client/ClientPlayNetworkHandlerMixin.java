@@ -29,7 +29,7 @@ public class ClientPlayNetworkHandlerMixin
 	private ClientWorld world;
 
 	@Inject(method = "onSignEditorOpen", at = @At(value = "HEAD"), cancellable = true)
-	public void openSignEditor(SignEditorOpenS2CPacket packet, CallbackInfo info) {
+	public void be_openSignEditor(SignEditorOpenS2CPacket packet, CallbackInfo info) {
 		NetworkThreadUtils.forceMainThread(packet, (ClientPlayNetworkHandler) (Object) this,
 				(ThreadExecutor<?>) client);
 		BlockEntity blockEntity = this.world.getBlockEntity(packet.getPos());
@@ -41,7 +41,7 @@ public class ClientPlayNetworkHandlerMixin
 	}
 
 	@Inject(method = "onBlockEntityUpdate", at = @At(value = "HEAD"), cancellable = true)
-	public void onEntityUpdate(BlockEntityUpdateS2CPacket packet, CallbackInfo info) {
+	public void be_onEntityUpdate(BlockEntityUpdateS2CPacket packet, CallbackInfo info) {
 		NetworkThreadUtils.forceMainThread(packet, (ClientPlayNetworkHandler) (Object) this,
 				(ThreadExecutor<?>) client);
 		BlockPos blockPos = packet.getPos();

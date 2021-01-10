@@ -23,7 +23,7 @@ public class TagGroupLoaderMixin {
 	private String entryType;
 	
 	@Inject(method = "prepareReload", at = @At("RETURN"), cancellable = true)
-	public void prepareReload(ResourceManager manager, Executor prepareExecutor, CallbackInfoReturnable<CompletableFuture<Map<Identifier, Tag.Builder>>> info) {
+	public void be_prepareReload(ResourceManager manager, Executor prepareExecutor, CallbackInfoReturnable<CompletableFuture<Map<Identifier, Tag.Builder>>> info) {
 		CompletableFuture<Map<Identifier, Tag.Builder>> future = info.getReturnValue();
 		info.setReturnValue(CompletableFuture.supplyAsync(() -> {
 			Map<Identifier, Tag.Builder> map = future.join();

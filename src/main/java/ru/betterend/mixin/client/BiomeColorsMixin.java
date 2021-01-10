@@ -20,7 +20,7 @@ public class BiomeColorsMixin {
 	private static final int STREAM_COLOR = MHelper.color(105, 213, 244);
 	
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
-	private static void beGetWaterColor(BlockRenderView world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
+	private static void be_getWaterColor(BlockRenderView world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
 		int color = info.getReturnValue();
 		
 		boolean scanDeep = true;

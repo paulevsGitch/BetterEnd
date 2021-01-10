@@ -30,7 +30,7 @@ public abstract class NamespaceResourceManagerMixin {
 		value = "NEW",
 		target = "java/io/FileNotFoundException",
 		shift = Shift.BEFORE))
-	public void getStatesPattern(Identifier id, CallbackInfoReturnable<List<Resource>> info) {
+	public void be_getStatesPattern(Identifier id, CallbackInfoReturnable<List<Resource>> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			String[] data = id.getPath().split("/");
 			if (data.length > 1) {

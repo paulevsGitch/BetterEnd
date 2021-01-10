@@ -22,20 +22,20 @@ public abstract class LivingEntityMixin {
 	private Entity lastAttacker;
 	
 	@Inject(method = "damage", at = @At("HEAD"))
-	public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
+	public void be_damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
 		this.lastAttacker = source.getAttacker();
 	}
 	
 	@ModifyArg(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;takeKnockback(FDD)V"))
-	private float increaseKnockback(float value, double x, double z) {
+	private float be_increaseKnockback(float value, double x, double z) {
 		if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) lastAttacker;
-			value += this.getKnockback(attacker.getMainHandStack().getItem());
+			value += this.be_getKnockback(attacker.getMainHandStack().getItem());
 		}
 		return value;
 	}
 	
-	private double getKnockback(Item tool) {
+	private double be_getKnockback(Item tool) {
 		if (tool == null) return 0.0D;
 		Collection<EntityAttributeModifier> modifiers = tool.getAttributeModifiers(EquipmentSlot.MAINHAND)
 															.get(EntityAttributes.GENERIC_ATTACK_KNOCKBACK);

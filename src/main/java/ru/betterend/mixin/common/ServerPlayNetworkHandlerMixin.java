@@ -29,7 +29,7 @@ public class ServerPlayNetworkHandlerMixin {
 	public ServerPlayerEntity player;
 
 	@Inject(method = "onSignUpdate", at = @At(value = "HEAD"), cancellable = true)
-	private void signUpdate(UpdateSignC2SPacket packet, CallbackInfo info) {
+	private void be_signUpdate(UpdateSignC2SPacket packet, CallbackInfo info) {
 		NetworkThreadUtils.forceMainThread(packet, (ServerPlayNetworkHandler) (Object) this, (ServerWorld) this.player.getServerWorld());
 		this.player.updateLastActionTime();
 		ServerWorld serverWorld = this.player.getServerWorld();

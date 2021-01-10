@@ -16,11 +16,10 @@ import ru.betterend.effects.EndStatusEffects;
 public abstract class EndermanEntityMixin {
 	
 	@Inject(method = "isPlayerStaring", at = @At("HEAD"), cancellable = true)
-	private void isPlayerStaring(PlayerEntity player, CallbackInfoReturnable<Boolean> info) {
+	private void be_isPlayerStaring(PlayerEntity player, CallbackInfoReturnable<Boolean> info) {
 		if (player.isCreative() || player.hasStatusEffect(EndStatusEffects.END_VEIL) ||
 				EnchantmentHelper.getLevel(EndEnchantments.END_VEIL, player.getEquippedStack(EquipmentSlot.HEAD)) > 0) {
 			info.setReturnValue(false);
-			info.cancel();
 		}
 	}
 }

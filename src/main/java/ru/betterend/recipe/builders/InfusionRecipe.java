@@ -20,11 +20,12 @@ import net.minecraft.world.World;
 
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
+import ru.betterend.interfaces.BetterEndRecipe;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.rituals.InfusionRitual;
 import ru.betterend.util.ItemUtil;
 
-public class InfusionRecipe implements Recipe<InfusionRitual> {
+public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 	
 	public final static String GROUP = "infusion";
 	public final static RecipeType<InfusionRecipe> TYPE = EndRecipeManager.registerType(GROUP);

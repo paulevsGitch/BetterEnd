@@ -20,7 +20,6 @@ public class EndSpikeFeatureMixin {
 	private void beSpikeGenerate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, EndSpikeFeatureConfig endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPillars()) {
 			info.setReturnValue(false);
-			info.cancel();
 		}
 	}
 }

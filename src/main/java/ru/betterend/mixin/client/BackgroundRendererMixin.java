@@ -42,7 +42,7 @@ public class BackgroundRendererMixin {
 	private static float blue;
 	
 	@Inject(method = "render", at = @At("RETURN"))
-	private static void onRender(Camera camera, float tickDelta, ClientWorld world, int i, float f, CallbackInfo info) {
+	private static void be_onRender(Camera camera, float tickDelta, ClientWorld world, int i, float f, CallbackInfo info) {
 		long l = Util.getMeasuringTimeMs() - time;
 		time += l;
 		lerp += l * 0.001F;
@@ -69,7 +69,7 @@ public class BackgroundRendererMixin {
 	}
 	
 	@Inject(method = "applyFog", at = @At("HEAD"), cancellable = true)
-	private static void fogDensity(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, CallbackInfo info) {
+	private static void be_fogDensity(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, CallbackInfo info) {
 		Entity entity = camera.getFocusedEntity();
 		Biome biome = entity.world.getBiome(entity.getBlockPos());
 		FluidState fluidState = camera.getSubmergedFluidState();

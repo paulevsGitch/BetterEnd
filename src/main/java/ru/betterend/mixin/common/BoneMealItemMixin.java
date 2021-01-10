@@ -31,7 +31,7 @@ public class BoneMealItemMixin {
 	private static final Mutable POS = new Mutable();
 
 	@Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
-	private void beOnUse(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
+	private void be_onUse(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
 		World world = context.getWorld();
 		BlockPos blockPos = context.getBlockPos();
 		if (!world.isClient) {

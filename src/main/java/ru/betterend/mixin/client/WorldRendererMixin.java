@@ -76,8 +76,8 @@ public class WorldRendererMixin {
 	private int ticks;
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void onInit(MinecraftClient client, BufferBuilderStorage bufferBuilders, CallbackInfo info) {
-		initStars();
+	private void be_onInit(MinecraftClient client, BufferBuilderStorage bufferBuilders, CallbackInfo info) {
+		be_initStars();
 		Random random = new Random(131);
 		axis1 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
 		axis2 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
@@ -92,7 +92,7 @@ public class WorldRendererMixin {
 	}
 	
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
-	private void renderBetterEndSky(MatrixStack matrices, float tickDelta, CallbackInfo info) {
+	private void be_renderBetterEndSky(MatrixStack matrices, float tickDelta, CallbackInfo info) {
 		if (ClientOptions.isCustomSky() && client.world.getSkyProperties().getSkyType() == SkyProperties.SkyType.END) {
 			time = (ticks % 360000) * 0.000017453292F;
 			time2 = time * 2;
@@ -121,31 +121,31 @@ public class WorldRendererMixin {
 				matrices.push();
 				matrices.multiply(new Quaternion(0, time, 0, false));
 				textureManager.bindTexture(HORIZON);
-				renderBuffer(matrices, horizon, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
+				be_renderBuffer(matrices, horizon, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
 				matrices.pop();
 				
 				matrices.push();
 				matrices.multiply(new Quaternion(0, -time, 0, false));
 				textureManager.bindTexture(NEBULA_1);
-				renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
+				be_renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
 				
 				matrices.push();
 				matrices.multiply(new Quaternion(0, time2, 0, false));
 				textureManager.bindTexture(NEBULA_2);
-				renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
+				be_renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
 				
 				textureManager.bindTexture(STARS);
 				
 				matrices.push();
 				matrices.multiply(axis3.getRadialQuaternion(time));
-				renderBuffer(matrices, stars3, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind06);
+				be_renderBuffer(matrices, stars3, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind06);
 				matrices.pop();
 				
 				matrices.push();
 				matrices.multiply(axis4.getRadialQuaternion(time2));
-				renderBuffer(matrices, stars4, VertexFormats.POSITION_TEXTURE, 1F, 1F, 1F, blind06);
+				be_renderBuffer(matrices, stars4, VertexFormats.POSITION_TEXTURE, 1F, 1F, 1F, blind06);
 				matrices.pop();
 			}
 			
@@ -153,7 +153,7 @@ public class WorldRendererMixin {
 			if (a > 0) {
 				if (a > 1) a = 1;
 				textureManager.bindTexture(FOG);
-				renderBuffer(matrices, fog, VertexFormats.POSITION_TEXTURE, BackgroundInfo.red, BackgroundInfo.green, BackgroundInfo.blue, a);
+				be_renderBuffer(matrices, fog, VertexFormats.POSITION_TEXTURE, BackgroundInfo.red, BackgroundInfo.green, BackgroundInfo.blue, a);
 			}
 
 			RenderSystem.disableTexture();
@@ -161,12 +161,12 @@ public class WorldRendererMixin {
 			if (blindA > 0) {
 				matrices.push();
 				matrices.multiply(axis1.getRadialQuaternion(time3));
-				renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, blind06);
+				be_renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, blind06);
 				matrices.pop();
 				
 				matrices.push();
 				matrices.multiply(axis2.getRadialQuaternion(time2));
-				renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, blind06);
+				be_renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, blind06);
 				matrices.pop();
 			}
 			
@@ -177,7 +177,7 @@ public class WorldRendererMixin {
 		}
 	}
 	
-	private void renderBuffer(MatrixStack matrices, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) {
+	private void be_renderBuffer(MatrixStack matrices, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) {
 		RenderSystem.color4f(r, g, b, a);
 		buffer.bind();
 		format.startDrawing(0L);
@@ -186,84 +186,84 @@ public class WorldRendererMixin {
         format.endDrawing();
 	}
 
-	private void initStars() {
+	private void be_initStars() {
 		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
-		stars1 = buildBufferStars(buffer, stars1, 0.1, 0.30, 3500, 41315);
-		stars2 = buildBufferStars(buffer, stars2, 0.1, 0.35, 2000, 35151);
-		stars3 = buildBufferUVStars(buffer, stars3, 0.4, 1.2, 1000, 61354);
-		stars4 = buildBufferUVStars(buffer, stars4, 0.4, 1.2, 1000, 61355);
-		nebulas1 = buildBufferFarFog(buffer, nebulas1, 40, 60, 30, 11515);
-		nebulas2 = buildBufferFarFog(buffer, nebulas2, 40, 60, 10, 14151);
-		horizon = buildBufferHorizon(buffer, horizon);
-		fog = buildBufferFog(buffer, fog);
+		stars1 = be_buildBufferStars(buffer, stars1, 0.1, 0.30, 3500, 41315);
+		stars2 = be_buildBufferStars(buffer, stars2, 0.1, 0.35, 2000, 35151);
+		stars3 = be_buildBufferUVStars(buffer, stars3, 0.4, 1.2, 1000, 61354);
+		stars4 = be_buildBufferUVStars(buffer, stars4, 0.4, 1.2, 1000, 61355);
+		nebulas1 = be_buildBufferFarFog(buffer, nebulas1, 40, 60, 30, 11515);
+		nebulas2 = be_buildBufferFarFog(buffer, nebulas2, 40, 60, 10, 14151);
+		horizon = be_buildBufferHorizon(buffer, horizon);
+		fog = be_buildBufferFog(buffer, fog);
 	}
 	 
-	private VertexBuffer buildBufferStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+	private VertexBuffer be_buildBufferStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
 		if (buffer != null) {
 			buffer.close();
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION);
-		makeStars(bufferBuilder, minSize, maxSize, count, seed);
+		be_makeStars(bufferBuilder, minSize, maxSize, count, seed);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
 	}
 	
-	private VertexBuffer buildBufferUVStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+	private VertexBuffer be_buildBufferUVStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
 		if (buffer != null) {
 			buffer.close();
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
-		makeUVStars(bufferBuilder, minSize, maxSize, count, seed);
+		be_makeUVStars(bufferBuilder, minSize, maxSize, count, seed);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
 	}
 	
-	private VertexBuffer buildBufferFarFog(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+	private VertexBuffer be_buildBufferFarFog(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
 		if (buffer != null) {
 			buffer.close();
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
-		makeFarFog(bufferBuilder, minSize, maxSize, count, seed);
+		be_makeFarFog(bufferBuilder, minSize, maxSize, count, seed);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
 	}
 	
-	private VertexBuffer buildBufferHorizon(BufferBuilder bufferBuilder, VertexBuffer buffer) {
+	private VertexBuffer be_buildBufferHorizon(BufferBuilder bufferBuilder, VertexBuffer buffer) {
 		if (buffer != null) {
 			buffer.close();
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
-		makeCylinder(bufferBuilder, 16, 50, 100);
+		be_makeCylinder(bufferBuilder, 16, 50, 100);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
 	}
 	
-	private VertexBuffer buildBufferFog(BufferBuilder bufferBuilder, VertexBuffer buffer) {
+	private VertexBuffer be_buildBufferFog(BufferBuilder bufferBuilder, VertexBuffer buffer) {
 		if (buffer != null) {
 			buffer.close();
 		}
 
 		buffer = new VertexBuffer(VertexFormats.POSITION_TEXTURE);
-		makeCylinder(bufferBuilder, 16, 50, 70);
+		be_makeCylinder(bufferBuilder, 16, 50, 70);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
 	}
 	
-	private void makeStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
+	private void be_makeStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
 		buffer.begin(7, VertexFormats.POSITION);
 
@@ -306,7 +306,7 @@ public class WorldRendererMixin {
 		}
 	}
 	
-	private void makeUVStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
+	private void be_makeUVStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
 
@@ -354,7 +354,7 @@ public class WorldRendererMixin {
 		}
 	}
 	
-	private void makeFarFog(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
+	private void be_makeFarFog(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
 
@@ -405,7 +405,7 @@ public class WorldRendererMixin {
 		}
 	}
 	
-	private void makeCylinder(BufferBuilder buffer, int segments, double height, double radius) {
+	private void be_makeCylinder(BufferBuilder buffer, int segments, double height, double radius) {
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
 		for (int i = 0; i < segments; i ++) {
 			double a1 = (double) i * Math.PI * 2.0 / (double) segments;

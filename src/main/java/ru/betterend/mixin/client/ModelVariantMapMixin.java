@@ -20,7 +20,7 @@ import ru.betterend.patterns.BlockPatterned;
 public abstract class ModelVariantMapMixin {
 	
 	@Inject(method = "deserialize", at = @At("HEAD"), cancellable = true)
-	private static void deserializeBlockState(ModelVariantMap.DeserializationContext context, Reader reader, CallbackInfoReturnable<ModelVariantMap> info) {
+	private static void be_deserializeBlockState(ModelVariantMap.DeserializationContext context, Reader reader, CallbackInfoReturnable<ModelVariantMap> info) {
 		Block block = context.getStateFactory().getDefaultState().getBlock();
 		if (block instanceof BlockPatterned) {
 			String pattern = ((BlockPatterned) block).getStatesPattern(reader);

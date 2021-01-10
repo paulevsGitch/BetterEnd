@@ -53,7 +53,7 @@ public abstract class EntityMixin implements TeleportingEntity {
 	protected abstract TeleportTarget getTeleportTarget(ServerWorld destination);
 	
 	@Inject(method = "moveToWorld", at = @At("HEAD"), cancellable = true)
-	public void moveToWorld(ServerWorld destination, CallbackInfoReturnable<Entity> info) {
+	public void be_moveToWorld(ServerWorld destination, CallbackInfoReturnable<Entity> info) {
 		if (!removed && beExitPos != null && world instanceof ServerWorld) {
 			this.detach();
 			this.world.getProfiler().push("changeDimension");
@@ -75,21 +75,19 @@ public abstract class EntityMixin implements TeleportingEntity {
 				this.world.getProfiler().pop();
 				this.beExitPos = null;
 				info.setReturnValue(entity);
-				info.cancel();
 			}
 		}
 	}
 	
 	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
-	protected void getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<TeleportTarget> info) {
+	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<TeleportTarget> info) {
 		if (beExitPos != null) {
 			info.setReturnValue(new TeleportTarget(new Vec3d(beExitPos.getX() + 0.5D, beExitPos.getY(), beExitPos.getZ() + 0.5D), getVelocity(), yaw, pitch));
-			info.cancel();
 		}
 	}
 	
 	@Inject(method = "baseTick", at = @At("TAIL"))
-	public void baseTick(CallbackInfo info) {
+	public void be_baseTick(CallbackInfo info) {
 		if (hasCooldown()) {
 			this.beCooldown--;
 		}

@@ -24,7 +24,7 @@ public abstract class PlayerEntityMixin {
 	private static Direction[] HORIZONTAL;
 	
 	@Inject(method = "findRespawnPosition", at = @At(value = "HEAD"), cancellable = true)
-	private static void statueRespawn(ServerWorld world, BlockPos pos, float f, boolean bl, boolean bl2, CallbackInfoReturnable<Optional<Vec3d>> info) {
+	private static void be_statueRespawn(ServerWorld world, BlockPos pos, float f, boolean bl, boolean bl2, CallbackInfoReturnable<Optional<Vec3d>> info) {
 		BlockState blockState = world.getBlockState(pos);
 		if (blockState.isOf(EndBlocks.RESPAWN_OBELISK)) {
 			info.setReturnValue(beObeliskRespawnPosition(world, pos, blockState));

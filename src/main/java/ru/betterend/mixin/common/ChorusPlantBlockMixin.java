@@ -23,6 +23,7 @@ import net.minecraft.world.WorldView;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
+import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
 public abstract class ChorusPlantBlockMixin extends Block {
@@ -32,12 +33,16 @@ public abstract class ChorusPlantBlockMixin extends Block {
 
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void beOnInit(AbstractBlock.Settings settings, CallbackInfo info) {
-		this.setDefaultState(this.getDefaultState().with(BlocksHelper.ROOTS, false));
+		if (GeneratorOptions.changeChorusPlant()) {
+			this.setDefaultState(this.getDefaultState().with(BlocksHelper.ROOTS, false));
+		}
 	}
 	
 	@Inject(method = "appendProperties", at = @At("TAIL"))
 	private void beAddProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo info) {
-		builder.add(BlocksHelper.ROOTS);
+		if (GeneratorOptions.changeChorusPlant()) {
+			builder.add(BlocksHelper.ROOTS);
+		}
 	}
 	
 	@Inject(method = "withConnectionProperties", at = @At("RETURN"), cancellable = true)
@@ -69,11 +74,18 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockState plant = info.getReturnValue();
 		if (plant.isOf(Blocks.CHORUS_PLANT)) {
 			if (world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
-				plant = plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true);
+				if (GeneratorOptions.changeChorusPlant()) {
+					plant = plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true);
+				}
+				else {
+					plant = plant.with(Properties.DOWN, true);
+				}
 				info.cancel();
 			}
 			else {
-				plant = plant.with(BlocksHelper.ROOTS, false);
+				if (GeneratorOptions.changeChorusPlant()) {
+					plant = plant.with(BlocksHelper.ROOTS, false);
+				}
 				info.cancel();
 			}
 			info.setReturnValue(plant);
@@ -87,7 +99,12 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		World world = ctx.getWorld();
 		BlockState plant = info.getReturnValue();
 		if (ctx.canPlace() && plant.isOf(Blocks.CHORUS_PLANT) && world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
-			info.setReturnValue(plant.with(BlocksHelper.ROOTS, true).with(Properties.DOWN, true));
+			if (GeneratorOptions.changeChorusPlant()) {
+				info.setReturnValue(plant.with(BlocksHelper.ROOTS, true).with(Properties.DOWN, true));
+			}
+			else {
+				info.setReturnValue(plant.with(Properties.DOWN, true));
+			}
 			info.cancel();
 		}
 	}

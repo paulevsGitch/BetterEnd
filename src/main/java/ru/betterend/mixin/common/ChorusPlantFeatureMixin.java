@@ -19,6 +19,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
+import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ChorusPlantFeature.class)
 public class ChorusPlantFeatureMixin {
@@ -28,7 +29,12 @@ public class ChorusPlantFeatureMixin {
 			ChorusFlowerBlock.generate(structureWorldAccess, blockPos, random, MHelper.randRange(8, 16, random));
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
 			if (bottom.isOf(Blocks.CHORUS_PLANT)) {
-				BlocksHelper.setWithoutUpdate(structureWorldAccess, blockPos, bottom.with(BlocksHelper.ROOTS, true).with(ConnectingBlock.DOWN, true));
+				if ((GeneratorOptions.changeChorusPlant())) {
+					BlocksHelper.setWithoutUpdate(structureWorldAccess, blockPos, bottom.with(BlocksHelper.ROOTS, true).with(ConnectingBlock.DOWN, true));
+				}
+				else {
+					BlocksHelper.setWithoutUpdate(structureWorldAccess, blockPos, bottom.with(ConnectingBlock.DOWN, true));
+				}
 			}
 			info.setReturnValue(true);
 		}

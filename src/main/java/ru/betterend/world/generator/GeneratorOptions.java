@@ -9,6 +9,8 @@ public class GeneratorOptions {
 	private static boolean hasPillars;
 	private static boolean hasDragonFights;
 	private static boolean swapOverworldToEnd;
+	private static boolean changeChorusPlant;
+	private static boolean removeChorusFromVanillaBiomes;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getIntRoot("biomeSizeLand", 256);
@@ -17,6 +19,8 @@ public class GeneratorOptions {
 		hasPillars = Configs.GENERATOR_CONFIG.getBooleanRoot("hasPillars", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
 		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false);
+		changeChorusPlant = Configs.GENERATOR_CONFIG.getBooleanRoot("changeChorusPlant", true);
+		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBooleanRoot("removeChorusFromVanillaBiomes", true);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -41,5 +45,13 @@ public class GeneratorOptions {
 	
 	public static boolean swapOverworldToEnd() {
 		return swapOverworldToEnd;
+	}
+
+	public static boolean changeChorusPlant() {
+		return changeChorusPlant;
+	}
+
+	public static boolean removeChorusFromVanillaBiomes() {
+		return removeChorusFromVanillaBiomes;
 	}
 }

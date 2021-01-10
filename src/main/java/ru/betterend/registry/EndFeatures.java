@@ -50,6 +50,7 @@ import ru.betterend.world.features.trees.MossyGlowshroomFeature;
 import ru.betterend.world.features.trees.PythadendronTreeFeature;
 import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
+import ru.betterend.world.generator.GeneratorOptions;
 
 public class EndFeatures {
 	// Trees //
@@ -156,15 +157,17 @@ public class EndFeatures {
 	public static final EndFeature CRASHED_SHIP = EndFeature.makeChansedFeature("crashed_ship", new CrashedShipFeature(), 500);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
-		if (id.getNamespace().equals("minecraft")) {
-			String path = id.getPath();
-			if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands")) {
-				int pos = GenerationStep.Feature.VEGETAL_DECORATION.ordinal();
-				if (pos < features.size()) {
-					List<Supplier<ConfiguredFeature<?, ?>>> list = features.get(pos);
-					// If only chorus plants are enabled
-					if (list.size() == 1) {
-						features.get(pos).clear();
+		if (GeneratorOptions.removeChorusFromVanillaBiomes()) {
+			if (id.getNamespace().equals("minecraft")) {
+				String path = id.getPath();
+				if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands")) {
+					int pos = GenerationStep.Feature.VEGETAL_DECORATION.ordinal();
+					if (pos < features.size()) {
+						List<Supplier<ConfiguredFeature<?, ?>>> list = features.get(pos);
+						// If only chorus plants are enabled
+						if (list.size() == 1) {
+							features.get(pos).clear();
+						}
 					}
 				}
 			}

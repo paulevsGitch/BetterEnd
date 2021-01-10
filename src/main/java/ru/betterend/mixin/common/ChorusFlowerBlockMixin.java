@@ -29,6 +29,7 @@ import net.minecraft.world.WorldView;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
+import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(value = ChorusFlowerBlock.class, priority = 100)
 public abstract class ChorusFlowerBlockMixin extends Block {
@@ -59,7 +60,12 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 				int i = state.get(ChorusFlowerBlock.AGE);
 				if (i < 5) {
 					this.grow(world, up, i + 1);
-					BlocksHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true).with(BlocksHelper.ROOTS, true));
+					if (GeneratorOptions.changeChorusPlant()) {
+						BlocksHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true).with(BlocksHelper.ROOTS, true));
+					}
+					else {
+						BlocksHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true));
+					}
 					info.cancel();
 				}
 			}
@@ -69,7 +75,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	@Inject(method = "generate", at = @At("RETURN"), cancellable = true)
 	private static void beOnGenerate(WorldAccess world, BlockPos pos, Random random, int size, CallbackInfo info) {
 		BlockState state = world.getBlockState(pos);
-		if (state.isOf(Blocks.CHORUS_PLANT)) {
+		if (GeneratorOptions.changeChorusPlant() && state.isOf(Blocks.CHORUS_PLANT)) {
 			BlocksHelper.setWithoutUpdate(world, pos, state.with(BlocksHelper.ROOTS, true));
 		}
 	}

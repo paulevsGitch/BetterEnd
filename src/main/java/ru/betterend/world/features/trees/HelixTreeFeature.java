@@ -80,14 +80,18 @@ public class HelixTreeFeature extends DefaultFeature {
 		});
 		
 		spline.clear();
-		for (int i = 0; i <= 20; i++) {
-			float radius = 1 - i * 0.05F;
+		float rad = MHelper.randRange(8F, 11F, random);
+		int count = MHelper.randRange(20, 30, random);
+		float scaleM = 20F / (float) count * scale * 1.75F;
+		float hscale = 20F / (float) count * 0.05F;
+		for (int i = 0; i <= count; i++) {
+			float radius = 1 - i * hscale;
 			radius = radius * radius * 2 - 1;
 			radius *= radius;
-			radius = (1 - radius) * 8F * scale;
+			radius = (1 - radius) * rad * scale;
 			dx = (float) Math.sin(i * 0.45F + angle) * radius;
 			dz = (float) Math.cos(i * 0.45F + angle) * radius;
-			spline.add(new Vector3f(dx, i * scale * 1.75F, dz));
+			spline.add(new Vector3f(dx, i * scaleM, dz));
 		}
 		
 		Vector3f start = new Vector3f();

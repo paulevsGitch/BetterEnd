@@ -3,11 +3,13 @@ package ru.betterend;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
+import ru.betterend.events.PlayerAdvancementsEvents;
 import ru.betterend.integration.Integrations;
 import ru.betterend.item.GuideBookItem;
 import ru.betterend.recipe.AlloyingRecipes;
@@ -67,6 +69,15 @@ public class BetterEnd implements ModInitializer {
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 		Configs.saveConfigs();
+		
+		if (hasGuideBook()) {
+			PlayerAdvancementsEvents.PLAYER_ADVENCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
+				Identifier advId = new Identifier("minecraft:end/enter_end_gateway");
+				if (advId.equals(advancement.getId())) {
+					player.giveItemStack(new ItemStack(GuideBookItem.GUIDE_BOOK));
+				}
+			});
+		}
 	}
 	
 	public static boolean hasGuideBook() {

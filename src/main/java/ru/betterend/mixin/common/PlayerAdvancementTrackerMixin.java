@@ -9,11 +9,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.PlayerAdvancementTracker;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-import ru.betterend.BetterEnd;
-import ru.betterend.item.GuideBookItem;
+
+import ru.betterend.events.PlayerAdvancementsEvents;
 
 @Mixin(PlayerAdvancementTracker.class)
 public abstract class PlayerAdvancementTrackerMixin {
@@ -25,10 +23,7 @@ public abstract class PlayerAdvancementTrackerMixin {
 			value = "INVOKE",
 			target = "Lnet/minecraft/advancement/AdvancementRewards;apply(Lnet/minecraft/server/network/ServerPlayerEntity;)V",
 			shift = Shift.AFTER))
-	public void grantBonuses(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> info) {
-		Identifier advId = new Identifier("minecraft:end/enter_end_gateway");
-		if (BetterEnd.hasGuideBook() && advId.equals(advancement.getId())) {
-			this.owner.giveItemStack(new ItemStack(GuideBookItem.GUIDE_BOOK));
-		}
+	public void be_onAdvancementComplete(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> info) {
+		PlayerAdvancementsEvents.PLAYER_ADVENCEMENT_COMPLETE.invoker().onAdvancementComplete(owner, advancement, criterionName);
 	}
 }

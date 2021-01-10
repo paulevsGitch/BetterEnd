@@ -115,7 +115,7 @@ public class EntityEndSlime extends SlimeEntity {
 				slimeEntity.setCustomName(text);
 				slimeEntity.setAiDisabled(bl);
 				slimeEntity.setInvulnerable(this.isInvulnerable());
-				((ISlime) slimeEntity).setSlimeSize(j, true);
+				((ISlime) slimeEntity).beSetSlimeSize(j, true);
 				slimeEntity.calculateDimensions();
 				slimeEntity.refreshPositionAndAngles(this.getX() + (double) g, this.getY() + 0.5D, this.getZ() + (double) h, this.random.nextFloat() * 360.0F, 0.0F);
 				this.world.spawnEntity(slimeEntity);

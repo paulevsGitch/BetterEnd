@@ -12,7 +12,7 @@ public class SlimeEntityMixin implements ISlime {
 	protected void setSize(int size, boolean heal) {}
 	
 	@Override
-	public void setSlimeSize(int size, boolean heal) {
+	public void beSetSlimeSize(int size, boolean heal) {
 		setSize(size, heal);
 	}
 }

@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.basis.DoublePlantBlock;
+import ru.betterend.blocks.basis.EndCropBlock;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.util.BlocksHelper;
 
@@ -55,6 +56,10 @@ public class SinglePlantFeature extends ScatterFeature {
 			BlockState state = plant.getDefaultState().with(DoublePlantBlock.ROTATION, rot);
 			BlocksHelper.setWithoutUpdate(world, blockPos, state);
 			BlocksHelper.setWithoutUpdate(world, blockPos.up(), state.with(DoublePlantBlock.TOP, true));
+		}
+		else if (plant instanceof EndCropBlock) {
+			BlockState state = plant.getDefaultState().with(EndCropBlock.AGE, 3);
+			BlocksHelper.setWithoutUpdate(world, blockPos, state);
 		}
 		else if (plant instanceof EndPlantWithAgeBlock) {
 			int age = random.nextInt(4);

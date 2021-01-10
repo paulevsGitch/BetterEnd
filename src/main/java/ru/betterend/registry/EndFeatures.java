@@ -86,6 +86,7 @@ public class EndFeatures {
 	public static final EndFeature TWISTED_UMBRELLA_MOSS = new EndFeature("twisted_umbrella_moss", new DoublePlantFeature(EndBlocks.TWISTED_UMBRELLA_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS_TALL, 6), 5);
 	public static final EndFeature JUNGLE_GRASS = new EndFeature("jungle_grass", new SinglePlantFeature(EndBlocks.JUNGLE_GRASS, 7, 3), 8);
 	public static final EndFeature SMALL_JELLYSHROOM_FLOOR = new EndFeature("small_jellyshroom_floor", new SinglePlantFeature(EndBlocks.SMALL_JELLYSHROOM, 5, 5), 4);
+	public static final EndFeature BLOSSOM_BERRY = new EndFeature("blossom_berry", new SinglePlantFeature(EndBlocks.BLOSSOM_BERRY, 3, 3), 2);
 	
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);

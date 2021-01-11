@@ -1,6 +1,8 @@
 package ru.betterend.blocks.basis;
 
 import java.io.Reader;
+import java.util.Collections;
+import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractSignBlock;
@@ -15,6 +17,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.network.packet.s2c.play.SignEditorOpenS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager;
@@ -53,7 +56,7 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	private final Block parent;
 	
 	public EndSignBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).noCollision().nonOpaque(), SignType.OAK);
+		super(FabricBlockSettings.copyOf(source).strength(1.0F, 1.0F).noCollision().nonOpaque(), SignType.OAK);
 		this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0).with(FLOOR, true).with(WATERLOGGED, false));
 		this.parent = source;
 	}
@@ -180,5 +183,10 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	@Override
 	public BlockState mirror(BlockState state, BlockMirror mirror) {
 		return (BlockState) state.with(ROTATION, mirror.mirror((Integer) state.get(ROTATION), 16));
+	}
+	
+	@Override
+	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+		return Collections.singletonList(new ItemStack(this));
 	}
 }

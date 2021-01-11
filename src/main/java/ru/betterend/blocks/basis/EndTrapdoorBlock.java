@@ -20,7 +20,7 @@ import ru.betterend.patterns.Patterns;
 
 public class EndTrapdoorBlock extends TrapdoorBlock implements IRenderTypeable, BlockPatterned {
 	public EndTrapdoorBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).nonOpaque());
+		super(FabricBlockSettings.copyOf(source).strength(3.0F, 3.0F).nonOpaque());
 	}
 
 	@Override

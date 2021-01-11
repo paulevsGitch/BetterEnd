@@ -16,11 +16,10 @@ import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
 public class EndWoodenButtonBlock extends WoodenButtonBlock implements BlockPatterned {
-	
 	private final Block parent;
 	
 	public EndWoodenButtonBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).nonOpaque());
+		super(FabricBlockSettings.copyOf(source).strength(0.5F, 0.5F).nonOpaque());
 		this.parent = source;
 	}
 

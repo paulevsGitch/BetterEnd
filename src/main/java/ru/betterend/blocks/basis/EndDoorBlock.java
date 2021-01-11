@@ -19,8 +19,8 @@ import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
 public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockPatterned {
-	public EndDoorBlock(Block block) {
-		super(FabricBlockSettings.copy(block).nonOpaque());
+	public EndDoorBlock(Block source) {
+		super(FabricBlockSettings.copyOf(source).strength(3F, 3F).nonOpaque());
 	}
 
 	@Override

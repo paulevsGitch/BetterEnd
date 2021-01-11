@@ -35,6 +35,7 @@ public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRend
 				.suffocates((state, world, pos) -> { return false; })
 				.blockVision((state, world, pos) -> { return false; })
 				.materialColor(color)
+				.breakByTool(FabricToolTags.HOES)
 				.breakByTool(FabricToolTags.SHEARS));
 		this.sapling = sapling;
 	}
@@ -46,6 +47,7 @@ public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRend
 				.blockVision((state, world, pos) -> { return false; })
 				.materialColor(color)
 				.luminance(light)
+				.breakByTool(FabricToolTags.HOES)
 				.breakByTool(FabricToolTags.SHEARS));
 		this.sapling = sapling;
 	}

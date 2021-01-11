@@ -106,9 +106,9 @@ public class TerrainGenerator {
 			dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz));
 			dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz));
 			if (dist > -0.5F) {
-				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.04;
-				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.02;
-				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.01;
+				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
+				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
+				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
 			}
 			if (dist > 0) {
 				LOCKER.unlock();
@@ -148,9 +148,9 @@ public class TerrainGenerator {
 			dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz));
 			dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz));
 			if (dist > -0.5F) {
-				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.04;
-				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.02;
-				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.01;
+				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
+				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
+				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
 			}
 			if (dist > 0) {
 				LOCKER.unlock();

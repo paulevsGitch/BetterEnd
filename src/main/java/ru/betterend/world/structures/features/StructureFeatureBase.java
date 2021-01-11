@@ -22,7 +22,7 @@ public abstract class StructureFeatureBase extends StructureFeature<DefaultFeatu
 	}
 	
 	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, ChunkRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, DefaultFeatureConfig featureConfig) {
-		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 50;
+		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 20;
 	}
 
 	private static int getGenerationHeight(int chunkX, int chunkZ, ChunkGenerator chunkGenerator) {

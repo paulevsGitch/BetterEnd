@@ -107,7 +107,7 @@ public class LakePiece extends BasePiece {
 					dist = 1 - dist / r2;
 					int maxY = map.get(x, z);
 					if (MathHelper.abs(maxY - center.getY()) < 8) {
-						float minY = dist * depth * getHeightClamp(world, 8, px, pz);
+						float minY = (float) Math.sqrt(dist) * depth * getHeightClamp(world, 8, px, pz);
 						if (minY > 0) {
 							minY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
 							minY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
@@ -121,33 +121,35 @@ public class LakePiece extends BasePiece {
 								pos.setY(maxY ++);
 							}
 							
-							if (maxY <= center.getY() + 1) {
-								maxY = MathHelper.clamp(maxY + 4, 0, center.getY());
-								BlockState surf = random.nextBoolean() ? EndBlocks.ENDSTONE_DUST.getDefaultState() : world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-								BlockState under = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
-								for (int y = maxY; y >= minY; y--) {
-									pos.setY(y);
-									BlockState state = chunk.getBlockState(pos);
-									if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-										chunk.setBlockState(pos, y > center.getY() ? AIR : y == maxY ? surf : under, false);
-									}
-									else {
-										break;
+							if (!waterIsNear(world, pos.getX() + sx, center.getY(), pos.getZ() + sz, 2)) {
+								if (maxY <= center.getY() + 1) {
+									maxY = MathHelper.clamp(maxY + 4, 0, center.getY());
+									BlockState surf = random.nextBoolean() ? EndBlocks.ENDSTONE_DUST.getDefaultState() : world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+									BlockState under = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
+									for (int y = maxY; y >= minY; y--) {
+										pos.setY(y);
+										BlockState state = chunk.getBlockState(pos);
+										if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
+											chunk.setBlockState(pos, y > center.getY() ? AIR : y == maxY ? surf : under, false);
+										}
+										else {
+											break;
+										}
 									}
 								}
-							}
-							else {
-								for (int y = maxY; y >= minY; y--) {
-									pos.setY(y);
-									BlockState state = chunk.getBlockState(pos);
-									if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-										if (maxY <= center.getY() + 1)
-											chunk.setBlockState(pos, Blocks.REDSTONE_BLOCK.getDefaultState(), false);
-										else
-										chunk.setBlockState(pos, y > center.getY() ? AIR : WATER, false);
-									}
-									else {
-										break;
+								else {
+									for (int y = maxY; y >= minY; y--) {
+										pos.setY(y);
+										BlockState state = chunk.getBlockState(pos);
+										if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
+											if (maxY <= center.getY() + 1)
+												chunk.setBlockState(pos, Blocks.REDSTONE_BLOCK.getDefaultState(), false);
+											else
+											chunk.setBlockState(pos, y > center.getY() ? AIR : WATER, false);
+										}
+										else {
+											break;
+										}
 									}
 								}
 							}
@@ -179,6 +181,26 @@ public class LakePiece extends BasePiece {
 		map = chunk.getHeightmap(Type.WORLD_SURFACE);
 		
 		return true;
+	}
+	
+	private boolean waterIsNear(StructureWorldAccess world, int x, int y, int z, int r) {
+		int py = world.getChunk(x >> 4, z >> 4).sampleHeightmap(Type.WORLD_SURFACE, x & 15, z & 15) - 1;
+		if (py > y) {
+			Mutable m = new Mutable();
+			m.setY(py);
+			for (int i  = -r; i <= r; i++) {
+				int px = x + i;
+				m.setX(px);
+				for (int j = -r; j <= r; j++) {
+					int pz = z + j;
+					m.setZ(pz);
+					if (!world.getFluidState(m).isEmpty()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	private int getHeight(StructureWorldAccess world, BlockPos pos) {

@@ -30,8 +30,8 @@ public class StructureMegaLake extends StructureFeatureBase {
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 5) {
-				float radius = MHelper.randRange(50, 100, random);
-				float depth = MHelper.randRange(10, 16, random);
+				float radius = MHelper.randRange(50, 150, random);
+				float depth = MHelper.randRange(6, 10, random);
 				LakePiece piece = new LakePiece(new BlockPos(x, y - 3, z), radius, depth, random, biome);
 				this.children.add(piece);
 			}

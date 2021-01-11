@@ -110,7 +110,7 @@ public class TerrainGenerator {
 				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
 				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
 			}
-			if (dist > 0) {
+			if (dist > -0.01) {
 				LOCKER.unlock();
 				return true;
 			}

@@ -8,7 +8,6 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmithingRecipe;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;

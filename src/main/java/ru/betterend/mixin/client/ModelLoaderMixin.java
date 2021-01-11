@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.block.Block;
@@ -20,13 +21,12 @@ import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import ru.betterend.BetterEnd;
 import ru.betterend.patterns.Patterned;
+import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ModelLoader.class)
 public class ModelLoaderMixin {
-	
 	@Final
 	@Shadow
 	private ResourceManager resourceManager;
@@ -80,5 +80,13 @@ public class ModelLoaderMixin {
 		model.id = id.toString();
 		
 		return model;
+	}
+	
+	@ModifyVariable(method = "loadModel", ordinal = 2, at = @At(value = "INVOKE"))
+	public Identifier be_SwitchModel(Identifier id) {
+		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") && id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus") && !id.getPath().contains("custom_")) {
+			id = new Identifier(id.getPath().replace("chorus", "custom_chorus"));
+		}
+		return id;
 	}
 }

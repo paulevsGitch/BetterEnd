@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.EndLotusLeafBlock;
 import ru.betterend.blocks.BlockProperties.TripleShape;
+import ru.betterend.blocks.EndLotusLeafBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 

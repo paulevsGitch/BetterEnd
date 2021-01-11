@@ -15,7 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
-
 import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(Entity.class)

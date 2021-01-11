@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.model.json.ModelVariantMap;
 import net.minecraft.util.JsonHelper;
-
 import ru.betterend.patterns.BlockPatterned;
 
 @Mixin(ModelVariantMap.class)

@@ -29,9 +29,9 @@ public class TerrainGenerator {
 	
 	public static void initNoise(long seed) {
 		Random random = new Random(seed);
-		largeIslands = new IslandLayer(random.nextInt(), 300, 200, 63, 0);
-		mediumIslands = new IslandLayer(random.nextInt(), 150, 100, 63, 16);
-		smallIslands = new IslandLayer(random.nextInt(), 60, 50, 63, 32);
+		largeIslands = new IslandLayer(random.nextInt(), 300, 200, 70, 10);
+		mediumIslands = new IslandLayer(random.nextInt(), 150, 100, 70, 20);
+		smallIslands = new IslandLayer(random.nextInt(), 60, 50, 70, 30);
 		noise1 = new OpenSimplexNoise(random.nextInt());
 		noise2 = new OpenSimplexNoise(random.nextInt());
 	}
@@ -70,9 +70,9 @@ public class TerrainGenerator {
 			dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz));
 			dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz));
 			if (dist > -0.5F) {
-				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.04;
-				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.02;
-				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.01;
+				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
+				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
+				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
 			}
 			buffer[y] = dist;
 		}

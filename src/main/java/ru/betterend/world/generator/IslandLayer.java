@@ -14,7 +14,6 @@ import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFScale;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFCappedCone;
 
 public class IslandLayer {
@@ -123,8 +122,8 @@ public class IslandLayer {
 		SDF cone3 = makeCone(0.5F, 0.45F, 0.03F, 0.0F);
 		SDF cone4 = makeCone(0.45F, 0, 0.02F, 0.03F);
 		
-		SDF coneBottom = new SDFUnion().setSourceA(cone1).setSourceB(cone2);
-		SDF coneTop = new SDFUnion().setSourceA(cone3).setSourceB(cone4);
+		SDF coneBottom = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone1).setSourceB(cone2);
+		SDF coneTop = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone3).setSourceB(cone4);
 		
 		ISLAND = new SDFSmoothUnion().setRadius(0.01F).setSourceA(coneTop).setSourceB(coneBottom);
 	}

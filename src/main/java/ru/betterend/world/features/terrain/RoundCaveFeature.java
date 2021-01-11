@@ -41,7 +41,7 @@ public class RoundCaveFeature extends DefaultFeature {
 		}
 		
 		int radius = MHelper.randRange(10, 30, random);
-		int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
+		/*int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
 		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ());
 		
 		Mutable bpos = new Mutable();
@@ -52,6 +52,32 @@ public class RoundCaveFeature extends DefaultFeature {
 			bpos.setY(--top);
 		}
 		top -= radius * 1.3F + 5;
+		
+		if (top <= bottom) {
+			return false;
+		}*/
+		
+		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		Mutable bpos = new Mutable();
+		bpos.setX(pos.getX());
+		bpos.setZ(pos.getZ());
+		bpos.setY(top);
+		
+		BlockState state = world.getBlockState(bpos);
+		while (!state.isIn(EndTags.GEN_TERRAIN) && bpos.getY() > 5) {
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		if (bpos.getY() < 10) {
+			return false;
+		}
+		top = (int) (bpos.getY() - (radius * 1.3F + 5));
+		
+		while (state.isIn(EndTags.GEN_TERRAIN) || state.isOf(Blocks.WATER) && bpos.getY() > 5) {
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		int bottom = (int) (bpos.getY() + radius * 1.3F + 5);
 		
 		if (top <= bottom) {
 			return false;
@@ -90,7 +116,7 @@ public class RoundCaveFeature extends DefaultFeature {
 					double r2 = r + 5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
-						BlockState state = world.getBlockState(bpos);
+						state = world.getBlockState(bpos);
 						if (isReplaceable(state)) {
 							BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 							
@@ -113,7 +139,7 @@ public class RoundCaveFeature extends DefaultFeature {
 						}
 					}
 					else if (dist < r2 * r2) {
-						BlockState state = world.getBlockState(bpos);
+						state = world.getBlockState(bpos);
 						if (!state.getFluidState().isEmpty()) {
 							BlocksHelper.setWithoutUpdate(world, bpos, Blocks.END_STONE.getDefaultState());
 						}
@@ -150,11 +176,11 @@ public class RoundCaveFeature extends DefaultFeature {
 				float vx = (float) Math.sin(angleY);
 				float vz = (float) Math.sin(angleY);
 				prism = new SDFRotation().setRotation(new Vector3f(vx, 0, vz), random.nextFloat()).setSource(prism);
-				prism.setReplaceFunction((state) -> {
-					return state.getMaterial().isReplaceable()
-							|| state.isIn(EndTags.GEN_TERRAIN)
-							|| state.getMaterial().equals(Material.PLANT)
-							|| state.getMaterial().equals(Material.LEAVES);
+				prism.setReplaceFunction((bState) -> {
+					return bState.getMaterial().isReplaceable()
+							|| bState.isIn(EndTags.GEN_TERRAIN)
+							|| bState.getMaterial().equals(Material.PLANT)
+							|| bState.getMaterial().equals(Material.LEAVES);
 				});
 				prism.fillRecursive(world, pos);
 				BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.AURORA_CRYSTAL);

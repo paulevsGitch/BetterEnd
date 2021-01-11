@@ -118,15 +118,15 @@ public class MountainPiece extends BasePiece {
 					}
 					minY = pos.getY();
 					minY = Math.max(minY, map2.get(x, z));
-					if (minY > 10) {
-						float maxY = dist * height * getHeightClamp(world, 8, px, pz);
+					if (minY > center.getY() - 8) {
+						float maxY = dist * height * getHeightClamp(world, 12, px, pz);
 						if (maxY > 0) {
 							maxY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
 							maxY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
-							maxY += 56;
+							maxY += center.getY();
 							int maxYI = (int) (maxY);
 							int cover = maxYI - 1;
-							boolean needCover = (noise1.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random) - (maxY - 70) * 0.1) > 0;
+							boolean needCover = (noise1.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random) - (center.getY() + 14) * 0.1) > 0;
 							for (int y = minY - 1; y < maxYI; y++) {
 								pos.setY(y);
 								chunk.setBlockState(pos, needCover && y == cover ? top : Blocks.END_STONE.getDefaultState(), false);
@@ -140,7 +140,7 @@ public class MountainPiece extends BasePiece {
 		map = chunk.getHeightmap(Type.WORLD_SURFACE);
 		
 		// Big crystals
-		int count = (map.get(8, 8) - 80) / 7;
+		int count = (map.get(8, 8) - (center.getY() + 24)) / 7;
 		count = MathHelper.clamp(count, 0, 8);
 		for (int i = 0; i < count; i++) {
 			int radius = MHelper.randRange(2, 3, random);
@@ -158,7 +158,7 @@ public class MountainPiece extends BasePiece {
 		}
 		
 		// Small crystals
-		count = (map.get(8, 8) - 80) / 2;
+		count = (map.get(8, 8) - (center.getY() + 24)) / 2;
 		count = MathHelper.clamp(count, 4, 8);
 		for (int i = 0; i < count; i++) {
 			int radius = MHelper.randRange(1, 2, random);
@@ -190,10 +190,13 @@ public class MountainPiece extends BasePiece {
 			return -10;
 		}
 		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-		if (h < 57) {
-			heightmap.put(p, -4);
-			return -4;
+		h = MathHelper.abs(h - center.getY());
+		if (h > 4) {
+			h = 4 - h;
+			heightmap.put(p, h);
+			return h;
 		}
+		
 		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
 		
 		if (h < 0) {

@@ -3,6 +3,7 @@ package ru.betterend.world.generator;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.minecraft.util.math.MathHelper;
 import ru.betterend.config.Configs;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
@@ -117,5 +118,47 @@ public class TerrainGenerator {
 		
 		LOCKER.unlock();
 		return false;
+	}
+	
+	/**
+	 * Check if this is land
+	 * @param x - biome pos x
+	 * @param z - biome pos z
+	 */
+	public static int getHeight(int x, int z) {
+		LOCKER.lock();
+		
+		//x >>= 3;
+		//z >>= 3;
+		double px = (double) x / 8.0;
+		double pz = (double) z / 8.0;
+		
+		double distortion1 = noise1.eval(px * 0.1, pz * 0.1) * 20 + noise2.eval(px * 0.2, pz * 0.2) * 10 + noise1.eval(px * 0.4, pz * 0.4) * 5;
+		double distortion2 = noise2.eval(px * 0.1, pz * 0.1) * 20 + noise1.eval(px * 0.2, pz * 0.2) * 10 + noise2.eval(px * 0.4, pz * 0.4) * 5;
+		px = (double) x * SCALE_XZ + distortion1;
+		pz = (double) z * SCALE_XZ + distortion2;
+		
+		largeIslands.updatePositions(px, pz);
+		mediumIslands.updatePositions(px, pz);
+		smallIslands.updatePositions(px, pz);
+		
+		for (int y = 32; y >= 0; y--) {
+			double py = (double) y * SCALE_Y;
+			float dist = largeIslands.getDensity(px, py, pz);
+			dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz));
+			dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz));
+			if (dist > -0.5F) {
+				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.04;
+				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.02;
+				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.01;
+			}
+			if (dist > 0) {
+				LOCKER.unlock();
+				return MathHelper.floor(MathHelper.clamp(y + dist, y, y + 1) * SCALE_Y);
+			}
+		}
+		
+		LOCKER.unlock();
+		return 0;
 	}
 }

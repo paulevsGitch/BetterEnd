@@ -29,7 +29,7 @@ public class StructureMountain extends StructureFeatureBase {
 			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
-			if (y > 50) {
+			if (y > 5) {
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.8F, 1.2F, random);
 				MountainPiece piece = new MountainPiece(new BlockPos(x, y, z), radius, height, random, biome);

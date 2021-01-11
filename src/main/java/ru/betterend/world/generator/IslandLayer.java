@@ -30,6 +30,8 @@ public class IslandLayer {
 	private final int minY;
 	private final int maxY;
 	private final long center;
+	private int lastX = Integer.MIN_VALUE;
+	private int lastZ = Integer.MIN_VALUE;
 	
 	public IslandLayer(int seed, double distance, float scale, int center, int heightVariation) {
 		this.distance = distance;
@@ -48,22 +50,24 @@ public class IslandLayer {
 	}
 	
 	public void updatePositions(double x, double z) {
-		positions.clear();
-		
 		int ix = MHelper.floor(x / distance);
 		int iz = MHelper.floor(z / distance);
-		
-		for (int pox = -1; pox < 2; pox++) {
-			int px = pox + ix;
-			for (int poz = -1; poz < 2; poz++) {
-				int pz = poz + iz;
-				if (TerrainGenerator.noRingVoid() || (long) px + (long) pz > center) {
-					RANDOM.setSeed(getSeed(px, pz));
-					double posX = (px + RANDOM.nextFloat()) * distance;
-					double posY = MHelper.randRange(minY, maxY, RANDOM);
-					double posZ = (pz + RANDOM.nextFloat()) * distance;
-					if (density.eval(posX * 0.01, posZ * 0.01) > 0) {
-						positions.add(new BlockPos(posX, posY, posZ));
+		if (lastX != ix || lastZ != iz) {
+			lastX = ix;
+			lastZ = iz;
+			positions.clear();
+			for (int pox = -1; pox < 2; pox++) {
+				int px = pox + ix;
+				for (int poz = -1; poz < 2; poz++) {
+					int pz = poz + iz;
+					if (TerrainGenerator.noRingVoid() || (long) px + (long) pz > center) {
+						RANDOM.setSeed(getSeed(px, pz));
+						double posX = (px + RANDOM.nextFloat()) * distance;
+						double posY = MHelper.randRange(minY, maxY, RANDOM);
+						double posZ = (pz + RANDOM.nextFloat()) * distance;
+						if (density.eval(posX * 0.01, posZ * 0.01) > 0) {
+							positions.add(new BlockPos(posX, posY, posZ));
+						}
 					}
 				}
 			}
@@ -102,7 +106,7 @@ public class IslandLayer {
 	}
 	
 	public void clearCache() {
-		if (islands.size() > 32) {
+		if (islands.size() > 128) {
 			islands.clear();
 		}
 	}

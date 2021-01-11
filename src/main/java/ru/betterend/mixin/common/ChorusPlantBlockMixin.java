@@ -20,6 +20,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import ru.betterend.config.Configs;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -43,9 +44,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		GeneratorOptions.init();
 		if (GeneratorOptions.changeChorusPlant()) {
 			builder.add(BlocksHelper.ROOTS);
-			System.out.println("Added!");
 		}
-		System.out.println("Added? " + GeneratorOptions.changeChorusPlant());
 	}
 	
 	@Inject(method = "withConnectionProperties", at = @At("RETURN"), cancellable = true)

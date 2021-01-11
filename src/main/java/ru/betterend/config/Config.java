@@ -103,8 +103,8 @@ public abstract class Config {
 	protected float getFloat(ConfigKey key, float defaultValue) {
 		Float val = keeper.getValue(key, FloatEntry.class);
 		if (val == null) {
-			keeper.registerEntry(key, new FloatEntry(defaultValue));
-			return defaultValue;
+			FloatEntry entry = keeper.registerEntry(key, new FloatEntry(defaultValue));
+			return entry.getValue();
 		}
 		return val;
 	}
@@ -129,8 +129,8 @@ public abstract class Config {
 	protected boolean getBoolean(ConfigKey key, boolean defaultValue) {
 		Boolean val = keeper.getValue(key, BooleanEntry.class);
 		if (val == null) {
-			keeper.registerEntry(key, new BooleanEntry(defaultValue));
-			return defaultValue;
+			BooleanEntry entry = keeper.registerEntry(key, new BooleanEntry(defaultValue));
+			return entry.getValue();
 		}
 		return val;
 	}

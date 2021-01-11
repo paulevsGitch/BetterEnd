@@ -1,7 +1,0 @@
-{
-	"parent": "minecraft:block/cube_column",
-	"textures": {
-		"end": "betterend:block/violecite_pillar_top",
-		"side": "betterend:block/violecite_pillar_side"
-	}
-}

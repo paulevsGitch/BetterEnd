@@ -33,8 +33,28 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		int radius = MHelper.randRange(10, 30, random);
-		int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
-		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ()) - radius - 5;
+		
+		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		Mutable bpos = new Mutable();
+		bpos.setX(pos.getX());
+		bpos.setZ(pos.getZ());
+		bpos.setY(top - 1);
+		
+		BlockState state = world.getBlockState(bpos);
+		while (!state.isIn(EndTags.GEN_TERRAIN) && bpos.getY() > 5) {
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		if (bpos.getY() < 10) {
+			return false;
+		}
+		top = (int) (bpos.getY() - (radius * 1.3F + 5));
+		
+		while (state.isIn(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		int bottom = (int) (bpos.getY() + radius * 1.3F + 5);
 		
 		if (top <= bottom) {
 			return false;
@@ -55,7 +75,6 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		
-		BlockState state;
 		Set<BlockPos> brimstone = Sets.newHashSet();
 		BlockState rock = EndBlocks.SULPHURIC_ROCK.stone.getDefaultState();
 		int waterLevel = pos.getY() + MHelper.randRange(MHelper.floor(radius * 0.8), radius, random);

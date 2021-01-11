@@ -41,27 +41,12 @@ public class RoundCaveFeature extends DefaultFeature {
 		}
 		
 		int radius = MHelper.randRange(10, 30, random);
-		/*int bottom = BlocksHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
-		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ());
-		
-		Mutable bpos = new Mutable();
-		bpos.setX(pos.getX());
-		bpos.setZ(pos.getZ());
-		bpos.setY(top);
-		while (top > bottom && !world.getBlockState(bpos).isIn(EndTags.GEN_TERRAIN)) {
-			bpos.setY(--top);
-		}
-		top -= radius * 1.3F + 5;
-		
-		if (top <= bottom) {
-			return false;
-		}*/
 		
 		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		Mutable bpos = new Mutable();
 		bpos.setX(pos.getX());
 		bpos.setZ(pos.getZ());
-		bpos.setY(top);
+		bpos.setY(top - 1);
 		
 		BlockState state = world.getBlockState(bpos);
 		while (!state.isIn(EndTags.GEN_TERRAIN) && bpos.getY() > 5) {
@@ -73,7 +58,7 @@ public class RoundCaveFeature extends DefaultFeature {
 		}
 		top = (int) (bpos.getY() - (radius * 1.3F + 5));
 		
-		while (state.isIn(EndTags.GEN_TERRAIN) || state.isOf(Blocks.WATER) && bpos.getY() > 5) {
+		while (state.isIn(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}

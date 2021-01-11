@@ -40,9 +40,12 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	
 	@Inject(method = "appendProperties", at = @At("TAIL"))
 	private void beAddProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo info) {
+		GeneratorOptions.init();
 		if (GeneratorOptions.changeChorusPlant()) {
 			builder.add(BlocksHelper.ROOTS);
+			System.out.println("Added!");
 		}
+		System.out.println("Added? " + GeneratorOptions.changeChorusPlant());
 	}
 	
 	@Inject(method = "withConnectionProperties", at = @At("RETURN"), cancellable = true)
@@ -50,11 +53,18 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockState plant = info.getReturnValue();
 		if (plant.isOf(Blocks.CHORUS_PLANT)) {
 			if (world.getBlockState(pos.down()).isIn(EndTags.END_GROUND)) {
-				info.setReturnValue(plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true));
+				if (GeneratorOptions.changeChorusPlant()) {
+					info.setReturnValue(plant.with(Properties.DOWN, true).with(BlocksHelper.ROOTS, true));
+				}
+				else {
+					info.setReturnValue(plant.with(Properties.DOWN, true));
+				}
 				info.cancel();
 			}
 			else {
-				info.setReturnValue(plant.with(BlocksHelper.ROOTS, false));
+				if (GeneratorOptions.changeChorusPlant()) {
+					info.setReturnValue(plant.with(BlocksHelper.ROOTS, false));
+				}
 				info.cancel();
 			}
 		}

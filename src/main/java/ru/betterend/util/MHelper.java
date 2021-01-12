@@ -161,6 +161,14 @@ public class MHelper {
 		return i * i;
 	}
 	
+	public static float pow2(float f) {
+		return f * f;
+	}
+	
+	public static double pow2(double d) {
+		return d * d;
+	}
+	
 	public static int fromHSBtoRGB(float hue, float saturation, float brightness) {
 		int red = 0;
 		int green = 0;

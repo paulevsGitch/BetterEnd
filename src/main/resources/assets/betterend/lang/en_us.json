@@ -561,5 +561,8 @@
 	"block.betterend.umbrella_tree_sapling": "Umbrella Tree Sapling",
 	"item.betterend.umbrella_cluster_juice": "Umbrella Cluster Juice",
 	"block.betterend.blossom_berry_seed": "Blossom Berry Seed",
-	"item.betterend.blossom_berry": "Blossom Berry"
+	"item.betterend.blossom_berry": "Blossom Berry",
+	
+	"biome.betterend.nightshade_redwoods": "Nightshade Redwoods",
+	"block.betterend.nightshade_moss": "Nightshade Moss"
 }

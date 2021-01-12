@@ -8,6 +8,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
+import net.minecraft.world.gen.GenerationStep.Feature;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
@@ -34,7 +35,9 @@ public class NightshadeRedwoods extends EndBiome {
 				.setGrassColor(48, 13, 89)
 				.setPlantsColor(200, 125, 9)
 				.addFeature(EndFeatures.END_LAKE_RARE)
-				.addFeature(BYGFeatures.NIGHTSHADE_REDWOOD_TREE);
+				.addFeature(BYGFeatures.NIGHTSHADE_REDWOOD_TREE)
+				.addFeature(BYGFeatures.NIGHTSHADE_MOSS_WOOD)
+				.addFeature(BYGFeatures.NIGHTSHADE_MOSS);
 		
 		if (BetterEnd.isClient()) {
 			SoundEvent loop = effects.getLoopSound().get();
@@ -43,6 +46,11 @@ public class NightshadeRedwoods extends EndBiome {
 			SoundEvent mood = effects.getMoodSound().get().getSound();
 			def.setLoop(loop).setMusic(music).setAdditions(additions).setMood(mood);
 		}
+		biome.getGenerationSettings().getFeatures().forEach((list) -> {
+			list.forEach((feature) -> {
+				def.addFeature(Feature.VEGETAL_DECORATION, feature.get());
+			});
+		});
 		
 		for (SpawnGroup group: SpawnGroup.values()) {
 			List<SpawnEntry> list = biome.getSpawnSettings().getSpawnEntry(group);

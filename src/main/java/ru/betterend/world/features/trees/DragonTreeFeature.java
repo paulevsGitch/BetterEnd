@@ -68,7 +68,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		});
 		
 		function.setReplaceFunction(REPLACE);
-		function.setPostProcess(POST);
+		function.addPostProcess(POST);
 		function.fillRecursiveIgnore(world, pos, IGNORE);
 		
 		return true;
@@ -124,7 +124,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 1.5F; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		Mutable mut = new Mutable();
-		sphere.setPostProcess((info) -> {
+		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) {
 				for (Direction dir: Direction.values()) {
 					BlockState state = info.getState(dir, 2);

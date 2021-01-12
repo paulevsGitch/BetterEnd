@@ -81,7 +81,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 			sdf = (sdf == null) ? branch : new SDFUnion().setSourceA(sdf).setSourceB(branch);
 		}
 		
-		sdf.setReplaceFunction(replacement).setPostProcess((info) -> {
+		sdf.setReplaceFunction(replacement).addPostProcess((info) -> {
 			if (info.getState().equals(stem) && (!info.getStateUp().equals(stem) || !info.getStateDown().equals(stem))) {
 				return wood;
 			}

@@ -64,7 +64,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		dx = 30 * scale;
 		float dy1 = -20 * scale;
 		float dy2 = 100 * scale;
-		sdf.setPostProcess(POST).fillArea(world, pos, new Box(pos.add(-dx, dy1, -dx), pos.add(dx, dy2, dx)));
+		sdf.addPostProcess(POST).fillArea(world, pos, new Box(pos.add(-dx, dy1, -dx), pos.add(dx, dy2, dx)));
 		SplineHelper.scale(spline, scale);
 		SplineHelper.fillSplineForce(spline, world, EndBlocks.HELIX_TREE.bark.getDefaultState(), pos, (state) -> {
 			return state.getMaterial().isReplaceable();

@@ -52,7 +52,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 			return EndBlocks.PYTHADENDRON.bark.getDefaultState();
 		});
 		function.setReplaceFunction(REPLACE);
-		function.setPostProcess(POST);
+		function.addPostProcess(POST);
 		function.fillRecursive(world, pos);
 		
 		return true;
@@ -115,7 +115,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		Mutable mut = new Mutable();
-		sphere.setPostProcess((info) -> {
+		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) {
 				for (Direction dir: Direction.values()) {
 					BlockState state = info.getState(dir, 2);

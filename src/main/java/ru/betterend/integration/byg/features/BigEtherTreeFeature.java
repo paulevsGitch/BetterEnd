@@ -61,7 +61,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		
 		sdf.setReplaceFunction((state) -> {
 			return state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
-		}).setPostProcess((info) -> {
+		}).addPostProcess((info) -> {
 			if (info.getState().equals(log) && (!info.getStateUp().equals(log) || !info.getStateDown().equals(log))) {
 				return wood;
 			}

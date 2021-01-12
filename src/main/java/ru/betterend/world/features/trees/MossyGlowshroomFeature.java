@@ -80,7 +80,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		new SDFScale().setScale(scale)
 				.setSource(FUNCTION)
 				.setReplaceFunction(REPLACE)
-				.setPostProcess((info) -> {
+				.addPostProcess((info) -> {
 					if (EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getState())) {
 						if (random.nextBoolean() && info.getStateUp().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_CAP) {
 							info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(MossyGlowshroomCapBlock.TRANSITION, true));

@@ -63,7 +63,7 @@ public class StructureGiantIceStar extends SDFStructureFeature {
 		final BlockState ancient = EndBlocks.ANCIENT_EMERALD_ICE.getDefaultState();
 		final SDF sdfCopy = sdf;
 		
-		return sdf.setPostProcess((info) -> {
+		return sdf.addPostProcess((info) -> {
 			BlockPos bpos = info.getPos();
 			float px = bpos.getX() - center.getX();
 			float py = bpos.getY() - center.getY();

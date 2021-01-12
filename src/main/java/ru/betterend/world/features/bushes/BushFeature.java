@@ -46,7 +46,7 @@ public class BushFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> { return MHelper.randRange(-2F, 2F, random); }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		sphere.setReplaceFunction(REPLACE);
-		sphere.setPostProcess((info) -> {
+		sphere.addPostProcess((info) -> {
 			if (info.getState().getBlock() instanceof LeavesBlock) {
 				int distance = info.getPos().getManhattanDistance(pos);
 				if (distance < 7) {

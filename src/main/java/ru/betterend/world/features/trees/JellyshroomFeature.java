@@ -56,7 +56,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		final Vector3f last = spline.get(spline.size() - 1);
 		cap = new SDFTranslate().setTranslate(last.getX(), last.getY(), last.getZ()).setSource(cap);
 		sdf = new SDFSmoothUnion().setRadius(3F).setSourceA(sdf).setSourceB(cap);
-		sdf.setReplaceFunction(REPLACE).setPostProcess((info) -> {
+		sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 			if (EndBlocks.JELLYSHROOM.isTreeLog(info.getState())) {
 				if (EndBlocks.JELLYSHROOM.isTreeLog(info.getStateUp()) && EndBlocks.JELLYSHROOM.isTreeLog(info.getStateDown())) {
 					return EndBlocks.JELLYSHROOM.log.getDefaultState();

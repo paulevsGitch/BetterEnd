@@ -88,7 +88,7 @@ public class StructureGiantMossyGlowshroom extends SDFStructureFeature {
 		return new SDFRound().setRadius(1.5F).setSource(new SDFScale()
 				.setScale(scale)
 				.setSource(function))
-				.setPostProcess((info) -> {
+				.addPostProcess((info) -> {
 					if (EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getState())) {
 						if (random.nextBoolean() && info.getStateUp().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_CAP) {
 							info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(MossyGlowshroomCapBlock.TRANSITION, true));

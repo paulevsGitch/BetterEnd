@@ -69,7 +69,7 @@ public class IceStarFeature extends DefaultFeature {
 		final BlockState ancient = EndBlocks.ANCIENT_EMERALD_ICE.getDefaultState();
 		final SDF sdfCopy = sdf;
 		
-		sdf.setPostProcess((info) -> {
+		sdf.addPostProcess((info) -> {
 			BlockPos bpos = info.getPos();
 			float px = bpos.getX() - center.getX();
 			float py = bpos.getY() - center.getY();

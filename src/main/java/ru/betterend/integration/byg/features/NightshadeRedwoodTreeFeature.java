@@ -13,15 +13,18 @@ import net.minecraft.block.Material;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.PosInfo;
 import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFDisplacement;
 import ru.betterend.util.sdf.operator.SDFFlatWave;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.primitive.SDFCappedCone;
@@ -38,7 +41,7 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 		BlockState log = Integrations.BYG.getDefaultState("nightshade_log");
 		BlockState wood = Integrations.BYG.getDefaultState("nightshade_wood");
 		BlockState leaves = Integrations.BYG.getDefaultState("nightshade_leaves");
-		//BlockState leaves_flower = Integrations.BYG.getDefaultState("flowering_nightshade_leaves");
+		BlockState leaves_flower = Integrations.BYG.getDefaultState("flowering_nightshade_leaves");
 		
 		Function<BlockPos, BlockState> splinePlacer = (bpos) -> { return log; };
 		Function<BlockState, Boolean> replace = (state) -> {
@@ -66,7 +69,6 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 		float start = trunk.size() / 3F;
 		float delta = trunk.size() * 0.6F;
 		float max = height - 7;
-		//SDF leavesSDF = null;
 		for (int i = 0; i < count; i++) {
 			float scale = (float) (count - i) / count * 15;
 			Vector3f offset = SplineHelper.getPos(trunk, (float) i / count * delta + start);
@@ -79,41 +81,43 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 			SplineHelper.offsetParts(branch, random, 0.3F, 0.3F, 0.3F);
 			SplineHelper.offset(branch, offset);
 			SplineHelper.fillSpline(branch, world, wood, pos, replace);
-			
-			/*SDF leaf = null;
-			for (int j = 2; j < 5; j++) {
-				Vector3f point = branch.get(j);
-				float radius = (float) (j - 2) / 3F;
-				radius = (1F - radius) * 3F;
-				SDF sphere = new SDFSphere().setRadius(radius).setBlock(leaves);
-				sphere = new SDFTranslate().setTranslate(point.getX(), point.getY(), point.getZ()).setSource(sphere);
-				leaf = leaf == null ? sphere : new SDFUnion().setSourceA(leaf).setSourceB(leaf);
-			}*/
-			
-			/*SDF leaf = SplineHelper.buildSDF(branch, (del) -> {
-				float radius = 1 - del;
-				radius = radius * radius * 2 - 1;
-				radius *= radius;
-				radius = (1 - radius) * 2;
-				return radius;
-			}, (bpos) -> {
-				return leaves;
-			});*/
-			//leavesSDF = leavesSDF == null ? leaf : new SDFUnion().setSourceA(leavesSDF).setSourceB(leaf);
 		}
 		
 		SDF sdf = SplineHelper.buildSDF(trunk, 2.3F, 0.8F, splinePlacer);
 		SDF roots = new SDFSphere().setRadius(2F).setBlock(log);
 		roots = new SDFFlatWave().setIntensity(2F).setRaysCount(MHelper.randRange(5, 7, random)).setAngle(random.nextFloat() * MHelper.PI2).setSource(roots);
 		sdf = new SDFSmoothUnion().setRadius(2F).setSourceA(sdf).setSourceB(roots);
-		sdf.setReplaceFunction(replace).setPostProcess(post).fillRecursive(world, pos);
+		sdf.setReplaceFunction(replace).addPostProcess(post).fillRecursive(world, pos);
+		Vector3f last = SplineHelper.getPos(trunk, trunk.size() - 1.35F);
+		for (int y = 0; y < 8; y++) {
+			BlockPos p = pos.add(last.getX() + 0.5, last.getY() + y, last.getZ() + 0.5);
+			BlocksHelper.setWithoutUpdate(world, p, y == 4 ? wood : log);
+		}
 		
-		/*if (leavesSDF != null) {
-			leavesSDF.fillArea(world, pos, new Box(pos).expand(20, 80, 20));
-		}*/
+		for (int y = 0; y < 16; y++) {
+			BlockPos p = pos.add(last.getX() + 0.5, last.getY() + y, last.getZ() + 0.5);
+			if (world.isAir(p)) {
+				BlocksHelper.setWithoutUpdate(world, p, leaves);
+			}
+			float radius = (1 - y / 16F) * 3F;
+			int rad = (int) (radius + 1);
+			radius *= radius;
+			for (int x = -rad; x <= rad; x++) {
+				int x2 = x * x;
+				for (int z = -rad; z <= rad; z++) {
+					int z2 = z * z;
+					if (x2 + z2 < radius - random.nextFloat() * rad) {
+						BlockPos lp = p.add(x, 0, z);
+						if (world.isAir(lp)) {
+							BlocksHelper.setWithoutUpdate(world, lp, leaves);
+						}
+					}
+				}
+			}
+		}
 		
 		Mutable mut = new Mutable();
-		Function<PosInfo, BlockState> leavesPost = (info) -> {
+		Function<PosInfo, BlockState> leavesPost1 = (info) -> {
 			if (info.getState().equals(log) || info.getState().equals(wood)) {
 				for (int x = -6; x < 7; x++) {
 					int ax = Math.abs(x);
@@ -138,22 +142,36 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 					}
 				}
 			}
-			else if (info.getState().getBlock() instanceof LeavesBlock) {
+			return info.getState();
+		};
+		Function<PosInfo, BlockState> leavesPost2 = (info) -> {
+			if (info.getState().getBlock() instanceof LeavesBlock) {
 				int distance = info.getState().get(LeavesBlock.DISTANCE);
-				return distance > MHelper.randRange(3, 5, random) ? Blocks.AIR.getDefaultState() : info.getState();
+				if (distance > MHelper.randRange(2, 4, random)) {
+					return Blocks.AIR.getDefaultState();
+				}
+				for (Direction d: BlocksHelper.DIRECTIONS) {
+					int airCount = 0;
+					if (info.getState(d).isAir()) {
+						airCount ++;
+					}
+					if (airCount > 5) {
+						return Blocks.AIR.getDefaultState();
+					}
+				}
+				if (random.nextInt(8) == 0) {
+					return leaves_flower.with(LeavesBlock.DISTANCE, distance);
+				}
 			}
 			return info.getState();
 		};
 		
-		SDF canopy = new SDFCappedCone().setRadius1(12F).setRadius2(3f).setHeight(height * 0.3F).setBlock(leaves);
-		canopy.setPostProcess(leavesPost ).fillRecursiveIgnore(world, pos.add(0, height * 0.75, 0), ignore);
+		SDF canopy = new SDFCappedCone().setRadius1(12F).setRadius2(1f).setHeight(height * 0.3F).setBlock(leaves);
+		canopy = new SDFDisplacement().setFunction((vec) -> { return MHelper.randRange(-3F, 3F, random); }).setSource(canopy);
+		canopy.addPostProcess(leavesPost1).addPostProcess(leavesPost2).fillRecursiveIgnore(world, pos.add(0, height * 0.75, 0), ignore);
 		
 		return true;
 	}
-	
-	//private void makeLeavesSphere(StructureWorldAccess world, BlockPos pos, BlockState leaves, Function<BlockState, Boolean> ignore) {
-	//	
-	//}
 	
 	static {
 		BRANCH = Lists.newArrayList(new Vector3f(0, 0, 0),

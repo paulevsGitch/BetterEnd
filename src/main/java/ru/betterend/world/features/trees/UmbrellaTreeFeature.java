@@ -100,7 +100,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			sdf = new SDFScale().setScale(scale).setSource(sdf);
 		}
 		
-		sdf.setReplaceFunction(REPLACE).setPostProcess((info) -> {
+		sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 			if (EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateUp()) && EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateDown())) {
 				return EndBlocks.UMBRELLA_TREE.log.getDefaultState();
 			}

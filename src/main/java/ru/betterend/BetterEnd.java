@@ -39,9 +39,6 @@ public class BetterEnd implements ModInitializer {
 	public static final Logger LOGGER = Logger.get();
 	@Override
 	public void onInitialize() {
-		TerrainGenerator.init();
-		GeneratorOptions.init();
-		
 		EndSounds.register();
 		EndItems.register();
 		EndBlocks.register();
@@ -63,6 +60,8 @@ public class BetterEnd implements ModInitializer {
 		EndStructures.register();
 		Integrations.register();
 		BonemealUtil.init();
+		TerrainGenerator.init();
+		GeneratorOptions.init();
 		
 		if (hasGuideBook()) {
 			GuideBookItem.register();

@@ -56,7 +56,7 @@ public final class ConfigKeeper {
 		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
 		
-		this.changed = entry.setLocation(obj, paramKey);
+		this.changed |= entry.setLocation(obj, paramKey);
 	}
 	
 	private <T, E extends Entry<T>> void storeValue(E entry, T value) {

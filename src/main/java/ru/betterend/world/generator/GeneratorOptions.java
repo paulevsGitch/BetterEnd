@@ -13,14 +13,14 @@ public class GeneratorOptions {
 	private static boolean removeChorusFromVanillaBiomes;
 	
 	public static void init() {
-		biomeSizeLand = Configs.GENERATOR_CONFIG.getIntRoot("biomeSizeLand", 256);
-		biomeSizeVoid = Configs.GENERATOR_CONFIG.getIntRoot("biomeSizeVoid", 256);
+		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
+		biomeSizeVoid = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeVoid", 256);
 		hasPortal = Configs.GENERATOR_CONFIG.getBooleanRoot("hasPortal", true);
 		hasPillars = Configs.GENERATOR_CONFIG.getBooleanRoot("hasPillars", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
 		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false);
-		changeChorusPlant = Configs.GENERATOR_CONFIG.getBooleanRoot("changeChorusPlant", true);
-		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBooleanRoot("removeChorusFromVanillaBiomes", true);
+		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
+		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "removeChorusFromVanillaBiomes", true);
 	}
 
 	public static int getBiomeSizeLand() {

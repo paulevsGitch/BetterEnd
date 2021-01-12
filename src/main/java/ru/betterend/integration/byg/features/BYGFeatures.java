@@ -18,6 +18,7 @@ public class BYGFeatures {
 	public static final EndFeature BULBIS_ODDITY = new EndFeature("bulbis_oddity", new SinglePlantFeature(Integrations.BYG.getBlock("bulbis_oddity"), 4, 4), 5);
 	public static final EndFeature PURPLE_BULBIS_ODDITY = new EndFeature("purple_bulbis_oddity", new SinglePlantFeature(Integrations.BYG.getBlock("purple_bulbis_oddity"), 4, 4), 5);
 	
+	public static final EndFeature NIGHTSHADE_REDWOOD_TREE = new EndFeature("nightshade_redwood_tree", new NightshadeRedwoodTreeFeature(), 1);
 	public static final EndFeature BIG_ETHER_TREE = new EndFeature("big_ether_tree", new BigEtherTreeFeature(), 1);
 	
 	public static final ConfiguredFeature<?,?> BULBIS_TREES = Integrations.BYG.getConfiguredFeature("rs_sparse_bulbis_tree");

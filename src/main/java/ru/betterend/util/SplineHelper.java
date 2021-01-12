@@ -74,6 +74,25 @@ public class SplineHelper {
 		return result;
 	}
 	
+	public static SDF buildSDF(List<Vector3f> spline, Function<Float, Float> radiusFunction, Function<BlockPos, BlockState> placerFunction) {
+		int count = spline.size();
+		float max = count - 2;
+		SDF result = null;
+		Vector3f start = spline.get(0);
+		for (int i = 1; i < count; i++) {
+			Vector3f pos = spline.get(i);
+			float delta = (float) (i - 1) / max;
+			SDF line = new SDFLine()
+					.setRadius(radiusFunction.apply(delta))
+					.setStart(start.getX(), start.getY(), start.getZ())
+					.setEnd(pos.getX(), pos.getY(), pos.getZ())
+					.setBlock(placerFunction);
+			result = result == null ? line : new SDFUnion().setSourceA(result).setSourceB(line);
+			start = pos;
+		}
+		return result;
+	}
+	
 	public static boolean fillSpline(List<Vector3f> spline, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
 		Vector3f startPos = spline.get(0);
 		for (int i = 1; i < spline.size(); i++) {

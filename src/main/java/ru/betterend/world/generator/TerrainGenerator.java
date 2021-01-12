@@ -88,13 +88,13 @@ public class TerrainGenerator {
 	public static boolean isLand(int x, int z) {
 		LOCKER.lock();
 		
-		x >>= 1;
-		z >>= 1;
+		double px = (x >> 1) + 0.5;
+		double pz = (z >> 1) + 0.5;
 		
-		double distortion1 = noise1.eval(x * 0.1, z * 0.1) * 20 + noise2.eval(x * 0.2, z * 0.2) * 10 + noise1.eval(x * 0.4, z * 0.4) * 5;
-		double distortion2 = noise2.eval(x * 0.1, z * 0.1) * 20 + noise1.eval(x * 0.2, z * 0.2) * 10 + noise2.eval(x * 0.4, z * 0.4) * 5;
-		double px = (double) x * SCALE_XZ + distortion1;
-		double pz = (double) z * SCALE_XZ + distortion2;
+		double distortion1 = noise1.eval(px * 0.1, pz * 0.1) * 20 + noise2.eval(px * 0.2, pz * 0.2) * 10 + noise1.eval(px * 0.4, pz * 0.4) * 5;
+		double distortion2 = noise2.eval(px * 0.1, pz * 0.1) * 20 + noise1.eval(px * 0.2, pz * 0.2) * 10 + noise2.eval(px * 0.4, pz * 0.4) * 5;
+		px = px * SCALE_XZ + distortion1;
+		pz = pz * SCALE_XZ + distortion2;
 		
 		largeIslands.updatePositions(px, pz);
 		mediumIslands.updatePositions(px, pz);
@@ -121,9 +121,9 @@ public class TerrainGenerator {
 	}
 	
 	/**
-	 * Check if this is land
-	 * @param x - biome pos x
-	 * @param z - biome pos z
+	 * Get something like height
+	 * @param x - block pos x
+	 * @param z - block pos z
 	 */
 	public static int getHeight(int x, int z) {
 		LOCKER.lock();

@@ -14,6 +14,7 @@ public class GeneratorOptions {
 	private static boolean newGenerator;
 	private static boolean noRingVoid;
 	private static boolean generateCentralIsland;
+	private static int endCityFailChance;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
@@ -27,6 +28,7 @@ public class GeneratorOptions {
 		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", false);
 		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
 		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", false);
+		endCityFailChance = Configs.GENERATOR_CONFIG.getInt("customGenerator", "endCityFailChance", 5);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -71,5 +73,9 @@ public class GeneratorOptions {
 	
 	public static boolean hasCentralIsland() {
 		return generateCentralIsland;
+	}
+	
+	public static int getEndCityFailChance() {
+		return endCityFailChance;
 	}
 }

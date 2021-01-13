@@ -81,8 +81,13 @@ public class IslandLayer {
 	private SDF getIsland(BlockPos pos) {
 		SDF island = islands.get(pos);
 		if (island == null) {
-			RANDOM.setSeed(getSeed(pos.getX(), pos.getZ()));
-			island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(ISLAND);
+			if (pos.getX() == 0 && pos.getZ() == 0) {
+				island = new SDFScale().setScale(1.3F).setSource(ISLAND);
+			}
+			else {
+				RANDOM.setSeed(getSeed(pos.getX(), pos.getZ()));
+				island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(ISLAND);
+			}
 			islands.put(pos, island);
 		}
 		return island;

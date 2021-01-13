@@ -73,7 +73,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
 				ServerPlayerEntity player = (ServerPlayerEntity) entity;
-				player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, entity.yaw, entity.pitch);
+				player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, player.yaw, player.pitch);
 				player.resetNetherPortalCooldown();
 				
 			} else {

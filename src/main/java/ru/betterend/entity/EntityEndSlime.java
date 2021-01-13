@@ -191,7 +191,7 @@ public class EntityEndSlime extends SlimeEntity {
 	}
 	
 	public static boolean canSpawn(EntityType<EntityEndSlime> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
+		return random.nextInt(64) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
 	}
 	
 	private static boolean isPermanentBiome(ServerWorldAccess world, BlockPos pos) {

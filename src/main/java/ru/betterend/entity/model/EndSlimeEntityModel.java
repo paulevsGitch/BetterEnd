@@ -8,6 +8,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.CompositeEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import ru.betterend.entity.EntityEndSlime;
+import ru.betterend.util.MHelper;
 
 public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEntityModel<T> {
 	private final ModelPart flower;
@@ -39,7 +40,7 @@ public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEnti
 			
 			for (int i = 0; i < 4; i++) {
 				ModelPart petalRot = new ModelPart(this);
-				petalRot.yaw = i * 45F;
+				petalRot.yaw = MHelper.degreesToRadians(i * 45F);
 				
 				ModelPart petal = new ModelPart(this, 40, 0);
 				petal.setPivot(-4, 8, 0);
@@ -51,7 +52,7 @@ public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEnti
 			
 			for (int i = 0; i < 2; i++) {
 				ModelPart petalRot = new ModelPart(this);
-				petalRot.yaw = i * 90F + 45F;
+				petalRot.yaw = MHelper.degreesToRadians(i * 90F + 45F);
 				
 				ModelPart petal = new ModelPart(this, 40, 0);
 				petal.setPivot(-4, 8, 0);

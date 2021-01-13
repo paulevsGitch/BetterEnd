@@ -76,7 +76,7 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
 					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(this.getTexture(livingEntity)));
 					this.getContextModel().renderFlower(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(livingEntity, 0.0F));
 				}
-				else if (livingEntity.isAmber()) {
+				else if (livingEntity.isAmber() || livingEntity.isChorus()) {
 					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(this.getTexture(livingEntity)));
 					this.getContextModel().renderCrop(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(livingEntity, 0.0F));
 				}

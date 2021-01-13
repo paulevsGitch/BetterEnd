@@ -190,6 +190,10 @@ public class EntityEndSlime extends SlimeEntity {
 		return this.dataTracker.get(VARIANT) == 3;
 	}
 	
+	public boolean isChorus() {
+		return this.dataTracker.get(VARIANT) == 0;
+	}
+	
 	public static boolean canSpawn(EntityType<EntityEndSlime> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		return random.nextInt(64) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
 	}

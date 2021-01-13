@@ -297,8 +297,12 @@ public class MHelper {
 		return new Vec3d(hue, saturation, brightness);
 	}
 	
-	public static final float radiandToDegrees(float value) {
+	public static final float radiansToDegrees(float value) {
 		return value * RAD_TO_DEG;
+	}
+	
+	public static final float degreesToRadians(float value) {
+		return value / RAD_TO_DEG;
 	}
 	
 	public static Vector3f cross(Vector3f vec1, Vector3f vec2)

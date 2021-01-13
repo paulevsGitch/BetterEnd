@@ -37,9 +37,6 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
 				if (entity.isLake()) {
 					this.getContextModel().renderFlower(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV);
 				}
-				else if (entity.isAmber()) {
-					this.getContextModel().renderCrop(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV);
-				}
 			}
         });
     }
@@ -78,6 +75,10 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
 				if (livingEntity.isLake()) {
 					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(this.getTexture(livingEntity)));
 					this.getContextModel().renderFlower(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(livingEntity, 0.0F));
+				}
+				else if (livingEntity.isAmber()) {
+					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(this.getTexture(livingEntity)));
+					this.getContextModel().renderCrop(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(livingEntity, 0.0F));
 				}
 				
 				EndSlimeEntityModel<T> model = livingEntity.getSlimeType() == 1 ? modelLake : modelOrdinal;

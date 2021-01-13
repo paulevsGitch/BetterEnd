@@ -1,5 +1,7 @@
 package ru.betterend.mixin.common;
 
+import java.util.Map;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -7,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.google.common.collect.Maps;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,9 +23,8 @@ import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
-	
+	private static final Map<Entity, Long> COOLDOWN = Maps.newHashMap();
 	private BlockPos beExitPos;
-	private long beCooldown;
 	
 	@Shadow
 	public float yaw;
@@ -81,6 +84,7 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<TeleportTarget> info) {
 		if (beExitPos != null) {
+			COOLDOWN.remove(beGetSelf());
 			info.setReturnValue(new TeleportTarget(new Vec3d(beExitPos.getX() + 0.5D, beExitPos.getY(), beExitPos.getZ() + 0.5D), getVelocity(), yaw, pitch));
 		}
 	}
@@ -88,18 +92,20 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Inject(method = "baseTick", at = @At("TAIL"))
 	public void be_baseTick(CallbackInfo info) {
 		if (hasCooldown()) {
-			this.beCooldown--;
+			Entity key = beGetSelf();
+			long value = COOLDOWN.getOrDefault(key, 0L) - 1;
+			COOLDOWN.put(key, value);
 		}
 	}
 	
 	@Override
 	public long beGetCooldown() {
-		return this.beCooldown;
+		return COOLDOWN.getOrDefault(beGetSelf(), 0L);
 	}
 
 	@Override
 	public void beSetCooldown(long time) {
-		this.beCooldown = time;
+		COOLDOWN.put(beGetSelf(), time);
 	}
 
 	@Override
@@ -110,5 +116,9 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Override
 	public BlockPos beGetExitPos() {
 		return this.beExitPos;
+	}
+	
+	private Entity beGetSelf() {
+		return (Entity) (Object) this;
 	}
 }

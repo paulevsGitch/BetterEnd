@@ -7,7 +7,6 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 import ru.betterend.BetterEnd;
@@ -16,9 +15,8 @@ import ru.betterend.util.ColorUtil;
 import ru.betterend.util.MHelper;
 
 public class EternalCrystalRenderer {
-	private static final Identifier CRYSTAL_TEXTURE = BetterEnd.makeID("textures/entity/eternal_crystal.png");
 	private static final RenderLayer RENDER_LAYER;
-	private static final ModelPart SHARDS;
+	private static final ModelPart[] SHARDS;
 	private static final ModelPart CORE;
 	
 	public static void render(int age, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light) {
@@ -29,7 +27,15 @@ public class EternalCrystalRenderer {
 		matrices.scale(0.6F, 0.6F, 0.6F);
 		matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(rotation));
 		CORE.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, colors[0], colors[1], colors[2], colors[3]);
-		SHARDS.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, colors[0], colors[1], colors[2], colors[3]);
+		
+		for (int i = 0; i < 4; i++) {
+			matrices.push();
+			float offset = MathHelper.sin(rotation * 2 + i) * 0.15F;
+			matrices.translate(0, offset, 0);
+			SHARDS[i].render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, colors[0], colors[1], colors[2], colors[3]);
+			matrices.pop();
+		}
+		
 		matrices.pop();
 	}
 	
@@ -51,12 +57,12 @@ public class EternalCrystalRenderer {
 	}
 	
 	static {
-		RENDER_LAYER = RenderLayer.getBeaconBeam(CRYSTAL_TEXTURE, true);
-		SHARDS = new ModelPart(16, 16, 2, 4);
-		SHARDS.addCuboid(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS.addCuboid(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS.addCuboid(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
-		SHARDS.addCuboid(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
+		RENDER_LAYER = RenderLayer.getBeaconBeam(BetterEnd.makeID("textures/entity/eternal_crystal.png"), true);
+		SHARDS = new ModelPart[4];
+		SHARDS[0] = new ModelPart(16, 16, 2, 4).addCuboid(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[1] = new ModelPart(16, 16, 2, 4).addCuboid(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[2] = new ModelPart(16, 16, 2, 4).addCuboid(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
+		SHARDS[3] = new ModelPart(16, 16, 2, 4).addCuboid(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
 		CORE = new ModelPart(16, 16, 0, 0);
 		CORE.addCuboid(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
 	}

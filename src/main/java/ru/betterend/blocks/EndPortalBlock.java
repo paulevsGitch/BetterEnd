@@ -1,5 +1,6 @@
 package ru.betterend.blocks;
 
+import java.util.Objects;
 import java.util.Random;
 
 import net.fabricmc.api.EnvType;
@@ -31,9 +32,7 @@ import ru.betterend.registry.EndParticles;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
 	public EndPortalBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getBlastResistance()).luminance(state -> {
-			return 12;
-		}));
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getBlastResistance()).luminance(state -> 12));
 	}
 	
 	@Override
@@ -67,8 +66,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
-			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entity);
-			if (teleEntity.hasCooldown()) return;
+			if (entity.hasNetherPortalCooldown()) return;
 			boolean isOverworld = world.getRegistryKey().equals(World.OVERWORLD);
 			ServerWorld destination = ((ServerWorld) world).getServer().getWorld(isOverworld ? World.END : World.OVERWORLD);
 			BlockPos exitPos = this.findExitPos(destination, pos, entity);
@@ -76,11 +74,14 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			if (entity instanceof ServerPlayerEntity) {
 				ServerPlayerEntity player = (ServerPlayerEntity) entity;
 				player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, entity.yaw, entity.pitch);
-				teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
+				player.resetNetherPortalCooldown();
 			} else {
+				TeleportingEntity teleEntity = (TeleportingEntity) entity;
 				teleEntity.beSetExitPos(exitPos);
-				entity.moveToWorld(destination);
-				teleEntity.beSetCooldown(300);
+				Entity teleported = entity.moveToWorld(destination);
+				if (teleported != null) {
+					teleported.resetNetherPortalCooldown();
+				}
 			}
 		}
 	}
@@ -91,8 +92,10 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	}
 	
 	private BlockPos findExitPos(ServerWorld world, BlockPos pos, Entity entity) {
+		if (world == null) return null;
+
 		Registry<DimensionType> registry = world.getRegistryManager().getDimensionTypes();
-		double mult = registry.get(DimensionType.THE_END_ID).getCoordinateScale();
+		double mult = Objects.requireNonNull(registry.get(DimensionType.THE_END_ID)).getCoordinateScale();
 		BlockPos.Mutable basePos;
 		if (world.getRegistryKey().equals(World.OVERWORLD)) {
 			basePos = pos.mutableCopy().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
@@ -120,14 +123,11 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 									entityDir = frontDir;
 								}
 
-								if (frontDir == entityDir || frontDir.getOpposite() == entityDir) {
-									return checkPos.offset(entityDir);
-								}
-								else {
+								if (frontDir != entityDir && frontDir.getOpposite() != entityDir) {
 									entity.applyRotation(BlockRotation.CLOCKWISE_90);
 									entityDir = entityDir.rotateYClockwise();
-									return checkPos.offset(entityDir);
 								}
+								return checkPos.offset(entityDir);
 							}
 							checkPos.move(Direction.DOWN);
 						}

@@ -7,10 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.google.common.collect.Maps;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -23,7 +20,7 @@ import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
-	private static final Map<Entity, Long> COOLDOWN = Maps.newHashMap();
+
 	private BlockPos beExitPos;
 	
 	@Shadow
@@ -44,12 +41,6 @@ public abstract class EntityMixin implements TeleportingEntity {
 	
 	@Shadow
 	public abstract EntityType<?> getType();
-	
-	@Shadow
-	public abstract void copyFrom(Entity original);
-	
-	@Shadow
-	public abstract Entity moveToWorld(ServerWorld destination);
 	
 	@Shadow
 	protected abstract TeleportTarget getTeleportTarget(ServerWorld destination);
@@ -84,41 +75,12 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<TeleportTarget> info) {
 		if (beExitPos != null) {
-			COOLDOWN.remove(beGetSelf());
 			info.setReturnValue(new TeleportTarget(new Vec3d(beExitPos.getX() + 0.5D, beExitPos.getY(), beExitPos.getZ() + 0.5D), getVelocity(), yaw, pitch));
 		}
-	}
-	
-	@Inject(method = "baseTick", at = @At("TAIL"))
-	public void be_baseTick(CallbackInfo info) {
-		if (hasCooldown()) {
-			Entity key = beGetSelf();
-			long value = COOLDOWN.getOrDefault(key, 0L) - 1;
-			COOLDOWN.put(key, value);
-		}
-	}
-	
-	@Override
-	public long beGetCooldown() {
-		return COOLDOWN.getOrDefault(beGetSelf(), 0L);
-	}
-
-	@Override
-	public void beSetCooldown(long time) {
-		COOLDOWN.put(beGetSelf(), time);
 	}
 
 	@Override
 	public void beSetExitPos(BlockPos pos) {
 		this.beExitPos = pos;
-	}
-
-	@Override
-	public BlockPos beGetExitPos() {
-		return this.beExitPos;
-	}
-	
-	private Entity beGetSelf() {
-		return (Entity) (Object) this;
 	}
 }

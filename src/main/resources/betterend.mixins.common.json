@@ -12,7 +12,6 @@
 		"NoiseChunkGeneratorMixin",
 		"AnvilScreenHandlerMixin",
 		"ChorusPlantFeatureMixin",
-		"ServerPlayerEntityMixin",
 		"ComposterBlockAccessor",
 		"ChorusFlowerBlockMixin",
 		"LandPathNodeMakerMixin",
@@ -33,7 +32,7 @@
 		"PlayerEntityMixin",
 		"SlimeEntityMixin",
 		"BrewingAccessor",
-		"EntityMixin",
+		"EntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

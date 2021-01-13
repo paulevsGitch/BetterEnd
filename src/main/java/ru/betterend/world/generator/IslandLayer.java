@@ -29,10 +29,11 @@ public class IslandLayer {
 	private final int minY;
 	private final int maxY;
 	private final long center;
+	private final boolean hasCentralIsland;
 	private int lastX = Integer.MIN_VALUE;
 	private int lastZ = Integer.MIN_VALUE;
 	
-	public IslandLayer(int seed, double distance, float scale, int center, int heightVariation) {
+	public IslandLayer(int seed, double distance, float scale, int center, int heightVariation, boolean hasCentralIsland) {
 		this.distance = distance;
 		this.density = new OpenSimplexNoise(seed);
 		this.scale = scale;
@@ -40,6 +41,7 @@ public class IslandLayer {
 		this.minY = center - heightVariation;
 		this.maxY = center + heightVariation;
 		this.center = MHelper.floor(1000 / distance);
+		this.hasCentralIsland = hasCentralIsland;
 	}
 	
 	private int getSeed(int x, int z) {
@@ -59,7 +61,7 @@ public class IslandLayer {
 				int px = pox + ix;
 				for (int poz = -1; poz < 2; poz++) {
 					int pz = poz + iz;
-					if (TerrainGenerator.noRingVoid() || (long) px + (long) pz > center) {
+					if (GeneratorOptions.noRingVoid() || (long) px + (long) pz > center) {
 						RANDOM.setSeed(getSeed(px, pz));
 						double posX = (px + RANDOM.nextFloat()) * distance;
 						double posY = MHelper.randRange(minY, maxY, RANDOM);
@@ -68,6 +70,14 @@ public class IslandLayer {
 							positions.add(new BlockPos(posX, posY, posZ));
 						}
 					}
+				}
+			}
+			if (hasCentralIsland && GeneratorOptions.hasCentralIsland() && ix == 0 && iz == 0) {
+				if (positions.size() > 4) {
+					positions.set(4, new BlockPos(0, 64, 0));
+				}
+				else {
+					positions.add(new BlockPos(0, 64, 0));
 				}
 			}
 		}

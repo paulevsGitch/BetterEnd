@@ -11,6 +11,9 @@ public class GeneratorOptions {
 	private static boolean swapOverworldToEnd;
 	private static boolean changeChorusPlant;
 	private static boolean removeChorusFromVanillaBiomes;
+	private static boolean newGenerator;
+	private static boolean noRingVoid;
+	private static boolean generateCentralIsland;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
@@ -21,6 +24,9 @@ public class GeneratorOptions {
 		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false);
 		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
 		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "removeChorusFromVanillaBiomes", true);
+		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", false);
+		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
+		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", false);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -53,5 +59,17 @@ public class GeneratorOptions {
 
 	public static boolean removeChorusFromVanillaBiomes() {
 		return removeChorusFromVanillaBiomes;
+	}
+	
+	public static boolean noRingVoid() {
+		return noRingVoid;
+	}
+	
+	public static boolean useNewGenerator() {
+		return newGenerator;
+	}
+	
+	public static boolean hasCentralIsland() {
+		return generateCentralIsland;
 	}
 }

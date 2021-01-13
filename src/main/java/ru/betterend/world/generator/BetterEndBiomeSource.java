@@ -70,7 +70,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 
 	@Override
 	public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
-		boolean hasVoid = !TerrainGenerator.useNewGenerator() || !TerrainGenerator.noRingVoid();
+		boolean hasVoid = !GeneratorOptions.useNewGenerator() || !GeneratorOptions.noRingVoid();
 		long i = (long) biomeX * (long) biomeX;
 		long j = (long) biomeZ * (long) biomeZ;
 		if (hasVoid && i + j <= 65536L) return this.centerBiome;
@@ -80,7 +80,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 			mapVoid.clearCache();
 		}
 		
-		if (TerrainGenerator.useNewGenerator()) {
+		if (GeneratorOptions.useNewGenerator()) {
 			if (TerrainGenerator.isLand(biomeX, biomeZ)) {
 				return mapLand.getBiome(biomeX << 2, biomeZ << 2).getActualBiome();
 			}

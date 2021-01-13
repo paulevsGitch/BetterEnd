@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.minecraft.util.math.MathHelper;
-import ru.betterend.config.Configs;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 
@@ -19,33 +18,18 @@ public class TerrainGenerator {
 	private static IslandLayer smallIslands;
 	private static OpenSimplexNoise noise1;
 	private static OpenSimplexNoise noise2;
-	private static boolean newGenerator;
-	private static boolean noRingVoid;
 	
-	public static void init() {
-		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", false);
-		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
+	public static boolean canGenerate(int x, int z) {
+		return GeneratorOptions.noRingVoid() || (long) x + (long) z > CENTER;
 	}
 	
 	public static void initNoise(long seed) {
 		Random random = new Random(seed);
-		largeIslands = new IslandLayer(random.nextInt(), 300, 200, 70, 10);
-		mediumIslands = new IslandLayer(random.nextInt(), 150, 100, 70, 20);
-		smallIslands = new IslandLayer(random.nextInt(), 60, 50, 70, 30);
+		largeIslands = new IslandLayer(random.nextInt(), 300, 200, 70, 10, false);
+		mediumIslands = new IslandLayer(random.nextInt(), 150, 100, 70, 20, true);
+		smallIslands = new IslandLayer(random.nextInt(), 60, 50, 70, 30, false);
 		noise1 = new OpenSimplexNoise(random.nextInt());
 		noise2 = new OpenSimplexNoise(random.nextInt());
-	}
-	
-	public static boolean canGenerate(int x, int z) {
-		return noRingVoid || (long) x + (long) z > CENTER;
-	}
-	
-	public static boolean noRingVoid() {
-		return noRingVoid;
-	}
-	
-	public static boolean useNewGenerator() {
-		return newGenerator;
 	}
 	
 	public static void fillTerrainDensity(double[] buffer, int x, int z) {
@@ -128,8 +112,6 @@ public class TerrainGenerator {
 	public static int getHeight(int x, int z) {
 		LOCKER.lock();
 		
-		//x >>= 3;
-		//z >>= 3;
 		double px = (double) x / 8.0;
 		double pz = (double) z / 8.0;
 		

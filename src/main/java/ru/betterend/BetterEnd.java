@@ -31,7 +31,6 @@ import ru.betterend.util.BonemealUtil;
 import ru.betterend.util.Logger;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.generator.GeneratorOptions;
-import ru.betterend.world.generator.TerrainGenerator;
 import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BetterEnd implements ModInitializer {
@@ -60,7 +59,6 @@ public class BetterEnd implements ModInitializer {
 		EndStructures.register();
 		Integrations.register();
 		BonemealUtil.init();
-		TerrainGenerator.init();
 		GeneratorOptions.init();
 		
 		if (hasGuideBook()) {

@@ -176,6 +176,7 @@ public class EndBiomes {
 			}
 		}
 		if (BetterEnd.isDevEnvironment()) {
+			System.out.println("==================================");
 			System.out.println("Added void biomes from Fabric API:");
 			FABRIC_VOID.forEach((id) -> {
 				System.out.println(id);
@@ -324,7 +325,6 @@ public class EndBiomes {
 	public static void addSubBiomeIntegration(EndBiome biome, Identifier parent) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			EndBiome parentBiome = ID_MAP.get(parent);
-			System.out.println(parentBiome);
 			if (parentBiome != null && !parentBiome.containsSubBiome(biome)) {
 				parentBiome.addSubBiome(biome);
 			}

@@ -111,8 +111,6 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 						while (checkPos.getY() > 5) {
 							BlockState state = world.getBlockState(checkPos);
 							if (state.isOf(this)) {
-								System.out.println("Out: " + checkPos);
-
 								Axis axis = state.get(AXIS);
 								checkPos = this.findCenter(world, checkPos, axis);
 

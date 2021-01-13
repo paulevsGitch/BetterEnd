@@ -23,16 +23,17 @@
 		"MinecraftServerMixin",
 		"TagGroupLoaderMixin",
 		"EndermanEntityMixin",
-		"DimensionTypeMixin",
-		"RecipeManagerMixin",
 		"AbstractBlockMixin",
+		"DimensionTypeMixin",
+		"PlayerManagerMixin",
+		"RecipeManagerMixin",
 		"HostileEntityMixin",
 		"LivingEntityMixin",
 		"BoneMealItemMixin",
 		"PlayerEntityMixin",
 		"SlimeEntityMixin",
 		"BrewingAccessor",
-		"EntityMixin"
+		"EntityMixin",
 	],
 	"injectors": {
 		"defaultRequire": 1

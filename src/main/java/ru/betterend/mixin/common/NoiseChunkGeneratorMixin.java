@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
 import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
+import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.generator.TerrainGenerator;
 
 @Mixin(NoiseChunkGenerator.class)
@@ -27,7 +28,7 @@ public abstract class NoiseChunkGeneratorMixin {
 	
 	@Inject(method = "sampleNoiseColumn([DII)V", at = @At("HEAD"), cancellable = true, allow = 2)
 	private void beSampleNoiseColumn(double[] buffer, int x, int z, CallbackInfo info) {
-		if (TerrainGenerator.useNewGenerator() && settings.get().equals(ChunkGeneratorSettings.END)) {
+		if (GeneratorOptions.useNewGenerator() && settings.get().equals(ChunkGeneratorSettings.END)) {
 			if (TerrainGenerator.canGenerate(x, z)) {
 				TerrainGenerator.fillTerrainDensity(buffer, x, z);
 				info.cancel();

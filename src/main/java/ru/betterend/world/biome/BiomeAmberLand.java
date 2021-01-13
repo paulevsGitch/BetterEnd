@@ -3,6 +3,7 @@ package ru.betterend.world.biome;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
@@ -28,6 +29,7 @@ public class BiomeAmberLand extends EndBiome {
 				.addFeature(EndFeatures.CHARNIA_ORANGE)
 				.addFeature(EndFeatures.CHARNIA_RED)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
-				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
+				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4)
+				.addMobSpawn(EndEntities.END_SLIME, 10, 1, 2));
 	}
 }

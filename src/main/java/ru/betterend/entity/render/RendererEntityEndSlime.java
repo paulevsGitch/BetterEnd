@@ -18,11 +18,11 @@ import ru.betterend.entity.EntityEndSlime;
 import ru.betterend.entity.model.EndSlimeEntityModel;
 
 public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, EndSlimeEntityModel<EntityEndSlime>> {
-	private static final Identifier TEXTURE[] = new Identifier[3];
-	private static final RenderLayer GLOW[] = new RenderLayer[3];
+	private static final Identifier TEXTURE[] = new Identifier[4];
+	private static final RenderLayer GLOW[] = new RenderLayer[4];
 	
     public RendererEntityEndSlime(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new EndSlimeEntityModel<EntityEndSlime>(false, 0), 0.25F);
+        super(entityRenderDispatcher, new EndSlimeEntityModel<EntityEndSlime>(false), 0.25F);
         this.addFeature(new OverlayFeatureRenderer<EntityEndSlime>(this));
         this.addFeature(new EyesFeatureRenderer<EntityEndSlime, EndSlimeEntityModel<EntityEndSlime>>(this) {
 			@Override
@@ -36,6 +36,9 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
 				this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 				if (entity.isLake()) {
 					this.getContextModel().renderFlower(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV);
+				}
+				else if (entity.isAmber()) {
+					this.getContextModel().renderCrop(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV);
 				}
 			}
         });
@@ -63,8 +66,8 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
 	}
 
 	private final class OverlayFeatureRenderer<T extends EntityEndSlime> extends FeatureRenderer<T, EndSlimeEntityModel<T>> {
-		private final EndSlimeEntityModel<T> modelOrdinal = new EndSlimeEntityModel<T>(true, 0);
-		private final EndSlimeEntityModel<T> modelLake = new EndSlimeEntityModel<T>(true, 1);
+		private final EndSlimeEntityModel<T> modelOrdinal = new EndSlimeEntityModel<T>(true);
+		private final EndSlimeEntityModel<T> modelLake = new EndSlimeEntityModel<T>(true);
 
 		public OverlayFeatureRenderer(FeatureRendererContext<T, EndSlimeEntityModel<T>> featureRendererContext) {
 			super(featureRendererContext);
@@ -91,8 +94,10 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
 		TEXTURE[0] = BetterEnd.makeID("textures/entity/end_slime/end_slime.png");
 		TEXTURE[1] = BetterEnd.makeID("textures/entity/end_slime/end_slime_mossy.png");
 		TEXTURE[2] = BetterEnd.makeID("textures/entity/end_slime/end_slime_lake.png");
+		TEXTURE[3] = BetterEnd.makeID("textures/entity/end_slime/end_slime_amber.png");
 		GLOW[0] = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/end_slime/end_slime_glow.png"));
 		GLOW[1] = GLOW[0];
 		GLOW[2] = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/end_slime/end_slime_lake_glow.png"));
+		GLOW[3] = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/end_slime/end_slime_amber_glow.png"));
 	}
 }

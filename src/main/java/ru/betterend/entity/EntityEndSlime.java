@@ -82,6 +82,9 @@ public class EntityEndSlime extends SlimeEntity {
 		else if (biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
 			this.setLake(true);
 		}
+		else if (biome == EndBiomes.AMBER_LAND) {
+			this.setAmber(true);
+		}
 		this.calculateDimensions();
 		return data;
 	}
@@ -177,6 +180,14 @@ public class EntityEndSlime extends SlimeEntity {
 
 	public boolean isLake() {
 		return this.dataTracker.get(VARIANT) == 2;
+	}
+	
+	protected void setAmber(boolean mossy) {
+		this.dataTracker.set(VARIANT, (byte) 3);
+	}
+
+	public boolean isAmber() {
+		return this.dataTracker.get(VARIANT) == 3;
 	}
 	
 	public static boolean canSpawn(EntityType<EntityEndSlime> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

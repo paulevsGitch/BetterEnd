@@ -11,12 +11,13 @@ import ru.betterend.entity.EntityEndSlime;
 
 public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEntityModel<T> {
 	private final ModelPart flower;
+	private final ModelPart crop;
 	private final ModelPart innerCube;
 	private final ModelPart rightEye;
 	private final ModelPart leftEye;
 	private final ModelPart mouth;
 	
-	public EndSlimeEntityModel(boolean onlyShell, int type) {
+	public EndSlimeEntityModel(boolean onlyShell) {
 		super(RenderLayer::getEntityCutout);
 		
 		this.innerCube = new ModelPart(this, 0, 16);
@@ -24,6 +25,7 @@ public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEnti
 		this.leftEye = new ModelPart(this, 32, 4);
 		this.mouth = new ModelPart(this, 32, 8);
 		this.flower = new ModelPart(this);
+		this.crop = new ModelPart(this);
 
 		if (onlyShell) {
 			this.innerCube.setTextureOffset(0, 0);
@@ -46,6 +48,18 @@ public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEnti
 				this.flower.addChild(petalRot);
 				petalRot.addChild(petal);
 			}
+			
+			for (int i = 0; i < 2; i++) {
+				ModelPart petalRot = new ModelPart(this);
+				petalRot.yaw = i * 90F + 45F;
+				
+				ModelPart petal = new ModelPart(this, 40, 0);
+				petal.setPivot(-4, 8, 0);
+				petal.addCuboid(0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F, 0.0F);
+				
+				this.crop.addChild(petalRot);
+				petalRot.addChild(petal);
+			}
 		}
 	}
 	
@@ -54,6 +68,10 @@ public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEnti
 	
 	public void renderFlower(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
 		flower.render(matrices, vertices, light, overlay);
+	}
+	
+	public void renderCrop(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
+		crop.render(matrices, vertices, light, overlay);
 	}
 
 	@Override

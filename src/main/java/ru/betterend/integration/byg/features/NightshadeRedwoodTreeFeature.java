@@ -69,6 +69,7 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 		float start = trunk.size() / 3F;
 		float delta = trunk.size() * 0.6F;
 		float max = height - 7;
+		float startAngle = random.nextFloat() * MHelper.PI2;
 		for (int i = 0; i < count; i++) {
 			float scale = (float) (count - i) / count * 15;
 			Vector3f offset = SplineHelper.getPos(trunk, (float) i / count * delta + start);
@@ -76,7 +77,7 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 				break;
 			}
 			List<Vector3f> branch = SplineHelper.copySpline(BRANCH);
-			SplineHelper.rotateSpline(branch, i * 1.3F);
+			SplineHelper.rotateSpline(branch, i * 1.3F + startAngle);
 			SplineHelper.scale(branch, scale);
 			SplineHelper.offsetParts(branch, random, 0.3F, 0.3F, 0.3F);
 			SplineHelper.offset(branch, offset);

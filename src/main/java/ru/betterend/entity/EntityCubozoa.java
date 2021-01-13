@@ -45,7 +45,6 @@ public class EntityCubozoa extends SchoolingFishEntity {
 
 	public EntityCubozoa(EntityType<EntityCubozoa> entityType, World world) {
 		super(entityType, world);
-		//this.moveControl = new CubozoaMoveControl(this);
 	}
 
 	@Override

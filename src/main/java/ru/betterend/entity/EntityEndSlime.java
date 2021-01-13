@@ -42,9 +42,10 @@ import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
+import ru.betterend.world.biome.EndBiome;
 
 public class EntityEndSlime extends SlimeEntity {
-	private static final TrackedData<Boolean> MOSSY = DataTracker.registerData(EntityEndSlime.class, TrackedDataHandlerRegistry.BOOLEAN);
+	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityEndSlime.class, TrackedDataHandlerRegistry.BYTE);
 	private static final Mutable POS = new Mutable();
 	
 	public EntityEndSlime(EntityType<EntityEndSlime> entityType, World world) {
@@ -74,8 +75,12 @@ public class EntityEndSlime extends SlimeEntity {
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
-		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.FOGGY_MUSHROOMLAND) {
+		EndBiome biome = EndBiomes.getFromBiome(world.getBiome(getBlockPos()));
+		if (biome == EndBiomes.FOGGY_MUSHROOMLAND) {
 			this.setMossy(true);
+		}
+		else if (biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
+			this.setLake(true);
 		}
 		this.calculateDimensions();
 		return data;
@@ -84,7 +89,21 @@ public class EntityEndSlime extends SlimeEntity {
 	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
-		this.dataTracker.startTracking(MOSSY, false);
+		this.dataTracker.startTracking(VARIANT, (byte) 0);
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		super.writeCustomDataToTag(tag);
+		tag.putByte("Variant", (byte) getSlimeType());
+	}
+
+	@Override
+	public void readCustomDataFromTag(CompoundTag tag) {
+		super.readCustomDataFromTag(tag);
+		if (tag.contains("Variant")) {
+			this.dataTracker.set(VARIANT, tag.getByte("Variant"));
+		}
 	}
 
 	@Override
@@ -140,12 +159,24 @@ public class EntityEndSlime extends SlimeEntity {
 		this.world.spawnEntity(drop);
 	}
 	
+	public int getSlimeType() {
+		return this.dataTracker.get(VARIANT).intValue();
+	}
+	
 	protected void setMossy(boolean mossy) {
-		this.dataTracker.set(MOSSY, mossy);
+		this.dataTracker.set(VARIANT, (byte) 1);
 	}
 
 	public boolean isMossy() {
-		return this.dataTracker.get(MOSSY);
+		return this.dataTracker.get(VARIANT) == 1;
+	}
+	
+	protected void setLake(boolean mossy) {
+		this.dataTracker.set(VARIANT, (byte) 2);
+	}
+
+	public boolean isLake() {
+		return this.dataTracker.get(VARIANT) == 2;
 	}
 	
 	public static boolean canSpawn(EntityType<EntityEndSlime> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

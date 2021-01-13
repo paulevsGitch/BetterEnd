@@ -30,13 +30,14 @@ import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.primitive.SDFHexPrism;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 import ru.betterend.world.features.DefaultFeature;
+import ru.betterend.world.generator.GeneratorOptions;
 
 public class RoundCaveFeature extends DefaultFeature {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
-		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) {
+		if (!(GeneratorOptions.useNewGenerator() && GeneratorOptions.noRingVoid()) || pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) {
 			return false;
 		}
 		

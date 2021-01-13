@@ -72,13 +72,8 @@ public class IslandLayer {
 					}
 				}
 			}
-			if (hasCentralIsland && GeneratorOptions.hasCentralIsland() && ix == 0 && iz == 0) {
-				if (positions.size() > 4) {
-					positions.set(4, new BlockPos(0, 64, 0));
-				}
-				else {
-					positions.add(new BlockPos(0, 64, 0));
-				}
+			if (hasCentralIsland && GeneratorOptions.hasCentralIsland() && ix < 2 && iz < 2 && ix > -2 && iz > -2) {
+				positions.add(new BlockPos(0, 64, 0));
 			}
 		}
 	}

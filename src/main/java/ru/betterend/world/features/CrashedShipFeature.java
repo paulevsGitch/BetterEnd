@@ -2,14 +2,22 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.structure.Structure;
+import net.minecraft.structure.Structure.StructureBlockInfo;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
+import net.minecraft.structure.processor.StructureProcessor;
+import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.registry.EndTags;
@@ -18,11 +26,19 @@ import ru.betterend.util.MHelper;
 import ru.betterend.util.StructureHelper;
 
 public class CrashedShipFeature extends NBTStructureFeature {
+	private static final StructureProcessor REPLACER;
 	private static final String STRUCTURE_PATH = "/data/minecraft/structures/end_city/ship.nbt";
+	private Structure structure;
 
 	@Override
 	protected Structure getStructure(StructureWorldAccess world, BlockPos pos, Random random) {
-		return StructureHelper.readStructure(STRUCTURE_PATH);
+		if (structure == null) {
+			structure = world.toServerWorld().getStructureManager().getStructureOrBlank(new Identifier("end_city/ship"));
+			if (structure == null) {
+				structure = StructureHelper.readStructure(STRUCTURE_PATH);
+			}
+		}
+		return structure;
 	}
 
 	@Override
@@ -56,6 +72,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center, DefaultFeatureConfig featureConfig) {
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
 		center = getGround(world, center);
+		BlockBox bounds = makeBox(center);
 		
 		if (!canSpawn(world, center, random)) {
 			return false;
@@ -69,7 +86,6 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror);
 		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
 		
-		BlockBox bounds = makeBox(center);
 		BlockBox structB = structure.calculateBoundingBox(placementData, center);
 		bounds = StructureHelper.intersectBoxes(bounds, structB);
 		
@@ -84,6 +100,24 @@ public class CrashedShipFeature extends NBTStructureFeature {
 
 	@Override
 	protected void addStructureData(StructurePlacementData data) {
-		data.addProcessor(BlockIgnoreStructureProcessor.IGNORE_AIR_AND_STRUCTURE_BLOCKS).setIgnoreEntities(true);
+		data.addProcessor(BlockIgnoreStructureProcessor.IGNORE_AIR_AND_STRUCTURE_BLOCKS).addProcessor(REPLACER).setIgnoreEntities(true);
+	}
+	
+	static {
+		REPLACER = new StructureProcessor() {
+			@Override
+			public StructureBlockInfo process(WorldView worldView, BlockPos pos, BlockPos blockPos, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlacementData structurePlacementData) {
+				BlockState state = structureBlockInfo2.state;
+				if (state.isOf(Blocks.SPAWNER) || state.getMaterial().equals(Material.WOOL)) {
+					return new StructureBlockInfo(structureBlockInfo2.pos, AIR, null);
+				}
+				return structureBlockInfo2;
+			}
+
+			@Override
+			protected StructureProcessorType<?> getType() {
+				return StructureProcessorType.NOP;
+			}
+		};
 	}
 }

@@ -1,15 +1,11 @@
 package ru.betterend.mixin.common;
 
-import java.util.Map;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.google.common.collect.Maps;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -22,7 +18,7 @@ import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
-	private static final Map<Entity, BlockPos> EXIT_POS = Maps.newHashMap();
+	private BlockPos exitPos;
 	
 	@Shadow
 	public float yaw;
@@ -68,7 +64,7 @@ public abstract class EntityMixin implements TeleportingEntity {
 				((ServerWorld) world).resetIdleTimeout();
 				destination.resetIdleTimeout();
 				this.world.getProfiler().pop();
-				be_resetTeleport();
+				beResetTeleport();
 				info.setReturnValue(entity);
 				info.cancel();
 			}
@@ -78,9 +74,8 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<TeleportTarget> info) {
 		if (beCanTeleport()) {
-			BlockPos pos = EXIT_POS.get(be_getSelf());
-			info.setReturnValue(new TeleportTarget(new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5), getVelocity(), yaw, pitch));
-			be_resetTeleport();
+			info.setReturnValue(new TeleportTarget(new Vec3d(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getVelocity(), yaw, pitch));
+			beResetTeleport();
 			info.cancel();
 		}
 	}
@@ -90,19 +85,19 @@ public abstract class EntityMixin implements TeleportingEntity {
 
 	@Override
 	public void beSetExitPos(BlockPos pos) {
-		EXIT_POS.put(be_getSelf(), pos.toImmutable());
+		exitPos = pos.toImmutable();
 	}
 	
-	private void be_resetTeleport() {
-		EXIT_POS.remove(be_getSelf());
+	public void beResetTeleport() {
+		exitPos = null;
 	}
 	
 	@Override
 	public boolean beCanTeleport() {
-		return EXIT_POS.containsKey(be_getSelf());
+		return exitPos != null;
 	}
 	
-	private Entity be_getSelf() {
-		return (Entity) (Object) this;
-	}
+	public BlockPos beGetExit() {
+		return exitPos;
+	};
 }

@@ -95,9 +95,16 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			if (destination.getRegistryKey() == World.OVERWORLD) {
 				//player.teleport(destination, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
 				//player.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
-				player.moveToWorld(destination);
-				player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				//player.moveToWorld(destination);
+				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 				//player.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
+				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				
+				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				
+				// The most safe way
+				player.moveToWorld(destination);
+				
 				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 			}
 			else {

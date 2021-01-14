@@ -12,6 +12,7 @@
 		"NoiseChunkGeneratorMixin",
 		"AnvilScreenHandlerMixin",
 		"ChorusPlantFeatureMixin",
+		"ServerPlayerEntityMixin",
 		"ComposterBlockAccessor",
 		"ChorusFlowerBlockMixin",
 		"LandPathNodeMakerMixin",

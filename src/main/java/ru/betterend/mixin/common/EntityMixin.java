@@ -1,11 +1,15 @@
 package ru.betterend.mixin.common;
 
+import java.util.Map;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.google.common.collect.Maps;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,8 +22,7 @@ import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
-
-	private BlockPos beExitPos;
+	private static final Map<Entity, BlockPos> EXIT_POS = Maps.newHashMap();
 	
 	@Shadow
 	public float yaw;
@@ -45,14 +48,15 @@ public abstract class EntityMixin implements TeleportingEntity {
 	
 	@Inject(method = "moveToWorld", at = @At("HEAD"), cancellable = true)
 	public void be_moveToWorld(ServerWorld destination, CallbackInfoReturnable<Entity> info) {
-		if (!removed && beExitPos != null && world instanceof ServerWorld) {
+		Entity entity = (Entity) (Object) this;
+		if (!removed && beCanTeleport() && world instanceof ServerWorld) {
 			this.detach();
 			this.world.getProfiler().push("changeDimension");
 			this.world.getProfiler().push("reposition");
 			TeleportTarget teleportTarget = this.getTeleportTarget(destination);
 			if (teleportTarget != null) {
 				this.world.getProfiler().swap("reloading");
-				Entity entity = this.getType().create(destination);
+				entity = this.getType().create(destination);
 				if (entity != null) {
 					entity.copyFrom(Entity.class.cast(this));
 					entity.refreshPositionAndAngles(teleportTarget.position.x, teleportTarget.position.y, teleportTarget.position.z, teleportTarget.yaw, entity.pitch);
@@ -64,21 +68,41 @@ public abstract class EntityMixin implements TeleportingEntity {
 				((ServerWorld) world).resetIdleTimeout();
 				destination.resetIdleTimeout();
 				this.world.getProfiler().pop();
-				this.beExitPos = null;
+				be_resetTeleport();
 				info.setReturnValue(entity);
+				info.cancel();
 			}
 		}
 	}
 	
 	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<TeleportTarget> info) {
-		if (beExitPos != null) {
-			info.setReturnValue(new TeleportTarget(new Vec3d(beExitPos.getX() + 0.5D, beExitPos.getY(), beExitPos.getZ() + 0.5D), getVelocity(), yaw, pitch));
+		if (beCanTeleport()) {
+			BlockPos pos = EXIT_POS.get(be_getSelf());
+			info.setReturnValue(new TeleportTarget(new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5), getVelocity(), yaw, pitch));
+			be_resetTeleport();
+			info.cancel();
 		}
 	}
+	
+	@Shadow
+	protected void setRotation(float yaw, float pitch) {}
 
 	@Override
 	public void beSetExitPos(BlockPos pos) {
-		this.beExitPos = pos;
+		EXIT_POS.put(be_getSelf(), pos.toImmutable());
+	}
+	
+	private void be_resetTeleport() {
+		EXIT_POS.remove(be_getSelf());
+	}
+	
+	@Override
+	public boolean beCanTeleport() {
+		return EXIT_POS.containsKey(be_getSelf());
+	}
+	
+	private Entity be_getSelf() {
+		return (Entity) (Object) this;
 	}
 }

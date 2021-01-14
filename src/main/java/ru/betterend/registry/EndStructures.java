@@ -33,7 +33,7 @@ public class EndStructures {
 	public static final StructurePieceType NBT_PIECE = register("nbt_piece", NBTPiece::new);
 	
 	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new StructureGiantMossyGlowshroom(), Feature.SURFACE_STRUCTURES, 16, 8);
-	public static final EndStructureFeature MEGALAKE = new EndStructureFeature("megalake", new StructureMegaLake(), Feature.RAW_GENERATION, 8, 2);
+	public static final EndStructureFeature MEGALAKE = new EndStructureFeature("megalake", new StructureMegaLake(), Feature.RAW_GENERATION, 4, 1);
 	public static final EndStructureFeature MOUNTAIN = new EndStructureFeature("mountain", new StructureMountain(), Feature.RAW_GENERATION, 3, 2);
 	public static final EndStructureFeature PAINTED_MOUNTAIN = new EndStructureFeature("painted_mountain", new StructurePaintedMountain(), Feature.RAW_GENERATION, 3, 2);
 	public static final EndStructureFeature ETERNAL_PORTAL = new EndStructureFeature("eternal_portal", new StructureEternalPortal(), Feature.SURFACE_STRUCTURES, 16, 6);

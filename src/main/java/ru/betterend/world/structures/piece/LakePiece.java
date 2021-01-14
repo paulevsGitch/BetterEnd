@@ -105,12 +105,12 @@ public class LakePiece extends BasePiece {
 				pos.setZ(z);
 				dist = 1 - dist / r2;
 				int maxY = map.get(x, z);
-				if (MathHelper.abs(maxY - center.getY()) < 8) {
-					float minY = (float) Math.sqrt(dist) * depth * getHeightClamp(world, 8, px, pz);
+				if (MathHelper.abs(maxY - center.getY()) < 16) {
+					float minY = (float) Math.sqrt(dist) * depth * getHeightClamp(world, 12, px, pz);
 					if (minY > 0) {
-						minY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
-						minY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
-						float lerp = minY / 4F;
+						//minY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
+						//minY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
+						float lerp = minY / 8F;
 						if (lerp > 1) {
 							lerp = 1;
 						}
@@ -214,23 +214,26 @@ public class LakePiece extends BasePiece {
 		}
 		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		
-		h = MathHelper.abs(h - center.getY());
-		if (h > 4) {
-			h = 4 - h;
+		/*h = 5 - MathHelper.abs(h - center.getY());
+		if (h < 2) {
 			heightmap.put(p, h);
 			return h;
 		}
 		
-		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
+		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);*/
 		
-		if (h < 0) {
+		h = 8 - MathHelper.abs(h - center.getY());
+		heightmap.put(p, h);
+		return h;
+		
+		/*if (h < 0) {
 			heightmap.put(p, 0);
 			return 0;
 		}
 		
 		heightmap.put(p, h);
 		
-		return h;
+		return h;*/
 	}
 	
 	private float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {

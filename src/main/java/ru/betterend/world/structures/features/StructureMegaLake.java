@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.structures.piece.LakePiece;
+import ru.betterend.world.structures.piece.LakePiece2;
 
 public class StructureMegaLake extends StructureFeatureBase {
 	@Override
@@ -30,9 +31,10 @@ public class StructureMegaLake extends StructureFeatureBase {
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 5) {
-				float radius = MHelper.randRange(50, 150, random);
-				float depth = MHelper.randRange(6, 10, random);
-				LakePiece piece = new LakePiece(new BlockPos(x, y - 3, z), radius, depth, random, biome);
+				float radius = MHelper.randRange(64, 96, random);
+				float depth = MHelper.randRange(8, 25, random);
+				//LakePiece piece = new LakePiece(new BlockPos(x, y - 3, z), radius, depth, random, biome);
+				LakePiece2 piece = new LakePiece2(new BlockPos(x, y, z), radius, depth, random, biome);
 				this.children.add(piece);
 			}
 			this.setBoundingBoxFromChildren();

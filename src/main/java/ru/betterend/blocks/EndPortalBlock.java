@@ -2,6 +2,8 @@ package ru.betterend.blocks;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,6 +22,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -73,8 +76,10 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
 				ServerPlayerEntity player = (ServerPlayerEntity) entity;
-				player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, player.yaw, player.pitch);
-				player.resetNetherPortalCooldown();
+				//player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, player.yaw, player.pitch);
+				//player.onTeleportationDone();
+				//player.resetNetherPortalCooldown();
+				teleportPlayer(player, destination, exitPos);
 				
 			} else {
 				TeleportingEntity teleEntity = (TeleportingEntity) entity;
@@ -85,6 +90,22 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 				}
 			}
 		}
+	}
+	
+	private void teleportPlayer(ServerPlayerEntity player, ServerWorld destination, BlockPos pos) {
+		if (player.isCreative()) {
+			player.teleport(destination, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
+		}
+		else {
+			player.moveToWorld(destination);
+			player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+			if (destination.getRegistryKey() == World.OVERWORLD) {
+				destination.tickEntity(player);
+				player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				//player.teleport(destination, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
+			}
+		}
+		player.resetNetherPortalCooldown();
 	}
 	
 	@Override

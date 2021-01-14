@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -49,6 +50,9 @@ public class FloatingSpireFeature extends SpireFeature {
 					support.add(info.getPos().up());
 				}
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+			}
+			else if (info.getState(Direction.UP, 3).isAir()) {
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
 			}
 			return info.getState();
 		});

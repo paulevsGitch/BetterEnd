@@ -246,7 +246,7 @@ public class StructureHelper {
 								while (world.getBlockState(mut2).getMaterial().isReplaceable() && mut2.getY() > minY) {
 									mut2.setY(mut2.getY() - 1);
 								}
-								if (y > 50 && state.canPlaceAt(world, mut2)) {
+								if (!world.getBlockState(mut2).isAir() && state.canPlaceAt(world, mut2)) {
 									mut2.setY(mut2.getY() + 1);
 									BlocksHelper.setWithoutUpdate(world, mut2, state);
 								}

@@ -40,8 +40,8 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 		
 		BlockState log = Integrations.BYG.getDefaultState("nightshade_log");
 		BlockState wood = Integrations.BYG.getDefaultState("nightshade_wood");
-		BlockState leaves = Integrations.BYG.getDefaultState("nightshade_leaves");
-		BlockState leaves_flower = Integrations.BYG.getDefaultState("flowering_nightshade_leaves");
+		BlockState leaves = Integrations.BYG.getDefaultState("nightshade_leaves").with(LeavesBlock.DISTANCE, 1);
+		BlockState leaves_flower = Integrations.BYG.getDefaultState("flowering_nightshade_leaves").with(LeavesBlock.DISTANCE, 1);
 		
 		Function<BlockPos, BlockState> splinePlacer = (bpos) -> { return log; };
 		Function<BlockState, Boolean> replace = (state) -> {

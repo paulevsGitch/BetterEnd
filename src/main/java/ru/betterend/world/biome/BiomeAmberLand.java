@@ -30,6 +30,6 @@ public class BiomeAmberLand extends EndBiome {
 				.addFeature(EndFeatures.CHARNIA_RED)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4)
-				.addMobSpawn(EndEntities.END_SLIME, 10, 1, 2));
+				.addMobSpawn(EndEntities.END_SLIME, 30, 1, 2));
 	}
 }

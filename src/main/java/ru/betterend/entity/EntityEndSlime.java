@@ -77,10 +77,10 @@ public class EntityEndSlime extends SlimeEntity {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		EndBiome biome = EndBiomes.getFromBiome(world.getBiome(getBlockPos()));
 		if (biome == EndBiomes.FOGGY_MUSHROOMLAND) {
-			this.setMossy(true);
+			this.setMossy();
 		}
 		else if (biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
-			this.setLake(true);
+			this.setLake();
 		}
 		else if (biome == EndBiomes.AMBER_LAND) {
 			this.setAmber(true);
@@ -123,7 +123,7 @@ public class EntityEndSlime extends SlimeEntity {
 			float f = (float) i / 4.0F;
 			int j = i / 2;
 			int k = 2 + this.random.nextInt(3);
-			boolean mossy = this.isMossy();
+			int type = this.getSlimeType();
 			
 			for (int l = 0; l < k; ++l) {
 				float g = ((float) (l % 2) - 0.5F) * f;
@@ -133,7 +133,7 @@ public class EntityEndSlime extends SlimeEntity {
 					slimeEntity.setPersistent();
 				}
 
-				slimeEntity.setMossy(mossy);
+				slimeEntity.setSlimeType(type);
 				slimeEntity.setCustomName(text);
 				slimeEntity.setAiDisabled(bl);
 				slimeEntity.setInvulnerable(this.isInvulnerable());
@@ -166,20 +166,24 @@ public class EntityEndSlime extends SlimeEntity {
 		return this.dataTracker.get(VARIANT).intValue();
 	}
 	
-	protected void setMossy(boolean mossy) {
-		this.dataTracker.set(VARIANT, (byte) 1);
+	public void setSlimeType(int value) {
+		this.dataTracker.set(VARIANT, (byte) value);
+	}
+	
+	protected void setMossy() {
+		setSlimeType(1);
 	}
 
 	public boolean isMossy() {
-		return this.dataTracker.get(VARIANT) == 1;
+		return getSlimeType() == 1;
 	}
 	
-	protected void setLake(boolean mossy) {
-		this.dataTracker.set(VARIANT, (byte) 2);
+	protected void setLake() {
+		setSlimeType(2);
 	}
 
 	public boolean isLake() {
-		return this.dataTracker.get(VARIANT) == 2;
+		return getSlimeType() == 2;
 	}
 	
 	protected void setAmber(boolean mossy) {
@@ -195,7 +199,7 @@ public class EntityEndSlime extends SlimeEntity {
 	}
 	
 	public static boolean canSpawn(EntityType<EntityEndSlime> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return random.nextInt(64) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
+		return random.nextInt(16) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
 	}
 	
 	private static boolean isPermanentBiome(ServerWorldAccess world, BlockPos pos) {

@@ -7,10 +7,10 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.CompositeEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import ru.betterend.entity.EntityEndSlime;
+import ru.betterend.entity.EndSlimeEntity;
 import ru.betterend.util.MHelper;
 
-public class EndSlimeEntityModel<T extends EntityEndSlime> extends CompositeEntityModel<T> {
+public class EndSlimeEntityModel<T extends EndSlimeEntity> extends CompositeEntityModel<T> {
 	private final ModelPart flower;
 	private final ModelPart crop;
 	private final ModelPart innerCube;

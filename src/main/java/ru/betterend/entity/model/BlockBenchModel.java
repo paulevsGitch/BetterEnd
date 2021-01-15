@@ -1,4 +1,4 @@
-package ru.betterend.entity;
+package ru.betterend.entity.model;
 
 import java.util.function.Function;
 

@@ -29,14 +29,14 @@ import net.minecraft.world.World;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
 
-public class EntityEndFish extends SchoolingFishEntity {
+public class EndFishEntity extends SchoolingFishEntity {
 	public static final int VARIANTS_NORMAL = 5;
 	public static final int VARIANTS_SULPHUR = 3;
 	public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
-	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityEndFish.class, TrackedDataHandlerRegistry.BYTE);
-	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EntityEndFish.class, TrackedDataHandlerRegistry.BYTE);
+	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EndFishEntity.class, TrackedDataHandlerRegistry.BYTE);
+	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EndFishEntity.class, TrackedDataHandlerRegistry.BYTE);
 	
-	public EntityEndFish(EntityType<EntityEndFish> entityType, World world) {
+	public EndFishEntity(EntityType<EndFishEntity> entityType, World world) {
 		super(entityType, world);
 	}
 	
@@ -126,9 +126,9 @@ public class EntityEndFish extends SchoolingFishEntity {
 		return this.dataTracker.get(SCALE) / 32F + 0.75F;
 	}
 	
-	public static boolean canSpawn(EntityType<EntityEndFish> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+	public static boolean canSpawn(EntityType<EndFishEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		Box box = new Box(pos).expand(16);
-		List<EntityEndFish> list = world.getEntitiesByClass(EntityEndFish.class, box, (entity) -> { return true; });
+		List<EndFishEntity> list = world.getEntitiesByClass(EndFishEntity.class, box, (entity) -> { return true; });
 		return list.size() < 9;
 	}
 	

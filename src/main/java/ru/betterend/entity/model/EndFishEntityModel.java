@@ -4,10 +4,9 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
-import ru.betterend.entity.BlockBenchModel;
-import ru.betterend.entity.EntityEndFish;
+import ru.betterend.entity.EndFishEntity;
 
-public class ModelEntityEndFish extends BlockBenchModel<EntityEndFish> {
+public class EndFishEntityModel extends BlockBenchModel<EndFishEntity> {
 	private final ModelPart model;
 	private final ModelPart fin_top;
 	private final ModelPart fin_bottom;
@@ -15,7 +14,7 @@ public class ModelEntityEndFish extends BlockBenchModel<EntityEndFish> {
 	private final ModelPart fin_right;
 	private final ModelPart fin_left;
 
-	public ModelEntityEndFish() {
+	public EndFishEntityModel() {
 		super(RenderLayer::getEntityCutout);
 		
 		textureWidth = 32;
@@ -58,7 +57,7 @@ public class ModelEntityEndFish extends BlockBenchModel<EntityEndFish> {
 
 
 	@Override
-	public void setAngles(EntityEndFish entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+	public void setAngles(EndFishEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		float s1 = (float) Math.sin(animationProgress * 0.1);
 		float s2 = (float) Math.sin(animationProgress * 0.05);
 		flipper.yaw = s1 * 0.3F;

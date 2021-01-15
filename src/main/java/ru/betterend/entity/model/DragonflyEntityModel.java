@@ -4,10 +4,9 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
-import ru.betterend.entity.BlockBenchModel;
-import ru.betterend.entity.EntityDragonfly;
+import ru.betterend.entity.DragonflyEntity;
 
-public class ModelEntityDragonfly extends BlockBenchModel<EntityDragonfly> {
+public class DragonflyEntityModel extends BlockBenchModel<DragonflyEntity> {
 	private final ModelPart model;
 	private final ModelPart head;
 	private final ModelPart tail;
@@ -19,7 +18,7 @@ public class ModelEntityDragonfly extends BlockBenchModel<EntityDragonfly> {
 	private final ModelPart legs_1;
 	private final ModelPart legs_2;
 
-	public ModelEntityDragonfly() {
+	public DragonflyEntityModel() {
 		super(RenderLayer::getEntityCutout);
 		
 		textureWidth = 64;
@@ -82,7 +81,7 @@ public class ModelEntityDragonfly extends BlockBenchModel<EntityDragonfly> {
 
 
 	@Override
-	public void setAngles(EntityDragonfly entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+	public void setAngles(DragonflyEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		float progress = animationProgress * 2F;
 		
 		wing_1.roll = 0.3491F + (float) Math.sin(progress) * 0.3491F;

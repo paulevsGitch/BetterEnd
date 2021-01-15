@@ -37,8 +37,8 @@ import ru.betterend.registry.EndSounds;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class EntityDragonfly extends AnimalEntity implements Flutterer {
-	public EntityDragonfly(EntityType<EntityDragonfly> entityType, World world) {
+public class DragonflyEntity extends AnimalEntity implements Flutterer {
+	public DragonflyEntity(EntityType<DragonflyEntity> entityType, World world) {
 		super(entityType, world);
 		this.moveControl = new FlightMoveControl(this, 20, true);
 		this.lookControl = new DragonflyLookControl(this);
@@ -137,11 +137,11 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 		}
 
 		public boolean canStart() {
-			return EntityDragonfly.this.navigation.isIdle() && EntityDragonfly.this.random.nextInt(10) == 0;
+			return DragonflyEntity.this.navigation.isIdle() && DragonflyEntity.this.random.nextInt(10) == 0;
 		}
 
 		public boolean shouldContinue() {
-			return EntityDragonfly.this.navigation.isFollowingPath();
+			return DragonflyEntity.this.navigation.isFollowingPath();
 		}
 
 		public void start() {
@@ -149,9 +149,9 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 			if (vec3d != null) {
 				BlockPos pos = new BlockPos(vec3d);
 				try {
-					Path path = EntityDragonfly.this.navigation.findPathTo(pos, 1);
+					Path path = DragonflyEntity.this.navigation.findPathTo(pos, 1);
 					if (path != null) {
-						EntityDragonfly.this.navigation.startMovingAlong(path, 1.0D);
+						DragonflyEntity.this.navigation.startMovingAlong(path, 1.0D);
 					}
 				}
 				catch (Exception e) {}
@@ -160,29 +160,29 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 		}
 
 		private Vec3d getRandomLocation() {
-			int h = BlocksHelper.downRay(EntityDragonfly.this.world, EntityDragonfly.this.getBlockPos(), 16);
-			Vec3d rotation = EntityDragonfly.this.getRotationVec(0.0F);
-			Vec3d airPos = TargetFinder.findAirTarget(EntityDragonfly.this, 8, 7, rotation, 1.5707964F, 2, 1);
+			int h = BlocksHelper.downRay(DragonflyEntity.this.world, DragonflyEntity.this.getBlockPos(), 16);
+			Vec3d rotation = DragonflyEntity.this.getRotationVec(0.0F);
+			Vec3d airPos = TargetFinder.findAirTarget(DragonflyEntity.this, 8, 7, rotation, 1.5707964F, 2, 1);
 			if (airPos != null) {
 				if (isInVoid(airPos)) {
 					for (int i = 0; i < 8; i++) {
-						airPos = TargetFinder.findAirTarget(EntityDragonfly.this, 16, 7, rotation, MHelper.PI2, 2, 1);
+						airPos = TargetFinder.findAirTarget(DragonflyEntity.this, 16, 7, rotation, MHelper.PI2, 2, 1);
 						if (airPos != null && !isInVoid(airPos)) {
 							return airPos;
 						}
 					}
 					return null;
 				}
-				if (h > 5 && airPos.getY() >= EntityDragonfly.this.getBlockPos().getY()) {
+				if (h > 5 && airPos.getY() >= DragonflyEntity.this.getBlockPos().getY()) {
 					airPos = new Vec3d(airPos.x, airPos.y - h * 0.5, airPos.z);
 				}
 				return airPos;
 			}
-			return TargetFinder.findGroundTarget(EntityDragonfly.this, 8, 4, -2, rotation, 1.5707963705062866D);
+			return TargetFinder.findGroundTarget(DragonflyEntity.this, 8, 4, -2, rotation, 1.5707963705062866D);
 		}
 
 		private boolean isInVoid(Vec3d pos) {
-			int h = BlocksHelper.downRay(EntityDragonfly.this.world, new BlockPos(pos), 128);
+			int h = BlocksHelper.downRay(DragonflyEntity.this.world, new BlockPos(pos), 128);
 			return h > 100;
 		}
 	}
@@ -192,7 +192,7 @@ public class EntityDragonfly extends AnimalEntity implements Flutterer {
 		return EndEntities.DRAGONFLY.create(world);
 	}
 	
-	public static boolean canSpawn(EntityType<EntityDragonfly> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+	public static boolean canSpawn(EntityType<DragonflyEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		int y = world.getChunk(pos).sampleHeightmap(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
 		return y > 0 && pos.getY() >= y;
 	}

@@ -5,17 +5,17 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
-import ru.betterend.entity.EntityShadowWalker;
+import ru.betterend.entity.ShadowWalkerEntity;
 
-public class RendererEntityShadowWalker extends BipedEntityRenderer<EntityShadowWalker, PlayerEntityModel<EntityShadowWalker>> {
+public class RendererEntityShadowWalker extends BipedEntityRenderer<ShadowWalkerEntity, PlayerEntityModel<ShadowWalkerEntity>> {
 	private static final Identifier TEXTURE = BetterEnd.makeID("textures/entity/shadow_walker.png");
 	
 	public RendererEntityShadowWalker(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new PlayerEntityModel<EntityShadowWalker>(0.0F, false), 0.5F);
+		super(entityRenderDispatcher, new PlayerEntityModel<ShadowWalkerEntity>(0.0F, false), 0.5F);
 	}
 
 	@Override
-	public Identifier getTexture(EntityShadowWalker zombieEntity) {
+	public Identifier getTexture(ShadowWalkerEntity zombieEntity) {
 		return TEXTURE;
 	}
 }

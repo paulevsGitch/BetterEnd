@@ -5,10 +5,9 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
-import ru.betterend.entity.BlockBenchModel;
-import ru.betterend.entity.EntityCubozoa;
+import ru.betterend.entity.CubozoaEntity;
 
-public class ModelEntityCubozoa extends BlockBenchModel<EntityCubozoa> {
+public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
 	private final ModelPart model;
 	private final ModelPart main_cube_r1;
 	private final ModelPart tentacle_center_1;
@@ -22,7 +21,7 @@ public class ModelEntityCubozoa extends BlockBenchModel<EntityCubozoa> {
 	private float scaleY;
 	private float scaleXZ;
 
-	public ModelEntityCubozoa() {
+	public CubozoaEntityModel() {
 		super(RenderLayer::getEntityTranslucent);
 		
 		textureWidth = 48;
@@ -83,7 +82,7 @@ public class ModelEntityCubozoa extends BlockBenchModel<EntityCubozoa> {
 	}
 	
 	@Override
-	public void setAngles(EntityCubozoa entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+	public void setAngles(CubozoaEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		float sin = MathHelper.sin(animationProgress * 0.13F);
 		scaleY = sin * 0.1F + 0.9F;
 		scaleXZ = MathHelper.sin(animationProgress * 0.13F + 3.14F) * 0.1F + 0.9F;

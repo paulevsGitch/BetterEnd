@@ -44,11 +44,11 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
-public class EntityEndSlime extends SlimeEntity {
-	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityEndSlime.class, TrackedDataHandlerRegistry.BYTE);
+public class EndSlimeEntity extends SlimeEntity {
+	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EndSlimeEntity.class, TrackedDataHandlerRegistry.BYTE);
 	private static final Mutable POS = new Mutable();
 	
-	public EntityEndSlime(EntityType<EntityEndSlime> entityType, World world) {
+	public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, World world) {
 		super(entityType, world);
 		this.moveControl = new EndSlimeMoveControl(this);
 	}
@@ -128,7 +128,7 @@ public class EntityEndSlime extends SlimeEntity {
 			for (int l = 0; l < k; ++l) {
 				float g = ((float) (l % 2) - 0.5F) * f;
 				float h = ((float) (l / 2) - 0.5F) * f;
-				EntityEndSlime slimeEntity = (EntityEndSlime) this.getType().create(this.world);
+				EndSlimeEntity slimeEntity = (EndSlimeEntity) this.getType().create(this.world);
 				if (this.isPersistent()) {
 					slimeEntity.setPersistent();
 				}
@@ -198,7 +198,7 @@ public class EntityEndSlime extends SlimeEntity {
 		return this.dataTracker.get(VARIANT) == 0;
 	}
 	
-	public static boolean canSpawn(EntityType<EntityEndSlime> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		return random.nextInt(16) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
 	}
 	
@@ -209,7 +209,7 @@ public class EntityEndSlime extends SlimeEntity {
 	
 	private static boolean notManyEntities(ServerWorldAccess world, BlockPos pos, int radius, int maxCount) {
 		Box box = new Box(pos).expand(radius);
-		List<EntityEndSlime> list = world.getEntitiesByClass(EntityEndSlime.class, box, (entity) -> { return true; });
+		List<EndSlimeEntity> list = world.getEntitiesByClass(EndSlimeEntity.class, box, (entity) -> { return true; });
 		return list.size() <= maxCount;
 	}
 	
@@ -235,17 +235,17 @@ public class EntityEndSlime extends SlimeEntity {
 		}
 
 		public boolean canStart() {
-			if (EntityEndSlime.this.hasVehicle()) {
+			if (EndSlimeEntity.this.hasVehicle()) {
 				return false;
 			}
 			
-			float yaw = EntityEndSlime.this.getHeadYaw();
-			float speed = EntityEndSlime.this.getMovementSpeed();
+			float yaw = EndSlimeEntity.this.getHeadYaw();
+			float speed = EndSlimeEntity.this.getMovementSpeed();
 			if (speed > 0.1) {
 				float dx = MathHelper.sin(-yaw * 0.017453292F);
 				float dz = MathHelper.cos(-yaw * 0.017453292F);
-				BlockPos pos = EntityEndSlime.this.getBlockPos().add(dx * speed * 4, 0, dz * speed * 4);
-				int down = BlocksHelper.downRay(EntityEndSlime.this.world, pos, 16);
+				BlockPos pos = EndSlimeEntity.this.getBlockPos().add(dx * speed * 4, 0, dz * speed * 4);
+				int down = BlocksHelper.downRay(EndSlimeEntity.this.world, pos, 16);
 				return down < 5;
 			}
 			
@@ -253,28 +253,28 @@ public class EntityEndSlime extends SlimeEntity {
 		}
 
 		public void tick() {
-			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).move(1.0D);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).move(1.0D);
 		}
 	}
 
 	class SwimmingGoal extends Goal {
 		public SwimmingGoal() {
 			this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
-			EntityEndSlime.this.getNavigation().setCanSwim(true);
+			EndSlimeEntity.this.getNavigation().setCanSwim(true);
 		}
 
 		public boolean canStart() {
-			return (EntityEndSlime.this.isTouchingWater()
-					|| EntityEndSlime.this.isInLava())
-					&& EntityEndSlime.this.getMoveControl() instanceof EndSlimeMoveControl;
+			return (EndSlimeEntity.this.isTouchingWater()
+					|| EndSlimeEntity.this.isInLava())
+					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 
 		public void tick() {
-			if (EntityEndSlime.this.getRandom().nextFloat() < 0.8F) {
-				EntityEndSlime.this.getJumpControl().setActive();
+			if (EndSlimeEntity.this.getRandom().nextFloat() < 0.8F) {
+				EndSlimeEntity.this.getJumpControl().setActive();
 			}
 
-			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).move(1.2D);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).move(1.2D);
 		}
 	}
 
@@ -287,21 +287,21 @@ public class EntityEndSlime extends SlimeEntity {
 		}
 
 		public boolean canStart() {
-			return EntityEndSlime.this.getTarget() == null
-					&& (EntityEndSlime.this.onGround
-							|| EntityEndSlime.this.isTouchingWater()
-							|| EntityEndSlime.this.isInLava()
-							|| EntityEndSlime.this.hasStatusEffect(StatusEffects.LEVITATION))
-					&& EntityEndSlime.this.getMoveControl() instanceof EndSlimeMoveControl;
+			return EndSlimeEntity.this.getTarget() == null
+					&& (EndSlimeEntity.this.onGround
+							|| EndSlimeEntity.this.isTouchingWater()
+							|| EndSlimeEntity.this.isInLava()
+							|| EndSlimeEntity.this.hasStatusEffect(StatusEffects.LEVITATION))
+					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 
 		public void tick() {
 			if (--this.timer <= 0) {
-				this.timer = 40 + EntityEndSlime.this.getRandom().nextInt(60);
-				this.targetYaw = (float) EntityEndSlime.this.getRandom().nextInt(360);
+				this.timer = 40 + EndSlimeEntity.this.getRandom().nextInt(60);
+				this.targetYaw = (float) EndSlimeEntity.this.getRandom().nextInt(360);
 			}
 
-			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).look(this.targetYaw, false);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(this.targetYaw, false);
 		}
 	}
 
@@ -313,7 +313,7 @@ public class EntityEndSlime extends SlimeEntity {
 		}
 
 		public boolean canStart() {
-			LivingEntity livingEntity = EntityEndSlime.this.getTarget();
+			LivingEntity livingEntity = EndSlimeEntity.this.getTarget();
 			if (livingEntity == null) {
 				return false;
 			}
@@ -321,7 +321,7 @@ public class EntityEndSlime extends SlimeEntity {
 				return false;
 			}
 			else {
-				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable ? false : EntityEndSlime.this.getMoveControl() instanceof EndSlimeMoveControl;
+				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable ? false : EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 			}
 		}
 
@@ -331,7 +331,7 @@ public class EntityEndSlime extends SlimeEntity {
 		}
 
 		public boolean shouldContinue() {
-			LivingEntity livingEntity = EntityEndSlime.this.getTarget();
+			LivingEntity livingEntity = EndSlimeEntity.this.getTarget();
 			if (livingEntity == null) {
 				return false;
 			}
@@ -347,8 +347,8 @@ public class EntityEndSlime extends SlimeEntity {
 		}
 
 		public void tick() {
-			EntityEndSlime.this.lookAtEntity(EntityEndSlime.this.getTarget(), 10.0F, 10.0F);
-			((EndSlimeMoveControl) EntityEndSlime.this.getMoveControl()).look(EntityEndSlime.this.yaw, EntityEndSlime.this.canAttack());
+			EndSlimeEntity.this.lookAtEntity(EndSlimeEntity.this.getTarget(), 10.0F, 10.0F);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.yaw, EndSlimeEntity.this.canAttack());
 		}
 	}
 
@@ -357,7 +357,7 @@ public class EntityEndSlime extends SlimeEntity {
 		private int ticksUntilJump;
 		private boolean jumpOften;
 
-		public EndSlimeMoveControl(EntityEndSlime slime) {
+		public EndSlimeMoveControl(EndSlimeEntity slime) {
 			super(slime);
 			this.targetYaw = 180.0F * slime.yaw / 3.1415927F;
 		}
@@ -384,19 +384,19 @@ public class EntityEndSlime extends SlimeEntity {
 				if (this.entity.isOnGround()) {
 					this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
 					if (this.ticksUntilJump-- <= 0) {
-						this.ticksUntilJump = EntityEndSlime.this.getTicksUntilNextJump();
+						this.ticksUntilJump = EndSlimeEntity.this.getTicksUntilNextJump();
 						if (this.jumpOften) {
 							this.ticksUntilJump /= 3;
 						}
 
-						EntityEndSlime.this.getJumpControl().setActive();
-						if (EntityEndSlime.this.makesJumpSound()) {
-							EntityEndSlime.this.playSound(EntityEndSlime.this.getJumpSound(), EntityEndSlime.this.getSoundVolume(), getJumpSoundPitch());
+						EndSlimeEntity.this.getJumpControl().setActive();
+						if (EndSlimeEntity.this.makesJumpSound()) {
+							EndSlimeEntity.this.playSound(EndSlimeEntity.this.getJumpSound(), EndSlimeEntity.this.getSoundVolume(), getJumpSoundPitch());
 						}
 					}
 					else {
-						EntityEndSlime.this.sidewaysSpeed = 0.0F;
-						EntityEndSlime.this.forwardSpeed = 0.0F;
+						EndSlimeEntity.this.sidewaysSpeed = 0.0F;
+						EndSlimeEntity.this.forwardSpeed = 0.0F;
 						this.entity.setMovementSpeed(0.0F);
 					}
 				}
@@ -408,8 +408,8 @@ public class EntityEndSlime extends SlimeEntity {
 		}
 
 		private float getJumpSoundPitch() {
-			float f = EntityEndSlime.this.isSmall() ? 1.4F : 0.8F;
-			return ((EntityEndSlime.this.random.nextFloat() - EntityEndSlime.this.random.nextFloat()) * 0.2F + 1.0F) * f;
+			float f = EndSlimeEntity.this.isSmall() ? 1.4F : 0.8F;
+			return ((EndSlimeEntity.this.random.nextFloat() - EndSlimeEntity.this.random.nextFloat()) * 0.2F + 1.0F) * f;
 		}
 	}
 }

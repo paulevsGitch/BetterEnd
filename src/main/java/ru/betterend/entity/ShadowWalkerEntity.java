@@ -29,8 +29,8 @@ import net.minecraft.world.World;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.util.MHelper;
 
-public class EntityShadowWalker extends HostileEntity {
-	public EntityShadowWalker(EntityType<EntityShadowWalker> entityType, World world) {
+public class ShadowWalkerEntity extends HostileEntity {
+	public ShadowWalkerEntity(EntityType<ShadowWalkerEntity> entityType, World world) {
 		super(entityType, world);
 	}
 	
@@ -112,20 +112,20 @@ public class EntityShadowWalker extends HostileEntity {
 		return attack;
 	}
 	
-	public static boolean canSpawn(EntityType<EntityShadowWalker> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		if (HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random)) {
 			Box box = new Box(pos).expand(16);
-			List<EntityShadowWalker> entities = world.getEntitiesByClass(EntityShadowWalker.class, box, (entity) -> { return true; });
+			List<ShadowWalkerEntity> entities = world.getEntitiesByClass(ShadowWalkerEntity.class, box, (entity) -> { return true; });
 			return entities.size() < 6;
 		}
 		return false;
 	}
 	
 	private final class AttackGoal extends MeleeAttackGoal {
-		private final EntityShadowWalker walker;
+		private final ShadowWalkerEntity walker;
 		private int ticks;
 
-		public AttackGoal(EntityShadowWalker walker, double speed, boolean pauseWhenMobIdle) {
+		public AttackGoal(ShadowWalkerEntity walker, double speed, boolean pauseWhenMobIdle) {
 		      super(walker, speed, pauseWhenMobIdle);
 		      this.walker = walker;
 		   }

@@ -14,24 +14,24 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.entity.EntityEndSlime;
+import ru.betterend.entity.EndSlimeEntity;
 import ru.betterend.entity.model.EndSlimeEntityModel;
 
-public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, EndSlimeEntityModel<EntityEndSlime>> {
+public class RendererEntityEndSlime extends MobEntityRenderer<EndSlimeEntity, EndSlimeEntityModel<EndSlimeEntity>> {
 	private static final Identifier TEXTURE[] = new Identifier[4];
 	private static final RenderLayer GLOW[] = new RenderLayer[4];
 	
     public RendererEntityEndSlime(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new EndSlimeEntityModel<EntityEndSlime>(false), 0.25F);
-        this.addFeature(new OverlayFeatureRenderer<EntityEndSlime>(this));
-        this.addFeature(new EyesFeatureRenderer<EntityEndSlime, EndSlimeEntityModel<EntityEndSlime>>(this) {
+        super(entityRenderDispatcher, new EndSlimeEntityModel<EndSlimeEntity>(false), 0.25F);
+        this.addFeature(new OverlayFeatureRenderer<EndSlimeEntity>(this));
+        this.addFeature(new EyesFeatureRenderer<EndSlimeEntity, EndSlimeEntityModel<EndSlimeEntity>>(this) {
 			@Override
 			public RenderLayer getEyesTexture() {
 				return GLOW[0];
 			}
 			
 			@Override
-			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, EntityEndSlime entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, EndSlimeEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getSlimeType()]);
 				this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 				if (entity.isLake()) {
@@ -42,18 +42,18 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
     }
 
 	@Override
-	public Identifier getTexture(EntityEndSlime entity) {
+	public Identifier getTexture(EndSlimeEntity entity) {
 		return TEXTURE[entity.getSlimeType()];
 	}
 
 	@Override
-	public void render(EntityEndSlime slimeEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+	public void render(EndSlimeEntity slimeEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
 		this.shadowRadius = 0.25F * (float) slimeEntity.getSize();
 		super.render(slimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
 	}
 
 	@Override
-	protected void scale(EntityEndSlime slimeEntity, MatrixStack matrixStack, float f) {
+	protected void scale(EndSlimeEntity slimeEntity, MatrixStack matrixStack, float f) {
 		matrixStack.scale(0.999F, 0.999F, 0.999F);
 		matrixStack.translate(0.0D, 0.0010000000474974513D, 0.0D);
 		float h = (float) slimeEntity.getSize();
@@ -62,7 +62,7 @@ public class RendererEntityEndSlime extends MobEntityRenderer<EntityEndSlime, En
 		matrixStack.scale(j * h, 1.0F / j * h, j * h);
 	}
 
-	private final class OverlayFeatureRenderer<T extends EntityEndSlime> extends FeatureRenderer<T, EndSlimeEntityModel<T>> {
+	private final class OverlayFeatureRenderer<T extends EndSlimeEntity> extends FeatureRenderer<T, EndSlimeEntityModel<T>> {
 		private final EndSlimeEntityModel<T> modelOrdinal = new EndSlimeEntityModel<T>(true);
 		private final EndSlimeEntityModel<T> modelLake = new EndSlimeEntityModel<T>(true);
 

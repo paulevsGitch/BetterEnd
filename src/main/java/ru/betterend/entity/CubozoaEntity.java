@@ -38,12 +38,12 @@ import net.minecraft.world.World;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
 
-public class EntityCubozoa extends SchoolingFishEntity {
+public class CubozoaEntity extends SchoolingFishEntity {
 	public static final int VARIANTS = 2;
-	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
-	private static final TrackedData<Byte> SCALE = DataTracker.registerData(EntityCubozoa.class, TrackedDataHandlerRegistry.BYTE);
+	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(CubozoaEntity.class, TrackedDataHandlerRegistry.BYTE);
+	private static final TrackedData<Byte> SCALE = DataTracker.registerData(CubozoaEntity.class, TrackedDataHandlerRegistry.BYTE);
 
-	public EntityCubozoa(EntityType<EntityCubozoa> entityType, World world) {
+	public CubozoaEntity(EntityType<CubozoaEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -97,9 +97,9 @@ public class EntityCubozoa extends SchoolingFishEntity {
 		return this.dataTracker.get(SCALE) / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<EntityCubozoa> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+	public static boolean canSpawn(EntityType<CubozoaEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		Box box = new Box(pos).expand(16);
-		List<EntityCubozoa> list = world.getEntitiesByClass(EntityCubozoa.class, box, (entity) -> {
+		List<CubozoaEntity> list = world.getEntitiesByClass(CubozoaEntity.class, box, (entity) -> {
 			return true;
 		});
 		return list.size() < 9;
@@ -141,7 +141,7 @@ public class EntityCubozoa extends SchoolingFishEntity {
 	}
 
 	static class CubozoaMoveControl extends MoveControl {
-		CubozoaMoveControl(EntityCubozoa owner) {
+		CubozoaMoveControl(CubozoaEntity owner) {
 			super(owner);
 		}
 

@@ -19,7 +19,7 @@ public class BiomeMegalakeGrove extends EndBiome {
 				.setMusic(EndSounds.MUSIC_WATER)
 				.setLoop(EndSounds.AMBIENT_MEGALAKE_GROVE)
 				.setSurface(EndBlocks.END_MOSS)
-				.addStructureFeature(EndStructures.MEGALAKE)
+				.addStructureFeature(EndStructures.MEGALAKE_SMALL)
 				.addFeature(EndFeatures.LACUGROVE)
 				.addFeature(EndFeatures.END_LOTUS)
 				.addFeature(EndFeatures.END_LOTUS_LEAF)

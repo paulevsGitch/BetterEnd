@@ -24,6 +24,7 @@ import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.LanceleafFeature;
 import ru.betterend.world.features.MengerSpongeFeature;
 import ru.betterend.world.features.OverworldIslandFeature;
+import ru.betterend.world.features.SilkMothNestFeature;
 import ru.betterend.world.features.SingleInvertedScatterFeature;
 import ru.betterend.world.features.SinglePlantFeature;
 import ru.betterend.world.features.UnderwaterPlantFeature;
@@ -154,6 +155,9 @@ public class EndFeatures {
 	
 	// Buildings
 	public static final EndFeature CRASHED_SHIP = EndFeature.makeChansedFeature("crashed_ship", new CrashedShipFeature(), 500);
+	
+	// Mobs
+	public static final EndFeature SILK_MOTH_NEST = EndFeature.makeChansedFeature("silk_moth_nest", new SilkMothNestFeature(), 2);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (GeneratorOptions.removeChorusFromVanillaBiomes()) {

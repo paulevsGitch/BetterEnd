@@ -1,9 +1,21 @@
 {
 	"variants": {
 		"active=false": { "model": "betterend:block/silk_moth_nest_top" },
-		"active=true,facing=north": { "model": "betterend:block/silk_moth_nest_bottom" },
-		"active=true,facing=south": { "model": "betterend:block/silk_moth_nest_bottom", "y": 180 },
-		"active=true,facing=east": { "model": "betterend:block/silk_moth_nest_bottom", "y": 90 },
-		"active=true,facing=west": { "model": "betterend:block/silk_moth_nest_bottom", "y": 270 }
+		"active=true,facing=north,fullness=0": { "model": "betterend:block/silk_moth_nest_bottom" },
+		"active=true,facing=south,fullness=0": { "model": "betterend:block/silk_moth_nest_bottom", "y": 180 },
+		"active=true,facing=east,fullness=0": { "model": "betterend:block/silk_moth_nest_bottom", "y": 90 },
+		"active=true,facing=west,fullness=0": { "model": "betterend:block/silk_moth_nest_bottom", "y": 270 },
+		"active=true,facing=north,fullness=1": { "model": "betterend:block/silk_moth_nest_bottom" },
+		"active=true,facing=south,fullness=1": { "model": "betterend:block/silk_moth_nest_bottom", "y": 180 },
+		"active=true,facing=east,fullness=1": { "model": "betterend:block/silk_moth_nest_bottom", "y": 90 },
+		"active=true,facing=west,fullness=1": { "model": "betterend:block/silk_moth_nest_bottom", "y": 270 },
+		"active=true,facing=north,fullness=2": { "model": "betterend:block/silk_moth_nest_bottom" },
+		"active=true,facing=south,fullness=2": { "model": "betterend:block/silk_moth_nest_bottom", "y": 180 },
+		"active=true,facing=east,fullness=2": { "model": "betterend:block/silk_moth_nest_bottom", "y": 90 },
+		"active=true,facing=west,fullness=2": { "model": "betterend:block/silk_moth_nest_bottom", "y": 270 },
+		"active=true,facing=north,fullness=3": { "model": "betterend:block/silk_moth_nest_bottom_silk" },
+		"active=true,facing=south,fullness=3": { "model": "betterend:block/silk_moth_nest_bottom_silk", "y": 180 },
+		"active=true,facing=east,fullness=3": { "model": "betterend:block/silk_moth_nest_bottom_silk", "y": 90 },
+		"active=true,facing=west,fullness=3": { "model": "betterend:block/silk_moth_nest_bottom_silk", "y": 270 }
 	}
 }

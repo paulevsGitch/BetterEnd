@@ -36,6 +36,7 @@ public class EndEntities {
 		SpawnHelper.restrictionWater(END_FISH, EndFishEntity::canSpawn);
 		SpawnHelper.restrictionLand(SHADOW_WALKER, ShadowWalkerEntity::canSpawn);
 		SpawnHelper.restrictionWater(CUBOZOA, CubozoaEntity::canSpawn);
+		SpawnHelper.restrictionAir(SILK_MOTH, SilkMothEntity::canSpawn);
 	}
 	
 	protected static <T extends Entity> EntityType<T> register(String name, SpawnGroup group, float width, float height, EntityFactory<T> entity) {

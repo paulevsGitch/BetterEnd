@@ -1,0 +1,37 @@
+{
+	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+	"parent": "block/block",
+	"textures": {
+		"particle": "betterend:block/silk_moth_nest_side",
+		"texture": "betterend:block/silk_moth_nest_side",
+		"top": "betterend:block/silk_moth_nest_top",
+		"front": "betterend:block/silk_moth_nest_front_silk"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "Box1",
+			"from": [ 0, 0, 0 ],
+			"to": [ 16, 13, 16 ],
+			"faces": {
+				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "cullface": "down" },
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
+				"north": { "uv": [ 0, 3, 16, 16 ], "texture": "#front", "cullface": "north" },
+				"south": { "uv": [ 0, 3, 16, 16 ], "texture": "#texture", "cullface": "south" },
+				"west": { "uv": [ 0, 3, 16, 16 ], "texture": "#texture", "cullface": "west" },
+				"east": { "uv": [ 0, 3, 16, 16 ], "texture": "#texture", "cullface": "east" }
+			}
+		},
+		{
+			"__comment": "Box1",
+			"from": [ 3, 12, 3 ],
+			"to": [ 13, 16, 13 ],
+			"faces": {
+				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#top", "cullface": "up" },
+				"north": { "uv": [ 3, 0, 13, 4 ], "texture": "#texture" },
+				"south": { "uv": [ 3, 0, 13, 4 ], "texture": "#texture" },
+				"west": { "uv": [ 3, 0, 13, 4 ], "texture": "#texture" },
+				"east": { "uv": [ 3, 0, 13, 4 ], "texture": "#texture" }
+			}
+		}
+	]
+}

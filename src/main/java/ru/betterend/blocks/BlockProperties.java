@@ -15,6 +15,7 @@ public class BlockProperties {
 	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
 	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
 	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
+	public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, 3);
 	
 	public static enum TripleShape implements StringIdentifiable {
 		TOP("top"),

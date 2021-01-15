@@ -2,6 +2,7 @@ package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
@@ -25,6 +26,8 @@ public class BiomeBlossomingSpires extends EndBiome {
 				.addFeature(EndFeatures.BLOSSOM_BERRY)
 				.addFeature(EndFeatures.TWISTED_MOSS)
 				.addFeature(EndFeatures.TWISTED_MOSS_WOOD)
-				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
+				.addFeature(EndFeatures.SILK_MOTH_NEST)
+				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4)
+				.addMobSpawn(EndEntities.SILK_MOTH, 5, 1, 2));
 	}
 }

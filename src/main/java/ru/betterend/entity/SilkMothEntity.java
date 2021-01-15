@@ -1,6 +1,7 @@
 package ru.betterend.entity;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -8,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Flutterer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.TargetFinder;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
@@ -33,11 +35,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.Heightmap.Type;
 import ru.betterend.BetterEnd;
+import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.SilkMothNestBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
+import ru.betterend.util.BlocksHelper;
 
 public class SilkMothEntity extends AnimalEntity implements Flutterer {
 	private BlockPos hivePos;
@@ -146,6 +152,11 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 		return EndEntities.SILK_MOTH.create(world);
 	}
 	
+	public static boolean canSpawn(EntityType<SilkMothEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+		int y = world.getChunk(pos).sampleHeightmap(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
+		return y > 0 && pos.getY() >= y;
+	}
+	
 	class MothLookControl extends LookControl {
 		MothLookControl(MobEntity entity) {
 			super(entity);
@@ -206,7 +217,7 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 		
 		@Override
 		public boolean shouldContinue() {
-			return SilkMothEntity.this.navigation.isFollowingPath() && world.getBlockState(entrance).isAir();
+			return SilkMothEntity.this.navigation.isFollowingPath() && world.getBlockState(entrance).isAir() && world.getBlockState(hivePos).isOf(EndBlocks.SILK_MOTH_NEST);
 		}
 		
 		@Override
@@ -216,7 +227,7 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 				SilkMothEntity.this.hivePos = null;
 			}
 			try {
-				entrance = SilkMothEntity.this.hivePos.offset(state.get(SilkMothNestBlock.FACING));
+				SilkMothEntity.this.entrance = SilkMothEntity.this.hivePos.offset(state.get(SilkMothNestBlock.FACING));
 				SilkMothEntity.this.navigation.startMovingAlong(SilkMothEntity.this.navigation.findPathTo(entrance, 1), 1.0D);
 			}
 			catch (Exception e) {}
@@ -229,8 +240,16 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 			double dy = Math.abs(SilkMothEntity.this.entrance.getY() - SilkMothEntity.this.getY());
 			double dz = Math.abs(SilkMothEntity.this.entrance.getZ() - SilkMothEntity.this.getZ());
 			if (dx + dy + dz < 1) {
-				SilkMothEntity.this.world.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BLOCK_BEEHIVE_ENTER, SoundCategory.BLOCKS, 1, 1);
-				SilkMothEntity.this.remove();
+				BlockState state = SilkMothEntity.this.world.getBlockState(hivePos);
+				if (state.isOf(EndBlocks.SILK_MOTH_NEST)) {
+					int fullness = state.get(BlockProperties.FULLNESS);
+					if (fullness < 3 && SilkMothEntity.this.random.nextBoolean()) {
+						fullness ++;
+						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state);
+					}
+					SilkMothEntity.this.world.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BLOCK_BEEHIVE_ENTER, SoundCategory.BLOCKS, 1, 1);
+					SilkMothEntity.this.remove();
+				}
 			}
 		}
 	}

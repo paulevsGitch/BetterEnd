@@ -21,6 +21,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.BlockMirror;
@@ -43,17 +44,18 @@ import ru.betterend.util.BlocksHelper;
 public class SilkMothNestBlock extends BaseBlock implements IRenderTypeable {
 	public static final BooleanProperty ACTIVE = BlockProperties.ACTIVE;
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+	public static final IntProperty FULLNESS = BlockProperties.FULLNESS;
 	private static final VoxelShape TOP = createCuboidShape(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape BOTTOM = createCuboidShape(0, 0, 0, 16, 16, 16);
 	
 	public SilkMothNestBlock() {
 		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sounds(BlockSoundGroup.WOOL).nonOpaque().ticksRandomly());
-		this.setDefaultState(getDefaultState().with(ACTIVE, true));
+		this.setDefaultState(getDefaultState().with(ACTIVE, true).with(FULLNESS, 0));
 	}
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
-		stateManager.add(ACTIVE, FACING);
+		stateManager.add(ACTIVE, FACING, FULLNESS);
 	}
 	
 	@Override

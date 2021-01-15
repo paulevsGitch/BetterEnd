@@ -119,7 +119,7 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTypeable {
 		if (!state.get(ACTIVE)) {
 			return;
 		}
-		if (random.nextInt(16) > 0) {
+		if (random.nextBoolean()) {
 			return;
 		}
 		Direction dir = state.get(FACING);

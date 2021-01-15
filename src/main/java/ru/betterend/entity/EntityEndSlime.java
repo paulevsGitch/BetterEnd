@@ -242,8 +242,8 @@ public class EntityEndSlime extends SlimeEntity {
 			float yaw = EntityEndSlime.this.getHeadYaw();
 			float speed = EntityEndSlime.this.getMovementSpeed();
 			if (speed > 0.1) {
-				float dx = MathHelper.sin(-yaw * 0.017453292F - 3.1415927F);
-				float dz = MathHelper.cos(-yaw * 0.017453292F - 3.1415927F);
+				float dx = MathHelper.sin(-yaw * 0.017453292F);
+				float dz = MathHelper.cos(-yaw * 0.017453292F);
 				BlockPos pos = EntityEndSlime.this.getBlockPos().add(dx * speed * 4, 0, dz * speed * 4);
 				int down = BlocksHelper.downRay(EntityEndSlime.this.world, pos, 16);
 				return down < 5;

@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.structure.StructureManager;
@@ -15,8 +16,8 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.biome.Biome;
@@ -28,31 +29,30 @@ import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class LakePiece extends BasePiece {
+	private static final BlockState ENDSTONE = Blocks.END_STONE.getDefaultState();
 	private static final BlockState WATER = Blocks.WATER.getDefaultState();
-	private Map<Integer, Integer> heightmap = Maps.newHashMap();
-	private OpenSimplexNoise noise1;
-	private OpenSimplexNoise noise2;
+	private Map<Integer, Byte> heightmap = Maps.newHashMap();
+	private OpenSimplexNoise noise;
 	private BlockPos center;
 	private float radius;
+	private float aspect;
 	private float depth;
-	private float r2;
+	private int seed;
+	
 	private Identifier biomeID;
-	private int seed1;
-	private int seed2;
 	
 	public LakePiece(BlockPos center, float radius, float depth, Random random, Biome biome) {
 		super(EndStructures.LAKE_PIECE, random.nextInt());
 		this.center = center;
 		this.radius = radius;
 		this.depth = depth;
-		this.r2 = MHelper.pow2(radius);
-		this.seed1 = random.nextInt();
-		this.seed2 = random.nextInt();
-		this.noise1 = new OpenSimplexNoise(this.seed1);
-		this.noise2 = new OpenSimplexNoise(this.seed2);
+		this.seed = random.nextInt();
+		this.noise = new OpenSimplexNoise(this.seed);
+		this.aspect = radius / depth;
 		this.biomeID = EndBiomes.getBiomeID(biome);
 		makeBoundingBox();
 	}
@@ -67,9 +67,8 @@ public class LakePiece extends BasePiece {
 		tag.put("center", NbtHelper.fromBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("depth", depth);
+		tag.putInt("seed", seed);
 		tag.putString("biome", biomeID.toString());
-		tag.putInt("seed1", seed1);
-		tag.putInt("seed2", seed2);
 	}
 
 	@Override
@@ -77,163 +76,161 @@ public class LakePiece extends BasePiece {
 		center = NbtHelper.toBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
 		depth = tag.getFloat("depth");
-		r2 = MHelper.pow2(radius);
-		seed1 = tag.getInt("seed1");
-		seed2 = tag.getInt("seed2");
-		noise1 = new OpenSimplexNoise(seed1);
-		noise2 = new OpenSimplexNoise(seed2);
+		seed = tag.getInt("seed");
+		noise = new OpenSimplexNoise(seed);
+		aspect = radius / depth;
 		biomeID = new Identifier(tag.getString("biome"));
 	}
 
 	@Override
 	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		int sx = chunkPos.getStartX();
-		int sz = chunkPos.getStartZ();
-		Mutable pos = new Mutable();
+		int minY = this.boundingBox.minY;
+		int maxY = this.boundingBox.maxY;
+		int sx = chunkPos.x << 4;
+		int sz = chunkPos.z << 4;
+		Mutable mut = new Mutable();
 		Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
-		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
 		for (int x = 0; x < 16; x++) {
-			int px = x + sx;
-			int px2 = MHelper.pow2(px - center.getX());
-			pos.setX(x);
+			mut.setX(x);
+			int wx = x | sx;
+			double nx = wx * 0.1;
+			int x2 = wx - center.getX();
 			for (int z = 0; z < 16; z++) {
-				int pz = z + sz;
-				int pz2 = MHelper.pow2(pz - center.getZ());
-				float dist = px2 + pz2;
-				if (dist > r2) continue;
+				mut.setZ(z);
+				int wz = z | sz;
+				double nz = wz * 0.1;
+				int z2 = wz - center.getZ();
+				float clamp = getHeightClamp(world, 8, wx, wz);
+				if (clamp < 0.01) continue;
 				
-				pos.setZ(z);
-				dist = 1 - dist / r2;
-				int maxY = map.get(x, z);
-				if (MathHelper.abs(maxY - center.getY()) < 16) {
-					float minY = (float) Math.sqrt(dist) * depth * getHeightClamp(world, 12, px, pz);
-					if (minY > 0) {
-						//minY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
-						//minY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
-						float lerp = minY / 8F;
-						if (lerp > 1) {
-							lerp = 1;
+				double n = noise.eval(nx, nz) * 1.5 + 1.5;
+				double x3 = MHelper.pow2(x2 + noise.eval(nx, nz, 100) * 10);
+				double z3 = MHelper.pow2(z2 + noise.eval(nx, nz, -100) * 10);
+				
+				for (int y = minY; y <= maxY; y++) {
+					mut.setY((int) (y + n));
+					double y2 = MHelper.pow2((y - center.getY()) * aspect);
+					double r2 = radius * clamp;
+					double r3 = r2 + 8;
+					r2 *= r2;
+					r3 = r3 * r3 + 100;
+					double dist = x3 + y2 + z3;
+					if (dist < r2) {
+						BlockState state = chunk.getBlockState(mut);
+						if (state.isIn(EndTags.GEN_TERRAIN) || state.isAir()) {
+							state = mut.getY() < center.getY() ? WATER : AIR;
+							chunk.setBlockState(mut, state, false);
 						}
-						minY = MathHelper.lerp(lerp, maxY - minY, center.getY() - minY);
-						pos.setY(maxY);
-						while (!chunk.getBlockState(pos).getMaterial().isReplaceable()) {
-							pos.setY(maxY ++);
-						}
-						
-						if (!waterIsNear(world, pos.getX() + sx, center.getY(), pos.getZ() + sz, 2)) {
-							if (maxY <= center.getY() + 1) {
-								maxY = MathHelper.clamp(maxY + 4, 0, center.getY());
-								BlockState surf = random.nextBoolean() ? EndBlocks.ENDSTONE_DUST.getDefaultState() : world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-								BlockState under = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
-								for (int y = maxY; y >= minY; y--) {
-									pos.setY(y);
-									BlockState state = chunk.getBlockState(pos);
-									if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-										chunk.setBlockState(pos, y > center.getY() ? AIR : y == maxY ? surf : under, false);
-									}
-									else {
-										break;
-									}
-								}
+					}
+					else if (dist <= r3 && mut.getY() < center.getY()) {
+						BlockState state = chunk.getBlockState(mut);
+						BlockPos worldPos = mut.add(sx, 0, sz);
+						if (!state.isFullCube(world, worldPos) && !state.isSolidBlock(world, worldPos)) {
+							state = chunk.getBlockState(mut.up());
+							if (state.isAir()) {
+								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
 							}
 							else {
-								for (int y = maxY; y >= minY; y--) {
-									pos.setY(y);
-									BlockState state = chunk.getBlockState(pos);
-									if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-										if (maxY <= center.getY() + 1)
-											chunk.setBlockState(pos, Blocks.REDSTONE_BLOCK.getDefaultState(), false);
-										else
-										chunk.setBlockState(pos, y > center.getY() ? AIR : WATER, false);
+								state = state.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.getDefaultState();
+							}
+							chunk.setBlockState(mut, state, false);
+						}
+					}
+				}
+			}
+		}
+		fixWater(world, chunk, mut, random, sx, sz);
+		return true;
+	}
+	
+	private void fixWater(StructureWorldAccess world, Chunk chunk, Mutable mut, Random random, int sx, int sz) {
+		int minY = this.boundingBox.minY;
+		int maxY = this.boundingBox.maxY;
+		for (int x = 0; x < 16; x++) {
+			mut.setX(x);
+			for (int z = 0; z < 16; z++) {
+				mut.setZ(z);
+				for (int y = minY; y <= maxY; y++) {
+					mut.setY(y);
+					FluidState state = chunk.getFluidState(mut);
+					if (!state.isEmpty()) {
+						mut.setY(y - 1);
+						if (chunk.getBlockState(mut).isAir()) {
+							mut.setY(y + 1);
+							
+							BlockState bState = chunk.getBlockState(mut);
+							if (bState.isAir()) {
+								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+							}
+							else {
+								bState = bState.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.getDefaultState();
+							}
+							
+							mut.setY(y);
+							
+							makeEndstonePillar(chunk, mut, bState);
+						}
+						else if (x > 1 && x < 15 && z > 1 && z < 15) {
+							mut.setY(y);
+							for (Direction dir: BlocksHelper.HORIZONTAL) {
+								BlockPos wPos = mut.add(dir.getOffsetX(), 0, dir.getOffsetZ());
+								if (chunk.getBlockState(wPos).isAir()) {
+									mut.setY(y + 1);
+									BlockState bState = chunk.getBlockState(mut);
+									if (bState.isAir()) {
+										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
 									}
 									else {
-										break;
+										bState = bState.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.getDefaultState();
 									}
-								}
-							}
-						}
-						
-						boolean under = pos.getY() <= center.getY() || (pos.getY() == center.getY() + 1 && random.nextBoolean());
-						pos.setY(pos.getY() - 1);
-						BlockState state = chunk.getBlockState(pos);
-						if (state.isIn(EndTags.GEN_TERRAIN) || (state.getMaterial().isReplaceable() && pos.getY() <= center.getY())) {
-							state = under ? EndBlocks.ENDSTONE_DUST.getDefaultState() : world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-							chunk.setBlockState(pos, state, false);
-							maxY = (int) (noise1.eval((pos.getX() + sx) * 0.1, (pos.getZ() + sz) * 0.1) + 2);
-							state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
-							for (int i = 0; i < maxY; i++) {
-								pos.setY(pos.getY() - 1);
-								if (state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)) {
-									chunk.setBlockState(pos, state, false);
-								}
-								else {
+									mut.setY(y);
+									makeEndstonePillar(chunk, mut, bState);
 									break;
 								}
 							}
 						}
+						else if (chunk.getBlockState(mut.move(Direction.UP)).isAir()) {
+							chunk.getFluidTickScheduler().schedule(mut.move(Direction.DOWN), state.getFluid(), 0);
+						}
 					}
 				}
 			}
 		}
-		
-		map = chunk.getHeightmap(Type.WORLD_SURFACE);
-		
-		return true;
 	}
 	
-	private boolean waterIsNear(StructureWorldAccess world, int x, int y, int z, int r) {
-		int py = world.getChunk(x >> 4, z >> 4).sampleHeightmap(Type.WORLD_SURFACE, x & 15, z & 15) - 1;
-		if (py > y) {
-			Mutable m = new Mutable();
-			m.setY(py);
-			for (int i  = -r; i <= r; i++) {
-				int px = x + i;
-				m.setX(px);
-				for (int j = -r; j <= r; j++) {
-					int pz = z + j;
-					m.setZ(pz);
-					if (!world.getFluidState(m).isEmpty()) {
-						return true;
-					}
-				}
-			}
+	private void makeEndstonePillar(Chunk chunk, Mutable mut, BlockState terrain) {
+		chunk.setBlockState(mut, terrain, false);
+		mut.setY(mut.getY() - 1);
+		while (!chunk.getFluidState(mut).isEmpty()) {
+			chunk.setBlockState(mut, ENDSTONE, false);
+			mut.setY(mut.getY() - 1);
 		}
-		return false;
 	}
 	
 	private int getHeight(StructureWorldAccess world, BlockPos pos) {
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
-		int h = heightmap.getOrDefault(p, Integer.MIN_VALUE);
-		if (h > Integer.MIN_VALUE) {
+		int h = heightmap.getOrDefault(p, Byte.MIN_VALUE);
+		if (h > Byte.MIN_VALUE) {
 			return h;
 		}
 		
 		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
-			heightmap.put(p, -4);
-			return -4;
-		}
-		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-		
-		/*h = 5 - MathHelper.abs(h - center.getY());
-		if (h < 2) {
-			heightmap.put(p, h);
-			return h;
-		}
-		
-		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);*/
-		
-		h = 8 - MathHelper.abs(h - center.getY());
-		heightmap.put(p, h);
-		return h;
-		
-		/*if (h < 0) {
-			heightmap.put(p, 0);
+			heightmap.put(p, (byte) 0);
 			return 0;
 		}
 		
-		heightmap.put(p, h);
+		/*h = world.getTopY(Type.WORLD_SURFACE, pos.getX(), pos.getZ());
+		if (!world.getBlockState(new BlockPos(pos.getX(), h - 1, pos.getZ())).getFluidState().isEmpty()) {
+			heightmap.put(p, (byte) 0);
+			return 0;
+		}*/
 		
-		return h;*/
+		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = MathHelper.abs(h - center.getY());
+		h = h < 8 ? 1 : 0;
+		
+		heightmap.put(p, (byte) h);
+		return h;
 	}
 	
 	private float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {
@@ -255,14 +252,16 @@ public class LakePiece extends BasePiece {
 			}
 		}
 		height /= max;
-		return MathHelper.clamp(height / radius, 0, 1);
+		return MathHelper.clamp(height, 0, 1);
 	}
 	
 	private void makeBoundingBox() {
-		int minX = MHelper.floor(center.getX() - radius);
-		int minZ = MHelper.floor(center.getZ() - radius);
-		int maxX = MHelper.floor(center.getX() + radius + 1);
-		int maxZ = MHelper.floor(center.getZ() + radius + 1);
-		this.boundingBox = new BlockBox(minX, minZ, maxX, maxZ);
+		int minX = MHelper.floor(center.getX() - radius - 8);
+		int minY = MHelper.floor(center.getX() - depth - 8);
+		int minZ = MHelper.floor(center.getZ() - radius - 8);
+		int maxX = MHelper.floor(center.getX() + radius + 8);
+		int maxY = MHelper.floor(center.getY() + depth);
+		int maxZ = MHelper.floor(center.getZ() + radius + 8);
+		this.boundingBox = new BlockBox(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 }

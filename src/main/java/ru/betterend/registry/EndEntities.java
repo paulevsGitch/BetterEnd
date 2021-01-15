@@ -18,6 +18,7 @@ import ru.betterend.entity.DragonflyEntity;
 import ru.betterend.entity.EndFishEntity;
 import ru.betterend.entity.EndSlimeEntity;
 import ru.betterend.entity.ShadowWalkerEntity;
+import ru.betterend.entity.SilkMothEntity;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.SpawnHelper;
 
@@ -27,6 +28,7 @@ public class EndEntities {
 	public static final EntityType<EndFishEntity> END_FISH = register("end_fish", SpawnGroup.WATER_AMBIENT, 0.5F, 0.5F, EndFishEntity::new, EndFishEntity.createMobAttributes(), true, MHelper.color(3, 50, 76), MHelper.color(120, 206, 255));
 	public static final EntityType<ShadowWalkerEntity> SHADOW_WALKER = register("shadow_walker", SpawnGroup.MONSTER, 0.6F, 1.95F, ShadowWalkerEntity::new, ShadowWalkerEntity.createMobAttributes(), true, MHelper.color(30, 30, 30), MHelper.color(5, 5, 5));
 	public static final EntityType<CubozoaEntity> CUBOZOA = register("cubozoa", SpawnGroup.WATER_AMBIENT, 0.6F, 1F, CubozoaEntity::new, CubozoaEntity.createMobAttributes(), true, MHelper.color(151, 77, 181), MHelper.color(93, 176, 238));
+	public static final EntityType<SilkMothEntity> SILK_MOTH = register("silk_moth", SpawnGroup.AMBIENT, 0.6F, 0.6F, SilkMothEntity::new, SilkMothEntity.createMobAttributes(), true, MHelper.color(0, 0, 0), MHelper.color(225, 225, 225));
 	
 	public static void register() {
 		SpawnHelper.restrictionAir(DRAGONFLY, DragonflyEntity::canSpawn);

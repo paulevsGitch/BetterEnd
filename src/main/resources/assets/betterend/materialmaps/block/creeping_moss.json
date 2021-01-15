@@ -3,7 +3,7 @@
 		"spriteMap": [
 			{
 				"sprite": "betterend:block/creeping_moss_spores",
-				"material": "betterend:wave_glow_50_half"
+				"material": "betterend:waving_floor_glow_half"
 			},
 			{
 				"sprite": "betterend:block/creeping_moss_leaves",

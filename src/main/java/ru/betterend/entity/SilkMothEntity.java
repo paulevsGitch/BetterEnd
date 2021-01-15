@@ -23,13 +23,27 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
+import ru.betterend.BetterEnd;
+import ru.betterend.blocks.SilkMothNestBlock;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 
 public class SilkMothEntity extends AnimalEntity implements Flutterer {
+	private BlockPos hivePos;
+	private BlockPos entrance;
+	private World hiveWorld;
+	
 	public SilkMothEntity(EntityType<? extends SilkMothEntity> entityType, World world) {
 		super(entityType, world);
 		this.moveControl = new FlightMoveControl(this, 20, true);
@@ -46,9 +60,38 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 				.add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1D);
 	}
+	
+	public void setHive(World world, BlockPos hive) {
+		this.hivePos = hive;
+		this.hiveWorld = world;
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		if (hivePos != null) {
+			tag.put("HivePos", NbtHelper.fromBlockPos(hivePos));
+			tag.putString("HiveWorld", hiveWorld.getRegistryKey().getValue().toString());
+		}
+	}
+	
+	@Override
+	public void readCustomDataFromTag(CompoundTag tag) {
+		if (tag.contains("HivePos")) {
+			hivePos = NbtHelper.toBlockPos(tag.getCompound("HivePos"));
+			Identifier worldID = new Identifier(tag.getString("HiveWorld"));
+			try {
+				hiveWorld = world.getServer().getWorld(RegistryKey.of(Registry.DIMENSION, worldID));
+			}
+			catch (Exception e) {
+				BetterEnd.LOGGER.warning("Silk Moth Hive World {} is missing!", worldID);
+				hivePos = null;
+			}
+		}
+	}
 
 	@Override
 	protected void initGoals() {
+		this.goalSelector.add(1, new ReturnToHiveGoal());
 		this.goalSelector.add(2, new AnimalMateGoal(this, 1.0D));
 		this.goalSelector.add(5, new FollowParentGoal(this, 1.25D));
 		this.goalSelector.add(8, new WanderAroundGoal());
@@ -118,23 +161,25 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 			this.setControls(EnumSet.of(Goal.Control.MOVE));
 		}
 
+		@Override
 		public boolean canStart() {
 			return SilkMothEntity.this.navigation.isIdle() && SilkMothEntity.this.random.nextInt(10) == 0;
 		}
 
+		@Override
 		public boolean shouldContinue() {
 			return SilkMothEntity.this.navigation.isFollowingPath();
 		}
 
+		@Override
 		public void start() {
 			Vec3d vec3d = this.getRandomLocation();
 			if (vec3d != null) {
 				try {
-					SilkMothEntity.this.navigation.startMovingAlong(SilkMothEntity.this.navigation.findPathTo((BlockPos) (new BlockPos(vec3d)), 1), 1.0D);
+					SilkMothEntity.this.navigation.startMovingAlong(SilkMothEntity.this.navigation.findPathTo(new BlockPos(vec3d), 1), 1.0D);
 				}
 				catch (Exception e) {}
 			}
-
 		}
 
 		@Nullable
@@ -142,6 +187,51 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 			Vec3d vec3d3 = SilkMothEntity.this.getRotationVec(0.0F);
 			Vec3d vec3d4 = TargetFinder.findAirTarget(SilkMothEntity.this, 8, 7, vec3d3, 1.5707964F, 2, 1);
 			return vec3d4 != null ? vec3d4 : TargetFinder.findGroundTarget(SilkMothEntity.this, 8, 4, -2, vec3d3, 1.5707963705062866D);
+		}
+	}
+	
+	class ReturnToHiveGoal extends Goal {
+		ReturnToHiveGoal() {
+			this.setControls(EnumSet.of(Goal.Control.MOVE));
+		}
+		
+		@Override
+		public boolean canStart() {
+			return SilkMothEntity.this.hivePos != null
+					&& SilkMothEntity.this.hiveWorld == SilkMothEntity.this.world
+					&& SilkMothEntity.this.navigation.isIdle()
+					&& SilkMothEntity.this.random.nextInt(16) == 0
+					&& SilkMothEntity.this.getPos().squaredDistanceTo(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) < 32;
+		}
+		
+		@Override
+		public boolean shouldContinue() {
+			return SilkMothEntity.this.navigation.isFollowingPath() && world.getBlockState(entrance).isAir();
+		}
+		
+		@Override
+		public void start() {
+			BlockState state = SilkMothEntity.this.world.getBlockState(SilkMothEntity.this.hivePos);
+			if (!state.isOf(EndBlocks.SILK_MOTH_NEST)) {
+				SilkMothEntity.this.hivePos = null;
+			}
+			try {
+				entrance = SilkMothEntity.this.hivePos.offset(state.get(SilkMothNestBlock.FACING));
+				SilkMothEntity.this.navigation.startMovingAlong(SilkMothEntity.this.navigation.findPathTo(entrance, 1), 1.0D);
+			}
+			catch (Exception e) {}
+		}
+		
+		@Override
+		public void tick() {
+			super.tick();
+			double dx = Math.abs(SilkMothEntity.this.entrance.getX() - SilkMothEntity.this.getX());
+			double dy = Math.abs(SilkMothEntity.this.entrance.getY() - SilkMothEntity.this.getY());
+			double dz = Math.abs(SilkMothEntity.this.entrance.getZ() - SilkMothEntity.this.getZ());
+			if (dx + dy + dz < 1) {
+				SilkMothEntity.this.world.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BLOCK_BEEHIVE_ENTER, SoundCategory.BLOCKS, 1, 1);
+				SilkMothEntity.this.remove();
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -13,7 +14,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -22,14 +26,18 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.basis.BaseBlock;
 import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.entity.SilkMothEntity;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.registry.EndEntities;
 import ru.betterend.util.BlocksHelper;
 
 public class SilkMothNestBlock extends BaseBlock implements IRenderTypeable {
@@ -39,7 +47,7 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTypeable {
 	private static final VoxelShape BOTTOM = createCuboidShape(0, 0, 0, 16, 16, 16);
 	
 	public SilkMothNestBlock() {
-		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sounds(BlockSoundGroup.WOOL).nonOpaque());
+		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sounds(BlockSoundGroup.WOOL).nonOpaque().ticksRandomly());
 		this.setDefaultState(getDefaultState().with(ACTIVE, true));
 	}
 	
@@ -102,5 +110,30 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTypeable {
 			BlocksHelper.setWithUpdate(world, pos.up(), Blocks.AIR);
 		}
 		super.onBreak(world, pos, state, player);
+	}
+	
+	@Override
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		if (!state.get(ACTIVE)) {
+			return;
+		}
+		if (random.nextInt(16) > 0) {
+			return;
+		}
+		Direction dir = state.get(FACING);
+		BlockPos spawn = pos.offset(dir);
+		if (!world.getBlockState(spawn).isAir()) {
+			return;
+		}
+		int count = world.getEntitiesByType(EndEntities.SILK_MOTH, new Box(pos).expand(16), (entity) -> { return true; }).size();
+		if (count > 8) {
+			return;
+		}
+		SilkMothEntity moth = new SilkMothEntity(EndEntities.SILK_MOTH, world);
+		moth.refreshPositionAndAngles(spawn.getX() + 0.5, spawn.getY() + 0.5, spawn.getZ() + 0.5, dir.asRotation(), 0);
+		moth.setVelocity(new Vec3d(dir.getOffsetX() * 0.4, 0, dir.getOffsetZ() * 0.4));
+		moth.setHive(world, pos);
+		world.spawnEntity(moth);
+		world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.BLOCKS, 1, 1);
 	}
 }

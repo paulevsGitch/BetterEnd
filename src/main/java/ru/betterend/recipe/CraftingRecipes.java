@@ -187,6 +187,8 @@ public class CraftingRecipes {
 			.addMaterial('S', Items.STICK)
 			.addMaterial('L', EndItems.LEATHER_STRIPE)
 			.build();
+		
+		GridRecipe.make("fiber_string", Items.STRING).setOutputCount(6).setShape("#", "#", "#").addMaterial('#', EndItems.SILK_FIBER).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

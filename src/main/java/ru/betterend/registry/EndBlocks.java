@@ -201,15 +201,15 @@ public class EndBlocks {
 	public static final WoodenMaterial CAPSACIS = new WoodenMaterial("capsacis", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
 	
 	// Small ecosystem tree
-	public static final WoodenMaterial INANIS = new WoodenMaterial("inanis", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
+	//public static final WoodenMaterial INANIS = new WoodenMaterial("inanis", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
 	
 	// Tree from Yuki's ide
-	public static final Block CEMINUS_SAPLING = registerBlock("ceminus_sapling", new UmbrellaTreeSaplingBlock());
-	public static final Block CEMINUS_GRID = registerBlock("ceminus_grid", new UmbrellaTreeMembraneBlock());
-	public static final WoodenMaterial CEMINUS = new WoodenMaterial("ceminus", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
+	//public static final Block CEMINUS_SAPLING = registerBlock("ceminus_sapling", new UmbrellaTreeSaplingBlock());
+	//public static final Block CEMINUS_GRID = registerBlock("ceminus_grid", new UmbrellaTreeMembraneBlock());
+	//public static final WoodenMaterial CEMINUS = new WoodenMaterial("ceminus", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
 	
 	// For megacolonies
-	public static final Block VOID_COLONY_MEMBRANE = registerBlock("void_colony_membrane", new UmbrellaTreeMembraneBlock());
+	//public static final Block VOID_COLONY_MEMBRANE = registerBlock("void_colony_membrane", new UmbrellaTreeMembraneBlock());
 	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new UmbrellaMossBlock());

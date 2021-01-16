@@ -70,6 +70,7 @@ public class EndItems {
 	public final static Item ENCHANTED_PETAL = registerItem("enchanted_petal", new EnchantedPetalItem());
 	public final static Item LEATHER_STRIPE = registerItem("leather_stripe");
 	public final static Item LEATHER_WRAPPED_STICK = registerItem("leather_wrapped_stick");
+	public final static Item SILK_FIBER = registerItem("silk_fiber");
 	
 	// Armor //
 	public static final Item TERMINITE_HELMET = registerItem("terminite_helmet", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.HEAD, makeItemSettings()));

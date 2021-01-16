@@ -6,8 +6,10 @@ import java.util.Random;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Flutterer;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.TargetFinder;
@@ -22,9 +24,11 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.world.ServerWorld;
@@ -43,7 +47,9 @@ import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.SilkMothNestBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
+import ru.betterend.registry.EndItems;
 import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.MHelper;
 
 public class SilkMothEntity extends AnimalEntity implements Flutterer {
 	private BlockPos hivePos;
@@ -150,6 +156,23 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
 		return EndEntities.SILK_MOTH.create(world);
+	}
+	
+	@Override
+	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
+		int minCount = 0;
+		int maxCount = 1;
+		if (causedByPlayer && this.attackingPlayer != null) {
+			int looting = EnchantmentHelper.getLooting(this.attackingPlayer);
+			minCount += looting;
+			maxCount += looting;
+			if (maxCount > 2) {
+				maxCount = 2;
+			}
+		}
+		int count = minCount < maxCount ? MHelper.randRange(minCount, maxCount, random) : maxCount;
+		ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(EndItems.SILK_FIBER, count));
+		this.world.spawnEntity(drop);
 	}
 	
 	public static boolean canSpawn(EntityType<SilkMothEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

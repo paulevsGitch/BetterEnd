@@ -197,7 +197,7 @@ public class EndBlocks {
 	public static final Block CAPSACIS_SAPLING = registerBlock("capsacis_sapling", new UmbrellaTreeSaplingBlock());
 	public static final Block CAPSACIS_CAP_BLACK = registerBlock("capsacis_cap_black", new CapsacisCapBlock(MaterialColor.BLACK));
 	public static final Block CAPSACIS_CAP_WHITE = registerBlock("capsacis_cap_white", new CapsacisCapBlock(MaterialColor.WHITE));
-	public static final Block CAPSACIS_CAP_MAGENTA = registerBlock("capsacis_cap_magenta", new CapsacisCapBlock(MaterialColor.MAGENTA));
+	public static final Block CAPSACIS_CAP_PURPLE = registerBlock("capsacis_cap_purple", new CapsacisCapBlock(MaterialColor.MAGENTA));
 	public static final WoodenMaterial CAPSACIS = new WoodenMaterial("capsacis", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
 	
 	// Small ecosystem tree

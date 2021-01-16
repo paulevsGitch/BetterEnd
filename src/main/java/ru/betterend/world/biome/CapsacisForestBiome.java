@@ -2,6 +2,7 @@ package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
 public class CapsacisForestBiome extends EndBiome {
@@ -13,6 +14,7 @@ public class CapsacisForestBiome extends EndBiome {
 				.setFoliageColor(71, 45, 120)
 				.setFogColor(78, 71, 92)
 				.setFogDensity(1.5F)
+				.addFeature(EndFeatures.CAPSACIS)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

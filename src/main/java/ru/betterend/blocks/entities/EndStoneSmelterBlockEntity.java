@@ -1,15 +1,9 @@
 package ru.betterend.blocks.entities;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -23,15 +17,9 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.recipe.BlastingRecipe;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeFinder;
-import net.minecraft.recipe.RecipeInputProvider;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.RecipeUnlocker;
+import net.minecraft.recipe.*;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -47,11 +35,15 @@ import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.EndBlockEntities;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider, Tickable {
 
 	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
-	private static final int[] SIDE_SLOTS = new int[] { 3 };
+	private static final int[] SIDE_SLOTS = new int[] { 1, 2 };
 	private static final Map<Item, Integer> AVAILABLE_FUELS = Maps.newHashMap();
 	
 	private final Object2IntOpenHashMap<Identifier> recipesUsed;
@@ -66,7 +58,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	public EndStoneSmelterBlockEntity() {
 		super(EndBlockEntities.END_STONE_SMELTER);
 		this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
-		this.recipesUsed = new Object2IntOpenHashMap<Identifier>();
+		this.recipesUsed = new Object2IntOpenHashMap<>();
 		 this.propertyDelegate = new PropertyDelegate() {
 		 	public int get(int index) {
 		 		switch(index) {
@@ -167,6 +159,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	}
 	
 	protected int getSmeltTime() {
+		assert this.world != null;
 		int smeltTime = this.world.getRecipeManager().getFirstMatch(AlloyingRecipe.TYPE, this, world)
 				.map(AlloyingRecipe::getSmeltTime).orElse(0);
 		if (smeltTime == 0) {
@@ -178,10 +171,9 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	}
 	
 	public void dropExperience(PlayerEntity player) {
+		assert world != null;
 		List<Recipe<?>> list = Lists.newArrayList();
-		ObjectIterator<Entry<Identifier>> usedRecipes = this.recipesUsed.object2IntEntrySet().iterator();
-		while(usedRecipes.hasNext()) {
-			Entry<Identifier> entry = usedRecipes.next();
+		for (Entry<Identifier> entry : this.recipesUsed.object2IntEntrySet()) {
 			world.getRecipeManager().get(entry.getKey()).ifPresent((recipe) -> {
 				list.add(recipe);
 				if (recipe instanceof AlloyingRecipe) {
@@ -213,6 +205,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
+		assert this.world != null;
 		if (this.world.getBlockEntity(this.pos) != this) {
 			return false;
 		} else {
@@ -243,10 +236,11 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 		}
 
 		boolean burning = this.isBurning();
+		assert this.world != null;
 		if (!this.world.isClient) {
 			ItemStack fuel = this.inventory.get(2);
 			if (!burning && (fuel.isEmpty() || inventory.get(0).isEmpty() && inventory.get(1).isEmpty())) {
-				if (!burning && smeltTime > 0) {
+				if (smeltTime > 0) {
 					this.smeltTime = MathHelper.clamp(smeltTime - 2, 0, smeltTimeTotal);
 				}
 			} else {
@@ -294,7 +288,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	
 	protected boolean canAcceptRecipeOutput(Recipe<?> recipe) {
 		if (recipe == null) return false;
-		boolean validInput = false;
+		boolean validInput;
 		if (recipe instanceof AlloyingRecipe) {
 			validInput = !inventory.get(0).isEmpty() &&
 					!inventory.get(1).isEmpty();
@@ -336,6 +330,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 			output.increment(result.getCount());
 		}
 
+		assert this.world != null;
 		if (!this.world.isClient) {
 			this.setLastRecipe(recipe);
 		}
@@ -354,9 +349,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 
 	@Override
 	public void provideRecipeInputs(RecipeFinder finder) {
-		Iterator<ItemStack> inventory = this.inventory.iterator();
-		while(inventory.hasNext()) {
-			ItemStack itemStack = inventory.next();
+		for (ItemStack itemStack : this.inventory) {
 			finder.addItem(itemStack);
 		}
 	}
@@ -392,9 +385,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	@Override
 	public boolean canExtract(int slot, ItemStack stack, Direction dir) {
 		if (dir == Direction.DOWN && slot == 2) {
-			if (stack.getItem() != Items.BUCKET) {
-				return false;
-			}
+			return stack.getItem() == Items.BUCKET;
 		}
 		return true;
 	}
@@ -418,9 +409,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 		this.smeltTime = tag.getShort("SmeltTime");
 		this.smeltTimeTotal = tag.getShort("SmeltTimeTotal");
 		CompoundTag compoundTag = tag.getCompound("RecipesUsed");
-		Iterator<String> recipes = compoundTag.getKeys().iterator();
-		while(recipes.hasNext()) {
-			String id = recipes.next();
+		for (String id : compoundTag.getKeys()) {
 			this.recipesUsed.put(new Identifier(id), compoundTag.getInt(id));
 		}
 	}
@@ -434,9 +423,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 		tag.putShort("SmeltTimeTotal", (short) smeltTimeTotal);
 		Inventories.toTag(tag, inventory);
 		CompoundTag usedRecipes = new CompoundTag();
-		this.recipesUsed.forEach((identifier, integer) -> {
-			usedRecipes.putInt(identifier.toString(), integer);
-		});
+		this.recipesUsed.forEach((identifier, integer) -> usedRecipes.putInt(identifier.toString(), integer));
 		tag.put("RecipesUsed", usedRecipes);
 		
 		return tag;
@@ -445,7 +432,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	public boolean isValid(int slot, ItemStack stack) {
 		if (slot == 3) {
 			return false;
-		} else if (slot != 0 || slot != 1) {
+		} else if (slot == 0 || slot == 1) {
 			return true;
 		} else {
 			ItemStack itemStack = this.inventory.get(2);
@@ -458,16 +445,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	}
 	
 	public static void registerFuel(ItemConvertible fuel, int time) {
-		if (AVAILABLE_FUELS.containsKey(fuel)) {
-			AVAILABLE_FUELS.replace(fuel.asItem(), time);
-		} else {
-			AVAILABLE_FUELS.put(fuel.asItem(), time);
-		}
-	}
-	
-	public static void registerFuel(Tag<Item> tag, int time) {
-		Iterator<Item> tagItems = tag.values().iterator();
-		tagItems.forEachRemaining(item -> registerFuel(item, time));
+		AVAILABLE_FUELS.put(fuel.asItem(), time);
 	}
 
 	public static Map<Item, Integer> availableFuels() {

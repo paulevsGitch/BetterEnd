@@ -18,7 +18,6 @@ import ru.betterend.util.MHelper;
 import ru.betterend.util.SplineHelper;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFFlatWave;
-import ru.betterend.util.sdf.operator.SDFScale;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFTranslate;
 import ru.betterend.util.sdf.operator.SDFUnion;
@@ -57,7 +56,7 @@ public class CapsacisTreeFeature extends DefaultFeature {
 			return woodState;
 		});
 		
-		SDF cap = makeCap(height * 0.2F, height * 0.1F, random, capState);
+		SDF cap = makeCap(height * 0.2F, height * 0.25F, random, capState);
 		
 		sdf = new SDFUnion().setSourceA(sdf).setSourceB(cap);
 		makeRoots(world, center, height * 0.4F, random, woodState);
@@ -79,7 +78,7 @@ public class CapsacisTreeFeature extends DefaultFeature {
 		cone = new SDFTranslate().setTranslate(0, radius * 0.3F, 0).setSource(cone);
 		cap = new SDFSmoothUnion().setRadius(5).setSourceA(cap).setSourceB(cone);
 		SDF upperSphere = new SDFSphere().setRadius(radius * 0.4F).setBlock(capState);
-		upperSphere = new SDFTranslate().setTranslate(0, radius * 0.3F, 0).setSource(upperSphere);
+		upperSphere = new SDFTranslate().setTranslate(0, radius * 0.6F, 0).setSource(upperSphere);
 		cap = new SDFSmoothUnion().setRadius(5).setSourceA(cap).setSourceB(upperSphere);
 		cap = new SDFFlatWave().setAngle(angle).setRaysCount(count).setIntensity(1F).setSource(cap);
 		

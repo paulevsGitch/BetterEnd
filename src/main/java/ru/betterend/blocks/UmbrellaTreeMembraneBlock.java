@@ -32,7 +32,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
 public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTypeable, BlockPatterned {
-	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
+	public static final IntProperty COLOR = BlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public UmbrellaTreeMembraneBlock() {

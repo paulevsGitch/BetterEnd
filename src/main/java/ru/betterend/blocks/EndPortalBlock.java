@@ -73,8 +73,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
 				ServerPlayerEntity player = (ServerPlayerEntity) entity;
-				teleportPlayer(player, destination, exitPos);
-				
+				this.teleportPlayer(player, destination, exitPos);
 			} else {
 				TeleportingEntity teleEntity = (TeleportingEntity) entity;
 				teleEntity.beSetExitPos(exitPos);
@@ -85,32 +84,14 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			}
 		}
 	}
-	
-	private void teleportPlayer(ServerPlayerEntity player, ServerWorld destination, BlockPos pos) {
-		((TeleportingEntity) player).beSetExitPos(pos);
+
+	private void teleportPlayer(ServerPlayerEntity player, ServerWorld destination, BlockPos exitPos) {
 		if (player.isCreative()) {
-			player.teleport(destination, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
-		}
-		else {
-			if (destination.getRegistryKey() == World.OVERWORLD) {
-				//player.teleport(destination, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
-				//player.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
-				//player.moveToWorld(destination);
-				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-				//player.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.yaw, player.pitch);
-				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-				
-				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-				
-				// The most safe way
-				player.moveToWorld(destination);
-				
-				//player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			}
-			else {
-				player.moveToWorld(destination);
-				player.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			}
+			player.teleport(destination, exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5, player.yaw, player.pitch);
+		} else {
+			TeleportingEntity teleEntity = (TeleportingEntity) player;
+			teleEntity.beSetExitPos(exitPos);
+			player.moveToWorld(destination);
 		}
 		player.resetNetherPortalCooldown();
 	}

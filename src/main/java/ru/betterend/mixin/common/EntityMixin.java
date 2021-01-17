@@ -18,8 +18,7 @@ import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
-	private BlockPos exitPos;
-	
+
 	@Shadow
 	public float yaw;
 	@Shadow
@@ -41,10 +40,11 @@ public abstract class EntityMixin implements TeleportingEntity {
 	
 	@Shadow
 	protected abstract TeleportTarget getTeleportTarget(ServerWorld destination);
-	
+
+	private BlockPos exitPos;
+
 	@Inject(method = "moveToWorld", at = @At("HEAD"), cancellable = true)
 	public void be_moveToWorld(ServerWorld destination, CallbackInfoReturnable<Entity> info) {
-		Entity entity = (Entity) (Object) this;
 		if (!removed && beCanTeleport() && world instanceof ServerWorld) {
 			this.detach();
 			this.world.getProfiler().push("changeDimension");
@@ -52,7 +52,7 @@ public abstract class EntityMixin implements TeleportingEntity {
 			TeleportTarget teleportTarget = this.getTeleportTarget(destination);
 			if (teleportTarget != null) {
 				this.world.getProfiler().swap("reloading");
-				entity = this.getType().create(destination);
+				Entity entity = this.getType().create(destination);
 				if (entity != null) {
 					entity.copyFrom(Entity.class.cast(this));
 					entity.refreshPositionAndAngles(teleportTarget.position.x, teleportTarget.position.y, teleportTarget.position.z, teleportTarget.yaw, entity.pitch);
@@ -64,9 +64,8 @@ public abstract class EntityMixin implements TeleportingEntity {
 				((ServerWorld) world).resetIdleTimeout();
 				destination.resetIdleTimeout();
 				this.world.getProfiler().pop();
-				beResetTeleport();
+				this.beResetExitPos();
 				info.setReturnValue(entity);
-				info.cancel();
 			}
 		}
 	}
@@ -75,29 +74,21 @@ public abstract class EntityMixin implements TeleportingEntity {
 	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<TeleportTarget> info) {
 		if (beCanTeleport()) {
 			info.setReturnValue(new TeleportTarget(new Vec3d(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getVelocity(), yaw, pitch));
-			beResetTeleport();
-			info.cancel();
 		}
 	}
-	
-	@Shadow
-	protected void setRotation(float yaw, float pitch) {}
 
 	@Override
 	public void beSetExitPos(BlockPos pos) {
-		exitPos = pos.toImmutable();
+		this.exitPos = pos.toImmutable();
 	}
-	
-	public void beResetTeleport() {
-		exitPos = null;
+
+	@Override
+	public void beResetExitPos() {
+		this.exitPos = null;
 	}
-	
+
 	@Override
 	public boolean beCanTeleport() {
-		return exitPos != null;
+		return this.exitPos != null;
 	}
-	
-	public BlockPos beGetExit() {
-		return exitPos;
-	};
 }

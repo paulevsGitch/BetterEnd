@@ -13,11 +13,16 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 
 public class CapsacisCapBlock extends BaseBlock {
-	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
+	public static final IntProperty COLOR = BlockProperties.COLOR;
 	
-	public CapsacisCapBlock(MaterialColor color) {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK).materialColor(color));
+	public CapsacisCapBlock() {
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK).materialColor(MaterialColor.MAGENTA));
+	}
+	
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+		stateManager.add(COLOR);
 	}
 	
 	@Override
@@ -26,10 +31,5 @@ public class CapsacisCapBlock extends BaseBlock {
 		double py = ctx.getBlockPos().getY() * 0.1;
 		double pz = ctx.getBlockPos().getZ() * 0.1;
 		return this.getDefaultState().with(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
-	}
-	
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
-		stateManager.add(COLOR);
 	}
 }

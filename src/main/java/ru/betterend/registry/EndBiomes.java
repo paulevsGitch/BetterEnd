@@ -84,7 +84,7 @@ public class EndBiomes {
 	public static final EndBiome BLOSSOMING_SPIRES = registerBiome(new BiomeBlossomingSpires(), BiomeType.LAND);
 	public static final EndBiome SULPHUR_SPRINGS = registerBiome(new BiomeSulphurSprings(), BiomeType.LAND);
 	public static final EndBiome UMBRELLA_JUNGLE = registerBiome(new BiomeUmbrellaJungle(), BiomeType.LAND);
-	public static final EndBiome CAPSACIS_FOREST = registerBiome(new CapsacisForestBiome(), BiomeType.LAND);
+	public static final EndBiome CAPSACIS_FOREST = registerSubBiome(new CapsacisForestBiome(), CHORUS_FOREST);
 	//public static final EndBiome HANGING_GARDENS = registerBiome(new HangingGardensBiome(), BiomeType.LAND);
 	
 	// Better End Void

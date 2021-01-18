@@ -53,7 +53,7 @@ public class CapsacisTreeFeature extends DefaultFeature {
 			return woodState;
 		});
 		
-		final float scale = config == null ? 1 : MHelper.randRange(1, 3, random);
+		final float scale = config == null ? 1 : MHelper.randRange(1, 1.5F, random);
 		final float offset = height * 0.2F;
 		final float radius = height * 0.25F;
 		final float heightScale = radius * 2 * scale;
@@ -62,8 +62,12 @@ public class CapsacisTreeFeature extends DefaultFeature {
 		SDF cap = makeCap(offset, radius, count, angle, capState);
 		
 		sdf = new SDFUnion().setSourceA(sdf).setSourceB(cap);
+		SDF roots = makeRoots(world, center, height * 0.4F, random, woodState);
+		if (roots != null) {
+			sdf = new SDFUnion().setSourceA(sdf).setSourceB(roots);
+		}
 		sdf = new SDFScale().setScale(scale).setSource(sdf);
-		makeRoots(world, center, height * 0.4F, random, woodState);
+		
 		sdf.addPostProcess((info) -> {
 			if (EndBlocks.CAPSACIS.isTreeLog(info.getStateUp()) && EndBlocks.CAPSACIS.isTreeLog(info.getStateDown())) {
 				return logState;
@@ -95,9 +99,22 @@ public class CapsacisTreeFeature extends DefaultFeature {
 		return cap;
 	}
 	
-	private void makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random, BlockState state) {
-		int count = (int) (radius);
+	private SDF makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random, BlockState state) {
+		int count = (int) (radius * 0.7F);
+		SDF roots = null;
 		for (int i = 0; i < count; i++) {
+			float angle = (float) i / (float) count * MHelper.PI2;
+			float scale = radius * MHelper.randRange(0.85F, 1.15F, random);
+			
+			List<Vector3f> branch = SplineHelper.copySpline(ROOT);
+			SplineHelper.rotateSpline(branch, angle);
+			SplineHelper.scale(branch, scale);
+			SplineHelper.offsetParts(branch, random, 0.5F, 0.7F, 0.5F);
+			SDF sdf = SplineHelper.buildSDF(branch, 2F, 1F, (p) -> { return state; });
+			roots = roots == null ? sdf : new SDFUnion().setSourceA(sdf).setSourceB(roots);
+		}
+		return roots;
+		/*for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2;
 			float scale = radius * MHelper.randRange(0.85F, 1.15F, random);
 			
@@ -109,7 +126,7 @@ public class CapsacisTreeFeature extends DefaultFeature {
 			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(EndTags.GEN_TERRAIN)) {
 				SplineHelper.fillSpline(branch, world, state, pos, REPLACE);
 			}
-		}
+		}*/
 	}
 	
 	static {

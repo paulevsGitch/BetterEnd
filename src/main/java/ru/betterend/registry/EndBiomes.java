@@ -43,7 +43,6 @@ import ru.betterend.world.biome.BiomePaintedMountains;
 import ru.betterend.world.biome.BiomeShadowForest;
 import ru.betterend.world.biome.BiomeSulphurSprings;
 import ru.betterend.world.biome.BiomeUmbrellaJungle;
-import ru.betterend.world.biome.CapsacisForestBiome;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.generator.BELayerRandomSource;
 import ru.betterend.world.generator.BiomePicker;
@@ -84,8 +83,6 @@ public class EndBiomes {
 	public static final EndBiome BLOSSOMING_SPIRES = registerBiome(new BiomeBlossomingSpires(), BiomeType.LAND);
 	public static final EndBiome SULPHUR_SPRINGS = registerBiome(new BiomeSulphurSprings(), BiomeType.LAND);
 	public static final EndBiome UMBRELLA_JUNGLE = registerBiome(new BiomeUmbrellaJungle(), BiomeType.LAND);
-	public static final EndBiome CAPSACIS_FOREST = registerSubBiome(new CapsacisForestBiome(), CHORUS_FOREST);
-	//public static final EndBiome HANGING_GARDENS = registerBiome(new HangingGardensBiome(), BiomeType.LAND);
 	
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);

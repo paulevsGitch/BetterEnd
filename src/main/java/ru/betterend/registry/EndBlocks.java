@@ -20,7 +20,6 @@ import ru.betterend.blocks.BulbVineBlock;
 import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
 import ru.betterend.blocks.BulbVineSeedBlock;
-import ru.betterend.blocks.CapsacisCapBlock;
 import ru.betterend.blocks.CharniaBlock;
 import ru.betterend.blocks.ChorusGrassBlock;
 import ru.betterend.blocks.DenseEmeraldIceBlock;
@@ -192,22 +191,6 @@ public class EndBlocks {
 	
 	public static final Block JELLYSHROOM_CAP_PURPLE = registerBlock("jellyshroom_cap_purple", new JellyshroomCapBlock(217, 142, 255, 164, 0, 255));
 	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
-	
-	// Tree from original concept (+ modifications)
-	public static final Block CAPSACIS_SAPLING = registerBlock("capsacis_sapling", new UmbrellaTreeSaplingBlock());
-	public static final Block CAPSACIS_CAP = registerBlock("capsacis_cap", new CapsacisCapBlock());
-	public static final WoodenMaterial CAPSACIS = new WoodenMaterial("capsacis", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
-	
-	// Small ecosystem tree
-	//public static final WoodenMaterial INANIS = new WoodenMaterial("inanis", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
-	
-	// Tree from Yuki's ide
-	//public static final Block CEMINUS_SAPLING = registerBlock("ceminus_sapling", new UmbrellaTreeSaplingBlock());
-	//public static final Block CEMINUS_GRID = registerBlock("ceminus_grid", new UmbrellaTreeMembraneBlock());
-	//public static final WoodenMaterial CEMINUS = new WoodenMaterial("ceminus", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
-	
-	// For megacolonies
-	//public static final Block VOID_COLONY_MEMBRANE = registerBlock("void_colony_membrane", new UmbrellaTreeMembraneBlock());
 	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new UmbrellaMossBlock());

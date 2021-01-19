@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import ru.betterend.blocks.BlockProperties.LumecornShape;
 import ru.betterend.blocks.LumecornBlock;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.features.DefaultFeature;
@@ -19,6 +20,8 @@ import ru.betterend.world.features.DefaultFeature;
 public class Lumecorn extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
+		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
+		
 		int height = MHelper.randRange(3, 6, random);
 		Mutable mut = new Mutable().set(pos);
 		for (int i = 1; i < height; i++) {

@@ -7,6 +7,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
+import ru.betterend.particle.FireflyParticle;
 import ru.betterend.particle.InfusionParticle;
 import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.particle.ParticleBlackSpore;
@@ -29,6 +30,7 @@ public class EndParticles {
 	public static final DefaultParticleType BLACK_SPORE = register("black_spore");
 	public static final DefaultParticleType TENANEA_PETAL = register("tenanea_petal");
 	public static final DefaultParticleType JUNGLE_SPORE = register("jungle_spore");
+	public static final DefaultParticleType FIREFLY = register("firefly");
 	
 	public static void register() {
 		ParticleFactoryRegistry.getInstance().register(GLOWING_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
@@ -41,6 +43,7 @@ public class EndParticles {
 		ParticleFactoryRegistry.getInstance().register(BLACK_SPORE, ParticleBlackSpore.FactoryBlackSpore::new);
 		ParticleFactoryRegistry.getInstance().register(TENANEA_PETAL, ParticleTenaneaPetal.FactoryTenaneaPetal::new);
 		ParticleFactoryRegistry.getInstance().register(JUNGLE_SPORE, ParticleJungleSpore.FactoryJungleSpore::new);
+		ParticleFactoryRegistry.getInstance().register(FIREFLY, FireflyParticle.FireflyParticleFactory::new);
 	}
 	
 	private static DefaultParticleType register(String name) {

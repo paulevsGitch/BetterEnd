@@ -3,6 +3,7 @@ package ru.betterend.world.biome;
 import net.minecraft.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 
 public class GlowingGrasslandsBiome extends EndBiome {
@@ -10,6 +11,7 @@ public class GlowingGrasslandsBiome extends EndBiome {
 		super(new BiomeDefinition("glowing_grasslands")
 				.setFogColor(99, 228, 247)
 				.setFogDensity(1.3F)
+				.setParticles(EndParticles.FIREFLY, 0.001F)
 				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.setSurface(EndBlocks.END_MOSS)
 				.addFeature(EndFeatures.END_LAKE_RARE)

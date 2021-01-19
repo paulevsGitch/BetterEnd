@@ -4,6 +4,18 @@
 			{
 				"sprite": "betterend:block/lumecorn_light_1",
 				"material": "betterend:glow_inc"
+			},
+			{
+				"sprite": "betterend:block/lumecorn_leaf_2",
+				"material": "betterend:waving_floor"
+			},
+			{
+				"sprite": "betterend:block/lumecorn_leaf_1",
+				"material": "betterend:waving_floor"
+			},
+			{
+				"sprite": "betterend:block/lumecorn_big_petal",
+				"material": "betterend:waving"
 			}
 		]
 	}

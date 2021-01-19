@@ -1,0 +1,10 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/lumecorn_light_1",
+				"material": "betterend:glow_inc"
+			}
+		]
+	}
+}

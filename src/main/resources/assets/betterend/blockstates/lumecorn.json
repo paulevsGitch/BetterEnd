@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "shape=light1": { "model": "betterend:block/lumecorn_light_1" },
+        "shape=light2": { "model": "betterend:block/lumecorn_light_2" },
+        "shape=light3": { "model": "betterend:block/lumecorn_light_3" },
+        "shape=middle": { "model": "betterend:block/lumecon_middle_big" },
+        "shape=bottom_big": { "model": "betterend:block/lumecorn_bottom_big" },
+        "shape=bottom_small": { "model": "betterend:block/lumecorn_bottom_small" }
+    }
+}

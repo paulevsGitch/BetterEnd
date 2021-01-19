@@ -119,4 +119,35 @@ public class BlockProperties {
 			return name;
 		}
 	}
+	
+	public static enum LumecornShape implements StringIdentifiable {
+		LIGHT1("light1", 15),
+		LIGHT2("light2", 14),
+		LIGHT3("light3", 13),
+		MIDDLE("middle", 0),
+		BOTTOM_BIG("bottom_big", 0),
+		BOTTOM_SMALL("bottom_small", 0);
+		
+		private final String name;
+		private final int light;
+		
+		LumecornShape(String name, int light) {
+			this.name = name;
+			this.light = light;
+		}
+
+		@Override
+		public String asString() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
+		
+		public int getLight() {
+			return light;
+		}
+	}
 }

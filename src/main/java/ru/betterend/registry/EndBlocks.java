@@ -56,6 +56,7 @@ import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.blocks.LacugroveSaplingBlock;
 import ru.betterend.blocks.LanceleafBlock;
 import ru.betterend.blocks.LanceleafSeedBlock;
+import ru.betterend.blocks.LumecornBlock;
 import ru.betterend.blocks.MengerSpongeBlock;
 import ru.betterend.blocks.MengerSpongeWetBlock;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
@@ -220,6 +221,8 @@ public class EndBlocks {
 	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new FurBlock(GLOWING_PILLAR_SEED, 15, 3));
 	
 	public static final Block SMALL_JELLYSHROOM = registerBlock("small_jellyshroom", new SmallJellyshroomBlock());
+	
+	public static final Block LUMECORN = registerBlock("lumecorn", new LumecornBlock());
 	
 	// Crops
 	public static final Block BLOSSOM_BERRY = registerBlock("blossom_berry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, PINK_MOSS));

@@ -194,9 +194,9 @@ public class CraftingRecipes {
 		GridRecipe.make("thalassium_ingot_from_block", EndItems.THALASSIUM_INGOT).setOutputCount(9).setList("#").addMaterial('#', EndBlocks.THALASSIUM_BLOCK).build();
 		
 		GridRecipe.make("thalassium_axe", EndItems.THALASSIUM_AXE).setShape("##", "#I", " I").addMaterial('#', EndItems.THALASSIUM_INGOT).addMaterial('I', Items.STICK).build();
-		GridRecipe.make("thalassium_axe", EndItems.THALASSIUM_HOE).setShape("##", " I", " I").addMaterial('#', EndItems.THALASSIUM_INGOT).addMaterial('I', Items.STICK).build();
-		GridRecipe.make("thalassium_axe", EndItems.THALASSIUM_PICKAXE).setShape("###", " I ", " I ").addMaterial('#', EndItems.THALASSIUM_INGOT).addMaterial('I', Items.STICK).build();
-		GridRecipe.make("thalassium_axe", EndItems.THALASSIUM_SWORD).setShape("#", "#", "I").addMaterial('#', EndItems.THALASSIUM_INGOT).addMaterial('I', Items.STICK).build();
+		GridRecipe.make("thalassium_hoe", EndItems.THALASSIUM_HOE).setShape("##", " I", " I").addMaterial('#', EndItems.THALASSIUM_INGOT).addMaterial('I', Items.STICK).build();
+		GridRecipe.make("thalassium_pickaxe", EndItems.THALASSIUM_PICKAXE).setShape("###", " I ", " I ").addMaterial('#', EndItems.THALASSIUM_INGOT).addMaterial('I', Items.STICK).build();
+		GridRecipe.make("thalassium_sword", EndItems.THALASSIUM_SWORD).setShape("#", "#", "I").addMaterial('#', EndItems.THALASSIUM_INGOT).addMaterial('I', Items.STICK).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

@@ -1,5 +1,6 @@
 package ru.betterend.registry;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
@@ -86,6 +87,7 @@ import ru.betterend.blocks.UmbrellaTreeClusterEmptyBlock;
 import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.blocks.UmbrellaTreeSaplingBlock;
 import ru.betterend.blocks.VentBubbleColumnBlock;
+import ru.betterend.blocks.basis.BaseBlock;
 import ru.betterend.blocks.basis.EndCropBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
 import ru.betterend.blocks.basis.EndOreBlock;
@@ -278,6 +280,7 @@ public class EndBlocks {
 	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new SilkMothNestBlock()); 
 	
 	// Ores //
+	public static final Block THALASSIUM_ORE = registerBlock("thalassium_ore", new BaseBlock(FabricBlockSettings.copyOf(Blocks.END_STONE)));
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new EndOreBlock(EndItems.ENDER_SHARD, 1, 3, 5));
 	public static final Block AMBER_ORE = registerBlock("amber_ore", new EndOreBlock(EndItems.RAW_AMBER, 1, 2, 4));
 	

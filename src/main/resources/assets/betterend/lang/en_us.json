@@ -574,5 +574,13 @@
 	"block.betterend.vaiolush_fern": "Vaiolush Fern",
 	"entity.betterend.silk_moth": "Silk Moth",
 	"item.betterend.silk_fiber": "Silk Fiber",
-	"item.betterend.spawn_egg_silk_moth": "Silk Moth Spawn Egg"
+	"item.betterend.spawn_egg_silk_moth": "Silk Moth Spawn Egg",
+	
+	"block.betterend.thalassium_ore": "Thalassium Ore",
+	"item.betterend.thalassium_axe": "Thalassium Axe",
+	"item.betterend.thalassium_hoe": "Thalassium Hoe",
+	"item.betterend.thalassium_ingot": "Thalassium Ingot",
+	"item.betterend.thalassium_pickaxe": "Thalassium Pickaxe",
+	"item.betterend.thalassium_shovel": "Thalassium Shovel",
+	"item.betterend.thalassium_sword": "Thalassium Sword"
 }

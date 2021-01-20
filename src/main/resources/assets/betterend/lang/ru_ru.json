@@ -576,5 +576,13 @@
 	"block.betterend.vaiolush_fern": "Пышнопёрый папоротник",
 	"entity.betterend.silk_moth": "Шелковичная моль",
 	"item.betterend.silk_fiber": "Шёлковое волокно",
-	"item.betterend.spawn_egg_silk_moth": "Яйцо призыва шелковичной моли"
+	"item.betterend.spawn_egg_silk_moth": "Яйцо призыва шелковичной моли",
+	
+	"block.betterend.thalassium_ore": "Талласиевая руда",
+	"item.betterend.thalassium_axe": "Талласиевый топор",
+	"item.betterend.thalassium_hoe": "Талласиевая мотыга",
+	"item.betterend.thalassium_ingot": "Талласиевый слиток",
+	"item.betterend.thalassium_pickaxe": "Талласиевая кирка",
+	"item.betterend.thalassium_shovel": "Талласиевая лопата",
+	"item.betterend.thalassium_sword": "Талласиевый меч"
 }

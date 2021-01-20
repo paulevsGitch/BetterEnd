@@ -566,5 +566,15 @@
 	"item.betterend.blossom_berry": "Цветущая ягода",
 	
 	"biome.betterend.nightshade_redwoods": "Теневой Секвойник",
-	"block.betterend.nightshade_moss": "Теневой мох"
+	"block.betterend.nightshade_moss": "Теневой мох",
+	
+	"biome.betterend.glowing_grasslands": "Светящиеся луга",
+	"block.betterend.blooming_cooksonia": "Цветущая куксония",
+	"block.betterend.fracturn": "Фрактюрн",
+	"block.betterend.lumecorn": "Люмекорн",
+	"block.betterend.salteago": "Сальтеаго",
+	"block.betterend.vaiolush_fern": "Пышнопёрый папоротник",
+	"entity.betterend.silk_moth": "Шелковичная моль",
+	"item.betterend.silk_fiber": "Шёлковое волокно",
+	"item.betterend.spawn_egg_silk_moth": "Яйцо призыва шелковичной моли"
 }

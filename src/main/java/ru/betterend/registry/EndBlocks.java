@@ -206,6 +206,10 @@ public class EndBlocks {
 	public static final Block TWISTED_UMBRELLA_MOSS = registerBlock("twisted_umbrella_moss", new TwistedUmbrellaMossBlock());
 	public static final Block TWISTED_UMBRELLA_MOSS_TALL = registerBlock("twisted_umbrella_moss_tall", new TwistedUmbrellaMossTallBlock());
 	public static final Block JUNGLE_GRASS = registerBlock("jungle_grass", new TerrainPlantBlock(JUNGLE_MOSS));
+	public static final Block BLOOMING_COOKSONIA = registerBlock("blooming_cooksonia", new TerrainPlantBlock(END_MOSS));
+	public static final Block SALTEAGO = registerBlock("salteago", new TerrainPlantBlock(END_MOSS));
+	public static final Block VAIOLUSH_FERN = registerBlock("vaiolush_fern", new TerrainPlantBlock(END_MOSS));
+	public static final Block FRACTURN = registerBlock("fracturn", new TerrainPlantBlock(END_MOSS));
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlueVineSeedBlock());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlueVineBlock());

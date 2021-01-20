@@ -564,5 +564,15 @@
 	"item.betterend.blossom_berry": "Blossom Berry",
 	
 	"biome.betterend.nightshade_redwoods": "Nightshade Redwoods",
-	"block.betterend.nightshade_moss": "Nightshade Moss"
+	"block.betterend.nightshade_moss": "Nightshade Moss",
+	
+	"biome.betterend.glowing_grasslands": "Glowing Grasslands",
+	"block.betterend.blooming_cooksonia": "Blooming Cooksonia",
+	"block.betterend.fracturn": "Fracturn",
+	"block.betterend.lumecorn": "Lumecorn",
+	"block.betterend.salteago": "Salteago",
+	"block.betterend.vaiolush_fern": "Vaiolush Fern",
+	"entity.betterend.silk_moth": "Silk Moth",
+	"item.betterend.silk_fiber": "Silk Fiber",
+	"item.betterend.spawn_egg_silk_moth": "Silk Moth Spawn Egg"
 }

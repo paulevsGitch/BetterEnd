@@ -91,6 +91,13 @@ public class EndFeatures {
 	public static final EndFeature JUNGLE_GRASS = new EndFeature("jungle_grass", new SinglePlantFeature(EndBlocks.JUNGLE_GRASS, 7, 3), 8);
 	public static final EndFeature SMALL_JELLYSHROOM_FLOOR = new EndFeature("small_jellyshroom_floor", new SinglePlantFeature(EndBlocks.SMALL_JELLYSHROOM, 5, 5), 4);
 	public static final EndFeature BLOSSOM_BERRY = new EndFeature("blossom_berry", new SinglePlantFeature(EndBlocks.BLOSSOM_BERRY, 3, 3), 2);
+	public static final EndFeature BLOOMING_COOKSONIA = new EndFeature("blooming_cooksonia", new SinglePlantFeature(EndBlocks.BLOOMING_COOKSONIA, 5), 5);
+	public static final EndFeature SALTEAGO = new EndFeature("salteago", new SinglePlantFeature(EndBlocks.SALTEAGO, 5), 5);
+	public static final EndFeature VAIOLUSH_FERN = new EndFeature("vaiolush_fern", new SinglePlantFeature(EndBlocks.VAIOLUSH_FERN, 5), 5);
+	public static final EndFeature FRACTURN = new EndFeature("fracturn", new SinglePlantFeature(EndBlocks.FRACTURN, 5), 5);
+	public static final EndFeature UMBRELLA_MOSS_RARE = new EndFeature("umbrella_moss_rare", new SinglePlantFeature(EndBlocks.UMBRELLA_MOSS, 3), 2);
+	public static final EndFeature CREEPING_MOSS_RARE = new EndFeature("creeping_moss_rare", new SinglePlantFeature(EndBlocks.CREEPING_MOSS, 3), 2);
+	public static final EndFeature TWISTED_UMBRELLA_MOSS_RARE = new EndFeature("twisted_umbrella_moss_rare", new SinglePlantFeature(EndBlocks.TWISTED_UMBRELLA_MOSS, 3), 2);
 	
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);

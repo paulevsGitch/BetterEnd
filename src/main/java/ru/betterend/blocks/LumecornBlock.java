@@ -46,10 +46,10 @@ public class LumecornBlock extends BaseBlockNotFull implements IRenderTypeable {
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
 		LumecornShape shape = state.get(SHAPE);
-		if (shape == LumecornShape.LIGHT3) {
+		if (shape == LumecornShape.LIGHT_MIDDLE) {
 			return SHAPE_SMALL;
 		}
-		else if (shape == LumecornShape.LIGHT2) {
+		else if (shape == LumecornShape.LIGHT_TOP_MIDDLE) {
 			return SHAPE_MEDIUM;
 		}
 		else {

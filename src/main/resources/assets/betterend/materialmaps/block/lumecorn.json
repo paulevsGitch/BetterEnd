@@ -2,7 +2,19 @@
 	"defaultMap": {
 		"spriteMap": [
 			{
-				"sprite": "betterend:block/lumecorn_light_1",
+				"sprite": "betterend:block/lumecorn_light_bottom",
+				"material": "betterend:glow_inc"
+			},
+			{
+				"sprite": "betterend:block/lumecorn_light_middle",
+				"material": "betterend:glow_inc"
+			},
+			{
+				"sprite": "betterend:block/lumecorn_light_top_middle",
+				"material": "betterend:glow_inc"
+			},
+			{
+				"sprite": "betterend:block/lumecorn_light_top",
 				"material": "betterend:glow_inc"
 			},
 			{

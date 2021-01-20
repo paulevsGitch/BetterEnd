@@ -584,5 +584,6 @@
 	"item.betterend.thalassium_ingot": "Талласиевый слиток",
 	"item.betterend.thalassium_pickaxe": "Талласиевая кирка",
 	"item.betterend.thalassium_shovel": "Талласиевая лопата",
-	"item.betterend.thalassium_sword": "Талласиевый меч"
+	"item.betterend.thalassium_sword": "Талласиевый меч",
+	"block.betterend.thalassium_block": "Талласиевый блок"
 }

@@ -3,6 +3,7 @@ package ru.betterend.recipe;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import ru.betterend.recipe.builders.AlloyingRecipe;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public class AlloyingRecipes {
@@ -33,6 +34,18 @@ public class AlloyingRecipes {
 			.setInput(EndItems.TERMINITE_INGOT, Items.NETHERITE_INGOT)
 			.setOutput(EndItems.AETERNIUM_INGOT, 1)
 			.setExpiriense(4.5F)
+			.setSmeltTime(600)
+			.build();
+		AlloyingRecipe.Builder.create("terminite_ingot_thalassium")
+			.setInput(EndItems.THALASSIUM_INGOT, EndItems.ENDER_DUST)
+			.setOutput(EndItems.TERMINITE_INGOT, 1)
+			.setExpiriense(2.5F)
+			.setSmeltTime(450)
+			.build();
+		AlloyingRecipe.Builder.create("thalassium_ingot")
+			.setInput(EndBlocks.THALASSIUM_ORE, EndBlocks.THALASSIUM_ORE)
+			.setOutput(EndItems.THALASSIUM_INGOT, 3)
+			.setExpiriense(2.1F)
 			.setSmeltTime(600)
 			.build();
 	}

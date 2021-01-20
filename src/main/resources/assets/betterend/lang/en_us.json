@@ -582,5 +582,6 @@
 	"item.betterend.thalassium_ingot": "Thalassium Ingot",
 	"item.betterend.thalassium_pickaxe": "Thalassium Pickaxe",
 	"item.betterend.thalassium_shovel": "Thalassium Shovel",
-	"item.betterend.thalassium_sword": "Thalassium Sword"
+	"item.betterend.thalassium_sword": "Thalassium Sword",
+	"block.betterend.thalassium_block": "Thalassium Block"
 }

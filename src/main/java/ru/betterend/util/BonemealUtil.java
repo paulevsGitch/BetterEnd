@@ -8,9 +8,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
+import net.minecraft.util.Identifier;
+import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.world.biome.EndBiome;
 
 public class BonemealUtil {
+	private static final Map<Identifier, Map<Block, GrassList>> GRASS_BIOMES = Maps.newHashMap();
 	private static final Map<Block, GrassList> GRASS_TYPES = Maps.newHashMap();
 	
 	public static void init() {
@@ -29,6 +33,15 @@ public class BonemealUtil {
 		addBonemealGrass(EndBlocks.JUNGLE_MOSS, EndBlocks.JUNGLE_GRASS);
 		addBonemealGrass(EndBlocks.JUNGLE_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS);
 		addBonemealGrass(EndBlocks.JUNGLE_MOSS, EndBlocks.SMALL_JELLYSHROOM, 0.1F);
+		
+		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.BLOOMING_COOKSONIA);
+		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.VAIOLUSH_FERN);
+		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.FRACTURN);
+		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.SALTEAGO);
+		
+		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.CREEPING_MOSS, 0.1F);
+		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.UMBRELLA_MOSS, 0.1F);
+		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS, 0.1F);
 	}
 	
 	public static void addBonemealGrass(Block terrain, Block plant) {
@@ -44,8 +57,33 @@ public class BonemealUtil {
 		list.addGrass(plant, chance);
 	}
 	
-	public static Block getGrass(Block terrain, Random random) {
-		GrassList list = GRASS_TYPES.get(terrain);
+	public static void addBonemealGrass(EndBiome biome, Block terrain, Block plant) {
+		addBonemealGrass(biome, terrain, plant, 1F);
+	}
+	
+	public static void addBonemealGrass(EndBiome biome, Block terrain, Block plant, float chance) {
+		Map<Block, GrassList> map = GRASS_BIOMES.get(biome.getID());
+		if (map == null) {
+			map = Maps.newHashMap();
+			GRASS_BIOMES.put(biome.getID(), map);
+		}
+		GrassList list = map.get(terrain);
+		if (list == null) {
+			list = new GrassList();
+			map.put(terrain, list);
+		}
+		list.addGrass(plant, chance);
+	}
+	
+	public static Block getGrass(Identifier biomeID, Block terrain, Random random) {
+		Map<Block, GrassList> map = GRASS_BIOMES.get(biomeID);
+		GrassList list = null;
+		if (map != null) {
+			list = map.get(terrain);
+		}
+		else {
+			list = GRASS_TYPES.get(terrain);
+		}
 		return list == null ? null : list.getGrass(random);
 	}
 	

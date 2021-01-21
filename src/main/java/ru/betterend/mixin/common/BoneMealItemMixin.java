@@ -128,7 +128,7 @@ public class BoneMealItemMixin {
 	private BlockState beGetGrassState(World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		block = BonemealUtil.getGrass(block, world.getRandom());
+		block = BonemealUtil.getGrass(EndBiomes.getBiomeID(world.getBiome(pos)), block, world.getRandom());
 		return block == null ? null : block.getDefaultState();
 	}
 	

@@ -121,10 +121,10 @@ public class BlockProperties {
 	}
 	
 	public static enum LumecornShape implements StringIdentifiable {
-		LIGHT_TOP("light_top", 10),
-		LIGHT_TOP_MIDDLE("light_top_middle", 13),
+		LIGHT_TOP("light_top", 15),
+		LIGHT_TOP_MIDDLE("light_top_middle", 15),
 		LIGHT_MIDDLE("light_middle", 15),
-		LIGHT_BOTTOM("light_bottom", 10),
+		LIGHT_BOTTOM("light_bottom", 15),
 		MIDDLE("middle", 0),
 		BOTTOM_BIG("bottom_big", 0),
 		BOTTOM_SMALL("bottom_small", 0);

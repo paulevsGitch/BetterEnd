@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -45,5 +46,10 @@ public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.isOf(EndBlocks.END_MOSS) || state.isOf(EndBlocks.END_MYCELIUM);
+	}
+	
+	@Override
+	public AbstractBlock.OffsetType getOffsetType() {
+		return AbstractBlock.OffsetType.NONE;
 	}
 }

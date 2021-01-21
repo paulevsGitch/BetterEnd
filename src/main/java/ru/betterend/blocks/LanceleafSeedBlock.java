@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -36,5 +37,10 @@ public class LanceleafSeedBlock extends EndPlantWithAgeBlock {
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.isOf(EndBlocks.AMBER_MOSS);
+	}
+	
+	@Override
+	public AbstractBlock.OffsetType getOffsetType() {
+		return AbstractBlock.OffsetType.NONE;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
@@ -65,5 +66,10 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.isOf(EndBlocks.AMBER_MOSS);
+	}
+	
+	@Override
+	public AbstractBlock.OffsetType getOffsetType() {
+		return AbstractBlock.OffsetType.NONE;
 	}
 }

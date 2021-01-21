@@ -591,5 +591,8 @@
 	"block.betterend.thallasium_door": "Талласиевая дверь",
 	"block.betterend.thallasium_plate": "Талласиевая нажимная плита",
 	"block.betterend.thallasium_tile": "Талласиевая плитка",
-	"block.betterend.thallasium_trapdoor": "Талласиевый люк"
+	"block.betterend.thallasium_trapdoor": "Талласиевый люк",
+	
+	"block.betterend.lumecorn_seed": "Семя люмекорна",
+	"item.betterend.lumecorn_rod": "Стержень люмекорна"
 }

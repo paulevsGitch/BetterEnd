@@ -51,13 +51,13 @@ public abstract class EndPlantWithAgeBlock extends EndPlantBlock {
 	
 	@Override
 	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-		return random.nextInt(8) == 0;
+		return true;
 	}
 	
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
-		if (canGrow(world, random, pos, state)) {
+		if (random.nextInt(8) == 0) {
 			grow(world, random, pos, state);
 		}
 	}

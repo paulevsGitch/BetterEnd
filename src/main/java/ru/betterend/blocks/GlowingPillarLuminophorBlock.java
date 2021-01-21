@@ -14,10 +14,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
-public class GlowingPillarLuminophorBlock extends BaseBlock {
+public class GlowingPillarLuminophorBlock extends BlockBase {
 	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
 	
 	public GlowingPillarLuminophorBlock() {

@@ -9,9 +9,9 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 
-public class EnderBlock extends BaseBlock {
+public class EnderBlock extends BlockBase {
 
 	public EnderBlock() {
 		super(FabricBlockSettings.of(Material.STONE, MaterialColor.field_25708)

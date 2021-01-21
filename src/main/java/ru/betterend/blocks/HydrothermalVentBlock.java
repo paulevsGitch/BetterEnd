@@ -36,13 +36,13 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.blocks.basis.BaseBlockNotFull;
+import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.util.BlocksHelper;
 
-public class HydrothermalVentBlock extends BaseBlockNotFull implements BlockEntityProvider, FluidFillable, Waterloggable {
+public class HydrothermalVentBlock extends BlockBaseNotFull implements BlockEntityProvider, FluidFillable, Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	private static final VoxelShape SHAPE = Block.createCuboidShape(1, 1, 1, 15, 16, 15);

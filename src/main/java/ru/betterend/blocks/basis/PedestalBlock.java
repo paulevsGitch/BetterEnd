@@ -43,7 +43,7 @@ import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
-public class PedestalBlock extends BaseBlockNotFull implements BlockEntityProvider {
+public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvider {
 	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
 	public static final BooleanProperty HAS_LIGHT = BlockProperties.HAS_LIGHT;

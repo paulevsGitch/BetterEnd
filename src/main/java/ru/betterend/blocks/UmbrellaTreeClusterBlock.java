@@ -17,12 +17,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.BlocksHelper;
 
-public class UmbrellaTreeClusterBlock extends BaseBlock {
+public class UmbrellaTreeClusterBlock extends BlockBase {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public UmbrellaTreeClusterBlock() {

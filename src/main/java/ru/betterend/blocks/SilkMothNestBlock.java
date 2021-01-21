@@ -34,14 +34,14 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.entity.SilkMothEntity;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.util.BlocksHelper;
 
-public class SilkMothNestBlock extends BaseBlock implements IRenderTypeable {
+public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
 	public static final BooleanProperty ACTIVE = BlockProperties.ACTIVE;
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static final IntProperty FULLNESS = BlockProperties.FULLNESS;

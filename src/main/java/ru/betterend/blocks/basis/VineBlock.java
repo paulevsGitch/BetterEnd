@@ -38,7 +38,7 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 
-public class VineBlock extends BaseBlockNotFull implements IRenderTypeable, Fertilizable {
+public class VineBlock extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape VOXEL_SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
 	

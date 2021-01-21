@@ -8,9 +8,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 
-public class HydraluxPetalBlock extends BaseBlock {
+public class HydraluxPetalBlock extends BlockBase {
 	public HydraluxPetalBlock() {
 		this(FabricBlockSettings.of(Material.PLANT)
 				.materialColor(MaterialColor.SPRUCE)

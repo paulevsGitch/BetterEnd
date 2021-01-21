@@ -9,10 +9,10 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
-public class MossyGlowshroomCapBlock extends BaseBlock {
+public class MossyGlowshroomCapBlock extends BlockBase {
 	public static final BooleanProperty TRANSITION = BooleanProperty.of("transition");
 	
 	public MossyGlowshroomCapBlock() {

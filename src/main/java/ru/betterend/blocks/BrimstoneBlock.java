@@ -13,11 +13,11 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
-public class BrimstoneBlock extends BaseBlock {
+public class BrimstoneBlock extends BlockBase {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	
 	public BrimstoneBlock() {

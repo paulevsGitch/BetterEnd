@@ -26,12 +26,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 
-public class EndLotusStemBlock extends BaseBlock implements Waterloggable, IRenderTypeable {
+public class EndLotusStemBlock extends BlockBase implements Waterloggable, IRenderTypeable {
 	public static final EnumProperty<Direction> FACING = Properties.FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final BooleanProperty LEAF = BooleanProperty.of("leaf");

@@ -36,7 +36,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -46,7 +46,7 @@ import ru.betterend.registry.EndItems;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IRenderTypeable {
+public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IRenderTypeable {
 	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.createCuboidShape(1, 0, 1, 15, 16, 15);
 	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
 	

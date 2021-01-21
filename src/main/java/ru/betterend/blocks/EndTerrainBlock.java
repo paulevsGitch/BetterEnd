@@ -29,9 +29,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.light.ChunkLightProvider;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 
-public class EndTerrainBlock extends BaseBlock {
+public class EndTerrainBlock extends BlockBase {
 	private Block pathBlock;
 	
 	public EndTerrainBlock(MaterialColor color) {

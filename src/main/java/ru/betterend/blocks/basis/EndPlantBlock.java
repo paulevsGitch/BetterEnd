@@ -34,7 +34,7 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndTags;
 
-public class EndPlantBlock extends BaseBlockNotFull implements IRenderTypeable, Fertilizable {
+public class EndPlantBlock extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
 	
 	public EndPlantBlock() {

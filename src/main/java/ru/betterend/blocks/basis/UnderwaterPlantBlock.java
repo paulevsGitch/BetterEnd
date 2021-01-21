@@ -39,7 +39,7 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 
-public class UnderwaterPlantBlock extends BaseBlockNotFull implements IRenderTypeable, Fertilizable, FluidFillable {
+public class UnderwaterPlantBlock extends BlockBaseNotFull implements IRenderTypeable, Fertilizable, FluidFillable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
 	
 	public UnderwaterPlantBlock() {

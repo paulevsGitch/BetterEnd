@@ -30,7 +30,7 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndTags;
 
-public class UpDownPlantBlock extends BaseBlockNotFull implements IRenderTypeable {
+public class UpDownPlantBlock extends BlockBaseNotFull implements IRenderTypeable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 16, 12);
 	
 	public UpDownPlantBlock() {

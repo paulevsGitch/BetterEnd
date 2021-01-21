@@ -13,10 +13,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
-public class BlueVineLanternBlock extends BaseBlock {
+public class BlueVineLanternBlock extends BlockBase {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public BlueVineLanternBlock() {

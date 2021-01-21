@@ -11,11 +11,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
-public class UmbrellaTreeClusterEmptyBlock extends BaseBlock {
+public class UmbrellaTreeClusterEmptyBlock extends BlockBase {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public UmbrellaTreeClusterEmptyBlock() {

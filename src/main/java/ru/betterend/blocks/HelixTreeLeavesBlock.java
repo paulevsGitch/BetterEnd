@@ -23,13 +23,13 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.MathHelper;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
-public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
+public class HelixTreeLeavesBlock extends BlockBase implements IColorProvider {
 	public static final IntProperty COLOR = BlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	

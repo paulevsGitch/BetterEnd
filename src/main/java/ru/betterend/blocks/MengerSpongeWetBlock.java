@@ -16,13 +16,13 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import ru.betterend.blocks.basis.BaseBlockNotFull;
+import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
-public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTypeable {
+public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTypeable {
 	public MengerSpongeWetBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).nonOpaque());
 	}

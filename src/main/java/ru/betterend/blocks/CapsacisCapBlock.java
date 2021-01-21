@@ -8,11 +8,11 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 
-public class CapsacisCapBlock extends BaseBlock {
+public class CapsacisCapBlock extends BlockBase {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	public static final IntProperty COLOR = BlockProperties.COLOR;
 	

@@ -12,7 +12,7 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.Patterns;
 
-public class SimpleLeavesBlock extends BaseBlockNotFull implements IRenderTypeable {
+public class SimpleLeavesBlock extends BlockBaseNotFull implements IRenderTypeable {
 	public SimpleLeavesBlock(MaterialColor color) {
 		super(FabricBlockSettings.of(Material.LEAVES)
 				.strength(0.2F)

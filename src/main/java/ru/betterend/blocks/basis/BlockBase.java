@@ -13,8 +13,8 @@ import net.minecraft.util.registry.Registry;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
-public class BaseBlock extends Block implements BlockPatterned {
-	public BaseBlock(Settings settings) {
+public class BlockBase extends Block implements BlockPatterned {
+	public BlockBase(Settings settings) {
 		super(settings);
 	}
 	

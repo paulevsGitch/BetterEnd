@@ -16,7 +16,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.util.BlocksHelper;
 
-public abstract class AttachedBlock extends BaseBlockNotFull {
+public abstract class AttachedBlock extends BlockBaseNotFull {
 	public static final DirectionProperty FACING = Properties.FACING;
 	
 	public AttachedBlock(Settings settings) {

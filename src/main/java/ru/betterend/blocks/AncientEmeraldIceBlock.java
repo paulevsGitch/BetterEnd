@@ -8,13 +8,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class AncientEmeraldIceBlock extends BaseBlock {
+public class AncientEmeraldIceBlock extends BlockBase {
 	public AncientEmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.BLUE_ICE).ticksRandomly());
 	}

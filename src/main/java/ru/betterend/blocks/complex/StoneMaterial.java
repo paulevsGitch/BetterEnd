@@ -7,7 +7,7 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import ru.betterend.blocks.EndPedestal;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndPillarBlock;
 import ru.betterend.blocks.basis.EndSlabBlock;
 import ru.betterend.blocks.basis.EndStairsBlock;
@@ -44,9 +44,9 @@ public class StoneMaterial {
 	public StoneMaterial(String name, MaterialColor color) {
 		FabricBlockSettings material = FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color);
 		
-		stone = EndBlocks.registerBlock(name, new BaseBlock(material));
-		polished = EndBlocks.registerBlock(name + "_polished", new BaseBlock(material));
-		tiles = EndBlocks.registerBlock(name + "_tiles", new BaseBlock(material));
+		stone = EndBlocks.registerBlock(name, new BlockBase(material));
+		polished = EndBlocks.registerBlock(name + "_polished", new BlockBase(material));
+		tiles = EndBlocks.registerBlock(name + "_tiles", new BlockBase(material));
 		pillar = EndBlocks.registerBlock(name + "_pillar", new EndPillarBlock(material));
 		stairs = EndBlocks.registerBlock(name + "_stairs", new EndStairsBlock(stone));
 		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(stone));
@@ -56,7 +56,7 @@ public class StoneMaterial {
 		pedestal = EndBlocks.registerBlock(name + "_pedestal", new EndPedestal(stone));
 		lantern = EndBlocks.registerBlock(name + "_lantern", new StoneLanternBlock(stone));
 		
-		bricks = EndBlocks.registerBlock(name + "_bricks", new BaseBlock(material));
+		bricks = EndBlocks.registerBlock(name + "_bricks", new BlockBase(material));
 		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new EndStairsBlock(bricks));
 		brick_slab = EndBlocks.registerBlock(name + "_bricks_slab", new EndSlabBlock(bricks));
 		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new EndWallBlock(bricks));

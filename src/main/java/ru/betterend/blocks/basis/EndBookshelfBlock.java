@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.patterns.Patterns;
 
-public class EndBookshelfBlock extends BaseBlock {
+public class EndBookshelfBlock extends BlockBase {
 	public EndBookshelfBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source));
 	}

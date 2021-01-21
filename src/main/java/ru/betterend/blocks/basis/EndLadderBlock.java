@@ -31,7 +31,7 @@ import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class EndLadderBlock extends BaseBlockNotFull implements IRenderTypeable, BlockPatterned {
+public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable, BlockPatterned {
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 16.0D);

@@ -7,7 +7,7 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndDoorBlock;
 import ru.betterend.blocks.basis.EndMetalPaneBlock;
 import ru.betterend.blocks.basis.EndTrapdoorBlock;
@@ -42,9 +42,9 @@ public class MetalMaterial {
 	public MetalMaterial(String name, MaterialColor color, ToolMaterial material) {
 		FabricBlockSettings materialBlock = FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color);
 		
-		ore = EndBlocks.registerBlock(name + "_ore", new BaseBlock(FabricBlockSettings.copyOf(Blocks.END_STONE)));
-		block = EndBlocks.registerBlock(name + "_block", new BaseBlock(materialBlock));
-		tile = EndBlocks.registerBlock(name + "_tile", new BaseBlock(materialBlock));
+		ore = EndBlocks.registerBlock(name + "_ore", new BlockBase(FabricBlockSettings.copyOf(Blocks.END_STONE)));
+		block = EndBlocks.registerBlock(name + "_block", new BlockBase(materialBlock));
+		tile = EndBlocks.registerBlock(name + "_tile", new BlockBase(materialBlock));
 		bars = EndBlocks.registerBlock(name + "_bars", new EndMetalPaneBlock(block));
 		plate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(block));
 		door = EndBlocks.registerBlock(name + "_door", new EndDoorBlock(block));

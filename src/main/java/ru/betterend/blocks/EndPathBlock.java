@@ -16,9 +16,9 @@ import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import ru.betterend.blocks.basis.BaseBlockNotFull;
+import ru.betterend.blocks.basis.BlockBaseNotFull;
 
-public class EndPathBlock extends BaseBlockNotFull {
+public class EndPathBlock extends BlockBaseNotFull {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 15, 16);
 	
 	public EndPathBlock(Block source) {

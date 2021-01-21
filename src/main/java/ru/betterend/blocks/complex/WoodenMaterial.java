@@ -11,7 +11,7 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
 import ru.betterend.blocks.basis.BarkBlock;
-import ru.betterend.blocks.basis.BaseBlock;
+import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndBarrelBlock;
 import ru.betterend.blocks.basis.EndBlockStripableLogLog;
 import ru.betterend.blocks.basis.EndBookshelfBlock;
@@ -74,7 +74,7 @@ public class WoodenMaterial {
 		log = EndBlocks.registerBlock(name + "_log", new EndBlockStripableLogLog(woodColor, log_stripped));
 		bark = EndBlocks.registerBlock(name + "_bark", new StrippableBarkBlock(woodColor, bark_stripped));
 		
-		planks = EndBlocks.registerBlock(name + "_planks", new BaseBlock(materialPlanks));
+		planks = EndBlocks.registerBlock(name + "_planks", new BlockBase(materialPlanks));
 		stairs = EndBlocks.registerBlock(name + "_stairs", new EndStairsBlock(planks));
 		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(planks));
 		fence = EndBlocks.registerBlock(name + "_fence", new EndFenceBlock(planks));

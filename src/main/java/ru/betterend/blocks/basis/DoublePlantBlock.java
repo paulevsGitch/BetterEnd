@@ -40,7 +40,7 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
-public class DoublePlantBlock extends BaseBlockNotFull implements IRenderTypeable, Fertilizable {
+public class DoublePlantBlock extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 2, 4, 12, 16, 12);
 	public static final IntProperty ROTATION = BlockProperties.ROTATION;
 	public static final BooleanProperty TOP = BooleanProperty.of("top");

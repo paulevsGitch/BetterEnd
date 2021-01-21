@@ -27,7 +27,7 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndTags;
 
-public abstract class FeatureSaplingBlock extends BaseBlockNotFull implements Fertilizable, IRenderTypeable {
+public abstract class FeatureSaplingBlock extends BlockBaseNotFull implements Fertilizable, IRenderTypeable {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 14, 12);
 	
 	public FeatureSaplingBlock() {

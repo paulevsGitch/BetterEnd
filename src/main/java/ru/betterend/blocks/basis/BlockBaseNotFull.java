@@ -5,9 +5,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-public class BaseBlockNotFull extends BaseBlock {
+public class BlockBaseNotFull extends BlockBase {
 
-	public BaseBlockNotFull(Settings settings) {
+	public BlockBaseNotFull(Settings settings) {
 		super(settings);
 	}
 

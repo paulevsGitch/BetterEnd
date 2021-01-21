@@ -21,7 +21,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.LumecornShape;
-import ru.betterend.blocks.basis.BaseBlockNotFull;
+import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
@@ -29,7 +29,7 @@ import ru.betterend.registry.EndItems;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
-public class LumecornBlock extends BaseBlockNotFull implements IRenderTypeable {
+public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.of("shape", LumecornShape.class);
 	private static final VoxelShape SHAPE_BOTTOM = Block.createCuboidShape(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape SHAPE_TOP = Block.createCuboidShape(6, 0, 6, 10, 8, 10);

@@ -189,6 +189,9 @@ public class CraftingRecipes {
 			.build();
 		
 		GridRecipe.make("fiber_string", Items.STRING).setOutputCount(6).setShape("#", "#", "#").addMaterial('#', EndItems.SILK_FIBER).build();
+		
+		GridRecipe.make("thallasium_chandelier", EndBlocks.THALLASIUM_CHANDELIER).setShape("I#I", " # ")
+		.addMaterial('#', EndBlocks.THALLASIUM.ingot).addMaterial('I', EndItems.LUMECORN_ROD).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

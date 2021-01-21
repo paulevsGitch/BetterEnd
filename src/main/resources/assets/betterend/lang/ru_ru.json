@@ -585,5 +585,11 @@
 	"item.betterend.thallasium_pickaxe": "Талласиевая кирка",
 	"item.betterend.thallasium_shovel": "Талласиевая лопата",
 	"item.betterend.thallasium_sword": "Талласиевый меч",
-	"block.betterend.thallasium_block": "Талласиевый блок"
+	"block.betterend.thallasium_block": "Талласиевый блок",
+	
+	"block.betterend.thallasium_bars": "Талласиевые прутья",
+	"block.betterend.thallasium_door": "Талласиевая дверь",
+	"block.betterend.thallasium_plate": "Талласиевая нажимная плита",
+	"block.betterend.thallasium_tile": "Талласиевая плитка",
+	"block.betterend.thallasium_trapdoor": "Талласиевый люк"
 }

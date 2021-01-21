@@ -57,7 +57,6 @@ public class EndItems {
 	// Materials //
 	public final static Item ENDER_DUST = registerItem("ender_dust");
 	public final static Item ENDER_SHARD = registerItem("ender_shard");
-	public final static Item THALLASIUM_INGOT = registerItem("thallasium_ingot");
 	public final static Item TERMINITE_INGOT = registerItem("terminite_ingot");
 	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot");
 	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
@@ -90,12 +89,6 @@ public class EndItems {
 	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	
 	// Tools //
-	public static final ToolItem THALLASIUM_SHOVEL = registerTool("thallasium_shovel", new EndShovelItem(EndToolMaterial.THALLASIUM, 1.0F, -3.0F, makeItemSettings()));
-	public static final ToolItem THALLASIUM_SWORD = registerTool("thallasium_sword", new EndSwordItem(EndToolMaterial.THALLASIUM, 2, -2.4F, makeItemSettings()));
-	public static final ToolItem THALLASIUM_PICKAXE = registerTool("thallasium_pickaxe", new EndPickaxeItem(EndToolMaterial.THALLASIUM, 1, -2.8F, makeItemSettings()));
-	public static final ToolItem THALLASIUM_AXE = registerTool("thallasium_axe", new EndAxeItem(EndToolMaterial.THALLASIUM, 5.0F, -3.0F, makeItemSettings()));
-	public static final ToolItem THALLASIUM_HOE = registerTool("thallasium_hoe", new EndHoeItem(EndToolMaterial.THALLASIUM, -3, 0.0F, makeItemSettings()));
-	
 	public static final ToolItem TERMINITE_SHOVEL = registerTool("terminite_shovel", new EndShovelItem(EndToolMaterial.TERMINITE, 1.5F, -3.0F, makeItemSettings()));
 	public static final ToolItem TERMINITE_SWORD = registerTool("terminite_sword", new EndSwordItem(EndToolMaterial.TERMINITE, 3, -2.4F, makeItemSettings()));
 	public static final ToolItem TERMINITE_PICKAXE = registerTool("terminite_pickaxe", new EndPickaxeItem(EndToolMaterial.TERMINITE, 1, -2.8F, makeItemSettings()));
@@ -137,7 +130,7 @@ public class EndItems {
 	public final static Item AETERNIUM_SWORD_BLADE = registerItem("aeternium_sword_blade");
 	public final static Item AETERNIUM_SWORD_HANDLE = registerItem("aeternium_sword_handle");
 	
-	protected static Item registerItem(String name) {
+	public static Item registerItem(String name) {
 		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));
 	}
 	
@@ -176,7 +169,7 @@ public class EndItems {
 		return item;
 	}
 	
-	private static ToolItem registerTool(String name, ToolItem item) {
+	public static ToolItem registerTool(String name, ToolItem item) {
 		Identifier id = BetterEnd.makeID(name);
 		if (!Configs.ITEM_CONFIG.getBoolean("tools", id.getPath(), true)) {
 			return item;

@@ -189,14 +189,6 @@ public class CraftingRecipes {
 			.build();
 		
 		GridRecipe.make("fiber_string", Items.STRING).setOutputCount(6).setShape("#", "#", "#").addMaterial('#', EndItems.SILK_FIBER).build();
-		
-		GridRecipe.make("thallasium_block", EndBlocks.THALLASIUM_BLOCK).setShape("###", "###", "###").addMaterial('#', EndItems.THALLASIUM_INGOT).build();
-		GridRecipe.make("thallasium_ingot_from_block", EndItems.THALLASIUM_INGOT).setOutputCount(9).setList("#").addMaterial('#', EndBlocks.THALLASIUM_BLOCK).build();
-		
-		GridRecipe.make("thallasium_axe", EndItems.THALLASIUM_AXE).setShape("##", "#I", " I").addMaterial('#', EndItems.THALLASIUM_INGOT).addMaterial('I', Items.STICK).build();
-		GridRecipe.make("thallasium_hoe", EndItems.THALLASIUM_HOE).setShape("##", " I", " I").addMaterial('#', EndItems.THALLASIUM_INGOT).addMaterial('I', Items.STICK).build();
-		GridRecipe.make("thallasium_pickaxe", EndItems.THALLASIUM_PICKAXE).setShape("###", " I ", " I ").addMaterial('#', EndItems.THALLASIUM_INGOT).addMaterial('I', Items.STICK).build();
-		GridRecipe.make("thallasium_sword", EndItems.THALLASIUM_SWORD).setShape("#", "#", "I").addMaterial('#', EndItems.THALLASIUM_INGOT).addMaterial('I', Items.STICK).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

@@ -7,7 +7,7 @@ import java.util.List;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.WeightedPressurePlateBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.util.Identifier;
@@ -15,11 +15,11 @@ import net.minecraft.util.registry.Registry;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
-public class EndPlateBlock extends PressurePlateBlock implements BlockPatterned {
+public class EndMetalPlateBlock extends WeightedPressurePlateBlock implements BlockPatterned {
 	private final Block parent;
 	
-	public EndPlateBlock(Block source) {
-		super(ActivationRule.EVERYTHING, FabricBlockSettings.copyOf(source).nonOpaque());
+	public EndMetalPlateBlock(Block source) {
+		super(15, FabricBlockSettings.copyOf(source).noCollision().nonOpaque().requiresTool().strength(0.5F));
 		this.parent = source;
 	}
 

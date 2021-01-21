@@ -23,7 +23,7 @@ import ru.betterend.blocks.basis.EndFenceBlock;
 import ru.betterend.blocks.basis.EndGateBlock;
 import ru.betterend.blocks.basis.EndLadderBlock;
 import ru.betterend.blocks.basis.EndPillarBlock;
-import ru.betterend.blocks.basis.EndPlateBlock;
+import ru.betterend.blocks.basis.EndWoodenPlateBlock;
 import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.basis.EndSlabBlock;
 import ru.betterend.blocks.basis.EndStairsBlock;
@@ -80,7 +80,7 @@ public class WoodenMaterial {
 		fence = EndBlocks.registerBlock(name + "_fence", new EndFenceBlock(planks));
 		gate = EndBlocks.registerBlock(name + "_gate", new EndGateBlock(planks));
 		button = EndBlocks.registerBlock(name + "_button", new EndWoodenButtonBlock(planks));
-		pressurePlate = EndBlocks.registerBlock(name + "_plate", new EndPlateBlock(planks));
+		pressurePlate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(planks));
 		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new EndTrapdoorBlock(planks));
 		door = EndBlocks.registerBlock(name + "_door", new EndDoorBlock(planks));
 		

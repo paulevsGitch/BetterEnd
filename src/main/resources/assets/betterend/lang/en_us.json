@@ -583,5 +583,11 @@
 	"item.betterend.thallasium_pickaxe": "Thallasium Pickaxe",
 	"item.betterend.thallasium_shovel": "Thallasium Shovel",
 	"item.betterend.thallasium_sword": "Thallasium Sword",
-	"block.betterend.thallasium_block": "Thallasium Block"
+	"block.betterend.thallasium_block": "Thallasium Block",
+	
+	"block.betterend.thallasium_bars": "Thallasium Bars",
+	"block.betterend.thallasium_door": "Thallasium Door",
+	"block.betterend.thallasium_plate": "Thallasium Pressure Plate",
+	"block.betterend.thallasium_tile": "Thallasium Tile",
+	"block.betterend.thallasium_trapdoor": "Thallasium Trapdoor"
 }

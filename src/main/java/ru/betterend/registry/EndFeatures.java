@@ -157,7 +157,7 @@ public class EndFeatures {
 	public static final EndFeature SULPHUR_HILL = EndFeature.makeChansedFeature("sulphur_hill", new SulphurHillFeature(), 8);
 	
 	// Ores //
-	public static final EndFeature THALASSIUM_ORE = EndFeature.makeOreFeature("thalassium_ore", EndBlocks.THALASSIUM_ORE, 12, 6, 0, 16, 128);
+	public static final EndFeature THALLASIUM_ORE = EndFeature.makeOreFeature("thallasium_ore", EndBlocks.THALLASIUM_ORE, 12, 6, 0, 16, 128);
 	public static final EndFeature ENDER_ORE = EndFeature.makeOreFeature("ender_ore", EndBlocks.ENDER_ORE, 8, 3, 0, 16, 128);
 	public static final EndFeature AMBER_ORE = EndFeature.makeOreFeature("amber_ore", EndBlocks.AMBER_ORE, 12, 6, 0, 16, 128);
 	public static final EndFeature VIOLECITE_LAYER = EndFeature.makeLayerFeature("violecite_layer", EndBlocks.VIOLECITE, 15, 16, 128, 8);
@@ -187,7 +187,7 @@ public class EndFeatures {
 		}
 		
 		addFeature(FLAVOLITE_LAYER, features);
-		addFeature(THALASSIUM_ORE, features);
+		addFeature(THALLASIUM_ORE, features);
 		addFeature(ENDER_ORE, features);
 		addFeature(CRASHED_SHIP, features);
 		

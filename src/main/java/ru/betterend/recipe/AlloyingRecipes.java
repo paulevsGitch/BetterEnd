@@ -36,15 +36,15 @@ public class AlloyingRecipes {
 			.setExpiriense(4.5F)
 			.setSmeltTime(600)
 			.build();
-		AlloyingRecipe.Builder.create("terminite_ingot_thalassium")
-			.setInput(EndItems.THALASSIUM_INGOT, EndItems.ENDER_DUST)
+		AlloyingRecipe.Builder.create("terminite_ingot_thallasium")
+			.setInput(EndItems.THALLASIUM_INGOT, EndItems.ENDER_DUST)
 			.setOutput(EndItems.TERMINITE_INGOT, 1)
 			.setExpiriense(2.5F)
 			.setSmeltTime(450)
 			.build();
-		AlloyingRecipe.Builder.create("thalassium_ingot")
-			.setInput(EndBlocks.THALASSIUM_ORE, EndBlocks.THALASSIUM_ORE)
-			.setOutput(EndItems.THALASSIUM_INGOT, 3)
+		AlloyingRecipe.Builder.create("thallasium_ingot")
+			.setInput(EndBlocks.THALLASIUM_ORE, EndBlocks.THALLASIUM_ORE)
+			.setOutput(EndItems.THALLASIUM_INGOT, 3)
 			.setExpiriense(2.1F)
 			.setSmeltTime(600)
 			.build();

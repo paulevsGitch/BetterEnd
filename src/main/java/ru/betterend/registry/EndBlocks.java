@@ -280,14 +280,14 @@ public class EndBlocks {
 	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new SilkMothNestBlock()); 
 	
 	// Ores //
-	public static final Block THALASSIUM_ORE = registerBlock("thalassium_ore", new BaseBlock(FabricBlockSettings.copyOf(Blocks.END_STONE)));
+	public static final Block THALLASIUM_ORE = registerBlock("thallasium_ore", new BaseBlock(FabricBlockSettings.copyOf(Blocks.END_STONE)));
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new EndOreBlock(EndItems.ENDER_SHARD, 1, 3, 5));
 	public static final Block AMBER_ORE = registerBlock("amber_ore", new EndOreBlock(EndItems.RAW_AMBER, 1, 2, 4));
 	
 	// Materials //
 	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
-	public static final Block THALASSIUM_BLOCK = registerBlock("thalassium_block", new BaseBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
+	public static final Block THALLASIUM_BLOCK = registerBlock("thallasium_block", new BaseBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new AmberBlock());

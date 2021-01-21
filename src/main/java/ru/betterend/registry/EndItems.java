@@ -57,7 +57,7 @@ public class EndItems {
 	// Materials //
 	public final static Item ENDER_DUST = registerItem("ender_dust");
 	public final static Item ENDER_SHARD = registerItem("ender_shard");
-	public final static Item THALASSIUM_INGOT = registerItem("thalassium_ingot");
+	public final static Item THALLASIUM_INGOT = registerItem("thallasium_ingot");
 	public final static Item TERMINITE_INGOT = registerItem("terminite_ingot");
 	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot");
 	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
@@ -90,11 +90,11 @@ public class EndItems {
 	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	
 	// Tools //
-	public static final ToolItem THALASSIUM_SHOVEL = registerTool("thalassium_shovel", new EndShovelItem(EndToolMaterial.THALASSIUM, 1.0F, -3.0F, makeItemSettings()));
-	public static final ToolItem THALASSIUM_SWORD = registerTool("thalassium_sword", new EndSwordItem(EndToolMaterial.THALASSIUM, 2, -2.4F, makeItemSettings()));
-	public static final ToolItem THALASSIUM_PICKAXE = registerTool("thalassium_pickaxe", new EndPickaxeItem(EndToolMaterial.THALASSIUM, 1, -2.8F, makeItemSettings()));
-	public static final ToolItem THALASSIUM_AXE = registerTool("thalassium_axe", new EndAxeItem(EndToolMaterial.THALASSIUM, 5.0F, -3.0F, makeItemSettings()));
-	public static final ToolItem THALASSIUM_HOE = registerTool("thalassium_hoe", new EndHoeItem(EndToolMaterial.THALASSIUM, -3, 0.0F, makeItemSettings()));
+	public static final ToolItem THALLASIUM_SHOVEL = registerTool("thallasium_shovel", new EndShovelItem(EndToolMaterial.THALLASIUM, 1.0F, -3.0F, makeItemSettings()));
+	public static final ToolItem THALLASIUM_SWORD = registerTool("thallasium_sword", new EndSwordItem(EndToolMaterial.THALLASIUM, 2, -2.4F, makeItemSettings()));
+	public static final ToolItem THALLASIUM_PICKAXE = registerTool("thallasium_pickaxe", new EndPickaxeItem(EndToolMaterial.THALLASIUM, 1, -2.8F, makeItemSettings()));
+	public static final ToolItem THALLASIUM_AXE = registerTool("thallasium_axe", new EndAxeItem(EndToolMaterial.THALLASIUM, 5.0F, -3.0F, makeItemSettings()));
+	public static final ToolItem THALLASIUM_HOE = registerTool("thallasium_hoe", new EndHoeItem(EndToolMaterial.THALLASIUM, -3, 0.0F, makeItemSettings()));
 	
 	public static final ToolItem TERMINITE_SHOVEL = registerTool("terminite_shovel", new EndShovelItem(EndToolMaterial.TERMINITE, 1.5F, -3.0F, makeItemSettings()));
 	public static final ToolItem TERMINITE_SWORD = registerTool("terminite_sword", new EndSwordItem(EndToolMaterial.TERMINITE, 3, -2.4F, makeItemSettings()));

@@ -68,7 +68,7 @@ public class EndTags {
 	
 	public static void register() {
 		addSurfaceBlock(Blocks.END_STONE);
-		addSurfaceBlock(EndBlocks.THALASSIUM_ORE);
+		addSurfaceBlock(EndBlocks.THALLASIUM_ORE);
 		addSurfaceBlock(EndBlocks.ENDSTONE_DUST);
 		addSurfaceBlock(EndBlocks.AMBER_ORE);
 		

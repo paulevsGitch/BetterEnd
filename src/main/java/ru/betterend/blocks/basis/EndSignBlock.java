@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractSignBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -43,6 +44,7 @@ import net.minecraft.world.WorldView;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
+import ru.betterend.util.BlocksHelper;
 
 public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	public static final IntProperty ROTATION = Properties.ROTATION;
@@ -113,13 +115,25 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	}
 
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState,
-			WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if ((Boolean) state.get(WATERLOGGED)) {
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
-
+		if (!canPlaceAt(state, world, pos)) {
+			return state.get(WATERLOGGED) ? state.getFluidState().getBlockState() : Blocks.AIR.getDefaultState();
+		}
 		return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+	}
+	
+	@Override
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+		if (!state.get(FLOOR)) {
+			int index = (((state.get(ROTATION) >> 2) + 2)) & 3;
+			return world.getBlockState(pos.offset(BlocksHelper.HORIZONTAL[index])).getMaterial().isSolid();
+		}
+		else {
+			return world.getBlockState(pos.down()).getMaterial().isSolid();
+		}
 	}
 
 	@Override

@@ -2,7 +2,9 @@
 	"layers": [
 		{
 			"vertexSource": "canvas:shaders/material/default.vert",
-			"fragmentSource": "betterend:shaders/material/glow_green.frag"
+			"fragmentSource": "betterend:shaders/material/glow_green.frag",
+			"disableAo": true,
+			"disableDiffuse": true
 		}
 	]
 }

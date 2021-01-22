@@ -1,5 +1,6 @@
 package ru.betterend.blocks.basis;
 
+import java.awt.Point;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
@@ -38,9 +40,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
+import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.rituals.InfusionRitual;
 import ru.betterend.util.BlocksHelper;
 
 public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvider {
@@ -110,6 +114,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 				ItemStack itemStack = player.getStackInHand(hand);
 				if (itemStack.isEmpty()) return ActionResult.CONSUME;
 				pedestal.setStack(0, itemStack.split(1));
+				activate(world, pos, player, hand, hit);
 				return ActionResult.SUCCESS;
 			} else {
 				ItemStack itemStack = pedestal.getStack(0);
@@ -121,6 +126,21 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 			}
 		}
 		return ActionResult.PASS;
+	}
+	
+	private void activate(World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		Mutable mut = new Mutable();
+		Point[] points = InfusionRitual.getMap();
+		for (Point p: points) {
+			mut.set(pos).move(p.x, 0, p.y);
+			BlockState state = world.getBlockState(mut);
+			if (state.getBlock() instanceof InfusionPedestal) {
+				ActionResult result = state.getBlock().onUse(state, world, mut, player, null, hit);
+				if (result == ActionResult.SUCCESS) {
+					break;
+				}
+			}
+		}
 	}
 	
 	@Override

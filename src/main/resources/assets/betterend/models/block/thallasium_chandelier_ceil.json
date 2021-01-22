@@ -10,6 +10,7 @@
 			"__comment": "Box1",
 			"from": [ 6, 15, 6 ],
 			"to": [ 10, 16, 10 ],
+			"shade": false,
 			"faces": {
 				"down": { "uv": [ 0, 0, 4, 4 ], "texture": "#rod" },
 				"up": { "uv": [ 0, 0, 4, 4 ], "texture": "#rod" },

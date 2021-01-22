@@ -18,7 +18,7 @@ import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
 
 public class InfusionRitual implements Inventory {
-	private static Point[] pedestalsMap = new Point[] {
+	private static final Point[] PEDESTALS_MAP = new Point[] {
 		new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2),
 		new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)
 	};
@@ -40,6 +40,10 @@ public class InfusionRitual implements Inventory {
 		this.configure();
 	}
 	
+	public static Point[] getMap() {
+		return PEDESTALS_MAP;
+	}
+	
 	public void configure() {
 		if (world == null || world.isClient || worldPos == null) return;
 		BlockEntity inputEntity = world.getBlockEntity(worldPos);
@@ -47,7 +51,7 @@ public class InfusionRitual implements Inventory {
 			this.input = (InfusionPedestalEntity) inputEntity;
 		}
 		int i = 0;
-		for(Point point : pedestalsMap) {
+		for(Point point : PEDESTALS_MAP) {
 			BlockPos.Mutable checkPos = worldPos.mutableCopy().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
 			BlockEntity catalystEntity = world.getBlockEntity(checkPos);
 			if (catalystEntity instanceof PedestalBlockEntity) {

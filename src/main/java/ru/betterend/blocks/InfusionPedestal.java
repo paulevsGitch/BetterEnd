@@ -43,7 +43,10 @@ public class InfusionPedestal extends PedestalBlock {
 				}
 			}
 		}
-		ActionResult result = super.onUse(state, world, pos, player, hand, hit);
+		ActionResult result = ActionResult.FAIL;
+		if (hand != null) {
+			result = super.onUse(state, world, pos, player, hand, hit);
+		}
 		if (result == ActionResult.SUCCESS) {
 			if (pedestal != null) {
 				if (pedestal.hasRitual()) {

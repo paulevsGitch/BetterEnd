@@ -65,10 +65,10 @@ public class MetalMaterial {
 		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(tile));
 		
 		ingot = EndItems.registerItem(name + "_ingot");
-		shovel = EndItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.0F, -3.0F, EndItems.makeItemSettings()));
-		sword = EndItems.registerTool(name + "_sword", new EndSwordItem(material, 2, -2.4F, EndItems.makeItemSettings()));
+		shovel = EndItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.5F, -3.0F, EndItems.makeItemSettings()));
+		sword = EndItems.registerTool(name + "_sword", new EndSwordItem(material, 3, -2.4F, EndItems.makeItemSettings()));
 		pickaxe = EndItems.registerTool(name + "_pickaxe", new EndPickaxeItem(material, 1, -2.8F, EndItems.makeItemSettings()));
-		axe = EndItems.registerTool(name + "_axe", new EndAxeItem(material, 5.0F, -3.0F, EndItems.makeItemSettings()));
+		axe = EndItems.registerTool(name + "_axe", new EndAxeItem(material, 6.0F, -3.0F, EndItems.makeItemSettings()));
 		hoe = EndItems.registerTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, EndItems.makeItemSettings()));
 		
 		FurnaceRecipe.make("thallasium_ingot_furnace", ore, ingot).build();

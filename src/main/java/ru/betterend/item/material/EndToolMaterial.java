@@ -8,7 +8,7 @@ import net.minecraft.util.Lazy;
 import ru.betterend.registry.EndItems;
 
 public enum EndToolMaterial implements ToolMaterial {
-	THALLASIUM(2, 320, 6.5F, 4.5F, 13, () -> {
+	THALLASIUM(2, 320, 7.0F, 1.5F, 12, () -> {
 		return Ingredient.ofItems(EndItems.AETERNIUM_INGOT);
 	}),
 	TERMINITE(3, 1230, 8.5F, 3.0F, 14, () -> {

@@ -593,5 +593,10 @@
 	
 	"block.betterend.lumecorn_seed": "Lumecorn Seed",
 	"item.betterend.lumecorn_rod": "Lumecorn Rod",
-	"block.betterend.thallasium_chandelier": "Thallasium Chandelier"
+	"block.betterend.thallasium_chandelier": "Thallasium Chandelier",
+	
+	"block.betterend.thallasium_anvil": "Thallasium Anvil",
+	"block.betterend.thallasium_chain": "Thallasium Chain",
+	"block.betterend.thallasium_slab": "Thallasium Slab",
+	"block.betterend.thallasium_stairs": "Thallasium Stairs"
 }

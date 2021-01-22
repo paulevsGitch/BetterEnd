@@ -4,9 +4,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.ItemTags;
+import net.minecraft.tag.Tag;
+import net.minecraft.tag.Tag.Identified;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -167,5 +173,17 @@ public abstract class ModIntegration {
 			}
 		}
 		return null;
+	}
+	
+	public Tag.Identified<Item> getItemTag(String name) {
+		Identifier id = getID(name);
+		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
+		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
+	}
+	
+	public Tag.Identified<Block> getBlockTag(String name) {
+		Identifier id = getID(name);
+		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
+		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
 	}
 }

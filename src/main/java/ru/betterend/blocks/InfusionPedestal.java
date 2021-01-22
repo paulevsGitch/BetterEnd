@@ -62,6 +62,9 @@ public class InfusionPedestal extends PedestalBlock {
 	}
 	
 	@Override
+	protected void activate(World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {}
+	
+	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
 		return new InfusionPedestalEntity();
 	}

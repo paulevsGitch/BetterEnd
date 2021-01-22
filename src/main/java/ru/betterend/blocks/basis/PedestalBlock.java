@@ -114,9 +114,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 				ItemStack itemStack = player.getStackInHand(hand);
 				if (itemStack.isEmpty()) return ActionResult.CONSUME;
 				pedestal.setStack(0, itemStack.split(1));
-				if (!(this instanceof InfusionPedestal)) {
-					activate(world, pos, player, hit);
-				}
+				activate(world, pos, player, hit);
 				return ActionResult.SUCCESS;
 			} else {
 				ItemStack itemStack = pedestal.getStack(0);
@@ -130,7 +128,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 		return ActionResult.PASS;
 	}
 	
-	private void activate(World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+	protected void activate(World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		Mutable mut = new Mutable();
 		Point[] points = InfusionRitual.getMap();
 		for (Point p: points) {

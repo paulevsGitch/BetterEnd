@@ -69,6 +69,9 @@ public class EternalPedestal extends PedestalBlock {
 	}
 	
 	@Override
+	protected void activate(World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {}
+	
+	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		BlockState updated = super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 		if (!updated.isOf(this)) return updated;

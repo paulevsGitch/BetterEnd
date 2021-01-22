@@ -595,5 +595,10 @@
 	
 	"block.betterend.lumecorn_seed": "Семя люмекорна",
 	"item.betterend.lumecorn_rod": "Стержень люмекорна",
-	"block.betterend.thallasium_chandelier": "Талласиевый канделябр"
+	"block.betterend.thallasium_chandelier": "Талласиевый канделябр",
+	
+	"block.betterend.thallasium_anvil": "Талласиевая наковальня",
+	"block.betterend.thallasium_chain": "Талласиевая цепь",
+	"block.betterend.thallasium_slab": "Талласиевая плита",
+	"block.betterend.thallasium_stairs": "Талласиевые ступени"
 }

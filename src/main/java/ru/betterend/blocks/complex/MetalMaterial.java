@@ -13,6 +13,8 @@ import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.blocks.basis.EndChainBlock;
 import ru.betterend.blocks.basis.EndDoorBlock;
 import ru.betterend.blocks.basis.EndMetalPaneBlock;
+import ru.betterend.blocks.basis.EndSlabBlock;
+import ru.betterend.blocks.basis.EndStairsBlock;
 import ru.betterend.blocks.basis.EndTrapdoorBlock;
 import ru.betterend.blocks.basis.EndWoodenPlateBlock;
 import ru.betterend.item.EndAxeItem;
@@ -37,6 +39,8 @@ public class MetalMaterial {
 	public final Block trapdoor;
 	public final Block anvil;
 	public final Block chain;
+	public final Block stairs;
+	public final Block slab;
 	
 	public final Item ingot;
 	public final Item shovel;
@@ -57,6 +61,8 @@ public class MetalMaterial {
 		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new EndTrapdoorBlock(block));
 		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(color));
 		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(color));
+		stairs = EndBlocks.registerBlock(name + "_stairs", new EndStairsBlock(tile));
+		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(tile));
 		
 		ingot = EndItems.registerItem(name + "_ingot");
 		shovel = EndItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.0F, -3.0F, EndItems.makeItemSettings()));

@@ -14,6 +14,7 @@ public class GeneratorOptions {
 	private static boolean newGenerator;
 	private static boolean noRingVoid;
 	private static boolean generateCentralIsland;
+	private static boolean generateObsidianPlatform;
 	private static int endCityFailChance;
 	
 	public static void init() {
@@ -29,6 +30,7 @@ public class GeneratorOptions {
 		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
 		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", false);
 		endCityFailChance = Configs.GENERATOR_CONFIG.getInt("customGenerator", "endCityFailChance", 5);
+		generateObsidianPlatform = Configs.GENERATOR_CONFIG.getBooleanRoot("generateObsidianPlatform", true);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -73,6 +75,10 @@ public class GeneratorOptions {
 	
 	public static boolean hasCentralIsland() {
 		return generateCentralIsland;
+	}
+	
+	public static boolean generateObsidianPlatform() {
+		return generateObsidianPlatform;
 	}
 	
 	public static int getEndCityFailChance() {

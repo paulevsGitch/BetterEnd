@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProperties;
 import net.minecraft.world.biome.source.BiomeAccess;
 import ru.betterend.interfaces.TeleportingEntity;
+import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity implements TeleportingEntity {
@@ -60,7 +61,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Te
 
 	@Inject(method = "createEndSpawnPlatform", at = @At("HEAD"), cancellable = true)
 	private void be_createEndSpawnPlatform(ServerWorld world, BlockPos centerPos, CallbackInfo info) {
-		if (!centerPos.equals(world.getSpawnPos()) || beCanTeleport()) {
+		if (!GeneratorOptions.generateObsidianPlatform()) {
 			info.cancel();
 		}
 	}

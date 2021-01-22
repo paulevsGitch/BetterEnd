@@ -192,6 +192,13 @@ public class CraftingRecipes {
 		
 		GridRecipe.make("thallasium_chandelier", EndBlocks.THALLASIUM_CHANDELIER).setShape("I#I", " # ")
 		.addMaterial('#', EndBlocks.THALLASIUM.ingot).addMaterial('I', EndItems.LUMECORN_ROD).build();
+		
+		GridRecipe.make("ender_eye_amber", Items.ENDER_EYE)
+		.setShape("SAS", "APA", "SAS")
+		.addMaterial('S', EndItems.CRYSTAL_SHARDS)
+		.addMaterial('A', EndItems.AMBER_GEM)
+		.addMaterial('P', Items.ENDER_PEARL)
+		.build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

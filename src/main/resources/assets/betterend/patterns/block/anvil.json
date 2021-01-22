@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/template_anvil",
+	"textures": {
+		"top": "betterend:block/%block%_top",
+		"body": "betterend:block/%block%",
+		"particle": "#body"
+	}
+}

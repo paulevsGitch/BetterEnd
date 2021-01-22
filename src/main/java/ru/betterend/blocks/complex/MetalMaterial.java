@@ -7,7 +7,10 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.tag.BlockTags;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.EndAnvilBlock;
+import ru.betterend.blocks.basis.EndChainBlock;
 import ru.betterend.blocks.basis.EndDoorBlock;
 import ru.betterend.blocks.basis.EndMetalPaneBlock;
 import ru.betterend.blocks.basis.EndTrapdoorBlock;
@@ -22,6 +25,7 @@ import ru.betterend.recipe.builders.FurnaceRecipe;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+import ru.betterend.util.TagHelper;
 
 public class MetalMaterial {
 	public final Block ore;
@@ -31,6 +35,8 @@ public class MetalMaterial {
 	public final Block plate;
 	public final Block door;
 	public final Block trapdoor;
+	public final Block anvil;
+	public final Block chain;
 	
 	public final Item ingot;
 	public final Item shovel;
@@ -49,6 +55,8 @@ public class MetalMaterial {
 		plate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(block));
 		door = EndBlocks.registerBlock(name + "_door", new EndDoorBlock(block));
 		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new EndTrapdoorBlock(block));
+		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(color));
+		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(color));
 		
 		ingot = EndItems.registerItem(name + "_ingot");
 		shovel = EndItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.0F, -3.0F, EndItems.makeItemSettings()));
@@ -73,5 +81,7 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_hoe", hoe).setShape("##", " I", " I").addMaterial('#', ingot).addMaterial('I', Items.STICK).build();
 		GridRecipe.make(name + "_pickaxe", pickaxe).setShape("###", " I ", " I ").addMaterial('#', ingot).addMaterial('I', Items.STICK).build();
 		GridRecipe.make(name + "_sword", sword).setShape("#", "#", "I").addMaterial('#', ingot).addMaterial('I', Items.STICK).build();
+		
+		TagHelper.addTag(BlockTags.ANVIL, anvil);
 	}
 }

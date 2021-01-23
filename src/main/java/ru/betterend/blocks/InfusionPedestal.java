@@ -28,41 +28,19 @@ public class InfusionPedestal extends PedestalBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (world.isClient || !state.isOf(this)) return ActionResult.CONSUME;
+	public void checkRitual(World world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		InfusionPedestalEntity pedestal = null;
 		if (blockEntity instanceof InfusionPedestalEntity) {
-			pedestal = (InfusionPedestalEntity) blockEntity;
-			if (!pedestal.isEmpty() && pedestal.hasRitual()) {
-				if (pedestal.getRitual().hasRecipe()) {
-					pedestal.getRitual().stop();
-					return ActionResult.SUCCESS;
-				} else if (pedestal.getRitual().checkRecipe()) {
-					return ActionResult.SUCCESS;
-				}
+			InfusionPedestalEntity pedestal = (InfusionPedestalEntity) blockEntity;
+			if (pedestal.hasRitual()) {
+				pedestal.getRitual().checkRecipe();
+			} else {
+				InfusionRitual ritual = new InfusionRitual(world, pos);
+				pedestal.linkRitual(ritual);
+				ritual.checkRecipe();
 			}
 		}
-		ActionResult result = ActionResult.FAIL;
-		if (hand != null) {
-			result = super.onUse(state, world, pos, player, hand, hit);
-		}
-		if (result == ActionResult.SUCCESS) {
-			if (pedestal != null) {
-				if (pedestal.hasRitual()) {
-					pedestal.getRitual().checkRecipe();
-				} else {
-					InfusionRitual ritual = new InfusionRitual(world, pos);
-					pedestal.linkRitual(ritual);
-					ritual.checkRecipe();
-				}
-			}
-		}
-		return result;
 	}
-	
-	@Override
-	protected void activate(World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {}
 	
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {

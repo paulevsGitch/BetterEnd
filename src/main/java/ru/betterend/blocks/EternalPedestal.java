@@ -38,38 +38,31 @@ public class EternalPedestal extends PedestalBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult result = super.onUse(state, world, pos, player, hand, hit);
-		if (result.equals(ActionResult.SUCCESS)) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof EternalPedestalEntity) {
-				EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
-				BlockState updatedState = world.getBlockState(pos);
-				if (pedestal.isEmpty() && updatedState.get(ACTIVATED)) {
+	public void checkRitual(World world, BlockPos pos) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof EternalPedestalEntity) {
+			EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
+			BlockState updatedState = world.getBlockState(pos);
+			if (pedestal.isEmpty() && updatedState.get(ACTIVATED)) {
+				if (pedestal.hasRitual()) {
+					EternalRitual ritual = pedestal.getRitual();
+					ritual.removePortal();
+				}
+				world.setBlockState(pos, updatedState.with(ACTIVATED, false));
+			} else {
+				ItemStack itemStack = pedestal.getStack(0);
+				if (itemStack.getItem() == EndItems.ETERNAL_CRYSTAL) {
+					world.setBlockState(pos, updatedState.with(ACTIVATED, true));
 					if (pedestal.hasRitual()) {
-						EternalRitual ritual = pedestal.getRitual();
-						ritual.removePortal();
-					}
-					world.setBlockState(pos, updatedState.with(ACTIVATED, false));
-				} else {
-					ItemStack itemStack = pedestal.getStack(0);
-					if (itemStack.getItem() == EndItems.ETERNAL_CRYSTAL) {
-						world.setBlockState(pos, updatedState.with(ACTIVATED, true));
-						if (pedestal.hasRitual()) {
-							pedestal.getRitual().checkStructure();
-						} else {
-							EternalRitual ritual = new EternalRitual(world, pos);
-							ritual.checkStructure();
-						}
+						pedestal.getRitual().checkStructure();
+					} else {
+						EternalRitual ritual = new EternalRitual(world, pos);
+						ritual.checkStructure();
 					}
 				}
 			}
 		}
-		return result;
 	}
-	
-	@Override
-	protected void activate(World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {}
 	
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {

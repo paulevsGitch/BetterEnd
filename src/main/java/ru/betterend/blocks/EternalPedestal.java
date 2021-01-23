@@ -99,7 +99,7 @@ public class EternalPedestal extends PedestalBlock {
 		}
 		List<ItemStack> drop = Lists.newArrayList();
 		BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
-		if (blockEntity != null && blockEntity instanceof EternalPedestalEntity) {
+		if (blockEntity instanceof EternalPedestalEntity) {
 			EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
 			if (!pedestal.isEmpty()) {
 				drop.add(pedestal.getStack(0));

@@ -135,6 +135,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 			BlockState state = world.getBlockState(posMutable);
 			if (state.getBlock() instanceof InfusionPedestal) {
 				((InfusionPedestal) state.getBlock()).checkRitual(world, posMutable);
+				break;
 			}
 		}
 	}

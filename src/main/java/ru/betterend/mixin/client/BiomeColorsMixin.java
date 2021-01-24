@@ -23,8 +23,7 @@ import ru.betterend.util.MHelper;
 public class BiomeColorsMixin {
 	private static final int POISON_COLOR = MHelper.color(92, 160, 78);
 	private static final int STREAM_COLOR = MHelper.color(105, 213, 244);
-	private static final Point[] OUTER_POINTS;
-	private static final Point[] INNER_POINTS;
+	private static final Point[] OFFSETS;
 	private static final boolean HAS_SODIUM;
 	
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
@@ -33,22 +32,11 @@ public class BiomeColorsMixin {
 			BlockRenderView view = HAS_SODIUM ? MinecraftClient.getInstance().world : world;
 			Mutable mut = new Mutable();
 			mut.setY(pos.getY());
-			
-			for (Point offset: INNER_POINTS) {
-				mut.setX(pos.getX() + offset.x);
-				mut.setZ(pos.getZ() + offset.y);
+			for (int i = 0; i < OFFSETS.length; i++) {
+				mut.setX(pos.getX() + OFFSETS[i].x);
+				mut.setZ(pos.getZ() + OFFSETS[i].y);
 				if ((view.getBlockState(mut).isOf(EndBlocks.BRIMSTONE))) {
-					info.setReturnValue(POISON_COLOR);
-					info.cancel();
-					return;
-				}
-			}
-			
-			for (Point offset: OUTER_POINTS) {
-				mut.setX(pos.getX() + offset.x);
-				mut.setZ(pos.getZ() + offset.y);
-				if ((view.getBlockState(mut).isOf(EndBlocks.BRIMSTONE))) {
-					info.setReturnValue(STREAM_COLOR);
+					info.setReturnValue(i < 16 ? STREAM_COLOR : POISON_COLOR);
 					info.cancel();
 					return;
 				}
@@ -59,21 +47,21 @@ public class BiomeColorsMixin {
 	static {
 		HAS_SODIUM = FabricLoader.getInstance().isModLoaded("sodium");
 		
-		OUTER_POINTS = new Point[16];
+		OFFSETS = new Point[20];
 		for (int i = 0; i < 3; i++) {
 			int p = i - 1;
-			OUTER_POINTS[i] = new Point(p, -2);
-			OUTER_POINTS[i + 3] = new Point(p, 2);
-			OUTER_POINTS[i + 6] = new Point(-2, p);
-			OUTER_POINTS[i + 9] = new Point(2, p);
+			OFFSETS[i] = new Point(p, -2);
+			OFFSETS[i + 3] = new Point(p, 2);
+			OFFSETS[i + 6] = new Point(-2, p);
+			OFFSETS[i + 9] = new Point(2, p);
 		}
 		
-		INNER_POINTS = new Point[4];
 		for (int i = 0; i < 4; i++) {
+			int inner = i + 16;
 			Direction dir = BlocksHelper.HORIZONTAL[i];
-			INNER_POINTS[i] = new Point(dir.getOffsetX(), dir.getOffsetZ());
+			OFFSETS[inner] = new Point(dir.getOffsetX(), dir.getOffsetZ());
 			dir = BlocksHelper.HORIZONTAL[(i + 1) & 3];
-			OUTER_POINTS[i + 12] = new Point(INNER_POINTS[i].x + dir.getOffsetX(), INNER_POINTS[i].y + dir.getOffsetZ());
+			OFFSETS[i + 12] = new Point(OFFSETS[inner].x + dir.getOffsetX(), OFFSETS[inner].y + dir.getOffsetZ());
 		}
 	}
 }

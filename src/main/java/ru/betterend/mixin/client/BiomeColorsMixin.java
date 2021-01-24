@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -22,19 +23,21 @@ import ru.betterend.util.MHelper;
 public class BiomeColorsMixin {
 	private static final int POISON_COLOR = MHelper.color(92, 160, 78);
 	private static final int STREAM_COLOR = MHelper.color(105, 213, 244);
-	private static final Mutable POS = new Mutable();
 	private static final Point[] OUTER_POINTS;
 	private static final Point[] INNER_POINTS;
-	private static final boolean CAN_RENDER;
+	private static final boolean HAS_SODIUM;
 	
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(BlockRenderView world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
-		if (CAN_RENDER && ClientOptions.useSulfurWaterColor()) {
-			POS.setY(pos.getY());
+		if (ClientOptions.useSulfurWaterColor()) {
+			BlockRenderView view = HAS_SODIUM ? MinecraftClient.getInstance().world : world;
+			Mutable mut = new Mutable();
+			mut.setY(pos.getY());
+			
 			for (Point offset: INNER_POINTS) {
-				POS.setX(pos.getX() + offset.x);
-				POS.setZ(pos.getZ() + offset.y);
-				if ((world.getBlockState(POS).isOf(EndBlocks.BRIMSTONE))) {
+				mut.setX(pos.getX() + offset.x);
+				mut.setZ(pos.getZ() + offset.y);
+				if ((view.getBlockState(mut).isOf(EndBlocks.BRIMSTONE))) {
 					info.setReturnValue(POISON_COLOR);
 					info.cancel();
 					return;
@@ -42,9 +45,9 @@ public class BiomeColorsMixin {
 			}
 			
 			for (Point offset: OUTER_POINTS) {
-				POS.setX(pos.getX() + offset.x);
-				POS.setZ(pos.getZ() + offset.y);
-				if ((world.getBlockState(POS).isOf(EndBlocks.BRIMSTONE))) {
+				mut.setX(pos.getX() + offset.x);
+				mut.setZ(pos.getZ() + offset.y);
+				if ((view.getBlockState(mut).isOf(EndBlocks.BRIMSTONE))) {
 					info.setReturnValue(STREAM_COLOR);
 					info.cancel();
 					return;
@@ -54,7 +57,7 @@ public class BiomeColorsMixin {
 	}
 	
 	static {
-		CAN_RENDER = !FabricLoader.getInstance().isModLoaded("sodium");
+		HAS_SODIUM = FabricLoader.getInstance().isModLoaded("sodium");
 		
 		OUTER_POINTS = new Point[16];
 		for (int i = 0; i < 3; i++) {

@@ -1,6 +1,5 @@
 package ru.betterend.client;
 
-import net.fabricmc.loader.api.FabricLoader;
 import ru.betterend.config.Configs;
 
 public class ClientOptions {
@@ -14,9 +13,6 @@ public class ClientOptions {
 		useFogDensity = Configs.CLENT_CONFIG.getBooleanRoot("useFogDensity", true);
 		blendBiomeMusic = Configs.CLENT_CONFIG.getBooleanRoot("blendBiomeMusic", true);
 		sulfurWaterColor = Configs.CLENT_CONFIG.getBooleanRoot("sulfurWaterColor", true);
-		if (sulfurWaterColor) {
-			sulfurWaterColor = !FabricLoader.getInstance().isModLoaded("sodium");
-		}
 		Configs.CLENT_CONFIG.saveChanges();
 	}
 
@@ -49,6 +45,6 @@ public class ClientOptions {
 	}
 
 	public static void setSulfurWaterColor(boolean sulfurWaterColor) {
-		ClientOptions.sulfurWaterColor = sulfurWaterColor && !FabricLoader.getInstance().isModLoaded("sodium");
+		ClientOptions.sulfurWaterColor = sulfurWaterColor;
 	}
 }

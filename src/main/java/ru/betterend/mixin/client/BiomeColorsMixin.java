@@ -1,10 +1,13 @@
 package ru.betterend.mixin.client;
 
+import java.awt.Point;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -19,46 +22,55 @@ import ru.betterend.util.MHelper;
 public class BiomeColorsMixin {
 	private static final int POISON_COLOR = MHelper.color(92, 160, 78);
 	private static final int STREAM_COLOR = MHelper.color(105, 213, 244);
+	private static final Mutable POS = new Mutable();
+	private static final Point[] OUTER_POINTS;
+	private static final Point[] INNER_POINTS;
+	private static final boolean CAN_RENDER;
 	
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(BlockRenderView world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
-		if (ClientOptions.useSulfurWaterColor()) {
-			int color = info.getReturnValue();
-			
-			boolean scanDeep = true;
-			Mutable mut = new Mutable();
-			for (Direction d: BlocksHelper.HORIZONTAL) {
-				mut.set(pos).move(d);
-				if ((world.getBlockState(mut).isOf(EndBlocks.BRIMSTONE))) {
-					color = POISON_COLOR;
-					scanDeep = false;
-					break;
-				}
-			}
-	
-			if (scanDeep) {
-				int x1 = pos.getX() - 2;
-				int z1 = pos.getZ() - 2;
-	
-				int x2 = pos.getX() + 3;
-				int z2 = pos.getZ() + 3;
-	
-				mut.setY(pos.getY());
-				for (int x = x1; x < x2 && scanDeep; x++) {
-					mut.setX(x);
-					for (int z = z1; z < z2 && scanDeep; z++) {
-						mut.setZ(z);
-						if (Math.abs(pos.getX() - x) != 2 || Math.abs(pos.getZ() - z) != 2) {
-							if ((world.getBlockState(mut).isOf(EndBlocks.BRIMSTONE))) {
-								color = STREAM_COLOR;
-								scanDeep = false;
-							}
-						}
-					}
+		if (CAN_RENDER && ClientOptions.useSulfurWaterColor()) {
+			POS.setY(pos.getY());
+			for (Point offset: INNER_POINTS) {
+				POS.setX(pos.getX() + offset.x);
+				POS.setZ(pos.getZ() + offset.y);
+				if ((world.getBlockState(POS).isOf(EndBlocks.BRIMSTONE))) {
+					info.setReturnValue(POISON_COLOR);
+					info.cancel();
+					return;
 				}
 			}
 			
-			info.setReturnValue(color);
+			for (Point offset: OUTER_POINTS) {
+				POS.setX(pos.getX() + offset.x);
+				POS.setZ(pos.getZ() + offset.y);
+				if ((world.getBlockState(POS).isOf(EndBlocks.BRIMSTONE))) {
+					info.setReturnValue(STREAM_COLOR);
+					info.cancel();
+					return;
+				}
+			}
+		}
+	}
+	
+	static {
+		CAN_RENDER = !FabricLoader.getInstance().isModLoaded("sodium");
+		
+		OUTER_POINTS = new Point[16];
+		for (int i = 0; i < 3; i++) {
+			int p = i - 1;
+			OUTER_POINTS[i] = new Point(p, -2);
+			OUTER_POINTS[i + 3] = new Point(p, 2);
+			OUTER_POINTS[i + 6] = new Point(-2, p);
+			OUTER_POINTS[i + 9] = new Point(2, p);
+		}
+		
+		INNER_POINTS = new Point[4];
+		for (int i = 0; i < 4; i++) {
+			Direction dir = BlocksHelper.HORIZONTAL[i];
+			INNER_POINTS[i] = new Point(dir.getOffsetX(), dir.getOffsetZ());
+			dir = BlocksHelper.HORIZONTAL[(i + 1) & 3];
+			OUTER_POINTS[i + 12] = new Point(INNER_POINTS[i].x + dir.getOffsetX(), INNER_POINTS[i].y + dir.getOffsetZ());
 		}
 	}
 }

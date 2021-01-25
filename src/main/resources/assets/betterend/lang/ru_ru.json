@@ -381,6 +381,24 @@
 	"block.betterend.iron_bulb_lantern_white": "Белый железный луковичный фонарь",
 	"block.betterend.iron_bulb_lantern_yellow": "Жёлтый железный луковичный фонарь",
 	
+	"block.betterend.gold_bulb_lantern": "Золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_black": "Чёрный золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_blue": "Синий золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_brown": "Коричневый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_cyan": "Циановый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_gray": "Серый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_green": "Зелёный золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_light_blue": "Голубой золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_light_gray": "Светло-серый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_lime": "Лаймовый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_magenta": "Фиолетовый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_orange": "Оранжевый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_pink": "Розовый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_purple": "Пурпурный золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_red": "Красный золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_white": "Белый золотой луковичный фонарь",
+	"block.betterend.gold_bulb_lantern_yellow": "Жёлтый золотой луковичный фонарь",
+	
 	"block.betterend.thallasium_bulb_lantern": "Талласиевый луковичный фонарь",
 	"block.betterend.thallasium_bulb_lantern_black": "Чёрный талласиевый луковичный фонарь",
 	"block.betterend.thallasium_bulb_lantern_blue": "Синий талласиевый луковичный фонарь",
@@ -618,5 +636,9 @@
 	"block.betterend.thallasium_anvil": "Талласиевая наковальня",
 	"block.betterend.thallasium_chain": "Талласиевая цепь",
 	"block.betterend.thallasium_slab": "Талласиевая плита",
-	"block.betterend.thallasium_stairs": "Талласиевые ступени"
+	"block.betterend.thallasium_stairs": "Талласиевые ступени",
+	
+	"block.betterend.gold_chandelier": "Золотой канделябр",
+	"block.betterend.iron_chandelier": "Железный канделябр",
+	"item.betterend.thallasium_nugget": "Талласиевый самородок"
 }

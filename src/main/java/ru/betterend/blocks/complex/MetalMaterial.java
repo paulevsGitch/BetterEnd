@@ -74,7 +74,7 @@ public class MetalMaterial {
 		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(color));
 		plate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(block));
 		
-		chandelier = EndBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(materialBlock));
+		chandelier = EndBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(block));
 		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lantern));
 		bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
 		

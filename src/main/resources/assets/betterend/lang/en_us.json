@@ -379,6 +379,24 @@
 	"block.betterend.iron_bulb_lantern_white": "White Iron Bulb Lantern",
 	"block.betterend.iron_bulb_lantern_yellow": "Yellow Iron Bulb Lantern",
 	
+	"block.betterend.gold_bulb_lantern": "Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_black": "Black Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_blue": "Blue Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_brown": "Brown Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_cyan": "Cyan Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_gray": "Gray Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_green": "Green Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_light_blue": "Light Blue Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_light_gray": "Light Gray Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_lime": "Lime Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_magenta": "Magenta Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_orange": "Orange Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_pink": "Pink Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_purple": "Purple Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_red": "Red Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_white": "White Gold Bulb Lantern",
+	"block.betterend.gold_bulb_lantern_yellow": "Yellow Gold Bulb Lantern",
+	
 	"block.betterend.thallasium_bulb_lantern": "Thallasium Bulb Lantern",
 	"block.betterend.thallasium_bulb_lantern_black": "Black Thallasium Bulb Lantern",
 	"block.betterend.thallasium_bulb_lantern_blue": "Blue Thallasium Bulb Lantern",
@@ -616,5 +634,9 @@
 	"block.betterend.thallasium_anvil": "Thallasium Anvil",
 	"block.betterend.thallasium_chain": "Thallasium Chain",
 	"block.betterend.thallasium_slab": "Thallasium Slab",
-	"block.betterend.thallasium_stairs": "Thallasium Stairs"
+	"block.betterend.thallasium_stairs": "Thallasium Stairs",
+	
+	"block.betterend.gold_chandelier": "Gold Chandelier",
+	"block.betterend.iron_chandelier": "Iron Chandelier",
+	"item.betterend.thallasium_nugget": "Thallasium Nugget"
 }

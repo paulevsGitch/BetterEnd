@@ -196,6 +196,9 @@ public class CraftingRecipes {
 		.addMaterial('A', EndItems.AMBER_GEM)
 		.addMaterial('P', Items.ENDER_PEARL)
 		.build();
+		
+		GridRecipe.make("iron_chandelier", EndBlocks.IRON_CHANDELIER).setShape("I#I", " # ").addMaterial('#', Items.IRON_INGOT).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
+		GridRecipe.make("gold_chandelier", EndBlocks.GOLD_CHANDELIER).setShape("I#I", " # ").addMaterial('#', Items.GOLD_INGOT).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

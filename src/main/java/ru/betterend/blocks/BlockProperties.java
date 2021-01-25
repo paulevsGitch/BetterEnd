@@ -6,15 +6,18 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.StringIdentifiable;
 
 public class BlockProperties {
-	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.of("shape", TripleShape.class);
-	public final static EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.of("state", PedestalState.class);
 	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.of("shape", HydraluxShape.class);
+	public final static EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.of("state", PedestalState.class);
+	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.of("shape", TripleShape.class);
 	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.of("shape", PentaShape.class);
-	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
+	
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.of("has_light");
-	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
-	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
+	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
 	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
+	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
+	
+	public static final IntProperty DESTRUCTION = IntProperty.of("destruction", 0, 2);
+	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
 	public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, 3);
 	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
 	

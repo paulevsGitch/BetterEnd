@@ -32,6 +32,7 @@
 		"BoneMealItemMixin",
 		"PlayerEntityMixin",
 		"SlimeEntityMixin",
+		"AnvilBlockMixin",
 		"BrewingAccessor",
 		"EntityMixin"
 	],

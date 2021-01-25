@@ -3,22 +3,37 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AnvilBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import ru.betterend.blocks.BlockProperties;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
 public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
+	public static final IntProperty DESTRUCTION = BlockProperties.DESTRUCTION;
+	
 	public EndAnvilBlock(MaterialColor color) {
 		super(FabricBlockSettings.copyOf(Blocks.ANVIL).materialColor(color));
+	}
+	
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		super.appendProperties(builder);
+		builder.add(DESTRUCTION);
 	}
 	
 	@Override
@@ -35,7 +50,18 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	@Override
 	public String getModelPattern(String block) {
 		Identifier blockId = Registry.BLOCK.getId(this);
-		return Patterns.createJson(Patterns.BLOCK_ANVIL, blockId.getPath(), blockId.getPath());
+		Map<String, String> map = Maps.newHashMap();
+		map.put("%anvil%", blockId.getPath());
+		map.put("%top%", getTop(blockId, block));
+		return Patterns.createJson(Patterns.BLOCK_ANVIL, map);
+	}
+	
+	private String getTop(Identifier blockId, String block) {
+		if (block.contains("item")) {
+			return blockId.getPath() + "_top_0";
+		}
+		char last = block.charAt(block.length() - 1);
+		return blockId.getPath() + "_top_" + last;
 	}
 	
 	@Override

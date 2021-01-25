@@ -2,8 +2,8 @@
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
 	"parent": "block/block",
 	"textures": {
-		"overlay": "betterend:block/bulb_vine_lantern_overlay",
-		"metal": "betterend:block/bulb_vine_lantern_metal",
+		"overlay": "betterend:block/%glow%",
+		"metal": "betterend:block/%metal%",
 		"particle": "#overlay"
 	},
 	"elements": [ 	 

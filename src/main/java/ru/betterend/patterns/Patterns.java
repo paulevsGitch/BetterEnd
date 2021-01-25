@@ -82,8 +82,8 @@ public class Patterns {
 	public final static Identifier BLOCK_BOOKSHELF = BetterEnd.makeID("patterns/block/bookshelf.json");
 	public final static Identifier BLOCK_STONE_LANTERN_CEIL = BetterEnd.makeID("patterns/block/stone_lantern_ceil.json");
 	public final static Identifier BLOCK_STONE_LANTERN_FLOOR = BetterEnd.makeID("patterns/block/stone_lantern_floor.json");
-	public final static Identifier BLOCK_BULB_LANTERN_COLORED_FLOOR = BetterEnd.makeID("models/block/bulb_lantern_colored_floor.json");
-	public final static Identifier BLOCK_BULB_LANTERN_COLORED_CEIL = BetterEnd.makeID("models/block/bulb_lantern_colored_ceil.json");
+	public final static Identifier BLOCK_BULB_LANTERN_FLOOR = BetterEnd.makeID("patterns/block/bulb_lantern_floor.json");
+	public final static Identifier BLOCK_BULB_LANTERN_CEIL = BetterEnd.makeID("patterns/block/bulb_lantern_ceil.json");
 	public final static Identifier BLOCK_PETAL_COLORED = BetterEnd.makeID("models/block/block_petal_colored.json");
 	public final static Identifier BLOCK_COMPOSTER = BetterEnd.makeID("patterns/block/composter.json");
 	public final static Identifier BLOCK_COLORED = BetterEnd.makeID("patterns/block/block_colored.json");

@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "betterend:block/thallasium_anvil",
+			"y": 270
+		},
+		"facing=north": {
+			"model": "betterend:block/thallasium_anvil",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "betterend:block/thallasium_anvil"
+		},
+		"facing=west": {
+			"model": "betterend:block/thallasium_anvil",
+			"y": 90
+		}
+	}
+}

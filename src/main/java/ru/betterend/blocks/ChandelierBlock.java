@@ -7,8 +7,6 @@ import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MaterialColor;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -19,11 +17,11 @@ import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 
-public class ThallasiumChandelierBlock extends AttachedBlock implements IRenderTypeable {
+public class ChandelierBlock extends AttachedBlock implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
-	public ThallasiumChandelierBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(MaterialColor.BLUE).noCollision().nonOpaque().requiresTool().luminance(15));
+	public ChandelierBlock(FabricBlockSettings settings) {
+		super(settings.noCollision().nonOpaque().requiresTool().luminance(15));
 	}
 	
 	@Override

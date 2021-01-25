@@ -2,6 +2,7 @@ package ru.betterend.recipe.builders;
 
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.BlastingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
@@ -58,10 +59,19 @@ public class FurnaceRecipe {
 	}
 	
 	public void build() {
+		build(false);
+	}
+	
+	public void build(boolean blasting) {
 		if (exist) {
 			Identifier id = BetterEnd.makeID(name);
 			SmeltingRecipe recipe = new SmeltingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time);
 			EndRecipeManager.addRecipe(RecipeType.SMELTING, recipe);
+			
+			if (blasting) {
+				BlastingRecipe recipe2 = new BlastingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time / 2);
+				EndRecipeManager.addRecipe(RecipeType.BLASTING, recipe2);
+			}
 		}
 		else {
 			BetterEnd.LOGGER.debug("Smelting recipe {} couldn't be added", name);

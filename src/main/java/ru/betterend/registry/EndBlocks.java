@@ -78,7 +78,6 @@ import ru.betterend.blocks.TenaneaFlowersBlock;
 import ru.betterend.blocks.TenaneaSaplingBlock;
 import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.TerrainPlantBlock;
-import ru.betterend.blocks.ThallasiumChandelierBlock;
 import ru.betterend.blocks.TwistedUmbrellaMossBlock;
 import ru.betterend.blocks.TwistedUmbrellaMossTallBlock;
 import ru.betterend.blocks.UmbrellaMossBlock;
@@ -305,10 +304,8 @@ public class EndBlocks {
 	public static final Block END_STONE_LANTERN = registerBlock("end_stone_lantern", new StoneLanternBlock(Blocks.END_STONE));
 	public static final Block BLACKSTONE_LANTERN = registerBlock("blackstone_lantern", new StoneLanternBlock(Blocks.BLACKSTONE));
 	
-	public static final Block BULB_LANTERN = registerBlock("bulb_lantern", new BulbVineLanternBlock());
-	public static final ColoredMaterial BULB_LANTERN_COLORED = new ColoredMaterial(BulbVineLanternColoredBlock::new, BULB_LANTERN, false);
-	
-	public static final Block THALLASIUM_CHANDELIER = registerBlock("thallasium_chandelier", new ThallasiumChandelierBlock());
+	public static final Block IRON_BULB_LANTERN = registerBlock("iron_bulb_lantern", new BulbVineLanternBlock());
+	public static final ColoredMaterial IRON_BULB_LANTERN_COLORED = new ColoredMaterial(BulbVineLanternColoredBlock::new, IRON_BULB_LANTERN, false);
 	
 	// Blocks With Entity //
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());

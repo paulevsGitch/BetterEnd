@@ -108,7 +108,7 @@ public class WoodenMaterial {
 		GridRecipe.make(name + "_sign", sign).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
 		GridRecipe.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
 		GridRecipe.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
-		GridRecipe.make(name + "_bookshelf", shelf).setShape("###", "PPP", "###").addMaterial('#', planks).addMaterial('P', Items.PAPER).setGroup("end_bookshelves").build();
+		GridRecipe.make(name + "_bookshelf", shelf).setShape("###", "PPP", "###").addMaterial('#', planks).addMaterial('P', Items.BOOK).setGroup("end_bookshelves").build();
 		GridRecipe.make(name + "_bark", bark).setShape("##", "##").addMaterial('#', log).setOutputCount(3).build();
 		GridRecipe.make(name + "_log", log).setShape("##", "##").addMaterial('#', bark).setOutputCount(3).build();
 		GridRecipe.make(name + "_composter", composter).setShape("# #", "# #", "###").addMaterial('#', slab).build();

@@ -27,6 +27,7 @@ public class Patterns {
 	public final static Identifier STATE_BUTTON = BetterEnd.makeID("patterns/blockstate/button.json");
 	public final static Identifier STATE_PILLAR = BetterEnd.makeID("patterns/blockstate/pillar.json");
 	public final static Identifier STATE_PLATE = BetterEnd.makeID("patterns/blockstate/pressure_plate.json");
+	public final static Identifier STATE_PLATE_ROTATED = BetterEnd.makeID("patterns/blockstate/pressure_plate_rotated.json");
 	public final static Identifier STATE_DOOR = BetterEnd.makeID("patterns/blockstate/door.json");
 	public final static Identifier STATE_SAPLING = BetterEnd.makeID("patterns/blockstate/sapling.json");
 	public final static Identifier STATE_GATE = BetterEnd.makeID("patterns/blockstate/fence_gate.json");

@@ -2,9 +2,12 @@ package ru.betterend;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
@@ -76,6 +79,13 @@ public class BetterEnd implements ModInitializer {
 				}
 			});
 		}
+		
+		RegistryEntryAddedCallback.event(Registry.BLOCK).register((i, id, block) -> {
+			if (block instanceof SlabBlock) {
+				// Do Some Stuff
+				System.out.println(id);
+			}
+		});
 	}
 	
 	public static boolean hasGuideBook() {

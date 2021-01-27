@@ -18,7 +18,7 @@ import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
 public class GlowingPillarLuminophorBlock extends BlockBase {
-	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
+	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public GlowingPillarLuminophorBlock() {
 		super(FabricBlockSettings.of(Material.LEAVES)

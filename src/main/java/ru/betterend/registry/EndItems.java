@@ -80,10 +80,10 @@ public class EndItems {
 	public static final Item TERMINITE_CHESTPLATE = registerItem("terminite_chestplate", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.CHEST, makeItemSettings()));
 	public static final Item TERMINITE_LEGGINGS = registerItem("terminite_leggings", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.LEGS, makeItemSettings()));
 	public static final Item TERMINITE_BOOTS = registerItem("terminite_boots", new ArmorItem(EndArmorMaterial.TERMINITE, EquipmentSlot.FEET, makeItemSettings()));
-	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings()));
-	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings()));
-	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings()));
-	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings()));
+	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireproof()));
+	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings().fireproof()));
+	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings().fireproof()));
+	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings().fireproof()));
 	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.HEAD, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
@@ -97,12 +97,12 @@ public class EndItems {
 	public static final ToolItem TERMINITE_HOE = registerTool("terminite_hoe", new EndHoeItem(EndToolMaterial.TERMINITE, -3, 0.0F, makeItemSettings()));
 	public static final ToolItem TERMINITE_HAMMER = registerTool("terminite_hammer", new EndHammerItem(EndToolMaterial.TERMINITE, 5.0F, -3.2F, 0.3D, makeItemSettings()));
 	
-	public static final ToolItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new EndShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_SWORD = registerTool("aeternium_sword", new EndSwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_PICKAXE = registerTool("aeternium_pickaxe", new EndPickaxeItem(EndToolMaterial.AETERNIUM, 1, -2.8F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_AXE = registerTool("aeternium_axe", new EndAxeItem(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_HOE = registerTool("aeternium_hoe", new EndHoeItem(EndToolMaterial.AETERNIUM, -3, 0.0F, makeItemSettings()));
-	public static final ToolItem AETERNIUM_HAMMER = registerTool("aeternium_hammer", new EndHammerItem(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeItemSettings()));
+	public static final ToolItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new EndShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings().fireproof()));
+	public static final ToolItem AETERNIUM_SWORD = registerTool("aeternium_sword", new EndSwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, makeItemSettings().fireproof()));
+	public static final ToolItem AETERNIUM_PICKAXE = registerTool("aeternium_pickaxe", new EndPickaxeItem(EndToolMaterial.AETERNIUM, 1, -2.8F, makeItemSettings().fireproof()));
+	public static final ToolItem AETERNIUM_AXE = registerTool("aeternium_axe", new EndAxeItem(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, makeItemSettings().fireproof()));
+	public static final ToolItem AETERNIUM_HOE = registerTool("aeternium_hoe", new EndHoeItem(EndToolMaterial.AETERNIUM, -3, 0.0F, makeItemSettings().fireproof()));
+	public static final ToolItem AETERNIUM_HAMMER = registerTool("aeternium_hammer", new EndHammerItem(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeItemSettings().fireproof()));
 	
 	public static final ToolItem IRON_HAMMER = registerTool("iron_hammer", new EndHammerItem(ToolMaterials.IRON, 5.0F, -3.2F, 0.2D, makeItemSettings()));
 	public static final ToolItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammerItem(ToolMaterials.GOLD, 4.5F, -3.4F, 0.3D, makeItemSettings()));

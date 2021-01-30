@@ -41,10 +41,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	@Inject(method = "canTakeOutput", at = @At("HEAD"), cancellable = true)
 	protected void be_canTakeOutput(PlayerEntity player, boolean present, CallbackInfoReturnable<Boolean> info) {
 		if (be_currentRecipe != null) {
-			ItemStack output = this.be_currentRecipe.craft(input, player);
-			if (!output.isEmpty()) {
-				info.setReturnValue(true);
-			}
+			info.setReturnValue(be_currentRecipe.checkHammerDurability(input, player));
 		}
 	}
 	
@@ -52,6 +49,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	protected void be_onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
 		if (be_currentRecipe != null) {
 			this.input.getStack(0).decrement(1);
+			stack = be_currentRecipe.craft(input, player);
 			this.onContentChanged(input);
 			this.context.run((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
@@ -77,7 +75,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 		RecipeManager recipeManager = this.player.world.getRecipeManager();
 		this.be_recipes = recipeManager.getAllMatches(AnvilRecipe.TYPE, input, player.world);
 		if (be_recipes.size() > 0) {
-			this.be_currentRecipe = recipeManager.getFirstMatch(AnvilRecipe.TYPE, input, player.world).get();
+			if (be_currentRecipe == null || !be_recipes.contains(be_currentRecipe)) {
+				this.be_currentRecipe = be_recipes.get(0);
+			}
 			this.be_updateResult();
 			info.cancel();
 		}

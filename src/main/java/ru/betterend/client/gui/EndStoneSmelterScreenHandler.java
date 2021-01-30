@@ -113,7 +113,7 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 	}
 
 	protected boolean isSmeltable(ItemStack itemStack) {
-		return this.world.getRecipeManager().getFirstMatch(AlloyingRecipe.TYPE, new SimpleInventory(new ItemStack[]{itemStack}), this.world).isPresent();
+		return this.world.getRecipeManager().getFirstMatch(AlloyingRecipe.TYPE, new SimpleInventory(itemStack), this.world).isPresent();
 	}
 
 	public boolean isFuel(ItemStack itemStack) {
@@ -141,11 +141,11 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 					if (!this.insertItem(itemStack2, 2, 3, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 4 && index < 31) {
+				} else if (index < 31) {
 					if (!insertItem(itemStack2, 31, 40, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index >= 31 && index < 40 && !insertItem(itemStack2, 4, 31, false)) {
+				} else if (index < 40 && !insertItem(itemStack2, 4, 31, false)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (!insertItem(itemStack2, 4, 40, false)) {

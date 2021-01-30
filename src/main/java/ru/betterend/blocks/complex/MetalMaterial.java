@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
@@ -25,6 +24,7 @@ import ru.betterend.blocks.basis.EndSlabBlock;
 import ru.betterend.blocks.basis.EndStairsBlock;
 import ru.betterend.blocks.basis.EndTrapdoorBlock;
 import ru.betterend.blocks.basis.EndWoodenPlateBlock;
+import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.EndAxeItem;
 import ru.betterend.item.EndHammerItem;
 import ru.betterend.item.EndHoeItem;
@@ -114,14 +114,14 @@ public class MetalMaterial {
 		hoe = EndItems.registerTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, itemSettings));
 		hammer = EndItems.registerTool(name + "_hammer", new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
 		
-		helmet = EndItems.registerItem(name + "_helmet", new ArmorItem(armor, EquipmentSlot.HEAD, itemSettings));
-		chestplate = EndItems.registerItem(name + "_chestplate", new ArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
-		leggings = EndItems.registerItem(name + "_leggings", new ArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
-		boots = EndItems.registerItem(name + "_boots", new ArmorItem(armor, EquipmentSlot.FEET, itemSettings));
+		helmet = EndItems.registerItem(name + "_helmet", new EndArmorItem(armor, EquipmentSlot.HEAD, itemSettings));
+		chestplate = EndItems.registerItem(name + "_chestplate", new EndArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
+		leggings = EndItems.registerItem(name + "_leggings", new EndArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
+		boots = EndItems.registerItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));
 		
 		if (hasOre) {
-			FurnaceRecipe.make("thallasium_ingot_furnace", ore, ingot).build(true);
-			AlloyingRecipe.Builder.create("thallasium_ingot").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
+			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").build(true);
+			AlloyingRecipe.Builder.create(name + "_ingot_alloy").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
 		}
 		
 		GridRecipe.make(name + "_ingot_from_nuggets", ingot).setShape("###", "###", "###").addMaterial('#', nugget).setGroup("end_metal_ingots_nug").build();
@@ -147,10 +147,15 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_chandelier", chandelier).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		GridRecipe.make(name + "_hammer", hammer).setShape("III", "ISI", " S ").addMaterial('I', ingot).addMaterial('S', Items.STICK).setGroup("end_metal_hammers").build();
 		
-		FurnaceRecipe.make(name + "_axe_ingot", axe, nugget).build(true);
-		FurnaceRecipe.make(name + "_hoe_ingot", hoe, nugget).build(true);
-		FurnaceRecipe.make(name + "_pickaxe_ingot", pickaxe, nugget).build(true);
-		FurnaceRecipe.make(name + "_sword_ingot", sword, nugget).build(true);
+		FurnaceRecipe.make(name + "_axe_nugget", axe, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_hoe_nugget", hoe, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_pickaxe_nugget", pickaxe, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_sword_nugget", sword, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_hammer_nugget", hammer, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_helmet_nugget", helmet, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_chestplate_nugget", chestplate, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_leggings_nugget", leggings, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_boots_nugget", boots, nugget).setGroup("end_nugget").build(true);
 		
 		TagHelper.addTag(BlockTags.ANVIL, anvil);
 	}

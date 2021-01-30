@@ -1,5 +1,7 @@
 package ru.betterend.recipe.builders;
 
+import java.util.Objects;
+
 import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
@@ -27,8 +29,6 @@ import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
-
-import java.util.Objects;
 
 public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	

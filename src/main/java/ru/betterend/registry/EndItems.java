@@ -35,6 +35,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.item.DrinkItem;
 import ru.betterend.item.EnchantedPetalItem;
+import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.EndAxeItem;
 import ru.betterend.item.EndHammerItem;
 import ru.betterend.item.EndHoeItem;
@@ -74,14 +75,14 @@ public class EndItems {
 	public final static Item LUMECORN_ROD = registerItem("lumecorn_rod");
 	
 	// Armor //
-	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireproof()));
-	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings().fireproof()));
-	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings().fireproof()));
-	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new ArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings().fireproof()));
-	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.HEAD, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new ArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireproof()));
+	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings().fireproof()));
+	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings().fireproof()));
+	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings().fireproof()));
+	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.HEAD, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	
 	// Tools //
 	public static final ToolItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new EndShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings().fireproof()));
@@ -106,12 +107,12 @@ public class EndItems {
 	public final static Item END_FISH_RAW = registerFood("end_fish_raw", FoodComponents.SALMON);
 	public final static Item END_FISH_COOKED = registerFood("end_fish_cooked", FoodComponents.COOKED_SALMON);
 	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new FishBucketItem(EndEntities.END_FISH, Fluids.WATER, makeItemSettings().maxCount(1)));
-	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 3, 0.75F);
-	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 4, 0.75F, new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400));
+	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 6, 0.75F);
+	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 7, 0.75F, new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400));
 	public final static Item BLOSSOM_BERRY = registerFood("blossom_berry", FoodComponents.APPLE);
 	
 	// Drinks //
-	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice");
+	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);
 	
 	public static Item registerItem(String name) {
 		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));
@@ -205,6 +206,15 @@ public class EndItems {
 	
 	public static Item registerDrink(String name) {
 		return registerItem(name, new DrinkItem(makeItemSettings().maxCount(1)));
+	}
+	
+	public static Item registerDrink(String name, FoodComponent foodComponent) {
+		return registerItem(name, new DrinkItem(makeItemSettings().maxCount(1).food(foodComponent)));
+	}
+	
+	public static Item registerDrink(String name, int hunger, float saturation) {
+		FoodComponent.Builder builder = new FoodComponent.Builder().hunger(hunger).saturationModifier(saturation);
+		return registerDrink(name, builder.build());
 	}
 
 	public static Settings makeItemSettings() {

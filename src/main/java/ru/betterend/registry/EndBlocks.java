@@ -308,8 +308,6 @@ public class EndBlocks {
 	
 	public static final Block IRON_BULB_LANTERN = registerBlock("iron_bulb_lantern", new BulbVineLanternBlock());
 	public static final ColoredMaterial IRON_BULB_LANTERN_COLORED = new ColoredMaterial(BulbVineLanternColoredBlock::new, IRON_BULB_LANTERN, false);
-	public static final Block GOLD_BULB_LANTERN = registerBlock("gold_bulb_lantern", new BulbVineLanternBlock());
-	public static final ColoredMaterial GOLD_BULB_LANTERN_COLORED = new ColoredMaterial(BulbVineLanternColoredBlock::new, GOLD_BULB_LANTERN, false);
 	
 	public static final Block IRON_CHANDELIER = EndBlocks.registerBlock("iron_chandelier", new ChandelierBlock(Blocks.GOLD_BLOCK));
 	public static final Block GOLD_CHANDELIER = EndBlocks.registerBlock("gold_chandelier", new ChandelierBlock(Blocks.GOLD_BLOCK));

@@ -640,5 +640,41 @@
 	
 	"block.betterend.gold_chandelier": "Золотой канделябр",
 	"block.betterend.iron_chandelier": "Железный канделябр",
-	"item.betterend.thallasium_nugget": "Талласиевый самородок"
+	"item.betterend.thallasium_nugget": "Талласиевый самородок",
+	
+	"block.betterend.terminite_anvil": "Терминитовая наковальня",
+	"block.betterend.terminite_bars": "Терминитовая решётка",
+	
+	"block.betterend.terminite_bulb_lantern": "Терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_black": "Чёрный терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_blue": "Синий терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_brown": "Коричневый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_cyan": "Циановый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_gray": "Серый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_green": "Зелёный терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_light_blue": "Голубой терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_light_gray": "Светло-серый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_lime": "Лаймовый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_magenta": "Фиолетовый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_orange": "Оранжевый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_pink": "Розовый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_purple": "Пурпурный терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_red": "Красный терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_white": "Белый терминитовый луковичный фонарь",
+	"block.betterend.terminite_bulb_lantern_yellow": "Жёлтый терминитовый луковичный фонарь",
+	
+	"block.betterend.terminite_chain": "Терминитовая цепь",
+	"block.betterend.terminite_chandelier": "Терминитовый канделябр",
+	"block.betterend.terminite_door": "Терминитовая дверь",
+	"block.betterend.terminite_plate": "Терминитовая нажимная плита",
+	"block.betterend.terminite_slab": "Терминитовая плита",
+	"block.betterend.terminite_stairs": "Терминитовые ступени",
+	"block.betterend.terminite_tile": "Терминитовая плитка",
+	"block.betterend.terminite_trapdoor": "Терминитовый люк",
+	"item.betterend.terminite_nugget": "Терминитовый самородок",
+	"item.betterend.thallasium_boots": "Талласиевые ботинки",
+	"item.betterend.thallasium_chestplate": "Талласиевый нагрудник",
+	"item.betterend.thallasium_hammer": "Талласиевый молот",
+	"item.betterend.thallasium_helmet": "Талласиевый шлем",
+	"item.betterend.thallasium_leggings": "Талласиевые поножи"
 }

@@ -28,6 +28,8 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
+import java.util.Objects;
+
 public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	
 	public final static String GROUP = "smithing";
@@ -71,14 +73,20 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	
 	public ItemStack craft(Inventory craftingInventory, PlayerEntity player) {
 		if (!player.isCreative()) {
+			if (!checkHammerDurability(craftingInventory, player)) return ItemStack.EMPTY;
 			ItemStack hammer = craftingInventory.getStack(1);
-			int damage = hammer.getDamage() + this.damage;
-			if (damage >= hammer.getMaxDamage()) return ItemStack.EMPTY;
 			hammer.damage(this.damage, player, entity -> {
 				entity.sendEquipmentBreakStatus(null);
 			});
 		}
 		return this.craft(craftingInventory);
+	}
+
+	public boolean checkHammerDurability(Inventory craftingInventory, PlayerEntity player) {
+		if (player.isCreative()) return true;
+		ItemStack hammer = craftingInventory.getStack(1);
+		int damage = hammer.getDamage() + this.damage;
+		return damage < hammer.getMaxDamage();
 	}
 	
 	public boolean matches(Inventory craftingInventory) {
@@ -125,7 +133,20 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	public boolean isIgnoredInRecipeBook() {
 		return true;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		AnvilRecipe that = (AnvilRecipe) o;
+		return damage == that.damage && level == that.level && id.equals(that.id) && input.equals(that.input) && output.equals(that.output);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, input, output, damage, level);
+	}
+
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
 		
@@ -244,5 +265,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			packetBuffer.writeVarInt(recipe.level);
 			packetBuffer.writeVarInt(recipe.damage);
 		}
+
+
 	}
 }

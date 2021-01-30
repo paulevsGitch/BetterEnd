@@ -2,7 +2,6 @@ package ru.betterend.recipe;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
@@ -55,29 +54,7 @@ public class CraftingRecipes {
 			.addMaterial('#', Blocks.OBSIDIAN)
 			.build();
 		
-		String material = "terminite";
-		GridRecipe.make(material + "_block", EndBlocks.TERMINITE_BLOCK)
-			.setShape("III", "III", "III")
-			.addMaterial('I', EndItems.TERMINITE_INGOT)
-			.build();
-		GridRecipe.make(material + "_block_to_ingot", EndItems.TERMINITE_INGOT)
-			.addMaterial('#', EndBlocks.TERMINITE_BLOCK)
-			.setOutputCount(9)
-			.setList("#")
-			.build();
-		
-		registerHelmet(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_HELMET);
-		registerChestplate(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_CHESTPLATE);
-		registerLeggings(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_LEGGINGS);
-		registerBoots(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_BOOTS);
-		registerShovel(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_SHOVEL);
-		registerSword(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_SWORD);
-		registerPickaxe(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_PICKAXE);
-		registerAxe(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_AXE);
-		registerHoe(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_HOE);
-		registerHammer(material, EndItems.TERMINITE_INGOT, EndItems.TERMINITE_HAMMER);
-		
-		material = "aeternium";
+		String material = "aeternium";
 		GridRecipe.make(material + "_block", EndBlocks.AETERNIUM_BLOCK)
 			.setShape("III", "III", "III")
 			.addMaterial('I', EndItems.AETERNIUM_INGOT)
@@ -87,11 +64,6 @@ public class CraftingRecipes {
 			.setOutputCount(9)
 			.setList("#")
 			.build();
-		
-		registerHammer("iron", Items.IRON_INGOT, EndItems.IRON_HAMMER);
-		registerHammer("golden", Items.GOLD_INGOT, EndItems.GOLDEN_HAMMER);
-		registerHammer("diamond", Items.DIAMOND, EndItems.DIAMOND_HAMMER);
-		registerHammer("netherite", Items.NETHERITE_INGOT, EndItems.NETHERITE_HAMMER);
 		
 		GridRecipe.make("blue_vine_seed_dye", Items.BLUE_DYE).setList("#").addMaterial('#', EndBlocks.BLUE_VINE_SEED).build();
 		GridRecipe.make("creeping_moss_dye", Items.CYAN_DYE).setList("#").addMaterial('#', EndBlocks.CREEPING_MOSS).build();
@@ -217,82 +189,6 @@ public class CraftingRecipes {
 			.addMaterial('S', slab)
 			.addMaterial('#', pillar)
 			.setOutputCount(2)
-			.build();
-	}
-	
-	private static void registerHelmet(String name, Item material, Item result) {
-		GridRecipe.make(name + "_helmet", result)
-			.setShape("III", "I I")
-			.addMaterial('I', material)
-			.build();
-	}
-	
-	private static void registerChestplate(String name, Item material, Item result) {
-		GridRecipe.make(name + "_chestplate", result)
-			.setShape("I I", "III", "III")
-			.addMaterial('I', material)
-			.build();
-	}
-	
-	private static void registerLeggings(String name, Item material, Item result) {
-		GridRecipe.make(name + "_leggings", result)
-			.setShape("III", "I I", "I I")
-			.addMaterial('I', material)
-			.build();
-	}
-	
-	private static void registerBoots(String name, Item material, Item result) {
-		GridRecipe.make(name + "_boots", result)
-			.setShape("I I", "I I")
-			.addMaterial('I', material)
-			.build();
-	}
-	
-	private static void registerShovel(String name, Item material, Item result) {
-		GridRecipe.make(name + "_shovel", result)
-			.setShape("I", "#", "#")
-			.addMaterial('I', material)
-			.addMaterial('#', Items.STICK)
-			.build();
-	}
-	
-	private static void registerSword(String name, Item material, Item result) {
-		GridRecipe.make(name + "_sword", result)
-			.setShape(new String[] { "I", "I", "#" })
-			.addMaterial('I', material)
-			.addMaterial('#', Items.STICK)
-			.build();
-	}
-	
-	private static void registerPickaxe(String name, Item material, Item result) {
-		GridRecipe.make(name + "_pickaxe", result)
-			.setShape("III", " # ", " # ")
-			.addMaterial('I', material)
-			.addMaterial('#', Items.STICK)
-			.build();
-	}
-	
-	private static void registerAxe(String name, Item material, Item result) {
-		GridRecipe.make(name + "_axe", result)
-			.setShape("II", "#I", "# ")
-			.addMaterial('I', material)
-			.addMaterial('#', Items.STICK)
-			.build();
-	}
-	
-	private static void registerHoe(String name, Item material, Item result) {
-		GridRecipe.make(name + "_hoe", result)
-			.setShape("II", "# ", "# ")
-			.addMaterial('I', material)
-			.addMaterial('#', Items.STICK)
-			.build();
-	}
-	
-	private static void registerHammer(String name, Item material, Item result) {
-		GridRecipe.make(name + "_hammer", result)
-			.setShape("I I", "I#I", " # ")
-			.addMaterial('I', material)
-			.addMaterial('#', Items.STICK)
 			.build();
 	}
 }

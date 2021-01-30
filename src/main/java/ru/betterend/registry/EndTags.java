@@ -1,6 +1,8 @@
 package ru.betterend.registry;
 
-import java.util.Arrays;
+import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
@@ -26,6 +28,7 @@ import ru.betterend.blocks.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;
+import ru.betterend.item.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 import ru.betterend.util.TagHelper;
 
@@ -96,16 +99,13 @@ public class EndTags {
 		TagHelper.addTag(GEN_TERRAIN, EndBlocks.ENDER_ORE, EndBlocks.FLAVOLITE.stone, EndBlocks.VIOLECITE.stone, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
 		TagHelper.addTag(END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
 		
-		ToolManagerImpl.tag(HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(
-				Arrays.asList(
-					EndItems.IRON_HAMMER,
-					EndItems.GOLDEN_HAMMER,
-					EndItems.DIAMOND_HAMMER,
-					EndItems.NETHERITE_HAMMER,
-					EndItems.TERMINITE_HAMMER,
-					EndItems.AETERNIUM_HAMMER
-				)
-			));
+		List<Item> hammers = Lists.newArrayList();
+		EndItems.getModItems().forEach((item) -> {
+			if (item instanceof EndHammerItem) {
+				hammers.add(item);
+			}
+		});
+		ToolManagerImpl.tag(HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
 	}
 	
 	public static void addSurfaceBlock(Block block) {

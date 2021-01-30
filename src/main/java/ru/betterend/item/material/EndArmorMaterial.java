@@ -10,17 +10,21 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Lazy;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public enum EndArmorMaterial implements ArmorMaterial {
+	THALLASIUM("thallasium", 26, new int[] { 3, 6, 7, 3 }, 14, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {
+		return Ingredient.ofItems(EndBlocks.THALLASIUM.ingot);
+	}),
 	TERMINITE("terminite", 26, new int[] { 3, 6, 7, 3 }, 14, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {
-		return Ingredient.ofItems(EndItems.TERMINITE_INGOT);
+		return Ingredient.ofItems(EndBlocks.TERMINITE.ingot);
 	}),
 	AETERNIUM("aeternium", 40, new int[] { 4, 7, 9, 4 }, 18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, 0.2F, () -> {
 		return Ingredient.ofItems(EndItems.AETERNIUM_INGOT);
 	}),
 	CRYSTALITE("crystalite", 30, new int[] { 3, 6, 8, 3 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.2F, 0.1F, () -> {
-		return Ingredient.ofItems(EndItems.TERMINITE_INGOT);
+		return Ingredient.ofItems(EndBlocks.TERMINITE.ingot);
 	});
 
 	private static final int[] BASE_DURABILITY = new int[] { 13, 15, 16, 11 };

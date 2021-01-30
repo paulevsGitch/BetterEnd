@@ -4,7 +4,11 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.Settings;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.BlockSoundGroup;
@@ -22,10 +26,12 @@ import ru.betterend.blocks.basis.EndStairsBlock;
 import ru.betterend.blocks.basis.EndTrapdoorBlock;
 import ru.betterend.blocks.basis.EndWoodenPlateBlock;
 import ru.betterend.item.EndAxeItem;
+import ru.betterend.item.EndHammerItem;
 import ru.betterend.item.EndHoeItem;
 import ru.betterend.item.EndPickaxeItem;
 import ru.betterend.item.EndShovelItem;
 import ru.betterend.item.EndSwordItem;
+import ru.betterend.item.PatternedItem;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.FurnaceRecipe;
 import ru.betterend.recipe.builders.GridRecipe;
@@ -57,37 +63,66 @@ public class MetalMaterial {
 	public final Item pickaxe;
 	public final Item axe;
 	public final Item hoe;
+	public final Item hammer;
 	
-	public MetalMaterial(String name, MaterialColor color, ToolMaterial material) {
-		FabricBlockSettings materialBlock = FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color);
-		FabricBlockSettings lantern = FabricBlockSettings.copyOf(materialBlock).sounds(BlockSoundGroup.LANTERN).hardness(1).resistance(1).luminance(15);
+	public final Item helmet;
+	public final Item chestplate;
+	public final Item leggings;
+	public final Item boots;
+	
+	public static MetalMaterial makeNormal(String name, MaterialColor color, ToolMaterial material, ArmorMaterial armor) {
+		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeItemSettings(), material, armor);
+	}
+	
+	public static MetalMaterial makeNormal(String name, MaterialColor color, float hardness, float resistance, ToolMaterial material, ArmorMaterial armor) {
+		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeItemSettings(), material, armor);
+	}
+	
+	public static MetalMaterial makeOreless(String name, MaterialColor color, ToolMaterial material, ArmorMaterial armor) {
+		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeItemSettings(), material, armor);
+	}
+	
+	public static MetalMaterial makeOreless(String name, MaterialColor color, float hardness, float resistance, ToolMaterial material, ArmorMaterial armor) {
+		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeItemSettings(), material, armor);
+	}
+	
+	private MetalMaterial(String name, boolean hasOre, FabricBlockSettings settings, Settings itemSettings, ToolMaterial material, ArmorMaterial armor) {
+		FabricBlockSettings lantern = FabricBlockSettings.copyOf(settings).sounds(BlockSoundGroup.LANTERN).hardness(1).resistance(1).luminance(15);
 		
-		ore = EndBlocks.registerBlock(name + "_ore", new BlockBase(FabricBlockSettings.copyOf(Blocks.END_STONE)));
-		block = EndBlocks.registerBlock(name + "_block", new BlockBase(materialBlock));
-		tile = EndBlocks.registerBlock(name + "_tile", new BlockBase(materialBlock));
+		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BlockBase(FabricBlockSettings.copyOf(Blocks.END_STONE))) : null;
+		block = EndBlocks.registerBlock(name + "_block", new BlockBase(settings));
+		tile = EndBlocks.registerBlock(name + "_tile", new BlockBase(settings));
 		stairs = EndBlocks.registerBlock(name + "_stairs", new EndStairsBlock(tile));
 		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(tile));
 		door = EndBlocks.registerBlock(name + "_door", new EndDoorBlock(block));
 		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new EndTrapdoorBlock(block));
-		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(color));
+		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(block.getDefaultMaterialColor()));
 		bars = EndBlocks.registerBlock(name + "_bars", new EndMetalPaneBlock(block));
-		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(color));
+		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(block.getDefaultMaterialColor()));
 		plate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(block));
 		
 		chandelier = EndBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(block));
 		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lantern));
 		bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
 		
-		nugget = EndItems.registerItem(name + "_nugget");
-		ingot = EndItems.registerItem(name + "_ingot");
-		shovel = EndItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.5F, -3.0F, EndItems.makeItemSettings()));
-		sword = EndItems.registerTool(name + "_sword", new EndSwordItem(material, 3, -2.4F, EndItems.makeItemSettings()));
-		pickaxe = EndItems.registerTool(name + "_pickaxe", new EndPickaxeItem(material, 1, -2.8F, EndItems.makeItemSettings()));
-		axe = EndItems.registerTool(name + "_axe", new EndAxeItem(material, 6.0F, -3.0F, EndItems.makeItemSettings()));
-		hoe = EndItems.registerTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, EndItems.makeItemSettings()));
+		nugget = EndItems.registerItem(name + "_nugget", new PatternedItem(itemSettings));
+		ingot = EndItems.registerItem(name + "_ingot", new PatternedItem(itemSettings));
+		shovel = EndItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.5F, -3.0F, itemSettings));
+		sword = EndItems.registerTool(name + "_sword", new EndSwordItem(material, 3, -2.4F, itemSettings));
+		pickaxe = EndItems.registerTool(name + "_pickaxe", new EndPickaxeItem(material, 1, -2.8F, itemSettings));
+		axe = EndItems.registerTool(name + "_axe", new EndAxeItem(material, 6.0F, -3.0F, itemSettings));
+		hoe = EndItems.registerTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, itemSettings));
+		hammer = EndItems.registerTool(name + "_hammer", new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
 		
-		FurnaceRecipe.make("thallasium_ingot_furnace", ore, ingot).build(true);
-		AlloyingRecipe.Builder.create("thallasium_ingot").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
+		helmet = EndItems.registerItem(name + "_helmet", new ArmorItem(armor, EquipmentSlot.HEAD, itemSettings));
+		chestplate = EndItems.registerItem(name + "_chestplate", new ArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
+		leggings = EndItems.registerItem(name + "_leggings", new ArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
+		boots = EndItems.registerItem(name + "_boots", new ArmorItem(armor, EquipmentSlot.FEET, itemSettings));
+		
+		if (hasOre) {
+			FurnaceRecipe.make("thallasium_ingot_furnace", ore, ingot).build(true);
+			AlloyingRecipe.Builder.create("thallasium_ingot").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
+		}
 		
 		GridRecipe.make(name + "_ingot_from_nuggets", ingot).setShape("###", "###", "###").addMaterial('#', nugget).setGroup("end_metal_ingots_nug").build();
 		GridRecipe.make(name + "_block", block).setShape("###", "###", "###").addMaterial('#', ingot).setGroup("end_metal_blocks").build();
@@ -104,12 +139,13 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_anvil", anvil).setOutputCount(3).setShape("###", " I ", "III").addMaterial('#', block, tile).addMaterial('I', ingot).setGroup("end_metal_anvil").build();
 		GridRecipe.make(name + "bulb_lantern", bulb_lantern).setShape("C", "I", "#").addMaterial('C', chain).addMaterial('I', ingot).addMaterial('#', EndItems.GLOWING_BULB).build();
 		
-		GridRecipe.make(name + "_axe", axe).setShape("##", "#I", " I").addMaterial('#', ingot).addMaterial('I', Items.STICK).build();
-		GridRecipe.make(name + "_hoe", hoe).setShape("##", " I", " I").addMaterial('#', ingot).addMaterial('I', Items.STICK).build();
-		GridRecipe.make(name + "_pickaxe", pickaxe).setShape("###", " I ", " I ").addMaterial('#', ingot).addMaterial('I', Items.STICK).build();
-		GridRecipe.make(name + "_sword", sword).setShape("#", "#", "I").addMaterial('#', ingot).addMaterial('I', Items.STICK).build();
+		GridRecipe.make(name + "_axe", axe).setShape("##", "#I", " I").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_axes").build();
+		GridRecipe.make(name + "_hoe", hoe).setShape("##", " I", " I").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_hoes").build();
+		GridRecipe.make(name + "_pickaxe", pickaxe).setShape("###", " I ", " I ").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_picks").build();
+		GridRecipe.make(name + "_sword", sword).setShape("#", "#", "I").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_swords").build();
 		
 		GridRecipe.make(name + "_chandelier", chandelier).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
+		GridRecipe.make(name + "_hammer", hammer).setShape("III", "ISI", " S ").addMaterial('I', ingot).addMaterial('S', Items.STICK).setGroup("end_metal_hammers").build();
 		
 		FurnaceRecipe.make(name + "_axe_ingot", axe, nugget).build(true);
 		FurnaceRecipe.make(name + "_hoe_ingot", hoe, nugget).build(true);

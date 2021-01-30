@@ -1,6 +1,7 @@
 package ru.betterend.recipe;
 
 import ru.betterend.recipe.builders.SmithingTableRecipe;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public class SmithingRecipes {
@@ -8,7 +9,7 @@ public class SmithingRecipes {
 	public static void register() {
 		SmithingTableRecipe.create("aeternium_sword_handle")
 			.setResult(EndItems.AETERNIUM_SWORD_HANDLE)
-			.setBase(EndItems.TERMINITE_INGOT)
+			.setBase(EndBlocks.TERMINITE.ingot)
 			.setAddition(EndItems.LEATHER_WRAPPED_STICK)
 			.build();
 		
@@ -45,22 +46,22 @@ public class SmithingRecipes {
 		
 		SmithingTableRecipe.create("aeternium_helmet")
 			.setResult(EndItems.AETERNIUM_HELMET)
-			.setBase(EndItems.TERMINITE_HELMET)
+			.setBase(EndBlocks.TERMINITE.helmet)
 			.setAddition(EndItems.AETERNIUM_INGOT)
 			.build();
 		SmithingTableRecipe.create("aeternium_chestplate")
 			.setResult(EndItems.AETERNIUM_CHESTPLATE)
-			.setBase(EndItems.TERMINITE_CHESTPLATE)
+			.setBase(EndBlocks.TERMINITE.chestplate)
 			.setAddition(EndItems.AETERNIUM_INGOT)
 			.build();
 		SmithingTableRecipe.create("aeternium_leggings")
 			.setResult(EndItems.AETERNIUM_LEGGINGS)
-			.setBase(EndItems.TERMINITE_LEGGINGS)
+			.setBase(EndBlocks.TERMINITE.leggings)
 			.setAddition(EndItems.AETERNIUM_INGOT)
 			.build();
 		SmithingTableRecipe.create("aeternium_boots")
 			.setResult(EndItems.AETERNIUM_BOOTS)
-			.setBase(EndItems.TERMINITE_BOOTS)
+			.setBase(EndBlocks.TERMINITE.boots)
 			.setAddition(EndItems.AETERNIUM_INGOT)
 			.build();
 	}

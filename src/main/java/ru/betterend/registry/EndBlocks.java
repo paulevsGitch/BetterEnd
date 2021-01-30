@@ -77,7 +77,6 @@ import ru.betterend.blocks.SmallJellyshroomBlock;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.blocks.TenaneaFlowersBlock;
 import ru.betterend.blocks.TenaneaSaplingBlock;
-import ru.betterend.blocks.TerminiteBlock;
 import ru.betterend.blocks.TerrainPlantBlock;
 import ru.betterend.blocks.TwistedUmbrellaMossBlock;
 import ru.betterend.blocks.TwistedUmbrellaMossTallBlock;
@@ -103,6 +102,7 @@ import ru.betterend.blocks.complex.MetalMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.Configs;
+import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 
 public class EndBlocks {
@@ -287,9 +287,10 @@ public class EndBlocks {
 	public static final Block AMBER_ORE = registerBlock("amber_ore", new EndOreBlock(EndItems.RAW_AMBER, 1, 2, 4));
 	
 	// Materials //
-	public static final Block TERMINITE_BLOCK = registerBlock("terminite_block", new TerminiteBlock());
+	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, EndToolMaterial.THALLASIUM, EndArmorMaterial.TERMINITE);
+	public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.field_25708, 7F, 9F, EndToolMaterial.TERMINITE, EndArmorMaterial.TERMINITE);
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
-	public static final MetalMaterial THALLASIUM = new MetalMaterial("thallasium", MaterialColor.BLUE, EndToolMaterial.THALLASIUM);
+	
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new AmberBlock());

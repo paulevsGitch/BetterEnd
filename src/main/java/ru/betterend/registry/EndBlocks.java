@@ -61,6 +61,7 @@ import ru.betterend.blocks.LumecornBlock;
 import ru.betterend.blocks.LumecornSeedBlock;
 import ru.betterend.blocks.MengerSpongeBlock;
 import ru.betterend.blocks.MengerSpongeWetBlock;
+import ru.betterend.blocks.MissingTileBlock;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.MossyGlowshroomHymenophoreBlock;
 import ru.betterend.blocks.MossyGlowshroomSaplingBlock;
@@ -135,6 +136,7 @@ public class EndBlocks {
 	public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
 	public static final Block BRIMSTONE = registerBlock("brimstone", new BrimstoneBlock());
 	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new SulphurCrystalBlock());
+	public static final Block MISSING_TILE = registerBlock("missing_tile", new MissingTileBlock());
 	
 	public static final Block FLAVOLITE_RUNED = registerBlock("flavolite_runed", new RunedFlavolite());
 	public static final Block FLAVOLITE_RUNED_ETERNAL = registerBlock("flavolite_runed_eternal", new EternalRunedFlavolite());

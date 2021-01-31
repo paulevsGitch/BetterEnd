@@ -78,14 +78,14 @@
 	
 	"effect.betterend.end_veil": "End Veil",
 	"enchantment.betterend.end_veil": "End Veil",
-	"item.minecraft.potion.effect.end_veil": "Potion of End Veil",
-	"item.minecraft.potion.effect.long_end_veil": "Potion of End Veil",
-	"item.minecraft.splash_potion.effect.end_veil": "Splash potion of End Veil",
-	"item.minecraft.splash_potion.effect.long_end_veil": "Splash potion of End Veil",
-	"item.minecraft.lingering_potion.effect.end_veil": "Lingering potion of End Veil",
-	"item.minecraft.lingering_potion.effect.long_end_veil": "Lingering potion of End Veil",
-	"item.minecraft.tipped_arrow.effect.end_veil": "Arrow of End Veil",
-	"item.minecraft.tipped_arrow.effect.long_end_veil": "Arrow of End Veil",
+	"item.minecraft.potion.effect.end_veil": "Potion Of End Veil",
+	"item.minecraft.potion.effect.long_end_veil": "Potion Of End Veil",
+	"item.minecraft.splash_potion.effect.end_veil": "Splash Potion Of End Veil",
+	"item.minecraft.splash_potion.effect.long_end_veil": "Splash Potion Of End Veil",
+	"item.minecraft.lingering_potion.effect.end_veil": "Lingering Potion Of End Veil",
+	"item.minecraft.lingering_potion.effect.long_end_veil": "Lingering Potion Of End Veil",
+	"item.minecraft.tipped_arrow.effect.end_veil": "ARrow Of End Veil",
+	"item.minecraft.tipped_arrow.effect.long_end_veil": "ARrow Of End Veil",
 	
 	"block.betterend.mossy_glowshroom_sapling": "Mossy Glowshroom Sapling",
 	"block.betterend.mossy_glowshroom_cap": "Mossy Glowshroom Cap",
@@ -656,5 +656,6 @@
 	"item.betterend.thallasium_chestplate": "Thallasium Chestplate",
 	"item.betterend.thallasium_hammer": "Thallasium Hammer",
 	"item.betterend.thallasium_helmet": "Thallasium Helmet",
-	"item.betterend.thallasium_leggings": "Thallasium Leggings"
+	"item.betterend.thallasium_leggings": "Thallasium Leggings",
+	"block.betterend.missing_tile": "Missing Tile"
 }

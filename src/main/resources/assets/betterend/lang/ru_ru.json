@@ -676,5 +676,6 @@
 	"item.betterend.thallasium_chestplate": "Талласиевый нагрудник",
 	"item.betterend.thallasium_hammer": "Талласиевый молот",
 	"item.betterend.thallasium_helmet": "Талласиевый шлем",
-	"item.betterend.thallasium_leggings": "Талласиевые поножи"
+	"item.betterend.thallasium_leggings": "Талласиевые поножи",
+	"block.betterend.missing_tile": "Отсутствующая плитка"
 }

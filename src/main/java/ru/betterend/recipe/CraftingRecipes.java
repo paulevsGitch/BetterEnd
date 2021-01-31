@@ -171,6 +171,13 @@ public class CraftingRecipes {
 		
 		GridRecipe.make("iron_chandelier", EndBlocks.IRON_CHANDELIER).setShape("I#I", " # ").addMaterial('#', Items.IRON_INGOT).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		GridRecipe.make("gold_chandelier", EndBlocks.GOLD_CHANDELIER).setShape("I#I", " # ").addMaterial('#', Items.GOLD_INGOT).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
+		
+		GridRecipe.make("missing_tile", EndBlocks.MISSING_TILE)
+		.setOutputCount(4)
+		.setShape("#P", "P#")
+		.addMaterial('#', EndBlocks.VIOLECITE.stone, EndBlocks.VIOLECITE.bricks, EndBlocks.VIOLECITE.tiles)
+		.addMaterial('P', Blocks.PURPUR_BLOCK)
+		.build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

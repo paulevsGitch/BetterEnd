@@ -21,6 +21,7 @@ import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
 import ru.betterend.blocks.BulbVineSeedBlock;
 import ru.betterend.blocks.ChandelierBlock;
+import ru.betterend.blocks.CharcoalBlock;
 import ru.betterend.blocks.CharniaBlock;
 import ru.betterend.blocks.ChorusGrassBlock;
 import ru.betterend.blocks.DenseEmeraldIceBlock;
@@ -89,6 +90,7 @@ import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.blocks.UmbrellaTreeSaplingBlock;
 import ru.betterend.blocks.VentBubbleColumnBlock;
 import ru.betterend.blocks.basis.EndCropBlock;
+import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
 import ru.betterend.blocks.basis.EndOreBlock;
 import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
@@ -292,6 +294,7 @@ public class EndBlocks {
 	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, EndToolMaterial.THALLASIUM, EndArmorMaterial.TERMINITE);
 	public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.field_25708, 7F, 9F, EndToolMaterial.TERMINITE, EndArmorMaterial.TERMINITE);
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
+	public static final Block CHARCOAL_BLOCK = registerBlock("charcoal_block", new CharcoalBlock());
 	
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
@@ -315,6 +318,7 @@ public class EndBlocks {
 	public static final Block GOLD_CHANDELIER = EndBlocks.registerBlock("gold_chandelier", new ChandelierBlock(Blocks.GOLD_BLOCK));
 	
 	// Blocks With Entity //
+	public static final Block END_STONE_FURNACE = registerBlock("end_stone_furnace", new EndFurnaceBlock(Blocks.END_STONE));
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
 	public static final Block ETERNAL_PEDESTAL = registerBlock("eternal_pedestal", new EternalPedestal());
 	public static final Block INFUSION_PEDESTAL = registerBlock("infusion_pedestal", new InfusionPedestal());

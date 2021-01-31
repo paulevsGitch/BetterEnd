@@ -657,5 +657,6 @@
 	"item.betterend.thallasium_hammer": "Thallasium Hammer",
 	"item.betterend.thallasium_helmet": "Thallasium Helmet",
 	"item.betterend.thallasium_leggings": "Thallasium Leggings",
-	"block.betterend.missing_tile": "Missing Tile"
+	"block.betterend.missing_tile": "Missing Tile",
+	"block.betterend.charcoal_block": "Charcoal Block"
 }

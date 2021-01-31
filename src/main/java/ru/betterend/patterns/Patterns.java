@@ -43,6 +43,7 @@ public class Patterns {
 	public final static Identifier STATE_ANVIL = BetterEnd.makeID("patterns/blockstate/anvil.json");
 	public final static Identifier STATE_CHAIN = BetterEnd.makeID("patterns/blockstate/chain.json");
 	public final static Identifier STATE_CHANDELIER = BetterEnd.makeID("patterns/blockstate/chandelier.json");
+	public final static Identifier STATE_FURNACE = BetterEnd.makeID("patterns/blockstate/furnace.json");
 	
 	//Models Block
 	public final static Identifier BLOCK_EMPTY = BetterEnd.makeID("patterns/block/empty.json");
@@ -96,6 +97,7 @@ public class Patterns {
 	public final static Identifier BLOCK_CHANDELIER_FLOOR = BetterEnd.makeID("patterns/block/chandelier_floor.json");
 	public final static Identifier BLOCK_CHANDELIER_WALL = BetterEnd.makeID("patterns/block/chandelier_wall.json");
 	public final static Identifier BLOCK_CHANDELIER_CEIL = BetterEnd.makeID("patterns/block/chandelier_ceil.json");
+	public final static Identifier BLOCK_FURNACE = BetterEnd.makeID("patterns/block/furnace.json");
 	
 	//Models Item
 	public final static Identifier ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");

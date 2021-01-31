@@ -15,11 +15,13 @@ import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.basis.EndBarrelBlock;
 import ru.betterend.blocks.basis.EndChestBlock;
+import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.blocks.entities.EChestBlockEntity;
+import ru.betterend.blocks.entities.EFurnaceBlockEntity;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.blocks.entities.EternalPedestalEntity;
@@ -43,6 +45,8 @@ public class EndBlockEntities {
 			BlockEntityType.Builder.create(ESignBlockEntity::new, getSigns()));
 	public final static BlockEntityType<BlockEntityHydrothermalVent> HYDROTHERMAL_VENT = registerBlockEntity("hydrother_malvent",
 			BlockEntityType.Builder.create(BlockEntityHydrothermalVent::new, EndBlocks.HYDROTHERMAL_VENT));
+	public static final BlockEntityType<EFurnaceBlockEntity> FURNACE = registerBlockEntity("furnace",
+			BlockEntityType.Builder.create(EFurnaceBlockEntity::new, getFurnaces()));
 
 	public static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, BlockEntityType.Builder<T> builder) {
 		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BetterEnd.makeID(id), builder.build(null));
@@ -97,6 +101,19 @@ public class EndBlockEntities {
 				if (block instanceof EternalPedestal ||
 					block instanceof InfusionPedestal) return;
 				if (block instanceof PedestalBlock) {
+					result.add(block);
+				}
+			}
+		});
+		return result.toArray(new Block[] {});
+	}
+	
+	static Block[] getFurnaces() {
+		List<Block> result = Lists.newArrayList();
+		EndItems.getModBlocks().forEach((item) -> {
+			if (item instanceof BlockItem) {
+				Block block = ((BlockItem) item).getBlock();
+				if (block instanceof EndFurnaceBlock) {
 					result.add(block);
 				}
 			}

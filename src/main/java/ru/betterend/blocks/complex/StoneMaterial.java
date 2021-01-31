@@ -8,6 +8,7 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import ru.betterend.blocks.EndPedestal;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndPillarBlock;
 import ru.betterend.blocks.basis.EndSlabBlock;
 import ru.betterend.blocks.basis.EndStairsBlock;
@@ -40,6 +41,7 @@ public class StoneMaterial {
 	public final Block brick_stairs;
 	public final Block brick_slab;
 	public final Block brick_wall;
+	public final Block furnace;
 	
 	public StoneMaterial(String name, MaterialColor color) {
 		FabricBlockSettings material = FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color);
@@ -60,6 +62,7 @@ public class StoneMaterial {
 		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new EndStairsBlock(bricks));
 		brick_slab = EndBlocks.registerBlock(name + "_bricks_slab", new EndSlabBlock(bricks));
 		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new EndWallBlock(bricks));
+		furnace = EndBlocks.registerBlock(name + "_furnace", new EndFurnaceBlock(bricks));
 		
 		// Recipes //
 		GridRecipe.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', stone).setGroup("end_bricks").build();
@@ -78,6 +81,7 @@ public class StoneMaterial {
 		GridRecipe.make(name + "_button", button).setList("#").addMaterial('#', stone).setGroup("end_stone_buttons").build();
 		GridRecipe.make(name + "_pressure_plate", pressure_plate).setShape("##").addMaterial('#', stone).setGroup("end_stone_plates").build();
 		GridRecipe.make(name + "_lantern", lantern).setShape("S", "#", "S").addMaterial('#', EndItems.CRYSTAL_SHARDS).addMaterial('S', slab, brick_slab).setGroup("end_stone_lanterns").build();
+		GridRecipe.make(name + "_furnace", furnace).setShape("###", "# #", "###").addMaterial('#', stone).setGroup("end_stone_furnaces").build();
 		
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		

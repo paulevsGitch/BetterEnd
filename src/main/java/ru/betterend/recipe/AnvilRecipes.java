@@ -15,7 +15,7 @@ public class AnvilRecipes {
 		AnvilRecipe.Builder.create("ender_shard_to_dust")
 			.setInput(EndItems.ENDER_SHARD)
 			.setOutput(EndItems.ENDER_DUST)
-			.setLevel(2)
+			.setLevel(0)
 			.setDamage(3)
 			.build();
 		

@@ -90,6 +90,7 @@ import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.blocks.UmbrellaTreeSaplingBlock;
 import ru.betterend.blocks.VentBubbleColumnBlock;
 import ru.betterend.blocks.basis.EndCropBlock;
+import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
 import ru.betterend.blocks.basis.EndOreBlock;
 import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
@@ -317,6 +318,7 @@ public class EndBlocks {
 	public static final Block GOLD_CHANDELIER = EndBlocks.registerBlock("gold_chandelier", new ChandelierBlock(Blocks.GOLD_BLOCK));
 	
 	// Blocks With Entity //
+	public static final Block END_STONE_FURNACE = registerBlock("end_stone_furnace", new EndFurnaceBlock(Blocks.END_STONE));
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
 	public static final Block ETERNAL_PEDESTAL = registerBlock("eternal_pedestal", new EternalPedestal());
 	public static final Block INFUSION_PEDESTAL = registerBlock("infusion_pedestal", new InfusionPedestal());

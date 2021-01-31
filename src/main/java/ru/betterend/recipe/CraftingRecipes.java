@@ -25,11 +25,11 @@ public class CraftingRecipes {
 				.build();
 		}
 		
-		GridRecipe.make("ender_pearl_to_block", EndBlocks.ENDER_BLOCK)
+		GridRecipe.make("ender_shards_to_block", EndBlocks.ENDER_BLOCK)
 			.setShape("OO", "OO")
-			.addMaterial('O', Items.ENDER_PEARL)
+			.addMaterial('O', EndItems.ENDER_SHARD)
 			.build();
-		GridRecipe.make("ender_block_to_pearl", Items.ENDER_PEARL)
+		GridRecipe.make("ender_block_to_shards", EndItems.ENDER_SHARD)
 			.addMaterial('#', EndBlocks.ENDER_BLOCK)
 			.setOutputCount(4)
 			.setList("#")
@@ -180,6 +180,7 @@ public class CraftingRecipes {
 		.build();
 		
 		GridRecipe.make("charcoal_block", EndBlocks.CHARCOAL_BLOCK).setShape("###", "###", "###").addMaterial('#', Items.CHARCOAL).build();
+		GridRecipe.make("end_stone_furnace", EndBlocks.END_STONE_FURNACE).setShape("###", "# #", "###").addMaterial('#', Blocks.END_STONE).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

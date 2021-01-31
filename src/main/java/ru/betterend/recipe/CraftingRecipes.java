@@ -37,8 +37,9 @@ public class CraftingRecipes {
 			.build();
 		
 		GridRecipe.make("end_stone_smelter", EndBlocks.END_STONE_SMELTER)
-			.setShape("###", "V V", "###")
+			.setShape("T#T", "V V", "T#T")
 			.addMaterial('#', Blocks.END_STONE_BRICKS)
+			.addMaterial('T', EndBlocks.THALLASIUM.ingot)
 			.addMaterial('V', Items.BUCKET)
 			.build();
 		

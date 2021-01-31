@@ -16,9 +16,9 @@ import ru.betterend.recipe.builders.AnvilRecipe;
 
 public class REIAnvilDisplay implements TransferRecipeDisplay {
 	
-	private AnvilRecipe recipe;
-	private List<List<EntryStack>> input;
-	private List<EntryStack> output;
+	private final AnvilRecipe recipe;
+	private final List<List<EntryStack>> input;
+	private final List<EntryStack> output;
 	
 	public REIAnvilDisplay(AnvilRecipe recipe) {
 		this.recipe = recipe;
@@ -28,6 +28,10 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	
 	public int getDamage() {
 		return this.recipe.getDamage();
+	}
+
+	public int getInputCount() {
+		return this.recipe.getInputCount();
 	}
 	
 	@Override

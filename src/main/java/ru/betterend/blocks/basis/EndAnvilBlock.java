@@ -35,6 +35,10 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 		super.appendProperties(builder);
 		builder.add(DESTRUCTION);
 	}
+
+	public int getCraftingLevel() {
+		return 1;
+	}
 	
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {

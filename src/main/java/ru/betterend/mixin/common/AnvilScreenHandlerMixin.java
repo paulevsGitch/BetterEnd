@@ -2,7 +2,9 @@ package ru.betterend.mixin.common;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import net.minecraft.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,6 +23,7 @@ import net.minecraft.screen.ForgingScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.tag.BlockTags;
+import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.interfaces.AnvilScreenHandlerExtended;
 import ru.betterend.recipe.builders.AnvilRecipe;
 
@@ -48,7 +51,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	@Inject(method = "onTakeOutput", at = @At("HEAD"), cancellable = true)
 	protected void be_onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
 		if (be_currentRecipe != null) {
-			this.input.getStack(0).decrement(1);
+			this.input.getStack(0).decrement(be_currentRecipe.getInputCount());
 			stack = be_currentRecipe.craft(input, player);
 			this.onContentChanged(input);
 			this.context.run((world, blockPos) -> {
@@ -75,11 +78,24 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 		RecipeManager recipeManager = this.player.world.getRecipeManager();
 		this.be_recipes = recipeManager.getAllMatches(AnvilRecipe.TYPE, input, player.world);
 		if (be_recipes.size() > 0) {
-			if (be_currentRecipe == null || !be_recipes.contains(be_currentRecipe)) {
-				this.be_currentRecipe = be_recipes.get(0);
+			this.context.run((world, blockPos) -> {
+				int anvilLevel;
+				Block anvilBlock = world.getBlockState(blockPos).getBlock();
+				if (anvilBlock instanceof EndAnvilBlock) {
+					anvilLevel = ((EndAnvilBlock) anvilBlock).getCraftingLevel();
+				} else {
+					anvilLevel = 1;
+				}
+				this.be_recipes = be_recipes.stream().filter(recipe ->
+					anvilLevel >= recipe.getAnvilLevel()).collect(Collectors.toList());
+			});
+			if (be_recipes.size() > 0) {
+				if (be_currentRecipe == null || !be_recipes.contains(be_currentRecipe)) {
+					this.be_currentRecipe = be_recipes.get(0);
+				}
+				this.be_updateResult();
+				info.cancel();
 			}
-			this.be_updateResult();
-			info.cancel();
 		}
 	}
 	

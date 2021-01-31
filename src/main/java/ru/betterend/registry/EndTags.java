@@ -1,14 +1,9 @@
 package ru.betterend.registry;
 
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
@@ -28,9 +23,10 @@ import ru.betterend.blocks.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;
-import ru.betterend.item.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 import ru.betterend.util.TagHelper;
+
+import java.util.Arrays;
 
 public class EndTags {
 	// Block Tags
@@ -98,14 +94,18 @@ public class EndTags {
 		
 		TagHelper.addTag(GEN_TERRAIN, EndBlocks.ENDER_ORE, EndBlocks.FLAVOLITE.stone, EndBlocks.VIOLECITE.stone, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
 		TagHelper.addTag(END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
-		
-		List<Item> hammers = Lists.newArrayList();
-		EndItems.getModItems().forEach((item) -> {
-			if (item instanceof EndHammerItem) {
-				hammers.add(item);
-			}
-		});
-		ToolManagerImpl.tag(HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
+
+		ToolManagerImpl.tag(HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(
+			Arrays.asList(
+				EndItems.IRON_HAMMER,
+				EndItems.GOLDEN_HAMMER,
+				EndItems.DIAMOND_HAMMER,
+				EndItems.NETHERITE_HAMMER,
+				EndItems.AETERNIUM_HAMMER,
+				EndBlocks.THALLASIUM.hammer,
+				EndBlocks.TERMINITE.hammer
+			)
+		));
 	}
 	
 	public static void addSurfaceBlock(Block block) {
@@ -123,17 +123,7 @@ public class EndTags {
 				TagHelper.addTag(END_GROUND, surface);
 			}
 		});
-		END_STONES.values().forEach((block) -> {
-			addSurfaceBlock(block);
-		});
-	}
-	
-	public static boolean validGenBlock(BlockState block) {
-		return block.isIn(END_GROUND) || block.isIn(GEN_TERRAIN);
-	}
-	
-	public static Tag<Item> registerItemTag(String name) {
-		return TagRegistry.item(BetterEnd.makeID(name));
+		END_STONES.values().forEach(EndTags::addSurfaceBlock);
 	}
 	
 	public static Tag<Item> registerFabricItemTag(String name) {

@@ -2,6 +2,7 @@ package ru.betterend.recipe;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
@@ -163,21 +164,25 @@ public class CraftingRecipes {
 		GridRecipe.make("fiber_string", Items.STRING).setOutputCount(6).setShape("#", "#", "#").addMaterial('#', EndItems.SILK_FIBER).build();
 		
 		GridRecipe.make("ender_eye_amber", Items.ENDER_EYE)
-		.setShape("SAS", "APA", "SAS")
-		.addMaterial('S', EndItems.CRYSTAL_SHARDS)
-		.addMaterial('A', EndItems.AMBER_GEM)
-		.addMaterial('P', Items.ENDER_PEARL)
-		.build();
+			.setShape("SAS", "APA", "SAS")
+			.addMaterial('S', EndItems.CRYSTAL_SHARDS)
+			.addMaterial('A', EndItems.AMBER_GEM)
+			.addMaterial('P', Items.ENDER_PEARL)
+			.build();
 		
 		GridRecipe.make("iron_chandelier", EndBlocks.IRON_CHANDELIER).setShape("I#I", " # ").addMaterial('#', Items.IRON_INGOT).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		GridRecipe.make("gold_chandelier", EndBlocks.GOLD_CHANDELIER).setShape("I#I", " # ").addMaterial('#', Items.GOLD_INGOT).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		
 		GridRecipe.make("missing_tile", EndBlocks.MISSING_TILE)
-		.setOutputCount(4)
-		.setShape("#P", "P#")
-		.addMaterial('#', EndBlocks.VIOLECITE.stone, EndBlocks.VIOLECITE.bricks, EndBlocks.VIOLECITE.tiles)
-		.addMaterial('P', Blocks.PURPUR_BLOCK)
-		.build();
+			.setOutputCount(4)
+			.setShape("#P", "P#")
+			.addMaterial('#', EndBlocks.VIOLECITE.stone, EndBlocks.VIOLECITE.bricks, EndBlocks.VIOLECITE.tiles)
+			.addMaterial('P', Blocks.PURPUR_BLOCK)
+			.build();
+
+		registerHammer("iron", Items.IRON_INGOT, EndItems.IRON_HAMMER);
+		registerHammer("golden", Items.GOLD_INGOT, EndItems.GOLDEN_HAMMER);
+		registerHammer("diamond", Items.DIAMOND, EndItems.DIAMOND_HAMMER);
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {
@@ -195,6 +200,14 @@ public class CraftingRecipes {
 			.addMaterial('S', slab)
 			.addMaterial('#', pillar)
 			.setOutputCount(2)
+			.build();
+	}
+
+	private static void registerHammer(String name, Item material, Item result) {
+		GridRecipe.make(name + "_hammer", result)
+			.setShape("I I", "I#I", " # ")
+			.addMaterial('I', material)
+			.addMaterial('#', Items.STICK)
 			.build();
 	}
 }

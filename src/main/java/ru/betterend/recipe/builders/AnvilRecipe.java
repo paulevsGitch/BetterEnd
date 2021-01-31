@@ -41,13 +41,17 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	private final Ingredient input;
 	private final ItemStack output;
 	private final int damage;
-	private final int level;
+	private final int toolLevel;
+	private final int anvilLevel;
+	private final int inputCount;
 	
-	public AnvilRecipe(Identifier identifier, Ingredient input, ItemStack output, int level, int damage) {
+	public AnvilRecipe(Identifier identifier, Ingredient input, ItemStack output, int inputCount, int toolLevel, int anvilLevel, int damage) {
 		this.id = identifier;
 		this.input = input;
 		this.output = output;
-		this.level = level;
+		this.toolLevel = toolLevel;
+		this.anvilLevel = anvilLevel;
+		this.inputCount = inputCount;
 		this.damage = damage;
 	}
 
@@ -75,9 +79,8 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		if (!player.isCreative()) {
 			if (!checkHammerDurability(craftingInventory, player)) return ItemStack.EMPTY;
 			ItemStack hammer = craftingInventory.getStack(1);
-			hammer.damage(this.damage, player, entity -> {
-				entity.sendEquipmentBreakStatus(null);
-			});
+			hammer.damage(this.damage, player, entity ->
+					entity.sendEquipmentBreakStatus(null));
 		}
 		return this.craft(craftingInventory);
 	}
@@ -94,20 +97,31 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		if (hammer.isEmpty() || !EndTags.HAMMERS.contains(hammer.getItem())) {
 			return false;
 		}
+		ItemStack material = craftingInventory.getStack(0);
+		int materialCount = material.getCount();
 		int level = ((ToolItem) hammer.getItem()).getMaterial().getMiningLevel();
-		return level >= this.level && this.input.test(craftingInventory.getStack(0));
+		return this.input.test(craftingInventory.getStack(0)) &&
+			   materialCount >= this.inputCount &&
+			   level >= this.toolLevel;
 	}
 	
 	public int getDamage() {
 		return this.damage;
 	}
 
+	public int getInputCount() {
+		return this.inputCount;
+	}
+
+	public int getAnvilLevel() {
+		return this.anvilLevel;
+	}
+
 	@Override
 	public DefaultedList<Ingredient> getPreviewInputs() {
 		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-		defaultedList.add(Ingredient.ofStacks(EndTags.HAMMERS.values().stream().filter(hammer -> {
-			return ((ToolItem) hammer).getMaterial().getMiningLevel() >= level;
-		}).map(ItemStack::new)));
+		defaultedList.add(Ingredient.ofStacks(EndTags.HAMMERS.values().stream().filter(hammer ->
+				((ToolItem) hammer).getMaterial().getMiningLevel() >= toolLevel).map(ItemStack::new)));
 		defaultedList.add(input);
 		
 		return defaultedList;
@@ -139,12 +153,12 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		AnvilRecipe that = (AnvilRecipe) o;
-		return damage == that.damage && level == that.level && id.equals(that.id) && input.equals(that.input) && output.equals(that.output);
+		return damage == that.damage && toolLevel == that.toolLevel && id.equals(that.id) && input.equals(that.input) && output.equals(that.output);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, input, output, damage, level);
+		return Objects.hash(id, input, output, damage, toolLevel);
 	}
 
 	public static class Builder {
@@ -158,7 +172,9 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			INSTANCE.id = id;
 			INSTANCE.input = null;
 			INSTANCE.output = null;
-			INSTANCE.level = 1;
+			INSTANCE.inputCount = 1;
+			INSTANCE.toolLevel = 1;
+			INSTANCE.anvilLevel = 1;
 			INSTANCE.damage = 1;
 			INSTANCE.alright = true;
 			
@@ -168,7 +184,9 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		private Identifier id;
 		private Ingredient input;
 		private ItemStack output;
-		private int level = 1;
+		private int inputCount = 1;
+		private int toolLevel = 1;
+		private int anvilLevel = 1;
 		private int damage = 1;
 		private boolean alright;
 		
@@ -189,6 +207,11 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			this.input = ingredient;
 			return this;
 		}
+
+		public Builder setInputCount(int count) {
+			this.inputCount = count;
+			return this;
+		}
 		
 		public Builder setOutput(ItemConvertible output) {
 			return this.setOutput(output, 1);
@@ -200,8 +223,13 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return this;
 		}
 		
-		public Builder setLevel(int level) {
-			this.level = level;
+		public Builder setToolLevel(int level) {
+			this.toolLevel = level;
+			return this;
+		}
+
+		public Builder setAnvilLevel(int level) {
+			this.anvilLevel = level;
 			return this;
 		}
 		
@@ -228,7 +256,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 					BetterEnd.LOGGER.debug("Can't add Anvil recipe {}! Ingeredient or output not exists.", id);
 					return;
 				}
-				EndRecipeManager.addRecipe(TYPE, new AnvilRecipe(id, input, output, level, damage));
+				EndRecipeManager.addRecipe(TYPE, new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage));
 			}
 		}
 	}
@@ -242,27 +270,33 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			if (output == null) {
 				throw new IllegalStateException("Output item does not exists!");
 			}
-			int level = JsonHelper.getInt(json, "level", 1);
+			int inputCount = JsonHelper.getInt(json, "inputCount", 1);
+			int toolLevel = JsonHelper.getInt(json, "toolLevel", 1);
+			int anvilLevel = JsonHelper.getInt(json, "anvilLevel", 1);
 			int damage = JsonHelper.getInt(json, "damage", 1);
 			
-			return new AnvilRecipe(id, input, output, level, damage);
+			return new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage);
 		}
 
 		@Override
 		public AnvilRecipe read(Identifier id, PacketByteBuf packetBuffer) {
 			Ingredient input = Ingredient.fromPacket(packetBuffer);
 			ItemStack output = packetBuffer.readItemStack();
-			int level = packetBuffer.readVarInt();
+			int inputCount = packetBuffer.readVarInt();
+			int toolLevel = packetBuffer.readVarInt();
+			int anvilLevel = packetBuffer.readVarInt();
 			int damage = packetBuffer.readVarInt();
 			
-			return new AnvilRecipe(id, input, output, level, damage);
+			return new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage);
 		}
 
 		@Override
 		public void write(PacketByteBuf packetBuffer, AnvilRecipe recipe) {
 			recipe.input.write(packetBuffer);
 			packetBuffer.writeItemStack(recipe.output);
-			packetBuffer.writeVarInt(recipe.level);
+			packetBuffer.writeVarInt(recipe.inputCount);
+			packetBuffer.writeVarInt(recipe.toolLevel);
+			packetBuffer.writeVarInt(recipe.anvilLevel);
 			packetBuffer.writeVarInt(recipe.damage);
 		}
 

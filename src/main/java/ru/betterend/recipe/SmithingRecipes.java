@@ -1,5 +1,6 @@
 package ru.betterend.recipe;
 
+import net.minecraft.item.Items;
 import ru.betterend.recipe.builders.SmithingTableRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -42,6 +43,12 @@ public class SmithingRecipes {
 			.setResult(EndItems.AETERNIUM_HAMMER)
 			.setBase(EndItems.AETERNIUM_HAMMER_HEAD)
 			.setAddition(EndItems.LEATHER_WRAPPED_STICK)
+			.build();
+
+		SmithingTableRecipe.create("netherite_hammer")
+			.setResult(EndItems.NETHERITE_HAMMER)
+			.setBase(EndItems.DIAMOND_HAMMER)
+			.setAddition(Items.NETHERITE_INGOT)
 			.build();
 		
 		SmithingTableRecipe.create("aeternium_helmet")

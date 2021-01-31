@@ -13,18 +13,8 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.FishBucketItem;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.FoodComponents;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolItem;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -100,6 +90,12 @@ public class EndItems {
 	public final static Item AETERNIUM_HAMMER_HEAD = registerItem("aeternium_hammer_head");
 	public final static Item AETERNIUM_SWORD_BLADE = registerItem("aeternium_sword_blade");
 	public final static Item AETERNIUM_SWORD_HANDLE = registerItem("aeternium_sword_handle");
+
+	// Hammers //
+	public static final ToolItem IRON_HAMMER = registerTool("iron_hammer", new EndHammerItem(ToolMaterials.IRON, 5.0F, -3.2F, 0.2D, makeItemSettings()));
+	public static final ToolItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammerItem(ToolMaterials.GOLD, 4.5F, -3.4F, 0.3D, makeItemSettings()));
+	public static final ToolItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammerItem(ToolMaterials.DIAMOND, 5.5F, -3.1F, 0.2D, makeItemSettings()));
+	public static final ToolItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammerItem(ToolMaterials.NETHERITE, 5.0F, -3.0F, 0.2D, makeItemSettings().fireproof()));
 	
 	// Food //
 	public final static Item SHADOW_BERRY_RAW = registerFood("shadow_berry_raw", 4, 0.5F);

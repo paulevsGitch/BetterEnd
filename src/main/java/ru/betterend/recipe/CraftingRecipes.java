@@ -178,6 +178,8 @@ public class CraftingRecipes {
 		.addMaterial('#', EndBlocks.VIOLECITE.stone, EndBlocks.VIOLECITE.bricks, EndBlocks.VIOLECITE.tiles)
 		.addMaterial('P', Blocks.PURPUR_BLOCK)
 		.build();
+		
+		GridRecipe.make("charcoal_block", EndBlocks.CHARCOAL_BLOCK).setShape("###", "###", "###").addMaterial('#', Items.CHARCOAL).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

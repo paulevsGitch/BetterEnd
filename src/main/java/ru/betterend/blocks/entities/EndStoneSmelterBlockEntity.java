@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -398,7 +399,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 			return 0;
 		}
 		Item item = fuel.getItem();
-		return AVAILABLE_FUELS.getOrDefault(item, 0);
+		return AVAILABLE_FUELS.getOrDefault(item, getFabricFuel(fuel));
 	}
 	
 	@Override
@@ -442,7 +443,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	}
 
 	public static boolean canUseAsFuel(ItemStack stack) {
-		return AVAILABLE_FUELS.containsKey(stack.getItem());
+		return AVAILABLE_FUELS.containsKey(stack.getItem()) || getFabricFuel(stack) > 2000;
 	}
 	
 	public static void registerFuel(ItemConvertible fuel, int time) {
@@ -451,5 +452,10 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 
 	public static Map<Item, Integer> availableFuels() {
 		return AVAILABLE_FUELS;
+	}
+	
+	private static int getFabricFuel(ItemStack stack) {
+		Integer ticks = FuelRegistry.INSTANCE.get(stack.getItem());
+		return ticks == null ? 0 : ticks;
 	}
 }

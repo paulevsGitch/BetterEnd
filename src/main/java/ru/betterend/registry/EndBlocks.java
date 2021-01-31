@@ -21,6 +21,7 @@ import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
 import ru.betterend.blocks.BulbVineSeedBlock;
 import ru.betterend.blocks.ChandelierBlock;
+import ru.betterend.blocks.CharcoalBlock;
 import ru.betterend.blocks.CharniaBlock;
 import ru.betterend.blocks.ChorusGrassBlock;
 import ru.betterend.blocks.DenseEmeraldIceBlock;
@@ -292,6 +293,7 @@ public class EndBlocks {
 	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, EndToolMaterial.THALLASIUM, EndArmorMaterial.TERMINITE);
 	public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.field_25708, 7F, 9F, EndToolMaterial.TERMINITE, EndArmorMaterial.TERMINITE);
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
+	public static final Block CHARCOAL_BLOCK = registerBlock("charcoal_block", new CharcoalBlock());
 	
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());

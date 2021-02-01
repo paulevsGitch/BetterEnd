@@ -678,5 +678,9 @@
 	"item.betterend.thallasium_helmet": "Талласиевый шлем",
 	"item.betterend.thallasium_leggings": "Талласиевые поножи",
 	"block.betterend.missing_tile": "Отсутствующая плитка",
-	"block.betterend.charcoal_block": "Блок древесного угля"
+	"block.betterend.charcoal_block": "Блок древесного угля",
+	"block.betterend.end_stone_furnace": "Эндерняковая печь",
+	"block.betterend.flavolite_furnace": "Флаволитовая печь",
+	"block.betterend.sulphuric_rock_furnace": "Печь из серного камня",
+	"block.betterend.violecite_furnace": "Виолецитовая печь"
 }

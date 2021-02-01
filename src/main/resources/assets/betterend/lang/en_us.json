@@ -658,5 +658,9 @@
 	"item.betterend.thallasium_helmet": "Thallasium Helmet",
 	"item.betterend.thallasium_leggings": "Thallasium Leggings",
 	"block.betterend.missing_tile": "Missing Tile",
-	"block.betterend.charcoal_block": "Charcoal Block"
+	"block.betterend.charcoal_block": "Charcoal Block",
+	"block.betterend.end_stone_furnace": "End Stone Furnace",
+	"block.betterend.flavolite_furnace": "Flavolite Furnace",
+	"block.betterend.sulphuric_rock_furnace": "Sulfuric Rock Furnace",
+	"block.betterend.violecite_furnace": "Violecite Furnace"
 }

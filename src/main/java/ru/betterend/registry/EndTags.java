@@ -1,5 +1,7 @@
 package ru.betterend.registry;
 
+import java.util.Arrays;
+
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
@@ -25,8 +27,6 @@ import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 import ru.betterend.util.TagHelper;
-
-import java.util.Arrays;
 
 public class EndTags {
 	// Block Tags

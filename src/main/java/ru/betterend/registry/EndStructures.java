@@ -20,14 +20,14 @@ import ru.betterend.world.structures.features.StructureMountain;
 import ru.betterend.world.structures.features.StructurePaintedMountain;
 import ru.betterend.world.structures.piece.CavePiece;
 import ru.betterend.world.structures.piece.LakePiece;
-import ru.betterend.world.structures.piece.MountainPiece;
+import ru.betterend.world.structures.piece.CrystalMountainPiece;
 import ru.betterend.world.structures.piece.NBTPiece;
 import ru.betterend.world.structures.piece.PaintedMountainPiece;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
 public class EndStructures {
 	public static final StructurePieceType VOXEL_PIECE = register("voxel", VoxelPiece::new);
-	public static final StructurePieceType MOUNTAIN_PIECE = register("mountain_piece", MountainPiece::new);
+	public static final StructurePieceType MOUNTAIN_PIECE = register("mountain_piece", CrystalMountainPiece::new);
 	public static final StructurePieceType CAVE_PIECE = register("cave_piece", CavePiece::new);
 	public static final StructurePieceType LAKE_PIECE = register("lake_piece", LakePiece::new);
 	public static final StructurePieceType PAINTED_MOUNTAIN_PIECE = register("painted_mountain_piece", PaintedMountainPiece::new);

@@ -11,7 +11,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 import ru.betterend.util.MHelper;
-import ru.betterend.world.structures.piece.MountainPiece;
+import ru.betterend.world.structures.piece.CrystalMountainPiece;
 
 public class StructureMountain extends StructureFeatureBase {
 	@Override
@@ -32,7 +32,7 @@ public class StructureMountain extends StructureFeatureBase {
 			if (y > 5) {
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.8F, 1.2F, random);
-				MountainPiece piece = new MountainPiece(new BlockPos(x, y, z), radius, height, random, biome);
+				CrystalMountainPiece piece = new CrystalMountainPiece(new BlockPos(x, y, z), radius, height, random, biome);
 				this.children.add(piece);
 			}
 			this.setBoundingBoxFromChildren();

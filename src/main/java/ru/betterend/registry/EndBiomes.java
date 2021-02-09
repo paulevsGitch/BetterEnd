@@ -144,18 +144,15 @@ public class EndBiomes {
 		VOID_BIOMES.rebuild();
 		
 		LAND_BIOMES.getBiomes().forEach((endBiome) -> {
-			Biome biome = biomeRegistry.get(endBiome.getID());
-			endBiome.setActualBiome(biome);
+			endBiome.updateActualBiomes(biomeRegistry);
 		});
 		
 		VOID_BIOMES.getBiomes().forEach((endBiome) -> {
-			Biome biome = biomeRegistry.get(endBiome.getID());
-			endBiome.setActualBiome(biome);
+			endBiome.updateActualBiomes(biomeRegistry);
 		});
 		
 		SUBBIOMES.forEach((endBiome) -> {
-			Biome biome = biomeRegistry.get(endBiome.getID());
-			endBiome.setActualBiome(biome);
+			endBiome.updateActualBiomes(biomeRegistry);
 		});
 		
 		CLIENT.clear();

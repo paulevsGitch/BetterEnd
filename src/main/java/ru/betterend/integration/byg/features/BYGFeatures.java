@@ -1,6 +1,5 @@
 package ru.betterend.integration.byg.features;
 
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.BYGBlocks;
 import ru.betterend.world.features.EndFeature;
@@ -23,8 +22,8 @@ public class BYGFeatures {
 	public static final EndFeature NIGHTSHADE_REDWOOD_TREE = new EndFeature("nightshade_redwood_tree", new NightshadeRedwoodTreeFeature(), 1);
 	public static final EndFeature BIG_ETHER_TREE = new EndFeature("big_ether_tree", new BigEtherTreeFeature(), 1);
 	
-	public static final ConfiguredFeature<?,?> BULBIS_TREES = Integrations.BYG.getConfiguredFeature("rs_sparse_bulbis_tree");
-	public static final ConfiguredFeature<?,?> PURPLE_BULBIS_TREES = Integrations.BYG.getConfiguredFeature("rs_sparse_purple_bulbis_tree");
+	//public static final ConfiguredFeature<?,?> BULBIS_TREES = Integrations.BYG.getConfiguredFeature("rs_sparse_bulbis_tree");
+	//public static final ConfiguredFeature<?,?> PURPLE_BULBIS_TREES = Integrations.BYG.getConfiguredFeature("rs_sparse_purple_bulbis_tree");
 	
 	public static void register() {}
 }

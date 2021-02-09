@@ -53,7 +53,10 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		};
 		
 		float size = MHelper.randRange(10, 20, random);
+		float addSize = MHelper.randRange(1, 1.7F, random);
+		float addRad = addSize * 0.5F + 0.5F;
 		int count = (int) (size * 0.15F);
+		size *= addSize;
 		float var = MHelper.PI2 /  (float) (count * 3);
 		float start = MHelper.randRange(0, MHelper.PI2, random);
 		SDF sdf = null;
@@ -65,10 +68,10 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 			List<Vector3f> spline = SplineHelper.copySpline(SPLINE);
 			float sizeXZ = (size + MHelper.randRange(0, size * 0.5F, random)) * 0.7F;
 			SplineHelper.scale(spline, sizeXZ, sizeXZ * 1.5F + MHelper.randRange(0, size * 0.5F, random), sizeXZ);
-			SplineHelper.offset(spline, new Vector3f((20 - size), 0, 0));
+			SplineHelper.offset(spline, new Vector3f(size * random.nextFloat() * 0.3F, 0, 0));
 			SplineHelper.rotateSpline(spline, angle);
 			SplineHelper.offsetParts(spline, random, 1F, 0, 1F);//1.3F 0.8F
-			SDF branch = SplineHelper.buildSDF(spline, 2.3F, 1.3F, (bpos) -> {
+			SDF branch = SplineHelper.buildSDF(spline, 2.3F * addRad, 1.3F * addRad, (bpos) -> {
 				return stem;
 			});
 

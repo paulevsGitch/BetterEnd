@@ -1,6 +1,7 @@
 package ru.betterend.integration;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -87,25 +88,41 @@ public abstract class ModIntegration {
 		return cl;
 	}
 	
-	public Method getMethod(Class<?> cl, String functionName, Class<?>... args) {
+	@SuppressWarnings("unchecked")
+	public <T extends Object> T getStaticFieldValue(Class<?> cl, String name) {
 		if (cl != null) {
 			try {
-				return cl.getMethod(functionName, args);
-			}
-			catch (NoSuchMethodException | SecurityException e) {
-				BetterEnd.LOGGER.error(e.getMessage());
-				if (BetterEnd.isDevEnvironment()) {
-					e.printStackTrace();
+				Field field = cl.getDeclaredField(name);
+				if (field != null) {
+					return (T) field.get(null);
 				}
+			}
+			catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
 			}
 		}
 		return null;
 	}
 	
-	public Method getInstanceMethod(Object instance, String functionName, Class<?>... args) {
-		if (instance != null) {
+	public Object getFieldValue(Class<?> cl, String name, Object classInstance) {
+		if (cl != null) {
 			try {
-				return instance.getClass().getDeclaredMethod(functionName, args);
+				Field field = cl.getDeclaredField(name);
+				if (field != null) {
+					return field.get(classInstance);
+				}
+			}
+			catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public Method getMethod(Class<?> cl, String functionName, Class<?>... args) {
+		if (cl != null) {
+			try {
+				return cl.getMethod(functionName, args);
 			}
 			catch (NoSuchMethodException | SecurityException e) {
 				BetterEnd.LOGGER.error(e.getMessage());
@@ -144,14 +161,15 @@ public abstract class ModIntegration {
 		return null;
 	}
 	
-	public Object getAndExecuteRuntime(Object instance, String functionName, Object... args) {
+	@SuppressWarnings("unchecked")
+	public <T extends Object> T getAndExecuteRuntime(Class<?> cl, Object instance, String functionName, Object... args) {
 		if (instance != null) {
 			Class<?>[] classes = new Class<?>[args.length];
 			for (int i = 0; i < args.length; i++) {
 				classes[i] = args[i].getClass();
 			}
-			Method method = getInstanceMethod(instance, functionName, classes);
-			return executeMethod(instance, method, args);
+			Method method = getMethod(cl, functionName, classes);
+			return (T) executeMethod(instance, method, args);
 		}
 		return null;
 	}

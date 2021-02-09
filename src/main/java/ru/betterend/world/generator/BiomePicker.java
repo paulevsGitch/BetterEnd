@@ -28,7 +28,6 @@ public class BiomePicker {
 	
 	public void addBiomeMutable(EndBiome biome) {
 		biomes.add(biome);
-		maxChance = biome.mutateGenChance(maxChance);
 	}
 	
 	public void clearMutables() {
@@ -49,7 +48,21 @@ public class BiomePicker {
 		return immutableIDs.contains(id);
 	}
 	
+	public void removeMutableBiome(Identifier id) {
+		for (int i = biomeCount; i < biomes.size(); i++) {
+			EndBiome biome = biomes.get(i);
+			if (biome.getID().equals(id)) {
+				biomes.remove(i);
+				break;
+			}
+		}
+	}
+	
 	public void rebuild() {
+		maxChance = maxChanceUnmutable;
+		for (int i = biomeCount; i < biomes.size(); i++) {
+			maxChance = biomes.get(i).mutateGenChance(maxChance);
+		}
 		tree = new WeighTree(biomes);
 	}
 }

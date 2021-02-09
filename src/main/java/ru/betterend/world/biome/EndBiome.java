@@ -9,6 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
@@ -161,10 +162,6 @@ public class EndBiome {
 		return structuresFeature;
 	}
 	
-	public void setActualBiome(Biome biome) {
-		this.actualBiome = biome;
-	}
-	
 	public Biome getActualBiome() {
 		return this.actualBiome;
 	}
@@ -179,5 +176,35 @@ public class EndBiome {
 	
 	public boolean hasCaves() {
 		return hasCaves;
+	}
+	
+	public void updateActualBiomes(Registry<Biome> biomeRegistry) {
+		subbiomes.forEach((sub) -> {
+			sub.updateActualBiomes(biomeRegistry);
+		});
+		if (edge != null) {
+			edge.updateActualBiomes(biomeRegistry);
+		}
+		Biome biome = biomeRegistry.get(mcID);
+		this.actualBiome = biome;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		EndBiome biome = (EndBiome) obj;
+		return biome == null ? false : biome.mcID.equals(mcID);
+	}
+	
+	@Override
+	public int hashCode() {
+		return mcID.hashCode();
+	}
+
+	public List<EndBiome> subbiomes() {
+		// TODO Auto-generated method stub
+		return this.subbiomes;
 	}
 }

@@ -38,11 +38,12 @@ public class EndBiome {
 	private Biome actualBiome;
 
 	public EndBiome(BiomeDefinition definition) {
-		biome = definition.build();
-		mcID = definition.getID();
-		fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", definition.getFodDensity());
-		genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", definition.getGenChance());
-		hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", definition.hasCaves());
+		this.biome = definition.build();
+		this.mcID = definition.getID();
+		this.fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", definition.getFodDensity());
+		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", definition.getGenChance());
+		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", definition.hasCaves());
+		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
 		readStructureList();
 	}
 
@@ -52,6 +53,7 @@ public class EndBiome {
 		this.fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", fogDensity);
 		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", genChance);
 		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", hasCaves);
+		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
 		readStructureList();
 	}
 
@@ -201,10 +203,5 @@ public class EndBiome {
 	@Override
 	public int hashCode() {
 		return mcID.hashCode();
-	}
-
-	public List<EndBiome> subbiomes() {
-		// TODO Auto-generated method stub
-		return this.subbiomes;
 	}
 }

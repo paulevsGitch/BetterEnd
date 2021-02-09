@@ -49,13 +49,12 @@ public class BYGIntegration extends ModIntegration {
 						EndBiomes.VOID_BIOMES.removeMutableBiome(edgeID);
 						EndBiome edgeBiome = EndBiomes.getBiome(edgeID);
 						endBiome.setEdge(edgeBiome);
-						endBiome.setEdgeSize(32);
 					}
 					else {
 						boolean isVoid = this.getAndExecuteRuntime(biomeClass, obj, "isVoid");
 						if (isVoid) {
 							EndBiomes.LAND_BIOMES.removeMutableBiome(biomeID);
-							EndBiomes.VOID_BIOMES.addBiome(endBiome);
+							EndBiomes.VOID_BIOMES.addBiomeMutable(endBiome);
 						}
 						WeightedList<Identifier> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
 						if (subBiomes != null) {

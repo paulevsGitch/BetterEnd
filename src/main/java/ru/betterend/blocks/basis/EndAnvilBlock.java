@@ -25,9 +25,11 @@ import ru.betterend.patterns.Patterns;
 
 public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	public static final IntProperty DESTRUCTION = BlockProperties.DESTRUCTION;
+	private final int level;
 	
-	public EndAnvilBlock(MaterialColor color) {
+	public EndAnvilBlock(MaterialColor color, int level) {
 		super(FabricBlockSettings.copyOf(Blocks.ANVIL).materialColor(color));
+		this.level = level;
 	}
 	
 	@Override
@@ -37,7 +39,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	}
 
 	public int getCraftingLevel() {
-		return 1;
+		return level;
 	}
 	
 	@Override

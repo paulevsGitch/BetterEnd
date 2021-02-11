@@ -112,6 +112,7 @@ public class WoodenMaterial {
 		GridRecipe.make(name + "_bark", bark).setShape("##", "##").addMaterial('#', log).setOutputCount(3).build();
 		GridRecipe.make(name + "_log", log).setShape("##", "##").addMaterial('#', bark).setOutputCount(3).build();
 		GridRecipe.make(name + "_composter", composter).setShape("# #", "# #", "###").addMaterial('#', slab).build();
+		GridRecipe.make(name + "_shulker", Items.SHULKER_BOX).setShape("S", "#", "S").addMaterial('S', Items.SHULKER_SHELL).addMaterial('#', chest).build();
 		
 		// Item Tags //
 		TagHelper.addTag(ItemTags.PLANKS, planks);

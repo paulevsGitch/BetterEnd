@@ -190,6 +190,7 @@ public class MetalMaterial {
 		SmithingTableRecipe.create(name + "_hoe").setResult(hoe).setBase(hoeHead).setAddition(Items.STICK).build();
 		SmithingTableRecipe.create(name + "_sword_handle").setResult(swordHandle).setBase(ingot).setAddition(Items.STICK).build();
 		SmithingTableRecipe.create(name + "_sword").setResult(sword).setBase(swordBlade).setAddition(swordHandle).build();
+		SmithingTableRecipe.create(name + "_shovel").setResult(shovel).setBase(shovelHead).setAddition(Items.STICK).build();
 		
 		TagHelper.addTag(BlockTags.ANVIL, anvil);
 	}

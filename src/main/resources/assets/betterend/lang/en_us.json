@@ -662,5 +662,18 @@
 	"block.betterend.end_stone_furnace": "End Stone Furnace",
 	"block.betterend.flavolite_furnace": "Flavolite Furnace",
 	"block.betterend.sulphuric_rock_furnace": "Sulfuric Rock Furnace",
-	"block.betterend.violecite_furnace": "Violecite Furnace"
+	"block.betterend.violecite_furnace": "Violecite Furnace",
+	
+	"item.betterend.terminite_axe_head": "Terminite Axe Head",
+	"item.betterend.terminite_hoe_head": "Terminite Hoe Head",
+	"item.betterend.terminite_pickaxe_head": "Terminite Pickaxe Head",
+	"item.betterend.terminite_shovel_head": "Terminite Shovel Head",
+	"item.betterend.terminite_sword_blade": "Terminite Sword Blade",
+	"item.betterend.terminite_sword_handle": "Terminite Sword Handle",
+	"item.betterend.thallasium_axe_head": "Thallasium Axe Head",
+	"item.betterend.thallasium_hoe_head": "Thallasium Hoe Head",
+	"item.betterend.thallasium_pickaxe_head": "Thallasium Pickaxe Head",
+	"item.betterend.thallasium_shovel_head": "Thallasium Shovel Head",
+	"item.betterend.thallasium_sword_blade": "Thallasium Sword Blade",
+	"item.betterend.thallasium_sword_handle": "Thallasium Sword Handle"
 }

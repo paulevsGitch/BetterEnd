@@ -26,11 +26,11 @@ public class CraftingRecipes {
 				.build();
 		}
 		
-		GridRecipe.make("ender_shard_to_block", EndBlocks.ENDER_BLOCK)
+		GridRecipe.make("ender_perl_to_block", EndBlocks.ENDER_BLOCK)
 			.setShape("OO", "OO")
-			.addMaterial('O', EndItems.ENDER_SHARD)
+			.addMaterial('O', Items.ENDER_PEARL)
 			.build();
-		GridRecipe.make("ender_block_to_shard", EndItems.ENDER_SHARD)
+		GridRecipe.make("ender_block_to_perl", Items.ENDER_PEARL)
 			.addMaterial('#', EndBlocks.ENDER_BLOCK)
 			.setOutputCount(4)
 			.setList("#")

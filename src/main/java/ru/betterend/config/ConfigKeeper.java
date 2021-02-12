@@ -17,8 +17,7 @@ import ru.betterend.util.JsonFactory;
 
 public final class ConfigKeeper {
 	
-	private Map<ConfigKey, Entry<?>> configEntries = Maps.newHashMap();
-	
+	private final Map<ConfigKey, Entry<?>> configEntries = Maps.newHashMap();
 	private final JsonObject configObject;
 	private final ConfigWriter writer;
 	

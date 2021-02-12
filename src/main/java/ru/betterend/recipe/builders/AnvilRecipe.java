@@ -161,6 +161,11 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		return Objects.hash(id, input, output, damage, toolLevel);
 	}
 
+	@Override
+	public String toString() {
+		return "AnvilRecipe [" + id + "]";
+	}
+
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
 		
@@ -299,7 +304,5 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			packetBuffer.writeVarInt(recipe.anvilLevel);
 			packetBuffer.writeVarInt(recipe.damage);
 		}
-
-
 	}
 }

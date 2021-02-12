@@ -25,7 +25,7 @@ import ru.betterend.patterns.Patterns;
 
 public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	public static final IntProperty DESTRUCTION = BlockProperties.DESTRUCTION;
-	private final int level;
+	protected final int level;
 	
 	public EndAnvilBlock(MaterialColor color, int level) {
 		super(FabricBlockSettings.copyOf(Blocks.ANVIL).materialColor(color));
@@ -36,6 +36,10 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		super.appendProperties(builder);
 		builder.add(DESTRUCTION);
+	}
+
+	public IntProperty getDestructionProperty() {
+		return DESTRUCTION;
 	}
 
 	public int getCraftingLevel() {
@@ -61,8 +65,8 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 		map.put("%top%", getTop(blockId, block));
 		return Patterns.createJson(Patterns.BLOCK_ANVIL, map);
 	}
-	
-	private String getTop(Identifier blockId, String block) {
+
+	protected String getTop(Identifier blockId, String block) {
 		if (block.contains("item")) {
 			return blockId.getPath() + "_top_0";
 		}

@@ -22,6 +22,7 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndTerrainBlock;
+import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;
@@ -113,6 +114,7 @@ public class EndTags {
 		));
 		
 		TagHelper.addTag(FURNACES, Blocks.FURNACE);
+		TagHelper.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

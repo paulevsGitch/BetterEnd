@@ -20,45 +20,46 @@ public class AnvilRecipes {
 			.setDamage(3)
 			.build();
 		
+		int anvilLevel = EndToolMaterial.AETERNIUM.getMiningLevel();
 		AnvilRecipe.Builder.create("aeternium_axe_head")
 			.setInput(EndItems.AETERNIUM_INGOT)
 			.setOutput(EndItems.AETERNIUM_AXE_HEAD)
-			.setAnvilLevel(EndToolMaterial.AETERNIUM.getDurability())
+			.setAnvilLevel(anvilLevel)
 			.setToolLevel(4)
 			.setDamage(6)
 			.build();
 		AnvilRecipe.Builder.create("aeternium_pickaxe_head")
 			.setInput(EndItems.AETERNIUM_INGOT)
 			.setOutput(EndItems.AETERNIUM_PICKAXE_HEAD)
-			.setAnvilLevel(EndToolMaterial.AETERNIUM.getDurability())
+			.setAnvilLevel(anvilLevel)
 			.setToolLevel(4)
 			.setDamage(6)
 			.build();
 		AnvilRecipe.Builder.create("aeternium_shovel_head")
 			.setInput(EndItems.AETERNIUM_INGOT)
 			.setOutput(EndItems.AETERNIUM_SHOVEL_HEAD)
-			.setAnvilLevel(EndToolMaterial.AETERNIUM.getDurability())
+			.setAnvilLevel(anvilLevel)
 			.setToolLevel(4)
 			.setDamage(6)
 			.build();
 		AnvilRecipe.Builder.create("aeternium_hoe_head")
 			.setInput(EndItems.AETERNIUM_INGOT)
 			.setOutput(EndItems.AETERNIUM_HOE_HEAD)
-			.setAnvilLevel(EndToolMaterial.AETERNIUM.getDurability())
+			.setAnvilLevel(anvilLevel)
 			.setToolLevel(4)
 			.setDamage(6)
 			.build();
 		AnvilRecipe.Builder.create("aeternium_hammer_head")
 			.setInput(EndItems.AETERNIUM_INGOT)
 			.setOutput(EndItems.AETERNIUM_HAMMER_HEAD)
-			.setAnvilLevel(EndToolMaterial.AETERNIUM.getDurability())
+			.setAnvilLevel(anvilLevel)
 			.setToolLevel(4)
 			.setDamage(6)
 			.build();
 		AnvilRecipe.Builder.create("aeternium_sword_blade")
 			.setInput(EndItems.AETERNIUM_INGOT)
 			.setOutput(EndItems.AETERNIUM_SWORD_BLADE)
-			.setAnvilLevel(EndToolMaterial.AETERNIUM.getDurability())
+			.setAnvilLevel(anvilLevel)
 			.setToolLevel(4)
 			.setDamage(6)
 			.build();

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import net.minecraft.screen.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,10 +19,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeManager;
-import net.minecraft.screen.AnvilScreenHandler;
-import net.minecraft.screen.ForgingScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.tag.BlockTags;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.interfaces.AnvilScreenHandlerExtended;
@@ -32,10 +29,25 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 
 	private List<AnvilRecipe> be_recipes = Collections.emptyList();
 	private AnvilRecipe be_currentRecipe;
-	
+	private Property anvilLevel;
+
 	public AnvilScreenHandlerMixin(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory,
 			ScreenHandlerContext context) {
 		super(type, syncId, playerInventory, context);
+	}
+
+	@Inject(method = "<init>*", at = @At("TAIL"))
+	public void be_initAnvilLevel(int syncId, PlayerInventory inventory, ScreenHandlerContext context, CallbackInfo info) {
+		int anvLevel = context.run((world, blockPos) -> {
+			Block anvilBlock = world.getBlockState(blockPos).getBlock();
+			if (anvilBlock instanceof EndAnvilBlock) {
+				return ((EndAnvilBlock) anvilBlock).getCraftingLevel();
+			}
+			return 1;
+		}, 1);
+		Property anvilLevel = Property.create();
+		anvilLevel.set(anvLevel);
+		this.anvilLevel = addProperty(anvilLevel);
 	}
 	
 	@Shadow
@@ -76,25 +88,19 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	@Inject(method = "updateResult", at = @At("HEAD"), cancellable = true)
 	public void be_updateOutput(CallbackInfo info) {
 		RecipeManager recipeManager = this.player.world.getRecipeManager();
-		this.be_recipes = recipeManager.getAllMatches(AnvilRecipe.TYPE, input, player.world);
+		be_recipes = recipeManager.getAllMatches(AnvilRecipe.TYPE, input, player.world);
 		if (be_recipes.size() > 0) {
-			this.context.run((world, blockPos) -> {
-				int anvilLevel;
-				Block anvilBlock = world.getBlockState(blockPos).getBlock();
-				if (anvilBlock instanceof EndAnvilBlock) {
-					anvilLevel = ((EndAnvilBlock) anvilBlock).getCraftingLevel();
-				} else {
-					anvilLevel = 1;
-				}
-				this.be_recipes = be_recipes.stream().filter(recipe ->
+			int anvilLevel = this.anvilLevel.get();
+			be_recipes = be_recipes.stream().filter(recipe ->
 					anvilLevel >= recipe.getAnvilLevel()).collect(Collectors.toList());
-			});
 			if (be_recipes.size() > 0) {
 				if (be_currentRecipe == null || !be_recipes.contains(be_currentRecipe)) {
-					this.be_currentRecipe = be_recipes.get(0);
+					be_currentRecipe = be_recipes.get(0);
 				}
-				this.be_updateResult();
+				be_updateResult();
 				info.cancel();
+			} else {
+				be_currentRecipe = null;
 			}
 		}
 	}

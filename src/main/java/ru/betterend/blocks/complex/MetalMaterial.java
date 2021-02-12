@@ -40,6 +40,7 @@ import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.recipe.builders.SmithingTableRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.TagHelper;
 
 public class MetalMaterial {
@@ -198,5 +199,6 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_boots", boots).setShape("# #", "# #").addMaterial('#', ingot).setGroup("end_metal_boots").build();
 		
 		TagHelper.addTag(BlockTags.ANVIL, anvil);
+		TagHelper.addTag(EndTags.IRON_INGOTS, ingot);
 	}
 }

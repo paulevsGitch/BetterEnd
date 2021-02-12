@@ -29,6 +29,9 @@ import ru.betterend.mixin.common.ComposterBlockAccessor;
 import ru.betterend.util.TagHelper;
 
 public class EndTags {
+	// Table with common (c) tags:
+	// https://fabricmc.net/wiki/tutorial:tags
+	
 	// Block Tags
 	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonBlockTag("bookshelves");
 	public static final Tag.Identified<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
@@ -39,6 +42,8 @@ public class EndTags {
 	
 	// Item Tags
 	public static final Tag.Identified<Item> ITEM_CHEST = makeCommonItemTag("chest");
+	public static final Tag.Identified<Item> IRON_INGOTS = makeCommonItemTag("iron_ingots");
+	public static final Tag.Identified<Item> FURNACES = makeCommonItemTag("furnaces");
 	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
 	
 	public static Tag.Identified<Block> makeBlockTag(String name) {
@@ -106,6 +111,8 @@ public class EndTags {
 				EndBlocks.TERMINITE.hammer
 			)
 		));
+		
+		TagHelper.addTag(FURNACES, Blocks.FURNACE);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

@@ -99,6 +99,7 @@ public class Patterns {
 	public final static Identifier BLOCK_CHANDELIER_WALL = BetterEnd.makeID("patterns/block/chandelier_wall.json");
 	public final static Identifier BLOCK_CHANDELIER_CEIL = BetterEnd.makeID("patterns/block/chandelier_ceil.json");
 	public final static Identifier BLOCK_FURNACE = BetterEnd.makeID("patterns/block/furnace.json");
+	public final static Identifier BLOCK_FURNACE_GLOW = BetterEnd.makeID("patterns/block/furnace_glow.json");
 	
 	//Models Item
 	public final static Identifier ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");

@@ -18,12 +18,16 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ru.betterend.blocks.entities.EFurnaceBlockEntity;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
-public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned {
+public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned, IRenderTypeable {
 	public EndFurnaceBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source));
+		super(FabricBlockSettings.copyOf(source).luminance((state) -> {
+			return state.get(LIT) ? 13 : 0;
+		}));
 	}
 
 	@Override
@@ -48,18 +52,28 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned {
 	
 	@Override
 	public String getModelPattern(String block) {
-		String add = block.contains("_on") ? "_on" : "";
 		Identifier blockId = Registry.BLOCK.getId(this);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%top%", blockId.getPath() + "_top");
-		map.put("%front%", blockId.getPath() + "_front" + add);
 		map.put("%side%", blockId.getPath() + "_side");
-		map.put("%bottom%", blockId.getPath() + "_bottom");
-		return Patterns.createJson(Patterns.BLOCK_FURNACE, map);
+		if (block.contains("_on")) {
+			map.put("%front%", blockId.getPath() + "_front_on");
+			map.put("%glow%", blockId.getPath() + "_glow");
+			return Patterns.createJson(Patterns.BLOCK_FURNACE_GLOW, map);
+		}
+		else {
+			map.put("%front%", blockId.getPath() + "_front");
+			return Patterns.createJson(Patterns.BLOCK_FURNACE, map);
+		}
 	}
 	
 	@Override
 	public Identifier statePatternId() {
 		return Patterns.STATE_FURNACE;
+	}
+
+	@Override
+	public ERenderLayer getRenderLayer() {
+		return ERenderLayer.CUTOUT;
 	}
 }

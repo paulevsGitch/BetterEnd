@@ -40,7 +40,7 @@ public class CraftingRecipes {
 			.setShape("T#T", "V V", "T#T")
 			.addMaterial('#', Blocks.END_STONE_BRICKS)
 			.addMaterial('T', EndBlocks.THALLASIUM.ingot)
-			.addMaterial('V', Items.BUCKET)
+			.addMaterial('V', EndTags.FURNACES)
 			.build();
 		
 		registerPedestal("andesite_pedestal", EndBlocks.ANDESITE_PEDESTAL, Blocks.POLISHED_ANDESITE_SLAB, Blocks.POLISHED_ANDESITE);

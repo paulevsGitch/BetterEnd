@@ -7,6 +7,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
+import ru.betterend.blocks.AeterniumAnvil;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AmberBlock;
 import ru.betterend.blocks.AncientEmeraldIceBlock;
@@ -322,6 +323,7 @@ public class EndBlocks {
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
 	public static final Block ETERNAL_PEDESTAL = registerBlock("eternal_pedestal", new EternalPedestal());
 	public static final Block INFUSION_PEDESTAL = registerBlock("infusion_pedestal", new InfusionPedestal());
+	public static final Block AETERNIUM_ANVIL = registerBlock("aeternium_anvil", new AeterniumAnvil());
 	
 	// Technical
 	public static final Block END_PORTAL_BLOCK = registerBlockNI("end_portal_block", new EndPortalBlock());

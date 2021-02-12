@@ -77,5 +77,11 @@ public class SmithingRecipes {
 		.setBase(EndBlocks.THALLASIUM.anvil)
 		.setAddition(EndBlocks.TERMINITE.block)
 		.build();
+		
+		SmithingTableRecipe.create("terminite_anvil_updrade")
+		.setResult(EndBlocks.AETERNIUM_ANVIL)
+		.setBase(EndBlocks.TERMINITE.anvil)
+		.setAddition(EndBlocks.AETERNIUM_BLOCK)
+		.build();
 	}
 }

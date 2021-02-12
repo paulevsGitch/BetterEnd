@@ -16,6 +16,7 @@ public class BlockProperties {
 	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
 	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
 	
+	public static final IntProperty DESTRUCTION_LONG = IntProperty.of("destruction", 0, 8);
 	public static final IntProperty DESTRUCTION = IntProperty.of("destruction", 0, 2);
 	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
 	public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, 3);

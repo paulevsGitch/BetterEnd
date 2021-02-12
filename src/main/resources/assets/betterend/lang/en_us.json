@@ -675,5 +675,6 @@
 	"item.betterend.thallasium_pickaxe_head": "Thallasium Pickaxe Head",
 	"item.betterend.thallasium_shovel_head": "Thallasium Shovel Head",
 	"item.betterend.thallasium_sword_blade": "Thallasium Sword Blade",
-	"item.betterend.thallasium_sword_handle": "Thallasium Sword Handle"
+	"item.betterend.thallasium_sword_handle": "Thallasium Sword Handle",
+	"block.betterend.aeternium_anvil": "Aeternium Anvil"
 }

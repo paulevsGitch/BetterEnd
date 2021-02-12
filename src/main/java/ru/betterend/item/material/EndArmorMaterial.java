@@ -14,7 +14,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public enum EndArmorMaterial implements ArmorMaterial {
-	THALLASIUM("thallasium", 26, new int[] { 3, 6, 7, 3 }, 14, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {
+	THALLASIUM("thallasium", 17, new int[] { 1, 4, 5, 2 }, 12, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
 		return Ingredient.ofItems(EndBlocks.THALLASIUM.ingot);
 	}),
 	TERMINITE("terminite", 26, new int[] { 3, 6, 7, 3 }, 14, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {

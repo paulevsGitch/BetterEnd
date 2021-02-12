@@ -4,6 +4,6 @@
 		"top": "betterend:block/%top%",
 		"front": "betterend:block/%front%",
 		"side": "betterend:block/%side%",
-		"bottom": "betterend:block/%bottom%"
+		"bottom": "betterend:block/%top%"
 	}
 }

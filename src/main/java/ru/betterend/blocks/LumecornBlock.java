@@ -3,6 +3,8 @@ package ru.betterend.blocks;
 import java.util.Collections;
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -99,5 +101,15 @@ public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 		else {
 			return Collections.emptyList();
 		}
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		LumecornShape shape = state.get(SHAPE);
+		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL || shape == LumecornShape.MIDDLE) {
+			return new ItemStack(EndBlocks.LUMECORN_SEED);
+		}
+		return new ItemStack(EndItems.LUMECORN_ROD);
 	}
 }

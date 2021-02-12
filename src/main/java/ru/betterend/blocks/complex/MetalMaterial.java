@@ -191,6 +191,12 @@ public class MetalMaterial {
 		SmithingTableRecipe.create(name + "_sword").setResult(sword).setBase(swordBlade).setAddition(swordHandle).build();
 		SmithingTableRecipe.create(name + "_shovel").setResult(shovel).setBase(shovelHead).setAddition(Items.STICK).build();
 		
+		// Armor crafting
+		GridRecipe.make(name + "_helmet", helmet).setShape("###", "# #").addMaterial('#', ingot).setGroup("end_metal_helmets").build();
+		GridRecipe.make(name + "_chestplate", chestplate).setShape("# #", "###", "###").addMaterial('#', ingot).setGroup("end_metal_chestplates").build();
+		GridRecipe.make(name + "_leggings", leggings).setShape("###", "# #", "# #").addMaterial('#', ingot).setGroup("end_metal_leggings").build();
+		GridRecipe.make(name + "_boots", boots).setShape("# #", "# #").addMaterial('#', ingot).setGroup("end_metal_boots").build();
+		
 		TagHelper.addTag(BlockTags.ANVIL, anvil);
 	}
 }

@@ -1,6 +1,5 @@
 package ru.betterend.mixin.common;
 
-import net.minecraft.state.property.IntProperty;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -8,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.BlockState;
-import ru.betterend.blocks.BlockProperties;
+import net.minecraft.state.property.IntProperty;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 
 @Mixin(AnvilBlock.class)

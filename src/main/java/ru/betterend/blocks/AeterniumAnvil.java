@@ -1,23 +1,12 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.Maps;
-
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.item.material.EndToolMaterial;
-import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 

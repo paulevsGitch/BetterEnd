@@ -181,7 +181,6 @@ public class MetalMaterial {
 		AnvilRecipe.Builder.create(name + "_axe_head").setInput(ingot).setInputCount(3).setOutput(axeHead).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
 		AnvilRecipe.Builder.create(name + "_hoe_head").setInput(ingot).setInputCount(2).setOutput(hoeHead).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
 		AnvilRecipe.Builder.create(name + "_sword_blade").setInput(ingot).setOutput(swordBlade).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
-		AnvilRecipe.Builder.create(name + "_sword_handle").setInput(ingot).setOutput(swordHandle).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
 		
 		// Tools from parts
 		SmithingTableRecipe.create(name + "_hammer").setResult(hammer).setBase(block).setAddition(Items.STICK).build();

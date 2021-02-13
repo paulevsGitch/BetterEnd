@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
 import org.jetbrains.annotations.NotNull;
 
 import com.google.common.collect.Lists;
@@ -19,9 +17,11 @@ import me.shedaniel.rei.api.widgets.Widgets;
 import me.shedaniel.rei.gui.entries.RecipeEntry;
 import me.shedaniel.rei.gui.entries.SimpleRecipeEntry;
 import me.shedaniel.rei.gui.widget.Widget;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.BlockItem;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import ru.betterend.blocks.basis.EndAnvilBlock;

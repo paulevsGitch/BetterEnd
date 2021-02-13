@@ -1,18 +1,18 @@
 package ru.betterend.integration.rei;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.google.common.collect.Lists;
+
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.BlastingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndAnvilBlock;
@@ -21,9 +21,6 @@ import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
 public class REIPlugin implements REIPluginV0 {

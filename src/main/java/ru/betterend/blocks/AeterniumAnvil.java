@@ -11,7 +11,7 @@ import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 
 public class AeterniumAnvil extends EndAnvilBlock {
-	public static final IntProperty DESTRUCTION = BlockProperties.DESTRUCTION_LONG;
+	private static final IntProperty DESTRUCTION = BlockProperties.DESTRUCTION_LONG;
 	
 	public AeterniumAnvil() {
 		super(EndBlocks.AETERNIUM_BLOCK.getDefaultMaterialColor(), EndToolMaterial.AETERNIUM.getMiningLevel());

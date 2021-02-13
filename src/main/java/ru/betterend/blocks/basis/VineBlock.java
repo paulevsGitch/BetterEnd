@@ -77,6 +77,10 @@ public class VineBlock extends BlockBaseNotFull implements IRenderTypeable, Fert
 	public AbstractBlock.OffsetType getOffsetType() {
 		return AbstractBlock.OffsetType.XZ;
 	}
+	
+	public boolean canGenerate(BlockState state, WorldView world, BlockPos pos) {
+		return isSupport(state, world, pos);
+	}
 
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {

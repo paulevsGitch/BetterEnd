@@ -24,7 +24,7 @@ import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
 public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
-	public static final IntProperty DESTRUCTION = BlockProperties.DESTRUCTION;
+	private static final IntProperty DESTRUCTION = BlockProperties.DESTRUCTION;
 	protected final int level;
 	
 	public EndAnvilBlock(MaterialColor color, int level) {

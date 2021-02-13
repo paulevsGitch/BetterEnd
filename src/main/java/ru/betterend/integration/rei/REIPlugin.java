@@ -1,18 +1,29 @@
 package ru.betterend.integration.rei;
 
+import com.google.common.collect.Lists;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.BlastingRecipe;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
+import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndItems;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
 public class REIPlugin implements REIPluginV0 {
@@ -24,7 +35,7 @@ public class REIPlugin implements REIPluginV0 {
 	
 	public final static EntryStack END_STONE_SMELTER = EntryStack.create(EndBlocks.END_STONE_SMELTER);
 	public final static EntryStack INFUSION_RITUAL = EntryStack.create(EndBlocks.INFUSION_PEDESTAL);
-	public final static EntryStack ANVIL = EntryStack.create(Blocks.ANVIL);
+	public final static List<EntryStack> ANVILS;
 	
 	@Override
 	public Identifier getPluginIdentifier() {
@@ -43,7 +54,7 @@ public class REIPlugin implements REIPluginV0 {
 	public void registerOthers(RecipeHelper recipeHelper) {
 		recipeHelper.registerWorkingStations(ALLOYING, END_STONE_SMELTER);
 		recipeHelper.registerWorkingStations(INFUSION, INFUSION_RITUAL);
-		recipeHelper.registerWorkingStations(SMITHING, ANVIL);
+		recipeHelper.registerWorkingStations(SMITHING, ANVILS.toArray(new EntryStack[]{}));
 		recipeHelper.removeAutoCraftButton(SMITHING);
     }
 	
@@ -52,5 +63,11 @@ public class REIPlugin implements REIPluginV0 {
 		recipeHelper.registerCategories(new REIAlloyingCategory(),
 										new REIInfusionCategory(),
 										new REIAnvilCategory());
+	}
+
+	static {
+		ANVILS = Lists.newArrayList(EntryStack.ofItems(EndItems.getModBlocks().stream()
+				.filter(item -> ((BlockItem) item).getBlock() instanceof EndAnvilBlock).collect(Collectors.toList())));
+		ANVILS.add(0, EntryStack.create(Blocks.ANVIL));
 	}
 }

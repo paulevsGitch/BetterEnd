@@ -27,11 +27,15 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	}
 	
 	public int getDamage() {
-		return this.recipe.getDamage();
+		return recipe.getDamage();
 	}
 
 	public int getInputCount() {
-		return this.recipe.getInputCount();
+		return recipe.getInputCount();
+	}
+
+	public int getAnvilLevel() {
+		return recipe.getAnvilLevel();
 	}
 	
 	@Override
@@ -56,7 +60,7 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	
 	@Override
 	public @NotNull List<List<EntryStack>> getRequiredEntries() {
-		return this.input;
+		return input;
 	}
 
 	@Override
@@ -72,6 +76,6 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	@Override
 	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo,
 			ScreenHandler container) {
-		return this.input;
+		return input;
 	}
 }

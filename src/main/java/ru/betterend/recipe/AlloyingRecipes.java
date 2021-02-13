@@ -22,7 +22,7 @@ public class AlloyingRecipes {
 			.setInput(Blocks.ANCIENT_DEBRIS, Blocks.ANCIENT_DEBRIS)
 			.setOutput(Items.NETHERITE_SCRAP, 3)
 			.setExpiriense(6F)
-			.setSmeltTime(500)
+			.setSmeltTime(1000)
 			.build();
 		AlloyingRecipe.Builder.create("terminite_ingot")
 			.setInput(Items.IRON_INGOT, EndItems.ENDER_DUST)
@@ -34,7 +34,7 @@ public class AlloyingRecipes {
 			.setInput(EndBlocks.TERMINITE.ingot, Items.NETHERITE_INGOT)
 			.setOutput(EndItems.AETERNIUM_INGOT, 1)
 			.setExpiriense(4.5F)
-			.setSmeltTime(600)
+			.setSmeltTime(850)
 			.build();
 		AlloyingRecipe.Builder.create("terminite_ingot_thallasium")
 			.setInput(EndBlocks.THALLASIUM.ingot, EndItems.ENDER_DUST)

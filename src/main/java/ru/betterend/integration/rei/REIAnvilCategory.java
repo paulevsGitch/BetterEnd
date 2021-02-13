@@ -2,7 +2,10 @@ package ru.betterend.integration.rei;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import org.jetbrains.annotations.NotNull;
 
 import com.google.common.collect.Lists;
@@ -21,6 +24,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.util.LangUtil;
 
 public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay> {
@@ -37,7 +41,7 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 	
 	@Override
 	public @NotNull EntryStack getLogo() {
-		return REIPlugin.ANVIL;
+		return REIPlugin.ANVILS.get(0);
 	}
 	
 	@Override
@@ -47,16 +51,26 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 		widgets.add(Widgets.createRecipeBase(bounds));
 		int x = startPoint.x + 10;
 		int y = startPoint.y;
-		widgets.add(Widgets.createResultSlotBackground(new Point(x + 61, y + 4)));
+		widgets.add(Widgets.createResultSlotBackground(new Point(x + 61, y + 5)));
 		List<List<EntryStack>> inputEntries = display.getInputEntries();
 		List<EntryStack> materials = inputEntries.get(1);
+		int anvilLevel = display.getAnvilLevel();
+		List<EntryStack> anvils = REIPlugin.ANVILS.stream().filter(anvil -> {
+			Block block = ((BlockItem) anvil.getItem()).getBlock();
+			if (block instanceof EndAnvilBlock) {
+				return ((EndAnvilBlock) block).getCraftingLevel() >= anvilLevel;
+			}
+			return anvilLevel == 1;
+		}).collect(Collectors.toList());
 		materials.forEach(entryStack -> entryStack.setAmount(display.getInputCount()));
-		widgets.add(Widgets.createArrow(new Point(x + 24, y + 3)));
-		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 5, bounds.y + bounds.height - 12),
+		widgets.add(Widgets.createArrow(new Point(x + 24, y + 4)));
+		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 7, bounds.y + bounds.height - 15),
 				new TranslatableText("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
-		widgets.add(Widgets.createSlot(new Point(x - 20, y + 3)).entries(materials).markInput());
-		widgets.add(Widgets.createSlot(new Point(x + 1, y + 3)).entries(inputEntries.get(0)).markInput());
-		widgets.add(Widgets.createSlot(new Point(x + 61, y + 4)).entries(display.getResultingEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(new Point(x - 20, y + 4)).entries(materials).markInput());
+		widgets.add(Widgets.createSlot(new Point(x + 1, y + 4)).entries(inputEntries.get(0)).markInput());
+		widgets.add(Widgets.createSlot(new Point(x + 61, y + 5)).entries(display.getResultingEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(new Point(x - 9, y + 25)).entries(anvils));
+
 		return widgets;
 	}
 
@@ -80,7 +94,7 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 	
 	@Override
 	public int getDisplayHeight() {
-		return 49;
+		return 60;
 	}
 
 }

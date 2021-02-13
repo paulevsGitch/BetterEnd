@@ -51,8 +51,8 @@ public class BYGIntegration extends ModIntegration {
 						endBiome.setEdge(edgeBiome);
 					}
 					else {
-						boolean isVoid = this.getAndExecuteRuntime(biomeClass, obj, "isVoid");
-						if (isVoid) {
+						Boolean isVoid = this.getAndExecuteRuntime(biomeClass, obj, "isVoid");
+						if (isVoid != null && isVoid.booleanValue()) {
 							EndBiomes.LAND_BIOMES.removeMutableBiome(biomeID);
 							EndBiomes.VOID_BIOMES.addBiomeMutable(endBiome);
 						}

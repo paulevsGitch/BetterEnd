@@ -38,23 +38,23 @@ public class EndBiome {
 	private Biome actualBiome;
 
 	public EndBiome(BiomeDefinition definition) {
-		this.biome = definition.build();
 		this.mcID = definition.getID();
+		this.readStructureList();
+		this.biome = definition.build();
 		this.fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", definition.getFodDensity());
 		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", definition.getGenChance());
 		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", definition.hasCaves());
 		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
-		readStructureList();
 	}
 
 	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
-		this.biome = biome;
 		this.mcID = id;
+		this.readStructureList();
+		this.biome = biome;
 		this.fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", fogDensity);
 		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", genChance);
 		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", hasCaves);
 		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
-		readStructureList();
 	}
 
 	public EndBiome getEdge() {

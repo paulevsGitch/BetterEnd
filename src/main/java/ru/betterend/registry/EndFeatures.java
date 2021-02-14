@@ -9,6 +9,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import ru.betterend.BetterEnd;
+import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePlantFeature;
@@ -170,6 +172,10 @@ public class EndFeatures {
 	public static final EndFeature SILK_MOTH_NEST = EndFeature.makeChansedFeature("silk_moth_nest", new SilkMothNestFeature(), 2);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
+			return;
+		}
+		
 		if (GeneratorOptions.removeChorusFromVanillaBiomes()) {
 			if (id.getNamespace().equals("minecraft")) {
 				String path = id.getPath();
@@ -200,6 +206,18 @@ public class EndFeatures {
 		EndFeature feature = endBiome.getStructuresFeature();
 		if (feature != null) {
 			addFeature(feature, features);
+		}
+	}
+	
+	public static void addDefaultFeatures(BiomeDefinition def) {
+		def.addFeature(FLAVOLITE_LAYER);
+		def.addFeature(THALLASIUM_ORE);
+		def.addFeature(ENDER_ORE);
+		def.addFeature(CRASHED_SHIP);
+		
+		if (def.hasCaves()) {
+			def.addFeature(ROUND_CAVE_RARE);
+			def.addFeature(CAVE_GRASS);
 		}
 	}
 	

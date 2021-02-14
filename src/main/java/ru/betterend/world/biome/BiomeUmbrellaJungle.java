@@ -1,6 +1,7 @@
 package ru.betterend.world.biome;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -34,6 +35,7 @@ public class BiomeUmbrellaJungle extends EndBiome {
 				.addFeature(EndFeatures.CHARNIA_GREEN)
 				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
 				.addFeature(EndFeatures.CHARNIA_RED_RARE)
+				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

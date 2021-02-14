@@ -35,6 +35,7 @@ import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import ru.betterend.BetterEnd;
+import ru.betterend.registry.EndFeatures;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.structures.EndStructureFeature;
@@ -233,6 +234,7 @@ public class BiomeDefinition {
 			spawnSettings.spawn(entry.type.getSpawnGroup(), entry);
 		});
 
+		EndFeatures.addDefaultFeatures(this);
 		generationSettings.surfaceBuilder(surface == null ? ConfiguredSurfaceBuilders.END : surface);
 		structures.forEach((structure) -> generationSettings.structureFeature(structure));
 		features.forEach((info) -> generationSettings.feature(info.featureStep, info.feature));

@@ -114,6 +114,9 @@ public class EndTags {
 		
 		TagHelper.addTag(FURNACES, Blocks.FURNACE);
 		TagHelper.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
+		
+		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
+		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

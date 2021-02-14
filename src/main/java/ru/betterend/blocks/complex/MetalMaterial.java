@@ -199,6 +199,8 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_boots", boots).setShape("# #", "# #").addMaterial('#', ingot).setGroup("end_metal_boots").build();
 		
 		TagHelper.addTag(BlockTags.ANVIL, anvil);
+		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
 		TagHelper.addTag(EndTags.IRON_INGOTS, ingot);
+		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
 	}
 }

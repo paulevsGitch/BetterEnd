@@ -16,13 +16,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
 public class CrystaliteArmorProvider implements ModelProvider, TextureProvider {
-	private final static Identifier FIRST_LAYER = BetterEnd.makeID("textures/model/armor/crystalite_layer_1.png");
-	private final static Identifier SECOND_LAYER = BetterEnd.makeID("textures/model/armor/crystalite_layer_2.png");
+	private final static Identifier FIRST_LAYER = new Identifier("textures/models/armor/crystalite_layer_1.png");
+	private final static Identifier SECOND_LAYER = new Identifier("textures/models/armor/crystalite_layer_2.png");
 	private final static CrystaliteHelmetModel HELMET_MODEL = new CrystaliteHelmetModel(1.0F);
 	private final static CrystaliteChestplateModel CHEST_MODEL = new CrystaliteChestplateModel(1.0F, false);
 	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = new CrystaliteChestplateModel(1.0F, true);

@@ -292,7 +292,7 @@ public class EndBlocks {
 	public static final Block AMBER_ORE = registerBlock("amber_ore", new EndOreBlock(EndItems.RAW_AMBER, 1, 2, 4));
 	
 	// Materials //
-	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, EndToolMaterial.THALLASIUM, EndArmorMaterial.TERMINITE);
+	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, EndToolMaterial.THALLASIUM, EndArmorMaterial.THALLASIUM);
 	public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.field_25708, 7F, 9F, EndToolMaterial.TERMINITE, EndArmorMaterial.TERMINITE);
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
 	public static final Block CHARCOAL_BLOCK = registerBlock("charcoal_block", new CharcoalBlock());

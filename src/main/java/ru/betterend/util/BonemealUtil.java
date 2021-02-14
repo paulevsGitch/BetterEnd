@@ -80,6 +80,9 @@ public class BonemealUtil {
 		GrassList list = null;
 		if (map != null) {
 			list = map.get(terrain);
+			if (list == null) {
+				list = GRASS_TYPES.get(terrain);
+			}
 		}
 		else {
 			list = GRASS_TYPES.get(terrain);

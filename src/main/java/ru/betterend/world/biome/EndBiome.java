@@ -40,6 +40,9 @@ public class EndBiome {
 	public EndBiome(BiomeDefinition definition) {
 		this.mcID = definition.getID();
 		this.readStructureList();
+		if (structuresFeature != null) {
+			definition.addFeature(structuresFeature);
+		}
 		this.biome = definition.build();
 		this.fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", definition.getFodDensity());
 		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", definition.getGenChance());

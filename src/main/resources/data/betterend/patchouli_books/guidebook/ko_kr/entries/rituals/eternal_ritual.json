@@ -1,0 +1,44 @@
+{
+    "name": "영원한 의식",
+    "icon": "betterend:eternal_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "\"오버월드로 돌아가는 일은 쉽지 않습니다.\"$(br2)엔드를 여행하는 동안 고대 유적을 발견할 수 있습니다."
+        },
+        {
+            "type": "image",
+            "text": "파괴된 (혹은 멀쩡한) $(bold)룬을 새긴 플라보라이트$() 포탈 틀과 주변에 6개의 받침대가 있습니다.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/portal_structure.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "이것은 한때 엔드와 오버월드를 연결했던 웅장한 포탈의 잔해입니다.$(br2)포탈을 활성화하려면 포탈 틀을 복구해야 합니다 (파괴된 경우)."
+        },
+        {
+            "type": "image",
+            "text": "그리고 6개의 $(bold)영원한 수정$()을 받침대에 놓습니다.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/portal_frame_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "마지막 수정을 놓으면 포탈이 활성화됩니다.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/ritual_finished.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "$(bold)룬을 새긴 플라보라이트$() (포탈 틀 복구용) 및 $(bold)영원한 수정$()은 $(l:rituals/infusion_ritual)주입 의식$(/l)을 통해 얻을 수 있습니다."
+        }
+    ]
+}

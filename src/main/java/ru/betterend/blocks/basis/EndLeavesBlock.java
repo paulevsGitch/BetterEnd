@@ -36,7 +36,8 @@ public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRend
 				.blockVision((state, world, pos) -> { return false; })
 				.materialColor(color)
 				.breakByTool(FabricToolTags.HOES)
-				.breakByTool(FabricToolTags.SHEARS));
+				.breakByTool(FabricToolTags.SHEARS)
+				.breakByHand(true));
 		this.sapling = sapling;
 	}
 	
@@ -78,7 +79,7 @@ public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRend
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.get(LootContextParameters.TOOL);
 		if (tool != null) {
-			if (tool.getItem().isIn(FabricToolTags.SHEARS) || tool.isEffectiveOn(state) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+			if (tool.getItem().isIn(FabricToolTags.SHEARS) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 				return Collections.singletonList(new ItemStack(this));
 			}
 			int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);

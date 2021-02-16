@@ -10,7 +10,7 @@
         },
         {
             "type": "image",
-            "text": "There is a destroyed (or not) frame of  $(bold)Runed Flavolite$() and eight pedestals around it.",
+            "text": "There is a destroyed (or not) frame of  $(bold)Runed Flavolite$() and six pedestals around it.",
             "border": false,
             "images": [
                 "betterend:textures/images/eternal_ritual/portal_structure.png"
@@ -22,7 +22,7 @@
         },
         {
             "type": "image",
-            "text": "And place 8 $(bold)Eternal Crystals$() to pedestals.",
+            "text": "And place 6 $(bold)Eternal Crystals$() to pedestals.",
             "border": false,
             "images": [
                 "betterend:textures/images/eternal_ritual/portal_frame_full.png"

@@ -27,6 +27,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndPortals;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
@@ -63,6 +64,7 @@ public class BetterEnd implements ModInitializer {
 		Integrations.register();
 		BonemealUtil.init();
 		GeneratorOptions.init();
+		EndPortals.loadPortals();
 		
 		if (hasGuideBook()) {
 			GuideBookItem.register();

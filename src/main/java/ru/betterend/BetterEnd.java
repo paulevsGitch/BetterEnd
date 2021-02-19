@@ -42,6 +42,7 @@ public class BetterEnd implements ModInitializer {
 	public static final Logger LOGGER = Logger.get();
 	@Override
 	public void onInitialize() {
+		EndPortals.loadPortals();
 		EndSounds.register();
 		EndItems.register();
 		EndBlocks.register();
@@ -64,7 +65,6 @@ public class BetterEnd implements ModInitializer {
 		Integrations.register();
 		BonemealUtil.init();
 		GeneratorOptions.init();
-		EndPortals.loadPortals();
 		
 		if (hasGuideBook()) {
 			GuideBookItem.register();

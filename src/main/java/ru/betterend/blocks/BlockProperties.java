@@ -4,6 +4,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.StringIdentifiable;
+import ru.betterend.registry.EndPortals;
 
 public class BlockProperties {
 	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.of("shape", HydraluxShape.class);
@@ -21,6 +22,7 @@ public class BlockProperties {
 	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
 	public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, 3);
 	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
+	public static final IntProperty PORTAL = IntProperty.of("portal", 0, EndPortals.getCount());
 	
 	public static enum TripleShape implements StringIdentifiable {
 		TOP("top"),

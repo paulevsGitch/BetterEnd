@@ -6,14 +6,20 @@ import java.util.Random;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.NetherPortalBlock;
+import net.minecraft.client.color.block.BlockColorProvider;
+import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -26,13 +32,23 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
 import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
+import ru.betterend.registry.EndPortals;
 
-public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
+public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable, IColorProvider {
+	public static final IntProperty PORTAL = BlockProperties.PORTAL;
+	
 	public EndPortalBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getBlastResistance()).luminance(state -> 12));
+	}
+	
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		super.appendProperties(builder);
+		builder.add(PORTAL);
 	}
 	
 	@Override
@@ -68,7 +84,8 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
 			if (entity.hasNetherPortalCooldown()) return;
 			boolean isOverworld = world.getRegistryKey().equals(World.OVERWORLD);
-			ServerWorld destination = ((ServerWorld) world).getServer().getWorld(isOverworld ? World.END : World.OVERWORLD);
+			MinecraftServer server = ((ServerWorld) world).getServer();
+			ServerWorld destination = isOverworld ? server.getWorld(World.END) : EndPortals.getWorld(server, state.get(PORTAL));
 			BlockPos exitPos = this.findExitPos(destination, pos, entity);
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
@@ -173,5 +190,19 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			return findCenter(world, pos.move(leftDir), axis, ++step);
 		}
 		return pos;
+	}
+
+	@Override
+	public BlockColorProvider getProvider() {
+		return (state, world, pos, tintIndex) -> {
+			return EndPortals.getColor(state.get(PORTAL));
+		};
+	}
+
+	@Override
+	public ItemColorProvider getItemProvider() {
+		return (stack, tintIndex) -> {
+			return EndPortals.getColor(0);
+		};
 	}
 }

@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import ru.betterend.BetterEnd;
 import ru.betterend.config.ConfigWriter;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.MHelper;
@@ -40,11 +41,24 @@ public class EndPortals {
 		}
 	}
 	
+	public static int getCount() {
+		return MHelper.max(portals.length - 1, 1);
+	}
+	
 	public static ServerWorld getWorld(MinecraftServer server, int state) {
 		if (state >= portals.length) {
 			return server.getOverworld();
 		}
 		return portals[state].getWorld(server);
+	}
+	
+	public static int getPortalState(Identifier item) {
+		for (int i = 0; i < portals.length; i++) {
+			if (portals[i].item.equals(item)) {
+				return i;
+			}
+		}
+		return 0;
 	}
 	
 	public static int getColor(int state) {
@@ -62,25 +76,28 @@ public class EndPortals {
 	}
 	
 	private static PortalInfo makeDefault() {
-		return new PortalInfo(new Identifier("minecraft:overworld"), 255, 255, 255);
+		return new PortalInfo(new Identifier("minecraft:overworld"), BetterEnd.makeID("eternal_crystal"), 255, 255, 255);
 	}
 	
 	private static class PortalInfo {
 		private final Identifier dimension;
+		private final Identifier item;
 		private final int color;
 		private ServerWorld world;
 		
 		PortalInfo(JsonObject obj) {
 			this(
 				new Identifier(JsonFactory.getString(obj, "dimension", "minecraft:overworld")),
+				new Identifier(JsonFactory.getString(obj, "item", "betterend:eternal_crystal")),
 				JsonFactory.getInt(obj, "colorRed", 255),
 				JsonFactory.getInt(obj, "colorGreen", 255),
 				JsonFactory.getInt(obj, "colorBlue", 255)
 			);
 		}
 		
-		PortalInfo(Identifier dimension, int r, int g, int b) {
+		PortalInfo(Identifier dimension, Identifier item, int r, int g, int b) {
 			this.dimension = dimension;
+			this.item = item;
 			this.color = MHelper.color(r, g, b);
 		}
 		

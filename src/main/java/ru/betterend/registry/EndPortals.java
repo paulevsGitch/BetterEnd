@@ -65,6 +65,15 @@ public class EndPortals {
 		return portals[state].color;
 	}
 	
+	public static boolean isAvailableItem(Identifier item) {
+		for (int i = 0; i < portals.length; i++) {
+			if (portals[i].item.equals(item)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private static JsonObject makeDefault(File file) {
 		JsonObject jsonObject = new JsonObject();
 		JsonFactory.storeJson(file, jsonObject);
@@ -119,6 +128,7 @@ public class EndPortals {
 		JsonObject toJson() {
 			JsonObject obj = new JsonObject();
 			obj.addProperty("dimension", dimension.toString());
+			obj.addProperty("item", item.toString());
 			obj.addProperty("colorRed", (color >> 16) & 255);
 			obj.addProperty("colorGreen", (color >> 8) & 255);
 			obj.addProperty("colorBlue", color & 255);

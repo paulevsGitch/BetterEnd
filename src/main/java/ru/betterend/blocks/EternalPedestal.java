@@ -9,13 +9,16 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -23,7 +26,7 @@ import net.minecraft.world.explosion.Explosion;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndPortals;
 import ru.betterend.rituals.EternalRitual;
 
 public class EternalPedestal extends PedestalBlock {
@@ -43,12 +46,15 @@ public class EternalPedestal extends PedestalBlock {
 			if (pedestal.isEmpty() && updatedState.get(ACTIVATED)) {
 				if (pedestal.hasRitual()) {
 					EternalRitual ritual = pedestal.getRitual();
-					ritual.removePortal();
+					Item item = pedestal.getStack(0).getItem();
+					int dim = EndPortals.getPortalState(Registry.ITEM.getId(item));
+					ritual.removePortal(dim);
 				}
 				world.setBlockState(pos, updatedState.with(ACTIVATED, false));
 			} else {
 				ItemStack itemStack = pedestal.getStack(0);
-				if (itemStack.getItem() == EndItems.ETERNAL_CRYSTAL) {
+				Identifier id = Registry.ITEM.getId(itemStack.getItem());
+				if (EndPortals.isAvailableItem(id)) {
 					world.setBlockState(pos, updatedState.with(ACTIVATED, true));
 					if (pedestal.hasRitual()) {
 						pedestal.getRitual().checkStructure();

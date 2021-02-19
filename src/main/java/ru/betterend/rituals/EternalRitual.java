@@ -10,6 +10,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -23,7 +24,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -35,6 +35,7 @@ import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndPortals;
 
 public class EternalRitual {
 	private final static Set<Point> STRUCTURE_MAP = Sets.newHashSet(
@@ -97,13 +98,24 @@ public class EternalRitual {
 			moveY = Direction.EAST;
 		}
 		boolean valid = this.checkFrame();
+		Item item = null;
 		for (Point pos : STRUCTURE_MAP) {
 			BlockPos.Mutable checkPos = center.mutableCopy();
 			checkPos.move(moveX, pos.x).move(moveY, pos.y);
 			valid &= this.isActive(checkPos);
+			if (valid) {
+				EternalPedestalEntity pedestal = (EternalPedestalEntity) world.getBlockEntity(checkPos);
+				Item pItem = pedestal.getStack(0).getItem();
+				if (item == null) {
+					item = pItem;
+				}
+				else if (!item.equals(pItem)) {
+					valid = false;
+				}
+			}
 		}
-		if (valid) {
-			this.activatePortal();
+		if (valid && item != null) {
+			this.activatePortal(item);
 		}
 	}
 
@@ -126,20 +138,21 @@ public class EternalRitual {
 		return this.active;
 	}
 
-	private void activatePortal() {
+	private void activatePortal(Item item) {
 		if (active) return;
-		this.activatePortal(world, center);
+		int state = EndPortals.getPortalState(Registry.ITEM.getId(item));
+		this.activatePortal(world, center, state);
 		this.doEffects((ServerWorld) world, center);
 		if (exit == null) {
-			this.exit = this.findPortalPos();
+			this.exit = this.findPortalPos(state);
 		}
 		else {
-			World targetWorld = this.getTargetWorld();
+			World targetWorld = this.getTargetWorld(state);
 			if (targetWorld.getBlockState(exit.up()).isOf(EndBlocks.END_PORTAL_BLOCK)) {
-				this.exit = this.findPortalPos();
+				this.exit = this.findPortalPos(state);
 			}
 			else {
-				this.activatePortal(targetWorld, exit);
+				this.activatePortal(targetWorld, exit, state);
 			}
 		}
 		this.active = true;
@@ -164,7 +177,7 @@ public class EternalRitual {
 		serverWorld.playSound(null, center, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.NEUTRAL, 16, 1);
 	}
 
-	private void activatePortal(World world, BlockPos center) {
+	private void activatePortal(World world, BlockPos center, int dim) {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
 		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
@@ -181,7 +194,7 @@ public class EternalRitual {
 			}
 		});
 		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
-		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis);
+		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis).with(EndPortalBlock.PORTAL, dim);
 		ParticleEffect effect = new BlockStateParticleEffect(ParticleTypes.BLOCK, portal);
 		ServerWorld serverWorld = (ServerWorld) world;
 
@@ -201,9 +214,9 @@ public class EternalRitual {
 		});
 	}
 
-	public void removePortal() {
+	public void removePortal(int state) {
 		if (!active || isInvalid()) return;
-		World targetWorld = this.getTargetWorld();
+		World targetWorld = this.getTargetWorld(state);
 		this.removePortal(world, center);
 		this.removePortal(targetWorld, exit);
 	}
@@ -236,10 +249,10 @@ public class EternalRitual {
 		this.active = false;
 	}
 
-	private BlockPos findPortalPos() {
+	private BlockPos findPortalPos(int state) {
 		MinecraftServer server = world.getServer();
 		assert server != null;
-		ServerWorld targetWorld = (ServerWorld) this.getTargetWorld();
+		ServerWorld targetWorld = (ServerWorld) this.getTargetWorld(state);
 		Registry<DimensionType> registry = server.getRegistryManager().getDimensionTypes();
 		double mult = Objects.requireNonNull(registry.get(DimensionType.THE_END_ID)).getCoordinateScale();
 		BlockPos.Mutable basePos = center.mutableCopy().set(center.getX() / mult, center.getY(), center.getZ() / mult);
@@ -281,9 +294,11 @@ public class EternalRitual {
 		return basePos.toImmutable();
 	}
 
-	private World getTargetWorld() {
-		RegistryKey<World> target = world.getRegistryKey() == World.END ? World.OVERWORLD : World.END;
-		return Objects.requireNonNull(world.getServer()).getWorld(target);
+	private World getTargetWorld(int state) {
+		if (world.getRegistryKey() == World.END) {
+			return EndPortals.getWorld(world.getServer(), state);
+		}
+		return Objects.requireNonNull(world.getServer()).getWorld(World.END);
 	}
 
 	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {

@@ -87,6 +87,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			MinecraftServer server = ((ServerWorld) world).getServer();
 			ServerWorld destination = isOverworld ? server.getWorld(World.END) : EndPortals.getWorld(server, state.get(PORTAL));
 			BlockPos exitPos = this.findExitPos(destination, pos, entity);
+			System.out.println(exitPos);
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
 				ServerPlayerEntity player = (ServerPlayerEntity) entity;
@@ -124,7 +125,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		Registry<DimensionType> registry = world.getRegistryManager().getDimensionTypes();
 		double mult = Objects.requireNonNull(registry.get(DimensionType.THE_END_ID)).getCoordinateScale();
 		BlockPos.Mutable basePos;
-		if (world.getRegistryKey().equals(World.OVERWORLD)) {
+		if (!world.getRegistryKey().equals(World.END)) {
 			basePos = pos.mutableCopy().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
 		} else {
 			basePos = pos.mutableCopy().set(pos.getX() * mult, pos.getY(), pos.getZ() * mult);

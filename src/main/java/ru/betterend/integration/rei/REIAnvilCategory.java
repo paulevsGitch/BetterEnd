@@ -1,5 +1,6 @@
 package ru.betterend.integration.rei;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 	
 	@Override
 	public @NotNull EntryStack getLogo() {
-		return REIPlugin.ANVILS.get(0);
+		return REIPlugin.ANVILS[0];
 	}
 	
 	@Override
@@ -55,7 +56,7 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 		List<List<EntryStack>> inputEntries = display.getInputEntries();
 		List<EntryStack> materials = inputEntries.get(1);
 		int anvilLevel = display.getAnvilLevel();
-		List<EntryStack> anvils = REIPlugin.ANVILS.stream().filter(anvil -> {
+		List<EntryStack> anvils = Arrays.stream(REIPlugin.ANVILS).filter(anvil -> {
 			Block block = ((BlockItem) anvil.getItem()).getBlock();
 			if (block instanceof EndAnvilBlock) {
 				return ((EndAnvilBlock) block).getCraftingLevel() >= anvilLevel;

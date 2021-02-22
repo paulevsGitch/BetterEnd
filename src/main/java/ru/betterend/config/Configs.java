@@ -11,7 +11,8 @@ public class Configs {
 	public static final IdConfig BIOME_CONFIG = new EntryConfig("biomes");
 	public static final PathConfig GENERATOR_CONFIG = new PathConfig("generator");
 	public static final PathConfig RECIPE_CONFIG = new PathConfig("recipes");
-	
+	public static final PortalsConfig PORTALS_CONFIG = new PortalsConfig("portals");
+
 	@Environment(value = EnvType.CLIENT)
 	public static final PathConfig CLENT_CONFIG = new PathConfig("client");
 	

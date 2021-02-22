@@ -1,17 +1,13 @@
 package ru.betterend.blocks.entities;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,12 +19,7 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.recipe.BlastingRecipe;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeFinder;
-import net.minecraft.recipe.RecipeInputProvider;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.RecipeUnlocker;
+import net.minecraft.recipe.*;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
@@ -45,6 +36,10 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.EndBlockEntities;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider, Tickable {
 
@@ -102,14 +97,6 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 		 		return 4;
 		 	}
 		 };
-		 
-		 this.registerFuels();
-	}
-	
-	private void registerFuels() {
-		registerFuel(Items.LAVA_BUCKET, 16000);
-		registerFuel(Blocks.COAL_BLOCK, 12000);
-		registerFuel(Items.BLAZE_ROD, 2000);
 	}
 
 	private boolean isBurning() {
@@ -445,7 +432,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	public static boolean canUseAsFuel(ItemStack stack) {
 		return AVAILABLE_FUELS.containsKey(stack.getItem()) || getFabricFuel(stack) > 2000;
 	}
-	
+
 	public static void registerFuel(ItemConvertible fuel, int time) {
 		AVAILABLE_FUELS.put(fuel.asItem(), time);
 	}
@@ -457,5 +444,13 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity imp
 	private static int getFabricFuel(ItemStack stack) {
 		Integer ticks = FuelRegistry.INSTANCE.get(stack.getItem());
 		return ticks == null ? 0 : ticks;
+	}
+
+	static {
+		AbstractFurnaceBlockEntity.createFuelTimeMap().forEach((item, time) -> {
+			if (time >= 2000) {
+				registerFuel(item, time);
+			}
+		});
 	}
 }

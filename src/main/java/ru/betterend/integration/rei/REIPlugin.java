@@ -1,6 +1,5 @@
 package ru.betterend.integration.rei;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,6 @@ import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import me.shedaniel.rei.plugin.DefaultPlugin;
-import me.shedaniel.rei.plugin.fuel.DefaultFuelDisplay;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
@@ -21,7 +19,6 @@ import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.blocks.basis.EndFurnaceBlock;
-import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;

@@ -1,6 +1,13 @@
 package ru.betterend.integration.rei;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Lists;
+
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.EntryStack;
@@ -16,11 +23,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.text.DecimalFormat;
-import java.util.List;
 
 public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDisplay> {
 	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");

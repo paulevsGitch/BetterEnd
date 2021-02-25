@@ -1,13 +1,13 @@
 package ru.betterend.integration.rei;
 
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.RecipeDisplay;
-import me.shedaniel.rei.plugin.DefaultPlugin;
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collections;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
+import me.shedaniel.rei.api.EntryStack;
+import me.shedaniel.rei.api.RecipeDisplay;
+import net.minecraft.util.Identifier;
 
 public class REIAlloyingFuelDisplay implements RecipeDisplay {
 	private EntryStack fuel;

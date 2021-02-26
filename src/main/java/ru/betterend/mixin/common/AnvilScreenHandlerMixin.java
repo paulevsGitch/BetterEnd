@@ -35,23 +35,25 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	private AnvilRecipe be_currentRecipe;
 	private Property anvilLevel;
 
-	public AnvilScreenHandlerMixin(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory,
-			ScreenHandlerContext context) {
-		super(type, syncId, playerInventory, context);
+	public AnvilScreenHandlerMixin(int syncId, PlayerInventory playerInventory) {
+		super(ScreenHandlerType.ANVIL, syncId, playerInventory, ScreenHandlerContext.EMPTY);
 	}
 
-	@Inject(method = "<init>*", at = @At("TAIL"))
+	@Inject(method = "<init>(ILnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/screen/ScreenHandlerContext;)V",
+			at = @At("TAIL"))
 	public void be_initAnvilLevel(int syncId, PlayerInventory inventory, ScreenHandlerContext context, CallbackInfo info) {
-		int anvLevel = context.run((world, blockPos) -> {
-			Block anvilBlock = world.getBlockState(blockPos).getBlock();
-			if (anvilBlock instanceof EndAnvilBlock) {
-				return ((EndAnvilBlock) anvilBlock).getCraftingLevel();
-			}
-			return 1;
-		}, 1);
-		Property anvilLevel = Property.create();
-		anvilLevel.set(anvLevel);
-		this.anvilLevel = addProperty(anvilLevel);
+		if (context != ScreenHandlerContext.EMPTY) {
+			int anvLevel = context.run((world, blockPos) -> {
+				Block anvilBlock = world.getBlockState(blockPos).getBlock();
+				if (anvilBlock instanceof EndAnvilBlock) {
+					return ((EndAnvilBlock) anvilBlock).getCraftingLevel();
+				}
+				return 1;
+			}, 1);
+			Property anvilLevel = Property.create();
+			anvilLevel.set(anvLevel);
+			this.anvilLevel = addProperty(anvilLevel);
+		}
 	}
 	
 	@Shadow

@@ -10,8 +10,8 @@ import me.shedaniel.rei.api.RecipeDisplay;
 import net.minecraft.util.Identifier;
 
 public class REIAlloyingFuelDisplay implements RecipeDisplay {
-	private EntryStack fuel;
-	private int fuelTime;
+	private final EntryStack fuel;
+	private final int fuelTime;
 
 	public REIAlloyingFuelDisplay(EntryStack fuel, int fuelTime) {
 		this.fuel = fuel;

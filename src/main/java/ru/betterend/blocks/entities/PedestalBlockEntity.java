@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Tickable;
-import net.minecraft.world.World;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndItems;
@@ -29,17 +28,11 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	}
 	
 	public int getAge() {
-		return this.age;
+		return age;
 	}
 	
 	public int getMaxAge() {
-		return this.maxAge;
-	}
-
-	@Override
-	public void clear() {
-		this.activeItem = ItemStack.EMPTY;
-		this.markDirty();
+		return maxAge;
 	}
 
 	@Override
@@ -49,42 +42,41 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 
 	@Override
 	public boolean isEmpty() {
-		return this.activeItem.isEmpty();
+		return activeItem.isEmpty();
 	}
 
 	@Override
 	public ItemStack getStack(int slot) {
-		return this.activeItem;
+		return activeItem;
 	}
 
 	@Override
 	public ItemStack removeStack(int slot, int amount) {
-		return this.removeStack(slot);
+		return removeStack(slot);
 	}
 	
 	@Override
 	public boolean isValid(int slot, ItemStack stack) {
-		return this.isEmpty();
+		return isEmpty();
+	}
+
+	@Override
+	public void clear() {
+		activeItem = ItemStack.EMPTY;
+		markDirty();
 	}
 
 	@Override
 	public ItemStack removeStack(int slot) {
-		ItemStack stored = this.activeItem;
-		this.activeItem = ItemStack.EMPTY;
-		this.markDirty();
+		ItemStack stored = activeItem;
+		clear();
 		return stored;
-	}
-	
-	public void removeStack(World world, BlockState state) {
-		world.setBlockState(pos, state.with(PedestalBlock.HAS_ITEM, false)
-									  .with(PedestalBlock.HAS_LIGHT, false));
-		this.removeStack(0);
 	}
 
 	@Override
 	public void setStack(int slot, ItemStack stack) {
-		this.activeItem = stack;
-		this.markDirty();
+		activeItem = stack;
+		markDirty();
 	}
 	
 	@Override
@@ -92,17 +84,18 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 		if (world != null && !world.isClient) {
 			BlockState state = world.getBlockState(pos);
 			if (state.getBlock() instanceof PedestalBlock) {
-				state = state.with(PedestalBlock.HAS_ITEM, !isEmpty());
+				BlockState trueState = state.with(PedestalBlock.HAS_ITEM, !isEmpty());
 				if (activeItem.getItem() == EndItems.ETERNAL_CRYSTAL) {
-					state = state.with(PedestalBlock.HAS_LIGHT, true);
+					trueState = trueState.with(PedestalBlock.HAS_LIGHT, true);
 				} else {
-					state = state.with(PedestalBlock.HAS_LIGHT, false);
+					trueState = trueState.with(PedestalBlock.HAS_LIGHT, false);
 				}
-				world.setBlockState(pos, state);
+				world.setBlockState(pos, trueState);
 			}
 		}
 		super.markDirty();
 	}
+
 	
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
@@ -111,12 +104,12 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	
 	@Override
 	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(pos, 32, this.toInitialChunkDataTag());
+		return new BlockEntityUpdateS2CPacket(pos, 32, toInitialChunkDataTag());
 	}
 
 	@Override
 	public CompoundTag toInitialChunkDataTag() {
-		return this.toTag(new CompoundTag());
+		return toTag(new CompoundTag());
 	}
 	
 	@Override
@@ -124,7 +117,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 		super.fromTag(state, tag);
 		if (tag.contains("active_item")) {
 			CompoundTag itemTag = tag.getCompound("active_item");
-			this.activeItem = ItemStack.fromTag(itemTag);
+			activeItem = ItemStack.fromTag(itemTag);
 		}
 	}
 
@@ -138,9 +131,9 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	@Override
 	public void tick() {
 		if (!isEmpty()) {
-			this.age++;
+			age++;
 			if (age > maxAge) {
-				this.age = 0;
+				age = 0;
 			}
 		}
 	}

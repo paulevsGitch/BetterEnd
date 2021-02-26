@@ -104,7 +104,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient || !state.isOf(this)) return ActionResult.CONSUME;
-		if (!this.isPlaceable(state)) {
+		if (!isPlaceable(state)) {
 			return ActionResult.PASS;
 		}
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -114,12 +114,12 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 				ItemStack itemStack = player.getStackInHand(hand);
 				if (itemStack.isEmpty()) return ActionResult.CONSUME;
 				pedestal.setStack(0, itemStack.split(1));
-				this.checkRitual(world, pos);
+				checkRitual(world, pos);
 				return ActionResult.SUCCESS;
 			} else {
 				ItemStack itemStack = pedestal.getStack(0);
 				if (player.giveItemStack(itemStack)) {
-					pedestal.removeStack(world, state);
+					pedestal.removeStack(0);
 					return ActionResult.SUCCESS;
 				}
 				return ActionResult.FAIL;
@@ -151,25 +151,25 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 		boolean hasPedestalOver = upState.getBlock() instanceof PedestalBlock;
 		boolean hasPedestalUnder = downState.getBlock() instanceof PedestalBlock;
 		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
-			return this.getDefaultState().with(STATE, PedestalState.COLUMN_TOP);
+			return getDefaultState().with(STATE, PedestalState.COLUMN_TOP);
 		} else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
-			return this.getDefaultState().with(STATE, PedestalState.COLUMN);
+			return getDefaultState().with(STATE, PedestalState.COLUMN);
 		} else if (hasPedestalUnder && hasPedestalOver) {
-			return this.getDefaultState().with(STATE, PedestalState.PILLAR);
+			return getDefaultState().with(STATE, PedestalState.PILLAR);
 		} else if (hasPedestalUnder) {
-			return this.getDefaultState().with(STATE, PedestalState.PEDESTAL_TOP);
+			return getDefaultState().with(STATE, PedestalState.PEDESTAL_TOP);
 		} else if (hasPedestalOver) {
-			return this.getDefaultState().with(STATE, PedestalState.BOTTOM);
+			return getDefaultState().with(STATE, PedestalState.BOTTOM);
 		}
-		return this.getDefaultState();
+		return getDefaultState();
 	}
 	
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-		BlockState updated = this.getUpdatedState(state, direction, newState, world, pos, posFrom);
+		BlockState updated = getUpdatedState(state, direction, newState, world, pos, posFrom);
 		if (!updated.isOf(this)) return updated;
-		if (!this.isPlaceable(updated)) {
-			this.moveStoredStack(world, updated, pos);
+		if (!isPlaceable(updated)) {
+			moveStoredStack(world, updated, pos);
 		}
 		return updated;
 	}
@@ -185,21 +185,27 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 		if (direction == Direction.UP) {
 			upSideSolid = newState.isSideSolidFullSquare(world, posFrom, Direction.DOWN) || newState.isIn(BlockTags.WALLS);
 			hasPedestalOver = newState.getBlock() instanceof PedestalBlock;
-		} else if (direction == Direction.DOWN) {
+		} else {
 			hasPedestalUnder = newState.getBlock() instanceof PedestalBlock;
 		}
+		BlockState updatedState;
 		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
-			return state.with(STATE, PedestalState.COLUMN_TOP);
+			updatedState = state.with(STATE, PedestalState.COLUMN_TOP);
 		} else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
-			return state.with(STATE, PedestalState.COLUMN);
+			updatedState = state.with(STATE, PedestalState.COLUMN);
 		} else if (hasPedestalUnder && hasPedestalOver) {
-			return state.with(STATE, PedestalState.PILLAR);
+			updatedState = state.with(STATE, PedestalState.PILLAR);
 		} else if (hasPedestalUnder) {
-			return state.with(STATE, PedestalState.PEDESTAL_TOP);
+			updatedState = state.with(STATE, PedestalState.PEDESTAL_TOP);
 		} else if (hasPedestalOver) {
-			return state.with(STATE, PedestalState.BOTTOM);
+			updatedState = state.with(STATE, PedestalState.BOTTOM);
+		} else {
+			updatedState = state.with(STATE, PedestalState.DEFAULT);
 		}
-		return state.with(STATE, PedestalState.DEFAULT);
+		if (!isPlaceable(updatedState)) {
+			updatedState = updatedState.with(HAS_ITEM, false).with(HAS_LIGHT, false);
+		}
+		return updatedState;
 	}
 	
 	@Override
@@ -208,7 +214,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 		if (state.isOf(this)) {
 			if (isPlaceable(state)) {
 				BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
-				if (blockEntity != null && blockEntity instanceof PedestalBlockEntity) {
+				if (blockEntity instanceof PedestalBlockEntity) {
 					PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
 					if (!pedestal.isEmpty()) {
 						drop.add(pedestal.getStack(0));
@@ -222,63 +228,61 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 	}
 	
 	private void moveStoredStack(WorldAccess world, BlockState state, BlockPos pos) {
-		ItemStack stack = ItemStack.EMPTY;
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof PedestalBlockEntity && state.isOf(this)) {
 			PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
-			stack = pedestal.getStack(0);
-			pedestal.clear();
-			BlocksHelper.setWithoutUpdate(world, pos, state.with(HAS_ITEM, false));
-		}
-		if (!stack.isEmpty()) {
-			BlockPos upPos = pos.up();
-			this.moveStoredStack(world, stack, world.getBlockState(upPos), upPos);
+			ItemStack stack = pedestal.removeStack(0);
+			if (!stack.isEmpty()) {
+				moveStoredStack(blockEntity, world, stack, pos.up());
+			}
 		}
 	}
 	
-	private void moveStoredStack(WorldAccess world, ItemStack stack, BlockState state, BlockPos pos) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
+	private void moveStoredStack(BlockEntity blockEntity, WorldAccess world, ItemStack stack, BlockPos pos) {
+		BlockState state = world.getBlockState(pos);
 		if (!state.isOf(this)) {
-			this.dropStoredStack(blockEntity, stack, pos);
+			dropStoredStack(blockEntity, stack, pos);
 		} else if (state.get(STATE).equals(PedestalState.PILLAR)) {
-			BlockPos upPos = pos.up();
-			this.moveStoredStack(world, stack, world.getBlockState(upPos), upPos);
-		} else if (!this.isPlaceable(state)) {
-			this.dropStoredStack(blockEntity, stack, pos);
+			moveStoredStack(blockEntity, world, stack, pos.up());
+		} else if (!isPlaceable(state)) {
+			dropStoredStack(blockEntity, stack, pos);
 		} else if (blockEntity instanceof PedestalBlockEntity) {
 			PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
 			if (pedestal.isEmpty()) {
 				pedestal.setStack(0, stack);
 			} else {
-				this.dropStoredStack(blockEntity, stack, pos);
+				dropStoredStack(blockEntity, stack, pos);
 			}
 		} else {
-			this.dropStoredStack(blockEntity, stack, pos);
+			dropStoredStack(blockEntity, stack, pos);
 		}
 	}
 	
 	private void dropStoredStack(BlockEntity blockEntity, ItemStack stack, BlockPos pos) {
 		if (blockEntity != null && blockEntity.getWorld() != null) {
 			World world = blockEntity.getWorld();
-			Block.dropStack(world, this.getDropPos(world, pos), stack);
+			Block.dropStack(world, getDropPos(world, pos), stack);
 		}
 	}
 	
 	private BlockPos getDropPos(WorldAccess world, BlockPos pos) {
 		BlockPos dropPos;
+		if (world.getBlockState(pos).isAir()) {
+			return pos;
+		}
+		if (world.getBlockState(pos.up()).isAir()) {
+			return pos.up();
+		}
 		for(int i = 2; i < Direction.values().length; i++) {
 			dropPos = pos.offset(Direction.byId(i));
 			if (world.getBlockState(dropPos).isAir()) {
 				return dropPos.toImmutable();
 			}
 		}
-		if (world.getBlockState(pos.up()).isAir()) {
-			return pos.up();
-		}
-		return this.getDropPos(world, pos.up());
+		return getDropPos(world, pos.up());
 	}
 	
-	protected boolean isPlaceable(BlockState state) {
+	public boolean isPlaceable(BlockState state) {
 		if (!state.isOf(this)) return false;
 		PedestalState currentState = state.get(STATE);
 		return currentState != PedestalState.BOTTOM &&

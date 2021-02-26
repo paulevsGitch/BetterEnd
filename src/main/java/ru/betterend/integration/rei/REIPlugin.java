@@ -52,7 +52,6 @@ public class REIPlugin implements REIPluginV0 {
 		recipeHelper.registerRecipes(INFUSION, InfusionRecipe.class, REIInfusionDisplay::new);
 		FuelRegistryImpl.INSTANCE.getFuelTimes().forEach((item, time) -> {
 			if (time >= 2000) {
-				System.out.println(item);
 				recipeHelper.registerDisplay(new REIAlloyingFuelDisplay(EntryStack.create(item), time));
 			}
 		});

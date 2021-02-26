@@ -15,6 +15,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
@@ -34,16 +35,17 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 	@Override
 	public void render(T blockEntity, float tickDelta, MatrixStack matrices,
 			VertexConsumerProvider vertexConsumers, int light, int overlay) {
-		
-		if (blockEntity.isEmpty()) return;
-		
-		BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
+
+		World world = blockEntity.getWorld();
+		if (blockEntity.isEmpty() || world == null) return;
+
+		BlockState state = world.getBlockState(blockEntity.getPos());
 		if (!(state.getBlock() instanceof PedestalBlock)) return;
 		
 		ItemStack activeItem = blockEntity.getStack(0);
 		matrices.push();
 		MinecraftClient minecraft = MinecraftClient.getInstance();
-		BakedModel model = minecraft.getItemRenderer().getHeldItemModel(activeItem, blockEntity.getWorld(), null);
+		BakedModel model = minecraft.getItemRenderer().getHeldItemModel(activeItem, world, null);
 		Vector3f translate = model.getTransformation().ground.translation;
 		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
 		matrices.translate(translate.getX(), translate.getY(), translate.getZ());

@@ -19,7 +19,7 @@ public class SurfaceVentFeature extends DefaultFeature {
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
 		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
-		if (pos.getY() < 57) {
+		if (!world.getBlockState(pos.down(3)).isIn(EndTags.GEN_TERRAIN)) {
 			return false;
 		}
 		

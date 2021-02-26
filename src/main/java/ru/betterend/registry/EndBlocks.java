@@ -67,6 +67,7 @@ import ru.betterend.blocks.MissingTileBlock;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.MossyGlowshroomHymenophoreBlock;
 import ru.betterend.blocks.MossyGlowshroomSaplingBlock;
+import ru.betterend.blocks.MossyObsidian;
 import ru.betterend.blocks.MurkweedBlock;
 import ru.betterend.blocks.NeedlegrassBlock;
 import ru.betterend.blocks.PedestalVanilla;
@@ -132,6 +133,8 @@ public class EndBlocks {
 	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new EndPathBlock(PINK_MOSS));
 	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new EndPathBlock(AMBER_MOSS));
 	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new EndPathBlock(JUNGLE_MOSS));
+	
+	public static final Block MOSSY_OBSIDIAN = registerBlock("mossy_obsidian", new MossyObsidian());
 	
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Vec3d;
+import ru.betterend.util.sdf.operator.SDFRotation;
 
 public class MHelper {
 	public static final float PI2 = (float) (Math.PI * 2);
@@ -325,11 +326,17 @@ public class MHelper {
 		return vec;
 	}
 	
-	public static float angle(Vector3f vec1, Vector3f vec2)
-	{
+	public static float angle(Vector3f vec1, Vector3f vec2) {
 		float dot = vec1.getX() * vec2.getX() + vec1.getY() * vec2.getY() + vec1.getZ() * vec2.getZ();
 		float length1 = lengthSqr(vec1.getX(), vec1.getY(), vec1.getZ());
 		float length2 = lengthSqr(vec2.getX(), vec2.getY(), vec2.getZ());
 		return (float) Math.acos(dot / Math.sqrt(length1 * length2));
+	}
+	
+	public static Vector3f randomHorizontal(Random random) {
+		float angleY = MHelper.randRange(0, MHelper.PI2, random);
+		float vx = (float) Math.sin(angleY);
+		float vz = (float) Math.cos(angleY);
+		return new Vector3f(vx, 0, vz);
 	}
 }

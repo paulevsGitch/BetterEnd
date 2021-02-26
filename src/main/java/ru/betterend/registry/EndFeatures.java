@@ -37,9 +37,12 @@ import ru.betterend.world.features.bushes.BushFeature;
 import ru.betterend.world.features.bushes.Lumecorn;
 import ru.betterend.world.features.bushes.TenaneaBushFeature;
 import ru.betterend.world.features.terrain.EndLakeFeature;
+import ru.betterend.world.features.terrain.FallenPillarFeature;
 import ru.betterend.world.features.terrain.FloatingSpireFeature;
 import ru.betterend.world.features.terrain.GeyserFeature;
 import ru.betterend.world.features.terrain.IceStarFeature;
+import ru.betterend.world.features.terrain.ObsidianBoulderFeature;
+import ru.betterend.world.features.terrain.ObsidianPillarBasementFeature;
 import ru.betterend.world.features.terrain.RoundCaveFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
 import ru.betterend.world.features.terrain.SulphurHillFeature;
@@ -157,6 +160,9 @@ public class EndFeatures {
 	public static final EndFeature ICE_STAR_SMALL = EndFeature.makeRawGenFeature("ice_star_small", new IceStarFeature(3, 5, 7, 12), 8);
 	public static final EndFeature SURFACE_VENT = EndFeature.makeChansedFeature("surface_vent", new SurfaceVentFeature(), 4);
 	public static final EndFeature SULPHUR_HILL = EndFeature.makeChansedFeature("sulphur_hill", new SulphurHillFeature(), 8);
+	public static final EndFeature OBSIDIAN_PILLAR_BASEMENT = EndFeature.makeChansedFeature("obsidian_pillar_basement", new ObsidianPillarBasementFeature(), 8);
+	public static final EndFeature OBSIDIAN_BOULDER = EndFeature.makeChansedFeature("obsidian_boulder", new ObsidianBoulderFeature(), 10);
+	public static final EndFeature FALLEN_PILLAR = EndFeature.makeChansedFeature("fallen_pillar", new FallenPillarFeature(), 20);
 	
 	// Ores //
 	public static final EndFeature THALLASIUM_ORE = EndFeature.makeOreFeature("thallasium_ore", EndBlocks.THALLASIUM.ore, 12, 6, 0, 16, 128);

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/mossy_obsidian" },
+			{ "model": "betterend:block/mossy_obsidian", "y": 90 },
+			{ "model": "betterend:block/mossy_obsidian", "y": 180 },
+			{ "model": "betterend:block/mossy_obsidian", "y": 270 }
+		]
+	}
+}

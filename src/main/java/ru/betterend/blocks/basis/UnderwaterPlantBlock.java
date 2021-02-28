@@ -88,6 +88,7 @@ public class UnderwaterPlantBlock extends BlockBaseNotFull implements IRenderTyp
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (!canPlaceAt(state, world, pos)) {
+			world.breakBlock(pos, true);
 			return Blocks.WATER.getDefaultState();
 		}
 		else {

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Vec3d;
-import ru.betterend.util.sdf.operator.SDFRotation;
 
 public class MHelper {
 	public static final float PI2 = (float) (Math.PI * 2);

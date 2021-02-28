@@ -45,7 +45,6 @@ import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
-import ru.betterend.util.BlocksHelper;
 
 public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvider {
 	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;

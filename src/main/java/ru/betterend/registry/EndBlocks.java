@@ -121,7 +121,8 @@ public class EndBlocks {
 	public static final Block SHADOW_GRASS = registerBlock("shadow_grass", new ShadowGrassBlock());
 	public static final Block PINK_MOSS = registerBlock("pink_moss", new EndTerrainBlock(MaterialColor.PINK));
 	public static final Block AMBER_MOSS = registerBlock("amber_moss", new EndTerrainBlock(MaterialColor.ORANGE));
-	public static final Block JUNGLE_MOSS = registerBlock("jungle_moss", new EndTerrainBlock(MaterialColor.ORANGE));
+	public static final Block JUNGLE_MOSS = registerBlock("jungle_moss", new EndTerrainBlock(MaterialColor.GREEN));
+	public static final Block RUTISCUS = registerBlock("rutiscus", new EndTerrainBlock(MaterialColor.ORANGE));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new EndPathBlock(END_MYCELIUM));
@@ -133,6 +134,7 @@ public class EndBlocks {
 	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new EndPathBlock(PINK_MOSS));
 	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new EndPathBlock(AMBER_MOSS));
 	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new EndPathBlock(JUNGLE_MOSS));
+	public static final Block RUTISCUS_PATH = registerBlock("rutiscus_path", new EndPathBlock(RUTISCUS));
 	
 	public static final Block MOSSY_OBSIDIAN = registerBlock("mossy_obsidian", new MossyObsidian());
 	
@@ -222,6 +224,10 @@ public class EndBlocks {
 	public static final Block SALTEAGO = registerBlock("salteago", new TerrainPlantBlock(END_MOSS));
 	public static final Block VAIOLUSH_FERN = registerBlock("vaiolush_fern", new TerrainPlantBlock(END_MOSS));
 	public static final Block FRACTURN = registerBlock("fracturn", new TerrainPlantBlock(END_MOSS));
+	public static final Block ORANGO = registerBlock("orango", new TerrainPlantBlock(RUTISCUS));
+	public static final Block AERIDIUM = registerBlock("aeridium", new TerrainPlantBlock(RUTISCUS));
+	public static final Block LUTEBUS = registerBlock("lutebus", new TerrainPlantBlock(RUTISCUS));
+	public static final Block LAMELLARIUM = registerBlock("lamellarium", new TerrainPlantBlock(RUTISCUS));
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlueVineSeedBlock());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlueVineBlock());

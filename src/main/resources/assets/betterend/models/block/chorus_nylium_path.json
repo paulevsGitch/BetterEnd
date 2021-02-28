@@ -1,7 +1,0 @@
-{   "parent": "betterend:block/path",
-    "textures": {
-        "top": "betterend:block/chorus_nylium_path_top",
-        "side": "betterend:block/chorus_nylium_side",
-        "bottom": "block/end_stone"
-    }
-}

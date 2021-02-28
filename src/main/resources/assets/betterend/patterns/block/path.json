@@ -1,0 +1,7 @@
+{   "parent": "betterend:block/path",
+    "textures": {
+        "top": "betterend:block/%top%",
+        "side": "betterend:block/%side%",
+        "bottom": "block/end_stone"
+    }
+}

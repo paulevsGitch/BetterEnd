@@ -2,7 +2,10 @@ package ru.betterend.blocks;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+
+import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -23,13 +26,16 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.light.ChunkLightProvider;
 import ru.betterend.blocks.basis.BlockBase;
+import ru.betterend.patterns.Patterns;
 
 public class EndTerrainBlock extends BlockBase {
 	private Block pathBlock;
@@ -74,15 +80,32 @@ public class EndTerrainBlock extends BlockBase {
 	}
 	
 	public static boolean canSurvive(BlockState state, WorldView worldView, BlockPos pos) {
-	      BlockPos blockPos = pos.up();
-	      BlockState blockState = worldView.getBlockState(blockPos);
-	      if (blockState.isOf(Blocks.SNOW) && (Integer)blockState.get(SnowBlock.LAYERS) == 1) {
-	         return true;
-	      } else if (blockState.getFluidState().getLevel() == 8) {
-	         return false;
-	      } else {
-	         int i = ChunkLightProvider.getRealisticOpacity(worldView, state, pos, blockState, blockPos, Direction.UP, blockState.getOpacity(worldView, blockPos));
-	         return i < 5;
-	      }
-	   }
+		BlockPos blockPos = pos.up();
+		BlockState blockState = worldView.getBlockState(blockPos);
+		if (blockState.isOf(Blocks.SNOW) && (Integer) blockState.get(SnowBlock.LAYERS) == 1) {
+			return true;
+		}
+		else if (blockState.getFluidState().getLevel() == 8) {
+			return false;
+		}
+		else {
+			int i = ChunkLightProvider.getRealisticOpacity(worldView, state, pos, blockState, blockPos, Direction.UP, blockState.getOpacity(worldView, blockPos));
+			return i < 5;
+		}
+	}
+	
+	@Override
+	public String getModelPattern(String block) {
+		String name = Registry.BLOCK.getId(this).getPath();
+		Map<String, String> map = Maps.newHashMap();
+		map.put("%top%", "betterend:block/" + name + "_top");
+		map.put("%side%", "betterend:block/" + name + "_side");
+		map.put("%bottom%", "minecraft:block/end_stone");
+		return Patterns.createJson(Patterns.BLOCK_TOP_SIDE_BOTTOM, map);
+	}
+	
+	@Override
+	public Identifier statePatternId() {
+		return Patterns.STATE_ROTATED_TOP;
+	}
 }

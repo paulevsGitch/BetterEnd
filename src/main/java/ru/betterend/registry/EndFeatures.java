@@ -103,6 +103,10 @@ public class EndFeatures {
 	public static final EndFeature UMBRELLA_MOSS_RARE = new EndFeature("umbrella_moss_rare", new SinglePlantFeature(EndBlocks.UMBRELLA_MOSS, 3), 2);
 	public static final EndFeature CREEPING_MOSS_RARE = new EndFeature("creeping_moss_rare", new SinglePlantFeature(EndBlocks.CREEPING_MOSS, 3), 2);
 	public static final EndFeature TWISTED_UMBRELLA_MOSS_RARE = new EndFeature("twisted_umbrella_moss_rare", new SinglePlantFeature(EndBlocks.TWISTED_UMBRELLA_MOSS, 3), 2);
+	public static final EndFeature ORANGO = new EndFeature("orango", new SinglePlantFeature(EndBlocks.ORANGO, 5), 6);
+	public static final EndFeature AERIDIUM = new EndFeature("aeridium", new SinglePlantFeature(EndBlocks.AERIDIUM, 5, 4), 5);
+	public static final EndFeature LUTEBUS = new EndFeature("lutebus", new SinglePlantFeature(EndBlocks.LUTEBUS, 5, 2), 5);
+	public static final EndFeature LAMELLARIUM = new EndFeature("lamellarium", new SinglePlantFeature(EndBlocks.LAMELLARIUM, 5), 6);
 	
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);

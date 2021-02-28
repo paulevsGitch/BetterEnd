@@ -44,6 +44,7 @@ import ru.betterend.world.biome.BiomeShadowForest;
 import ru.betterend.world.biome.BiomeSulphurSprings;
 import ru.betterend.world.biome.BiomeUmbrellaJungle;
 import ru.betterend.world.biome.DragonGraveyardsBiome;
+import ru.betterend.world.biome.DryShrublandBiome;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.GlowingGrasslandsBiome;
 import ru.betterend.world.generator.BELayerRandomSource;
@@ -87,6 +88,7 @@ public class EndBiomes {
 	public static final EndBiome UMBRELLA_JUNGLE = registerBiome(new BiomeUmbrellaJungle(), BiomeType.LAND);
 	public static final EndBiome GLOWING_GRASSLANDS = registerBiome(new GlowingGrasslandsBiome(), BiomeType.LAND);
 	public static final EndBiome DRAGON_GRAVEYARDS = registerBiome(new DragonGraveyardsBiome(), BiomeType.LAND);
+	public static final EndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), BiomeType.LAND);
 	
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);

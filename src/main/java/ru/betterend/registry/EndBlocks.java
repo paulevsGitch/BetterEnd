@@ -11,6 +11,7 @@ import ru.betterend.blocks.AeterniumAnvil;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AmaranitaCapBlock;
 import ru.betterend.blocks.AmaranitaHymenophoreBlock;
+import ru.betterend.blocks.AmaranitaHyphaeBlock;
 import ru.betterend.blocks.AmberBlock;
 import ru.betterend.blocks.AncientEmeraldIceBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
@@ -230,6 +231,8 @@ public class EndBlocks {
 	public static final Block SALTEAGO = registerBlock("salteago", new TerrainPlantBlock(END_MOSS));
 	public static final Block VAIOLUSH_FERN = registerBlock("vaiolush_fern", new TerrainPlantBlock(END_MOSS));
 	public static final Block FRACTURN = registerBlock("fracturn", new TerrainPlantBlock(END_MOSS));
+	public static final Block CLAWFERN = registerBlock("clawfern", new TerrainPlantBlock(SANGNUM));
+	public static final Block GLOBULAGUS = registerBlock("globulagus", new TerrainPlantBlock(SANGNUM));
 	public static final Block ORANGO = registerBlock("orango", new TerrainPlantBlock(RUTISCUS));
 	public static final Block AERIDIUM = registerBlock("aeridium", new TerrainPlantBlock(RUTISCUS));
 	public static final Block LUTEBUS = registerBlock("lutebus", new TerrainPlantBlock(RUTISCUS));
@@ -255,7 +258,7 @@ public class EndBlocks {
 	
 	public static final Block SMALL_AMARANITA_MUSHROOM = registerBlock("small_amaranita_mushroom", new SmallAmaranitaBlock());
 	public static final Block LARGE_AMARANITA_MUSHROOM = registerBlockNI("large_amaranita_mushroom", new LargeAmaranitaBlock());
-	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaCapBlock());
+	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaHyphaeBlock());
 	public static final Block AMARANITA_HYMENOPHORE = registerBlock("amaranita_hymenophore", new AmaranitaHymenophoreBlock());
 	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 4));
 	public static final Block AMARANITA_CAP = registerBlock("amaranita_cap", new AmaranitaCapBlock());

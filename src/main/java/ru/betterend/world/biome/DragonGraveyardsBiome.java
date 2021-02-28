@@ -19,6 +19,10 @@ public class DragonGraveyardsBiome extends EndBiome {
 				.addFeature(EndFeatures.OBSIDIAN_PILLAR_BASEMENT)
 				.addFeature(EndFeatures.FALLEN_PILLAR)
 				.addFeature(EndFeatures.OBSIDIAN_BOULDER)
+				.addFeature(EndFeatures.LARGE_AMARANITA)
+				.addFeature(EndFeatures.SMALL_AMARANITA)
+				.addFeature(EndFeatures.GLOBULAGUS)
+				.addFeature(EndFeatures.CLAWFERN)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

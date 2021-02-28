@@ -34,6 +34,7 @@ import ru.betterend.world.features.VineFeature;
 import ru.betterend.world.features.WallPlantFeature;
 import ru.betterend.world.features.WallPlantOnLogFeature;
 import ru.betterend.world.features.bushes.BushFeature;
+import ru.betterend.world.features.bushes.LargeAmaranitaFeature;
 import ru.betterend.world.features.bushes.Lumecorn;
 import ru.betterend.world.features.bushes.TenaneaBushFeature;
 import ru.betterend.world.features.terrain.EndLakeFeature;
@@ -75,6 +76,7 @@ public class EndFeatures {
 	public static final EndFeature DRAGON_TREE_BUSH = new EndFeature("dragon_tree_bush", new BushFeature(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.bark), 15);
 	public static final EndFeature TENANEA_BUSH = new EndFeature("tenanea_bush", new TenaneaBushFeature(), 10);
 	public static final EndFeature LUMECORN = new EndFeature("lumecorn", new Lumecorn(), 5);
+	public static final EndFeature LARGE_AMARANITA = new EndFeature("large_amaranita", new LargeAmaranitaFeature(), 5);
 	
 	// Plants //
 	public static final EndFeature UMBRELLA_MOSS = new EndFeature("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);
@@ -107,6 +109,9 @@ public class EndFeatures {
 	public static final EndFeature AERIDIUM = new EndFeature("aeridium", new SinglePlantFeature(EndBlocks.AERIDIUM, 5, 4), 5);
 	public static final EndFeature LUTEBUS = new EndFeature("lutebus", new SinglePlantFeature(EndBlocks.LUTEBUS, 5, 2), 5);
 	public static final EndFeature LAMELLARIUM = new EndFeature("lamellarium", new SinglePlantFeature(EndBlocks.LAMELLARIUM, 5), 6);
+	public static final EndFeature SMALL_AMARANITA = new EndFeature("small_amaranita", new SinglePlantFeature(EndBlocks.SMALL_AMARANITA_MUSHROOM, 5, 5), 4);
+	public static final EndFeature GLOBULAGUS = new EndFeature("globulagus", new SinglePlantFeature(EndBlocks.GLOBULAGUS, 5, 3), 6);
+	public static final EndFeature CLAWFERN = new EndFeature("clawfern", new SinglePlantFeature(EndBlocks.CLAWFERN, 5, 4), 5);
 	
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);

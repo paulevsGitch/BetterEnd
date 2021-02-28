@@ -3,6 +3,7 @@ package ru.betterend.world.biome;
 import net.minecraft.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 
 public class DragonGraveyardsBiome extends EndBiome {
@@ -10,7 +11,8 @@ public class DragonGraveyardsBiome extends EndBiome {
 		super(new BiomeDefinition("dragon_graveyards")
 				.setGenChance(0.1F)
 				.setFogColor(244, 46, 79)
-				.setFogDensity(1.1F)
+				.setFogDensity(1.3F)
+				.setParticles(EndParticles.FIREFLY, 0.0007F)
 				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.setLoop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
 				.setSurface(EndBlocks.SANGNUM)

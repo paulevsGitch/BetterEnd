@@ -9,6 +9,8 @@ import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumAnvil;
 import ru.betterend.blocks.AeterniumBlock;
+import ru.betterend.blocks.AmaranitaCapBlock;
+import ru.betterend.blocks.AmaranitaHymenophoreBlock;
 import ru.betterend.blocks.AmberBlock;
 import ru.betterend.blocks.AncientEmeraldIceBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
@@ -59,6 +61,7 @@ import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.blocks.LacugroveSaplingBlock;
 import ru.betterend.blocks.LanceleafBlock;
 import ru.betterend.blocks.LanceleafSeedBlock;
+import ru.betterend.blocks.LargeAmaranitaBlock;
 import ru.betterend.blocks.LumecornBlock;
 import ru.betterend.blocks.LumecornSeedBlock;
 import ru.betterend.blocks.MengerSpongeBlock;
@@ -77,6 +80,7 @@ import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.ShadowBerryBlock;
 import ru.betterend.blocks.ShadowGrassBlock;
 import ru.betterend.blocks.SilkMothNestBlock;
+import ru.betterend.blocks.SmallAmaranitaBlock;
 import ru.betterend.blocks.SmallJellyshroomBlock;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.blocks.TenaneaFlowersBlock;
@@ -122,6 +126,7 @@ public class EndBlocks {
 	public static final Block PINK_MOSS = registerBlock("pink_moss", new EndTerrainBlock(MaterialColor.PINK));
 	public static final Block AMBER_MOSS = registerBlock("amber_moss", new EndTerrainBlock(MaterialColor.ORANGE));
 	public static final Block JUNGLE_MOSS = registerBlock("jungle_moss", new EndTerrainBlock(MaterialColor.GREEN));
+	public static final Block SANGNUM = registerBlock("sangnum", new EndTerrainBlock(MaterialColor.RED));
 	public static final Block RUTISCUS = registerBlock("rutiscus", new EndTerrainBlock(MaterialColor.ORANGE));
 	
 	// Roads //
@@ -134,6 +139,7 @@ public class EndBlocks {
 	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new EndPathBlock(PINK_MOSS));
 	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new EndPathBlock(AMBER_MOSS));
 	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new EndPathBlock(JUNGLE_MOSS));
+	public static final Block SANGNUM_PATH = registerBlock("sangnum_path", new EndPathBlock(SANGNUM));
 	public static final Block RUTISCUS_PATH = registerBlock("rutiscus_path", new EndPathBlock(RUTISCUS));
 	
 	public static final Block MOSSY_OBSIDIAN = registerBlock("mossy_obsidian", new MossyObsidian());
@@ -246,6 +252,13 @@ public class EndBlocks {
 	
 	public static final Block LUMECORN_SEED = registerBlock("lumecorn_seed", new LumecornSeedBlock());
 	public static final Block LUMECORN = registerBlockNI("lumecorn", new LumecornBlock());
+	
+	public static final Block SMALL_AMARANITA_MUSHROOM = registerBlock("small_amaranita_mushroom", new SmallAmaranitaBlock());
+	public static final Block LARGE_AMARANITA_MUSHROOM = registerBlockNI("large_amaranita_mushroom", new LargeAmaranitaBlock());
+	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaCapBlock());
+	public static final Block AMARANITA_HYMENOPHORE = registerBlock("amaranita_hymenophore", new AmaranitaHymenophoreBlock());
+	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 4));
+	public static final Block AMARANITA_CAP = registerBlock("amaranita_cap", new AmaranitaCapBlock());
 	
 	// Crops
 	public static final Block BLOSSOM_BERRY = registerBlock("blossom_berry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, PINK_MOSS));

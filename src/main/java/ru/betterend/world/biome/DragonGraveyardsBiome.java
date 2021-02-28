@@ -13,7 +13,7 @@ public class DragonGraveyardsBiome extends EndBiome {
 				.setFogDensity(1.1F)
 				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.setLoop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
-				.setSurface(EndBlocks.CAVE_MOSS)
+				.setSurface(EndBlocks.SANGNUM)
 				.setWaterAndFogColor(203, 59, 167)
 				.setPlantsColor(244, 46, 79)
 				.addFeature(EndFeatures.OBSIDIAN_PILLAR_BASEMENT)

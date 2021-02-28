@@ -12,8 +12,10 @@ public class BlockProperties {
 	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.of("shape", TripleShape.class);
 	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.of("shape", PentaShape.class);
 	
+	public static final BooleanProperty TRANSITION = BooleanProperty.of("transition");
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.of("has_light");
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
+	public static final BooleanProperty IS_FLOOR = BooleanProperty.of("is_floor");
 	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
 	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
 	

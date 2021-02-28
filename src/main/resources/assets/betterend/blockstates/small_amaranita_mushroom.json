@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/small_amaranita_mushroom_01" },
+			{ "model": "betterend:block/small_amaranita_mushroom_02" }
+		]
+	}
+}

@@ -42,6 +42,11 @@ public class BonemealUtil {
 		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.CREEPING_MOSS, 0.1F);
 		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.UMBRELLA_MOSS, 0.1F);
 		addBonemealGrass(EndBiomes.GLOWING_GRASSLANDS, EndBlocks.END_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS, 0.1F);
+		
+		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.ORANGO);
+		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.AERIDIUM, 0.2F);
+		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.LUTEBUS, 0.2F);
+		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.LAMELLARIUM);
 	}
 	
 	public static void addBonemealGrass(Block terrain, Block plant) {

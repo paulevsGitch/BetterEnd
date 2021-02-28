@@ -18,9 +18,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import ru.betterend.blocks.BlockProperties;
 
 public class EndLanternBlock extends BlockBaseNotFull implements Waterloggable, FluidFillable {
-	public static final BooleanProperty IS_FLOOR = BooleanProperty.of("is_floor");
+	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	
 	public EndLanternBlock(Block source) {

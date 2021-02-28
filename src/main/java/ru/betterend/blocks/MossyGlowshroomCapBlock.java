@@ -13,7 +13,7 @@ import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
 public class MossyGlowshroomCapBlock extends BlockBase {
-	public static final BooleanProperty TRANSITION = BooleanProperty.of("transition");
+	public static final BooleanProperty TRANSITION = BlockProperties.TRANSITION;
 	
 	public MossyGlowshroomCapBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sounds(BlockSoundGroup.WOOD));

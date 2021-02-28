@@ -6,7 +6,7 @@
 		"north": "betterend:block/mossy_obsidian_side",
 		"particle": "betterend:block/mossy_obsidian_side",
 		"south": "betterend:block/mossy_obsidian_side",
-		"up": "betterend:block/cave_moss_top",
+		"up": "betterend:block/sangnum_top",
 		"west": "betterend:block/mossy_obsidian_side"
 	}
 }

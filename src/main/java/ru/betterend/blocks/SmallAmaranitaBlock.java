@@ -2,17 +2,24 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
 public class SmallAmaranitaBlock extends EndPlantBlock {
+	private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 10, 12);
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.getBlock() == EndBlocks.SANGNUM;
+		return state.isOf(EndBlocks.SANGNUM) || state.isOf(EndBlocks.MOSSY_OBSIDIAN) || state.isOf(EndBlocks.MOSSY_BONE);
 	}
 	
 	@Override
@@ -22,6 +29,12 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 			return;
 		}
 		EndFeatures.LARGE_AMARANITA.getFeature().generate(world, null, random, pos, null);
+	}
+	
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
+		Vec3d vec3d = state.getModelOffset(view, pos);
+		return SHAPE.offset(vec3d.x, vec3d.y, vec3d.z);
 	}
 	
 	private BlockPos growBig(ServerWorld world, BlockPos pos) {

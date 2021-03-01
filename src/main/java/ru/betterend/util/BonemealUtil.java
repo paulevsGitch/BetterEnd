@@ -47,6 +47,18 @@ public class BonemealUtil {
 		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.AERIDIUM, 0.2F);
 		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.LUTEBUS, 0.2F);
 		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.LAMELLARIUM);
+		
+		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.GLOBULAGUS);
+		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.CLAWFERN);
+		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
+		
+		addBonemealGrass(EndBlocks.MOSSY_BONE, EndBlocks.GLOBULAGUS);
+		addBonemealGrass(EndBlocks.MOSSY_BONE, EndBlocks.CLAWFERN);
+		addBonemealGrass(EndBlocks.MOSSY_BONE, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
+		
+		addBonemealGrass(EndBlocks.MOSSY_OBSIDIAN, EndBlocks.GLOBULAGUS);
+		addBonemealGrass(EndBlocks.MOSSY_OBSIDIAN, EndBlocks.CLAWFERN);
+		addBonemealGrass(EndBlocks.MOSSY_OBSIDIAN, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
 	}
 	
 	public static void addBonemealGrass(Block terrain, Block plant) {

@@ -1,6 +1,0 @@
-{
-    "parent": "betterend:block/cross_inverted",
-    "textures": {
-        "cross": "betterend:block/small_amaranita_mushroom"
-    }
-}

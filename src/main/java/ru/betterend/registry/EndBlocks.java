@@ -68,6 +68,7 @@ import ru.betterend.blocks.LumecornSeedBlock;
 import ru.betterend.blocks.MengerSpongeBlock;
 import ru.betterend.blocks.MengerSpongeWetBlock;
 import ru.betterend.blocks.MissingTileBlock;
+import ru.betterend.blocks.MossyBoneBlock;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.MossyGlowshroomHymenophoreBlock;
 import ru.betterend.blocks.MossyGlowshroomSaplingBlock;
@@ -144,6 +145,7 @@ public class EndBlocks {
 	public static final Block RUTISCUS_PATH = registerBlock("rutiscus_path", new EndPathBlock(RUTISCUS));
 	
 	public static final Block MOSSY_OBSIDIAN = registerBlock("mossy_obsidian", new MossyObsidian());
+	public static final Block MOSSY_BONE = registerBlock("mossy_bone", new MossyBoneBlock());
 	
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
@@ -231,8 +233,8 @@ public class EndBlocks {
 	public static final Block SALTEAGO = registerBlock("salteago", new TerrainPlantBlock(END_MOSS));
 	public static final Block VAIOLUSH_FERN = registerBlock("vaiolush_fern", new TerrainPlantBlock(END_MOSS));
 	public static final Block FRACTURN = registerBlock("fracturn", new TerrainPlantBlock(END_MOSS));
-	public static final Block CLAWFERN = registerBlock("clawfern", new TerrainPlantBlock(SANGNUM));
-	public static final Block GLOBULAGUS = registerBlock("globulagus", new TerrainPlantBlock(SANGNUM));
+	public static final Block CLAWFERN = registerBlock("clawfern", new TerrainPlantBlock(SANGNUM, MOSSY_OBSIDIAN, MOSSY_BONE));
+	public static final Block GLOBULAGUS = registerBlock("globulagus", new TerrainPlantBlock(SANGNUM, MOSSY_OBSIDIAN, MOSSY_BONE));
 	public static final Block ORANGO = registerBlock("orango", new TerrainPlantBlock(RUTISCUS));
 	public static final Block AERIDIUM = registerBlock("aeridium", new TerrainPlantBlock(RUTISCUS));
 	public static final Block LUTEBUS = registerBlock("lutebus", new TerrainPlantBlock(RUTISCUS));

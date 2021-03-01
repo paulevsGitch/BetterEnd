@@ -6,8 +6,8 @@ import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
 import ru.betterend.blocks.basis.BlockBase;
 
-public class MossyGlowshroomHymenophoreBlock extends BlockBase {
-	public MossyGlowshroomHymenophoreBlock() {
+public class GlowingHymenophoreBlock extends BlockBase {
+	public GlowingHymenophoreBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sounds(BlockSoundGroup.WART_BLOCK).luminance(15));
 	}
 }

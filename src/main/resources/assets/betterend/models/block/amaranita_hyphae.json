@@ -1,12 +1,6 @@
 {
-	"parent": "block/cube",
+	"parent": "block/cube_all",
 	"textures": {
-		"down": "betterend:block/amaranita_hyphae_top",
-		"east": "betterend:block/amaranita_hyphae_side",
-		"north": "betterend:block/amaranita_hyphae_side",
-		"particle": "betterend:block/amaranita_hyphae_side",
-		"south": "betterend:block/amaranita_hyphae_side",
-		"up": "betterend:block/amaranita_hyphae_top",
-		"west": "betterend:block/amaranita_hyphae_side"
+		"all": "betterend:block/amaranita_hyphae_side"
 	}
 }

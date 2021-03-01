@@ -1,7 +1,11 @@
 package ru.betterend.blocks;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.BlockPos;
@@ -12,6 +16,15 @@ import ru.betterend.registry.EndBlocks;
 
 public class LargeAmaranitaBlock extends EndPlantBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
+	
+	public LargeAmaranitaBlock() {
+		super(FabricBlockSettings.of(Material.PLANT)
+				.luminance((state) -> (state.get(SHAPE) == TripleShape.TOP) ? 15 : 0)
+				.breakByTool(FabricToolTags.SHEARS)
+				.sounds(BlockSoundGroup.GRASS)
+				.breakByHand(true)
+				.noCollision());
+	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {

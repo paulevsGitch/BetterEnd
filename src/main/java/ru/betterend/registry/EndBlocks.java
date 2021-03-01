@@ -11,7 +11,7 @@ import ru.betterend.blocks.AeterniumAnvil;
 import ru.betterend.blocks.AeterniumBlock;
 import ru.betterend.blocks.AmaranitaCapBlock;
 import ru.betterend.blocks.AmaranitaHymenophoreBlock;
-import ru.betterend.blocks.AmaranitaHyphaeBlock;
+import ru.betterend.blocks.AmaranitaStemBlock;
 import ru.betterend.blocks.AmberBlock;
 import ru.betterend.blocks.AncientEmeraldIceBlock;
 import ru.betterend.blocks.AuroraCrystalBlock;
@@ -70,7 +70,7 @@ import ru.betterend.blocks.MengerSpongeWetBlock;
 import ru.betterend.blocks.MissingTileBlock;
 import ru.betterend.blocks.MossyBoneBlock;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
-import ru.betterend.blocks.MossyGlowshroomHymenophoreBlock;
+import ru.betterend.blocks.GlowingHymenophoreBlock;
 import ru.betterend.blocks.MossyGlowshroomSaplingBlock;
 import ru.betterend.blocks.MossyObsidian;
 import ru.betterend.blocks.MurkweedBlock;
@@ -175,7 +175,7 @@ public class EndBlocks {
 	// Wooden Materials And Trees //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new MossyGlowshroomSaplingBlock());
 	public static final Block MOSSY_GLOWSHROOM_CAP = registerBlock("mossy_glowshroom_cap", new MossyGlowshroomCapBlock());
-	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new MossyGlowshroomHymenophoreBlock());
+	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new GlowingHymenophoreBlock());
 	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 16));
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	
@@ -260,8 +260,10 @@ public class EndBlocks {
 	
 	public static final Block SMALL_AMARANITA_MUSHROOM = registerBlock("small_amaranita_mushroom", new SmallAmaranitaBlock());
 	public static final Block LARGE_AMARANITA_MUSHROOM = registerBlockNI("large_amaranita_mushroom", new LargeAmaranitaBlock());
-	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaHyphaeBlock());
+	public static final Block AMARANITA_STEM = registerBlock("amaranita_stem", new AmaranitaStemBlock());
+	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaStemBlock());
 	public static final Block AMARANITA_HYMENOPHORE = registerBlock("amaranita_hymenophore", new AmaranitaHymenophoreBlock());
+	public static final Block AMARANITA_LANTERN = registerBlock("amaranita_lantern", new GlowingHymenophoreBlock());
 	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 4));
 	public static final Block AMARANITA_CAP = registerBlock("amaranita_cap", new AmaranitaCapBlock());
 	

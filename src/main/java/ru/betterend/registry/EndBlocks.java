@@ -84,6 +84,7 @@ import ru.betterend.blocks.ShadowGrassBlock;
 import ru.betterend.blocks.SilkMothNestBlock;
 import ru.betterend.blocks.SmallAmaranitaBlock;
 import ru.betterend.blocks.SmallJellyshroomBlock;
+import ru.betterend.blocks.SmaragdantCrystalBlock;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.blocks.TenaneaFlowersBlock;
 import ru.betterend.blocks.TenaneaSaplingBlock;
@@ -151,6 +152,9 @@ public class EndBlocks {
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
 	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
 	public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
+	public static final StoneMaterial VIRID_jADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.GREEN);
+	public static final StoneMaterial AZURE_jADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.LIGHT_BLUE);
+	public static final StoneMaterial SANDY_jADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.YELLOW);
 	public static final Block BRIMSTONE = registerBlock("brimstone", new BrimstoneBlock());
 	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new SulphurCrystalBlock());
 	public static final Block MISSING_TILE = registerBlock("missing_tile", new MissingTileBlock());
@@ -329,6 +333,7 @@ public class EndBlocks {
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new AmberBlock());
+	public static final Block SMARAGDANT_CRYSTAL = registerBlock("smaragdant_crystal", new SmaragdantCrystalBlock()); 
 	
 	public static final Block RESPAWN_OBELISK = registerBlock("respawn_obelisk", new RespawnObeliskBlock());
 	

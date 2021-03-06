@@ -51,6 +51,7 @@ import ru.betterend.world.features.terrain.SulphuricCaveFeature;
 import ru.betterend.world.features.terrain.SulphuricLakeFeature;
 import ru.betterend.world.features.terrain.SurfaceVentFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
+import ru.betterend.world.features.trees.GiganticAmaranitaFeature;
 import ru.betterend.world.features.trees.HelixTreeFeature;
 import ru.betterend.world.features.trees.JellyshroomFeature;
 import ru.betterend.world.features.trees.LacugroveFeature;
@@ -70,6 +71,7 @@ public class EndFeatures {
 	public static final EndFeature HELIX_TREE = new EndFeature("helix_tree", new HelixTreeFeature(), 2);
 	public static final EndFeature UMBRELLA_TREE = new EndFeature("umbrella_tree", new UmbrellaTreeFeature(), 4);
 	public static final EndFeature JELLYSHROOM = new EndFeature("jellyshroom", new JellyshroomFeature(), 3);
+	public static final EndFeature GIGANTIC_AMARANITA = new EndFeature("gigantic_amaranita", new GiganticAmaranitaFeature(), 1);
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark), 4);

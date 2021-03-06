@@ -21,6 +21,7 @@ public class DragonGraveyardsBiome extends EndBiome {
 				.addFeature(EndFeatures.OBSIDIAN_PILLAR_BASEMENT)
 				.addFeature(EndFeatures.FALLEN_PILLAR)
 				.addFeature(EndFeatures.OBSIDIAN_BOULDER)
+				.addFeature(EndFeatures.GIGANTIC_AMARANITA)
 				.addFeature(EndFeatures.LARGE_AMARANITA)
 				.addFeature(EndFeatures.SMALL_AMARANITA)
 				.addFeature(EndFeatures.GLOBULAGUS)

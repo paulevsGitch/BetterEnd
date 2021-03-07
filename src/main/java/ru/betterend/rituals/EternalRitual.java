@@ -21,6 +21,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -97,25 +98,26 @@ public class EternalRitual {
 			moveX = Direction.SOUTH;
 			moveY = Direction.EAST;
 		}
-		boolean valid = this.checkFrame();
+		boolean valid = checkFrame();
 		Item item = null;
 		for (Point pos : STRUCTURE_MAP) {
 			BlockPos.Mutable checkPos = center.mutableCopy();
 			checkPos.move(moveX, pos.x).move(moveY, pos.y);
-			valid &= this.isActive(checkPos);
+			valid &= isActive(checkPos);
 			if (valid) {
 				EternalPedestalEntity pedestal = (EternalPedestalEntity) world.getBlockEntity(checkPos);
-				Item pItem = pedestal.getStack(0).getItem();
-				if (item == null) {
-					item = pItem;
-				}
-				else if (!item.equals(pItem)) {
-					valid = false;
+				if (pedestal != null) {
+					Item pItem = pedestal.getStack(0).getItem();
+					if (item == null) {
+						item = pItem;
+					} else if (!item.equals(pItem)) {
+						valid = false;
+					}
 				}
 			}
 		}
 		if (valid && item != null) {
-			this.activatePortal(item);
+			activatePortal(item);
 		}
 	}
 
@@ -141,18 +143,17 @@ public class EternalRitual {
 	private void activatePortal(Item item) {
 		if (active) return;
 		int state = EndPortals.getPortalState(Registry.ITEM.getId(item));
-		this.activatePortal(world, center, state);
-		this.doEffects((ServerWorld) world, center);
+		System.out.println(state);
+		activatePortal(world, center, state);
+		doEffects((ServerWorld) world, center);
 		if (exit == null) {
-			this.exit = this.findPortalPos(state);
-		}
-		else {
-			World targetWorld = this.getTargetWorld(state);
+			this.exit = findPortalPos(state);
+		} else {
+			World targetWorld = getTargetWorld(state);
 			if (targetWorld.getBlockState(exit.up()).isOf(EndBlocks.END_PORTAL_BLOCK)) {
-				this.exit = this.findPortalPos(state);
-			}
-			else {
-				this.activatePortal(targetWorld, exit, state);
+				this.exit = findPortalPos(state);
+			} else {
+				activatePortal(targetWorld, exit, state);
 			}
 		}
 		this.active = true;
@@ -216,9 +217,8 @@ public class EternalRitual {
 
 	public void removePortal(int state) {
 		if (!active || isInvalid()) return;
-		World targetWorld = this.getTargetWorld(state);
-		this.removePortal(world, center);
-		this.removePortal(targetWorld, exit);
+		removePortal(getTargetWorld(state), exit);
+		removePortal(world, center);
 	}
 
 	private void removePortal(World world, BlockPos center) {
@@ -252,10 +252,11 @@ public class EternalRitual {
 	private BlockPos findPortalPos(int state) {
 		MinecraftServer server = world.getServer();
 		assert server != null;
-		ServerWorld targetWorld = (ServerWorld) this.getTargetWorld(state);
+		ServerWorld targetWorld = (ServerWorld) getTargetWorld(state);
+		Identifier targetWorldId = targetWorld.getRegistryKey().getValue();
 		Registry<DimensionType> registry = server.getRegistryManager().getDimensionTypes();
-		double mult = Objects.requireNonNull(registry.get(DimensionType.THE_END_ID)).getCoordinateScale();
-		BlockPos.Mutable basePos = center.mutableCopy().set(center.getX() / mult, center.getY(), center.getZ() / mult);
+		double multiplier = Objects.requireNonNull(registry.get(targetWorldId)).getCoordinateScale();
+		BlockPos.Mutable basePos = center.mutableCopy().set(center.getX() / multiplier, center.getY(), center.getZ() / multiplier);
 		Direction.Axis portalAxis = (Direction.Axis.X == axis) ? Direction.Axis.Z : Direction.Axis.X;
 		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) {
 			EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
@@ -465,9 +466,15 @@ public class EternalRitual {
 		BlockState state = world.getBlockState(pos);
 		if (state.isOf(PEDESTAL)) {
 			EternalPedestalEntity pedestal = (EternalPedestalEntity) world.getBlockEntity(pos);
-			assert pedestal != null;
-			if (!pedestal.hasRitual()) {
-				pedestal.linkRitual(this);
+			if (pedestal != null) {
+				if (!pedestal.hasRitual()) {
+					pedestal.linkRitual(this);
+				} else {
+					EternalRitual ritual = pedestal.getRitual();
+					if (!ritual.equals(this)) {
+						pedestal.linkRitual(this);
+					}
+				}
 			}
 			return state.get(ACTIVE);
 		}
@@ -491,5 +498,15 @@ public class EternalRitual {
 		if (tag.contains("exit")) {
 			this.exit = NbtHelper.toBlockPos(tag.getCompound("exit"));
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		EternalRitual ritual = (EternalRitual) o;
+		return world.equals(ritual.world) &&
+				Objects.equals(center, ritual.center) &&
+				Objects.equals(exit, ritual.exit);
 	}
 }

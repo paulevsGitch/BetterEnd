@@ -34,7 +34,7 @@ public class EternalPedestal extends PedestalBlock {
 	
 	public EternalPedestal() {
 		super(EndBlocks.FLAVOLITE_RUNED_ETERNAL);
-		this.setDefaultState(this.getDefaultState().with(ACTIVATED, false));
+		this.setDefaultState(getDefaultState().with(ACTIVATED, false));
 	}
 	
 	@Override
@@ -50,12 +50,12 @@ public class EternalPedestal extends PedestalBlock {
 					int dim = EndPortals.getPortalState(Registry.ITEM.getId(item));
 					ritual.removePortal(dim);
 				}
-				world.setBlockState(pos, updatedState.with(ACTIVATED, false));
+				world.setBlockState(pos, updatedState.with(ACTIVATED, false).with(HAS_LIGHT, false));
 			} else {
 				ItemStack itemStack = pedestal.getStack(0);
 				Identifier id = Registry.ITEM.getId(itemStack.getItem());
 				if (EndPortals.isAvailableItem(id)) {
-					world.setBlockState(pos, updatedState.with(ACTIVATED, true));
+					world.setBlockState(pos, updatedState.with(ACTIVATED, true).with(HAS_LIGHT, true));
 					if (pedestal.hasRitual()) {
 						pedestal.getRitual().checkStructure();
 					} else {

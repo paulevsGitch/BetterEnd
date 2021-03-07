@@ -1,8 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Objects;
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -21,6 +18,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
@@ -37,6 +35,9 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndPortals;
+
+import java.util.Objects;
+import java.util.Random;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable, IColorProvider {
 	public static final IntProperty PORTAL = BlockProperties.PORTAL;
@@ -83,11 +84,12 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
 			if (entity.hasNetherPortalCooldown()) return;
-			boolean isOverworld = world.getRegistryKey().equals(World.OVERWORLD);
-			MinecraftServer server = ((ServerWorld) world).getServer();
-			ServerWorld destination = isOverworld ? server.getWorld(World.END) : EndPortals.getWorld(server, state.get(PORTAL));
-			BlockPos exitPos = this.findExitPos(destination, pos, entity);
-			System.out.println(exitPos);
+			ServerWorld currentWorld = (ServerWorld) world;
+			MinecraftServer server = currentWorld.getServer();
+			ServerWorld targetWorld = EndPortals.getWorld(server, state.get(PORTAL));
+			boolean isTarget = world.getRegistryKey().equals(targetWorld.getRegistryKey());
+			ServerWorld destination = isTarget ? server.getWorld(World.END) : targetWorld;
+			BlockPos exitPos = findExitPos(currentWorld, destination, pos, entity);
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
 				ServerPlayerEntity player = (ServerPlayerEntity) entity;
@@ -119,31 +121,33 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		return ERenderLayer.TRANSLUCENT;
 	}
 	
-	private BlockPos findExitPos(ServerWorld world, BlockPos pos, Entity entity) {
-		if (world == null) return null;
+	private BlockPos findExitPos(ServerWorld current, ServerWorld target, BlockPos pos, Entity entity) {
+		if (target == null) return null;
 
-		Registry<DimensionType> registry = world.getRegistryManager().getDimensionTypes();
-		double mult = Objects.requireNonNull(registry.get(DimensionType.THE_END_ID)).getCoordinateScale();
-		BlockPos.Mutable basePos;
-		if (!world.getRegistryKey().equals(World.END)) {
-			basePos = pos.mutableCopy().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
-		} else {
-			basePos = pos.mutableCopy().set(pos.getX() * mult, pos.getY(), pos.getZ() * mult);
-		}
+		Registry<DimensionType> registry = target.getRegistryManager().getDimensionTypes();
+		Identifier targetWorldId = target.getRegistryKey().getValue();
+		Identifier currentWorldId = current.getRegistryKey().getValue();
+		double targetMultiplier = Objects.requireNonNull(registry.get(targetWorldId)).getCoordinateScale();
+		double currentMultiplier = Objects.requireNonNull(registry.get(currentWorldId)).getCoordinateScale();
+		double multiplier = targetMultiplier > currentMultiplier ? currentMultiplier / targetMultiplier : currentMultiplier;
+		BlockPos.Mutable basePos = pos.mutableCopy().set(pos.getX() * multiplier, pos.getY(), pos.getZ() * multiplier);
+		System.out.println(basePos);
 		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
 		for (int step = 1; step < 128; step++) {
 			for (int i = 0; i < (step >> 1); i++) {
-				Chunk chunk = world.getChunk(checkPos);
+				Chunk chunk = target.getChunk(checkPos);
 				if (chunk != null) {
-					int ceil = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
+					int surfaceY = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
+					int motionY = chunk.sampleHeightmap(Heightmap.Type.MOTION_BLOCKING, checkPos.getX() & 15, checkPos.getZ() & 15);
+					int ceil = Math.max(surfaceY, motionY) + 1;
 					if (ceil > 5) {
 						checkPos.setY(ceil);
 						while (checkPos.getY() > 5) {
-							BlockState state = world.getBlockState(checkPos);
+							BlockState state = target.getBlockState(checkPos);
 							if (state.isOf(this)) {
 								Axis axis = state.get(AXIS);
-								checkPos = this.findCenter(world, checkPos, axis);
+								checkPos = findCenter(target, checkPos, axis);
 
 								Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
 								Direction entityDir = entity.getMovementDirection();
@@ -195,15 +199,11 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 
 	@Override
 	public BlockColorProvider getProvider() {
-		return (state, world, pos, tintIndex) -> {
-			return EndPortals.getColor(state.get(PORTAL));
-		};
+		return (state, world, pos, tintIndex) -> EndPortals.getColor(state.get(PORTAL));
 	}
 
 	@Override
 	public ItemColorProvider getItemProvider() {
-		return (stack, tintIndex) -> {
-			return EndPortals.getColor(0);
-		};
+		return (stack, tintIndex) -> EndPortals.getColor(0);
 	}
 }

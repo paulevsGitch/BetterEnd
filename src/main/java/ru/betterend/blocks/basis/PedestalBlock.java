@@ -86,9 +86,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 	protected float height = 1.0F;
 	
 	public PedestalBlock(Block parent) {
-		super(FabricBlockSettings.copyOf(parent).luminance(state -> {
-			return state.get(HAS_LIGHT) ? 12 : 0;
-		}));
+		super(FabricBlockSettings.copyOf(parent).luminance(state -> state.get(HAS_LIGHT) ? 12 : 0));
 		this.setDefaultState(stateManager.getDefaultState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false).with(HAS_LIGHT, false));
 		this.parent = parent;
 	}
@@ -119,6 +117,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 				ItemStack itemStack = pedestal.getStack(0);
 				if (player.giveItemStack(itemStack)) {
 					pedestal.removeStack(0);
+					checkRitual(world, pos);
 					return ActionResult.SUCCESS;
 				}
 				return ActionResult.FAIL;

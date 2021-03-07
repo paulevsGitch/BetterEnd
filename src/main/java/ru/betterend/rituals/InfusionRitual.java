@@ -1,8 +1,5 @@
 package ru.betterend.rituals;
 
-import java.awt.Point;
-
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -16,6 +13,8 @@ import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
+
+import java.awt.*;
 
 public class InfusionRitual implements Inventory {
 	private static final Point[] PEDESTALS_MAP = new Point[] {
@@ -32,7 +31,7 @@ public class InfusionRitual implements Inventory {
 	private int time = 0;
 	
 	private InfusionPedestalEntity input;
-	private PedestalBlockEntity[] catalysts = new PedestalBlockEntity[8];
+	private final PedestalBlockEntity[] catalysts = new PedestalBlockEntity[8];
 	
 	public InfusionRitual(World world, BlockPos pos) {
 		this.world = world;
@@ -108,7 +107,6 @@ public class InfusionRitual implements Inventory {
 		if (!checkRecipe()) return;
 		progress++;
 		if (progress == time) {
-			BlockState inputState = world.getBlockState(input.getPos());
 			input.removeStack(0);
 			input.setStack(0, activeRecipe.craft(this));
 			for (PedestalBlockEntity catalyst : catalysts) {
@@ -198,7 +196,7 @@ public class InfusionRitual implements Inventory {
 		if (slot == 0) {
 			return input.removeStack(0);
 		} else {
-			return catalysts[slot - 1].getStack(0);
+			return catalysts[slot - 1].removeStack(0);
 		}
 	}
 

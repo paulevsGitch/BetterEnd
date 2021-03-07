@@ -19,26 +19,26 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	public void setLocation(World world, BlockPos pos) {
 		super.setLocation(world, pos);
 		if (hasRitual()) {
-			this.linkedRitual.setLocation(world, pos);
+			linkedRitual.setLocation(world, pos);
 		}
 	}
 	
 	public void linkRitual(InfusionRitual ritual) {
-		this.linkedRitual = ritual;
+		linkedRitual = ritual;
 	}
 	
 	public InfusionRitual getRitual() {
-		return this.linkedRitual;
+		return linkedRitual;
 	}
 	
 	public boolean hasRitual() {
-		return this.linkedRitual != null;
+		return linkedRitual != null;
 	}
 	
 	@Override
 	public void tick() {
 		if (hasRitual()) {
-			this.linkedRitual.tick();
+			linkedRitual.tick();
 		}
 		super.tick();
 	}
@@ -52,8 +52,8 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	public void fromTag(BlockState state, CompoundTag tag) {
 		super.fromTag(state, tag);
 		if (tag.contains("ritual")) {
-			this.linkedRitual = new InfusionRitual(world, pos);
-			this.linkedRitual.fromTag(tag.getCompound("ritual"));
+			linkedRitual = new InfusionRitual(world, pos);
+			linkedRitual.fromTag(tag.getCompound("ritual"));
 		}
 	}
 

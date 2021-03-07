@@ -1,11 +1,8 @@
 package ru.betterend.registry;
 
-import java.io.File;
-import java.util.Iterator;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
+import com.ibm.icu.impl.UResource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -13,6 +10,8 @@ import ru.betterend.BetterEnd;
 import ru.betterend.config.ConfigWriter;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.MHelper;
+
+import java.io.File;
 
 public class EndPortals {
 	private static PortalInfo[] portals;
@@ -23,8 +22,7 @@ public class EndPortals {
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
 			json = makeDefault(file);
-		}
-		else {
+		} else {
 			json = JsonFactory.getJsonObject(file);
 		}
 		if (!json.has("portals") || !json.get("portals").isJsonArray()) {
@@ -66,8 +64,8 @@ public class EndPortals {
 	}
 	
 	public static boolean isAvailableItem(Identifier item) {
-		for (int i = 0; i < portals.length; i++) {
-			if (portals[i].item.equals(item)) {
+		for (PortalInfo portal : portals) {
+			if (portal.item.equals(item)) {
 				return true;
 			}
 		}
@@ -114,9 +112,7 @@ public class EndPortals {
 			if (world != null) {
 				return world;
 			}
-			Iterator<ServerWorld> iterator = server.getWorlds().iterator();
-			while (iterator.hasNext()) {
-				ServerWorld world = iterator.next();
+			for (ServerWorld world : server.getWorlds()) {
 				if (world.getRegistryKey().getValue().equals(dimension)) {
 					this.world = world;
 					return world;

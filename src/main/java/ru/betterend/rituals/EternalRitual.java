@@ -143,7 +143,6 @@ public class EternalRitual {
 	private void activatePortal(Item item) {
 		if (active) return;
 		int state = EndPortals.getPortalState(Registry.ITEM.getId(item));
-		System.out.println(state);
 		activatePortal(world, center, state);
 		doEffects((ServerWorld) world, center);
 		if (exit == null) {
@@ -217,12 +216,15 @@ public class EternalRitual {
 
 	public void removePortal(int state) {
 		if (!active || isInvalid()) return;
+		System.out.println(getTargetWorld(state).getRegistryKey());
+		System.out.println(exit);
 		removePortal(getTargetWorld(state), exit);
 		removePortal(world, center);
 	}
 
 	private void removePortal(World world, BlockPos center) {
 		BlockPos framePos = center.down();
+		System.out.println(framePos);
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
 		FRAME_MAP.forEach(point -> {
 			BlockPos pos = framePos.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
@@ -258,6 +260,7 @@ public class EternalRitual {
 		double multiplier = Objects.requireNonNull(registry.get(targetWorldId)).getCoordinateScale();
 		BlockPos.Mutable basePos = center.mutableCopy().set(center.getX() / multiplier, center.getY(), center.getZ() / multiplier);
 		Direction.Axis portalAxis = (Direction.Axis.X == axis) ? Direction.Axis.Z : Direction.Axis.X;
+		int worldCeil = targetWorld.getDimensionHeight() - 1;
 		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) {
 			EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
 			return basePos.toImmutable();
@@ -269,7 +272,8 @@ public class EternalRitual {
 					Chunk chunk = world.getChunk(checkPos);
 					if (chunk != null) {
 						int ceil = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15) + 1;
-						if (ceil < 2) continue;
+						ceil = Math.min(ceil, worldCeil);
+						if (ceil < 5) continue;
 						checkPos.setY(ceil);
 						while (checkPos.getY() > 2) {
 							if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
@@ -303,6 +307,8 @@ public class EternalRitual {
 	}
 
 	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {
+		System.out.println(pos.getY());
+		if (pos.getY() >= world.getDimensionHeight() - 1) return false;
 		if (!isBaseValid(world, pos, axis)) return false;
 		return EternalRitual.checkArea(world, pos, axis);
 	}

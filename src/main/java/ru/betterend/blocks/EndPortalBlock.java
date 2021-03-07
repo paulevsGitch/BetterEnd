@@ -87,8 +87,8 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			ServerWorld currentWorld = (ServerWorld) world;
 			MinecraftServer server = currentWorld.getServer();
 			ServerWorld targetWorld = EndPortals.getWorld(server, state.get(PORTAL));
-			boolean isTarget = world.getRegistryKey().equals(targetWorld.getRegistryKey());
-			ServerWorld destination = isTarget ? server.getWorld(World.END) : targetWorld;
+			boolean isInEnd = currentWorld.getRegistryKey().equals(World.END);
+			ServerWorld destination = isInEnd ? targetWorld : server.getWorld(World.END);
 			BlockPos exitPos = findExitPos(currentWorld, destination, pos, entity);
 			if (exitPos == null) return;
 			if (entity instanceof ServerPlayerEntity) {
@@ -129,9 +129,8 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		Identifier currentWorldId = current.getRegistryKey().getValue();
 		double targetMultiplier = Objects.requireNonNull(registry.get(targetWorldId)).getCoordinateScale();
 		double currentMultiplier = Objects.requireNonNull(registry.get(currentWorldId)).getCoordinateScale();
-		double multiplier = targetMultiplier > currentMultiplier ? currentMultiplier / targetMultiplier : currentMultiplier;
+		double multiplier = targetMultiplier > currentMultiplier ? 1.0 / targetMultiplier : currentMultiplier;
 		BlockPos.Mutable basePos = pos.mutableCopy().set(pos.getX() * multiplier, pos.getY(), pos.getZ() * multiplier);
-		System.out.println(basePos);
 		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
 		for (int step = 1; step < 128; step++) {

@@ -46,6 +46,7 @@ import ru.betterend.blocks.EnderBlock;
 import ru.betterend.blocks.EndstoneDustBlock;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.EternalRunedFlavolite;
+import ru.betterend.blocks.GlowingHymenophoreBlock;
 import ru.betterend.blocks.GlowingMossBlock;
 import ru.betterend.blocks.GlowingPillarLuminophorBlock;
 import ru.betterend.blocks.GlowingPillarRootsBlock;
@@ -70,7 +71,6 @@ import ru.betterend.blocks.MengerSpongeWetBlock;
 import ru.betterend.blocks.MissingTileBlock;
 import ru.betterend.blocks.MossyBoneBlock;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
-import ru.betterend.blocks.GlowingHymenophoreBlock;
 import ru.betterend.blocks.MossyGlowshroomSaplingBlock;
 import ru.betterend.blocks.MossyObsidian;
 import ru.betterend.blocks.MurkweedBlock;
@@ -85,6 +85,7 @@ import ru.betterend.blocks.SilkMothNestBlock;
 import ru.betterend.blocks.SmallAmaranitaBlock;
 import ru.betterend.blocks.SmallJellyshroomBlock;
 import ru.betterend.blocks.SmaragdantCrystalBlock;
+import ru.betterend.blocks.SmaragdantCrystalShardBlock;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.blocks.TenaneaFlowersBlock;
 import ru.betterend.blocks.TenaneaSaplingBlock;
@@ -333,7 +334,8 @@ public class EndBlocks {
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new AmberBlock());
-	public static final Block SMARAGDANT_CRYSTAL = registerBlock("smaragdant_crystal", new SmaragdantCrystalBlock()); 
+	public static final Block SMARAGDANT_CRYSTAL = registerBlock("smaragdant_crystal", new SmaragdantCrystalBlock());
+	public static final Block SMARAGDANT_CRYSTAL_SHARD = registerBlock("smaragdant_crystal_shard", new SmaragdantCrystalShardBlock());
 	
 	public static final Block RESPAWN_OBELISK = registerBlock("respawn_obelisk", new RespawnObeliskBlock());
 	

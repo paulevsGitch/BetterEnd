@@ -1,5 +1,7 @@
 package ru.betterend.rituals;
 
+import java.awt.Point;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -13,8 +15,6 @@ import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
-
-import java.awt.*;
 
 public class InfusionRitual implements Inventory {
 	private static final Point[] PEDESTALS_MAP = new Point[] {

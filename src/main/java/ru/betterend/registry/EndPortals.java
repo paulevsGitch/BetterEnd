@@ -1,8 +1,10 @@
 package ru.betterend.registry;
 
+import java.io.File;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.ibm.icu.impl.UResource;
+
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -10,8 +12,6 @@ import ru.betterend.BetterEnd;
 import ru.betterend.config.ConfigWriter;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.MHelper;
-
-import java.io.File;
 
 public class EndPortals {
 	private static PortalInfo[] portals;

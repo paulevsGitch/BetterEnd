@@ -4,7 +4,7 @@
 		"down": "betterend:block/amaranita_hyphae_top",
 		"east": "betterend:block/amaranita_hyphae_side",
 		"north": "betterend:block/amaranita_hyphae_side",
-		"particle": "betterend:block/mossy_bone_side_ver",
+		"particle": "betterend:block/amaranita_hyphae_side",
 		"south": "betterend:block/amaranita_hyphae_side",
 		"up": "betterend:block/amaranita_hyphae_top",
 		"west": "betterend:block/amaranita_hyphae_side"

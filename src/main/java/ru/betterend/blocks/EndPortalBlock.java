@@ -1,5 +1,8 @@
 package ru.betterend.blocks;
 
+import java.util.Objects;
+import java.util.Random;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -35,9 +38,6 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndPortals;
-
-import java.util.Objects;
-import java.util.Random;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable, IColorProvider {
 	public static final IntProperty PORTAL = BlockProperties.PORTAL;

@@ -33,6 +33,7 @@
 		"SlimeEntityMixin",
 		"AnvilBlockMixin",
 		"BrewingAccessor",
+		"BiomeArrayMixin",
 		"EntityMixin"
 	],
 	"injectors": {

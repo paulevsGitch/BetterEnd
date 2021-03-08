@@ -67,13 +67,19 @@ public class BiomeDefinition {
 	private final Identifier id;
 	private float genChance = 1F;
 	private boolean hasCaves = true;
+	private boolean isCaveBiome = false;
 	
 	private ConfiguredSurfaceBuilder<?> surface;
 
 	public BiomeDefinition(String name) {
 		this.id = BetterEnd.makeID(name);
 	}
-
+	
+	public BiomeDefinition setCaveBiome() {
+		isCaveBiome = true;
+		return this;
+	}
+	
 	public BiomeDefinition setSurface(Block block) {
 		setSurface(SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
 				block.getDefaultState(),
@@ -249,7 +255,7 @@ public class BiomeDefinition {
 
 		return new Biome.Builder()
 				.precipitation(Precipitation.NONE)
-				.category(Category.THEEND)
+				.category(isCaveBiome ? Category.NONE : Category.THEEND)
 				.depth(0.1F)
 				.scale(0.2F)
 				.temperature(2.0F)

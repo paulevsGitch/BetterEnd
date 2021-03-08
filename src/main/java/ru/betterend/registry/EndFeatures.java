@@ -13,7 +13,6 @@ import ru.betterend.BetterEnd;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.BlueVineFeature;
-import ru.betterend.world.features.CavePlantFeature;
 import ru.betterend.world.features.CharniaFeature;
 import ru.betterend.world.features.CrashedShipFeature;
 import ru.betterend.world.features.DoublePlantFeature;
@@ -44,12 +43,12 @@ import ru.betterend.world.features.terrain.GeyserFeature;
 import ru.betterend.world.features.terrain.IceStarFeature;
 import ru.betterend.world.features.terrain.ObsidianBoulderFeature;
 import ru.betterend.world.features.terrain.ObsidianPillarBasementFeature;
-import ru.betterend.world.features.terrain.RoundCaveFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
 import ru.betterend.world.features.terrain.SulphurHillFeature;
 import ru.betterend.world.features.terrain.SulphuricCaveFeature;
 import ru.betterend.world.features.terrain.SulphuricLakeFeature;
 import ru.betterend.world.features.terrain.SurfaceVentFeature;
+import ru.betterend.world.features.terrain.caves.RoundCaveFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
 import ru.betterend.world.features.trees.GiganticAmaranitaFeature;
 import ru.betterend.world.features.trees.HelixTreeFeature;
@@ -85,7 +84,6 @@ public class EndFeatures {
 	public static final EndFeature CREEPING_MOSS = new EndFeature("creeping_moss", new SinglePlantFeature(EndBlocks.CREEPING_MOSS, 5), 5);
 	public static final EndFeature BLUE_VINE = new EndFeature("blue_vine", new BlueVineFeature(), 1);
 	public static final EndFeature CHORUS_GRASS = new EndFeature("chorus_grass", new SinglePlantFeature(EndBlocks.CHORUS_GRASS, 4), 5);
-	public static final EndFeature CAVE_GRASS = new EndFeature("cave_grass", new CavePlantFeature(EndBlocks.CAVE_GRASS, 7), 7);
 	public static final EndFeature CRYSTAL_GRASS = new EndFeature("crystal_grass", new SinglePlantFeature(EndBlocks.CRYSTAL_GRASS, 8, false), 5);
 	public static final EndFeature SHADOW_PLANT = new EndFeature("shadow_plant", new SinglePlantFeature(EndBlocks.SHADOW_PLANT, 6), 9);
 	public static final EndFeature MURKWEED = new EndFeature("murkweed", new SinglePlantFeature(EndBlocks.MURKWEED, 3), 2);
@@ -161,7 +159,6 @@ public class EndFeatures {
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);
 	public static final EndFeature END_LAKE_RARE = EndFeature.makeLakeFeature("end_lake_rare", new EndLakeFeature(), 40);
 	public static final EndFeature ROUND_CAVE = EndFeature.makeRawGenFeature("round_cave", new RoundCaveFeature(), 2);
-	public static final EndFeature ROUND_CAVE_RARE = EndFeature.makeRawGenFeature("round_cave_rare", new RoundCaveFeature(), 25);
 	public static final EndFeature SPIRE = EndFeature.makeRawGenFeature("spire", new SpireFeature(), 2);
 	public static final EndFeature FLOATING_SPIRE = EndFeature.makeRawGenFeature("floating_spire", new FloatingSpireFeature(), 8);
 	public static final EndFeature GEYSER = EndFeature.makeRawGenFeature("geyser", new GeyserFeature(), 8);
@@ -215,8 +212,7 @@ public class EndFeatures {
 		addFeature(CRASHED_SHIP, features);
 		
 		if (EndBiomes.getBiome(id).hasCaves()) {
-			addFeature(ROUND_CAVE_RARE, features);
-			addFeature(CAVE_GRASS, features);
+			addFeature(ROUND_CAVE, features);
 		}
 		
 		EndBiome endBiome = EndBiomes.getBiome(id);
@@ -233,8 +229,7 @@ public class EndFeatures {
 		def.addFeature(CRASHED_SHIP);
 		
 		if (def.hasCaves()) {
-			def.addFeature(ROUND_CAVE_RARE);
-			def.addFeature(CAVE_GRASS);
+			def.addFeature(ROUND_CAVE);
 		}
 	}
 	

@@ -32,6 +32,7 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 import ru.betterend.world.features.DefaultFeature;
 import ru.betterend.world.generator.GeneratorOptions;
 
+@Deprecated
 public class RoundCaveFeature extends DefaultFeature {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
 	

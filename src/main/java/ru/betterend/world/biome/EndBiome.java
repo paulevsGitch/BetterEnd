@@ -190,8 +190,7 @@ public class EndBiome {
 		if (edge != null) {
 			edge.updateActualBiomes(biomeRegistry);
 		}
-		Biome biome = biomeRegistry.get(mcID);
-		this.actualBiome = biome;
+		this.actualBiome = biomeRegistry.get(mcID);
 	}
 	
 	@Override

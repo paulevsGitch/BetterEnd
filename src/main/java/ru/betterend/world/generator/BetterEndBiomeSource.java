@@ -10,7 +10,6 @@ import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.TheEndBiomeSource;
@@ -61,7 +60,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 	private static List<Biome> getBiomes(Registry<Biome> biomeRegistry) {
 		List<Biome> list = Lists.newArrayList();
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getCategory() == Category.THEEND) {
+			if (EndBiomes.hasBiome(biomeRegistry.getId(biome))) {
 				list.add(biome);
 			}
 		});

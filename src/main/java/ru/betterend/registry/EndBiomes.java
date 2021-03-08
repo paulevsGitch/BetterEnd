@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
@@ -45,7 +46,9 @@ import ru.betterend.world.biome.BiomeSulphurSprings;
 import ru.betterend.world.biome.BiomeUmbrellaJungle;
 import ru.betterend.world.biome.DragonGraveyardsBiome;
 import ru.betterend.world.biome.DryShrublandBiome;
+import ru.betterend.world.biome.EmptyEndCaveBiome;
 import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.EndCaveBiome;
 import ru.betterend.world.biome.GlowingGrasslandsBiome;
 import ru.betterend.world.generator.BELayerRandomSource;
 import ru.betterend.world.generator.BiomePicker;
@@ -59,6 +62,7 @@ public class EndBiomes {
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
+	public static final BiomePicker CAVE_BIOMES = new BiomePicker();
 	public static final List<EndBiome> SUBBIOMES = Lists.newArrayList();
 	private static final JsonObject EMPTY_JSON = new JsonObject();
 	
@@ -93,6 +97,9 @@ public class EndBiomes {
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);
 	
+	// Better End Caves
+	public static final EndCaveBiome EMPTY_CAVE = registerCaveBiome(new EmptyEndCaveBiome());
+	
 	public static void register() {}
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
@@ -100,6 +107,7 @@ public class EndBiomes {
 		
 		LAND_BIOMES.clearMutables();
 		VOID_BIOMES.clearMutables();
+		CAVE_BIOMES.clearMutables();
 		
 		if (FABRIC_VOID.isEmpty()) {
 			loadFabricAPIBiomes();
@@ -144,22 +152,22 @@ public class EndBiomes {
 		Integrations.addBiomes();
 		Configs.BIOME_CONFIG.saveChanges();
 		
-		LAND_BIOMES.rebuild();
-		VOID_BIOMES.rebuild();
-		
-		LAND_BIOMES.getBiomes().forEach((endBiome) -> {
-			endBiome.updateActualBiomes(biomeRegistry);
-		});
-		
-		VOID_BIOMES.getBiomes().forEach((endBiome) -> {
-			endBiome.updateActualBiomes(biomeRegistry);
-		});
+		rebuildPicker(LAND_BIOMES, biomeRegistry);
+		rebuildPicker(VOID_BIOMES, biomeRegistry);
+		rebuildPicker(CAVE_BIOMES, biomeRegistry);
 		
 		SUBBIOMES.forEach((endBiome) -> {
 			endBiome.updateActualBiomes(biomeRegistry);
 		});
 		
 		CLIENT.clear();
+	}
+	
+	private static void rebuildPicker(BiomePicker picker, Registry<Biome> biomeRegistry) {
+		picker.rebuild();
+		picker.getBiomes().forEach((endBiome) -> {
+			endBiome.updateActualBiomes(biomeRegistry);
+		});
 	}
 	
 	private static void loadFabricAPIBiomes() {
@@ -343,10 +351,12 @@ public class EndBiomes {
 	}
 	
 	private static void addToPicker(EndBiome biome, BiomeType type) {
-		if (type == BiomeType.LAND)
+		if (type == BiomeType.LAND) {
 			LAND_BIOMES.addBiome(biome);
-		else
+		}
+		else {
 			VOID_BIOMES.addBiome(biome);
+		}
 	}
 
 	private static void registerBiomeDirectly(EndBiome biome) {
@@ -399,5 +409,22 @@ public class EndBiomes {
 		result.addAll(EndBiomes.VOID_BIOMES.getBiomes());
 		result.addAll(SUBBIOMES);
 		return result;
+	}
+	
+	public static EndCaveBiome registerCaveBiome(EndCaveBiome biome) {
+		registerBiomeDirectly(biome);
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			CAVE_BIOMES.addBiome(biome);
+			ID_MAP.put(biome.getID(), biome);
+		}
+		return biome;
+	}
+	
+	public static EndCaveBiome getCaveBiome(Random random) {
+		return (EndCaveBiome) CAVE_BIOMES.getBiome(random);
+	}
+	
+	public static boolean hasBiome(Identifier biomeID) {
+		return ID_MAP.containsKey(biomeID);
 	}
 }

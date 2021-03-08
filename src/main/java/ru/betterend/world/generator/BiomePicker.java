@@ -32,12 +32,13 @@ public class BiomePicker {
 	
 	public void clearMutables() {
 		maxChance = maxChanceUnmutable;
-		for (int i = biomes.size() - 1; i >= biomeCount; i--)
+		for (int i = biomes.size() - 1; i >= biomeCount; i--) {
 			biomes.remove(i);
+		}
 	}
 	
 	public EndBiome getBiome(Random random) {
-		return tree.getBiome(random.nextFloat() * maxChance);
+		return biomes.isEmpty() ? null : tree.getBiome(random.nextFloat() * maxChance);
 	}
 	
 	public List<EndBiome> getBiomes() {
@@ -59,6 +60,9 @@ public class BiomePicker {
 	}
 	
 	public void rebuild() {
+		if (biomes.isEmpty()) {
+			return;
+		}
 		maxChance = maxChanceUnmutable;
 		for (int i = biomeCount; i < biomes.size(); i++) {
 			maxChance = biomes.get(i).mutateGenChance(maxChance);

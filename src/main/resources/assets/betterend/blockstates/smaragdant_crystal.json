@@ -1,5 +1,7 @@
 {
 	"variants": {
-		"": { "model": "betterend:block/smaragdant_crystal" }
+		"axis=x": { "model": "betterend:block/smaragdant_crystal", "x": 90, "y": 90 },
+		"axis=y": { "model": "betterend:block/smaragdant_crystal" },
+		"axis=z": { "model": "betterend:block/smaragdant_crystal", "x": 90 }
 	}
 }

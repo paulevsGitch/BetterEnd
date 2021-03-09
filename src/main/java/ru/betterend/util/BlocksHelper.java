@@ -24,6 +24,7 @@ import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.BlueVineBlock;
 import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.blocks.basis.FurBlock;
+import ru.betterend.blocks.basis.StalactiteBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -204,6 +205,24 @@ public class BlocksHelper {
 								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 								state = world.getBlockState(POS);
+							}
+						}
+					}
+					else if (state.getBlock() instanceof StalactiteBlock) {
+						if (!state.canPlaceAt(world, POS)) {
+							if (world.getBlockState(POS.up()).getBlock() instanceof StalactiteBlock) {
+								while (state.getBlock() instanceof StalactiteBlock) {
+									setWithoutUpdate(world, POS, AIR);
+									POS.setY(POS.getY() + 1);
+									state = world.getBlockState(POS);
+								}
+							}
+							else {
+								while (state.getBlock() instanceof StalactiteBlock) {
+									setWithoutUpdate(world, POS, AIR);
+									POS.setY(POS.getY() - 1);
+									state = world.getBlockState(POS);
+								}
 							}
 						}
 					}

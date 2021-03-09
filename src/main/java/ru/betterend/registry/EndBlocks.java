@@ -107,6 +107,7 @@ import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
+import ru.betterend.blocks.basis.StalactiteBlock;
 import ru.betterend.blocks.basis.StoneLanternBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.blocks.basis.WallMushroomBlock;
@@ -176,6 +177,8 @@ public class EndBlocks {
 	public static final Block EMERALD_ICE = registerBlock("emerald_ice", new EmeraldIceBlock());
 	public static final Block DENSE_EMERALD_ICE = registerBlock("dense_emerald_ice", new DenseEmeraldIceBlock());
 	public static final Block ANCIENT_EMERALD_ICE = registerBlock("ancient_emerald_ice", new AncientEmeraldIceBlock());
+	
+	public static final Block END_STONE_STALACTITE = registerBlock("end_stone_stalactite", new StalactiteBlock(Blocks.END_STONE));
 	
 	// Wooden Materials And Trees //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new MossyGlowshroomSaplingBlock());

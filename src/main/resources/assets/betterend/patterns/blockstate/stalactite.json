@@ -1,0 +1,13 @@
+{
+    "variants":
+	{
+        "size=0": { "model": "betterend:pattern/%block%/%block%_0" },
+        "size=1": { "model": "betterend:pattern/%block%/%block%_1" },
+        "size=2": { "model": "betterend:pattern/%block%/%block%_2" },
+        "size=3": { "model": "betterend:pattern/%block%/%block%_3" },
+        "size=4": { "model": "betterend:pattern/%block%/%block%_4" },
+        "size=5": { "model": "betterend:pattern/%block%/%block%_5" },
+        "size=6": { "model": "betterend:pattern/%block%/%block%_6" },
+        "size=7": { "model": "betterend:pattern/%block%/%block%_7" }
+    }
+}

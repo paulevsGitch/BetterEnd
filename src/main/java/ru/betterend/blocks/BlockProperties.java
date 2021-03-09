@@ -25,6 +25,7 @@ public class BlockProperties {
 	public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, 3);
 	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
 	public static final IntProperty PORTAL = IntProperty.of("portal", 0, EndPortals.getCount());
+	public static final IntProperty SIZE = IntProperty.of("size", 0, 7);
 	
 	public static enum TripleShape implements StringIdentifiable {
 		TOP("top"),

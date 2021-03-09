@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
@@ -45,9 +46,10 @@ import ru.betterend.world.features.terrain.GeyserFeature;
 import ru.betterend.world.features.terrain.IceStarFeature;
 import ru.betterend.world.features.terrain.ObsidianBoulderFeature;
 import ru.betterend.world.features.terrain.ObsidianPillarBasementFeature;
+import ru.betterend.world.features.terrain.SingleBlockFeature;
 import ru.betterend.world.features.terrain.SmaragdantCrystalFeature;
-import ru.betterend.world.features.terrain.SmaragdantCrystalShardFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
+import ru.betterend.world.features.terrain.StalactiteFeature;
 import ru.betterend.world.features.terrain.SulphurHillFeature;
 import ru.betterend.world.features.terrain.SulphuricCaveFeature;
 import ru.betterend.world.features.terrain.SulphuricLakeFeature;
@@ -191,8 +193,12 @@ public class EndFeatures {
 	
 	// Caves
 	public static final DefaultFeature SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
-	public static final DefaultFeature SMARAGDANT_CRYSTAL_SHARD = new SmaragdantCrystalShardFeature();
+	public static final DefaultFeature SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(EndBlocks.SMARAGDANT_CRYSTAL_SHARD);
 	public static final DefaultFeature BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
+	public static final DefaultFeature CAVE_BUSH = new BushFeature(EndBlocks.CAVE_BUSH, EndBlocks.CAVE_BUSH);
+	public static final DefaultFeature CAVE_GRASS = new SingleBlockFeature(EndBlocks.CAVE_GRASS);
+	public static final DefaultFeature END_STONE_STALACTITE = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
+	public static final DefaultFeature END_STONE_STALAGMITE = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {

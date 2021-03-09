@@ -16,11 +16,21 @@ public class LushAuroraCaveBiome extends EndCaveBiome {
 				.setMusic(EndSounds.MUSIC_FOREST)
 				.setParticles(EndParticles.GLOWING_SPHERE, 0.001F)
 				.setSurface(EndBlocks.CAVE_MOSS));
+		
 		this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL, 1);
+		this.addFloorFeature(EndFeatures.CAVE_BUSH, 10);
+		this.addFloorFeature(EndFeatures.CAVE_GRASS, 40);
+		
+		this.addCeilFeature(EndFeatures.CAVE_BUSH, 1);
 	}
 	
 	@Override
 	public float getFloorDensity() {
-		return 0.01F;
+		return 0.1F;
+	}
+	
+	@Override
+	public float getCeilDensity() {
+		return 0.03F;
 	}
 }

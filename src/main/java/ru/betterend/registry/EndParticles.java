@@ -18,6 +18,7 @@ import ru.betterend.particle.ParticleSnowflake;
 import ru.betterend.particle.ParticleSulphur;
 import ru.betterend.particle.ParticleTenaneaPetal;
 import ru.betterend.particle.PaticlePortalSphere;
+import ru.betterend.particle.SmaragdantParticle;
 
 public class EndParticles {
 	public static final DefaultParticleType GLOWING_SPHERE = register("glowing_sphere");
@@ -31,6 +32,7 @@ public class EndParticles {
 	public static final DefaultParticleType TENANEA_PETAL = register("tenanea_petal");
 	public static final DefaultParticleType JUNGLE_SPORE = register("jungle_spore");
 	public static final DefaultParticleType FIREFLY = register("firefly");
+	public static final DefaultParticleType SMARAGDANT = register("smaragdant_particle");
 	
 	public static void register() {
 		ParticleFactoryRegistry.getInstance().register(GLOWING_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
@@ -44,6 +46,7 @@ public class EndParticles {
 		ParticleFactoryRegistry.getInstance().register(TENANEA_PETAL, ParticleTenaneaPetal.FactoryTenaneaPetal::new);
 		ParticleFactoryRegistry.getInstance().register(JUNGLE_SPORE, ParticleJungleSpore.FactoryJungleSpore::new);
 		ParticleFactoryRegistry.getInstance().register(FIREFLY, FireflyParticle.FireflyParticleFactory::new);
+		ParticleFactoryRegistry.getInstance().register(SMARAGDANT, SmaragdantParticle.SmaragdantParticleFactory::new);
 	}
 	
 	private static DefaultParticleType register(String name) {

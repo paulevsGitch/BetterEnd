@@ -34,4 +34,8 @@ public class EndCaveBiome extends EndBiome {
 	public float getFloorDensity() {
 		return 0;
 	}
+	
+	public float getCeilDensity() {
+		return 0;
+	}
 }

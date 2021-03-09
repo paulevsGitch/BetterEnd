@@ -46,6 +46,7 @@ public class Patterns {
 	public final static Identifier STATE_CHANDELIER = BetterEnd.makeID("patterns/blockstate/chandelier.json");
 	public final static Identifier STATE_FURNACE = BetterEnd.makeID("patterns/blockstate/furnace.json");
 	public final static Identifier STATE_ROTATED_TOP = BetterEnd.makeID("patterns/blockstate/rotated_top.json");
+	public final static Identifier STATE_STALACTITE = BetterEnd.makeID("patterns/blockstate/stalactite.json");
 	
 	//Models Block
 	public final static Identifier BLOCK_EMPTY = BetterEnd.makeID("patterns/block/empty.json");
@@ -103,6 +104,17 @@ public class Patterns {
 	public final static Identifier BLOCK_FURNACE_GLOW = BetterEnd.makeID("patterns/block/furnace_glow.json");
 	public final static Identifier BLOCK_TOP_SIDE_BOTTOM = BetterEnd.makeID("patterns/block/top_side_bottom.json");
 	public final static Identifier BLOCK_PATH = BetterEnd.makeID("patterns/block/path.json");
+	
+	public final static Identifier[] BLOCKS_STALACTITE = new Identifier[] {
+		BetterEnd.makeID("patterns/block/stalactite_0.json"),
+		BetterEnd.makeID("patterns/block/stalactite_1.json"),
+		BetterEnd.makeID("patterns/block/stalactite_2.json"),
+		BetterEnd.makeID("patterns/block/stalactite_3.json"),
+		BetterEnd.makeID("patterns/block/stalactite_4.json"),
+		BetterEnd.makeID("patterns/block/stalactite_5.json"),
+		BetterEnd.makeID("patterns/block/stalactite_6.json"),
+		BetterEnd.makeID("patterns/block/stalactite_7.json")
+	};
 	
 	//Models Item
 	public final static Identifier ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");

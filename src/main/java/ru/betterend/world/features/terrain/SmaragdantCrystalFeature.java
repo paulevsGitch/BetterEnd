@@ -40,13 +40,8 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
 						BlocksHelper.setWithoutUpdate(world, mut, crystal);
 						mut.setY(mut.getY() + 1);
 					}
-					if (random.nextBoolean()) {
-						boolean waterlogged = !world.getFluidState(mut).isEmpty();
-						BlocksHelper.setWithoutUpdate(world, mut, shard.with(Properties.WATERLOGGED, waterlogged));
-					}
-					else {
-						BlocksHelper.setWithoutUpdate(world, mut, crystal);
-					}
+					boolean waterlogged = !world.getFluidState(mut).isEmpty();
+					BlocksHelper.setWithoutUpdate(world, mut, shard.with(Properties.WATERLOGGED, waterlogged));
 				}
 			}
 		}

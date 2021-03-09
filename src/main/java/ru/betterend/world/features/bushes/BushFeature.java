@@ -63,7 +63,12 @@ public class BushFeature extends DefaultFeature {
 		for (Direction d: Direction.values()) {
 			BlockPos p = pos.offset(d);
 			if (world.isAir(p)) {
-				BlocksHelper.setWithoutUpdate(world, p, leaves.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+				if (leaves instanceof LeavesBlock) {
+					BlocksHelper.setWithoutUpdate(world, p, leaves.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+				}
+				else {
+					BlocksHelper.setWithoutUpdate(world, p, leaves.getDefaultState());
+				}
 			}
 		}
 		

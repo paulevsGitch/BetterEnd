@@ -37,6 +37,7 @@ import ru.betterend.world.features.bushes.BushFeature;
 import ru.betterend.world.features.bushes.LargeAmaranitaFeature;
 import ru.betterend.world.features.bushes.Lumecorn;
 import ru.betterend.world.features.bushes.TenaneaBushFeature;
+import ru.betterend.world.features.terrain.BigAuroraCrystalFeature;
 import ru.betterend.world.features.terrain.EndLakeFeature;
 import ru.betterend.world.features.terrain.FallenPillarFeature;
 import ru.betterend.world.features.terrain.FloatingSpireFeature;
@@ -191,6 +192,7 @@ public class EndFeatures {
 	// Caves
 	public static final DefaultFeature SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
 	public static final DefaultFeature SMARAGDANT_CRYSTAL_SHARD = new SmaragdantCrystalShardFeature();
+	public static final DefaultFeature BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {

@@ -32,9 +32,12 @@ import ru.betterend.config.Configs;
 import ru.betterend.integration.Integrations;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.world.biome.air.BiomeIceStarfield;
+import ru.betterend.world.biome.cave.EmptyAuroraCaveBiome;
 import ru.betterend.world.biome.cave.EmptyEndCaveBiome;
 import ru.betterend.world.biome.cave.EmptySmaragdantCaveBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+import ru.betterend.world.biome.cave.LushAuroraCaveBiome;
+import ru.betterend.world.biome.cave.LushSmaragdantCaveBiome;
 import ru.betterend.world.biome.land.BiomeAmberLand;
 import ru.betterend.world.biome.land.BiomeBlossomingSpires;
 import ru.betterend.world.biome.land.BiomeChorusForest;
@@ -101,6 +104,9 @@ public class EndBiomes {
 	// Better End Caves
 	public static final EndCaveBiome EMPTY_END_CAVE = registerCaveBiome(new EmptyEndCaveBiome());
 	public static final EndCaveBiome EMPTY_SMARAGDANT_CAVE = registerCaveBiome(new EmptySmaragdantCaveBiome());
+	public static final EndCaveBiome LUSH_SMARAGDANT_CAVE = registerCaveBiome(new LushSmaragdantCaveBiome());
+	public static final EndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
+	public static final EndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
 	
 	public static void register() {}
 	

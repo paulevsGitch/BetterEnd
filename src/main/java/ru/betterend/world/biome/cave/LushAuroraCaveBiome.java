@@ -18,19 +18,21 @@ public class LushAuroraCaveBiome extends EndCaveBiome {
 				.setSurface(EndBlocks.CAVE_MOSS));
 		
 		this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL, 1);
-		this.addFloorFeature(EndFeatures.CAVE_BUSH, 10);
+		this.addFloorFeature(EndFeatures.CAVE_BUSH, 5);
 		this.addFloorFeature(EndFeatures.CAVE_GRASS, 40);
+		this.addFloorFeature(EndFeatures.END_STONE_STALAGMITE_CAVEMOSS, 10);
 		
 		this.addCeilFeature(EndFeatures.CAVE_BUSH, 1);
+		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE_CAVEMOSS, 20);
 	}
 	
 	@Override
 	public float getFloorDensity() {
-		return 0.1F;
+		return 0.2F;
 	}
 	
 	@Override
 	public float getCeilDensity() {
-		return 0.03F;
+		return 0.1F;
 	}
 }

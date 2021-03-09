@@ -179,6 +179,7 @@ public class EndBlocks {
 	public static final Block ANCIENT_EMERALD_ICE = registerBlock("ancient_emerald_ice", new AncientEmeraldIceBlock());
 	
 	public static final Block END_STONE_STALACTITE = registerBlock("end_stone_stalactite", new StalactiteBlock(Blocks.END_STONE));
+	public static final Block END_STONE_STALACTITE_CAVEMOSS = registerBlock("end_stone_stalactite_cavemoss", new StalactiteBlock(CAVE_MOSS));
 	
 	// Wooden Materials And Trees //
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new MossyGlowshroomSaplingBlock());

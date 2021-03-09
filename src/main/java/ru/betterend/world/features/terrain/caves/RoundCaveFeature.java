@@ -47,11 +47,10 @@ public class RoundCaveFeature extends EndCaveFeature {
 					ysq *= ysq;
 					bpos.setY(y);
 					double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
-					//double r2 = r + 5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) {
 						state = world.getBlockState(bpos);
-						if (isReplaceable(state)) {
+						if (isReplaceable(state) && !isWaterNear(world, bpos)) {
 							BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 							blocks.add(bpos.toImmutable());
 							

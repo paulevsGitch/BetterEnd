@@ -2,7 +2,7 @@ package ru.betterend.world.generator;
 
 import java.util.List;
 
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class WeighTree {
 	private final Node root;

@@ -2,7 +2,7 @@ package ru.betterend.world.generator;
 
 import java.util.Random;
 
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class BiomeChunk
 {

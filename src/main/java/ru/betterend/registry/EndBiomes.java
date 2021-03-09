@@ -31,25 +31,26 @@ import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.integration.Integrations;
 import ru.betterend.util.JsonFactory;
-import ru.betterend.world.biome.BiomeAmberLand;
-import ru.betterend.world.biome.BiomeBlossomingSpires;
-import ru.betterend.world.biome.BiomeChorusForest;
-import ru.betterend.world.biome.BiomeCrystalMountains;
-import ru.betterend.world.biome.BiomeDustWastelands;
-import ru.betterend.world.biome.BiomeFoggyMushroomland;
-import ru.betterend.world.biome.BiomeIceStarfield;
-import ru.betterend.world.biome.BiomeMegalake;
-import ru.betterend.world.biome.BiomeMegalakeGrove;
-import ru.betterend.world.biome.BiomePaintedMountains;
-import ru.betterend.world.biome.BiomeShadowForest;
-import ru.betterend.world.biome.BiomeSulphurSprings;
-import ru.betterend.world.biome.BiomeUmbrellaJungle;
-import ru.betterend.world.biome.DragonGraveyardsBiome;
-import ru.betterend.world.biome.DryShrublandBiome;
-import ru.betterend.world.biome.EmptyEndCaveBiome;
-import ru.betterend.world.biome.EndBiome;
-import ru.betterend.world.biome.EndCaveBiome;
-import ru.betterend.world.biome.GlowingGrasslandsBiome;
+import ru.betterend.world.biome.air.BiomeIceStarfield;
+import ru.betterend.world.biome.cave.EmptyEndCaveBiome;
+import ru.betterend.world.biome.cave.EmptySmaragdantCaveBiome;
+import ru.betterend.world.biome.cave.EndCaveBiome;
+import ru.betterend.world.biome.land.BiomeAmberLand;
+import ru.betterend.world.biome.land.BiomeBlossomingSpires;
+import ru.betterend.world.biome.land.BiomeChorusForest;
+import ru.betterend.world.biome.land.BiomeCrystalMountains;
+import ru.betterend.world.biome.land.BiomeDustWastelands;
+import ru.betterend.world.biome.land.BiomeFoggyMushroomland;
+import ru.betterend.world.biome.land.BiomeMegalake;
+import ru.betterend.world.biome.land.BiomeMegalakeGrove;
+import ru.betterend.world.biome.land.BiomePaintedMountains;
+import ru.betterend.world.biome.land.BiomeShadowForest;
+import ru.betterend.world.biome.land.BiomeSulphurSprings;
+import ru.betterend.world.biome.land.BiomeUmbrellaJungle;
+import ru.betterend.world.biome.land.DragonGraveyardsBiome;
+import ru.betterend.world.biome.land.DryShrublandBiome;
+import ru.betterend.world.biome.land.EndBiome;
+import ru.betterend.world.biome.land.GlowingGrasslandsBiome;
 import ru.betterend.world.generator.BELayerRandomSource;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
@@ -98,7 +99,8 @@ public class EndBiomes {
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);
 	
 	// Better End Caves
-	public static final EndCaveBiome EMPTY_CAVE = registerCaveBiome(new EmptyEndCaveBiome());
+	public static final EndCaveBiome EMPTY_END_CAVE = registerCaveBiome(new EmptyEndCaveBiome());
+	public static final EndCaveBiome EMPTY_SMARAGDANT_CAVE = registerCaveBiome(new EmptySmaragdantCaveBiome());
 	
 	public static void register() {}
 	

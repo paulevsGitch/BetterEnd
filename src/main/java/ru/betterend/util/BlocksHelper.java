@@ -196,6 +196,17 @@ public class BlocksHelper {
 							}
 						}
 					}
+					else if (state.isOf(EndBlocks.SMARAGDANT_CRYSTAL)) {
+						POS.setY(POS.getY() - 1);
+						if (world.isAir(POS)) {
+							POS.setY(POS.getY() + 1);
+							while (state.isOf(EndBlocks.SMARAGDANT_CRYSTAL)) {
+								setWithoutUpdate(world, POS, AIR);
+								POS.setY(POS.getY() + 1);
+								state = world.getBlockState(POS);
+							}
+						}
+					}
 					else if (!state.canPlaceAt(world, POS)) {
 						// Chorus
 						if (state.isOf(Blocks.CHORUS_PLANT)) {

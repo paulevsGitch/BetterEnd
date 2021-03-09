@@ -9,16 +9,20 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.interfaces.IBiomeArray;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
-import ru.betterend.world.biome.EndCaveBiome;
+import ru.betterend.world.biome.cave.EndCaveBiome;
+import ru.betterend.world.biome.land.EndBiome;
 import ru.betterend.world.features.DefaultFeature;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -33,6 +37,10 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			return false;
 		}
 		
+		if (biomeMissingCaves(world, pos)) {
+			return false;
+		}
+		
 		int radius = MHelper.randRange(10, 30, random);
 		BlockPos center = findPos(world, pos, radius, random);
 		
@@ -42,29 +50,31 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		
 		EndCaveBiome biome = EndBiomes.getCaveBiome(random);
 		Set<BlockPos> caveBlocks = generate(world, center, radius, random);
-		if (biome != null && !caveBlocks.isEmpty()) {
-			setBiomes(world, biome, caveBlocks);
-			Set<BlockPos> floorPositions = Sets.newHashSet();
-			Set<BlockPos> ceilPositions = Sets.newHashSet();
-			Mutable mut = new Mutable();
-			caveBlocks.forEach((bpos) -> {
-				mut.set(bpos);
-				if (world.getBlockState(mut).getMaterial().isReplaceable()) {
-					mut.setY(bpos.getY() - 1);
-					if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
-						floorPositions.add(mut.toImmutable());
+		if (!caveBlocks.isEmpty()) {
+			if (biome != null) {
+				setBiomes(world, biome, caveBlocks);
+				Set<BlockPos> floorPositions = Sets.newHashSet();
+				Set<BlockPos> ceilPositions = Sets.newHashSet();
+				Mutable mut = new Mutable();
+				caveBlocks.forEach((bpos) -> {
+					mut.set(bpos);
+					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
+						mut.setY(bpos.getY() - 1);
+						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
+							floorPositions.add(mut.toImmutable());
+						}
+						mut.setY(bpos.getY() + 1);
+						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
+							ceilPositions.add(mut.toImmutable());
+						}
 					}
-					mut.setY(bpos.getY() + 1);
-					if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
-						ceilPositions.add(mut.toImmutable());
-					}
-				}
-			});
-			BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
-			placeFloor(world, biome, floorPositions, random, surfaceBlock);
-			placeCeil(world, biome, ceilPositions, random);
+				});
+				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
+				placeFloor(world, biome, floorPositions, random, surfaceBlock);
+				placeCeil(world, biome, ceilPositions, random);
+			}
+			fixBlocks(world, caveBlocks);
 		}
-		fixBlocks(world, center, radius);
 		
 		return true;
 	}
@@ -75,6 +85,18 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 		});
+		
+		float density = biome.getFloorDensity();
+		if (density > 0) {
+			floorPositions.forEach((pos) -> {
+				if (random.nextFloat() <= density) {
+					Feature<?> feature = biome.getFloorFeature(random);
+					if (feature != null) {
+						feature.generate(world, null, random, pos.up(), null);
+					}
+				}
+			});
+		}
 	}
 	
 	protected void placeCeil(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
@@ -122,13 +144,54 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		return new BlockPos(pos.getX(), MHelper.randRange(bottom, top, random), pos.getZ());
 	}
 	
-	private void fixBlocks(StructureWorldAccess world, BlockPos pos, int radius) {
-		int x1 = pos.getX() - radius - 5;
-		int y1 = pos.getY() - radius - 5;
-		int z1 = pos.getZ() - radius - 5;
-		int x2 = pos.getX() + radius + 5;
-		int y2 = pos.getY() + radius + 5;
-		int z2 = pos.getZ() + radius + 5;
-		BlocksHelper.fixBlocks(world, new BlockPos(x1, y1, z1), new BlockPos(x2, y2, z2));
+	private void fixBlocks(StructureWorldAccess world, Set<BlockPos> caveBlocks) {
+		BlockPos pos = caveBlocks.iterator().next();
+		Mutable start = new Mutable().set(pos);
+		Mutable end = new Mutable().set(pos);
+		caveBlocks.forEach((bpos) -> {
+			if (bpos.getX() < start.getX()) {
+				start.setX(bpos.getX());
+			}
+			if (bpos.getX() > end.getX()) {
+				end.setX(bpos.getX());
+			}
+			
+			if (bpos.getY() < start.getY()) {
+				start.setY(bpos.getY());
+			}
+			if (bpos.getY() > end.getY()) {
+				end.setY(bpos.getY());
+			}
+			
+			if (bpos.getZ() < start.getZ()) {
+				start.setZ(bpos.getZ());
+			}
+			if (bpos.getZ() > end.getZ()) {
+				end.setZ(bpos.getZ());
+			}
+		});
+		BlocksHelper.fixBlocks(world, start.add(-5, -5, -5), end.add(5, 5, 5));
+	}
+	
+	protected boolean isWaterNear(StructureWorldAccess world, BlockPos pos) {
+		for (Direction dir: BlocksHelper.DIRECTIONS) {
+			if (!world.getFluidState(pos.offset(dir, 5)).isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	protected boolean biomeMissingCaves(StructureWorldAccess world, BlockPos pos) {
+		for (int x = -2; x < 3; x++) {
+			for (int z = -2; z < 3; z++) {
+				Biome biome = world.getBiome(pos.add(x << 4, 0, z << 4));
+				EndBiome endBiome = EndBiomes.getFromBiome(biome);
+				if (!endBiome.hasCaves()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

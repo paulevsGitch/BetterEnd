@@ -1,4 +1,4 @@
-package ru.betterend.world.biome;
+package ru.betterend.world.biome.land;
 
 import java.util.List;
 

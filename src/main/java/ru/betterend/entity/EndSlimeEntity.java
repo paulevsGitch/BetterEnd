@@ -42,7 +42,7 @@ import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class EndSlimeEntity extends SlimeEntity {
 	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EndSlimeEntity.class, TrackedDataHandlerRegistry.BYTE);

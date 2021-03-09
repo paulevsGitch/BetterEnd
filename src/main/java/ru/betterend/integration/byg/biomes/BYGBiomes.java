@@ -2,7 +2,7 @@ package ru.betterend.integration.byg.biomes;
 
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class BYGBiomes {
 	// New Biomes

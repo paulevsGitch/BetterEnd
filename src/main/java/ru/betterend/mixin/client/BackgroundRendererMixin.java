@@ -25,7 +25,7 @@ import net.minecraft.world.biome.Biome.Category;
 import ru.betterend.client.ClientOptions;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BackgroundInfo;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 @Mixin(BackgroundRenderer.class)
 public class BackgroundRendererMixin {

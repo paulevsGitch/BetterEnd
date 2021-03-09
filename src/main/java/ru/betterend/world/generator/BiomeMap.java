@@ -8,7 +8,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.gen.ChunkRandom;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class BiomeMap {
 	private static final ChunkRandom RANDOM = new ChunkRandom();

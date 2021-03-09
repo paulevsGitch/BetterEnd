@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import net.minecraft.util.Identifier;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class BiomePicker {
 	private final Set<Identifier> immutableIDs = Sets.newHashSet();

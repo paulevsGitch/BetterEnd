@@ -10,11 +10,12 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import ru.betterend.BetterEnd;
-import ru.betterend.world.biome.BiomeDefinition;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.BiomeDefinition;
+import ru.betterend.world.biome.land.EndBiome;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CharniaFeature;
 import ru.betterend.world.features.CrashedShipFeature;
+import ru.betterend.world.features.DefaultFeature;
 import ru.betterend.world.features.DoublePlantFeature;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLilyFeature;
@@ -43,6 +44,8 @@ import ru.betterend.world.features.terrain.GeyserFeature;
 import ru.betterend.world.features.terrain.IceStarFeature;
 import ru.betterend.world.features.terrain.ObsidianBoulderFeature;
 import ru.betterend.world.features.terrain.ObsidianPillarBasementFeature;
+import ru.betterend.world.features.terrain.SmaragdantCrystalFeature;
+import ru.betterend.world.features.terrain.SmaragdantCrystalShardFeature;
 import ru.betterend.world.features.terrain.SpireFeature;
 import ru.betterend.world.features.terrain.SulphurHillFeature;
 import ru.betterend.world.features.terrain.SulphuricCaveFeature;
@@ -184,6 +187,10 @@ public class EndFeatures {
 	
 	// Mobs
 	public static final EndFeature SILK_MOTH_NEST = EndFeature.makeChansedFeature("silk_moth_nest", new SilkMothNestFeature(), 2);
+	
+	// Caves
+	public static final DefaultFeature SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
+	public static final DefaultFeature SMARAGDANT_CRYSTAL_SHARD = new SmaragdantCrystalShardFeature();
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {

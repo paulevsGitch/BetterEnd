@@ -14,7 +14,7 @@ import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.TagHelper;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class BYGIntegration extends ModIntegration {
 	public BYGIntegration() {

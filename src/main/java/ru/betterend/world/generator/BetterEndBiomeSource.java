@@ -19,7 +19,7 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.FeaturesHelper;
-import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.biome.land.EndBiome;
 
 public class BetterEndBiomeSource extends BiomeSource {
 	public static final Codec<BetterEndBiomeSource> CODEC = RecordCodecBuilder.create((instance) -> {

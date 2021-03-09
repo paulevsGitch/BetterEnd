@@ -4,11 +4,19 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidFillable;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -20,28 +28,61 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties;
+import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.Patterns;
 
-public class StalactiteBlock extends BlockBaseNotFull {
+public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, FluidFillable, IRenderTypeable {
+	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
 	public static final IntProperty SIZE = BlockProperties.SIZE;
 	private static final Mutable POS = new Mutable();
 	private static final VoxelShape[] SHAPES;
-	private final Block source;
 
 	public StalactiteBlock(Block source) {
 		super(FabricBlockSettings.copy(source).nonOpaque());
-		this.setDefaultState(getStateManager().getDefaultState().with(SIZE, 0));
-		this.source = source;
+		this.setDefaultState(getStateManager().getDefaultState().with(SIZE, 0).with(IS_FLOOR, true).with(WATERLOGGED, false));
 	}
 
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
-		stateManager.add(SIZE);
+		stateManager.add(WATERLOGGED, IS_FLOOR, SIZE);
 	}
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
 		return SHAPES[state.get(SIZE)];
+	}
+	
+	@Override
+	public BlockState getPlacementState(ItemPlacementContext ctx) {
+		WorldView worldView = ctx.getWorld();
+		BlockPos blockPos = ctx.getBlockPos();
+		Direction dir = ctx.getSide();
+		boolean water = worldView.getFluidState(blockPos).getFluid() == Fluids.WATER;
+		
+		if (dir == Direction.UP) {
+			if (sideCoversSmallSquare(worldView, blockPos.up(), Direction.DOWN)) {
+				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
+			}
+			else if (sideCoversSmallSquare(worldView, blockPos.down(), Direction.UP)) {
+				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
+			}
+			else {
+				return null;
+			}
+		}
+		else {
+			if (sideCoversSmallSquare(worldView, blockPos.up(), Direction.DOWN)) {
+				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
+			}
+			else if (sideCoversSmallSquare(worldView, blockPos.down(), Direction.UP)) {
+				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
+			}
+			else {
+				return null;
+			}
+		}
 	}
 
 	@Override
@@ -55,7 +96,7 @@ public class StalactiteBlock extends BlockBaseNotFull {
 					BlockState state2 = world.getBlockState(POS);
 					int size = state2.get(SIZE);
 					if (size < i) {
-						world.setBlockState(POS, state2.with(SIZE, i));
+						world.setBlockState(POS, state2.with(SIZE, i).with(IS_FLOOR, true));
 					}
 					else {
 						break;
@@ -75,7 +116,7 @@ public class StalactiteBlock extends BlockBaseNotFull {
 					BlockState state2 = world.getBlockState(POS);
 					int size = state2.get(SIZE);
 					if (size < i) {
-						world.setBlockState(POS, state2.with(SIZE, i));
+						world.setBlockState(POS, state2.with(SIZE, i).with(IS_FLOOR, false));
 					}
 					else {
 						break;
@@ -94,18 +135,29 @@ public class StalactiteBlock extends BlockBaseNotFull {
 			return Blocks.AIR.getDefaultState();
 		}
 		else {
+			if (checkUp(world, neighborPos, state.get(SIZE))) {
+				state = state.with(IS_FLOOR, false);
+			}
 			return state;
 		}
 	}
 
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		BlockState upState = world.getBlockState(pos.up());
-		BlockState downState = world.getBlockState(pos.down());
 		int size = state.get(SIZE);
-		boolean validUp = (upState.isOf(this) && upState.get(SIZE) >= size) || upState.isFullCube(world, pos.up());
-		boolean validDown = (downState.isOf(this) && downState.get(SIZE) >= size) || downState.isFullCube(world, pos.down());
-		return validUp || validDown;
+		return checkUp(world, pos, size) || checkDown(world, pos, size);
+	}
+	
+	private boolean checkUp(BlockView world, BlockPos pos, int size) {
+		BlockPos p = pos.up();
+		BlockState state = world.getBlockState(p);
+		return (state.getBlock() instanceof StalactiteBlock && state.get(SIZE) >= size) || state.isFullCube(world, p);
+	}
+	
+	private boolean checkDown(BlockView world, BlockPos pos, int size) {
+		BlockPos p = pos.down();
+		BlockState state = world.getBlockState(p);
+		return (state.getBlock() instanceof StalactiteBlock && state.get(SIZE) >= size) || state.isFullCube(world, p);
 	}
 	
 	@Override
@@ -114,14 +166,32 @@ public class StalactiteBlock extends BlockBaseNotFull {
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());
 		}
-		blockId = Registry.BLOCK.getId(source);
-		int shape = Character.getNumericValue(block.charAt(block.lastIndexOf('_') + 1));
-		return Patterns.createJson(Patterns.BLOCKS_STALACTITE[shape], blockId.getNamespace() + ":block/" + blockId.getPath());
+		return Patterns.createJson(Patterns.BLOCK_CROSS_SHADED, block);
 	}
 	
 	@Override
 	public Identifier statePatternId() {
 		return Patterns.STATE_STALACTITE;
+	}
+	
+	@Override
+	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+		return false;
+	}
+
+	@Override
+	public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+		return false;
+	}
+	
+	@Override
+	public FluidState getFluidState(BlockState state) {
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+	}
+
+	@Override
+	public ERenderLayer getRenderLayer() {
+		return ERenderLayer.CUTOUT;
 	}
 
 	static {

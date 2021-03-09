@@ -109,7 +109,7 @@ public abstract class FeatureSaplingBlock extends BlockBaseNotFull implements Fe
 			block = block.split("/")[1];
 			return Patterns.createJson(Patterns.ITEM_BLOCK, block);
 		}
-		return Patterns.createJson(Patterns.BLOCK_SAPLING, block);
+		return Patterns.createJson(Patterns.BLOCK_CROSS, block);
 	}
 	
 	@Override

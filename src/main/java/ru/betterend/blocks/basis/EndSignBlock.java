@@ -102,8 +102,7 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	}
 
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer,
-			ItemStack itemStack) {
+	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
 		if (placer != null && placer instanceof PlayerEntity) {
 			ESignBlockEntity sign = (ESignBlockEntity) world.getBlockEntity(pos);
 			if (!world.isClient) {
@@ -124,7 +123,7 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 		}
 		return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 	}
-	
+
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		if (!state.get(FLOOR)) {
@@ -143,7 +142,8 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 			return this.getDefaultState().with(FLOOR, true)
 					.with(ROTATION, MathHelper.floor((180.0 + ctx.getPlayerYaw() * 16.0 / 360.0) + 0.5 - 12) & 15)
 					.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-		} else if (ctx.getSide() != Direction.DOWN) {
+		}
+		else if (ctx.getSide() != Direction.DOWN) {
 			BlockState blockState = this.getDefaultState();
 			FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 			WorldView worldView = ctx.getWorld();

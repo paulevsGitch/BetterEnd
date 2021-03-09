@@ -71,7 +71,8 @@ public class Patterns {
 	public final static Identifier BLOCK_DOOR_TOP_HINGE = BetterEnd.makeID("patterns/block/door_top_hinge.json");
 	public final static Identifier BLOCK_DOOR_BOTTOM = BetterEnd.makeID("patterns/block/door_bottom.json");
 	public final static Identifier BLOCK_DOOR_BOTTOM_HINGE = BetterEnd.makeID("patterns/block/door_bottom_hinge.json");
-	public final static Identifier BLOCK_SAPLING = BetterEnd.makeID("patterns/block/sapling.json");
+	public final static Identifier BLOCK_CROSS = BetterEnd.makeID("patterns/block/cross.json");
+	public final static Identifier BLOCK_CROSS_SHADED = BetterEnd.makeID("patterns/block/cross_shaded.json");
 	public final static Identifier BLOCK_GATE_CLOSED = BetterEnd.makeID("patterns/block/fence_gate_closed.json");
 	public final static Identifier BLOCK_GATE_CLOSED_WALL = BetterEnd.makeID("patterns/block/wall_gate_closed.json");
 	public final static Identifier BLOCK_GATE_OPEN = BetterEnd.makeID("patterns/block/fence_gate_open.json");
@@ -104,17 +105,6 @@ public class Patterns {
 	public final static Identifier BLOCK_FURNACE_GLOW = BetterEnd.makeID("patterns/block/furnace_glow.json");
 	public final static Identifier BLOCK_TOP_SIDE_BOTTOM = BetterEnd.makeID("patterns/block/top_side_bottom.json");
 	public final static Identifier BLOCK_PATH = BetterEnd.makeID("patterns/block/path.json");
-	
-	public final static Identifier[] BLOCKS_STALACTITE = new Identifier[] {
-		BetterEnd.makeID("patterns/block/stalactite_0.json"),
-		BetterEnd.makeID("patterns/block/stalactite_1.json"),
-		BetterEnd.makeID("patterns/block/stalactite_2.json"),
-		BetterEnd.makeID("patterns/block/stalactite_3.json"),
-		BetterEnd.makeID("patterns/block/stalactite_4.json"),
-		BetterEnd.makeID("patterns/block/stalactite_5.json"),
-		BetterEnd.makeID("patterns/block/stalactite_6.json"),
-		BetterEnd.makeID("patterns/block/stalactite_7.json")
-	};
 	
 	//Models Item
 	public final static Identifier ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");

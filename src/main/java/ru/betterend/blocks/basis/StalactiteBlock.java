@@ -21,6 +21,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -195,9 +196,12 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 	}
 
 	static {
+		float end = 2F / 8F;
+		float start = 5F / 8F;
 		SHAPES = new VoxelShape[8];
 		for (int i = 0; i < 8; i++) {
-			SHAPES[i] = Block.createCuboidShape(7 - i, 0, 7 - i, 9 + i, 16, 9 + i);
+			int side = MathHelper.floor(MathHelper.lerp(i / 7F, start, end) * 8F + 0.5F);
+			SHAPES[i] = Block.createCuboidShape(side, 0, side, 16 - side, 16, 16 - side);
 		}
 	}
 }

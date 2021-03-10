@@ -34,7 +34,7 @@ public class StalactiteFeature extends DefaultFeature {
 		}
 		
 		Mutable mut = new Mutable().set(pos);
-		int height = random.nextInt(8);
+		int height = random.nextInt(16);
 		int dir = ceiling ? -1 : 1;
 		boolean stalagnate = false;
 		
@@ -43,15 +43,19 @@ public class StalactiteFeature extends DefaultFeature {
 			BlockState state = world.getBlockState(mut);
 			if (!state.getMaterial().isReplaceable()) {
 				stalagnate = state.isIn(EndTags.GEN_TERRAIN);
-				height = i - 1;
+				height = i;
 				break;
 			}
 		}
 		
-		int center = stalagnate ? height >> 1 : 0;
+		if (!stalagnate && height > 7) {
+			height = random.nextInt(8);
+		}
+		
+		float center = height * 0.5F;
 		for (int i = 0; i < height; i++) {
 			mut.setY(pos.getY() + i * dir);
-			int size = stalagnate ? MathHelper.abs(i - center) + 1 : height - i - 1;
+			int size = stalagnate ? MathHelper.clamp((int) (MathHelper.abs(i - center) + 1), 1, 7) : height - i - 1;
 			boolean waterlogged = !world.getFluidState(mut).isEmpty();
 			BlockState base = block.getDefaultState().with(StalactiteBlock.SIZE, size).with(Properties.WATERLOGGED, waterlogged);
 			BlockState state = stalagnate ? base.with(StalactiteBlock.IS_FLOOR, dir > 0 ? i < center : i > center) : base.with(StalactiteBlock.IS_FLOOR, dir > 0);

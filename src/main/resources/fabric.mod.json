@@ -11,6 +11,7 @@
 	],
 	"contact": {
 		"homepage": "https://www.curseforge.com/minecraft/mc-mods/betterend",
+		"issues": "https://github.com/paulevsGitch/BetterEnd/issues",
 		"sources": "https://github.com/paulevsGitch/BetterEnd"
 	},
 

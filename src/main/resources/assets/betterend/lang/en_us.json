@@ -84,8 +84,8 @@
 	"item.minecraft.splash_potion.effect.long_end_veil": "Splash Potion Of End Veil",
 	"item.minecraft.lingering_potion.effect.end_veil": "Lingering Potion Of End Veil",
 	"item.minecraft.lingering_potion.effect.long_end_veil": "Lingering Potion Of End Veil",
-	"item.minecraft.tipped_arrow.effect.end_veil": "ARrow Of End Veil",
-	"item.minecraft.tipped_arrow.effect.long_end_veil": "ARrow Of End Veil",
+	"item.minecraft.tipped_arrow.effect.end_veil": "Arrow Of End Veil",
+	"item.minecraft.tipped_arrow.effect.long_end_veil": "Arrow Of End Veil",
 	
 	"block.betterend.mossy_glowshroom_sapling": "Mossy Glowshroom Sapling",
 	"block.betterend.mossy_glowshroom_cap": "Mossy Glowshroom Cap",
@@ -315,7 +315,7 @@
 	"block.betterend.purpur_lantern": "Purpur Lantern",
 	"block.betterend.quartz_lantern": "Quartz Lantern",
 	
-	"item.betterend.bucket_end_fish": "End Fish Bucket",
+	"item.betterend.bucket_end_fish": "Bucket of End Fish",
 	"item.betterend.end_fish_cooked": "Cooked End Fish",
 	"item.betterend.end_fish_raw": "End Fish",
 	

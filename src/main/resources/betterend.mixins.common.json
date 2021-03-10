@@ -6,7 +6,6 @@
 	"mixins": [
 		"EnchantmentScreenHandlerMixin",
 		"PlayerAdvancementTrackerMixin",
-		"ServerPlayNetworkHandlerMixin",
 		"CraftingScreenHandlerMixin",
 		"GenerationSettingsAccessor",
 		"NoiseChunkGeneratorMixin",

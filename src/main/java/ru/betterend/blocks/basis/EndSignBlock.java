@@ -15,7 +15,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -25,13 +24,10 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -50,16 +46,17 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	public static final IntProperty ROTATION = Properties.ROTATION;
 	public static final BooleanProperty FLOOR = BooleanProperty.of("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
-			Block.createCuboidShape(0.0D, 4.5D, 14.0D, 16.0D, 12.5D, 16.0D),
-			Block.createCuboidShape(0.0D, 4.5D, 0.0D, 2.0D, 12.5D, 16.0D),
-			Block.createCuboidShape(0.0D, 4.5D, 0.0D, 16.0D, 12.5D, 2.0D),
-			Block.createCuboidShape(14.0D, 4.5D, 0.0D, 16.0D, 12.5D, 16.0D) };
+		Block.createCuboidShape(0.0D, 4.5D, 14.0D, 16.0D, 12.5D, 16.0D),
+		Block.createCuboidShape(0.0D, 4.5D, 0.0D, 2.0D, 12.5D, 16.0D),
+		Block.createCuboidShape(0.0D, 4.5D, 0.0D, 16.0D, 12.5D, 2.0D),
+		Block.createCuboidShape(14.0D, 4.5D, 0.0D, 16.0D, 12.5D, 16.0D)
+	};
 
 	private final Block parent;
 	
 	public EndSignBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).strength(1.0F, 1.0F).noCollision().nonOpaque(), SignType.OAK);
-		this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0).with(FLOOR, true).with(WATERLOGGED, false));
+		this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0).with(FLOOR, false).with(WATERLOGGED, false));
 		this.parent = source;
 	}
 
@@ -77,30 +74,7 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	public BlockEntity createBlockEntity(BlockView world) {
 		return new ESignBlockEntity();
 	}
-
-	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ItemStack itemStack = player.getStackInHand(hand);
-		boolean bl = itemStack.getItem() instanceof DyeItem && player.abilities.allowModifyWorld;
-		if (world.isClient) {
-			return bl ? ActionResult.SUCCESS : ActionResult.CONSUME;
-		} else {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof ESignBlockEntity) {
-				ESignBlockEntity signBlockEntity = (ESignBlockEntity) blockEntity;
-				if (bl) {
-					boolean bl2 = signBlockEntity.setTextColor(((DyeItem) itemStack.getItem()).getColor());
-					if (bl2 && !player.isCreative()) {
-						itemStack.decrement(1);
-					}
-				}
-				return signBlockEntity.onActivate(player) ? ActionResult.SUCCESS : ActionResult.PASS;
-			} else {
-				return ActionResult.PASS;
-			}
-		}
-	}
-
+	
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
 		if (placer != null && placer instanceof PlayerEntity) {
@@ -108,8 +82,10 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 			if (!world.isClient) {
 				sign.setEditor((PlayerEntity) placer);
 				((ServerPlayerEntity) placer).networkHandler.sendPacket(new SignEditorOpenS2CPacket(pos));
-			} else
+			}
+			else {
 				sign.setEditable(true);
+			}
 		}
 	}
 
@@ -149,14 +125,12 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 			WorldView worldView = ctx.getWorld();
 			BlockPos blockPos = ctx.getBlockPos();
 			Direction[] directions = ctx.getPlacementDirections();
-			Direction[] var7 = directions;
-			int var8 = directions.length;
 
-			for (int var9 = 0; var9 < var8; ++var9) {
-				Direction direction = var7[var9];
+			for (int i = 0; i < directions.length; ++i) {
+				Direction direction = directions[i];
 				if (direction.getAxis().isHorizontal()) {
-					Direction direction2 = direction.getOpposite();
-					int rot = MathHelper.floor((180.0 + direction2.asRotation() * 16.0 / 360.0) + 0.5 + 4) & 15;
+					Direction dir = direction.getOpposite();
+					int rot = MathHelper.floor((180.0 + dir.asRotation() * 16.0 / 360.0) + 0.5 + 4) & 15;
 					blockState = blockState.with(ROTATION, rot);
 					if (blockState.canPlaceAt(worldView, blockPos)) {
 						return blockState.with(FLOOR, false).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);

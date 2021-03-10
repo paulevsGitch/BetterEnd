@@ -103,6 +103,7 @@ import ru.betterend.blocks.basis.EndCropBlock;
 import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
 import ru.betterend.blocks.basis.EndOreBlock;
+import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
 import ru.betterend.blocks.basis.FurBlock;
@@ -375,7 +376,8 @@ public class EndBlocks {
 			return block;
 		}
 		Registry.register(Registry.BLOCK, id, block);
-		EndItems.registerBlockItem(id, new BlockItem(block, EndItems.makeBlockItemSettings()));
+		int maxCount = block instanceof EndSignBlock ? 16 : 64;
+		EndItems.registerBlockItem(id, new BlockItem(block, EndItems.makeBlockItemSettings().maxCount(maxCount)));
 		return block;
 	}
 	

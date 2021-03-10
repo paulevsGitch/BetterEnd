@@ -6,8 +6,8 @@ import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 
-public class BiomeCrystalMountains extends EndBiome {
-	public BiomeCrystalMountains() {
+public class CrystalMountainsBiome extends EndBiome {
+	public CrystalMountainsBiome() {
 		super(new BiomeDefinition("crystal_mountains")
 				.setPlantsColor(255, 133, 211)
 				.setSurface(EndBlocks.CRYSTAL_MOSS)

@@ -8,8 +8,8 @@ import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
-public class BiomeShadowForest extends EndBiome {
-	public BiomeShadowForest() {
+public class ShadowForestBiome extends EndBiome {
+	public ShadowForestBiome() {
 		super(new BiomeDefinition("shadow_forest")
 				.setFogColor(0, 0, 0)
 				.setFogDensity(2.5F)

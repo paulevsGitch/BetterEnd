@@ -7,8 +7,8 @@ import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 
-public class BiomeUmbrellaJungle extends EndBiome {
-	public BiomeUmbrellaJungle() {
+public class UmbrellaJungleBiome extends EndBiome {
+	public UmbrellaJungleBiome() {
 		super(new BiomeDefinition("umbrella_jungle")
 				.setFogColor(87, 223, 221)
 				.setWaterAndFogColor(119, 198, 253)

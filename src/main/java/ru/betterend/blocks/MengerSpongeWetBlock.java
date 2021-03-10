@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -79,9 +80,14 @@ public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTyp
 		}
 	}
 	
-	@Override
+	/*@Override
 	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		world.breakBlock(pos, !player.isCreative());
+		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
+	}*/
+	
+	@Override
+	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
 	}
 	

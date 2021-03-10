@@ -10,8 +10,8 @@ import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
-public class BiomeChorusForest extends EndBiome {
-	public BiomeChorusForest() {
+public class ChorusForestBiome extends EndBiome {
+	public ChorusForestBiome() {
 		super(new BiomeDefinition("chorus_forest")
 				.setFogColor(87, 26, 87)
 				.setFogDensity(1.5F)

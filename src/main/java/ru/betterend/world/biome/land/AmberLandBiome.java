@@ -8,8 +8,8 @@ import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 
-public class BiomeAmberLand extends EndBiome {
-	public BiomeAmberLand() {
+public class AmberLandBiome extends EndBiome {
+	public AmberLandBiome() {
 		super(new BiomeDefinition("amber_land")
 				.setFogColor(255, 184, 71)
 				.setFogDensity(2.0F)

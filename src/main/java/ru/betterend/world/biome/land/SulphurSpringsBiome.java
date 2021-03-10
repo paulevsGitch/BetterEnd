@@ -7,8 +7,8 @@ import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.surface.SurfaceBuilders;
 
-public class BiomeSulphurSprings extends EndBiome {
-	public BiomeSulphurSprings() {
+public class SulphurSpringsBiome extends EndBiome {
+	public SulphurSpringsBiome() {
 		super(new BiomeDefinition("sulphur_springs")
 				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE)
 				.setMusic(EndSounds.MUSIC_OPENSPACE)

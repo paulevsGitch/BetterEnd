@@ -9,8 +9,8 @@ import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 
-public class BiomeFoggyMushroomland extends EndBiome {
-	public BiomeFoggyMushroomland() {
+public class FoggyMushroomlandBiome extends EndBiome {
+	public FoggyMushroomlandBiome() {
 		super(new BiomeDefinition("foggy_mushroomland")
 				.setPlantsColor(73, 210, 209)
 				.setFogColor(41, 122, 173)

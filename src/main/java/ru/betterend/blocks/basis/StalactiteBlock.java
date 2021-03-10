@@ -37,7 +37,6 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
 	public static final IntProperty SIZE = BlockProperties.SIZE;
-	private static final Mutable POS = new Mutable();
 	private static final VoxelShape[] SHAPES;
 
 	public StalactiteBlock(Block source) {
@@ -57,16 +56,19 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 	
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		WorldView worldView = ctx.getWorld();
-		BlockPos blockPos = ctx.getBlockPos();
+		WorldView world = ctx.getWorld();
+		BlockPos pos = ctx.getBlockPos();
 		Direction dir = ctx.getSide();
-		boolean water = worldView.getFluidState(blockPos).getFluid() == Fluids.WATER;
+		boolean water = world.getFluidState(pos).getFluid() == Fluids.WATER;
 		
-		if (dir == Direction.UP) {
-			if (sideCoversSmallSquare(worldView, blockPos.up(), Direction.DOWN)) {
+		if (dir == Direction.DOWN) {
+			System.out.println("Check up!");
+			if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
+				System.out.println("Up true!");
 				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
 			}
-			else if (sideCoversSmallSquare(worldView, blockPos.down(), Direction.UP)) {
+			else if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
+				System.out.println("Up false!");
 				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
 			}
 			else {
@@ -74,11 +76,14 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 			}
 		}
 		else {
-			if (sideCoversSmallSquare(worldView, blockPos.up(), Direction.DOWN)) {
-				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
-			}
-			else if (sideCoversSmallSquare(worldView, blockPos.down(), Direction.UP)) {
+			System.out.println("Check down!");
+			if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
+				System.out.println("Down true!");
 				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
+			}
+			else if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
+				System.out.println("Down false!");
+				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
 			}
 			else {
 				return null;
@@ -88,16 +93,44 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		if (world.getBlockState(pos.down()).getBlock() instanceof StalactiteBlock) {
-			POS.setX(pos.getX());
-			POS.setZ(pos.getZ());
+		boolean hasUp = isThis(world, pos.up());
+		boolean hasDown = isThis(world, pos.down());
+		Mutable mut = new Mutable();
+		if (hasUp && hasDown) {
+			boolean floor = state.get(IS_FLOOR);
+			BlockPos second = floor ? pos.up() : pos.down();
+			BlockState bState = world.getBlockState(second);
+			world.setBlockState(pos, state.with(SIZE, 1).with(IS_FLOOR, floor));
+			world.setBlockState(second, bState.with(SIZE, 1).with(IS_FLOOR, !floor));
+			
+			bState = state;
+			int startSize = floor ? 1 : 2;
+			mut.set(pos.getX(), pos.getY() + 1, pos.getZ());
+			for (int i = 0; i < 8 && isThis(bState); i++) {
+				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, false));
+				mut.setY(mut.getY() + 1);
+				bState = world.getBlockState(mut);
+			}
+			
+			bState = state;
+			startSize = floor ? 2 : 1;
+			mut.set(pos.getX(), pos.getY() - 1, pos.getZ());
+			for (int i = 0; i < 8 && isThis(bState); i++) {
+				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, true));
+				mut.setY(mut.getY() - 1);
+				bState = world.getBlockState(mut);
+			}
+		}
+		else if (hasDown) {
+			mut.setX(pos.getX());
+			mut.setZ(pos.getZ());
 			for (int i = 1; i < 8; i++) {
-				POS.setY(pos.getY() - i);
-				if (world.getBlockState(POS).getBlock() instanceof StalactiteBlock) {
-					BlockState state2 = world.getBlockState(POS);
+				mut.setY(pos.getY() - i);
+				if (isThis(world, mut)) {
+					BlockState state2 = world.getBlockState(mut);
 					int size = state2.get(SIZE);
 					if (size < i) {
-						world.setBlockState(POS, state2.with(SIZE, i).with(IS_FLOOR, true));
+						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, true));
 					}
 					else {
 						break;
@@ -108,16 +141,16 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 				}
 			}
 		}
-		if (world.getBlockState(pos.up()).getBlock() instanceof StalactiteBlock) {
-			POS.setX(pos.getX());
-			POS.setZ(pos.getZ());
+		else if (hasUp) {
+			mut.setX(pos.getX());
+			mut.setZ(pos.getZ());
 			for (int i = 1; i < 8; i++) {
-				POS.setY(pos.getY() + i);
-				if (world.getBlockState(POS).getBlock() instanceof StalactiteBlock) {
-					BlockState state2 = world.getBlockState(POS);
+				mut.setY(pos.getY() + i);
+				if (isThis(world, mut)) {
+					BlockState state2 = world.getBlockState(mut);
 					int size = state2.get(SIZE);
 					if (size < i) {
-						world.setBlockState(POS, state2.with(SIZE, i).with(IS_FLOOR, false));
+						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, false));
 					}
 					else {
 						break;
@@ -130,17 +163,20 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 		}
 	}
 	
+	private boolean isThis(WorldView world, BlockPos pos) {
+		return isThis(world.getBlockState(pos));
+	}
+	
+	private boolean isThis(BlockState state) {
+		return state.getBlock() instanceof StalactiteBlock;
+	}
+	
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (!canPlaceAt(state, world, pos)) {
 			return Blocks.AIR.getDefaultState();
 		}
-		else {
-			if (checkUp(world, neighborPos, state.get(SIZE))) {
-				state = state.with(IS_FLOOR, false);
-			}
-			return state;
-		}
+		return state;
 	}
 
 	@Override
@@ -152,13 +188,13 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 	private boolean checkUp(BlockView world, BlockPos pos, int size) {
 		BlockPos p = pos.up();
 		BlockState state = world.getBlockState(p);
-		return (state.getBlock() instanceof StalactiteBlock && state.get(SIZE) >= size) || state.isFullCube(world, p);
+		return (isThis(state) && state.get(SIZE) >= size) || state.isFullCube(world, p);
 	}
 	
 	private boolean checkDown(BlockView world, BlockPos pos, int size) {
 		BlockPos p = pos.down();
 		BlockState state = world.getBlockState(p);
-		return (state.getBlock() instanceof StalactiteBlock && state.get(SIZE) >= size) || state.isFullCube(world, p);
+		return (isThis(state) && state.get(SIZE) >= size) || state.isFullCube(world, p);
 	}
 	
 	@Override

@@ -279,7 +279,11 @@ public class EndBlocks {
 	public static final Block AMARANITA_CAP = registerBlock("amaranita_cap", new AmaranitaCapBlock());
 	
 	// Crops
+	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new ShadowBerryBlock());
 	public static final Block BLOSSOM_BERRY = registerBlock("blossom_berry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, PINK_MOSS));
+	public static final Block AMBER_ROOT = registerBlock("amber_root_seed", new EndCropBlock(EndItems.AMBER_ROOT_RAW, AMBER_MOSS));
+	public static final Block CHORUS_MUSHROOM = registerBlock("chorus_mushroom_seed", new EndCropBlock(EndItems.CHORUS_MUSHROOM_RAW, CHORUS_NYLIUM));
+	public static final Block PEARLBERRY = registerBlock("pearlberry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, END_MOSS, END_MYCELIUM));
 	
 	// Water plants
 	public static final Block BUBBLE_CORAL = registerBlock("bubble_coral", new BubbleCoralBlock());
@@ -313,9 +317,6 @@ public class EndBlocks {
 	public static final Block TUBE_WORM = registerBlock("tube_worm", new EndUnderwaterWallPlantBlock());
 	public static final Block BULB_MOSS = registerBlock("bulb_moss", new EndWallPlantBlock(12));
 	public static final Block JUNGLE_FERN = registerBlock("jungle_fern", new EndWallPlantBlock());
-	
-	// Crops //
-	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new ShadowBerryBlock());
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new VineBlock(15, true));

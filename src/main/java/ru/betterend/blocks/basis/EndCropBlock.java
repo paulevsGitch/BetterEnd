@@ -12,6 +12,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
@@ -24,12 +25,14 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class EndCropBlock extends EndPlantBlock {
+	private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 14, 14);
 	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
 	
 	private final Block[] terrain;
@@ -101,14 +104,19 @@ public class EndCropBlock extends EndPlantBlock {
 	
 	@Override
 	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-		return random.nextInt(8) == 0 && state.get(AGE) < 3;
+		return state.get(AGE) < 3;
 	}
 	
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
-		if (canGrow(world, random, pos, state)) {
+		if (canGrow(world, random, pos, state) && random.nextInt(8) == 0) {
 			grow(world, random, pos, state);
 		}
+	}
+	
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
+		return SHAPE;
 	}
 }

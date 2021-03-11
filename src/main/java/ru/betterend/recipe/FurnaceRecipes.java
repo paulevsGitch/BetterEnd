@@ -14,5 +14,6 @@ public class FurnaceRecipes {
 		FurnaceRecipe.make("end_fish", EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED).build();
 		FurnaceRecipe.make("slime_ball", EndBlocks.JELLYSHROOM_CAP_PURPLE, Items.SLIME_BALL).build();
 		FurnaceRecipe.make("menger_sponge", EndBlocks.MENGER_SPONGE_WET, EndBlocks.MENGER_SPONGE).build();
+		FurnaceRecipe.make("chorus_mushroom", EndItems.CHORUS_MUSHROOM_RAW, EndItems.CHORUS_MUSHROOM_COOKED).build();
 	}
 }

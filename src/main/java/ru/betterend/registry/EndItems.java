@@ -117,6 +117,9 @@ public class EndItems {
 	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 6, 0.75F);
 	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 7, 0.75F, new StatusEffectInstance(StatusEffects.NIGHT_VISION, 400));
 	public final static Item BLOSSOM_BERRY = registerFood("blossom_berry", FoodComponents.APPLE);
+	public final static Item AMBER_ROOT_RAW = registerFood("amber_root_raw", 2, 0.8F);
+	public final static Item CHORUS_MUSHROOM_RAW = registerFood("chorus_mushroom_raw", 3, 0.5F);
+	public final static Item CHORUS_MUSHROOM_COOKED = registerFood("chorus_mushroom_cooked", FoodComponents.MUSHROOM_STEW);
 	
 	// Drinks //
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);

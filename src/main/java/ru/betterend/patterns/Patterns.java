@@ -46,6 +46,7 @@ public class Patterns {
 	public final static Identifier STATE_CHANDELIER = BetterEnd.makeID("patterns/blockstate/chandelier.json");
 	public final static Identifier STATE_FURNACE = BetterEnd.makeID("patterns/blockstate/furnace.json");
 	public final static Identifier STATE_ROTATED_TOP = BetterEnd.makeID("patterns/blockstate/rotated_top.json");
+	public final static Identifier STATE_TRIPLE_ROTATED_TOP = BetterEnd.makeID("patterns/blockstate/triple_rotated_top.json");
 	public final static Identifier STATE_STALACTITE = BetterEnd.makeID("patterns/blockstate/stalactite.json");
 	
 	//Models Block

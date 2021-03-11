@@ -79,7 +79,7 @@ public class EndTerrainBlock extends BlockBase {
 		}
 	}
 	
-	public static boolean canSurvive(BlockState state, WorldView worldView, BlockPos pos) {
+	protected boolean canSurvive(BlockState state, WorldView worldView, BlockPos pos) {
 		BlockPos blockPos = pos.up();
 		BlockState blockState = worldView.getBlockState(blockPos);
 		if (blockState.isOf(Blocks.SNOW) && (Integer) blockState.get(SnowBlock.LAYERS) == 1) {

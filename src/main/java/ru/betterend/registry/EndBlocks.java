@@ -110,6 +110,7 @@ import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.StalactiteBlock;
 import ru.betterend.blocks.basis.StoneLanternBlock;
+import ru.betterend.blocks.basis.TripleTerrainBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.blocks.basis.WallMushroomBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
@@ -126,7 +127,7 @@ public class EndBlocks {
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new EndTerrainBlock(MaterialColor.LIGHT_BLUE));
 	public static final Block END_MOSS = registerBlock("end_moss", new EndTerrainBlock(MaterialColor.CYAN));
 	public static final Block CHORUS_NYLIUM = registerBlock("chorus_nylium", new EndTerrainBlock(MaterialColor.MAGENTA));
-	public static final Block CAVE_MOSS = registerBlock("cave_moss", new EndTerrainBlock(MaterialColor.PURPLE));
+	public static final Block CAVE_MOSS = registerBlock("cave_moss", new TripleTerrainBlock(MaterialColor.PURPLE));
 	public static final Block CRYSTAL_MOSS = registerBlock("crystal_moss", new EndTerrainBlock(MaterialColor.PINK));
 	public static final Block SHADOW_GRASS = registerBlock("shadow_grass", new ShadowGrassBlock());
 	public static final Block PINK_MOSS = registerBlock("pink_moss", new EndTerrainBlock(MaterialColor.PINK));
@@ -322,6 +323,7 @@ public class EndBlocks {
 	public static final Block BULB_VINE_SEED = registerBlock("bulb_vine_seed", new BulbVineSeedBlock());
 	public static final Block BULB_VINE = registerBlock("bulb_vine", new BulbVineBlock());
 	public static final Block JUNGLE_VINE = registerBlock("jungle_vine", new VineBlock());
+	public static final Block RUBINEA = registerBlock("rubinea", new VineBlock());
 	
 	// Mob-Related
 	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new SilkMothNestBlock()); 

@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
+	id 'fabric-loom' version '0.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -15,6 +15,7 @@ repositories {
     maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
 	maven { url "https://maven.fabricmc.net/" }
 	maven { url 'https://maven.blamejared.com' }
+	maven { url "https://maven.shedaniel.me/" }
 	maven { url 'https://jitpack.io' }
 	jcenter()
 }
@@ -27,7 +28,7 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
-	useApi "vazkii.patchouli:Patchouli:${project.minecraft_version}-${project.patchouli_version}"
+	useApi "vazkii.patchouli:Patchouli:1.16.4-${project.patchouli_version}"
 	
 	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"

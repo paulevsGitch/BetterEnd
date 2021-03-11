@@ -48,7 +48,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 		System.out.println(block);
 		String name = Registry.BLOCK.getId(this).getPath();
 		if (block.endsWith("_middle")) {
-			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top");
+			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top", name + "_top");
 		}
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%top%", "betterend:block/" + name + "_top");

@@ -9,14 +9,19 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
@@ -63,6 +68,15 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	}
 	
 	@Override
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		TripleShape shape = state.get(SHAPE);
+		if (shape == TripleShape.BOTTOM) {
+			return super.onUse(state, world, pos, player, hand, hit);
+		}
+		return ActionResult.FAIL;
+	}
+	
+	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		TripleShape shape = state.get(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
@@ -77,7 +91,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 				}
 			}
 			else {
-				boolean top = canSurvive(state, world, pos);
+				boolean top = canSurvive(state, world, pos) || isMiddle(world.getBlockState(pos.up()));
 				if (!top && !bottom) {
 					world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 				}
@@ -94,11 +108,18 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	protected boolean canSurviveBottom(WorldView world, BlockPos pos) {
 		BlockPos blockPos = pos.down();
 		BlockState blockState = world.getBlockState(blockPos);
-		if (blockState.getFluidState().getLevel() == 8) {
+		if (isMiddle(blockState)) {
+			return true;
+		}
+		else if (blockState.getFluidState().getLevel() == 8) {
 			return false;
 		}
 		else {
 			return !blockState.isSideSolidFullSquare(world, blockPos, Direction.UP);
 		}
+	}
+	
+	protected boolean isMiddle(BlockState state) {
+		return state.isOf(this) && state.get(SHAPE) == TripleShape.MIDDLE;
 	}
 }

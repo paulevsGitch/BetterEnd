@@ -65,13 +65,13 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		TripleShape shape = state.get(SHAPE);
-		if (shape == TripleShape.TOP) {
+		if (shape == TripleShape.BOTTOM) {
 			super.randomTick(state, world, pos, random);
 			return;
 		}
 		else if (random.nextInt(16) == 0) {
 			boolean bottom = canSurviveBottom(world, pos);
-			if (shape == TripleShape.BOTTOM) {
+			if (shape == TripleShape.TOP) {
 				if (!bottom) {
 					world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 				}
@@ -82,10 +82,10 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 					world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 				}
 				else if (top && !bottom) {
-					world.setBlockState(pos, state.with(SHAPE, TripleShape.TOP));
+					world.setBlockState(pos, state.with(SHAPE, TripleShape.BOTTOM));
 				}
 				else if (!top && bottom) {
-					world.setBlockState(pos, state.with(SHAPE, TripleShape.BOTTOM));
+					world.setBlockState(pos, state.with(SHAPE, TripleShape.TOP));
 				}
 			}
 		}

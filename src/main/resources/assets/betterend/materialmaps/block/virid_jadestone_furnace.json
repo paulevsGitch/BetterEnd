@@ -1,0 +1,10 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/virid_jadestone_furnace_glow",
+				"material": "betterend:glow_all"
+			}
+		]
+	}
+}

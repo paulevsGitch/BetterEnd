@@ -20,8 +20,8 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.patterns.Patterns;
 import ru.betterend.blocks.EndTerrainBlock;
+import ru.betterend.patterns.Patterns;
 
 public class TripleTerrainBlock extends EndTerrainBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;

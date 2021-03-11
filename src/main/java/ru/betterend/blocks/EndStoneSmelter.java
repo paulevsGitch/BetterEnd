@@ -1,9 +1,11 @@
 package ru.betterend.blocks;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -18,6 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
@@ -83,7 +86,18 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this));
+		List<ItemStack> drop = Lists.newArrayList(new ItemStack(this));
+		BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
+		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
+			EndStoneSmelterBlockEntity smelterBlockEntity = (EndStoneSmelterBlockEntity) blockEntity;
+			for (int i = 0; i < smelterBlockEntity.size(); i++) {
+				ItemStack item = smelterBlockEntity.getStack(i);
+				if (!item.isEmpty()) {
+					drop.add(item);
+				}
+			}
+		}
+		return drop;
 	}
 
 	@Override

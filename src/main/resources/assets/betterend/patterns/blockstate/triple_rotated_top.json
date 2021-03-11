@@ -13,7 +13,7 @@
 			{ "model": "betterend:pattern/%block%_middle", "y": 270 }
 		],
 		"shape=top": [
-			{ "model": "betterend:pattern/%block%" },
+			{ "model": "betterend:pattern/%block%", "x": 180 },
 			{ "model": "betterend:pattern/%block%", "x": 180, "y": 90 },
 			{ "model": "betterend:pattern/%block%", "x": 180, "y": 180 },
 			{ "model": "betterend:pattern/%block%", "x": 180, "y": 270 }

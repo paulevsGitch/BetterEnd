@@ -52,31 +52,23 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		Set<BlockPos> caveBlocks = generate(world, center, radius, random);
 		if (!caveBlocks.isEmpty()) {
 			if (biome != null) {
-				boolean fillFloor = biome.getFloorDensity() > 0;
-				boolean fillCeil = biome.getCeilDensity() > 0;
 				setBiomes(world, biome, caveBlocks);
 				Set<BlockPos> floorPositions = Sets.newHashSet();
 				Set<BlockPos> ceilPositions = Sets.newHashSet();
 				Mutable mut = new Mutable();
-				if (fillFloor || fillCeil) {
-					caveBlocks.forEach((bpos) -> {
-						mut.set(bpos);
-						if (world.getBlockState(mut).getMaterial().isReplaceable()) {
-							if (fillFloor) {
-								mut.setY(bpos.getY() - 1);
-								if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
-									floorPositions.add(mut.toImmutable());
-								}
-							}
-							if (fillCeil) {
-								mut.setY(bpos.getY() + 1);
-								if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
-									ceilPositions.add(mut.toImmutable());
-								}
-							}
+				caveBlocks.forEach((bpos) -> {
+					mut.set(bpos);
+					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
+						mut.setY(bpos.getY() - 1);
+						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
+							floorPositions.add(mut.toImmutable());
 						}
-					});
-				}
+						mut.setY(bpos.getY() + 1);
+						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
+							ceilPositions.add(mut.toImmutable());
+						}
+					}
+				});
 				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
 				placeFloor(world, biome, floorPositions, random, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, random);
@@ -90,35 +82,32 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	protected abstract Set<BlockPos> generate(StructureWorldAccess world, BlockPos center, int radius, Random random);
 	
 	protected void placeFloor(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
+		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
-		});
-		
-		float density = biome.getFloorDensity();
-		if (density > 0) {
-			floorPositions.forEach((pos) -> {
-				if (random.nextFloat() <= density) {
-					Feature<?> feature = biome.getFloorFeature(random);
-					if (feature != null) {
-						feature.generate(world, null, random, pos.up(), null);
-					}
+			if (density > 0 && random.nextFloat() <= density) {
+				Feature<?> feature = biome.getFloorFeature(random);
+				if (feature != null) {
+					feature.generate(world, null, random, pos.up(), null);
 				}
-			});
-		}
+			}
+		});
 	}
 	
 	protected void placeCeil(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
 		float density = biome.getCeilDensity();
-		if (density > 0) {
-			ceilPositions.forEach((pos) -> {
-				if (random.nextFloat() <= density) {
-					Feature<?> feature = biome.getCeilFeature(random);
-					if (feature != null) {
-						feature.generate(world, null, random, pos.down(), null);
-					}
+		ceilPositions.forEach((pos) -> {
+			BlockState ceilBlock = biome.getCeil(pos);
+			if (ceilBlock != null) {
+				BlocksHelper.setWithoutUpdate(world, pos, ceilBlock);
+			}
+			if (density > 0 && random.nextFloat() <= density) {
+				Feature<?> feature = biome.getCeilFeature(random);
+				if (feature != null) {
+					feature.generate(world, null, random, pos.down(), null);
 				}
-			});
-		}
+			}
+		});
 	}
 	
 	protected void setBiomes(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> blocks) {

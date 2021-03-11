@@ -197,6 +197,7 @@ public class EndFeatures {
 	public static final DefaultFeature BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
 	public static final DefaultFeature CAVE_BUSH = new BushFeature(EndBlocks.CAVE_BUSH, EndBlocks.CAVE_BUSH);
 	public static final DefaultFeature CAVE_GRASS = new SingleBlockFeature(EndBlocks.CAVE_GRASS);
+	public static final DefaultFeature RUBINEA = new VineFeature(EndBlocks.RUBINEA, 8);
 	public static final DefaultFeature END_STONE_STALACTITE = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
 	public static final DefaultFeature END_STONE_STALAGMITE = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
 	public static final DefaultFeature END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, Blocks.END_STONE, EndBlocks.CAVE_MOSS);

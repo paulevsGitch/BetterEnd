@@ -2,7 +2,9 @@ package ru.betterend.world.biome.cave;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.util.collection.WeightedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.world.biome.land.BiomeDefinition;
 import ru.betterend.world.biome.land.EndBiome;
@@ -37,5 +39,9 @@ public class EndCaveBiome extends EndBiome {
 	
 	public float getCeilDensity() {
 		return 0;
+	}
+	
+	public BlockState getCeil(BlockPos pos) {
+		return null;
 	}
 }

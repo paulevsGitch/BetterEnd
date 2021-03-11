@@ -1,5 +1,9 @@
 package ru.betterend.world.biome.cave;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
+import ru.betterend.blocks.BlockProperties;
+import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -20,10 +24,11 @@ public class LushAuroraCaveBiome extends EndCaveBiome {
 		this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL, 1);
 		this.addFloorFeature(EndFeatures.CAVE_BUSH, 5);
 		this.addFloorFeature(EndFeatures.CAVE_GRASS, 40);
-		this.addFloorFeature(EndFeatures.END_STONE_STALAGMITE_CAVEMOSS, 10);
+		this.addFloorFeature(EndFeatures.END_STONE_STALAGMITE_CAVEMOSS, 5);
 		
 		this.addCeilFeature(EndFeatures.CAVE_BUSH, 1);
-		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE_CAVEMOSS, 20);
+		this.addCeilFeature(EndFeatures.RUBINEA, 3);
+		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE_CAVEMOSS, 10);
 	}
 	
 	@Override
@@ -34,5 +39,10 @@ public class LushAuroraCaveBiome extends EndCaveBiome {
 	@Override
 	public float getCeilDensity() {
 		return 0.1F;
+	}
+	
+	@Override
+	public BlockState getCeil(BlockPos pos) {
+		return EndBlocks.CAVE_MOSS.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
 	}
 }

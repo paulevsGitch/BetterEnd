@@ -36,7 +36,7 @@ public class BushFeature extends DefaultFeature {
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
-		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND)) return false;
+		if (!world.getBlockState(pos.down()).getBlock().isIn(EndTags.END_GROUND) && !world.getBlockState(pos.up()).getBlock().isIn(EndTags.END_GROUND)) return false;
 		
 		float radius = MHelper.randRange(1.8F, 3.5F, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());

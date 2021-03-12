@@ -52,9 +52,9 @@ public class BonemealUtil {
 		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.CLAWFERN);
 		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
 		
-		addBonemealGrass(EndBlocks.MOSSY_BONE, EndBlocks.GLOBULAGUS);
-		addBonemealGrass(EndBlocks.MOSSY_BONE, EndBlocks.CLAWFERN);
-		addBonemealGrass(EndBlocks.MOSSY_BONE, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
+		addBonemealGrass(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.GLOBULAGUS);
+		addBonemealGrass(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.CLAWFERN);
+		addBonemealGrass(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
 		
 		addBonemealGrass(EndBlocks.MOSSY_OBSIDIAN, EndBlocks.GLOBULAGUS);
 		addBonemealGrass(EndBlocks.MOSSY_OBSIDIAN, EndBlocks.CLAWFERN);

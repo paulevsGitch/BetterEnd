@@ -4,6 +4,8 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.item.ItemStack;
@@ -16,6 +18,10 @@ import ru.betterend.patterns.Patterns;
 public class EndPillarBlock extends PillarBlock implements BlockPatterned {
 	public EndPillarBlock(Settings settings) {
 		super(settings);
+	}
+	
+	public EndPillarBlock(Block block) {
+		super(FabricBlockSettings.copyOf(block));
 	}
 	
 	@Override

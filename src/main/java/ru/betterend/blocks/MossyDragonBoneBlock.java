@@ -19,9 +19,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.light.ChunkLightProvider;
 import ru.betterend.blocks.basis.EndPillarBlock;
+import ru.betterend.registry.EndBlocks;
 
-public class MossyBoneBlock extends EndPillarBlock {
-	public MossyBoneBlock() {
+public class MossyDragonBoneBlock extends EndPillarBlock {
+	public MossyDragonBoneBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).hardness(0.5F).ticksRandomly());
 	}
 	
@@ -31,7 +32,7 @@ public class MossyBoneBlock extends EndPillarBlock {
 		if (tool != null && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 			return Collections.singletonList(new ItemStack(this));
 		}
-		return Collections.singletonList(new ItemStack(Blocks.BONE_BLOCK));
+		return Collections.singletonList(new ItemStack(EndBlocks.DRAGON_BONE_BLOCK));
 	}
 	
 	@Override

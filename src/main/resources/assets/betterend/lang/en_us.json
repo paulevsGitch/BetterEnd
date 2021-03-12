@@ -765,5 +765,10 @@
 	"biome.betterend.empty_end_cave": "Empty End Cave",
 	"biome.betterend.empty_smaragdant_cave": "Empty Smaragdant Cave",
 	"biome.betterend.lush_aurora_cave": "Lush Aurora Cave",
-	"biome.betterend.lush_smaragdant_cave": "Lush Smaragdant Cave"
+	"biome.betterend.lush_smaragdant_cave": "Lush Smaragdant Cave",
+	
+	"block.betterend.dragon_bone_block": "Dragon Bone Block",
+	"block.betterend.dragon_bone_slab": "Dragon Bone Slab",
+	"block.betterend.dragon_bone_stairs": "Dragon Bone Stairs",
+	"block.betterend.mossy_dragon_bone": "Mossy Dragon Bone"
 }

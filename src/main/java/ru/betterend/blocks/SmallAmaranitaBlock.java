@@ -22,7 +22,7 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isOf(EndBlocks.SANGNUM) || state.isOf(EndBlocks.MOSSY_OBSIDIAN) || state.isOf(EndBlocks.MOSSY_BONE);
+		return state.isOf(EndBlocks.SANGNUM) || state.isOf(EndBlocks.MOSSY_OBSIDIAN) || state.isOf(EndBlocks.MOSSY_DRAGON_BONE);
 	}
 	
 	@Override

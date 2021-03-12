@@ -785,5 +785,10 @@
 	"biome.betterend.empty_end_cave": "Пустая пещера Энда",
 	"biome.betterend.empty_smaragdant_cave": "Пустая смарагдантовая пещера",
 	"biome.betterend.lush_aurora_cave": "Пышная пещера авроры",
-	"biome.betterend.lush_smaragdant_cave": "Пышная смарагдантовая пещера"
+	"biome.betterend.lush_smaragdant_cave": "Пышная смарагдантовая пещера",
+	
+	"block.betterend.dragon_bone_block": "Блок драконьих костей",
+	"block.betterend.dragon_bone_slab": "Плита из блока драконьих костей",
+	"block.betterend.dragon_bone_stairs": "Ступени из блока драконьих костей",
+	"block.betterend.mossy_dragon_bone": "Замшелые драконьи кости"
 }

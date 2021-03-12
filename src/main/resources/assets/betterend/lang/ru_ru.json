@@ -779,5 +779,11 @@
 	"block.betterend.virid_jadestone_wall": "Стена из зелёного нефрита",
 	"item.betterend.amber_root_raw": "Сырой янтарный корень",
 	"item.betterend.chorus_mushroom_cooked": "Приготовленный хорусовый гриб",
-	"item.betterend.chorus_mushroom_raw": "Сырой хорусовый гриб"
+	"item.betterend.chorus_mushroom_raw": "Сырой хорусовый гриб",
+	
+	"biome.betterend.empty_aurora_cave": "Пустая пещера авроры",
+	"biome.betterend.empty_end_cave": "Пустая пещера Энда",
+	"biome.betterend.empty_smaragdant_cave": "Пустая смарагдантовая пещера",
+	"biome.betterend.lush_aurora_cave": "Пышная пещера авроры",
+	"biome.betterend.lush_smaragdant_cave": "Пышная смарагдантовая пещера"
 }

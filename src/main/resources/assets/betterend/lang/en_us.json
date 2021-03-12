@@ -759,5 +759,11 @@
 	"block.betterend.virid_jadestone_wall": "Virid Jadestone Wall",
 	"item.betterend.amber_root_raw": "Raw Amber Root",
 	"item.betterend.chorus_mushroom_cooked": "Cooked Chorus Mushroom",
-	"item.betterend.chorus_mushroom_raw": "Raw Chorus Mushroom"
+	"item.betterend.chorus_mushroom_raw": "Raw Chorus Mushroom",
+	
+	"biome.betterend.empty_aurora_cave": "Empty Aurora Cave",
+	"biome.betterend.empty_end_cave": "Empty End Cave",
+	"biome.betterend.empty_smaragdant_cave": "Empty Smaragdant Cave",
+	"biome.betterend.lush_aurora_cave": "Lush Aurora Cave",
+	"biome.betterend.lush_smaragdant_cave": "Lush Smaragdant Cave"
 }

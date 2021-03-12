@@ -415,6 +415,7 @@ public class EndBiomes {
 		List<EndBiome> result = Lists.newArrayList();
 		result.addAll(EndBiomes.LAND_BIOMES.getBiomes());
 		result.addAll(EndBiomes.VOID_BIOMES.getBiomes());
+		result.addAll(EndBiomes.CAVE_BIOMES.getBiomes());
 		result.addAll(SUBBIOMES);
 		return result;
 	}

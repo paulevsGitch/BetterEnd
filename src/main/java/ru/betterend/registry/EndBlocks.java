@@ -64,6 +64,7 @@ import ru.betterend.blocks.LacugroveSaplingBlock;
 import ru.betterend.blocks.LanceleafBlock;
 import ru.betterend.blocks.LanceleafSeedBlock;
 import ru.betterend.blocks.LargeAmaranitaBlock;
+import ru.betterend.blocks.FilaluxLanternBlock;
 import ru.betterend.blocks.LumecornBlock;
 import ru.betterend.blocks.LumecornSeedBlock;
 import ru.betterend.blocks.MengerSpongeBlock;
@@ -233,6 +234,10 @@ public class EndBlocks {
 	public static final Block JELLYSHROOM_CAP_PURPLE = registerBlock("jellyshroom_cap_purple", new JellyshroomCapBlock(217, 142, 255, 164, 0, 255));
 	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
 	
+	public static final Block LUCERNIA_SAPLING = registerBlock("lucernia_sapling", new TenaneaSaplingBlock());
+	public static final Block LUCERNIA_LEAVES = registerBlock("lucernia_leaves", new EndLeavesBlock(LUCERNIA_SAPLING, MaterialColor.ORANGE));
+	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.ORANGE, MaterialColor.ORANGE);
+	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new UmbrellaMossBlock());
 	public static final Block UMBRELLA_MOSS_TALL = registerBlock("umbrella_moss_tall", new UmbrellaMossTallBlock());
@@ -331,6 +336,8 @@ public class EndBlocks {
 	public static final Block BULB_VINE = registerBlock("bulb_vine", new BulbVineBlock());
 	public static final Block JUNGLE_VINE = registerBlock("jungle_vine", new VineBlock());
 	public static final Block RUBINEA = registerBlock("rubinea", new VineBlock());
+	public static final Block FILALUX = registerBlock("filalux", new FilaluxBlock());
+	public static final Block FILALUX_LANTERN = registerBlock("filalux_lantern", new FilaluxLanternBlock());
 	
 	// Mob-Related
 	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new SilkMothNestBlock()); 

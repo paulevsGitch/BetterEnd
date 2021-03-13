@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterend:block/filalux_middle" },
+		"shape=middle": { "model": "betterend:block/filalux_middle" },
+		"shape=bottom": { "model": "betterend:block/filalux_bottom" }
+	}
+}

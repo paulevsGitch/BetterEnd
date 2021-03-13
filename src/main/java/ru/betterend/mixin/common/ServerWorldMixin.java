@@ -51,19 +51,23 @@ public class ServerWorldMixin {
 			fix = !dataVersion.equals(version);
 		}
 		else {
-			CompoundTag root = new CompoundTag();
-			root.putString("version", version);
-			try {
-				NbtIo.write(root, beData);
-			}
-			catch (IOException e) {
-				BetterEnd.LOGGER.error("World data saving failed", e);
-			}
 			fix = true;
 		}
 		
 		if (fix) {
 			DataFixerUtil.fixData(beData.getParentFile());
+			be_writeDataFile(beData, version);
+		}
+	}
+	
+	private void be_writeDataFile(File file, String version) {
+		CompoundTag root = new CompoundTag();
+		root.putString("version", version);
+		try {
+			NbtIo.write(root, file);
+		}
+		catch (IOException e) {
+			BetterEnd.LOGGER.error("World data saving failed", e);
 		}
 	}
 }

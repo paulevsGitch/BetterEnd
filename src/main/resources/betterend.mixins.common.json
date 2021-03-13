@@ -29,6 +29,7 @@
 		"LivingEntityMixin",
 		"BoneMealItemMixin",
 		"PlayerEntityMixin",
+		"ServerWorldMixin",
 		"SlimeEntityMixin",
 		"AnvilBlockMixin",
 		"BrewingAccessor",

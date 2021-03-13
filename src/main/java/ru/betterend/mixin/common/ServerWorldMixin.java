@@ -33,11 +33,8 @@ public class ServerWorldMixin {
 	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey<World> registryKey, DimensionType dimensionType, WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long l, List<Spawner> list, boolean bl, CallbackInfo info) {
 		File beData = new File(FabricLoader.getInstance().getGameDir().getParent().toString(), "saves/" + properties.getLevelName() + "/betterend_data.nbt");
 		ModMetadata meta = FabricLoader.getInstance().getModContainer(BetterEnd.MOD_ID).get().getMetadata();
-		String version = meta.getVersion().toString();
+		String version = BetterEnd.isDevEnvironment() ? "development" : meta.getVersion().toString();
 		boolean fix = false;
-		if (version.equals("${version}")) {
-			version = "development";
-		}
 		if (beData.exists()) {
 			CompoundTag root;
 			try {

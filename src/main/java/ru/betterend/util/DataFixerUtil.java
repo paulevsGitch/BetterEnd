@@ -19,12 +19,16 @@ public class DataFixerUtil {
 	private static final Map<String, String> REPLACEMENT = Maps.newHashMap();
 	
 	public static void init() {
-		addFix("minecraft:stone", "minecraft:glowstone");
+		//addFix("minecraft:stone", "minecraft:glowstone"); // Example
 	}
 	
 	public static void fixData(File dir) {
+		if (REPLACEMENT.isEmpty()) {
+			return;
+		}
+		
 		List<File> regions = getAllRegions(dir, null);
-		regions.forEach((file) -> {
+		regions.parallelStream().forEach((file) -> {
 			try {
 				System.out.println("Fixing " + file);
 				boolean[] changed = new boolean[1];

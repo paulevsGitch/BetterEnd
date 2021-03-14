@@ -90,7 +90,8 @@ public class CraftingRecipes {
 		registerLantern("blackstone_lantern", EndBlocks.BLACKSTONE_LANTERN, Blocks.BLACKSTONE_SLAB);
 		
 		GridRecipe.make("amber_gem", EndItems.AMBER_GEM).setShape("##", "##").addMaterial('#', EndItems.RAW_AMBER).build();
-		GridRecipe.make("amber_block", EndBlocks.AMBER_BLOCK).setShape("###", "###", "###").addMaterial('#', EndItems.AMBER_GEM).build();
+		GridRecipe.make("amber_block", EndBlocks.AMBER_BLOCK).setShape("##", "##").addMaterial('#', EndItems.AMBER_GEM).build();
+		GridRecipe.make("amber_gem_block", EndItems.AMBER_GEM).setOutputCount(4).setList("#").addMaterial('#', EndBlocks.AMBER_BLOCK).build();
 		GridRecipe.make("iron_bulb_lantern", EndBlocks.IRON_BULB_LANTERN).setShape("C", "I", "#").addMaterial('C', Items.CHAIN).addMaterial('I', Items.IRON_INGOT).addMaterial('#', EndItems.GLOWING_BULB).build();
 		GridRecipe.make("twisted_moss_dye", Items.PINK_DYE).setList("#").addMaterial('#', EndBlocks.TWISTED_MOSS).build();
 		GridRecipe.make("byshy_grass_dye", Items.MAGENTA_DYE).setList("#").addMaterial('#', EndBlocks.BUSHY_GRASS).build();

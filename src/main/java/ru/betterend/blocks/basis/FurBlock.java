@@ -64,7 +64,7 @@ public class FurBlock extends AttachedBlock implements IRenderTypeable {
 		if (tool != null && tool.getItem().isIn(FabricToolTags.SHEARS) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
 		}
-		else if (MHelper.RANDOM.nextInt(dropChance) == 0) {
+		else if (dropChance < 1 || MHelper.RANDOM.nextInt(dropChance) == 0) {
 			return Lists.newArrayList(new ItemStack(drop));
 		}
 		else {

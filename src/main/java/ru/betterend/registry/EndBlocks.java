@@ -337,6 +337,7 @@ public class EndBlocks {
 	public static final Block JUNGLE_VINE = registerBlock("jungle_vine", new VineBlock());
 	public static final Block RUBINEA = registerBlock("rubinea", new VineBlock());
 	public static final Block FILALUX = registerBlock("filalux", new FilaluxBlock());
+	public static final Block FILALUX_WINGS = registerBlock("filalux_wings", new FilaluxWingsBlock());
 	public static final Block FILALUX_LANTERN = registerBlock("filalux_lantern", new FilaluxLanternBlock());
 	
 	// Mob-Related

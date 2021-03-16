@@ -236,6 +236,7 @@ public class EndBlocks {
 	
 	public static final Block LUCERNIA_SAPLING = registerBlock("lucernia_sapling", new TenaneaSaplingBlock());
 	public static final Block LUCERNIA_LEAVES = registerBlock("lucernia_leaves", new EndLeavesBlock(LUCERNIA_SAPLING, MaterialColor.ORANGE));
+	public static final Block LUCERNIA_OUTER_LEAVES = registerBlock("lucernia_outer_leaves", new FurBlock(LUCERNIA_SAPLING, 32));
 	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.ORANGE, MaterialColor.ORANGE);
 	
 	// Small Plants //

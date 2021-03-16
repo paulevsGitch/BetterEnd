@@ -22,6 +22,7 @@ import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.EndLilyFeature;
 import ru.betterend.world.features.EndLotusFeature;
 import ru.betterend.world.features.EndLotusLeafFeature;
+import ru.betterend.world.features.FilaluxFeature;
 import ru.betterend.world.features.GlowPillarFeature;
 import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.LanceleafFeature;
@@ -60,6 +61,7 @@ import ru.betterend.world.features.trees.GiganticAmaranitaFeature;
 import ru.betterend.world.features.trees.HelixTreeFeature;
 import ru.betterend.world.features.trees.JellyshroomFeature;
 import ru.betterend.world.features.trees.LacugroveFeature;
+import ru.betterend.world.features.trees.LucerniaFeature;
 import ru.betterend.world.features.trees.MossyGlowshroomFeature;
 import ru.betterend.world.features.trees.PythadendronTreeFeature;
 import ru.betterend.world.features.trees.TenaneaFeature;
@@ -77,6 +79,7 @@ public class EndFeatures {
 	public static final EndFeature UMBRELLA_TREE = new EndFeature("umbrella_tree", new UmbrellaTreeFeature(), 4);
 	public static final EndFeature JELLYSHROOM = new EndFeature("jellyshroom", new JellyshroomFeature(), 3);
 	public static final EndFeature GIGANTIC_AMARANITA = new EndFeature("gigantic_amaranita", new GiganticAmaranitaFeature(), 1);
+	public static final EndFeature LUCERNIA = new EndFeature("lucernia", new LucerniaFeature(), 3);
 	
 	// Bushes //
 	public static final EndFeature PYTHADENDRON_BUSH = new EndFeature("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark), 4);
@@ -141,6 +144,9 @@ public class EndFeatures {
 	public static final EndFeature SMALL_JELLYSHROOM_WALL = new EndFeature("small_jellyshroom_wall", new WallPlantFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 4);
 	public static final EndFeature SMALL_JELLYSHROOM_WOOD = new EndFeature("small_jellyshroom_wood", new WallPlantOnLogFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 8);
 	public static final EndFeature JUNGLE_FERN_WOOD = new EndFeature("jungle_fern_wood", new WallPlantOnLogFeature(EndBlocks.JUNGLE_FERN, 3), 12);
+	
+	// Sky plants
+	public static final EndFeature FILALUX = new EndFeature("filalux", new FilaluxFeature(), 1);
 	
 	// Water //
 	public static final EndFeature BUBBLE_CORAL = new EndFeature("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 6), 10);

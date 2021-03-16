@@ -48,6 +48,7 @@ import ru.betterend.world.biome.land.DustWastelandsBiome;
 import ru.betterend.world.biome.land.EndBiome;
 import ru.betterend.world.biome.land.FoggyMushroomlandBiome;
 import ru.betterend.world.biome.land.GlowingGrasslandsBiome;
+import ru.betterend.world.biome.land.LanternWoodsBiome;
 import ru.betterend.world.biome.land.MegalakeBiome;
 import ru.betterend.world.biome.land.MegalakeGroveBiome;
 import ru.betterend.world.biome.land.PaintedMountainsBiome;
@@ -97,6 +98,7 @@ public class EndBiomes {
 	public static final EndBiome GLOWING_GRASSLANDS = registerBiome(new GlowingGrasslandsBiome(), BiomeType.LAND);
 	public static final EndBiome DRAGON_GRAVEYARDS = registerBiome(new DragonGraveyardsBiome(), BiomeType.LAND);
 	public static final EndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), BiomeType.LAND);
+	public static final EndBiome LANTERN_WOODS = registerBiome(new LanternWoodsBiome(), BiomeType.LAND);
 	
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);

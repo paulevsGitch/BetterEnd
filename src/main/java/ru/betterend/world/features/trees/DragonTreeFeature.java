@@ -227,11 +227,13 @@ public class DragonTreeFeature extends DefaultFeature {
 		SplineHelper.offset(SIDE1, offset2);
 		SplineHelper.offset(SIDE2, offset2);
 		
-		ROOT = Lists.newArrayList(new Vector3f(0F, 1F, 0),
-				new Vector3f(0.1F, 0.7F, 0),
-				new Vector3f(0.3F, 0.3F, 0),
-				new Vector3f(0.7F, 0.05F, 0),
-				new Vector3f(0.8F, -0.2F, 0));
+		ROOT = Lists.newArrayList(
+			new Vector3f(0F, 1F, 0),
+			new Vector3f(0.1F, 0.7F, 0),
+			new Vector3f(0.3F, 0.3F, 0),
+			new Vector3f(0.7F, 0.05F, 0),
+			new Vector3f(0.8F, -0.2F, 0)
+		);
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 	}
 }

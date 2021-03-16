@@ -7,6 +7,7 @@ import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
+import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.util.Identifier;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -60,18 +61,18 @@ public class FurnaceRecipe {
 	}
 	
 	public void build() {
-		build(false, false);
+		build(false, false, false);
 	}
 	
 	public void buildWithBlasting() {
-		build(true, false);
+		build(true, false, false);
 	}
 	
-	public void buildWithCampfire() {
-		build(false, true);
+	public void buildFoodlike() {
+		build(false, true, true);
 	}
 	
-	public void build(boolean blasting, boolean campfire) {
+	public void build(boolean blasting, boolean campfire, boolean smoker) {
 		if (exist) {
 			Identifier id = BetterEnd.makeID(name);
 			SmeltingRecipe recipe = new SmeltingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time);
@@ -83,12 +84,17 @@ public class FurnaceRecipe {
 			}
 			
 			if (campfire) {
-				CampfireCookingRecipe recipe2 = new CampfireCookingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time / 2);
+				CampfireCookingRecipe recipe2 = new CampfireCookingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time * 3);
 				EndRecipeManager.addRecipe(RecipeType.CAMPFIRE_COOKING, recipe2);
+			}
+			
+			if (smoker) {
+				SmokingRecipe recipe2 = new SmokingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time / 2);
+				EndRecipeManager.addRecipe(RecipeType.SMOKING, recipe2);
 			}
 		}
 		else {
-			BetterEnd.LOGGER.debug("Smelting recipe {} couldn't be added", name);
+			BetterEnd.LOGGER.debug("Furnace recipe {} couldn't be added", name);
 		}
 	}
 }

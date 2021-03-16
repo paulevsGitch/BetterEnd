@@ -3,6 +3,7 @@ package ru.betterend.recipe.builders;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.BlastingRecipe;
+import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
@@ -59,10 +60,18 @@ public class FurnaceRecipe {
 	}
 	
 	public void build() {
-		build(false);
+		build(false, false);
 	}
 	
-	public void build(boolean blasting) {
+	public void buildWithBlasting() {
+		build(true, false);
+	}
+	
+	public void buildWithCampfire() {
+		build(false, true);
+	}
+	
+	public void build(boolean blasting, boolean campfire) {
 		if (exist) {
 			Identifier id = BetterEnd.makeID(name);
 			SmeltingRecipe recipe = new SmeltingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time);
@@ -71,6 +80,11 @@ public class FurnaceRecipe {
 			if (blasting) {
 				BlastingRecipe recipe2 = new BlastingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time / 2);
 				EndRecipeManager.addRecipe(RecipeType.BLASTING, recipe2);
+			}
+			
+			if (campfire) {
+				CampfireCookingRecipe recipe2 = new CampfireCookingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time / 2);
+				EndRecipeManager.addRecipe(RecipeType.CAMPFIRE_COOKING, recipe2);
 			}
 		}
 		else {

@@ -141,7 +141,7 @@ public class MetalMaterial {
 		boots = EndItems.registerItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));
 		
 		if (hasOre) {
-			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").build(true);
+			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").buildWithBlasting();
 			AlloyingRecipe.Builder.create(name + "_ingot_alloy").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
 		}
 		
@@ -166,15 +166,15 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_chandelier", chandelier).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		
 		// Tools & armor into nuggets
-		FurnaceRecipe.make(name + "_axe_nugget", axe, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_hoe_nugget", hoe, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_pickaxe_nugget", pickaxe, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_sword_nugget", sword, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_hammer_nugget", hammer, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_helmet_nugget", helmet, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_chestplate_nugget", chestplate, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_leggings_nugget", leggings, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_boots_nugget", boots, nugget).setGroup("end_nugget").build(true);
+		FurnaceRecipe.make(name + "_axe_nugget", axe, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_hoe_nugget", hoe, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_pickaxe_nugget", pickaxe, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_sword_nugget", sword, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_hammer_nugget", hammer, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_helmet_nugget", helmet, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_chestplate_nugget", chestplate, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_leggings_nugget", leggings, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(name + "_boots_nugget", boots, nugget).setGroup("end_nugget").buildWithBlasting();
 		
 		// Tool parts from ingots
 		AnvilRecipe.Builder.create(name + "_shovel_head").setInput(ingot).setOutput(shovelHead).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();

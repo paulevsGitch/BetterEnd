@@ -1,5 +1,6 @@
 package ru.betterend.world.generator;
 
+import net.minecraft.util.math.MathHelper;
 import ru.betterend.config.Configs;
 
 public class GeneratorOptions {
@@ -40,11 +41,11 @@ public class GeneratorOptions {
 	}
 
 	public static int getBiomeSizeLand() {
-		return biomeSizeLand;
+		return MathHelper.clamp(biomeSizeLand, 1, 8192);
 	}
 	
 	public static int getBiomeSizeVoid() {
-		return biomeSizeVoid;
+		return MathHelper.clamp(biomeSizeVoid, 1, 8192);
 	}
 
 	public static boolean hasPortal() {

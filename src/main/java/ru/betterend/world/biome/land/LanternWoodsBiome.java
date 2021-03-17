@@ -29,6 +29,8 @@ public class LanternWoodsBiome extends EndBiome {
 				.addFeature(EndFeatures.POND_ANEMONE)
 				.addFeature(EndFeatures.CHARNIA_ORANGE)
 				.addFeature(EndFeatures.CHARNIA_RED)
+				.addFeature(EndFeatures.RUSCUS)
+				.addFeature(EndFeatures.RUSCUS_WOOD)
 				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}

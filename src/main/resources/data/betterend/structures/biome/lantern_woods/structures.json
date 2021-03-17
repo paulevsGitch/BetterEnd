@@ -1,0 +1,13 @@
+{
+	"structures": [
+		{ "nbt": "cabin", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "light_1", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "log_1", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "log_2", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "ruins_1", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_2", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "stump_1", "offsetY": 0, "terrainMerge": "object" },
+		{ "nbt": "stump_2", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "stump_3", "offsetY": 0, "terrainMerge": "surface" }
+	]
+}

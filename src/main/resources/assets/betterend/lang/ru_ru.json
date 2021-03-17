@@ -818,5 +818,12 @@
 	"block.betterend.lucernia_stairs": "Ступени из люцернии",
 	"block.betterend.lucernia_stripped_bark": "Обтёсанная кора люцернии",
 	"block.betterend.lucernia_stripped_log": "Обтёсанное бревно люцернии",
-	"block.betterend.lucernia_trapdoor": "Люцерниевый люк"
+	"block.betterend.lucernia_trapdoor": "Люцерниевый люк",
+	
+	"block.betterend.aurant_polypore": "Аурантовый трутовик",
+	"block.betterend.bolux_mushroom": "Болюкс",
+	"block.betterend.flamaea": "Фламея",
+	"block.betterend.pond_anemone": "Озёрный анемон",
+	"block.betterend.ruscus": "Рускус",
+	"item.betterend.bolux_mushroom_cooked": "Приготовленный болюкс"
 }

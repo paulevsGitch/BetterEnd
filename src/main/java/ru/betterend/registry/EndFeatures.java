@@ -148,6 +148,8 @@ public class EndFeatures {
 	public static final EndFeature SMALL_JELLYSHROOM_WALL = new EndFeature("small_jellyshroom_wall", new WallPlantFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 4);
 	public static final EndFeature SMALL_JELLYSHROOM_WOOD = new EndFeature("small_jellyshroom_wood", new WallPlantOnLogFeature(EndBlocks.SMALL_JELLYSHROOM, 4), 8);
 	public static final EndFeature JUNGLE_FERN_WOOD = new EndFeature("jungle_fern_wood", new WallPlantOnLogFeature(EndBlocks.JUNGLE_FERN, 3), 12);
+	public static final EndFeature RUSCUS = new EndFeature("ruscus", new WallPlantFeature(EndBlocks.RUSCUS, 6), 10);
+	public static final EndFeature RUSCUS_WOOD = new EndFeature("ruscus_wood", new WallPlantOnLogFeature(EndBlocks.RUSCUS, 6), 10);
 	
 	// Sky plants
 	public static final EndFeature FILALUX = new EndFeature("filalux", new FilaluxFeature(), 1);

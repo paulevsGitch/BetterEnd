@@ -321,7 +321,7 @@ public class EndBlocks {
 	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new HydraluxPetalBlock());
 	public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial(HydraluxPetalColoredBlock::new, HYDRALUX_PETAL_BLOCK, true);
 	
-	public static final Block POND_ANEMONE = registerBlock("pond_anemone", new BubbleCoralBlock());
+	public static final Block POND_ANEMONE = registerBlock("pond_anemone", new PondAnemoneBlock());
 	
 	public static final Block FLAMAEA = registerBlock("flamaea", new FlamaeaBlock());
 	

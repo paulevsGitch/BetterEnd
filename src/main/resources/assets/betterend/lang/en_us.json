@@ -798,5 +798,12 @@
 	"block.betterend.lucernia_stairs": "Lucernia Stairs",
 	"block.betterend.lucernia_stripped_bark": "Stripped Lucernia Bark",
 	"block.betterend.lucernia_stripped_log": "Stripped Lucernia Log",
-	"block.betterend.lucernia_trapdoor": "Lucernia Trapdoor"
+	"block.betterend.lucernia_trapdoor": "Lucernia Trapdoor",
+	
+	"block.betterend.aurant_polypore": "Aurant Polypore",
+	"block.betterend.bolux_mushroom": "Bolux Mushroom",
+	"block.betterend.flamaea": "Flamaea",
+	"block.betterend.pond_anemone": "Pond Anemone",
+	"block.betterend.ruscus": "Ruscus",
+	"item.betterend.bolux_mushroom_cooked": "Cooked Bolux Mushroom"
 }

@@ -185,9 +185,11 @@ public class EndBiome {
 	
 	public void updateActualBiomes(Registry<Biome> biomeRegistry) {
 		subbiomes.forEach((sub) -> {
-			sub.updateActualBiomes(biomeRegistry);
+			if (sub != this) {
+				sub.updateActualBiomes(biomeRegistry);
+			}
 		});
-		if (edge != null) {
+		if (edge != null && edge != this) {
 			edge.updateActualBiomes(biomeRegistry);
 		}
 		this.actualBiome = biomeRegistry.get(mcID);

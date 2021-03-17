@@ -23,25 +23,17 @@ public class IslandLayer {
 	private final List<BlockPos> positions = new ArrayList<BlockPos>(9);
 	private final Map<BlockPos, SDF> islands = Maps.newHashMap();
 	private final OpenSimplexNoise density;
-	private final double distance;
-	private final float scale;
 	private final int seed;
-	private final int minY;
-	private final int maxY;
-	private final long center;
 	private final boolean hasCentralIsland;
 	private int lastX = Integer.MIN_VALUE;
 	private int lastZ = Integer.MIN_VALUE;
+	private final LayerOptions options;
 	
-	public IslandLayer(int seed, double distance, float scale, int center, int heightVariation, boolean hasCentralIsland) {
-		this.distance = distance;
-		this.density = new OpenSimplexNoise(seed);
-		this.scale = scale;
-		this.seed = seed;
-		this.minY = center - heightVariation;
-		this.maxY = center + heightVariation;
-		this.center = MHelper.floor(1000 / distance);
+	public IslandLayer(int seed, LayerOptions options, boolean hasCentralIsland) {
 		this.hasCentralIsland = hasCentralIsland;
+		this.density = new OpenSimplexNoise(seed);
+		this.options = options;
+		this.seed = seed;
 	}
 	
 	private int getSeed(int x, int z) {
@@ -51,8 +43,8 @@ public class IslandLayer {
 	}
 	
 	public void updatePositions(double x, double z) {
-		int ix = MHelper.floor(x / distance);
-		int iz = MHelper.floor(z / distance);
+		int ix = MHelper.floor(x / options.distance);
+		int iz = MHelper.floor(z / options.distance);
 		if (lastX != ix || lastZ != iz) {
 			lastX = ix;
 			lastZ = iz;
@@ -61,11 +53,11 @@ public class IslandLayer {
 				int px = pox + ix;
 				for (int poz = -1; poz < 2; poz++) {
 					int pz = poz + iz;
-					if (GeneratorOptions.noRingVoid() || (long) px + (long) pz > center) {
+					if (GeneratorOptions.noRingVoid() || (long) px + (long) pz > options.centerDist) {
 						RANDOM.setSeed(getSeed(px, pz));
-						double posX = (px + RANDOM.nextFloat()) * distance;
-						double posY = MHelper.randRange(minY, maxY, RANDOM);
-						double posZ = (pz + RANDOM.nextFloat()) * distance;
+						double posX = (px + RANDOM.nextFloat()) * options.distance;
+						double posY = MHelper.randRange(options.minY, options.maxY, RANDOM);
+						double posZ = (pz + RANDOM.nextFloat()) * options.distance;
 						if (density.eval(posX * 0.01, posZ * 0.01) > 0) {
 							positions.add(new BlockPos(posX, posY, posZ));
 						}
@@ -94,9 +86,9 @@ public class IslandLayer {
 	}
 	
 	private float getRelativeDistance(SDF sdf, BlockPos center, double px, double py, double pz) {
-		float x = (float) (px - center.getX()) / scale;
-		float y = (float) (py - center.getY()) / scale;
-		float z = (float) (pz - center.getZ()) / scale;
+		float x = (float) (px - center.getX()) / options.scale;
+		float y = (float) (py - center.getY()) / options.scale;
+		float z = (float) (pz - center.getZ()) / options.scale;
 		return sdf.getDistance(x, y, z);
 	}
 	

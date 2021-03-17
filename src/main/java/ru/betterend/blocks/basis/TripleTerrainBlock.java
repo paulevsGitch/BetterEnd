@@ -50,7 +50,6 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	
 	@Override
 	public String getModelPattern(String block) {
-		System.out.println(block);
 		String name = Registry.BLOCK.getId(this).getPath();
 		if (block.endsWith("_middle")) {
 			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top", name + "_top");

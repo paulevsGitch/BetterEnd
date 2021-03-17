@@ -72,7 +72,17 @@ public class BetterEndBiomeSource extends BiomeSource {
 		boolean hasVoid = !GeneratorOptions.useNewGenerator() || !GeneratorOptions.noRingVoid();
 		long i = (long) biomeX * (long) biomeX;
 		long j = (long) biomeZ * (long) biomeZ;
-		if (hasVoid && i + j <= 65536L) return this.centerBiome;
+		
+		long dist = i + j;
+		if (hasVoid) {
+			if (dist <= 65536L) return this.centerBiome;
+		}
+		else if (dist <= 625L) {
+			dist += noise.sample(i * 0.2, j * 0.2) * 10;
+			if (dist <= 625L) {
+				return this.centerBiome;
+			}
+		}
 		
 		if (biomeX == 0 && biomeZ == 0) {
 			mapLand.clearCache();

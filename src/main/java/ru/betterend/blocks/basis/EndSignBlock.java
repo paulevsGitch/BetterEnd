@@ -13,6 +13,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -38,11 +39,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.entities.ESignBlockEntity;
+import ru.betterend.interfaces.ISpetialItem;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
+public class EndSignBlock extends AbstractSignBlock implements BlockPatterned, ISpetialItem {
 	public static final IntProperty ROTATION = Properties.ROTATION;
 	public static final BooleanProperty FLOOR = BooleanProperty.of("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
@@ -176,5 +178,33 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned {
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
+	}
+
+	@Override
+	public Fluid tryDrainFluid(WorldAccess world, BlockPos pos, BlockState state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getStackSize() {
+		return 16;
+	}
+
+	@Override
+	public boolean canPlaceOnWater() {
+		return false;
 	}
 }

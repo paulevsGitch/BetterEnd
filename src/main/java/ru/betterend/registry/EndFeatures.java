@@ -123,6 +123,7 @@ public class EndFeatures {
 	public static final EndFeature SMALL_AMARANITA = new EndFeature("small_amaranita", new SinglePlantFeature(EndBlocks.SMALL_AMARANITA_MUSHROOM, 5, 5), 4);
 	public static final EndFeature GLOBULAGUS = new EndFeature("globulagus", new SinglePlantFeature(EndBlocks.GLOBULAGUS, 5, 3), 6);
 	public static final EndFeature CLAWFERN = new EndFeature("clawfern", new SinglePlantFeature(EndBlocks.CLAWFERN, 5, 4), 5);
+	public static final EndFeature BOLUX_MUSHROOM = new EndFeature("bolux_mushroom", new SinglePlantFeature(EndBlocks.BOLUX_MUSHROOM, 5, 5), 2);
 	
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);
@@ -135,6 +136,7 @@ public class EndFeatures {
 	
 	// Wall Plants //
 	public static final EndFeature PURPLE_POLYPORE = new EndFeature("purple_polypore", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 3), 5);
+	public static final EndFeature AURANT_POLYPORE = new EndFeature("aurant_polypore", new WallPlantOnLogFeature(EndBlocks.AURANT_POLYPORE, 3), 5);
 	public static final EndFeature TAIL_MOSS = new EndFeature("tail_moss", new WallPlantFeature(EndBlocks.TAIL_MOSS, 3), 15);
 	public static final EndFeature CYAN_MOSS = new EndFeature("cyan_moss", new WallPlantFeature(EndBlocks.CYAN_MOSS, 3), 15);
 	public static final EndFeature TAIL_MOSS_WOOD = new EndFeature("tail_moss_wood", new WallPlantOnLogFeature(EndBlocks.TAIL_MOSS, 4), 25);
@@ -158,6 +160,7 @@ public class EndFeatures {
 	public static final EndFeature END_LOTUS = new EndFeature("end_lotus", new EndLotusFeature(7), 5);
 	public static final EndFeature END_LOTUS_LEAF = new EndFeature("end_lotus_leaf", new EndLotusLeafFeature(20), 25);
 	public static final EndFeature HYDRALUX = new EndFeature("hydralux", new HydraluxFeature(5), 5);
+	public static final EndFeature POND_ANEMONE = new EndFeature("pond_anemone", new UnderwaterPlantFeature(EndBlocks.POND_ANEMONE, 6), 10);
 	
 	public static final EndFeature CHARNIA_RED = new EndFeature("charnia_red", new CharniaFeature(EndBlocks.CHARNIA_RED), 10);
 	public static final EndFeature CHARNIA_PURPLE = new EndFeature("charnia_purple", new CharniaFeature(EndBlocks.CHARNIA_PURPLE), 10);
@@ -168,6 +171,7 @@ public class EndFeatures {
 	public static final EndFeature MENGER_SPONGE = new EndFeature("menger_sponge", new MengerSpongeFeature(5), 1);
 	public static final EndFeature CHARNIA_RED_RARE = new EndFeature("charnia_red_rare", new CharniaFeature(EndBlocks.CHARNIA_RED), 2);
 	public static final EndFeature OVERWORLD_ISLAND = EndFeature.makeFetureConfigured("overworld_island", new OverworldIslandFeature());
+	public static final EndFeature FLAMAEA = new EndFeature("flamaea", new SinglePlantFeature(EndBlocks.FLAMAEA, 12, false, 5), 20);
 	
 	// Terrain //
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);

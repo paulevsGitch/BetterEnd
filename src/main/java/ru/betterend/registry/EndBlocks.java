@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item.Settings;
+import net.minecraft.item.LilyPadItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ru.betterend.BetterEnd;
@@ -18,6 +20,7 @@ import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.blocks.BlueVineBlock;
 import ru.betterend.blocks.BlueVineLanternBlock;
 import ru.betterend.blocks.BlueVineSeedBlock;
+import ru.betterend.blocks.BoluxMushroomBlock;
 import ru.betterend.blocks.BrimstoneBlock;
 import ru.betterend.blocks.BubbleCoralBlock;
 import ru.betterend.blocks.BulbVineBlock;
@@ -47,6 +50,7 @@ import ru.betterend.blocks.EndstoneDustBlock;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.EternalRunedFlavolite;
 import ru.betterend.blocks.FilaluxLanternBlock;
+import ru.betterend.blocks.FlamaeaBlock;
 import ru.betterend.blocks.GlowingHymenophoreBlock;
 import ru.betterend.blocks.GlowingMossBlock;
 import ru.betterend.blocks.GlowingPillarLuminophorBlock;
@@ -105,7 +109,6 @@ import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
 import ru.betterend.blocks.basis.EndOreBlock;
 import ru.betterend.blocks.basis.EndPillarBlock;
-import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.basis.EndSlabBlock;
 import ru.betterend.blocks.basis.EndStairsBlock;
 import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
@@ -122,6 +125,7 @@ import ru.betterend.blocks.complex.MetalMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.Configs;
+import ru.betterend.interfaces.ISpetialItem;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 
@@ -277,6 +281,7 @@ public class EndBlocks {
 	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new FurBlock(GLOWING_PILLAR_SEED, 15, 3));
 	
 	public static final Block SMALL_JELLYSHROOM = registerBlock("small_jellyshroom", new SmallJellyshroomBlock());
+	public static final Block BOLUX_MUSHROOM = registerBlock("bolux_mushroom", new BoluxMushroomBlock());
 	
 	public static final Block LUMECORN_SEED = registerBlock("lumecorn_seed", new LumecornSeedBlock());
 	public static final Block LUMECORN = registerBlockNI("lumecorn", new LumecornBlock());
@@ -316,6 +321,10 @@ public class EndBlocks {
 	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new HydraluxPetalBlock());
 	public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial(HydraluxPetalColoredBlock::new, HYDRALUX_PETAL_BLOCK, true);
 	
+	public static final Block POND_ANEMONE = registerBlock("pond_anemone", new BubbleCoralBlock());
+	
+	public static final Block FLAMAEA = registerBlock("flamaea", new FlamaeaBlock());
+	
 	public static final Block CAVE_BUSH = registerBlock("cave_bush", new SimpleLeavesBlock(MaterialColor.MAGENTA));
 	
 	public static final Block MURKWEED = registerBlock("murkweed", new MurkweedBlock());
@@ -323,12 +332,14 @@ public class EndBlocks {
 	
 	// Wall Plants //
 	public static final Block PURPLE_POLYPORE = registerBlock("purple_polypore", new WallMushroomBlock(13));
+	public static final Block AURANT_POLYPORE = registerBlock("aurant_polypore", new WallMushroomBlock(13));
 	public static final Block TAIL_MOSS = registerBlock("tail_moss", new EndWallPlantBlock());
 	public static final Block CYAN_MOSS = registerBlock("cyan_moss", new EndWallPlantBlock());
 	public static final Block TWISTED_MOSS = registerBlock("twisted_moss", new EndWallPlantBlock());
 	public static final Block TUBE_WORM = registerBlock("tube_worm", new EndUnderwaterWallPlantBlock());
 	public static final Block BULB_MOSS = registerBlock("bulb_moss", new EndWallPlantBlock(12));
 	public static final Block JUNGLE_FERN = registerBlock("jungle_fern", new EndWallPlantBlock());
+	public static final Block RUSCUS = registerBlock("ruscus", new EndWallPlantBlock());
 	
 	// Vines //
 	public static final Block DENSE_VINE = registerBlock("dense_vine", new VineBlock(15, true));
@@ -394,8 +405,20 @@ public class EndBlocks {
 			return block;
 		}
 		Registry.register(Registry.BLOCK, id, block);
-		int maxCount = block instanceof EndSignBlock ? 16 : 64;
-		EndItems.registerBlockItem(id, new BlockItem(block, EndItems.makeBlockItemSettings().maxCount(maxCount)));
+		int maxCount = 64;
+		boolean placeOnWater = false;
+		if (block instanceof ISpetialItem) {
+			ISpetialItem item = (ISpetialItem) block;
+			maxCount = item.getStackSize();
+			placeOnWater = item.canPlaceOnWater();
+		}
+		Settings item = EndItems.makeBlockItemSettings().maxCount(maxCount);
+		if (placeOnWater) {
+			EndItems.registerBlockItem(id, new LilyPadItem(block, item));
+		}
+		else {
+			EndItems.registerBlockItem(id, new BlockItem(block, item));
+		}
 		return block;
 	}
 	

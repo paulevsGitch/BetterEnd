@@ -42,7 +42,7 @@ public class MusicTrackerMixin {
 	public void be_onTick(CallbackInfo info) {
 		if (ClientOptions.blendBiomeMusic()) {
 			MusicSound musicSound = client.getMusicType();
-			if (volume > 0 && beIsInEnd() && beShouldChangeSound(musicSound)) {
+			if (be_checkNullSound(musicSound) && volume > 0 && be_isInEnd() && be_shouldChangeSound(musicSound)) {
 				if (volume > 0) {
 					if (srcVolume < 0) {
 						srcVolume = current.getVolume();
@@ -81,12 +81,16 @@ public class MusicTrackerMixin {
 		}
 	}
 	
-	private boolean beIsInEnd() {
+	private boolean be_isInEnd() {
 		return client.world != null && client.world.getRegistryKey().equals(World.END);
 	}
 	
-	private boolean beShouldChangeSound(MusicSound musicSound) {
+	private boolean be_shouldChangeSound(MusicSound musicSound) {
 		return current != null && !musicSound.getSound().getId().equals(this.current.getId()) && musicSound.shouldReplaceCurrentMusic();
+	}
+	
+	private boolean be_checkNullSound(MusicSound musicSound) {
+		return musicSound != null && musicSound.getSound() != null;
 	}
 	
 	@Shadow

@@ -33,7 +33,7 @@ public class LayerOptions {
 	}
 	
 	private float clampCoverage(float value) {
-		return MathHelper.clamp(value, 0, 1) * 2 - 1;
+		return 0.9999F - MathHelper.clamp(value, 0, 1) * 2;
 	}
 	
 	private int clampCenter(int value) {

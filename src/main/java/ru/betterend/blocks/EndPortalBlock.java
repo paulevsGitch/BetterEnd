@@ -43,7 +43,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	public static final IntProperty PORTAL = BlockProperties.PORTAL;
 	
 	public EndPortalBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getBlastResistance()).luminance(state -> 12));
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getBlastResistance()).luminance(15));
 	}
 	
 	@Override

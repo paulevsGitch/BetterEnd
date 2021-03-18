@@ -825,5 +825,8 @@
 	"block.betterend.flamaea": "Фламея",
 	"block.betterend.pond_anemone": "Озёрный анемон",
 	"block.betterend.ruscus": "Рускус",
-	"item.betterend.bolux_mushroom_cooked": "Приготовленный болюкс"
+	"item.betterend.bolux_mushroom_cooked": "Приготовленный болюкс",
+	
+	"block.betterend.silk_moth_hive": "Улей шелковичной моли",
+	"item.betterend.silk_moth_matrix": "Матрица шелковичной моли"
 }

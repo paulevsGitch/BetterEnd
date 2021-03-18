@@ -25,9 +25,9 @@ public class TerrainGenerator {
 	
 	public static void initNoise(long seed) {
 		Random random = new Random(seed);
-		largeIslands = new IslandLayer(random.nextInt(), GeneratorOptions.bigOptions, false);
-		mediumIslands = new IslandLayer(random.nextInt(), GeneratorOptions.mediumOptions, true);
-		smallIslands = new IslandLayer(random.nextInt(), GeneratorOptions.smallOptions, false);
+		largeIslands = new IslandLayer(random.nextInt(), GeneratorOptions.bigOptions);
+		mediumIslands = new IslandLayer(random.nextInt(), GeneratorOptions.mediumOptions);
+		smallIslands = new IslandLayer(random.nextInt(), GeneratorOptions.smallOptions);
 		noise1 = new OpenSimplexNoise(random.nextInt());
 		noise2 = new OpenSimplexNoise(random.nextInt());
 	}

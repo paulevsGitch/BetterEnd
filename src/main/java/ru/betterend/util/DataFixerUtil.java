@@ -71,7 +71,7 @@ public class DataFixerUtil {
 		});
 	}
 	
-	private static void addFix(String result, String... names) {
+	protected static void addFix(String result, String... names) {
 		for (String name: names) {
 			REPLACEMENT.put(name, result);
 		}

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import net.minecraft.util.math.BlockPos;
@@ -24,13 +25,11 @@ public class IslandLayer {
 	private final Map<BlockPos, SDF> islands = Maps.newHashMap();
 	private final OpenSimplexNoise density;
 	private final int seed;
-	private final boolean hasCentralIsland;
 	private int lastX = Integer.MIN_VALUE;
 	private int lastZ = Integer.MIN_VALUE;
 	private final LayerOptions options;
 	
-	public IslandLayer(int seed, LayerOptions options, boolean hasCentralIsland) {
-		this.hasCentralIsland = hasCentralIsland;
+	public IslandLayer(int seed, LayerOptions options) {
 		this.density = new OpenSimplexNoise(seed);
 		this.options = options;
 		this.seed = seed;
@@ -43,8 +42,10 @@ public class IslandLayer {
 	}
 	
 	public void updatePositions(double x, double z) {
+		
 		int ix = MHelper.floor(x / options.distance);
 		int iz = MHelper.floor(z / options.distance);
+		
 		if (lastX != ix || lastZ != iz) {
 			lastX = ix;
 			lastZ = iz;
@@ -64,7 +65,18 @@ public class IslandLayer {
 					}
 				}
 			}
-			if (hasCentralIsland && GeneratorOptions.hasCentralIsland() && ix < 2 && iz < 2 && ix > -2 && iz > -2) {
+		}
+		
+		if (GeneratorOptions.hasCentralIsland() && ix < 4 && iz < 4 && ix > -4 && iz > -4) {
+			List<BlockPos> remove = Lists.newArrayList();
+			positions.forEach((pos) -> {
+				int d = pos.getX() * pos.getX() + pos.getZ() * pos.getZ();
+				if (d < 12544) {
+					remove.add(pos);
+				}
+			});
+			positions.removeAll(remove);
+			if (options.hasCentralIsland) {
 				positions.add(new BlockPos(0, 64, 0));
 			}
 		}

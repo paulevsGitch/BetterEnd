@@ -1,7 +1,6 @@
 package ru.betterend.mixin.common;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -14,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.ServerWorld;
@@ -28,6 +27,7 @@ import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.storage.LevelStorage;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.DataFixerUtil;
+import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerWorld.class)
@@ -37,26 +37,17 @@ public class ServerWorldMixin {
 		File beData = new File(FabricLoader.getInstance().getGameDir().getParent().toString(), "saves/" + properties.getLevelName() + "/betterend_data.nbt");
 		ModMetadata meta = FabricLoader.getInstance().getModContainer(BetterEnd.MOD_ID).get().getMetadata();
 		String version = BetterEnd.isDevEnvironment() ? "development" : meta.getVersion().toString();
-		boolean fix = false;
-		if (beData.exists()) {
-			CompoundTag root;
-			try {
-				root = NbtIo.read(beData);
-			}
-			catch (IOException e) {
-				BetterEnd.LOGGER.error("World data loading failed", e);
-				return;
-			}
-			String dataVersion = root.getString("version");
-			fix = !dataVersion.equals(version);
-		}
-		else {
-			fix = true;
-		}
+		
+		WorldDataUtil.load(beData);
+		CompoundTag root = WorldDataUtil.getRootTag();
+		String dataVersion = root.getString("version");
+		GeneratorOptions.setPortalPos(NbtHelper.toBlockPos(root.getCompound("portal")));
+		boolean fix = !dataVersion.equals(version);
 		
 		if (fix) {
 			DataFixerUtil.fixData(beData.getParentFile());
-			be_writeDataFile(beData, version);
+			root.putString("version", version);
+			WorldDataUtil.saveFile();
 		}
 	}
 
@@ -67,17 +58,6 @@ public class ServerWorldMixin {
 				info.setReturnValue(GeneratorOptions.getSpawn());
 				info.cancel();
 			}
-		}
-	}
-
-	private void be_writeDataFile(File file, String version) {
-		CompoundTag root = new CompoundTag();
-		root.putString("version", version);
-		try {
-			NbtIo.write(root, file);
-		}
-		catch (IOException e) {
-			BetterEnd.LOGGER.error("World data saving failed", e);
 		}
 	}
 }

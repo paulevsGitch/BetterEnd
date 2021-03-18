@@ -23,6 +23,8 @@ public class GeneratorOptions {
 	public static LayerOptions smallOptions;
 	private static boolean changeSpawn;
 	private static BlockPos spawn;
+	private static BlockPos portal = BlockPos.ORIGIN;
+	private static boolean replacePortal;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
@@ -47,6 +49,7 @@ public class GeneratorOptions {
 			Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65),
 			Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0)
 		);
+		replacePortal = Configs.GENERATOR_CONFIG.getBooleanRoot("customEndPortal", true);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -107,5 +110,17 @@ public class GeneratorOptions {
 
 	public static BlockPos getSpawn() {
 		return spawn;
+	}
+
+	public static BlockPos getPortalPos() {
+		return portal;
+	}
+
+	public static void setPortalPos(BlockPos portal) {
+		GeneratorOptions.portal = portal;
+	}
+	
+	public static boolean replacePortal() {
+		return replacePortal;
 	}
 }

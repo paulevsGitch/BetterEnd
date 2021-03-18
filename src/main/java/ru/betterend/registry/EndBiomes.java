@@ -1,6 +1,7 @@
 package ru.betterend.registry;
 
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +27,10 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.integration.Integrations;
+import ru.betterend.interfaces.IBiomeList;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.world.biome.air.BiomeIceStarfield;
 import ru.betterend.world.biome.cave.EmptyAuroraCaveBiome;
@@ -55,7 +56,6 @@ import ru.betterend.world.biome.land.PaintedMountainsBiome;
 import ru.betterend.world.biome.land.ShadowForestBiome;
 import ru.betterend.world.biome.land.SulphurSpringsBiome;
 import ru.betterend.world.biome.land.UmbrellaJungleBiome;
-import ru.betterend.world.generator.BELayerRandomSource;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
 
@@ -181,21 +181,11 @@ public class EndBiomes {
 	}
 	
 	private static void loadFabricAPIBiomes() {
-		WeightedBiomePicker picker = InternalBiomeData.getEndBiomesMap().get(BiomeKeys.SMALL_END_ISLANDS);
-		LayerRandomnessSource random = new BELayerRandomSource();
-		if (picker != null) {
-			for (int i = 0; i < 1000; i++) {
-				RegistryKey<Biome> key = picker.pickRandom(random);
-				FABRIC_VOID.add(key.getValue());
-			}
-		}
-		picker = InternalBiomeData.getEndBiomesMap().get(BiomeKeys.END_BARRENS);
-		if (picker != null) {
-			for (int i = 0; i < 1000; i++) {
-				RegistryKey<Biome> key = picker.pickRandom(random);
-				FABRIC_VOID.add(key.getValue());
-			}
-		}
+		List<RegistryKey<Biome>> biomes = Lists.newArrayList();
+		biomes.addAll(getBiomes(InternalBiomeData.getEndBiomesMap().get(BiomeKeys.SMALL_END_ISLANDS)));
+		biomes.addAll(getBiomes(InternalBiomeData.getEndBarrensMap().get(BiomeKeys.END_BARRENS)));
+		biomes.forEach((key) -> FABRIC_VOID.add(key.getValue()));
+		
 		if (BetterEnd.isDevEnvironment()) {
 			System.out.println("==================================");
 			System.out.println("Added void biomes from Fabric API:");
@@ -204,6 +194,11 @@ public class EndBiomes {
 			});
 			System.out.println("==================================");
 		}
+	}
+	
+	private static List<RegistryKey<Biome>> getBiomes(WeightedBiomePicker picker) {
+		IBiomeList biomeList = (IBiomeList) (Object) picker;
+		return biomeList == null ? Collections.emptyList() : biomeList.getBiomes();
 	}
 	
 	private static JsonObject loadJsonConfig(String namespace) {

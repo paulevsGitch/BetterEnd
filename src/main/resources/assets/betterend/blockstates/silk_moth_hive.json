@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"facing=north,fullness=0": { "model": "betterend:block/silk_moth_hive" },
+		"facing=south,fullness=0": { "model": "betterend:block/silk_moth_hive", "y": 180 },
+		"facing=east,fullness=0": { "model": "betterend:block/silk_moth_hive", "y": 90 },
+		"facing=west,fullness=0": { "model": "betterend:block/silk_moth_hive", "y": 270 },
+		"facing=north,fullness=1": { "model": "betterend:block/silk_moth_hive" },
+		"facing=south,fullness=1": { "model": "betterend:block/silk_moth_hive", "y": 180 },
+		"facing=east,fullness=1": { "model": "betterend:block/silk_moth_hive", "y": 90 },
+		"facing=west,fullness=1": { "model": "betterend:block/silk_moth_hive", "y": 270 },
+		"facing=north,fullness=2": { "model": "betterend:block/silk_moth_hive" },
+		"facing=south,fullness=2": { "model": "betterend:block/silk_moth_hive", "y": 180 },
+		"facing=east,fullness=2": { "model": "betterend:block/silk_moth_hive", "y": 90 },
+		"facing=west,fullness=2": { "model": "betterend:block/silk_moth_hive", "y": 270 },
+		"facing=north,fullness=3": { "model": "betterend:block/silk_moth_hive_silk" },
+		"facing=south,fullness=3": { "model": "betterend:block/silk_moth_hive_silk", "y": 180 },
+		"facing=east,fullness=3": { "model": "betterend:block/silk_moth_hive_silk", "y": 90 },
+		"facing=west,fullness=3": { "model": "betterend:block/silk_moth_hive_silk", "y": 270 }
+	}
+}

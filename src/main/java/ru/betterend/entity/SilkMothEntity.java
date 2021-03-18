@@ -1,6 +1,7 @@
 package ru.betterend.entity;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +35,10 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
@@ -44,7 +47,6 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.SilkMothNestBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
@@ -177,7 +179,13 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 	
 	public static boolean canSpawn(EntityType<SilkMothEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		int y = world.getChunk(pos).sampleHeightmap(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
-		return y > 0 && pos.getY() >= y;
+		return y > 0 && pos.getY() >= y && notManyEntities(world, pos, 32, 1);
+	}
+	
+	private static boolean notManyEntities(ServerWorldAccess world, BlockPos pos, int radius, int maxCount) {
+		Box box = new Box(pos).expand(radius);
+		List<SilkMothEntity> list = world.getEntitiesByClass(SilkMothEntity.class, box, (entity) -> true);
+		return list.size() <= maxCount;
 	}
 	
 	class MothLookControl extends LookControl {
@@ -207,7 +215,13 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 
 		@Override
 		public void start() {
-			Vec3d vec3d = this.getRandomLocation();
+			Vec3d vec3d = null;
+			if (SilkMothEntity.this.hivePos != null && SilkMothEntity.this.hiveWorld == SilkMothEntity.this.world) {
+				if (SilkMothEntity.this.getPos().squaredDistanceTo(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) > 16) {
+					vec3d = SilkMothEntity.this.getPos().add(random.nextGaussian() * 2, 0, random.nextGaussian() * 2);
+				}
+			}
+			vec3d = vec3d == null ? this.getRandomLocation() : vec3d;
 			if (vec3d != null) {
 				try {
 					SilkMothEntity.this.navigation.startMovingAlong(SilkMothEntity.this.navigation.findPathTo(new BlockPos(vec3d), 1), 1.0D);
@@ -235,22 +249,23 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 					&& SilkMothEntity.this.hiveWorld == SilkMothEntity.this.world
 					&& SilkMothEntity.this.navigation.isIdle()
 					&& SilkMothEntity.this.random.nextInt(16) == 0
-					&& SilkMothEntity.this.getPos().squaredDistanceTo(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) < 32;
+					&& SilkMothEntity.this.getPos().squaredDistanceTo(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) < 64;
 		}
 		
 		@Override
 		public boolean shouldContinue() {
-			return SilkMothEntity.this.navigation.isFollowingPath() && world.getBlockState(entrance).isAir() && world.getBlockState(hivePos).isOf(EndBlocks.SILK_MOTH_NEST);
+			return SilkMothEntity.this.navigation.isFollowingPath() && world.getBlockState(entrance).isAir() && (world.getBlockState(hivePos).isOf(EndBlocks.SILK_MOTH_NEST) || world.getBlockState(hivePos).isOf(EndBlocks.SILK_MOTH_HIVE));
 		}
 		
 		@Override
 		public void start() {
 			BlockState state = SilkMothEntity.this.world.getBlockState(SilkMothEntity.this.hivePos);
-			if (!state.isOf(EndBlocks.SILK_MOTH_NEST)) {
+			if (!state.isOf(EndBlocks.SILK_MOTH_NEST) && !state.isOf(EndBlocks.SILK_MOTH_HIVE)) {
 				SilkMothEntity.this.hivePos = null;
+				return;
 			}
 			try {
-				SilkMothEntity.this.entrance = SilkMothEntity.this.hivePos.offset(state.get(SilkMothNestBlock.FACING));
+				SilkMothEntity.this.entrance = SilkMothEntity.this.hivePos.offset(state.get(Properties.HORIZONTAL_FACING));
 				SilkMothEntity.this.navigation.startMovingAlong(SilkMothEntity.this.navigation.findPathTo(entrance, 1), 1.0D);
 			}
 			catch (Exception e) {}
@@ -259,19 +274,29 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 		@Override
 		public void tick() {
 			super.tick();
+			if (SilkMothEntity.this.entrance == null) {
+				return;
+			}
 			double dx = Math.abs(SilkMothEntity.this.entrance.getX() - SilkMothEntity.this.getX());
 			double dy = Math.abs(SilkMothEntity.this.entrance.getY() - SilkMothEntity.this.getY());
 			double dz = Math.abs(SilkMothEntity.this.entrance.getZ() - SilkMothEntity.this.getZ());
 			if (dx + dy + dz < 1) {
 				BlockState state = SilkMothEntity.this.world.getBlockState(hivePos);
-				if (state.isOf(EndBlocks.SILK_MOTH_NEST)) {
+				if (state.isOf(EndBlocks.SILK_MOTH_NEST) || state.isOf(EndBlocks.SILK_MOTH_HIVE)) {
 					int fullness = state.get(BlockProperties.FULLNESS);
-					if (fullness < 3 && SilkMothEntity.this.random.nextBoolean()) {
-						fullness ++;
-						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state);
+					boolean isHive = state.isOf(EndBlocks.SILK_MOTH_HIVE);
+					if (fullness < 3 && (isHive || SilkMothEntity.this.random.nextBoolean())) {
+						fullness += isHive ? MHelper.randRange(1, 2, random) : 1;
+						if (fullness > 3) {
+							fullness = 3;
+						}
+						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state.with(BlockProperties.FULLNESS, fullness));
 					}
 					SilkMothEntity.this.world.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BLOCK_BEEHIVE_ENTER, SoundCategory.BLOCKS, 1, 1);
 					SilkMothEntity.this.remove();
+				}
+				else {
+					SilkMothEntity.this.hivePos = null;
 				}
 			}
 		}

@@ -86,6 +86,7 @@ import ru.betterend.blocks.RespawnObeliskBlock;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.ShadowBerryBlock;
 import ru.betterend.blocks.ShadowGrassBlock;
+import ru.betterend.blocks.SilkMothHiveBlock;
 import ru.betterend.blocks.SilkMothNestBlock;
 import ru.betterend.blocks.SmallAmaranitaBlock;
 import ru.betterend.blocks.SmallJellyshroomBlock;
@@ -353,7 +354,8 @@ public class EndBlocks {
 	public static final Block FILALUX_LANTERN = registerBlock("filalux_lantern", new FilaluxLanternBlock());
 	
 	// Mob-Related
-	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new SilkMothNestBlock()); 
+	public static final Block SILK_MOTH_NEST = registerBlock("silk_moth_nest", new SilkMothNestBlock());
+	public static final Block SILK_MOTH_HIVE = registerBlock("silk_moth_hive", new SilkMothHiveBlock());
 	
 	// Ores //
 	public static final Block ENDER_ORE = registerBlock("ender_ore", new EndOreBlock(EndItems.ENDER_SHARD, 1, 3, 5));

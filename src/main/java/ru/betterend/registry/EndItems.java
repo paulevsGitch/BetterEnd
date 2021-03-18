@@ -74,6 +74,7 @@ public class EndItems {
 	public final static Item LEATHER_WRAPPED_STICK = registerItem("leather_wrapped_stick");
 	public final static Item SILK_FIBER = registerItem("silk_fiber");
 	public final static Item LUMECORN_ROD = registerItem("lumecorn_rod");
+	public final static Item SILK_MOTH_MATRIX = registerItem("silk_moth_matrix");
 	
 	// Armor //
 	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireproof()));

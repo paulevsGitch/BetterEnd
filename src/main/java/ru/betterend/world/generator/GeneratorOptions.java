@@ -1,5 +1,6 @@
 package ru.betterend.world.generator;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ru.betterend.config.Configs;
 
@@ -20,6 +21,8 @@ public class GeneratorOptions {
 	public static LayerOptions bigOptions;
 	public static LayerOptions mediumOptions;
 	public static LayerOptions smallOptions;
+	private static boolean changeSpawn;
+	private static BlockPos spawn;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
@@ -38,6 +41,12 @@ public class GeneratorOptions {
 		bigOptions = new LayerOptions("customGenerator.layers.bigIslands", Configs.GENERATOR_CONFIG, 300, 200, 70, 10, false);
 		mediumOptions = new LayerOptions("customGenerator.layers.mediumIslands", Configs.GENERATOR_CONFIG, 150, 100, 70, 20, true);
 		smallOptions = new LayerOptions("customGenerator.layers.smallIslands", Configs.GENERATOR_CONFIG, 60, 50, 70, 30, false);
+		changeSpawn = Configs.GENERATOR_CONFIG.getBoolean("spawn", "changeSpawn", false);
+		spawn = new BlockPos(
+			Configs.GENERATOR_CONFIG.getInt("spawn.point", "x", 20),
+			Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65),
+			Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0)
+		);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -90,5 +99,13 @@ public class GeneratorOptions {
 	
 	public static int getEndCityFailChance() {
 		return endCityFailChance;
+	}
+
+	public static boolean changeSpawn() {
+		return changeSpawn;
+	}
+
+	public static BlockPos getSpawn() {
+		return spawn;
 	}
 }

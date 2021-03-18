@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
@@ -17,6 +18,7 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -26,6 +28,7 @@ import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.storage.LevelStorage;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.DataFixerUtil;
+import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
@@ -56,7 +59,17 @@ public class ServerWorldMixin {
 			be_writeDataFile(beData, version);
 		}
 	}
-	
+
+	@Inject(method = "getSpawnPos", at = @At("HEAD"), cancellable = true)
+	private void be_getSpawnPos(CallbackInfoReturnable<BlockPos> info) {
+		if (GeneratorOptions.changeSpawn()) {
+			if (((ServerWorld) (Object) this).getRegistryKey() == World.END) {
+				info.setReturnValue(GeneratorOptions.getSpawn());
+				info.cancel();
+			}
+		}
+	}
+
 	private void be_writeDataFile(File file, String version) {
 		CompoundTag root = new CompoundTag();
 		root.putString("version", version);

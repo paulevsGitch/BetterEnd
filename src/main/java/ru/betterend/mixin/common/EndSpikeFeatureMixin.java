@@ -44,7 +44,7 @@ public class EndSpikeFeatureMixin {
 		int z = spike.getCenterZ();
 		int radius = spike.getRadius();
 		int minY = world.getChunk(x >> 4, z >> 4).sampleHeightmap(Type.WORLD_SURFACE, x & 15, z);
-		int maxY = minY + spike.getHeight() - 30;
+		int maxY = minY + spike.getHeight() - 64;
 		
 		if (GeneratorOptions.replacePillars() && be_radiusInRange(radius)) {
 			radius--;

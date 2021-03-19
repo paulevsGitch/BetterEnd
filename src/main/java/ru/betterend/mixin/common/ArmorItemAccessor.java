@@ -12,11 +12,11 @@ import java.util.UUID;
 @Mixin(ArmorItem.class)
 public interface ArmorItemAccessor {
 	@Accessor("MODIFIERS")
-	UUID[] getModifiers();
+	UUID[] be_getModifiers();
 
 	@Accessor("attributeModifiers")
-	Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers();
+	Multimap<EntityAttribute, EntityAttributeModifier> be_getAttributeModifiers();
 
 	@Accessor("attributeModifiers")
-	void setAttributeModifiers(Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers);
+	void be_setAttributeModifiers(Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers);
 }

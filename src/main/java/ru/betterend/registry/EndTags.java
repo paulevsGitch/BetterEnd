@@ -39,6 +39,7 @@ public class EndTags {
 	public static final Tag.Identified<Block> PEDESTALS = makeBlockTag("pedestal");
 	public static final Tag.Identified<Block> BLOCK_CHEST = makeCommonBlockTag("chest");
 	public static final Tag.Identified<Block> END_STONES = makeCommonBlockTag("end_stones");
+	public static final Tag.Identified<Block> DRAGON_IMMUNE = getMCBlockTag("dragon_immune");
 	
 	// Item Tags
 	public static final Tag.Identified<Item> ITEM_CHEST = makeCommonItemTag("chest");
@@ -68,6 +69,12 @@ public class EndTags {
 		Identifier id = new Identifier("c", name);
 		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
+	}
+	
+	public static Tag.Identified<Block> getMCBlockTag(String name) {
+		Identifier id = new Identifier(name);
+		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
+		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
 	}
 	
 	public static void register() {
@@ -117,6 +124,8 @@ public class EndTags {
 		
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
+		
+		TagHelper.addTag(EndTags.DRAGON_IMMUNE, EndBlocks.ENDER_ORE);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

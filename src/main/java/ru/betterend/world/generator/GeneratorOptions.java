@@ -25,6 +25,7 @@ public class GeneratorOptions {
 	private static BlockPos spawn;
 	private static BlockPos portal = BlockPos.ORIGIN;
 	private static boolean replacePortal;
+	private static boolean replacePillars;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
@@ -50,6 +51,7 @@ public class GeneratorOptions {
 			Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0)
 		);
 		replacePortal = Configs.GENERATOR_CONFIG.getBooleanRoot("customEndPortal", true);
+		replacePillars = Configs.GENERATOR_CONFIG.getBooleanRoot("customObsidianSpikes", true);
 	}
 
 	public static int getBiomeSizeLand() {
@@ -122,5 +124,9 @@ public class GeneratorOptions {
 	
 	public static boolean replacePortal() {
 		return replacePortal;
+	}
+	
+	public static boolean replacePillars() {
+		return replacePillars;
 	}
 }

@@ -202,5 +202,7 @@ public class MetalMaterial {
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
 		TagHelper.addTag(EndTags.IRON_INGOTS, ingot);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
+		
+		TagHelper.addTag(EndTags.DRAGON_IMMUNE, ore, bars);
 	}
 }

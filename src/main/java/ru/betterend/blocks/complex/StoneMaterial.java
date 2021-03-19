@@ -98,5 +98,7 @@ public class StoneMaterial {
 		TagHelper.addTag(BlockTags.SLABS, slab, brick_slab);
 		TagHelper.addTags(pressure_plate, BlockTags.PRESSURE_PLATES, BlockTags.STONE_PRESSURE_PLATES);
 		TagHelper.addTag(EndTags.END_STONES, stone);
+		
+		TagHelper.addTag(EndTags.DRAGON_IMMUNE, stone, stairs, slab, wall);
 	}
 }

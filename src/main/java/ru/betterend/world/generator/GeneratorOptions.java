@@ -30,8 +30,8 @@ public class GeneratorOptions {
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
 		biomeSizeVoid = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeVoid", 256);
-		hasPortal = Configs.GENERATOR_CONFIG.getBooleanRoot("hasPortal", true);
-		hasPillars = Configs.GENERATOR_CONFIG.getBooleanRoot("hasPillars", true);
+		hasPortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "hasPortal", true);
+		hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
 		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false);
 		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
@@ -50,8 +50,8 @@ public class GeneratorOptions {
 			Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65),
 			Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0)
 		);
-		replacePortal = Configs.GENERATOR_CONFIG.getBooleanRoot("customEndPortal", true);
-		replacePillars = Configs.GENERATOR_CONFIG.getBooleanRoot("customObsidianSpikes", true);
+		replacePortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "customEndPortal", true);
+		replacePillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "customObsidianSpikes", true);
 	}
 
 	public static int getBiomeSizeLand() {

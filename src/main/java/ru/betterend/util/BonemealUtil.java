@@ -48,6 +48,10 @@ public class BonemealUtil {
 		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.LUTEBUS, 0.2F);
 		addBonemealGrass(EndBlocks.RUTISCUS, EndBlocks.LAMELLARIUM);
 		
+		addBonemealGrass(EndBiomes.LANTERN_WOODS, EndBlocks.RUTISCUS, EndBlocks.AERIDIUM, 0.2F);
+		addBonemealGrass(EndBiomes.LANTERN_WOODS, EndBlocks.RUTISCUS, EndBlocks.LAMELLARIUM);
+		addBonemealGrass(EndBiomes.LANTERN_WOODS, EndBlocks.RUTISCUS, EndBlocks.BOLUX_MUSHROOM, 0.05F);
+		
 		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.GLOBULAGUS);
 		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.CLAWFERN);
 		addBonemealGrass(EndBlocks.SANGNUM, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);

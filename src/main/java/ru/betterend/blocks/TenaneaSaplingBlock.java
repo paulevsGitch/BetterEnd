@@ -15,11 +15,11 @@ public class TenaneaSaplingBlock extends FeatureSaplingBlock {
 
 	@Override
 	protected Feature<?> getFeature() {
-		return EndFeatures.TENANEA.getFeature();
+		return EndFeatures.LUCERNIA.getFeature();
 	}
 	
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		return world.getBlockState(pos.down()).isOf(EndBlocks.PINK_MOSS);
+		return world.getBlockState(pos.down()).isOf(EndBlocks.RUTISCUS);
 	}
 }

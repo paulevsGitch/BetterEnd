@@ -5,6 +5,7 @@ import net.minecraft.particle.ParticleTypes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.EndBiome;
 
 public class PaintedMountainsBiome extends EndBiome {
 	public PaintedMountainsBiome() {

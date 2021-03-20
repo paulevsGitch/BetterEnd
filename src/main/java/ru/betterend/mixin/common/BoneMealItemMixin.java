@@ -23,7 +23,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.BonemealUtil;
-import ru.betterend.world.biome.land.EndBiome;
+import ru.betterend.world.biome.EndBiome;
 
 @Mixin(BoneMealItem.class)
 public class BoneMealItemMixin {

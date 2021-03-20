@@ -6,6 +6,7 @@ import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.EndBiome;
 
 public class MegalakeBiome extends EndBiome {
 	public MegalakeBiome() {

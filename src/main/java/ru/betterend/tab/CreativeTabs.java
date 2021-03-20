@@ -25,9 +25,5 @@ public class CreativeTabs {
 						stacks.add(new ItemStack(i));
 					}
 				}).build();
-		if (BetterEnd.isDevEnvironment()) {
-			System.out.println("CREATIVE_TAB_ITEMS: " + TAB_ITEMS.getName());
-			System.out.println("CREATIVE_TAB_BLOCKS: " + TAB_BLOCKS.getName());
-		}
 	}
 }

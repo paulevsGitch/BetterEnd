@@ -5,6 +5,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndSounds;
+import ru.betterend.world.biome.EndBiome;
 
 public class DustWastelandsBiome extends EndBiome {
 	public DustWastelandsBiome() {

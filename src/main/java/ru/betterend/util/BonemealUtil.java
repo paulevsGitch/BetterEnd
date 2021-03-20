@@ -11,7 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.biome.land.EndBiome;
+import ru.betterend.world.biome.EndBiome;
 
 public class BonemealUtil {
 	private static final Map<Identifier, Map<Block, GrassList>> GRASS_BIOMES = Maps.newHashMap();

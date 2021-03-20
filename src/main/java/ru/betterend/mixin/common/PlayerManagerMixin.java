@@ -102,8 +102,6 @@ public class PlayerManagerMixin {
 			else {
 				var23 = World.END;
 			}
-			
-			System.out.println("World " + this.server.getWorld(World.END));
 
 			RegistryKey<World> registryKey = var23;
 			ServerWorld serverWorld = this.server.getWorld(registryKey);

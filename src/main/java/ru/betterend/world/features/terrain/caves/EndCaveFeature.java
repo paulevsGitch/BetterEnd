@@ -21,8 +21,8 @@ import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
-import ru.betterend.world.biome.land.EndBiome;
 import ru.betterend.world.features.DefaultFeature;
 import ru.betterend.world.generator.GeneratorOptions;
 

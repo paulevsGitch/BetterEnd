@@ -6,15 +6,27 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.collection.WeightedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.Feature;
+import ru.betterend.registry.EndBiomes;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.land.BiomeDefinition;
-import ru.betterend.world.biome.land.EndBiome;
+import ru.betterend.world.features.EndFeature;
+import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
 public class EndCaveBiome extends EndBiome {
 	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
 	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
 	
 	public EndCaveBiome(BiomeDefinition definition) {
-		super(definition.setCaveBiome());
+		super(makeDef(definition));
+	}
+	
+	private static BiomeDefinition makeDef(BiomeDefinition definition) {
+		EndFeature feature = EndFeature.makeChunkFeature(
+			definition.getID().getPath() + "_cave_populator",
+			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) EndBiomes.getBiome(definition.getID()))
+		);
+		definition.addFeature(feature).setCaveBiome();
+		return definition;
 	}
 	
 	public void addFloorFeature(Feature<?> feature, int weight) {

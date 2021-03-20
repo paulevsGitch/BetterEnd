@@ -10,8 +10,8 @@ import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.land.BiomeDefinition;
-import ru.betterend.world.biome.land.EndBiome;
 
 public class EterialGrove extends EndBiome {
 	public EterialGrove() {

@@ -5,6 +5,7 @@ import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.surface.SurfaceBuilders;
 
 public class SulphurSpringsBiome extends EndBiome {

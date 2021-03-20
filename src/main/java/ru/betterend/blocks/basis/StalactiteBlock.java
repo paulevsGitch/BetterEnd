@@ -62,13 +62,10 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 		boolean water = world.getFluidState(pos).getFluid() == Fluids.WATER;
 		
 		if (dir == Direction.DOWN) {
-			System.out.println("Check up!");
 			if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
-				System.out.println("Up true!");
 				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
 			}
 			else if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
-				System.out.println("Up false!");
 				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
 			}
 			else {
@@ -76,13 +73,10 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 			}
 		}
 		else {
-			System.out.println("Check down!");
 			if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
-				System.out.println("Down true!");
 				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
 			}
 			else if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
-				System.out.println("Down false!");
 				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
 			}
 			else {

@@ -25,6 +25,7 @@ public class AmberLandBiome extends EndBiome {
 				.addFeature(EndFeatures.LANCELEAF)
 				.addFeature(EndFeatures.GLOW_PILLAR)
 				.addFeature(EndFeatures.AMBER_GRASS)
+				.addFeature(EndFeatures.AMBER_ROOT)
 				.addFeature(EndFeatures.BULB_MOSS)
 				.addFeature(EndFeatures.BULB_MOSS_WOOD)
 				.addFeature(EndFeatures.CHARNIA_ORANGE)

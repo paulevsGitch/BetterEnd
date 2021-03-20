@@ -27,6 +27,7 @@ public class MegalakeGroveBiome extends EndBiome {
 				.addFeature(EndFeatures.BUBBLE_CORAL_RARE)
 				.addFeature(EndFeatures.END_LILY_RARE)
 				.addFeature(EndFeatures.UMBRELLA_MOSS)
+				.addFeature(EndFeatures.PEARLBERRY)
 				.addFeature(EndFeatures.CREEPING_MOSS)
 				.addFeature(EndFeatures.CHARNIA_CYAN)
 				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)

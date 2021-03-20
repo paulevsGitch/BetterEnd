@@ -30,6 +30,7 @@ public class ChorusForestBiome extends EndBiome {
 				.addFeature(Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.addFeature(Feature.VEGETAL_DECORATION, ConfiguredFeatures.CHORUS_PLANT)
 				.addFeature(EndFeatures.CHORUS_GRASS)
+				.addFeature(EndFeatures.CHORUS_MUSHROOM)
 				.addFeature(EndFeatures.TAIL_MOSS)
 				.addFeature(EndFeatures.TAIL_MOSS_WOOD)
 				.addFeature(EndFeatures.CHARNIA_PURPLE)

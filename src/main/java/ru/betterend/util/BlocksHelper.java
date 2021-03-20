@@ -226,6 +226,11 @@ public class BlocksHelper {
 							}
 						}
 					}
+					else if (state.isOf(EndBlocks.CAVE_PUMPKIN)) {
+						if (!world.getBlockState(POS.up()).isOf(EndBlocks.CAVE_PUMPKIN_SEED)) {
+							setWithoutUpdate(world, POS, AIR);
+						}
+					}
 					else if (!state.canPlaceAt(world, POS)) {
 						// Chorus
 						if (state.isOf(Blocks.CHORUS_PLANT)) {

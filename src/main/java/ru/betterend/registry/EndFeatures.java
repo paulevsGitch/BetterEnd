@@ -14,6 +14,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.land.BiomeDefinition;
 import ru.betterend.world.features.BlueVineFeature;
+import ru.betterend.world.features.CavePumpkinFeature;
 import ru.betterend.world.features.CharniaFeature;
 import ru.betterend.world.features.CrashedShipFeature;
 import ru.betterend.world.features.DefaultFeature;
@@ -124,6 +125,9 @@ public class EndFeatures {
 	public static final EndFeature GLOBULAGUS = new EndFeature("globulagus", new SinglePlantFeature(EndBlocks.GLOBULAGUS, 5, 3), 6);
 	public static final EndFeature CLAWFERN = new EndFeature("clawfern", new SinglePlantFeature(EndBlocks.CLAWFERN, 5, 4), 5);
 	public static final EndFeature BOLUX_MUSHROOM = new EndFeature("bolux_mushroom", new SinglePlantFeature(EndBlocks.BOLUX_MUSHROOM, 5, 5), 2);
+	public static final EndFeature CHORUS_MUSHROOM = new EndFeature("chorus_mushroom", new SinglePlantFeature(EndBlocks.CHORUS_MUSHROOM, 5, 5), 1);
+	public static final EndFeature AMBER_ROOT = new EndFeature("amber_root", new SinglePlantFeature(EndBlocks.AMBER_ROOT, 5, 5), 1);
+	public static final EndFeature PEARLBERRY = new EndFeature("pearlberry", new SinglePlantFeature(EndBlocks.PEARLBERRY, 5, 5), 1);
 	
 	// Vines //
 	public static final EndFeature DENSE_VINE = new EndFeature("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);
@@ -217,6 +221,7 @@ public class EndFeatures {
 	public static final DefaultFeature END_STONE_STALAGMITE = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
 	public static final DefaultFeature END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, Blocks.END_STONE, EndBlocks.CAVE_MOSS);
 	public static final DefaultFeature END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, EndBlocks.CAVE_MOSS);
+	public static final DefaultFeature CAVE_PUMPKIN = new CavePumpkinFeature();
 	
 	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {

@@ -11,7 +11,7 @@ public class TerrainGenerator {
 	private static final ReentrantLock LOCKER = new ReentrantLock();
 	private static final double SCALE_XZ = 8.0;
 	private static final double SCALE_Y = 4.0;
-	private static final int CENTER = MHelper.floor(500 / SCALE_XZ);
+	//private static final int CENTER = MHelper.floor(500 / SCALE_XZ);
 	
 	private static IslandLayer largeIslands;
 	private static IslandLayer mediumIslands;
@@ -20,7 +20,7 @@ public class TerrainGenerator {
 	private static OpenSimplexNoise noise2;
 	
 	public static boolean canGenerate(int x, int z) {
-		return GeneratorOptions.noRingVoid() || (long) x + (long) z > CENTER;
+		return GeneratorOptions.noRingVoid()/* || (long) x + (long) z > CENTER*/;
 	}
 	
 	public static void initNoise(long seed) {

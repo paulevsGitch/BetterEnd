@@ -191,6 +191,8 @@ public class CraftingRecipes {
 		GridRecipe.make("filalux_lantern", EndBlocks.FILALUX_LANTERN).setShape("###", "###", "###").addMaterial('#', EndBlocks.FILALUX).build();
 		
 		GridRecipe.make("silk_moth_hive", EndBlocks.SILK_MOTH_HIVE).setShape("#L#", "LML", "#L#").addMaterial('#', EndBlocks.TENANEA.planks).addMaterial('L', EndBlocks.TENANEA_LEAVES).addMaterial('M', EndItems.SILK_MOTH_MATRIX).build();
+		GridRecipe.make("cave_pumpkin_pie", EndItems.CAVE_PUMPKIN_PIE).setShape(" B ", "BPB", " B ").addMaterial('P', EndBlocks.CAVE_PUMPKIN).addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).build();
+		GridRecipe.make("cave_pumpkin_seeds", EndBlocks.CAVE_PUMPKIN_SEED).setOutputCount(4).setList("#").addMaterial('#', EndBlocks.CAVE_PUMPKIN).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

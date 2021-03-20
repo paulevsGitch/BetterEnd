@@ -1,13 +1,15 @@
 package ru.betterend.mixin.common;
 
-import com.google.common.collect.Multimap;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.item.ArmorItem;
+import java.util.UUID;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.UUID;
+import com.google.common.collect.Multimap;
+
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.item.ArmorItem;
 
 @Mixin(ArmorItem.class)
 public interface ArmorItemAccessor {

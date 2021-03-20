@@ -1,7 +1,10 @@
 package ru.betterend.item;
 
+import java.util.UUID;
+
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -12,8 +15,6 @@ import net.minecraft.item.Item;
 import ru.betterend.mixin.common.ArmorItemAccessor;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
-
-import java.util.UUID;
 
 public class EndArmorItem extends ArmorItem implements Patterned {
 	public EndArmorItem(ArmorMaterial material, EquipmentSlot slot, Item.Settings settings) {

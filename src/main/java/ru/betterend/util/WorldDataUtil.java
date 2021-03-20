@@ -30,6 +30,22 @@ public class WorldDataUtil {
 		return root;
 	}
 	
+	public static CompoundTag getCompoundTag(String path) {
+		String[] parts = path.split("\\.");
+		CompoundTag tag = root;
+		for (String part: parts) {
+			if (tag.contains(part)) {
+				tag = tag.getCompound(part);
+			}
+			else {
+				CompoundTag t = new CompoundTag();
+				tag.put(part, t);
+				tag = t;
+			}
+		}
+		return tag;
+	}
+	
 	public static void saveFile() {
 		try {
 			NbtIo.write(root, saveFile);

@@ -14,9 +14,10 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
+import ru.betterend.blocks.BlockProperties;
 
 public abstract class EndPlantWithAgeBlock extends EndPlantBlock {
-	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
+	public static final IntProperty AGE = BlockProperties.AGE;
 	
 	public EndPlantWithAgeBlock() {
 		this(FabricBlockSettings.of(Material.PLANT)

@@ -13,9 +13,10 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
+import ru.betterend.blocks.BlockProperties;
 
 public abstract class UnderwaterPlantWithAgeBlock extends UnderwaterPlantBlock {
-	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
+	public static final IntProperty AGE = BlockProperties.AGE;
 	
 	public UnderwaterPlantWithAgeBlock() {
 		super(FabricBlockSettings.of(Material.UNDERWATER_PLANT)

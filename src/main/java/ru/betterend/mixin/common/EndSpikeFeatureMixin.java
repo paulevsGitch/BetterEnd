@@ -13,6 +13,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.math.BlockPos;
@@ -27,6 +28,7 @@ import net.minecraft.world.gen.feature.EndSpikeFeatureConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.StructureHelper;
+import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(EndSpikeFeature.class)
@@ -43,7 +45,24 @@ public class EndSpikeFeatureMixin {
 		int x = spike.getCenterX();
 		int z = spike.getCenterZ();
 		int radius = spike.getRadius();
-		int minY = world.getChunk(x >> 4, z >> 4).sampleHeightmap(Type.WORLD_SURFACE, x & 15, z);
+		int minY = 0;
+		
+		long lx = (long) x;
+		long lz = (long) z;
+		if (lx * lx + lz * lz < 10000) {
+			String pillarID = String.format("%d_%d", x, z);
+			CompoundTag pillar = WorldDataUtil.getCompoundTag("pillars");
+			boolean haveValue = pillar.contains(pillarID);
+			minY = haveValue ? pillar.getInt(pillarID) : world.getChunk(x >> 4, z >> 4).sampleHeightmap(Type.WORLD_SURFACE, x & 15, z);
+			if (!haveValue) {
+				pillar.putInt(pillarID, minY);
+				WorldDataUtil.saveFile();
+			}
+		}
+		else {
+			minY = world.getChunk(x >> 4, z >> 4).sampleHeightmap(Type.WORLD_SURFACE, x & 15, z);
+		}
+		
 		int maxY = minY + spike.getHeight() - 64;
 		
 		if (GeneratorOptions.replacePillars() && be_radiusInRange(radius)) {

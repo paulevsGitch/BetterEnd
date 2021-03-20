@@ -122,6 +122,7 @@ public class EndItems {
 	public final static Item CHORUS_MUSHROOM_RAW = registerFood("chorus_mushroom_raw", 3, 0.5F);
 	public final static Item CHORUS_MUSHROOM_COOKED = registerFood("chorus_mushroom_cooked", FoodComponents.MUSHROOM_STEW);
 	public final static Item BOLUX_MUSHROOM_COOKED = registerFood("bolux_mushroom_cooked", FoodComponents.MUSHROOM_STEW);
+	public final static Item CAVE_PUMPKIN_PIE = registerFood("cave_pumpkin_pie", FoodComponents.PUMPKIN_PIE);
 	
 	// Drinks //
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);

@@ -18,6 +18,7 @@ public class BlockProperties {
 	public static final BooleanProperty IS_FLOOR = BooleanProperty.of("is_floor");
 	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
 	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
+	public static final BooleanProperty SMALL = BooleanProperty.of("small");
 	
 	public static final IntProperty DESTRUCTION_LONG = IntProperty.of("destruction", 0, 8);
 	public static final IntProperty DESTRUCTION = IntProperty.of("destruction", 0, 2);
@@ -26,6 +27,7 @@ public class BlockProperties {
 	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
 	public static final IntProperty PORTAL = IntProperty.of("portal", 0, EndPortals.getCount());
 	public static final IntProperty SIZE = IntProperty.of("size", 0, 7);
+	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
 	
 	public static enum TripleShape implements StringIdentifiable {
 		TOP("top"),

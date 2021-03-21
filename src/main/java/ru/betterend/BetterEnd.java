@@ -31,6 +31,7 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.BonemealUtil;
 import ru.betterend.util.DataFixerUtil;
 import ru.betterend.util.Logger;
+import ru.betterend.util.LootTableUtil;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.surface.SurfaceBuilders;
@@ -64,6 +65,7 @@ public class BetterEnd implements ModInitializer {
 		BonemealUtil.init();
 		GeneratorOptions.init();
 		DataFixerUtil.init();
+		LootTableUtil.init();
 		
 		if (hasGuideBook()) {
 			GuideBookItem.register();

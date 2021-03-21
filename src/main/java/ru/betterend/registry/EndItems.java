@@ -19,6 +19,7 @@ import net.minecraft.item.FoodComponent;
 import net.minecraft.item.FoodComponents;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShovelItem;
@@ -45,6 +46,7 @@ import ru.betterend.item.EndShovelItem;
 import ru.betterend.item.EndSpawnEggItem;
 import ru.betterend.item.EndSwordItem;
 import ru.betterend.item.EternalCrystalItem;
+import ru.betterend.item.PatternedDiscItem;
 import ru.betterend.item.PatternedItem;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
@@ -75,6 +77,9 @@ public class EndItems {
 	public final static Item SILK_FIBER = registerItem("silk_fiber");
 	public final static Item LUMECORN_ROD = registerItem("lumecorn_rod");
 	public final static Item SILK_MOTH_MATRIX = registerItem("silk_moth_matrix");
+	
+	// Music Discs
+	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerDisc("music_disc_strange_and_alien", 0, EndSounds.STRANGE_AND_ALIEN);
 	
 	// Armor //
 	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireproof()));
@@ -126,6 +131,10 @@ public class EndItems {
 	
 	// Drinks //
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);
+	
+	public static Item registerDisc(String name, int power, SoundEvent sound) {
+		return registerItem(BetterEnd.makeID(name), new PatternedDiscItem(power, sound, makeItemSettings()));
+	}
 	
 	public static Item registerItem(String name) {
 		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));

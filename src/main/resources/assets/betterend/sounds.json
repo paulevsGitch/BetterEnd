@@ -232,5 +232,15 @@
 				"stream": false
 			}
 		]
+	},
+	
+	"betterend.record.strange_and_alien": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-strange_and_alien",
+				"stream": false
+			}
+		]
 	}
 }

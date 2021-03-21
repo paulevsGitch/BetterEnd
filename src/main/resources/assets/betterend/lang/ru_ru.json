@@ -835,5 +835,7 @@
 	"block.betterend.cave_pumpkin_seed": "Семена пещерной тыквы",
 	"block.betterend.magnula": "Магнула",
 	"block.betterend.neon_cactus": "Неоновый кактус",
-	"item.betterend.cave_pumpkin_pie": "Пирог из пещерной тыквы"
+	"item.betterend.cave_pumpkin_pie": "Пирог из пещерной тыквы",
+	
+	"item.betterend.music_disc_strange_and_alien": "§bПластинка§r"
 }

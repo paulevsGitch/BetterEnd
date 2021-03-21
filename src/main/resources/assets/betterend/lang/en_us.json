@@ -815,5 +815,8 @@
 	"block.betterend.cave_pumpkin_seed": "Cave Pumpkin Seed",
 	"block.betterend.magnula": "Magnula",
 	"block.betterend.neon_cactus": "Neon Cactus",
-	"item.betterend.cave_pumpkin_pie": "Cave Pumpkin Pie"
+	"item.betterend.cave_pumpkin_pie": "Cave Pumpkin Pie",
+	
+	"item.betterend.music_disc_strange_and_alien": "§bMusic Disc§r",
+	"item.betterend.music_disc_strange_and_alien.desc": "§5Firel§r - §fStrange And Alien§r"
 }

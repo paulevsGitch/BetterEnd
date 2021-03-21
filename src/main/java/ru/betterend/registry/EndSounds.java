@@ -28,6 +28,9 @@ public class EndSounds {
 	public static final SoundEvent ENTITY_SHADOW_WALKER_DAMAGE = register("entity", "shadow_walker_damage");
 	public static final SoundEvent ENTITY_SHADOW_WALKER_DEATH = register("entity", "shadow_walker_death");
 	
+	// Records
+	public static final SoundEvent STRANGE_AND_ALIEN = register("record", "strange_and_alien");
+	
 	public static void register() {}
 	
 	private static SoundEvent register(String type, String id) {

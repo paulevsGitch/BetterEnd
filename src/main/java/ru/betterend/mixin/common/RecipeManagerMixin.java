@@ -41,6 +41,12 @@ public class RecipeManagerMixin {
 		return null;
 	}
 
+	/**
+	 * @author paulevs
+	 * @reason Remove conflicts with vanilla tags
+	 * Change recipe order to show mod recipes first, helps when block have vanilla tag
+	 * (example - mod stone with vanilla tags and furnace from that stone)
+	 */
 	@Overwrite
 	public <C extends Inventory, T extends Recipe<C>> Optional<T> getFirstMatch(RecipeType<T> type, C inventory, World world) {
 		Collection<Recipe<C>> values = getAllOfType(type).values();

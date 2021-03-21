@@ -808,5 +808,12 @@
 	"item.betterend.bolux_mushroom_cooked": "Cooked Bolux Mushroom",
 	
 	"block.betterend.silk_moth_hive": "Silk Moth Hive",
-	"item.betterend.silk_moth_matrix": "Silk Moth Matrix"
+	"item.betterend.silk_moth_matrix": "Silk Moth Matrix",
+	
+	"biome.betterend.neon_oasis": "Neon Oasis",
+	"block.betterend.cave_pumpkin": "Cave Pumpkin",
+	"block.betterend.cave_pumpkin_seed": "Cave Pumpkin Seed",
+	"block.betterend.magnula": "Magnula",
+	"block.betterend.neon_cactus": "Neon Cactus",
+	"item.betterend.cave_pumpkin_pie": "Cave Pumpkin Pie"
 }

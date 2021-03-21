@@ -28,6 +28,7 @@ import ru.betterend.world.features.GlowPillarFeature;
 import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.LanceleafFeature;
 import ru.betterend.world.features.MengerSpongeFeature;
+import ru.betterend.world.features.NeonCactusFeature;
 import ru.betterend.world.features.OverworldIslandFeature;
 import ru.betterend.world.features.SilkMothNestFeature;
 import ru.betterend.world.features.SingleInvertedScatterFeature;
@@ -90,6 +91,7 @@ public class EndFeatures {
 	public static final EndFeature LUMECORN = new EndFeature("lumecorn", new Lumecorn(), 5);
 	public static final EndFeature LARGE_AMARANITA = new EndFeature("large_amaranita", new LargeAmaranitaFeature(), 5);
 	public static final EndFeature LUCERNIA_BUSH = new EndFeature("lucernia_bush", new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.bark), 10);
+	public static final EndFeature NEON_CACTUS = new EndFeature("neon_cactus", new NeonCactusFeature(), 2);
 	
 	// Plants //
 	public static final EndFeature UMBRELLA_MOSS = new EndFeature("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);

@@ -828,5 +828,12 @@
 	"item.betterend.bolux_mushroom_cooked": "Приготовленный болюкс",
 	
 	"block.betterend.silk_moth_hive": "Улей шелковичной моли",
-	"item.betterend.silk_moth_matrix": "Матрица шелковичной моли"
+	"item.betterend.silk_moth_matrix": "Матрица шелковичной моли",
+	
+	"biome.betterend.neon_oasis": "Неоновый оазис",
+	"block.betterend.cave_pumpkin": "Пещерная тыква",
+	"block.betterend.cave_pumpkin_seed": "Семена пещерной тыквы",
+	"block.betterend.magnula": "Магнула",
+	"block.betterend.neon_cactus": "Неоновый кактус",
+	"item.betterend.cave_pumpkin_pie": "Пирог из пещерной тыквы"
 }

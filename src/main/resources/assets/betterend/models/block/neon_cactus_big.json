@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:block/cube_column",
+	"textures": {
+		"end": "betterend:block/neon_cactus_big_top",
+		"side": "betterend:block/neon_cactus_big_side"
+	}
+}

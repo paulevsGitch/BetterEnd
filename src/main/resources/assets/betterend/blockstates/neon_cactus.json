@@ -1,0 +1,24 @@
+{
+    "variants": {
+        "shape=bottom,facing=up":    { "model": "betterend:block/neon_cactus_big" },
+        "shape=bottom,facing=down":  { "model": "betterend:block/neon_cactus_big", "x": 180 },
+        "shape=bottom,facing=north": { "model": "betterend:block/neon_cactus_big", "x": 90 },
+        "shape=bottom,facing=south": { "model": "betterend:block/neon_cactus_big", "x": 90, "y": 180 },
+        "shape=bottom,facing=east":  { "model": "betterend:block/neon_cactus_big", "x": 90, "y": 90 },
+        "shape=bottom,facing=west":  { "model": "betterend:block/neon_cactus_big", "x": 90, "y": 270 },
+		
+		"shape=middle,facing=up":    { "model": "betterend:block/neon_cactus_medium" },
+        "shape=middle,facing=down":  { "model": "betterend:block/neon_cactus_medium", "x": 180 },
+        "shape=middle,facing=north": { "model": "betterend:block/neon_cactus_medium", "x": 90 },
+        "shape=middle,facing=south": { "model": "betterend:block/neon_cactus_medium", "x": 90, "y": 180 },
+        "shape=middle,facing=east":  { "model": "betterend:block/neon_cactus_medium", "x": 90, "y": 90 },
+        "shape=middle,facing=west":  { "model": "betterend:block/neon_cactus_medium", "x": 90, "y": 270 },
+		
+		"shape=top,facing=up":    { "model": "betterend:block/neon_cactus_small" },
+        "shape=top,facing=down":  { "model": "betterend:block/neon_cactus_small", "x": 180 },
+        "shape=top,facing=north": { "model": "betterend:block/neon_cactus_small", "x": 90 },
+        "shape=top,facing=south": { "model": "betterend:block/neon_cactus_small", "x": 90, "y": 180 },
+        "shape=top,facing=east":  { "model": "betterend:block/neon_cactus_small", "x": 90, "y": 90 },
+        "shape=top,facing=west":  { "model": "betterend:block/neon_cactus_small", "x": 90, "y": 270 }
+    }
+}

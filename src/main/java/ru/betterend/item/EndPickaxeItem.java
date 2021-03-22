@@ -2,7 +2,10 @@ package ru.betterend.item;
 
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
+import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl.Entry;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +26,15 @@ public class EndPickaxeItem extends PickaxeItem implements DynamicAttributeTool,
 			return this.getMaterial().getMiningLevel();
 		}
 		return 0;
+	}
+	
+	@Override
+	public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
+		if (this.getMaterial().getMiningLevel() > 2 && state.getMaterial().equals(Blocks.END_STONE.getDefaultState().getMaterial())) {
+			return this.miningSpeed * 3;
+		}
+		Entry entry = ToolManagerImpl.entryNullable(state.getBlock());
+		return (entry != null && entry.getMiningLevel(FabricToolTags.PICKAXES) >= 0) ? this.miningSpeed : super.getMiningSpeedMultiplier(stack, state);
 	}
 	
 	@Override

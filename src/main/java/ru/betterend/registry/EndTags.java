@@ -125,7 +125,7 @@ public class EndTags {
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
 		
-		TagHelper.addTag(EndTags.DRAGON_IMMUNE, EndBlocks.ENDER_ORE);
+		TagHelper.addTag(EndTags.DRAGON_IMMUNE, EndBlocks.ENDER_ORE, EndBlocks.ETERNAL_PEDESTAL, EndBlocks.FLAVOLITE_RUNED_ETERNAL, EndBlocks.FLAVOLITE_RUNED);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

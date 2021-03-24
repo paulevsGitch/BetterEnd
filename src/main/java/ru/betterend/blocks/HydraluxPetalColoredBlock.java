@@ -8,6 +8,7 @@ import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.util.Identifier;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.patterns.Patterns;
+import ru.betterend.util.BlocksHelper;
 
 public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements IColorProvider {
 	public HydraluxPetalColoredBlock(FabricBlockSettings settings) {
@@ -17,14 +18,14 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 	@Override
 	public BlockColorProvider getProvider() {
 		return (state, world, pos, tintIndex) -> {
-			return this.getDefaultMaterialColor().color;
+			return BlocksHelper.getBlockColor(this);
 		};
 	}
 
 	@Override
 	public ItemColorProvider getItemProvider() {
 		return (stack, tintIndex) -> {
-			return this.getDefaultMaterialColor().color;
+			return BlocksHelper.getBlockColor(this);
 		};
 	}
 	

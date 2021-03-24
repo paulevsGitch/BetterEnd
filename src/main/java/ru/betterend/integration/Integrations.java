@@ -12,6 +12,7 @@ public class Integrations {
 	public static final ModIntegration NOURISH = register(new NourishIntegration());
 	//public static final ModIntegration EXTRA_PIECES = register(new ExtraPiecesIntegration());
 	//public static final ModIntegration ADORN = register(new AdornIntegration());
+	public static final ModIntegration FLAMBOYANT_REFABRICATED = register(new FlamboyantRefabricatedIntegration());
 	
 	public static void register() {
 		INTEGRATIONS.forEach((integration) -> {

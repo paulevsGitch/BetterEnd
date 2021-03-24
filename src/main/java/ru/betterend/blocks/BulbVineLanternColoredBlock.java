@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
 import ru.betterend.interfaces.IColorProvider;
+import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements IColorProvider {
@@ -26,7 +27,7 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 	}
 	
 	private int getColor() {
-		int color = this.getDefaultMaterialColor().color;
+		int color = BlocksHelper.getBlockColor(this);
 		int b = (color & 255);
 		int g = ((color >> 8) & 255);
 		int r = ((color >> 16) & 255);

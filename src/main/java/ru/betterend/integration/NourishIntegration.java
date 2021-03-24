@@ -22,7 +22,4 @@ public class NourishIntegration extends ModIntegration {
 		TagHelper.addTag(protein, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
 		TagHelper.addTag(sweets, EndItems.SHADOW_BERRY_JELLY, EndItems.SWEET_BERRY_JELLY);
 	}
-
-	@Override
-	public void addBiomes() {}
 }

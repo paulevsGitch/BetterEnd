@@ -2,9 +2,11 @@ package ru.betterend.util;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
@@ -31,6 +33,7 @@ import ru.betterend.registry.EndTags;
 
 public class BlocksHelper {
 	public static final BooleanProperty ROOTS = BooleanProperty.of("roots");
+	private static final Map<Block, Integer> COLOR_BY_BLOCK = Maps.newHashMap();
 	
 	public static final int FLAG_UPDATE_BLOCK = 1;
 	public static final int FLAG_SEND_CLIENT_CHANGES = 2;
@@ -60,6 +63,14 @@ public class BlocksHelper {
 			new Vec3i(1, 0, -1), new Vec3i(1, 0, 0), new Vec3i(1, 0, 1),
 			new Vec3i(1, 1, -1), new Vec3i(1, 1, 0), new Vec3i(1, 1, 1)
 	};
+	
+	public static void addBlockColor(Block block, int color) {
+		COLOR_BY_BLOCK.put(block, color);
+	}
+	
+	public static int getBlockColor(Block block) {
+		return COLOR_BY_BLOCK.getOrDefault(block, 0xFF000000);
+	}
 
 	public static void setWithoutUpdate(WorldAccess world, BlockPos pos, BlockState state) {
 		world.setBlockState(pos, state, SET_SILENT);

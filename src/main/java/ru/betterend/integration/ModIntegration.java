@@ -28,9 +28,9 @@ import ru.betterend.world.features.EndFeature;
 public abstract class ModIntegration {
 	private final String modID;
 	
-	public abstract void register();
+	public void register() {}
 	
-	public abstract void addBiomes();
+	public void addBiomes() {}
 	
 	public ModIntegration(String modID) {
 		this.modID = modID;
@@ -42,6 +42,10 @@ public abstract class ModIntegration {
 	
 	public Block getBlock(String name) {
 		return Registry.BLOCK.get(getID(name));
+	}
+	
+	public Item getItem(String name) {
+		return Registry.ITEM.get(getID(name));
 	}
 
 	public BlockState getDefaultState(String name) {

@@ -10,6 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
@@ -99,8 +100,18 @@ public class EndTags {
 			else if (block instanceof PedestalBlock) {
 				TagHelper.addTag(PEDESTALS, block);
 			}
-			if (block.getDefaultState().getMaterial().equals(Material.PLANT)) {
+			
+			Material mat = block.getDefaultState().getMaterial();
+			if (mat.equals(Material.PLANT) || mat.equals(Material.REPLACEABLE_PLANT)) {
 				ComposterBlockAccessor.callRegisterCompostableItem(0.1F, block);
+			}
+		});
+		
+		EndItems.getModItems().forEach((item) -> {
+			if (item.isFood()) {
+				FoodComponent food = item.getFoodComponent();
+				float compost = food.getHunger() * food.getSaturationModifier() * 0.18F;
+				ComposterBlockAccessor.callRegisterCompostableItem(compost, item);
 			}
 		});
 		

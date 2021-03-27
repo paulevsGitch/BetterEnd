@@ -13,7 +13,7 @@ import net.minecraft.world.gen.feature.StructureFeature;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.structures.piece.CrystalMountainPiece;
 
-public class StructureMountain extends StructureFeatureBase {
+public class MountainStructure extends FeatureBaseStructure {
 	@Override
 	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
 		return SDFStructureStart::new;

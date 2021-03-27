@@ -13,7 +13,7 @@ import net.minecraft.world.gen.feature.StructureFeature;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.structures.piece.LakePiece;
 
-public class StructureMegaLakeSmall extends StructureFeatureBase {
+public class MegaLakeSmallStructure extends FeatureBaseStructure {
 	@Override
 	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
 		return SDFStructureStart::new;

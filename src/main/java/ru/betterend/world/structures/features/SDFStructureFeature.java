@@ -16,7 +16,7 @@ import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
-public abstract class SDFStructureFeature extends StructureFeatureBase {
+public abstract class SDFStructureFeature extends FeatureBaseStructure {
 	
 	protected abstract SDF getSDF(BlockPos pos, Random random);
 	

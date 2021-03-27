@@ -11,13 +11,13 @@ import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.structures.EndStructureFeature;
-import ru.betterend.world.structures.features.StructureEternalPortal;
-import ru.betterend.world.structures.features.StructureGiantIceStar;
-import ru.betterend.world.structures.features.StructureGiantMossyGlowshroom;
-import ru.betterend.world.structures.features.StructureMegaLake;
-import ru.betterend.world.structures.features.StructureMegaLakeSmall;
-import ru.betterend.world.structures.features.StructureMountain;
-import ru.betterend.world.structures.features.StructurePaintedMountain;
+import ru.betterend.world.structures.features.EternalPortalStructure;
+import ru.betterend.world.structures.features.GiantIceStarStructure;
+import ru.betterend.world.structures.features.GiantMossyGlowshroomStructure;
+import ru.betterend.world.structures.features.MegaLakeStructure;
+import ru.betterend.world.structures.features.MegaLakeSmallStructure;
+import ru.betterend.world.structures.features.MountainStructure;
+import ru.betterend.world.structures.features.PaintedMountainStructure;
 import ru.betterend.world.structures.piece.CavePiece;
 import ru.betterend.world.structures.piece.CrystalMountainPiece;
 import ru.betterend.world.structures.piece.LakePiece;
@@ -33,13 +33,13 @@ public class EndStructures {
 	public static final StructurePieceType PAINTED_MOUNTAIN_PIECE = register("painted_mountain_piece", PaintedMountainPiece::new);
 	public static final StructurePieceType NBT_PIECE = register("nbt_piece", NBTPiece::new);
 	
-	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new StructureGiantMossyGlowshroom(), Feature.SURFACE_STRUCTURES, 16, 8);
-	public static final EndStructureFeature MEGALAKE = new EndStructureFeature("megalake", new StructureMegaLake(), Feature.RAW_GENERATION, 4, 1);
-	public static final EndStructureFeature MEGALAKE_SMALL = new EndStructureFeature("megalake_small", new StructureMegaLakeSmall(), Feature.RAW_GENERATION, 4, 1);
-	public static final EndStructureFeature MOUNTAIN = new EndStructureFeature("mountain", new StructureMountain(), Feature.RAW_GENERATION, 3, 2);
-	public static final EndStructureFeature PAINTED_MOUNTAIN = new EndStructureFeature("painted_mountain", new StructurePaintedMountain(), Feature.RAW_GENERATION, 3, 2);
-	public static final EndStructureFeature ETERNAL_PORTAL = new EndStructureFeature("eternal_portal", new StructureEternalPortal(), Feature.SURFACE_STRUCTURES, 16, 6);
-	public static final EndStructureFeature GIANT_ICE_STAR = new EndStructureFeature("giant_ice_star", new StructureGiantIceStar(), Feature.SURFACE_STRUCTURES, 16, 8);
+	public static final EndStructureFeature GIANT_MOSSY_GLOWSHROOM = new EndStructureFeature("giant_mossy_glowshroom", new GiantMossyGlowshroomStructure(), Feature.SURFACE_STRUCTURES, 16, 8);
+	public static final EndStructureFeature MEGALAKE = new EndStructureFeature("megalake", new MegaLakeStructure(), Feature.RAW_GENERATION, 4, 1);
+	public static final EndStructureFeature MEGALAKE_SMALL = new EndStructureFeature("megalake_small", new MegaLakeSmallStructure(), Feature.RAW_GENERATION, 4, 1);
+	public static final EndStructureFeature MOUNTAIN = new EndStructureFeature("mountain", new MountainStructure(), Feature.RAW_GENERATION, 3, 2);
+	public static final EndStructureFeature PAINTED_MOUNTAIN = new EndStructureFeature("painted_mountain", new PaintedMountainStructure(), Feature.RAW_GENERATION, 3, 2);
+	public static final EndStructureFeature ETERNAL_PORTAL = new EndStructureFeature("eternal_portal", new EternalPortalStructure(), Feature.SURFACE_STRUCTURES, 16, 6);
+	public static final EndStructureFeature GIANT_ICE_STAR = new EndStructureFeature("giant_ice_star", new GiantIceStarStructure(), Feature.SURFACE_STRUCTURES, 16, 8);
 	
 	public static void register() {}
 	

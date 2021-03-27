@@ -16,7 +16,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.structures.piece.PaintedMountainPiece;
 
-public class StructurePaintedMountain extends StructureFeatureBase {
+public class PaintedMountainStructure extends FeatureBaseStructure {
 	private static final BlockState[] VARIANTS;
 	
 	@Override

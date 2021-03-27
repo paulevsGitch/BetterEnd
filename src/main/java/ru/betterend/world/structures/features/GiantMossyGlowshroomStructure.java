@@ -28,7 +28,7 @@ import ru.betterend.util.sdf.primitive.SDFCappedCone;
 import ru.betterend.util.sdf.primitive.SDFPrimitive;
 import ru.betterend.util.sdf.primitive.SDFSphere;
 
-public class StructureGiantMossyGlowshroom extends SDFStructureFeature {
+public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
 	@Override
 	protected SDF getSDF(BlockPos center, Random random) {
 		SDFCappedCone cone1 = new SDFCappedCone().setHeight(2.5F).setRadius1(1.5F).setRadius2(2.5F);

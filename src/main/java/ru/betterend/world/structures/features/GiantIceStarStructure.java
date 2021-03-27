@@ -24,7 +24,7 @@ import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFCappedCone;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
-public class StructureGiantIceStar extends SDFStructureFeature {
+public class GiantIceStarStructure extends SDFStructureFeature {
 	private final float minSize = 20;
 	private final float maxSize = 35;
 	private final int minCount = 25;

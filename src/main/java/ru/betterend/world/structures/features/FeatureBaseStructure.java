@@ -14,10 +14,10 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
-public abstract class StructureFeatureBase extends StructureFeature<DefaultFeatureConfig> {
+public abstract class FeatureBaseStructure extends StructureFeature<DefaultFeatureConfig> {
 	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
 	
-	public StructureFeatureBase() {
+	public FeatureBaseStructure() {
 		super(DefaultFeatureConfig.CODEC);
 	}
 	

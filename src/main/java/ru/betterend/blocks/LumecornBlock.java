@@ -88,19 +88,9 @@ public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		LumecornShape shape = state.get(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL || shape == LumecornShape.MIDDLE) {
-			if (MHelper.RANDOM.nextBoolean()) {
-				return Collections.singletonList(new ItemStack(EndBlocks.LUMECORN_SEED));
-			}
-			else {
-				return Collections.emptyList();
-			}
+			return Collections.singletonList(new ItemStack(EndBlocks.LUMECORN_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
 		}
-		if (MHelper.RANDOM.nextBoolean()) {
-			return Collections.singletonList(new ItemStack(EndItems.LUMECORN_ROD));
-		}
-		else {
-			return Collections.emptyList();
-		}
+		return MHelper.RANDOM.nextBoolean() ? Collections.singletonList(new ItemStack(EndItems.LUMECORN_ROD)) : Collections.emptyList();
 	}
 	
 	@Override

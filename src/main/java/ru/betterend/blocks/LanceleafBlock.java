@@ -1,8 +1,13 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
@@ -13,6 +18,7 @@ import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.PentaShape;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.util.MHelper;
 
 public class LanceleafBlock extends EndPlantBlock {
 	public static final EnumProperty<PentaShape> SHAPE = BlockProperties.PENTA_SHAPE;
@@ -49,5 +55,13 @@ public class LanceleafBlock extends EndPlantBlock {
 		else {
 			return state;
 		}
+	}
+	
+	@Override
+	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+		if (state.get(SHAPE) == PentaShape.BOTTOM) {
+			return Collections.singletonList(new ItemStack(EndBlocks.LANCELEAF_SEED));
+		}
+		return MHelper.RANDOM.nextBoolean() ? Collections.emptyList() : Collections.singletonList(new ItemStack(EndBlocks.LANCELEAF_SEED));
 	}
 }

@@ -15,7 +15,7 @@ public class WorldDataUtil {
 		saveFile = file;
 		if (file.exists()) {
 			try {
-				root = NbtIo.read(file);
+				root = NbtIo.readCompressed(file);
 			}
 			catch (IOException e) {
 				BetterEnd.LOGGER.error("World data loading failed", e);
@@ -48,7 +48,7 @@ public class WorldDataUtil {
 	
 	public static void saveFile() {
 		try {
-			NbtIo.write(root, saveFile);
+			NbtIo.writeCompressed(root, saveFile);
 		}
 		catch (IOException e) {
 			BetterEnd.LOGGER.error("World data saving failed", e);

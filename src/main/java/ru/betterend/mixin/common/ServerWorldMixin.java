@@ -2,6 +2,7 @@ package ru.betterend.mixin.common;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,21 +33,39 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
+	private static final int DEV_VERSION = be_getVersionInt("63.63.63");
+	private static final int FIX_VERSION = DEV_VERSION;
+	private static String lastWorld = null;
+	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey<World> registryKey, DimensionType dimensionType, WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long l, List<Spawner> list, boolean bl, CallbackInfo info) {
-		File beData = new File(FabricLoader.getInstance().getGameDir().getParent().toString(), "saves/" + properties.getLevelName() + "/data/betterend_data.nbt");
+		if (lastWorld != null && lastWorld.equals(session.getDirectoryName())) {
+			return;
+		}
+		
+		lastWorld = session.getDirectoryName();
+		
+		@SuppressWarnings("resource")
+		ServerWorld world = (ServerWorld) (Object) this;
+		File dir = session.getWorldDirectory(world.getRegistryKey());
+		if (!new File(dir, "level.dat").exists()) {
+			dir = dir.getParentFile();
+		}
+		File data = new File(dir, "data/betterend_data.nbt");
+		
 		ModMetadata meta = FabricLoader.getInstance().getModContainer(BetterEnd.MOD_ID).get().getMetadata();
-		String version = BetterEnd.isDevEnvironment() ? "development" : meta.getVersion().toString();
+		int version = BetterEnd.isDevEnvironment() ? DEV_VERSION : be_getVersionInt(meta.getVersion().toString());
 		
-		WorldDataUtil.load(beData);
+		WorldDataUtil.load(data);
 		CompoundTag root = WorldDataUtil.getRootTag();
-		String dataVersion = root.getString("version");
+		int dataVersion = be_getVersionInt(root.getString("version"));
 		GeneratorOptions.setPortalPos(NbtHelper.toBlockPos(root.getCompound("portal")));
-		boolean fix = !dataVersion.equals(version);
 		
-		if (fix) {
-			DataFixerUtil.fixData(beData.getParentFile());
-			root.putString("version", version);
+		if (dataVersion < version) {
+			if (version < FIX_VERSION) {
+				DataFixerUtil.fixData(data.getParentFile());
+			}
+			root.putString("version", be_getVersionString(version));
 			WorldDataUtil.saveFile();
 		}
 	}
@@ -59,5 +78,25 @@ public class ServerWorldMixin {
 				info.cancel();
 			}
 		}
+	}
+	
+	private static int be_getVersionInt(String version) {
+		if (version.isEmpty()) {
+			return 0;
+		}
+		try {
+			String[] values = version.split("\\.");
+			return Integer.parseInt(values[0]) << 12 | Integer.parseInt(values[1]) << 6 | Integer.parseInt(values[1]);
+		}
+		catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	private static String be_getVersionString(int version) {
+		int a = (version >> 12) & 63;
+		int b = (version >> 6) & 63;
+		int c = version & 63;
+		return String.format(Locale.ROOT, "%d.%d.%d", a, b, c);
 	}
 }

@@ -273,4 +273,38 @@ public abstract class SDF {
 			world.setBlock(info.getPos(), info.getState());
 		});
 	}
+	
+	public Set<BlockPos> getPositions(ServerWorldAccess world, BlockPos start) {
+		Set<BlockPos> blocks = Sets.newHashSet();
+		Set<BlockPos> ends = Sets.newHashSet();
+		Set<BlockPos> add = Sets.newHashSet();
+		ends.add(new BlockPos(0, 0, 0));
+		boolean run = true;
+		
+		Mutable bPos = new Mutable();
+		
+		while (run) {
+			for (BlockPos center: ends) {
+				for (Direction dir: Direction.values()) {
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.add(start);
+					BlockState state = world.getBlockState(wpos);
+					if (!blocks.contains(wpos) && canReplace.apply(state)) {
+						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) {
+							add.add(bPos.toImmutable());
+						}
+					}
+				}
+			}
+			
+			ends.forEach((end) -> blocks.add(end.add(start)));
+			ends.clear();
+			ends.addAll(add);
+			add.clear();
+			
+			run &= !ends.isEmpty();
+		}
+		
+		return blocks;
+	}
 }

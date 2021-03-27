@@ -59,6 +59,7 @@ import ru.betterend.world.features.terrain.SulphuricCaveFeature;
 import ru.betterend.world.features.terrain.SulphuricLakeFeature;
 import ru.betterend.world.features.terrain.SurfaceVentFeature;
 import ru.betterend.world.features.terrain.caves.RoundCaveFeature;
+import ru.betterend.world.features.terrain.caves.TunelCaveFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
 import ru.betterend.world.features.trees.GiganticAmaranitaFeature;
 import ru.betterend.world.features.trees.HelixTreeFeature;
@@ -198,6 +199,7 @@ public class EndFeatures {
 	public static final EndFeature OBSIDIAN_PILLAR_BASEMENT = EndFeature.makeChansedFeature("obsidian_pillar_basement", new ObsidianPillarBasementFeature(), 8);
 	public static final EndFeature OBSIDIAN_BOULDER = EndFeature.makeChansedFeature("obsidian_boulder", new ObsidianBoulderFeature(), 10);
 	public static final EndFeature FALLEN_PILLAR = EndFeature.makeChansedFeature("fallen_pillar", new FallenPillarFeature(), 20);
+	public static final EndFeature TUNEL_CAVE = EndFeature.makeRawGenFeature("tunel_cave", new TunelCaveFeature(), 2);
 	
 	// Ores //
 	public static final EndFeature THALLASIUM_ORE = EndFeature.makeOreFeature("thallasium_ore", EndBlocks.THALLASIUM.ore, 12, 6, 0, 16, 128);
@@ -254,6 +256,7 @@ public class EndFeatures {
 		
 		if (EndBiomes.getBiome(id).hasCaves()) {
 			addFeature(ROUND_CAVE, features);
+			addFeature(TUNEL_CAVE, features);
 		}
 		
 		EndBiome endBiome = EndBiomes.getBiome(id);
@@ -271,6 +274,7 @@ public class EndFeatures {
 		
 		if (def.hasCaves()) {
 			def.addFeature(ROUND_CAVE);
+			def.addFeature(TUNEL_CAVE);
 		}
 	}
 	

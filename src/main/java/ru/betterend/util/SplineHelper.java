@@ -33,6 +33,29 @@ public class SplineHelper {
 		return spline;
 	}
 	
+	public static List<Vector3f> smoothSpline(List<Vector3f> spline, int segmentPoints) {
+		List<Vector3f> result = Lists.newArrayList();
+		Vector3f start = spline.get(0);
+		for (int i = 1; i < spline.size(); i++) {
+			Vector3f end = spline.get(i);
+			for (int j = 0; j < segmentPoints; j++) {
+				float delta = (float) j / segmentPoints;
+				delta = 0.5F - 0.5F * MathHelper.cos(delta * 3.14159F);
+				result.add(lerp(start, end, delta));
+			}
+			start = end;
+		}
+		result.add(start);
+		return result;
+	}
+	
+	private static Vector3f lerp(Vector3f start, Vector3f end, float delta) {
+		float x = MathHelper.lerp(delta, start.getX(), end.getX());
+		float y = MathHelper.lerp(delta, start.getY(), end.getY());
+		float z = MathHelper.lerp(delta, start.getZ(), end.getZ());
+		return new Vector3f(x, y, z);
+	}
+	
 	public static void offsetParts(List<Vector3f> spline, Random random, float dx, float dy, float dz) {
 		int count = spline.size();
 		for (int i = 1; i < count; i++) {

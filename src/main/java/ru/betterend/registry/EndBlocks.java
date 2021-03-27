@@ -27,6 +27,7 @@ import ru.betterend.blocks.basis.TripleTerrainBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.blocks.basis.WallMushroomBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
+import ru.betterend.blocks.complex.CrystalSubblocksMaterial;
 import ru.betterend.blocks.complex.MetalMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
@@ -104,7 +105,7 @@ public class EndBlocks {
 	public static final Block MOSSY_GLOWSHROOM_SAPLING = registerBlock("mossy_glowshroom_sapling", new MossyGlowshroomSaplingBlock());
 	public static final Block MOSSY_GLOWSHROOM_CAP = registerBlock("mossy_glowshroom_cap", new MossyGlowshroomCapBlock());
 	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new GlowingHymenophoreBlock());
-	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 16));
+	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 16, true));
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	
 	public static final Block PYTHADENDRON_SAPLING = registerBlock("pythadendron_sapling", new PythadendronSaplingBlock());
@@ -176,7 +177,7 @@ public class EndBlocks {
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlueVineSeedBlock());
 	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlueVineBlock());
 	public static final Block BLUE_VINE_LANTERN = registerBlock("blue_vine_lantern", new BlueVineLanternBlock());
-	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new FurBlock(BLUE_VINE_SEED, 15, 3));
+	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new FurBlock(BLUE_VINE_SEED, 15, 3, false));
 	
 	public static final Block LANCELEAF_SEED = registerBlock("lanceleaf_seed", new LanceleafSeedBlock());
 	public static final Block LANCELEAF = registerBlockNI("lanceleaf", new LanceleafBlock());
@@ -184,7 +185,7 @@ public class EndBlocks {
 	public static final Block GLOWING_PILLAR_SEED = registerBlock("glowing_pillar_seed", new GlowingPillarSeedBlock());
 	public static final Block GLOWING_PILLAR_ROOTS = registerBlockNI("glowing_pillar_roots", new GlowingPillarRootsBlock());
 	public static final Block GLOWING_PILLAR_LUMINOPHOR = registerBlock("glowing_pillar_luminophor", new GlowingPillarLuminophorBlock());
-	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new FurBlock(GLOWING_PILLAR_SEED, 15, 3));
+	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new FurBlock(GLOWING_PILLAR_SEED, 15, 3, false));
 	
 	public static final Block SMALL_JELLYSHROOM = registerBlock("small_jellyshroom", new SmallJellyshroomBlock());
 	public static final Block BOLUX_MUSHROOM = registerBlock("bolux_mushroom", new BoluxMushroomBlock());
@@ -198,7 +199,7 @@ public class EndBlocks {
 	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaStemBlock());
 	public static final Block AMARANITA_HYMENOPHORE = registerBlock("amaranita_hymenophore", new AmaranitaHymenophoreBlock());
 	public static final Block AMARANITA_LANTERN = registerBlock("amaranita_lantern", new GlowingHymenophoreBlock());
-	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 4));
+	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 4, true));
 	public static final Block AMARANITA_CAP = registerBlock("amaranita_cap", new AmaranitaCapBlock());
 	
 	public static final Block NEON_CACTUS = registerBlock("neon_cactus", new NeonCactusBlock());
@@ -281,6 +282,7 @@ public class EndBlocks {
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new AmberBlock());
 	public static final Block SMARAGDANT_CRYSTAL = registerBlock("smaragdant_crystal", new SmaragdantCrystalBlock());
+	public static final CrystalSubblocksMaterial SMARAGDANT_SUBBLOCKS = new CrystalSubblocksMaterial("smaragdant_crystal", SMARAGDANT_CRYSTAL);
 	public static final Block SMARAGDANT_CRYSTAL_SHARD = registerBlock("smaragdant_crystal_shard", new SmaragdantCrystalShardBlock());
 	
 	public static final Block RESPAWN_OBELISK = registerBlock("respawn_obelisk", new RespawnObeliskBlock());

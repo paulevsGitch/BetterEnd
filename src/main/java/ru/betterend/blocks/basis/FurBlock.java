@@ -32,10 +32,10 @@ public class FurBlock extends AttachedBlock implements IRenderTypeable {
 	private final ItemConvertible drop;
 	private final int dropChance;
 	
-	public FurBlock(ItemConvertible drop, int light, int dropChance) {
+	public FurBlock(ItemConvertible drop, int light, int dropChance, boolean wet) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(BlockSoundGroup.WET_GRASS)
+				.sounds(wet ? BlockSoundGroup.WET_GRASS : BlockSoundGroup.GRASS)
 				.luminance(light)
 				.breakByHand(true)
 				.noCollision());
@@ -46,7 +46,7 @@ public class FurBlock extends AttachedBlock implements IRenderTypeable {
 	public FurBlock(ItemConvertible drop, int dropChance) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(BlockSoundGroup.WET_GRASS)
+				.sounds(BlockSoundGroup.GRASS)
 				.breakByHand(true)
 				.noCollision());
 		this.drop = drop;

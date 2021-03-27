@@ -6,6 +6,7 @@ import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
@@ -20,7 +21,9 @@ public class EndstoneDustBlock extends FallingBlock {
 	private static final int COLOR = MHelper.color(226, 239, 168);
 	
 	public EndstoneDustBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.SAND).materialColor(Blocks.END_STONE.getDefaultMaterialColor()));
+		super(FabricBlockSettings.copyOf(Blocks.SAND)
+				.breakByTool(FabricToolTags.SHOVELS)
+				.materialColor(Blocks.END_STONE.getDefaultMaterialColor()));
 	}
 	
 	@Override

@@ -818,5 +818,34 @@
 	"item.betterend.cave_pumpkin_pie": "Cave Pumpkin Pie",
 	
 	"item.betterend.music_disc_strange_and_alien": "§bMusic Disc§r",
-	"item.betterend.music_disc_strange_and_alien.desc": "§5Firel§r - §fStrange And Alien§r"
+	"item.betterend.music_disc_strange_and_alien.desc": "§5Firel§r - §fStrange And Alien§r",
+	
+	"block.betterend.hydralux_petal_block_amber": "Amber Petal Block",
+	"block.betterend.hydralux_petal_block_beige": "Beige Petal Block",
+	"block.betterend.hydralux_petal_block_cream": "Cream Petal Block",
+	"block.betterend.hydralux_petal_block_dark_green": "Dark Green Petal Block",
+	"block.betterend.hydralux_petal_block_forest_green": "Forest Green Petal Block",
+	"block.betterend.hydralux_petal_block_hot_pink": "Hot Pink Petal Block",
+	"block.betterend.hydralux_petal_block_indigo": "Indigo Petal Block",
+	"block.betterend.hydralux_petal_block_maroon": "Maroon Petal Block",
+	"block.betterend.hydralux_petal_block_navy": "Navy Petal Block",
+	"block.betterend.hydralux_petal_block_olive": "Olive Petal Block",
+	"block.betterend.hydralux_petal_block_pale_green": "Pale Green Petal Block",
+	"block.betterend.hydralux_petal_block_pale_pink": "Pale Pink Petal Block",
+	"block.betterend.hydralux_petal_block_pale_yellow": "Pale Yellow Petal Block",
+	"block.betterend.hydralux_petal_block_sky_blue": "Sky Blue Petal Block",
+	"block.betterend.hydralux_petal_block_slate_gray": "Slate Gray Petal Block",
+	"block.betterend.hydralux_petal_block_violet": "Violet Petal Block",
+	
+	"block.betterend.smaragdant_crystal_bricks": "Smaragdant Bricks",
+	"block.betterend.smaragdant_crystal_bricks_slab": "Smaragdant Bricks Slab",
+	"block.betterend.smaragdant_crystal_bricks_stairs": "Smaragdant Bricks Stairs",
+	"block.betterend.smaragdant_crystal_bricks_wall": "Smaragdant Bricks Wall",
+	"block.betterend.smaragdant_crystal_pedestal": "Smaragdant Pedestal",
+	"block.betterend.smaragdant_crystal_pillar": "Smaragdant Pillar",
+	"block.betterend.smaragdant_crystal_polished": "Smaragdant Polished",
+	"block.betterend.smaragdant_crystal_slab": "Smaragdant Slab",
+	"block.betterend.smaragdant_crystal_stairs": "Smaragdant Stairs",
+	"block.betterend.smaragdant_crystal_tiles": "Smaragdant Tiles",
+	"block.betterend.smaragdant_crystal_wall": "Smaragdant Wall"
 }

@@ -1,4 +1,4 @@
-package ru.betterend.item;
+package ru.betterend.item.tool;
 
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ToolMaterial;

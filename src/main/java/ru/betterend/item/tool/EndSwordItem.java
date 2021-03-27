@@ -1,4 +1,4 @@
-package ru.betterend.item;
+package ru.betterend.item.tool;
 
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.minecraft.item.SwordItem;

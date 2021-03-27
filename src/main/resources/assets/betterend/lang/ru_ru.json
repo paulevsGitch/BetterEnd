@@ -837,5 +837,34 @@
 	"block.betterend.neon_cactus": "Неоновый кактус",
 	"item.betterend.cave_pumpkin_pie": "Пирог из пещерной тыквы",
 	
-	"item.betterend.music_disc_strange_and_alien": "§bПластинка§r"
+	"item.betterend.music_disc_strange_and_alien": "§bПластинка§r",
+	
+	"block.betterend.hydralux_petal_block_amber": "Янтарный блок лепестков",
+	"block.betterend.hydralux_petal_block_beige": "Бежевый блок лепестков",
+	"block.betterend.hydralux_petal_block_cream": "Кремовый блок лепестков",
+	"block.betterend.hydralux_petal_block_dark_green": "Тёмно-зелёный блок лепестков",
+	"block.betterend.hydralux_petal_block_forest_green": "Лесной зелёный блок лепестков",
+	"block.betterend.hydralux_petal_block_hot_pink": "Ярко-розовый блок лепестков",
+	"block.betterend.hydralux_petal_block_indigo": "Индиго блок лепестков",
+	"block.betterend.hydralux_petal_block_maroon": "Бордовый блок лепестков",
+	"block.betterend.hydralux_petal_block_navy": "Темно-синий блок лепестков",
+	"block.betterend.hydralux_petal_block_olive": "Оливковый блок лепестков",
+	"block.betterend.hydralux_petal_block_pale_green": "Бледно-зеленый блок лепестков",
+	"block.betterend.hydralux_petal_block_pale_pink": "Бледно-розовый блок лепестков",
+	"block.betterend.hydralux_petal_block_pale_yellow": "Бледно-жёлтый блок лепестков",
+	"block.betterend.hydralux_petal_block_sky_blue": "Неьесно-голубой блок лепестков",
+	"block.betterend.hydralux_petal_block_slate_gray": "Сланцево-серый блок лепестков",
+	"block.betterend.hydralux_petal_block_violet": "Лиловый блок лепестков",
+	
+	"block.betterend.smaragdant_crystal_bricks": "Смарагдантовые кирпичи",
+	"block.betterend.smaragdant_crystal_bricks_slab": "Плита из смарагдантовых кирпичей",
+	"block.betterend.smaragdant_crystal_bricks_stairs": "Ступени из смарагдантовых кирпичей",
+	"block.betterend.smaragdant_crystal_bricks_wall": "Стена из смарагдантовых кирпичей",
+	"block.betterend.smaragdant_crystal_pedestal": "Смарагдантовый пьедестал",
+	"block.betterend.smaragdant_crystal_pillar": "Смарагдантовая колонна",
+	"block.betterend.smaragdant_crystal_polished": "Полированный смарагдант",
+	"block.betterend.smaragdant_crystal_slab": "Смарагдантовая плита",
+	"block.betterend.smaragdant_crystal_stairs": "Смарагдантовые ступени",
+	"block.betterend.smaragdant_crystal_tiles": "Смарагдантовая плитка",
+	"block.betterend.smaragdant_crystal_wall": "Смарагдантовая стена"
 }

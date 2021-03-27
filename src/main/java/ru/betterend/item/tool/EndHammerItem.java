@@ -1,4 +1,4 @@
-package ru.betterend.item;
+package ru.betterend.item.tool;
 
 import java.util.UUID;
 

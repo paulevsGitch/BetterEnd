@@ -283,10 +283,8 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 	public boolean isPlaceable(BlockState state) {
 		if (!state.isOf(this)) return false;
 		PedestalState currentState = state.get(STATE);
-		return currentState != PedestalState.BOTTOM &&
-			   currentState != PedestalState.COLUMN &&
-			   currentState != PedestalState.PILLAR &&
-			   currentState != PedestalState.COLUMN_TOP;
+		return currentState == PedestalState.DEFAULT ||
+			   currentState == PedestalState.PEDESTAL_TOP;
 	}
 	
 	@Override

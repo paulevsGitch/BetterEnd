@@ -1,5 +1,6 @@
 package ru.betterend.blocks.entities;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -13,7 +14,7 @@ import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndItems;
 
-public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable {
+public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable, BlockEntityClientSerializable {
 	private ItemStack activeItem = ItemStack.EMPTY;
 	
 	private final int maxAge = 314;
@@ -103,22 +104,9 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	}
 	
 	@Override
-	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(pos, 32, toInitialChunkDataTag());
-	}
-
-	@Override
-	public CompoundTag toInitialChunkDataTag() {
-		return toTag(new CompoundTag());
-	}
-	
-	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
 		super.fromTag(state, tag);
-		if (tag.contains("active_item")) {
-			CompoundTag itemTag = tag.getCompound("active_item");
-			activeItem = ItemStack.fromTag(itemTag);
-		}
+		fromClientTag(tag);
 	}
 
 	@Override
@@ -136,5 +124,18 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 				age = 0;
 			}
 		}
+	}
+
+	@Override
+	public void fromClientTag(CompoundTag tag) {
+		if (tag.contains("active_item")) {
+			CompoundTag itemTag = tag.getCompound("active_item");
+			activeItem = ItemStack.fromTag(itemTag);
+		}
+	}
+
+	@Override
+	public CompoundTag toClientTag(CompoundTag tag) {
+		return toTag(tag);
 	}
 }

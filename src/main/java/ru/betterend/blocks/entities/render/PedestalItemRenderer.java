@@ -37,12 +37,13 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 			VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
 		World world = blockEntity.getWorld();
-		if (blockEntity.isEmpty() || world == null) return;
+		if (world == null || blockEntity.isEmpty()) return;
 
 		BlockState state = world.getBlockState(blockEntity.getPos());
 		if (!(state.getBlock() instanceof PedestalBlock)) return;
 		
 		ItemStack activeItem = blockEntity.getStack(0);
+
 		matrices.push();
 		MinecraftClient minecraft = MinecraftClient.getInstance();
 		BakedModel model = minecraft.getItemRenderer().getHeldItemModel(activeItem, world, null);

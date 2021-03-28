@@ -1,5 +1,7 @@
 package ru.betterend.mixin.client;
 
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,8 +29,8 @@ public class ClientPlayNetworkHandlerMixin
 
 	@Inject(method = "onSignEditorOpen", at = @At(value = "HEAD"), cancellable = true)
 	public void be_openSignEditor(SignEditorOpenS2CPacket packet, CallbackInfo info) {
-		NetworkThreadUtils.forceMainThread(packet, (ClientPlayNetworkHandler) (Object) this, (ThreadExecutor<?>) client);
-		BlockEntity blockEntity = this.world.getBlockEntity(packet.getPos());
+		NetworkThreadUtils.forceMainThread(packet, ClientPlayNetworkHandler.class.cast(this), client);
+		BlockEntity blockEntity = world.getBlockEntity(packet.getPos());
 		if (blockEntity instanceof ESignBlockEntity) {
 			ESignBlockEntity sign = (ESignBlockEntity) blockEntity;
 			client.openScreen(new BlockSignEditScreen(sign));

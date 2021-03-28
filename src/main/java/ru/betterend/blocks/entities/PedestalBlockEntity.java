@@ -106,14 +106,30 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
 		super.fromTag(state, tag);
-		fromClientTag(tag);
+		fromTag(tag);
 	}
 
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
-		super.toTag(tag);
 		tag.put("active_item", activeItem.toTag(new CompoundTag()));
-		return tag;
+		return super.toTag(tag);
+	}
+
+	@Override
+	public void fromClientTag(CompoundTag tag) {
+		fromTag(tag);
+	}
+
+	@Override
+	public CompoundTag toClientTag(CompoundTag tag) {
+		return toTag(tag);
+	}
+
+	protected void fromTag(CompoundTag tag) {
+		if (tag.contains("active_item")) {
+			CompoundTag itemTag = tag.getCompound("active_item");
+			activeItem = ItemStack.fromTag(itemTag);
+		}
 	}
 
 	@Override
@@ -124,18 +140,5 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 				age = 0;
 			}
 		}
-	}
-
-	@Override
-	public void fromClientTag(CompoundTag tag) {
-		if (tag.contains("active_item")) {
-			CompoundTag itemTag = tag.getCompound("active_item");
-			activeItem = ItemStack.fromTag(itemTag);
-		}
-	}
-
-	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		return toTag(tag);
 	}
 }

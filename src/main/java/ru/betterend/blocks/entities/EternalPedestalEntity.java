@@ -33,15 +33,6 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
 			linkedRitual.setWorld(world);
 		}
 	}
-	
-	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		super.fromTag(state, tag);
-		if (tag.contains("ritual")) {
-			linkedRitual = new EternalRitual(world);
-			linkedRitual.fromTag(tag.getCompound("ritual"));
-		}
-	}
 
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
@@ -49,5 +40,14 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
 			tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
 		}
 		return super.toTag(tag);
+	}
+
+	@Override
+	protected void fromTag(CompoundTag tag) {
+		super.fromTag(tag);
+		if (tag.contains("ritual")) {
+			linkedRitual = new EternalRitual(world);
+			linkedRitual.fromTag(tag.getCompound("ritual"));
+		}
 	}
 }

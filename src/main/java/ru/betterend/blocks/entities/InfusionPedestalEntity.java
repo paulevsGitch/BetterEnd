@@ -1,6 +1,7 @@
 package ru.betterend.blocks.entities;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -42,27 +43,21 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 		}
 		super.tick();
 	}
-	
+
 	@Override
-	public CompoundTag toInitialChunkDataTag() {
-		return this.toTag(new CompoundTag());
+	public CompoundTag toTag(CompoundTag tag) {
+		if (hasRitual()) {
+			tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
+		}
+		return super.toTag(tag);
 	}
-	
+
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		super.fromTag(state, tag);
+	protected void fromTag(CompoundTag tag) {
+		super.fromTag(tag);
 		if (tag.contains("ritual")) {
 			linkedRitual = new InfusionRitual(world, pos);
 			linkedRitual.fromTag(tag.getCompound("ritual"));
 		}
-	}
-
-	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		super.toTag(tag);
-		if (hasRitual()) {
-			tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
-		}
-		return tag;
 	}
 }

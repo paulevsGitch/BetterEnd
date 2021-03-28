@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
@@ -43,12 +42,19 @@ public class EternalPedestal extends PedestalBlock {
 		if (blockEntity instanceof EternalPedestalEntity) {
 			EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
 			BlockState updatedState = world.getBlockState(pos);
-			if (pedestal.isEmpty() && updatedState.get(ACTIVATED)) {
+			if (pedestal.isEmpty()) {
 				if (pedestal.hasRitual()) {
 					EternalRitual ritual = pedestal.getRitual();
-					Item item = pedestal.getStack(0).getItem();
-					int dim = EndPortals.getPortalState(Registry.ITEM.getId(item));
-					ritual.removePortal(dim);
+					if (ritual.isActive()) {
+						Identifier targetWorld = ritual.getTargetWorldId();
+						int portalId;
+						if (targetWorld != null) {
+							portalId = EndPortals.getPortalIdByWorld(targetWorld);
+						} else {
+							portalId = EndPortals.getPortalIdByWorld(EndPortals.OVERWORLD_ID);
+						}
+						ritual.disablePortal(portalId);
+					}
 				}
 				world.setBlockState(pos, updatedState.with(ACTIVATED, false).with(HAS_LIGHT, false));
 			} else {

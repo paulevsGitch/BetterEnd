@@ -84,6 +84,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
 			if (entity.hasNetherPortalCooldown()) return;
+			entity.resetNetherPortalCooldown();
 			ServerWorld currentWorld = (ServerWorld) world;
 			MinecraftServer server = currentWorld.getServer();
 			ServerWorld targetWorld = EndPortals.getWorld(server, state.get(PORTAL));
@@ -121,47 +122,45 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		return ERenderLayer.TRANSLUCENT;
 	}
 	
-	private BlockPos findExitPos(ServerWorld current, ServerWorld target, BlockPos pos, Entity entity) {
-		if (target == null) return null;
-
-		Registry<DimensionType> registry = target.getRegistryManager().getDimensionTypes();
-		Identifier targetWorldId = target.getRegistryKey().getValue();
-		Identifier currentWorldId = current.getRegistryKey().getValue();
+	private BlockPos findExitPos(ServerWorld currentWorld, ServerWorld targetWorld, BlockPos currentPos, Entity entity) {
+		if (targetWorld == null) return null;
+		Registry<DimensionType> registry = targetWorld.getRegistryManager().getDimensionTypes();
+		Identifier targetWorldId = targetWorld.getRegistryKey().getValue();
+		Identifier currentWorldId = currentWorld.getRegistryKey().getValue();
 		double targetMultiplier = Objects.requireNonNull(registry.get(targetWorldId)).getCoordinateScale();
 		double currentMultiplier = Objects.requireNonNull(registry.get(currentWorldId)).getCoordinateScale();
 		double multiplier = targetMultiplier > currentMultiplier ? 1.0 / targetMultiplier : currentMultiplier;
-		BlockPos.Mutable basePos = pos.mutableCopy().set(pos.getX() * multiplier, pos.getY(), pos.getZ() * multiplier);
+		BlockPos.Mutable basePos = currentPos.mutableCopy().set(currentPos.getX() * multiplier, currentPos.getY(), currentPos.getZ() * multiplier);
 		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
-		for (int step = 1; step < 128; step++) {
+		for (int step = 1; step < 64; step++) {
 			for (int i = 0; i < (step >> 1); i++) {
-				Chunk chunk = target.getChunk(checkPos);
+				Chunk chunk = targetWorld.getChunk(checkPos);
 				if (chunk != null) {
 					int surfaceY = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
 					int motionY = chunk.sampleHeightmap(Heightmap.Type.MOTION_BLOCKING, checkPos.getX() & 15, checkPos.getZ() & 15);
 					int ceil = Math.max(surfaceY, motionY) + 1;
-					if (ceil > 5) {
-						checkPos.setY(ceil);
-						while (checkPos.getY() > 5) {
-							BlockState state = target.getBlockState(checkPos);
-							if (state.isOf(this)) {
-								Axis axis = state.get(AXIS);
-								checkPos = findCenter(target, checkPos, axis);
+					if (ceil < 5) continue;
+					checkPos.setY(ceil);
+					while (checkPos.getY() >= 5) {
+						BlockState state = targetWorld.getBlockState(checkPos);
+						if (state.isOf(this)) {
+							Axis axis = state.get(AXIS);
+							checkPos = findCenter(targetWorld, checkPos, axis);
 
-								Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
-								Direction entityDir = entity.getMovementDirection();
-								if (entityDir.getAxis().isVertical()) {
-									entityDir = frontDir;
-								}
-
-								if (frontDir != entityDir && frontDir.getOpposite() != entityDir) {
-									entity.applyRotation(BlockRotation.CLOCKWISE_90);
-									entityDir = entityDir.rotateYClockwise();
-								}
-								return checkPos.offset(entityDir);
+							Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
+							Direction entityDir = entity.getMovementDirection();
+							if (entityDir.getAxis().isVertical()) {
+								entityDir = frontDir;
 							}
-							checkPos.move(Direction.DOWN);
+
+							if (frontDir != entityDir && frontDir.getOpposite() != entityDir) {
+								entity.applyRotation(BlockRotation.CLOCKWISE_90);
+								entityDir = entityDir.rotateYClockwise();
+							}
+							return checkPos.offset(entityDir);
 						}
+						checkPos.move(Direction.DOWN);
 					}
 				}
 				checkPos.move(direction);

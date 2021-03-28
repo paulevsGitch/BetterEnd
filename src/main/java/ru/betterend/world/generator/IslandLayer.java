@@ -1,5 +1,7 @@
 package ru.betterend.world.generator;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,10 +10,13 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import net.minecraft.client.texture.NativeImage;
 import net.minecraft.util.math.BlockPos;
+import ru.betterend.BetterEnd;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
+import ru.betterend.util.sdf.operator.SDFHeightmap;
 import ru.betterend.util.sdf.operator.SDFScale;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFTranslate;
@@ -19,7 +24,7 @@ import ru.betterend.util.sdf.primitive.SDFCappedCone;
 
 public class IslandLayer {
 	private static final Random RANDOM = new Random();
-	private static final SDF ISLAND;
+	private static final SDF[] ISLAND;
 	
 	private final List<BlockPos> positions = new ArrayList<BlockPos>(9);
 	private final Map<BlockPos, SDF> islands = Maps.newHashMap();
@@ -86,11 +91,11 @@ public class IslandLayer {
 		SDF island = islands.get(pos);
 		if (island == null) {
 			if (pos.getX() == 0 && pos.getZ() == 0) {
-				island = new SDFScale().setScale(1.3F).setSource(ISLAND);
+				island = new SDFScale().setScale(1.3F).setSource(ISLAND[0]);
 			}
 			else {
 				RANDOM.setSeed(getSeed(pos.getX(), pos.getZ()));
-				island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(ISLAND);
+				island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(ISLAND[0]);
 			}
 			islands.put(pos, island);
 		}
@@ -130,7 +135,24 @@ public class IslandLayer {
 		return new SDFTranslate().setTranslate(0, minY + hh, 0).setSource(sdf);
 	}
 	
+	private static NativeImage loadMap(String path) {
+		InputStream stream = IslandLayer.class.getResourceAsStream(path);
+		if (stream != null) {
+			try {
+				NativeImage map = NativeImage.read(stream);
+				stream.close();
+				return map;
+			}
+			catch (IOException e) {
+				BetterEnd.LOGGER.warning(e.getMessage());
+			}
+		}
+		return null;
+	}
+	
 	static {
+		NativeImage map = loadMap("/assets/" + BetterEnd.MOD_ID + "/textures/heightmaps/mountain_1.png");
+		
 		SDF cone1 = makeCone(0, 0.4F, 0.2F, -0.3F);
 		SDF cone2 = makeCone(0.4F, 0.5F, 0.1F, -0.1F);
 		SDF cone3 = makeCone(0.5F, 0.45F, 0.03F, 0.0F);
@@ -139,6 +161,11 @@ public class IslandLayer {
 		SDF coneBottom = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone1).setSourceB(cone2);
 		SDF coneTop = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone3).setSourceB(cone4);
 		
-		ISLAND = new SDFSmoothUnion().setRadius(0.01F).setSourceA(coneTop).setSourceB(coneBottom);
+		SDF map1 = new SDFHeightmap().setMap(map).setIntensity(0.3F).setSource(coneTop);
+		
+		ISLAND = new SDF[] {
+			new SDFSmoothUnion().setRadius(0.01F).setSourceA(coneTop).setSourceB(coneBottom),
+			new SDFSmoothUnion().setRadius(0.01F).setSourceA(map1).setSourceB(coneBottom)
+		};
 	}
 }

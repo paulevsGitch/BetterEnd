@@ -1,6 +1,5 @@
 package ru.betterend.blocks.entities;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

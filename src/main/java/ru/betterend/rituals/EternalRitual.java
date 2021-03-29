@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
@@ -30,7 +32,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
-import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;

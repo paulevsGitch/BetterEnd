@@ -1,7 +1,5 @@
 package ru.betterend.mixin.client;
 
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +12,6 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.network.packet.s2c.play.SignEditorOpenS2CPacket;
-import net.minecraft.util.thread.ThreadExecutor;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.client.gui.BlockSignEditScreen;
 

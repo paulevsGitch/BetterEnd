@@ -7,16 +7,18 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -79,16 +81,17 @@ public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTyp
 			}
 		}
 	}
-	
-	/*@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		world.breakBlock(pos, !player.isCreative());
-		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
-	}*/
-	
+
 	@Override
-	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
+		if (!world.isClient()) {
+			world.syncWorldEvent(2001, pos, getRawIdFromState(state));
+		}
+		if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS) && (player == null || !player.isCreative())) {
+			ItemEntity drop = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(this));
+			world.spawnEntity(drop);
+		}
 	}
 	
 	@Override

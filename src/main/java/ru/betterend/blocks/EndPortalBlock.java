@@ -133,7 +133,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		BlockPos.Mutable basePos = currentPos.mutableCopy().set(currentPos.getX() * multiplier, currentPos.getY(), currentPos.getZ() * multiplier);
 		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
-		for (int step = 1; step < 64; step++) {
+		for (int step = 1; step <= 128; step++) {
 			for (int i = 0; i < (step >> 1); i++) {
 				Chunk chunk = targetWorld.getChunk(checkPos);
 				if (chunk != null) {

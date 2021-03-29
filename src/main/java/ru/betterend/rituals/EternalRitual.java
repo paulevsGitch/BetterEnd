@@ -184,7 +184,7 @@ public class EternalRitual {
 		serverWorld.playSound(null, center, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.NEUTRAL, 16, 1);
 	}
 
-	private void activatePortal(World world, BlockPos center, int dim) {
+	private void activatePortal(World world, BlockPos center, int portalId) {
 		BlockPos framePos = center.down();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
 		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
@@ -201,7 +201,7 @@ public class EternalRitual {
 			}
 		});
 		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
-		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis).with(EndPortalBlock.PORTAL, dim);
+		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis).with(EndPortalBlock.PORTAL, portalId);
 		ParticleEffect effect = new BlockStateParticleEffect(ParticleTypes.BLOCK, portal);
 		ServerWorld serverWorld = (ServerWorld) world;
 
@@ -270,7 +270,7 @@ public class EternalRitual {
 		} else {
 			Direction direction = Direction.EAST;
 			BlockPos.Mutable checkPos = basePos.mutableCopy();
-			for (int step = 1; step < 64; step++) {
+			for (int step = 1; step <= 96; step++) {
 				for (int i = 0; i < (step >> 1); i++) {
 					Chunk chunk = targetWorld.getChunk(checkPos);
 					if (chunk != null) {
@@ -322,7 +322,7 @@ public class EternalRitual {
 			for (int i = 0; i < 7; i++) {
 				BlockPos checkPos = pos.add(0, 0, i);
 				BlockState state = world.getBlockState(checkPos);
-				solid &= this.validBlock(world, checkPos, state);
+				solid &= validBlock(world, checkPos, state);
 			}
 		}
 		else {
@@ -330,7 +330,7 @@ public class EternalRitual {
 			for (int i = 0; i < 7; i++) {
 				BlockPos checkPos = pos.add(i, 0, 0);
 				BlockState state = world.getBlockState(checkPos);
-				solid &= this.validBlock(world, checkPos, state);
+				solid &= validBlock(world, checkPos, state);
 			}
 		}
 		return solid;

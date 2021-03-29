@@ -7,8 +7,8 @@ import net.minecraft.util.collection.WeightedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.Feature;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
-import ru.betterend.world.biome.land.BiomeDefinition;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 

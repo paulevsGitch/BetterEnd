@@ -287,8 +287,8 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
-		registerBiomeDirectly(biome);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			registerBiomeDirectly(biome);
 			parent.addSubBiome(biome);
 			SUBBIOMES.add(biome);
 			SUBBIOMES_UNMUTABLES.add(biome.getID());
@@ -305,8 +305,8 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
-		registerBiomeDirectly(biome);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			registerBiomeDirectly(biome);
 			addToPicker(biome, type);
 			ID_MAP.put(biome.getID(), biome);
 			if (type == BiomeType.LAND) {
@@ -325,8 +325,8 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerSubBiomeIntegration(EndBiome biome) {
-		registerBiomeDirectly(biome);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			registerBiomeDirectly(biome);
 			SUBBIOMES.add(biome);
 			SUBBIOMES_UNMUTABLES.add(biome.getID());
 			ID_MAP.put(biome.getID(), biome);
@@ -367,9 +367,7 @@ public class EndBiomes {
 	}
 
 	private static void registerBiomeDirectly(EndBiome biome) {
-		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-			Registry.register(BuiltinRegistries.BIOME, biome.getID(), biome.getBiome());
-		}
+		Registry.register(BuiltinRegistries.BIOME, biome.getID(), biome.getBiome());
 	}
 	
 	private static void addLandBiomeToFabricApi(EndBiome biome) {
@@ -420,8 +418,8 @@ public class EndBiomes {
 	}
 	
 	public static EndCaveBiome registerCaveBiome(EndCaveBiome biome) {
-		registerBiomeDirectly(biome);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
+			registerBiomeDirectly(biome);
 			CAVE_BIOMES.addBiome(biome);
 			ID_MAP.put(biome.getID(), biome);
 		}

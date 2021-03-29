@@ -5,6 +5,7 @@ import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
+import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.surface.SurfaceBuilders;
 
@@ -19,6 +20,7 @@ public class SulphurSpringsBiome extends EndBiome {
 				.setFogColor(207, 194, 62)
 				.setFogDensity(1.5F)
 				.setCaves(false)
+				.setDepth(0F)
 				.setParticles(EndParticles.SULPHUR_PARTICLE, 0.001F)
 				.addFeature(EndFeatures.GEYSER)
 				.addFeature(EndFeatures.SURFACE_VENT)

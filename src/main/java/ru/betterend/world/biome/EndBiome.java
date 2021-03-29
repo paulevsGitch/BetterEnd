@@ -14,7 +14,6 @@ import net.minecraft.world.biome.Biome;
 import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.StructureHelper;
-import ru.betterend.world.biome.land.BiomeDefinition;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.ListFeature;
 import ru.betterend.world.features.ListFeature.StructureInfo;

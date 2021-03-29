@@ -13,8 +13,8 @@ import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
-import ru.betterend.world.biome.land.BiomeDefinition;
 
 public class NightshadeRedwoods extends EndBiome {
 	public NightshadeRedwoods() {

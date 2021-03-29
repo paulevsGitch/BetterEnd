@@ -8,7 +8,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.land.BiomeDefinition;
+import ru.betterend.world.biome.BiomeDefinition;
 
 public class LushAuroraCaveBiome extends EndCaveBiome {
 	public LushAuroraCaveBiome() {

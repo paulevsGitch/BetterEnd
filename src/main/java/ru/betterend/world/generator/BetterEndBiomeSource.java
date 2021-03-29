@@ -108,6 +108,24 @@ public class BetterEndBiomeSource extends BiomeSource {
 			return endBiome.getActualBiome();
 		}
 	}
+	
+	public Biome getLandBiome(int biomeX, int biomeY, int biomeZ) {
+		boolean hasVoid = !GeneratorOptions.useNewGenerator() || !GeneratorOptions.noRingVoid();
+		long i = (long) biomeX * (long) biomeX;
+		long j = (long) biomeZ * (long) biomeZ;
+		
+		long dist = i + j;
+		if (hasVoid) {
+			if (dist <= 65536L) return this.centerBiome;
+		}
+		else if (dist <= 625L) {
+			dist += noise.sample(i * 0.2, j * 0.2) * 10;
+			if (dist <= 625L) {
+				return this.centerBiome;
+			}
+		}
+		return mapLand.getBiome(biomeX << 2, biomeZ << 2).getActualBiome();
+	}
 
 	@Override
 	public BiomeSource withSeed(long seed) {

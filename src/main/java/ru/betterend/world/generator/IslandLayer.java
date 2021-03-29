@@ -1,7 +1,5 @@
 package ru.betterend.world.generator;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,13 +8,11 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import net.minecraft.client.texture.NativeImage;
 import net.minecraft.util.math.BlockPos;
-import ru.betterend.BetterEnd;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFHeightmap;
+import ru.betterend.util.sdf.operator.SDFRadialNoiseMap;
 import ru.betterend.util.sdf.operator.SDFScale;
 import ru.betterend.util.sdf.operator.SDFSmoothUnion;
 import ru.betterend.util.sdf.operator.SDFTranslate;
@@ -24,7 +20,8 @@ import ru.betterend.util.sdf.primitive.SDFCappedCone;
 
 public class IslandLayer {
 	private static final Random RANDOM = new Random();
-	private static final SDF[] ISLAND;
+	private final SDFRadialNoiseMap noise;
+	private final SDF island;
 	
 	private final List<BlockPos> positions = new ArrayList<BlockPos>(9);
 	private final Map<BlockPos, SDF> islands = Maps.newHashMap();
@@ -38,6 +35,16 @@ public class IslandLayer {
 		this.density = new OpenSimplexNoise(seed);
 		this.options = options;
 		this.seed = seed;
+		
+		SDF cone1 = makeCone(0, 0.4F, 0.2F, -0.3F);
+		SDF cone2 = makeCone(0.4F, 0.5F, 0.1F, -0.1F);
+		SDF cone3 = makeCone(0.5F, 0.45F, 0.03F, 0.0F);
+		SDF cone4 = makeCone(0.45F, 0, 0.02F, 0.03F);
+		
+		SDF coneBottom = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone1).setSourceB(cone2);
+		SDF coneTop = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone3).setSourceB(cone4);
+		noise = (SDFRadialNoiseMap) new SDFRadialNoiseMap().setSeed(seed).setRadius(0.5F).setIntensity(0.2F).setSource(coneTop);
+		island = new SDFSmoothUnion().setRadius(0.01F).setSourceA(noise).setSourceB(coneBottom);
 	}
 	
 	private int getSeed(int x, int z) {
@@ -47,7 +54,6 @@ public class IslandLayer {
 	}
 	
 	public void updatePositions(double x, double z) {
-		
 		int ix = MHelper.floor(x / options.distance);
 		int iz = MHelper.floor(z / options.distance);
 		
@@ -91,14 +97,15 @@ public class IslandLayer {
 		SDF island = islands.get(pos);
 		if (island == null) {
 			if (pos.getX() == 0 && pos.getZ() == 0) {
-				island = new SDFScale().setScale(1.3F).setSource(ISLAND[0]);
+				island = new SDFScale().setScale(1.3F).setSource(this.island);
 			}
 			else {
 				RANDOM.setSeed(getSeed(pos.getX(), pos.getZ()));
-				island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(ISLAND[0]);
+				island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(this.island);
 			}
 			islands.put(pos, island);
 		}
+		noise.setOffset(pos.getX(), pos.getZ());
 		return island;
 	}
 	
@@ -123,6 +130,12 @@ public class IslandLayer {
 		return -calculateSDF(x, y, z);
 	}
 	
+	public float getDensity(double x, double y, double z, float height) {
+		noise.setIntensity(height);
+		noise.setRadius(0.5F / (1 + height));
+		return -calculateSDF(x, y, z);
+	}
+	
 	public void clearCache() {
 		if (islands.size() > 128) {
 			islands.clear();
@@ -135,7 +148,7 @@ public class IslandLayer {
 		return new SDFTranslate().setTranslate(0, minY + hh, 0).setSource(sdf);
 	}
 	
-	private static NativeImage loadMap(String path) {
+	/*private static NativeImage loadMap(String path) {
 		InputStream stream = IslandLayer.class.getResourceAsStream(path);
 		if (stream != null) {
 			try {
@@ -148,9 +161,9 @@ public class IslandLayer {
 			}
 		}
 		return null;
-	}
+	}*/
 	
-	static {
+	/*static {
 		NativeImage map = loadMap("/assets/" + BetterEnd.MOD_ID + "/textures/heightmaps/mountain_1.png");
 		
 		SDF cone1 = makeCone(0, 0.4F, 0.2F, -0.3F);
@@ -162,10 +175,11 @@ public class IslandLayer {
 		SDF coneTop = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone3).setSourceB(cone4);
 		
 		SDF map1 = new SDFHeightmap().setMap(map).setIntensity(0.3F).setSource(coneTop);
+		NOISE = (SDFRadialNoiseMap) new SDFRadialNoiseMap().setSource(coneTop);
 		
 		ISLAND = new SDF[] {
 			new SDFSmoothUnion().setRadius(0.01F).setSourceA(coneTop).setSourceB(coneBottom),
 			new SDFSmoothUnion().setRadius(0.01F).setSourceA(map1).setSourceB(coneBottom)
 		};
-	}
+	}*/
 }

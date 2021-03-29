@@ -1,4 +1,4 @@
-package ru.betterend.world.biome.land;
+package ru.betterend.world.biome;
 
 import java.util.List;
 
@@ -63,6 +63,7 @@ public class BiomeDefinition {
 	private int foliageColor = DEF_FOLIAGE;
 	private int grassColor = DEF_FOLIAGE;
 	private float fogDensity = 1F;
+	private float depth = 0.1F;
 
 	private final Identifier id;
 	private float genChance = 1F;
@@ -110,6 +111,11 @@ public class BiomeDefinition {
 	
 	public BiomeDefinition setGenChance(float genChance) {
 		this.genChance = genChance;
+		return this;
+	}
+	
+	public BiomeDefinition setDepth(float depth) {
+		this.depth = depth;
 		return this;
 	}
 
@@ -256,7 +262,7 @@ public class BiomeDefinition {
 		return new Biome.Builder()
 				.precipitation(Precipitation.NONE)
 				.category(isCaveBiome ? Category.NONE : Category.THEEND)
-				.depth(0.1F)
+				.depth(depth)
 				.scale(0.2F)
 				.temperature(2.0F)
 				.downfall(0.0F)

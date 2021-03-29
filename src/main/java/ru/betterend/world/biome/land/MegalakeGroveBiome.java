@@ -7,6 +7,7 @@ import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class MegalakeGroveBiome extends EndBiome {
@@ -20,6 +21,7 @@ public class MegalakeGroveBiome extends EndBiome {
 				.setMusic(EndSounds.MUSIC_WATER)
 				.setLoop(EndSounds.AMBIENT_MEGALAKE_GROVE)
 				.setSurface(EndBlocks.END_MOSS)
+				.setDepth(0F)
 				.addStructureFeature(EndStructures.MEGALAKE_SMALL)
 				.addFeature(EndFeatures.LACUGROVE)
 				.addFeature(EndFeatures.END_LOTUS)

@@ -4,8 +4,8 @@ import net.minecraft.entity.EntityType;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
-import ru.betterend.world.biome.land.BiomeDefinition;
 
 public class BiomeIceStarfield extends EndBiome {
 	public BiomeIceStarfield() {

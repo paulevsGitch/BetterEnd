@@ -1,9 +1,15 @@
 package ru.betterend.world.generator;
 
+import java.awt.Point;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.source.BiomeSource;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 
@@ -11,7 +17,8 @@ public class TerrainGenerator {
 	private static final ReentrantLock LOCKER = new ReentrantLock();
 	private static final double SCALE_XZ = 8.0;
 	private static final double SCALE_Y = 4.0;
-	//private static final int CENTER = MHelper.floor(500 / SCALE_XZ);
+	private static final float[] COEF;
+	private static final Point[] OFFS;
 	
 	private static IslandLayer largeIslands;
 	private static IslandLayer mediumIslands;
@@ -32,7 +39,7 @@ public class TerrainGenerator {
 		noise2 = new OpenSimplexNoise(random.nextInt());
 	}
 	
-	public static void fillTerrainDensity(double[] buffer, int x, int z) {
+	public static void fillTerrainDensity(double[] buffer, int x, int z, BiomeSource biomeSource) {
 		LOCKER.lock();
 		
 		largeIslands.clearCache();
@@ -48,11 +55,13 @@ public class TerrainGenerator {
 		mediumIslands.updatePositions(px, pz);
 		smallIslands.updatePositions(px, pz);
 		
+		float height = getAverageDepth(biomeSource, x << 1, z << 1) * 0.5F;
+		
 		for (int y = 0; y < buffer.length; y++) {
 			double py = (double) y * SCALE_Y;
-			float dist = largeIslands.getDensity(px, py, pz);
-			dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz));
-			dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz));
+			float dist = largeIslands.getDensity(px, py, pz, height);
+			dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz, height));
+			dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz, height));
 			if (dist > -0.5F) {
 				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
 				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
@@ -62,6 +71,26 @@ public class TerrainGenerator {
 		}
 		
 		LOCKER.unlock();
+	}
+	
+	private static float getAverageDepth(BiomeSource biomeSource, int x, int z) {
+		if (getBiome(biomeSource, x, z).getDepth() < 0.1F) {
+			return 0F;
+		}
+		float depth = 0F;
+		for (int i = 0; i < OFFS.length; i++) {
+			int px = x + OFFS[i].x;
+			int pz = z + OFFS[i].y;
+			depth += getBiome(biomeSource, px, pz).getDepth() * COEF[i];
+		}
+		return depth;
+	}
+	
+	private static Biome getBiome(BiomeSource biomeSource, int x, int z) {
+		if (biomeSource instanceof BetterEndBiomeSource) {
+			return ((BetterEndBiomeSource) biomeSource).getLandBiome(x, 0, z);
+		}
+		return biomeSource.getBiomeForNoiseGen(x, 0, z);
 	}
 	
 	/**
@@ -142,5 +171,26 @@ public class TerrainGenerator {
 		
 		LOCKER.unlock();
 		return 0;
+	}
+	
+	static {
+		float sum = 0;
+		List<Float> coef = Lists.newArrayList();
+		List<Point> pos = Lists.newArrayList();
+		for (int x = -3; x <= 3; x++) {
+			for (int z = -3; z <= 3; z++) {
+				float dist = MHelper.length(x, z) / 3F;
+				if (dist <= 1) {
+					sum += dist;
+					coef.add(dist);
+					pos.add(new Point(x, z));
+				}
+			}
+		}
+		OFFS = pos.toArray(new Point[] {});
+		COEF = new float[coef.size()];
+		for (int i = 0; i < COEF.length; i++) {
+			COEF[i] = coef.get(i) / sum;
+		}
 	}
 }

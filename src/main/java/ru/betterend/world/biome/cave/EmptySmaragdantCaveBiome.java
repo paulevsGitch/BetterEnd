@@ -3,7 +3,7 @@ package ru.betterend.world.biome.cave;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.land.BiomeDefinition;
+import ru.betterend.world.biome.BiomeDefinition;
 
 public class EmptySmaragdantCaveBiome extends EndCaveBiome {
 	public EmptySmaragdantCaveBiome() {

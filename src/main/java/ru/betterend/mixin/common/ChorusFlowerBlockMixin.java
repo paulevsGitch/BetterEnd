@@ -90,8 +90,13 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	private void die(World world, BlockPos pos) {}
 	
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return state.get(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;
+	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+		if (GeneratorOptions.changeChorusPlant()) {
+			return state.get(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;
+		}
+		else {
+			return super.getOutlineShape(state, world, pos, context);
+		}
 	}
 
 	@Inject(method = "die", at = @At("HEAD"), cancellable = true)

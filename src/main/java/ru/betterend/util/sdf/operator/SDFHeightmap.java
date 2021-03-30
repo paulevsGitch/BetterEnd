@@ -8,16 +8,19 @@ public class SDFHeightmap extends SDFDisplacement {
 	private NativeImage map;
 	private float offsetX;
 	private float offsetZ;
-	private float angle;
 	private float scale;
+	private float cos = 1;
+	private float sin = 0;
 	
 	public SDFHeightmap() {
 		setFunction((pos) -> {
 			if (map == null) {
 				return 0F;
 			}
-			float dx = MathHelper.clamp(pos.getX() * scale + offsetX, 0, map.getWidth() - 2);
-			float dz = MathHelper.clamp(pos.getZ() * scale + offsetZ, 0, map.getHeight() - 2);
+			float px = MathHelper.clamp(pos.getX() * scale + offsetX, 0, map.getWidth() - 2);
+			float pz = MathHelper.clamp(pos.getZ() * scale + offsetZ, 0, map.getHeight() - 2);
+			float dx = (px * cos - pz * sin);
+			float dz = (pz * cos + px * sin);
 			int x1 = MathHelper.floor(dx);
 			int z1 = MathHelper.floor(dz);
 			int x2 = x1 + 1;
@@ -43,7 +46,8 @@ public class SDFHeightmap extends SDFDisplacement {
 	}
 	
 	public SDFHeightmap setAngle(float angle) {
-		this.angle = angle;
+		sin = MathHelper.sin(angle);
+		cos = MathHelper.cos(angle);
 		return this;
 	}
 	

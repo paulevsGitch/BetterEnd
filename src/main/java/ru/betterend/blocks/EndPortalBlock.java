@@ -27,10 +27,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
@@ -38,14 +36,15 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndPortals;
+import ru.betterend.rituals.EternalRitual;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable, IColorProvider {
 	public static final IntProperty PORTAL = BlockProperties.PORTAL;
-	
+
 	public EndPortalBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getBlastResistance()).luminance(15));
 	}
-	
+
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		super.appendProperties(builder);
@@ -82,28 +81,31 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
-			if (entity.hasNetherPortalCooldown()) return;
-			entity.resetNetherPortalCooldown();
-			ServerWorld currentWorld = (ServerWorld) world;
-			MinecraftServer server = currentWorld.getServer();
-			ServerWorld targetWorld = EndPortals.getWorld(server, state.get(PORTAL));
-			boolean isInEnd = currentWorld.getRegistryKey().equals(World.END);
-			ServerWorld destination = isInEnd ? targetWorld : server.getWorld(World.END);
-			BlockPos exitPos = findExitPos(currentWorld, destination, pos, entity);
-			if (exitPos == null) return;
-			if (entity instanceof ServerPlayerEntity) {
-				ServerPlayerEntity player = (ServerPlayerEntity) entity;
-				this.teleportPlayer(player, destination, exitPos);
-			} else {
-				TeleportingEntity teleEntity = (TeleportingEntity) entity;
-				teleEntity.beSetExitPos(exitPos);
-				Entity teleported = entity.moveToWorld(destination);
-				if (teleported != null) {
-					teleported.resetNetherPortalCooldown();
-				}
+		if (world.isClient || !validate(entity)) return;
+		entity.resetNetherPortalCooldown();
+		ServerWorld currentWorld = (ServerWorld) world;
+		MinecraftServer server = currentWorld.getServer();
+		ServerWorld targetWorld = EndPortals.getWorld(server, state.get(PORTAL));
+		boolean isInEnd = currentWorld.getRegistryKey().equals(World.END);
+		ServerWorld destination = isInEnd ? targetWorld : server.getWorld(World.END);
+		BlockPos exitPos = findExitPos(currentWorld, destination, pos, entity);
+		if (exitPos == null) return;
+		if (entity instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity) entity;
+			teleportPlayer(player, destination, exitPos);
+		} else {
+			TeleportingEntity teleEntity = (TeleportingEntity) entity;
+			teleEntity.beSetExitPos(exitPos);
+			Entity teleported = entity.moveToWorld(destination);
+			if (teleported != null) {
+				teleported.resetNetherPortalCooldown();
 			}
 		}
+	}
+
+	private boolean validate(Entity entity) {
+		return !entity.hasVehicle() && !entity.hasPassengers() &&
+				entity.canUsePortals() && !entity.hasNetherPortalCooldown();
 	}
 
 	private void teleportPlayer(ServerPlayerEntity player, ServerWorld destination, BlockPos exitPos) {
@@ -114,7 +116,6 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			teleEntity.beSetExitPos(exitPos);
 			player.moveToWorld(destination);
 		}
-		player.resetNetherPortalCooldown();
 	}
 	
 	@Override
@@ -131,47 +132,31 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		double currentMultiplier = Objects.requireNonNull(registry.get(currentWorldId)).getCoordinateScale();
 		double multiplier = targetMultiplier > currentMultiplier ? 1.0 / targetMultiplier : currentMultiplier;
 		BlockPos.Mutable basePos = currentPos.mutableCopy().set(currentPos.getX() * multiplier, currentPos.getY(), currentPos.getZ() * multiplier);
-		Direction direction = Direction.EAST;
 		BlockPos.Mutable checkPos = basePos.mutableCopy();
-		for (int step = 1; step <= 128; step++) {
-			for (int i = 0; i < (step >> 1); i++) {
-				Chunk chunk = targetWorld.getChunk(checkPos);
-				if (chunk != null) {
-					int surfaceY = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
-					int motionY = chunk.sampleHeightmap(Heightmap.Type.MOTION_BLOCKING, checkPos.getX() & 15, checkPos.getZ() & 15);
-					int ceil = Math.max(surfaceY, motionY) + 1;
-					if (ceil < 5) continue;
-					checkPos.setY(ceil);
-					while (checkPos.getY() >= 5) {
-						BlockState state = targetWorld.getBlockState(checkPos);
-						if (state.isOf(this)) {
-							Axis axis = state.get(AXIS);
-							checkPos = findCenter(targetWorld, checkPos, axis);
-
-							Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
-							Direction entityDir = entity.getMovementDirection();
-							if (entityDir.getAxis().isVertical()) {
-								entityDir = frontDir;
-							}
-
-							if (frontDir != entityDir && frontDir.getOpposite() != entityDir) {
-								entity.applyRotation(BlockRotation.CLOCKWISE_90);
-								entityDir = entityDir.rotateYClockwise();
-							}
-							return checkPos.offset(entityDir);
-						}
-						checkPos.move(Direction.DOWN);
-					}
-				}
-				checkPos.move(direction);
+		BlockState currentState = currentWorld.getBlockState(currentPos);
+		int radius = (EternalRitual.SEARCH_RADIUS >> 4) + 1;
+		checkPos = EternalRitual.findBlockPos(targetWorld, checkPos, radius, this, state -> state.isOf(this) &&
+				state.get(PORTAL).equals(currentState.get(PORTAL)));
+		if (checkPos != null) {
+			BlockState checkState = targetWorld.getBlockState(checkPos);
+			Axis axis = checkState.get(AXIS);
+			checkPos = findCenter(targetWorld, checkPos, axis);
+			Direction frontDir = Direction.from(axis, AxisDirection.POSITIVE).rotateYClockwise();
+			Direction entityDir = entity.getMovementDirection();
+			if (entityDir.getAxis().isVertical()) {
+				entityDir = frontDir;
 			}
-			direction = direction.rotateYClockwise();
+			if (frontDir != entityDir && frontDir.getOpposite() != entityDir) {
+				entity.applyRotation(BlockRotation.CLOCKWISE_90);
+				entityDir = entityDir.rotateYClockwise();
+			}
+			return checkPos.offset(entityDir);
 		}
 		return null;
 	}
 	
 	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis) {
-		return this.findCenter(world, pos, axis, 1);
+		return findCenter(world, pos, axis, 1);
 	}
 	
 	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis, int step) {

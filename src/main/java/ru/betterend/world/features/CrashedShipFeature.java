@@ -43,7 +43,12 @@ public class CrashedShipFeature extends NBTStructureFeature {
 
 	@Override
 	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random) {
-		return pos.getY() > 58 && world.getBlockState(pos.down()).isIn(EndTags.GEN_TERRAIN);
+		long x = pos.getX() >> 4;
+		long z = pos.getX() >> 4;
+		if (x * x + z * z < 3600) {
+			return false;
+		}
+		return pos.getY() > 5 && world.getBlockState(pos.down()).isIn(EndTags.GEN_TERRAIN);
 	}
 
 	@Override

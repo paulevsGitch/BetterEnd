@@ -38,7 +38,7 @@ public class GeneratorOptions {
 		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "removeChorusFromVanillaBiomes", true);
 		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", true);
 		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
-		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", false);
+		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", true);
 		endCityFailChance = Configs.GENERATOR_CONFIG.getInt("customGenerator", "endCityFailChance", 5);
 		generateObsidianPlatform = Configs.GENERATOR_CONFIG.getBooleanRoot("generateObsidianPlatform", true);
 		bigOptions = new LayerOptions("customGenerator.layers.bigIslands", Configs.GENERATOR_CONFIG, 300, 200, 70, 10, false);

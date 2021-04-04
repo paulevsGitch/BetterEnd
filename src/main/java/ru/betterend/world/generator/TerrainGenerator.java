@@ -26,9 +26,9 @@ public class TerrainGenerator {
 	private static OpenSimplexNoise noise1;
 	private static OpenSimplexNoise noise2;
 	
-	public static boolean canGenerate(int x, int z) {
-		return GeneratorOptions.noRingVoid()/* || (long) x + (long) z > CENTER*/;
-	}
+	/*public static boolean canGenerate(int x, int z) {
+		return GeneratorOptions.noRingVoid() || (long) x + (long) z > CENTER;
+	}*/
 	
 	public static void initNoise(long seed) {
 		Random random = new Random(seed);

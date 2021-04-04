@@ -121,11 +121,11 @@ public class BlocksHelper {
 	}
 
 	public static BlockState rotateHorizontal(BlockState state, BlockRotation rotation, Property<Direction> facing) {
-		return (BlockState) state.with(facing, rotation.rotate((Direction) state.get(facing)));
+		return state.with(facing, rotation.rotate(state.get(facing)));
 	}
 
 	public static BlockState mirrorHorizontal(BlockState state, BlockMirror mirror, Property<Direction> facing) {
-		return state.rotate(mirror.getRotation((Direction) state.get(facing)));
+		return state.rotate(mirror.getRotation(state.get(facing)));
 	}
 
 	public static int getLengthDown(WorldAccess world, BlockPos pos, Block block) {
@@ -363,5 +363,9 @@ public class BlocksHelper {
 	
 	public static Direction randomDirection(Random random) {
 		return DIRECTIONS[random.nextInt(6)];
+	}
+
+	public static boolean isFluid(BlockState blockState) {
+		return !blockState.getFluidState().isEmpty();
 	}
 }

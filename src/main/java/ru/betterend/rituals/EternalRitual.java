@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import com.google.common.collect.Lists;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
@@ -38,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
@@ -158,22 +158,29 @@ public class EternalRitual {
 		if (active) return;
 		Identifier itemId = Registry.ITEM.getId(keyItem);
 		int portalId = EndPortals.getPortalIdByItem(itemId);
-		activatePortal(world, center, portalId);
-		doEffects((ServerWorld) world, center);
 		World targetWorld = getTargetWorld(portalId);
 		Identifier worldId = targetWorld.getRegistryKey().getValue();
-		if (exit == null) {
-			initPortal(worldId, portalId);
-		} else {
-			if (!worldId.equals(targetWorldId)) {
+		try {
+			if (exit == null) {
 				initPortal(worldId, portalId);
-			} else if (!checkFrame(targetWorld, exit.down())) {
-				Direction.Axis portalAxis = (Direction.Axis.X == axis) ? Direction.Axis.Z : Direction.Axis.X;
-				generatePortal(targetWorld, exit, portalAxis, portalId);
+			} else {
+				if (!worldId.equals(targetWorldId)) {
+					initPortal(worldId, portalId);
+				} else if (!checkFrame(targetWorld, exit.down())) {
+					Direction.Axis portalAxis = (Direction.Axis.X == axis) ? Direction.Axis.Z : Direction.Axis.X;
+					generatePortal(targetWorld, exit, portalAxis, portalId);
+				}
+				activatePortal(targetWorld, exit, portalId);
 			}
-			activatePortal(targetWorld, exit, portalId);
+			activatePortal(world, center, portalId);
+			doEffects((ServerWorld) world, center);
+			active = true;
+		} catch (Exception ex) {
+			BetterEnd.LOGGER.error("Create End portals error.", ex);
+			removePortal(targetWorld, exit);
+			removePortal(world, center);
+			active = false;
 		}
-		this.active = true;
 	}
 
 	private void initPortal(Identifier worldId, int portalId) {
@@ -328,8 +335,8 @@ public class EternalRitual {
 			ConfiguredFeatures.END_ISLAND.generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.down());
 		} else if (targetWorld.getRegistryKey() == World.OVERWORLD) {
 			basePos.setY(targetWorld.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
-			EndFeatures.OVERWORLD_ISLAND.getFeatureConfigured().generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.down());
 		}
+		EndFeatures.BIOME_ISLAND.getFeatureConfigured().generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.down());
 		generatePortal(targetWorld, basePos, portalAxis, portalId);
 		return basePos.toImmutable();
 	}

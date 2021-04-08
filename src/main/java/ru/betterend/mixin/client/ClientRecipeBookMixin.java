@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.recipebook.RecipeBookGroup;
-import net.minecraft.recipe.Recipe;
+import net.minecraft.world.item.crafting.Recipe;
 import ru.betterend.interfaces.BetterEndRecipe;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 

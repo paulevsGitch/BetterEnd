@@ -7,8 +7,8 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.Mth;
+import net.minecraft.core.Vec3i;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.util.ColorUtil;
@@ -18,44 +18,47 @@ public class EternalCrystalRenderer {
 	private static final RenderLayer RENDER_LAYER;
 	private static final ModelPart[] SHARDS;
 	private static final ModelPart CORE;
-	
-	public static void render(int age, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light) {
+
+	public static void render(int age, float tickDelta, MatrixStack matrices,
+			VertexConsumerProvider vertexConsumerProvider, int light) {
 		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RENDER_LAYER);
 		float[] colors = colors(age);
 		float rotation = (age + tickDelta) / 25.0F + 6.0F;
 		matrices.push();
 		matrices.scale(0.6F, 0.6F, 0.6F);
 		matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(rotation));
-		CORE.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, colors[0], colors[1], colors[2], colors[3]);
-		
+		CORE.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, colors[0], colors[1], colors[2],
+				colors[3]);
+
 		for (int i = 0; i < 4; i++) {
 			matrices.push();
-			float offset = MathHelper.sin(rotation * 2 + i) * 0.15F;
+			float offset = Mth.sin(rotation * 2 + i) * 0.15F;
 			matrices.translate(0, offset, 0);
-			SHARDS[i].render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, colors[0], colors[1], colors[2], colors[3]);
+			SHARDS[i].render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, colors[0], colors[1],
+					colors[2], colors[3]);
 			matrices.pop();
 		}
-		
+
 		matrices.pop();
 	}
-	
+
 	public static float[] colors(int age) {
 		double delta = age * 0.01;
 		int index = MHelper.floor(delta);
 		int index2 = (index + 1) & 3;
 		delta -= index;
 		index &= 3;
-		
+
 		Vec3i color1 = AuroraCrystalBlock.COLORS[index];
 		Vec3i color2 = AuroraCrystalBlock.COLORS[index2];
-		
-		int r = MHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
-		int g = MHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
-		int b = MHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
-		
+
+		int r = MHelper.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
+		int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
+		int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
+
 		return ColorUtil.toFloatArray(MHelper.color(r, g, b));
 	}
-	
+
 	static {
 		RENDER_LAYER = RenderLayer.getBeaconBeam(BetterEnd.makeID("textures/entity/eternal_crystal.png"), true);
 		SHARDS = new ModelPart[4];

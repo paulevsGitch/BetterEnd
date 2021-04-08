@@ -3,37 +3,37 @@ package ru.betterend.entity;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.FollowTargetGoal;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnReason;
+import net.minecraft.world.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.world.entity.ai.goal.LookAroundGoal;
+import net.minecraft.world.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.WanderAroundFarGoal;
+import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.damage.DamageSource;
+import net.minecraft.world.entity.effect.StatusEffectInstance;
+import net.minecraft.world.entity.effect.StatusEffects;
+import net.minecraft.world.entity.mob.HostileEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.util.MHelper;
 
 public class ShadowWalkerEntity extends HostileEntity {
-	public ShadowWalkerEntity(EntityType<ShadowWalkerEntity> entityType, World world) {
+	public ShadowWalkerEntity(EntityType<ShadowWalkerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		this.goalSelector.add(2, new AttackGoal(this, 1.0D, false));
@@ -44,34 +44,22 @@ public class ShadowWalkerEntity extends HostileEntity {
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return HostileEntity.createHostileAttributes()
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35.0)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15)
-				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.5)
-				.add(EntityAttributes.GENERIC_ARMOR, 2.0)
-				.add(EntityAttributes.ZOMBIE_SPAWN_REINFORCEMENTS);
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35.0)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.5)
+				.add(EntityAttributes.GENERIC_ARMOR, 2.0).add(EntityAttributes.ZOMBIE_SPAWN_REINFORCEMENTS);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
-		world.addParticle(ParticleTypes.ASH,
-				getX() + random.nextGaussian() * 0.2,
-				getY() + random.nextGaussian() * 0.5 + 1,
-				getZ() + random.nextGaussian() * 0.2,
-				0, 0, 0);
-		world.addParticle(ParticleTypes.SMOKE,
-				getX() + random.nextGaussian() * 0.2,
-				getY() + random.nextGaussian() * 0.5 + 1,
-				getZ() + random.nextGaussian() * 0.2,
-				0, 0, 0);
-		world.addParticle(ParticleTypes.ENTITY_EFFECT,
-				getX() + random.nextGaussian() * 0.2,
-				getY() + random.nextGaussian() * 0.5 + 1,
-				getZ() + random.nextGaussian() * 0.2,
-				0, 0, 0);
+		world.addParticle(ParticleTypes.ASH, getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
+		world.addParticle(ParticleTypes.SMOKE, getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
+		world.addParticle(ParticleTypes.ENTITY_EFFECT, getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return EndSounds.ENTITY_SHADOW_WALKER;
@@ -88,18 +76,19 @@ public class ShadowWalkerEntity extends HostileEntity {
 	}
 
 	@Override
-	protected void playStepSound(BlockPos pos, BlockState state) {}
-	
+	protected void playStepSound(BlockPos pos, BlockState state) {
+	}
+
 	@Override
 	protected float getSoundVolume() {
 		return MHelper.randRange(0.25F, 0.5F, random);
 	}
-	
+
 	@Override
 	protected float getSoundPitch() {
 		return MHelper.randRange(0.75F, 1.25F, random);
 	}
-	
+
 	@Override
 	public boolean tryAttack(Entity target) {
 		boolean attack = super.tryAttack(target);
@@ -111,24 +100,27 @@ public class ShadowWalkerEntity extends HostileEntity {
 		}
 		return attack;
 	}
-	
-	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+
+	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerWorldAccess world,
+			SpawnReason spawnReason, BlockPos pos, Random random) {
 		if (HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random)) {
 			Box box = new Box(pos).expand(16);
-			List<ShadowWalkerEntity> entities = world.getEntitiesByClass(ShadowWalkerEntity.class, box, (entity) -> { return true; });
+			List<ShadowWalkerEntity> entities = world.getEntitiesByClass(ShadowWalkerEntity.class, box, (entity) -> {
+				return true;
+			});
 			return entities.size() < 6;
 		}
 		return false;
 	}
-	
+
 	private final class AttackGoal extends MeleeAttackGoal {
 		private final ShadowWalkerEntity walker;
 		private int ticks;
 
 		public AttackGoal(ShadowWalkerEntity walker, double speed, boolean pauseWhenMobIdle) {
-		      super(walker, speed, pauseWhenMobIdle);
-		      this.walker = walker;
-		   }
+			super(walker, speed, pauseWhenMobIdle);
+			this.walker = walker;
+		}
 
 		public void start() {
 			super.start();
@@ -145,8 +137,7 @@ public class ShadowWalkerEntity extends HostileEntity {
 			++this.ticks;
 			if (this.ticks >= 5 && this.method_28348() < this.method_28349() / 2) {
 				this.walker.setAttacking(true);
-			}
-			else {
+			} else {
 				this.walker.setAttacking(false);
 			}
 		}

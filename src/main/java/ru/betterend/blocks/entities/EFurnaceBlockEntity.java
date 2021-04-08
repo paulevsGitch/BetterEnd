@@ -1,8 +1,8 @@
 package ru.betterend.blocks.entities;
 
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.entity.player.PlayerInventory;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.screen.FurnaceScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;

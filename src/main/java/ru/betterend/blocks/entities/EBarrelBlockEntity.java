@@ -1,25 +1,25 @@
 package ru.betterend.blocks.entities;
 
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.LootableContainerBlockEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.sound.SoundCategory;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import ru.betterend.blocks.basis.EndBarrelBlock;
 import ru.betterend.registry.EndBlockEntities;
 
@@ -124,7 +124,7 @@ public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 	}
 
 	private void setOpen(BlockState state, boolean open) {
-		this.world.setBlockState(this.getPos(), (BlockState) state.with(BarrelBlock.OPEN, open), 3);
+		this.world.setBlockAndUpdate(this.getPos(), (BlockState) state.with(BarrelBlock.OPEN, open), 3);
 	}
 
 	private void playSound(BlockState blockState, SoundEvent soundEvent) {
@@ -132,7 +132,7 @@ public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 		double d = (double) this.pos.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
 		double e = (double) this.pos.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
 		double f = (double) this.pos.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
-		this.world.playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F,
+		this.world.playLocalSound((PlayerEntity) null, d, e, f, soundEvent, SoundSource.BLOCKS, 0.5F,
 				this.world.random.nextFloat() * 0.1F + 0.9F);
 	}
 }

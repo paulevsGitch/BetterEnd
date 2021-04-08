@@ -3,21 +3,21 @@ package ru.betterend.client.gui;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeFinder;
-import net.minecraft.recipe.RecipeInputProvider;
-import net.minecraft.recipe.book.RecipeBookCategory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeFinder;
+import net.minecraft.world.item.crafting.RecipeInputProvider;
+import net.minecraft.world.item.crafting.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
@@ -27,39 +27,40 @@ import ru.betterend.recipe.builders.AlloyingRecipe;
 
 public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
 
-	public final static ScreenHandlerType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(
-			BetterEnd.makeID(EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
-	
+	public final static ScreenHandlerType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry
+			.registerSimple(BetterEnd.makeID(EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
+
 	private final Inventory inventory;
 	private final PropertyDelegate propertyDelegate;
-	protected final World world;
-	
+	protected final Level world;
+
 	public EndStoneSmelterScreenHandler(int syncId, PlayerInventory playerInventory) {
 		this(syncId, playerInventory, new SimpleInventory(4), new ArrayPropertyDelegate(4));
 	}
-	
-	public EndStoneSmelterScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
+
+	public EndStoneSmelterScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory,
+			PropertyDelegate propertyDelegate) {
 		super(HANDLER_TYPE, syncId);
 		this.inventory = inventory;
 		this.propertyDelegate = propertyDelegate;
 		this.world = playerInventory.player.world;
-		
+
 		this.addProperties(propertyDelegate);
 		this.addSlot(new Slot(inventory, 0, 45, 17));
 		this.addSlot(new Slot(inventory, 1, 67, 17));
 		this.addSlot(new SmelterFuelSlot(this, inventory, 2, 56, 53));
 		this.addSlot(new SmelterOutputSlot(playerInventory.player, inventory, 3, 129, 35));
 
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 9; ++j) {
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-		for(int i = 0; i < 9; ++i) {
+		for (int i = 0; i < 9; ++i) {
 			this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
 		}
 	}
-	
+
 	@Override
 	public ScreenHandlerType<?> getType() {
 		return HANDLER_TYPE;
@@ -113,13 +114,14 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 	}
 
 	protected boolean isSmeltable(ItemStack itemStack) {
-		return this.world.getRecipeManager().getFirstMatch(AlloyingRecipe.TYPE, new SimpleInventory(itemStack), this.world).isPresent();
+		return this.world.getRecipeManager()
+				.getFirstMatch(AlloyingRecipe.TYPE, new SimpleInventory(itemStack), this.world).isPresent();
 	}
 
 	public boolean isFuel(ItemStack itemStack) {
 		return EndStoneSmelterBlockEntity.canUseAsFuel(itemStack);
 	}
-	
+
 	@Override
 	public ItemStack transferSlot(PlayerEntity player, int index) {
 		ItemStack itemStack = ItemStack.EMPTY;
@@ -167,7 +169,7 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 
 		return itemStack;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	public int getSmeltProgress() {
 		int time = this.propertyDelegate.get(2);

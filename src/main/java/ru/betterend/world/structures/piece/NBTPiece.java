@@ -8,10 +8,10 @@ import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
@@ -21,19 +21,20 @@ import ru.betterend.util.MHelper;
 import ru.betterend.util.StructureHelper;
 
 public class NBTPiece extends BasePiece {
-	private Identifier structureID;
-	private BlockRotation rotation;
+	private ResourceLocation structureID;
+	private Rotation rotation;
 	private BlockMirror mirror;
 	private Structure structure;
 	private BlockPos pos;
 	private int erosion;
 	private boolean cover;
-	
-	public NBTPiece(Identifier structureID, Structure structure, BlockPos pos, int erosion, boolean cover, Random random) {
+
+	public NBTPiece(ResourceLocation structureID, Structure structure, BlockPos pos, int erosion, boolean cover,
+			Random random) {
 		super(EndStructures.NBT_PIECE, random.nextInt());
 		this.structureID = structureID;
 		this.structure = structure;
-		this.rotation = BlockRotation.random(random);
+		this.rotation = Rotation.random(random);
 		this.mirror = BlockMirror.values()[random.nextInt(3)];
 		this.pos = StructureHelper.offsetPos(pos, structure, rotation, mirror);
 		this.erosion = erosion;
@@ -58,8 +59,8 @@ public class NBTPiece extends BasePiece {
 
 	@Override
 	protected void fromNbt(CompoundTag tag) {
-		structureID = new Identifier(tag.getString("id"));
-		rotation = BlockRotation.values()[tag.getInt("rotation")];
+		structureID = new ResourceLocation(tag.getString("id"));
+		rotation = Rotation.values()[tag.getInt("rotation")];
 		mirror = BlockMirror.values()[tag.getInt("mirror")];
 		erosion = tag.getInt("erosion");
 		pos = NbtHelper.toBlockPos(tag.getCompound("pos"));
@@ -68,11 +69,13 @@ public class NBTPiece extends BasePiece {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
+			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		BlockBox bounds = new BlockBox(blockBox);
 		bounds.maxY = this.boundingBox.maxY;
 		bounds.minY = this.boundingBox.minY;
-		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
+		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror)
+				.setBoundingBox(bounds);
 		structure.place(world, pos, placementData, random);
 		if (erosion > 0) {
 			bounds.maxX = MHelper.min(bounds.maxX, boundingBox.maxX);
@@ -86,7 +89,7 @@ public class NBTPiece extends BasePiece {
 		}
 		return true;
 	}
-	
+
 	private void makeBoundingBox() {
 		this.boundingBox = StructureHelper.getStructureBounds(pos, structure, rotation, mirror);
 	}

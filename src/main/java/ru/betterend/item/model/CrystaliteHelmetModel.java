@@ -9,7 +9,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 @Environment(EnvType.CLIENT)
 public class CrystaliteHelmetModel extends BipedEntityModel<LivingEntity> {
@@ -20,12 +20,12 @@ public class CrystaliteHelmetModel extends BipedEntityModel<LivingEntity> {
 		this.helmet.addCuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, scale + 0.5F);
 		this.helmet.setPivot(0.0F, 0.0F, 0.0F);
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getHeadParts() {
 		return Collections::emptyIterator;
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return Lists.newArrayList(helmet);

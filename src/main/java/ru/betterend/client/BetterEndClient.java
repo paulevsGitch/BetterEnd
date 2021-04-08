@@ -3,7 +3,7 @@ package ru.betterend.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -24,7 +24,7 @@ public class BetterEndClient implements ClientModInitializer {
 		EndEntitiesRenders.register();
 		EndModelProviders.register();
 		ClientOptions.init();
-		
+
 		if (BetterEnd.isDevEnvironment()) {
 			TranslationHelper.printMissingNames();
 		}

@@ -5,52 +5,53 @@ import java.util.Map.Entry;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 
 public class EndRecipeManager {
-	private static final Map<RecipeType<?>, Map<Identifier, Recipe<?>>> RECIPES = Maps.newHashMap();
+	private static final Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> RECIPES = Maps.newHashMap();
 
 	public static void addRecipe(RecipeType<?> type, Recipe<?> recipe) {
-		Map<Identifier, Recipe<?>> list = RECIPES.get(type);
+		Map<ResourceLocation, Recipe<?>> list = RECIPES.get(type);
 		if (list == null) {
 			list = Maps.newHashMap();
 			RECIPES.put(type, list);
 		}
 		list.put(recipe.getId(), recipe);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static <T extends Recipe<?>> T getRecipe(RecipeType<T> type, Identifier id) {
+	public static <T extends Recipe<?>> T getRecipe(RecipeType<T> type, ResourceLocation id) {
 		if (RECIPES.containsKey(type)) {
 			return (T) RECIPES.get(type).get(id);
 		}
 		return null;
 	}
 
-	public static Map<RecipeType<?>, Map<Identifier, Recipe<?>>> getMap(Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes) {
-		Map<RecipeType<?>, Map<Identifier, Recipe<?>>> result = Maps.newHashMap();
+	public static Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> getMap(
+			Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes) {
+		Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> result = Maps.newHashMap();
 
 		for (RecipeType<?> type : recipes.keySet()) {
-			Map<Identifier, Recipe<?>> typeList = Maps.newHashMap();
+			Map<ResourceLocation, Recipe<?>> typeList = Maps.newHashMap();
 			typeList.putAll(recipes.get(type));
 			result.put(type, typeList);
 		}
 
 		for (RecipeType<?> type : RECIPES.keySet()) {
-			Map<Identifier, Recipe<?>> list = RECIPES.get(type);
+			Map<ResourceLocation, Recipe<?>> list = RECIPES.get(type);
 			if (list != null) {
-				Map<Identifier, Recipe<?>> typeList = result.get(type);
+				Map<ResourceLocation, Recipe<?>> typeList = result.get(type);
 				if (typeList == null) {
 					typeList = Maps.newHashMap();
 					result.put(type, typeList);
 				}
-				for (Entry<Identifier, Recipe<?>> entry : list.entrySet()) {
-					Identifier id = entry.getKey();
+				for (Entry<ResourceLocation, Recipe<?>> entry : list.entrySet()) {
+					ResourceLocation id = entry.getKey();
 					if (!typeList.containsKey(id))
 						typeList.put(id, entry.getValue());
 				}
@@ -65,11 +66,11 @@ public class EndRecipeManager {
 	}
 
 	public static <T extends Recipe<?>> RecipeType<T> registerType(String type) {
-		Identifier recipeTypeId = BetterEnd.makeID(type);
+		ResourceLocation recipeTypeId = BetterEnd.makeID(type);
 		return Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new RecipeType<T>() {
 			public String toString() {
 				return type;
 			}
-	    });
+		});
 	}
 }

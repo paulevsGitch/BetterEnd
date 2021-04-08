@@ -1,12 +1,12 @@
 package ru.betterend.blocks.entities;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Tickable;
 import ru.betterend.blocks.basis.PedestalBlock;
@@ -15,22 +15,22 @@ import ru.betterend.registry.EndItems;
 
 public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable, BlockEntityClientSerializable {
 	private ItemStack activeItem = ItemStack.EMPTY;
-	
+
 	private final int maxAge = 314;
 	private int age;
-	
+
 	public PedestalBlockEntity() {
 		super(EndBlockEntities.PEDESTAL);
 	}
-	
+
 	public PedestalBlockEntity(BlockEntityType<?> type) {
 		super(type);
 	}
-	
+
 	public int getAge() {
 		return age;
 	}
-	
+
 	public int getMaxAge() {
 		return maxAge;
 	}
@@ -54,7 +54,7 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	public ItemStack removeStack(int slot, int amount) {
 		return removeStack(slot);
 	}
-	
+
 	@Override
 	public boolean isValid(int slot, ItemStack stack) {
 		return isEmpty();
@@ -78,10 +78,10 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 		activeItem = stack;
 		markDirty();
 	}
-	
+
 	@Override
 	public void markDirty() {
-		if (world != null && !world.isClient) {
+		if (world != null && !world.isClientSide) {
 			BlockState state = world.getBlockState(pos);
 			if (state.getBlock() instanceof PedestalBlock) {
 				BlockState trueState = state.with(PedestalBlock.HAS_ITEM, !isEmpty());
@@ -90,18 +90,17 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 				} else {
 					trueState = trueState.with(PedestalBlock.HAS_LIGHT, false);
 				}
-				world.setBlockState(pos, trueState);
+				world.setBlockAndUpdate(pos, trueState);
 			}
 		}
 		super.markDirty();
 	}
 
-	
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
 		return true;
 	}
-	
+
 	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
 		super.fromTag(state, tag);

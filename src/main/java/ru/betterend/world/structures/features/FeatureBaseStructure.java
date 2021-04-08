@@ -2,9 +2,9 @@ package ru.betterend.world.structures.features;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.BlockRotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
@@ -15,27 +15,29 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
 public abstract class FeatureBaseStructure extends StructureFeature<DefaultFeatureConfig> {
-	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
-	
+	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
+
 	public FeatureBaseStructure() {
 		super(DefaultFeatureConfig.CODEC);
 	}
-	
-	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, ChunkRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, DefaultFeatureConfig featureConfig) {
+
+	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed,
+			ChunkRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
+			DefaultFeatureConfig featureConfig) {
 		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 20;
 	}
 
 	private static int getGenerationHeight(int chunkX, int chunkZ, ChunkGenerator chunkGenerator) {
 		Random random = new Random((long) (chunkX + chunkZ * 10387313));
-		BlockRotation blockRotation = BlockRotation.random(random);
+		Rotation blockRotation = Rotation.random(random);
 		int i = 5;
 		int j = 5;
-		if (blockRotation == BlockRotation.CLOCKWISE_90) {
+		if (blockRotation == Rotation.CLOCKWISE_90) {
 			i = -5;
-		} else if (blockRotation == BlockRotation.CLOCKWISE_180) {
+		} else if (blockRotation == Rotation.CLOCKWISE_180) {
 			i = -5;
 			j = -5;
-		} else if (blockRotation == BlockRotation.COUNTERCLOCKWISE_90) {
+		} else if (blockRotation == Rotation.COUNTERCLOCKWISE_90) {
 			j = -5;
 		}
 

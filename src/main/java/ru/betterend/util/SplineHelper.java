@@ -7,11 +7,11 @@ import java.util.function.Function;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFUnion;
@@ -24,15 +24,15 @@ public class SplineHelper {
 		int count = points - 1;
 		for (int i = 1; i < count; i++) {
 			float delta = (float) i / (float) count;
-			float x = MathHelper.lerp(delta, x1, x2);
-			float y = MathHelper.lerp(delta, y1, y2);
-			float z = MathHelper.lerp(delta, z1, z2);
+			float x = Mth.lerp(delta, x1, x2);
+			float y = Mth.lerp(delta, y1, y2);
+			float z = Mth.lerp(delta, z1, z2);
 			spline.add(new Vector3f(x, y, z));
 		}
 		spline.add(new Vector3f(x2, y2, z2));
 		return spline;
 	}
-	
+
 	public static List<Vector3f> smoothSpline(List<Vector3f> spline, int segmentPoints) {
 		List<Vector3f> result = Lists.newArrayList();
 		Vector3f start = spline.get(0);
@@ -40,7 +40,7 @@ public class SplineHelper {
 			Vector3f end = spline.get(i);
 			for (int j = 0; j < segmentPoints; j++) {
 				float delta = (float) j / segmentPoints;
-				delta = 0.5F - 0.5F * MathHelper.cos(delta * 3.14159F);
+				delta = 0.5F - 0.5F * Mth.cos(delta * 3.14159F);
 				result.add(lerp(start, end, delta));
 			}
 			start = end;
@@ -48,14 +48,14 @@ public class SplineHelper {
 		result.add(start);
 		return result;
 	}
-	
+
 	private static Vector3f lerp(Vector3f start, Vector3f end, float delta) {
-		float x = MathHelper.lerp(delta, start.getX(), end.getX());
-		float y = MathHelper.lerp(delta, start.getY(), end.getY());
-		float z = MathHelper.lerp(delta, start.getZ(), end.getZ());
+		float x = Mth.lerp(delta, start.getX(), end.getX());
+		float y = Mth.lerp(delta, start.getY(), end.getY());
+		float z = Mth.lerp(delta, start.getZ(), end.getZ());
 		return new Vector3f(x, y, z);
 	}
-	
+
 	public static void offsetParts(List<Vector3f> spline, Random random, float dx, float dy, float dz) {
 		int count = spline.size();
 		for (int i = 1; i < count; i++) {
@@ -66,7 +66,7 @@ public class SplineHelper {
 			pos.set(x, y, z);
 		}
 	}
-	
+
 	public static void powerOffset(List<Vector3f> spline, float distance, float power) {
 		int count = spline.size();
 		float max = count + 1;
@@ -77,8 +77,9 @@ public class SplineHelper {
 			pos.set(pos.getX(), y, pos.getZ());
 		}
 	}
-	
-	public static SDF buildSDF(List<Vector3f> spline, float radius1, float radius2, Function<BlockPos, BlockState> placerFunction) {
+
+	public static SDF buildSDF(List<Vector3f> spline, float radius1, float radius2,
+			Function<BlockPos, BlockState> placerFunction) {
 		int count = spline.size();
 		float max = count - 2;
 		SDF result = null;
@@ -86,18 +87,17 @@ public class SplineHelper {
 		for (int i = 1; i < count; i++) {
 			Vector3f pos = spline.get(i);
 			float delta = (float) (i - 1) / max;
-			SDF line = new SDFLine()
-					.setRadius(MathHelper.lerp(delta, radius1, radius2))
-					.setStart(start.getX(), start.getY(), start.getZ())
-					.setEnd(pos.getX(), pos.getY(), pos.getZ())
+			SDF line = new SDFLine().setRadius(Mth.lerp(delta, radius1, radius2))
+					.setStart(start.getX(), start.getY(), start.getZ()).setEnd(pos.getX(), pos.getY(), pos.getZ())
 					.setBlock(placerFunction);
 			result = result == null ? line : new SDFUnion().setSourceA(result).setSourceB(line);
 			start = pos;
 		}
 		return result;
 	}
-	
-	public static SDF buildSDF(List<Vector3f> spline, Function<Float, Float> radiusFunction, Function<BlockPos, BlockState> placerFunction) {
+
+	public static SDF buildSDF(List<Vector3f> spline, Function<Float, Float> radiusFunction,
+			Function<BlockPos, BlockState> placerFunction) {
 		int count = spline.size();
 		float max = count - 2;
 		SDF result = null;
@@ -105,18 +105,17 @@ public class SplineHelper {
 		for (int i = 1; i < count; i++) {
 			Vector3f pos = spline.get(i);
 			float delta = (float) (i - 1) / max;
-			SDF line = new SDFLine()
-					.setRadius(radiusFunction.apply(delta))
-					.setStart(start.getX(), start.getY(), start.getZ())
-					.setEnd(pos.getX(), pos.getY(), pos.getZ())
+			SDF line = new SDFLine().setRadius(radiusFunction.apply(delta))
+					.setStart(start.getX(), start.getY(), start.getZ()).setEnd(pos.getX(), pos.getY(), pos.getZ())
 					.setBlock(placerFunction);
 			result = result == null ? line : new SDFUnion().setSourceA(result).setSourceB(line);
 			start = pos;
 		}
 		return result;
 	}
-	
-	public static boolean fillSpline(List<Vector3f> spline, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+
+	public static boolean fillSpline(List<Vector3f> spline, StructureWorldAccess world, BlockState state, BlockPos pos,
+			Function<BlockState, Boolean> replace) {
 		Vector3f startPos = spline.get(0);
 		for (int i = 1; i < spline.size(); i++) {
 			Vector3f endPos = spline.get(i);
@@ -125,11 +124,12 @@ public class SplineHelper {
 			}
 			startPos = endPos;
 		}
-		
+
 		return true;
 	}
-	
-	public static void fillSplineForce(List<Vector3f> spline, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+
+	public static void fillSplineForce(List<Vector3f> spline, StructureWorldAccess world, BlockState state,
+			BlockPos pos, Function<BlockState, Boolean> replace) {
 		Vector3f startPos = spline.get(0);
 		for (int i = 1; i < spline.size(); i++) {
 			Vector3f endPos = spline.get(i);
@@ -137,8 +137,9 @@ public class SplineHelper {
 			startPos = endPos;
 		}
 	}
-	
-	public static boolean fillLine(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+
+	public static boolean fillLine(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state,
+			BlockPos pos, Function<BlockState, Boolean> replace) {
 		float dx = end.getX() - start.getX();
 		float dy = end.getY() - start.getY();
 		float dz = end.getZ() - start.getZ();
@@ -151,9 +152,9 @@ public class SplineHelper {
 		float y = start.getY();
 		float z = start.getZ();
 		boolean down = Math.abs(dy) > 0.2;
-		
+
 		BlockState bState;
-		Mutable bPos = new Mutable();
+		MutableBlockPos bPos = new MutableBlockPos();
 		for (int i = 0; i < count; i++) {
 			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
 			bState = world.getBlockState(bPos);
@@ -164,8 +165,7 @@ public class SplineHelper {
 				if (down && bState.equals(state) || replace.apply(bState)) {
 					BlocksHelper.setWithoutUpdate(world, bPos, state);
 				}
-			}
-			else {
+			} else {
 				return false;
 			}
 			x += dx;
@@ -182,13 +182,13 @@ public class SplineHelper {
 				BlocksHelper.setWithoutUpdate(world, bPos, state);
 			}
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
-	public static void fillLineForce(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+
+	public static void fillLineForce(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state,
+			BlockPos pos, Function<BlockState, Boolean> replace) {
 		float dx = end.getX() - start.getX();
 		float dy = end.getY() - start.getY();
 		float dz = end.getZ() - start.getZ();
@@ -201,9 +201,9 @@ public class SplineHelper {
 		float y = start.getY();
 		float z = start.getZ();
 		boolean down = Math.abs(dy) > 0.2;
-		
+
 		BlockState bState;
-		Mutable bPos = new Mutable();
+		MutableBlockPos bPos = new MutableBlockPos();
 		for (int i = 0; i < count; i++) {
 			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
 			bState = world.getBlockState(bPos);
@@ -230,11 +230,12 @@ public class SplineHelper {
 			}
 		}
 	}
-	
-	public static boolean canGenerate(List<Vector3f> spline, float scale, BlockPos start, StructureWorldAccess world, Function<BlockState, Boolean> canReplace) {
+
+	public static boolean canGenerate(List<Vector3f> spline, float scale, BlockPos start, StructureWorldAccess world,
+			Function<BlockState, Boolean> canReplace) {
 		int count = spline.size();
 		Vector3f vec = spline.get(0);
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		float x1 = start.getX() + vec.getX() * scale;
 		float y1 = start.getY() + vec.getY() * scale;
 		float z1 = start.getZ() + vec.getZ() * scale;
@@ -243,29 +244,31 @@ public class SplineHelper {
 			float x2 = start.getX() + vec.getX() * scale;
 			float y2 = start.getY() + vec.getY() * scale;
 			float z2 = start.getZ() + vec.getZ() * scale;
-			
+
 			for (float py = y1; py < y2; py += 3) {
-				if (py - start.getY() < 10) continue;
+				if (py - start.getY() < 10)
+					continue;
 				float lerp = (py - y1) / (y2 - y1);
-				float x = MathHelper.lerp(lerp, x1, x2);
-				float z = MathHelper.lerp(lerp, z1, z2);
+				float x = Mth.lerp(lerp, x1, x2);
+				float z = Mth.lerp(lerp, z1, z2);
 				mut.set(x, py, z);
 				if (!canReplace.apply(world.getBlockState(mut))) {
 					return false;
 				}
 			}
-			
+
 			x1 = x2;
 			y1 = y2;
 			z1 = z2;
 		}
 		return true;
 	}
-	
-	public static boolean canGenerate(List<Vector3f> spline, BlockPos start, StructureWorldAccess world, Function<BlockState, Boolean> canReplace) {
+
+	public static boolean canGenerate(List<Vector3f> spline, BlockPos start, StructureWorldAccess world,
+			Function<BlockState, Boolean> canReplace) {
 		int count = spline.size();
 		Vector3f vec = spline.get(0);
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		float x1 = start.getX() + vec.getX();
 		float y1 = start.getY() + vec.getY();
 		float z1 = start.getZ() + vec.getZ();
@@ -274,25 +277,26 @@ public class SplineHelper {
 			float x2 = start.getX() + vec.getX();
 			float y2 = start.getY() + vec.getY();
 			float z2 = start.getZ() + vec.getZ();
-			
+
 			for (float py = y1; py < y2; py += 3) {
-				if (py - start.getY() < 10) continue;
+				if (py - start.getY() < 10)
+					continue;
 				float lerp = (py - y1) / (y2 - y1);
-				float x = MathHelper.lerp(lerp, x1, x2);
-				float z = MathHelper.lerp(lerp, z1, z2);
+				float x = Mth.lerp(lerp, x1, x2);
+				float z = Mth.lerp(lerp, z1, z2);
 				mut.set(x, py, z);
 				if (!canReplace.apply(world.getBlockState(mut))) {
 					return false;
 				}
 			}
-			
+
 			x1 = x2;
 			y1 = y2;
 			z1 = z2;
 		}
 		return true;
 	}
-	
+
 	public static Vector3f getPos(List<Vector3f> spline, float index) {
 		int i = (int) index;
 		int last = spline.size() - 1;
@@ -302,14 +306,14 @@ public class SplineHelper {
 		float delta = index - i;
 		Vector3f p1 = spline.get(i);
 		Vector3f p2 = spline.get(i + 1);
-		float x = MathHelper.lerp(delta, p1.getX(), p2.getX());
-		float y = MathHelper.lerp(delta, p1.getY(), p2.getY());
-		float z = MathHelper.lerp(delta, p1.getZ(), p2.getZ());
+		float x = Mth.lerp(delta, p1.getX(), p2.getX());
+		float y = Mth.lerp(delta, p1.getY(), p2.getY());
+		float z = Mth.lerp(delta, p1.getZ(), p2.getZ());
 		return new Vector3f(x, y, z);
 	}
-	
+
 	public static void rotateSpline(List<Vector3f> spline, float angle) {
-		for (Vector3f v: spline) {
+		for (Vector3f v : spline) {
 			float sin = (float) Math.sin(angle);
 			float cos = (float) Math.cos(angle);
 			float x = v.getX() * cos + v.getZ() * sin;
@@ -317,27 +321,27 @@ public class SplineHelper {
 			v.set(x, v.getY(), z);
 		}
 	}
-	
+
 	public static List<Vector3f> copySpline(List<Vector3f> spline) {
 		List<Vector3f> result = new ArrayList<Vector3f>(spline.size());
-		for (Vector3f v: spline) {
+		for (Vector3f v : spline) {
 			result.add(new Vector3f(v.getX(), v.getY(), v.getZ()));
 		}
 		return result;
 	}
-	
+
 	public static void scale(List<Vector3f> spline, float scale) {
 		scale(spline, scale, scale, scale);
 	}
-	
+
 	public static void scale(List<Vector3f> spline, float x, float y, float z) {
-		for (Vector3f v: spline) {
+		for (Vector3f v : spline) {
 			v.set(v.getX() * x, v.getY() * y, v.getZ() * z);
 		}
 	}
-	
+
 	public static void offset(List<Vector3f> spline, Vector3f offset) {
-		for (Vector3f v: spline) {
+		for (Vector3f v : spline) {
 			v.set(offset.getX() + v.getX(), offset.getY() + v.getY(), offset.getZ() + v.getZ());
 		}
 	}

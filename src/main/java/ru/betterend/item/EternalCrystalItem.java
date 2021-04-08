@@ -1,6 +1,6 @@
 package ru.betterend.item;
 
-import net.minecraft.util.Rarity;
+import net.minecraft.world.item.Rarity;
 import ru.betterend.registry.EndItems;
 
 public class EternalCrystalItem extends PatternedItem {

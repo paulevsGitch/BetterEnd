@@ -20,15 +20,15 @@ import me.shedaniel.rei.gui.widget.Widget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDisplay> {
 	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
 	@Override
-	public @NotNull Identifier getIdentifier() {
+	public @NotNull ResourceLocation getIdentifier() {
 		return REIPlugin.ALLOYING_FUEL;
 	}
 
@@ -53,16 +53,21 @@ public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDi
 		String burnTime = DECIMAL_FORMAT.format(recipeDisplay.getFuelTime());
 		List<Widget> widgets = Lists.newArrayList();
 		widgets.add(Widgets.createRecipeBase(bounds));
-		widgets.add(Widgets.createLabel(new Point(bounds.x + 26, bounds.getMaxY() - 15), new TranslatableText("category.rei.fuel.time", burnTime))
+		widgets.add(Widgets
+				.createLabel(new Point(bounds.x + 26, bounds.getMaxY() - 15),
+						new TranslatableText("category.rei.fuel.time", burnTime))
 				.color(0xFF404040, 0xFFBBBBBB).noShadow().leftAligned());
-		widgets.add(Widgets.createBurningFire(new Point(bounds.x + 6, startPoint.y + 1)).animationDurationTicks(recipeDisplay.getFuelTime()));
-		widgets.add(Widgets.createSlot(new Point(bounds.x + 6, startPoint.y + 18)).entries(recipeDisplay.getInputEntries().get(0)).markInput());
+		widgets.add(Widgets.createBurningFire(new Point(bounds.x + 6, startPoint.y + 1))
+				.animationDurationTicks(recipeDisplay.getFuelTime()));
+		widgets.add(Widgets.createSlot(new Point(bounds.x + 6, startPoint.y + 18))
+				.entries(recipeDisplay.getInputEntries().get(0)).markInput());
 		return widgets;
 	}
 
 	@Override
 	public @NotNull RecipeEntry getSimpleRenderer(REIAlloyingFuelDisplay recipe) {
-		Slot slot = Widgets.createSlot(new Point(0, 0)).entries(recipe.getInputEntries().get(0)).disableBackground().disableHighlight();
+		Slot slot = Widgets.createSlot(new Point(0, 0)).entries(recipe.getInputEntries().get(0)).disableBackground()
+				.disableHighlight();
 		String burnItems = DECIMAL_FORMAT.format(recipe.getFuelTime() / 200d);
 		return new RecipeEntry() {
 			private TranslatableText text = new TranslatableText("category.rei.fuel.time_short.items", burnItems);
@@ -85,7 +90,8 @@ public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDi
 				slot.setZ(getZ() + 50);
 				slot.getBounds().setLocation(bounds.x + 4, bounds.y + 2);
 				slot.render(matrices, mouseX, mouseY, delta);
-				MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, text.asOrderedText(), bounds.x + 25, bounds.y + 8, -1);
+				MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, text.asOrderedText(), bounds.x + 25,
+						bounds.y + 8, -1);
 			}
 		};
 	}

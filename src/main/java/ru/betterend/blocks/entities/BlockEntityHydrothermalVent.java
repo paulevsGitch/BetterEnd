@@ -1,8 +1,8 @@
 package ru.betterend.blocks.entities;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Tickable;
 import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.registry.EndBlockEntities;
@@ -21,11 +21,10 @@ public class BlockEntityHydrothermalVent extends BlockEntity implements Tickable
 			double y = pos.getY() + 0.9 + world.random.nextDouble() * 0.3;
 			double z = pos.getZ() + world.random.nextDouble();
 			BlockState state = getCachedState();
-			if (state.isOf(EndBlocks.HYDROTHERMAL_VENT) && state.get(HydrothermalVentBlock.ACTIVATED)) {
-				if (state.get(HydrothermalVentBlock.WATERLOGGED)) {
+			if (state.is(EndBlocks.HYDROTHERMAL_VENT) && state.getValue(HydrothermalVentBlock.ACTIVATED)) {
+				if (state.getValue(HydrothermalVentBlock.WATERLOGGED)) {
 					world.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
-				}
-				else {
+				} else {
 					world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
 				}
 			}

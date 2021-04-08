@@ -14,8 +14,8 @@ import net.minecraft.client.sound.AbstractSoundInstance;
 import net.minecraft.client.sound.MusicTracker;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.sound.MusicSound;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import ru.betterend.client.ClientOptions;
 
 @Mixin(MusicTracker.class)
@@ -23,21 +23,21 @@ public class MusicTrackerMixin {
 	@Shadow
 	@Final
 	private MinecraftClient client;
-	
+
 	@Shadow
 	@Final
 	private Random random;
-	
+
 	@Shadow
 	private SoundInstance current;
-	
+
 	@Shadow
 	private int timeUntilNextSong;
-	
+
 	private static float volume = 1;
 	private static float srcVolume = 0;
 	private static long time;
-	
+
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	public void be_onTick(CallbackInfo info) {
 		if (ClientOptions.blendBiomeMusic()) {
@@ -67,32 +67,33 @@ public class MusicTrackerMixin {
 					time = 0;
 					srcVolume = -1;
 					this.client.getSoundManager().stop(this.current);
-					this.timeUntilNextSong = MathHelper.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
+					this.timeUntilNextSong = Mth.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
 					this.current = null;
 				}
 				if (this.current == null && this.timeUntilNextSong-- <= 0) {
 					this.play(musicSound);
 				}
 				info.cancel();
-			}
-			else {
+			} else {
 				volume = 1;
 			}
 		}
 	}
-	
+
 	private boolean be_isInEnd() {
-		return client.world != null && client.world.getRegistryKey().equals(World.END);
+		return client.world != null && client.world.dimension().equals(Level.END);
 	}
-	
+
 	private boolean be_shouldChangeSound(MusicSound musicSound) {
-		return current != null && !musicSound.getSound().getId().equals(this.current.getId()) && musicSound.shouldReplaceCurrentMusic();
+		return current != null && !musicSound.getSound().getId().equals(this.current.getId())
+				&& musicSound.shouldReplaceCurrentMusic();
 	}
-	
+
 	private boolean be_checkNullSound(MusicSound musicSound) {
 		return musicSound != null && musicSound.getSound() != null;
 	}
-	
+
 	@Shadow
-	public void play(MusicSound type) {}
+	public void play(MusicSound type) {
+	}
 }

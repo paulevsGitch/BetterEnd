@@ -1,13 +1,13 @@
 package ru.betterend.blocks.basis;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 
 public class BlockBaseNotFull extends BlockBase {
 
-	public BlockBaseNotFull(Settings settings) {
+	public BlockBaseNotFull(Properties settings) {
 		super(settings);
 	}
 

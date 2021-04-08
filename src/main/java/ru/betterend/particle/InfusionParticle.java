@@ -6,14 +6,15 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.multiplayer.ClientLevel;
 
 public class InfusionParticle extends SpriteBillboardParticle {
-	
-	private final SpriteProvider spriteProvider;
 
-	public InfusionParticle(ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ, float[] palette, SpriteProvider spriteProvider) {
+	private final SpriteSet spriteProvider;
+
+	public InfusionParticle(ClientLevel clientWorld, double x, double y, double z, double velocityX, double velocityY,
+			double velocityZ, float[] palette, SpriteSet spriteProvider) {
 		super(clientWorld, x, y, z, 0.0, 0.0, 0.0);
 		this.setSpriteForAge(spriteProvider);
 		this.spriteProvider = spriteProvider;
@@ -30,7 +31,7 @@ public class InfusionParticle extends SpriteBillboardParticle {
 	public ParticleTextureSheet getType() {
 		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
 	}
-	
+
 	@Override
 	public void tick() {
 		this.prevPosX = this.x;
@@ -49,13 +50,14 @@ public class InfusionParticle extends SpriteBillboardParticle {
 
 	@Environment(EnvType.CLIENT)
 	public static class InfusionFactory implements ParticleFactory<InfusionParticleType> {
-		private final SpriteProvider spriteProvider;
-	
-		public InfusionFactory(SpriteProvider spriteProvider) {
+		private final SpriteSet spriteProvider;
+
+		public InfusionFactory(SpriteSet spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
-	
-		public Particle createParticle(InfusionParticleType particleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+
+		public Particle createParticle(InfusionParticleType particleType, ClientLevel clientWorld, double d, double e,
+				double f, double g, double h, double i) {
 			return new InfusionParticle(clientWorld, d, e, f, g, h, i, particleType.getPalette(), this.spriteProvider);
 		}
 	}

@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import ru.betterend.entity.SilkMothEntity;
 
 public class SilkMothEntityModel extends BlockBenchModel<SilkMothEntity> {
@@ -26,7 +26,7 @@ public class SilkMothEntityModel extends BlockBenchModel<SilkMothEntity> {
 
 	public SilkMothEntityModel() {
 		super(RenderLayer::getEntityCutout);
-		
+
 		textureWidth = 64;
 		textureHeight = 64;
 
@@ -113,22 +113,22 @@ public class SilkMothEntityModel extends BlockBenchModel<SilkMothEntity> {
 		abdomen_r1.setTextureOffset(0, 10).addCuboid(-3.0F, -4.0F, -1.0F, 4.0F, 4.0F, 7.0F, 0.0F);
 	}
 
-
 	@Override
-	public void setAngles(SilkMothEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		wingR_r1.roll = MathHelper.sin(animationProgress * 2F) * 0.4F + 0.3927F;
+	public void setAngles(SilkMothEntity entity, float limbAngle, float limbDistance, float animationProgress,
+			float headYaw, float headPitch) {
+		wingR_r1.roll = Mth.sin(animationProgress * 2F) * 0.4F + 0.3927F;
 		wingL_r1.roll = -wingR_r1.roll;
-		head_pivot.pitch = MathHelper.sin(animationProgress * 0.03F) * 0.1F;
-		tendril_r_r1.roll = MathHelper.sin(animationProgress * 0.07F) * 0.2F + 0.3927F;
+		head_pivot.pitch = Mth.sin(animationProgress * 0.03F) * 0.1F;
+		tendril_r_r1.roll = Mth.sin(animationProgress * 0.07F) * 0.2F + 0.3927F;
 		tendril_r_r2.roll = -tendril_r_r1.roll;
-		abdomen_r1.pitch = MathHelper.sin(animationProgress * 0.05F) * 0.1F - 0.3927F;
-		legsR.roll = MathHelper.sin(animationProgress * 0.07F) * 0.1F - 0.6545F;
+		abdomen_r1.pitch = Mth.sin(animationProgress * 0.05F) * 0.1F - 0.3927F;
+		legsR.roll = Mth.sin(animationProgress * 0.07F) * 0.1F - 0.6545F;
 		legsL.roll = -legsR.roll;
 	}
 
-
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green,
+			float blue, float alpha) {
 		bb_main.render(matrices, vertices, light, overlay);
 		head_pivot.render(matrices, vertices, light, overlay);
 		legsL.render(matrices, vertices, light, overlay);

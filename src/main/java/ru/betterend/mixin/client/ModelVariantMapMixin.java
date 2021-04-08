@@ -10,17 +10,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.gson.Gson;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.client.render.model.json.ModelVariantMap;
 import net.minecraft.util.JsonHelper;
 import ru.betterend.patterns.BlockPatterned;
 
 @Mixin(ModelVariantMap.class)
 public abstract class ModelVariantMapMixin {
-	
+
 	@Inject(method = "deserialize", at = @At("HEAD"), cancellable = true)
-	private static void be_deserializeBlockState(ModelVariantMap.DeserializationContext context, Reader reader, CallbackInfoReturnable<ModelVariantMap> info) {
-		Block block = context.getStateFactory().getDefaultState().getBlock();
+	private static void be_deserializeBlockState(ModelVariantMap.DeserializationContext context, Reader reader,
+			CallbackInfoReturnable<ModelVariantMap> info) {
+		Block block = context.getStateFactory().defaultBlockState().getBlock();
 		if (block instanceof BlockPatterned) {
 			String pattern = ((BlockPatterned) block).getStatesPattern(reader);
 			Gson gson = ContextGsonAccessor.class.cast(context).getGson();

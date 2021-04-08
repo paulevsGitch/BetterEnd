@@ -4,27 +4,26 @@ import java.util.function.Supplier;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.recipe.Ingredient;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Lazy;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.LazyLoadedValue;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public enum EndArmorMaterial implements ArmorMaterial {
 	THALLASIUM("thallasium", 17, new int[] { 1, 4, 5, 2 }, 12, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
-		return Ingredient.ofItems(EndBlocks.THALLASIUM.ingot);
-	}),
-	TERMINITE("terminite", 26, new int[] { 3, 6, 7, 3 }, 14, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {
-		return Ingredient.ofItems(EndBlocks.TERMINITE.ingot);
+		return Ingredient.of(EndBlocks.THALLASIUM.ingot);
+	}), TERMINITE("terminite", 26, new int[] { 3, 6, 7, 3 }, 14, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {
+		return Ingredient.of(EndBlocks.TERMINITE.ingot);
 	}),
 	AETERNIUM("aeternium", 40, new int[] { 4, 7, 9, 4 }, 18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, 0.2F, () -> {
-		return Ingredient.ofItems(EndItems.AETERNIUM_INGOT);
+		return Ingredient.of(EndItems.AETERNIUM_INGOT);
 	}),
 	CRYSTALITE("crystalite", 30, new int[] { 3, 6, 8, 3 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.2F, 0.1F, () -> {
-		return Ingredient.ofItems(EndBlocks.TERMINITE.ingot);
+		return Ingredient.of(EndBlocks.TERMINITE.ingot);
 	});
 
 	private static final int[] BASE_DURABILITY = new int[] { 13, 15, 16, 11 };
@@ -35,12 +34,11 @@ public enum EndArmorMaterial implements ArmorMaterial {
 	private final SoundEvent equipSound;
 	private final float toughness;
 	private final float knockbackResistance;
-	private final Lazy<Ingredient> repairIngredient;
-	
+	private final LazyLoadedValue<Ingredient> repairIngredient;
+
 	private EndArmorMaterial(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantability,
-			SoundEvent equipSound, float toughness, float knockbackResistance,
-			Supplier<Ingredient> repairIngredient) {
-		
+			SoundEvent equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+
 		this.name = name;
 		this.durabilityMultiplier = durabilityMultiplier;
 		this.protectionAmounts = protectionAmounts;
@@ -48,7 +46,7 @@ public enum EndArmorMaterial implements ArmorMaterial {
 		this.equipSound = equipSound;
 		this.toughness = toughness;
 		this.knockbackResistance = knockbackResistance;
-		this.repairIngredient = new Lazy<>(repairIngredient);
+		this.repairIngredient = new LazyLoadedValue<>(repairIngredient);
 	}
 
 	@Override

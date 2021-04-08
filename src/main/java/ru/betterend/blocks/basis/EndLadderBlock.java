@@ -3,27 +3,27 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalFacingBlock;
+import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
+import net.minecraft.world.item.ItemPlacementContext;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.WorldView;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -44,13 +44,13 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(FACING);
 		stateManager.add(WATERLOGGED);
 	}
 
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		switch (state.get(FACING)) {
+		switch (state.getValue(FACING)) {
 		case SOUTH:
 			return SOUTH_SHAPE;
 		case WEST:
@@ -69,21 +69,21 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		Direction direction = (Direction) state.get(FACING);
-		return this.canPlaceOn(world, pos.offset(direction.getOpposite()), direction);
+		Direction direction = (Direction) state.getValue(FACING);
+		return this.canPlaceOn(world, pos.relative(direction.getOpposite()), direction);
 	}
 
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState,
-			WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-		if (facing.getOpposite() == state.get(FACING) && !state.canPlaceAt(world, pos)) {
-			return Blocks.AIR.getDefaultState();
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world,
+			BlockPos pos, BlockPos neighborPos) {
+		if (facing.getOpposite() == state.getValue(FACING) && !state.canPlaceAt(world, pos)) {
+			return Blocks.AIR.defaultBlockState();
 		} else {
-			if ((Boolean) state.get(WATERLOGGED)) {
+			if ((Boolean) state.getValue(WATERLOGGED)) {
 				world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 			}
 
-			return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+			return super.updateShape(state, facing, neighborState, world, pos, neighborPos);
 		}
 	}
 
@@ -91,16 +91,16 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		BlockState blockState2;
 		if (!ctx.canReplaceExisting()) {
-			blockState2 = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(ctx.getSide().getOpposite()));
+			blockState2 = ctx.getLevel().getBlockState(ctx.getBlockPos().offset(ctx.getSide().getOpposite()));
 			if (blockState2.getBlock() == this && blockState2.get(FACING) == ctx.getSide()) {
 				return null;
 			}
 		}
 
-		blockState2 = this.getDefaultState();
-		WorldView worldView = ctx.getWorld();
+		blockState2 = this.defaultBlockState();
+		WorldView worldView = ctx.getLevel();
 		BlockPos blockPos = ctx.getBlockPos();
-		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+		FluidState fluidState = ctx.getLevel().getFluidState(ctx.getBlockPos());
 		Direction[] var6 = ctx.getPlacementDirections();
 		int var7 = var6.length;
 
@@ -118,7 +118,7 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation) {
+	public BlockState rotate(BlockState state, Rotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
 	}
 
@@ -129,31 +129,31 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return (Boolean) state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+		return (Boolean) state.getValue(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
 
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
+
 	@Override
 	public String getStatesPattern(Reader data) {
-		String blockId = Registry.BLOCK.getId(this).getPath();
+		String blockId = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, blockId, blockId);
 	}
-	
+
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_BLOCK, blockId.getPath());
 		}
 		return Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
 	}
-	
+
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_LADDER;
 	}
 }

@@ -6,15 +6,15 @@ import com.google.common.collect.Maps;
 
 import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
-import net.minecraft.block.AbstractChestBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.DoubleBlockProperties;
-import net.minecraft.block.DoubleBlockProperties.PropertySource;
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.block.enums.ChestType;
+import net.minecraft.world.level.block.AbstractChestBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.DoubleBlockProperties;
+import net.minecraft.world.level.block.DoubleBlockProperties.PropertySource;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.enums.ChestType;
 import net.minecraft.client.block.ChestAnimationProgress;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
@@ -25,11 +25,11 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.LightmapCoordinatesRetriever;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.item.BlockItem;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.Level;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndChestBlock;
 import ru.betterend.blocks.entities.EChestBlockEntity;
@@ -85,11 +85,15 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 		this.partLeftB.pivotY = 8.0F;
 	}
 
-	public void render(EChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-		World world = entity.getWorld();
+	public void render(EChestBlockEntity entity, float tickDelta, MatrixStack matrices,
+			VertexConsumerProvider vertexConsumers, int light, int overlay) {
+		Level world = entity.getLevel();
 		boolean worldExists = world != null;
-		BlockState blockState = worldExists ? entity.getCachedState() : (BlockState) Blocks.CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
-		ChestType chestType = blockState.contains(ChestBlock.CHEST_TYPE) ? (ChestType) blockState.get(ChestBlock.CHEST_TYPE) : ChestType.SINGLE;
+		BlockState blockState = worldExists ? entity.getCachedState()
+				: (BlockState) Blocks.CHEST.defaultBlockState().with(ChestBlock.FACING, Direction.SOUTH);
+		ChestType chestType = blockState.contains(ChestBlock.CHEST_TYPE)
+				? (ChestType) blockState.get(ChestBlock.CHEST_TYPE)
+				: ChestType.SINGLE;
 		Block block = blockState.getBlock();
 		if (block instanceof AbstractChestBlock) {
 			AbstractChestBlock<?> abstractChestBlock = (AbstractChestBlock<?>) block;
@@ -108,19 +112,23 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 				propertySource = DoubleBlockProperties.PropertyRetriever::getFallback;
 			}
 
-			float pitch = ((Float2FloatFunction) propertySource.apply(ChestBlock.getAnimationProgressRetriever((ChestAnimationProgress) entity))).get(tickDelta);
+			float pitch = ((Float2FloatFunction) propertySource
+					.apply(ChestBlock.getAnimationProgressRetriever((ChestAnimationProgress) entity))).get(tickDelta);
 			pitch = 1.0F - pitch;
 			pitch = 1.0F - pitch * pitch * pitch;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			int blockLight = ((Int2IntFunction) propertySource.apply(new LightmapCoordinatesRetriever())).applyAsInt(light);
+			int blockLight = ((Int2IntFunction) propertySource.apply(new LightmapCoordinatesRetriever()))
+					.applyAsInt(light);
 
 			VertexConsumer vertexConsumer = getConsumer(vertexConsumers, block, chestType);
 
 			if (isDouble) {
 				if (chestType == ChestType.LEFT) {
-					renderParts(matrices, vertexConsumer, this.partLeftA, this.partLeftB, this.partLeftC, pitch, blockLight, overlay);
+					renderParts(matrices, vertexConsumer, this.partLeftA, this.partLeftB, this.partLeftC, pitch,
+							blockLight, overlay);
 				} else {
-					renderParts(matrices, vertexConsumer, this.partRightA, this.partRightB, this.partRightC, pitch, blockLight, overlay);
+					renderParts(matrices, vertexConsumer, this.partRightA, this.partRightB, this.partRightC, pitch,
+							blockLight, overlay);
 				}
 			} else {
 				renderParts(matrices, vertexConsumer, this.partA, this.partB, this.partC, pitch, blockLight, overlay);
@@ -130,7 +138,8 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 		}
 	}
 
-	private void renderParts(MatrixStack matrices, VertexConsumer vertices, ModelPart modelPart, ModelPart modelPart2, ModelPart modelPart3, float pitch, int light, int overlay) {
+	private void renderParts(MatrixStack matrices, VertexConsumer vertices, ModelPart modelPart, ModelPart modelPart2,
+			ModelPart modelPart3, float pitch, int light, int overlay) {
 		modelPart.pitch = -(pitch * 1.5707964F);
 		modelPart2.pitch = modelPart.pitch;
 		modelPart.render(matrices, vertices, light, overlay);
@@ -157,21 +166,21 @@ public class EndChestBlockEntityRenderer extends BlockEntityRenderer<EChestBlock
 
 	static {
 		defaultLayer = new RenderLayer[] {
-			RenderLayer.getEntityCutout(new Identifier("textures/entity/chest/normal.png")),
-			RenderLayer.getEntityCutout(new Identifier("textures/entity/chest/normal_left.png")),
-			RenderLayer.getEntityCutout(new Identifier("textures/entity/chest/normal_right.png"))
-		};
-		
+				RenderLayer.getEntityCutout(new ResourceLocation("textures/entity/chest/normal.png")),
+				RenderLayer.getEntityCutout(new ResourceLocation("textures/entity/chest/normal_left.png")),
+				RenderLayer.getEntityCutout(new ResourceLocation("textures/entity/chest/normal_right.png")) };
+
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof EndChestBlock) {
-					String name = Registry.BLOCK.getId(block).getPath();
+					String name = Registry.BLOCK.getKey(block).getPath();
 					LAYERS.put(block, new RenderLayer[] {
-						RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + ".png")),
-						RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + "_left.png")),
-						RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + "_right.png"))
-					});
+							RenderLayer.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + ".png")),
+							RenderLayer
+									.getEntityCutout(BetterEnd.makeID("textures/entity/chest/" + name + "_left.png")),
+							RenderLayer.getEntityCutout(
+									BetterEnd.makeID("textures/entity/chest/" + name + "_right.png")) });
 				}
 			}
 		});

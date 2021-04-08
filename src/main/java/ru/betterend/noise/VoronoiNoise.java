@@ -2,13 +2,13 @@ package ru.betterend.noise;
 
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import ru.betterend.util.MHelper;
 
 public class VoronoiNoise {
 	private static final Random RANDOM = new Random();
 	final int seed;
-	
+
 	public VoronoiNoise() {
 		this(0);
 	}
@@ -16,7 +16,7 @@ public class VoronoiNoise {
 	public VoronoiNoise(int seed) {
 		this.seed = seed;
 	}
-	
+
 	private int getSeed(int x, int y, int z) {
 		int h = seed + x * 374761393 + y * 668265263 + z;
 		h = (h ^ (h >> 13)) * 1274126177;
@@ -27,13 +27,13 @@ public class VoronoiNoise {
 		int ix = MHelper.floor(x);
 		int iy = MHelper.floor(y);
 		int iz = MHelper.floor(z);
-		
+
 		float px = (float) (x - ix);
 		float py = (float) (y - iy);
 		float pz = (float) (z - iz);
-		
+
 		float d = 10;
-		
+
 		for (int pox = -1; pox < 2; pox++) {
 			for (int poy = -1; poy < 2; poy++) {
 				for (int poz = -1; poz < 2; poz++) {
@@ -48,19 +48,19 @@ public class VoronoiNoise {
 				}
 			}
 		}
-		
+
 		return Math.sqrt(d);
 	}
-	
+
 	public BlockPos[] getPos(double x, double y, double z, double scale) {
 		int ix = MHelper.floor(x);
 		int iy = MHelper.floor(y);
 		int iz = MHelper.floor(z);
-		
+
 		float px = (float) (x - ix);
 		float py = (float) (y - iy);
 		float pz = (float) (z - iz);
-		
+
 		float d = 10;
 		float selX = 0;
 		float selY = 0;
@@ -68,7 +68,7 @@ public class VoronoiNoise {
 		float selXPre = 0;
 		float selYPre = 0;
 		float selZPre = 0;
-		
+
 		for (int pox = -1; pox < 2; pox++) {
 			for (int poy = -1; poy < 2; poy++) {
 				for (int poz = -1; poz < 2; poz++) {
@@ -89,9 +89,11 @@ public class VoronoiNoise {
 				}
 			}
 		}
-		
-		BlockPos p1 = new BlockPos((ix + (double) selX) * scale, (iy + (double) selY) * scale, (iz + (double) selZ) * scale);
-		BlockPos p2 = new BlockPos((ix + (double) selXPre) * scale, (iy + (double) selYPre) * scale, (iz + (double) selZPre) * scale);
-		return new BlockPos[] {p1, p2};
+
+		BlockPos p1 = new BlockPos((ix + (double) selX) * scale, (iy + (double) selY) * scale,
+				(iz + (double) selZ) * scale);
+		BlockPos p2 = new BlockPos((ix + (double) selXPre) * scale, (iy + (double) selYPre) * scale,
+				(iz + (double) selZPre) * scale);
+		return new BlockPos[] { p1, p2 };
 	}
 }

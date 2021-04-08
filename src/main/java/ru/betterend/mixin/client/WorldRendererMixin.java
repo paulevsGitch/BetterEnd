@@ -26,8 +26,8 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.Quaternion;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.ClientOptions;
@@ -36,12 +36,12 @@ import ru.betterend.util.MHelper;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
-	private static final Identifier NEBULA_1 = BetterEnd.makeID("textures/sky/nebula_2.png");
-	private static final Identifier NEBULA_2 = BetterEnd.makeID("textures/sky/nebula_3.png");
-	private static final Identifier HORIZON = BetterEnd.makeID("textures/sky/nebula_1.png");
-	private static final Identifier STARS = BetterEnd.makeID("textures/sky/stars.png");
-	private static final Identifier FOG = BetterEnd.makeID("textures/sky/fog.png");
-	
+	private static final ResourceLocation NEBULA_1 = BetterEnd.makeID("textures/sky/nebula_2.png");
+	private static final ResourceLocation NEBULA_2 = BetterEnd.makeID("textures/sky/nebula_3.png");
+	private static final ResourceLocation HORIZON = BetterEnd.makeID("textures/sky/nebula_1.png");
+	private static final ResourceLocation STARS = BetterEnd.makeID("textures/sky/stars.png");
+	private static final ResourceLocation FOG = BetterEnd.makeID("textures/sky/fog.png");
+
 	private static VertexBuffer stars1;
 	private static VertexBuffer stars2;
 	private static VertexBuffer stars3;
@@ -60,21 +60,21 @@ public class WorldRendererMixin {
 	private static float blind02;
 	private static float blind06;
 	private static boolean directOpenGL = false;
-	
+
 	@Shadow
 	@Final
 	private MinecraftClient client;
-	
+
 	@Shadow
 	@Final
 	private TextureManager textureManager;
-	
+
 	@Shadow
-	private ClientWorld world;
-	
+	private ClientLevel world;
+
 	@Shadow
 	private int ticks;
-	
+
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onInit(MinecraftClient client, BufferBuilderStorage bufferBuilders, CallbackInfo info) {
 		be_initStars();
@@ -87,103 +87,106 @@ public class WorldRendererMixin {
 		axis2.normalize();
 		axis3.normalize();
 		axis4.normalize();
-		
-		directOpenGL = FabricLoader.getInstance().isModLoaded("optifabric") || FabricLoader.getInstance().isModLoaded("immersive_portals");
+
+		directOpenGL = FabricLoader.getInstance().isModLoaded("optifabric")
+				|| FabricLoader.getInstance().isModLoaded("immersive_portals");
 	}
-	
+
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
 	private void be_renderBetterEndSky(MatrixStack matrices, float tickDelta, CallbackInfo info) {
 		if (ClientOptions.isCustomSky() && client.world.getSkyProperties().getSkyType() == SkyProperties.SkyType.END) {
 			time = (ticks % 360000) * 0.000017453292F;
 			time2 = time * 2;
 			time3 = time * 3;
-			
+
 			BackgroundRenderer.setFogBlack();
 			RenderSystem.enableTexture();
-			
+
 			if (directOpenGL) {
 				GL11.glEnable(GL11.GL_ALPHA_TEST);
 				GL11.glAlphaFunc(516, 0.0F);
 				GL11.glEnable(GL11.GL_BLEND);
 				RenderSystem.depthMask(false);
-			}
-			else {
+			} else {
 				RenderSystem.enableAlphaTest();
 				RenderSystem.alphaFunc(516, 0.0F);
 				RenderSystem.enableBlend();
 			}
-			
+
 			float blindA = 1F - BackgroundInfo.blindness;
 			blind02 = blindA * 0.2F;
 			blind06 = blindA * 0.6F;
-			
+
 			if (blindA > 0) {
 				matrices.push();
 				matrices.multiply(new Quaternion(0, time, 0, false));
 				textureManager.bindTexture(HORIZON);
 				be_renderBuffer(matrices, horizon, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
 				matrices.pop();
-				
+
 				matrices.push();
 				matrices.multiply(new Quaternion(0, -time, 0, false));
 				textureManager.bindTexture(NEBULA_1);
 				be_renderBuffer(matrices, nebulas1, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
-				
+
 				matrices.push();
 				matrices.multiply(new Quaternion(0, time2, 0, false));
 				textureManager.bindTexture(NEBULA_2);
 				be_renderBuffer(matrices, nebulas2, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
-				
+
 				textureManager.bindTexture(STARS);
-				
+
 				matrices.push();
 				matrices.multiply(axis3.getRadialQuaternion(time));
 				be_renderBuffer(matrices, stars3, VertexFormats.POSITION_TEXTURE, 0.77F, 0.31F, 0.73F, blind06);
 				matrices.pop();
-				
+
 				matrices.push();
 				matrices.multiply(axis4.getRadialQuaternion(time2));
 				be_renderBuffer(matrices, stars4, VertexFormats.POSITION_TEXTURE, 1F, 1F, 1F, blind06);
 				matrices.pop();
 			}
-			
+
 			float a = (BackgroundInfo.fog - 1F);
 			if (a > 0) {
-				if (a > 1) a = 1;
+				if (a > 1)
+					a = 1;
 				textureManager.bindTexture(FOG);
-				be_renderBuffer(matrices, fog, VertexFormats.POSITION_TEXTURE, BackgroundInfo.red, BackgroundInfo.green, BackgroundInfo.blue, a);
+				be_renderBuffer(matrices, fog, VertexFormats.POSITION_TEXTURE, BackgroundInfo.red, BackgroundInfo.green,
+						BackgroundInfo.blue, a);
 			}
 
 			RenderSystem.disableTexture();
-			
+
 			if (blindA > 0) {
 				matrices.push();
 				matrices.multiply(axis1.getRadialQuaternion(time3));
 				be_renderBuffer(matrices, stars1, VertexFormats.POSITION, 1, 1, 1, blind06);
 				matrices.pop();
-				
+
 				matrices.push();
 				matrices.multiply(axis2.getRadialQuaternion(time2));
 				be_renderBuffer(matrices, stars2, VertexFormats.POSITION, 0.95F, 0.64F, 0.93F, blind06);
 				matrices.pop();
 			}
-			
+
 			RenderSystem.enableTexture();
 			RenderSystem.depthMask(true);
-			
+
 			info.cancel();
 		}
 	}
-	
-	private void be_renderBuffer(MatrixStack matrices, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) {
+
+	private void be_renderBuffer(MatrixStack matrices, VertexBuffer buffer, VertexFormat format, float r, float g,
+			float b, float a) {
 		RenderSystem.color4f(r, g, b, a);
 		buffer.bind();
 		format.startDrawing(0L);
-        buffer.draw(matrices.peek().getModel(), 7);
-        VertexBuffer.unbind();
-        format.endDrawing();
+		buffer.draw(matrices.peek().getModel(), 7);
+		VertexBuffer.unbind();
+		format.endDrawing();
 	}
 
 	private void be_initStars() {
@@ -197,8 +200,9 @@ public class WorldRendererMixin {
 		horizon = be_buildBufferHorizon(buffer, horizon);
 		fog = be_buildBufferFog(buffer, fog);
 	}
-	 
-	private VertexBuffer be_buildBufferStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+
+	private VertexBuffer be_buildBufferStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize,
+			double maxSize, int count, long seed) {
 		if (buffer != null) {
 			buffer.close();
 		}
@@ -210,8 +214,9 @@ public class WorldRendererMixin {
 
 		return buffer;
 	}
-	
-	private VertexBuffer be_buildBufferUVStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+
+	private VertexBuffer be_buildBufferUVStars(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize,
+			double maxSize, int count, long seed) {
 		if (buffer != null) {
 			buffer.close();
 		}
@@ -223,8 +228,9 @@ public class WorldRendererMixin {
 
 		return buffer;
 	}
-	
-	private VertexBuffer be_buildBufferFarFog(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize, double maxSize, int count, long seed) {
+
+	private VertexBuffer be_buildBufferFarFog(BufferBuilder bufferBuilder, VertexBuffer buffer, double minSize,
+			double maxSize, int count, long seed) {
 		if (buffer != null) {
 			buffer.close();
 		}
@@ -236,7 +242,7 @@ public class WorldRendererMixin {
 
 		return buffer;
 	}
-	
+
 	private VertexBuffer be_buildBufferHorizon(BufferBuilder bufferBuilder, VertexBuffer buffer) {
 		if (buffer != null) {
 			buffer.close();
@@ -249,7 +255,7 @@ public class WorldRendererMixin {
 
 		return buffer;
 	}
-	
+
 	private VertexBuffer be_buildBufferFog(BufferBuilder bufferBuilder, VertexBuffer buffer) {
 		if (buffer != null) {
 			buffer.close();
@@ -262,7 +268,7 @@ public class WorldRendererMixin {
 
 		return buffer;
 	}
-	
+
 	private void be_makeStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
 		buffer.begin(7, VertexFormats.POSITION);
@@ -305,7 +311,7 @@ public class WorldRendererMixin {
 			}
 		}
 	}
-	
+
 	private void be_makeUVStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
@@ -347,13 +353,13 @@ public class WorldRendererMixin {
 					double ah = ab * n + ae * o;
 					float texU = (pos >> 1) & 1;
 					float texV = (((pos + 1) >> 1) & 1) / 4F + minV;
-					pos ++;
+					pos++;
 					buffer.vertex(j + af, k + ad, l + ah).texture(texU, texV).next();
 				}
 			}
 		}
 	}
-	
+
 	private void be_makeFarFog(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
@@ -398,26 +404,26 @@ public class WorldRendererMixin {
 					double ah = ab * n + ae * o;
 					float texU = (pos >> 1) & 1;
 					float texV = ((pos + 1) >> 1) & 1;
-					pos ++;
+					pos++;
 					buffer.vertex(j + af, k + ad, l + ah).texture(texU, texV).next();
 				}
 			}
 		}
 	}
-	
+
 	private void be_makeCylinder(BufferBuilder buffer, int segments, double height, double radius) {
 		buffer.begin(7, VertexFormats.POSITION_TEXTURE);
-		for (int i = 0; i < segments; i ++) {
+		for (int i = 0; i < segments; i++) {
 			double a1 = (double) i * Math.PI * 2.0 / (double) segments;
 			double a2 = (double) (i + 1) * Math.PI * 2.0 / (double) segments;
 			double px1 = Math.sin(a1) * radius;
 			double pz1 = Math.cos(a1) * radius;
 			double px2 = Math.sin(a2) * radius;
 			double pz2 = Math.cos(a2) * radius;
-			
+
 			float u0 = (float) i / (float) segments;
 			float u1 = (float) (i + 1) / (float) segments;
-			
+
 			buffer.vertex(px1, -height, pz1).texture(u0, 0).next();
 			buffer.vertex(px1, height, pz1).texture(u0, 1).next();
 			buffer.vertex(px2, height, pz2).texture(u1, 1).next();

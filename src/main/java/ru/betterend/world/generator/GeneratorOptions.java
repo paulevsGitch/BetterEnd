@@ -1,7 +1,7 @@
 package ru.betterend.world.generator;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import ru.betterend.config.Configs;
 
 public class GeneratorOptions {
@@ -26,7 +26,7 @@ public class GeneratorOptions {
 	private static BlockPos portal = BlockPos.ORIGIN;
 	private static boolean replacePortal;
 	private static boolean replacePillars;
-	
+
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
 		biomeSizeVoid = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeVoid", 256);
@@ -35,45 +35,47 @@ public class GeneratorOptions {
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
 		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false);
 		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
-		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "removeChorusFromVanillaBiomes", true);
+		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant",
+				"removeChorusFromVanillaBiomes", true);
 		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", true);
 		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
 		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", true);
 		endCityFailChance = Configs.GENERATOR_CONFIG.getInt("customGenerator", "endCityFailChance", 5);
 		generateObsidianPlatform = Configs.GENERATOR_CONFIG.getBooleanRoot("generateObsidianPlatform", true);
-		bigOptions = new LayerOptions("customGenerator.layers.bigIslands", Configs.GENERATOR_CONFIG, 300, 200, 70, 10, false);
-		mediumOptions = new LayerOptions("customGenerator.layers.mediumIslands", Configs.GENERATOR_CONFIG, 150, 100, 70, 20, true);
-		smallOptions = new LayerOptions("customGenerator.layers.smallIslands", Configs.GENERATOR_CONFIG, 60, 50, 70, 30, false);
+		bigOptions = new LayerOptions("customGenerator.layers.bigIslands", Configs.GENERATOR_CONFIG, 300, 200, 70, 10,
+				false);
+		mediumOptions = new LayerOptions("customGenerator.layers.mediumIslands", Configs.GENERATOR_CONFIG, 150, 100, 70,
+				20, true);
+		smallOptions = new LayerOptions("customGenerator.layers.smallIslands", Configs.GENERATOR_CONFIG, 60, 50, 70, 30,
+				false);
 		changeSpawn = Configs.GENERATOR_CONFIG.getBoolean("spawn", "changeSpawn", false);
-		spawn = new BlockPos(
-			Configs.GENERATOR_CONFIG.getInt("spawn.point", "x", 20),
-			Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65),
-			Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0)
-		);
+		spawn = new BlockPos(Configs.GENERATOR_CONFIG.getInt("spawn.point", "x", 20),
+				Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65),
+				Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0));
 		replacePortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "customEndPortal", true);
 		replacePillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "customObsidianSpikes", true);
 	}
 
 	public static int getBiomeSizeLand() {
-		return MathHelper.clamp(biomeSizeLand, 1, 8192);
+		return Mth.clamp(biomeSizeLand, 1, 8192);
 	}
-	
+
 	public static int getBiomeSizeVoid() {
-		return MathHelper.clamp(biomeSizeVoid, 1, 8192);
+		return Mth.clamp(biomeSizeVoid, 1, 8192);
 	}
 
 	public static boolean hasPortal() {
 		return hasPortal;
 	}
-	
+
 	public static boolean hasPillars() {
 		return hasPillars;
 	}
-	
+
 	public static boolean hasDragonFights() {
 		return hasDragonFights;
 	}
-	
+
 	public static boolean swapOverworldToEnd() {
 		return swapOverworldToEnd;
 	}
@@ -85,23 +87,23 @@ public class GeneratorOptions {
 	public static boolean removeChorusFromVanillaBiomes() {
 		return removeChorusFromVanillaBiomes;
 	}
-	
+
 	public static boolean noRingVoid() {
 		return noRingVoid;
 	}
-	
+
 	public static boolean useNewGenerator() {
 		return newGenerator;
 	}
-	
+
 	public static boolean hasCentralIsland() {
 		return generateCentralIsland;
 	}
-	
+
 	public static boolean generateObsidianPlatform() {
 		return generateObsidianPlatform;
 	}
-	
+
 	public static int getEndCityFailChance() {
 		return endCityFailChance;
 	}
@@ -121,11 +123,11 @@ public class GeneratorOptions {
 	public static void setPortalPos(BlockPos portal) {
 		GeneratorOptions.portal = portal;
 	}
-	
+
 	public static boolean replacePortal() {
 		return replacePortal;
 	}
-	
+
 	public static boolean replacePillars() {
 		return replacePillars;
 	}

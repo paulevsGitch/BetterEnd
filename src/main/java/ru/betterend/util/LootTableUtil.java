@@ -2,15 +2,15 @@ package ru.betterend.util;
 
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.loot.UniformLootTableRange;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.registry.EndItems;
 
 public class LootTableUtil {
-	private static final Identifier END_CITY_TREASURE_ID = new Identifier("chests/end_city_treasure");
+	private static final ResourceLocation END_CITY_TREASURE_ID = new ResourceLocation("chests/end_city_treasure");
 
 	public static void init() {
 		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {

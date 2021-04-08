@@ -8,8 +8,8 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
@@ -23,7 +23,7 @@ public class EndBiome {
 	protected List<EndBiome> subbiomes = Lists.newArrayList();
 
 	protected final Biome biome;
-	protected final Identifier mcID;
+	protected final ResourceLocation mcID;
 	protected EndBiome edge;
 	protected int edgeSize;
 
@@ -50,7 +50,7 @@ public class EndBiome {
 		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
 	}
 
-	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
+	public EndBiome(ResourceLocation id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
 		this.mcID = id;
 		this.readStructureList();
 		this.biome = biome;
@@ -82,7 +82,7 @@ public class EndBiome {
 		biome.biomeParent = this;
 		subbiomes.add(biome);
 	}
-	
+
 	public boolean containsSubBiome(EndBiome biome) {
 		return subbiomes.contains(biome);
 	}
@@ -130,14 +130,14 @@ public class EndBiome {
 		return mcID.toString();
 	}
 
-	public Identifier getID() {
+	public ResourceLocation getID() {
 		return mcID;
 	}
 
 	public float getFogDensity() {
 		return fogDensity;
 	}
-	
+
 	protected void readStructureList() {
 		String ns = mcID.getNamespace();
 		String nm = mcID.getPath();
@@ -162,11 +162,11 @@ public class EndBiome {
 			}
 		}
 	}
-	
+
 	public EndFeature getStructuresFeature() {
 		return structuresFeature;
 	}
-	
+
 	public Biome getActualBiome() {
 		return this.actualBiome;
 	}
@@ -174,15 +174,15 @@ public class EndBiome {
 	public float getGenChance() {
 		return this.genChance;
 	}
-	
+
 	public float getGenChanceImmutable() {
 		return this.genChanceUnmutable;
 	}
-	
+
 	public boolean hasCaves() {
 		return hasCaves;
 	}
-	
+
 	public void updateActualBiomes(Registry<Biome> biomeRegistry) {
 		subbiomes.forEach((sub) -> {
 			if (sub != this) {
@@ -194,7 +194,7 @@ public class EndBiome {
 		}
 		this.actualBiome = biomeRegistry.get(mcID);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -203,7 +203,7 @@ public class EndBiome {
 		EndBiome biome = (EndBiome) obj;
 		return biome == null ? false : biome.mcID.equals(mcID);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return mcID.hashCode();

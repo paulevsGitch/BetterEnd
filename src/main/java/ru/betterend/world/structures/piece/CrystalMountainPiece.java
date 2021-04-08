@@ -2,15 +2,15 @@ package ru.betterend.world.structures.piece;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.StructureWorldAccess;
@@ -26,7 +26,7 @@ import ru.betterend.util.MHelper;
 
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;
-	
+
 	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
 		top = biome.getGenerationSettings().getSurfaceConfig().getTopMaterial();
@@ -43,10 +43,11 @@ public class CrystalMountainPiece extends MountainPiece {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
+			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getStartX();
 		int sz = chunkPos.getStartZ();
-		Mutable pos = new Mutable();
+		MutableBlockPos pos = new MutableBlockPos();
 		Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
 		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
 		Heightmap map2 = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
@@ -68,7 +69,8 @@ public class CrystalMountainPiece extends MountainPiece {
 						continue;
 					}
 					pos.setY(minY);
-					while (!chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(pos.down()).isOf(Blocks.CAVE_AIR)) {
+					while (!chunk.getBlockState(pos).isIn(EndTags.GEN_TERRAIN) && pos.getY() > 56
+							&& !chunk.getBlockState(pos.below()).is(Blocks.CAVE_AIR)) {
 						pos.setY(pos.getY() - 1);
 					}
 					minY = pos.getY();
@@ -81,22 +83,24 @@ public class CrystalMountainPiece extends MountainPiece {
 							maxY += center.getY();
 							int maxYI = (int) (maxY);
 							int cover = maxYI - 1;
-							boolean needCover = (noise1.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random) - (center.getY() + 14) * 0.1) > 0;
+							boolean needCover = (noise1.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random)
+									- (center.getY() + 14) * 0.1) > 0;
 							for (int y = minY - 1; y < maxYI; y++) {
 								pos.setY(y);
-								chunk.setBlockState(pos, needCover && y == cover ? top : Blocks.END_STONE.getDefaultState(), false);
+								chunk.setBlockAndUpdate(pos,
+										needCover && y == cover ? top : Blocks.END_STONE.defaultBlockState(), false);
 							}
 						}
 					}
 				}
 			}
 		}
-		
+
 		map = chunk.getHeightmap(Type.WORLD_SURFACE);
-		
+
 		// Big crystals
 		int count = (map.get(8, 8) - (center.getY() + 24)) / 7;
-		count = MathHelper.clamp(count, 0, 8);
+		count = Mth.clamp(count, 0, 8);
 		for (int i = 0; i < count; i++) {
 			int radius = MHelper.randRange(2, 3, random);
 			float fill = MHelper.randRange(0F, 1F, random);
@@ -105,16 +109,16 @@ public class CrystalMountainPiece extends MountainPiece {
 			int y = map.get(x, z);
 			if (y > 80) {
 				pos.set(x, y, z);
-				if (chunk.getBlockState(pos.down()).isOf(Blocks.END_STONE)) {
+				if (chunk.getBlockState(pos.below()).is(Blocks.END_STONE)) {
 					int height = MHelper.floor(radius * MHelper.randRange(1.5F, 3F, random) + (y - 80) * 0.3F);
 					crystal(chunk, pos, radius, height, fill, random);
 				}
 			}
 		}
-		
+
 		// Small crystals
 		count = (map.get(8, 8) - (center.getY() + 24)) / 2;
-		count = MathHelper.clamp(count, 4, 8);
+		count = Mth.clamp(count, 4, 8);
 		for (int i = 0; i < count; i++) {
 			int radius = MHelper.randRange(1, 2, random);
 			float fill = random.nextBoolean() ? 0 : 1;
@@ -123,18 +127,18 @@ public class CrystalMountainPiece extends MountainPiece {
 			int y = map.get(x, z);
 			if (y > 80) {
 				pos.set(x, y, z);
-				if (chunk.getBlockState(pos.down()).getBlock() == Blocks.END_STONE) {
+				if (chunk.getBlockState(pos.below()).getBlock() == Blocks.END_STONE) {
 					int height = MHelper.floor(radius * MHelper.randRange(1.5F, 3F, random) + (y - 80) * 0.3F);
 					crystal(chunk, pos, radius, height, fill, random);
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	private void crystal(Chunk chunk, BlockPos pos, int radius, int height, float fill, Random random) {
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		int max = MHelper.floor(fill * radius + radius + 0.5F);
 		height += pos.getY();
 		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
@@ -156,7 +160,7 @@ public class CrystalMountainPiece extends MountainPiece {
 							int h = coefX * x + coefZ * z + height;
 							for (int y = minY; y < h; y++) {
 								mut.setY(y);
-								chunk.setBlockState(mut, EndBlocks.AURORA_CRYSTAL.getDefaultState(), false);
+								chunk.setBlockAndUpdate(mut, EndBlocks.AURORA_CRYSTAL.defaultBlockState(), false);
 							}
 						}
 					}

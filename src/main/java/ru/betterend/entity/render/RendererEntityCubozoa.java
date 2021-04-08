@@ -8,13 +8,13 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.CubozoaEntity;
 import ru.betterend.entity.model.CubozoaEntityModel;
 
 public class RendererEntityCubozoa extends MobEntityRenderer<CubozoaEntity, CubozoaEntityModel> {
-	private static final Identifier[] TEXTURE = new Identifier[2];
+	private static final ResourceLocation[] TEXTURE = new ResourceLocation[2];
 	private static final RenderLayer[] GLOW = new RenderLayer[2];
 
 	public RendererEntityCubozoa(EntityRenderDispatcher entityRenderDispatcher) {
@@ -26,11 +26,14 @@ public class RendererEntityCubozoa extends MobEntityRenderer<CubozoaEntity, Cubo
 			}
 
 			@Override
-			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CubozoaEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light,
+					CubozoaEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress,
+					float headYaw, float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getVariant()]);
-				this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+				this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F,
+						1.0F, 1.0F);
 			}
-        });
+		});
 	}
 
 	@Override
@@ -40,14 +43,14 @@ public class RendererEntityCubozoa extends MobEntityRenderer<CubozoaEntity, Cubo
 	}
 
 	@Override
-	public Identifier getTexture(CubozoaEntity entity) {
+	public ResourceLocation getTexture(CubozoaEntity entity) {
 		return TEXTURE[entity.getVariant()];
 	}
-	
+
 	static {
 		TEXTURE[0] = BetterEnd.makeID("textures/entity/cubozoa/cubozoa.png");
 		TEXTURE[1] = BetterEnd.makeID("textures/entity/cubozoa/cubozoa_sulphur.png");
-		
+
 		GLOW[0] = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/cubozoa/cubozoa_glow.png"));
 		GLOW[1] = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/cubozoa/cubozoa_sulphur_glow.png"));
 	}

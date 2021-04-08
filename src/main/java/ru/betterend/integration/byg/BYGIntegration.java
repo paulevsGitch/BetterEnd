@@ -3,7 +3,7 @@ package ru.betterend.integration.byg;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.collection.WeightedList;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.world.biome.Biome;
@@ -32,31 +32,31 @@ public class BYGIntegration extends ModIntegration {
 	@Override
 	public void addBiomes() {
 		BYGBiomes.addBiomes();
-		
+
 		Class<?> biomeClass = this.getClass("corgiaoc.byg.common.world.biome.BYGEndBiome");
 		List<Object> biomes = this.getStaticFieldValue(biomeClass, "BYG_END_BIOMES");
-		
+
 		if (biomes != null && biomeClass != null) {
 			biomes.forEach((obj) -> {
 				Biome biome = this.getAndExecuteRuntime(biomeClass, obj, "getBiome");
 				if (biome != null) {
-					Identifier biomeID = BuiltinRegistries.BIOME.getId(biome);
+					ResourceLocation biomeID = BuiltinRegistries.BIOME.getId(biome);
 					EndBiome endBiome = EndBiomes.getBiome(biomeID);
 					Biome edge = this.getAndExecuteRuntime(biomeClass, obj, "getEdge");
 					if (edge != null) {
-						Identifier edgeID = BuiltinRegistries.BIOME.getId(edge);
+						ResourceLocation edgeID = BuiltinRegistries.BIOME.getId(edge);
 						EndBiomes.LAND_BIOMES.removeMutableBiome(edgeID);
 						EndBiomes.VOID_BIOMES.removeMutableBiome(edgeID);
 						EndBiome edgeBiome = EndBiomes.getBiome(edgeID);
 						endBiome.setEdge(edgeBiome);
-					}
-					else {
+					} else {
 						Boolean isVoid = this.getAndExecuteRuntime(biomeClass, obj, "isVoid");
 						if (isVoid != null && isVoid.booleanValue()) {
 							EndBiomes.LAND_BIOMES.removeMutableBiome(biomeID);
 							EndBiomes.VOID_BIOMES.addBiomeMutable(endBiome);
 						}
-						WeightedList<Identifier> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
+						WeightedList<ResourceLocation> subBiomes = this.getAndExecuteRuntime(biomeClass, obj,
+								"getHills");
 						if (subBiomes != null) {
 							subBiomes.stream().collect(Collectors.toList()).forEach((id) -> {
 								EndBiome subBiome = EndBiomes.getBiome(id);

@@ -5,15 +5,15 @@ import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 
 public class ItemUtil {
-	
+
 	public static String toStackString(@NotNull ItemStack stack) {
 		try {
 			if (stack == null) {
@@ -26,7 +26,7 @@ public class ItemUtil {
 		}
 		return "";
 	}
-	
+
 	@Nullable
 	public static ItemStack fromStackString(String stackString) {
 		if (stackString == null || stackString.equals("")) {
@@ -34,15 +34,16 @@ public class ItemUtil {
 		}
 		try {
 			String[] parts = stackString.split(":");
-			if (parts.length < 2) return null;
+			if (parts.length < 2)
+				return null;
 			if (parts.length == 2) {
-				Identifier itemId = new Identifier(stackString);
+				ResourceLocation itemId = new ResourceLocation(stackString);
 				Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
 					return new IllegalStateException("Output item " + itemId + " does not exists!");
 				});
 				return new ItemStack(item);
 			}
-			Identifier itemId = new Identifier(parts[0], parts[1]);
+			ResourceLocation itemId = new ResourceLocation(parts[0], parts[1]);
 			Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
 				return new IllegalStateException("Output item " + itemId + " does not exists!");
 			});
@@ -52,14 +53,14 @@ public class ItemUtil {
 		}
 		return null;
 	}
-	
+
 	@Nullable
 	public static ItemStack fromJsonRecipe(JsonObject recipe) {
 		try {
 			if (!recipe.has("item")) {
 				throw new IllegalStateException("Invalid JsonObject. Entry 'item' does not exists!");
 			}
-			Identifier itemId = new Identifier(JsonHelper.getString(recipe, "item"));
+			ResourceLocation itemId = new ResourceLocation(JsonHelper.getString(recipe, "item"));
 			Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
 				return new IllegalStateException("Output item " + itemId + " does not exists!");
 			});

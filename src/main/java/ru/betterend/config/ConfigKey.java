@@ -1,20 +1,20 @@
 package ru.betterend.config;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class ConfigKey {
 	private final String path[];
 	private final String entry;
 	private final boolean root;
-	
+
 	public ConfigKey(String entry, String... path) {
 		this.validate(entry);
 		this.path = path;
 		this.entry = entry;
 		this.root = path.length == 0 || (path.length == 1 && path[0].isEmpty());
 	}
-	
-	public ConfigKey(String entry, Identifier path) {
+
+	public ConfigKey(String entry, ResourceLocation path) {
 		this(entry, path.getNamespace(), path.getPath());
 	}
 
@@ -25,7 +25,7 @@ public class ConfigKey {
 	public String getEntry() {
 		return entry;
 	}
-	
+
 	public boolean isRoot() {
 		return root;
 	}
@@ -61,7 +61,7 @@ public class ConfigKey {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		if (root) {
@@ -73,7 +73,7 @@ public class ConfigKey {
 		}
 		return String.format("%s:%s", p, entry);
 	}
-	
+
 	private void validate(String entry) {
 		if (entry == null) {
 			throw new NullPointerException("Config key must be not null!");

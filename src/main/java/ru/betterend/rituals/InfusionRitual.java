@@ -2,56 +2,56 @@ package ru.betterend.rituals;
 
 import java.awt.Point;
 
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
 
 public class InfusionRitual implements Inventory {
-	private static final Point[] PEDESTALS_MAP = new Point[] {
-		new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2),
-		new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)
-	};
+	private static final Point[] PEDESTALS_MAP = new Point[] { new Point(0, 3), new Point(2, 2), new Point(3, 0),
+			new Point(2, -2), new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2) };
 
-	private World world;
+	private Level world;
 	private BlockPos worldPos;
 	private InfusionRecipe activeRecipe;
 	private boolean isDirty = false;
 	private boolean hasRecipe = false;
 	private int progress = 0;
 	private int time = 0;
-	
+
 	private InfusionPedestalEntity input;
 	private final PedestalBlockEntity[] catalysts = new PedestalBlockEntity[8];
-	
-	public InfusionRitual(World world, BlockPos pos) {
+
+	public InfusionRitual(Level world, BlockPos pos) {
 		this.world = world;
 		this.worldPos = pos;
 		this.configure();
 	}
-	
+
 	public static Point[] getMap() {
 		return PEDESTALS_MAP;
 	}
-	
+
 	public void configure() {
-		if (world == null || world.isClient || worldPos == null) return;
+		if (world == null || world.isClientSide || worldPos == null)
+			return;
 		BlockEntity inputEntity = world.getBlockEntity(worldPos);
 		if (inputEntity instanceof InfusionPedestalEntity) {
 			input = (InfusionPedestalEntity) inputEntity;
 		}
 		int i = 0;
-		for(Point point : PEDESTALS_MAP) {
-			BlockPos.Mutable checkPos = worldPos.mutableCopy().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
+		for (Point point : PEDESTALS_MAP) {
+			BlockPos.MutableBlockPos checkPos = worldPos.mutable().move(Direction.EAST, point.x).move(Direction.NORTH,
+					point.y);
 			BlockEntity catalystEntity = world.getBlockEntity(checkPos);
 			if (catalystEntity instanceof PedestalBlockEntity) {
 				catalysts[i] = (PedestalBlockEntity) catalystEntity;
@@ -61,9 +61,10 @@ public class InfusionRitual implements Inventory {
 			}
 		}
 	}
-	
+
 	public boolean checkRecipe() {
-		if (!isValid()) return false;
+		if (!isValid())
+			return false;
 		InfusionRecipe recipe = world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, this, world).orElse(null);
 		if (hasRecipe()) {
 			if (recipe == null) {
@@ -89,7 +90,7 @@ public class InfusionRitual implements Inventory {
 		}
 		return false;
 	}
-	
+
 	public void stop() {
 		activeRecipe = null;
 		hasRecipe = false;
@@ -97,14 +98,16 @@ public class InfusionRitual implements Inventory {
 		time = 0;
 		markDirty();
 	}
-	
+
 	public void tick() {
 		if (isDirty) {
 			configure();
 			isDirty = false;
 		}
-		if (!isValid() || !hasRecipe()) return;
-		if (!checkRecipe()) return;
+		if (!isValid() || !hasRecipe())
+			return;
+		if (!checkRecipe())
+			return;
 		progress++;
 		if (progress == time) {
 			input.removeStack(0);
@@ -114,7 +117,7 @@ public class InfusionRitual implements Inventory {
 			}
 			stop();
 		} else {
-			ServerWorld world = (ServerWorld) this.world;
+			ServerLevel world = (ServerLevel) this.world;
 			BlockPos target = worldPos.up();
 			double tx = target.getX() + 0.5;
 			double ty = target.getY() + 0.5;
@@ -126,31 +129,33 @@ public class InfusionRitual implements Inventory {
 					double sx = start.getX() + 0.5;
 					double sy = start.getY() + 1.25;
 					double sz = start.getZ() + 0.5;
-					world.spawnParticles(new InfusionParticleType(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
+					world.sendParticles(new InfusionParticleType(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
 				}
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean isValid(int slot, ItemStack stack) {
 		return isValid();
 	}
-	
+
 	public boolean isValid() {
-		if (world == null || world.isClient || worldPos == null || input == null) return false;
+		if (world == null || world.isClientSide || worldPos == null || input == null)
+			return false;
 		for (PedestalBlockEntity catalyst : catalysts) {
-			if (catalyst == null) return false;
+			if (catalyst == null)
+				return false;
 		}
 		return true;
 	}
-	
+
 	public boolean hasRecipe() {
 		return hasRecipe;
 	}
 
-	public void setLocation(World world, BlockPos pos) {
+	public void setLocation(Level world, BlockPos pos) {
 		this.world = world;
 		this.worldPos = pos;
 		this.isDirty = true;
@@ -158,7 +163,8 @@ public class InfusionRitual implements Inventory {
 
 	@Override
 	public void clear() {
-		if (!isValid()) return;
+		if (!isValid())
+			return;
 		input.clear();
 		for (PedestalBlockEntity catalyst : catalysts) {
 			catalyst.clear();
@@ -177,7 +183,8 @@ public class InfusionRitual implements Inventory {
 
 	@Override
 	public ItemStack getStack(int slot) {
-		if (slot > 8) return ItemStack.EMPTY;
+		if (slot > 8)
+			return ItemStack.EMPTY;
 		if (slot == 0) {
 			return input.getStack(0);
 		} else {
@@ -192,7 +199,8 @@ public class InfusionRitual implements Inventory {
 
 	@Override
 	public ItemStack removeStack(int slot) {
-		if (slot > 8) return ItemStack.EMPTY;
+		if (slot > 8)
+			return ItemStack.EMPTY;
 		if (slot == 0) {
 			return input.removeStack(0);
 		} else {
@@ -202,7 +210,8 @@ public class InfusionRitual implements Inventory {
 
 	@Override
 	public void setStack(int slot, ItemStack stack) {
-		if (slot > 8) return;
+		if (slot > 8)
+			return;
 		if (slot == 0) {
 			input.setStack(0, stack);
 		} else {
@@ -224,7 +233,7 @@ public class InfusionRitual implements Inventory {
 	public boolean canPlayerUse(PlayerEntity player) {
 		return true;
 	}
-	
+
 	public void fromTag(CompoundTag tag) {
 		if (tag.contains("recipe")) {
 			hasRecipe = tag.getBoolean("recipe");

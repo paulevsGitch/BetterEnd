@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import com.google.common.collect.Multimap;
 
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.item.ArmorItem;
+import net.minecraft.world.entity.attribute.EntityAttribute;
+import net.minecraft.world.entity.attribute.EntityAttributeModifier;
+import net.minecraft.world.item.ArmorItem;
 
 @Mixin(ArmorItem.class)
 public interface ArmorItemAccessor {

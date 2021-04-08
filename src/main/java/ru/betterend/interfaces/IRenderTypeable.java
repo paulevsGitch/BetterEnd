@@ -4,5 +4,5 @@ import ru.betterend.client.render.ERenderLayer;
 
 public interface IRenderTypeable
 {
-	public ERenderLayer getRenderLayer();
+	ERenderLayer getRenderLayer();
 }

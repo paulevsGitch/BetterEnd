@@ -17,10 +17,10 @@ import net.minecraft.client.gui.screen.CreditsScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.sound.MusicType;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.sound.MusicSound;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.Level;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.util.MHelper;
 
@@ -28,17 +28,17 @@ import ru.betterend.util.MHelper;
 public class MinecraftClientMixin {
 	@Shadow
 	public ClientPlayerEntity player;
-	
+
 	@Shadow
 	public Screen currentScreen;
-	
+
 	@Shadow
 	@Final
 	public InGameHud inGameHud;
-	
+
 	@Shadow
-	public ClientWorld world;
-	
+	public ClientLevel world;
+
 	@Shadow
 	@Final
 	private BlockColors blockColors;
@@ -46,27 +46,28 @@ public class MinecraftClientMixin {
 	@Shadow
 	@Final
 	private ItemColors itemColors;
-	
+
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onInit(RunArgs args, CallbackInfo info) {
 		Registry.BLOCK.forEach(block -> {
 			if (block instanceof IColorProvider) {
 				IColorProvider provider = (IColorProvider) block;
-				blockColors.registerColorProvider(provider.getProvider(), block);
+				blockColors.registerColorProvider(provider.getBlockProvider(), block);
 				itemColors.register(provider.getItemProvider(), block.asItem());
 			}
 		});
 	}
-	
+
 	@Inject(method = "getMusicType", at = @At("HEAD"), cancellable = true)
 	private void be_getEndMusic(CallbackInfoReturnable<MusicSound> info) {
 		if (!(this.currentScreen instanceof CreditsScreen) && this.player != null) {
-			if (this.player.world.getRegistryKey() == World.END) {
-				if (this.inGameHud.getBossBarHud().shouldPlayDragonMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
+			if (this.player.world.dimension() == Level.END) {
+				if (this.inGameHud.getBossBarHud().shouldPlayDragonMusic()
+						&& MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
 					info.setReturnValue(MusicType.DRAGON);
-				}
-				else {
-					MusicSound sound = (MusicSound) this.world.getBiomeAccess().method_27344(this.player.getBlockPos()).getMusic().orElse(MusicType.END);
+				} else {
+					MusicSound sound = (MusicSound) this.world.getBiomeAccess().method_27344(this.player.getBlockPos())
+							.getMusic().orElse(MusicType.END);
 					info.setReturnValue(sound);
 				}
 				info.cancel();

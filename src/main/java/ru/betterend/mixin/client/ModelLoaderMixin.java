@@ -13,14 +13,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.world.generator.GeneratorOptions;
@@ -30,11 +30,11 @@ public class ModelLoaderMixin {
 	@Final
 	@Shadow
 	private ResourceManager resourceManager;
-	
+
 	@Inject(method = "loadModelFromJson", at = @At("HEAD"), cancellable = true)
-	private void be_loadModelPattern(Identifier id, CallbackInfoReturnable<JsonUnbakedModel> info) {
+	private void be_loadModelPattern(ResourceLocation id, CallbackInfoReturnable<JsonUnbakedModel> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
-			Identifier modelId = new Identifier(id.getNamespace(), "models/" + id.getPath() + ".json");
+			ResourceLocation modelId = new ResourceLocation(id.getNamespace(), "models/" + id.getPath() + ".json");
 			JsonUnbakedModel model;
 			try (Resource resource = this.resourceManager.getResource(modelId)) {
 				Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
@@ -44,7 +44,7 @@ public class ModelLoaderMixin {
 			} catch (Exception ex) {
 				String data[] = id.getPath().split("/");
 				if (data.length > 1) {
-					Identifier itemId = new Identifier(id.getNamespace(), data[1]);
+					ResourceLocation itemId = new ResourceLocation(id.getNamespace(), data[1]);
 					Optional<Block> block = Registry.BLOCK.getOrEmpty(itemId);
 					if (block.isPresent()) {
 						if (block.get() instanceof Patterned) {
@@ -64,8 +64,8 @@ public class ModelLoaderMixin {
 			}
 		}
 	}
-	
-	private JsonUnbakedModel be_getModel(String data[], Identifier id, Patterned patterned) {
+
+	private JsonUnbakedModel be_getModel(String data[], ResourceLocation id, Patterned patterned) {
 		String pattern;
 		if (id.getPath().contains("item")) {
 			pattern = patterned.getModelPattern(id.getPath());
@@ -78,14 +78,16 @@ public class ModelLoaderMixin {
 		}
 		JsonUnbakedModel model = JsonUnbakedModel.deserialize(pattern);
 		model.id = id.toString();
-		
+
 		return model;
 	}
-	
+
 	@ModifyVariable(method = "loadModel", ordinal = 2, at = @At(value = "INVOKE"))
-	public Identifier be_SwitchModel(Identifier id) {
-		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") && id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus") && !id.getPath().contains("custom_")) {
-			id = new Identifier(id.getPath().replace("chorus", "custom_chorus"));
+	public ResourceLocation be_SwitchModel(ResourceLocation id) {
+		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft")
+				&& id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus")
+				&& !id.getPath().contains("custom_")) {
+			id = new ResourceLocation(id.getPath().replace("chorus", "custom_chorus"));
 		}
 		return id;
 	}

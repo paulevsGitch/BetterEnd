@@ -4,18 +4,18 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.sound.MusicType;
-import net.minecraft.entity.EntityType;
-import net.minecraft.particle.ParticleEffect;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sound.BiomeAdditionsSound;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.core.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.Biome.Precipitation;
@@ -44,7 +44,7 @@ import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BiomeDefinition {
 	private static final int DEF_FOLIAGE = MHelper.color(197, 210, 112);
-	
+
 	private final List<ConfiguredStructureFeature<?, ?>> structures = Lists.newArrayList();
 	private final List<FeatureInfo> features = Lists.newArrayList();
 	private final List<CarverInfo> carvers = Lists.newArrayList();
@@ -65,62 +65,60 @@ public class BiomeDefinition {
 	private float fogDensity = 1F;
 	private float depth = 0.1F;
 
-	private final Identifier id;
+	private final ResourceLocation id;
 	private float genChance = 1F;
 	private boolean hasCaves = true;
 	private boolean isCaveBiome = false;
-	
+
 	private ConfiguredSurfaceBuilder<?> surface;
 
 	public BiomeDefinition(String name) {
 		this.id = BetterEnd.makeID(name);
 	}
-	
+
 	public BiomeDefinition setCaveBiome() {
 		isCaveBiome = true;
 		return this;
 	}
-	
+
 	public BiomeDefinition setSurface(Block block) {
-		setSurface(SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
-				block.getDefaultState(),
-				Blocks.END_STONE.getDefaultState(),
-				Blocks.END_STONE.getDefaultState()
-		)));
+		setSurface(SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(block.defaultBlockState(),
+				Blocks.END_STONE.defaultBlockState(), Blocks.END_STONE.defaultBlockState())));
 		return this;
 	}
-	
+
 	public BiomeDefinition setSurface(Block block1, Block block2) {
-		setSurface(DoubleBlockSurfaceBuilder.register("be_" + id.getPath() + "_surface").setBlock1(block1).setBlock2(block2).configured());
+		setSurface(DoubleBlockSurfaceBuilder.register("be_" + id.getPath() + "_surface").setBlock1(block1)
+				.setBlock2(block2).configured());
 		return this;
 	}
-	
+
 	public BiomeDefinition setSurface(ConfiguredSurfaceBuilder<?> builder) {
 		this.surface = builder;
 		return this;
 	}
-	
+
 	public BiomeDefinition setSurface(SurfaceBuilder<TernarySurfaceConfig> builder) {
 		return setSurface(builder.withConfig(SurfaceBuilders.DEFAULT_END_CONFIG));
 	}
 
-	public BiomeDefinition setParticles(ParticleEffect particle, float probability) {
+	public BiomeDefinition setParticles(ParticleOptions particle, float probability) {
 		this.particleConfig = new BiomeParticleConfig(particle, probability);
 		return this;
 	}
-	
+
 	public BiomeDefinition setGenChance(float genChance) {
 		this.genChance = genChance;
 		return this;
 	}
-	
+
 	public BiomeDefinition setDepth(float depth) {
 		this.depth = depth;
 		return this;
 	}
 
 	public BiomeDefinition addMobSpawn(EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {
-		Identifier eID = Registry.ENTITY_TYPE.getId(type);
+		ResourceLocation eID = Registry.ENTITY_TYPE.getId(type);
 		if (eID != Registry.ENTITY_TYPE.getDefaultId()) {
 			SpawnInfo info = new SpawnInfo();
 			info.type = type;
@@ -131,7 +129,7 @@ public class BiomeDefinition {
 		}
 		return this;
 	}
-	
+
 	public BiomeDefinition addMobSpawn(SpawnEntry entry) {
 		spawns.add(entry);
 		return this;
@@ -141,12 +139,12 @@ public class BiomeDefinition {
 		structures.add(feature);
 		return this;
 	}
-	
+
 	public BiomeDefinition addStructureFeature(EndStructureFeature feature) {
 		structures.add(feature.getFeatureConfigured());
 		return this;
 	}
-	
+
 	public BiomeDefinition addFeature(EndFeature feature) {
 		FeatureInfo info = new FeatureInfo();
 		info.featureStep = feature.getFeatureStep();
@@ -162,11 +160,11 @@ public class BiomeDefinition {
 		features.add(info);
 		return this;
 	}
-	
+
 	private int getColor(int r, int g, int b) {
-		r = MathHelper.clamp(r, 0, 255);
-		g = MathHelper.clamp(g, 0, 255);
-		b = MathHelper.clamp(b, 0, 255);
+		r = Mth.clamp(r, 0, 255);
+		g = Mth.clamp(g, 0, 255);
+		b = Mth.clamp(b, 0, 255);
 		return MHelper.color(r, g, b);
 	}
 
@@ -189,21 +187,21 @@ public class BiomeDefinition {
 		this.waterFogColor = getColor(r, g, b);
 		return this;
 	}
-	
+
 	public BiomeDefinition setWaterAndFogColor(int r, int g, int b) {
 		return setWaterColor(r, g, b).setWaterFogColor(r, g, b);
 	}
-	
+
 	public BiomeDefinition setFoliageColor(int r, int g, int b) {
 		this.foliageColor = getColor(r, g, b);
 		return this;
 	}
-	
+
 	public BiomeDefinition setGrassColor(int r, int g, int b) {
 		this.grassColor = getColor(r, g, b);
 		return this;
 	}
-	
+
 	public BiomeDefinition setPlantsColor(int r, int g, int b) {
 		return this.setFoliageColor(r, g, b).setGrassColor(r, g, b);
 	}
@@ -227,7 +225,7 @@ public class BiomeDefinition {
 		this.music = music;
 		return this;
 	}
-	
+
 	public BiomeDefinition setCaves(boolean hasCaves) {
 		this.hasCaves = hasCaves;
 		return this;
@@ -239,9 +237,10 @@ public class BiomeDefinition {
 		Builder effects = new Builder();
 
 		mobs.forEach((spawn) -> {
-			spawnSettings.spawn(spawn.type.getSpawnGroup(), new SpawnSettings.SpawnEntry(spawn.type, spawn.weight, spawn.minGroupSize, spawn.maxGroupSize));
+			spawnSettings.spawn(spawn.type.getSpawnGroup(),
+					new SpawnSettings.SpawnEntry(spawn.type, spawn.weight, spawn.minGroupSize, spawn.maxGroupSize));
 		});
-		
+
 		spawns.forEach((entry) -> {
 			spawnSettings.spawn(entry.type.getSpawnGroup(), entry);
 		});
@@ -252,24 +251,22 @@ public class BiomeDefinition {
 		features.forEach((info) -> generationSettings.feature(info.featureStep, info.feature));
 		carvers.forEach((info) -> generationSettings.carver(info.carverStep, info.carver));
 
-		effects.skyColor(0).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor).foliageColor(foliageColor).grassColor(grassColor);
-		if (loop != null) effects.loopSound(loop);
-		if (mood != null) effects.moodSound(mood);
-		if (additions != null) effects.additionsSound(additions);
-		if (particleConfig != null) effects.particleConfig(particleConfig);
+		effects.skyColor(0).waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor)
+				.foliageColor(foliageColor).grassColor(grassColor);
+		if (loop != null)
+			effects.loopSound(loop);
+		if (mood != null)
+			effects.moodSound(mood);
+		if (additions != null)
+			effects.additionsSound(additions);
+		if (particleConfig != null)
+			effects.particleConfig(particleConfig);
 		effects.music(music != null ? new MusicSound(music, 600, 2400, true) : MusicType.END);
 
-		return new Biome.Builder()
-				.precipitation(Precipitation.NONE)
-				.category(isCaveBiome ? Category.NONE : Category.THEEND)
-				.depth(depth)
-				.scale(0.2F)
-				.temperature(2.0F)
-				.downfall(0.0F)
-				.effects(effects.build())
-				.spawnSettings(spawnSettings.build())
-				.generationSettings(generationSettings.build())
-				.build();
+		return new Biome.Builder().precipitation(Precipitation.NONE)
+				.category(isCaveBiome ? Category.NONE : Category.THEEND).depth(depth).scale(0.2F).temperature(2.0F)
+				.downfall(0.0F).effects(effects.build()).spawnSettings(spawnSettings.build())
+				.generationSettings(generationSettings.build()).build();
 	}
 
 	private static final class SpawnInfo {
@@ -283,16 +280,16 @@ public class BiomeDefinition {
 		Feature featureStep;
 		ConfiguredFeature<?, ?> feature;
 	}
-	
+
 	private static final class CarverInfo {
 		Carver carverStep;
 		ConfiguredCarver<ProbabilityConfig> carver;
 	}
 
-	public Identifier getID() {
+	public ResourceLocation getID() {
 		return id;
 	}
-	
+
 	public float getFodDensity() {
 		return fogDensity;
 	}

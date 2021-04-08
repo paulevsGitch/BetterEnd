@@ -6,12 +6,12 @@ import java.util.function.Function;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -29,14 +29,16 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class SpireFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE;
-	
+
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
+	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			DefaultFeatureConfig config) {
 		pos = getPosOnSurfaceWG(world, pos);
-		if (pos.getY() < 10 || !world.getBlockState(pos.down(3)).isIn(EndTags.GEN_TERRAIN) || !world.getBlockState(pos.down(6)).isIn(EndTags.GEN_TERRAIN)) {
+		if (pos.getY() < 10 || !world.getBlockState(pos.down(3)).isIn(EndTags.GEN_TERRAIN)
+				|| !world.getBlockState(pos.down(6)).isIn(EndTags.GEN_TERRAIN)) {
 			return false;
 		}
-		
+
 		SDF sdf = new SDFSphere().setRadius(MHelper.randRange(2, 3, random)).setBlock(Blocks.END_STONE);
 		int count = MHelper.randRange(3, 7, random);
 		for (int i = 0; i < count; i++) {
@@ -45,7 +47,8 @@ public class SpireFeature extends DefaultFeature {
 		}
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1)) * 3F + Math.abs(noise.eval(vec.getX() * 0.3, vec.getY() * 0.3 + 100, vec.getZ() * 0.3)) * 1.3F);
+			return (float) (Math.abs(noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1)) * 3F
+					+ Math.abs(noise.eval(vec.getX() * 0.3, vec.getY() * 0.3 + 100, vec.getZ() * 0.3)) * 1.3F);
 		}).setSource(sdf);
 		final BlockPos center = pos;
 		List<BlockPos> support = Lists.newArrayList();
@@ -55,13 +58,12 @@ public class SpireFeature extends DefaultFeature {
 					support.add(info.getPos().up());
 				}
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-			}
-			else if (info.getState(Direction.UP, 3).isAir()) {
+			} else if (info.getState(Direction.UP, 3).isAir()) {
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
 			}
 			return info.getState();
 		}).fillRecursive(world, center);
-		
+
 		support.forEach((bpos) -> {
 			if (EndBiomes.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
 				EndFeatures.TENANEA_BUSH.getFeature().generate(world, chunkGenerator, random, bpos, null);
@@ -70,13 +72,14 @@ public class SpireFeature extends DefaultFeature {
 
 		return true;
 	}
-	
+
 	protected SDF addSegment(SDF sdf, float radius, Random random) {
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(Blocks.END_STONE);
-		SDF offseted = new SDFTranslate().setTranslate(0, radius + random.nextFloat() * 0.25F * radius, 0).setSource(sdf);
+		SDF offseted = new SDFTranslate().setTranslate(0, radius + random.nextFloat() * 0.25F * radius, 0)
+				.setSource(sdf);
 		return new SDFSmoothUnion().setRadius(radius * 0.5F).setSourceA(sphere).setSourceB(offseted);
 	}
-	
+
 	static {
 		REPLACE = (state) -> {
 			if (state.isIn(EndTags.END_GROUND)) {

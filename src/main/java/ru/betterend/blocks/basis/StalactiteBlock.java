@@ -1,32 +1,32 @@
 package ru.betterend.blocks.basis;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FluidFillable;
+import net.minecraft.world.level.block.ShapeContext;
+import net.minecraft.world.level.block.Waterloggable;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateManager;
+import net.minecraft.world.item.ItemPlacementContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.core.Registry;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
@@ -36,86 +36,81 @@ import ru.betterend.patterns.Patterns;
 public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, FluidFillable, IRenderTypeable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
-	public static final IntProperty SIZE = BlockProperties.SIZE;
+	public static final IntegerProperty SIZE = BlockProperties.SIZE;
 	private static final VoxelShape[] SHAPES;
 
 	public StalactiteBlock(Block source) {
 		super(FabricBlockSettings.copy(source).nonOpaque());
-		this.setDefaultState(getStateManager().getDefaultState().with(SIZE, 0).with(IS_FLOOR, true).with(WATERLOGGED, false));
+		this.setDefaultState(
+				getStateManager().defaultBlockState().with(SIZE, 0).with(IS_FLOOR, true).with(WATERLOGGED, false));
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(WATERLOGGED, IS_FLOOR, SIZE);
 	}
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return SHAPES[state.get(SIZE)];
+		return SHAPES[state.getValue(SIZE)];
 	}
-	
+
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		WorldView world = ctx.getWorld();
+		WorldView world = ctx.getLevel();
 		BlockPos pos = ctx.getBlockPos();
 		Direction dir = ctx.getSide();
 		boolean water = world.getFluidState(pos).getFluid() == Fluids.WATER;
-		
+
 		if (dir == Direction.DOWN) {
 			if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
 				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
-			}
-			else if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
+			} else if (isThis(world, pos.below()) || sideCoversSmallSquare(world, pos.below(), Direction.UP)) {
 				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
-			}
-			else {
+			} else {
 				return null;
 			}
-		}
-		else {
-			if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
+		} else {
+			if (isThis(world, pos.below()) || sideCoversSmallSquare(world, pos.below(), Direction.UP)) {
 				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
-			}
-			else if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
+			} else if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
 				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
-			}
-			else {
+			} else {
 				return null;
 			}
 		}
 	}
 
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+	public void onPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
 		boolean hasUp = isThis(world, pos.up());
-		boolean hasDown = isThis(world, pos.down());
-		Mutable mut = new Mutable();
+		boolean hasDown = isThis(world, pos.below());
+		MutableBlockPos mut = new MutableBlockPos();
 		if (hasUp && hasDown) {
-			boolean floor = state.get(IS_FLOOR);
-			BlockPos second = floor ? pos.up() : pos.down();
+			boolean floor = state.getValue(IS_FLOOR);
+			BlockPos second = floor ? pos.up() : pos.below();
 			BlockState bState = world.getBlockState(second);
-			world.setBlockState(pos, state.with(SIZE, 1).with(IS_FLOOR, floor));
-			world.setBlockState(second, bState.with(SIZE, 1).with(IS_FLOOR, !floor));
-			
+			world.setBlockAndUpdate(pos, state.with(SIZE, 1).with(IS_FLOOR, floor));
+			world.setBlockAndUpdate(second, bState.with(SIZE, 1).with(IS_FLOOR, !floor));
+
 			bState = state;
 			int startSize = floor ? 1 : 2;
 			mut.set(pos.getX(), pos.getY() + 1, pos.getZ());
 			for (int i = 0; i < 8 && isThis(bState); i++) {
-				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, false));
+				world.setBlockAndUpdate(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, false));
 				mut.setY(mut.getY() + 1);
 				bState = world.getBlockState(mut);
 			}
-			
+
 			bState = state;
 			startSize = floor ? 2 : 1;
 			mut.set(pos.getX(), pos.getY() - 1, pos.getZ());
 			for (int i = 0; i < 8 && isThis(bState); i++) {
-				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, true));
+				world.setBlockAndUpdate(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, true));
 				mut.setY(mut.getY() - 1);
 				bState = world.getBlockState(mut);
 			}
-		}
-		else if (hasDown) {
+		} else if (hasDown) {
 			mut.setX(pos.getX());
 			mut.setZ(pos.getZ());
 			for (int i = 1; i < 8; i++) {
@@ -124,18 +119,15 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 					BlockState state2 = world.getBlockState(mut);
 					int size = state2.get(SIZE);
 					if (size < i) {
-						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, true));
-					}
-					else {
+						world.setBlockAndUpdate(mut, state2.with(SIZE, i).with(IS_FLOOR, true));
+					} else {
 						break;
 					}
-				}
-				else {
+				} else {
 					break;
 				}
 			}
-		}
-		else if (hasUp) {
+		} else if (hasUp) {
 			mut.setX(pos.getX());
 			mut.setZ(pos.getZ());
 			for (int i = 1; i < 8; i++) {
@@ -144,80 +136,79 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 					BlockState state2 = world.getBlockState(mut);
 					int size = state2.get(SIZE);
 					if (size < i) {
-						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, false));
-					}
-					else {
+						world.setBlockAndUpdate(mut, state2.with(SIZE, i).with(IS_FLOOR, false));
+					} else {
 						break;
 					}
-				}
-				else {
+				} else {
 					break;
 				}
 			}
 		}
 	}
-	
+
 	private boolean isThis(WorldView world, BlockPos pos) {
 		return isThis(world.getBlockState(pos));
 	}
-	
+
 	private boolean isThis(BlockState state) {
 		return state.getBlock() instanceof StalactiteBlock;
 	}
-	
+
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world,
+			BlockPos pos, BlockPos neighborPos) {
 		if (!canPlaceAt(state, world, pos)) {
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		return state;
 	}
 
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		int size = state.get(SIZE);
+		int size = state.getValue(SIZE);
 		return checkUp(world, pos, size) || checkDown(world, pos, size);
 	}
-	
+
 	private boolean checkUp(BlockView world, BlockPos pos, int size) {
 		BlockPos p = pos.up();
 		BlockState state = world.getBlockState(p);
-		return (isThis(state) && state.get(SIZE) >= size) || state.isFullCube(world, p);
+		return (isThis(state) && state.getValue(SIZE) >= size) || state.isFullCube(world, p);
 	}
-	
+
 	private boolean checkDown(BlockView world, BlockPos pos, int size) {
-		BlockPos p = pos.down();
+		BlockPos p = pos.below();
 		BlockState state = world.getBlockState(p);
-		return (isThis(state) && state.get(SIZE) >= size) || state.isFullCube(world, p);
+		return (isThis(state) && state.getValue(SIZE) >= size) || state.isFullCube(world, p);
 	}
-	
+
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());
 		}
 		return Patterns.createJson(Patterns.BLOCK_CROSS_SHADED, block);
 	}
-	
+
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_STALACTITE;
 	}
-	
+
 	@Override
 	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;
 	}
 
 	@Override
-	public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+	public boolean tryFillWithFluid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		return false;
 	}
-	
+
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.defaultBlockState();
 	}
 
 	@Override
@@ -230,7 +221,7 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 		float start = 5F / 8F;
 		SHAPES = new VoxelShape[8];
 		for (int i = 0; i < 8; i++) {
-			int side = MathHelper.floor(MathHelper.lerp(i / 7F, start, end) * 8F + 0.5F);
+			int side = Mth.floor(Mth.lerp(i / 7F, start, end) * 8F + 0.5F);
 			SHAPES[i] = Block.createCuboidShape(side, 0, side, 16 - side, 16, 16 - side);
 		}
 	}

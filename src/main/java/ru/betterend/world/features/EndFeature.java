@@ -1,12 +1,12 @@
 package ru.betterend.world.features;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
@@ -26,99 +26,116 @@ public class EndFeature {
 	private Feature<?> feature;
 	private ConfiguredFeature<?, ?> featureConfigured;
 	private GenerationStep.Feature featureStep;
-	
-	protected EndFeature() {}
-	
-	public EndFeature(Feature<?> feature, ConfiguredFeature<?, ?> configuredFeature, GenerationStep.Feature featureStep) {
+
+	protected EndFeature() {
+	}
+
+	public EndFeature(Feature<?> feature, ConfiguredFeature<?, ?> configuredFeature,
+			GenerationStep.Feature featureStep) {
 		this.featureStep = featureStep;
 		this.feature = feature;
 		this.featureConfigured = configuredFeature;
 	}
-	
-	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, GenerationStep.Feature featureStep, ConfiguredFeature<?, ?> configuredFeature) {
-		Identifier id = BetterEnd.makeID(name);
+
+	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, GenerationStep.Feature featureStep,
+			ConfiguredFeature<?, ?> configuredFeature) {
+		ResourceLocation id = BetterEnd.makeID(name);
 		this.featureStep = featureStep;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
 		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, configuredFeature);
 	}
-	
+
 	public EndFeature(String name, Feature<DefaultFeatureConfig> feature) {
-		Identifier id = BetterEnd.makeID(name);
+		ResourceLocation id = BetterEnd.makeID(name);
 		this.featureStep = GenerationStep.Feature.VEGETAL_DECORATION;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
-		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100))));
+		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature
+				.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100))));
 	}
-	
+
 	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, int density) {
-		Identifier id = BetterEnd.makeID(name);
+		ResourceLocation id = BetterEnd.makeID(name);
 		this.featureStep = GenerationStep.Feature.VEGETAL_DECORATION;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
-		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.configure(FeatureConfig.DEFAULT).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(density));
+		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id,
+				feature.configure(FeatureConfig.DEFAULT).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP)
+						.repeatRandomly(density));
 	}
-	
+
 	public static EndFeature makeRawGenFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
-		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
-	
+
 	public static EndFeature makeLakeFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
-		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.WATER_LAKE.configure(new ChanceDecoratorConfig(chance)));
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.WATER_LAKE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.LAKES, configured);
 	}
-	
-	public static EndFeature makeOreFeature(String name, Block blockOre, int veins, int veinSize, int offset, int minY, int maxY) {
+
+	public static EndFeature makeOreFeature(String name, Block blockOre, int veins, int veinSize, int offset, int minY,
+			int maxY) {
 		EndFeature newFeature = new EndFeature();
-		OreFeatureConfig featureConfig = new OreFeatureConfig(new BlockMatchRuleTest(Blocks.END_STONE), blockOre.getDefaultState(), veinSize);
+		OreFeatureConfig featureConfig = new OreFeatureConfig(new BlockMatchRuleTest(Blocks.END_STONE),
+				blockOre.defaultBlockState(), veinSize);
 		RangeDecoratorConfig rangeDecorator = new RangeDecoratorConfig(offset, minY, maxY);
 		ConfiguredFeature<?, ?> oreFeature = Feature.ORE.configure(featureConfig)
-				  .decorate(Decorator.RANGE.configure(rangeDecorator))
-				  .spreadHorizontally()
-				  .repeat(veins);
+				.decorate(Decorator.RANGE.configure(rangeDecorator)).spreadHorizontally().repeat(veins);
 		newFeature.feature = Feature.ORE;
 		newFeature.featureStep = GenerationStep.Feature.UNDERGROUND_ORES;
-		newFeature.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, BetterEnd.makeID(name), oreFeature);
-		
+		newFeature.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, BetterEnd.makeID(name),
+				oreFeature);
+
 		return newFeature;
 	}
-	
-	public static EndFeature makeLayerFeature(String name, BlockState state, float radius, int minY, int maxY, int count) {
+
+	public static EndFeature makeLayerFeature(String name, BlockState state, float radius, int minY, int maxY,
+			int count) {
 		OreLayerFeature layer = new OreLayerFeature(state, radius, minY, maxY);
-		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(count)));
+		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.COUNT.configure(new CountConfig(count)));
 		return new EndFeature(name, layer, GenerationStep.Feature.UNDERGROUND_ORES, configured);
 	}
-	
+
 	public static EndFeature makeLayerFeature(String name, Block block, float radius, int minY, int maxY, int count) {
-		OreLayerFeature layer = new OreLayerFeature(block.getDefaultState(), radius, minY, maxY);
-		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(count)));
+		OreLayerFeature layer = new OreLayerFeature(block.defaultBlockState(), radius, minY, maxY);
+		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.COUNT.configure(new CountConfig(count)));
 		return new EndFeature(name, layer, GenerationStep.Feature.UNDERGROUND_ORES, configured);
 	}
-	
-	public static EndFeature makeLayerFeature(String name, StoneMaterial material, float radius, int minY, int maxY, int count) {
-		OreLayerFeature layer = new OreLayerFeature(material.stone.getDefaultState(), radius, minY, maxY);
-		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(count)));
+
+	public static EndFeature makeLayerFeature(String name, StoneMaterial material, float radius, int minY, int maxY,
+			int count) {
+		OreLayerFeature layer = new OreLayerFeature(material.stone.defaultBlockState(), radius, minY, maxY);
+		ConfiguredFeature<?, ?> configured = layer.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.COUNT.configure(new CountConfig(count)));
 		return new EndFeature(name, layer, GenerationStep.Feature.UNDERGROUND_ORES, configured);
 	}
-	
+
 	public static EndFeature makeChunkFeature(String name, Feature<DefaultFeatureConfig> feature) {
-		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(1)));
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.COUNT.configure(new CountConfig(1)));
 		return new EndFeature(name, feature, GenerationStep.Feature.LOCAL_MODIFICATIONS, configured);
 	}
-	
+
 	public static EndFeature makeChansedFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
-		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.SURFACE_STRUCTURES, configured);
 	}
-	
+
 	public static EndFeature makeCountRawFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
-		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT).decorate(Decorator.COUNT.configure(new CountConfig(chance)));
+		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
+				.decorate(Decorator.COUNT.configure(new CountConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
-	
+
 	public static EndFeature makeFeatureConfigured(String name, Feature<DefaultFeatureConfig> feature) {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT);
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
-	
+
 	public Feature<?> getFeature() {
 		return feature;
 	}

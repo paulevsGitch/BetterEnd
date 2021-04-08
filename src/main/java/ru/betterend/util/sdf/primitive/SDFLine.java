@@ -1,6 +1,6 @@
 package ru.betterend.util.sdf.primitive;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import ru.betterend.util.MHelper;
 
 public class SDFLine extends SDFPrimitive {
@@ -11,19 +11,19 @@ public class SDFLine extends SDFPrimitive {
 	private float x2;
 	private float y2;
 	private float z2;
-	
+
 	public SDFLine setRadius(float radius) {
 		this.radius = radius;
 		return this;
 	}
-	
+
 	public SDFLine setStart(float x, float y, float z) {
 		this.x1 = x;
 		this.y1 = y;
 		this.z1 = z;
 		return this;
 	}
-	
+
 	public SDFLine setEnd(float x, float y, float z) {
 		this.x2 = x;
 		this.y2 = y;
@@ -43,7 +43,7 @@ public class SDFLine extends SDFPrimitive {
 
 		float dpb = MHelper.dot(pax, pay, paz, bax, bay, baz);
 		float dbb = MHelper.dot(bax, bay, baz, bax, bay, baz);
-		float h = MathHelper.clamp(dpb / dbb, 0F, 1F);
+		float h = Mth.clamp(dpb / dbb, 0F, 1F);
 		return MHelper.length(pax - bax * h, pay - bay * h, paz - baz * h) - radius;
 	}
 }

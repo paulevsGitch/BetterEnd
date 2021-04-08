@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.block.OreBlock;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.OreBlock;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.core.Registry;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
@@ -29,36 +29,33 @@ public class EndOreBlock extends OreBlock implements BlockPatterned {
 	private final int minCount;
 	private final int maxCount;
 	private final int expirience;
-	
+
 	public EndOreBlock(Item drop, int minCount, int maxCount, int expirience) {
-		super(FabricBlockSettings.of(Material.STONE, MaterialColor.SAND)
-				.hardness(3F)
-				.resistance(9F)
-				.requiresTool()
-				.sounds(BlockSoundGroup.STONE));
+		super(FabricBlockSettings.of(Material.STONE, MaterialColor.SAND).hardness(3F).resistance(9F).requiresTool()
+				.sounds(SoundType.STONE));
 		this.dropItem = drop;
 		this.minCount = minCount;
 		this.maxCount = maxCount;
 		this.expirience = expirience;
 	}
-	
+
 	@Override
 	protected int getExperienceWhenMined(Random random) {
 		return this.expirience > 0 ? random.nextInt(expirience) + 1 : 0;
 	}
 
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		ItemStack tool = builder.get(LootContextParameters.TOOL);
-		if (tool != null && tool.isEffectiveOn(state)) {
-			if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
+		if (tool != null && tool.isCorrectToolForDrops(state)) {
+			if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 				return Collections.singletonList(new ItemStack(this));
 			}
 			int count = 0;
-			int enchantment = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
+			int enchantment = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
 			if (enchantment > 0) {
-				int min = MathHelper.clamp(minCount + enchantment, minCount, maxCount);
-				int max = maxCount + (enchantment / Enchantments.FORTUNE.getMaxLevel());
+				int min = Mth.clamp(minCount + enchantment, minCount, maxCount);
+				int max = maxCount + (enchantment / Enchantments.BLOCK_FORTUNE.getMaxLevel());
 				if (min == max) {
 					return Collections.singletonList(new ItemStack(dropItem, max));
 				}
@@ -70,21 +67,21 @@ public class EndOreBlock extends OreBlock implements BlockPatterned {
 		}
 		return Collections.emptyList();
 	}
-	
+
 	@Override
 	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getId(this).getPath();
+		String block = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, block, block);
 	}
-	
+
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
 	}
-	
+
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SIMPLE;
 	}
 }

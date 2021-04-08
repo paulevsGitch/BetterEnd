@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeDisplay;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class REIAlloyingFuelDisplay implements RecipeDisplay {
 	private final EntryStack fuel;
@@ -29,7 +29,7 @@ public class REIAlloyingFuelDisplay implements RecipeDisplay {
 	}
 
 	@Override
-	public @NotNull Identifier getRecipeCategory() {
+	public @NotNull ResourceLocation getRecipeCategory() {
 		return REIPlugin.ALLOYING_FUEL;
 	}
 

@@ -2,9 +2,9 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
@@ -15,7 +15,7 @@ public class VineFeature extends InvertedScatterFeature {
 	private final Block vineBlock;
 	private final int maxLength;
 	private final boolean vine;
-	
+
 	public VineFeature(Block vineBlock, int maxLength) {
 		super(6);
 		this.vineBlock = vineBlock;
@@ -24,7 +24,8 @@ public class VineFeature extends InvertedScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
+			float radius) {
 		BlockState state = world.getBlockState(blockPos);
 		return state.getMaterial().isReplaceable() && canPlaceBlock(state, world, blockPos);
 	}
@@ -43,28 +44,27 @@ public class VineFeature extends InvertedScatterFeature {
 			BlocksHelper.setWithoutUpdate(world, blockPos.down(h), bottom);
 		}
 	}
-	
+
 	private boolean canPlaceBlock(BlockState state, StructureWorldAccess world, BlockPos blockPos) {
 		if (vine) {
 			return ((VineBlock) vineBlock).canGenerate(state, world, blockPos);
-		}
-		else {
+		} else {
 			return vineBlock.canPlaceAt(state, world, blockPos);
 		}
 	}
-	
+
 	private BlockState getTopState() {
-		BlockState state = vineBlock.getDefaultState();
+		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP) : state;
 	}
-	
+
 	private BlockState getMiggleState() {
-		BlockState state = vineBlock.getDefaultState();
+		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE) : state;
 	}
-	
+
 	private BlockState getBottomState() {
-		BlockState state = vineBlock.getDefaultState();
+		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM) : state;
 	}
 }

@@ -6,39 +6,39 @@ import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.ShapeContext;
+import net.minecraft.world.entity.ItemEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.item.ItemPlacementContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.IntProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.entity.SilkMothEntity;
@@ -51,51 +51,53 @@ import ru.betterend.util.MHelper;
 public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
 	public static final BooleanProperty ACTIVE = BlockProperties.ACTIVE;
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-	public static final IntProperty FULLNESS = BlockProperties.FULLNESS;
+	public static final IntegerProperty FULLNESS = BlockProperties.FULLNESS;
 	private static final VoxelShape TOP = createCuboidShape(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape BOTTOM = createCuboidShape(0, 0, 0, 16, 16, 16);
-	
+
 	public SilkMothNestBlock() {
-		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sounds(BlockSoundGroup.WOOL).nonOpaque().ticksRandomly());
+		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sounds(SoundType.WOOL).nonOpaque()
+				.ticksRandomly());
 		this.setDefaultState(getDefaultState().with(ACTIVE, true).with(FULLNESS, 0));
 	}
-	
+
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(ACTIVE, FACING, FULLNESS);
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return state.get(ACTIVE) ? BOTTOM : TOP;
+		return state.getValue(ACTIVE) ? BOTTOM : TOP;
 	}
 
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
+
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		Direction dir = ctx.getPlayerFacing().getOpposite();
-		return this.getDefaultState().with(FACING, dir);
+		return this.defaultBlockState().with(FACING, dir);
 	}
-	
+
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-		if (!state.get(ACTIVE)) {
-			if (sideCoversSmallSquare(world, pos.up(), Direction.DOWN) || world.getBlockState(pos.up()).isIn(BlockTags.LEAVES)) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world,
+			BlockPos pos, BlockPos neighborPos) {
+		if (!state.getValue(ACTIVE)) {
+			if (sideCoversSmallSquare(world, pos.up(), Direction.DOWN)
+					|| world.getBlockState(pos.up()).isIn(BlockTags.LEAVES)) {
 				return state;
-			}
-			else {
-				return Blocks.AIR.getDefaultState();
+			} else {
+				return Blocks.AIR.defaultBlockState();
 			}
 		}
 		return state;
 	}
-	
+
 	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation) {
+	public BlockState rotate(BlockState state, Rotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
 	}
 
@@ -103,38 +105,40 @@ public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
 	public BlockState mirror(BlockState state, BlockMirror mirror) {
 		return BlocksHelper.mirrorHorizontal(state, mirror, FACING);
 	}
-	
+
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		return state.get(ACTIVE) ? Collections.singletonList(new ItemStack(this)) : Collections.emptyList();
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		return state.getValue(ACTIVE) ? Collections.singletonList(new ItemStack(this)) : Collections.emptyList();
 	}
-	
+
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!state.get(ACTIVE) && player.isCreative()) {
-			BlocksHelper.setWithUpdate(world, pos.down(), Blocks.AIR);
+	public void onBreak(Level world, BlockPos pos, BlockState state, PlayerEntity player) {
+		if (!state.getValue(ACTIVE) && player.isCreative()) {
+			BlocksHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
 		}
 		BlockState up = world.getBlockState(pos.up());
-		if (up.isOf(this) && !up.get(ACTIVE)) {
+		if (up.is(this) && !up.get(ACTIVE)) {
 			BlocksHelper.setWithUpdate(world, pos.up(), Blocks.AIR);
 		}
 		super.onBreak(world, pos, state, player);
 	}
-	
+
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		if (!state.get(ACTIVE)) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+		if (!state.getValue(ACTIVE)) {
 			return;
 		}
 		if (random.nextBoolean()) {
 			return;
 		}
-		Direction dir = state.get(FACING);
-		BlockPos spawn = pos.offset(dir);
+		Direction dir = state.getValue(FACING);
+		BlockPos spawn = pos.relative(dir);
 		if (!world.getBlockState(spawn).isAir()) {
 			return;
 		}
-		int count = world.getEntitiesByType(EndEntities.SILK_MOTH, new Box(pos).expand(16), (entity) -> { return true; }).size();
+		int count = world.getEntitiesByType(EndEntities.SILK_MOTH, new Box(pos).expand(16), (entity) -> {
+			return true;
+		}).size();
 		if (count > 6) {
 			return;
 		}
@@ -143,16 +147,18 @@ public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
 		moth.setVelocity(new Vec3d(dir.getOffsetX() * 0.4, 0, dir.getOffsetZ() * 0.4));
 		moth.setHive(world, pos);
 		world.spawnEntity(moth);
-		world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.BLOCKS, 1, 1);
+		world.playLocalSound(null, pos, SoundEvents.BLOCK_BEEHIVE_EXIT, SoundSource.BLOCKS, 1, 1);
 	}
-	
+
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+			BlockHitResult hit) {
 		if (hand == Hand.MAIN_HAND) {
 			ItemStack stack = player.getMainHandStack();
-			if (stack.getItem().isIn(FabricToolTags.SHEARS) && state.get(ACTIVE) && state.get(FULLNESS) == 3) {
+			if (stack.getItem().isIn(FabricToolTags.SHEARS) && state.getValue(ACTIVE)
+					&& state.getValue(FULLNESS) == 3) {
 				BlocksHelper.setWithUpdate(world, pos, state.with(FULLNESS, 0));
-				Direction dir = state.get(FACING);
+				Direction dir = state.getValue(FACING);
 				double px = pos.getX() + dir.getOffsetX() + 0.5;
 				double py = pos.getY() + dir.getOffsetY() + 0.5;
 				double pz = pos.getZ() + dir.getOffsetZ() + 0.5;

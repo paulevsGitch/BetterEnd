@@ -2,7 +2,7 @@ package ru.betterend.blocks.entities.render;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -11,11 +11,11 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
@@ -27,21 +27,23 @@ import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
 public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEntityRenderer<T> {
-	
+
 	public PedestalItemRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);
 	}
 
 	@Override
-	public void render(T blockEntity, float tickDelta, MatrixStack matrices,
-			VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void render(T blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers,
+			int light, int overlay) {
 
-		World world = blockEntity.getWorld();
-		if (world == null || blockEntity.isEmpty()) return;
+		Level world = blockEntity.getLevel();
+		if (world == null || blockEntity.isEmpty())
+			return;
 
 		BlockState state = world.getBlockState(blockEntity.getPos());
-		if (!(state.getBlock() instanceof PedestalBlock)) return;
-		
+		if (!(state.getBlock() instanceof PedestalBlock))
+			return;
+
 		ItemStack activeItem = blockEntity.getStack(0);
 
 		matrices.push();
@@ -57,12 +59,13 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 			matrices.scale(1.25F, 1.25F, 1.25F);
 		}
 		int age = blockEntity.getAge();
-		if (state.isOf(EndBlocks.ETERNAL_PEDESTAL) && state.get(EternalPedestal.ACTIVATED)) {
+		if (state.is(EndBlocks.ETERNAL_PEDESTAL) && state.getValue(EternalPedestal.ACTIVATED)) {
 			float[] colors = EternalCrystalRenderer.colors(age);
 			int y = blockEntity.getPos().getY();
-			
-			BeamRenderer.renderLightBeam(matrices, vertexConsumers, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.13F, 0.16F);
-			float altitude = MathHelper.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
+
+			BeamRenderer.renderLightBeam(matrices, vertexConsumers, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.13F,
+					0.16F);
+			float altitude = Mth.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
 			matrices.translate(0.0D, altitude, 0.0D);
 		}
 		if (activeItem.getItem() == Items.END_CRYSTAL) {
@@ -72,7 +75,8 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 		} else {
 			float rotation = (age + tickDelta) / 25.0F + 6.0F;
 			matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(rotation));
-			minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, overlay, model);
+			minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices,
+					vertexConsumers, light, overlay, model);
 		}
 		matrices.pop();
 	}

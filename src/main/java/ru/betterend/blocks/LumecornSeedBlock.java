@@ -2,9 +2,9 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.AbstractBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
@@ -15,12 +15,12 @@ public class LumecornSeedBlock extends EndPlantWithAgeBlock {
 	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
 		EndFeatures.LUMECORN.getFeature().generate(world, null, random, pos, null);
 	}
-	
+
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isOf(EndBlocks.END_MOSS);
+		return state.is(EndBlocks.END_MOSS);
 	}
-	
+
 	@Override
 	public AbstractBlock.OffsetType getOffsetType() {
 		return AbstractBlock.OffsetType.NONE;

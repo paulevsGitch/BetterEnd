@@ -7,14 +7,14 @@ import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PaneBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.PaneBlock;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.BlockPatterned;
@@ -26,30 +26,29 @@ public class EndMetalPaneBlock extends PaneBlock implements BlockPatterned, IRen
 	}
 
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
 	}
-	
+
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
 	}
-	
+
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_BLOCK, blockId.getPath());
 		}
 		if (block.contains("post")) {
 			return Patterns.createJson(Patterns.BLOCK_BARS_POST, blockId.getPath(), blockId.getPath());
-		}
-		else {
+		} else {
 			return Patterns.createJson(Patterns.BLOCK_BARS_SIDE, blockId.getPath(), blockId.getPath());
 		}
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
 		if (direction.getAxis().isVertical() && stateFrom.getBlock().is(this) && !stateFrom.equals(state)) {
@@ -57,12 +56,12 @@ public class EndMetalPaneBlock extends PaneBlock implements BlockPatterned, IRen
 		}
 		return super.isSideInvisible(state, stateFrom, direction);
 	}
-	
+
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_BARS;
 	}
-	
+
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;

@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.AbstractSignBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SignBlock;
+import net.minecraft.world.level.block.AbstractSignBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -22,11 +22,11 @@ import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.item.BlockItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.text.OrderedText;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.SignType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndSignBlock;
 import ru.betterend.blocks.entities.ESignBlockEntity;
@@ -47,7 +47,7 @@ public class EndSignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEn
 		matrixStack.push();
 
 		matrixStack.translate(0.5D, 0.5D, 0.5D);
-		float angle = -((float) ((Integer) state.get(SignBlock.ROTATION) * 360) / 16.0F);
+		float angle = -((float) ((Integer) state.getValue(SignBlock.ROTATION) * 360) / 16.0F);
 
 		BlockState blockState = signBlockEntity.getCachedState();
 		if (blockState.get(EndSignBlock.FLOOR)) {
@@ -81,7 +81,8 @@ public class EndSignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEn
 			});
 			if (orderedText != null) {
 				float t = (float) (-textRenderer.getWidth(orderedText) / 2);
-				textRenderer.draw((OrderedText) orderedText, t, (float) (s * 10 - 20), q, false, matrixStack.peek().getModel(), provider, false, 0, light);
+				textRenderer.draw((OrderedText) orderedText, t, (float) (s * 10 - 20), q, false,
+						matrixStack.peek().getModel(), provider, false, 0, light);
 			}
 		}
 
@@ -98,25 +99,25 @@ public class EndSignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEn
 
 		return TexturedRenderLayers.getSignTextureId(signType2);
 	}
-	
+
 	public static VertexConsumer getConsumer(VertexConsumerProvider provider, Block block) {
 		return provider.getBuffer(LAYERS.getOrDefault(block, defaultLayer));
 	}
 
 	static {
-		defaultLayer = RenderLayer.getEntitySolid(new Identifier("textures/entity/sign/oak.png"));
-		
+		defaultLayer = RenderLayer.getEntitySolid(new ResourceLocation("textures/entity/sign/oak.png"));
+
 		EndItems.getModBlocks().forEach((item) -> {
 			if (item instanceof BlockItem) {
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof EndSignBlock) {
-					String name = Registry.BLOCK.getId(block).getPath();
-					RenderLayer layer = RenderLayer.getEntitySolid(BetterEnd.makeID("textures/entity/sign/" + name + ".png"));
+					String name = Registry.BLOCK.getKey(block).getPath();
+					RenderLayer layer = RenderLayer
+							.getEntitySolid(BetterEnd.makeID("textures/entity/sign/" + name + ".png"));
 					LAYERS.put(block, layer);
 				}
 			}
 		});
 	}
 
-	
 }

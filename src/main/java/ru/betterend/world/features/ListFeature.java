@@ -6,8 +6,8 @@ import java.util.Random;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.StructureHelper;
@@ -15,11 +15,11 @@ import ru.betterend.util.StructureHelper;
 public class ListFeature extends NBTStructureFeature {
 	private final List<StructureInfo> list;
 	private StructureInfo selected;
-	
+
 	public ListFeature(List<StructureInfo> list) {
 		this.list = list;
 	}
-	
+
 	@Override
 	protected Structure getStructure(StructureWorldAccess world, BlockPos pos, Random random) {
 		selected = list.get(random.nextInt(list.size()));
@@ -30,12 +30,12 @@ public class ListFeature extends NBTStructureFeature {
 	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random) {
 		int cx = pos.getX() >> 4;
 		int cz = pos.getZ() >> 4;
-		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.down()).isIn(EndTags.GEN_TERRAIN);
+		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.below()).isIn(EndTags.GEN_TERRAIN);
 	}
 
 	@Override
-	protected BlockRotation getRotation(StructureWorldAccess world, BlockPos pos, Random random) {
-		return BlockRotation.random(random);
+	protected Rotation getRotation(StructureWorldAccess world, BlockPos pos, Random random) {
+		return Rotation.random(random);
 	}
 
 	@Override
@@ -52,23 +52,24 @@ public class ListFeature extends NBTStructureFeature {
 	protected TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random) {
 		return selected.terrainMerge;
 	}
-	
+
 	@Override
-	protected void addStructureData(StructurePlacementData data) {}
-	
+	protected void addStructureData(StructurePlacementData data) {
+	}
+
 	public static final class StructureInfo {
 		public final TerrainMerge terrainMerge;
 		public final String structurePath;
 		public final int offsetY;
-		
+
 		private Structure structure;
-		
+
 		public StructureInfo(String structurePath, int offsetY, TerrainMerge terrainMerge) {
 			this.terrainMerge = terrainMerge;
 			this.structurePath = structurePath;
 			this.offsetY = offsetY;
 		}
-		
+
 		public Structure getStructure() {
 			if (structure == null) {
 				structure = StructureHelper.readStructure(structurePath);

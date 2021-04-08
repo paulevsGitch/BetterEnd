@@ -12,47 +12,44 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.indigo.renderer.helper.ColorHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.NativeImage;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 
 @Environment(EnvType.CLIENT)
 public class ColorUtil {
-	
+
 	private static float[] floatBuffer = new float[4];
-	
+
 	public static int[] toIntArray(int color) {
-		return new int[] {
-			(color >> 24) & 255,
-			(color >> 16) & 255,
-			(color >> 8) & 255,
-			 color & 255
-		};
+		return new int[] { (color >> 24) & 255, (color >> 16) & 255, (color >> 8) & 255, color & 255 };
 	}
-	
+
 	public static float[] toFloatArray(int color) {
 		floatBuffer[0] = ((color >> 16 & 255) / 255.0F);
 		floatBuffer[1] = ((color >> 8 & 255) / 255.0F);
 		floatBuffer[2] = ((color & 255) / 255.0F);
 		floatBuffer[3] = ((color >> 24 & 255) / 255.0F);
-		
+
 		return floatBuffer;
 	}
-	
+
 	public static float[] RGBtoHSB(int r, int g, int b, float[] hsbvals) {
 		float hue, saturation, brightness;
 		if (hsbvals == null) {
 			hsbvals = floatBuffer;
 		}
 		int cmax = (r > g) ? r : g;
-		if (b > cmax) cmax = b;
+		if (b > cmax)
+			cmax = b;
 		int cmin = (r < g) ? r : g;
-		if (b < cmin) cmin = b;
+		if (b < cmin)
+			cmin = b;
 
 		brightness = ((float) cmax) / 255.0F;
 		if (cmax != 0)
@@ -80,14 +77,14 @@ public class ColorUtil {
 		hsbvals[2] = brightness;
 		return hsbvals;
 	}
-	
+
 	public static int HSBtoRGB(float hue, float saturation, float brightness) {
 		int r = 0, g = 0, b = 0;
 		if (saturation == 0) {
 			r = g = b = (int) (brightness * 255.0F + 0.5F);
 		} else {
-			float h = (hue - (float)Math.floor(hue)) * 6.0F;
-			float f = h - (float)java.lang.Math.floor(h);
+			float h = (hue - (float) Math.floor(hue)) * 6.0F;
+			float f = h - (float) java.lang.Math.floor(h);
 			float p = brightness * (1.0F - saturation);
 			float q = brightness * (1.0F - saturation * f);
 			float t = brightness * (1.0F - (saturation * (1.0F - f)));
@@ -126,41 +123,43 @@ public class ColorUtil {
 		}
 		return 0xFF000000 | (r << 16) | (g << 8) | (b << 0);
 	}
-	
+
 	public static int parseHex(String hexColor) {
 		int len = hexColor.length();
 		if (len < 6 || len > 8 || len % 2 > 0) {
 			return -1;
 		}
-		
+
 		int color, shift;
-		if(len == 6) {
-			color = 0xFF000000; shift = 16;
+		if (len == 6) {
+			color = 0xFF000000;
+			shift = 16;
 		} else {
-			color = 0; shift = 24;
+			color = 0;
+			shift = 24;
 		}
-		
+
 		try {
 			String[] splited = hexColor.split("(?<=\\G.{2})");
 			for (String digit : splited) {
 				color |= Integer.valueOf(digit, 16) << shift;
 				shift -= 8;
 			}
-		} catch(NumberFormatException ex) {
+		} catch (NumberFormatException ex) {
 			BetterEnd.LOGGER.catching(ex);
 			return -1;
 		}
-		
+
 		return color;
 	}
-	
+
 	public static int toABGR(int color) {
 		int r = (color >> 16) & 255;
 		int g = (color >> 8) & 255;
 		int b = color & 255;
 		return 0xFF000000 | b << 16 | g << 8 | r;
 	}
-	
+
 	public static int ABGRtoARGB(int color) {
 		int a = (color >> 24) & 255;
 		int b = (color >> 16) & 255;
@@ -168,18 +167,18 @@ public class ColorUtil {
 		int r = color & 255;
 		return a << 24 | r << 16 | g << 8 | b;
 	}
-	
+
 	public static int colorBrigtness(int color, float val) {
 		RGBtoHSB((color >> 16) & 255, (color >> 8) & 255, color & 255, floatBuffer);
 		floatBuffer[2] += val / 10.0F;
-		floatBuffer[2] = MathHelper.clamp(floatBuffer[2], 0.0F, 1.0F);
+		floatBuffer[2] = Mth.clamp(floatBuffer[2], 0.0F, 1.0F);
 		return HSBtoRGB(floatBuffer[0], floatBuffer[1], floatBuffer[2]);
 	}
-	
+
 	public static int applyTint(int color, int tint) {
 		return colorBrigtness(ColorHelper.multiplyColor(color, tint), 1.5F);
 	}
-	
+
 	public static int colorDistance(int color1, int color2) {
 		int r1 = (color1 >> 16) & 255;
 		int g1 = (color1 >> 8) & 255;
@@ -189,20 +188,21 @@ public class ColorUtil {
 		int b2 = color2 & 255;
 		return MHelper.pow2(r1 - r2) + MHelper.pow2(g1 - g2) + MHelper.pow2(b1 - b2);
 	}
-	
-	private static Map<Identifier, Integer> colorPalette = Maps.newHashMap();
-	
+
+	private static Map<ResourceLocation, Integer> colorPalette = Maps.newHashMap();
+
 	public static int extractColor(Item item) {
-		Identifier id = Registry.ITEM.getId(item);
-		if (id.equals(Registry.ITEM.getDefaultId())) return -1;
+		ResourceLocation id = Registry.ITEM.getId(item);
+		if (id.equals(Registry.ITEM.getDefaultId()))
+			return -1;
 		if (colorPalette.containsKey(id)) {
 			return colorPalette.get(id);
 		}
-		Identifier texture;
+		ResourceLocation texture;
 		if (item instanceof BlockItem) {
-			texture = new Identifier(id.getNamespace(), "textures/block/" + id.getPath() + ".png");
+			texture = new ResourceLocation(id.getNamespace(), "textures/block/" + id.getPath() + ".png");
 		} else {
-			texture = new Identifier(id.getNamespace(), "textures/item/" + id.getPath() + ".png");
+			texture = new ResourceLocation(id.getNamespace(), "textures/item/" + id.getPath() + ".png");
 		}
 		NativeImage image = loadImage(texture, 16, 16);
 		List<Integer> colors = new ArrayList<>();
@@ -215,27 +215,28 @@ public class ColorUtil {
 			}
 		}
 		image.close();
-		
-		if (colors.size() == 0) return -1;
-		
+
+		if (colors.size() == 0)
+			return -1;
+
 		ColorExtractor extractor = new ColorExtractor(colors);
 		int color = extractor.analize();
 		colorPalette.put(id, color);
-		
+
 		return color;
 	}
-	
-	public static NativeImage loadImage(Identifier image, int w, int h) {
+
+	public static NativeImage loadImage(ResourceLocation image, int w, int h) {
 		MinecraftClient minecraft = MinecraftClient.getInstance();
 		ResourceManager resourceManager = minecraft.getResourceManager();
 		if (resourceManager.containsResource(image)) {
 			try (Resource resource = resourceManager.getResource(image)) {
-				return NativeImage.read(resource.getInputStream());			
+				return NativeImage.read(resource.getInputStream());
 			} catch (IOException e) {
 				BetterEnd.LOGGER.warning("Can't load texture image: {}. Will be created empty image.", image);
 				BetterEnd.LOGGER.warning("Cause: {}.", e.getMessage());
 			}
-		}		
+		}
 		return new NativeImage(w, h, false);
 	}
 }

@@ -2,14 +2,14 @@ package ru.betterend.world.structures.piece;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
@@ -23,7 +23,9 @@ import ru.betterend.util.MHelper;
 
 public class PaintedMountainPiece extends MountainPiece {
 	private BlockState[] slises;
-	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome, BlockState[] slises) {
+
+	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome,
+			BlockState[] slises) {
 		super(EndStructures.PAINTED_MOUNTAIN_PIECE, center, radius, height, random, biome);
 		this.slises = slises;
 	}
@@ -36,7 +38,7 @@ public class PaintedMountainPiece extends MountainPiece {
 	protected void toNbt(CompoundTag tag) {
 		super.toNbt(tag);
 		ListTag slise = new ListTag();
-		for (BlockState state: slises) {
+		for (BlockState state : slises) {
 			slise.add(NbtHelper.fromBlockState(state));
 		}
 		tag.put("slises", slise);
@@ -53,10 +55,11 @@ public class PaintedMountainPiece extends MountainPiece {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
+			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getStartX();
 		int sz = chunkPos.getStartZ();
-		Mutable pos = new Mutable();
+		MutableBlockPos pos = new MutableBlockPos();
 		Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
 		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
 		Heightmap map2 = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
@@ -76,7 +79,7 @@ public class PaintedMountainPiece extends MountainPiece {
 					int minY = map.get(x, z);
 					pos.setY(minY - 1);
 					while (chunk.getBlockState(pos).isAir() && pos.getY() > 50) {
-						pos.setY(minY --);
+						pos.setY(minY--);
 					}
 					minY = pos.getY();
 					minY = Math.max(minY, map2.get(x, z));
@@ -86,18 +89,19 @@ public class PaintedMountainPiece extends MountainPiece {
 							maxY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
 							maxY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.9F;
 							maxY += center.getY();
-							float offset = (float) (noise1.eval(px * 0.07, pz * 0.07) * 5 + noise1.eval(px * 0.2, pz * 0.2) * 2 + 7);
+							float offset = (float) (noise1.eval(px * 0.07, pz * 0.07) * 5
+									+ noise1.eval(px * 0.2, pz * 0.2) * 2 + 7);
 							for (int y = minY - 1; y < maxY; y++) {
 								pos.setY(y);
 								int index = MHelper.floor((y + offset) * 0.65F) % slises.length;
-								chunk.setBlockState(pos, slises[index], false);
+								chunk.setBlockAndUpdate(pos, slises[index], false);
 							}
 						}
 					}
 				}
 			}
 		}
-		
+
 		return true;
 	}
 }

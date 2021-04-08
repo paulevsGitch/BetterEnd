@@ -1,12 +1,12 @@
 package ru.betterend.item;
 
-import net.minecraft.item.MusicDiscItem;
+import net.minecraft.world.item.MusicDiscItem;
 import net.minecraft.sound.SoundEvent;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
 public class PatternedDiscItem extends MusicDiscItem implements Patterned {
-	public PatternedDiscItem(int comparatorOutput, SoundEvent sound, Settings settings) {
+	public PatternedDiscItem(int comparatorOutput, SoundEvent sound, Properties settings) {
 		super(comparatorOutput, sound, settings);
 	}
 

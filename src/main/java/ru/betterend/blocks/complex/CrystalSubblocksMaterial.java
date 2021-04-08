@@ -1,9 +1,9 @@
 package ru.betterend.blocks.complex;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import ru.betterend.blocks.EndPedestal;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndPillarBlock;
@@ -27,7 +27,7 @@ public class CrystalSubblocksMaterial {
 	public final Block brick_stairs;
 	public final Block brick_slab;
 	public final Block brick_wall;
-	
+
 	public CrystalSubblocksMaterial(String name, Block source) {
 		FabricBlockSettings material = FabricBlockSettings.copyOf(source);
 		polished = EndBlocks.registerBlock(name + "_polished", new BlockBase(material));
@@ -41,29 +41,39 @@ public class CrystalSubblocksMaterial {
 		brick_stairs = EndBlocks.registerBlock(name + "_bricks_stairs", new EndStairsBlock(bricks));
 		brick_slab = EndBlocks.registerBlock(name + "_bricks_slab", new EndSlabBlock(bricks));
 		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new EndWallBlock(bricks));
-		
+
 		// Recipes //
-		GridRecipe.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', source).setGroup("end_bricks").build();
-		GridRecipe.make(name + "_polished", polished).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
-		GridRecipe.make(name + "_tiles", tiles).setOutputCount(4).setShape("##", "##").addMaterial('#', polished).setGroup("end_small_tile").build();
-		GridRecipe.make(name + "_pillar", pillar).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar").build();
-		
-		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', source).setGroup("end_stone_stairs").build();
-		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', source).setGroup("end_stone_slabs").build();
-		GridRecipe.make(name + "_bricks_stairs", brick_stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', bricks).setGroup("end_stone_stairs").build();
-		GridRecipe.make(name + "_bricks_slab", brick_slab).setOutputCount(6).setShape("###").addMaterial('#', bricks).setGroup("end_stone_slabs").build();
-		
-		GridRecipe.make(name + "_wall", wall).setOutputCount(6).setShape("###", "###").addMaterial('#', source).setGroup("end_wall").build();
-		GridRecipe.make(name + "_bricks_wall", brick_wall).setOutputCount(6).setShape("###", "###").addMaterial('#', bricks).setGroup("end_wall").build();
-		
+		GridRecipe.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', source)
+				.setGroup("end_bricks").build();
+		GridRecipe.make(name + "_polished", polished).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks)
+				.setGroup("end_tile").build();
+		GridRecipe.make(name + "_tiles", tiles).setOutputCount(4).setShape("##", "##").addMaterial('#', polished)
+				.setGroup("end_small_tile").build();
+		GridRecipe.make(name + "_pillar", pillar).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar")
+				.build();
+
+		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###")
+				.addMaterial('#', source).setGroup("end_stone_stairs").build();
+		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', source)
+				.setGroup("end_stone_slabs").build();
+		GridRecipe.make(name + "_bricks_stairs", brick_stairs).setOutputCount(4).setShape("#  ", "## ", "###")
+				.addMaterial('#', bricks).setGroup("end_stone_stairs").build();
+		GridRecipe.make(name + "_bricks_slab", brick_slab).setOutputCount(6).setShape("###").addMaterial('#', bricks)
+				.setGroup("end_stone_slabs").build();
+
+		GridRecipe.make(name + "_wall", wall).setOutputCount(6).setShape("###", "###").addMaterial('#', source)
+				.setGroup("end_wall").build();
+		GridRecipe.make(name + "_bricks_wall", brick_wall).setOutputCount(6).setShape("###", "###")
+				.addMaterial('#', bricks).setGroup("end_wall").build();
+
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
-		
+
 		// Item Tags //
 		TagHelper.addTag(ItemTags.SLABS, slab, brick_slab);
 		TagHelper.addTag(ItemTags.STONE_BRICKS, bricks);
 		TagHelper.addTag(ItemTags.STONE_CRAFTING_MATERIALS, source);
 		TagHelper.addTag(ItemTags.STONE_TOOL_MATERIALS, source);
-		
+
 		// Block Tags //
 		TagHelper.addTag(BlockTags.STONE_BRICKS, bricks);
 		TagHelper.addTag(BlockTags.WALLS, wall, brick_wall);

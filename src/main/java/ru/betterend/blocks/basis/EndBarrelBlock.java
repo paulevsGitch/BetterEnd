@@ -5,26 +5,26 @@ import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.PiglinBrain;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockRenderType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.mob.PiglinBrain;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
@@ -41,16 +41,16 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 	}
 
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		List<ItemStack> drop = super.getDroppedStacks(state, builder);
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		List<ItemStack> drop = super.getDrops(state, builder);
 		drop.add(new ItemStack(this.asItem()));
 		return drop;
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
 			BlockHitResult hit) {
-		if (world.isClient) {
+		if (world.isClientSide) {
 			return ActionResult.SUCCESS;
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -65,7 +65,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 	}
 
 	@Override
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void scheduledTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EBarrelBlockEntity) {
 			((EBarrelBlockEntity) blockEntity).tick();
@@ -78,8 +78,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 	}
 
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer,
-			ItemStack itemStack) {
+	public void onPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
 		if (itemStack.hasCustomName()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof EBarrelBlockEntity) {
@@ -87,24 +86,24 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 			}
 		}
 	}
-	
+
 	@Override
 	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getId(this).getPath();
+		String block = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, block, block);
 	}
-	
+
 	@Override
 	public String getModelPattern(String block) {
-		String texture = Registry.BLOCK.getId(this).getPath();
+		String texture = Registry.BLOCK.getKey(this).getPath();
 		if (block.contains("open")) {
 			return Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
 		}
 		return Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
 	}
-	
+
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_BARREL;
 	}
 }

@@ -1,8 +1,8 @@
 package ru.betterend.client.gui.slot;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
@@ -41,7 +41,7 @@ public class SmelterOutputSlot extends Slot {
 
 	protected void onCrafted(ItemStack stack) {
 		stack.onCraft(this.player.world, this.player, this.amount);
-		if (!this.player.world.isClient && this.inventory instanceof EndStoneSmelterBlockEntity) {
+		if (!this.player.world.isClientSide && this.inventory instanceof EndStoneSmelterBlockEntity) {
 			((EndStoneSmelterBlockEntity) this.inventory).dropExperience(player);
 		}
 		this.amount = 0;

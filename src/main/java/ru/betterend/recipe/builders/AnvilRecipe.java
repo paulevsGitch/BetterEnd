@@ -6,22 +6,22 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolItem;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.tags.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.BetterEndRecipe;
@@ -31,21 +31,22 @@ import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
 public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
-	
+
 	public final static String GROUP = "smithing";
 	public final static RecipeType<AnvilRecipe> TYPE = EndRecipeManager.registerType(GROUP);
 	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
-	public final static Identifier ID = BetterEnd.makeID(GROUP);
-	
-	private final Identifier id;
+	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
+
+	private final ResourceLocation id;
 	private final Ingredient input;
 	private final ItemStack output;
 	private final int damage;
 	private final int toolLevel;
 	private final int anvilLevel;
 	private final int inputCount;
-	
-	public AnvilRecipe(Identifier identifier, Ingredient input, ItemStack output, int inputCount, int toolLevel, int anvilLevel, int damage) {
+
+	public AnvilRecipe(ResourceLocation identifier, Ingredient input, ItemStack output, int inputCount, int toolLevel,
+			int anvilLevel, int damage) {
 		this.id = identifier;
 		this.input = input;
 		this.output = output;
@@ -64,34 +65,35 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	public ItemStack getOutput() {
 		return this.output;
 	}
-	
+
 	@Override
-	public boolean matches(Inventory craftingInventory, World world) {
+	public boolean matches(Inventory craftingInventory, Level world) {
 		return this.matches(craftingInventory);
 	}
-	
+
 	@Override
 	public ItemStack craft(Inventory craftingInventory) {
 		return this.output.copy();
 	}
-	
+
 	public ItemStack craft(Inventory craftingInventory, PlayerEntity player) {
 		if (!player.isCreative()) {
-			if (!checkHammerDurability(craftingInventory, player)) return ItemStack.EMPTY;
+			if (!checkHammerDurability(craftingInventory, player))
+				return ItemStack.EMPTY;
 			ItemStack hammer = craftingInventory.getStack(1);
-			hammer.damage(this.damage, player, entity ->
-					entity.sendEquipmentBreakStatus(null));
+			hammer.damage(this.damage, player, entity -> entity.sendEquipmentBreakStatus(null));
 		}
 		return this.craft(craftingInventory);
 	}
 
 	public boolean checkHammerDurability(Inventory craftingInventory, PlayerEntity player) {
-		if (player.isCreative()) return true;
+		if (player.isCreative())
+			return true;
 		ItemStack hammer = craftingInventory.getStack(1);
 		int damage = hammer.getDamage() + this.damage;
 		return damage < hammer.getMaxDamage();
 	}
-	
+
 	public boolean matches(Inventory craftingInventory) {
 		ItemStack hammer = craftingInventory.getStack(1);
 		if (hammer.isEmpty() || !EndTags.HAMMERS.contains(hammer.getItem())) {
@@ -99,12 +101,11 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		}
 		ItemStack material = craftingInventory.getStack(0);
 		int materialCount = material.getCount();
-		int level = ((ToolItem) hammer.getItem()).getMaterial().getMiningLevel();
-		return this.input.test(craftingInventory.getStack(0)) &&
-			   materialCount >= this.inputCount &&
-			   level >= this.toolLevel;
+		int level = ((ToolItem) hammer.getItem()).getTier().getLevel();
+		return this.input.test(craftingInventory.getStack(0)) && materialCount >= this.inputCount
+				&& level >= this.toolLevel;
 	}
-	
+
 	public int getDamage() {
 		return this.damage;
 	}
@@ -120,10 +121,10 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	@Override
 	public DefaultedList<Ingredient> getPreviewInputs() {
 		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-		defaultedList.add(Ingredient.ofStacks(EndTags.HAMMERS.values().stream().filter(hammer ->
-				((ToolItem) hammer).getMaterial().getMiningLevel() >= toolLevel).map(ItemStack::new)));
+		defaultedList.add(Ingredient.ofStacks(EndTags.HAMMERS.values().stream()
+				.filter(hammer -> ((ToolItem) hammer).getTier().getLevel() >= toolLevel).map(ItemStack::new)));
 		defaultedList.add(input);
-		
+
 		return defaultedList;
 	}
 
@@ -134,7 +135,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	}
 
 	@Override
-	public Identifier getId() {
+	public ResourceLocation getId() {
 		return this.id;
 	}
 
@@ -142,7 +143,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	public RecipeType<?> getType() {
 		return TYPE;
 	}
-	
+
 	@Override
 	public boolean isIgnoredInRecipeBook() {
 		return true;
@@ -150,10 +151,13 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		AnvilRecipe that = (AnvilRecipe) o;
-		return damage == that.damage && toolLevel == that.toolLevel && id.equals(that.id) && input.equals(that.input) && output.equals(that.output);
+		return damage == that.damage && toolLevel == that.toolLevel && id.equals(that.id) && input.equals(that.input)
+				&& output.equals(that.output);
 	}
 
 	@Override
@@ -168,12 +172,12 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
-		
+
 		public static Builder create(String id) {
 			return create(BetterEnd.makeID(id));
 		}
-		
-		public static Builder create(Identifier id) {
+
+		public static Builder create(ResourceLocation id) {
 			INSTANCE.id = id;
 			INSTANCE.input = null;
 			INSTANCE.output = null;
@@ -182,11 +186,11 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			INSTANCE.anvilLevel = 1;
 			INSTANCE.damage = 1;
 			INSTANCE.alright = true;
-			
+
 			return INSTANCE;
 		}
-		
-		private Identifier id;
+
+		private ResourceLocation id;
 		private Ingredient input;
 		private ItemStack output;
 		private int inputCount = 1;
@@ -194,20 +198,21 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		private int anvilLevel = 1;
 		private int damage = 1;
 		private boolean alright;
-		
-		private Builder() {}
-		
+
+		private Builder() {
+		}
+
 		public Builder setInput(ItemConvertible... inputItems) {
 			this.alright &= RecipeHelper.exists(inputItems);
-			this.setInput(Ingredient.ofItems(inputItems));
+			this.setInput(Ingredient.of(inputItems));
 			return this;
 		}
-		
+
 		public Builder setInput(Tag<Item> inputTag) {
 			this.setInput(Ingredient.fromTag(inputTag));
 			return this;
 		}
-		
+
 		public Builder setInput(Ingredient ingredient) {
 			this.input = ingredient;
 			return this;
@@ -217,17 +222,17 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			this.inputCount = count;
 			return this;
 		}
-		
+
 		public Builder setOutput(ItemConvertible output) {
 			return this.setOutput(output, 1);
 		}
-		
+
 		public Builder setOutput(ItemConvertible output, int amount) {
 			this.alright &= RecipeHelper.exists(output);
 			this.output = new ItemStack(output, amount);
 			return this;
 		}
-		
+
 		public Builder setToolLevel(int level) {
 			this.toolLevel = level;
 			return this;
@@ -237,19 +242,19 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			this.anvilLevel = level;
 			return this;
 		}
-		
+
 		public Builder setDamage(int damage) {
 			this.damage = damage;
 			return this;
 		}
-		
+
 		public void build() {
 			if (Configs.RECIPE_CONFIG.getBoolean("anvil", id.getPath(), true)) {
 				if (input == null) {
 					BetterEnd.LOGGER.warning("Input for Anvil recipe can't be 'null', recipe {} will be ignored!", id);
 					return;
 				}
-				if(output == null) {
+				if (output == null) {
 					BetterEnd.LOGGER.warning("Output for Anvil recipe can't be 'null', recipe {} will be ignored!", id);
 					return;
 				}
@@ -261,14 +266,15 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 					BetterEnd.LOGGER.debug("Can't add Anvil recipe {}! Ingeredient or output not exists.", id);
 					return;
 				}
-				EndRecipeManager.addRecipe(TYPE, new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage));
+				EndRecipeManager.addRecipe(TYPE,
+						new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage));
 			}
 		}
 	}
 
 	public static class Serializer implements RecipeSerializer<AnvilRecipe> {
 		@Override
-		public AnvilRecipe read(Identifier id, JsonObject json) {
+		public AnvilRecipe read(ResourceLocation id, JsonObject json) {
 			Ingredient input = Ingredient.fromJson(json.get("input"));
 			JsonObject result = JsonHelper.getObject(json, "result");
 			ItemStack output = ItemUtil.fromJsonRecipe(result);
@@ -279,19 +285,19 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			int toolLevel = JsonHelper.getInt(json, "toolLevel", 1);
 			int anvilLevel = JsonHelper.getInt(json, "anvilLevel", 1);
 			int damage = JsonHelper.getInt(json, "damage", 1);
-			
+
 			return new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage);
 		}
 
 		@Override
-		public AnvilRecipe read(Identifier id, PacketByteBuf packetBuffer) {
+		public AnvilRecipe read(ResourceLocation id, PacketByteBuf packetBuffer) {
 			Ingredient input = Ingredient.fromPacket(packetBuffer);
 			ItemStack output = packetBuffer.readItemStack();
 			int inputCount = packetBuffer.readVarInt();
 			int toolLevel = packetBuffer.readVarInt();
 			int anvilLevel = packetBuffer.readVarInt();
 			int damage = packetBuffer.readVarInt();
-			
+
 			return new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage);
 		}
 

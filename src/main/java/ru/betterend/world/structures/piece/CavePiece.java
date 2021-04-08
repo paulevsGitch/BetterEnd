@@ -2,13 +2,13 @@ package ru.betterend.world.structures.piece;
 
 import java.util.Random;
 
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
@@ -23,7 +23,7 @@ public class CavePiece extends BasePiece {
 	private OpenSimplexNoise noise;
 	private BlockPos center;
 	private float radius;
-	
+
 	public CavePiece(BlockPos center, float radius, int id) {
 		super(EndStructures.CAVE_PIECE, id);
 		this.center = center;
@@ -36,19 +36,20 @@ public class CavePiece extends BasePiece {
 		super(EndStructures.CAVE_PIECE, tag);
 		makeBoundingBox();
 	}
-	
+
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
+			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int x1 = MHelper.max(this.boundingBox.minX, blockBox.minX);
 		int z1 = MHelper.max(this.boundingBox.minZ, blockBox.minZ);
 		int x2 = MHelper.min(this.boundingBox.maxX, blockBox.maxX);
 		int z2 = MHelper.min(this.boundingBox.maxZ, blockBox.maxZ);
 		int y1 = this.boundingBox.minY;
 		int y2 = this.boundingBox.maxY;
-		
+
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
-		Mutable pos = new Mutable();
+		MutableBlockPos pos = new MutableBlockPos();
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - center.getX();
 			xsq *= xsq;
@@ -69,8 +70,7 @@ public class CavePiece extends BasePiece {
 						if (world.getBlockState(pos).isIn(EndTags.END_GROUND)) {
 							BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						}
-					}
-					else if (dist < r * r) {
+					} else if (dist < r * r) {
 						if (world.getBlockState(pos).getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, pos, Blocks.END_STONE);
 						}
@@ -78,7 +78,7 @@ public class CavePiece extends BasePiece {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -94,7 +94,7 @@ public class CavePiece extends BasePiece {
 		radius = tag.getFloat("radius");
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 	}
-	
+
 	private void makeBoundingBox() {
 		int minX = MHelper.floor(center.getX() - radius);
 		int minY = MHelper.floor(center.getY() - radius);

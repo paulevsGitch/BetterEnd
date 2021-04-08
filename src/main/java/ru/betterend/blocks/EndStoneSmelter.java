@@ -8,36 +8,36 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockRenderType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalFacingBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.item.ItemPlacementContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import ru.betterend.blocks.basis.BaseBlockWithEntity;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
@@ -47,18 +47,14 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	public static final String ID = "end_stone_smelter";
 
 	public EndStoneSmelter() {
-		super(FabricBlockSettings.of(Material.STONE, MaterialColor.GRAY)
-				.hardness(4F)
-				.resistance(100F)
-				.requiresTool()
-				.sounds(BlockSoundGroup.STONE));
-		this.setDefaultState(this.stateManager.getDefaultState()
-											  .with(FACING, Direction.NORTH)
-											  .with(LIT, false));
+		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY).hardness(4F).resistance(100F)
+				.requiresTool().sounds(SoundType.STONE));
+		this.setDefaultState(this.stateManager.defaultBlockState().with(FACING, Direction.NORTH).with(LIT, false));
 	}
-	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (world.isClient) {
+
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+			BlockHitResult hit) {
+		if (world.isClientSide) {
 			return ActionResult.SUCCESS;
 		} else {
 			this.openScreen(world, pos, player);
@@ -66,27 +62,27 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 		}
 	}
 
-	private void openScreen(World world, BlockPos pos, PlayerEntity player) {
+	private void openScreen(Level world, BlockPos pos, PlayerEntity player) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
 			player.openHandledScreen((EndStoneSmelterBlockEntity) blockEntity);
 		}
 	}
-	
+
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+		return this.defaultBlockState().with(FACING, ctx.getPlayerFacing().getOpposite());
 	}
-	
+
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
 		return new EndStoneSmelterBlockEntity();
 	}
-	
+
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drop = Lists.newArrayList(new ItemStack(this));
-		BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
+		BlockEntity blockEntity = builder.getNullable(LootContextParams.BLOCK_ENTITY);
 		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
 			EndStoneSmelterBlockEntity smelterBlockEntity = (EndStoneSmelterBlockEntity) blockEntity;
 			for (int i = 0; i < smelterBlockEntity.size(); i++) {
@@ -105,8 +101,8 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	}
 
 	@Override
-	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-		//TODO
+	public int getComparatorOutput(BlockState state, Level world, BlockPos pos) {
+		// TODO
 		return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
 	}
 
@@ -116,31 +112,32 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation) {
-		return (BlockState)state.with(FACING, rotation.rotate((Direction)state.get(FACING)));
+	public BlockState rotate(BlockState state, Rotation rotation) {
+		return (BlockState) state.with(FACING, rotation.rotate((Direction) state.getValue(FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, BlockMirror mirror) {
-		return state.rotate(mirror.getRotation((Direction)state.get(FACING)));
+		return state.rotate(mirror.getRotation((Direction) state.getValue(FACING)));
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, LIT);
 	}
-	
+
 	@Environment(EnvType.CLIENT)
-	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-		if (state.get(LIT)) {
+	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
+		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5D;
 			double y = pos.getY();
 			double z = pos.getZ() + 0.5D;
 			if (random.nextDouble() < 0.1D) {
-			   world.playSound(x, y, z, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+				world.playLocalSound(x, y, z, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F,
+						1.0F, false);
 			}
 
-			Direction direction = (Direction)state.get(FACING);
+			Direction direction = (Direction) state.getValue(FACING);
 			Direction.Axis axis = direction.getAxis();
 			double defOffset = random.nextDouble() * 0.6D - 0.3D;
 			double offX = axis == Direction.Axis.X ? direction.getOffsetX() * 0.52D : defOffset;

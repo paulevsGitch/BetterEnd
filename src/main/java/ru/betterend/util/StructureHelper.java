@@ -11,39 +11,38 @@ import java.util.zip.ZipFile;
 
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.tag.BlockTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 
 public class StructureHelper {
 	private static final Direction[] DIR = BlocksHelper.makeHorizontal();
-	
-	public static Structure readStructure(Identifier resource) {
+
+	public static Structure readStructure(ResourceLocation resource) {
 		String ns = resource.getNamespace();
 		String nm = resource.getPath();
 		return readStructure("/data/" + ns + "/structures/" + nm + ".nbt");
 	}
-	
+
 	public static Structure readStructure(File datapack, String path) {
 		if (datapack.isDirectory()) {
 			return readStructure(datapack.toString() + "/" + path);
-		}
-		else if (datapack.isFile() && datapack.getName().endsWith(".zip")) {
+		} else if (datapack.isFile() && datapack.getName().endsWith(".zip")) {
 			try {
 				ZipFile zipFile = new ZipFile(datapack);
 				Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -58,25 +57,23 @@ public class StructureHelper {
 					System.out.format("\t %s - %d - %d\n", type, compressedSize, normalSize);
 				}
 				zipFile.close();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return null;
 	}
-	
+
 	public static Structure readStructure(String path) {
 		try {
 			InputStream inputstream = StructureHelper.class.getResourceAsStream(path);
 			return readStructureFromStream(inputstream);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	private static Structure readStructureFromStream(InputStream stream) throws IOException {
 		CompoundTag nbttagcompound = NbtIo.readCompressed(stream);
 
@@ -85,22 +82,25 @@ public class StructureHelper {
 
 		return template;
 	}
-	
-	public static BlockPos offsetPos(BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror) {
+
+	public static BlockPos offsetPos(BlockPos pos, Structure structure, Rotation rotation, BlockMirror mirror) {
 		BlockPos offset = Structure.transformAround(structure.getSize(), mirror, rotation, BlockPos.ORIGIN);
-		return pos.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
+		return pos.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
 	}
-	
-	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror, Random random) {
+
+	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure,
+			Rotation rotation, BlockMirror mirror, Random random) {
 		placeCenteredBottom(world, pos, structure, rotation, mirror, makeBox(pos), random);
 	}
-	
-	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror, BlockBox bounds, Random random) {
+
+	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure,
+			Rotation rotation, BlockMirror mirror, BlockBox bounds, Random random) {
 		BlockPos offset = offsetPos(pos, structure, rotation, mirror);
-		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
+		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror)
+				.setBoundingBox(bounds);
 		structure.place(world, offset, placementData, random);
 	}
-	
+
 	private static BlockBox makeBox(BlockPos pos) {
 		int sx = ((pos.getX() >> 4) << 4) - 16;
 		int sz = ((pos.getZ() >> 4) << 4) - 16;
@@ -108,28 +108,29 @@ public class StructureHelper {
 		int ez = sz + 47;
 		return BlockBox.create(sx, 0, sz, ex, 255, ez);
 	}
-	
-	public static BlockBox getStructureBounds(BlockPos pos, Structure structure, BlockRotation rotation, BlockMirror mirror) {
+
+	public static BlockBox getStructureBounds(BlockPos pos, Structure structure, Rotation rotation,
+			BlockMirror mirror) {
 		BlockPos max = structure.getSize();
 		BlockPos min = Structure.transformAround(structure.getSize(), mirror, rotation, BlockPos.ORIGIN);
 		max = max.subtract(min);
 		return new BlockBox(min.add(pos), max.add(pos));
 	}
-	
+
 	public static BlockBox intersectBoxes(BlockBox box1, BlockBox box2) {
 		int x1 = MHelper.max(box1.minX, box2.minX);
 		int y1 = MHelper.max(box1.minY, box2.minY);
 		int z1 = MHelper.max(box1.minZ, box2.minZ);
-		
+
 		int x2 = MHelper.min(box1.maxX, box2.maxX);
 		int y2 = MHelper.min(box1.maxY, box2.maxY);
 		int z2 = MHelper.min(box1.maxZ, box2.maxZ);
-		
+
 		return BlockBox.create(x1, y1, z1, x2, y2, z2);
 	}
-	
+
 	public static void erode(StructureWorldAccess world, BlockBox bounds, int iterations, Random random) {
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		boolean canDestruct = true;
 		for (int i = 0; i < iterations; i++) {
 			for (int x = bounds.minX; x <= bounds.maxX; x++) {
@@ -139,7 +140,8 @@ public class StructureHelper {
 					for (int y = bounds.maxY; y >= bounds.minY; y--) {
 						mut.setY(y);
 						BlockState state = world.getBlockState(mut);
-						if (canDestruct && state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL) && random.nextInt(8) == 0 && world.isAir(mut.down(2))) {
+						if (canDestruct && state.is(EndBlocks.FLAVOLITE_RUNED_ETERNAL) && random.nextInt(8) == 0
+								&& world.isAir(mut.down(2))) {
 							int r = MHelper.randRange(1, 4, random);
 							int cx = mut.getX();
 							int cy = mut.getY();
@@ -162,7 +164,8 @@ public class StructureHelper {
 										int dz = pz - cz;
 										dz *= dz;
 										mut.setZ(pz);
-										if (dx + dy + dz <= r && world.getBlockState(mut).isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL)) {
+										if (dx + dy + dz <= r
+												&& world.getBlockState(mut).is(EndBlocks.FLAVOLITE_RUNED_ETERNAL)) {
 											BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
 										}
 									}
@@ -173,14 +176,13 @@ public class StructureHelper {
 							mut.setZ(cz);
 							canDestruct = false;
 							continue;
-						}
-						else if (ignore(state)) {
+						} else if (ignore(state)) {
 							continue;
 						}
 						if (!state.isAir() && random.nextBoolean()) {
 							shuffle(random);
-							for (Direction dir: DIR) {
-								if (world.isAir(mut.offset(dir)) && world.isAir(mut.down().offset(dir))) {
+							for (Direction dir : DIR) {
+								if (world.isAir(mut.offset(dir)) && world.isAir(mut.below().offset(dir))) {
 									BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
 									mut.move(dir).move(Direction.DOWN);
 									for (int py = mut.getY(); y >= bounds.minY - 10; y--) {
@@ -194,8 +196,8 @@ public class StructureHelper {
 								}
 							}
 							break;
-						}
-						else if (random.nextInt(8) == 0 && !world.getBlockState(mut.up()).isOf(EndBlocks.ETERNAL_PEDESTAL)) {
+						} else if (random.nextInt(8) == 0
+								&& !world.getBlockState(mut.up()).is(EndBlocks.ETERNAL_PEDESTAL)) {
 							BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
 						}
 					}
@@ -209,7 +211,7 @@ public class StructureHelper {
 				for (int y = bounds.maxY; y >= bounds.minY; y--) {
 					mut.setY(y);
 					BlockState state = world.getBlockState(mut);
-					if (!ignore(state) && world.isAir(mut.down())) {
+					if (!ignore(state) && world.isAir(mut.below())) {
 						BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
 						for (int py = mut.getY(); py >= bounds.minY - 10; py--) {
 							mut.setY(py - 1);
@@ -226,8 +228,8 @@ public class StructureHelper {
 	}
 
 	public static void erodeIntense(StructureWorldAccess world, BlockBox bounds, Random random) {
-		Mutable mut = new Mutable();
-		Mutable mut2 = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
+		MutableBlockPos mut2 = new MutableBlockPos();
 		int minY = bounds.minY - 10;
 		for (int x = bounds.minX; x <= bounds.maxX; x++) {
 			mut.setX(x);
@@ -251,8 +253,7 @@ public class StructureHelper {
 									BlocksHelper.setWithoutUpdate(world, mut2, state);
 								}
 							}
-						}
-						else if (random.nextInt(8) == 0) {
+						} else if (random.nextInt(8) == 0) {
 							BlocksHelper.setWithoutUpdate(world, mut, Blocks.AIR);
 						}
 					}
@@ -262,23 +263,23 @@ public class StructureHelper {
 
 		drop(world, bounds);
 	}
-	
+
 	private static boolean isTerrainNear(StructureWorldAccess world, BlockPos pos) {
-		for (Direction dir: BlocksHelper.DIRECTIONS) {
-			if (world.getBlockState(pos.offset(dir)).isIn(EndTags.GEN_TERRAIN)) {
+		for (Direction dir : BlocksHelper.DIRECTIONS) {
+			if (world.getBlockState(pos.relative(dir)).isIn(EndTags.GEN_TERRAIN)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	private static void drop(StructureWorldAccess world, BlockBox bounds) {
-		Mutable mut = new Mutable();
-		
+		MutableBlockPos mut = new MutableBlockPos();
+
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> edge = Sets.newHashSet();
 		Set<BlockPos> add = Sets.newHashSet();
-		
+
 		for (int x = bounds.minX; x <= bounds.maxX; x++) {
 			mut.setX(x);
 			for (int z = bounds.minZ; z <= bounds.maxZ; z++) {
@@ -292,14 +293,14 @@ public class StructureHelper {
 				}
 			}
 		}
-		
+
 		if (edge.isEmpty()) {
 			return;
 		}
-		
+
 		while (!edge.isEmpty()) {
-			for (BlockPos center: edge) {
-				for (Direction dir: BlocksHelper.DIRECTIONS) {
+			for (BlockPos center : edge) {
+				for (Direction dir : BlocksHelper.DIRECTIONS) {
 					BlockState state = world.getBlockState(center);
 					if (state.isFullCube(world, center)) {
 						mut.set(center).move(dir);
@@ -312,13 +313,13 @@ public class StructureHelper {
 					}
 				}
 			}
-			
+
 			blocks.addAll(edge);
 			edge.clear();
 			edge.addAll(add);
 			add.clear();
 		}
-		
+
 		int minY = bounds.minY - 10;
 		for (int x = bounds.minX; x <= bounds.maxX; x++) {
 			mut.setX(x);
@@ -343,17 +344,12 @@ public class StructureHelper {
 	}
 
 	private static boolean ignore(BlockState state) {
-		return state.getMaterial().isReplaceable()
-				|| !state.getFluidState().isEmpty()
-				|| state.isIn(EndTags.END_GROUND)
-				|| state.isOf(EndBlocks.ETERNAL_PEDESTAL)
-				|| state.isOf(EndBlocks.FLAVOLITE_RUNED_ETERNAL)
-				|| state.isIn(BlockTags.LOGS)
-				|| state.isIn(BlockTags.LEAVES)
-				|| state.getMaterial().equals(Material.PLANT)
-				|| state.getMaterial().equals(Material.LEAVES);
+		return state.getMaterial().isReplaceable() || !state.getFluidState().isEmpty() || state.isIn(EndTags.END_GROUND)
+				|| state.is(EndBlocks.ETERNAL_PEDESTAL) || state.is(EndBlocks.FLAVOLITE_RUNED_ETERNAL)
+				|| state.isIn(BlockTags.LOGS) || state.isIn(BlockTags.LEAVES)
+				|| state.getMaterial().equals(Material.PLANT) || state.getMaterial().equals(Material.LEAVES);
 	}
-	
+
 	private static void shuffle(Random random) {
 		for (int i = 0; i < 4; i++) {
 			int j = random.nextInt(4);
@@ -362,9 +358,9 @@ public class StructureHelper {
 			DIR[j] = d;
 		}
 	}
-	
+
 	public static void cover(StructureWorldAccess world, BlockBox bounds, Random random) {
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		for (int x = bounds.minX; x <= bounds.maxX; x++) {
 			mut.setX(x);
 			for (int z = bounds.minZ; z <= bounds.maxZ; z++) {

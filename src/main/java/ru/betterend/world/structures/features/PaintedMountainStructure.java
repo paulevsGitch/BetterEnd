@@ -1,11 +1,11 @@
 package ru.betterend.world.structures.features;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureStart;
 import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.biome.Biome;
@@ -18,19 +18,21 @@ import ru.betterend.world.structures.piece.PaintedMountainPiece;
 
 public class PaintedMountainStructure extends FeatureBaseStructure {
 	private static final BlockState[] VARIANTS;
-	
+
 	@Override
 	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
 		return SDFStructureStart::new;
 	}
-	
+
 	public static class SDFStructureStart extends StructureStart<DefaultFeatureConfig> {
-		public SDFStructureStart(StructureFeature<DefaultFeatureConfig> feature, int chunkX, int chunkZ, BlockBox box, int references, long seed) {
+		public SDFStructureStart(StructureFeature<DefaultFeatureConfig> feature, int chunkX, int chunkZ, BlockBox box,
+				int references, long seed) {
 			super(feature, chunkX, chunkZ, box, references, seed);
 		}
 
 		@Override
-		public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator, StructureManager manager, int chunkX, int chunkZ, Biome biome, DefaultFeatureConfig config) {
+		public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator,
+				StructureManager manager, int chunkX, int chunkZ, Biome biome, DefaultFeatureConfig config) {
 			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
@@ -42,17 +44,15 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 				for (int i = 0; i < count; i++) {
 					slises[i] = VARIANTS[random.nextInt(VARIANTS.length)];
 				}
-				this.children.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises ));
+				this.children
+						.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises));
 			}
 			this.setBoundingBoxFromChildren();
 		}
 	}
-	
+
 	static {
-		VARIANTS = new BlockState[] {
-				Blocks.END_STONE.getDefaultState(),
-				EndBlocks.FLAVOLITE.stone.getDefaultState(),
-				EndBlocks.VIOLECITE.stone.getDefaultState(),
-		};
+		VARIANTS = new BlockState[] { Blocks.END_STONE.defaultBlockState(),
+				EndBlocks.FLAVOLITE.stone.defaultBlockState(), EndBlocks.VIOLECITE.stone.defaultBlockState(), };
 	}
 }

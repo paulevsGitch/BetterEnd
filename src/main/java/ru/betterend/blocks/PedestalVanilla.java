@@ -3,9 +3,9 @@ package ru.betterend.blocks;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.patterns.Patterns;
 
@@ -14,15 +14,15 @@ public class PedestalVanilla extends PedestalBlock {
 	public PedestalVanilla(Block parent) {
 		super(parent);
 	}
-	
+
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(parent);
+		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
 		String name = blockId.getPath().replace("_block", "");
 		Map<String, String> textures = new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("%mod%", blockId.getNamespace() );
+				put("%mod%", blockId.getNamespace());
 				put("%top%", "polished_" + name);
 				put("%base%", "polished_" + name);
 				put("%pillar%", name + "_pillar");

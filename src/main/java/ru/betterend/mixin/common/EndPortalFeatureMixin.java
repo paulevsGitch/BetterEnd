@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -29,16 +29,17 @@ public class EndPortalFeatureMixin {
 	@Final
 	@Shadow
 	private boolean open;
-	
+
 	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void bePortalGenerate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos blockPos, DefaultFeatureConfig config, CallbackInfoReturnable<Boolean> info) {
+	private void bePortalGenerate(StructureWorldAccess world, ChunkGenerator generator, Random random,
+			BlockPos blockPos, DefaultFeatureConfig config, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPortal()) {
 			info.setReturnValue(false);
 			info.cancel();
-		}
-		else if (GeneratorOptions.replacePortal()) {
+		} else if (GeneratorOptions.replacePortal()) {
 			blockPos = be_updatePos(blockPos, world);
-			Structure structure = StructureHelper.readStructure(BetterEnd.makeID(open ? "portal/end_portal_active" : "portal/end_portal_inactive"));
+			Structure structure = StructureHelper
+					.readStructure(BetterEnd.makeID(open ? "portal/end_portal_active" : "portal/end_portal_inactive"));
 			BlockPos size = structure.getSize();
 			blockPos = blockPos.add(-(size.getX() >> 1), -3, -(size.getZ() >> 1));
 			structure.place(world, blockPos, new StructurePlacementData(), random);
@@ -46,12 +47,12 @@ public class EndPortalFeatureMixin {
 			info.cancel();
 		}
 	}
-	
+
 	@ModifyVariable(method = "generate", ordinal = 0, at = @At("HEAD"))
 	private BlockPos be_setPosOnGround(BlockPos blockPos, StructureWorldAccess world) {
 		return be_updatePos(blockPos, world);
 	}
-	
+
 	private BlockPos be_updatePos(BlockPos blockPos, StructureWorldAccess world) {
 		if (GeneratorOptions.useNewGenerator()) {
 			BlockPos pos = GeneratorOptions.getPortalPos();

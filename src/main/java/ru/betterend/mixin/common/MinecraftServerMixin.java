@@ -17,10 +17,10 @@ import net.minecraft.resource.ServerResourceManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.WorldGenerationProgressListener;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.SaveProperties;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerWorldProperties;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndBiomes;
@@ -30,11 +30,11 @@ import ru.betterend.world.generator.GeneratorOptions;
 public class MinecraftServerMixin {
 	@Shadow
 	private ServerResourceManager serverResourceManager;
-	
+
 	@Final
 	@Shadow
-	private Map<RegistryKey<World>, ServerWorld> worlds;
-	
+	private Map<RegistryKey<Level>, ServerLevel> worlds;
+
 	@Final
 	@Shadow
 	protected SaveProperties saveProperties;
@@ -49,25 +49,26 @@ public class MinecraftServerMixin {
 		beInjectRecipes();
 		EndBiomes.initRegistry((MinecraftServer) (Object) this);
 	}
-	
+
 	@Inject(method = "getOverworld", at = @At(value = "HEAD"), cancellable = true)
-	private final void beGetOverworld(CallbackInfoReturnable<ServerWorld> info) {
+	private final void beGetOverworld(CallbackInfoReturnable<ServerLevel> info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
-			ServerWorld world = worlds.get(World.END);
+			ServerLevel world = worlds.get(Level.END);
 			if (world == null) {
-				world = worlds.get(World.OVERWORLD);
+				world = worlds.get(Level.OVERWORLD);
 			}
 			info.setReturnValue(world);
 			info.cancel();
 		}
 	}
-	
+
 	@Inject(method = "createWorlds", at = @At(value = "TAIL"))
-	private final void be_CreateWorlds(WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo info) {
+	private final void be_CreateWorlds(WorldGenerationProgressListener worldGenerationProgressListener,
+			CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
-			ServerWorld world = worlds.get(World.END);
+			ServerLevel world = worlds.get(Level.END);
 			if (world == null) {
-				world = worlds.get(World.OVERWORLD);
+				world = worlds.get(Level.OVERWORLD);
 			}
 			this.getPlayerManager().setMainWorld(world);
 			ServerWorldProperties serverWorldProperties = saveProperties.getMainWorldProperties();
@@ -76,17 +77,20 @@ public class MinecraftServerMixin {
 			setupSpawn(world, serverWorldProperties, generatorOptions.hasBonusChest(), bl, true);
 		}
 	}
-	
+
 	@Inject(method = "setupSpawn", at = @At(value = "HEAD"), cancellable = true)
-	private static void be_SetupSpawn(ServerWorld world, ServerWorldProperties serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) {
-		if (GeneratorOptions.swapOverworldToEnd() && world.getRegistryKey() == World.OVERWORLD) {
+	private static void be_SetupSpawn(ServerLevel world, ServerWorldProperties serverWorldProperties,
+			boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) {
+		if (GeneratorOptions.swapOverworldToEnd() && world.dimension() == Level.OVERWORLD) {
 			info.cancel();
 		}
 	}
-	
+
 	@Shadow
-	private static void setupSpawn(ServerWorld world, ServerWorldProperties serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl) {}
-	
+	private static void setupSpawn(ServerLevel world, ServerWorldProperties serverWorldProperties, boolean bonusChest,
+			boolean debugWorld, boolean bl) {
+	}
+
 	@Shadow
 	public PlayerManager getPlayerManager() {
 		return null;

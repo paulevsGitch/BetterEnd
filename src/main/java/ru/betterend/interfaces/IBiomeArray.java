@@ -1,6 +1,6 @@
 package ru.betterend.interfaces;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.biome.Biome;
 
 public interface IBiomeArray {

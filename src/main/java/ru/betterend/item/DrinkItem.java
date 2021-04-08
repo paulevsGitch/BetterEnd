@@ -1,20 +1,20 @@
 package ru.betterend.item;
 
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUsage;
+import net.minecraft.world.item.Items;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class DrinkItem extends PatternedItem {
-	public DrinkItem(Settings settings) {
+	public DrinkItem(Properties settings) {
 		super(settings);
 	}
 
@@ -29,14 +29,14 @@ public class DrinkItem extends PatternedItem {
 	}
 
 	@Override
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+	public TypedActionResult<ItemStack> use(Level world, PlayerEntity user, Hand hand) {
 		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
 
 	@Override
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (user instanceof ServerPlayerEntity) {
-			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) user;
+	public ItemStack finishUsing(ItemStack stack, Level world, LivingEntity user) {
+		if (user instanceof ServerPlayer) {
+			ServerPlayer serverPlayerEntity = (ServerPlayer) user;
 			Criteria.CONSUME_ITEM.trigger(serverPlayerEntity, stack);
 			serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
 		}
@@ -45,7 +45,7 @@ public class DrinkItem extends PatternedItem {
 			stack.decrement(1);
 		}
 
-		if (!world.isClient) {
+		if (!world.isClientSide) {
 			user.clearStatusEffects();
 		}
 

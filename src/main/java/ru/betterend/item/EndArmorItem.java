@@ -5,26 +5,27 @@ import java.util.UUID;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Item;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.attribute.EntityAttribute;
+import net.minecraft.world.entity.attribute.EntityAttributeModifier;
+import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import ru.betterend.mixin.common.ArmorItemAccessor;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
 public class EndArmorItem extends ArmorItem implements Patterned {
-	public EndArmorItem(ArmorMaterial material, EquipmentSlot slot, Item.Settings settings) {
+	public EndArmorItem(ArmorMaterial material, EquipmentSlot slot, Item.Properties settings) {
 		super(material, slot, settings);
 
 		addKnockbackResistance((ArmorItemAccessor) this, slot, this.knockbackResistance);
 	}
 
 	/** Ensures knockback resistance is actually applied */
-	private static void addKnockbackResistance(ArmorItemAccessor accessor, EquipmentSlot slot, double knockbackResistance) {
+	private static void addKnockbackResistance(ArmorItemAccessor accessor, EquipmentSlot slot,
+			double knockbackResistance) {
 		if (knockbackResistance == 0) {
 			return;
 		}
@@ -41,7 +42,8 @@ public class EndArmorItem extends ArmorItem implements Patterned {
 		// Rebuild attributeModifiers to include knockback resistance
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 		builder.putAll(attributeModifiers);
-		builder.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(uuid, "Armor knockback resistance", knockbackResistance, EntityAttributeModifier.Operation.ADDITION));
+		builder.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(uuid,
+				"Armor knockback resistance", knockbackResistance, EntityAttributeModifier.Operation.ADDITION));
 		accessor.be_setAttributeModifiers(builder.build());
 	}
 

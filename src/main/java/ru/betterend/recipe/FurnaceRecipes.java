@@ -1,7 +1,7 @@
 package ru.betterend.recipe;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Items;
 import ru.betterend.recipe.builders.FurnaceRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -14,7 +14,8 @@ public class FurnaceRecipes {
 		FurnaceRecipe.make("end_fish", EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED).buildFoodlike();
 		FurnaceRecipe.make("slime_ball", EndBlocks.JELLYSHROOM_CAP_PURPLE, Items.SLIME_BALL).build();
 		FurnaceRecipe.make("menger_sponge", EndBlocks.MENGER_SPONGE_WET, EndBlocks.MENGER_SPONGE).build();
-		FurnaceRecipe.make("chorus_mushroom", EndItems.CHORUS_MUSHROOM_RAW, EndItems.CHORUS_MUSHROOM_COOKED).buildFoodlike();
+		FurnaceRecipe.make("chorus_mushroom", EndItems.CHORUS_MUSHROOM_RAW, EndItems.CHORUS_MUSHROOM_COOKED)
+				.buildFoodlike();
 		FurnaceRecipe.make("bolux_mushroom", EndBlocks.BOLUX_MUSHROOM, EndItems.BOLUX_MUSHROOM_COOKED).buildFoodlike();
 	}
 }

@@ -2,11 +2,11 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
+import net.minecraft.world.level.block.AbstractBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import ru.betterend.blocks.BlockProperties.PentaShape;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
@@ -23,22 +23,26 @@ public class LanceleafSeedBlock extends EndPlantWithAgeBlock {
 			return;
 		}
 		int rotation = random.nextInt(4);
-		Mutable mut = new Mutable().set(pos);
-		BlockState plant = EndBlocks.LANCELEAF.getDefaultState().with(BlockProperties.ROTATION, rotation);
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
+		BlockState plant = EndBlocks.LANCELEAF.defaultBlockState().with(BlockProperties.ROTATION, rotation);
 		BlocksHelper.setWithoutUpdate(world, mut, plant.with(BlockProperties.PENTA_SHAPE, PentaShape.BOTTOM));
-		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.PRE_BOTTOM));
+		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP),
+				plant.with(BlockProperties.PENTA_SHAPE, PentaShape.PRE_BOTTOM));
 		for (int i = 2; i < height - 2; i++) {
-			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP),
+					plant.with(BlockProperties.PENTA_SHAPE, PentaShape.MIDDLE));
 		}
-		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP));
-		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.TOP));
+		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP),
+				plant.with(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP));
+		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP),
+				plant.with(BlockProperties.PENTA_SHAPE, PentaShape.TOP));
 	}
-	
+
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isOf(EndBlocks.AMBER_MOSS);
+		return state.is(EndBlocks.AMBER_MOSS);
 	}
-	
+
 	@Override
 	public AbstractBlock.OffsetType getOffsetType() {
 		return AbstractBlock.OffsetType.NONE;

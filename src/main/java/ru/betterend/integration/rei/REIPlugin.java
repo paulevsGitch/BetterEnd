@@ -12,10 +12,10 @@ import me.shedaniel.rei.plugin.DefaultPlugin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
-import net.minecraft.recipe.BlastingRecipe;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.crafting.BlastingRecipe;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.blocks.basis.EndFurnaceBlock;
@@ -28,11 +28,11 @@ import ru.betterend.registry.EndItems;
 @Environment(EnvType.CLIENT)
 public class REIPlugin implements REIPluginV0 {
 
-	public final static Identifier PLUGIN_ID = BetterEnd.makeID("rei_plugin");
-	public final static Identifier ALLOYING_FUEL = BetterEnd.makeID("alloying_fuel");
-	public final static Identifier ALLOYING = AlloyingRecipe.ID;
-	public final static Identifier SMITHING = AnvilRecipe.ID;
-	public final static Identifier INFUSION = InfusionRecipe.ID;
+	public final static ResourceLocation PLUGIN_ID = BetterEnd.makeID("rei_plugin");
+	public final static ResourceLocation ALLOYING_FUEL = BetterEnd.makeID("alloying_fuel");
+	public final static ResourceLocation ALLOYING = AlloyingRecipe.ID;
+	public final static ResourceLocation SMITHING = AnvilRecipe.ID;
+	public final static ResourceLocation INFUSION = InfusionRecipe.ID;
 
 	public final static EntryStack END_STONE_SMELTER = EntryStack.create(EndBlocks.END_STONE_SMELTER);
 	public final static EntryStack INFUSION_RITUAL = EntryStack.create(EndBlocks.INFUSION_PEDESTAL);
@@ -40,12 +40,12 @@ public class REIPlugin implements REIPluginV0 {
 	public final static EntryStack[] ANVILS;
 
 	@Override
-	public Identifier getPluginIdentifier() {
+	public ResourceLocation getPluginIdentifier() {
 		return PLUGIN_ID;
 	}
-	
+
 	@Override
-    public void registerRecipeDisplays(RecipeHelper recipeHelper) {
+	public void registerRecipeDisplays(RecipeHelper recipeHelper) {
 		recipeHelper.registerRecipes(ALLOYING, AlloyingRecipe.class, REIAlloyingDisplay::new);
 		recipeHelper.registerRecipes(ALLOYING, BlastingRecipe.class, REIAlloyingDisplay::new);
 		recipeHelper.registerRecipes(SMITHING, AnvilRecipe.class, REIAnvilDisplay::new);
@@ -56,7 +56,7 @@ public class REIPlugin implements REIPluginV0 {
 			}
 		});
 	}
-	
+
 	@Override
 	public void registerOthers(RecipeHelper recipeHelper) {
 		recipeHelper.registerWorkingStations(ALLOYING_FUEL, END_STONE_SMELTER);
@@ -68,15 +68,12 @@ public class REIPlugin implements REIPluginV0 {
 
 		recipeHelper.registerWorkingStations(DefaultPlugin.SMELTING, FURNACES);
 		recipeHelper.registerWorkingStations(DefaultPlugin.FUEL, FURNACES);
-    }
-	
+	}
+
 	@Override
 	public void registerPluginCategories(RecipeHelper recipeHelper) {
-		recipeHelper.registerCategories(
-				new REIAlloyingFuelCategory(),
-				new REIAlloyingCategory(),
-				new REIInfusionCategory(),
-				new REIAnvilCategory());
+		recipeHelper.registerCategories(new REIAlloyingFuelCategory(), new REIAlloyingCategory(),
+				new REIInfusionCategory(), new REIAnvilCategory());
 	}
 
 	static {

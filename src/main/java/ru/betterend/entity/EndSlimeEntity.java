@@ -4,39 +4,39 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.ai.goal.FollowTargetGoal;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.EntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ItemEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnReason;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.damage.DamageSource;
+import net.minecraft.world.entity.data.DataTracker;
+import net.minecraft.world.entity.data.TrackedData;
+import net.minecraft.world.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.world.entity.effect.StatusEffects;
+import net.minecraft.world.entity.mob.SlimeEntity;
+import net.minecraft.world.entity.passive.IronGolemEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.biome.Biome;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
@@ -45,44 +45,43 @@ import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
 public class EndSlimeEntity extends SlimeEntity {
-	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EndSlimeEntity.class, TrackedDataHandlerRegistry.BYTE);
-	private static final Mutable POS = new Mutable();
-	
-	public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, World world) {
+	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(EndSlimeEntity.class,
+			TrackedDataHandlerRegistry.BYTE);
+	private static final MutableBlockPos POS = new MutableBlockPos();
+
+	public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, Level world) {
 		super(entityType, world);
 		this.moveControl = new EndSlimeMoveControl(this);
 	}
-	
+
 	protected void initGoals() {
 		this.goalSelector.add(1, new SwimmingGoal());
 		this.goalSelector.add(2, new FaceTowardTargetGoal());
 		this.goalSelector.add(3, new RandomLookGoal());
 		this.goalSelector.add(5, new MoveGoal());
-		this.targetSelector.add(1, new FollowTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, false, (livingEntity) -> {
-			return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
-		}));
+		this.targetSelector.add(1,
+				new FollowTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, false, (livingEntity) -> {
+					return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
+				}));
 		this.targetSelector.add(3, new FollowTargetGoal<IronGolemEntity>(this, IronGolemEntity.class, true));
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes()
-				.add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0D)
-				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D)
+		return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0D)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15D);
 	}
-	
+
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+			EntityData entityData, CompoundTag entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		EndBiome biome = EndBiomes.getFromBiome(world.getBiome(getBlockPos()));
 		if (biome == EndBiomes.FOGGY_MUSHROOMLAND) {
 			this.setMossy();
-		}
-		else if (biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
+		} else if (biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
 			this.setLake();
-		}
-		else if (biome == EndBiomes.AMBER_LAND) {
+		} else if (biome == EndBiomes.AMBER_LAND) {
 			this.setAmber(true);
 		}
 		this.calculateDimensions();
@@ -94,7 +93,7 @@ public class EndSlimeEntity extends SlimeEntity {
 		super.initDataTracker();
 		this.dataTracker.startTracking(VARIANT, (byte) 0);
 	}
-	
+
 	@Override
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
@@ -110,21 +109,21 @@ public class EndSlimeEntity extends SlimeEntity {
 	}
 
 	@Override
-	protected ParticleEffect getParticles() {
+	protected ParticleOptions getParticles() {
 		return ParticleTypes.PORTAL;
 	}
-	
+
 	@Override
 	public void remove() {
 		int i = this.getSize();
-		if (!this.world.isClient && i > 1 && this.isDead()) {
+		if (!this.world.isClientSide && i > 1 && this.isDead()) {
 			Text text = this.getCustomName();
 			boolean bl = this.isAiDisabled();
 			float f = (float) i / 4.0F;
 			int j = i / 2;
 			int k = 2 + this.random.nextInt(3);
 			int type = this.getSlimeType();
-			
+
 			for (int l = 0; l < k; ++l) {
 				float g = ((float) (l % 2) - 0.5F) * f;
 				float h = ((float) (l / 2) - 0.5F) * f;
@@ -139,13 +138,14 @@ public class EndSlimeEntity extends SlimeEntity {
 				slimeEntity.setInvulnerable(this.isInvulnerable());
 				((ISlime) slimeEntity).beSetSlimeSize(j, true);
 				slimeEntity.calculateDimensions();
-				slimeEntity.refreshPositionAndAngles(this.getX() + (double) g, this.getY() + 0.5D, this.getZ() + (double) h, this.random.nextFloat() * 360.0F, 0.0F);
+				slimeEntity.refreshPositionAndAngles(this.getX() + (double) g, this.getY() + 0.5D,
+						this.getZ() + (double) h, this.random.nextFloat() * 360.0F, 0.0F);
 				this.world.spawnEntity(slimeEntity);
 			}
 		}
 		this.removed = true;
 	}
-	
+
 	@Override
 	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
 		int maxCount = this.getSize();
@@ -161,15 +161,15 @@ public class EndSlimeEntity extends SlimeEntity {
 		ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(Items.SLIME_BALL, count));
 		this.world.spawnEntity(drop);
 	}
-	
+
 	public int getSlimeType() {
 		return this.dataTracker.get(VARIANT).intValue();
 	}
-	
+
 	public void setSlimeType(int value) {
 		this.dataTracker.set(VARIANT, (byte) value);
 	}
-	
+
 	protected void setMossy() {
 		setSlimeType(1);
 	}
@@ -177,7 +177,7 @@ public class EndSlimeEntity extends SlimeEntity {
 	public boolean isMossy() {
 		return getSlimeType() == 1;
 	}
-	
+
 	protected void setLake() {
 		setSlimeType(2);
 	}
@@ -185,7 +185,7 @@ public class EndSlimeEntity extends SlimeEntity {
 	public boolean isLake() {
 		return getSlimeType() == 2;
 	}
-	
+
 	protected void setAmber(boolean mossy) {
 		this.dataTracker.set(VARIANT, (byte) 3);
 	}
@@ -193,26 +193,30 @@ public class EndSlimeEntity extends SlimeEntity {
 	public boolean isAmber() {
 		return this.dataTracker.get(VARIANT) == 3;
 	}
-	
+
 	public boolean isChorus() {
 		return this.dataTracker.get(VARIANT) == 0;
 	}
-	
-	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return random.nextInt(16) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
+
+	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerWorldAccess world, SpawnReason spawnReason,
+			BlockPos pos, Random random) {
+		return random.nextInt(16) == 0 || isPermanentBiome(world, pos)
+				|| (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
 	}
-	
+
 	private static boolean isPermanentBiome(ServerWorldAccess world, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
 		return EndBiomes.getFromBiome(biome) == EndBiomes.CHORUS_FOREST;
 	}
-	
+
 	private static boolean notManyEntities(ServerWorldAccess world, BlockPos pos, int radius, int maxCount) {
 		Box box = new Box(pos).expand(radius);
-		List<EndSlimeEntity> list = world.getEntitiesByClass(EndSlimeEntity.class, box, (entity) -> { return true; });
+		List<EndSlimeEntity> list = world.getEntitiesByClass(EndSlimeEntity.class, box, (entity) -> {
+			return true;
+		});
 		return list.size() <= maxCount;
 	}
-	
+
 	private static boolean isWaterNear(ServerWorldAccess world, BlockPos pos, int radius, int radius2) {
 		for (int x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
 			POS.setX(x);
@@ -228,7 +232,7 @@ public class EndSlimeEntity extends SlimeEntity {
 		}
 		return false;
 	}
-	
+
 	class MoveGoal extends Goal {
 		public MoveGoal() {
 			this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
@@ -238,17 +242,17 @@ public class EndSlimeEntity extends SlimeEntity {
 			if (EndSlimeEntity.this.hasVehicle()) {
 				return false;
 			}
-			
+
 			float yaw = EndSlimeEntity.this.getHeadYaw();
 			float speed = EndSlimeEntity.this.getMovementSpeed();
 			if (speed > 0.1) {
-				float dx = MathHelper.sin(-yaw * 0.017453292F);
-				float dz = MathHelper.cos(-yaw * 0.017453292F);
+				float dx = Mth.sin(-yaw * 0.017453292F);
+				float dz = Mth.cos(-yaw * 0.017453292F);
 				BlockPos pos = EndSlimeEntity.this.getBlockPos().add(dx * speed * 4, 0, dz * speed * 4);
 				int down = BlocksHelper.downRay(EndSlimeEntity.this.world, pos, 16);
 				return down < 5;
 			}
-			
+
 			return true;
 		}
 
@@ -264,8 +268,7 @@ public class EndSlimeEntity extends SlimeEntity {
 		}
 
 		public boolean canStart() {
-			return (EndSlimeEntity.this.isTouchingWater()
-					|| EndSlimeEntity.this.isInLava())
+			return (EndSlimeEntity.this.isTouchingWater() || EndSlimeEntity.this.isInLava())
 					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 
@@ -288,8 +291,7 @@ public class EndSlimeEntity extends SlimeEntity {
 
 		public boolean canStart() {
 			return EndSlimeEntity.this.getTarget() == null
-					&& (EndSlimeEntity.this.onGround
-							|| EndSlimeEntity.this.isTouchingWater()
+					&& (EndSlimeEntity.this.onGround || EndSlimeEntity.this.isTouchingWater()
 							|| EndSlimeEntity.this.isInLava()
 							|| EndSlimeEntity.this.hasStatusEffect(StatusEffects.LEVITATION))
 					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
@@ -316,12 +318,12 @@ public class EndSlimeEntity extends SlimeEntity {
 			LivingEntity livingEntity = EndSlimeEntity.this.getTarget();
 			if (livingEntity == null) {
 				return false;
-			}
-			else if (!livingEntity.isAlive()) {
+			} else if (!livingEntity.isAlive()) {
 				return false;
-			}
-			else {
-				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable ? false : EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
+			} else {
+				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable
+						? false
+						: EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 			}
 		}
 
@@ -334,21 +336,19 @@ public class EndSlimeEntity extends SlimeEntity {
 			LivingEntity livingEntity = EndSlimeEntity.this.getTarget();
 			if (livingEntity == null) {
 				return false;
-			}
-			else if (!livingEntity.isAlive()) {
+			} else if (!livingEntity.isAlive()) {
 				return false;
-			}
-			else if (livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable) {
+			} else if (livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable) {
 				return false;
-			}
-			else {
+			} else {
 				return --this.ticksLeft > 0;
 			}
 		}
 
 		public void tick() {
 			EndSlimeEntity.this.lookAtEntity(EndSlimeEntity.this.getTarget(), 10.0F, 10.0F);
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.yaw, EndSlimeEntity.this.canAttack());
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.yaw,
+					EndSlimeEntity.this.canAttack());
 		}
 	}
 
@@ -378,11 +378,11 @@ public class EndSlimeEntity extends SlimeEntity {
 			this.entity.bodyYaw = this.entity.yaw;
 			if (this.state != MoveControl.State.MOVE_TO) {
 				this.entity.setForwardSpeed(0.0F);
-			}
-			else {
+			} else {
 				this.state = MoveControl.State.WAIT;
 				if (this.entity.isOnGround()) {
-					this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
+					this.entity.setMovementSpeed((float) (this.speed
+							* this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
 					if (this.ticksUntilJump-- <= 0) {
 						this.ticksUntilJump = EndSlimeEntity.this.getTicksUntilNextJump();
 						if (this.jumpOften) {
@@ -391,17 +391,17 @@ public class EndSlimeEntity extends SlimeEntity {
 
 						EndSlimeEntity.this.getJumpControl().setActive();
 						if (EndSlimeEntity.this.makesJumpSound()) {
-							EndSlimeEntity.this.playSound(EndSlimeEntity.this.getJumpSound(), EndSlimeEntity.this.getSoundVolume(), getJumpSoundPitch());
+							EndSlimeEntity.this.playSound(EndSlimeEntity.this.getJumpSound(),
+									EndSlimeEntity.this.getSoundVolume(), getJumpSoundPitch());
 						}
-					}
-					else {
+					} else {
 						EndSlimeEntity.this.sidewaysSpeed = 0.0F;
 						EndSlimeEntity.this.forwardSpeed = 0.0F;
 						this.entity.setMovementSpeed(0.0F);
 					}
-				}
-				else {
-					this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
+				} else {
+					this.entity.setMovementSpeed((float) (this.speed
+							* this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
 				}
 
 			}
@@ -409,7 +409,8 @@ public class EndSlimeEntity extends SlimeEntity {
 
 		private float getJumpSoundPitch() {
 			float f = EndSlimeEntity.this.isSmall() ? 1.4F : 0.8F;
-			return ((EndSlimeEntity.this.random.nextFloat() - EndSlimeEntity.this.random.nextFloat()) * 0.2F + 1.0F) * f;
+			return ((EndSlimeEntity.this.random.nextFloat() - EndSlimeEntity.this.random.nextFloat()) * 0.2F + 1.0F)
+					* f;
 		}
 	}
 }

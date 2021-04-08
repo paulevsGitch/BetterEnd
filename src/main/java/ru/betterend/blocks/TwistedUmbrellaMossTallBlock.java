@@ -2,11 +2,11 @@ package ru.betterend.blocks;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
 import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.registry.EndBlocks;
 
@@ -14,15 +14,16 @@ public class TwistedUmbrellaMossTallBlock extends DoublePlantBlock {
 	public TwistedUmbrellaMossTallBlock() {
 		super(12);
 	}
-	
+
 	@Override
-	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(EndBlocks.TWISTED_UMBRELLA_MOSS));
+	public void grow(ServerLevel world, Random random, BlockPos pos, BlockState state) {
+		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+				new ItemStack(EndBlocks.TWISTED_UMBRELLA_MOSS));
 		world.spawnEntity(item);
 	}
-	
+
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isOf(EndBlocks.END_MOSS) || state.isOf(EndBlocks.END_MYCELIUM) || state.isOf(EndBlocks.JUNGLE_MOSS);
+		return state.is(EndBlocks.END_MOSS) || state.is(EndBlocks.END_MYCELIUM) || state.is(EndBlocks.JUNGLE_MOSS);
 	}
 }

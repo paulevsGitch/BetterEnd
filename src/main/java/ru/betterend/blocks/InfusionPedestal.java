@@ -1,15 +1,15 @@
 package ru.betterend.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ShapeContext;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.rituals.InfusionRitual;
@@ -22,9 +22,9 @@ public class InfusionPedestal extends PedestalBlock {
 		super(Blocks.OBSIDIAN);
 		this.height = 1.08F;
 	}
-	
+
 	@Override
-	public void checkRitual(World world, BlockPos pos) {
+	public void checkRitual(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof InfusionPedestalEntity) {
 			InfusionPedestalEntity pedestal = (InfusionPedestalEntity) blockEntity;
@@ -37,30 +37,30 @@ public class InfusionPedestal extends PedestalBlock {
 			}
 		}
 	}
-	
+
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
 		return new InfusionPedestalEntity();
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		if (state.isOf(this)) {
-			switch(state.get(STATE)) {
-				case PEDESTAL_TOP: {
-					return SHAPE_PEDESTAL_TOP;
-				}
-				case DEFAULT: {
-					return SHAPE_DEFAULT;
-				}
-				default: {
-					return super.getOutlineShape(state, world, pos, context);
-				}
+		if (state.is(this)) {
+			switch (state.getValue(STATE)) {
+			case PEDESTAL_TOP: {
+				return SHAPE_PEDESTAL_TOP;
+			}
+			case DEFAULT: {
+				return SHAPE_DEFAULT;
+			}
+			default: {
+				return super.getOutlineShape(state, world, pos, context);
+			}
 			}
 		}
 		return super.getOutlineShape(state, world, pos, context);
 	}
-	
+
 	static {
 		VoxelShape basinUp = Block.createCuboidShape(2, 3, 2, 14, 4, 14);
 		VoxelShape basinDown = Block.createCuboidShape(0, 0, 0, 16, 3, 16);

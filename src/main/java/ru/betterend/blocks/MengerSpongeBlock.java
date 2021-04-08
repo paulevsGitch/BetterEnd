@@ -5,20 +5,20 @@ import java.util.Queue;
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.block.FluidDrainable;
-import net.minecraft.block.Material;
-import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FluidBlock;
+import net.minecraft.world.level.block.FluidDrainable;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -28,23 +28,24 @@ public class MengerSpongeBlock extends BlockBaseNotFull implements IRenderTypeab
 	public MengerSpongeBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SPONGE).nonOpaque());
 	}
-	
+
 	@Override
-	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+	public void onBlockAdded(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (absorbWater(world, pos)) {
-			world.setBlockState(pos, EndBlocks.MENGER_SPONGE_WET.getDefaultState());
+			world.setBlockAndUpdate(pos, EndBlocks.MENGER_SPONGE_WET.defaultBlockState());
 		}
 	}
-	
+
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world,
+			BlockPos pos, BlockPos neighborPos) {
 		if (absorbWater(world, pos)) {
-			return EndBlocks.MENGER_SPONGE_WET.getDefaultState();
+			return EndBlocks.MENGER_SPONGE_WET.defaultBlockState();
 		}
 		return state;
 	}
 
-	private boolean absorbWater(WorldAccess world, BlockPos pos) {
+	private boolean absorbWater(LevelAccessor world, BlockPos pos) {
 		Queue<Pair<BlockPos, Integer>> queue = Lists.newLinkedList();
 		queue.add(new Pair<BlockPos, Integer>(pos, 0));
 		int i = 0;
@@ -63,23 +64,25 @@ public class MengerSpongeBlock extends BlockBaseNotFull implements IRenderTypeab
 				FluidState fluidState = world.getFluidState(blockPos2);
 				Material material = blockState.getMaterial();
 				if (fluidState.isIn(FluidTags.WATER)) {
-					if (blockState.getBlock() instanceof FluidDrainable && ((FluidDrainable) blockState.getBlock()).tryDrainFluid(world, blockPos2, blockState) != Fluids.EMPTY) {
+					if (blockState.getBlock() instanceof FluidDrainable && ((FluidDrainable) blockState.getBlock())
+							.tryDrainFluid(world, blockPos2, blockState) != Fluids.EMPTY) {
 						++i;
 						if (j < 6) {
 							queue.add(new Pair<BlockPos, Integer>(blockPos2, j + 1));
 						}
-					}
-					else if (blockState.getBlock() instanceof FluidBlock) {
-						world.setBlockState(blockPos2, Blocks.AIR.getDefaultState(), 3);
+					} else if (blockState.getBlock() instanceof FluidBlock) {
+						world.setBlockAndUpdate(blockPos2, Blocks.AIR.defaultBlockState(), 3);
 						++i;
 						if (j < 6) {
 							queue.add(new Pair<BlockPos, Integer>(blockPos2, j + 1));
 						}
-					}
-					else if (material == Material.UNDERWATER_PLANT || material == Material.REPLACEABLE_UNDERWATER_PLANT) {
-						BlockEntity blockEntity = blockState.getBlock().hasBlockEntity() ? world.getBlockEntity(blockPos2) : null;
+					} else if (material == Material.UNDERWATER_PLANT
+							|| material == Material.REPLACEABLE_UNDERWATER_PLANT) {
+						BlockEntity blockEntity = blockState.getBlock().hasBlockEntity()
+								? world.getBlockEntity(blockPos2)
+								: null;
 						dropStacks(blockState, world, blockPos2, blockEntity);
-						world.setBlockState(blockPos2, Blocks.AIR.getDefaultState(), 3);
+						world.setBlockAndUpdate(blockPos2, Blocks.AIR.defaultBlockState(), 3);
 						++i;
 						if (j < 6) {
 							queue.add(new Pair<BlockPos, Integer>(blockPos2, j + 1));
@@ -95,7 +98,7 @@ public class MengerSpongeBlock extends BlockBaseNotFull implements IRenderTypeab
 
 		return i > 0;
 	}
-	
+
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;

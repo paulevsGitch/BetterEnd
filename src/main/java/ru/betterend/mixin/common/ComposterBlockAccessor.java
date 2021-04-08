@@ -3,8 +3,8 @@ package ru.betterend.mixin.common;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.item.ItemConvertible;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.item.ItemConvertible;
 
 @Mixin(ComposterBlock.class)
 public interface ComposterBlockAccessor {

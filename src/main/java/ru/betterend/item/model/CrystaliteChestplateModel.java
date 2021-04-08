@@ -8,7 +8,7 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.util.Arm;
 
 public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
@@ -16,7 +16,7 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 	public ModelPart leftShoulder;
 	public ModelPart rightShoulder;
 	private boolean thinArms;
-	
+
 	public CrystaliteChestplateModel(float scale, boolean thinArms) {
 		super(RenderLayer::getEntityTranslucent, scale, 0.0F, 64, 48);
 		this.thinArms = thinArms;
@@ -41,29 +41,29 @@ public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
 			this.rightShoulder.setPivot(-5.0F, 2.0F, 10.0F);
 		}
 	}
-	
+
 	@Override
 	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
 		super.setAttributes(bipedEntityModel);
 		this.leftShoulder.copyPositionAndRotation(leftArm);
 		this.rightShoulder.copyPositionAndRotation(rightArm);
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getHeadParts() {
 		return Collections::emptyIterator;
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return Lists.newArrayList(torso, leftShoulder, rightShoulder);
 	}
-	
+
 	@Override
 	public void setArmAngle(Arm arm, MatrixStack matrices) {
 		ModelPart modelPart = this.getArm(arm);
 		if (this.thinArms) {
-			float f = 0.5F * (float)(arm == Arm.RIGHT ? 1 : -1);
+			float f = 0.5F * (float) (arm == Arm.RIGHT ? 1 : -1);
 			modelPart.pivotX += f;
 			modelPart.rotate(matrices);
 			modelPart.pivotX -= f;

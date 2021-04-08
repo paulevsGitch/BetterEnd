@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 public class CrystaliteLeggingsModel extends BipedEntityModel<LivingEntity> {
 
@@ -28,7 +28,7 @@ public class CrystaliteLeggingsModel extends BipedEntityModel<LivingEntity> {
 	protected Iterable<ModelPart> getHeadParts() {
 		return Collections::emptyIterator;
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return Lists.newArrayList(torso, rightLeg, leftLeg);

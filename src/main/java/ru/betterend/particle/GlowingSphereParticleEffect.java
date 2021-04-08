@@ -3,12 +3,12 @@ package ru.betterend.particle;
 import java.util.Locale;
 
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.Registry;
 import ru.betterend.registry.EndParticles;
 
-public class GlowingSphereParticleEffect implements ParticleEffect {
+public class GlowingSphereParticleEffect implements ParticleOptions {
 	private final float red;
 	private final float green;
 	private final float blue;
@@ -33,7 +33,8 @@ public class GlowingSphereParticleEffect implements ParticleEffect {
 
 	@Override
 	public String asString() {
-		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getId(this.getType()), this.red, this.green, this.blue);
+		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getId(this.getType()), this.red,
+				this.green, this.blue);
 	}
 
 	public float getRed() {

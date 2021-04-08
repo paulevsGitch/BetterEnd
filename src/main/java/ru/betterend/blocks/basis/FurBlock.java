@@ -8,21 +8,21 @@ import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.ShapeContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
+import net.minecraft.world.level.BlockGetter;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.MHelper;
@@ -31,52 +31,44 @@ public class FurBlock extends AttachedBlock implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	private final ItemConvertible drop;
 	private final int dropChance;
-	
+
 	public FurBlock(ItemConvertible drop, int light, int dropChance, boolean wet) {
-		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(wet ? BlockSoundGroup.WET_GRASS : BlockSoundGroup.GRASS)
-				.luminance(light)
-				.breakByHand(true)
-				.noCollision());
+		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT).breakByTool(FabricToolTags.SHEARS)
+				.sounds(wet ? SoundType.WET_GRASS : SoundType.GRASS).luminance(light).breakByHand(true).noCollision());
 		this.drop = drop;
 		this.dropChance = dropChance;
 	}
-	
+
 	public FurBlock(ItemConvertible drop, int dropChance) {
-		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(BlockSoundGroup.GRASS)
-				.breakByHand(true)
-				.noCollision());
+		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT).breakByTool(FabricToolTags.SHEARS)
+				.sounds(SoundType.GRASS).breakByHand(true).noCollision());
 		this.drop = drop;
 		this.dropChance = dropChance;
 	}
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return BOUNDING_SHAPES.get(state.get(FACING));
+		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-	
+
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		ItemStack tool = builder.get(LootContextParameters.TOOL);
-		if (tool != null && tool.getItem().isIn(FabricToolTags.SHEARS) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
+		if (tool != null && tool.getItem().isIn(FabricToolTags.SHEARS)
+				|| EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
-		}
-		else if (dropChance < 1 || MHelper.RANDOM.nextInt(dropChance) == 0) {
+		} else if (dropChance < 1 || MHelper.RANDOM.nextInt(dropChance) == 0) {
 			return Lists.newArrayList(new ItemStack(drop));
-		}
-		else {
+		} else {
 			return Lists.newArrayList();
 		}
 	}
-	
+
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
+
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, VoxelShapes.cuboid(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
 		BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.cuboid(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));

@@ -7,14 +7,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.CraftingTableBlock;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.block.CraftingTableBlock;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 
 @Mixin(CraftingScreenHandler.class)
-public abstract class CraftingScreenHandlerMixin
-{
+public abstract class CraftingScreenHandlerMixin {
 	@Shadow
 	@Final
 	private ScreenHandlerContext context;

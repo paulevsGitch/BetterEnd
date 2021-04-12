@@ -1,12 +1,9 @@
 package ru.betterend.world.features.trees;
 
+import com.mojang.math.Vector3f;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -14,8 +11,10 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -34,7 +33,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
 			return false;
 
 		float size = MHelper.randRange(5, 10, random);
@@ -52,8 +51,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 		});
 
 		Vector3f capPos = spline.get(spline.size() - 1);
-		makeHead(world, pos.offset(capPos.getX() + 0.5F, capPos.getY() + 1.5F, capPos.getZ() + 0.5F),
-				Mth.floor(size / 1.6F));
+		makeHead(world, pos.offset(capPos.x() + 0.5F, capPos.y() + 1.5F, capPos.z() + 0.5F), Mth.floor(size / 1.6F));
 
 		function.setReplaceFunction(REPLACE);
 		function.addPostProcess(POST);
@@ -99,7 +97,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 						mut.move(Direction.DOWN);
 						if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_FUR.defaultBlockState()
-									.with(AttachedBlock.FACING, Direction.DOWN));
+									.setValue(AttachedBlock.FACING, Direction.DOWN));
 						}
 					}
 				}
@@ -159,18 +157,18 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_LANTERN);
 							Axis axis = x < 0 || x > 1 ? Axis.X : Axis.Z;
 							int distance = axis == Axis.X ? x < 0 ? -1 : 1 : z < 0 ? -1 : 1;
-							BlockPos offseted = mut.offset(axis, distance);
+							BlockPos offseted = mut.relative(axis, distance);
 							if (world.getBlockState(offseted).getMaterial().isReplaceable()) {
 								Direction dir = Direction.fromAxisAndDirection(axis,
 										distance < 0 ? AxisDirection.NEGATIVE : AxisDirection.POSITIVE);
-								BlocksHelper.setWithoutUpdate(world, offseted,
-										EndBlocks.AMARANITA_FUR.defaultBlockState().with(AttachedBlock.FACING, dir));
+								BlocksHelper.setWithoutUpdate(world, offseted, EndBlocks.AMARANITA_FUR
+										.defaultBlockState().setValue(AttachedBlock.FACING, dir));
 							}
 							mut.move(Direction.DOWN);
 						}
 						if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_FUR.defaultBlockState()
-									.with(AttachedBlock.FACING, Direction.DOWN));
+									.setValue(AttachedBlock.FACING, Direction.DOWN));
 						}
 					}
 				}
@@ -273,18 +271,18 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_LANTERN);
 							Axis axis = x < 0 || x > 1 ? Axis.X : Axis.Z;
 							int distance = axis == Axis.X ? x < 0 ? -1 : 1 : z < 0 ? -1 : 1;
-							BlockPos offseted = mut.offset(axis, distance);
+							BlockPos offseted = mut.relative(axis, distance);
 							if (world.getBlockState(offseted).getMaterial().isReplaceable()) {
 								Direction dir = Direction.fromAxisAndDirection(axis,
 										distance < 0 ? AxisDirection.NEGATIVE : AxisDirection.POSITIVE);
-								BlocksHelper.setWithoutUpdate(world, offseted,
-										EndBlocks.AMARANITA_FUR.defaultBlockState().with(AttachedBlock.FACING, dir));
+								BlocksHelper.setWithoutUpdate(world, offseted, EndBlocks.AMARANITA_FUR
+										.defaultBlockState().setValue(AttachedBlock.FACING, dir));
 							}
 							mut.move(Direction.DOWN);
 						}
 						if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_FUR.defaultBlockState()
-									.with(AttachedBlock.FACING, Direction.DOWN));
+									.setValue(AttachedBlock.FACING, Direction.DOWN));
 						}
 					}
 				}
@@ -329,7 +327,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
+			if (state.is(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

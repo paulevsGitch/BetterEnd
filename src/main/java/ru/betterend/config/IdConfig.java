@@ -1,26 +1,23 @@
 package ru.betterend.config;
 
 import java.util.function.BiFunction;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.config.ConfigKeeper.Entry;
 import ru.betterend.config.ConfigKeeper.FloatRange;
 import ru.betterend.config.ConfigKeeper.IntegerRange;
 
 public class IdConfig extends Config {
-
+	
 	protected final BiFunction<ResourceLocation, String, ConfigKey> keyFactory;
-
+	
 	public IdConfig(String group, BiFunction<ResourceLocation, String, ConfigKey> keyFactory) {
 		super(group);
 		this.keyFactory = keyFactory;
 	}
 
 	@Override
-	protected void registerEntries() {
-	}
+	protected void registerEntries() {}
 
 	protected ConfigKey createKey(ResourceLocation id, String key) {
 		return this.keyFactory.apply(id, key);
@@ -63,7 +60,7 @@ public class IdConfig extends Config {
 	public boolean setRangedInt(ResourceLocation id, String key, int value) {
 		return this.setRanged(createKey(id, key), value, IntegerRange.class);
 	}
-
+	
 	public boolean setRangedFloat(ResourceLocation id, String key, float value) {
 		return this.setRanged(createKey(id, key), value, FloatRange.class);
 	}

@@ -1,16 +1,16 @@
 package ru.betterend.item;
 
-import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUsage;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class DrinkItem extends PatternedItem {
@@ -19,34 +19,34 @@ public class DrinkItem extends PatternedItem {
 	}
 
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return 32;
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.DRINK;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.DRINK;
 	}
 
 	@Override
-	public TypedActionResult<ItemStack> use(Level world, Player user, Hand hand) {
-		return ItemUsage.consumeHeldItem(world, user, hand);
+	public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
+		return ItemUtils.useDrink(world, user, hand);
 	}
 
 	@Override
-	public ItemStack finishUsing(ItemStack stack, Level world, LivingEntity user) {
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
 		if (user instanceof ServerPlayer) {
 			ServerPlayer serverPlayerEntity = (ServerPlayer) user;
-			Criteria.CONSUME_ITEM.trigger(serverPlayerEntity, stack);
-			serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
+			CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayerEntity, stack);
+			serverPlayerEntity.awardStat(Stats.ITEM_USED.get(this));
 		}
 
-		if (user instanceof Player && !((Player) user).abilities.creativeMode) {
-			stack.decrement(1);
+		if (user instanceof Player && !((Player) user).abilities.instabuild) {
+			stack.shrink(1);
 		}
 
 		if (!world.isClientSide) {
-			user.clearMobEffects();
+			user.removeAllEffects();
 		}
 
 		return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;

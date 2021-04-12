@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.OreBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.block.OreBlock;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.core.Registry;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
@@ -29,18 +29,21 @@ public class EndOreBlock extends OreBlock implements BlockPatterned {
 	private final int minCount;
 	private final int maxCount;
 	private final int expirience;
-
+	
 	public EndOreBlock(Item drop, int minCount, int maxCount, int expirience) {
-		super(FabricBlockSettings.of(Material.STONE, MaterialColor.SAND).hardness(3F).resistance(9F).requiresTool()
-				.sounds(SoundType.STONE));
+		super(FabricBlockSettings.of(Material.STONE, MaterialColor.SAND)
+				.hardness(3F)
+				.resistance(9F)
+				.requiresCorrectToolForDrops()
+				.sound(SoundType.STONE));
 		this.dropItem = drop;
 		this.minCount = minCount;
 		this.maxCount = maxCount;
 		this.expirience = expirience;
 	}
-
+	
 	@Override
-	protected int getExperienceWhenMined(Random random) {
+	protected int xpOnDrop(Random random) {
 		return this.expirience > 0 ? random.nextInt(expirience) + 1 : 0;
 	}
 
@@ -67,19 +70,19 @@ public class EndOreBlock extends OreBlock implements BlockPatterned {
 		}
 		return Collections.emptyList();
 	}
-
+	
 	@Override
 	public String getStatesPattern(Reader data) {
 		String block = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, block, block);
 	}
-
+	
 	@Override
 	public String getModelPattern(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
 	}
-
+	
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SIMPLE;

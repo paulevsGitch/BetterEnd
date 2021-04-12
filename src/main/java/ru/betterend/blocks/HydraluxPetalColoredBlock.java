@@ -14,9 +14,9 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 	public HydraluxPetalColoredBlock(FabricBlockSettings settings) {
 		super(settings);
 	}
-
+	
 	@Override
-	public BlockColor getBlockProvider() {
+	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
 			return BlocksHelper.getBlockColor(this);
 		};
@@ -28,19 +28,19 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 			return BlocksHelper.getBlockColor(this);
 		};
 	}
-
+	
 	@Override
 	public String getStatesPattern(Reader data) {
 		String path = "betterend:block/block_petal_colored";
 		return Patterns.createJson(data, path, path);
 	}
-
+	
 	@Override
 	public String getModelPattern(String block) {
 		String path = "betterend:block/block_petal_colored";
 		return Patterns.createJson(Patterns.BLOCK_PETAL_COLORED, path, path);
 	}
-
+	
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_DIRECT;

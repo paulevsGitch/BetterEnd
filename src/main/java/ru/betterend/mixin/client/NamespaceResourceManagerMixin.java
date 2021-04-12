@@ -1,7 +1,11 @@
 package ru.betterend.mixin.client;
 
 import java.util.List;
-
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.FallbackResourceManager;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -10,22 +14,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.common.collect.Lists;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.resource.NamespaceResourceManager;
-import net.minecraft.resource.Resource;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.patterns.BlockPatterned;
 
-@Mixin(NamespaceResourceManager.class)
+@Mixin(FallbackResourceManager.class)
 public abstract class NamespaceResourceManagerMixin {
-
+	
 	@Shadow
 	public abstract Resource getResource(ResourceLocation id);
-
-	@Inject(method = "getAllResources", cancellable = true, at = @At(value = "NEW", target = "java/io/FileNotFoundException", shift = Shift.BEFORE))
+	
+	@Inject(method = "getAllResources", cancellable = true, at = @At(
+		value = "NEW",
+		target = "java/io/FileNotFoundException",
+		shift = Shift.BEFORE))
 	public void be_getStatesPattern(ResourceLocation id, CallbackInfoReturnable<List<Resource>> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			String[] data = id.getPath().split("/");

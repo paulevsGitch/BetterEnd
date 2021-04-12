@@ -11,10 +11,10 @@ public class EnchantedPetalItem extends PatternedItem {
 	}
 
 	@Override
-	public boolean hasGlint(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
-
+	
 	@Override
 	public String getModelPattern(String name) {
 		return Patterns.createJson(Patterns.ITEM_GENERATED, "item/hydralux_petal");

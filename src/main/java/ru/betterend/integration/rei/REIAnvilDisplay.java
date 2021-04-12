@@ -9,23 +9,23 @@ import org.jetbrains.annotations.NotNull;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.TransferRecipeDisplay;
 import me.shedaniel.rei.server.ContainerInfo;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.crafting.Recipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 
 public class REIAnvilDisplay implements TransferRecipeDisplay {
-
+	
 	private final AnvilRecipe recipe;
 	private final List<List<EntryStack>> input;
 	private final List<EntryStack> output;
-
+	
 	public REIAnvilDisplay(AnvilRecipe recipe) {
 		this.recipe = recipe;
-		this.input = EntryStack.ofIngredients(recipe.getPreviewInputs());
-		this.output = Collections.singletonList(EntryStack.create(recipe.getOutput()));
+		this.input = EntryStack.ofIngredients(recipe.getIngredients());
+		this.output = Collections.singletonList(EntryStack.create(recipe.getResultItem()));
 	}
-
+	
 	public int getDamage() {
 		return recipe.getDamage();
 	}
@@ -37,7 +37,7 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	public int getAnvilLevel() {
 		return recipe.getAnvilLevel();
 	}
-
+	
 	@Override
 	public @NotNull Optional<ResourceLocation> getRecipeLocation() {
 		return Optional.ofNullable(recipe).map(Recipe::getId);
@@ -47,7 +47,7 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	public @NotNull List<List<EntryStack>> getInputEntries() {
 		return this.input;
 	}
-
+	
 	@Override
 	public @NotNull List<List<EntryStack>> getResultingEntries() {
 		return Collections.singletonList(output);
@@ -57,7 +57,7 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	public @NotNull ResourceLocation getRecipeCategory() {
 		return REIPlugin.SMITHING;
 	}
-
+	
 	@Override
 	public @NotNull List<List<EntryStack>> getRequiredEntries() {
 		return input;
@@ -74,8 +74,8 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	}
 
 	@Override
-	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo,
-			ScreenHandler container) {
+	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo,
+			AbstractContainerMenu container) {
 		return input;
 	}
 }

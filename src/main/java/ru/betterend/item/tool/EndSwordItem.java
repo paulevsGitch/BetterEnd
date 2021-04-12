@@ -10,7 +10,7 @@ public class EndSwordItem extends SwordItem implements DynamicAttributeTool, Pat
 	public EndSwordItem(Tier material, int attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
 	}
-
+	
 	@Override
 	public String getModelPattern(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);

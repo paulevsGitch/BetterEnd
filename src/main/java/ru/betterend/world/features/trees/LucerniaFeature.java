@@ -3,19 +3,17 @@ package ru.betterend.world.features.trees;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import com.google.common.collect.Lists;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
+import com.google.common.collect.Lists;
+import com.mojang.math.Vector3f;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.FurBlock;
@@ -44,7 +42,7 @@ public class LucerniaFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
 			return false;
 
 		float size = MHelper.randRange(12, 20, random);
@@ -61,8 +59,7 @@ public class LucerniaFeature extends DefaultFeature {
 			Vector3f last = spline.get(spline.size() - 1);
 			float leavesRadius = (size * 0.13F + MHelper.randRange(0.8F, 1.5F, random)) * 1.4F;
 			OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
-			leavesBall(world, pos.offset(last.getX(), last.getY(), last.getZ()), leavesRadius, random, noise,
-					config != null);
+			leavesBall(world, pos.offset(last.x(), last.y(), last.z()), leavesRadius, random, noise, config != null);
 		}
 
 		makeRoots(world, pos.offset(0, MHelper.randRange(3, 5, random), 0), size * 0.35F, random);
@@ -73,7 +70,7 @@ public class LucerniaFeature extends DefaultFeature {
 	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise,
 			boolean natural) {
 		SDF sphere = new SDFSphere().setRadius(radius)
-				.setBlock(EndBlocks.LUCERNIA_LEAVES.defaultBlockState().with(LeavesBlock.DISTANCE, 6));
+				.setBlock(EndBlocks.LUCERNIA_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
@@ -95,10 +92,10 @@ public class LucerniaFeature extends DefaultFeature {
 			}
 		}
 
-		BlockState top = EndBlocks.FILALUX.defaultBlockState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
-		BlockState middle = EndBlocks.FILALUX.defaultBlockState().with(BlockProperties.TRIPLE_SHAPE,
+		BlockState top = EndBlocks.FILALUX.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		BlockState middle = EndBlocks.FILALUX.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE,
 				TripleShape.MIDDLE);
-		BlockState bottom = EndBlocks.FILALUX.defaultBlockState().with(BlockProperties.TRIPLE_SHAPE,
+		BlockState bottom = EndBlocks.FILALUX.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE,
 				TripleShape.BOTTOM);
 		BlockState outer = EndBlocks.LUCERNIA_OUTER_LEAVES.defaultBlockState();
 
@@ -121,7 +118,7 @@ public class LucerniaFeature extends DefaultFeature {
 			MHelper.shuffle(DIRECTIONS, random);
 			for (Direction d : DIRECTIONS) {
 				if (info.getState(d).isAir()) {
-					info.setBlockPos(info.getPos().offset(d), outer.with(FurBlock.FACING, d));
+					info.setBlockPos(info.getPos().relative(d), outer.setValue(FurBlock.FACING, d));
 				}
 			}
 
@@ -141,7 +138,7 @@ public class LucerniaFeature extends DefaultFeature {
 								if (state.getBlock() instanceof LeavesBlock) {
 									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) {
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -159,11 +156,11 @@ public class LucerniaFeature extends DefaultFeature {
 			if (state.isAir() || state.is(EndBlocks.LUCERNIA_OUTER_LEAVES)) {
 				int count = MHelper.randRange(3, 8, random);
 				mut.set(bpos);
-				if (world.getBlockState(mut.up()).is(EndBlocks.LUCERNIA_LEAVES)) {
+				if (world.getBlockState(mut.above()).is(EndBlocks.LUCERNIA_LEAVES)) {
 					BlocksHelper.setWithoutUpdate(world, mut, top);
 					for (int i = 1; i < count; i++) {
 						mut.setY(mut.getY() - 1);
-						if (world.isAir(mut.below())) {
+						if (world.isEmptyBlock(mut.below())) {
 							BlocksHelper.setWithoutUpdate(world, mut, middle);
 						} else {
 							break;
@@ -185,7 +182,7 @@ public class LucerniaFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.getX(), last.getY(), last.getZ())).isIn(EndTags.GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(EndTags.GEN_TERRAIN)) {
 				SplineHelper.fillSplineForce(branch, world, EndBlocks.LUCERNIA.bark.defaultBlockState(), pos, REPLACE);
 			}
 		}
@@ -193,7 +190,7 @@ public class LucerniaFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND)) {
+			if (state.is(EndTags.END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == EndBlocks.LUCERNIA_LEAVES) {

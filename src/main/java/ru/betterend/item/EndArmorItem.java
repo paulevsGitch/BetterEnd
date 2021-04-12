@@ -1,17 +1,15 @@
 package ru.betterend.item;
 
 import java.util.UUID;
-
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.attribute.Attributes;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import ru.betterend.mixin.common.ArmorItemAccessor;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
@@ -24,8 +22,7 @@ public class EndArmorItem extends ArmorItem implements Patterned {
 	}
 
 	/** Ensures knockback resistance is actually applied */
-	private static void addKnockbackResistance(ArmorItemAccessor accessor, EquipmentSlot slot,
-			double knockbackResistance) {
+	private static void addKnockbackResistance(ArmorItemAccessor accessor, EquipmentSlot slot, double knockbackResistance) {
 		if (knockbackResistance == 0) {
 			return;
 		}
@@ -37,13 +34,12 @@ public class EndArmorItem extends ArmorItem implements Patterned {
 			return;
 		}
 
-		UUID uuid = accessor.be_getModifiers()[slot.getEntitySlotId()];
+		UUID uuid = accessor.be_getModifiers()[slot.getIndex()];
 
 		// Rebuild attributeModifiers to include knockback resistance
 		ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.putAll(attributeModifiers);
-		builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance",
-				knockbackResistance, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", knockbackResistance, AttributeModifier.Operation.ADDITION));
 		accessor.be_setAttributeModifiers(builder.build());
 	}
 

@@ -3,18 +3,16 @@ package ru.betterend.world.features.terrain;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import com.google.common.collect.Lists;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
+import com.google.common.collect.Lists;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
@@ -46,7 +44,7 @@ public class SpireFeature extends DefaultFeature {
 			sdf = addSegment(sdf, MHelper.randRange(rMin, rMin + 1.5F, random), random);
 		}
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
-		sdf = new SDFDisplacement().setFunction(vec -> {
+		sdf = new SDFDisplacement().setFunction((vec) -> {
 			return (float) (Math.abs(noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1)) * 3F
 					+ Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
 		}).setSource(sdf);

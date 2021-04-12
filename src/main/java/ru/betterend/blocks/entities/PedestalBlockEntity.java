@@ -1,42 +1,42 @@
 package ru.betterend.blocks.entities;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Tickable;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndItems;
 
-public class PedestalBlockEntity extends BlockEntity implements Inventory, Tickable, BlockEntityClientSerializable {
+public class PedestalBlockEntity extends BlockEntity implements Container, TickableBlockEntity, BlockEntityClientSerializable {
 	private ItemStack activeItem = ItemStack.EMPTY;
-
+	
 	private final int maxAge = 314;
 	private int age;
-
+	
 	public PedestalBlockEntity() {
 		super(EndBlockEntities.PEDESTAL);
 	}
-
+	
 	public PedestalBlockEntity(BlockEntityType<?> type) {
 		super(type);
 	}
-
+	
 	public int getAge() {
 		return age;
 	}
-
+	
 	public int getMaxAge() {
 		return maxAge;
 	}
 
 	@Override
-	public int size() {
+	public int getContainerSize() {
 		return 1;
 	}
 
@@ -46,71 +46,72 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 	}
 
 	@Override
-	public ItemStack getStack(int slot) {
+	public ItemStack getItem(int slot) {
 		return activeItem;
 	}
 
 	@Override
-	public ItemStack removeStack(int slot, int amount) {
-		return removeStack(slot);
+	public ItemStack removeItem(int slot, int amount) {
+		return removeItemNoUpdate(slot);
 	}
-
+	
 	@Override
-	public boolean isValid(int slot, ItemStack stack) {
+	public boolean canPlaceItem(int slot, ItemStack stack) {
 		return isEmpty();
 	}
 
 	@Override
-	public void clear() {
+	public void clearContent() {
 		activeItem = ItemStack.EMPTY;
-		markDirty();
+		setChanged();
 	}
 
 	@Override
-	public ItemStack removeStack(int slot) {
+	public ItemStack removeItemNoUpdate(int slot) {
 		ItemStack stored = activeItem;
-		clear();
+		clearContent();
 		return stored;
 	}
 
 	@Override
-	public void setStack(int slot, ItemStack stack) {
+	public void setItem(int slot, ItemStack stack) {
 		activeItem = stack;
-		markDirty();
+		setChanged();
 	}
-
+	
 	@Override
-	public void markDirty() {
-		if (world != null && !world.isClientSide) {
-			BlockState state = world.getBlockState(pos);
+	public void setChanged() {
+		if (level != null && !level.isClientSide) {
+			BlockState state = level.getBlockState(worldPosition);
 			if (state.getBlock() instanceof PedestalBlock) {
-				BlockState trueState = state.with(PedestalBlock.HAS_ITEM, !isEmpty());
+				BlockState trueState = state.setValue(PedestalBlock.HAS_ITEM, !isEmpty());
 				if (activeItem.getItem() == EndItems.ETERNAL_CRYSTAL) {
-					trueState = trueState.with(PedestalBlock.HAS_LIGHT, true);
+					trueState = trueState.setValue(PedestalBlock.HAS_LIGHT, true);
 				} else {
-					trueState = trueState.with(PedestalBlock.HAS_LIGHT, false);
+					trueState = trueState.setValue(PedestalBlock.HAS_LIGHT, false);
 				}
-				world.setBlockAndUpdate(pos, trueState);
+				level.setBlockAndUpdate(worldPosition, trueState);
 			}
 		}
-		super.markDirty();
+		super.setChanged();
 	}
 
+	
 	@Override
-	public boolean canPlayerUse(Player player) {
+	public boolean stillValid(Player player) {
 		return true;
 	}
-
+	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		super.fromTag(state, tag);
+	public void load(BlockState state, CompoundTag tag) {
+		super.load(state, tag);
 		fromTag(tag);
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		tag.put("active_item", activeItem.toTag(new CompoundTag()));
-		return super.toTag(tag);
+	public CompoundTag save(CompoundTag tag) {
+		tag.put("active_item", activeItem.save(new CompoundTag()));
+		return super.save(tag);
 	}
 
 	@Override
@@ -120,13 +121,13 @@ public class PedestalBlockEntity extends BlockEntity implements Inventory, Ticka
 
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
-		return toTag(tag);
+		return save(tag);
 	}
 
 	protected void fromTag(CompoundTag tag) {
 		if (tag.contains("active_item")) {
 			CompoundTag itemTag = tag.getCompound("active_item");
-			activeItem = ItemStack.fromTag(itemTag);
+			activeItem = ItemStack.of(itemTag);
 		}
 	}
 

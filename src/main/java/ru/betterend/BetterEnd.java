@@ -39,7 +39,6 @@ import ru.betterend.world.surface.SurfaceBuilders;
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
 	public static final Logger LOGGER = Logger.get();
-
 	@Override
 	public void onInitialize() {
 		EndPortals.loadPortals();
@@ -67,41 +66,40 @@ public class BetterEnd implements ModInitializer {
 		GeneratorOptions.init();
 		DataFixerUtil.init();
 		LootTableUtil.init();
-
+		
 		if (hasGuideBook()) {
 			GuideBookItem.register();
 		}
-
-		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class)
-				.forEach(BetterEndPlugin::register);
+		
+		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 		Configs.saveConfigs();
-
+		
 		if (hasGuideBook()) {
-			PlayerAdvancementsEvents.PLAYER_ADVANCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
+			PlayerAdvancementsEvents.PLAYER_ADVENCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
 				ResourceLocation advId = new ResourceLocation("minecraft:end/enter_end_gateway");
 				if (advId.equals(advancement.getId())) {
-					player.giveItemStack(new ItemStack(GuideBookItem.GUIDE_BOOK));
+					player.addItem(new ItemStack(GuideBookItem.GUIDE_BOOK));
 				}
 			});
 		}
 	}
-
+	
 	public static boolean hasGuideBook() {
 		return FabricLoader.getInstance().isModLoaded("patchouli");
 	}
-
+	
 	public static ResourceLocation makeID(String path) {
 		return new ResourceLocation(MOD_ID, path);
 	}
-
+	
 	public static String getStringId(String id) {
 		return String.format("%s:%s", MOD_ID, id);
 	}
-
+	
 	public static boolean isDevEnvironment() {
 		return FabricLoader.getInstance().isDevelopmentEnvironment();
 	}
-
+	
 	public static boolean isClient() {
 		return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
 	}

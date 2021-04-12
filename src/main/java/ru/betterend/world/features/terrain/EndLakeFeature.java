@@ -1,16 +1,15 @@
 package ru.betterend.world.features.terrain;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -37,22 +36,22 @@ public class EndLakeFeature extends DefaultFeature {
 
 		int waterLevel = blockPos.getY();
 
-		BlockPos pos = getPosOnSurfaceRaycast(world, blockPos.north(dist).up(10), 20);
+		BlockPos pos = getPosOnSurfaceRaycast(world, blockPos.north(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 
-		pos = getPosOnSurfaceRaycast(world, blockPos.south(dist).up(10), 20);
+		pos = getPosOnSurfaceRaycast(world, blockPos.south(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 
-		pos = getPosOnSurfaceRaycast(world, blockPos.east(dist).up(10), 20);
+		pos = getPosOnSurfaceRaycast(world, blockPos.east(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 
-		pos = getPosOnSurfaceRaycast(world, blockPos.west(dist).up(10), 20);
+		pos = getPosOnSurfaceRaycast(world, blockPos.west(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
@@ -116,11 +115,11 @@ public class EndLakeFeature extends DefaultFeature {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.isIn(EndTags.GEN_TERRAIN)) {
+								if (state.is(EndTags.GEN_TERRAIN)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								}
 								pos = POS.below();
-								if (world.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
+								if (world.getBlockState(pos).is(EndTags.GEN_TERRAIN)) {
 									state = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig()
 											.getTopMaterial();
 									if (y > waterLevel + 1)
@@ -165,24 +164,24 @@ public class EndLakeFeature extends DefaultFeature {
 						if (y2 + x2 + z2 <= r) {
 							state = world.getBlockState(POS);
 							if (canReplace(state)) {
-								state = world.getBlockState(POS.up());
+								state = world.getBlockState(POS.above());
 								state = canReplace(state) ? (y < waterLevel ? WATER : AIR) : state;
 								BlocksHelper.setWithoutUpdate(world, POS, state);
 							}
 							pos = POS.below();
-							if (world.getBlockState(pos).getBlock().isIn(EndTags.GEN_TERRAIN)) {
+							if (world.getBlockState(pos).getBlock().is(EndTags.GEN_TERRAIN)) {
 								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
 							}
-							pos = POS.up();
+							pos = POS.above();
 							while (canReplace(state = world.getBlockState(pos)) && !state.isAir()
 									&& state.getFluidState().isEmpty()) {
 								BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
-								pos = pos.up();
+								pos = pos.above();
 							}
 						}
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
-							if (world.isAir(POS.up())) {
+							if (world.isEmptyBlock(POS.above())) {
 								state = world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig()
 										.getTopMaterial();
 								BlocksHelper.setWithoutUpdate(world, POS,
@@ -206,9 +205,8 @@ public class EndLakeFeature extends DefaultFeature {
 	}
 
 	private boolean canReplace(BlockState state) {
-		return state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)
-				|| state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial().equals(Material.PLANT)
-				|| state.getMaterial().equals(Material.UNDERWATER_PLANT)
-				|| state.getMaterial().equals(Material.UNUSED_PLANT);
+		return state.getMaterial().isReplaceable() || state.is(EndTags.GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST)
+				|| state.getMaterial().equals(Material.PLANT) || state.getMaterial().equals(Material.WATER_PLANT)
+				|| state.getMaterial().equals(Material.CORAL);
 	}
 }

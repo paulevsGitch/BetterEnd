@@ -1,13 +1,12 @@
 package ru.betterend.world.features;
 
 import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
@@ -22,12 +21,12 @@ public abstract class WallScatterFeature extends DefaultFeature {
 
 	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
 
-	public abstract void place(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
+	public abstract void generate(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
 
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
 			NoneFeatureConfiguration featureConfig) {
-		int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
+		int maxY = world.getHeight(Heightmap.Types.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlocksHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		if (maxY < 10 || maxY < minY) {
 			return false;
@@ -41,7 +40,7 @@ public abstract class WallScatterFeature extends DefaultFeature {
 				mut.setY(py + y);
 				for (int z = -radius; z <= radius; z++) {
 					mut.setZ(center.getZ() + z);
-					if (random.nextInt(4) == 0 && world.isAir(mut)) {
+					if (random.nextInt(4) == 0 && world.isEmptyBlock(mut)) {
 						shuffle(random);
 						for (Direction dir : DIR) {
 							if (canGenerate(world, random, mut, dir)) {

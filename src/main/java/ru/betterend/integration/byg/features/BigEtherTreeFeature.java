@@ -2,16 +2,14 @@ package ru.betterend.integration.byg.features;
 
 import java.util.List;
 import java.util.Random;
-
-import com.google.common.base.Function;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
+import com.google.common.base.Function;
+import com.mojang.math.Vector3f;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
@@ -23,7 +21,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
 			return false;
 
 		BlockState log = Integrations.BYG.getDefaultState("ether_log");
@@ -33,7 +31,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 			return log;
 		};
 		Function<BlockState, Boolean> replace = (state) -> {
-			return state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
+			return state.is(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
 					|| state.getMaterial().isReplaceable();
 		};
 
@@ -51,7 +49,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 			List<Vector3f> branch = SplineHelper.makeSpline(0, 0, 0, length, 0, 0, points < 2 ? 2 : points);
 			SplineHelper.powerOffset(branch, length, 2F);
 			int rotCount = MHelper.randRange(5, 7, random);
-			// float startRad = Mth.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
+			// float startRad = MathHelper.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
 			Vector3f start = SplineHelper.getPos(trunk, splinePos * (trunk.size() - 1));
 			for (int j = 0; j < rotCount; j++) {
 				float angle = startAngle + (float) j / rotCount * MHelper.PI2;
@@ -65,7 +63,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		}
 
 		sdf.setReplaceFunction((state) -> {
-			return state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
+			return state.is(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
 					|| state.getMaterial().isReplaceable();
 		}).addPostProcess((info) -> {
 			if (info.getState().equals(log) && (!info.getStateUp().equals(log) || !info.getStateDown().equals(log))) {
@@ -77,7 +75,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		return true;
 	}
 
-	// private void makeLeavesSphere(WorldGenLevel world, BlockPos pos,
+	// private void makeLeavesSphere(StructureWorldAccess world, BlockPos pos,
 	// BlockState leaves, Function<BlockState, Boolean> ignore) {
 	//
 	// }

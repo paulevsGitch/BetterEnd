@@ -9,7 +9,7 @@ public class SDFSmoothIntersection extends SDFBinary {
 		this.radius = radius;
 		return this;
 	}
-
+	
 	@Override
 	public float getDistance(float x, float y, float z) {
 		float a = this.sourceA.getDistance(x, y, z);

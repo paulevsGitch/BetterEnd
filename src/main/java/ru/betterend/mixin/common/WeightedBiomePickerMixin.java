@@ -19,21 +19,20 @@ import ru.betterend.interfaces.IBiomeList;
 @Mixin(value = WeightedBiomePicker.class, remap = false)
 public class WeightedBiomePickerMixin implements IBiomeList {
 	private List<ResourceKey<Biome>> biomes = Lists.newArrayList();
-
+	
 	@Inject(method = "addBiome", at = @At("TAIL"))
 	private void be_addBiome(final ResourceKey<Biome> biome, final double weight, CallbackInfo info) {
 		if (be_isCorrectPicker((WeightedBiomePicker) (Object) this)) {
 			biomes.add(biome);
 		}
 	}
-
+	
 	@Override
 	public List<ResourceKey<Biome>> getBiomes() {
 		return biomes;
 	}
-
+	
 	private boolean be_isCorrectPicker(WeightedBiomePicker picker) {
-		return picker == InternalBiomeData.getEndBiomesMap().get(Biomes.SMALL_END_ISLANDS)
-				|| picker == InternalBiomeData.getEndBarrensMap().get(Biomes.END_BARRENS);
+		return picker == InternalBiomeData.getEndBiomesMap().get(Biomes.SMALL_END_ISLANDS) || picker == InternalBiomeData.getEndBarrensMap().get(Biomes.END_BARRENS);
 	}
 }

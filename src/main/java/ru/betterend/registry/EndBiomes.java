@@ -19,12 +19,13 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.biome.InternalBiomeData;
 import net.fabricmc.fabric.impl.biome.WeightedBiomePicker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.Biomes;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -64,24 +65,24 @@ public class EndBiomes {
 	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
 	public static final Set<ResourceLocation> FABRIC_VOID = Sets.newHashSet();
 	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
-
+	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
 	public static final BiomePicker CAVE_BIOMES = new BiomePicker();
 	public static final List<EndBiome> SUBBIOMES = Lists.newArrayList();
 	private static final JsonObject EMPTY_JSON = new JsonObject();
-
+	
 	private static Registry<Biome> biomeRegistry;
-
+	
 	// Vanilla Land
 	public static final EndBiome END = registerBiome(Biomes.THE_END, BiomeType.LAND, 1F);
 	public static final EndBiome END_MIDLANDS = registerSubBiome(Biomes.END_MIDLANDS, END, 0.5F);
 	public static final EndBiome END_HIGHLANDS = registerSubBiome(Biomes.END_HIGHLANDS, END, 0.5F);
-
+	
 	// Vanilla Void
 	public static final EndBiome END_BARRENS = registerBiome(Biomes.END_BARRENS, BiomeType.VOID, 1F);
 	public static final EndBiome SMALL_END_ISLANDS = registerBiome(Biomes.SMALL_END_ISLANDS, BiomeType.VOID, 1);
-
+	
 	// Better End Land
 	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new FoggyMushroomlandBiome(), BiomeType.LAND);
 	public static final EndBiome CHORUS_FOREST = registerBiome(new ChorusForestBiome(), BiomeType.LAND);
@@ -100,39 +101,37 @@ public class EndBiomes {
 	public static final EndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), BiomeType.LAND);
 	public static final EndBiome LANTERN_WOODS = registerBiome(new LanternWoodsBiome(), BiomeType.LAND);
 	public static final EndBiome NEON_OASIS = registerSubBiome(new NeonOasisBiome(), DUST_WASTELANDS);
-
+	
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);
-
+	
 	// Better End Caves
 	public static final EndCaveBiome EMPTY_END_CAVE = registerCaveBiome(new EmptyEndCaveBiome());
 	public static final EndCaveBiome EMPTY_SMARAGDANT_CAVE = registerCaveBiome(new EmptySmaragdantCaveBiome());
 	public static final EndCaveBiome LUSH_SMARAGDANT_CAVE = registerCaveBiome(new LushSmaragdantCaveBiome());
 	public static final EndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
 	public static final EndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
-
-	public static void register() {
-	}
-
+	
+	public static void register() {}
+	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
 		EndBiomes.biomeRegistry = biomeRegistry;
-
+		
 		LAND_BIOMES.clearMutables();
 		VOID_BIOMES.clearMutables();
 		CAVE_BIOMES.clearMutables();
-
+		
 		if (FABRIC_VOID.isEmpty()) {
 			loadFabricAPIBiomes();
 		}
-
+		
 		Map<String, JsonObject> configs = Maps.newHashMap();
-
+		
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getBiomeCategory() == Biome.BiomeCategory.THEEND) {
+			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {
 				ResourceLocation id = biomeRegistry.getKey(biome);
 				if (Configs.BIOME_CONFIG.getBoolean(id, "enabled", true)) {
-					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id)
-							&& !SUBBIOMES_UNMUTABLES.contains(id)) {
+					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) {
 						JsonObject config = configs.get(id.getNamespace());
 						if (config == null) {
 							config = loadJsonConfig(id.getNamespace());
@@ -153,7 +152,8 @@ public class EndBiomes {
 
 						if (isVoid) {
 							VOID_BIOMES.addBiomeMutable(endBiome);
-						} else {
+						}
+						else {
 							LAND_BIOMES.addBiomeMutable(endBiome);
 						}
 						ID_MAP.put(id, endBiome);
@@ -163,58 +163,58 @@ public class EndBiomes {
 		});
 		Integrations.addBiomes();
 		Configs.BIOME_CONFIG.saveChanges();
-
+		
 		rebuildPicker(LAND_BIOMES, biomeRegistry);
 		rebuildPicker(VOID_BIOMES, biomeRegistry);
 		rebuildPicker(CAVE_BIOMES, biomeRegistry);
-
+		
 		SUBBIOMES.forEach((endBiome) -> {
 			endBiome.updateActualBiomes(biomeRegistry);
 		});
-
+		
 		CLIENT.clear();
 	}
-
+	
 	private static void rebuildPicker(BiomePicker picker, Registry<Biome> biomeRegistry) {
 		picker.rebuild();
 		picker.getBiomes().forEach((endBiome) -> {
 			endBiome.updateActualBiomes(biomeRegistry);
 		});
 	}
-
+	
 	private static void loadFabricAPIBiomes() {
 		List<ResourceKey<Biome>> biomes = Lists.newArrayList();
 		biomes.addAll(getBiomes(InternalBiomeData.getEndBiomesMap().get(Biomes.SMALL_END_ISLANDS)));
 		biomes.addAll(getBiomes(InternalBiomeData.getEndBarrensMap().get(Biomes.END_BARRENS)));
 		biomes.forEach((key) -> FABRIC_VOID.add(key.location()));
-
+		
 		if (BetterEnd.isDevEnvironment()) {
 			System.out.println("==================================");
 			System.out.println("Added void biomes from Fabric API:");
-			FABRIC_VOID.forEach(System.out::println);
+			FABRIC_VOID.forEach((id) -> {
+				System.out.println(id);
+			});
 			System.out.println("==================================");
 		}
 	}
-
+	
 	private static List<ResourceKey<Biome>> getBiomes(WeightedBiomePicker picker) {
 		IBiomeList biomeList = (IBiomeList) (Object) picker;
 		return biomeList == null ? Collections.emptyList() : biomeList.getBiomes();
 	}
-
+	
 	private static JsonObject loadJsonConfig(String namespace) {
-		InputStream inputstream = EndBiomes.class
-				.getResourceAsStream("/data/" + namespace + "/end_biome_properties.json");
+		InputStream inputstream = EndBiomes.class.getResourceAsStream("/data/" + namespace + "/end_biome_properties.json");
 		if (inputstream != null) {
 			return JsonFactory.getJsonObject(inputstream);
-		} else {
+		}
+		else {
 			return EMPTY_JSON;
 		}
 	}
-
+	
 	/**
-	 * Initialize registry if it was not initialized in world generation (when using
-	 * mods/datapacks, that overrides the End generation)
-	 * 
+	 * Initialize registry if it was not initialized in world generation (when using mods/datapacks, that overrides the End generation)
 	 * @param server - {@link MinecraftServer}
 	 */
 	public static void initRegistry(MinecraftServer server) {
@@ -222,28 +222,24 @@ public class EndBiomes {
 			biomeRegistry = server.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
 		}
 	}
-
+	
 	/**
-	 * Registers new {@link EndBiome} and adds it to picker, can be used to add
-	 * existing mod biomes into the End.
-	 * 
-	 * @param biome     - {@link Biome} instance
-	 * @param type      - {@link BiomeType}
+	 * Registers new {@link EndBiome} and adds it to picker, can be used to add existing mod biomes into the End.
+	 * @param biome - {@link Biome} instance
+	 * @param type - {@link BiomeType}
 	 * @param genChance - generation chance [0.0F - Infinity]
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float genChance) {
 		return registerBiome(biome, type, 1, genChance);
 	}
-
+	
 	/**
-	 * Registers new {@link EndBiome} and adds it to picker, can be used to add
-	 * existing mod biomes into the End.
-	 * 
-	 * @param biome      - {@link Biome} instance
-	 * @param type       - {@link BiomeType}
+	 * Registers new {@link EndBiome} and adds it to picker, can be used to add existing mod biomes into the End.
+	 * @param biome - {@link Biome} instance
+	 * @param type - {@link BiomeType}
 	 * @param fogDensity - density of fog (def: 1F) [0.0F - Infinity]
-	 * @param genChance  - generation chance [0.0F - Infinity]
+	 * @param genChance - generation chance [0.0F - Infinity]
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
@@ -253,32 +249,27 @@ public class EndBiomes {
 		}
 		return endBiome;
 	}
-
+	
 	/**
-	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a
-	 * sub-biome into selected parent.
-	 * 
-	 * @param biome     - {@link Biome} instance
-	 * @param parent    - {@link EndBiome} to be linked with
+	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
+	 * @param biome - {@link Biome} instance
+	 * @param parent - {@link EndBiome} to be linked with
 	 * @param genChance - generation chance [0.0F - Infinity]
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float genChance, boolean hasCaves) {
 		return registerSubBiome(biome, parent, 1, genChance, hasCaves);
 	}
-
+	
 	/**
-	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a
-	 * sub-biome into selected parent.
-	 * 
-	 * @param biome      - {@link Biome} instance
-	 * @param parent     - {@link EndBiome} to be linked with
+	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
+	 * @param biome - {@link Biome} instance
+	 * @param parent - {@link EndBiome} to be linked with
 	 * @param fogDensity - density of fog (def: 1F) [0.0F - Infinity]
-	 * @param genChance  - generation chance [0.0F - Infinity]
+	 * @param genChance - generation chance [0.0F - Infinity]
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance,
-			boolean hasCaves) {
+	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance, boolean hasCaves) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
 			parent.addSubBiome(endBiome);
@@ -288,11 +279,10 @@ public class EndBiomes {
 		}
 		return endBiome;
 	}
-
+	
 	/**
 	 * Put existing {@link EndBiome} as a sub-biome into selected parent.
-	 * 
-	 * @param biome  - {@link EndBiome} instance
+	 * @param biome - {@link EndBiome} instance
 	 * @param parent - {@link EndBiome} to be linked with
 	 * @return registered {@link EndBiome}
 	 */
@@ -307,12 +297,11 @@ public class EndBiomes {
 		}
 		return biome;
 	}
-
+	
 	/**
 	 * Registers {@link EndBiome} and adds it into worldgen.
-	 * 
 	 * @param biome - {@link EndBiome} instance
-	 * @param type  - {@link BiomeType}
+	 * @param type - {@link BiomeType}
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
@@ -322,17 +311,16 @@ public class EndBiomes {
 			ID_MAP.put(biome.getID(), biome);
 			if (type == BiomeType.LAND) {
 				addLandBiomeToFabricApi(biome);
-			} else {
+			}
+			else {
 				addVoidBiomeToFabricApi(biome);
 			}
 		}
 		return biome;
 	}
-
+	
 	/**
-	 * Put integration sub-biome {@link EndBiome} into subbiomes list and registers
-	 * it.
-	 * 
+	 * Put integration sub-biome {@link EndBiome} into subbiomes list and registers it.
 	 * @param biome - {@link EndBiome} instance
 	 * @return registered {@link EndBiome}
 	 */
@@ -346,11 +334,10 @@ public class EndBiomes {
 		}
 		return biome;
 	}
-
+	
 	/**
 	 * Link integration sub-biome with parent.
-	 * 
-	 * @param biome  - {@link EndBiome} instance
+	 * @param biome - {@link EndBiome} instance
 	 * @param parent - {@link ResourceLocation} parent id
 	 */
 	public static void addSubBiomeIntegration(EndBiome biome, ResourceLocation parent) {
@@ -361,19 +348,20 @@ public class EndBiomes {
 			}
 		}
 	}
-
+	
 	public static EndBiome registerBiome(ResourceKey<Biome> key, BiomeType type, float genChance) {
 		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
 	}
-
+	
 	public static EndBiome registerSubBiome(ResourceKey<Biome> key, EndBiome parent, float genChance) {
 		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance, true);
 	}
-
+	
 	private static void addToPicker(EndBiome biome, BiomeType type) {
 		if (type == BiomeType.LAND) {
 			LAND_BIOMES.addBiome(biome);
-		} else {
+		}
+		else {
 			VOID_BIOMES.addBiome(biome);
 		}
 	}
@@ -381,37 +369,36 @@ public class EndBiomes {
 	private static void registerBiomeDirectly(EndBiome biome) {
 		Registry.register(BuiltinRegistries.BIOME, biome.getID(), biome.getBiome());
 	}
-
+	
 	private static void addLandBiomeToFabricApi(EndBiome biome) {
 		float weight = biome.getGenChanceImmutable();
 		ResourceKey<Biome> key = BuiltinRegistries.BIOME.getResourceKey(biome.getBiome()).get();
 		InternalBiomeData.addEndBiomeReplacement(Biomes.END_HIGHLANDS, key, weight);
 		InternalBiomeData.addEndBiomeReplacement(Biomes.END_MIDLANDS, key, weight);
 	}
-
+	
 	private static void addVoidBiomeToFabricApi(EndBiome biome) {
 		float weight = biome.getGenChanceImmutable();
 		ResourceKey<Biome> key = BuiltinRegistries.BIOME.getResourceKey(biome.getBiome()).get();
 		InternalBiomeData.addEndBiomeReplacement(Biomes.SMALL_END_ISLANDS, key, weight);
 	}
-
+	
 	public static EndBiome getFromBiome(Biome biome) {
-		return ID_MAP.getOrDefault(biomeRegistry.getId(biome), END);
+		return ID_MAP.getOrDefault(biomeRegistry.getKey(biome), END);
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public static EndBiome getRenderBiome(Biome biome) {
 		EndBiome endBiome = CLIENT.get(biome);
 		if (endBiome == null) {
 			Minecraft minecraft = Minecraft.getInstance();
-			ResourceLocation id = minecraft.level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY)
-					.getKey(biome);
+			ResourceLocation id = minecraft.level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(biome);
 			endBiome = id == null ? END : ID_MAP.getOrDefault(id, END);
 			CLIENT.put(biome, endBiome);
 		}
 		return endBiome;
 	}
-
+	
 	public static ResourceLocation getBiomeID(Biome biome) {
 		ResourceLocation id = biomeRegistry.getKey(biome);
 		return id == null ? END.getID() : id;
@@ -429,7 +416,7 @@ public class EndBiomes {
 		result.addAll(SUBBIOMES);
 		return result;
 	}
-
+	
 	public static EndCaveBiome registerCaveBiome(EndCaveBiome biome) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			registerBiomeDirectly(biome);
@@ -438,11 +425,11 @@ public class EndBiomes {
 		}
 		return biome;
 	}
-
+	
 	public static EndCaveBiome getCaveBiome(Random random) {
 		return (EndCaveBiome) CAVE_BIOMES.getBiome(random);
 	}
-
+	
 	public static boolean hasBiome(ResourceLocation biomeID) {
 		return ID_MAP.containsKey(biomeID);
 	}

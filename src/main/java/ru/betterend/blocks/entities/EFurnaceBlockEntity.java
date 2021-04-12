@@ -1,12 +1,12 @@
 package ru.betterend.blocks.entities;
 
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.world.entity.player.PlayerInventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.FurnaceMenu;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.screen.FurnaceScreenHandler;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import ru.betterend.registry.EndBlockEntities;
 
 public class EFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
@@ -14,11 +14,11 @@ public class EFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 		super(EndBlockEntities.FURNACE, RecipeType.SMELTING);
 	}
 
-	protected Text getContainerName() {
-		return new TranslatableText("container.furnace");
+	protected Component getDefaultName() {
+		return new TranslatableComponent("container.furnace");
 	}
 
-	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-		return new FurnaceScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
+	protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+		return new FurnaceMenu(syncId, playerInventory, this, this.dataAccess);
 	}
 }

@@ -11,19 +11,19 @@ public class SDFLine extends SDFPrimitive {
 	private float x2;
 	private float y2;
 	private float z2;
-
+	
 	public SDFLine setRadius(float radius) {
 		this.radius = radius;
 		return this;
 	}
-
+	
 	public SDFLine setStart(float x, float y, float z) {
 		this.x1 = x;
 		this.y1 = y;
 		this.z1 = z;
 		return this;
 	}
-
+	
 	public SDFLine setEnd(float x, float y, float z) {
 		this.x2 = x;
 		this.y2 = y;

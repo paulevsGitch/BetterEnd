@@ -3,18 +3,16 @@ package ru.betterend.world.features.terrain.caves;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
-
-import com.google.common.collect.Sets;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import com.google.common.collect.Sets;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
@@ -45,8 +43,8 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		return true;
 	}
 
-	protected void fillSets(int sx, int sz, Chunk chunk, Set<BlockPos> floorPositions, Set<BlockPos> ceilPositions,
-			MutableBlockPos min, MutableBlockPos max) {
+	protected void fillSets(int sx, int sz, ChunkAccess chunk, Set<BlockPos> floorPositions,
+			Set<BlockPos> ceilPositions, MutableBlockPos min, MutableBlockPos max) {
 		MutableBlockPos mut = new MutableBlockPos();
 		MutableBlockPos mut2 = new MutableBlockPos();
 		MutableBlockPos mut3 = new MutableBlockPos();
@@ -57,16 +55,16 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 				mut.setZ(z);
 				mut2.setZ(z);
 				mut2.setY(0);
-				for (int y = 1; y < chunk.getHeight(); y++) {
+				for (int y = 1; y < chunk.getMaxBuildHeight(); y++) {
 					mut.setY(y);
 					BlockState top = chunk.getBlockState(mut);
 					BlockState bottom = chunk.getBlockState(mut2);
-					if (top.isAir() && (bottom.isIn(EndTags.GEN_TERRAIN) || bottom.is(Blocks.STONE))) {
+					if (top.isAir() && (bottom.is(EndTags.GEN_TERRAIN) || bottom.is(Blocks.STONE))) {
 						mut3.set(mut2).move(sx, 0, sz);
 						floorPositions.add(mut3.immutable());
 						updateMin(mut3, min);
 						updateMax(mut3, max);
-					} else if (bottom.isAir() && (top.isIn(EndTags.GEN_TERRAIN) || top.is(Blocks.STONE))) {
+					} else if (bottom.isAir() && (top.is(EndTags.GEN_TERRAIN) || top.is(Blocks.STONE))) {
 						mut3.set(mut).move(sx, 0, sz);
 						ceilPositions.add(mut3.immutable());
 						updateMin(mut3, min);
@@ -110,7 +108,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.place(world, null, random, pos.up(), null);
+					feature.place(world, null, random, pos.above(), null);
 				}
 			}
 		});

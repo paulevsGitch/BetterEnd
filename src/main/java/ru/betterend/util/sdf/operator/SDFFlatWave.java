@@ -7,7 +7,7 @@ public class SDFFlatWave extends SDFDisplacement {
 	
 	public SDFFlatWave() {
 		setFunction((pos) -> {
-			return (float) Math.cos(Math.atan2(pos.getX(), pos.getZ()) * rayCount + angle) * intensity;
+			return (float) Math.cos(Math.atan2(pos.x(), pos.z()) * rayCount + angle) * intensity;
 		});
 	}
 	

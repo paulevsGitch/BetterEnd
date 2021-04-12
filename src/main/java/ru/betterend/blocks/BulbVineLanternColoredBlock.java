@@ -13,7 +13,7 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 	}
 
 	@Override
-	public BlockColor getBlockProvider() {
+	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
 			return getColor();
 		};
@@ -25,7 +25,7 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 			return getColor();
 		};
 	}
-
+	
 	private int getColor() {
 		int color = BlocksHelper.getBlockColor(this);
 		int b = (color & 255);
@@ -34,7 +34,7 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 		float[] hsv = MHelper.fromRGBtoHSB(r, g, b);
 		return MHelper.fromHSBtoRGB(hsv[0], hsv[1], hsv[1] > 0.2 ? 1 : hsv[2]);
 	}
-
+	
 	@Override
 	protected String getGlowTexture() {
 		return "bulb_vine_lantern_overlay";

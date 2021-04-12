@@ -2,16 +2,15 @@ package ru.betterend.world.features.bushes;
 
 import java.util.Random;
 import java.util.function.Function;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -37,8 +36,8 @@ public class BushFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND)
-				&& !world.getBlockState(pos.up()).getBlock().isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND)
+				&& !world.getBlockState(pos.above()).getBlock().is(EndTags.END_GROUND))
 			return false;
 
 		float radius = MHelper.randRange(1.8F, 3.5F, random);
@@ -56,9 +55,9 @@ public class BushFeature extends DefaultFeature {
 		sphere.setReplaceFunction(REPLACE);
 		sphere.addPostProcess((info) -> {
 			if (info.getState().getBlock() instanceof LeavesBlock) {
-				int distance = info.getPos().getManhattanDistance(pos);
+				int distance = info.getPos().distManhattan(pos);
 				if (distance < 7) {
-					return info.getState().with(LeavesBlock.DISTANCE, distance);
+					return info.getState().setValue(LeavesBlock.DISTANCE, distance);
 				} else {
 					return AIR;
 				}
@@ -69,9 +68,10 @@ public class BushFeature extends DefaultFeature {
 		BlocksHelper.setWithoutUpdate(world, pos, stem);
 		for (Direction d : Direction.values()) {
 			BlockPos p = pos.relative(d);
-			if (world.isAir(p)) {
+			if (world.isEmptyBlock(p)) {
 				if (leaves instanceof LeavesBlock) {
-					BlocksHelper.setWithoutUpdate(world, p, leaves.defaultBlockState().with(LeavesBlock.DISTANCE, 1));
+					BlocksHelper.setWithoutUpdate(world, p,
+							leaves.defaultBlockState().setValue(LeavesBlock.DISTANCE, 1));
 				} else {
 					BlocksHelper.setWithoutUpdate(world, p, leaves.defaultBlockState());
 				}

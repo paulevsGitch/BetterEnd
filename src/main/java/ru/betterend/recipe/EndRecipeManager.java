@@ -2,14 +2,12 @@ package ru.betterend.recipe;
 
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.google.common.collect.Maps;
-
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
+import com.google.common.collect.Maps;
 import ru.betterend.BetterEnd;
 
 public class EndRecipeManager {
@@ -23,7 +21,7 @@ public class EndRecipeManager {
 		}
 		list.put(recipe.getId(), recipe);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public static <T extends Recipe<?>> T getRecipe(RecipeType<T> type, ResourceLocation id) {
 		if (RECIPES.containsKey(type)) {
@@ -32,8 +30,7 @@ public class EndRecipeManager {
 		return null;
 	}
 
-	public static Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> getMap(
-			Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes) {
+	public static Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> getMap(Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes) {
 		Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> result = Maps.newHashMap();
 
 		for (RecipeType<?> type : recipes.keySet()) {
@@ -71,6 +68,6 @@ public class EndRecipeManager {
 			public String toString() {
 				return type;
 			}
-		});
+	    });
 	}
 }

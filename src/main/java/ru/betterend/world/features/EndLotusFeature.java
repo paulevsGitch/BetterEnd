@@ -1,7 +1,6 @@
 package ru.betterend.world.features;
 
 import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.EndLotusSeedBlock;
@@ -13,11 +12,11 @@ public class EndLotusFeature extends UnderwaterPlantScatter {
 	}
 
 	@Override
-	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		EndLotusSeedBlock seed = (EndLotusSeedBlock) EndBlocks.END_LOTUS_SEED;
 		seed.grow(world, random, blockPos);
 	}
-
+	
 	@Override
 	protected int getChance() {
 		return 15;

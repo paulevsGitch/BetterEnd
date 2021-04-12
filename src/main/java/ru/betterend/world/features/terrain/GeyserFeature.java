@@ -1,20 +1,19 @@
 package ru.betterend.world.features.terrain;
 
+import com.mojang.math.Vector3f;
 import java.util.Random;
 import java.util.function.Function;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HorizontalFacingBlock;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -56,7 +55,7 @@ public class GeyserFeature extends DefaultFeature {
 		MutableBlockPos bpos = new MutableBlockPos().set(pos);
 		bpos.setY(bpos.getY() - 1);
 		BlockState state = world.getBlockState(bpos);
-		while (state.isIn(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+		while (state.is(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -107,7 +106,7 @@ public class GeyserFeature extends DefaultFeature {
 			bowl = new SDFSubtraction().setSourceA(bowl).setSourceB(cut);
 
 			bowl = new SDFTranslate().setTranslate(radius, py - radius, 0).setSource(bowl);
-			bowl = new SDFRotation().setRotation(Vector3f.POSITIVE_Y, i * 4F).setSource(bowl);
+			bowl = new SDFRotation().setRotation(Vector3f.YP, i * 4F).setSource(bowl);
 			sdf = new SDFUnion().setSourceA(sdf).setSourceB(bowl);
 		}
 		sdf.setReplaceFunction(REPLACE2).fillRecursive(world, pos);
@@ -165,7 +164,7 @@ public class GeyserFeature extends DefaultFeature {
 		for (int i = 0; i < count; i++) {
 			BlocksHelper.setWithoutUpdate(world, mut, WATER);
 			for (Direction dir : BlocksHelper.HORIZONTAL) {
-				BlocksHelper.setWithoutUpdate(world, mut.offset(dir), WATER);
+				BlocksHelper.setWithoutUpdate(world, mut.relative(dir), WATER);
 			}
 			mut.setY(mut.getY() + 1);
 		}
@@ -177,24 +176,25 @@ public class GeyserFeature extends DefaultFeature {
 			int dist = MHelper.floor(6 - distRaw) + random.nextInt(2);
 			if (dist >= 0) {
 				state = world.getBlockState(mut);
-				while (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.UNDERWATER_PLANT)) {
+				while (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.WATER_PLANT)) {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(EndTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).is(EndBlocks.HYDROTHERMAL_VENT)) {
+				if (state.is(EndTags.GEN_TERRAIN)
+						&& !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 						MHelper.shuffle(HORIZONTAL, random);
 						for (Direction dir : HORIZONTAL) {
-							BlockPos p = mut.offset(dir);
+							BlockPos p = mut.relative(dir);
 							if (random.nextBoolean() && world.getBlockState(p).is(Blocks.WATER)) {
 								BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TUBE_WORM.defaultBlockState()
-										.with(HorizontalFacingBlock.FACING, dir));
+										.setValue(HorizontalDirectionalBlock.FACING, dir));
 							}
 						}
 						mut.setY(mut.getY() + 1);
 					}
-					state = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState().with(HydrothermalVentBlock.ACTIVATED,
+					state = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState().setValue(HydrothermalVentBlock.ACTIVATED,
 							distRaw < 2);
 					BlocksHelper.setWithoutUpdate(world, mut, state);
 					mut.setY(mut.getY() + 1);
@@ -219,12 +219,12 @@ public class GeyserFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(EndTags.GEN_TERRAIN)) {
+				if (state.is(EndTags.GEN_TERRAIN)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 						mut.setY(mut.getY() + 1);
 					}
-					state = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState().with(HydrothermalVentBlock.ACTIVATED,
+					state = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState().setValue(HydrothermalVentBlock.ACTIVATED,
 							distRaw < 2);
 					BlocksHelper.setWithoutUpdate(world, mut, state);
 					mut.setY(mut.getY() + 1);
@@ -250,11 +250,11 @@ public class GeyserFeature extends DefaultFeature {
 
 	static {
 		REPLACE1 = (state) -> {
-			return state.isAir() || (state.isIn(EndTags.GEN_TERRAIN));
+			return state.isAir() || (state.is(EndTags.GEN_TERRAIN));
 		};
 
 		REPLACE2 = (state) -> {
-			if (state.isIn(EndTags.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT)
+			if (state.is(EndTags.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT)
 					|| state.is(EndBlocks.SULPHUR_CRYSTAL)) {
 				return true;
 			}

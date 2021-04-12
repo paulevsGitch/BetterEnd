@@ -3,25 +3,24 @@ package ru.betterend.world.features;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtIo;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -30,19 +29,19 @@ import ru.betterend.world.processors.DestructionStructureProcessor;
 public abstract class NBTStructureFeature extends DefaultFeature {
 	protected static final DestructionStructureProcessor DESTRUCTION = new DestructionStructureProcessor();
 
-	protected abstract Structure getStructure(WorldGenLevel world, BlockPos pos, Random random);
+	protected abstract StructureTemplate getStructure(WorldGenLevel world, BlockPos pos, Random random);
 
 	protected abstract boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random);
 
 	protected abstract Rotation getRotation(WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract BlockMirror getMirror(WorldGenLevel world, BlockPos pos, Random random);
+	protected abstract Mirror getMirror(WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract int getYOffset(Structure structure, WorldGenLevel world, BlockPos pos, Random random);
+	protected abstract int getYOffset(StructureTemplate structure, WorldGenLevel world, BlockPos pos, Random random);
 
 	protected abstract TerrainMerge getTerrainMerge(WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract void addStructureData(StructurePlacementData data);
+	protected abstract void addStructureData(StructurePlaceSettings data);
 
 	protected BlockPos getGround(WorldGenLevel world, BlockPos center) {
 		Biome biome = world.getBiome(center);
@@ -85,18 +84,18 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		}
 
 		int posY = center.getY() + 1;
-		Structure structure = getStructure(world, center, random);
+		StructureTemplate structure = getStructure(world, center, random);
 		Rotation rotation = getRotation(world, center, random);
-		BlockMirror mirror = getMirror(world, center, random);
-		BlockPos offset = Structure.transformAround(structure.getSize(), mirror, rotation, BlockPos.ORIGIN);
-		center = center.add(0, getYOffset(structure, world, center, random) + 0.5, 0);
+		Mirror mirror = getMirror(world, center, random);
+		BlockPos offset = StructureTemplate.transform(structure.getSize(), mirror, rotation, BlockPos.ZERO);
+		center = center.offset(0, getYOffset(structure, world, center, random) + 0.5, 0);
 
-		BlockBox bounds = makeBox(center);
-		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror)
+		BoundingBox bounds = makeBox(center);
+		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror)
 				.setBoundingBox(bounds);
 		addStructureData(placementData);
-		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
-		structure.place(world, center, placementData, random);
+		center = center.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
+		structure.placeInWorldChunk(world, center, placementData, random);
 
 		TerrainMerge merge = getTerrainMerge(world, center, random);
 		int x1 = center.getX();
@@ -125,24 +124,24 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 					mut.setZ(z);
 					mut.setY(surfMax);
 					BlockState state = world.getBlockState(mut);
-					if (!state.isIn(EndTags.GEN_TERRAIN) && state.isSideSolidFullSquare(world, mut, Direction.DOWN)) {
+					if (!state.is(EndTags.GEN_TERRAIN) && state.isFaceSturdy(world, mut, Direction.DOWN)) {
 						for (int i = 0; i < 10; i++) {
 							mut.setY(mut.getY() - 1);
 							BlockState stateSt = world.getBlockState(mut);
-							if (!stateSt.isIn(EndTags.GEN_TERRAIN)) {
+							if (!stateSt.is(EndTags.GEN_TERRAIN)) {
 								if (merge == TerrainMerge.SURFACE) {
-									SurfaceConfig config = world.getBiome(mut).getGenerationSettings()
+									SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings()
 											.getSurfaceBuilderConfig();
-									boolean isTop = mut.getY() == surfMax && state.getMaterial().blocksLight();
+									boolean isTop = mut.getY() == surfMax && state.getMaterial().isSolidBlocking();
 									BlockState top = isTop ? config.getTopMaterial() : config.getUnderMaterial();
 									BlocksHelper.setWithoutUpdate(world, mut, top);
 								} else {
 									BlocksHelper.setWithoutUpdate(world, mut, state);
 								}
 							} else {
-								if (stateSt.isIn(EndTags.END_GROUND) && state.getMaterial().blocksLight()) {
+								if (stateSt.is(EndTags.END_GROUND) && state.getMaterial().isSolidBlocking()) {
 									if (merge == TerrainMerge.SURFACE) {
-										SurfaceConfig config = world.getBiome(mut).getGenerationSettings()
+										SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings()
 												.getSurfaceBuilderConfig();
 										BlocksHelper.setWithoutUpdate(world, mut, config.getUnderMaterial());
 									} else {
@@ -162,15 +161,15 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		return true;
 	}
 
-	protected BlockBox makeBox(BlockPos pos) {
+	protected BoundingBox makeBox(BlockPos pos) {
 		int sx = ((pos.getX() >> 4) << 4) - 16;
 		int sz = ((pos.getZ() >> 4) << 4) - 16;
 		int ex = sx + 47;
 		int ez = sz + 47;
-		return BlockBox.create(sx, 0, sz, ex, 255, ez);
+		return BoundingBox.createProper(sx, 0, sz, ex, 255, ez);
 	}
 
-	protected static Structure readStructure(ResourceLocation resource) {
+	protected static StructureTemplate readStructure(ResourceLocation resource) {
 		String ns = resource.getNamespace();
 		String nm = resource.getPath();
 
@@ -185,11 +184,11 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		return null;
 	}
 
-	private static Structure readStructureFromStream(InputStream stream) throws IOException {
+	private static StructureTemplate readStructureFromStream(InputStream stream) throws IOException {
 		CompoundTag nbttagcompound = NbtIo.readCompressed(stream);
 
-		Structure template = new Structure();
-		template.fromTag(nbttagcompound);
+		StructureTemplate template = new StructureTemplate();
+		template.load(nbttagcompound);
 
 		return template;
 	}

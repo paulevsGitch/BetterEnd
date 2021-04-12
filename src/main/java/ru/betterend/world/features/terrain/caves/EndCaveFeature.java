@@ -2,20 +2,18 @@ package ru.betterend.world.features.terrain.caves;
 
 import java.util.Random;
 import java.util.Set;
-
-import com.google.common.collect.Sets;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import com.google.common.collect.Sets;
 import ru.betterend.interfaces.IBiomeArray;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
@@ -62,11 +60,11 @@ public abstract class EndCaveFeature extends DefaultFeature {
 					mut.set(bpos);
 					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 						mut.setY(bpos.getY() - 1);
-						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
+						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
 							floorPositions.add(mut.immutable());
 						}
 						mut.setY(bpos.getY() + 1);
-						if (world.getBlockState(mut).isIn(EndTags.GEN_TERRAIN)) {
+						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
 							ceilPositions.add(mut.immutable());
 						}
 					}
@@ -82,7 +80,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		return true;
 	}
 
-	protected abstract Set<BlockPos> place(WorldGenLevel world, BlockPos center, int radius, Random random);
+	protected abstract Set<BlockPos> generate(WorldGenLevel world, BlockPos center, int radius, Random random);
 
 	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random,
 			BlockState surfaceBlock) {
@@ -92,7 +90,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.place(world, null, random, pos.up(), null);
+					feature.place(world, null, random, pos.above(), null);
 				}
 			}
 		});
@@ -119,21 +117,21 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	}
 
 	private void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
-		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomeArray();
+		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomes();
 		if (array != null) {
 			array.setBiome(biome.getActualBiome(), pos);
 		}
 	}
 
 	private BlockPos findPos(WorldGenLevel world, BlockPos pos, int radius, Random random) {
-		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		int top = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		MutableBlockPos bpos = new MutableBlockPos();
 		bpos.setX(pos.getX());
 		bpos.setZ(pos.getZ());
 		bpos.setY(top - 1);
 
 		BlockState state = world.getBlockState(bpos);
-		while (!state.isIn(EndTags.GEN_TERRAIN) && bpos.getY() > 5) {
+		while (!state.is(EndTags.GEN_TERRAIN) && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -142,7 +140,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		}
 		top = (int) (bpos.getY() - (radius * 1.3F + 5));
 
-		while (state.isIn(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+		while (state.is(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -181,7 +179,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				end.setZ(bpos.getZ());
 			}
 		});
-		BlocksHelper.fixBlocks(world, start.add(-5, -5, -5), end.add(5, 5, 5));
+		BlocksHelper.fixBlocks(world, start.offset(-5, -5, -5), end.offset(5, 5, 5));
 	}
 
 	protected boolean isWaterNear(WorldGenLevel world, BlockPos pos) {

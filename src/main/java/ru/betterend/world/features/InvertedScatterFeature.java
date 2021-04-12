@@ -1,12 +1,11 @@
 package ru.betterend.world.features;
 
 import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
@@ -22,16 +21,16 @@ public abstract class InvertedScatterFeature extends DefaultFeature {
 	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos,
 			float radius);
 
-	public abstract void place(WorldGenLevel world, Random random, BlockPos blockPos);
+	public abstract void generate(WorldGenLevel world, Random random, BlockPos blockPos);
 
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
 			NoneFeatureConfiguration featureConfig) {
-		int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
+		int maxY = world.getHeight(Heightmap.Types.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlocksHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		for (int y = maxY; y > minY; y--) {
 			POS.set(center.getX(), y, center.getZ());
-			if (world.getBlockState(POS).isAir() && !world.getBlockState(POS.up()).isAir()) {
+			if (world.getBlockState(POS).isAir() && !world.getBlockState(POS.above()).isAir()) {
 				float r = MHelper.randRange(radius * 0.5F, radius, random);
 				int count = MHelper.floor(r * r * MHelper.randRange(0.5F, 1.5F, random));
 				for (int i = 0; i < count; i++) {

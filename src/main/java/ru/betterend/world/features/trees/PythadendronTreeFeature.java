@@ -1,19 +1,18 @@
 package ru.betterend.world.features.trees;
 
+import com.mojang.math.Vector3f;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -48,8 +47,8 @@ public class PythadendronTreeFeature extends DefaultFeature {
 
 		int depth = MHelper.floor((size - 10F) * 3F / 10F + 1F);
 		float bsize = (10F - (size - 10F)) / 10F + 1.5F;
-		branch(last.getX(), last.getY(), last.getZ(), size * bsize, MHelper.randRange(0, MHelper.PI2, random), random,
-				depth, world, pos);
+		branch(last.x(), last.y(), last.z(), size * bsize, MHelper.randRange(0, MHelper.PI2, random), random, depth,
+				world, pos);
 
 		SDF function = SplineHelper.buildSDF(spline, 1.7F, 1.1F, (bpos) -> {
 			return EndBlocks.PYTHADENDRON.bark.defaultBlockState();
@@ -93,10 +92,10 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
 		if (depth < 3) {
 			if (s1) {
-				leavesBall(world, pos.offset(pos1.getX(), pos1.getY(), pos1.getZ()), random, noise);
+				leavesBall(world, pos.offset(pos1.x(), pos1.y(), pos1.z()), random, noise);
 			}
 			if (s2) {
-				leavesBall(world, pos.offset(pos2.getX(), pos2.getY(), pos2.getZ()), random, noise);
+				leavesBall(world, pos.offset(pos2.x(), pos2.y(), pos2.z()), random, noise);
 			}
 		}
 
@@ -106,10 +105,10 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		float angle2 = angle + (float) Math.PI * 0.5F + MHelper.randRange(-0.1F, 0.1F, random);
 
 		if (s1) {
-			branch(pos1.getX(), pos1.getY(), pos1.getZ(), size1, angle1, random, depth - 1, world, pos);
+			branch(pos1.x(), pos1.y(), pos1.z(), size1, angle1, random, depth - 1, world, pos);
 		}
 		if (s2) {
-			branch(pos2.getX(), pos2.getY(), pos2.getZ(), size2, angle2, random, depth - 1, world, pos);
+			branch(pos2.x(), pos2.y(), pos2.z(), size2, angle2, random, depth - 1, world, pos);
 		}
 	}
 
@@ -117,7 +116,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		float radius = MHelper.randRange(4.5F, 6.5F, random);
 
 		SDF sphere = new SDFSphere().setRadius(radius)
-				.setBlock(EndBlocks.PYTHADENDRON_LEAVES.defaultBlockState().with(LeavesBlock.DISTANCE, 6));
+				.setBlock(EndBlocks.PYTHADENDRON_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
@@ -152,7 +151,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 								if (state.getBlock() instanceof LeavesBlock) {
 									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) {
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -167,7 +166,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND)) {
+			if (state.is(EndTags.END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == EndBlocks.PYTHADENDRON_LEAVES) {

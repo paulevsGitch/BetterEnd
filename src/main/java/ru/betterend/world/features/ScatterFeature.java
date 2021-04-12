@@ -1,7 +1,6 @@
 package ru.betterend.world.features;
 
 import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -22,7 +21,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos,
 			float radius);
 
-	public abstract void place(WorldGenLevel world, Random random, BlockPos blockPos);
+	public abstract void generate(WorldGenLevel world, Random random, BlockPos blockPos);
 
 	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		return getPosOnSurfaceWG(world, pos);
@@ -31,7 +30,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) {
 		if (pos.getY() < 5) {
 			return false;
-		} else if (!world.getBlockState(pos.below()).isIn(EndTags.END_GROUND)) {
+		} else if (!world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
 			return false;
 		}
 		return true;

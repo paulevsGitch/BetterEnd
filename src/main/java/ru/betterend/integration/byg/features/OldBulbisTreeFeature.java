@@ -3,19 +3,17 @@ package ru.betterend.integration.byg.features;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import com.google.common.collect.Lists;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.AABB;
+import com.google.common.collect.Lists;
+import com.mojang.math.Vector3f;
 import ru.betterend.integration.Integrations;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndTags;
@@ -38,9 +36,9 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
 			return false;
-		if (!world.getBlockState(pos.down(4)).getBlock().isIn(EndTags.GEN_TERRAIN))
+		if (!world.getBlockState(pos.below(4)).getBlock().is(EndTags.GEN_TERRAIN))
 			return false;
 
 		BlockState stem = Integrations.BYG.getDefaultState("bulbis_stem");
@@ -50,7 +48,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		BlockState glow = Integrations.BYG.getDefaultState("purple_shroomlight");
 
 		Function<BlockState, Boolean> replacement = (state) -> {
-			if (state.equals(stem) || state.equals(wood) || state.isIn(EndTags.END_GROUND)
+			if (state.equals(stem) || state.equals(wood) || state.is(EndTags.END_GROUND)
 					|| state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
@@ -67,7 +65,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		SDF sdf = null;
 		int x1 = ((pos.getX() >> 4) << 4) - 16;
 		int z1 = ((pos.getZ() >> 4) << 4) - 16;
-		Box limits = new Box(x1, pos.getY() - 5, z1, x1 + 47, pos.getY() + size * 2, z1 + 47);
+		AABB limits = new AABB(x1, pos.getY() - 5, z1, x1 + 47, pos.getY() + size * 2, z1 + 47);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2 + MHelper.randRange(0, var, random) + start;
 			List<Vector3f> spline = SplineHelper.copySpline(SPLINE);
@@ -140,12 +138,12 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 				List<Vector3f> side = SplineHelper.copySpline(SIDE);
 				SplineHelper.rotateSpline(side, angle);
 				SplineHelper.scale(side, scale * radius);
-				BlockPos p = pos.offset(point.getX() + 0.5F, point.getY() + 0.5F, point.getZ() + 0.5F);
+				BlockPos p = pos.offset(point.x() + 0.5F, point.y() + 0.5F, point.z() + 0.5F);
 				SplineHelper.fillSplineForce(side, world, wood, p, replacement);
 			}
 		}
 
-		sphere.fillArea(world, pos, new Box(pos.up((int) offsetY)).expand(radius * 1.3F));
+		sphere.fillArea(world, pos, new AABB(pos.above((int) offsetY)).inflate(radius * 1.3F));
 	}
 
 	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random, BlockState wood,
@@ -159,7 +157,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.getX(), last.getY(), last.getZ())).isIn(EndTags.GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(EndTags.GEN_TERRAIN)) {
 				SplineHelper.fillSpline(branch, world, wood, pos, replacement);
 			}
 		}

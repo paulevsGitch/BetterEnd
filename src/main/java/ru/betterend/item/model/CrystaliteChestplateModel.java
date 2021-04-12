@@ -1,74 +1,72 @@
 package ru.betterend.item.model;
 
 import java.util.Collections;
-
-import com.google.common.collect.Lists;
-
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.util.Arm;
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-public class CrystaliteChestplateModel extends BipedEntityModel<LivingEntity> {
+public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 
 	public ModelPart leftShoulder;
 	public ModelPart rightShoulder;
 	private boolean thinArms;
-
+	
 	public CrystaliteChestplateModel(float scale, boolean thinArms) {
-		super(RenderLayer::getEntityTranslucent, scale, 0.0F, 64, 48);
+		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
 		this.thinArms = thinArms;
-		this.torso = new ModelPart(this, 16, 16);
-		this.torso.addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale + 0.25F);
-		this.torso.setPivot(0.0F, 0.0F, 0.0F);
+		this.body = new ModelPart(this, 16, 16);
+		this.body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale + 0.25F);
+		this.body.setPos(0.0F, 0.0F, 0.0F);
 		if (thinArms) {
 			this.leftShoulder = new ModelPart(this, 41, 32);
-			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
-			this.leftShoulder.setPivot(5.0F, 2.5F, 0.0F);
+			this.leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
+			this.leftShoulder.setPos(5.0F, 2.5F, 0.0F);
 			this.leftShoulder.mirror = true;
 			this.rightShoulder = new ModelPart(this, 41, 16);
-			this.rightShoulder.addCuboid(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
-			this.rightShoulder.setPivot(-5.0F, 2.5F, 10.0F);
+			this.rightShoulder.addBox(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
+			this.rightShoulder.setPos(-5.0F, 2.5F, 10.0F);
 		} else {
 			this.leftShoulder = new ModelPart(this, 40, 32);
-			this.leftShoulder.addCuboid(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
-			this.leftShoulder.setPivot(5.0F, 2.0F, 0.0F);
+			this.leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
+			this.leftShoulder.setPos(5.0F, 2.0F, 0.0F);
 			this.leftShoulder.mirror = true;
 			this.rightShoulder = new ModelPart(this, 40, 16);
-			this.rightShoulder.addCuboid(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
-			this.rightShoulder.setPivot(-5.0F, 2.0F, 10.0F);
+			this.rightShoulder.addBox(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
+			this.rightShoulder.setPos(-5.0F, 2.0F, 10.0F);
 		}
 	}
-
+	
 	@Override
-	public void setAttributes(BipedEntityModel<LivingEntity> bipedEntityModel) {
-		super.setAttributes(bipedEntityModel);
-		this.leftShoulder.copyPositionAndRotation(leftArm);
-		this.rightShoulder.copyPositionAndRotation(rightArm);
+	public void copyPropertiesTo(HumanoidModel<LivingEntity> bipedEntityModel) {
+		super.copyPropertiesTo(bipedEntityModel);
+		this.leftShoulder.copyFrom(leftArm);
+		this.rightShoulder.copyFrom(rightArm);
 	}
-
+	
 	@Override
-	protected Iterable<ModelPart> getHeadParts() {
+	protected Iterable<ModelPart> headParts() {
 		return Collections::emptyIterator;
 	}
-
+	
 	@Override
-	protected Iterable<ModelPart> getBodyParts() {
-		return Lists.newArrayList(torso, leftShoulder, rightShoulder);
+	protected Iterable<ModelPart> bodyParts() {
+		return Lists.newArrayList(body, leftShoulder, rightShoulder);
 	}
-
+	
 	@Override
-	public void setArmAngle(Arm arm, MatrixStack matrices) {
+	public void translateToHand(HumanoidArm arm, PoseStack matrices) {
 		ModelPart modelPart = this.getArm(arm);
 		if (this.thinArms) {
-			float f = 0.5F * (float) (arm == Arm.RIGHT ? 1 : -1);
-			modelPart.pivotX += f;
-			modelPart.rotate(matrices);
-			modelPart.pivotX -= f;
+			float f = 0.5F * (float)(arm == HumanoidArm.RIGHT ? 1 : -1);
+			modelPart.x += f;
+			modelPart.translateAndRotate(matrices);
+			modelPart.x -= f;
 		} else {
-			modelPart.rotate(matrices);
+			modelPart.translateAndRotate(matrices);
 		}
 	}
 }

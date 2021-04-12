@@ -1,15 +1,14 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Material;
 import com.mojang.math.Vector3f;
+import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -27,7 +26,7 @@ public class FallenPillarFeature extends DefaultFeature {
 			NoneFeatureConfiguration config) {
 		pos = getPosOnSurface(world,
 				new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
-		if (!world.getBlockState(pos.down(5)).isIn(EndTags.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(5)).is(EndTags.GEN_TERRAIN)) {
 			return false;
 		}
 
@@ -51,7 +50,7 @@ public class FallenPillarFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.isIn(EndTags.GEN_TERRAIN)
+			return state.getMaterial().isReplaceable() || state.is(EndTags.GEN_TERRAIN)
 					|| state.getMaterial().equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 

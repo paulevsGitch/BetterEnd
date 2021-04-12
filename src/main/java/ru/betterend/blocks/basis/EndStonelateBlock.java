@@ -4,6 +4,6 @@ import net.minecraft.world.level.block.Block;
 
 public class EndStonelateBlock extends EndPlateBlock {
 	public EndStonelateBlock(Block source) {
-		super(ActivationRule.MOBS, source);
+		super(Sensitivity.MOBS, source);
 	}
 }

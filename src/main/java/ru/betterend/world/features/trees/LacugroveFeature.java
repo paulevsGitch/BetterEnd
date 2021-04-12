@@ -1,19 +1,18 @@
 package ru.betterend.world.features.trees;
 
+import com.mojang.math.Vector3f;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -36,7 +35,7 @@ public class LacugroveFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).is(EndTags.END_GROUND))
 			return false;
 
 		float size = MHelper.randRange(15, 25, random);
@@ -52,7 +51,7 @@ public class LacugroveFeature extends DefaultFeature {
 		float radius = MHelper.randRange(6F, 8F, random);
 		radius *= (size - 15F) / 20F + 1F;
 		Vector3f center = spline.get(4);
-		leavesBall(world, pos.offset(center.getX(), center.getY(), center.getZ()), radius, random, noise);
+		leavesBall(world, pos.offset(center.x(), center.y(), center.z()), radius, random, noise);
 
 		radius = MHelper.randRange(1.2F, 1.8F, random);
 		SDF function = SplineHelper.buildSDF(spline, radius, 0.7F, (bpos) -> {
@@ -81,7 +80,7 @@ public class LacugroveFeature extends DefaultFeature {
 					boolean generate = false;
 					for (int y = minY; y < maxY; y++) {
 						mut.setY(y);
-						if (world.getBlockState(mut).isIn(EndTags.END_GROUND)) {
+						if (world.getBlockState(mut).is(EndTags.END_GROUND)) {
 							generate = true;
 							break;
 						}
@@ -92,7 +91,7 @@ public class LacugroveFeature extends DefaultFeature {
 							mut.setY(y);
 							BlockState state = world.getBlockState(mut);
 							if (state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT)
-									|| state.isIn(EndTags.END_GROUND)) {
+									|| state.is(EndTags.END_GROUND)) {
 								BlocksHelper.setWithoutUpdate(world, mut,
 										y == top ? EndBlocks.LACUGROVE.bark : EndBlocks.LACUGROVE.log);
 							} else {
@@ -109,7 +108,7 @@ public class LacugroveFeature extends DefaultFeature {
 
 	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
 		SDF sphere = new SDFSphere().setRadius(radius)
-				.setBlock(EndBlocks.LACUGROVE_LEAVES.defaultBlockState().with(LeavesBlock.DISTANCE, 6));
+				.setBlock(EndBlocks.LACUGROVE_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
 		}).setSource(sphere);
@@ -143,7 +142,7 @@ public class LacugroveFeature extends DefaultFeature {
 								if (state.getBlock() instanceof LeavesBlock) {
 									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) {
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -162,7 +161,7 @@ public class LacugroveFeature extends DefaultFeature {
 						random.nextGaussian() * 1);
 				boolean place = true;
 				for (Direction d : Direction.values()) {
-					BlockState state = world.getBlockState(p.offset(d));
+					BlockState state = world.getBlockState(p.relative(d));
 					if (!EndBlocks.LACUGROVE.isTreeLog(state) && !state.is(EndBlocks.LACUGROVE_LEAVES)) {
 						place = false;
 						break;
@@ -179,7 +178,7 @@ public class LacugroveFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND)) {
+			if (state.is(EndTags.END_GROUND)) {
 				return true;
 			}
 			if (EndBlocks.LACUGROVE.isTreeLog(state)) {

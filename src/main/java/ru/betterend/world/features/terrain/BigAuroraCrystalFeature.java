@@ -1,13 +1,12 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-
-import net.minecraft.world.level.material.Material;
 import com.mojang.math.Vector3f;
+import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -37,7 +36,7 @@ public class BigAuroraCrystalFeature extends DefaultFeature {
 		Vector3f vec = MHelper.randomHorizontal(random);
 		prism = new SDFRotation().setRotation(vec, random.nextFloat()).setSource(prism);
 		prism.setReplaceFunction((bState) -> {
-			return bState.getMaterial().isReplaceable() || bState.isIn(EndTags.GEN_TERRAIN)
+			return bState.getMaterial().isReplaceable() || bState.is(EndTags.GEN_TERRAIN)
 					|| bState.getMaterial().equals(Material.PLANT) || bState.getMaterial().equals(Material.LEAVES);
 		});
 		prism.fillRecursive(world, pos);

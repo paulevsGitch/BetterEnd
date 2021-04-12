@@ -2,21 +2,19 @@ package ru.betterend.integration.byg.features;
 
 import java.util.List;
 import java.util.Random;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.mojang.math.Vector3f;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -37,20 +35,20 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
 			return false;
 
 		BlockState log = Integrations.BYG.getDefaultState("nightshade_log");
 		BlockState wood = Integrations.BYG.getDefaultState("nightshade_wood");
-		BlockState leaves = Integrations.BYG.getDefaultState("nightshade_leaves").with(LeavesBlock.DISTANCE, 1);
+		BlockState leaves = Integrations.BYG.getDefaultState("nightshade_leaves").setValue(LeavesBlock.DISTANCE, 1);
 		BlockState leaves_flower = Integrations.BYG.getDefaultState("flowering_nightshade_leaves")
-				.with(LeavesBlock.DISTANCE, 1);
+				.setValue(LeavesBlock.DISTANCE, 1);
 
 		Function<BlockPos, BlockState> splinePlacer = (bpos) -> {
 			return log;
 		};
 		Function<BlockState, Boolean> replace = (state) -> {
-			return state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
+			return state.is(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
 					|| state.getMaterial().isReplaceable();
 		};
 		Function<PosInfo, BlockState> post = (info) -> {
@@ -78,7 +76,7 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 		for (int i = 0; i < count; i++) {
 			float scale = (float) (count - i) / count * 15;
 			Vector3f offset = SplineHelper.getPos(trunk, (float) i / count * delta + start);
-			if (offset.getY() > max) {
+			if (offset.y() > max) {
 				break;
 			}
 			List<Vector3f> branch = SplineHelper.copySpline(BRANCH);
@@ -98,13 +96,13 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 		sdf.setReplaceFunction(replace).addPostProcess(post).fillRecursive(world, pos);
 		Vector3f last = SplineHelper.getPos(trunk, trunk.size() - 1.75F);
 		for (int y = 0; y < 8; y++) {
-			BlockPos p = pos.offset(last.getX() + 0.5, last.getY() + y, last.getZ() + 0.5);
+			BlockPos p = pos.offset(last.x() + 0.5, last.y() + y, last.z() + 0.5);
 			BlocksHelper.setWithoutUpdate(world, p, y == 4 ? wood : log);
 		}
 
 		for (int y = 0; y < 16; y++) {
-			BlockPos p = pos.offset(last.getX() + 0.5, last.getY() + y, last.getZ() + 0.5);
-			if (world.isAir(p)) {
+			BlockPos p = pos.offset(last.x() + 0.5, last.y() + y, last.z() + 0.5);
+			if (world.isEmptyBlock(p)) {
 				BlocksHelper.setWithoutUpdate(world, p, leaves);
 			}
 			float radius = (1 - y / 16F) * 3F;
@@ -115,8 +113,8 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 				for (int z = -rad; z <= rad; z++) {
 					int z2 = z * z;
 					if (x2 + z2 < radius - random.nextFloat() * rad) {
-						BlockPos lp = p.add(x, 0, z);
-						if (world.isAir(lp)) {
+						BlockPos lp = p.offset(x, 0, z);
+						if (world.isEmptyBlock(lp)) {
 							BlocksHelper.setWithoutUpdate(world, lp, leaves);
 						}
 					}
@@ -142,7 +140,7 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 								if (state.getBlock() instanceof LeavesBlock) {
 									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) {
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -154,7 +152,7 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 		};
 		Function<PosInfo, BlockState> leavesPost2 = (info) -> {
 			if (info.getState().getBlock() instanceof LeavesBlock) {
-				int distance = info.getState().get(LeavesBlock.DISTANCE);
+				int distance = info.getState().getValue(LeavesBlock.DISTANCE);
 				if (distance > MHelper.randRange(2, 4, random)) {
 					return Blocks.AIR.defaultBlockState();
 				}
@@ -168,7 +166,7 @@ public class GreatNightshadeTreeFeature extends DefaultFeature {
 					}
 				}
 				if (random.nextInt(8) == 0) {
-					return leaves_flower.with(LeavesBlock.DISTANCE, distance);
+					return leaves_flower.setValue(LeavesBlock.DISTANCE, distance);
 				}
 			}
 			return info.getState();

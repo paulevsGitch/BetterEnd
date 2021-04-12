@@ -2,18 +2,16 @@ package ru.betterend.world.features.terrain;
 
 import java.util.Random;
 import java.util.Set;
-
-import com.google.common.collect.Sets;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Fluids;
+import com.google.common.collect.Sets;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -60,25 +58,25 @@ public class SulphuricLakeFeature extends DefaultFeature {
 				int dist = x2 + z2;
 				if (dist <= r) {
 					POS.setY(getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).isIn(EndTags.GEN_TERRAIN)) {
+					if (world.getBlockState(POS).is(EndTags.GEN_TERRAIN)) {
 						if (isBorder(world, POS)) {
 							if (random.nextInt(8) > 0) {
 								brimstone.add(POS.immutable());
 								if (random.nextBoolean()) {
 									brimstone.add(POS.below());
 									if (random.nextBoolean()) {
-										brimstone.add(POS.down(2));
+										brimstone.add(POS.below(2));
 									}
 								}
 							} else {
 								if (!isAbsoluteBorder(world, POS)) {
 									BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
-									world.getFluidTickScheduler().schedule(POS, Fluids.WATER, 0);
+									world.getLiquidTicks().scheduleTick(POS, Fluids.WATER, 0);
 									brimstone.add(POS.below());
 									if (random.nextBoolean()) {
-										brimstone.add(POS.down(2));
+										brimstone.add(POS.below(2));
 										if (random.nextBoolean()) {
-											brimstone.add(POS.down(3));
+											brimstone.add(POS.below(3));
 										}
 									}
 								} else {
@@ -92,8 +90,8 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
 							brimstone.remove(POS);
 							for (Direction dir : BlocksHelper.HORIZONTAL) {
-								BlockPos offseted = POS.offset(dir);
-								if (world.getBlockState(offseted).isIn(EndTags.GEN_TERRAIN)) {
+								BlockPos offseted = POS.relative(dir);
+								if (world.getBlockState(offseted).is(EndTags.GEN_TERRAIN)) {
 									brimstone.add(offseted);
 								}
 							}
@@ -101,29 +99,29 @@ public class SulphuricLakeFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(world, POS.move(Direction.DOWN), Blocks.WATER);
 								brimstone.remove(POS);
 								for (Direction dir : BlocksHelper.HORIZONTAL) {
-									BlockPos offseted = POS.offset(dir);
-									if (world.getBlockState(offseted).isIn(EndTags.GEN_TERRAIN)) {
+									BlockPos offseted = POS.relative(dir);
+									if (world.getBlockState(offseted).is(EndTags.GEN_TERRAIN)) {
 										brimstone.add(offseted);
 									}
 								}
 							}
 							brimstone.add(POS.below());
 							if (random.nextBoolean()) {
-								brimstone.add(POS.down(2));
+								brimstone.add(POS.below(2));
 								if (random.nextBoolean()) {
-									brimstone.add(POS.down(3));
+									brimstone.add(POS.below(3));
 								}
 							}
 						}
 					}
 				} else if (dist < r2) {
 					POS.setY(getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).isIn(EndTags.GEN_TERRAIN)) {
+					if (world.getBlockState(POS).is(EndTags.GEN_TERRAIN)) {
 						brimstone.add(POS.immutable());
 						if (random.nextBoolean()) {
 							brimstone.add(POS.below());
 							if (random.nextBoolean()) {
-								brimstone.add(POS.down(2));
+								brimstone.add(POS.below(2));
 							}
 						}
 					}
@@ -141,7 +139,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private boolean isBorder(WorldGenLevel world, BlockPos pos) {
 		int y = pos.getY() + 1;
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
-			if (getYOnSurface(world, pos.getX() + dir.getOffsetX(), pos.getZ() + dir.getOffsetZ()) < y) {
+			if (getYOnSurface(world, pos.getX() + dir.getStepX(), pos.getZ() + dir.getStepZ()) < y) {
 				return true;
 			}
 		}
@@ -151,7 +149,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private boolean isAbsoluteBorder(WorldGenLevel world, BlockPos pos) {
 		int y = pos.getY() - 2;
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
-			if (getYOnSurface(world, pos.getX() + dir.getOffsetX() * 3, pos.getZ() + dir.getOffsetZ() * 3) < y) {
+			if (getYOnSurface(world, pos.getX() + dir.getStepX() * 3, pos.getZ() + dir.getStepZ() * 3) < y) {
 				return true;
 			}
 		}
@@ -161,9 +159,9 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private boolean isDeepWater(WorldGenLevel world, BlockPos pos) {
 		int y = pos.getY() + 1;
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
-			if (getYOnSurface(world, pos.getX() + dir.getOffsetX(), pos.getZ() + dir.getOffsetZ()) < y
-					|| getYOnSurface(world, pos.getX() + dir.getOffsetX() * 2, pos.getZ() + dir.getOffsetZ() * 2) < y
-					|| getYOnSurface(world, pos.getX() + dir.getOffsetX() * 3, pos.getZ() + dir.getOffsetZ() * 3) < y) {
+			if (getYOnSurface(world, pos.getX() + dir.getStepX(), pos.getZ() + dir.getStepZ()) < y
+					|| getYOnSurface(world, pos.getX() + dir.getStepX() * 2, pos.getZ() + dir.getStepZ() * 2) < y
+					|| getYOnSurface(world, pos.getX() + dir.getStepX() * 3, pos.getZ() + dir.getStepZ() * 3) < y) {
 				return false;
 			}
 		}
@@ -181,7 +179,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private BlockState getBrimstone(WorldGenLevel world, BlockPos pos) {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			if (world.getBlockState(pos.relative(dir)).is(Blocks.WATER)) {
-				return EndBlocks.BRIMSTONE.defaultBlockState().with(BlockProperties.ACTIVE, true);
+				return EndBlocks.BRIMSTONE.defaultBlockState().setValue(BlockProperties.ACTIVE, true);
 			}
 		}
 		return EndBlocks.BRIMSTONE.defaultBlockState();
@@ -192,8 +190,8 @@ public class SulphuricLakeFeature extends DefaultFeature {
 			BlockPos side;
 			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.relative(dir))).is(Blocks.WATER)) {
 				BlockState state = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState()
-						.with(SulphurCrystalBlock.WATERLOGGED, true).with(SulphurCrystalBlock.FACING, dir)
-						.with(SulphurCrystalBlock.AGE, random.nextInt(3));
+						.setValue(SulphurCrystalBlock.WATERLOGGED, true).setValue(SulphurCrystalBlock.FACING, dir)
+						.setValue(SulphurCrystalBlock.AGE, random.nextInt(3));
 				BlocksHelper.setWithoutUpdate(world, side, state);
 			}
 		}

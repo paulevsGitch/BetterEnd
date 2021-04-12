@@ -1,13 +1,12 @@
 package ru.betterend.world.features.terrain;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
@@ -46,7 +45,7 @@ public class SulphurHillFeature extends DefaultFeature {
 		int max = radius + 4;
 		MutableBlockPos mut = new MutableBlockPos();
 		BlockState rock = EndBlocks.SULPHURIC_ROCK.stone.defaultBlockState();
-		BlockState brimstone = EndBlocks.BRIMSTONE.defaultBlockState().with(BlockProperties.ACTIVE, true);
+		BlockState brimstone = EndBlocks.BRIMSTONE.defaultBlockState().setValue(BlockProperties.ACTIVE, true);
 		for (int x = min; x < max; x++) {
 			int x2 = x * x;
 			int px = pos.getX() + x;

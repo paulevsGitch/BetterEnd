@@ -2,34 +2,33 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 import java.util.function.Function;
-
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class MengerSpongeFeature extends UnderwaterPlantScatter {
 	private static final Function<BlockState, Boolean> REPLACE;
-
+	
 	public MengerSpongeFeature(int radius) {
 		super(radius);
 	}
 
 	@Override
-	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlocksHelper.setWithoutUpdate(world, blockPos, EndBlocks.MENGER_SPONGE_WET);
 		if (random.nextBoolean()) {
-			for (Direction dir : BlocksHelper.DIRECTIONS) {
-				BlockPos pos = blockPos.offset(dir);
+			for (Direction dir: BlocksHelper.DIRECTIONS) {
+				BlockPos pos = blockPos.relative(dir);
 				if (REPLACE.apply(world.getBlockState(pos))) {
 					BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.MENGER_SPONGE_WET);
 				}
 			}
 		}
 	}
-
+	
 	static {
 		REPLACE = (state) -> {
 			if (state.is(EndBlocks.END_LOTUS_STEM)) {

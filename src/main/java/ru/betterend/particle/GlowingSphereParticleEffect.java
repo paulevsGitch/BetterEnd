@@ -1,11 +1,10 @@
 package ru.betterend.particle;
 
 import java.util.Locale;
-
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.Registry;
+import net.minecraft.network.FriendlyByteBuf;
 import ru.betterend.registry.EndParticles;
 
 public class GlowingSphereParticleEffect implements ParticleOptions {
@@ -25,16 +24,15 @@ public class GlowingSphereParticleEffect implements ParticleOptions {
 	}
 
 	@Override
-	public void write(PacketByteBuf buf) {
+	public void writeToNetwork(FriendlyByteBuf buf) {
 		buf.writeFloat(this.red);
 		buf.writeFloat(this.green);
 		buf.writeFloat(this.blue);
 	}
 
 	@Override
-	public String asString() {
-		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getId(this.getType()), this.red,
-				this.green, this.blue);
+	public String writeToString() {
+		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getKey(this.getType()), this.red, this.green, this.blue);
 	}
 
 	public float getRed() {

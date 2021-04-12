@@ -1,11 +1,10 @@
 package ru.betterend.world.features.terrain;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.HydrothermalVentBlock;
@@ -21,13 +20,13 @@ public class SurfaceVentFeature extends DefaultFeature {
 			NoneFeatureConfiguration config) {
 		pos = getPosOnSurface(world,
 				new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
-		if (!world.getBlockState(pos.down(3)).isIn(EndTags.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(3)).is(EndTags.GEN_TERRAIN)) {
 			return false;
 		}
 
 		MutableBlockPos mut = new MutableBlockPos();
 		int count = MHelper.randRange(15, 30, random);
-		BlockState vent = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState().with(HydrothermalVentBlock.WATERLOGGED,
+		BlockState vent = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState().setValue(HydrothermalVentBlock.WATERLOGGED,
 				false);
 		for (int i = 0; i < count; i++) {
 			mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 5,
@@ -40,7 +39,8 @@ public class SurfaceVentFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(EndTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).is(EndBlocks.HYDROTHERMAL_VENT)) {
+				if (state.is(EndTags.GEN_TERRAIN)
+						&& !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 						mut.setY(mut.getY() + 1);

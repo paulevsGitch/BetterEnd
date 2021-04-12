@@ -12,10 +12,10 @@ import me.shedaniel.rei.plugin.DefaultPlugin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.crafting.BlastingRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.blocks.basis.EndFurnaceBlock;
@@ -43,9 +43,9 @@ public class REIPlugin implements REIPluginV0 {
 	public ResourceLocation getPluginIdentifier() {
 		return PLUGIN_ID;
 	}
-
+	
 	@Override
-	public void registerRecipeDisplays(RecipeHelper recipeHelper) {
+    public void registerRecipeDisplays(RecipeHelper recipeHelper) {
 		recipeHelper.registerRecipes(ALLOYING, AlloyingRecipe.class, REIAlloyingDisplay::new);
 		recipeHelper.registerRecipes(ALLOYING, BlastingRecipe.class, REIAlloyingDisplay::new);
 		recipeHelper.registerRecipes(SMITHING, AnvilRecipe.class, REIAnvilDisplay::new);
@@ -56,7 +56,7 @@ public class REIPlugin implements REIPluginV0 {
 			}
 		});
 	}
-
+	
 	@Override
 	public void registerOthers(RecipeHelper recipeHelper) {
 		recipeHelper.registerWorkingStations(ALLOYING_FUEL, END_STONE_SMELTER);
@@ -68,12 +68,15 @@ public class REIPlugin implements REIPluginV0 {
 
 		recipeHelper.registerWorkingStations(DefaultPlugin.SMELTING, FURNACES);
 		recipeHelper.registerWorkingStations(DefaultPlugin.FUEL, FURNACES);
-	}
-
+    }
+	
 	@Override
 	public void registerPluginCategories(RecipeHelper recipeHelper) {
-		recipeHelper.registerCategories(new REIAlloyingFuelCategory(), new REIAlloyingCategory(),
-				new REIInfusionCategory(), new REIAnvilCategory());
+		recipeHelper.registerCategories(
+				new REIAlloyingFuelCategory(),
+				new REIAlloyingCategory(),
+				new REIInfusionCategory(),
+				new REIAnvilCategory());
 	}
 
 	static {

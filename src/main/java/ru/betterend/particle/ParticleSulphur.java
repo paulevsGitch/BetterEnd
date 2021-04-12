@@ -2,18 +2,18 @@ package ru.betterend.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteBillboardParticle;
-import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import ru.betterend.util.MHelper;
 
 @Environment(EnvType.CLIENT)
-public class ParticleSulphur extends SpriteBillboardParticle {
+public class ParticleSulphur extends TextureSheetParticle {
 	private int ticks;
 	private double preVX;
 	private double preVY;
@@ -21,29 +21,28 @@ public class ParticleSulphur extends SpriteBillboardParticle {
 	private double nextVX;
 	private double nextVY;
 	private double nextVZ;
-
-	protected ParticleSulphur(ClientLevel world, double x, double y, double z, double r, double g, double b,
-			SpriteSet sprites) {
+	
+	protected ParticleSulphur(ClientLevel world, double x, double y, double z, double r, double g, double b, SpriteSet sprites) {
 		super(world, x, y, z, r, g, b);
-		setSprite(sprites);
-
-		this.maxAge = MHelper.randRange(150, 300, random);
-		this.scale = MHelper.randRange(0.05F, 0.15F, random);
+		pickSprite(sprites);
+		
+		this.lifetime = MHelper.randRange(150, 300, random);
+		this.quadSize = MHelper.randRange(0.05F, 0.15F, random);
 		this.setColor(1, 1, 1);
-		this.setColorAlpha(0);
-
+		this.setAlpha(0);
+		
 		preVX = random.nextGaussian() * 0.015;
 		preVY = random.nextGaussian() * 0.015;
 		preVZ = random.nextGaussian() * 0.015;
-
+		
 		nextVX = random.nextGaussian() * 0.015;
 		nextVY = random.nextGaussian() * 0.015;
 		nextVZ = random.nextGaussian() * 0.015;
 	}
-
+	
 	@Override
 	public void tick() {
-		ticks++;
+		ticks ++;
 		if (ticks > 200) {
 			preVX = nextVX;
 			preVY = nextVY;
@@ -57,31 +56,32 @@ public class ParticleSulphur extends SpriteBillboardParticle {
 			ticks = 0;
 		}
 		double delta = (double) ticks / 200.0;
-
+		
 		if (this.age <= 40) {
-			this.setColorAlpha(this.age / 40F);
-		} else if (this.age >= this.maxAge - 40) {
-			this.setColorAlpha((this.maxAge - this.age) / 40F);
+			this.setAlpha(this.age / 40F);
 		}
-
-		if (this.age >= this.maxAge) {
-			this.markDead();
+		else if (this.age >= this.lifetime - 40) {
+			this.setAlpha((this.lifetime - this.age) / 40F);
 		}
-
-		this.velocityX = Mth.lerp(delta, preVX, nextVX);
-		this.velocityY = Mth.lerp(delta, preVY, nextVY);
-		this.velocityZ = Mth.lerp(delta, preVZ, nextVZ);
-
+		
+		if (this.age >= this.lifetime) {
+			this.remove();
+		}
+		
+		this.xd = Mth.lerp(delta, preVX, nextVX);
+		this.yd = Mth.lerp(delta, preVY, nextVY);
+		this.zd = Mth.lerp(delta, preVZ, nextVZ);
+		
 		super.tick();
 	}
-
+	
 	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static class FactorySulphur implements ParticleFactory<SimpleParticleType> {
+	public static class FactorySulphur implements ParticleProvider<SimpleParticleType> {
 
 		private final SpriteSet sprites;
 
@@ -90,8 +90,7 @@ public class ParticleSulphur extends SpriteBillboardParticle {
 		}
 
 		@Override
-		public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z,
-				double vX, double vY, double vZ) {
+		public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double vX, double vY, double vZ) {
 			return new ParticleSulphur(world, x, y, z, 1, 1, 1, sprites);
 		}
 	}

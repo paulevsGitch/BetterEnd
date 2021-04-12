@@ -1,9 +1,9 @@
 package ru.betterend.client.gui.slot;
 
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
 public class SmelterOutputSlot extends Slot {
@@ -11,38 +11,38 @@ public class SmelterOutputSlot extends Slot {
 	private Player player;
 	private int amount;
 
-	public SmelterOutputSlot(Player player, Inventory inventory, int index, int x, int y) {
+	public SmelterOutputSlot(Player player, Container inventory, int index, int x, int y) {
 		super(inventory, index, x, y);
 		this.player = player;
 	}
 
-	public boolean canInsert(ItemStack stack) {
+	public boolean mayPlace(ItemStack stack) {
 		return false;
 	}
 
-	public ItemStack takeStack(int amount) {
-		if (this.hasStack()) {
-			this.amount += Math.min(amount, this.getStack().getCount());
+	public ItemStack remove(int amount) {
+		if (this.hasItem()) {
+			this.amount += Math.min(amount, this.getItem().getCount());
 		}
 
-		return super.takeStack(amount);
+		return super.remove(amount);
 	}
 
-	public ItemStack onTakeItem(Player player, ItemStack stack) {
-		this.onCrafted(stack);
-		super.onTakeItem(player, stack);
+	public ItemStack onTake(Player player, ItemStack stack) {
+		this.checkTakeAchievements(stack);
+		super.onTake(player, stack);
 		return stack;
 	}
 
-	protected void onCrafted(ItemStack stack, int amount) {
+	protected void onQuickCraft(ItemStack stack, int amount) {
 		this.amount += amount;
-		this.onCrafted(stack);
+		this.checkTakeAchievements(stack);
 	}
 
-	protected void onCrafted(ItemStack stack) {
-		stack.onCraft(this.player.world, this.player, this.amount);
-		if (!this.player.world.isClientSide && this.inventory instanceof EndStoneSmelterBlockEntity) {
-			((EndStoneSmelterBlockEntity) this.inventory).dropExperience(player);
+	protected void checkTakeAchievements(ItemStack stack) {
+		stack.onCraftedBy(this.player.level, this.player, this.amount);
+		if (!this.player.level.isClientSide && this.container instanceof EndStoneSmelterBlockEntity) {
+			((EndStoneSmelterBlockEntity) this.container).dropExperience(player);
 		}
 		this.amount = 0;
 	}

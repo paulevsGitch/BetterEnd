@@ -1,12 +1,11 @@
 package ru.betterend.world.features.terrain;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.state.property.Properties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.registry.EndBlocks;
@@ -19,7 +18,7 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).isIn(EndTags.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below()).is(EndTags.GEN_TERRAIN)) {
 			return false;
 		}
 
@@ -38,13 +37,14 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(EndTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).is(crystal.getBlock())) {
+				if (state.is(EndTags.GEN_TERRAIN) && !world.getBlockState(mut.above()).is(crystal.getBlock())) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, crystal);
 						mut.setY(mut.getY() + 1);
 					}
 					boolean waterlogged = !world.getFluidState(mut).isEmpty();
-					BlocksHelper.setWithoutUpdate(world, mut, shard.with(Properties.WATERLOGGED, waterlogged));
+					BlocksHelper.setWithoutUpdate(world, mut,
+							shard.setValue(BlockStateProperties.WATERLOGGED, waterlogged));
 				}
 			}
 		}

@@ -3,19 +3,17 @@ package ru.betterend.world.features.trees;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import com.google.common.collect.Lists;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
+import com.google.common.collect.Lists;
+import com.mojang.math.Vector3f;
 import ru.betterend.blocks.UmbrellaTreeClusterBlock;
 import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.registry.EndBlocks;
@@ -42,16 +40,16 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
 			return false;
 
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.defaultBlockState();
-		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState().with(UmbrellaTreeMembraneBlock.COLOR,
-				1);
-		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState().with(UmbrellaTreeMembraneBlock.COLOR,
-				0);
-		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState().with(UmbrellaTreeClusterBlock.NATURAL,
-				true);
+		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
+				.setValue(UmbrellaTreeMembraneBlock.COLOR, 1);
+		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
+				.setValue(UmbrellaTreeMembraneBlock.COLOR, 0);
+		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState()
+				.setValue(UmbrellaTreeClusterBlock.NATURAL, true);
 
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
@@ -123,7 +121,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				}
 				int color = MHelper.floor(d / min.radius * 7);
 				color = Mth.clamp(color, 1, 7);
-				return info.getState().with(UmbrellaTreeMembraneBlock.COLOR, color);
+				return info.getState().setValue(UmbrellaTreeMembraneBlock.COLOR, color);
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);
@@ -156,7 +154,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.getX(), last.getY(), last.getZ())).isIn(EndTags.GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(EndTags.GEN_TERRAIN)) {
 				SplineHelper.fillSplineForce(branch, world, wood, pos, REPLACE);
 			}
 		}
@@ -186,8 +184,8 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		MutableBlockPos mut = new MutableBlockPos().set(px, py, pz);
 		for (int i = 0; i < 8; i++) {
 			mut.move(Direction.DOWN);
-			if (world.isAir(mut)) {
-				BlockState state = world.getBlockState(mut.up());
+			if (world.isEmptyBlock(mut)) {
+				BlockState state = world.getBlockState(mut.above());
 				if (state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE) && state.getValue(UmbrellaTreeMembraneBlock.COLOR) < 2) {
 					BlocksHelper.setWithoutUpdate(world, mut, fruit);
 				}
@@ -206,7 +204,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 
 		REPLACE = (state) -> {
-			if (state.isIn(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
+			if (state.is(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)
 					|| state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
 				return true;
 			}

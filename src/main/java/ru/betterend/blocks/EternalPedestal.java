@@ -1,27 +1,25 @@
 package ru.betterend.blocks;
 
 import java.util.List;
-
-import com.google.common.collect.Lists;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.explosion.Explosion;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import com.google.common.collect.Lists;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.registry.EndBlocks;
@@ -30,12 +28,12 @@ import ru.betterend.rituals.EternalRitual;
 
 public class EternalPedestal extends PedestalBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
-
+	
 	public EternalPedestal() {
 		super(EndBlocks.FLAVOLITE_RUNED_ETERNAL);
-		this.setDefaultState(getDefaultState().with(ACTIVATED, false));
+		this.registerDefaultState(defaultBlockState().setValue(ACTIVATED, false));
 	}
-
+	
 	@Override
 	public void checkRitual(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -56,12 +54,12 @@ public class EternalPedestal extends PedestalBlock {
 						ritual.disablePortal(portalId);
 					}
 				}
-				world.setBlockAndUpdate(pos, updatedState.with(ACTIVATED, false).with(HAS_LIGHT, false));
+				world.setBlockAndUpdate(pos, updatedState.setValue(ACTIVATED, false).setValue(HAS_LIGHT, false));
 			} else {
-				ItemStack itemStack = pedestal.getStack(0);
-				ResourceLocation id = Registry.ITEM.getId(itemStack.getItem());
+				ItemStack itemStack = pedestal.getItem(0);
+				ResourceLocation id = Registry.ITEM.getKey(itemStack.getItem());
 				if (EndPortals.isAvailableItem(id)) {
-					world.setBlockAndUpdate(pos, updatedState.with(ACTIVATED, true).with(HAS_LIGHT, true));
+					world.setBlockAndUpdate(pos, updatedState.setValue(ACTIVATED, true).setValue(HAS_LIGHT, true));
 					if (pedestal.hasRitual()) {
 						pedestal.getRitual().checkStructure();
 					} else {
@@ -72,54 +70,51 @@ public class EternalPedestal extends PedestalBlock {
 			}
 		}
 	}
-
+	
 	@Override
-	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world,
-			BlockPos pos, BlockPos posFrom) {
+	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		BlockState updated = super.updateShape(state, direction, newState, world, pos, posFrom);
-		if (!updated.is(this))
-			return updated;
+		if (!updated.is(this)) return updated;
 		if (!this.isPlaceable(updated)) {
-			return updated.with(ACTIVATED, false);
+			return updated.setValue(ACTIVATED, false);
 		}
 		return updated;
 	}
-
+	
 	@Override
-	public float calcBlockBreakingDelta(BlockState state, Player player, BlockView world, BlockPos pos) {
+	public float getDestroyProgress(BlockState state, Player player, BlockGetter world, BlockPos pos) {
 		return 0.0F;
 	}
-
+	
 	@Override
-	public float getBlastResistance() {
+	public float getExplosionResistance() {
 		return Blocks.BEDROCK.getExplosionResistance();
 	}
-
+	
 	@Override
-	public boolean shouldDropItemsOnExplosion(Explosion explosion) {
+	public boolean dropFromExplosion(Explosion explosion) {
 		return false;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.is(this)) {
 			BlockProperties.PedestalState currentState = state.getValue(BlockProperties.PEDESTAL_STATE);
-			if (currentState.equals(BlockProperties.PedestalState.BOTTOM)
-					|| currentState.equals(BlockProperties.PedestalState.PILLAR)) {
+			if (currentState.equals(BlockProperties.PedestalState.BOTTOM) || currentState.equals(BlockProperties.PedestalState.PILLAR)) {
 				return Lists.newArrayList();
 			}
 		}
 		List<ItemStack> drop = Lists.newArrayList();
-		BlockEntity blockEntity = builder.getNullable(LootContextParams.BLOCK_ENTITY);
+		BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
 		if (blockEntity instanceof EternalPedestalEntity) {
 			EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
 			if (!pedestal.isEmpty()) {
-				drop.add(pedestal.getStack(0));
+				drop.add(pedestal.getItem(0));
 			}
 		}
 		return drop;
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		super.createBlockStateDefinition(stateManager);
@@ -127,7 +122,7 @@ public class EternalPedestal extends PedestalBlock {
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
+	public BlockEntity newBlockEntity(BlockGetter world) {
 		return new EternalPedestalEntity();
 	}
 }

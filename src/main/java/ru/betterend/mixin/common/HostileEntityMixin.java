@@ -13,7 +13,7 @@ import net.minecraft.world.entity.SpawnReason;
 import net.minecraft.world.entity.mob.EndermanEntity;
 import net.minecraft.world.entity.mob.HostileEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.Box;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 @Mixin(HostileEntity.class)

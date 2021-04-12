@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.Box;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.core.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;

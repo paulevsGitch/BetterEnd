@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.world.level.block.AbstractSignBlock;
+import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -44,7 +44,7 @@ import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class EndSignBlock extends AbstractSignBlock implements BlockPatterned, ISpetialItem {
+public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialItem {
 	public static final IntegerProperty ROTATION = Properties.ROTATION;
 	public static final BooleanProperty FLOOR = BooleanProperty.of("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {

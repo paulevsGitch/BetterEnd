@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.world.level.block.AbstractSignBlock;
+import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SignBlock;
@@ -91,8 +91,8 @@ public class EndSignBlockEntityRenderer extends BlockEntityRenderer<ESignBlockEn
 
 	public static SpriteIdentifier getModelTexture(Block block) {
 		SignType signType2;
-		if (block instanceof AbstractSignBlock) {
-			signType2 = ((AbstractSignBlock) block).getSignType();
+		if (block instanceof SignBlock) {
+			signType2 = ((SignBlock) block).getSignType();
 		} else {
 			signType2 = SignType.OAK;
 		}

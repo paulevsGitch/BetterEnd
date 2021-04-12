@@ -15,7 +15,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.util.math.Box;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.core.Direction;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.structures.StructureWorld;
@@ -103,7 +103,7 @@ public abstract class SDF {
 		}
 	}
 
-	public void fillArea(ServerLevelAccessor world, BlockPos center, Box box) {
+	public void fillArea(ServerLevelAccessor world, BlockPos center, AABB box) {
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
 

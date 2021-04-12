@@ -32,7 +32,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.text.Text;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.util.math.Box;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.level.ServerLevelAccessor;

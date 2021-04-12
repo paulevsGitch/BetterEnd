@@ -38,7 +38,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.Box;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

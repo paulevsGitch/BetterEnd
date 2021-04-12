@@ -36,7 +36,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	private static final VoxelShape SHAPE_FULL = Block.createCuboidShape(0, 0, 0, 16, 16, 16);
 	private static final VoxelShape SHAPE_HALF = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
 
-	public ChorusFlowerBlockMixin(Properties settings) {
+	public ChorusFlowerBlockMixin(net.minecraft.world.level.block.state.BlockBehaviour.Properties settings) {
 		super(settings);
 	}
 

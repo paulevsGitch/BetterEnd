@@ -32,6 +32,8 @@ import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.WorldView;
+import ru.betterend.entity.DragonflyEntity.DragonflyLookControl;
+import ru.betterend.entity.DragonflyEntity.WanderAroundGoal;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.util.BlocksHelper;

@@ -19,7 +19,7 @@ import ru.betterend.util.BlocksHelper;
 public abstract class AttachedBlock extends BlockBaseNotFull {
 	public static final DirectionProperty FACING = Properties.FACING;
 
-	public AttachedBlock(Properties settings) {
+	public AttachedBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties settings) {
 		super(settings);
 		this.setDefaultState(this.defaultBlockState().with(FACING, Direction.UP));
 	}

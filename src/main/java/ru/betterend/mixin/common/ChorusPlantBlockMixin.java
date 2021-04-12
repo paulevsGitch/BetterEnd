@@ -27,7 +27,7 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
 public abstract class ChorusPlantBlockMixin extends Block {
-	public ChorusPlantBlockMixin(Properties settings) {
+	public ChorusPlantBlockMixin(net.minecraft.world.level.block.state.BlockBehaviour.Properties settings) {
 		super(settings);
 	}
 

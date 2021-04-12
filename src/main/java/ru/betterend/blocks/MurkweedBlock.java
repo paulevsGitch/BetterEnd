@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.pathing.NavigationType;
-import net.minecraft.world.entity.effect.StatusEffectInstance;
-import net.minecraft.world.entity.effect.StatusEffects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -30,8 +30,8 @@ public class MurkweedBlock extends EndPlantBlock {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (entity instanceof LivingEntity && !((LivingEntity) entity).hasStatusEffect(StatusEffects.BLINDNESS)) {
-			((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 50));
+		if (entity instanceof LivingEntity && !((LivingEntity) entity).hasMobEffect(MobEffects.BLINDNESS)) {
+			((LivingEntity) entity).addMobEffect(new MobEffectInstance(MobEffects.BLINDNESS, 50));
 		}
 	}
 

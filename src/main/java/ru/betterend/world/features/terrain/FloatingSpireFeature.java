@@ -8,9 +8,9 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
@@ -21,8 +21,8 @@ import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class FloatingSpireFeature extends SpireFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		int minY = getYOnSurface(world, pos.getX(), pos.getZ());
 		int y = minY > 57 ? MHelper.floor(MHelper.randRange(minY, minY * 2, random) * 0.5F + 32)
 				: MHelper.randRange(64, 192, random);
@@ -42,8 +42,8 @@ public class FloatingSpireFeature extends SpireFeature {
 
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1)) * 3F
-					+ Math.abs(noise.eval(vec.getX() * 0.3, vec.getY() * 0.3 + 100, vec.getZ() * 0.3)) * 1.3F);
+			return (float) (Math.abs(noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1)) * 3F
+					+ Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
 		}).setSource(sdf);
 		final BlockPos center = pos;
 		List<BlockPos> support = Lists.newArrayList();
@@ -52,9 +52,10 @@ public class FloatingSpireFeature extends SpireFeature {
 				if (random.nextInt(16) == 0) {
 					support.add(info.getPos().up());
 				}
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			} else if (info.getState(Direction.UP, 3).isAir()) {
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceConfig().getUnderMaterial();
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig()
+						.getUnderMaterial();
 			}
 			return info.getState();
 		});
@@ -62,7 +63,7 @@ public class FloatingSpireFeature extends SpireFeature {
 
 		support.forEach((bpos) -> {
 			if (EndBiomes.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
-				EndFeatures.TENANEA_BUSH.getFeature().generate(world, chunkGenerator, random, bpos, null);
+				EndFeatures.TENANEA_BUSH.getFeature().place(world, chunkGenerator, random, bpos, null);
 			}
 		});
 

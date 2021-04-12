@@ -17,7 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.level.biome.Biome.Category;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;

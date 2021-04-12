@@ -7,13 +7,13 @@ import java.util.function.Function;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -34,8 +34,8 @@ public class LacugroveFeature extends DefaultFeature {
 	private static final Function<PosInfo, BlockState> POST;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).isIn(EndTags.END_GROUND))
 			return false;
 
@@ -107,12 +107,11 @@ public class LacugroveFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void leavesBall(StructureWorldAccess world, BlockPos pos, float radius, Random random,
-			OpenSimplexNoise noise) {
+	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
 		SDF sphere = new SDFSphere().setRadius(radius)
 				.setBlock(EndBlocks.LACUGROVE_LEAVES.defaultBlockState().with(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3;
+			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return random.nextFloat() * 3F - 1.5F;

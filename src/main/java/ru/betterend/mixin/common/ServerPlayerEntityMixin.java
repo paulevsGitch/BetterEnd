@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.effect.StatusEffectInstance;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.packet.s2c.play.DifficultyS2CPacket;
-import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
+import net.minecraft.network.packet.s2c.play.EntityMobEffectS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerAbilitiesS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerRespawnS2CPacket;
 import net.minecraft.network.packet.s2c.play.WorldEventS2CPacket;
@@ -34,7 +34,7 @@ import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerPlayer.class)
-public abstract class ServerPlayerEntityMixin extends PlayerEntity implements TeleportingEntity {
+public abstract class ServerPlayerEntityMixin extends Player implements TeleportingEntity {
 
 	@Shadow
 	public ServerPlayNetworkHandler networkHandler;
@@ -108,9 +108,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Te
 				playerManager.sendWorldInfo(player, destination);
 				playerManager.sendPlayerStatus(player);
 
-				for (StatusEffectInstance statusEffectInstance : this.getStatusEffects()) {
-					this.networkHandler
-							.sendPacket(new EntityStatusEffectS2CPacket(getEntityId(), statusEffectInstance));
+				for (MobEffectInstance statusEffectInstance : this.getMobEffects()) {
+					this.networkHandler.sendPacket(new EntityMobEffectS2CPacket(getEntityId(), statusEffectInstance));
 				}
 
 				this.networkHandler.sendPacket(new WorldEventS2CPacket(1032, BlockPos.ORIGIN, 0, false));
@@ -135,7 +134,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Te
 
 	@Override
 	public void beSetExitPos(BlockPos pos) {
-		this.exitPos = pos.toImmutable();
+		this.exitPos = pos.immutable();
 	}
 
 	@Override

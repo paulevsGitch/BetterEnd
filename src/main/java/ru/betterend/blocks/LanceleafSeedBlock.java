@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties.PentaShape;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
@@ -16,7 +16,7 @@ import ru.betterend.util.MHelper;
 
 public class LanceleafSeedBlock extends EndPlantWithAgeBlock {
 	@Override
-	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(4, 6, random);
 		int h = BlocksHelper.upRay(world, pos, height + 2);
 		if (h < height + 1) {

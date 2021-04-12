@@ -15,8 +15,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.MHelper;
@@ -76,7 +76,7 @@ public abstract class MountainPiece extends BasePiece {
 		noise2 = new OpenSimplexNoise(seed2);
 	}
 
-	private int getHeight(StructureWorldAccess world, BlockPos pos) {
+	private int getHeight(WorldGenLevel world, BlockPos pos) {
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
 		int h = heightmap.getOrDefault(p, Integer.MIN_VALUE);
 		if (h > Integer.MIN_VALUE) {
@@ -87,7 +87,7 @@ public abstract class MountainPiece extends BasePiece {
 			heightmap.put(p, -10);
 			return -10;
 		}
-		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		h = Mth.abs(h - center.getY());
 		if (h > 4) {
 			h = 4 - h;
@@ -108,7 +108,7 @@ public abstract class MountainPiece extends BasePiece {
 		return h;
 	}
 
-	protected float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {
+	protected float getHeightClamp(WorldGenLevel world, int radius, int posX, int posZ) {
 		MutableBlockPos mut = new MutableBlockPos();
 		float height = 0;
 		float max = 0;

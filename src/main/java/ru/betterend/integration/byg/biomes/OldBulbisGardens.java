@@ -6,16 +6,16 @@ import java.util.function.Supplier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.SpawnGroup;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.core.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import net.minecraft.world.gen.GenerationStep.Feature;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeatures;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
@@ -33,7 +33,7 @@ public class OldBulbisGardens extends EndBiome {
 		BiomeEffects effects = biome.getEffects();
 
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
-		Block origin = biome.getGenerationSettings().getSurfaceConfig().getTopMaterial().getBlock();
+		Block origin = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial().getBlock();
 		BiomeDefinition def = new BiomeDefinition("old_bulbis_gardens").setFogColor(215, 132, 207).setFogDensity(1.8F)
 				.setWaterAndFogColor(40, 0, 56).setFoliageColor(122, 17, 155)
 				.setParticles(ParticleTypes.REVERSE_PORTAL, 0.002F).setSurface(ivis, origin)

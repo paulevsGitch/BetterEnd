@@ -1,12 +1,12 @@
 package ru.betterend.effects.status;
 
-import net.minecraft.world.entity.effect.StatusEffect;
-import net.minecraft.world.entity.effect.StatusEffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectType;
 
-public class EndVeilEffect extends StatusEffect {
+public class EndVeilEffect extends MobEffect {
 
 	public EndVeilEffect() {
-		super(StatusEffectType.BENEFICIAL, 0x0D554A);
+		super(MobEffectType.BENEFICIAL, 0x0D554A);
 	}
 
 	@Override

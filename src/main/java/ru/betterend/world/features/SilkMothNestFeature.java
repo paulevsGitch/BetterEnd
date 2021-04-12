@@ -9,9 +9,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
@@ -19,7 +19,7 @@ import ru.betterend.util.BlocksHelper;
 public class SilkMothNestFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();
 
-	private boolean canGenerate(StructureWorldAccess world, BlockPos pos) {
+	private boolean canGenerate(WorldGenLevel world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos.up());
 		if (state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.LOGS)) {
 			state = world.getBlockState(pos);
@@ -36,8 +36,8 @@ public class SilkMothNestFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
-			DefaultFeatureConfig featureConfig) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
+			NoneFeatureConfiguration featureConfig) {
 		int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlocksHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		POS.set(center);

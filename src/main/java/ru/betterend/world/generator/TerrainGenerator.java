@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.google.common.collect.Lists;
 
 import net.minecraft.util.Mth;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;

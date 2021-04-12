@@ -14,17 +14,17 @@ import net.minecraft.world.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.attribute.Attributes;
 import net.minecraft.world.entity.damage.DamageSource;
-import net.minecraft.world.entity.effect.StatusEffectInstance;
-import net.minecraft.world.entity.effect.StatusEffects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.mob.HostileEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.util.MHelper;
@@ -38,15 +38,15 @@ public class ShadowWalkerEntity extends HostileEntity {
 	protected void initGoals() {
 		this.goalSelector.add(2, new AttackGoal(this, 1.0D, false));
 		this.goalSelector.add(7, new WanderAroundFarGoal(this, 1.0D));
-		this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.add(8, new LookAtEntityGoal(this, Player.class, 8.0F));
 		this.goalSelector.add(8, new LookAroundGoal(this));
-		this.targetSelector.add(2, new FollowTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		this.targetSelector.add(2, new FollowTargetGoal<Player>(this, Player.class, true));
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35.0)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.5)
-				.add(EntityAttributes.GENERIC_ARMOR, 2.0).add(EntityAttributes.ZOMBIE_SPAWN_REINFORCEMENTS);
+		return HostileEntity.createHostileAttributes().add(Attributes.FOLLOW_RANGE, 35.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.15).add(Attributes.ATTACK_DAMAGE, 4.5).add(Attributes.ARMOR, 2.0)
+				.add(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
 	}
 
 	@Override
@@ -94,14 +94,14 @@ public class ShadowWalkerEntity extends HostileEntity {
 		boolean attack = super.tryAttack(target);
 		if (attack && target instanceof LivingEntity) {
 			LivingEntity living = (LivingEntity) target;
-			if (!(living.hasStatusEffect(StatusEffects.BLINDNESS))) {
-				living.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60));
+			if (!(living.hasMobEffect(MobEffects.BLINDNESS))) {
+				living.addMobEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60));
 			}
 		}
 		return attack;
 	}
 
-	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerWorldAccess world,
+	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerLevelAccessor world,
 			SpawnReason spawnReason, BlockPos pos, Random random) {
 		if (HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random)) {
 			Box box = new Box(pos).expand(16);

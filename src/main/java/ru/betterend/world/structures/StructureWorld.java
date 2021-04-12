@@ -12,7 +12,7 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.chunk.Chunk;
 
 public class StructureWorld {
@@ -79,7 +79,7 @@ public class StructureWorld {
 		lastPart = part;
 	}
 
-	public boolean placeChunk(StructureWorldAccess world, ChunkPos chunkPos) {
+	public boolean placeChunk(WorldGenLevel world, ChunkPos chunkPos) {
 		Part part = parts.get(chunkPos);
 		if (part != null) {
 			Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.BufferBuilder;
@@ -25,7 +25,7 @@ import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.Quaternion;
@@ -63,7 +63,7 @@ public class WorldRendererMixin {
 
 	@Shadow
 	@Final
-	private MinecraftClient client;
+	private Minecraft client;
 
 	@Shadow
 	@Final
@@ -76,7 +76,7 @@ public class WorldRendererMixin {
 	private int ticks;
 
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void be_onInit(MinecraftClient client, BufferBuilderStorage bufferBuilders, CallbackInfo info) {
+	private void be_onInit(Minecraft client, BufferBuilderStorage bufferBuilders, CallbackInfo info) {
 		be_initStars();
 		Random random = new Random(131);
 		axis1 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());

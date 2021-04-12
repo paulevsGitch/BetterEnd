@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.server.level.ServerLevel;
@@ -40,7 +40,7 @@ public class EmeraldIceBlock extends TransparentBlock implements IRenderTypeable
 	}
 
 	@Override
-	public void afterBreak(Level world, PlayerEntity player, BlockPos pos, BlockState state,
+	public void afterBreak(Level world, Player player, BlockPos pos, BlockState state,
 			@Nullable BlockEntity blockEntity, ItemStack stack) {
 		super.afterBreak(world, player, pos, state, blockEntity, stack);
 		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0) {

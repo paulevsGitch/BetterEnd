@@ -5,11 +5,11 @@ import java.util.Random;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -25,8 +25,8 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianPillarBasementFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		pos = getPosOnSurface(world,
 				new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		if (!world.getBlockState(pos.down(5)).isIn(EndTags.GEN_TERRAIN)) {
@@ -41,7 +41,7 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 		SDF cut = new SDFFlatland().setBlock(Blocks.OBSIDIAN);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		cut = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (noise.eval(vec.getX() * 0.2, vec.getZ() * 0.2) * 3);
+			return (float) (noise.eval(vec.x() * 0.2, vec.z() * 0.2) * 3);
 		}).setSource(cut);
 		Vector3f vec = MHelper.randomHorizontal(random);
 		float angle = random.nextFloat() * 0.5F + (float) Math.PI;

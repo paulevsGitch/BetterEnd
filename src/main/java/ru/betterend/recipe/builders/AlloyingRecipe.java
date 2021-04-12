@@ -7,7 +7,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -157,16 +157,16 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return this;
 		}
 
-		public Builder setPrimaryInput(ItemConvertible... inputs) {
-			for (ItemConvertible item : inputs) {
+		public Builder setPrimaryInput(ItemLike... inputs) {
+			for (ItemLike item : inputs) {
 				this.alright &= RecipeHelper.exists(item);
 			}
 			this.primaryInput = Ingredient.of(inputs);
 			return this;
 		}
 
-		public Builder setSecondaryInput(ItemConvertible... inputs) {
-			for (ItemConvertible item : inputs) {
+		public Builder setSecondaryInput(ItemLike... inputs) {
+			for (ItemLike item : inputs) {
 				this.alright &= RecipeHelper.exists(item);
 			}
 			this.secondaryInput = Ingredient.of(inputs);
@@ -183,7 +183,7 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return this;
 		}
 
-		public Builder setInput(ItemConvertible primaryInput, ItemConvertible secondaryInput) {
+		public Builder setInput(ItemLike primaryInput, ItemLike secondaryInput) {
 			this.setPrimaryInput(primaryInput);
 			this.setSecondaryInput(secondaryInput);
 			return this;
@@ -195,7 +195,7 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return this;
 		}
 
-		public Builder setOutput(ItemConvertible output, int amount) {
+		public Builder setOutput(ItemLike output, int amount) {
 			this.alright &= RecipeHelper.exists(output);
 			this.output = new ItemStack(output, amount);
 			return this;

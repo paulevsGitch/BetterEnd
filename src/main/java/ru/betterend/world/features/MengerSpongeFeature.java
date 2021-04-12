@@ -6,7 +6,7 @@ import java.util.function.Function;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
@@ -18,7 +18,7 @@ public class MengerSpongeFeature extends UnderwaterPlantScatter {
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlocksHelper.setWithoutUpdate(world, blockPos, EndBlocks.MENGER_SPONGE_WET);
 		if (random.nextBoolean()) {
 			for (Direction dir : BlocksHelper.DIRECTIONS) {

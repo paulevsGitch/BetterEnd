@@ -8,10 +8,10 @@ import java.util.function.Function;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.SplineHelper;
@@ -21,7 +21,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 
 	@Override
-	protected Set<BlockPos> generate(StructureWorldAccess world, BlockPos center, int radius, Random random) {
+	protected Set<BlockPos> place(WorldGenLevel world, BlockPos center, int radius, Random random) {
 		// OpenSimplexNoise noise = new OpenSimplexNoise(MHelper.getSeed(534,
 		// center.getX(), center.getZ()));
 		float rad = radius * 0.15F;
@@ -31,9 +31,9 @@ public class TunelCaveFeature extends EndCaveFeature {
 		spline = SplineHelper.smoothSpline(spline, 5);
 		SplineHelper.offsetParts(spline, random, 5, radius * 0.4F, 5);
 		for (Vector3f vec : spline) {
-			float x = Mth.clamp(vec.getX(), min, max);
-			float y = Mth.clamp(vec.getY(), -radius, radius);
-			float z = Mth.clamp(vec.getZ(), min, max);
+			float x = Mth.clamp(vec.x(), min, max);
+			float y = Mth.clamp(vec.y(), -radius, radius);
+			float z = Mth.clamp(vec.z(), min, max);
 			vec.set(x, y, z);
 		}
 		SDF sdf = SplineHelper.buildSDF(spline, rad, rad, (vec) -> Blocks.AIR.defaultBlockState());

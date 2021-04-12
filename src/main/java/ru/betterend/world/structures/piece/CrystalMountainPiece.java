@@ -13,11 +13,11 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
@@ -29,7 +29,7 @@ public class CrystalMountainPiece extends MountainPiece {
 
 	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
-		top = biome.getGenerationSettings().getSurfaceConfig().getTopMaterial();
+		top = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 
 	public CrystalMountainPiece(StructureManager manager, CompoundTag tag) {
@@ -39,12 +39,12 @@ public class CrystalMountainPiece extends MountainPiece {
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		super.fromNbt(tag);
-		top = EndBiomes.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
+		top = EndBiomes.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
-			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean place(WorldGenLevel world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random,
+			BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getStartX();
 		int sz = chunkPos.getStartZ();
 		MutableBlockPos pos = new MutableBlockPos();

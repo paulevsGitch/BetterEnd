@@ -10,7 +10,7 @@ import com.google.common.collect.Maps;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.indigo.renderer.helper.ColorHelper;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -193,7 +193,7 @@ public class ColorUtil {
 
 	public static int extractColor(Item item) {
 		ResourceLocation id = Registry.ITEM.getId(item);
-		if (id.equals(Registry.ITEM.getDefaultId()))
+		if (id.equals(Registry.ITEM.getDefaultKey()))
 			return -1;
 		if (colorPalette.containsKey(id)) {
 			return colorPalette.get(id);
@@ -227,7 +227,7 @@ public class ColorUtil {
 	}
 
 	public static NativeImage loadImage(ResourceLocation image, int w, int h) {
-		MinecraftClient minecraft = MinecraftClient.getInstance();
+		Minecraft minecraft = Minecraft.getInstance();
 		ResourceManager resourceManager = minecraft.getResourceManager();
 		if (resourceManager.containsResource(image)) {
 			try (Resource resource = resourceManager.getResource(image)) {

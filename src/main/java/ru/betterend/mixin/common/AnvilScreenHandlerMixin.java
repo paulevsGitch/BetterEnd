@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -60,14 +60,14 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	public abstract void updateResult();
 
 	@Inject(method = "canTakeOutput", at = @At("HEAD"), cancellable = true)
-	protected void be_canTakeOutput(PlayerEntity player, boolean present, CallbackInfoReturnable<Boolean> info) {
+	protected void be_canTakeOutput(Player player, boolean present, CallbackInfoReturnable<Boolean> info) {
 		if (be_currentRecipe != null) {
 			info.setReturnValue(be_currentRecipe.checkHammerDurability(input, player));
 		}
 	}
 
 	@Inject(method = "onTakeOutput", at = @At("HEAD"), cancellable = true)
-	protected void be_onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
+	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
 		if (be_currentRecipe != null) {
 			this.input.getStack(0).decrement(be_currentRecipe.getInputCount());
 			stack = be_currentRecipe.craft(input, player);
@@ -120,7 +120,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler imple
 	}
 
 	@Override
-	public boolean onButtonClick(PlayerEntity player, int id) {
+	public boolean onButtonClick(Player player, int id) {
 		if (id == 0) {
 			this.be_previousRecipe();
 			return true;

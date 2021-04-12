@@ -7,11 +7,11 @@ import com.google.common.base.Function;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
@@ -21,8 +21,8 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class BigEtherTreeFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
 			return false;
 
@@ -77,7 +77,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		return true;
 	}
 
-	// private void makeLeavesSphere(StructureWorldAccess world, BlockPos pos,
+	// private void makeLeavesSphere(WorldGenLevel world, BlockPos pos,
 	// BlockState leaves, Function<BlockState, Boolean> ignore) {
 	//
 	// }

@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChorusFlowerBlock;
 import net.minecraft.world.level.block.ConnectingBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.ChorusPlantFeature;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.ChorusPlantFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
@@ -24,8 +24,8 @@ import ru.betterend.world.generator.GeneratorOptions;
 @Mixin(ChorusPlantFeature.class)
 public class ChorusPlantFeatureMixin {
 	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void be_onGenerate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator, Random random,
-			BlockPos blockPos, DefaultFeatureConfig defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
+	private void be_onGenerate(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random,
+			BlockPos blockPos, NoneFeatureConfiguration defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (structureWorldAccess.isAir(blockPos)
 				&& structureWorldAccess.getBlockState(blockPos.below()).is(EndBlocks.CHORUS_NYLIUM)) {
 			ChorusFlowerBlock.generate(structureWorldAccess, blockPos, random, MHelper.randRange(8, 16, random));

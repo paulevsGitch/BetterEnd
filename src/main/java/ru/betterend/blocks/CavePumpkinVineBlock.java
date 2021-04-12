@@ -11,7 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
@@ -45,7 +45,7 @@ public class CavePumpkinVineBlock extends EndPlantWithAgeBlock {
 	}
 
 	@Override
-	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 	}
 
 	@Override

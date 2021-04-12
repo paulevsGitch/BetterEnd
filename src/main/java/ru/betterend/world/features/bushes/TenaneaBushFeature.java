@@ -12,9 +12,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.FurBlock;
@@ -39,8 +39,8 @@ public class TenaneaBushFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
 			return false;
 
@@ -50,7 +50,7 @@ public class TenaneaBushFeature extends DefaultFeature {
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(leaves);
 		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3;
+			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return MHelper.randRange(-2F, 2F, random);

@@ -19,11 +19,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.gen.Spawner;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.storage.LevelStorage;
 import ru.betterend.BetterEnd;
@@ -39,7 +39,7 @@ public class ServerWorldMixin {
 
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session,
-			ServerWorldProperties properties, RegistryKey<Level> registryKey, DimensionType dimensionType,
+			ServerWorldProperties properties, ResourceKey<Level> registryKey, DimensionType dimensionType,
 			WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator,
 			boolean debugWorld, long l, List<Spawner> list, boolean bl, CallbackInfo info) {
 		if (lastWorld != null && lastWorld.equals(session.getDirectoryName())) {

@@ -12,28 +12,28 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnReason;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.attribute.Attributes;
 import net.minecraft.world.entity.damage.DamageSource;
 import net.minecraft.world.entity.data.DataTracker;
 import net.minecraft.world.entity.data.TrackedData;
 import net.minecraft.world.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.world.entity.effect.StatusEffectInstance;
-import net.minecraft.world.entity.effect.StatusEffects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.passive.SchoolingFishEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.Mth;
 import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
@@ -50,7 +50,7 @@ public class CubozoaEntity extends SchoolingFishEntity {
 	}
 
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+	public EntityData initialize(ServerLevelAccessor world, LocalDifficulty difficulty, SpawnReason spawnReason,
 			EntityData entityData, CompoundTag entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.SULPHUR_SPRINGS) {
@@ -86,8 +86,8 @@ public class CubozoaEntity extends SchoolingFishEntity {
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0).add(Attributes.FOLLOW_RANGE, 16.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.5);
 	}
 
 	public int getVariant() {
@@ -98,7 +98,7 @@ public class CubozoaEntity extends SchoolingFishEntity {
 		return this.dataTracker.get(SCALE) / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<CubozoaEntity> type, ServerWorldAccess world, SpawnReason spawnReason,
+	public static boolean canSpawn(EntityType<CubozoaEntity> type, ServerLevelAccessor world, SpawnReason spawnReason,
 			BlockPos pos, Random random) {
 		Box box = new Box(pos).expand(16);
 		List<CubozoaEntity> list = world.getEntitiesByClass(CubozoaEntity.class, box, (entity) -> {
@@ -131,14 +131,14 @@ public class CubozoaEntity extends SchoolingFishEntity {
 	}
 
 	@Override
-	public void onPlayerCollision(PlayerEntity player) {
+	public void onPlayerCollision(Player player) {
 		if (player instanceof ServerPlayer && player.damage(DamageSource.mob(this), 0.5F)) {
 			if (!this.isSilent()) {
 				((ServerPlayer) player).networkHandler
 						.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
 			}
 			if (random.nextBoolean()) {
-				player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 0));
+				player.addMobEffect(new MobEffectInstance(MobEffects.POISON, 20, 0));
 			}
 		}
 	}
@@ -154,7 +154,7 @@ public class CubozoaEntity extends SchoolingFishEntity {
 			}
 
 			if (this.state == MoveControl.State.MOVE_TO && !this.entity.getNavigation().isIdle()) {
-				float f = (float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+				float f = (float) (this.speed * this.entity.getAttributeValue(Attributes.MOVEMENT_SPEED));
 				this.entity.setMovementSpeed(Mth.lerp(0.125F, this.entity.getMovementSpeed(), f));
 				double d = this.targetX - this.entity.getX();
 				double e = this.targetY - this.entity.getY();

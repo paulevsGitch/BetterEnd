@@ -6,9 +6,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -21,8 +21,8 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianBoulderFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		pos = getPosOnSurface(world,
 				new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		if (!world.getBlockState(pos.below()).isIn(EndTags.END_GROUND)) {
@@ -39,7 +39,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void makeBoulder(StructureWorldAccess world, BlockPos pos, Random random) {
+	private void makeBoulder(WorldGenLevel world, BlockPos pos, Random random) {
 		if (!world.getBlockState(pos.below()).isIn(EndTags.END_GROUND)) {
 			return;
 		}
@@ -52,7 +52,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 		sphere = new SDFScale3D().setScale(sx, sy, sz).setSource(sphere);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 1.5F);
+			return (float) (noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 1.5F);
 		}).setSource(sphere);
 
 		BlockState mossy = EndBlocks.MOSSY_OBSIDIAN.defaultBlockState();

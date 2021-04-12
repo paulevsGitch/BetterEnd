@@ -6,10 +6,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -28,10 +28,10 @@ public class BiomeIslandFeature extends DefaultFeature {
 	private static BlockState underBlock = Blocks.DIRT.defaultBlockState();
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		Biome biome = world.getBiome(pos);
-		SurfaceConfig surfaceConfig = biome.getGenerationSettings().getSurfaceConfig();
+		SurfaceConfig surfaceConfig = biome.getGenerationSettings().getSurfaceBuilderConfig();
 		BlockState topMaterial = surfaceConfig.getTopMaterial();
 		if (BlocksHelper.isFluid(topMaterial)) {
 			topBlock = ((TernarySurfaceConfig) surfaceConfig).getUnderwaterMaterial();

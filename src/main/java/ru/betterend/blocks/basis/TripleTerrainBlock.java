@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -68,7 +68,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, Player player, Hand hand,
 			BlockHitResult hit) {
 		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {

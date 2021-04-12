@@ -5,9 +5,9 @@ import java.util.Random;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
@@ -35,8 +35,8 @@ public class OreLayerFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		float radius = this.radius * 0.5F;
 		int r = MHelper.floor(radius + 1);
 		int posX = MHelper.randRange(Math.max(r - 16, 0), Math.min(31 - r, 15), random) + pos.getX();
@@ -49,10 +49,10 @@ public class OreLayerFeature extends DefaultFeature {
 
 		SPHERE.setRadius(radius).setBlock(state);
 		NOISE.setFunction((vec) -> {
-			double x = (vec.getX() + pos.getX()) * 0.1;
-			double z = (vec.getZ() + pos.getZ()) * 0.1;
+			double x = (vec.x() + pos.getX()) * 0.1;
+			double z = (vec.z() + pos.getZ()) * 0.1;
 			double offset = noise.eval(x, z);
-			vec.set(vec.getX(), vec.getY() + (float) offset * 8, vec.getZ());
+			vec.set(vec.x(), vec.y() + (float) offset * 8, vec.z());
 		});
 		FUNCTION.fillRecursive(world, new BlockPos(posX, posY, posZ));
 		return true;

@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.BlockEntityProvider;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -100,7 +100,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, Player player, Hand hand,
 			BlockHitResult hit) {
 		if (world.isClientSide || !state.is(this))
 			return ActionResult.CONSUME;
@@ -286,7 +286,7 @@ public class PedestalBlock extends BlockBaseNotFull implements BlockEntityProvid
 		for (int i = 2; i < Direction.values().length; i++) {
 			dropPos = pos.relative(Direction.byId(i));
 			if (world.getBlockState(dropPos).isAir()) {
-				return dropPos.toImmutable();
+				return dropPos.immutable();
 			}
 		}
 		return getDropPos(world, pos.up());

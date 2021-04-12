@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties;
 
 public abstract class UnderwaterPlantWithAgeBlock extends UnderwaterPlantBlock {
@@ -28,7 +28,7 @@ public abstract class UnderwaterPlantWithAgeBlock extends UnderwaterPlantBlock {
 		stateManager.add(AGE);
 	}
 
-	public abstract void grow(StructureWorldAccess world, Random random, BlockPos pos);
+	public abstract void grow(WorldGenLevel world, Random random, BlockPos pos);
 
 	@Override
 	public void grow(ServerLevel world, Random random, BlockPos pos, BlockState state) {

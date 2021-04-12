@@ -3,11 +3,11 @@ package ru.betterend.blocks;
 import java.util.Random;
 
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.UnderwaterPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
@@ -15,7 +15,7 @@ import ru.betterend.util.BlocksHelper;
 
 public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 	@Override
-	public void grow(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void grow(WorldGenLevel world, Random random, BlockPos pos) {
 		if (canGrow(world, pos)) {
 			BlockState startLeaf = EndBlocks.END_LOTUS_STEM.defaultBlockState().with(EndLotusStemBlock.LEAF, true);
 			BlockState roots = EndBlocks.END_LOTUS_STEM.defaultBlockState()
@@ -34,7 +34,7 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 			int height = random.nextBoolean() ? 0 : random.nextBoolean() ? 1 : random.nextBoolean() ? 1 : -1;
 			TripleShape shape = (height == 0) ? TripleShape.TOP : TripleShape.MIDDLE;
 			Direction dir = BlocksHelper.randomHorizontal(random);
-			BlockPos leafCenter = bpos.toImmutable().offset(dir);
+			BlockPos leafCenter = bpos.immutable().offset(dir);
 			if (hasLeaf(world, leafCenter)) {
 				generateLeaf(world, leafCenter);
 				BlocksHelper.setWithoutUpdate(world, bpos,
@@ -79,7 +79,7 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 		}
 	}
 
-	private boolean canGrow(StructureWorldAccess world, BlockPos pos) {
+	private boolean canGrow(WorldGenLevel world, BlockPos pos) {
 		MutableBlockPos bpos = new MutableBlockPos();
 		bpos.set(pos);
 		while (world.getBlockState(bpos).getFluidState().getFluid().equals(Fluids.WATER.getStill())) {
@@ -88,7 +88,7 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 		return world.isAir(bpos) && world.isAir(bpos.up());
 	}
 
-	private void generateLeaf(StructureWorldAccess world, BlockPos pos) {
+	private void generateLeaf(WorldGenLevel world, BlockPos pos) {
 		MutableBlockPos p = new MutableBlockPos();
 		BlockState leaf = EndBlocks.END_LOTUS_LEAF.defaultBlockState();
 		BlocksHelper.setWithoutUpdate(world, pos, leaf.with(EndLotusLeafBlock.SHAPE, TripleShape.BOTTOM));
@@ -104,7 +104,7 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 		}
 	}
 
-	private boolean hasLeaf(StructureWorldAccess world, BlockPos pos) {
+	private boolean hasLeaf(WorldGenLevel world, BlockPos pos) {
 		MutableBlockPos p = new MutableBlockPos();
 		p.setY(pos.getY());
 		int count = 0;

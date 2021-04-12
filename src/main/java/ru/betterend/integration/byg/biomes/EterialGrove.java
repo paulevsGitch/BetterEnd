@@ -3,8 +3,8 @@ package ru.betterend.integration.byg.biomes;
 import java.util.List;
 
 import net.minecraft.world.entity.SpawnGroup;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
 import ru.betterend.BetterEnd;

@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;

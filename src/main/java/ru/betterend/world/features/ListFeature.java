@@ -8,7 +8,7 @@ import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.StructureHelper;
 
@@ -21,35 +21,35 @@ public class ListFeature extends NBTStructureFeature {
 	}
 
 	@Override
-	protected Structure getStructure(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected Structure getStructure(WorldGenLevel world, BlockPos pos, Random random) {
 		selected = list.get(random.nextInt(list.size()));
 		return selected.getStructure();
 	}
 
 	@Override
-	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random) {
 		int cx = pos.getX() >> 4;
 		int cz = pos.getZ() >> 4;
 		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.below()).isIn(EndTags.GEN_TERRAIN);
 	}
 
 	@Override
-	protected Rotation getRotation(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected Rotation getRotation(WorldGenLevel world, BlockPos pos, Random random) {
 		return Rotation.random(random);
 	}
 
 	@Override
-	protected BlockMirror getMirror(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected BlockMirror getMirror(WorldGenLevel world, BlockPos pos, Random random) {
 		return BlockMirror.values()[random.nextInt(3)];
 	}
 
 	@Override
-	protected int getYOffset(Structure structure, StructureWorldAccess world, BlockPos pos, Random random) {
+	protected int getYOffset(Structure structure, WorldGenLevel world, BlockPos pos, Random random) {
 		return selected.offsetY;
 	}
 
 	@Override
-	protected TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected TerrainMerge getTerrainMerge(WorldGenLevel world, BlockPos pos, Random random) {
 		return selected.terrainMerge;
 	}
 

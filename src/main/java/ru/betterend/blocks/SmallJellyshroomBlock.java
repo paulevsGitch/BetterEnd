@@ -95,6 +95,6 @@ public class SmallJellyshroomBlock extends AttachedBlock implements IRenderTypea
 	@Override
 	public void grow(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
-		EndFeatures.JELLYSHROOM.getFeature().generate(world, null, random, pos, null);
+		EndFeatures.JELLYSHROOM.getFeature().place(world, null, random, pos, null);
 	}
 }

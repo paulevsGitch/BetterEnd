@@ -3,7 +3,7 @@ package ru.betterend.rituals;
 import java.awt.Point;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -230,7 +230,7 @@ public class InfusionRitual implements Inventory {
 	}
 
 	@Override
-	public boolean canPlayerUse(PlayerEntity player) {
+	public boolean canPlayerUse(Player player) {
 		return true;
 	}
 

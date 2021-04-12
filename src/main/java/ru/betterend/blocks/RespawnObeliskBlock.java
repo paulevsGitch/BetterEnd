@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -113,7 +113,7 @@ public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IR
 	}
 
 	@Override
-	public void onBreak(Level world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void onBreak(Level world, BlockPos pos, BlockState state, Player player) {
 		if (player.isCreative()) {
 			TripleShape shape = state.getValue(SHAPE);
 			if (shape == TripleShape.MIDDLE) {
@@ -152,7 +152,7 @@ public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IR
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, Player player, Hand hand,
 			BlockHitResult hit) {
 		ItemStack itemStack = player.getStackInHand(hand);
 		boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 5;

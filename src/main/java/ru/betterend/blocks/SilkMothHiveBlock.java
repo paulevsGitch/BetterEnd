@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.ItemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.server.level.ServerLevel;
@@ -89,7 +89,7 @@ public class SilkMothHiveBlock extends BlockBase {
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, Player player, Hand hand,
 			BlockHitResult hit) {
 		if (hand == Hand.MAIN_HAND) {
 			ItemStack stack = player.getMainHandStack();

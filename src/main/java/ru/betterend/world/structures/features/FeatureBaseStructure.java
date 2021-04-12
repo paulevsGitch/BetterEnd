@@ -7,23 +7,23 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 
-public abstract class FeatureBaseStructure extends StructureFeature<DefaultFeatureConfig> {
+public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureConfiguration> {
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
 
 	public FeatureBaseStructure() {
-		super(DefaultFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed,
 			ChunkRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
-			DefaultFeatureConfig featureConfig) {
+			NoneFeatureConfiguration featureConfig) {
 		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 20;
 	}
 

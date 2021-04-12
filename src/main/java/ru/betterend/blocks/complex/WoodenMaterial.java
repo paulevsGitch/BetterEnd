@@ -62,8 +62,8 @@ public class WoodenMaterial {
 	public final Block shelf;
 	public final Block composter;
 
-	public final Tag.Identified<Block> logBlockTag;
-	public final Tag.Identified<Item> logItemTag;
+	public final Tag.Named<Block> logBlockTag;
+	public final Tag.Named<Item> logItemTag;
 
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);

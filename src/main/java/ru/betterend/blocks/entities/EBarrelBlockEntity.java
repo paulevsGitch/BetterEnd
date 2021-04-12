@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.LootableContainerBlockEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -73,7 +73,7 @@ public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 		return GenericContainerScreenHandler.createGeneric9x3(syncId, playerInventory, this);
 	}
 
-	public void onOpen(PlayerEntity player) {
+	public void onOpen(Player player) {
 		if (!player.isSpectator()) {
 			if (this.viewerCount < 0) {
 				this.viewerCount = 0;
@@ -117,7 +117,7 @@ public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 		}
 	}
 
-	public void onClose(PlayerEntity player) {
+	public void onClose(Player player) {
 		if (!player.isSpectator()) {
 			--this.viewerCount;
 		}
@@ -132,7 +132,7 @@ public class EBarrelBlockEntity extends LootableContainerBlockEntity {
 		double d = (double) this.pos.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
 		double e = (double) this.pos.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
 		double f = (double) this.pos.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
-		this.world.playLocalSound((PlayerEntity) null, d, e, f, soundEvent, SoundSource.BLOCKS, 0.5F,
+		this.world.playLocalSound((Player) null, d, e, f, soundEvent, SoundSource.BLOCKS, 0.5F,
 				this.world.random.nextFloat() * 0.1F + 0.9F);
 	}
 }

@@ -10,12 +10,12 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.StructureHelper;
@@ -28,7 +28,7 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 	@Override
 	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed,
 			ChunkRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
-			DefaultFeatureConfig featureConfig) {
+			NoneFeatureConfiguration featureConfig) {
 		long x = chunkPos.x;
 		long z = chunkPos.z;
 		if (x * x + z * z < 10000) {
@@ -42,19 +42,19 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 	}
 
 	@Override
-	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
+	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStructureStartFactory() {
 		return SDFStructureStart::new;
 	}
 
-	public static class SDFStructureStart extends StructureStart<DefaultFeatureConfig> {
-		public SDFStructureStart(StructureFeature<DefaultFeatureConfig> feature, int chunkX, int chunkZ, BlockBox box,
-				int references, long seed) {
+	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
+		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ,
+				BlockBox box, int references, long seed) {
 			super(feature, chunkX, chunkZ, box, references, seed);
 		}
 
 		@Override
 		public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator,
-				StructureManager manager, int chunkX, int chunkZ, Biome biome, DefaultFeatureConfig config) {
+				StructureManager manager, int chunkX, int chunkZ, Biome biome, NoneFeatureConfiguration config) {
 			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);

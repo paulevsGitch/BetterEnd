@@ -20,11 +20,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.EndSpikeFeature;
-import net.minecraft.world.gen.feature.EndSpikeFeatureConfig;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.EndSpikeFeature;
+import net.minecraft.world.level.levelgen.feature.EndSpikeFeatureConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.StructureHelper;
@@ -34,16 +34,15 @@ import ru.betterend.world.generator.GeneratorOptions;
 @Mixin(EndSpikeFeature.class)
 public class EndSpikeFeatureMixin {
 	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void beSpikeGenerate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator,
-			Random random, BlockPos blockPos, EndSpikeFeatureConfig endSpikeFeatureConfig,
-			CallbackInfoReturnable<Boolean> info) {
+	private void beSpikeGenerate(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random,
+			BlockPos blockPos, EndSpikeFeatureConfig endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPillars()) {
 			info.setReturnValue(false);
 		}
 	}
 
 	@Inject(method = "generateSpike", at = @At("HEAD"), cancellable = true)
-	private void be_generateSpike(ServerWorldAccess world, Random random, EndSpikeFeatureConfig config,
+	private void be_generateSpike(ServerLevelAccessor world, Random random, EndSpikeFeatureConfig config,
 			EndSpikeFeature.Spike spike, CallbackInfo info) {
 		int x = spike.getCenterX();
 		int z = spike.getCenterZ();

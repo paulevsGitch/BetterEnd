@@ -5,9 +5,9 @@ import java.util.Random;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -17,8 +17,8 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class SurfaceVentFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		pos = getPosOnSurface(world,
 				new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		if (!world.getBlockState(pos.down(3)).isIn(EndTags.GEN_TERRAIN)) {

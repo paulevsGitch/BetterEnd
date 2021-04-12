@@ -8,9 +8,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -24,8 +24,8 @@ public class EndLakeFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos,
-			DefaultFeatureConfig featureConfig) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos,
+			NoneFeatureConfiguration featureConfig) {
 		double radius = MHelper.randRange(10.0, 20.0, random);
 		double depth = radius * 0.5 * MHelper.randRange(0.8, 1.2, random);
 		int dist = MHelper.floor(radius);
@@ -121,7 +121,7 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).isIn(EndTags.GEN_TERRAIN)) {
-									state = world.getBiome(pos).getGenerationSettings().getSurfaceConfig()
+									state = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig()
 											.getTopMaterial();
 									if (y > waterLevel + 1)
 										BlocksHelper.setWithoutUpdate(world, pos, state);
@@ -183,7 +183,8 @@ public class EndLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.isAir(POS.up())) {
-								state = world.getBiome(POS).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+								state = world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig()
+										.getTopMaterial();
 								BlocksHelper.setWithoutUpdate(world, POS,
 										random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState());
 								BlocksHelper.setWithoutUpdate(world, POS.below(), END_STONE);

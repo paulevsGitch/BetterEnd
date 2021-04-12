@@ -7,9 +7,9 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;

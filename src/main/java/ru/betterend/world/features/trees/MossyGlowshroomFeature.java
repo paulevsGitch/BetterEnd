@@ -6,12 +6,12 @@ import java.util.function.Function;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -48,8 +48,8 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 	private static final SDFPrimitive ROOTS;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos,
-			DefaultFeatureConfig featureConfig) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos,
+			NoneFeatureConfiguration featureConfig) {
 		BlockState down = world.getBlockState(blockPos.below());
 		if (!down.is(EndBlocks.END_MYCELIUM) && !down.is(EndBlocks.END_MOSS))
 			return false;

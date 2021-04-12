@@ -10,9 +10,9 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
@@ -38,8 +38,8 @@ public class CavePiece extends BasePiece {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
-			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean place(WorldGenLevel world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random,
+			BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int x1 = MHelper.max(this.boundingBox.minX, blockBox.minX);
 		int z1 = MHelper.max(this.boundingBox.minZ, blockBox.minZ);
 		int x2 = MHelper.min(this.boundingBox.maxX, blockBox.maxX);

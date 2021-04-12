@@ -17,7 +17,7 @@ import me.shedaniel.rei.api.widgets.Tooltip;
 import me.shedaniel.rei.api.widgets.Widgets;
 import me.shedaniel.rei.gui.entries.RecipeEntry;
 import me.shedaniel.rei.gui.widget.Widget;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.world.item.Items;
@@ -90,7 +90,7 @@ public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDi
 				slot.setZ(getZ() + 50);
 				slot.getBounds().setLocation(bounds.x + 4, bounds.y + 2);
 				slot.render(matrices, mouseX, mouseY, delta);
-				MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, text.asOrderedText(), bounds.x + 25,
+				Minecraft.getInstance().textRenderer.drawWithShadow(matrices, text.asOrderedText(), bounds.x + 25,
 						bounds.y + 8, -1);
 			}
 		};

@@ -9,9 +9,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import net.minecraft.core.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import ru.betterend.mixin.common.GenerationSettingsAccessor;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndStructures;

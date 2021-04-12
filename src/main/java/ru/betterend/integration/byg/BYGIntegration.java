@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.collection.WeightedList;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.biome.Biome;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.ModIntegration;
 import ru.betterend.integration.byg.biomes.BYGBiomes;

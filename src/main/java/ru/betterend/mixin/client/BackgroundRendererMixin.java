@@ -14,14 +14,14 @@ import net.minecraft.client.render.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.effect.StatusEffectInstance;
-import net.minecraft.world.entity.effect.StatusEffects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.Util;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.Category;
 import ru.betterend.client.ClientOptions;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BackgroundInfo;
@@ -55,7 +55,7 @@ public class BackgroundRendererMixin {
 			Entity entity = camera.getFocusedEntity();
 			boolean skip = false;
 			if (entity instanceof LivingEntity) {
-				StatusEffectInstance effect = ((LivingEntity) entity).getStatusEffect(StatusEffects.NIGHT_VISION);
+				MobEffectInstance effect = ((LivingEntity) entity).getMobEffect(MobEffects.NIGHT_VISION);
 				skip = effect != null && effect.getDuration() > 0;
 			}
 			if (!skip) {
@@ -96,7 +96,7 @@ public class BackgroundRendererMixin {
 
 			if (entity instanceof LivingEntity) {
 				LivingEntity le = (LivingEntity) entity;
-				StatusEffectInstance effect = le.getStatusEffect(StatusEffects.BLINDNESS);
+				MobEffectInstance effect = le.getMobEffect(MobEffects.BLINDNESS);
 				if (effect != null) {
 					int duration = effect.getDuration();
 					if (duration > 20) {

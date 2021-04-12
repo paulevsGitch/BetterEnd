@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.biome.source.BiomeArray;
 import ru.betterend.interfaces.IBiomeArray;
 

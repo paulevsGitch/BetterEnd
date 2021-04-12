@@ -13,11 +13,11 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.util.MHelper;
 
@@ -55,8 +55,8 @@ public class PaintedMountainPiece extends MountainPiece {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
-			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean place(WorldGenLevel world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random,
+			BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getStartX();
 		int sz = chunkPos.getStartZ();
 		MutableBlockPos pos = new MutableBlockPos();

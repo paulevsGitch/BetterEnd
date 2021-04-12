@@ -36,7 +36,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeatures;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
@@ -305,7 +305,7 @@ public class EternalRitual {
 		int worldCeil = targetWorld.getDimensionHeight() - 1;
 		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) {
 			generatePortal(targetWorld, basePos, portalAxis, portalId);
-			return basePos.toImmutable();
+			return basePos.immutable();
 		} else {
 			Direction direction = Direction.EAST;
 			BlockPos.MutableBlockPos checkPos = basePos.mutable();
@@ -325,7 +325,7 @@ public class EternalRitual {
 						while (checkPos.getY() >= 5) {
 							if (checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
 								generatePortal(targetWorld, checkPos, portalAxis, portalId);
-								return checkPos.toImmutable();
+								return checkPos.immutable();
 							}
 							checkPos.move(Direction.DOWN);
 						}
@@ -345,7 +345,7 @@ public class EternalRitual {
 		EndFeatures.BIOME_ISLAND.getFeatureConfigured().generate(targetWorld,
 				targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.below());
 		generatePortal(targetWorld, basePos, portalAxis, portalId);
-		return basePos.toImmutable();
+		return basePos.immutable();
 	}
 
 	private Level getTargetWorld(int state) {

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
@@ -145,7 +145,7 @@ public class Patterns {
 	}
 
 	public static String createJson(ResourceLocation patternId, String parent, String block) {
-		ResourceManager resourceManager = MinecraftClient.getInstance().getResourceManager();
+		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
 			return createJson(new InputStreamReader(input, StandardCharsets.UTF_8), parent, block);
 		} catch (Exception ex) {
@@ -160,7 +160,7 @@ public class Patterns {
 	}
 
 	public static String createJson(ResourceLocation patternId, Map<String, String> textures) {
-		ResourceManager resourceManager = MinecraftClient.getInstance().getResourceManager();
+		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
 			String json = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8)).lines()
 					.collect(Collectors.joining());

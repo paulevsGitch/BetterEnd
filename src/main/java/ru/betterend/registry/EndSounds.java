@@ -1,6 +1,6 @@
 package ru.betterend.registry;
 
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 

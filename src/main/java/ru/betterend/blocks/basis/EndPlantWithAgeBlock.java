@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.Level;
 import ru.betterend.blocks.BlockProperties;
 
@@ -33,7 +33,7 @@ public abstract class EndPlantWithAgeBlock extends EndPlantBlock {
 		stateManager.add(AGE);
 	}
 
-	public abstract void growAdult(StructureWorldAccess world, Random random, BlockPos pos);
+	public abstract void growAdult(WorldGenLevel world, Random random, BlockPos pos);
 
 	@Override
 	public void grow(ServerLevel world, Random random, BlockPos pos, BlockState state) {

@@ -3,7 +3,7 @@ package ru.betterend.item;
 import java.util.List;
 
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,11 +26,11 @@ public class GuideBookItem extends PatternedItem {
     }
 
     public GuideBookItem() {
-        super(EndItems.makeItemSettings().maxCount(1));
+        super(EndItems.makeItemSettings().stacksTo(1));
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(Level world, PlayerEntity user, Hand hand) {
+    public TypedActionResult<ItemStack> use(Level world, Player user, Hand hand) {
         if (!world.isClientSide && user instanceof ServerPlayer) {
             PatchouliAPI.get().openBookGUI((ServerPlayer) user, BOOK_ID);
             return TypedActionResult.success(user.getStackInHand(hand));

@@ -8,14 +8,14 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.UmbrellaTreeClusterBlock;
 import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.registry.EndBlocks;
@@ -40,8 +40,8 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 	private static final List<Vector3f> ROOT;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
 			return false;
 
@@ -86,9 +86,9 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				sdf = (sdf == null) ? branch : new SDFUnion().setSourceA(sdf).setSourceB(branch);
 				SDF mem = makeMembrane(world, radius, random, membrane, center);
 
-				float px = MHelper.floor(vec.getX()) + 0.5F;
-				float py = MHelper.floor(vec.getY()) + 0.5F;
-				float pz = MHelper.floor(vec.getZ()) + 0.5F;
+				float px = MHelper.floor(vec.x()) + 0.5F;
+				float py = MHelper.floor(vec.y()) + 0.5F;
+				float pz = MHelper.floor(vec.z()) + 0.5F;
 				mem = new SDFTranslate().setTranslate(px, py, pz).setSource(mem);
 				sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(mem);
 				centers.add(new Center(pos.getX() + (double) (px * scale), pos.getY() + (double) (py * scale),
@@ -146,7 +146,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random, BlockState wood) {
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random, BlockState wood) {
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2;
@@ -162,8 +162,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		}
 	}
 
-	private SDF makeMembrane(StructureWorldAccess world, float radius, Random random, BlockState membrane,
-			BlockState center) {
+	private SDF makeMembrane(WorldGenLevel world, float radius, Random random, BlockState membrane, BlockState center) {
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(membrane);
 		SDF sub = new SDFTranslate().setTranslate(0, -4, 0).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
@@ -183,8 +182,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		return sphere;
 	}
 
-	private void makeFruits(StructureWorldAccess world, double px, double py, double pz, BlockState fruit,
-			float scale) {
+	private void makeFruits(WorldGenLevel world, double px, double py, double pz, BlockState fruit, float scale) {
 		MutableBlockPos mut = new MutableBlockPos().set(px, py, pz);
 		for (int i = 0; i < 8; i++) {
 			mut.move(Direction.DOWN);

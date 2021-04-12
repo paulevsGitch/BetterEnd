@@ -6,9 +6,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.attribute.EntityAttribute;
-import net.minecraft.world.entity.attribute.EntityAttributeModifier;
-import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.attribute.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
@@ -30,20 +30,20 @@ public class EndArmorItem extends ArmorItem implements Patterned {
 			return;
 		}
 
-		Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers = accessor.be_getAttributeModifiers();
+		Multimap<Attribute, AttributeModifier> attributeModifiers = accessor.be_getAttributeModifiers();
 
 		// In case Mojang or anyone else decided to fix this
-		if (attributeModifiers.keys().contains(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)) {
+		if (attributeModifiers.keys().contains(Attributes.KNOCKBACK_RESISTANCE)) {
 			return;
 		}
 
 		UUID uuid = accessor.be_getModifiers()[slot.getEntitySlotId()];
 
 		// Rebuild attributeModifiers to include knockback resistance
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+		ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.putAll(attributeModifiers);
-		builder.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(uuid,
-				"Armor knockback resistance", knockbackResistance, EntityAttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance",
+				knockbackResistance, AttributeModifier.Operation.ADDITION));
 		accessor.be_setAttributeModifiers(builder.build());
 	}
 

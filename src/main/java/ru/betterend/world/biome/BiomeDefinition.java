@@ -12,13 +12,13 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sound.BiomeAdditionsSound;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.sound.MusicSound;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.core.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.Biome.Precipitation;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.Category;
+import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.biome.BiomeEffects.Builder;
 import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.biome.GenerationSettings;
@@ -28,8 +28,8 @@ import net.minecraft.world.gen.GenerationStep.Carver;
 import net.minecraft.world.gen.GenerationStep.Feature;
 import net.minecraft.world.gen.ProbabilityConfig;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
@@ -119,7 +119,7 @@ public class BiomeDefinition {
 
 	public BiomeDefinition addMobSpawn(EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {
 		ResourceLocation eID = Registry.ENTITY_TYPE.getId(type);
-		if (eID != Registry.ENTITY_TYPE.getDefaultId()) {
+		if (eID != Registry.ENTITY_TYPE.getDefaultKey()) {
 			SpawnInfo info = new SpawnInfo();
 			info.type = type;
 			info.weight = weight;

@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties.HydraluxShape;
 import ru.betterend.blocks.basis.UnderwaterPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
@@ -15,7 +15,7 @@ import ru.betterend.util.MHelper;
 
 public class HydraluxSaplingBlock extends UnderwaterPlantWithAgeBlock {
 	@Override
-	public void grow(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void grow(WorldGenLevel world, Random random, BlockPos pos) {
 		int h = MHelper.randRange(4, 8, random);
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 

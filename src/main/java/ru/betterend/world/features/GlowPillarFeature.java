@@ -3,7 +3,7 @@ package ru.betterend.world.features;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 
@@ -13,13 +13,12 @@ public class GlowPillarFeature extends ScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
-			float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		return EndBlocks.GLOWING_PILLAR_SEED.canPlaceAt(AIR, world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
 		EndPlantWithAgeBlock seed = ((EndPlantWithAgeBlock) EndBlocks.GLOWING_PILLAR_SEED);
 		seed.growAdult(world, random, blockPos);
 	}

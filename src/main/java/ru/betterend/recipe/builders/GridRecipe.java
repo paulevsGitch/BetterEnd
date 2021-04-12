@@ -6,7 +6,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,7 +25,7 @@ public class GridRecipe {
 	private static final GridRecipe INSTANCE = new GridRecipe();
 
 	private String name;
-	private ItemConvertible output;
+	private ItemLike output;
 
 	private String group;
 	private RecipeType<?> type;
@@ -38,7 +38,7 @@ public class GridRecipe {
 	private GridRecipe() {
 	}
 
-	public static GridRecipe make(String name, ItemConvertible output) {
+	public static GridRecipe make(String name, ItemLike output) {
 		INSTANCE.name = name;
 		INSTANCE.output = output;
 
@@ -78,8 +78,8 @@ public class GridRecipe {
 		return addMaterial(key, Ingredient.ofStacks(Arrays.stream(value)));
 	}
 
-	public GridRecipe addMaterial(char key, ItemConvertible... values) {
-		for (ItemConvertible item : values) {
+	public GridRecipe addMaterial(char key, ItemLike... values) {
+		for (ItemLike item : values) {
 			exist &= RecipeHelper.exists(item);
 		}
 		return addMaterial(key, Ingredient.of(values));

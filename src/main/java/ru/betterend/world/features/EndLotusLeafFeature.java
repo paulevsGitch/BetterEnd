@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.EndLotusLeafBlock;
 import ru.betterend.registry.EndBlocks;
@@ -19,7 +19,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
 		if (canGenerate(world, blockPos)) {
 			generateLeaf(world, blockPos);
 		}
@@ -31,11 +31,11 @@ public class EndLotusLeafFeature extends ScatterFeature {
 	}
 
 	@Override
-	protected BlockPos getCenterGround(StructureWorldAccess world, BlockPos pos) {
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		return getPosOnSurface(world, pos);
 	}
 
-	private void generateLeaf(StructureWorldAccess world, BlockPos pos) {
+	private void generateLeaf(WorldGenLevel world, BlockPos pos) {
 		MutableBlockPos p = new MutableBlockPos();
 		BlockState leaf = EndBlocks.END_LOTUS_LEAF.defaultBlockState();
 		BlocksHelper.setWithoutUpdate(world, pos, leaf.with(EndLotusLeafBlock.SHAPE, TripleShape.BOTTOM));
@@ -51,7 +51,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 		}
 	}
 
-	private boolean canGenerate(StructureWorldAccess world, BlockPos pos) {
+	private boolean canGenerate(WorldGenLevel world, BlockPos pos) {
 		MutableBlockPos p = new MutableBlockPos();
 		p.setY(pos.getY());
 		int count = 0;
@@ -67,8 +67,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
-			float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		return world.isAir(blockPos) && world.getBlockState(blockPos.below()).is(Blocks.WATER);
 	}
 }

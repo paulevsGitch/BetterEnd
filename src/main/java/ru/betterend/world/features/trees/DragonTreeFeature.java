@@ -9,13 +9,13 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -42,8 +42,8 @@ public class DragonTreeFeature extends DefaultFeature {
 	private static final List<Vector3f> ROOT;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
 			return false;
 
@@ -76,8 +76,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void makeCap(StructureWorldAccess world, BlockPos pos, float radius, Random random,
-			OpenSimplexNoise noise) {
+	private void makeCap(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
 		int count = (int) radius;
 		int offset = (int) (BRANCH.get(BRANCH.size() - 1).getY() * radius);
 		for (int i = 0; i < count; i++) {
@@ -102,7 +101,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		leavesBall(world, pos.up(offset), radius * 1.15F + 2, random, noise);
 	}
 
-	private void makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random) {
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random) {
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2;
@@ -118,8 +117,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		}
 	}
 
-	private void leavesBall(StructureWorldAccess world, BlockPos pos, float radius, Random random,
-			OpenSimplexNoise noise) {
+	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
 		SDF sphere = new SDFSphere().setRadius(radius)
 				.setBlock(EndBlocks.DRAGON_TREE_LEAVES.defaultBlockState().with(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
@@ -127,7 +125,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
 		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 1.5F;
+			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 1.5F;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return random.nextFloat() * 3F - 1.5F;

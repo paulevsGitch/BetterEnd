@@ -6,9 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -20,13 +20,13 @@ public abstract class WallScatterFeature extends DefaultFeature {
 		this.radius = radius;
 	}
 
-	public abstract boolean canGenerate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir);
+	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
 
-	public abstract void generate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir);
+	public abstract void place(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
-			DefaultFeatureConfig featureConfig) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
+			NoneFeatureConfiguration featureConfig) {
 		int maxY = world.getTopY(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlocksHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		if (maxY < 10 || maxY < minY) {

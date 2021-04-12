@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 
 public class WallPlantOnLogFeature extends WallPlantFeature {
 	public WallPlantOnLogFeature(Block block, int radius) {
@@ -15,7 +15,7 @@ public class WallPlantOnLogFeature extends WallPlantFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
 		BlockPos blockPos = pos.relative(dir.getOpposite());
 		BlockState blockState = world.getBlockState(blockPos);
 		return blockState.isIn(BlockTags.LOGS);

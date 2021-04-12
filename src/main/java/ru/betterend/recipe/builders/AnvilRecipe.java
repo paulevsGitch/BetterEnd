@@ -6,12 +6,12 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ToolItem;
+import net.minecraft.world.item.TieredItem;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -76,7 +76,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		return this.output.copy();
 	}
 
-	public ItemStack craft(Inventory craftingInventory, PlayerEntity player) {
+	public ItemStack craft(Inventory craftingInventory, Player player) {
 		if (!player.isCreative()) {
 			if (!checkHammerDurability(craftingInventory, player))
 				return ItemStack.EMPTY;
@@ -86,7 +86,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		return this.craft(craftingInventory);
 	}
 
-	public boolean checkHammerDurability(Inventory craftingInventory, PlayerEntity player) {
+	public boolean checkHammerDurability(Inventory craftingInventory, Player player) {
 		if (player.isCreative())
 			return true;
 		ItemStack hammer = craftingInventory.getStack(1);
@@ -101,7 +101,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		}
 		ItemStack material = craftingInventory.getStack(0);
 		int materialCount = material.getCount();
-		int level = ((ToolItem) hammer.getItem()).getTier().getLevel();
+		int level = ((TieredItem) hammer.getItem()).getTier().getLevel();
 		return this.input.test(craftingInventory.getStack(0)) && materialCount >= this.inputCount
 				&& level >= this.toolLevel;
 	}
@@ -122,7 +122,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	public DefaultedList<Ingredient> getPreviewInputs() {
 		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
 		defaultedList.add(Ingredient.ofStacks(EndTags.HAMMERS.values().stream()
-				.filter(hammer -> ((ToolItem) hammer).getTier().getLevel() >= toolLevel).map(ItemStack::new)));
+				.filter(hammer -> ((TieredItem) hammer).getTier().getLevel() >= toolLevel).map(ItemStack::new)));
 		defaultedList.add(input);
 
 		return defaultedList;
@@ -202,7 +202,7 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		private Builder() {
 		}
 
-		public Builder setInput(ItemConvertible... inputItems) {
+		public Builder setInput(ItemLike... inputItems) {
 			this.alright &= RecipeHelper.exists(inputItems);
 			this.setInput(Ingredient.of(inputItems));
 			return this;
@@ -223,11 +223,11 @@ public class AnvilRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return this;
 		}
 
-		public Builder setOutput(ItemConvertible output) {
+		public Builder setOutput(ItemLike output) {
 			return this.setOutput(output, 1);
 		}
 
-		public Builder setOutput(ItemConvertible output, int amount) {
+		public Builder setOutput(ItemLike output, int amount) {
 			this.alright &= RecipeHelper.exists(output);
 			this.output = new ItemStack(output, amount);
 			return this;

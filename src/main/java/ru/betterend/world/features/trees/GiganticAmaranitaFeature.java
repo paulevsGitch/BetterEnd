@@ -6,16 +6,16 @@ import java.util.function.Function;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.util.Mth;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -32,8 +32,8 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 	private static final Function<PosInfo, BlockState> POST;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
 			return false;
 
@@ -68,7 +68,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void makeHead(StructureWorldAccess world, BlockPos pos, int radius) {
+	private void makeHead(WorldGenLevel world, BlockPos pos, int radius) {
 		MutableBlockPos mut = new MutableBlockPos();
 		if (radius < 2) {
 			for (int i = -1; i < 2; i++) {

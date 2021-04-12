@@ -21,7 +21,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.Patterns;
@@ -73,7 +73,7 @@ public abstract class FeatureSaplingBlock extends BlockBaseNotFull implements Fe
 
 	@Override
 	public void grow(ServerLevel world, Random random, BlockPos pos, BlockState state) {
-		getFeature().generate(world, world.getChunkManager().getChunkGenerator(), random, pos, null);
+		getFeature().place(world, world.getChunkManager().getChunkGenerator(), random, pos, null);
 	}
 
 	@Override

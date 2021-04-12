@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.world.entity.ItemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -112,7 +112,7 @@ public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
 	}
 
 	@Override
-	public void onBreak(Level world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void onBreak(Level world, BlockPos pos, BlockState state, Player player) {
 		if (!state.getValue(ACTIVE) && player.isCreative()) {
 			BlocksHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
 		}
@@ -151,7 +151,7 @@ public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, Player player, Hand hand,
 			BlockHitResult hit) {
 		if (hand == Hand.MAIN_HAND) {
 			ItemStack stack = player.getMainHandStack();

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.sound.AbstractSoundInstance;
 import net.minecraft.client.sound.MusicTracker;
 import net.minecraft.client.sound.SoundInstance;
@@ -22,7 +22,7 @@ import ru.betterend.client.ClientOptions;
 public class MusicTrackerMixin {
 	@Shadow
 	@Final
-	private MinecraftClient client;
+	private Minecraft client;
 
 	@Shadow
 	@Final

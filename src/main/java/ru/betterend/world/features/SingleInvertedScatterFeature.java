@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.state.property.Properties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.util.BlocksHelper;
 
@@ -20,8 +20,7 @@ public class SingleInvertedScatterFeature extends InvertedScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
-			float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		if (!world.isAir(blockPos)) {
 			return false;
 		}
@@ -33,7 +32,7 @@ public class SingleInvertedScatterFeature extends InvertedScatterFeature {
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlockState state = block.defaultBlockState();
 		if (block instanceof AttachedBlock) {
 			state = state.with(Properties.FACING, Direction.DOWN);

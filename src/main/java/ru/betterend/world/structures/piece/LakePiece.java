@@ -19,11 +19,11 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
@@ -83,8 +83,8 @@ public class LakePiece extends BasePiece {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
-			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean place(WorldGenLevel world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random,
+			BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int minY = this.boundingBox.minY;
 		int maxY = this.boundingBox.maxY;
 		int sx = chunkPos.x << 4;
@@ -130,7 +130,7 @@ public class LakePiece extends BasePiece {
 							state = chunk.getBlockState(mut.up());
 							if (state.isAir()) {
 								state = random.nextBoolean() ? ENDSTONE
-										: world.getBiome(worldPos).getGenerationSettings().getSurfaceConfig()
+										: world.getBiome(worldPos).getGenerationSettings().getSurfaceBuilderConfig()
 												.getTopMaterial();
 							} else {
 								state = state.getFluidState().isEmpty() ? ENDSTONE
@@ -146,7 +146,7 @@ public class LakePiece extends BasePiece {
 		return true;
 	}
 
-	private void fixWater(StructureWorldAccess world, Chunk chunk, MutableBlockPos mut, Random random, int sx, int sz) {
+	private void fixWater(WorldGenLevel world, Chunk chunk, MutableBlockPos mut, Random random, int sx, int sz) {
 		int minY = this.boundingBox.minY;
 		int maxY = this.boundingBox.maxY;
 		for (int x = 0; x < 16; x++) {
@@ -164,8 +164,8 @@ public class LakePiece extends BasePiece {
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) {
 								bState = random.nextBoolean() ? ENDSTONE
-										: world.getBiome(mut.add(sx, 0, sz)).getGenerationSettings().getSurfaceConfig()
-												.getTopMaterial();
+										: world.getBiome(mut.add(sx, 0, sz)).getGenerationSettings()
+												.getSurfaceBuilderConfig().getTopMaterial();
 							} else {
 								bState = bState.getFluidState().isEmpty() ? ENDSTONE
 										: EndBlocks.ENDSTONE_DUST.defaultBlockState();
@@ -184,7 +184,7 @@ public class LakePiece extends BasePiece {
 									if (bState.isAir()) {
 										bState = random.nextBoolean() ? ENDSTONE
 												: world.getBiome(mut.add(sx, 0, sz)).getGenerationSettings()
-														.getSurfaceConfig().getTopMaterial();
+														.getSurfaceBuilderConfig().getTopMaterial();
 									} else {
 										bState = bState.getFluidState().isEmpty() ? ENDSTONE
 												: EndBlocks.ENDSTONE_DUST.defaultBlockState();
@@ -212,7 +212,7 @@ public class LakePiece extends BasePiece {
 		}
 	}
 
-	private int getHeight(StructureWorldAccess world, BlockPos pos) {
+	private int getHeight(WorldGenLevel world, BlockPos pos) {
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
 		int h = heightmap.getOrDefault(p, Byte.MIN_VALUE);
 		if (h > Byte.MIN_VALUE) {
@@ -224,7 +224,7 @@ public class LakePiece extends BasePiece {
 			return 0;
 		}
 
-		h = world.getTopY(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		h = Mth.abs(h - center.getY());
 		h = h < 8 ? 1 : 0;
 
@@ -232,7 +232,7 @@ public class LakePiece extends BasePiece {
 		return h;
 	}
 
-	private float getHeightClamp(StructureWorldAccess world, int radius, int posX, int posZ) {
+	private float getHeightClamp(WorldGenLevel world, int radius, int posX, int posZ) {
 		MutableBlockPos mut = new MutableBlockPos();
 		int r2 = radius * radius;
 		float height = 0;

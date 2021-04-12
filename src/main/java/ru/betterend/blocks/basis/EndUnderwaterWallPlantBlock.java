@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.FluidFillable;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;

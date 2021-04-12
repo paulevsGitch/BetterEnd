@@ -2,7 +2,7 @@ package ru.betterend.util;
 
 import java.util.Random;
 
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.util.math.Vec3d;
 
 public class MHelper {
@@ -15,7 +15,7 @@ public class MHelper {
 	public static int color(int r, int g, int b) {
 		return ALPHA | (r << 16) | (g << 8) | b;
 	}
-	
+
 	public static int color(String hex) {
 		int r = Integer.parseInt(hex.substring(0, 2), 16);
 		int g = Integer.parseInt(hex.substring(2, 4), 16);
@@ -26,7 +26,7 @@ public class MHelper {
 	public static int randRange(int min, int max, Random random) {
 		return min + random.nextInt(max - min + 1);
 	}
-	
+
 	public static double randRange(double min, double max, Random random) {
 		return min + random.nextDouble() * (max - min);
 	}
@@ -68,81 +68,81 @@ public class MHelper {
 	public static int min(int a, int b) {
 		return a < b ? a : b;
 	}
-	
+
 	public static int min(int a, int b, int c) {
 		return min(a, min(b, c));
 	}
-	
+
 	public static int max(int a, int b) {
 		return a > b ? a : b;
 	}
-	
+
 	public static float min(float a, float b) {
 		return a < b ? a : b;
 	}
-	
+
 	public static float max(float a, float b) {
 		return a > b ? a : b;
 	}
-	
+
 	public static float max(float a, float b, float c) {
 		return max(a, max(b, c));
 	}
-	
+
 	public static int max(int a, int b, int c) {
 		return max(a, max(b, c));
 	}
-	
+
 	public static boolean isEven(int num) {
 		return (num & 1) == 0;
 	}
-	
+
 	public static float lengthSqr(float x, float y, float z) {
 		return x * x + y * y + z * z;
 	}
-	
+
 	public static double lengthSqr(double x, double y, double z) {
 		return x * x + y * y + z * z;
 	}
-	
+
 	public static float length(float x, float y, float z) {
 		return (float) Math.sqrt(lengthSqr(x, y, z));
 	}
-	
+
 	public static double length(double x, double y, double z) {
 		return Math.sqrt(lengthSqr(x, y, z));
 	}
-	
+
 	public static float lengthSqr(float x, float y) {
 		return x * x + y * y;
 	}
-	
+
 	public static double lengthSqr(double x, double y) {
 		return x * x + y * y;
 	}
-	
+
 	public static float length(float x, float y) {
 		return (float) Math.sqrt(lengthSqr(x, y));
 	}
-	
+
 	public static double length(double x, double y) {
 		return Math.sqrt(lengthSqr(x, y));
 	}
-	
+
 	public static float dot(float x1, float y1, float z1, float x2, float y2, float z2) {
 		return x1 * x2 + y1 * y2 + z1 * z2;
 	}
-	
+
 	public static float dot(float x1, float y1, float x2, float y2) {
 		return x1 * x2 + y1 * y2;
 	}
-	
+
 	public static int getRandom(int x, int z) {
 		int h = x * 374761393 + z * 668265263;
 		h = (h ^ (h >> 13)) * 1274126177;
 		return h ^ (h >> 16);
 	}
-	
+
 	public static int getSeed(int seed, int x, int y) {
 		int h = seed + x * 374761393 + y * 668265263;
 		h = (h ^ (h >> 13)) * 1274126177;
@@ -154,7 +154,7 @@ public class MHelper {
 		h = (h ^ (h >> 13)) * 1274126177;
 		return h ^ (h >> 16);
 	}
-	
+
 	public static <T> void shuffle(T[] array, Random random) {
 		for (int i = 0; i < array.length; i++) {
 			int i2 = random.nextInt(array.length);
@@ -167,15 +167,15 @@ public class MHelper {
 	public static int pow2(int i) {
 		return i * i;
 	}
-	
+
 	public static float pow2(float f) {
 		return f * f;
 	}
-	
+
 	public static double pow2(double d) {
 		return d * d;
 	}
-	
+
 	public static int fromHSBtoRGB(float hue, float saturation, float brightness) {
 		int red = 0;
 		int green = 0;
@@ -189,35 +189,35 @@ public class MHelper {
 			float var9 = brightness * (1.0F - saturation * var7);
 			float var10 = brightness * (1.0F - saturation * (1.0F - var7));
 			switch ((int) var6) {
-				case 0 :
-					red = (int) (brightness * 255.0F + 0.5F);
-					green = (int) (var10 * 255.0F + 0.5F);
-					blue = (int) (var8 * 255.0F + 0.5F);
-					break;
-				case 1 :
-					red = (int) (var9 * 255.0F + 0.5F);
-					green = (int) (brightness * 255.0F + 0.5F);
-					blue = (int) (var8 * 255.0F + 0.5F);
-					break;
-				case 2 :
-					red = (int) (var8 * 255.0F + 0.5F);
-					green = (int) (brightness * 255.0F + 0.5F);
-					blue = (int) (var10 * 255.0F + 0.5F);
-					break;
-				case 3 :
-					red = (int) (var8 * 255.0F + 0.5F);
-					green = (int) (var9 * 255.0F + 0.5F);
-					blue = (int) (brightness * 255.0F + 0.5F);
-					break;
-				case 4 :
-					red = (int) (var10 * 255.0F + 0.5F);
-					green = (int) (var8 * 255.0F + 0.5F);
-					blue = (int) (brightness * 255.0F + 0.5F);
-					break;
-				case 5 :
-					red = (int) (brightness * 255.0F + 0.5F);
-					green = (int) (var8 * 255.0F + 0.5F);
-					blue = (int) (var9 * 255.0F + 0.5F);
+			case 0:
+				red = (int) (brightness * 255.0F + 0.5F);
+				green = (int) (var10 * 255.0F + 0.5F);
+				blue = (int) (var8 * 255.0F + 0.5F);
+				break;
+			case 1:
+				red = (int) (var9 * 255.0F + 0.5F);
+				green = (int) (brightness * 255.0F + 0.5F);
+				blue = (int) (var8 * 255.0F + 0.5F);
+				break;
+			case 2:
+				red = (int) (var8 * 255.0F + 0.5F);
+				green = (int) (brightness * 255.0F + 0.5F);
+				blue = (int) (var10 * 255.0F + 0.5F);
+				break;
+			case 3:
+				red = (int) (var8 * 255.0F + 0.5F);
+				green = (int) (var9 * 255.0F + 0.5F);
+				blue = (int) (brightness * 255.0F + 0.5F);
+				break;
+			case 4:
+				red = (int) (var10 * 255.0F + 0.5F);
+				green = (int) (var8 * 255.0F + 0.5F);
+				blue = (int) (brightness * 255.0F + 0.5F);
+				break;
+			case 5:
+				red = (int) (brightness * 255.0F + 0.5F);
+				green = (int) (var8 * 255.0F + 0.5F);
+				blue = (int) (var9 * 255.0F + 0.5F);
 			}
 		}
 
@@ -241,8 +241,7 @@ public class MHelper {
 		float hue;
 		if (saturation == 0.0F) {
 			hue = 0.0F;
-		}
-		else {
+		} else {
 			float var9 = (float) (max - r) / (float) (max - min);
 			float var10 = (float) (max - g) / (float) (max - min);
 			float var11 = (float) (max - b) / (float) (max - min);
@@ -263,10 +262,10 @@ public class MHelper {
 		values[0] = hue;
 		values[1] = saturation;
 		values[2] = brightness;
-		
+
 		return values;
 	}
-	
+
 	public static Vec3d fromRGBtoHSBV(int r, int g, int b) {
 		int max = max(r, g, b);
 		int min = min(r, g, b);
@@ -282,8 +281,7 @@ public class MHelper {
 		float hue;
 		if (saturation == 0.0F) {
 			hue = 0.0F;
-		}
-		else {
+		} else {
 			float var9 = (float) (max - r) / (float) (max - min);
 			float var10 = (float) (max - g) / (float) (max - min);
 			float var11 = (float) (max - b) / (float) (max - min);
@@ -300,45 +298,44 @@ public class MHelper {
 				++hue;
 			}
 		}
-		
+
 		return new Vec3d(hue, saturation, brightness);
 	}
-	
+
 	public static final float radiansToDegrees(float value) {
 		return value * RAD_TO_DEG;
 	}
-	
+
 	public static final float degreesToRadians(float value) {
 		return value / RAD_TO_DEG;
 	}
-	
-	public static Vector3f cross(Vector3f vec1, Vector3f vec2)
-	{
+
+	public static Vector3f cross(Vector3f vec1, Vector3f vec2) {
 		float cx = vec1.getY() * vec2.getZ() - vec1.getZ() * vec2.getY();
 		float cy = vec1.getZ() * vec2.getX() - vec1.getX() * vec2.getZ();
 		float cz = vec1.getX() * vec2.getY() - vec1.getY() * vec2.getX();
 		return new Vector3f(cx, cy, cz);
 	}
-	
+
 	public static Vector3f normalize(Vector3f vec) {
-		float length = lengthSqr(vec.getX(), vec.getY(), vec.getZ());
+		float length = lengthSqr(vec.x(), vec.y(), vec.z());
 		if (length > 0) {
 			length = (float) Math.sqrt(length);
-			float x = vec.getX() / length;
-			float y = vec.getY() / length;
-			float z = vec.getZ() / length;
+			float x = vec.x() / length;
+			float y = vec.y() / length;
+			float z = vec.z() / length;
 			vec.set(x, y, z);
 		}
 		return vec;
 	}
-	
+
 	public static float angle(Vector3f vec1, Vector3f vec2) {
 		float dot = vec1.getX() * vec2.getX() + vec1.getY() * vec2.getY() + vec1.getZ() * vec2.getZ();
 		float length1 = lengthSqr(vec1.getX(), vec1.getY(), vec1.getZ());
 		float length2 = lengthSqr(vec2.getX(), vec2.getY(), vec2.getZ());
 		return (float) Math.acos(dot / Math.sqrt(length1 * length2));
 	}
-	
+
 	public static Vector3f randomHorizontal(Random random) {
 		float angleY = MHelper.randRange(0, MHelper.PI2, random);
 		float vx = (float) Math.sin(angleY);

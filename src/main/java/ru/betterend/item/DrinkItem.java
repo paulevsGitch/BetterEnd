@@ -2,7 +2,7 @@ package ru.betterend.item;
 
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUsage;
 import net.minecraft.world.item.Items;
@@ -29,7 +29,7 @@ public class DrinkItem extends PatternedItem {
 	}
 
 	@Override
-	public TypedActionResult<ItemStack> use(Level world, PlayerEntity user, Hand hand) {
+	public TypedActionResult<ItemStack> use(Level world, Player user, Hand hand) {
 		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
 
@@ -41,12 +41,12 @@ public class DrinkItem extends PatternedItem {
 			serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
 		}
 
-		if (user instanceof PlayerEntity && !((PlayerEntity) user).abilities.creativeMode) {
+		if (user instanceof Player && !((Player) user).abilities.creativeMode) {
 			stack.decrement(1);
 		}
 
 		if (!world.isClientSide) {
-			user.clearStatusEffects();
+			user.clearMobEffects();
 		}
 
 		return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;

@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.item.DyeItem;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.util.DyeColor;
 import net.minecraft.core.Registry;
 import ru.betterend.recipe.builders.GridRecipe;
@@ -17,7 +17,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
 public class ColoredMaterial {
-	private static final Map<Integer, ItemConvertible> DYES = Maps.newHashMap();
+	private static final Map<Integer, ItemLike> DYES = Maps.newHashMap();
 	private static final Map<Integer, String> COLORS = Maps.newHashMap();
 	private final Map<Integer, Block> colors = Maps.newHashMap();
 
@@ -26,7 +26,7 @@ public class ColoredMaterial {
 	}
 
 	public ColoredMaterial(Function<FabricBlockSettings, Block> constructor, Block source, Map<Integer, String> colors,
-			Map<Integer, ItemConvertible> dyes, boolean craftEight) {
+			Map<Integer, ItemLike> dyes, boolean craftEight) {
 		String id = Registry.BLOCK.getKey(source).getPath();
 		colors.forEach((color, name) -> {
 			String blockName = id + "_" + name;

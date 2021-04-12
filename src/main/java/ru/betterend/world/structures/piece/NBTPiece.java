@@ -13,9 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.StructureHelper;
@@ -69,8 +69,8 @@ public class NBTPiece extends BasePiece {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator,
-			Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public boolean place(WorldGenLevel world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random,
+			BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		BlockBox bounds = new BlockBox(blockBox);
 		bounds.maxY = this.boundingBox.maxY;
 		bounds.minY = this.boundingBox.minY;

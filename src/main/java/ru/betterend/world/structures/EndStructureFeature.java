@@ -4,20 +4,20 @@ import java.util.Random;
 
 import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import ru.betterend.BetterEnd;
 
 public class EndStructureFeature {
 	private static final Random RANDOM = new Random(354);
-	private final StructureFeature<DefaultFeatureConfig> structure;
+	private final StructureFeature<NoneFeatureConfiguration> structure;
 	private final ConfiguredStructureFeature<?, ?> featureConfigured;
 	private final GenerationStep.Feature featureStep;
 
-	public EndStructureFeature(String name, StructureFeature<DefaultFeatureConfig> structure,
+	public EndStructureFeature(String name, StructureFeature<NoneFeatureConfiguration> structure,
 			GenerationStep.Feature step, int spacing, int separation) {
 		ResourceLocation id = BetterEnd.makeID(name);
 
@@ -25,12 +25,12 @@ public class EndStructureFeature {
 		this.structure = FabricStructureBuilder.create(id, structure).step(step)
 				.defaultConfig(spacing, separation, RANDOM.nextInt(8192)).register();
 
-		this.featureConfigured = this.structure.configure(DefaultFeatureConfig.DEFAULT);
+		this.featureConfigured = this.structure.configure(NoneFeatureConfiguration.DEFAULT);
 
 		BuiltinRegistries.add(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, id, this.featureConfigured);
 	}
 
-	public StructureFeature<DefaultFeatureConfig> getStructure() {
+	public StructureFeature<NoneFeatureConfiguration> getStructure() {
 		return structure;
 	}
 

@@ -21,7 +21,7 @@ import com.mojang.serialization.Dynamic;
 import io.netty.buffer.Unpooled;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.effect.StatusEffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -31,7 +31,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
 import net.minecraft.network.packet.s2c.play.DifficultyS2CPacket;
-import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
+import net.minecraft.network.packet.s2c.play.EntityMobEffectS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import net.minecraft.network.packet.s2c.play.HeldItemChangeS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerAbilitiesS2CPacket;
@@ -50,7 +50,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.UserCache;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.DynamicRegistryManager;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.WorldProperties;
@@ -92,18 +92,18 @@ public class PlayerManagerMixin {
 			String string = gameProfile2 == null ? gameProfile.getName() : gameProfile2.getName();
 			userCache.add(gameProfile);
 			CompoundTag compoundTag = this.loadPlayerData(player);
-			RegistryKey<Level> var23;
+			ResourceKey<Level> var23;
 			if (compoundTag != null) {
-				DataResult<RegistryKey<Level>> var10000 = DimensionType
+				DataResult<ResourceKey<Level>> var10000 = DimensionType
 						.method_28521(new Dynamic<Tag>(NbtOps.INSTANCE, compoundTag.get("Dimension")));
 				Logger var10001 = LOGGER;
 				var10001.getClass();
-				var23 = (RegistryKey<Level>) var10000.resultOrPartial(var10001::error).orElse(Level.END);
+				var23 = (ResourceKey<Level>) var10000.resultOrPartial(var10001::error).orElse(Level.END);
 			} else {
 				var23 = Level.END;
 			}
 
-			RegistryKey<Level> registryKey = var23;
+			ResourceKey<Level> registryKey = var23;
 			ServerLevel serverWorld = this.server.getLevel(registryKey);
 			ServerLevel serverWorld3;
 			if (serverWorld == null) {
@@ -178,12 +178,12 @@ public class PlayerManagerMixin {
 				player.sendResourcePackUrl(this.server.getResourcePackUrl(), this.server.getResourcePackHash());
 			}
 
-			Iterator<?> var24 = player.getStatusEffects().iterator();
+			Iterator<?> var24 = player.getMobEffects().iterator();
 
 			while (var24.hasNext()) {
-				StatusEffectInstance statusEffectInstance = (StatusEffectInstance) var24.next();
+				MobEffectInstance statusEffectInstance = (MobEffectInstance) var24.next();
 				serverPlayNetworkHandler
-						.sendPacket(new EntityStatusEffectS2CPacket(player.getEntityId(), statusEffectInstance));
+						.sendPacket(new EntityMobEffectS2CPacket(player.getEntityId(), statusEffectInstance));
 			}
 
 			if (compoundTag != null && compoundTag.contains("RootVehicle", 10)) {

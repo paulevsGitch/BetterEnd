@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.potion.PotionUtil;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.item.alchemy.Potions;
 import ru.betterend.BetterEnd;
 import ru.betterend.item.GuideBookItem;
 import ru.betterend.recipe.builders.GridRecipe;

@@ -7,13 +7,13 @@ import java.util.function.Function;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -35,8 +35,8 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	private static final Function<PosInfo, BlockState> POST;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (world.getBlockState(pos.below()).getBlock() != EndBlocks.CHORUS_NYLIUM)
 			return false;
 		BlocksHelper.setWithoutUpdate(world, pos, AIR);
@@ -62,7 +62,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	}
 
 	private void branch(float x, float y, float z, float size, float angle, Random random, int depth,
-			StructureWorldAccess world, BlockPos pos) {
+			WorldGenLevel world, BlockPos pos) {
 		if (depth == 0)
 			return;
 
@@ -113,14 +113,14 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		}
 	}
 
-	private void leavesBall(StructureWorldAccess world, BlockPos pos, Random random, OpenSimplexNoise noise) {
+	private void leavesBall(WorldGenLevel world, BlockPos pos, Random random, OpenSimplexNoise noise) {
 		float radius = MHelper.randRange(4.5F, 6.5F, random);
 
 		SDF sphere = new SDFSphere().setRadius(radius)
 				.setBlock(EndBlocks.PYTHADENDRON_LEAVES.defaultBlockState().with(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3;
+			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return random.nextFloat() * 3F - 1.5F;

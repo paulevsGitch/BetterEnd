@@ -26,7 +26,7 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 
@@ -88,13 +88,13 @@ public class StructureHelper {
 		return pos.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
 	}
 
-	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure,
-			Rotation rotation, BlockMirror mirror, Random random) {
+	public static void placeCenteredBottom(WorldGenLevel world, BlockPos pos, Structure structure, Rotation rotation,
+			BlockMirror mirror, Random random) {
 		placeCenteredBottom(world, pos, structure, rotation, mirror, makeBox(pos), random);
 	}
 
-	public static void placeCenteredBottom(StructureWorldAccess world, BlockPos pos, Structure structure,
-			Rotation rotation, BlockMirror mirror, BlockBox bounds, Random random) {
+	public static void placeCenteredBottom(WorldGenLevel world, BlockPos pos, Structure structure, Rotation rotation,
+			BlockMirror mirror, BlockBox bounds, Random random) {
 		BlockPos offset = offsetPos(pos, structure, rotation, mirror);
 		StructurePlacementData placementData = new StructurePlacementData().setRotation(rotation).setMirror(mirror)
 				.setBoundingBox(bounds);
@@ -129,7 +129,7 @@ public class StructureHelper {
 		return BlockBox.create(x1, y1, z1, x2, y2, z2);
 	}
 
-	public static void erode(StructureWorldAccess world, BlockBox bounds, int iterations, Random random) {
+	public static void erode(WorldGenLevel world, BlockBox bounds, int iterations, Random random) {
 		MutableBlockPos mut = new MutableBlockPos();
 		boolean canDestruct = true;
 		for (int i = 0; i < iterations; i++) {
@@ -227,7 +227,7 @@ public class StructureHelper {
 		}
 	}
 
-	public static void erodeIntense(StructureWorldAccess world, BlockBox bounds, Random random) {
+	public static void erodeIntense(WorldGenLevel world, BlockBox bounds, Random random) {
 		MutableBlockPos mut = new MutableBlockPos();
 		MutableBlockPos mut2 = new MutableBlockPos();
 		int minY = bounds.minY - 10;
@@ -264,7 +264,7 @@ public class StructureHelper {
 		drop(world, bounds);
 	}
 
-	private static boolean isTerrainNear(StructureWorldAccess world, BlockPos pos) {
+	private static boolean isTerrainNear(WorldGenLevel world, BlockPos pos) {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			if (world.getBlockState(pos.relative(dir)).isIn(EndTags.GEN_TERRAIN)) {
 				return true;
@@ -273,7 +273,7 @@ public class StructureHelper {
 		return false;
 	}
 
-	private static void drop(StructureWorldAccess world, BlockBox bounds) {
+	private static void drop(WorldGenLevel world, BlockBox bounds) {
 		MutableBlockPos mut = new MutableBlockPos();
 
 		Set<BlockPos> blocks = Sets.newHashSet();
@@ -288,7 +288,7 @@ public class StructureHelper {
 					mut.setY(y);
 					BlockState state = world.getBlockState(mut);
 					if (!ignore(state) && isTerrainNear(world, mut)) {
-						edge.add(mut.toImmutable());
+						edge.add(mut.immutable());
 					}
 				}
 			}
@@ -307,7 +307,7 @@ public class StructureHelper {
 						if (bounds.contains(mut)) {
 							state = world.getBlockState(mut);
 							if (!ignore(state) && !blocks.contains(mut)) {
-								add.add(mut.toImmutable());
+								add.add(mut.immutable());
 							}
 						}
 					}
@@ -359,13 +359,13 @@ public class StructureHelper {
 		}
 	}
 
-	public static void cover(StructureWorldAccess world, BlockBox bounds, Random random) {
+	public static void cover(WorldGenLevel world, BlockBox bounds, Random random) {
 		MutableBlockPos mut = new MutableBlockPos();
 		for (int x = bounds.minX; x <= bounds.maxX; x++) {
 			mut.setX(x);
 			for (int z = bounds.minZ; z <= bounds.maxZ; z++) {
 				mut.setZ(z);
-				BlockState top = world.getBiome(mut).getGenerationSettings().getSurfaceConfig().getTopMaterial();
+				BlockState top = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 				for (int y = bounds.maxY; y >= bounds.minY; y--) {
 					mut.setY(y);
 					BlockState state = world.getBlockState(mut);

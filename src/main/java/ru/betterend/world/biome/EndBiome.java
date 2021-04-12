@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.StructureHelper;

@@ -9,13 +9,13 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.FurBlock;
@@ -41,8 +41,8 @@ public class TenaneaFeature extends DefaultFeature {
 	private static final List<Vector3f> SPLINE;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
 			return false;
 
@@ -66,8 +66,7 @@ public class TenaneaFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void leavesBall(StructureWorldAccess world, BlockPos pos, float radius, Random random,
-			OpenSimplexNoise noise) {
+	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
 		SDF sphere = new SDFSphere().setRadius(radius)
 				.setBlock(EndBlocks.TENANEA_LEAVES.defaultBlockState().with(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
@@ -75,7 +74,7 @@ public class TenaneaFeature extends DefaultFeature {
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
 		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 2F;
+			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 2F;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return MHelper.randRange(-1.5F, 1.5F, random);
@@ -83,7 +82,7 @@ public class TenaneaFeature extends DefaultFeature {
 
 		MutableBlockPos mut = new MutableBlockPos();
 		for (Direction d1 : BlocksHelper.HORIZONTAL) {
-			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).toImmutable();
+			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).immutable();
 			BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TENANEA.bark.defaultBlockState());
 			for (Direction d2 : BlocksHelper.HORIZONTAL) {
 				mut.set(p).move(Direction.UP).move(d2);

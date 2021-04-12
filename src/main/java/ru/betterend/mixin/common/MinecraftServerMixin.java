@@ -18,7 +18,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.SaveProperties;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerWorldProperties;
@@ -33,7 +33,7 @@ public class MinecraftServerMixin {
 
 	@Final
 	@Shadow
-	private Map<RegistryKey<Level>, ServerLevel> worlds;
+	private Map<ResourceKey<Level>, ServerLevel> worlds;
 
 	@Final
 	@Shadow

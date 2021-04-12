@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.FurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -42,7 +42,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned, IRe
 	}
 
 	@Override
-	protected void openScreen(Level world, BlockPos pos, PlayerEntity player) {
+	protected void openScreen(Level world, BlockPos pos, Player player) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EFurnaceBlockEntity) {
 			player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);

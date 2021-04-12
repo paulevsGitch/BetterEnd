@@ -30,7 +30,7 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 	public void grow(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlockPos bigPos = growBig(world, pos);
 		if (bigPos != null) {
-			if (EndFeatures.GIGANTIC_AMARANITA.getFeature().generate(world, null, random, bigPos, null)) {
+			if (EndFeatures.GIGANTIC_AMARANITA.getFeature().place(world, null, random, bigPos, null)) {
 				replaceMushroom(world, bigPos);
 				replaceMushroom(world, bigPos.south());
 				replaceMushroom(world, bigPos.east());
@@ -38,7 +38,7 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 			}
 			return;
 		}
-		EndFeatures.LARGE_AMARANITA.getFeature().generate(world, null, random, pos, null);
+		EndFeatures.LARGE_AMARANITA.getFeature().place(world, null, random, pos, null);
 	}
 
 	@Override

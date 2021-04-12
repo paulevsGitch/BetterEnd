@@ -3,14 +3,14 @@ package ru.betterend.blocks.entities.render;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -47,7 +47,7 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 		ItemStack activeItem = blockEntity.getStack(0);
 
 		matrices.push();
-		MinecraftClient minecraft = MinecraftClient.getInstance();
+		Minecraft minecraft = Minecraft.getInstance();
 		BakedModel model = minecraft.getItemRenderer().getHeldItemModel(activeItem, world, null);
 		Vector3f translate = model.getTransformation().ground.translation;
 		PedestalBlock pedestal = (PedestalBlock) state.getBlock();

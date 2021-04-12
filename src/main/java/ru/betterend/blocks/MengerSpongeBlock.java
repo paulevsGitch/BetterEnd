@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.FluidDrainable;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Pair;
 import net.minecraft.core.BlockPos;

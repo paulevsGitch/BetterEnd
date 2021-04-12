@@ -24,7 +24,7 @@ import net.minecraft.world.entity.ai.pathing.BirdNavigation;
 import net.minecraft.world.entity.ai.pathing.EntityNavigation;
 import net.minecraft.world.entity.ai.pathing.PathNodeType;
 import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.attribute.Attributes;
 import net.minecraft.world.entity.damage.DamageSource;
 import net.minecraft.world.entity.mob.MobEntity;
 import net.minecraft.world.entity.passive.AnimalEntity;
@@ -41,9 +41,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.core.Registry;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockProperties;
@@ -68,9 +68,9 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0D)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D).add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4D)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1D);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0D)
+				.add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.FLYING_SPEED, 0.4D)
+				.add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
 
 	public void setHive(Level world, BlockPos hive) {
@@ -92,7 +92,7 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 			hivePos = NbtHelper.toBlockPos(tag.getCompound("HivePos"));
 			ResourceLocation worldID = new ResourceLocation(tag.getString("HiveWorld"));
 			try {
-				hiveWorld = world.getServer().getLevel(RegistryKey.of(Registry.DIMENSION, worldID));
+				hiveWorld = world.getServer().getLevel(ResourceKey.of(Registry.DIMENSION, worldID));
 			} catch (Exception e) {
 				BetterEnd.LOGGER.warning("Silk Moth Hive Level {} is missing!", worldID);
 				hivePos = null;
@@ -174,13 +174,13 @@ public class SilkMothEntity extends AnimalEntity implements Flutterer {
 		this.world.spawnEntity(drop);
 	}
 
-	public static boolean canSpawn(EntityType<SilkMothEntity> type, ServerWorldAccess world, SpawnReason spawnReason,
+	public static boolean canSpawn(EntityType<SilkMothEntity> type, ServerLevelAccessor world, SpawnReason spawnReason,
 			BlockPos pos, Random random) {
 		int y = world.getChunk(pos).sampleHeightmap(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
 		return y > 0 && pos.getY() >= y && notManyEntities(world, pos, 32, 1);
 	}
 
-	private static boolean notManyEntities(ServerWorldAccess world, BlockPos pos, int radius, int maxCount) {
+	private static boolean notManyEntities(ServerLevelAccessor world, BlockPos pos, int radius, int maxCount) {
 		Box box = new Box(pos).expand(radius);
 		List<SilkMothEntity> list = world.getEntitiesByClass(SilkMothEntity.class, box, (entity) -> true);
 		return list.size() <= maxCount;

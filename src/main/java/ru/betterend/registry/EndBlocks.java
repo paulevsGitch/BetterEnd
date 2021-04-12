@@ -400,7 +400,7 @@ public class EndBlocks {
 			maxCount = item.getStackSize();
 			placeOnWater = item.canPlaceOnWater();
 		}
-		Properties item = EndItems.makeBlockItemSettings().maxCount(maxCount);
+		Properties item = EndItems.makeBlockItemSettings().stacksTo(maxCount);
 		if (placeOnWater) {
 			EndItems.registerBlockItem(id, new LilyPadItem(block, item));
 		} else {

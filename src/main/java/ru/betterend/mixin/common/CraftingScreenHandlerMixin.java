@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.world.level.block.CraftingTableBlock;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 
@@ -19,7 +19,7 @@ public abstract class CraftingScreenHandlerMixin {
 	private ScreenHandlerContext context;
 
 	@Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-	private void be_canUse(PlayerEntity player, CallbackInfoReturnable<Boolean> info) {
+	private void be_canUse(Player player, CallbackInfoReturnable<Boolean> info) {
 		if (context.run((world, pos) -> {
 			return world.getBlockState(pos).getBlock() instanceof CraftingTableBlock;
 		}, true)) {

@@ -8,9 +8,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.basis.StalactiteBlock;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -28,8 +28,8 @@ public class StalactiteFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!isGround(world.getBlockState(ceiling ? pos.up() : pos.below()).getBlock())) {
 			return false;
 		}

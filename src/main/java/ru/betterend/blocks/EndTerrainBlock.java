@@ -16,7 +16,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.block.SnowBlock;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -50,7 +50,7 @@ public class EndTerrainBlock extends BlockBase {
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, Player player, Hand hand,
 			BlockHitResult hit) {
 		if (pathBlock != null && player.getMainHandStack().getItem().isIn(FabricToolTags.SHOVELS)) {
 			world.playLocalSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);

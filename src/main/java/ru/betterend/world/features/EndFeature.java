@@ -5,19 +5,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.core.Registry;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeatures;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeatureConfig;
+import net.minecraft.world.level.levelgen.feature.OreFeatureConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.world.features.terrain.OreLayerFeature;
@@ -37,7 +37,7 @@ public class EndFeature {
 		this.featureConfigured = configuredFeature;
 	}
 
-	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, GenerationStep.Feature featureStep,
+	public EndFeature(String name, Feature<NoneFeatureConfiguration> feature, GenerationStep.Feature featureStep,
 			ConfiguredFeature<?, ?> configuredFeature) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		this.featureStep = featureStep;
@@ -45,7 +45,7 @@ public class EndFeature {
 		this.featureConfigured = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, configuredFeature);
 	}
 
-	public EndFeature(String name, Feature<DefaultFeatureConfig> feature) {
+	public EndFeature(String name, Feature<NoneFeatureConfiguration> feature) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		this.featureStep = GenerationStep.Feature.VEGETAL_DECORATION;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
@@ -53,7 +53,7 @@ public class EndFeature {
 				.configure(FeatureConfig.DEFAULT).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100))));
 	}
 
-	public EndFeature(String name, Feature<DefaultFeatureConfig> feature, int density) {
+	public EndFeature(String name, Feature<NoneFeatureConfiguration> feature, int density) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		this.featureStep = GenerationStep.Feature.VEGETAL_DECORATION;
 		this.feature = Registry.register(Registry.FEATURE, id, feature);
@@ -62,13 +62,13 @@ public class EndFeature {
 						.repeatRandomly(density));
 	}
 
-	public static EndFeature makeRawGenFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
+	public static EndFeature makeRawGenFeature(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
 				.decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
 
-	public static EndFeature makeLakeFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
+	public static EndFeature makeLakeFeature(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
 				.decorate(Decorator.WATER_LAKE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.LAKES, configured);
@@ -113,25 +113,25 @@ public class EndFeature {
 		return new EndFeature(name, layer, GenerationStep.Feature.UNDERGROUND_ORES, configured);
 	}
 
-	public static EndFeature makeChunkFeature(String name, Feature<DefaultFeatureConfig> feature) {
+	public static EndFeature makeChunkFeature(String name, Feature<NoneFeatureConfiguration> feature) {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
 				.decorate(Decorator.COUNT.configure(new CountConfig(1)));
 		return new EndFeature(name, feature, GenerationStep.Feature.LOCAL_MODIFICATIONS, configured);
 	}
 
-	public static EndFeature makeChansedFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
+	public static EndFeature makeChansedFeature(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
 				.decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.SURFACE_STRUCTURES, configured);
 	}
 
-	public static EndFeature makeCountRawFeature(String name, Feature<DefaultFeatureConfig> feature, int chance) {
+	public static EndFeature makeCountRawFeature(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT)
 				.decorate(Decorator.COUNT.configure(new CountConfig(chance)));
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}
 
-	public static EndFeature makeFeatureConfigured(String name, Feature<DefaultFeatureConfig> feature) {
+	public static EndFeature makeFeatureConfigured(String name, Feature<NoneFeatureConfiguration> feature) {
 		ConfiguredFeature<?, ?> configured = feature.configure(FeatureConfig.DEFAULT);
 		return new EndFeature(name, feature, GenerationStep.Feature.RAW_GENERATION, configured);
 	}

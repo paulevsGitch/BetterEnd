@@ -6,9 +6,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.registry.EndBlocks;
@@ -17,8 +17,8 @@ import ru.betterend.util.MHelper;
 
 public class NeonCactusFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).is(EndBlocks.ENDSTONE_DUST)) {
 			return false;
 		}
@@ -48,7 +48,7 @@ public class NeonCactusFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void branch(StructureWorldAccess world, BlockPos pos, Direction dir, Random random, int length, int size) {
+	private void branch(WorldGenLevel world, BlockPos pos, Direction dir, Random random, int length, int size) {
 		int rotIndex = length >> 2;
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		Direction hor = BlocksHelper.randomHorizontal(random);

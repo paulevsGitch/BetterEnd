@@ -172,7 +172,7 @@ public class BlocksHelper {
 					state = world.getBlockState(POS);
 
 					if (state.getBlock() instanceof FurBlock) {
-						doubleCheck.add(POS.toImmutable());
+						doubleCheck.add(POS.immutable());
 					}
 					// Liquids
 					else if (!state.getFluidState().isEmpty()) {
@@ -237,7 +237,7 @@ public class BlocksHelper {
 						if (state.is(Blocks.CHORUS_PLANT)) {
 							Set<BlockPos> ends = Sets.newHashSet();
 							Set<BlockPos> add = Sets.newHashSet();
-							ends.add(POS.toImmutable());
+							ends.add(POS.immutable());
 
 							for (int i = 0; i < 64 && !ends.isEmpty(); i++) {
 								ends.forEach((pos) -> {
@@ -276,7 +276,7 @@ public class BlocksHelper {
 							POS.setY(POS.getY() - 1);
 							state = world.getBlockState(POS);
 
-							int ray = downRayRep(world, POS.toImmutable(), 64);
+							int ray = downRayRep(world, POS.immutable(), 64);
 							if (ray > 32) {
 								BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.defaultBlockState());
 								if (world.getRandom().nextBoolean()) {

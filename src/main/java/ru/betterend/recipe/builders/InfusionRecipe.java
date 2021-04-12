@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -146,12 +146,12 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			return this;
 		}
 
-		public Builder setInput(ItemConvertible input) {
+		public Builder setInput(ItemLike input) {
 			this.input = Ingredient.of(input);
 			return this;
 		}
 
-		public Builder setOutput(ItemConvertible output) {
+		public Builder setOutput(ItemLike output) {
 			this.output = new ItemStack(output);
 			this.output.setCount(1);
 			return this;
@@ -168,7 +168,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			return this;
 		}
 
-		public Builder addCatalyst(int slot, ItemConvertible... items) {
+		public Builder addCatalyst(int slot, ItemLike... items) {
 			if (slot > 7)
 				return this;
 			this.catalysts[slot] = Ingredient.of(items);

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.NetworkThreadUtils;
@@ -18,7 +18,7 @@ import ru.betterend.client.gui.BlockSignEditScreen;
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
 	@Shadow
-	private MinecraftClient client;
+	private Minecraft client;
 
 	@Shadow
 	private ClientLevel world;

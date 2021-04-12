@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.util.BlocksHelper;
 
 public class CavePlantFeature extends FullHeightScatterFeature {
@@ -16,13 +16,12 @@ public class CavePlantFeature extends FullHeightScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
-			float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		return plant.canPlaceAt(world.getBlockState(blockPos), world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlocksHelper.setWithoutUpdate(world, blockPos, plant);
 	}
 }

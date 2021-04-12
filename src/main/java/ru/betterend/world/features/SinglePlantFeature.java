@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.blocks.basis.EndCropBlock;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
@@ -40,18 +40,17 @@ public class SinglePlantFeature extends ScatterFeature {
 	}
 
 	@Override
-	protected BlockPos getCenterGround(StructureWorldAccess world, BlockPos pos) {
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		return rawHeightmap ? getPosOnSurfaceWG(world, pos) : getPosOnSurface(world, pos);
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
-			float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		return plant.canPlaceAt(plant.defaultBlockState(), world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
 		if (plant instanceof DoublePlantBlock) {
 			int rot = random.nextInt(4);
 			BlockState state = plant.defaultBlockState().with(DoublePlantBlock.ROTATION, rot);

@@ -7,14 +7,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalFacingBlock;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -45,8 +45,8 @@ public class GeyserFeature extends DefaultFeature {
 	private static final Direction[] HORIZONTAL = BlocksHelper.makeHorizontal();
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		pos = getPosOnSurfaceWG(world, pos);
 
 		if (pos.getY() < 10) {
@@ -96,9 +96,9 @@ public class GeyserFeature extends DefaultFeature {
 			final OpenSimplexNoise noise2 = new OpenSimplexNoise(random.nextLong());
 
 			bowl = new SDFCoordModify().setFunction((vec) -> {
-				float dx = (float) noise1.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
-				float dz = (float) noise2.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
-				vec.set(vec.getX() + dx, vec.getY(), vec.getZ() + dz);
+				float dx = (float) noise1.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1);
+				float dz = (float) noise2.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1);
+				vec.set(vec.x() + dx, vec.y(), vec.z() + dz);
 			}).setSource(bowl);
 
 			SDF cut = new SDFFlatland().setBlock(Blocks.AIR);
@@ -124,13 +124,13 @@ public class GeyserFeature extends DefaultFeature {
 		obj1 = new SDFCappedCone().setHeight(halfHeight + 5).setRadius1(radius1 * 0.5F).setRadius2(radius2);
 		sdf = new SDFTranslate().setTranslate(0, halfHeight - 13, 0).setSource(obj1);
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.3F, vec.getY() * 0.3F, vec.getZ() * 0.3F) * 0.5F;
+			return (float) noise.eval(vec.x() * 0.3F, vec.y() * 0.3F, vec.z() * 0.3F) * 0.5F;
 		}).setSource(sdf);
 
 		obj2 = new SDFSphere().setRadius(radius1);
 		SDF cave = new SDFScale3D().setScale(1.5F, 1, 1.5F).setSource(obj2);
 		cave = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.1F, vec.getY() * 0.1F, vec.getZ() * 0.1F) * 2F;
+			return (float) noise.eval(vec.x() * 0.1F, vec.y() * 0.1F, vec.z() * 0.1F) * 2F;
 		}).setSource(cave);
 		cave = new SDFTranslate().setTranslate(0, -halfHeight - 10, 0).setSource(cave);
 
@@ -238,7 +238,7 @@ public class GeyserFeature extends DefaultFeature {
 			}
 		}
 
-		EndFeatures.SULPHURIC_LAKE.getFeature().generate(world, chunkGenerator, random, pos, null);
+		EndFeatures.SULPHURIC_LAKE.getFeature().place(world, chunkGenerator, random, pos, null);
 
 		double distance = radius1 * 1.7;
 		BlockPos start = pos.offset(-distance, -halfHeight - 15 - distance, -distance);

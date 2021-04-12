@@ -1,6 +1,6 @@
 package ru.betterend.client.gui.slot;
 
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
@@ -8,10 +8,10 @@ import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
 public class SmelterOutputSlot extends Slot {
 
-	private PlayerEntity player;
+	private Player player;
 	private int amount;
 
-	public SmelterOutputSlot(PlayerEntity player, Inventory inventory, int index, int x, int y) {
+	public SmelterOutputSlot(Player player, Inventory inventory, int index, int x, int y) {
 		super(inventory, index, x, y);
 		this.player = player;
 	}
@@ -28,7 +28,7 @@ public class SmelterOutputSlot extends Slot {
 		return super.takeStack(amount);
 	}
 
-	public ItemStack onTakeItem(PlayerEntity player, ItemStack stack) {
+	public ItemStack onTakeItem(Player player, ItemStack stack) {
 		this.onCrafted(stack);
 		super.onTakeItem(player, stack);
 		return stack;

@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Waterloggable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.StateDefinition;

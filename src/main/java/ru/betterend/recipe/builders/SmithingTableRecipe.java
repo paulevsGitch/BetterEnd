@@ -1,7 +1,7 @@
 package ru.betterend.recipe.builders;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -41,17 +41,17 @@ public class SmithingTableRecipe {
 	private SmithingTableRecipe() {
 	}
 
-	public SmithingTableRecipe setResult(ItemConvertible item) {
+	public SmithingTableRecipe setResult(ItemLike item) {
 		return this.setResult(item, 1);
 	}
 
-	public SmithingTableRecipe setResult(ItemConvertible item, int count) {
+	public SmithingTableRecipe setResult(ItemLike item, int count) {
 		this.alright &= RecipeHelper.exists(item);
 		this.result = new ItemStack(item, count);
 		return this;
 	}
 
-	public SmithingTableRecipe setBase(ItemConvertible... items) {
+	public SmithingTableRecipe setBase(ItemLike... items) {
 		this.alright &= RecipeHelper.exists(items);
 		this.base = Ingredient.of(items);
 		return this;
@@ -62,7 +62,7 @@ public class SmithingTableRecipe {
 		return this;
 	}
 
-	public SmithingTableRecipe setAddition(ItemConvertible... items) {
+	public SmithingTableRecipe setAddition(ItemLike... items) {
 		this.alright &= RecipeHelper.exists(items);
 		this.addition = Ingredient.of(items);
 		return this;

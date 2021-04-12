@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.AbstractBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.blocks.basis.FurBlock;
@@ -16,7 +16,7 @@ import ru.betterend.util.MHelper;
 
 public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 	@Override
-	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(2, 5, random);
 		int h = BlocksHelper.upRay(world, pos, height + 2);
 		if (h < height + 1) {
@@ -33,7 +33,7 @@ public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 		placeLantern(world, pos.up(height + 1));
 	}
 
-	private void placeLantern(StructureWorldAccess world, BlockPos pos) {
+	private void placeLantern(WorldGenLevel world, BlockPos pos) {
 		BlocksHelper.setWithoutUpdate(world, pos,
 				EndBlocks.BLUE_VINE_LANTERN.defaultBlockState().with(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir : BlocksHelper.HORIZONTAL) {

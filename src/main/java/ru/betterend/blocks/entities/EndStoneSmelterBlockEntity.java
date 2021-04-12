@@ -14,12 +14,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.LockableContainerBlockEntity;
 import net.minecraft.world.entity.ExperienceOrbEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -171,7 +171,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity
 		return smeltTime;
 	}
 
-	public void dropExperience(PlayerEntity player) {
+	public void dropExperience(Player player) {
 		assert world != null;
 		List<Recipe<?>> list = Lists.newArrayList();
 		for (Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
@@ -205,7 +205,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity
 	}
 
 	@Override
-	public boolean canPlayerUse(PlayerEntity player) {
+	public boolean canPlayerUse(Player player) {
 		assert this.world != null;
 		if (this.world.getBlockEntity(this.pos) != this) {
 			return false;
@@ -442,7 +442,7 @@ public class EndStoneSmelterBlockEntity extends LockableContainerBlockEntity
 		return AVAILABLE_FUELS.containsKey(stack.getItem()) || getFabricFuel(stack) > 2000;
 	}
 
-	public static void registerFuel(ItemConvertible fuel, int time) {
+	public static void registerFuel(ItemLike fuel, int time) {
 		AVAILABLE_FUELS.put(fuel.asItem(), time);
 	}
 

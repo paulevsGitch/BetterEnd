@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.VineBlock;
@@ -24,14 +24,13 @@ public class VineFeature extends InvertedScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
-			float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		BlockState state = world.getBlockState(blockPos);
 		return state.getMaterial().isReplaceable() && canPlaceBlock(state, world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void place(WorldGenLevel world, Random random, BlockPos blockPos) {
 		int h = BlocksHelper.downRay(world, blockPos, random.nextInt(maxLength)) - 1;
 		if (h > 2) {
 			BlockState top = getTopState();
@@ -45,7 +44,7 @@ public class VineFeature extends InvertedScatterFeature {
 		}
 	}
 
-	private boolean canPlaceBlock(BlockState state, StructureWorldAccess world, BlockPos blockPos) {
+	private boolean canPlaceBlock(BlockState state, WorldGenLevel world, BlockPos blockPos) {
 		if (vine) {
 			return ((VineBlock) vineBlock).canGenerate(state, world, blockPos);
 		} else {

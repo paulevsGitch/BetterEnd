@@ -3,7 +3,7 @@ package ru.betterend.blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.blocks.basis.FeatureSaplingBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.registry.EndBlocks;

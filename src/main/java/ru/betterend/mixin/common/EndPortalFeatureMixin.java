@@ -15,10 +15,10 @@ import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.EndPortalFeature;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.EndPortalFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.StructureHelper;
 import ru.betterend.util.WorldDataUtil;
@@ -31,8 +31,8 @@ public class EndPortalFeatureMixin {
 	private boolean open;
 
 	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void bePortalGenerate(StructureWorldAccess world, ChunkGenerator generator, Random random,
-			BlockPos blockPos, DefaultFeatureConfig config, CallbackInfoReturnable<Boolean> info) {
+	private void bePortalGenerate(WorldGenLevel world, ChunkGenerator generator, Random random, BlockPos blockPos,
+			NoneFeatureConfiguration config, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPortal()) {
 			info.setReturnValue(false);
 			info.cancel();
@@ -49,11 +49,11 @@ public class EndPortalFeatureMixin {
 	}
 
 	@ModifyVariable(method = "generate", ordinal = 0, at = @At("HEAD"))
-	private BlockPos be_setPosOnGround(BlockPos blockPos, StructureWorldAccess world) {
+	private BlockPos be_setPosOnGround(BlockPos blockPos, WorldGenLevel world) {
 		return be_updatePos(blockPos, world);
 	}
 
-	private BlockPos be_updatePos(BlockPos blockPos, StructureWorldAccess world) {
+	private BlockPos be_updatePos(BlockPos blockPos, WorldGenLevel world) {
 		if (GeneratorOptions.useNewGenerator()) {
 			BlockPos pos = GeneratorOptions.getPortalPos();
 			if (pos.equals(BlockPos.ORIGIN)) {

@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.world.level.block.Waterloggable;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;

@@ -3,11 +3,11 @@ package ru.betterend.world.features.terrain;
 import java.util.Random;
 
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -19,8 +19,8 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class BigAuroraCrystalFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		int maxY = pos.getY() + BlocksHelper.upRay(world, pos, 16);
 		int minY = pos.getY() - BlocksHelper.downRay(world, pos, 16);
 

@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.HorizontalFacingBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -52,7 +52,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 		this.setDefaultState(this.stateManager.defaultBlockState().with(FACING, Direction.NORTH).with(LIT, false));
 	}
 
-	public ActionResult onUse(BlockState state, Level world, BlockPos pos, PlayerEntity player, Hand hand,
+	public ActionResult onUse(BlockState state, Level world, BlockPos pos, Player player, Hand hand,
 			BlockHitResult hit) {
 		if (world.isClientSide) {
 			return ActionResult.SUCCESS;
@@ -62,7 +62,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 		}
 	}
 
-	private void openScreen(Level world, BlockPos pos, PlayerEntity player) {
+	private void openScreen(Level world, BlockPos pos, Player player) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
 			player.openHandledScreen((EndStoneSmelterBlockEntity) blockEntity);

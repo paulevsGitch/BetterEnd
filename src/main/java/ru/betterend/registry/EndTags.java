@@ -10,16 +10,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.FoodComponent;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.tags.Tag.Identified;
+import net.minecraft.tags.Tag.Named;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.Category;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndTerrainBlock;
@@ -34,45 +34,45 @@ public class EndTags {
 	// https://fabricmc.net/wiki/tutorial:tags
 
 	// Block Tags
-	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonBlockTag("bookshelves");
-	public static final Tag.Identified<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
-	public static final Tag.Identified<Block> END_GROUND = makeBlockTag("end_ground");
-	public static final Tag.Identified<Block> PEDESTALS = makeBlockTag("pedestal");
-	public static final Tag.Identified<Block> BLOCK_CHEST = makeCommonBlockTag("chest");
-	public static final Tag.Identified<Block> END_STONES = makeCommonBlockTag("end_stones");
-	public static final Tag.Identified<Block> DRAGON_IMMUNE = getMCBlockTag("dragon_immune");
+	public static final Tag.Named<Block> BOOKSHELVES = makeCommonBlockTag("bookshelves");
+	public static final Tag.Named<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
+	public static final Tag.Named<Block> END_GROUND = makeBlockTag("end_ground");
+	public static final Tag.Named<Block> PEDESTALS = makeBlockTag("pedestal");
+	public static final Tag.Named<Block> BLOCK_CHEST = makeCommonBlockTag("chest");
+	public static final Tag.Named<Block> END_STONES = makeCommonBlockTag("end_stones");
+	public static final Tag.Named<Block> DRAGON_IMMUNE = getMCBlockTag("dragon_immune");
 
 	// Item Tags
-	public static final Tag.Identified<Item> ITEM_CHEST = makeCommonItemTag("chest");
-	public static final Tag.Identified<Item> IRON_INGOTS = makeCommonItemTag("iron_ingots");
-	public static final Tag.Identified<Item> FURNACES = makeCommonItemTag("furnaces");
+	public static final Tag.Named<Item> ITEM_CHEST = makeCommonItemTag("chest");
+	public static final Tag.Named<Item> IRON_INGOTS = makeCommonItemTag("iron_ingots");
+	public static final Tag.Named<Item> FURNACES = makeCommonItemTag("furnaces");
 	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
 
-	public static Tag.Identified<Block> makeBlockTag(String name) {
+	public static Tag.Named<Block> makeBlockTag(String name) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
 	}
 
-	public static Tag.Identified<Item> makeItemTag(String name) {
+	public static Tag.Named<Item> makeItemTag(String name) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
 	}
 
-	public static Tag.Identified<Block> makeCommonBlockTag(String name) {
+	public static Tag.Named<Block> makeCommonBlockTag(String name) {
 		ResourceLocation id = new ResourceLocation("c", name);
 		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
 	}
 
-	public static Tag.Identified<Item> makeCommonItemTag(String name) {
+	public static Tag.Named<Item> makeCommonItemTag(String name) {
 		ResourceLocation id = new ResourceLocation("c", name);
 		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
 	}
 
-	public static Tag.Identified<Block> getMCBlockTag(String name) {
+	public static Tag.Named<Block> getMCBlockTag(String name) {
 		ResourceLocation id = new ResourceLocation(name);
 		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
@@ -106,7 +106,7 @@ public class EndTags {
 
 		EndItems.getModItems().forEach((item) -> {
 			if (item.isFood()) {
-				FoodComponent food = item.getFoodComponent();
+				FoodProperties food = item.getFoodComponent();
 				float compost = food.getHunger() * food.getSaturationModifier() * 0.18F;
 				ComposterBlockAccessor.callRegisterCompostableItem(compost, item);
 			}
@@ -139,7 +139,7 @@ public class EndTags {
 	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) {
-				SurfaceConfig config = biome.getGenerationSettings().getSurfaceConfig();
+				SurfaceConfig config = biome.getGenerationSettings().getSurfaceBuilderConfig();
 				Block under = config.getUnderMaterial().getBlock();
 				Block surface = config.getTopMaterial().getBlock();
 				TagHelper.addTag(GEN_TERRAIN, under, surface);

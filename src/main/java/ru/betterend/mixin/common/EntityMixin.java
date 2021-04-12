@@ -81,7 +81,7 @@ public abstract class EntityMixin implements TeleportingEntity {
 
 	@Override
 	public void beSetExitPos(BlockPos pos) {
-		this.exitPos = pos.toImmutable();
+		this.exitPos = pos.immutable();
 	}
 
 	@Override

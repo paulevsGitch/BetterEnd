@@ -13,7 +13,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -29,17 +29,17 @@ import ru.betterend.util.MHelper;
 
 public class FurBlock extends AttachedBlock implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
-	private final ItemConvertible drop;
+	private final ItemLike drop;
 	private final int dropChance;
 
-	public FurBlock(ItemConvertible drop, int light, int dropChance, boolean wet) {
+	public FurBlock(ItemLike drop, int light, int dropChance, boolean wet) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT).breakByTool(FabricToolTags.SHEARS)
 				.sounds(wet ? SoundType.WET_GRASS : SoundType.GRASS).luminance(light).breakByHand(true).noCollision());
 		this.drop = drop;
 		this.dropChance = dropChance;
 	}
 
-	public FurBlock(ItemConvertible drop, int dropChance) {
+	public FurBlock(ItemLike drop, int dropChance) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT).breakByTool(FabricToolTags.SHEARS)
 				.sounds(SoundType.GRASS).breakByHand(true).noCollision());
 		this.drop = drop;

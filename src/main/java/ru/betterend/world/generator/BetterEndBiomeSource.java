@@ -9,8 +9,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.core.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
@@ -43,8 +43,8 @@ public class BetterEndBiomeSource extends BiomeSource {
 
 		this.mapLand = new BiomeMap(seed, GeneratorOptions.getBiomeSizeLand(), EndBiomes.LAND_BIOMES);
 		this.mapVoid = new BiomeMap(seed, GeneratorOptions.getBiomeSizeVoid(), EndBiomes.VOID_BIOMES);
-		this.centerBiome = biomeRegistry.getOrThrow(BiomeKeys.THE_END);
-		this.barrens = biomeRegistry.getOrThrow(BiomeKeys.END_BARRENS);
+		this.centerBiome = biomeRegistry.getOrThrow(Biomes.THE_END);
+		this.barrens = biomeRegistry.getOrThrow(Biomes.END_BARRENS);
 		this.biomeRegistry = biomeRegistry;
 		this.seed = seed;
 

@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -85,7 +85,7 @@ public class UpDownPlantBlock extends BlockBaseNotFull implements IRenderTypeabl
 	}
 
 	@Override
-	public void afterBreak(Level world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity,
+	public void afterBreak(Level world, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity,
 			ItemStack stack) {
 		super.afterBreak(world, player, pos, state, blockEntity, stack);
 		world.updateNeighbor(pos, Blocks.AIR, pos.below());

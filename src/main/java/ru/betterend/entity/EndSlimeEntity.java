@@ -15,15 +15,15 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FollowTargetGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.attribute.Attributes;
 import net.minecraft.world.entity.damage.DamageSource;
 import net.minecraft.world.entity.data.DataTracker;
 import net.minecraft.world.entity.data.TrackedData;
 import net.minecraft.world.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.world.entity.effect.StatusEffects;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.mob.SlimeEntity;
 import net.minecraft.world.entity.passive.IronGolemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -35,9 +35,9 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.Mth;
 import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlocksHelper;
@@ -59,21 +59,20 @@ public class EndSlimeEntity extends SlimeEntity {
 		this.goalSelector.add(2, new FaceTowardTargetGoal());
 		this.goalSelector.add(3, new RandomLookGoal());
 		this.goalSelector.add(5, new MoveGoal());
-		this.targetSelector.add(1,
-				new FollowTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, false, (livingEntity) -> {
-					return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
-				}));
+		this.targetSelector.add(1, new FollowTargetGoal<Player>(this, Player.class, 10, true, false, (livingEntity) -> {
+			return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
+		}));
 		this.targetSelector.add(3, new FollowTargetGoal<IronGolemEntity>(this, IronGolemEntity.class, true));
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0D)
-				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15D);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 1.0D)
+				.add(Attributes.ATTACK_DAMAGE, 1.0D).add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.15D);
 	}
 
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+	public EntityData initialize(ServerLevelAccessor world, LocalDifficulty difficulty, SpawnReason spawnReason,
 			EntityData entityData, CompoundTag entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		EndBiome biome = EndBiomes.getFromBiome(world.getBiome(getBlockPos()));
@@ -198,18 +197,18 @@ public class EndSlimeEntity extends SlimeEntity {
 		return this.dataTracker.get(VARIANT) == 0;
 	}
 
-	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerWorldAccess world, SpawnReason spawnReason,
+	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerLevelAccessor world, SpawnReason spawnReason,
 			BlockPos pos, Random random) {
 		return random.nextInt(16) == 0 || isPermanentBiome(world, pos)
 				|| (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
 	}
 
-	private static boolean isPermanentBiome(ServerWorldAccess world, BlockPos pos) {
+	private static boolean isPermanentBiome(ServerLevelAccessor world, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
 		return EndBiomes.getFromBiome(biome) == EndBiomes.CHORUS_FOREST;
 	}
 
-	private static boolean notManyEntities(ServerWorldAccess world, BlockPos pos, int radius, int maxCount) {
+	private static boolean notManyEntities(ServerLevelAccessor world, BlockPos pos, int radius, int maxCount) {
 		Box box = new Box(pos).expand(radius);
 		List<EndSlimeEntity> list = world.getEntitiesByClass(EndSlimeEntity.class, box, (entity) -> {
 			return true;
@@ -217,7 +216,7 @@ public class EndSlimeEntity extends SlimeEntity {
 		return list.size() <= maxCount;
 	}
 
-	private static boolean isWaterNear(ServerWorldAccess world, BlockPos pos, int radius, int radius2) {
+	private static boolean isWaterNear(ServerLevelAccessor world, BlockPos pos, int radius, int radius2) {
 		for (int x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
 			POS.setX(x);
 			for (int z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
@@ -293,7 +292,7 @@ public class EndSlimeEntity extends SlimeEntity {
 			return EndSlimeEntity.this.getTarget() == null
 					&& (EndSlimeEntity.this.onGround || EndSlimeEntity.this.isTouchingWater()
 							|| EndSlimeEntity.this.isInLava()
-							|| EndSlimeEntity.this.hasStatusEffect(StatusEffects.LEVITATION))
+							|| EndSlimeEntity.this.hasMobEffect(MobEffects.LEVITATION))
 					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 
@@ -321,8 +320,7 @@ public class EndSlimeEntity extends SlimeEntity {
 			} else if (!livingEntity.isAlive()) {
 				return false;
 			} else {
-				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable
-						? false
+				return livingEntity instanceof Player && ((Player) livingEntity).abilities.invulnerable ? false
 						: EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 			}
 		}
@@ -338,7 +336,7 @@ public class EndSlimeEntity extends SlimeEntity {
 				return false;
 			} else if (!livingEntity.isAlive()) {
 				return false;
-			} else if (livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable) {
+			} else if (livingEntity instanceof Player && ((Player) livingEntity).abilities.invulnerable) {
 				return false;
 			} else {
 				return --this.ticksLeft > 0;
@@ -381,8 +379,8 @@ public class EndSlimeEntity extends SlimeEntity {
 			} else {
 				this.state = MoveControl.State.WAIT;
 				if (this.entity.isOnGround()) {
-					this.entity.setMovementSpeed((float) (this.speed
-							* this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
+					this.entity.setMovementSpeed(
+							(float) (this.speed * this.entity.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 					if (this.ticksUntilJump-- <= 0) {
 						this.ticksUntilJump = EndSlimeEntity.this.getTicksUntilNextJump();
 						if (this.jumpOften) {
@@ -400,8 +398,8 @@ public class EndSlimeEntity extends SlimeEntity {
 						this.entity.setMovementSpeed(0.0F);
 					}
 				} else {
-					this.entity.setMovementSpeed((float) (this.speed
-							* this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED)));
+					this.entity.setMovementSpeed(
+							(float) (this.speed * this.entity.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 				}
 
 			}

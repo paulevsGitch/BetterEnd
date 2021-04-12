@@ -7,7 +7,7 @@ import ru.betterend.registry.EndItems;
 
 public class EnchantedPetalItem extends PatternedItem {
 	public EnchantedPetalItem() {
-		super(EndItems.makeItemSettings().rarity(Rarity.RARE).maxCount(16));
+		super(EndItems.makeItemSettings().rarity(Rarity.RARE).stacksTo(16));
 	}
 
 	@Override

@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ShapeContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.item.ItemPlacementContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -79,10 +79,10 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned, I
 
 	@Override
 	public void onPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		if (placer != null && placer instanceof PlayerEntity) {
+		if (placer != null && placer instanceof Player) {
 			ESignBlockEntity sign = (ESignBlockEntity) world.getBlockEntity(pos);
 			if (!world.isClientSide) {
-				sign.setEditor((PlayerEntity) placer);
+				sign.setEditor((Player) placer);
 				((ServerPlayer) placer).networkHandler.sendPacket(new SignEditorOpenS2CPacket(pos));
 			} else {
 				sign.setEditable(true);

@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.state.property.Properties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
 import ru.betterend.util.BlocksHelper;
@@ -21,7 +21,7 @@ public class WallPlantFeature extends WallScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
 		if (block instanceof EndWallPlantBlock) {
 			BlockState state = block.defaultBlockState().with(EndWallPlantBlock.FACING, dir);
 			return block.canPlaceAt(state, world, pos);
@@ -33,7 +33,7 @@ public class WallPlantFeature extends WallScatterFeature {
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
+	public void place(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
 		BlockState state = block.defaultBlockState();
 		if (block instanceof EndWallPlantBlock) {
 			state = state.with(EndWallPlantBlock.FACING, dir);

@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.WorldView;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
@@ -21,7 +21,7 @@ public class BulbVineSeedBlock extends EndPlantWithAgeBlock {
 	}
 
 	@Override
-	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int h = BlocksHelper.downRay(world, pos, random.nextInt(24)) - 1;
 		if (h > 2) {
 			BlocksHelper.setWithoutUpdate(world, pos,

@@ -8,11 +8,11 @@ import java.util.function.Function;
 import com.google.common.collect.Lists;
 
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFUnion;
 import ru.betterend.util.sdf.primitive.SDFLine;
@@ -114,7 +114,7 @@ public class SplineHelper {
 		return result;
 	}
 
-	public static boolean fillSpline(List<Vector3f> spline, StructureWorldAccess world, BlockState state, BlockPos pos,
+	public static boolean fillSpline(List<Vector3f> spline, WorldGenLevel world, BlockState state, BlockPos pos,
 			Function<BlockState, Boolean> replace) {
 		Vector3f startPos = spline.get(0);
 		for (int i = 1; i < spline.size(); i++) {
@@ -128,8 +128,8 @@ public class SplineHelper {
 		return true;
 	}
 
-	public static void fillSplineForce(List<Vector3f> spline, StructureWorldAccess world, BlockState state,
-			BlockPos pos, Function<BlockState, Boolean> replace) {
+	public static void fillSplineForce(List<Vector3f> spline, WorldGenLevel world, BlockState state, BlockPos pos,
+			Function<BlockState, Boolean> replace) {
 		Vector3f startPos = spline.get(0);
 		for (int i = 1; i < spline.size(); i++) {
 			Vector3f endPos = spline.get(i);
@@ -138,8 +138,8 @@ public class SplineHelper {
 		}
 	}
 
-	public static boolean fillLine(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state,
-			BlockPos pos, Function<BlockState, Boolean> replace) {
+	public static boolean fillLine(Vector3f start, Vector3f end, WorldGenLevel world, BlockState state, BlockPos pos,
+			Function<BlockState, Boolean> replace) {
 		float dx = end.getX() - start.getX();
 		float dy = end.getY() - start.getY();
 		float dz = end.getZ() - start.getZ();
@@ -187,8 +187,8 @@ public class SplineHelper {
 		}
 	}
 
-	public static void fillLineForce(Vector3f start, Vector3f end, StructureWorldAccess world, BlockState state,
-			BlockPos pos, Function<BlockState, Boolean> replace) {
+	public static void fillLineForce(Vector3f start, Vector3f end, WorldGenLevel world, BlockState state, BlockPos pos,
+			Function<BlockState, Boolean> replace) {
 		float dx = end.getX() - start.getX();
 		float dy = end.getY() - start.getY();
 		float dz = end.getZ() - start.getZ();
@@ -231,19 +231,19 @@ public class SplineHelper {
 		}
 	}
 
-	public static boolean canGenerate(List<Vector3f> spline, float scale, BlockPos start, StructureWorldAccess world,
+	public static boolean canGenerate(List<Vector3f> spline, float scale, BlockPos start, WorldGenLevel world,
 			Function<BlockState, Boolean> canReplace) {
 		int count = spline.size();
 		Vector3f vec = spline.get(0);
 		MutableBlockPos mut = new MutableBlockPos();
-		float x1 = start.getX() + vec.getX() * scale;
-		float y1 = start.getY() + vec.getY() * scale;
-		float z1 = start.getZ() + vec.getZ() * scale;
+		float x1 = start.getX() + vec.x() * scale;
+		float y1 = start.getY() + vec.y() * scale;
+		float z1 = start.getZ() + vec.z() * scale;
 		for (int i = 1; i < count; i++) {
 			vec = spline.get(i);
-			float x2 = start.getX() + vec.getX() * scale;
-			float y2 = start.getY() + vec.getY() * scale;
-			float z2 = start.getZ() + vec.getZ() * scale;
+			float x2 = start.getX() + vec.x() * scale;
+			float y2 = start.getY() + vec.y() * scale;
+			float z2 = start.getZ() + vec.z() * scale;
 
 			for (float py = y1; py < y2; py += 3) {
 				if (py - start.getY() < 10)
@@ -264,19 +264,19 @@ public class SplineHelper {
 		return true;
 	}
 
-	public static boolean canGenerate(List<Vector3f> spline, BlockPos start, StructureWorldAccess world,
+	public static boolean canGenerate(List<Vector3f> spline, BlockPos start, WorldGenLevel world,
 			Function<BlockState, Boolean> canReplace) {
 		int count = spline.size();
 		Vector3f vec = spline.get(0);
 		MutableBlockPos mut = new MutableBlockPos();
-		float x1 = start.getX() + vec.getX();
-		float y1 = start.getY() + vec.getY();
-		float z1 = start.getZ() + vec.getZ();
+		float x1 = start.getX() + vec.x();
+		float y1 = start.getY() + vec.y();
+		float z1 = start.getZ() + vec.z();
 		for (int i = 1; i < count; i++) {
 			vec = spline.get(i);
-			float x2 = start.getX() + vec.getX();
-			float y2 = start.getY() + vec.getY();
-			float z2 = start.getZ() + vec.getZ();
+			float x2 = start.getX() + vec.x();
+			float y2 = start.getY() + vec.y();
+			float z2 = start.getZ() + vec.z();
 
 			for (float py = y1; py < y2; py += 3) {
 				if (py - start.getY() < 10)

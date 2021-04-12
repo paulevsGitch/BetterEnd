@@ -17,10 +17,10 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
@@ -30,21 +30,21 @@ import ru.betterend.world.processors.DestructionStructureProcessor;
 public abstract class NBTStructureFeature extends DefaultFeature {
 	protected static final DestructionStructureProcessor DESTRUCTION = new DestructionStructureProcessor();
 
-	protected abstract Structure getStructure(StructureWorldAccess world, BlockPos pos, Random random);
+	protected abstract Structure getStructure(WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random);
+	protected abstract boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract Rotation getRotation(StructureWorldAccess world, BlockPos pos, Random random);
+	protected abstract Rotation getRotation(WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract BlockMirror getMirror(StructureWorldAccess world, BlockPos pos, Random random);
+	protected abstract BlockMirror getMirror(WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract int getYOffset(Structure structure, StructureWorldAccess world, BlockPos pos, Random random);
+	protected abstract int getYOffset(Structure structure, WorldGenLevel world, BlockPos pos, Random random);
 
-	protected abstract TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random);
+	protected abstract TerrainMerge getTerrainMerge(WorldGenLevel world, BlockPos pos, Random random);
 
 	protected abstract void addStructureData(StructurePlacementData data);
 
-	protected BlockPos getGround(StructureWorldAccess world, BlockPos center) {
+	protected BlockPos getGround(WorldGenLevel world, BlockPos center) {
 		Biome biome = world.getBiome(center);
 		ResourceLocation id = EndBiomes.getBiomeID(biome);
 		if (id.getNamespace().contains("moutain") || id.getNamespace().contains("lake")) {
@@ -56,7 +56,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		}
 	}
 
-	protected int getAverageY(StructureWorldAccess world, BlockPos center) {
+	protected int getAverageY(WorldGenLevel world, BlockPos center) {
 		int y = getYOnSurface(world, center.getX(), center.getZ());
 		y += getYOnSurface(world, center.getX() - 2, center.getZ() - 2);
 		y += getYOnSurface(world, center.getX() + 2, center.getZ() - 2);
@@ -65,7 +65,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		return y / 5;
 	}
 
-	protected int getAverageYWG(StructureWorldAccess world, BlockPos center) {
+	protected int getAverageYWG(WorldGenLevel world, BlockPos center) {
 		int y = getYOnSurfaceWG(world, center.getX(), center.getZ());
 		y += getYOnSurfaceWG(world, center.getX() - 2, center.getZ() - 2);
 		y += getYOnSurfaceWG(world, center.getX() + 2, center.getZ() - 2);
@@ -75,8 +75,8 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
-			DefaultFeatureConfig featureConfig) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
+			NoneFeatureConfiguration featureConfig) {
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
 		center = getGround(world, center);
 
@@ -132,7 +132,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 							if (!stateSt.isIn(EndTags.GEN_TERRAIN)) {
 								if (merge == TerrainMerge.SURFACE) {
 									SurfaceConfig config = world.getBiome(mut).getGenerationSettings()
-											.getSurfaceConfig();
+											.getSurfaceBuilderConfig();
 									boolean isTop = mut.getY() == surfMax && state.getMaterial().blocksLight();
 									BlockState top = isTop ? config.getTopMaterial() : config.getUnderMaterial();
 									BlocksHelper.setWithoutUpdate(world, mut, top);
@@ -143,7 +143,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 								if (stateSt.isIn(EndTags.END_GROUND) && state.getMaterial().blocksLight()) {
 									if (merge == TerrainMerge.SURFACE) {
 										SurfaceConfig config = world.getBiome(mut).getGenerationSettings()
-												.getSurfaceConfig();
+												.getSurfaceBuilderConfig();
 										BlocksHelper.setWithoutUpdate(world, mut, config.getUnderMaterial());
 									} else {
 										BlocksHelper.setWithoutUpdate(world, mut, state);

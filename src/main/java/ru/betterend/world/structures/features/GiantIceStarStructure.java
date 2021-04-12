@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureStart;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.registry.DynamicRegistryManager;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
@@ -96,19 +96,19 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 	}
 
 	@Override
-	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
+	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStructureStartFactory() {
 		return StarStructureStart::new;
 	}
 
-	public static class StarStructureStart extends StructureStart<DefaultFeatureConfig> {
-		public StarStructureStart(StructureFeature<DefaultFeatureConfig> feature, int chunkX, int chunkZ, BlockBox box,
-				int references, long seed) {
+	public static class StarStructureStart extends StructureStart<NoneFeatureConfiguration> {
+		public StarStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ,
+				BlockBox box, int references, long seed) {
 			super(feature, chunkX, chunkZ, box, references, seed);
 		}
 
 		@Override
 		public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator,
-				StructureManager manager, int chunkX, int chunkZ, Biome biome, DefaultFeatureConfig config) {
+				StructureManager manager, int chunkX, int chunkZ, Biome biome, NoneFeatureConfiguration config) {
 			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			BlockPos start = new BlockPos(x, MHelper.randRange(32, 128, random), z);

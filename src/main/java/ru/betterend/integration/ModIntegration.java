@@ -13,15 +13,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.tags.Tag.Identified;
+import net.minecraft.tags.Tag.Named;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.core.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.features.EndFeature;
 
@@ -54,8 +54,8 @@ public abstract class ModIntegration {
 		return getBlock(name).defaultBlockState();
 	}
 
-	public RegistryKey<Biome> getKey(String name) {
-		return RegistryKey.of(Registry.BIOME_KEY, getID(name));
+	public ResourceKey<Biome> getKey(String name) {
+		return ResourceKey.of(Registry.BIOME_KEY, getID(name));
 	}
 
 	public boolean modIsInstalled() {
@@ -196,13 +196,13 @@ public abstract class ModIntegration {
 		return null;
 	}
 
-	public Tag.Identified<Item> getItemTag(String name) {
+	public Tag.Named<Item> getItemTag(String name) {
 		ResourceLocation id = getID(name);
 		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
 	}
 
-	public Tag.Identified<Block> getBlockTag(String name) {
+	public Tag.Named<Block> getBlockTag(String name) {
 		ResourceLocation id = getID(name);
 		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
 		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;

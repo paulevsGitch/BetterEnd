@@ -12,7 +12,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
@@ -27,7 +27,7 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 	}
 
 	@Override
-	public void growAdult(StructureWorldAccess world, Random random, BlockPos pos) {
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(1, 2, random);
 		int h = BlocksHelper.upRay(world, pos, height + 2);
 		if (h < height) {

@@ -8,9 +8,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ItemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +35,7 @@ public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTyp
 		if (world.getDimension().isUltrawarm()) {
 			world.setBlockAndUpdate(pos, EndBlocks.MENGER_SPONGE.defaultBlockState(), 3);
 			world.syncWorldEvent(2009, pos, 0);
-			world.playLocalSound((PlayerEntity) null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F,
+			world.playLocalSound((Player) null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F,
 					(1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
 		}
 	}
@@ -80,7 +80,7 @@ public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTyp
 	}
 
 	@Override
-	public void onBreak(Level world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void onBreak(Level world, BlockPos pos, BlockState state, Player player) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
 		if (!world.isClientSide()) {
 			world.syncWorldEvent(2001, pos, getRawIdFromState(state));

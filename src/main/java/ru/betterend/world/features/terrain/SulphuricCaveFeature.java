@@ -13,9 +13,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -31,8 +31,8 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	private static final Direction[] HORIZONTAL = BlocksHelper.makeHorizontal();
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		int radius = MHelper.randRange(10, 30, random);
 
 		int top = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
@@ -106,7 +106,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1)
 									+ noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
 							if (v > 0.4) {
-								brimstone.add(mut.toImmutable());
+								brimstone.add(mut.immutable());
 							} else {
 								BlocksHelper.setWithoutUpdate(world, mut, rock);
 							}
@@ -173,7 +173,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 				|| state.getMaterial().equals(Material.UNDERWATER_PLANT) || state.getMaterial().equals(Material.LEAVES);
 	}
 
-	private void placeBrimstone(StructureWorldAccess world, BlockPos pos, Random random) {
+	private void placeBrimstone(WorldGenLevel world, BlockPos pos, Random random) {
 		BlockState state = getBrimstone(world, pos);
 		BlocksHelper.setWithoutUpdate(world, pos, state);
 		if (state.getValue(BlockProperties.ACTIVE)) {
@@ -181,7 +181,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		}
 	}
 
-	private BlockState getBrimstone(StructureWorldAccess world, BlockPos pos) {
+	private BlockState getBrimstone(WorldGenLevel world, BlockPos pos) {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			if (world.getBlockState(pos.relative(dir)).is(Blocks.WATER)) {
 				return EndBlocks.BRIMSTONE.defaultBlockState().with(BlockProperties.ACTIVE, true);
@@ -190,7 +190,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		return EndBlocks.BRIMSTONE.defaultBlockState();
 	}
 
-	private void makeShards(StructureWorldAccess world, BlockPos pos, Random random) {
+	private void makeShards(WorldGenLevel world, BlockPos pos, Random random) {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			BlockPos side;
 			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.relative(dir))).is(Blocks.WATER)) {

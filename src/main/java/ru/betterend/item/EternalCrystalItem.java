@@ -5,6 +5,6 @@ import ru.betterend.registry.EndItems;
 
 public class EternalCrystalItem extends PatternedItem {
 	public EternalCrystalItem() {
-		super(EndItems.makeItemSettings().maxCount(16).rarity(Rarity.EPIC));
+		super(EndItems.makeItemSettings().stacksTo(16).rarity(Rarity.EPIC));
 	}
 }

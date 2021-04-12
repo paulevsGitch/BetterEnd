@@ -1,6 +1,6 @@
 package ru.betterend.recipe.builders;
 
-import net.minecraft.world.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
@@ -17,8 +17,8 @@ import ru.betterend.util.RecipeHelper;
 public class FurnaceRecipe {
 	private static final FurnaceRecipe INSTANCE = new FurnaceRecipe();
 
-	private ItemConvertible input;
-	private ItemConvertible output;
+	private ItemLike input;
+	private ItemLike output;
 	private boolean exist;
 	private String group;
 	private String name;
@@ -29,7 +29,7 @@ public class FurnaceRecipe {
 	private FurnaceRecipe() {
 	}
 
-	public static FurnaceRecipe make(String name, ItemConvertible input, ItemConvertible output) {
+	public static FurnaceRecipe make(String name, ItemLike input, ItemLike output) {
 		INSTANCE.name = name;
 		INSTANCE.group = "";
 		INSTANCE.input = input;

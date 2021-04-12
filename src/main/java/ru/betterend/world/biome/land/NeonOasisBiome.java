@@ -2,7 +2,7 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeatures;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;

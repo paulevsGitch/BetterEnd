@@ -14,13 +14,14 @@ import net.minecraft.world.entity.mob.EndermanEntity;
 import net.minecraft.world.entity.mob.HostileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 @Mixin(HostileEntity.class)
 public class HostileEntityMixin {
 	@Inject(method = "canSpawnInDark", at = @At(value = "RETURN"), cancellable = true)
-	private static void be_endermenCheck(EntityType<? extends HostileEntity> type, ServerWorldAccess serverWorldAccess,
-			SpawnReason spawnReason, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> info) {
+	private static void be_endermenCheck(EntityType<? extends HostileEntity> type,
+			ServerLevelAccessor serverWorldAccess, SpawnReason spawnReason, BlockPos pos, Random random,
+			CallbackInfoReturnable<Boolean> info) {
 		boolean canSpawn = info.getReturnValue();
 		if (canSpawn && spawnReason == SpawnReason.NATURAL && type == EntityType.ENDERMAN) {
 			Box box = new Box(pos).expand(16);

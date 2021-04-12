@@ -7,9 +7,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -19,8 +19,8 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class SulphurHillFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 57 || pos.getY() > 70) {
 			return false;
@@ -40,7 +40,7 @@ public class SulphurHillFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void makeCircle(StructureWorldAccess world, BlockPos pos, OpenSimplexNoise noise, Random random) {
+	private void makeCircle(WorldGenLevel world, BlockPos pos, OpenSimplexNoise noise, Random random) {
 		int radius = MHelper.randRange(5, 9, random);
 		int min = -radius - 3;
 		int max = radius + 4;

@@ -16,10 +16,10 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
@@ -31,7 +31,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 	private Structure structure;
 
 	@Override
-	protected Structure getStructure(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected Structure getStructure(WorldGenLevel world, BlockPos pos, Random random) {
 		if (structure == null) {
 			structure = world.toServerWorld().getStructureManager()
 					.getStructureOrBlank(new ResourceLocation("end_city/ship"));
@@ -43,7 +43,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 	}
 
 	@Override
-	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random) {
 		long x = pos.getX() >> 4;
 		long z = pos.getX() >> 4;
 		if (x * x + z * z < 3600) {
@@ -53,30 +53,30 @@ public class CrashedShipFeature extends NBTStructureFeature {
 	}
 
 	@Override
-	protected Rotation getRotation(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected Rotation getRotation(WorldGenLevel world, BlockPos pos, Random random) {
 		return Rotation.random(random);
 	}
 
 	@Override
-	protected BlockMirror getMirror(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected BlockMirror getMirror(WorldGenLevel world, BlockPos pos, Random random) {
 		return BlockMirror.values()[random.nextInt(3)];
 	}
 
 	@Override
-	protected int getYOffset(Structure structure, StructureWorldAccess world, BlockPos pos, Random random) {
+	protected int getYOffset(Structure structure, WorldGenLevel world, BlockPos pos, Random random) {
 		int min = structure.getSize().getY() >> 3;
 		int max = structure.getSize().getY() >> 2;
 		return -MHelper.randRange(min, max, random);
 	}
 
 	@Override
-	protected TerrainMerge getTerrainMerge(StructureWorldAccess world, BlockPos pos, Random random) {
+	protected TerrainMerge getTerrainMerge(WorldGenLevel world, BlockPos pos, Random random) {
 		return TerrainMerge.NONE;
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
-			DefaultFeatureConfig featureConfig) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
+			NoneFeatureConfiguration featureConfig) {
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
 		center = getGround(world, center);
 		BlockBox bounds = makeBox(center);

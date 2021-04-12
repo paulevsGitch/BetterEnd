@@ -4,9 +4,9 @@ import java.util.Random;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
@@ -19,16 +19,16 @@ public abstract class ScatterFeature extends DefaultFeature {
 		this.radius = radius;
 	}
 
-	public abstract boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos,
+	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos,
 			float radius);
 
-	public abstract void generate(StructureWorldAccess world, Random random, BlockPos blockPos);
+	public abstract void place(WorldGenLevel world, Random random, BlockPos blockPos);
 
-	protected BlockPos getCenterGround(StructureWorldAccess world, BlockPos pos) {
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		return getPosOnSurfaceWG(world, pos);
 	}
 
-	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos) {
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) {
 		if (pos.getY() < 5) {
 			return false;
 		} else if (!world.getBlockState(pos.below()).isIn(EndTags.END_GROUND)) {
@@ -37,7 +37,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 		return true;
 	}
 
-	protected boolean getGroundPlant(StructureWorldAccess world, MutableBlockPos pos) {
+	protected boolean getGroundPlant(WorldGenLevel world, MutableBlockPos pos) {
 		int down = BlocksHelper.downRay(world, pos, 16);
 		if (down > Math.abs(getYOffset() * 2)) {
 			return false;
@@ -55,8 +55,8 @@ public abstract class ScatterFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
-			DefaultFeatureConfig featureConfig) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
+			NoneFeatureConfiguration featureConfig) {
 		center = getCenterGround(world, center);
 
 		if (!canSpawn(world, center)) {

@@ -21,7 +21,7 @@ import net.minecraft.client.render.block.entity.SignBlockEntityRenderer.SignMode
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.text.OrderedText;
 import net.minecraft.resources.ResourceLocation;

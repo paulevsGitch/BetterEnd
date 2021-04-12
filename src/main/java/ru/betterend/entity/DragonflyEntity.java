@@ -20,16 +20,16 @@ import net.minecraft.world.entity.ai.pathing.EntityNavigation;
 import net.minecraft.world.entity.ai.pathing.Path;
 import net.minecraft.world.entity.ai.pathing.PathNodeType;
 import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.attribute.Attributes;
 import net.minecraft.world.entity.mob.MobEntity;
 import net.minecraft.world.entity.passive.AnimalEntity;
 import net.minecraft.world.entity.passive.PassiveEntity;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.WorldView;
 import ru.betterend.registry.EndEntities;
@@ -48,9 +48,9 @@ public class DragonflyEntity extends AnimalEntity implements Flutterer {
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D).add(EntityAttributes.GENERIC_FLYING_SPEED, 1.0D)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1D);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 8.0D)
+				.add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.FLYING_SPEED, 1.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class DragonflyEntity extends AnimalEntity implements Flutterer {
 		return EndEntities.DRAGONFLY.create(world);
 	}
 
-	public static boolean canSpawn(EntityType<DragonflyEntity> type, ServerWorldAccess world, SpawnReason spawnReason,
+	public static boolean canSpawn(EntityType<DragonflyEntity> type, ServerLevelAccessor world, SpawnReason spawnReason,
 			BlockPos pos, Random random) {
 		int y = world.getChunk(pos).sampleHeightmap(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
 		return y > 0 && pos.getY() >= y;

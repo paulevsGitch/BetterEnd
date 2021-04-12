@@ -9,13 +9,13 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.Mth;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.integration.Integrations;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndTags;
@@ -36,8 +36,8 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 	private static final List<Vector3f> SIDE;
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().isIn(EndTags.END_GROUND))
 			return false;
 		if (!world.getBlockState(pos.down(4)).getBlock().isIn(EndTags.GEN_TERRAIN))
@@ -82,11 +82,9 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 
 			Vector3f vec = spline.get(spline.size() - 1);
 			float radius = (size + MHelper.randRange(0, size * 0.5F, random)) * 0.35F;
-			bigSphere(world, pos.offset(vec.getX(), vec.getY(), vec.getZ()), radius, cap, glow, wood, replacement,
-					random);
+			bigSphere(world, pos.offset(vec.x(), vec.y(), vec.z()), radius, cap, glow, wood, replacement, random);
 			vec = SplineHelper.getPos(spline, 0.3F);
-			makeRoots(world, pos.offset(vec.getX(), vec.getY(), vec.getZ()), size * 0.4F + 5, random, wood,
-					replacement);
+			makeRoots(world, pos.offset(vec.x(), vec.y(), vec.z()), size * 0.4F + 5, random, wood, replacement);
 
 			sdf = (sdf == null) ? branch : new SDFUnion().setSourceA(sdf).setSourceB(branch);
 		}
@@ -102,19 +100,19 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		return true;
 	}
 
-	private void bigSphere(StructureWorldAccess world, BlockPos pos, float radius, BlockState cap, BlockState glow,
+	private void bigSphere(WorldGenLevel world, BlockPos pos, float radius, BlockState cap, BlockState glow,
 			BlockState wood, Function<BlockState, Boolean> replacement, Random random) {
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(cap);
 
 		SDF sphereInner = new SDFSphere().setRadius(radius * 0.53F).setBlock(Blocks.AIR);
 		sphereInner = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
+			return (float) noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1);
 		}).setSource(sphereInner);
 
 		SDF sphereGlow = new SDFSphere().setRadius(radius * 0.6F).setBlock(glow);
 		sphereGlow = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1) * 2F;
+			return (float) noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1) * 2F;
 		}).setSource(sphereGlow);
 		sphereGlow = new SDFSubtraction().setSourceA(sphereGlow).setSourceB(sphereInner);
 
@@ -150,7 +148,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		sphere.fillArea(world, pos, new Box(pos.up((int) offsetY)).expand(radius * 1.3F));
 	}
 
-	private void makeRoots(StructureWorldAccess world, BlockPos pos, float radius, Random random, BlockState wood,
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random, BlockState wood,
 			Function<BlockState, Boolean> replacement) {
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) {

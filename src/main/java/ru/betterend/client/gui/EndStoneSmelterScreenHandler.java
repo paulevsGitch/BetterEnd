@@ -3,7 +3,7 @@ package ru.betterend.client.gui;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -109,7 +109,7 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 	}
 
 	@Override
-	public boolean canUse(PlayerEntity player) {
+	public boolean canUse(Player player) {
 		return this.inventory.canPlayerUse(player);
 	}
 
@@ -123,7 +123,7 @@ public class EndStoneSmelterScreenHandler extends AbstractRecipeScreenHandler<In
 	}
 
 	@Override
-	public ItemStack transferSlot(PlayerEntity player, int index) {
+	public ItemStack transferSlot(Player player, int index) {
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasStack()) {

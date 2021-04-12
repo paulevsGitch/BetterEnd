@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ItemEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnReason;
 import net.minecraft.world.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.world.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.attribute.Attributes;
 import net.minecraft.world.entity.damage.DamageSource;
 import net.minecraft.world.entity.data.DataTracker;
 import net.minecraft.world.entity.data.TrackedData;
@@ -19,12 +19,12 @@ import net.minecraft.world.entity.passive.SchoolingFishEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
@@ -43,7 +43,7 @@ public class EndFishEntity extends SchoolingFishEntity {
 	}
 
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+	public EntityData initialize(ServerLevelAccessor world, LocalDifficulty difficulty, SpawnReason spawnReason,
 			EntityData entityData, CompoundTag entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.SULPHUR_SPRINGS) {
@@ -115,8 +115,8 @@ public class EndFishEntity extends SchoolingFishEntity {
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.75);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0).add(Attributes.FOLLOW_RANGE, 16.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.75);
 	}
 
 	public int getVariant() {
@@ -127,7 +127,7 @@ public class EndFishEntity extends SchoolingFishEntity {
 		return this.dataTracker.get(SCALE) / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<EndFishEntity> type, ServerWorldAccess world, SpawnReason spawnReason,
+	public static boolean canSpawn(EntityType<EndFishEntity> type, ServerLevelAccessor world, SpawnReason spawnReason,
 			BlockPos pos, Random random) {
 		Box box = new Box(pos).expand(16);
 		List<EndFishEntity> list = world.getEntitiesByClass(EndFishEntity.class, box, (entity) -> {

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
@@ -33,8 +33,8 @@ public class IceStarFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		float size = MHelper.randRange(minSize, maxSize, random);
 		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);

@@ -10,11 +10,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
@@ -28,8 +28,8 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		Set<BlockPos> floorPositions = Sets.newHashSet();
 		Set<BlockPos> ceilPositions = Sets.newHashSet();
 		int sx = (pos.getX() >> 4) << 4;
@@ -38,7 +38,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		MutableBlockPos max = new MutableBlockPos().set(pos);
 		fillSets(sx, sz, world.getChunk(pos), floorPositions, ceilPositions, min, max);
 		EndCaveBiome biome = supplier.get();
-		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
+		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 		placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		placeCeil(world, biome, ceilPositions, random);
 		BlocksHelper.fixBlocks(world, min, max);
@@ -63,12 +63,12 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 					BlockState bottom = chunk.getBlockState(mut2);
 					if (top.isAir() && (bottom.isIn(EndTags.GEN_TERRAIN) || bottom.is(Blocks.STONE))) {
 						mut3.set(mut2).move(sx, 0, sz);
-						floorPositions.add(mut3.toImmutable());
+						floorPositions.add(mut3.immutable());
 						updateMin(mut3, min);
 						updateMax(mut3, max);
 					} else if (bottom.isAir() && (top.isIn(EndTags.GEN_TERRAIN) || top.is(Blocks.STONE))) {
 						mut3.set(mut).move(sx, 0, sz);
-						ceilPositions.add(mut3.toImmutable());
+						ceilPositions.add(mut3.immutable());
 						updateMin(mut3, min);
 						updateMax(mut3, max);
 					}
@@ -102,22 +102,21 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		}
 	}
 
-	protected void placeFloor(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> floorPositions,
-			Random random, BlockState surfaceBlock) {
+	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random,
+			BlockState surfaceBlock) {
 		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.up(), null);
+					feature.place(world, null, random, pos.up(), null);
 				}
 			}
 		});
 	}
 
-	protected void placeCeil(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> ceilPositions,
-			Random random) {
+	protected void placeCeil(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
 		float density = biome.getCeilDensity();
 		ceilPositions.forEach((pos) -> {
 			BlockState ceilBlock = biome.getCeil(pos);
@@ -127,7 +126,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.below(), null);
+					feature.place(world, null, random, pos.below(), null);
 				}
 			}
 		});

@@ -2,6 +2,7 @@ package ru.betterend.util;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -14,16 +15,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class TagHelper {
-	private static final Map<Identifier, Set<Identifier>> TAGS_BLOCK = Maps.newHashMap();
-	private static final Map<Identifier, Set<Identifier>> TAGS_ITEM = Maps.newHashMap();
+	private static final Map<Identifier, Set<Identifier>> TAGS_BLOCK = new ConcurrentHashMap<>();
+	private static final Map<Identifier, Set<Identifier>> TAGS_ITEM = new ConcurrentHashMap<>();
 	
 	public static void addTag(Tag.Identified<Block> tag, Block... blocks) {
 		Identifier tagID = tag.getId();
-		Set<Identifier> set = TAGS_BLOCK.get(tagID);
-		if (set == null) {
-			set = Sets.newHashSet();
-			TAGS_BLOCK.put(tagID, set);
-		}
+		Set<Identifier> set = TAGS_BLOCK.computeIfAbsent(tagID, k -> Sets.newHashSet());
 		for (Block block: blocks) {
 			Identifier id = Registry.BLOCK.getId(block);
 			if (id != Registry.BLOCK.getDefaultId()) {
@@ -34,11 +31,7 @@ public class TagHelper {
 	
 	public static void addTag(Tag.Identified<Item> tag, ItemConvertible... items) {
 		Identifier tagID = tag.getId();
-		Set<Identifier> set = TAGS_ITEM.get(tagID);
-		if (set == null) {
-			set = Sets.newHashSet();
-			TAGS_ITEM.put(tagID, set);
-		}
+		Set<Identifier> set = TAGS_ITEM.computeIfAbsent(tagID, k -> Sets.newHashSet());
 		for (ItemConvertible item: items) {
 			Identifier id = Registry.ITEM.getId(item.asItem());
 			if (id != Registry.ITEM.getDefaultId()) {
@@ -67,7 +60,8 @@ public class TagHelper {
 		});
 		return builder;
 	}
-	
+
+	// executed by a worker thread
 	public static void apply(String entry, Map<Identifier, Tag.Builder> tagsMap) {
 		Map<Identifier, Set<Identifier>> endTags = null;
 		if (entry.equals("block")) {

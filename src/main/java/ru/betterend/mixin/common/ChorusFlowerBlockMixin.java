@@ -42,8 +42,8 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	@Final
 	private ChorusPlantBlock plantBlock;
 	
-	@Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
-	private void beCanPlace(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
+	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
+	private void be_canPlace(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		if (world.getBlockState(pos.below()).is(EndBlocks.CHORUS_NYLIUM)) {
 			info.setReturnValue(true);
 			info.cancel();
@@ -51,13 +51,13 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	}
 	
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-	private void beOnTick(BlockState state, ServerLevel world, BlockPos pos, Random random, CallbackInfo info) {
+	private void be_onTick(BlockState state, ServerLevel world, BlockPos pos, Random random, CallbackInfo info) {
 		if (world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
 			BlockPos up = pos.above();
 			if (world.isEmptyBlock(up) && up.getY() < 256) {
 				int i = state.getValue(ChorusFlowerBlock.AGE);
 				if (i < 5) {
-					this.grow(world, up, i + 1);
+					this.placeGrownFlower(world, up, i + 1);
 					if (GeneratorOptions.changeChorusPlant()) {
 						BlocksHelper.setWithoutUpdate(world, pos, plantBlock.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true).setValue(BlocksHelper.ROOTS, true));
 					}
@@ -70,8 +70,8 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 		}
 	}
 	
-	@Inject(method = "generate", at = @At("RETURN"), cancellable = true)
-	private static void beOnGenerate(LevelAccessor world, BlockPos pos, Random random, int size, CallbackInfo info) {
+	@Inject(method = "generatePlant", at = @At("RETURN"), cancellable = true)
+	private static void be_onGeneratePlant(LevelAccessor world, BlockPos pos, Random random, int size, CallbackInfo info) {
 		BlockState state = world.getBlockState(pos);
 		if (GeneratorOptions.changeChorusPlant() && state.is(Blocks.CHORUS_PLANT)) {
 			BlocksHelper.setWithoutUpdate(world, pos, state.setValue(BlocksHelper.ROOTS, true));
@@ -79,13 +79,13 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	}
 	
 	@Shadow
-	private static boolean isSurroundedByAir(LevelReader world, BlockPos pos, @Nullable Direction exceptDirection) { return false; }
+	private static boolean allNeighborsEmpty(LevelReader world, BlockPos pos, @Nullable Direction exceptDirection) { return false; }
 	
 	@Shadow
-	private void grow(Level world, BlockPos pos, int age) {}
+	private void placeGrownFlower(Level world, BlockPos pos, int age) {}
 	
 	@Shadow
-	private void die(Level world, BlockPos pos) {}
+	private void placeDeadFlower(Level world, BlockPos pos) {}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
@@ -98,7 +98,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	}
 
 	@Inject(method = "die", at = @At("HEAD"), cancellable = true)
-	private void beOnDie(Level world, BlockPos pos, CallbackInfo info) {
+	private void be_onDie(Level world, BlockPos pos, CallbackInfo info) {
 		BlockState down = world.getBlockState(pos.below());
 		if (down.is(Blocks.CHORUS_PLANT) || down.is(EndTags.GEN_TERRAIN)) {
 			world.setBlock(pos, this.defaultBlockState().setValue(BlockStateProperties.AGE_5, 5), 2);

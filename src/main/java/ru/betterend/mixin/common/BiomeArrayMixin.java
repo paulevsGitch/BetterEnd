@@ -13,19 +13,19 @@ import ru.betterend.interfaces.IBiomeArray;
 public class BiomeArrayMixin implements IBiomeArray {
 	@Final
 	@Shadow
-	private Biome[] data;
+	private Biome[] biomes;
 
 	@Final
 	@Shadow
-	private static int HORIZONTAL_SECTION_COUNT;
+	private static int WIDTH_BITS;
 
 	@Final
 	@Shadow
-	public static int HORIZONTAL_BIT_MASK;
+	public static int HORIZONTAL_MASK;
 
 	@Final
 	@Shadow
-	public static int VERTICAL_BIT_MASK;
+	public static int VERTICAL_MASK;
 
 	@Override
 	public void setBiome(Biome biome, BlockPos pos) {
@@ -33,13 +33,13 @@ public class BiomeArrayMixin implements IBiomeArray {
 		int biomeY = pos.getY() >> 2;
 		int biomeZ = pos.getZ() >> 2;
 		int index = be_getArrayIndex(biomeX, biomeY, biomeZ);
-		data[index] = biome;
+		biomes[index] = biome;
 	}
 
 	private int be_getArrayIndex(int biomeX, int biomeY, int biomeZ) {
-		int i = biomeX & HORIZONTAL_BIT_MASK;
-		int j = Mth.clamp(biomeY, 0, VERTICAL_BIT_MASK);
-		int k = biomeZ & HORIZONTAL_BIT_MASK;
-		return j << HORIZONTAL_SECTION_COUNT + HORIZONTAL_SECTION_COUNT | k << HORIZONTAL_SECTION_COUNT | i;
+		int i = biomeX & HORIZONTAL_MASK;
+		int j = Mth.clamp(biomeY, 0, VERTICAL_MASK);
+		int k = biomeZ & HORIZONTAL_MASK;
+		return j << WIDTH_BITS + WIDTH_BITS | k << WIDTH_BITS | i;
 	}
 }

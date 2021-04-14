@@ -20,13 +20,13 @@ public class TagGroupLoaderMixin {
 	@Shadow
 	private String entryType;
 	
-	@Inject(method = "prepareReload", at = @At("RETURN"), cancellable = true)
-	public void be_prepareReload(ResourceManager manager, Executor prepareExecutor, CallbackInfoReturnable<CompletableFuture<Map<ResourceLocation, Tag.Builder>>> info) {
+	@Inject(method = "prepare", at = @At("RETURN"), cancellable = true)
+	public void be_prepareReload(ResourceManager manager, Executor executor, CallbackInfoReturnable<CompletableFuture<Map<ResourceLocation, Tag.Builder>>> info) {
 		CompletableFuture<Map<ResourceLocation, Tag.Builder>> future = info.getReturnValue();
 		info.setReturnValue(CompletableFuture.supplyAsync(() -> {
 			Map<ResourceLocation, Tag.Builder> map = future.join();
 			TagHelper.apply(entryType, map);
 			return map;
-		}));
+		}, executor));
 	}
 }

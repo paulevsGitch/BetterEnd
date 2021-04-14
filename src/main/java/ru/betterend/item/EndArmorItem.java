@@ -27,20 +27,20 @@ public class EndArmorItem extends ArmorItem implements Patterned {
 			return;
 		}
 
-		Multimap<Attribute, AttributeModifier> attributeModifiers = accessor.be_getAttributeModifiers();
+		Multimap<Attribute, AttributeModifier> attributeModifiers = accessor.getDefaultModifiers();
 
 		// In case Mojang or anyone else decided to fix this
 		if (attributeModifiers.keys().contains(Attributes.KNOCKBACK_RESISTANCE)) {
 			return;
 		}
 
-		UUID uuid = accessor.be_getModifiers()[slot.getIndex()];
+		UUID uuid = accessor.getModifiers()[slot.getIndex()];
 
 		// Rebuild attributeModifiers to include knockback resistance
 		ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.putAll(attributeModifiers);
 		builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", knockbackResistance, AttributeModifier.Operation.ADDITION));
-		accessor.be_setAttributeModifiers(builder.build());
+		accessor.setDefaultModifiers(builder.build());
 	}
 
 	@Override

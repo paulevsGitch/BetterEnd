@@ -23,7 +23,7 @@ import ru.betterend.util.MHelper;
 @Mixin(BlockBehaviour.class)
 public abstract class AbstractBlockMixin {
 	
-	@Inject(method = "getDroppedStacks", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getDrops", at = @At("HEAD"), cancellable = true)
 	public void be_getDroppedStacks(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> info) {
 		if (state.is(Blocks.GLOWSTONE)) {
 			ItemStack tool = builder.getParameter(LootContextParams.TOOL);

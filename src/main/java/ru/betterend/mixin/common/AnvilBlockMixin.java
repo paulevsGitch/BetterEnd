@@ -11,8 +11,8 @@ import ru.betterend.blocks.basis.EndAnvilBlock;
 
 @Mixin(AnvilBlock.class)
 public class AnvilBlockMixin {
-	@Inject(method = "getLandingState", at = @At("HEAD"), cancellable = true)
-	private static void be_getLandingState(BlockState fallingState, CallbackInfoReturnable<BlockState> info) {
+	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+	private static void be_damage(BlockState fallingState, CallbackInfoReturnable<BlockState> info) {
 		if (fallingState.getBlock() instanceof EndAnvilBlock) {
 			IntegerProperty destructionProperty = ((EndAnvilBlock) fallingState.getBlock()).getDestructionProperty();
 			int destruction = fallingState.getValue(destructionProperty);

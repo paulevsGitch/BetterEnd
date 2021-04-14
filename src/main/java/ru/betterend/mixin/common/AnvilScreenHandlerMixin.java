@@ -37,7 +37,7 @@ public abstract class AnvilScreenHandlerMixin extends ItemCombinerMenu implement
 		super(MenuType.ANVIL, syncId, playerInventory, ContainerLevelAccess.NULL);
 	}
 
-	@Inject(method = "<init>(ILnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/screen/ScreenHandlerContext;)V",
+	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V",
 			at = @At("TAIL"))
 	public void be_initAnvilLevel(int syncId, Inventory inventory, ContainerLevelAccess context, CallbackInfo info) {
 		if (context != ContainerLevelAccess.NULL) {
@@ -57,14 +57,14 @@ public abstract class AnvilScreenHandlerMixin extends ItemCombinerMenu implement
 	@Shadow
 	public abstract void createResult();
 	
-	@Inject(method = "canTakeOutput", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
 	protected void be_canTakeOutput(Player player, boolean present, CallbackInfoReturnable<Boolean> info) {
 		if (be_currentRecipe != null) {
 			info.setReturnValue(be_currentRecipe.checkHammerDurability(inputSlots, player));
 		}
 	}
 	
-	@Inject(method = "onTakeOutput", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "onTake", at = @At("HEAD"), cancellable = true)
 	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
 		if (be_currentRecipe != null) {
 			this.inputSlots.getItem(0).shrink(be_currentRecipe.getInputCount());
@@ -89,7 +89,7 @@ public abstract class AnvilScreenHandlerMixin extends ItemCombinerMenu implement
 		}
 	}
 	
-	@Inject(method = "updateResult", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "createResult", at = @At("HEAD"), cancellable = true)
 	public void be_updateOutput(CallbackInfo info) {
 		RecipeManager recipeManager = this.player.level.getRecipeManager();
 		be_recipes = recipeManager.getRecipesFor(AnvilRecipe.TYPE, inputSlots, player.level);
@@ -109,7 +109,7 @@ public abstract class AnvilScreenHandlerMixin extends ItemCombinerMenu implement
 		}
 	}
 	
-	@Inject(method = "setNewItemName", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "setItemName", at = @At("HEAD"), cancellable = true)
 	public void be_setNewItemName(String string, CallbackInfo info) {
 		if (be_currentRecipe != null) {
 			info.cancel();

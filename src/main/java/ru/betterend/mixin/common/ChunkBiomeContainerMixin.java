@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import ru.betterend.interfaces.IBiomeArray;
 
 @Mixin(ChunkBiomeContainer.class)
-public class BiomeArrayMixin implements IBiomeArray {
+public class ChunkBiomeContainerMixin implements IBiomeArray {
 	@Final
 	@Shadow
 	private Biome[] biomes;
@@ -28,7 +28,7 @@ public class BiomeArrayMixin implements IBiomeArray {
 	public static int VERTICAL_MASK;
 
 	@Override
-	public void setBiome(Biome biome, BlockPos pos) {
+	public void be_setBiome(Biome biome, BlockPos pos) {
 		int biomeX = pos.getX() >> 2;
 		int biomeY = pos.getY() >> 2;
 		int biomeZ = pos.getZ() >> 2;

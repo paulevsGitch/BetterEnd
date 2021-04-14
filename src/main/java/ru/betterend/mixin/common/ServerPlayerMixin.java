@@ -33,28 +33,27 @@ import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerPlayer.class)
-public abstract class ServerPlayerEntityMixin extends Player implements TeleportingEntity {
-
+public abstract class ServerPlayerMixin extends Player implements TeleportingEntity {
 	@Shadow
-	public ServerGamePacketListenerImpl networkHandler;
+	public ServerGamePacketListenerImpl connection;
 	@Final
 	@Shadow
-	public ServerPlayerGameMode interactionManager;
+	public ServerPlayerGameMode gameMode;
 	@Final
 	@Shadow
 	public MinecraftServer server;
 	@Shadow
-	private boolean inTeleportationState;
+	private boolean isChangingDimension;
 	@Shadow
-	private float syncedHealth;
+	private float lastSentHealth;
 	@Shadow
-	private int syncedFoodLevel;
+	private int lastSentFood;
 	@Shadow
-	private int syncedExperience;
+	private int lastSentExp;
 
 	private BlockPos exitPos;
 
-	public ServerPlayerEntityMixin(Level world, BlockPos pos, float yaw, GameProfile profile) {
+	public ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile profile) {
 		super(world, pos, yaw, profile);
 	}
 
@@ -67,21 +66,21 @@ public abstract class ServerPlayerEntityMixin extends Player implements Teleport
 
 	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
-		if (beCanTeleport()) {
+		if (be_canTeleport()) {
 			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), yRot, xRot));
 		}
 	}
 
-	@Inject(method = "moveToWorld", at = @At("HEAD"), cancellable = true)
-	public void be_moveToWorld(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
-		if (beCanTeleport() && level instanceof ServerLevel) {
-			this.inTeleportationState = true;
-			ServerLevel serverWorld = this.getServerWorld();
+	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
+	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
+		if (be_canTeleport() && level instanceof ServerLevel) {
+			this.isChangingDimension = true;
+			ServerLevel serverWorld = this.getLevel();
 			LevelData worldProperties = destination.getLevelData();
 			ServerPlayer player = ServerPlayer.class.cast(this);
-			this.networkHandler.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()),
-					interactionManager.getGameModeForPlayer(),interactionManager.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
-			this.networkHandler.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
+			this.connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()),
+					gameMode.getGameModeForPlayer(),gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
+			this.connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
 			PlayerList playerManager = this.server.getPlayerList();
 			playerManager.sendPlayerPermissionLevel(player);
 			serverWorld.removePlayerImmediately(player);
@@ -96,48 +95,48 @@ public abstract class ServerPlayerEntityMixin extends Player implements Teleport
 				this.setRot(teleportTarget.yRot, teleportTarget.xRot);
 				this.moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z);
 				serverWorld.getProfiler().pop();
-				this.worldChanged(serverWorld);
-				this.interactionManager.setLevel(destination);
-				this.networkHandler.send(new ClientboundPlayerAbilitiesPacket(this.abilities));
+				this.triggerDimensionChangeTriggers(serverWorld);
+				this.gameMode.setLevel(destination);
+				this.connection.send(new ClientboundPlayerAbilitiesPacket(this.abilities));
 				playerManager.sendLevelInfo(player, destination);
 				playerManager.sendAllPlayerInfo(player);
 
 				for (MobEffectInstance statusEffectInstance : this.getActiveEffects()) {
-					this.networkHandler.send(new ClientboundUpdateMobEffectPacket(getId(), statusEffectInstance));
+					this.connection.send(new ClientboundUpdateMobEffectPacket(getId(), statusEffectInstance));
 				}
 
-				this.networkHandler.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));
-				this.syncedExperience = -1;
-				this.syncedHealth = -1.0F;
-				this.syncedFoodLevel = -1;
+				this.connection.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));
+				this.lastSentExp = -1;
+				this.lastSentHealth = -1.0F;
+				this.lastSentFood = -1;
 			}
-			this.beResetExitPos();
+			this.be_resetExitPos();
 			info.setReturnValue(player);
 		}
 	}
 
 	@Shadow
-	abstract ServerLevel getServerWorld();
+	abstract ServerLevel getLevel();
 
 	@Shadow
-	abstract void worldChanged(ServerLevel origin);
+	abstract void triggerDimensionChangeTriggers(ServerLevel origin);
 
 	@Shadow
 	@Override
 	protected abstract PortalInfo findDimensionEntryPoint(ServerLevel destination);
 
 	@Override
-	public void beSetExitPos(BlockPos pos) {
+	public void be_setExitPos(BlockPos pos) {
 		this.exitPos = pos.immutable();
 	}
 
 	@Override
-	public void beResetExitPos() {
+	public void be_resetExitPos() {
 		this.exitPos = null;
 	}
 
 	@Override
-	public boolean beCanTeleport() {
+	public boolean be_canTeleport() {
 		return this.exitPos != null;
 	}
 }

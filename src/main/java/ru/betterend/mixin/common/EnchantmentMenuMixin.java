@@ -21,14 +21,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.betterend.registry.EndTags;
 
 @Mixin(EnchantmentMenu.class)
-public abstract class EnchantmentScreenHandlerMixin extends AbstractContainerMenu {
+public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 	@Shadow
 	@Final
-	private Container inventory;
+	private Container enchantSlots;
 
 	@Shadow
 	@Final
-	private ContainerLevelAccess context;
+	private ContainerLevelAccess access;
 
 	@Shadow
 	@Final
@@ -36,30 +36,30 @@ public abstract class EnchantmentScreenHandlerMixin extends AbstractContainerMen
 
 	@Shadow
 	@Final
-	private DataSlot seed;
+	private DataSlot enchantmentSeed;
 
 	@Shadow
 	@Final
-	public int[] enchantmentPower;
+	public int[] costs;
 
 	@Shadow
 	@Final
-	public int[] enchantmentId;
+	public int[] enchantClue;
 
 	@Shadow
 	@Final
-	public int[] enchantmentLevel;
+	public int[] levelClue;
 
-	protected EnchantmentScreenHandlerMixin(MenuType<?> type, int syncId) {
+	protected EnchantmentMenuMixin(MenuType<?> type, int syncId) {
 		super(type, syncId);
 	}
 
-	@Inject(method = "onContentChanged", at = @At("HEAD"), cancellable = true)
-	private void beOnContentChanged(Container inventory, CallbackInfo info) {
-		if (inventory == this.inventory) {
+	@Inject(method = "slotsChanged", at = @At("HEAD"), cancellable = true)
+	private void be_slotsChanged(Container inventory, CallbackInfo info) {
+		if (inventory == this.enchantSlots) {
 			ItemStack itemStack = inventory.getItem(0);
 			if (!itemStack.isEmpty() && itemStack.isEnchantable()) {
-				this.context.execute((world, blockPos) -> {
+				this.access.execute((world, blockPos) -> {
 					int i = 0;
 
 					int j;
@@ -95,24 +95,24 @@ public abstract class EnchantmentScreenHandlerMixin extends AbstractContainerMen
 						}
 					}
 
-					this.random.setSeed((long) this.seed.get());
+					this.random.setSeed((long) this.enchantmentSeed.get());
 
 					for (j = 0; j < 3; ++j) {
-						this.enchantmentPower[j] = EnchantmentHelper.getEnchantmentCost(this.random, j, i, itemStack);
-						this.enchantmentId[j] = -1;
-						this.enchantmentLevel[j] = -1;
-						if (this.enchantmentPower[j] < j + 1) {
-							this.enchantmentPower[j] = 0;
+						this.costs[j] = EnchantmentHelper.getEnchantmentCost(this.random, j, i, itemStack);
+						this.enchantClue[j] = -1;
+						this.levelClue[j] = -1;
+						if (this.costs[j] < j + 1) {
+							this.costs[j] = 0;
 						}
 					}
 
 					for (j = 0; j < 3; ++j) {
-						if (this.enchantmentPower[j] > 0) {
-							List<EnchantmentInstance> list = this.generateEnchantments(itemStack, j, this.enchantmentPower[j]);
+						if (this.costs[j] > 0) {
+							List<EnchantmentInstance> list = this.generateEnchantments(itemStack, j, this.costs[j]);
 							if (list != null && !list.isEmpty()) {
 								EnchantmentInstance enchantmentLevelEntry = (EnchantmentInstance) list.get(this.random.nextInt(list.size()));
-								this.enchantmentId[j] = Registry.ENCHANTMENT.getId(enchantmentLevelEntry.enchantment);
-								this.enchantmentLevel[j] = enchantmentLevelEntry.level;
+								this.enchantClue[j] = Registry.ENCHANTMENT.getId(enchantmentLevelEntry.enchantment);
+								this.levelClue[j] = enchantmentLevelEntry.level;
 							}
 						}
 					}
@@ -122,9 +122,9 @@ public abstract class EnchantmentScreenHandlerMixin extends AbstractContainerMen
 			}
 			else {
 				for (int i = 0; i < 3; ++i) {
-					this.enchantmentPower[i] = 0;
-					this.enchantmentId[i] = -1;
-					this.enchantmentLevel[i] = -1;
+					this.costs[i] = 0;
+					this.enchantClue[i] = -1;
+					this.levelClue[i] = -1;
 				}
 			}
 			info.cancel();

@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(RecipeManager.class)
 public interface RecipeManagerAccessor {
 	@Accessor("recipes")
-	Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> getRecipes();
+	Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> be_getRecipes();
 
 	@Accessor("recipes")
-	void setRecipes(Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes);
+	void be_setRecipes(Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes);
 }

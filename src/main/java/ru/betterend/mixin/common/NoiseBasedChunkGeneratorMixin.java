@@ -16,28 +16,25 @@ import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.generator.TerrainGenerator;
 
 @Mixin(NoiseBasedChunkGenerator.class)
-public abstract class NoiseChunkGeneratorMixin extends ChunkGenerator {
+public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
 	@Final
 	@Shadow
 	protected Supplier<NoiseGeneratorSettings> settings;
 	
-	public NoiseChunkGeneratorMixin(BiomeSource populationSource, BiomeSource biomeSource, StructureSettings structuresConfig, long worldSeed) {
+	public NoiseBasedChunkGeneratorMixin(BiomeSource populationSource, BiomeSource biomeSource, StructureSettings structuresConfig, long worldSeed) {
 		super(populationSource, biomeSource, structuresConfig, worldSeed);
 	}
 	
-	@Inject(method = "<init>(Lnet/minecraft/world/biome/source/BiomeSource;Lnet/minecraft/world/biome/source/BiomeSource;JLjava/util/function/Supplier;)V", at = @At("TAIL"))
+	@Inject(method = "<init>(Lnet/minecraft/world/level/biome/BiomeSource;Lnet/minecraft/world/level/biome/BiomeSource;JLjava/util/function/Supplier;)V", at = @At("TAIL"))
 	private void beOnInit(BiomeSource populationSource, BiomeSource biomeSource, long seed, Supplier<NoiseGeneratorSettings> settings, CallbackInfo info) {
 		TerrainGenerator.initNoise(seed);
 	}
 	
-	@Inject(method = "sampleNoiseColumn([DII)V", at = @At("HEAD"), cancellable = true, allow = 2)
-	private void beSampleNoiseColumn(double[] buffer, int x, int z, CallbackInfo info) {
+	@Inject(method = "fillNoiseColumn([DII)V", at = @At("HEAD"), cancellable = true, allow = 2)
+	private void be_fillNoiseColumn(double[] buffer, int x, int z, CallbackInfo info) {
 		if (GeneratorOptions.useNewGenerator() && settings.get().stable(NoiseGeneratorSettings.END)) {
-			//System.out.println(TerrainGenerator.canGenerate(x, z));
-			//if (TerrainGenerator.canGenerate(x, z)) {
-				TerrainGenerator.fillTerrainDensity(buffer, x, z, getBiomeSource());
-				info.cancel();
-			//}
+			TerrainGenerator.fillTerrainDensity(buffer, x, z, getBiomeSource());
+			info.cancel();
 		}
 	}
 }

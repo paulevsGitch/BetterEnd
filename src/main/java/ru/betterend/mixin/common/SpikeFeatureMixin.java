@@ -31,16 +31,16 @@ import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(SpikeFeature.class)
-public class EndSpikeFeatureMixin {
-	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void beSpikeGenerate(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, SpikeConfiguration endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info) {
+public class SpikeFeatureMixin {
+	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
+	private void be_place(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, SpikeConfiguration endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPillars()) {
 			info.setReturnValue(false);
 		}
 	}
 
-	@Inject(method = "generateSpike", at = @At("HEAD"), cancellable = true)
-	private void be_generateSpike(ServerLevelAccessor world, Random random, SpikeConfiguration config, SpikeFeature.EndSpike spike, CallbackInfo info) {
+	@Inject(method = "placeSpike", at = @At("HEAD"), cancellable = true)
+	private void be_placeSpike(ServerLevelAccessor world, Random random, SpikeConfiguration config, SpikeFeature.EndSpike spike, CallbackInfo info) {
 		int x = spike.getCenterX();
 		int z = spike.getCenterZ();
 		int radius = spike.getRadius();

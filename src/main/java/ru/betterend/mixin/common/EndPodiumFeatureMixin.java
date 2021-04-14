@@ -23,20 +23,20 @@ import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(EndPodiumFeature.class)
-public class EndPortalFeatureMixin {
+public class EndPodiumFeatureMixin {
 	@Final
 	@Shadow
-	private boolean open;
+	private boolean active;
 	
-	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void bePortalGenerate(WorldGenLevel world, ChunkGenerator generator, Random random, BlockPos blockPos, NoneFeatureConfiguration config, CallbackInfoReturnable<Boolean> info) {
+	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
+	private void be_place(WorldGenLevel world, ChunkGenerator generator, Random random, BlockPos blockPos, NoneFeatureConfiguration config, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPortal()) {
 			info.setReturnValue(false);
 			info.cancel();
 		}
 		else if (GeneratorOptions.replacePortal()) {
 			blockPos = be_updatePos(blockPos, world);
-			StructureTemplate structure = StructureHelper.readStructure(BetterEnd.makeID(open ? "portal/end_portal_active" : "portal/end_portal_inactive"));
+			StructureTemplate structure = StructureHelper.readStructure(BetterEnd.makeID(active ? "portal/end_portal_active" : "portal/end_portal_inactive"));
 			BlockPos size = structure.getSize();
 			blockPos = blockPos.offset(-(size.getX() >> 1), -3, -(size.getZ() >> 1));
 			structure.placeInWorldChunk(world, blockPos, new StructurePlaceSettings(), random);
@@ -45,7 +45,7 @@ public class EndPortalFeatureMixin {
 		}
 	}
 	
-	@ModifyVariable(method = "generate", ordinal = 0, at = @At("HEAD"))
+	@ModifyVariable(method = "place", ordinal = 0, at = @At("HEAD"))
 	private BlockPos be_setPosOnGround(BlockPos blockPos, WorldGenLevel world) {
 		return be_updatePos(blockPos, world);
 	}

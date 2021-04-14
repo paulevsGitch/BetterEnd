@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(PotionBrewing.class)
-public interface BrewingAccessor {
+public interface PotionBrewingAccessor {
 	@Invoker
 	static void callAddMix(Potion input, Item item, Potion output) {
 		throw new AssertionError("@Invoker dummy body called");

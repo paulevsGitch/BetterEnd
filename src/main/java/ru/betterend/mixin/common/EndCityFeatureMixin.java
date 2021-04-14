@@ -16,16 +16,16 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(EndCityFeature.class)
 public class EndCityFeatureMixin {
-	@Inject(method = "shouldStartAt", at = @At("HEAD"), cancellable = true)
-	private void be_shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long l, WorldgenRandom chunkRandom, int i, int j, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
+	@Inject(method = "isFeatureChunk", at = @At("HEAD"), cancellable = true)
+	private void be_isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long l, WorldgenRandom chunkRandom, int i, int j, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (GeneratorOptions.useNewGenerator()) {
 			int chance = GeneratorOptions.getEndCityFailChance();
 			if (chance == 0) {
-				info.setReturnValue(getGenerationHeight(i, j, chunkGenerator) >= 60);
+				info.setReturnValue(getYPositionForFeature(i, j, chunkGenerator) >= 60);
 				info.cancel();
 			}
 			else if (chunkRandom.nextInt(chance) == 0){
-				info.setReturnValue(getGenerationHeight(i, j, chunkGenerator) >= 60);
+				info.setReturnValue(getYPositionForFeature(i, j, chunkGenerator) >= 60);
 				info.cancel();
 			}
 			else {
@@ -36,7 +36,7 @@ public class EndCityFeatureMixin {
 	}
 	
 	@Shadow
-	private static int getGenerationHeight(int chunkX, int chunkZ, ChunkGenerator chunkGenerator) {
+	private static int getYPositionForFeature(int chunkX, int chunkZ, ChunkGenerator chunkGenerator) {
 		return 0;
 	}
 }

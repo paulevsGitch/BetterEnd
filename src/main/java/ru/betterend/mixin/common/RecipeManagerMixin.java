@@ -30,7 +30,7 @@ public class RecipeManagerMixin {
 	private Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes;
 
 	@Inject(method = "apply", at = @At(value = "RETURN"))
-	private void beSetRecipes(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profiler, CallbackInfo info) {
+	private void be_apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profiler, CallbackInfo info) {
 		recipes = EndRecipeManager.getMap(recipes);
 	}
 
@@ -46,7 +46,7 @@ public class RecipeManagerMixin {
 	 * (example - mod stone with vanilla tags and furnace from that stone)
 	 */
 	@Overwrite
-	public <C extends Container, T extends Recipe<C>> Optional<T> getFirstMatch(RecipeType<T> type, C inventory, Level world) {
+	public <C extends Container, T extends Recipe<C>> Optional<T> getRecipeFor(RecipeType<T> type, C inventory, Level world) {
 		Collection<Recipe<C>> values = getAllOfType(type).values();
 		List<Recipe<C>> list = new ArrayList<Recipe<C>>(values);
 		list.sort((v1, v2) -> {

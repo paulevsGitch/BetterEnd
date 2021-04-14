@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(ComposterBlock.class)
 public interface ComposterBlockAccessor {
 	@Invoker
-	static void callRegisterCompostableItem(float levelIncreaseChance, ItemLike item) {
+	static void callAdd(float levelIncreaseChance, ItemLike item) {
 		throw new AssertionError("@Invoker dummy body called");
 	}
 }

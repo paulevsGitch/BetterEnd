@@ -16,15 +16,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-
 	private Entity lastAttacker;
 	
-	@Inject(method = "damage", at = @At("HEAD"))
-	public void be_damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
+	@Inject(method = "hurt", at = @At("HEAD"))
+	public void be_hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
 		this.lastAttacker = source.getEntity();
 	}
 	
-	@ModifyArg(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;takeKnockback(FDD)V"))
+	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;knockback(FDD)V"))
 	private float be_increaseKnockback(float value, double x, double z) {
 		if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) lastAttacker;
@@ -35,8 +34,7 @@ public abstract class LivingEntityMixin {
 	
 	private double be_getKnockback(Item tool) {
 		if (tool == null) return 0.0D;
-		Collection<AttributeModifier> modifiers = tool.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND)
-															.get(Attributes.ATTACK_KNOCKBACK);
+		Collection<AttributeModifier> modifiers = tool.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_KNOCKBACK);
 		if (modifiers.size() > 0) {
 			return modifiers.iterator().next().getAmount();
 		}

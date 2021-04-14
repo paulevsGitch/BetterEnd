@@ -17,11 +17,10 @@ import ru.betterend.interfaces.TeleportingEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
-
 	@Shadow
-	public float yaw;
+	public float yRot;
 	@Shadow
-	public float pitch;
+	public float xRot;
 	@Shadow
 	public boolean removed;
 	@Shadow
@@ -42,9 +41,9 @@ public abstract class EntityMixin implements TeleportingEntity {
 
 	private BlockPos exitPos;
 
-	@Inject(method = "moveToWorld", at = @At("HEAD"), cancellable = true)
-	public void be_moveToWorld(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
-		if (!removed && beCanTeleport() && world instanceof ServerLevel) {
+	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
+	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
+		if (!removed && be_canTeleport() && world instanceof ServerLevel) {
 			this.detach();
 			this.world.getProfiler().push("changeDimension");
 			this.world.getProfiler().push("reposition");
@@ -63,31 +62,31 @@ public abstract class EntityMixin implements TeleportingEntity {
 				((ServerLevel) world).resetEmptyTime();
 				destination.resetEmptyTime();
 				this.world.getProfiler().pop();
-				this.beResetExitPos();
+				this.be_resetExitPos();
 				info.setReturnValue(entity);
 			}
 		}
 	}
 	
-	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
-	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
-		if (beCanTeleport()) {
-			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getVelocity(), yaw, pitch));
+	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
+	protected void be_findDimensionEntryPoint(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
+		if (be_canTeleport()) {
+			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getVelocity(), yRot, xRot));
 		}
 	}
 
 	@Override
-	public void beSetExitPos(BlockPos pos) {
+	public void be_setExitPos(BlockPos pos) {
 		this.exitPos = pos.immutable();
 	}
 
 	@Override
-	public void beResetExitPos() {
+	public void be_resetExitPos() {
 		this.exitPos = null;
 	}
 
 	@Override
-	public boolean beCanTeleport() {
+	public boolean be_canTeleport() {
 		return this.exitPos != null;
 	}
 }

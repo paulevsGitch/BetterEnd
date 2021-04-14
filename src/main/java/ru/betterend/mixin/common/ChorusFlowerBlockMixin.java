@@ -43,7 +43,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	private ChorusPlantBlock plantBlock;
 	
 	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
-	private void be_canPlace(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
+	private void be_canSurvive(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		if (world.getBlockState(pos.below()).is(EndBlocks.CHORUS_NYLIUM)) {
 			info.setReturnValue(true);
 			info.cancel();
@@ -51,7 +51,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	}
 	
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-	private void be_onTick(BlockState state, ServerLevel world, BlockPos pos, Random random, CallbackInfo info) {
+	private void be_randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random, CallbackInfo info) {
 		if (world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
 			BlockPos up = pos.above();
 			if (world.isEmptyBlock(up) && up.getY() < 256) {
@@ -71,7 +71,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	}
 	
 	@Inject(method = "generatePlant", at = @At("RETURN"), cancellable = true)
-	private static void be_onGeneratePlant(LevelAccessor world, BlockPos pos, Random random, int size, CallbackInfo info) {
+	private static void be_generatePlant(LevelAccessor world, BlockPos pos, Random random, int size, CallbackInfo info) {
 		BlockState state = world.getBlockState(pos);
 		if (GeneratorOptions.changeChorusPlant() && state.is(Blocks.CHORUS_PLANT)) {
 			BlocksHelper.setWithoutUpdate(world, pos, state.setValue(BlocksHelper.ROOTS, true));
@@ -97,8 +97,8 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 		}
 	}
 
-	@Inject(method = "die", at = @At("HEAD"), cancellable = true)
-	private void be_onDie(Level world, BlockPos pos, CallbackInfo info) {
+	@Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
+	private void be_placeDeadFlower(Level world, BlockPos pos, CallbackInfo info) {
 		BlockState down = world.getBlockState(pos.below());
 		if (down.is(Blocks.CHORUS_PLANT) || down.is(EndTags.GEN_TERRAIN)) {
 			world.setBlock(pos, this.defaultBlockState().setValue(BlockStateProperties.AGE_5, 5), 2);

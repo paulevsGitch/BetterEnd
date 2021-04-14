@@ -29,73 +29,73 @@ import ru.betterend.world.generator.GeneratorOptions;
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {
 	@Shadow
-	private ServerResources serverResourceManager;
+	private ServerResources resources;
 	
 	@Final
 	@Shadow
-	private Map<ResourceKey<Level>, ServerLevel> worlds;
+	private Map<ResourceKey<Level>, ServerLevel> levels;
 	
 	@Final
 	@Shadow
-	protected WorldData saveProperties;
+	protected WorldData worldData;
 
 	@Inject(method = "reloadResources", at = @At(value = "RETURN"), cancellable = true)
-	private void beOnReload(Collection<String> collection, CallbackInfoReturnable<CompletableFuture<Void>> info) {
-		beInjectRecipes();
+	private void be_reloadResources(Collection<String> collection, CallbackInfoReturnable<CompletableFuture<Void>> info) {
+		be_injectRecipes();
 	}
 
-	@Inject(method = "loadWorld", at = @At(value = "RETURN"), cancellable = true)
-	private void beOnLoadWorld(CallbackInfo info) {
-		beInjectRecipes();
+	@Inject(method = "loadLevel", at = @At(value = "RETURN"), cancellable = true)
+	private void be_loadLevel(CallbackInfo info) {
+		be_injectRecipes();
 		EndBiomes.initRegistry((MinecraftServer) (Object) this);
 	}
 	
-	@Inject(method = "getOverworld", at = @At(value = "HEAD"), cancellable = true)
-	private final void beGetOverworld(CallbackInfoReturnable<ServerLevel> info) {
+	@Inject(method = "overworld", at = @At(value = "HEAD"), cancellable = true)
+	private final void be_overworld(CallbackInfoReturnable<ServerLevel> info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
-			ServerLevel world = worlds.get(Level.END);
+			ServerLevel world = levels.get(Level.END);
 			if (world == null) {
-				world = worlds.get(Level.OVERWORLD);
+				world = levels.get(Level.OVERWORLD);
 			}
 			info.setReturnValue(world);
 			info.cancel();
 		}
 	}
 	
-	@Inject(method = "createWorlds", at = @At(value = "TAIL"))
-	private final void be_CreateWorlds(ChunkProgressListener worldGenerationProgressListener, CallbackInfo info) {
+	@Inject(method = "createLevels", at = @At(value = "TAIL"))
+	private final void be_createLevels(ChunkProgressListener worldGenerationProgressListener, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
-			ServerLevel world = worlds.get(Level.END);
+			ServerLevel world = levels.get(Level.END);
 			if (world == null) {
-				world = worlds.get(Level.OVERWORLD);
+				world = levels.get(Level.OVERWORLD);
 			}
-			this.getPlayerManager().setLevel(world);
-			ServerLevelData serverWorldProperties = saveProperties.overworldData();
-			net.minecraft.world.level.levelgen.WorldGenSettings generatorOptions = saveProperties.worldGenSettings();
+			this.getPlayerList().setLevel(world);
+			ServerLevelData serverWorldProperties = worldData.overworldData();
+			net.minecraft.world.level.levelgen.WorldGenSettings generatorOptions = worldData.worldGenSettings();
 			boolean bl = generatorOptions.isDebug();
-			setupSpawn(world, serverWorldProperties, generatorOptions.generateBonusChest(), bl, true);
+			setInitialSpawn(world, serverWorldProperties, generatorOptions.generateBonusChest(), bl, true);
 		}
 	}
 	
-	@Inject(method = "setupSpawn", at = @At(value = "HEAD"), cancellable = true)
-	private static void be_SetupSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) {
+	@Inject(method = "setInitialSpawn", at = @At(value = "HEAD"), cancellable = true)
+	private static void be_setInitialSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd() && world.dimension() == Level.OVERWORLD) {
 			info.cancel();
 		}
 	}
 	
 	@Shadow
-	private static void setupSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl) {}
+	private static void setInitialSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl) {}
 	
 	@Shadow
-	public PlayerList getPlayerManager() {
+	public PlayerList getPlayerList() {
 		return null;
 	}
 
-	private void beInjectRecipes() {
+	private void be_injectRecipes() {
 		if (FabricLoader.getInstance().isModLoaded("kubejs")) {
-			RecipeManagerAccessor accessor = (RecipeManagerAccessor) serverResourceManager.getRecipeManager();
-			accessor.setRecipes(EndRecipeManager.getMap(accessor.getRecipes()));
+			RecipeManagerAccessor accessor = (RecipeManagerAccessor) resources.getRecipeManager();
+			accessor.be_setRecipes(EndRecipeManager.getMap(accessor.be_getRecipes()));
 		}
 	}
 }

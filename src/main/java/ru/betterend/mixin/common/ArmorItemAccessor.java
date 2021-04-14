@@ -12,11 +12,11 @@ import com.google.common.collect.Multimap;
 @Mixin(ArmorItem.class)
 public interface ArmorItemAccessor {
 	@Accessor("ARMOR_MODIFIER_UUID_PER_SLOT")
-	UUID[] getModifiers();
+	UUID[] be_getModifiers();
 
 	@Accessor("defaultModifiers")
-	Multimap<Attribute, AttributeModifier> getDefaultModifiers();
+	Multimap<Attribute, AttributeModifier> be_getDefaultModifiers();
 
 	@Accessor("defaultModifiers")
-	void setDefaultModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers);
+	void be_setDefaultModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers);
 }

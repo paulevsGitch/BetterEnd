@@ -18,30 +18,30 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 @Mixin(Player.class)
-public abstract class PlayerEntityMixin {
-	private static Direction[] HORIZONTAL;
+public abstract class PlayerMixin {
+	private static Direction[] horizontal;
 	
-	@Inject(method = "findRespawnPosition", at = @At(value = "HEAD"), cancellable = true)
-	private static void be_statueRespawn(ServerLevel world, BlockPos pos, float f, boolean bl, boolean bl2, CallbackInfoReturnable<Optional<Vec3>> info) {
+	@Inject(method = "findRespawnPositionAndUseSpawnBlock", at = @At(value = "HEAD"), cancellable = true)
+	private static void be_findRespawnPositionAndUseSpawnBlock(ServerLevel world, BlockPos pos, float f, boolean bl, boolean bl2, CallbackInfoReturnable<Optional<Vec3>> info) {
 		BlockState blockState = world.getBlockState(pos);
 		if (blockState.is(EndBlocks.RESPAWN_OBELISK)) {
-			info.setReturnValue(beObeliskRespawnPosition(world, pos, blockState));
+			info.setReturnValue(be_obeliskRespawnPosition(world, pos, blockState));
 			info.cancel();
 		}
 	}
 
-	private static Optional<Vec3> beObeliskRespawnPosition(ServerLevel world, BlockPos pos, BlockState state) {
+	private static Optional<Vec3> be_obeliskRespawnPosition(ServerLevel world, BlockPos pos, BlockState state) {
 		if (state.getValue(BlockProperties.TRIPLE_SHAPE) == TripleShape.TOP) {
 			pos = pos.below(2);
 		}
 		else if (state.getValue(BlockProperties.TRIPLE_SHAPE) == TripleShape.MIDDLE) {
 			pos = pos.below();
 		}
-		if (HORIZONTAL == null) {
-			HORIZONTAL = BlocksHelper.makeHorizontal();
+		if (horizontal == null) {
+			horizontal = BlocksHelper.makeHorizontal();
 		}
-		MHelper.shuffle(HORIZONTAL, world.getRandom());
-		for (Direction dir: HORIZONTAL) {
+		MHelper.shuffle(horizontal, world.getRandom());
+		for (Direction dir: horizontal) {
 			BlockPos p = pos.relative(dir);
 			BlockState state2 = world.getBlockState(p);
 			if (!state2.getMaterial().blocksMotion() && state2.getCollisionShape(world, pos).isEmpty()) {

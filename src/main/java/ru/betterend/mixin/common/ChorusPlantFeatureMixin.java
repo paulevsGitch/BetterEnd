@@ -21,8 +21,8 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ChorusPlantFeature.class)
 public class ChorusPlantFeatureMixin {
-	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void be_onGenerate(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, NoneFeatureConfiguration defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
+	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
+	private void be_place(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, NoneFeatureConfiguration defaultFeatureConfig, CallbackInfoReturnable<Boolean> info) {
 		if (structureWorldAccess.isEmptyBlock(blockPos) && structureWorldAccess.getBlockState(blockPos.below()).is(EndBlocks.CHORUS_NYLIUM)) {
 			ChorusFlowerBlock.generatePlant(structureWorldAccess, blockPos, random, MHelper.randRange(8, 16, random));
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);

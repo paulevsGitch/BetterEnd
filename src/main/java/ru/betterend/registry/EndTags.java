@@ -92,7 +92,7 @@ public class EndTags {
 			}
 			else if (block instanceof LeavesBlock || block instanceof SimpleLeavesBlock) {
 				TagHelper.addTag(BlockTags.LEAVES, block);
-				ComposterBlockAccessor.callRegisterCompostableItem(0.3F, block);
+				ComposterBlockAccessor.callAdd(0.3F, block);
 			}
 			else if (block instanceof VineBlock) {
 				TagHelper.addTag(BlockTags.CLIMBABLE, block);
@@ -103,7 +103,7 @@ public class EndTags {
 			
 			Material mat = block.defaultBlockState().getMaterial();
 			if (mat.equals(Material.PLANT) || mat.equals(Material.REPLACEABLE_PLANT)) {
-				ComposterBlockAccessor.callRegisterCompostableItem(0.1F, block);
+				ComposterBlockAccessor.callAdd(0.1F, block);
 			}
 		});
 		
@@ -111,7 +111,7 @@ public class EndTags {
 			if (item.isEdible()) {
 				FoodProperties food = item.getFoodProperties();
 				float compost = food.getNutrition() * food.getSaturationModifier() * 0.18F;
-				ComposterBlockAccessor.callRegisterCompostableItem(compost, item);
+				ComposterBlockAccessor.callAdd(compost, item);
 			}
 		});
 		

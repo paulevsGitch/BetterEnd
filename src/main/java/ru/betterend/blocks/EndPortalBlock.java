@@ -95,7 +95,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			teleportPlayer(player, destination, exitPos);
 		} else {
 			TeleportingEntity teleEntity = (TeleportingEntity) entity;
-			teleEntity.beSetExitPos(exitPos);
+			teleEntity.be_setExitPos(exitPos);
 			Entity teleported = entity.changeDimension(destination);
 			if (teleported != null) {
 				teleported.setPortalCooldown();
@@ -113,7 +113,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 			player.teleportTo(destination, exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5, player.yRot, player.xRot);
 		} else {
 			TeleportingEntity teleEntity = (TeleportingEntity) player;
-			teleEntity.beSetExitPos(exitPos);
+			teleEntity.be_setExitPos(exitPos);
 			player.changeDimension(destination);
 		}
 	}

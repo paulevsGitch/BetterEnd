@@ -32,7 +32,7 @@ import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerLevel.class)
-public class ServerWorldMixin {
+public class ServerLevelMixin {
 	private static final int DEV_VERSION = be_getVersionInt("63.63.63");
 	private static final int FIX_VERSION = DEV_VERSION;
 	private static String lastWorld = null;
@@ -70,8 +70,8 @@ public class ServerWorldMixin {
 		}
 	}
 
-	@Inject(method = "getSpawnPos", at = @At("HEAD"), cancellable = true)
-	private void be_getSpawnPos(CallbackInfoReturnable<BlockPos> info) {
+	@Inject(method = "getSharedSpawnPos", at = @At("HEAD"), cancellable = true)
+	private void be_getSharedSpawnPos(CallbackInfoReturnable<BlockPos> info) {
 		if (GeneratorOptions.changeSpawn()) {
 			if (((ServerLevel) (Object) this).dimension() == Level.END) {
 				info.setReturnValue(GeneratorOptions.getSpawn());

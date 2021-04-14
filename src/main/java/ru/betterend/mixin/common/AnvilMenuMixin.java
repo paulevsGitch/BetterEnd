@@ -27,18 +27,16 @@ import ru.betterend.interfaces.AnvilScreenHandlerExtended;
 import ru.betterend.recipe.builders.AnvilRecipe;
 
 @Mixin(AnvilMenu.class)
-public abstract class AnvilScreenHandlerMixin extends ItemCombinerMenu implements AnvilScreenHandlerExtended {
-
+public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilScreenHandlerExtended {
 	private List<AnvilRecipe> be_recipes = Collections.emptyList();
 	private AnvilRecipe be_currentRecipe;
 	private DataSlot anvilLevel;
 
-	public AnvilScreenHandlerMixin(int syncId, Inventory playerInventory) {
+	public AnvilMenuMixin(int syncId, Inventory playerInventory) {
 		super(MenuType.ANVIL, syncId, playerInventory, ContainerLevelAccess.NULL);
 	}
 
-	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V",
-			at = @At("TAIL"))
+	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V", at = @At("TAIL"))
 	public void be_initAnvilLevel(int syncId, Inventory inventory, ContainerLevelAccess context, CallbackInfo info) {
 		if (context != ContainerLevelAccess.NULL) {
 			int anvLevel = context.evaluate((world, blockPos) -> {

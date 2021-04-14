@@ -7,7 +7,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import ru.betterend.BetterEnd;
-import ru.betterend.mixin.common.BrewingAccessor;
+import ru.betterend.mixin.common.PotionBrewingAccessor;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
@@ -24,8 +24,8 @@ public class EndPotions {
 	}
 	
 	public static void register() {
-		BrewingAccessor.callAddMix(Potions.AWKWARD, EndItems.ENDER_DUST, END_VEIL);
-		BrewingAccessor.callAddMix(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
-		BrewingAccessor.callAddMix(Potions.AWKWARD, EndBlocks.MURKWEED.asItem(), Potions.NIGHT_VISION);
+		PotionBrewingAccessor.callAddMix(Potions.AWKWARD, EndItems.ENDER_DUST, END_VEIL);
+		PotionBrewingAccessor.callAddMix(END_VEIL, Items.REDSTONE, LONG_END_VEIL);
+		PotionBrewingAccessor.callAddMix(Potions.AWKWARD, EndBlocks.MURKWEED.asItem(), Potions.NIGHT_VISION);
 	}
 }

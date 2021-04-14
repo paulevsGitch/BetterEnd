@@ -37,16 +37,16 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		}
 	}
 	
-	@Inject(method = "appendProperties", at = @At("TAIL"))
-	private void beAddProperties(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo info) {
+	@Inject(method = "createBlockStateDefinition", at = @At("TAIL"))
+	private void be_createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo info) {
 		GeneratorOptions.init();
 		if (GeneratorOptions.changeChorusPlant()) {
 			builder.add(BlocksHelper.ROOTS);
 		}
 	}
 	
-	@Inject(method = "withConnectionProperties", at = @At("RETURN"), cancellable = true)
-	private void beConnectionProperties(BlockGetter world, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
+	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
+	private void be_getStateForPlacement(BlockGetter world, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT)) {
 			if (world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
@@ -67,8 +67,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		}
 	}
 	
-	@Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
-	private void beCanPlace(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
+	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
+	private void be_canSurvive(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		BlockState down = world.getBlockState(pos.below());
 		if (down.is(EndBlocks.CHORUS_NYLIUM) || down.is(Blocks.END_STONE)) {
 			info.setReturnValue(true);
@@ -76,8 +76,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		}
 	}
 	
-	@Inject(method = "getStateForNeighborUpdate", at = @At("RETURN"), cancellable = true)
-	private void beStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
+	@Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
+	private void be_updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT)) {
 			if (world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
@@ -100,8 +100,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		}
 	}
 	
-	@Inject(method = "getPlacementState", at = @At("RETURN"), cancellable = true)
-	private void beGetPlacementState(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
+	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
+	private void be_getStateForPlacement(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
 		BlockPos pos = ctx.getClickedPos();
 		Level world = ctx.getLevel();
 		BlockState plant = info.getReturnValue();

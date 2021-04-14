@@ -59,7 +59,7 @@ import net.minecraft.world.level.storage.LevelData;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(PlayerList.class)
-public class PlayerManagerMixin {
+public class PlayerListMixin {
 	@Final
 	@Shadow
 	private static Logger LOGGER;
@@ -70,7 +70,7 @@ public class PlayerManagerMixin {
 
 	@Final
 	@Shadow
-	private RegistryAccess.RegistryHolder registryManager;
+	private RegistryAccess.RegistryHolder registryHolder;
 
 	@Shadow
 	private int viewDistance;
@@ -81,17 +81,17 @@ public class PlayerManagerMixin {
 
 	@Final
 	@Shadow
-	private Map<UUID, ServerPlayer> playerMap;
+	private Map<UUID, ServerPlayer> playersByUUID;
 
-	@Inject(method = "onPlayerConnect", at = @At(value = "HEAD"), cancellable = true)
-	public void be_onPlayerConnect(Connection connection, ServerPlayer player, CallbackInfo info) {
+	@Inject(method = "placeNewPlayer", at = @At(value = "HEAD"), cancellable = true)
+	public void be_placeNewPlayer(Connection connection, ServerPlayer player, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
 			GameProfile gameProfile = player.getGameProfile();
 			GameProfileCache userCache = this.server.getProfileCache();
 			GameProfile gameProfile2 = userCache.get(gameProfile.getId());
 			String string = gameProfile2 == null ? gameProfile.getName() : gameProfile2.getName();
 			userCache.add(gameProfile);
-			CompoundTag compoundTag = this.loadPlayerData(player);
+			CompoundTag compoundTag = this.load(player);
 			ResourceKey<Level> var23;
 			if (compoundTag != null) {
 				DataResult<ResourceKey<Level>> var10000 = DimensionType.parseLegacy(new Dynamic<Tag>(NbtOps.INSTANCE, compoundTag.get("Dimension")));
@@ -123,13 +123,13 @@ public class PlayerManagerMixin {
 
 			LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", player.getName().getString(), string2, player.getId(), player.getX(), player.getY(), player.getZ());
 			LevelData worldProperties = serverWorld3.getLevelData();
-			this.setGameMode(player, (ServerPlayer) null, serverWorld3);
+			this.updatePlayerGameMode(player, (ServerPlayer) null, serverWorld3);
 			ServerGamePacketListenerImpl serverPlayNetworkHandler = new ServerGamePacketListenerImpl(this.server, connection, player);
 			GameRules gameRules = serverWorld3.getGameRules();
 			boolean bl = gameRules.getBoolean(GameRules.RULE_DO_IMMEDIATE_RESPAWN);
 			boolean bl2 = gameRules.getBoolean(GameRules.RULE_REDUCEDDEBUGINFO);
 			serverPlayNetworkHandler.send(new ClientboundLoginPacket(player.getId(), player.gameMode.getGameModeForPlayer(), player.gameMode.getPreviousGameModeForPlayer(), BiomeManager.obfuscateSeed(serverWorld3.getSeed()),
-					worldProperties.isHardcore(), this.server.levelKeys(), this.registryManager, serverWorld3.dimensionType(), serverWorld3.dimension(), this.getMaxPlayerCount(), this.viewDistance, bl2, !bl,
+					worldProperties.isHardcore(), this.server.levelKeys(), this.registryHolder, serverWorld3.dimensionType(), serverWorld3.dimension(), this.getPlayerCount(), this.viewDistance, bl2, !bl,
 					serverWorld3.isDebug(), serverWorld3.isFlat()));
 			serverPlayNetworkHandler.send(new ClientboundCustomPayloadPacket(ClientboundCustomPayloadPacket.BRAND, (new FriendlyByteBuf(Unpooled.buffer())).writeUtf(this.getServer().getServerModName())));
 			serverPlayNetworkHandler.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
@@ -137,10 +137,10 @@ public class PlayerManagerMixin {
 			serverPlayNetworkHandler.send(new ClientboundSetCarriedItemPacket(player.inventory.selected));
 			serverPlayNetworkHandler.send(new ClientboundUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
 			serverPlayNetworkHandler.send(new ClientboundUpdateTagsPacket(this.server.getTags()));
-			this.sendCommandTree(player);
+			this.sendPlayerPermissionLevel(player);
 			player.getStats().markAllDirty();
 			player.getRecipeBook().sendInitialRecipeBook(player);
-			this.sendScoreboard(serverWorld3.getScoreboard(), player);
+			this.updateEntireScoreboard(serverWorld3.getScoreboard(), player);
 			this.server.invalidateStatus();
 			TranslatableComponent mutableText2;
 			if (player.getGameProfile().getName().equalsIgnoreCase(string)) {
@@ -150,11 +150,11 @@ public class PlayerManagerMixin {
 				mutableText2 = new TranslatableComponent("multiplayer.player.joined.renamed", new Object[] { player.getDisplayName(), string });
 			}
 
-			this.broadcastChatMessage(mutableText2.withStyle(ChatFormatting.YELLOW), ChatType.SYSTEM, Util.NIL_UUID);
+			this.broadcastMessage(mutableText2.withStyle(ChatFormatting.YELLOW), ChatType.SYSTEM, Util.NIL_UUID);
 			serverPlayNetworkHandler.teleport(player.getX(), player.getY(), player.getZ(), player.yRot, player.xRot);
 			this.players.add(player);
-			this.playerMap.put(player.getUUID(), player);
-			this.sendToAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[] { player }));
+			this.playersByUUID.put(player.getUUID(), player);
+			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[] { player }));
 
 			for (int i = 0; i < this.players.size(); ++i) {
 				player.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[] { (ServerPlayer) this.players.get(i) }));
@@ -162,7 +162,7 @@ public class PlayerManagerMixin {
 
 			serverWorld3.addNewPlayer(player);
 			this.server.getCustomBossEvents().onPlayerConnect(player);
-			this.sendWorldInfo(player, serverWorld3);
+			this.sendLevelInfo(player, serverWorld3);
 			if (!this.server.getResourcePack().isEmpty()) {
 				player.sendTexturePack(this.server.getResourcePack(), this.server.getResourcePackHash());
 			}
@@ -224,18 +224,18 @@ public class PlayerManagerMixin {
 	}
 
 	@Shadow
-	public CompoundTag loadPlayerData(ServerPlayer player) {
+	public CompoundTag load(ServerPlayer player) {
 		return null;
 	}
 
 	@Shadow
-	private void setGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
+	private void updatePlayerGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
 
 	@Shadow
-	public void sendCommandTree(ServerPlayer player) {}
+	public void sendPlayerPermissionLevel(ServerPlayer player) {}
 
 	@Shadow
-	public int getMaxPlayerCount() {
+	public int getPlayerCount() {
 		return 0;
 	}
 
@@ -245,14 +245,14 @@ public class PlayerManagerMixin {
 	}
 
 	@Shadow
-	protected void sendScoreboard(ServerScoreboard scoreboard, ServerPlayer player) {}
+	protected void updateEntireScoreboard(ServerScoreboard scoreboard, ServerPlayer player) {}
 
 	@Shadow
-	public void broadcastChatMessage(Component message, ChatType type, UUID senderUuid) {}
+	public void broadcastMessage(Component message, ChatType type, UUID senderUuid) {}
 
 	@Shadow
-	public void sendToAll(Packet<?> packet) {}
+	public void broadcastAll(Packet<?> packet) {}
 
 	@Shadow
-	public void sendWorldInfo(ServerPlayer player, ServerLevel world) {}
+	public void sendLevelInfo(ServerPlayer player, ServerLevel world) {}
 }

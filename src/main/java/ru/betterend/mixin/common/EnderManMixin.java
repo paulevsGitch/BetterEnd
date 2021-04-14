@@ -12,10 +12,9 @@ import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndStatusEffects;
 
 @Mixin(EnderMan.class)
-public abstract class EndermanEntityMixin {
-	
-	@Inject(method = "isPlayerStaring", at = @At("HEAD"), cancellable = true)
-	private void be_isPlayerStaring(Player player, CallbackInfoReturnable<Boolean> info) {
+public abstract class EnderManMixin {
+	@Inject(method = "isLookingAtMe", at = @At("HEAD"), cancellable = true)
+	private void be_isLookingAtMe(Player player, CallbackInfoReturnable<Boolean> info) {
 		if (player.isCreative() || player.hasEffect(EndStatusEffects.END_VEIL) ||
 				EnchantmentHelper.getItemEnchantmentLevel(EndEnchantments.END_VEIL, player.getItemBySlot(EquipmentSlot.HEAD)) > 0) {
 			info.setReturnValue(false);

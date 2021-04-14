@@ -15,8 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.util.TagHelper;
 
 @Mixin(TagLoader.class)
-public class TagGroupLoaderMixin {
-	
+public class TagLoaderMixin {
 	@Shadow
 	private String entryType;
 	

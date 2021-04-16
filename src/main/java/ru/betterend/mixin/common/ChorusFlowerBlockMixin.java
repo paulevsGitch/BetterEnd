@@ -38,9 +38,9 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 		super(settings);
 	}
 
-	@Shadow
 	@Final
-	private ChorusPlantBlock plantBlock;
+	@Shadow
+	private ChorusPlantBlock plant;
 	
 	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
 	private void be_canSurvive(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
@@ -59,10 +59,10 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 				if (i < 5) {
 					this.placeGrownFlower(world, up, i + 1);
 					if (GeneratorOptions.changeChorusPlant()) {
-						BlocksHelper.setWithoutUpdate(world, pos, plantBlock.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true).setValue(BlocksHelper.ROOTS, true));
+						BlocksHelper.setWithoutUpdate(world, pos, plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true).setValue(BlocksHelper.ROOTS, true));
 					}
 					else {
-						BlocksHelper.setWithoutUpdate(world, pos, plantBlock.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true));
+						BlocksHelper.setWithoutUpdate(world, pos, plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true));
 					}
 					info.cancel();
 				}

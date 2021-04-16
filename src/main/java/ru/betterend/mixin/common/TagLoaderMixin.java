@@ -17,14 +17,14 @@ import ru.betterend.util.TagHelper;
 @Mixin(TagLoader.class)
 public class TagLoaderMixin {
 	@Shadow
-	private String entryType;
+	private String directory;
 	
 	@Inject(method = "prepare", at = @At("RETURN"), cancellable = true)
 	public void be_prepareReload(ResourceManager manager, Executor executor, CallbackInfoReturnable<CompletableFuture<Map<ResourceLocation, Tag.Builder>>> info) {
 		CompletableFuture<Map<ResourceLocation, Tag.Builder>> future = info.getReturnValue();
 		info.setReturnValue(CompletableFuture.supplyAsync(() -> {
 			Map<ResourceLocation, Tag.Builder> map = future.join();
-			TagHelper.apply(entryType, map);
+			TagHelper.apply(directory, map);
 			return map;
 		}, executor));
 	}

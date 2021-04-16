@@ -12,12 +12,10 @@ import ru.betterend.recipe.builders.AlloyingRecipe;
 
 @Mixin(ClientRecipeBook.class)
 public abstract class ClientRecipeBookMixin {
-	@Inject(method = "getGroupForRecipe", at = @At("HEAD"), cancellable = true)
-	private static void be_getGroupForRecipe(Recipe<?> recipe, CallbackInfoReturnable<RecipeBookCategories> cinfo) {
-		if (recipe instanceof AlloyingRecipe) {
-			cinfo.setReturnValue(RecipeBookCategories.BLAST_FURNACE_MISC);
-		} else if (recipe instanceof BetterEndRecipe) {
-			cinfo.setReturnValue(RecipeBookCategories.UNKNOWN);
+	@Inject(method = "getCategory", at = @At("HEAD"), cancellable = true)
+	private static void be_getGroupForRecipe(Recipe<?> recipe, CallbackInfoReturnable<RecipeBookCategories> info) {
+		if (recipe instanceof BetterEndRecipe) {
+			info.setReturnValue(RecipeBookCategories.UNKNOWN);
 		}
 	}
 }

@@ -9,5 +9,5 @@ import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 @Mixin(BlockModelDefinition.Context.class)
 public interface ContextGsonAccessor {
 	@Accessor
-	public Gson getGson();
+	Gson getGson();
 }

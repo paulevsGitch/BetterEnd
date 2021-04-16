@@ -16,7 +16,7 @@ import ru.betterend.patterns.BlockPatterned;
 @Mixin(BlockModelDefinition.class)
 public abstract class ModelVariantMapMixin {
 	
-	@Inject(method = "deserialize", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "fromStream", at = @At("HEAD"), cancellable = true)
 	private static void be_deserializeBlockState(BlockModelDefinition.Context context, Reader reader, CallbackInfoReturnable<BlockModelDefinition> info) {
 		Block block = context.getDefinition().any().getBlock();
 		if (block instanceof BlockPatterned) {

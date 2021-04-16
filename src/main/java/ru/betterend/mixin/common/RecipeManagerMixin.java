@@ -25,7 +25,7 @@ import com.google.gson.JsonElement;
 import ru.betterend.recipe.EndRecipeManager;
 
 @Mixin(RecipeManager.class)
-public class RecipeManagerMixin {
+public abstract class RecipeManagerMixin {
 	@Shadow
 	private Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes;
 
@@ -35,7 +35,7 @@ public class RecipeManagerMixin {
 	}
 
 	@Shadow
-	private <C extends Container, T extends Recipe<C>> Map<ResourceLocation, Recipe<C>> getAllOfType(RecipeType<T> type) {
+	private <C extends Container, T extends Recipe<C>> Map<ResourceLocation, Recipe<C>> byType(RecipeType<T> type) {
 		return null;
 	}
 
@@ -47,7 +47,7 @@ public class RecipeManagerMixin {
 	 */
 	@Overwrite
 	public <C extends Container, T extends Recipe<C>> Optional<T> getRecipeFor(RecipeType<T> type, C inventory, Level world) {
-		Collection<Recipe<C>> values = getAllOfType(type).values();
+		Collection<Recipe<C>> values = byType(type).values();
 		List<Recipe<C>> list = new ArrayList<Recipe<C>>(values);
 		list.sort((v1, v2) -> {
 			boolean b1 = v1.getId().getNamespace().equals("minecraft");

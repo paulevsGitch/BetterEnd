@@ -29,7 +29,7 @@ public class ModelLoaderMixin {
 	@Shadow
 	private ResourceManager resourceManager;
 	
-	@Inject(method = "loadModelFromJson", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "loadBlockModel", at = @At("HEAD"), cancellable = true)
 	private void be_loadModelPattern(ResourceLocation id, CallbackInfoReturnable<BlockModel> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			ResourceLocation modelId = new ResourceLocation(id.getNamespace(), "models/" + id.getPath() + ".json");
@@ -40,7 +40,7 @@ public class ModelLoaderMixin {
 				model.name = id.toString();
 				info.setReturnValue(model);
 			} catch (Exception ex) {
-				String data[] = id.getPath().split("/");
+				String[] data = id.getPath().split("/");
 				if (data.length > 1) {
 					ResourceLocation itemId = new ResourceLocation(id.getNamespace(), data[1]);
 					Optional<Block> block = Registry.BLOCK.getOptional(itemId);
@@ -63,7 +63,7 @@ public class ModelLoaderMixin {
 		}
 	}
 	
-	private BlockModel be_getModel(String data[], ResourceLocation id, Patterned patterned) {
+	private BlockModel be_getModel(String[] data, ResourceLocation id, Patterned patterned) {
 		String pattern;
 		if (id.getPath().contains("item")) {
 			pattern = patterned.getModelPattern(id.getPath());
@@ -81,7 +81,7 @@ public class ModelLoaderMixin {
 	}
 	
 	@ModifyVariable(method = "loadModel", ordinal = 2, at = @At(value = "INVOKE"))
-	public ResourceLocation be_SwitchModel(ResourceLocation id) {
+	public ResourceLocation be_switchModel(ResourceLocation id) {
 		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") && id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus") && !id.getPath().contains("custom_")) {
 			id = new ResourceLocation(id.getPath().replace("chorus", "custom_chorus"));
 		}

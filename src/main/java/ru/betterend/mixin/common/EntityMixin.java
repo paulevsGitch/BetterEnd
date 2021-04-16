@@ -24,45 +24,45 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Shadow
 	public boolean removed;
 	@Shadow
-	public Level world;
+	public Level level;
 	
 	@Final
 	@Shadow
-	public abstract void detach();
+	public abstract void unRide();
 	
 	@Shadow
-	public abstract Vec3 getVelocity();
+	public abstract Vec3 getDeltaMovement();
 	
 	@Shadow
 	public abstract EntityType<?> getType();
 	
 	@Shadow
-	protected abstract PortalInfo getTeleportTarget(ServerLevel destination);
+	protected abstract PortalInfo findDimensionEntryPoint(ServerLevel destination);
 
 	private BlockPos exitPos;
 
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
 	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
-		if (!removed && be_canTeleport() && world instanceof ServerLevel) {
-			this.detach();
-			this.world.getProfiler().push("changeDimension");
-			this.world.getProfiler().push("reposition");
-			PortalInfo teleportTarget = this.getTeleportTarget(destination);
+		if (!removed && be_canTeleport() && level instanceof ServerLevel) {
+			unRide();
+			level.getProfiler().push("changeDimension");
+			level.getProfiler().push("reposition");
+			PortalInfo teleportTarget = findDimensionEntryPoint(destination);
 			if (teleportTarget != null) {
-				this.world.getProfiler().popPush("reloading");
-				Entity entity = this.getType().create(destination);
+				level.getProfiler().popPush("reloading");
+				Entity entity = getType().create(destination);
 				if (entity != null) {
 					entity.restoreFrom(Entity.class.cast(this));
 					entity.moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z, teleportTarget.yRot, entity.xRot);
 					entity.setDeltaMovement(teleportTarget.speed);
 					destination.addFromAnotherDimension(entity);
 				}
-				this.removed = true;
-				this.world.getProfiler().pop();
-				((ServerLevel) world).resetEmptyTime();
+				removed = true;
+				level.getProfiler().pop();
+				((ServerLevel) level).resetEmptyTime();
 				destination.resetEmptyTime();
-				this.world.getProfiler().pop();
-				this.be_resetExitPos();
+				level.getProfiler().pop();
+				be_resetExitPos();
 				info.setReturnValue(entity);
 			}
 		}
@@ -71,7 +71,7 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_findDimensionEntryPoint(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
-			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getVelocity(), yRot, xRot));
+			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), yRot, xRot));
 		}
 	}
 

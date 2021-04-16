@@ -22,20 +22,20 @@ import ru.betterend.registry.EndTags;
 
 @Mixin(EnchantmentMenu.class)
 public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
-	@Shadow
 	@Final
+	@Shadow
 	private Container enchantSlots;
 
-	@Shadow
 	@Final
+	@Shadow
 	private ContainerLevelAccess access;
 
-	@Shadow
 	@Final
+	@Shadow
 	private Random random;
 
-	@Shadow
 	@Final
+	@Shadow
 	private DataSlot enchantmentSeed;
 
 	@Shadow
@@ -95,36 +95,36 @@ public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 						}
 					}
 
-					this.random.setSeed((long) this.enchantmentSeed.get());
+					random.setSeed(enchantmentSeed.get());
 
 					for (j = 0; j < 3; ++j) {
-						this.costs[j] = EnchantmentHelper.getEnchantmentCost(this.random, j, i, itemStack);
-						this.enchantClue[j] = -1;
-						this.levelClue[j] = -1;
-						if (this.costs[j] < j + 1) {
-							this.costs[j] = 0;
+						costs[j] = EnchantmentHelper.getEnchantmentCost(this.random, j, i, itemStack);
+						enchantClue[j] = -1;
+						levelClue[j] = -1;
+						if (costs[j] < j + 1) {
+							costs[j] = 0;
 						}
 					}
 
 					for (j = 0; j < 3; ++j) {
 						if (this.costs[j] > 0) {
-							List<EnchantmentInstance> list = this.generateEnchantments(itemStack, j, this.costs[j]);
+							List<EnchantmentInstance> list = this.getEnchantmentList(itemStack, j, this.costs[j]);
 							if (list != null && !list.isEmpty()) {
 								EnchantmentInstance enchantmentLevelEntry = (EnchantmentInstance) list.get(this.random.nextInt(list.size()));
-								this.enchantClue[j] = Registry.ENCHANTMENT.getId(enchantmentLevelEntry.enchantment);
-								this.levelClue[j] = enchantmentLevelEntry.level;
+								enchantClue[j] = Registry.ENCHANTMENT.getId(enchantmentLevelEntry.enchantment);
+								levelClue[j] = enchantmentLevelEntry.level;
 							}
 						}
 					}
 
-					this.broadcastChanges();
+					broadcastChanges();
 				});
 			}
 			else {
 				for (int i = 0; i < 3; ++i) {
-					this.costs[i] = 0;
-					this.enchantClue[i] = -1;
-					this.levelClue[i] = -1;
+					costs[i] = 0;
+					enchantClue[i] = -1;
+					levelClue[i] = -1;
 				}
 			}
 			info.cancel();
@@ -132,7 +132,7 @@ public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 	}
 
 	@Shadow
-	private List<EnchantmentInstance> generateEnchantments(ItemStack stack, int slot, int level) {
+	private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int slot, int level) {
 		return null;
 	}
 }

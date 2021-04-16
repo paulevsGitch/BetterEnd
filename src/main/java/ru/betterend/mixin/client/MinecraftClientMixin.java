@@ -29,21 +29,21 @@ public class MinecraftClientMixin {
 	public LocalPlayer player;
 	
 	@Shadow
-	public Screen currentScreen;
-	
-	@Shadow
+	public Screen screen;
+
 	@Final
-	public Gui inGameHud;
+	@Shadow
+	public Gui gui;
 	
 	@Shadow
-	public ClientLevel world;
-	
-	@Shadow
+	public ClientLevel level;
+
 	@Final
+	@Shadow
 	private BlockColors blockColors;
 
-	@Shadow
 	@Final
+	@Shadow
 	private ItemColors itemColors;
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
@@ -57,15 +57,15 @@ public class MinecraftClientMixin {
 		});
 	}
 	
-	@Inject(method = "getMusicType", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
 	private void be_getEndMusic(CallbackInfoReturnable<Music> info) {
-		if (!(this.currentScreen instanceof WinScreen) && this.player != null) {
+		if (!(this.screen instanceof WinScreen) && this.player != null) {
 			if (this.player.level.dimension() == Level.END) {
-				if (this.inGameHud.getBossOverlay().shouldPlayMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
+				if (this.gui.getBossOverlay().shouldPlayMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
 					info.setReturnValue(Musics.END_BOSS);
 				}
 				else {
-					Music sound = (Music) this.world.getBiomeManager().getNoiseBiomeAtPosition(this.player.blockPosition()).getBackgroundMusic().orElse(Musics.END);
+					Music sound = (Music) this.level.getBiomeManager().getNoiseBiomeAtPosition(this.player.blockPosition()).getBackgroundMusic().orElse(Musics.END);
 					info.setReturnValue(sound);
 				}
 				info.cancel();

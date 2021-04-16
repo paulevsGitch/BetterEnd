@@ -34,13 +34,13 @@ public class BackgroundRendererMixin {
 	private static long time;
 	
 	@Shadow
-	private static float red;
+	private static float fogRed;
 	@Shadow
-	private static float green;
+	private static float fogGreen;
 	@Shadow
-	private static float blue;
+	private static float fogBlue;
 	
-	@Inject(method = "render", at = @At("RETURN"))
+	@Inject(method = "setupColor", at = @At("RETURN"))
 	private static void be_onRender(Camera camera, float tickDelta, ClientLevel world, int i, float f, CallbackInfo info) {
 		long l = Util.getMillis() - time;
 		time += l;
@@ -56,18 +56,18 @@ public class BackgroundRendererMixin {
 				skip = effect != null && effect.getDuration() > 0;
 			}
 			if (!skip) {
-				red *= 4;
-				green *= 4;
-				blue *= 4;
+				fogRed *= 4;
+				fogGreen *= 4;
+				fogBlue *= 4;
 			}
 		}
 		
-		BackgroundInfo.red = red;
-		BackgroundInfo.green = green;
-		BackgroundInfo.blue = blue;
+		BackgroundInfo.red = fogRed;
+		BackgroundInfo.green = fogGreen;
+		BackgroundInfo.blue = fogBlue;
 	}
 	
-	@Inject(method = "applyFog", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "setupFog", at = @At("HEAD"), cancellable = true)
 	private static void be_fogDensity(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, CallbackInfo info) {
 		Entity entity = camera.getEntity();
 		Biome biome = entity.level.getBiome(entity.blockPosition());

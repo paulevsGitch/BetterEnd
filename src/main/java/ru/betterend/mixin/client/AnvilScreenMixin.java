@@ -27,7 +27,7 @@ import ru.betterend.interfaces.AnvilScreenHandlerExtended;
 public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 
 	@Shadow
-	private EditBox nameField;
+	private EditBox name;
 	
 	private final List<AbstractWidget> be_buttons = Lists.newArrayList();
 	private AnvilScreenHandlerExtended anvilHandler;
@@ -37,24 +37,24 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 		super(handler, playerInventory, title, texture);
 	}
 
-	@Inject(method = "setup", at = @At("TAIL"))
+	@Inject(method = "subInit", at = @At("TAIL"))
 	protected void be_setup(CallbackInfo info) {
-		this.be_buttons.clear();
 		int x = (width - imageWidth) / 2;
 	    int y = (height - imageHeight) / 2;
-	    this.anvilHandler = (AnvilScreenHandlerExtended) this.menu;
-	    this.be_buttons.add(new Button(x + 8, y + 45, 15, 20, new TextComponent("<"), (b) -> be_previousRecipe()));
-		this.be_buttons.add(new Button(x + 154, y + 45, 15, 20, new TextComponent(">"), (b) -> be_nextRecipe()));
+	    anvilHandler = (AnvilScreenHandlerExtended) menu;
+		be_buttons.clear();
+	    be_buttons.add(new Button(x + 8, y + 45, 15, 20, new TextComponent("<"), (b) -> be_previousRecipe()));
+		be_buttons.add(new Button(x + 154, y + 45, 15, 20, new TextComponent(">"), (b) -> be_nextRecipe()));
 	}
 	
-	@Inject(method = "renderForeground", at = @At("TAIL"))
+	@Inject(method = "renderFg", at = @At("TAIL"))
 	protected void be_renderForeground(PoseStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
 		this.be_buttons.forEach(button -> {
 			button.render(matrices, mouseX, mouseY, delta);
 		});
 	}
 	
-	@Inject(method = "onSlotUpdate", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "slotChanged", at = @At("HEAD"), cancellable = true)
 	public void be_onSlotUpdate(AbstractContainerMenu handler, int slotId, ItemStack stack, CallbackInfo info) {
 		AnvilScreenHandlerExtended anvilHandler = (AnvilScreenHandlerExtended) handler;
 		if (anvilHandler.be_getCurrentRecipe() != null) {
@@ -63,7 +63,7 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 			} else {
 				this.be_buttons.forEach(button -> button.visible = false);
 			}
-			this.nameField.setValue("");
+			this.name.setValue("");
 			info.cancel();
 		} else {
 			this.be_buttons.forEach(button -> button.visible = false);
@@ -71,11 +71,11 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	}
 	
 	private void be_nextRecipe() {
-		this.anvilHandler.be_nextRecipe();
+		anvilHandler.be_nextRecipe();
 	}
 	
 	private void be_previousRecipe() {
-		this.anvilHandler.be_previousRecipe();
+		anvilHandler.be_previousRecipe();
 	}
 	
 	@Override
@@ -85,7 +85,7 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 				if (elem.visible && elem.mouseClicked(mouseX, mouseY, button)) {
 					if (minecraft.gameMode != null) {
 						int i = be_buttons.indexOf(elem);
-						this.minecraft.gameMode.handleInventoryButtonClick(menu.containerId, i);
+						minecraft.gameMode.handleInventoryButtonClick(menu.containerId, i);
 						return true;
 					}
 				}

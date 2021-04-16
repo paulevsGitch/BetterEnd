@@ -62,14 +62,14 @@ public class WorldRendererMixin {
 	
 	@Shadow
 	@Final
-	private Minecraft client;
+	private Minecraft minecraft;
 	
 	@Shadow
 	@Final
 	private TextureManager textureManager;
 	
 	@Shadow
-	private ClientLevel world;
+	private ClientLevel level;
 	
 	@Shadow
 	private int ticks;
@@ -92,7 +92,7 @@ public class WorldRendererMixin {
 	
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
 	private void be_renderBetterEndSky(PoseStack matrices, float tickDelta, CallbackInfo info) {
-		if (ClientOptions.isCustomSky() && client.level.effects().skyType() == DimensionSpecialEffects.SkyType.END) {
+		if (ClientOptions.isCustomSky() && minecraft.level.effects().skyType() == DimensionSpecialEffects.SkyType.END) {
 			time = (ticks % 360000) * 0.000017453292F;
 			time2 = time * 2;
 			time3 = time * 3;

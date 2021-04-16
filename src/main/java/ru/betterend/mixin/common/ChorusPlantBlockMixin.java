@@ -44,12 +44,31 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			builder.add(BlocksHelper.ROOTS);
 		}
 	}
-	
+
 	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
-	private void be_getStateForPlacement(BlockGetter world, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
+	private void be_getStateForPlacement(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
+		BlockPos pos = ctx.getClickedPos();
+		Level world = ctx.getLevel();
+		BlockState plant = info.getReturnValue();
+		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
+			if (GeneratorOptions.changeChorusPlant()) {
+				info.setReturnValue(plant.setValue(BlocksHelper.ROOTS, true).setValue(BlockStateProperties.DOWN, true));
+			}
+			else {
+				info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
+			}
+			info.cancel();
+		}
+	}
+	
+	@Inject(method = "Lnet/minecraft/world/level/block/ChorusPlantBlock;getStateForPlacement" +
+			"(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)" +
+			"Lnet/minecraft/world/level/block/state/BlockState;",
+			at = @At("RETURN"), cancellable = true)
+	private void be_getStateForPlacement(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT)) {
-			if (world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
+			if (blockGetter.getBlockState(blockPos.below()).is(EndTags.END_GROUND)) {
 				if (GeneratorOptions.changeChorusPlant()) {
 					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true).setValue(BlocksHelper.ROOTS, true));
 				}
@@ -96,22 +115,6 @@ public abstract class ChorusPlantBlockMixin extends Block {
 				info.cancel();
 			}
 			info.setReturnValue(plant);
-			info.cancel();
-		}
-	}
-	
-	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
-	private void be_getStateForPlacement(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
-		BlockPos pos = ctx.getClickedPos();
-		Level world = ctx.getLevel();
-		BlockState plant = info.getReturnValue();
-		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
-			if (GeneratorOptions.changeChorusPlant()) {
-				info.setReturnValue(plant.setValue(BlocksHelper.ROOTS, true).setValue(BlockStateProperties.DOWN, true));
-			}
-			else {
-				info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
-			}
 			info.cancel();
 		}
 	}

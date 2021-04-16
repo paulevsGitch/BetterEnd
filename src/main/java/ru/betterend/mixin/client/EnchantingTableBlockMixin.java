@@ -19,7 +19,7 @@ public abstract class EnchantingTableBlockMixin extends Block {
 		super(settings);
 	}
 
-	@Inject(method = "randomDisplayTick", at = @At(value = "TAIL"))
+	@Inject(method = "animateTick", at = @At(value = "TAIL"))
 	private void be_onRandomDisplayTick(BlockState state, Level world, BlockPos pos, Random random, CallbackInfo info) {
 		for (int px = -2; px <= 2; ++px) {
 			for (int pz = -2; pz <= 2; ++pz) {

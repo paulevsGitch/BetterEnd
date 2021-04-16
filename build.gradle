@@ -32,7 +32,7 @@ dependencies {
 	
 	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
-	useOptional "grondag:canvas-mc116:${project.canvas_version}"
+	//useOptional "grondag:canvas-mc116:${project.canvas_version}"
 }
 
 def useOptional(String dep) {

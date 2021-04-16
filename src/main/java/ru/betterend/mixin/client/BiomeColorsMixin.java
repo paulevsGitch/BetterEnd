@@ -26,7 +26,7 @@ public class BiomeColorsMixin {
 	private static final Point[] OFFSETS;
 	private static final boolean HAS_SODIUM;
 	
-	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "getAverageWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(BlockAndTintGetter world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
 		if (ClientOptions.useSulfurWaterColor()) {
 			BlockAndTintGetter view = HAS_SODIUM ? Minecraft.getInstance().level : world;

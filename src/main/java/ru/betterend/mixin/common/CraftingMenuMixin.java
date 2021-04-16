@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CraftingMenu.class)
 public abstract class CraftingMenuMixin {
-	@Shadow
 	@Final
-	private ContainerLevelAccess context;
+	@Shadow
+	private ContainerLevelAccess access;
 
 	@Inject(method = "stillValid", at = @At("HEAD"), cancellable = true)
 	private void be_stillValid(Player player, CallbackInfoReturnable<Boolean> info) {
-		if (context.evaluate((world, pos) -> {
+		if (access.evaluate((world, pos) -> {
 			return world.getBlockState(pos).getBlock() instanceof CraftingTableBlock;
 		}, true)) {
 			info.setReturnValue(true);

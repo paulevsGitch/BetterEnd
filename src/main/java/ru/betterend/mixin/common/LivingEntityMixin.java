@@ -23,7 +23,7 @@ public abstract class LivingEntityMixin {
 		this.lastAttacker = source.getEntity();
 	}
 	
-	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;knockback(FDD)V"))
+	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(FDD)V"))
 	private float be_increaseKnockback(float value, double x, double z) {
 		if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) lastAttacker;

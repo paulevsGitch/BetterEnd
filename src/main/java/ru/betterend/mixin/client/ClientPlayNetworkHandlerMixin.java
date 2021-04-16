@@ -18,18 +18,18 @@ import ru.betterend.client.gui.BlockSignEditScreen;
 public class ClientPlayNetworkHandlerMixin
 {
 	@Shadow
-	private Minecraft client;
+	private Minecraft minecraft;
 
 	@Shadow
-	private ClientLevel world;
+	private ClientLevel level;
 
-	@Inject(method = "onSignEditorOpen", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = "handleOpenSignEditor", at = @At(value = "HEAD"), cancellable = true)
 	public void be_openSignEditor(ClientboundOpenSignEditorPacket packet, CallbackInfo info) {
-		PacketUtils.ensureRunningOnSameThread(packet, ClientPacketListener.class.cast(this), client);
-		BlockEntity blockEntity = world.getBlockEntity(packet.getPos());
+		PacketUtils.ensureRunningOnSameThread(packet, ClientPacketListener.class.cast(this), minecraft);
+		BlockEntity blockEntity = level.getBlockEntity(packet.getPos());
 		if (blockEntity instanceof ESignBlockEntity) {
 			ESignBlockEntity sign = (ESignBlockEntity) blockEntity;
-			client.setScreen(new BlockSignEditScreen(sign));
+			minecraft.setScreen(new BlockSignEditScreen(sign));
 			info.cancel();
 		}
 	}

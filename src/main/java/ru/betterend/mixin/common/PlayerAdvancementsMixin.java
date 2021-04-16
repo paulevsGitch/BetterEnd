@@ -18,7 +18,7 @@ public abstract class PlayerAdvancementsMixin {
 	
 	@Inject(method = "award", at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/server/PlayerAdvancements;grant(Lnet/minecraft/server/level/ServerPlayer;)V",
+			target = "Lnet/minecraft/advancements/AdvancementRewards;grant(Lnet/minecraft/server/level/ServerPlayer;)V",
 			shift = Shift.AFTER))
 	public void be_award(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> info) {
 		PlayerAdvancementsEvents.PLAYER_ADVENCEMENT_COMPLETE.invoker().onAdvancementComplete(player, advancement, criterionName);

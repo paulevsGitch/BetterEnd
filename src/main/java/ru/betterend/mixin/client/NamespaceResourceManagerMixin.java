@@ -23,7 +23,7 @@ public abstract class NamespaceResourceManagerMixin {
 	@Shadow
 	public abstract Resource getResource(ResourceLocation id);
 	
-	@Inject(method = "getAllResources", cancellable = true, at = @At(
+	@Inject(method = "getResources", cancellable = true, at = @At(
 		value = "NEW",
 		target = "java/io/FileNotFoundException",
 		shift = Shift.BEFORE))

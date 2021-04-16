@@ -57,14 +57,14 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 		super(world, pos, yaw, profile);
 	}
 
-	@Inject(method = "createEndSpawnPlatform", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "createEndPlatform", at = @At("HEAD"), cancellable = true)
 	private void be_createEndSpawnPlatform(ServerLevel world, BlockPos centerPos, CallbackInfo info) {
 		if (!GeneratorOptions.generateObsidianPlatform()) {
 			info.cancel();
 		}
 	}
 
-	@Inject(method = "getTeleportTarget", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
 			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), yRot, xRot));
@@ -74,43 +74,43 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
 	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
 		if (be_canTeleport() && level instanceof ServerLevel) {
-			this.isChangingDimension = true;
-			ServerLevel serverWorld = this.getLevel();
+			isChangingDimension = true;
+			ServerLevel serverWorld = getLevel();
 			LevelData worldProperties = destination.getLevelData();
 			ServerPlayer player = ServerPlayer.class.cast(this);
-			this.connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()),
+			connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()),
 					gameMode.getGameModeForPlayer(),gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
-			this.connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
-			PlayerList playerManager = this.server.getPlayerList();
+			connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
+			PlayerList playerManager = server.getPlayerList();
 			playerManager.sendPlayerPermissionLevel(player);
 			serverWorld.removePlayerImmediately(player);
-			this.removed = false;
-			PortalInfo teleportTarget = this.findDimensionEntryPoint(destination);
+			removed = false;
+			PortalInfo teleportTarget = findDimensionEntryPoint(destination);
 			if (teleportTarget != null) {
 				serverWorld.getProfiler().push("moving");
 				serverWorld.getProfiler().pop();
 				serverWorld.getProfiler().push("placing");
-				this.setLevel(destination);
+				setLevel(destination);
 				destination.addDuringPortalTeleport(player);
-				this.setRot(teleportTarget.yRot, teleportTarget.xRot);
-				this.moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z);
+				setRot(teleportTarget.yRot, teleportTarget.xRot);
+				moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z);
 				serverWorld.getProfiler().pop();
-				this.triggerDimensionChangeTriggers(serverWorld);
-				this.gameMode.setLevel(destination);
-				this.connection.send(new ClientboundPlayerAbilitiesPacket(this.abilities));
+				triggerDimensionChangeTriggers(serverWorld);
+				gameMode.setLevel(destination);
+				connection.send(new ClientboundPlayerAbilitiesPacket(abilities));
 				playerManager.sendLevelInfo(player, destination);
 				playerManager.sendAllPlayerInfo(player);
 
-				for (MobEffectInstance statusEffectInstance : this.getActiveEffects()) {
-					this.connection.send(new ClientboundUpdateMobEffectPacket(getId(), statusEffectInstance));
+				for (MobEffectInstance statusEffectInstance : getActiveEffects()) {
+					connection.send(new ClientboundUpdateMobEffectPacket(getId(), statusEffectInstance));
 				}
 
-				this.connection.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));
-				this.lastSentExp = -1;
-				this.lastSentHealth = -1.0F;
-				this.lastSentFood = -1;
+				connection.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));
+				lastSentExp = -1;
+				lastSentHealth = -1.0F;
+				lastSentFood = -1;
 			}
-			this.be_resetExitPos();
+			be_resetExitPos();
 			info.setReturnValue(player);
 		}
 	}

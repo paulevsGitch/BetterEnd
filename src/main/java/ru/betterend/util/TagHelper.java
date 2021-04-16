@@ -12,16 +12,12 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class TagHelper {
-	private static final Map<ResourceLocation, Set<ResourceLocation>> TAGS_BLOCK = Maps.newHashMap();
-	private static final Map<ResourceLocation, Set<ResourceLocation>> TAGS_ITEM = Maps.newHashMap();
+	private static final Map<ResourceLocation, Set<ResourceLocation>> TAGS_BLOCK = Maps.newConcurrentMap();
+	private static final Map<ResourceLocation, Set<ResourceLocation>> TAGS_ITEM = Maps.newConcurrentMap();
 	
 	public static void addTag(Tag.Named<Block> tag, Block... blocks) {
 		ResourceLocation tagID = tag.getName();
-		Set<ResourceLocation> set = TAGS_BLOCK.get(tagID);
-		if (set == null) {
-			set = Sets.newHashSet();
-			TAGS_BLOCK.put(tagID, set);
-		}
+		Set<ResourceLocation> set = TAGS_BLOCK.computeIfAbsent(tagID, k -> Sets.newHashSet());
 		for (Block block: blocks) {
 			ResourceLocation id = Registry.BLOCK.getKey(block);
 			if (id != Registry.BLOCK.getDefaultKey()) {
@@ -32,11 +28,7 @@ public class TagHelper {
 	
 	public static void addTag(Tag.Named<Item> tag, ItemLike... items) {
 		ResourceLocation tagID = tag.getName();
-		Set<ResourceLocation> set = TAGS_ITEM.get(tagID);
-		if (set == null) {
-			set = Sets.newHashSet();
-			TAGS_ITEM.put(tagID, set);
-		}
+		Set<ResourceLocation> set = TAGS_ITEM.computeIfAbsent(tagID, k -> Sets.newHashSet());
 		for (ItemLike item: items) {
 			ResourceLocation id = Registry.ITEM.getKey(item.asItem());
 			if (id != Registry.ITEM.getDefaultKey()) {

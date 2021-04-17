@@ -19,14 +19,14 @@ import ru.betterend.util.TagHelper;
 @Mixin(TagLoader.class)
 public class TagLoaderMixin {
 	@Shadow
-	private String directory;
+	private String name;
 	
 	@Inject(method = "prepare", at = @At("RETURN"), cancellable = true)
 	public void be_prepareReload(ResourceManager manager, Executor executor, CallbackInfoReturnable<CompletableFuture<Map<ResourceLocation, Tag.Builder>>> info) {
 		CompletableFuture<Map<ResourceLocation, Tag.Builder>> future = info.getReturnValue();
 		info.setReturnValue(CompletableFuture.supplyAsync(() -> {
 			Map<ResourceLocation, Tag.Builder> map = Maps.newHashMap(future.join());
-			TagHelper.apply(directory, map);
+			TagHelper.apply(name, map);
 			return map;
 		}, executor));
 	}

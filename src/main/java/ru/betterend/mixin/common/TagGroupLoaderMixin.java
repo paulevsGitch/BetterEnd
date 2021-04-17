@@ -29,6 +29,6 @@ public class TagGroupLoaderMixin {
 			Map<Identifier, Tag.Builder> map = future.join();
 			TagHelper.apply(entryType, map);
 			return map;
-		}));
+		}, prepareExecutor));
 	}
 }

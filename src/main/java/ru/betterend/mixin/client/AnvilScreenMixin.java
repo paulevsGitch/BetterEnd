@@ -30,7 +30,6 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	private EditBox name;
 	
 	private final List<AbstractWidget> be_buttons = Lists.newArrayList();
-	private AnvilScreenHandlerExtended anvilHandler;
 	
 	public AnvilScreenMixin(AnvilMenu handler, Inventory playerInventory, Component title,
 			ResourceLocation texture) {
@@ -38,18 +37,17 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	}
 
 	@Inject(method = "subInit", at = @At("TAIL"))
-	protected void be_setup(CallbackInfo info) {
+	protected void be_subInit(CallbackInfo info) {
 		int x = (width - imageWidth) / 2;
 	    int y = (height - imageHeight) / 2;
-	    anvilHandler = (AnvilScreenHandlerExtended) menu;
 		be_buttons.clear();
-	    be_buttons.add(new Button(x + 8, y + 45, 15, 20, new TextComponent("<"), (b) -> be_previousRecipe()));
-		be_buttons.add(new Button(x + 154, y + 45, 15, 20, new TextComponent(">"), (b) -> be_nextRecipe()));
+	    be_buttons.add(new Button(x + 8, y + 45, 15, 20, new TextComponent("<"), b -> be_previousRecipe()));
+		be_buttons.add(new Button(x + 154, y + 45, 15, 20, new TextComponent(">"), b -> be_nextRecipe()));
 	}
 	
 	@Inject(method = "renderFg", at = @At("TAIL"))
 	protected void be_renderForeground(PoseStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-		this.be_buttons.forEach(button -> {
+		be_buttons.forEach(button -> {
 			button.render(matrices, mouseX, mouseY, delta);
 		});
 	}
@@ -59,23 +57,23 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 		AnvilScreenHandlerExtended anvilHandler = (AnvilScreenHandlerExtended) handler;
 		if (anvilHandler.be_getCurrentRecipe() != null) {
 			if (anvilHandler.be_getRecipes().size() > 1) {
-				this.be_buttons.forEach(button -> button.visible = true);
+				be_buttons.forEach(button -> button.visible = true);
 			} else {
-				this.be_buttons.forEach(button -> button.visible = false);
+				be_buttons.forEach(button -> button.visible = false);
 			}
-			this.name.setValue("");
+			name.setValue("");
 			info.cancel();
 		} else {
-			this.be_buttons.forEach(button -> button.visible = false);
+			be_buttons.forEach(button -> button.visible = false);
 		}
 	}
 	
 	private void be_nextRecipe() {
-		anvilHandler.be_nextRecipe();
+		((AnvilScreenHandlerExtended) menu).be_nextRecipe();
 	}
 	
 	private void be_previousRecipe() {
-		anvilHandler.be_previousRecipe();
+		((AnvilScreenHandlerExtended) menu).be_previousRecipe();
 	}
 	
 	@Override

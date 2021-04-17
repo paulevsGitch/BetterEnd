@@ -19,10 +19,8 @@ public class AnvilBlockMixin {
 			try {
 				BlockState state = fallingState.setValue(destructionProperty, destruction + 1);
 				info.setReturnValue(state);
-				info.cancel();
 			} catch (Exception ex) {
 				info.setReturnValue(null);
-				info.cancel();
 			}
 		}
 	}

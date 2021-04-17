@@ -38,17 +38,18 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 
 	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V", at = @At("TAIL"))
 	public void be_initAnvilLevel(int syncId, Inventory inventory, ContainerLevelAccess context, CallbackInfo info) {
+		this.anvilLevel = addDataSlot(DataSlot.standalone());
 		if (context != ContainerLevelAccess.NULL) {
-			int anvLevel = context.evaluate((world, blockPos) -> {
+			int level = context.evaluate((world, blockPos) -> {
 				Block anvilBlock = world.getBlockState(blockPos).getBlock();
 				if (anvilBlock instanceof EndAnvilBlock) {
 					return ((EndAnvilBlock) anvilBlock).getCraftingLevel();
 				}
 				return 1;
 			}, 1);
-			DataSlot anvilLevel = DataSlot.standalone();
-			anvilLevel.set(anvLevel);
-			this.anvilLevel = addDataSlot(anvilLevel);
+			anvilLevel.set(level);
+		} else {
+			anvilLevel.set(1);
 		}
 	}
 	
@@ -65,10 +66,10 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 	@Inject(method = "onTake", at = @At("HEAD"), cancellable = true)
 	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
 		if (be_currentRecipe != null) {
-			this.inputSlots.getItem(0).shrink(be_currentRecipe.getInputCount());
+			inputSlots.getItem(0).shrink(be_currentRecipe.getInputCount());
 			stack = be_currentRecipe.craft(inputSlots, player);
-			this.slotsChanged(inputSlots);
-			this.access.execute((world, blockPos) -> {
+			slotsChanged(inputSlots);
+			access.execute((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
 				if (!player.abilities.instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextFloat() < 0.12F) {
 					BlockState landingState = AnvilBlock.damage(anvilState);
@@ -117,10 +118,10 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0) {
-			this.be_previousRecipe();
+			be_previousRecipe();
 			return true;
 		} else if (id == 1) {
-			this.be_nextRecipe();
+			be_nextRecipe();
 			return true;
 		}
 		return super.clickMenuButton(player, id);
@@ -128,23 +129,23 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 	
 	private void be_updateResult() {
 		if (be_currentRecipe == null) return;
-		this.resultSlots.setItem(0, be_currentRecipe.assemble(inputSlots));
-		this.broadcastChanges();
+		resultSlots.setItem(0, be_currentRecipe.assemble(inputSlots));
+		broadcastChanges();
 	}
 	
 	@Override
 	public void be_updateCurrentRecipe(AnvilRecipe recipe) {
 		this.be_currentRecipe = recipe;
-		this.be_updateResult();
+		be_updateResult();
 	}
 	
 	@Override
 	public AnvilRecipe be_getCurrentRecipe() {
-		return this.be_currentRecipe;
+		return be_currentRecipe;
 	}
 	
 	@Override
 	public List<AnvilRecipe> be_getRecipes() {
-		return this.be_recipes;
+		return be_recipes;
 	}
 }

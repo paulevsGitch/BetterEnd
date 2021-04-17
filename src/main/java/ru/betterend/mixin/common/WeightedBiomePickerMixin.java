@@ -18,11 +18,11 @@ import ru.betterend.interfaces.IBiomeList;
 
 @Mixin(value = WeightedBiomePicker.class, remap = false)
 public class WeightedBiomePickerMixin implements IBiomeList {
-	private List<ResourceKey<Biome>> biomes = Lists.newArrayList();
+	private final List<ResourceKey<Biome>> biomes = Lists.newArrayList();
 	
 	@Inject(method = "addBiome", at = @At("TAIL"))
 	private void be_addBiome(final ResourceKey<Biome> biome, final double weight, CallbackInfo info) {
-		if (be_isCorrectPicker((WeightedBiomePicker) (Object) this)) {
+		if (be_isCorrectPicker(WeightedBiomePicker.class.cast(this))) {
 			biomes.add(biome);
 		}
 	}

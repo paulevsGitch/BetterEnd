@@ -22,7 +22,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -53,6 +52,14 @@ public class CubozoaEntity extends SchoolingFishEntity {
 		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.SULPHUR_SPRINGS) {
 			this.dataTracker.set(VARIANT, (byte) 1);
 		}
+		
+		if (entityTag != null) {
+			if (entityTag.contains("variant"))
+				this.dataTracker.set(VARIANT, entityTag.getByte("variant"));
+			if (entityTag.contains("scale"))
+				this.dataTracker.set(SCALE, entityTag.getByte("scale"));
+		}
+		
 		this.calculateDimensions();
 		return data;
 	}
@@ -120,7 +127,11 @@ public class CubozoaEntity extends SchoolingFishEntity {
 
 	@Override
 	protected ItemStack getFishBucketItem() {
-		return new ItemStack(Items.WATER_BUCKET);
+		ItemStack bucket = EndItems.BUCKET_CUBOZOA.getDefaultStack();
+		CompoundTag tag = bucket.getOrCreateTag();
+		tag.putByte("variant", dataTracker.get(VARIANT));
+		tag.putByte("scale", dataTracker.get(SCALE));
+		return bucket;
 	}
 
 	@Override

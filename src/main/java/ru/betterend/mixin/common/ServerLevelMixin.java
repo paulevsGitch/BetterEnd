@@ -46,7 +46,7 @@ public class ServerLevelMixin {
 		lastWorld = session.getLevelId();
 		
 		@SuppressWarnings("resource")
-		ServerLevel world = (ServerLevel) (Object) this;
+		ServerLevel world = ServerLevel.class.cast(this);
 		File dir = session.getDimensionPath(world.dimension());
 		if (!new File(dir, "level.dat").exists()) {
 			dir = dir.getParentFile();
@@ -73,7 +73,7 @@ public class ServerLevelMixin {
 	@Inject(method = "getSharedSpawnPos", at = @At("HEAD"), cancellable = true)
 	private void be_getSharedSpawnPos(CallbackInfoReturnable<BlockPos> info) {
 		if (GeneratorOptions.changeSpawn()) {
-			if (((ServerLevel) (Object) this).dimension() == Level.END) {
+			if (ServerLevel.class.cast(this).dimension() == Level.END) {
 				info.setReturnValue(GeneratorOptions.getSpawn());
 				info.cancel();
 			}

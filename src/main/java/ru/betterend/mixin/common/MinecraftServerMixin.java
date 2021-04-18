@@ -47,7 +47,7 @@ public class MinecraftServerMixin {
 	@Inject(method = "loadLevel", at = @At(value = "RETURN"), cancellable = true)
 	private void be_loadLevel(CallbackInfo info) {
 		be_injectRecipes();
-		EndBiomes.initRegistry((MinecraftServer) (Object) this);
+		EndBiomes.initRegistry(MinecraftServer.class.cast(this));
 	}
 	
 	@Inject(method = "overworld", at = @At(value = "HEAD"), cancellable = true)

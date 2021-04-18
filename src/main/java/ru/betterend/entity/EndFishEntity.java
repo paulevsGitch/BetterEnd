@@ -46,6 +46,14 @@ public class EndFishEntity extends SchoolingFishEntity {
 		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.SULPHUR_SPRINGS) {
 			this.dataTracker.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
 		}
+		
+		if (entityTag != null) {
+			if (entityTag.contains("variant"))
+				this.dataTracker.set(VARIANT, entityTag.getByte("variant"));
+			if (entityTag.contains("scale"))
+				this.dataTracker.set(SCALE, entityTag.getByte("scale"));
+		}
+		
 		this.calculateDimensions();
 		return data;
 	}
@@ -77,7 +85,11 @@ public class EndFishEntity extends SchoolingFishEntity {
 
 	@Override
 	protected ItemStack getFishBucketItem() {
-		return new ItemStack(EndItems.BUCKET_END_FISH);
+		ItemStack bucket = EndItems.BUCKET_END_FISH.getDefaultStack();
+		CompoundTag tag = bucket.getOrCreateTag();
+		tag.putByte("variant", dataTracker.get(VARIANT));
+		tag.putByte("scale", dataTracker.get(SCALE));
+		return bucket;
 	}
 
 	@Override

@@ -45,7 +45,6 @@ public class ServerLevelMixin {
 		
 		lastWorld = session.getLevelId();
 		
-		@SuppressWarnings("resource")
 		ServerLevel world = ServerLevel.class.cast(this);
 		File dir = session.getDimensionPath(world.dimension());
 		if (!new File(dir, "level.dat").exists()) {

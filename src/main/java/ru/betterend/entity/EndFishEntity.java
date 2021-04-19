@@ -43,15 +43,20 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		if (entityTag != null) {
-			if (entityTag.contains("variant"))
-				this.entityData.set(VARIANT, entityTag.getByte("variant"));
-			if (entityTag.contains("scale"))
-				this.entityData.set(SCALE, entityTag.getByte("scale"));
-		}
-		else if (EndBiomes.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
+		
+		if (EndBiomes.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
 			this.entityData.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
 		}
+		
+		if (entityTag != null) {
+			if (entityTag.contains("Variant")) {
+				this.entityData.set(VARIANT, entityTag.getByte("variant"));
+			}
+			if (entityTag.contains("Scale")) {
+				this.entityData.set(SCALE, entityTag.getByte("scale"));
+			}
+		}
+		
 		this.refreshDimensions();
 		return data;
 	}

@@ -49,15 +49,20 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		if (entityTag != null) {
-			if (entityTag.contains("variant"))
-				this.entityData.set(VARIANT, entityTag.getByte("variant"));
-			if (entityTag.contains("scale"))
-				this.entityData.set(SCALE, entityTag.getByte("scale"));
-		}
-		else if (EndBiomes.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
+		
+		if (EndBiomes.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
 			this.entityData.set(VARIANT, (byte) 1);
 		}
+		
+		if (entityTag != null) {
+			if (entityTag.contains("Variant")) {
+				this.entityData.set(VARIANT, entityTag.getByte("Variant"));
+			}
+			if (entityTag.contains("Scale")) {
+				this.entityData.set(SCALE, entityTag.getByte("Scale"));
+			}
+		}
+		
 		this.refreshDimensions();
 		return data;
 	}
@@ -91,8 +96,8 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	protected ItemStack getBucketItemStack() {
 		ItemStack bucket = EndItems.BUCKET_CUBOZOA.getDefaultInstance();
 		CompoundTag tag = bucket.getOrCreateTag();
-		tag.putByte("variant", entityData.get(VARIANT));
-		tag.putByte("scale", entityData.get(SCALE));
+		tag.putByte("Variant", entityData.get(VARIANT));
+		tag.putByte("Scale", entityData.get(SCALE));
 		return bucket;
 	}
 

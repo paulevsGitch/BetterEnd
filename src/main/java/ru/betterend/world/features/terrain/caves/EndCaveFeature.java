@@ -2,6 +2,9 @@ package ru.betterend.world.features.terrain.caves;
 
 import java.util.Random;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -13,7 +16,6 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import com.google.common.collect.Sets;
 import ru.betterend.interfaces.IBiomeArray;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
@@ -22,7 +24,6 @@ import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 import ru.betterend.world.features.DefaultFeature;
-import ru.betterend.world.generator.GeneratorOptions;
 
 public abstract class EndCaveFeature extends DefaultFeature {
 	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
@@ -30,10 +31,8 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	protected static final BlockState WATER = Blocks.WATER.defaultBlockState();
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!(GeneratorOptions.useNewGenerator() && GeneratorOptions.noRingVoid())
-				|| pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
+		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 2500) {
 			return false;
 		}
 
@@ -190,13 +189,13 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		}
 		return false;
 	}
-
+	
 	protected boolean biomeMissingCaves(WorldGenLevel world, BlockPos pos) {
 		for (int x = -2; x < 3; x++) {
 			for (int z = -2; z < 3; z++) {
 				Biome biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
 				EndBiome endBiome = EndBiomes.getFromBiome(biome);
-				if (!endBiome.hasCaves()) {
+				if (!endBiome.hasCaves() && EndBiomes.LAND_BIOMES.containsImmutable(endBiome.getID())) {
 					return true;
 				}
 			}

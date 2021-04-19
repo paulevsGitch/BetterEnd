@@ -24,7 +24,6 @@ import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 import ru.betterend.world.features.DefaultFeature;
-import ru.betterend.world.generator.GeneratorOptions;
 
 public abstract class EndCaveFeature extends DefaultFeature {
 	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
@@ -33,7 +32,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	
 	@Override
 	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
-		if (!(GeneratorOptions.useNewGenerator() && GeneratorOptions.noRingVoid()) || pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) {
+		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 2500) {
 			return false;
 		}
 		
@@ -194,7 +193,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			for (int z = -2; z < 3; z++) {
 				Biome biome = world.getBiome(pos.add(x << 4, 0, z << 4));
 				EndBiome endBiome = EndBiomes.getFromBiome(biome);
-				if (!endBiome.hasCaves()) {
+				if (!endBiome.hasCaves() && EndBiomes.LAND_BIOMES.containsImmutable(endBiome.getID())) {
 					return true;
 				}
 			}

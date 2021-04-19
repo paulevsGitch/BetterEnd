@@ -7,14 +7,14 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.biome.EndBiome;
 
 public class BonemealUtil {
-	private static final Map<Identifier, Map<Block, GrassList>> GRASS_BIOMES = Maps.newHashMap();
+	private static final Map<ResourceLocation, Map<Block, GrassList>> GRASS_BIOMES = Maps.newHashMap();
 	private static final Map<Block, GrassList> GRASS_TYPES = Maps.newHashMap();
 	
 	public static void init() {
@@ -96,7 +96,7 @@ public class BonemealUtil {
 		list.addGrass(plant, chance);
 	}
 	
-	public static Block getGrass(Identifier biomeID, Block terrain, Random random) {
+	public static Block getGrass(ResourceLocation biomeID, Block terrain, Random random) {
 		Map<Block, GrassList> map = GRASS_BIOMES.get(biomeID);
 		GrassList list = null;
 		if (map != null) {

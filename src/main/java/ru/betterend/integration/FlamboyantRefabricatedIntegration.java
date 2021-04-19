@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
 import ru.betterend.blocks.HydraluxPetalColoredBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.registry.EndBlocks;
@@ -26,7 +26,7 @@ public class FlamboyantRefabricatedIntegration extends ModIntegration {
 		}*/
 		
 		Map<Integer, String> colors = Maps.newHashMap();
-		Map<Integer, ItemConvertible> dyes = Maps.newHashMap();
+		Map<Integer, ItemLike> dyes = Maps.newHashMap();
 		/*for (Object val: values) {
 			Integer color = (Integer) getFieldValue(fDyeColor, "signColor", val);
 			String name = (String) getFieldValue(fDyeColor, "name", val);
@@ -57,7 +57,7 @@ public class FlamboyantRefabricatedIntegration extends ModIntegration {
 		new ColoredMaterial(HydraluxPetalColoredBlock::new, EndBlocks.HYDRALUX_PETAL_BLOCK, colors, dyes, true);
 	}
 	
-	private void addColor(String hex, String name, Map<Integer, String> colors, Map<Integer, ItemConvertible> dyes) {
+	private void addColor(String hex, String name, Map<Integer, String> colors, Map<Integer, ItemLike> dyes) {
 		int color = MHelper.color(hex);
 		colors.put(color, name);
 		dyes.put(color, getItem(name + "_dye"));

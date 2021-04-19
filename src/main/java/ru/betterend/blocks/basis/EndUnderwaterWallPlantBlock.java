@@ -2,58 +2,58 @@ package ru.betterend.blocks.basis;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.block.Material;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
 
-public class EndUnderwaterWallPlantBlock extends EndWallPlantBlock implements FluidFillable {
+public class EndUnderwaterWallPlantBlock extends EndWallPlantBlock implements LiquidBlockContainer {
 	
 	public EndUnderwaterWallPlantBlock() {
-		super(FabricBlockSettings.of(Material.UNDERWATER_PLANT)
+		super(FabricBlockSettings.of(Material.WATER_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(BlockSoundGroup.WET_GRASS)
 				.breakByHand(true)
-				.noCollision());
+				.sound(SoundType.WET_GRASS)
+				.noCollission());
 	}
 	
 	public EndUnderwaterWallPlantBlock(int light) {
-		super(FabricBlockSettings.of(Material.UNDERWATER_PLANT)
+		super(FabricBlockSettings.of(Material.WATER_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(BlockSoundGroup.WET_GRASS)
-				.luminance(light)
 				.breakByHand(true)
-				.noCollision());
+				.luminance(light)
+				.sound(SoundType.WET_GRASS)
+				.noCollission());
 	}
 	
-	public EndUnderwaterWallPlantBlock(Settings settings) {
+	public EndUnderwaterWallPlantBlock(Properties settings) {
 		super(settings);
 	}
 	
 	@Override
-	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;
 	}
 
 	@Override
-	public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+	public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		return false;
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return Fluids.WATER.getStill(false);
+		return Fluids.WATER.getSource(false);
 	}
 	
 	@Override
-	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		return world.getFluidState(pos).getFluid() == Fluids.WATER && super.canPlaceAt(state, world, pos);
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+		return world.getFluidState(pos).getType() == Fluids.WATER && super.canSurvive(state, world, pos);
 	}
 }

@@ -7,18 +7,18 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import com.google.common.collect.Multimap;
 
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.item.ArmorItem;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.ArmorItem;
 
 @Mixin(ArmorItem.class)
 public interface ArmorItemAccessor {
-	@Accessor("MODIFIERS")
+	@Accessor("ARMOR_MODIFIER_UUID_PER_SLOT")
 	UUID[] be_getModifiers();
 
-	@Accessor("attributeModifiers")
-	Multimap<EntityAttribute, EntityAttributeModifier> be_getAttributeModifiers();
+	@Accessor("defaultModifiers")
+	Multimap<Attribute, AttributeModifier> be_getDefaultModifiers();
 
-	@Accessor("attributeModifiers")
-	void be_setAttributeModifiers(Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers);
+	@Accessor("defaultModifiers")
+	void be_setDefaultModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers);
 }

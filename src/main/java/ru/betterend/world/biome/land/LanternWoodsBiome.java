@@ -1,7 +1,7 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
+import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -33,7 +33,7 @@ public class LanternWoodsBiome extends EndBiome {
 				.addFeature(EndFeatures.CHARNIA_RED)
 				.addFeature(EndFeatures.RUSCUS)
 				.addFeature(EndFeatures.RUSCUS_WOOD)
-				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
+				.addStructureFeature(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

@@ -5,14 +5,15 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePumpkinFeature;
 import ru.betterend.world.features.CharniaFeature;
@@ -29,7 +30,6 @@ import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.LanceleafFeature;
 import ru.betterend.world.features.MengerSpongeFeature;
 import ru.betterend.world.features.NeonCactusFeature;
-import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.SilkMothNestFeature;
 import ru.betterend.world.features.SingleInvertedScatterFeature;
 import ru.betterend.world.features.SinglePlantFeature;
@@ -228,7 +228,7 @@ public class EndFeatures {
 	public static final DefaultFeature END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, EndBlocks.CAVE_MOSS);
 	public static final DefaultFeature CAVE_PUMPKIN = new CavePumpkinFeature();
 	
-	public static void registerBiomeFeatures(Identifier id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+	public static void registerBiomeFeatures(ResourceLocation id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			return;
 		}
@@ -237,7 +237,7 @@ public class EndFeatures {
 			if (id.getNamespace().equals("minecraft")) {
 				String path = id.getPath();
 				if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands")) {
-					int pos = GenerationStep.Feature.VEGETAL_DECORATION.ordinal();
+					int pos = GenerationStep.Decoration.VEGETAL_DECORATION.ordinal();
 					if (pos < features.size()) {
 						List<Supplier<ConfiguredFeature<?, ?>>> list = features.get(pos);
 						// If only chorus plants are enabled

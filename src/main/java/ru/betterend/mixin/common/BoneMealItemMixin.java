@@ -7,17 +7,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.BoneMealItem;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
@@ -28,20 +28,20 @@ import ru.betterend.world.biome.EndBiome;
 @Mixin(BoneMealItem.class)
 public class BoneMealItemMixin {
 	private static final Direction[] DIR = BlocksHelper.makeHorizontal();
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 
-	@Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
-	private void be_onUse(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
-		World world = context.getWorld();
-		BlockPos blockPos = context.getBlockPos();
-		if (!world.isClient) {
-			BlockPos offseted = blockPos.offset(context.getSide());
-			boolean endBiome = world.getBiome(offseted).getCategory() == Category.THEEND;
+	@Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
+	private void be_onUse(UseOnContext context, CallbackInfoReturnable<InteractionResult> info) {
+		Level world = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
+		if (!world.isClientSide) {
+			BlockPos offseted = blockPos.relative(context.getClickedFace());
+			boolean endBiome = world.getBiome(offseted).getBiomeCategory() == BiomeCategory.THEEND;
 			
-			if (world.getBlockState(blockPos).isIn(EndTags.END_GROUND)) {
+			if (world.getBlockState(blockPos).is(EndTags.END_GROUND)) {
 				boolean consume = false;
-				if (world.getBlockState(blockPos).isOf(Blocks.END_STONE)) {
-					BlockState nylium = beGetNylium(world, blockPos);
+				if (world.getBlockState(blockPos).is(Blocks.END_STONE)) {
+					BlockState nylium = be_getNylium(world, blockPos);
 					if (nylium != null) {
 						BlocksHelper.setWithoutUpdate(world, blockPos, nylium);
 						consume = true;
@@ -50,32 +50,32 @@ public class BoneMealItemMixin {
 				else {
 					if (!world.getFluidState(offseted).isEmpty() && endBiome) {
 						if (world.getBlockState(offseted).getBlock().equals(Blocks.WATER)) {
-							consume = beGrowWaterGrass(world, blockPos);
+							consume = be_growWaterGrass(world, blockPos);
 						}
 					}
 					else {
-						consume = beGrowGrass(world, blockPos);
+						consume = be_growGrass(world, blockPos);
 					}
 				}
 				if (consume) {
 					if (!context.getPlayer().isCreative()) {
-						context.getStack().decrement(1);
+						context.getItemInHand().shrink(1);
 					}
-					world.syncWorldEvent(2005, blockPos, 0);
-					info.setReturnValue(ActionResult.SUCCESS);
+					world.levelEvent(2005, blockPos, 0);
+					info.setReturnValue(InteractionResult.SUCCESS);
 					info.cancel();
 				}
 			}
 			else if (!world.getFluidState(offseted).isEmpty() && endBiome) {
 				if (world.getBlockState(offseted).getBlock().equals(Blocks.WATER)) {
-					info.setReturnValue(ActionResult.FAIL);
+					info.setReturnValue(InteractionResult.FAIL);
 					info.cancel();
 				}
 			}
 		}
 	}
 	
-	private boolean beGrowGrass(World world, BlockPos pos) {
+	private boolean be_growGrass(Level world, BlockPos pos) {
 		int y1 = pos.getY() + 3;
 		int y2 = pos.getY() - 3;
 		boolean result = false;
@@ -86,9 +86,9 @@ public class BoneMealItemMixin {
 			POS.setZ(z);
 			for (int y = y1; y >= y2; y--) {
 				POS.setY(y);
-				BlockPos down = POS.down();
-				if (world.isAir(POS) && !world.isAir(down)) {
-					BlockState grass = beGetGrassState(world, down);
+				BlockPos down = POS.below();
+				if (world.isEmptyBlock(POS) && !world.isEmptyBlock(down)) {
+					BlockState grass = be_getGrassState(world, down);
 					if (grass != null) {
 						BlocksHelper.setWithoutUpdate(world, POS, grass);
 						result = true;
@@ -100,7 +100,7 @@ public class BoneMealItemMixin {
 		return result;
 	}
 	
-	private boolean beGrowWaterGrass(World world, BlockPos pos) {
+	private boolean be_growWaterGrass(Level world, BlockPos pos) {
 		int y1 = pos.getY() + 3;
 		int y2 = pos.getY() - 3;
 		boolean result = false;
@@ -111,9 +111,9 @@ public class BoneMealItemMixin {
 			POS.setZ(z);
 			for (int y = y1; y >= y2; y--) {
 				POS.setY(y);
-				BlockPos down = POS.down();
-				if (world.getBlockState(POS).isOf(Blocks.WATER) && world.getBlockState(down).isIn(EndTags.END_GROUND)) {
-					BlockState grass = beGetWaterGrassState(world, down);
+				BlockPos down = POS.below();
+				if (world.getBlockState(POS).is(Blocks.WATER) && world.getBlockState(down).is(EndTags.END_GROUND)) {
+					BlockState grass = be_getWaterGrassState(world, down);
 					if (grass != null) {
 						BlocksHelper.setWithoutUpdate(world, POS, grass);
 						result = true;
@@ -125,31 +125,31 @@ public class BoneMealItemMixin {
 		return result;
 	}
 	
-	private BlockState beGetGrassState(World world, BlockPos pos) {
+	private BlockState be_getGrassState(Level world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		block = BonemealUtil.getGrass(EndBiomes.getBiomeID(world.getBiome(pos)), block, world.getRandom());
-		return block == null ? null : block.getDefaultState();
+		return block == null ? null : block.defaultBlockState();
 	}
 	
-	private BlockState beGetWaterGrassState(World world, BlockPos pos) {
+	private BlockState be_getWaterGrassState(Level world, BlockPos pos) {
 		EndBiome biome = EndBiomes.getFromBiome(world.getBiome(pos));
 		if (world.random.nextInt(16) == 0) {
-			return EndBlocks.CHARNIA_RED.getDefaultState();
+			return EndBlocks.CHARNIA_RED.defaultBlockState();
 		}
 		else if (biome == EndBiomes.FOGGY_MUSHROOMLAND || biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
-			return world.random.nextBoolean() ? EndBlocks.CHARNIA_LIGHT_BLUE.getDefaultState() : EndBlocks.CHARNIA_LIGHT_BLUE.getDefaultState();
+			return world.random.nextBoolean() ? EndBlocks.CHARNIA_LIGHT_BLUE.defaultBlockState() : EndBlocks.CHARNIA_LIGHT_BLUE.defaultBlockState();
 		}
 		else if (biome == EndBiomes.AMBER_LAND) {
-			return world.random.nextBoolean() ? EndBlocks.CHARNIA_ORANGE.getDefaultState() : EndBlocks.CHARNIA_RED.getDefaultState();
+			return world.random.nextBoolean() ? EndBlocks.CHARNIA_ORANGE.defaultBlockState() : EndBlocks.CHARNIA_RED.defaultBlockState();
 		}
 		else if (biome == EndBiomes.CHORUS_FOREST || biome == EndBiomes.SHADOW_FOREST) {
-			return EndBlocks.CHARNIA_PURPLE.getDefaultState();
+			return EndBlocks.CHARNIA_PURPLE.defaultBlockState();
 		}
 		return null;
 	}
 
-	private void beShuffle(Random random) {
+	private void be_shuffle(Random random) {
 		for (int i = 0; i < 4; i++) {
 			int j = random.nextInt(4);
 			Direction d = DIR[i];
@@ -158,10 +158,10 @@ public class BoneMealItemMixin {
 		}
 	}
 
-	private BlockState beGetNylium(World world, BlockPos pos) {
-		beShuffle(world.random);
+	private BlockState be_getNylium(Level world, BlockPos pos) {
+		be_shuffle(world.random);
 		for (Direction dir : DIR) {
-			BlockState state = world.getBlockState(pos.offset(dir));
+			BlockState state = world.getBlockState(pos.relative(dir));
 			if (BlocksHelper.isEndNylium(state))
 				return state;
 		}

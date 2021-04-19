@@ -7,21 +7,21 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.BlockProperties.LumecornShape;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
@@ -32,21 +32,21 @@ import ru.betterend.registry.EndTags;
 import ru.betterend.util.MHelper;
 
 public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
-	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.of("shape", LumecornShape.class);
-	private static final VoxelShape SHAPE_BOTTOM = Block.createCuboidShape(6, 0, 6, 10, 16, 10);
-	private static final VoxelShape SHAPE_TOP = Block.createCuboidShape(6, 0, 6, 10, 8, 10);
+	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create("shape", LumecornShape.class);
+	private static final VoxelShape SHAPE_BOTTOM = Block.box(6, 0, 6, 10, 16, 10);
+	private static final VoxelShape SHAPE_TOP = Block.box(6, 0, 6, 10, 8, 10);
 	
 	public LumecornBlock() {
 		super(FabricBlockSettings.of(Material.WOOD)
 				.breakByTool(FabricToolTags.AXES)
 				.hardness(0.5F)
-				.luminance((state) -> {
-			return state.get(SHAPE).getLight();
+				.lightLevel((state) -> {
+			return state.getValue(SHAPE).getLight();
 		}));
 	}
 	
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
 
@@ -56,28 +56,28 @@ public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 	}
 	
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return state.get(SHAPE) == LumecornShape.LIGHT_TOP ? SHAPE_TOP : SHAPE_BOTTOM;
+	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+		return state.getValue(SHAPE) == LumecornShape.LIGHT_TOP ? SHAPE_TOP : SHAPE_BOTTOM;
 	}
 	
 	@Override
-	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		LumecornShape shape = state.get(SHAPE);
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
-			return world.getBlockState(pos.down()).isIn(EndTags.END_GROUND);
+			return world.getBlockState(pos.below()).is(EndTags.END_GROUND);
 		}
 		else if (shape == LumecornShape.LIGHT_TOP) {
-			return world.getBlockState(pos.down()).isOf(this);
+			return world.getBlockState(pos.below()).is(this);
 		}
 		else {
-			return world.getBlockState(pos.down()).isOf(this) && world.getBlockState(pos.up()).isOf(this);
+			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
 	
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-		if (!canPlaceAt(state, world, pos)) {
-			return Blocks.AIR.getDefaultState();
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+		if (!canSurvive(state, world, pos)) {
+			return Blocks.AIR.defaultBlockState();
 		}
 		else {
 			return state;
@@ -85,8 +85,8 @@ public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 	}
 	
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		LumecornShape shape = state.get(SHAPE);
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL || shape == LumecornShape.MIDDLE) {
 			return Collections.singletonList(new ItemStack(EndBlocks.LUMECORN_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
 		}
@@ -95,8 +95,8 @@ public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-		LumecornShape shape = state.get(SHAPE);
+	public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
+		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL || shape == LumecornShape.MIDDLE) {
 			return new ItemStack(EndBlocks.LUMECORN_SEED);
 		}

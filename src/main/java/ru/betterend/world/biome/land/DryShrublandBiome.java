@@ -1,7 +1,7 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
+import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
@@ -21,7 +21,7 @@ public class DryShrublandBiome extends EndBiome {
 				.addFeature(EndFeatures.AERIDIUM)
 				.addFeature(EndFeatures.LUTEBUS)
 				.addFeature(EndFeatures.LAMELLARIUM)
-				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
+				.addStructureFeature(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

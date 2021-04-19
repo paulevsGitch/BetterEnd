@@ -2,10 +2,10 @@ package ru.betterend.world.biome.cave;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.collection.WeightedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.ai.behavior.WeightedList;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
@@ -38,11 +38,11 @@ public class EndCaveBiome extends EndBiome {
 	}
 	
 	public Feature<?> getFloorFeature(Random random) {
-		return floorFeatures.isEmpty() ? null : floorFeatures.pickRandom(random);
+		return floorFeatures.isEmpty() ? null : floorFeatures.getOne(random);
 	}
 	
 	public Feature<?> getCeilFeature(Random random) {
-		return ceilFeatures.isEmpty() ? null : ceilFeatures.pickRandom(random);
+		return ceilFeatures.isEmpty() ? null : ceilFeatures.getOne(random);
 	}
 	
 	public float getFloorDensity() {

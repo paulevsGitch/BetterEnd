@@ -2,10 +2,10 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
@@ -20,13 +20,13 @@ public abstract class SkyScatterFeature extends ScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		if (!world.isAir(blockPos)) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+		if (!world.isEmptyBlock(blockPos)) {
 			return false;
 		}
 		
 		for (Direction dir: BlocksHelper.HORIZONTAL) {
-			if (!world.isAir(blockPos.offset(dir))) {
+			if (!world.isEmptyBlock(blockPos.relative(dir))) {
 				return false;
 			}
 		}
@@ -38,16 +38,16 @@ public abstract class SkyScatterFeature extends ScatterFeature {
 	}
 	
 	@Override
-	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos) {
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) {
 		return true;
 	}
 	
 	@Override
-	protected BlockPos getCenterGround(StructureWorldAccess world, BlockPos pos) {
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		return new BlockPos(pos.getX(), MHelper.randRange(32, 192, world.getRandom()), pos.getZ());
 	}
 	
-	protected boolean getGroundPlant(StructureWorldAccess world, Mutable pos) {
+	protected boolean getGroundPlant(WorldGenLevel world, MutableBlockPos pos) {
 		pos.setY(pos.getY() + MHelper.randRange(-getYOffset(), getYOffset(), world.getRandom()));
 		return true;
 	}

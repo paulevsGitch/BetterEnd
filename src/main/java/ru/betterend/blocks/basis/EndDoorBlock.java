@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.BlockPatterned;
@@ -20,12 +20,12 @@ import ru.betterend.patterns.Patterns;
 
 public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockPatterned {
 	public EndDoorBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).strength(3F, 3F).nonOpaque());
+		super(FabricBlockSettings.copyOf(source).strength(3F, 3F).noOcclusion());
 	}
 
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		if (state.get(HALF) == DoubleBlockHalf.LOWER)
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		if (state.getValue(HALF) == DoubleBlockHalf.LOWER)
 			return Collections.singletonList(new ItemStack(this.asItem()));
 		else
 			return Collections.emptyList();
@@ -38,13 +38,13 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockPat
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		String blockId = Registry.BLOCK.getId(this).getPath();
+		String blockId = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, blockId, blockId);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		String blockId = Registry.BLOCK.getId(this).getPath();
+		String blockId = Registry.BLOCK.getKey(this).getPath();
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, block);
 		}
@@ -61,7 +61,7 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockPat
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_DOOR;
 	}
 }

@@ -1,14 +1,14 @@
 package ru.betterend.recipe.builders;
 
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.BlastingRecipe;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.SmeltingRecipe;
-import net.minecraft.recipe.SmokingRecipe;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.BlastingRecipe;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.SmokingRecipe;
+import net.minecraft.world.level.ItemLike;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;
@@ -17,8 +17,8 @@ import ru.betterend.util.RecipeHelper;
 public class FurnaceRecipe {
 	private static final FurnaceRecipe INSTANCE = new FurnaceRecipe();
 	
-	private ItemConvertible input;
-	private ItemConvertible output;
+	private ItemLike input;
+	private ItemLike output;
 	private boolean exist;
 	private String group;
 	private String name;
@@ -28,7 +28,7 @@ public class FurnaceRecipe {
 	
 	private FurnaceRecipe() {}
 	
-	public static FurnaceRecipe make(String name, ItemConvertible input, ItemConvertible output) {
+	public static FurnaceRecipe make(String name, ItemLike input, ItemLike output) {
 		INSTANCE.name = name;
 		INSTANCE.group = "";
 		INSTANCE.input = input;
@@ -74,22 +74,22 @@ public class FurnaceRecipe {
 	
 	public void build(boolean blasting, boolean campfire, boolean smoker) {
 		if (exist) {
-			Identifier id = BetterEnd.makeID(name);
-			SmeltingRecipe recipe = new SmeltingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time);
+			ResourceLocation id = BetterEnd.makeID(name);
+			SmeltingRecipe recipe = new SmeltingRecipe(id, group, Ingredient.of(input), new ItemStack(output, count), xp, time);
 			EndRecipeManager.addRecipe(RecipeType.SMELTING, recipe);
 			
 			if (blasting) {
-				BlastingRecipe recipe2 = new BlastingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time / 2);
+				BlastingRecipe recipe2 = new BlastingRecipe(id, group, Ingredient.of(input), new ItemStack(output, count), xp, time / 2);
 				EndRecipeManager.addRecipe(RecipeType.BLASTING, recipe2);
 			}
 			
 			if (campfire) {
-				CampfireCookingRecipe recipe2 = new CampfireCookingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time * 3);
+				CampfireCookingRecipe recipe2 = new CampfireCookingRecipe(id, group, Ingredient.of(input), new ItemStack(output, count), xp, time * 3);
 				EndRecipeManager.addRecipe(RecipeType.CAMPFIRE_COOKING, recipe2);
 			}
 			
 			if (smoker) {
-				SmokingRecipe recipe2 = new SmokingRecipe(id, group, Ingredient.ofItems(input), new ItemStack(output, count), xp, time / 2);
+				SmokingRecipe recipe2 = new SmokingRecipe(id, group, Ingredient.of(input), new ItemStack(output, count), xp, time / 2);
 				EndRecipeManager.addRecipe(RecipeType.SMOKING, recipe2);
 			}
 		}

@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.structure.StructureManager;
-import net.minecraft.structure.StructureStart;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.DynamicRegistryManager;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import com.mojang.math.Vector3f;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
@@ -41,13 +42,13 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 		for (Vector3f point: points) {
 			SDF rotated = spike;
 			point = MHelper.normalize(point);
-			float angle = MHelper.angle(Vector3f.POSITIVE_Y, point);
+			float angle = MHelper.angle(Vector3f.YP, point);
 			if (angle > 0.01F && angle < 3.14F) {
-				Vector3f axis = MHelper.normalize(MHelper.cross(Vector3f.POSITIVE_Y, point));
+				Vector3f axis = MHelper.normalize(MHelper.cross(Vector3f.YP, point));
 				rotated = new SDFRotation().setRotation(axis, angle).setSource(spike);
 			}
 			else if (angle > 1) {
-				rotated = new SDFRotation().setRotation(Vector3f.POSITIVE_Y, (float) Math.PI).setSource(spike);
+				rotated = new SDFRotation().setRotation(Vector3f.YP, (float) Math.PI).setSource(spike);
 			}
 			sdf = (sdf == null) ? rotated : new SDFUnion().setSourceA(sdf).setSourceB(rotated);
 		}
@@ -58,9 +59,9 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 		final float randScale = size * 0.3F;
 		
 		final BlockPos center = pos;
-		final BlockState ice = EndBlocks.EMERALD_ICE.getDefaultState();
-		final BlockState dense = EndBlocks.DENSE_EMERALD_ICE.getDefaultState();
-		final BlockState ancient = EndBlocks.ANCIENT_EMERALD_ICE.getDefaultState();
+		final BlockState ice = EndBlocks.EMERALD_ICE.defaultBlockState();
+		final BlockState dense = EndBlocks.DENSE_EMERALD_ICE.defaultBlockState();
+		final BlockState ancient = EndBlocks.ANCIENT_EMERALD_ICE.defaultBlockState();
 		final SDF sdfCopy = sdf;
 		
 		return sdf.addPostProcess((info) -> {
@@ -97,23 +98,23 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 	}
 	
 	@Override
-	public StructureFeature.StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
+	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return StarStructureStart::new;
 	}
 	
-	public static class StarStructureStart extends StructureStart<DefaultFeatureConfig> {
-		public StarStructureStart(StructureFeature<DefaultFeatureConfig> feature, int chunkX, int chunkZ, BlockBox box, int references, long seed) {
+	public static class StarStructureStart extends StructureStart<NoneFeatureConfiguration> {
+		public StarStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ, BoundingBox box, int references, long seed) {
 			super(feature, chunkX, chunkZ, box, references, seed);
 		}
 
 		@Override
-		public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator, StructureManager manager, int chunkX, int chunkZ, Biome biome, DefaultFeatureConfig config) {
+		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager manager, int chunkX, int chunkZ, Biome biome, NoneFeatureConfiguration config) {
 			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
 			BlockPos start = new BlockPos(x, MHelper.randRange(32, 128, random), z);
 			VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
-			this.children.add(piece);
-			this.setBoundingBoxFromChildren();
+			this.pieces.add(piece);
+			this.calculateBoundingBox();
 		}
 	}
 }

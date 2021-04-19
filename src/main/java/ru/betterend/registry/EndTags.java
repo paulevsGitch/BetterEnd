@@ -1,31 +1,36 @@
 package ru.betterend.registry;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
+
+import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.Material;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.Item;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
-import net.minecraft.tag.Tag;
-import net.minecraft.tag.Tag.Identified;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.Tag.Named;
+import net.minecraft.tags.TagCollection;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;
+import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 import ru.betterend.util.TagHelper;
 
@@ -34,48 +39,49 @@ public class EndTags {
 	// https://fabricmc.net/wiki/tutorial:tags
 	
 	// Block Tags
-	public static final Tag.Identified<Block> BOOKSHELVES = makeCommonBlockTag("bookshelves");
-	public static final Tag.Identified<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
-	public static final Tag.Identified<Block> END_GROUND = makeBlockTag("end_ground");
-	public static final Tag.Identified<Block> PEDESTALS = makeBlockTag("pedestal");
-	public static final Tag.Identified<Block> BLOCK_CHEST = makeCommonBlockTag("chest");
-	public static final Tag.Identified<Block> END_STONES = makeCommonBlockTag("end_stones");
-	public static final Tag.Identified<Block> DRAGON_IMMUNE = getMCBlockTag("dragon_immune");
+	public static final Tag.Named<Block> BOOKSHELVES = makeCommonBlockTag("bookshelves");
+	public static final Tag.Named<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
+	public static final Tag.Named<Block> END_GROUND = makeBlockTag("end_ground");
+	public static final Tag.Named<Block> PEDESTALS = makeBlockTag("pedestal");
+	public static final Tag.Named<Block> BLOCK_CHEST = makeCommonBlockTag("chest");
+	public static final Tag.Named<Block> END_STONES = makeCommonBlockTag("end_stones");
+	public static final Tag.Named<Block> DRAGON_IMMUNE = getMCBlockTag("dragon_immune");
 	
 	// Item Tags
-	public static final Tag.Identified<Item> ITEM_CHEST = makeCommonItemTag("chest");
-	public static final Tag.Identified<Item> IRON_INGOTS = makeCommonItemTag("iron_ingots");
-	public static final Tag.Identified<Item> FURNACES = makeCommonItemTag("furnaces");
-	public final static Tag<Item> HAMMERS = registerFabricItemTag("hammers");
-	
-	public static Tag.Identified<Block> makeBlockTag(String name) {
-		Identifier id = BetterEnd.makeID(name);
-		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
-		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
+	public static final Tag.Named<Item> ITEM_CHEST = makeCommonItemTag("chest");
+	public static final Tag.Named<Item> IRON_INGOTS = makeCommonItemTag("iron_ingots");
+	public static final Tag.Named<Item> FURNACES = makeCommonItemTag("furnaces");
+	public final static Tag.Named<Item> HAMMERS = makeFabricItemTag("hammers");
+
+	public static <T> Tag.Named<T> makeTag(Supplier<TagCollection<T>> containerSupplier, ResourceLocation id) {
+		Tag<T> tag = containerSupplier.get().getTag(id);
+		return tag == null ? TagRegistry.create(id, containerSupplier) : (Named<T>) tag;
+	}
+
+	public static Tag.Named<Block> makeBlockTag(String name) {
+		return makeTag(BlockTags::getAllTags, BetterEnd.makeID(name));
 	}
 	
-	public static Tag.Identified<Item> makeItemTag(String name) {
-		Identifier id = BetterEnd.makeID(name);
-		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
-		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
+	public static Tag.Named<Item> makeItemTag(String name) {
+		return makeTag(ItemTags::getAllTags, BetterEnd.makeID(name));
 	}
 	
-	public static Tag.Identified<Block> makeCommonBlockTag(String name) {
-		Identifier id = new Identifier("c", name);
-		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
-		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
+	public static Tag.Named<Block> makeCommonBlockTag(String name) {
+		return makeTag(BlockTags::getAllTags, new ResourceLocation("c", name));
 	}
 	
-	public static Tag.Identified<Item> makeCommonItemTag(String name) {
-		Identifier id = new Identifier("c", name);
-		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
-		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
+	public static Tag.Named<Item> makeCommonItemTag(String name) {
+		return makeTag(ItemTags::getAllTags, new ResourceLocation("c", name));
+	}
+
+	public static Tag.Named<Item> makeFabricItemTag(String name) {
+		return makeTag(ItemTags::getAllTags, new ResourceLocation("fabric", name));
 	}
 	
-	public static Tag.Identified<Block> getMCBlockTag(String name) {
-		Identifier id = new Identifier(name);
-		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
-		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
+	public static Tag.Named<Block> getMCBlockTag(String name) {
+		ResourceLocation id = new ResourceLocation(name);
+		Tag<Block> tag = BlockTags.getAllTags().getTag(id);
+		return tag == null ? (Named<Block>) TagRegistry.block(id) : (Named<Block>) tag;
 	}
 	
 	public static void register() {
@@ -84,15 +90,15 @@ public class EndTags {
 		addSurfaceBlock(EndBlocks.ENDSTONE_DUST);
 		addSurfaceBlock(EndBlocks.AMBER_ORE);
 		
-		EndItems.getModBlocks().forEach((item) -> {
-			Block block = ((BlockItem) item).getBlock();
+		EndItems.getModBlocks().forEach(blockItem -> {
+			Block block = ((BlockItem) blockItem).getBlock();
 			if (block instanceof EndTerrainBlock) {
 				addSurfaceBlock(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);
 			}
 			else if (block instanceof LeavesBlock || block instanceof SimpleLeavesBlock) {
 				TagHelper.addTag(BlockTags.LEAVES, block);
-				ComposterBlockAccessor.callRegisterCompostableItem(0.3F, block);
+				ComposterBlockAccessor.callAdd(0.3F, block);
 			}
 			else if (block instanceof VineBlock) {
 				TagHelper.addTag(BlockTags.CLIMBABLE, block);
@@ -101,34 +107,29 @@ public class EndTags {
 				TagHelper.addTag(PEDESTALS, block);
 			}
 			
-			Material mat = block.getDefaultState().getMaterial();
+			Material mat = block.defaultBlockState().getMaterial();
 			if (mat.equals(Material.PLANT) || mat.equals(Material.REPLACEABLE_PLANT)) {
-				ComposterBlockAccessor.callRegisterCompostableItem(0.1F, block);
+				ComposterBlockAccessor.callAdd(0.1F, block);
 			}
 		});
 		
-		EndItems.getModItems().forEach((item) -> {
-			if (item.isFood()) {
-				FoodComponent food = item.getFoodComponent();
-				float compost = food.getHunger() * food.getSaturationModifier() * 0.18F;
-				ComposterBlockAccessor.callRegisterCompostableItem(compost, item);
+		List<Item> hammers = Lists.newArrayList();
+		EndItems.getModItems().forEach(item -> {
+			if (item.isEdible()) {
+				FoodProperties food = item.getFoodProperties();
+				if (food != null) {
+					float compost = food.getNutrition() * food.getSaturationModifier() * 0.18F;
+					ComposterBlockAccessor.callAdd(compost, item);
+				}
+			}
+			if (item instanceof EndHammerItem) {
+				hammers.add(item);
 			}
 		});
+		ToolManagerImpl.tag(HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
 		
 		TagHelper.addTag(GEN_TERRAIN, EndBlocks.ENDER_ORE, EndBlocks.FLAVOLITE.stone, EndBlocks.VIOLECITE.stone, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
 		TagHelper.addTag(END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
-
-		ToolManagerImpl.tag(HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(
-			Arrays.asList(
-				EndItems.IRON_HAMMER,
-				EndItems.GOLDEN_HAMMER,
-				EndItems.DIAMOND_HAMMER,
-				EndItems.NETHERITE_HAMMER,
-				EndItems.AETERNIUM_HAMMER,
-				EndBlocks.THALLASIUM.hammer,
-				EndBlocks.TERMINITE.hammer
-			)
-		));
 		
 		TagHelper.addTag(FURNACES, Blocks.FURNACE);
 		TagHelper.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
@@ -146,18 +147,14 @@ public class EndTags {
 	
 	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getCategory() == Category.THEEND) {
-				SurfaceConfig config = biome.getGenerationSettings().getSurfaceConfig();
+			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {
+				SurfaceBuilderConfiguration config = biome.getGenerationSettings().getSurfaceBuilderConfig();
 				Block under = config.getUnderMaterial().getBlock();
 				Block surface = config.getTopMaterial().getBlock();
 				TagHelper.addTag(GEN_TERRAIN, under, surface);
 				TagHelper.addTag(END_GROUND, surface);
 			}
 		});
-		END_STONES.values().forEach(EndTags::addSurfaceBlock);
-	}
-	
-	public static Tag<Item> registerFabricItemTag(String name) {
-		return TagRegistry.item(new Identifier("fabric", name));
+		END_STONES.getValues().forEach(EndTags::addSurfaceBlock);
 	}
 }

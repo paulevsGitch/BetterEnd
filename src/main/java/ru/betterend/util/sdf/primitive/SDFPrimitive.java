@@ -2,9 +2,9 @@ package ru.betterend.util.sdf.primitive;
 
 import java.util.function.Function;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.util.sdf.SDF;
 
 public abstract class SDFPrimitive extends SDF {
@@ -24,7 +24,7 @@ public abstract class SDFPrimitive extends SDF {
 	
 	public SDFPrimitive setBlock(Block block) {
 		this.placerFunction = (pos) -> {
-			return block.getDefaultState();
+			return block.defaultBlockState();
 		};
 		return this;
 	}

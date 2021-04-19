@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EternalPedestal;
@@ -30,23 +30,23 @@ import ru.betterend.blocks.entities.PedestalBlockEntity;
 
 public class EndBlockEntities {
 	public final static BlockEntityType<EndStoneSmelterBlockEntity> END_STONE_SMELTER = registerBlockEntity(EndStoneSmelter.ID,
-			BlockEntityType.Builder.create(EndStoneSmelterBlockEntity::new, EndBlocks.END_STONE_SMELTER));
+			BlockEntityType.Builder.of(EndStoneSmelterBlockEntity::new, EndBlocks.END_STONE_SMELTER));
 	public final static BlockEntityType<PedestalBlockEntity> PEDESTAL = registerBlockEntity("pedestal",
-			BlockEntityType.Builder.create(PedestalBlockEntity::new, getPedestals()));
+			BlockEntityType.Builder.of(PedestalBlockEntity::new, getPedestals()));
 	public final static BlockEntityType<EternalPedestalEntity> ETERNAL_PEDESTAL = registerBlockEntity("eternal_pedestal",
-			BlockEntityType.Builder.create(EternalPedestalEntity::new, EndBlocks.ETERNAL_PEDESTAL));
+			BlockEntityType.Builder.of(EternalPedestalEntity::new, EndBlocks.ETERNAL_PEDESTAL));
 	public final static BlockEntityType<InfusionPedestalEntity> INFUSION_PEDESTAL = registerBlockEntity("infusion_pedestal",
-			BlockEntityType.Builder.create(InfusionPedestalEntity::new, EndBlocks.INFUSION_PEDESTAL));
+			BlockEntityType.Builder.of(InfusionPedestalEntity::new, EndBlocks.INFUSION_PEDESTAL));
 	public static final BlockEntityType<EChestBlockEntity> CHEST = registerBlockEntity("chest", 
-			BlockEntityType.Builder.create(EChestBlockEntity::new, getChests()));
+			BlockEntityType.Builder.of(EChestBlockEntity::new, getChests()));
 	public static final BlockEntityType<EBarrelBlockEntity> BARREL = registerBlockEntity("barrel",
-			BlockEntityType.Builder.create(EBarrelBlockEntity::new, getBarrels()));
+			BlockEntityType.Builder.of(EBarrelBlockEntity::new, getBarrels()));
 	public static final BlockEntityType<ESignBlockEntity> SIGN = registerBlockEntity("sign",
-			BlockEntityType.Builder.create(ESignBlockEntity::new, getSigns()));
+			BlockEntityType.Builder.of(ESignBlockEntity::new, getSigns()));
 	public final static BlockEntityType<BlockEntityHydrothermalVent> HYDROTHERMAL_VENT = registerBlockEntity("hydrother_malvent",
-			BlockEntityType.Builder.create(BlockEntityHydrothermalVent::new, EndBlocks.HYDROTHERMAL_VENT));
+			BlockEntityType.Builder.of(BlockEntityHydrothermalVent::new, EndBlocks.HYDROTHERMAL_VENT));
 	public static final BlockEntityType<EFurnaceBlockEntity> FURNACE = registerBlockEntity("furnace",
-			BlockEntityType.Builder.create(EFurnaceBlockEntity::new, getFurnaces()));
+			BlockEntityType.Builder.of(EFurnaceBlockEntity::new, getFurnaces()));
 
 	public static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, BlockEntityType.Builder<T> builder) {
 		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BetterEnd.makeID(id), builder.build(null));

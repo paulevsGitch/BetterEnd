@@ -2,10 +2,10 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.VineBlock;
@@ -24,13 +24,13 @@ public class VineFeature extends InvertedScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		BlockState state = world.getBlockState(blockPos);
 		return state.getMaterial().isReplaceable() && canPlaceBlock(state, world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		int h = BlocksHelper.downRay(world, blockPos, random.nextInt(maxLength)) - 1;
 		if (h > 2) {
 			BlockState top = getTopState();
@@ -38,33 +38,33 @@ public class VineFeature extends InvertedScatterFeature {
 			BlockState bottom = getBottomState();
 			BlocksHelper.setWithoutUpdate(world, blockPos, top);
 			for (int i = 1; i < h; i++) {
-				BlocksHelper.setWithoutUpdate(world, blockPos.down(i), middle);
+				BlocksHelper.setWithoutUpdate(world, blockPos.below(i), middle);
 			}
-			BlocksHelper.setWithoutUpdate(world, blockPos.down(h), bottom);
+			BlocksHelper.setWithoutUpdate(world, blockPos.below(h), bottom);
 		}
 	}
 	
-	private boolean canPlaceBlock(BlockState state, StructureWorldAccess world, BlockPos blockPos) {
+	private boolean canPlaceBlock(BlockState state, WorldGenLevel world, BlockPos blockPos) {
 		if (vine) {
 			return ((VineBlock) vineBlock).canGenerate(state, world, blockPos);
 		}
 		else {
-			return vineBlock.canPlaceAt(state, world, blockPos);
+			return vineBlock.canSurvive(state, world, blockPos);
 		}
 	}
 	
 	private BlockState getTopState() {
-		BlockState state = vineBlock.getDefaultState();
-		return vine ? state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP) : state;
+		BlockState state = vineBlock.defaultBlockState();
+		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP) : state;
 	}
 	
 	private BlockState getMiggleState() {
-		BlockState state = vineBlock.getDefaultState();
-		return vine ? state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE) : state;
+		BlockState state = vineBlock.defaultBlockState();
+		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE) : state;
 	}
 	
 	private BlockState getBottomState() {
-		BlockState state = vineBlock.getDefaultState();
-		return vine ? state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM) : state;
+		BlockState state = vineBlock.defaultBlockState();
+		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM) : state;
 	}
 }

@@ -1,83 +1,83 @@
 package ru.betterend.blocks.basis;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidFillable;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.Patterns;
 
-public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, FluidFillable, IRenderTypeable {
-	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer, IRenderTypeable {
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
-	public static final IntProperty SIZE = BlockProperties.SIZE;
+	public static final IntegerProperty SIZE = BlockProperties.SIZE;
 	private static final VoxelShape[] SHAPES;
 
 	public StalactiteBlock(Block source) {
-		super(FabricBlockSettings.copy(source).nonOpaque());
-		this.setDefaultState(getStateManager().getDefaultState().with(SIZE, 0).with(IS_FLOOR, true).with(WATERLOGGED, false));
+		super(FabricBlockSettings.copy(source).noOcclusion());
+		this.registerDefaultState(getStateDefinition().any().setValue(SIZE, 0).setValue(IS_FLOOR, true).setValue(WATERLOGGED, false));
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(WATERLOGGED, IS_FLOOR, SIZE);
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return SHAPES[state.get(SIZE)];
+	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+		return SHAPES[state.getValue(SIZE)];
 	}
 	
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		WorldView world = ctx.getWorld();
-		BlockPos pos = ctx.getBlockPos();
-		Direction dir = ctx.getSide();
-		boolean water = world.getFluidState(pos).getFluid() == Fluids.WATER;
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		LevelReader world = ctx.getLevel();
+		BlockPos pos = ctx.getClickedPos();
+		Direction dir = ctx.getClickedFace();
+		boolean water = world.getFluidState(pos).getType() == Fluids.WATER;
 		
 		if (dir == Direction.DOWN) {
-			if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
-				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
+			if (isThis(world, pos.above()) || canSupportCenter(world, pos.above(), Direction.DOWN)) {
+				return defaultBlockState().setValue(IS_FLOOR, false).setValue(WATERLOGGED, water);
 			}
-			else if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
-				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
+			else if (isThis(world, pos.below()) || canSupportCenter(world, pos.below(), Direction.UP)) {
+				return defaultBlockState().setValue(IS_FLOOR, true).setValue(WATERLOGGED, water);
 			}
 			else {
 				return null;
 			}
 		}
 		else {
-			if (isThis(world, pos.down()) || sideCoversSmallSquare(world, pos.down(), Direction.UP)) {
-				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
+			if (isThis(world, pos.below()) || canSupportCenter(world, pos.below(), Direction.UP)) {
+				return defaultBlockState().setValue(IS_FLOOR, true).setValue(WATERLOGGED, water);
 			}
-			else if (isThis(world, pos.up()) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN)) {
-				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
+			else if (isThis(world, pos.above()) || canSupportCenter(world, pos.above(), Direction.DOWN)) {
+				return defaultBlockState().setValue(IS_FLOOR, false).setValue(WATERLOGGED, water);
 			}
 			else {
 				return null;
@@ -86,22 +86,22 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 	}
 
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		boolean hasUp = isThis(world, pos.up());
-		boolean hasDown = isThis(world, pos.down());
-		Mutable mut = new Mutable();
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+		boolean hasUp = isThis(world, pos.above());
+		boolean hasDown = isThis(world, pos.below());
+		MutableBlockPos mut = new MutableBlockPos();
 		if (hasUp && hasDown) {
-			boolean floor = state.get(IS_FLOOR);
-			BlockPos second = floor ? pos.up() : pos.down();
+			boolean floor = state.getValue(IS_FLOOR);
+			BlockPos second = floor ? pos.above() : pos.below();
 			BlockState bState = world.getBlockState(second);
-			world.setBlockState(pos, state.with(SIZE, 1).with(IS_FLOOR, floor));
-			world.setBlockState(second, bState.with(SIZE, 1).with(IS_FLOOR, !floor));
+			world.setBlockAndUpdate(pos, state.setValue(SIZE, 1).setValue(IS_FLOOR, floor));
+			world.setBlockAndUpdate(second, bState.setValue(SIZE, 1).setValue(IS_FLOOR, !floor));
 			
 			bState = state;
 			int startSize = floor ? 1 : 2;
 			mut.set(pos.getX(), pos.getY() + 1, pos.getZ());
 			for (int i = 0; i < 8 && isThis(bState); i++) {
-				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, false));
+				world.setBlockAndUpdate(mut, bState.setValue(SIZE, startSize++).setValue(IS_FLOOR, false));
 				mut.setY(mut.getY() + 1);
 				bState = world.getBlockState(mut);
 			}
@@ -110,7 +110,7 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 			startSize = floor ? 2 : 1;
 			mut.set(pos.getX(), pos.getY() - 1, pos.getZ());
 			for (int i = 0; i < 8 && isThis(bState); i++) {
-				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, true));
+				world.setBlockAndUpdate(mut, bState.setValue(SIZE, startSize++).setValue(IS_FLOOR, true));
 				mut.setY(mut.getY() - 1);
 				bState = world.getBlockState(mut);
 			}
@@ -122,9 +122,9 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 				mut.setY(pos.getY() - i);
 				if (isThis(world, mut)) {
 					BlockState state2 = world.getBlockState(mut);
-					int size = state2.get(SIZE);
+					int size = state2.getValue(SIZE);
 					if (size < i) {
-						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, true));
+						world.setBlockAndUpdate(mut, state2.setValue(SIZE, i).setValue(IS_FLOOR, true));
 					}
 					else {
 						break;
@@ -142,9 +142,9 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 				mut.setY(pos.getY() + i);
 				if (isThis(world, mut)) {
 					BlockState state2 = world.getBlockState(mut);
-					int size = state2.get(SIZE);
+					int size = state2.getValue(SIZE);
 					if (size < i) {
-						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, false));
+						world.setBlockAndUpdate(mut, state2.setValue(SIZE, i).setValue(IS_FLOOR, false));
 					}
 					else {
 						break;
@@ -157,7 +157,7 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 		}
 	}
 	
-	private boolean isThis(WorldView world, BlockPos pos) {
+	private boolean isThis(LevelReader world, BlockPos pos) {
 		return isThis(world.getBlockState(pos));
 	}
 	
@@ -166,34 +166,34 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 	}
 	
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-		if (!canPlaceAt(state, world, pos)) {
-			return Blocks.AIR.getDefaultState();
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+		if (!canSurvive(state, world, pos)) {
+			return Blocks.AIR.defaultBlockState();
 		}
 		return state;
 	}
 
 	@Override
-	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		int size = state.get(SIZE);
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+		int size = state.getValue(SIZE);
 		return checkUp(world, pos, size) || checkDown(world, pos, size);
 	}
 	
-	private boolean checkUp(BlockView world, BlockPos pos, int size) {
-		BlockPos p = pos.up();
+	private boolean checkUp(BlockGetter world, BlockPos pos, int size) {
+		BlockPos p = pos.above();
 		BlockState state = world.getBlockState(p);
-		return (isThis(state) && state.get(SIZE) >= size) || state.isFullCube(world, p);
+		return (isThis(state) && state.getValue(SIZE) >= size) || state.isCollisionShapeFullBlock(world, p);
 	}
 	
-	private boolean checkDown(BlockView world, BlockPos pos, int size) {
-		BlockPos p = pos.down();
+	private boolean checkDown(BlockGetter world, BlockPos pos, int size) {
+		BlockPos p = pos.below();
 		BlockState state = world.getBlockState(p);
-		return (isThis(state) && state.get(SIZE) >= size) || state.isFullCube(world, p);
+		return (isThis(state) && state.getValue(SIZE) >= size) || state.isCollisionShapeFullBlock(world, p);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());
 		}
@@ -201,23 +201,23 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_STALACTITE;
 	}
 	
 	@Override
-	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;
 	}
 
 	@Override
-	public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+	public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		return false;
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
 	}
 
 	@Override
@@ -230,8 +230,8 @@ public class StalactiteBlock extends BlockBaseNotFull implements Waterloggable, 
 		float start = 5F / 8F;
 		SHAPES = new VoxelShape[8];
 		for (int i = 0; i < 8; i++) {
-			int side = MathHelper.floor(MathHelper.lerp(i / 7F, start, end) * 8F + 0.5F);
-			SHAPES[i] = Block.createCuboidShape(side, 0, side, 16 - side, 16, 16 - side);
+			int side = Mth.floor(Mth.lerp(i / 7F, start, end) * 8F + 0.5F);
+			SHAPES[i] = Block.box(side, 0, side, 16 - side, 16, 16 - side);
 		}
 	}
 }

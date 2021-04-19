@@ -5,85 +5,85 @@ import java.util.Collections;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AbstractSignBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.network.packet.s2c.play.SignEditorOpenS2CPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.SignType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.network.protocol.game.ClientboundOpenSignEditorPacket;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SignBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.interfaces.ISpetialItem;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class EndSignBlock extends AbstractSignBlock implements BlockPatterned, ISpetialItem {
-	public static final IntProperty ROTATION = Properties.ROTATION;
-	public static final BooleanProperty FLOOR = BooleanProperty.of("floor");
+public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialItem {
+	public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
+	public static final BooleanProperty FLOOR = BooleanProperty.create("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
-		Block.createCuboidShape(0.0D, 4.5D, 14.0D, 16.0D, 12.5D, 16.0D),
-		Block.createCuboidShape(0.0D, 4.5D, 0.0D, 2.0D, 12.5D, 16.0D),
-		Block.createCuboidShape(0.0D, 4.5D, 0.0D, 16.0D, 12.5D, 2.0D),
-		Block.createCuboidShape(14.0D, 4.5D, 0.0D, 16.0D, 12.5D, 16.0D)
+		Block.box(0.0D, 4.5D, 14.0D, 16.0D, 12.5D, 16.0D),
+		Block.box(0.0D, 4.5D, 0.0D, 2.0D, 12.5D, 16.0D),
+		Block.box(0.0D, 4.5D, 0.0D, 16.0D, 12.5D, 2.0D),
+		Block.box(14.0D, 4.5D, 0.0D, 16.0D, 12.5D, 16.0D)
 	};
 
 	private final Block parent;
 	
 	public EndSignBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).strength(1.0F, 1.0F).noCollision().nonOpaque(), SignType.OAK);
-		this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0).with(FLOOR, false).with(WATERLOGGED, false));
+		super(FabricBlockSettings.copyOf(source).strength(1.0F, 1.0F).noCollission().noOcclusion(), WoodType.OAK);
+		this.registerDefaultState(this.stateDefinition.any().setValue(ROTATION, 0).setValue(FLOOR, false).setValue(WATERLOGGED, false));
 		this.parent = source;
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(ROTATION, FLOOR, WATERLOGGED);
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return state.get(FLOOR) ? SHAPE : WALL_SHAPES[state.get(ROTATION) >> 2];
+	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+		return state.getValue(FLOOR) ? SHAPE : WALL_SHAPES[state.getValue(ROTATION) >> 2];
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
+	public BlockEntity newBlockEntity(BlockGetter world) {
 		return new ESignBlockEntity();
 	}
 	
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		if (placer != null && placer instanceof PlayerEntity) {
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+		if (placer != null && placer instanceof Player) {
 			ESignBlockEntity sign = (ESignBlockEntity) world.getBlockEntity(pos);
-			if (!world.isClient) {
-				sign.setEditor((PlayerEntity) placer);
-				((ServerPlayerEntity) placer).networkHandler.sendPacket(new SignEditorOpenS2CPacket(pos));
+			if (!world.isClientSide) {
+				sign.setAllowedPlayerEditor((Player) placer);
+				((ServerPlayer) placer).connection.send(new ClientboundOpenSignEditorPacket(pos));
 			}
 			else {
 				sign.setEditable(true);
@@ -92,50 +92,50 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned, I
 	}
 
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-		if ((Boolean) state.get(WATERLOGGED)) {
-			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+		if ((Boolean) state.getValue(WATERLOGGED)) {
+			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
-		if (!canPlaceAt(state, world, pos)) {
-			return state.get(WATERLOGGED) ? state.getFluidState().getBlockState() : Blocks.AIR.getDefaultState();
+		if (!canSurvive(state, world, pos)) {
+			return state.getValue(WATERLOGGED) ? state.getFluidState().createLegacyBlock() : Blocks.AIR.defaultBlockState();
 		}
-		return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+		return super.updateShape(state, facing, neighborState, world, pos, neighborPos);
 	}
 
 	@Override
-	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		if (!state.get(FLOOR)) {
-			int index = (((state.get(ROTATION) >> 2) + 2)) & 3;
-			return world.getBlockState(pos.offset(BlocksHelper.HORIZONTAL[index])).getMaterial().isSolid();
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+		if (!state.getValue(FLOOR)) {
+			int index = (((state.getValue(ROTATION) >> 2) + 2)) & 3;
+			return world.getBlockState(pos.relative(BlocksHelper.HORIZONTAL[index])).getMaterial().isSolid();
 		}
 		else {
-			return world.getBlockState(pos.down()).getMaterial().isSolid();
+			return world.getBlockState(pos.below()).getMaterial().isSolid();
 		}
 	}
 
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		if (ctx.getSide() == Direction.UP) {
-			FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-			return this.getDefaultState().with(FLOOR, true)
-					.with(ROTATION, MathHelper.floor((180.0 + ctx.getPlayerYaw() * 16.0 / 360.0) + 0.5 - 12) & 15)
-					.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		if (ctx.getClickedFace() == Direction.UP) {
+			FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+			return this.defaultBlockState().setValue(FLOOR, true)
+					.setValue(ROTATION, Mth.floor((180.0 + ctx.getRotation() * 16.0 / 360.0) + 0.5 - 12) & 15)
+					.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
 		}
-		else if (ctx.getSide() != Direction.DOWN) {
-			BlockState blockState = this.getDefaultState();
-			FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-			WorldView worldView = ctx.getWorld();
-			BlockPos blockPos = ctx.getBlockPos();
-			Direction[] directions = ctx.getPlacementDirections();
+		else if (ctx.getClickedFace() != Direction.DOWN) {
+			BlockState blockState = this.defaultBlockState();
+			FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+			LevelReader worldView = ctx.getLevel();
+			BlockPos blockPos = ctx.getClickedPos();
+			Direction[] directions = ctx.getNearestLookingDirections();
 
 			for (int i = 0; i < directions.length; ++i) {
 				Direction direction = directions[i];
 				if (direction.getAxis().isHorizontal()) {
 					Direction dir = direction.getOpposite();
-					int rot = MathHelper.floor((180.0 + dir.asRotation() * 16.0 / 360.0) + 0.5 + 4) & 15;
-					blockState = blockState.with(ROTATION, rot);
-					if (blockState.canPlaceAt(worldView, blockPos)) {
-						return blockState.with(FLOOR, false).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+					int rot = Mth.floor((180.0 + dir.toYRot() * 16.0 / 360.0) + 0.5 + 4) & 15;
+					blockState = blockState.setValue(ROTATION, rot);
+					if (blockState.canSurvive(worldView, blockPos)) {
+						return blockState.setValue(FLOOR, false).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
 					}
 				}
 			}
@@ -146,14 +146,14 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned, I
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
-		Identifier parentId = Registry.BLOCK.getId(parent);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
 	}
 	
 	@Override
 	public String getModelPattern(String path) {
-		Identifier parentId = Registry.BLOCK.getId(parent);
+		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		if (path.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, path);
 		}
@@ -161,39 +161,39 @@ public class EndSignBlock extends AbstractSignBlock implements BlockPatterned, I
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SIMPLE;
 	}
 	
 	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation) {
-		return (BlockState) state.with(ROTATION, rotation.rotate((Integer) state.get(ROTATION), 16));
+	public BlockState rotate(BlockState state, Rotation rotation) {
+		return (BlockState) state.setValue(ROTATION, rotation.rotate((Integer) state.getValue(ROTATION), 16));
 	}
 
 	@Override
-	public BlockState mirror(BlockState state, BlockMirror mirror) {
-		return (BlockState) state.with(ROTATION, mirror.mirror((Integer) state.get(ROTATION), 16));
+	public BlockState mirror(BlockState state, Mirror mirror) {
+		return (BlockState) state.setValue(ROTATION, mirror.mirror((Integer) state.getValue(ROTATION), 16));
 	}
 	
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
 	}
 
 	@Override
-	public Fluid tryDrainFluid(WorldAccess world, BlockPos pos, BlockState state) {
+	public Fluid takeLiquid(LevelAccessor world, BlockPos pos, BlockState state) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+	public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		// TODO Auto-generated method stub
 		return false;
 	}

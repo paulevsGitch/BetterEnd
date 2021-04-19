@@ -5,11 +5,11 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
@@ -17,7 +17,7 @@ import ru.betterend.util.MHelper;
 
 public class RoundCaveFeature extends EndCaveFeature {
 	@Override
-	protected Set<BlockPos> generate(StructureWorldAccess world, BlockPos center, int radius, Random random) {
+	protected Set<BlockPos> generate(WorldGenLevel world, BlockPos center, int radius, Random random) {
 		OpenSimplexNoise noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 		
 		int x1 = center.getX() - radius - 5;
@@ -31,7 +31,7 @@ public class RoundCaveFeature extends EndCaveFeature {
 		double nr = radius * 0.25;
 		
 		BlockState state;
-		Mutable bpos = new Mutable();
+		MutableBlockPos bpos = new MutableBlockPos();
 		Set<BlockPos> blocks = Sets.newHashSet();
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - center.getX();
@@ -52,7 +52,7 @@ public class RoundCaveFeature extends EndCaveFeature {
 						state = world.getBlockState(bpos);
 						if (isReplaceable(state) && !isWaterNear(world, bpos)) {
 							BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
-							blocks.add(bpos.toImmutable());
+							blocks.add(bpos.immutable());
 							
 							while (state.getMaterial().equals(Material.LEAVES)) {
 								BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
@@ -76,7 +76,7 @@ public class RoundCaveFeature extends EndCaveFeature {
 	}
 	
 	private boolean isReplaceable(BlockState state) {
-		return state.isIn(EndTags.GEN_TERRAIN)
+		return state.is(EndTags.GEN_TERRAIN)
 				|| state.getMaterial().isReplaceable()
 				|| state.getMaterial().equals(Material.PLANT)
 				|| state.getMaterial().equals(Material.LEAVES);

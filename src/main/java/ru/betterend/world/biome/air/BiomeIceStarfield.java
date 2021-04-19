@@ -1,6 +1,6 @@
 package ru.betterend.world.biome.air;
 
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndStructures;

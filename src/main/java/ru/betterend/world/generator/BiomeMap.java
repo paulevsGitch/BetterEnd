@@ -4,14 +4,14 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.gen.ChunkRandom;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
 public class BiomeMap {
-	private static final ChunkRandom RANDOM = new ChunkRandom();
+	private static final WorldgenRandom RANDOM = new WorldgenRandom();
 	
 	private final Map<ChunkPos, BiomeChunk> maps = Maps.newHashMap();
 	private final int size;
@@ -70,7 +70,7 @@ public class BiomeMap {
 		ChunkPos cpos = new ChunkPos(MHelper.floor(x / BiomeChunk.WIDTH), MHelper.floor(z / BiomeChunk.WIDTH));
 		BiomeChunk chunk = maps.get(cpos);
 		if (chunk == null) {
-			RANDOM.setTerrainSeed(cpos.x, cpos.z);
+			RANDOM.setBaseChunkSeed(cpos.x, cpos.z);
 			chunk = new BiomeChunk(this, RANDOM, picker);
 			maps.put(cpos, chunk);
 		}

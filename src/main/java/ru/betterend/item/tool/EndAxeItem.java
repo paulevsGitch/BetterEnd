@@ -2,25 +2,25 @@ package ru.betterend.item.tool;
 
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.tag.Tag;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
 public class EndAxeItem extends AxeItem implements DynamicAttributeTool, Patterned {
-	public EndAxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
+	public EndAxeItem(Tier material, float attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
 	}
 
 	@Override
 	public int getMiningLevel(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
 		if (tag.equals(FabricToolTags.AXES)) {
-			return this.getMaterial().getMiningLevel();
+			return this.getTier().getLevel();
 		}
 		return 0;
 	}

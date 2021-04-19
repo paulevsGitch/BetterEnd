@@ -1,6 +1,6 @@
 package ru.betterend.recipe;
 
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.registry.EndItems;
@@ -20,7 +20,7 @@ public class AnvilRecipes {
 			.setDamage(3)
 			.build();
 		
-		int anvilLevel = EndToolMaterial.AETERNIUM.getMiningLevel();
+		int anvilLevel = EndToolMaterial.AETERNIUM.getLevel();
 		AnvilRecipe.Builder.create("aeternium_axe_head")
 			.setInput(EndItems.AETERNIUM_INGOT)
 			.setOutput(EndItems.AETERNIUM_AXE_HEAD)

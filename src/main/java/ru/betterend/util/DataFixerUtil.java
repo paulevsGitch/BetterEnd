@@ -12,8 +12,8 @@ import com.google.common.collect.Maps;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.storage.RegionFile;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.storage.RegionFile;
 
 public class DataFixerUtil {
 	private static final Map<String, String> REPLACEMENT = Maps.newHashMap();
@@ -38,7 +38,7 @@ public class DataFixerUtil {
 						ChunkPos pos = new ChunkPos(x, z);
 						changed[0] = false;
 						if (region.hasChunk(pos)) {
-							DataInputStream input = region.getChunkInputStream(pos);
+							DataInputStream input = region.getChunkDataInputStream(pos);
 							CompoundTag root = NbtIo.read(input);
 							input.close();
 							ListTag sections = root.getCompound("Level").getList("Sections", 10);
@@ -56,7 +56,7 @@ public class DataFixerUtil {
 							});
 							if (changed[0]) {
 								System.out.println("Write!");
-								DataOutputStream output = region.getChunkOutputStream(pos);
+								DataOutputStream output = region.getChunkDataOutputStream(pos);
 								NbtIo.write(root, output);
 								output.close();
 							}

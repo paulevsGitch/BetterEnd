@@ -1,12 +1,12 @@
 package ru.betterend.recipe;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -85,7 +85,7 @@ public class InfusionRecipes {
 
 		InfusionRecipe.Builder.create("protection_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.PROTECTION, 1))
+			.setOutput(createEnchantedBook(Enchantments.ALL_DAMAGE_PROTECTION, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(4, Items.TURTLE_HELMET)
 			.addCatalyst(1, Items.LAPIS_LAZULI)
@@ -111,7 +111,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("feather_falling_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.FEATHER_FALLING, 1))
+			.setOutput(createEnchantedBook(Enchantments.FALL_PROTECTION, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.FEATHER)
 			.addCatalyst(4, Items.FEATHER)
@@ -303,7 +303,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("looting_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.LOOTING, 1))
+			.setOutput(createEnchantedBook(Enchantments.MOB_LOOTING, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.EMERALD)
 			.addCatalyst(4, Items.GOLD_INGOT)
@@ -317,7 +317,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("sweeping_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.SWEEPING, 1))
+			.setOutput(createEnchantedBook(Enchantments.SWEEPING_EDGE, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.GOLDEN_SWORD)
 			.addCatalyst(4, Items.IRON_SWORD)
@@ -331,7 +331,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("efficiency_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.EFFICIENCY, 1))
+			.setOutput(createEnchantedBook(Enchantments.BLOCK_EFFICIENCY, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, EndItems.AMBER_GEM)
 			.addCatalyst(4, EndItems.AMBER_GEM)
@@ -373,7 +373,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("fortune_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.FORTUNE, 1))
+			.setOutput(createEnchantedBook(Enchantments.BLOCK_FORTUNE, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.EMERALD)
 			.addCatalyst(4, Items.RABBIT_FOOT)
@@ -387,7 +387,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("power_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.POWER, 1))
+			.setOutput(createEnchantedBook(Enchantments.POWER_ARROWS, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, EndItems.AMBER_GEM)
 			.addCatalyst(4, Items.DIAMOND_SWORD)
@@ -401,7 +401,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("punch_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.PUNCH, 1))
+			.setOutput(createEnchantedBook(Enchantments.PUNCH_ARROWS, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.POPPED_CHORUS_FRUIT)
 			.addCatalyst(4, Items.SPECTRAL_ARROW)
@@ -415,7 +415,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("flame_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.FLAME, 1))
+			.setOutput(createEnchantedBook(Enchantments.FLAMING_ARROWS, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.BLAZE_POWDER)
 			.addCatalyst(4, Items.SPECTRAL_ARROW)
@@ -429,7 +429,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("infinity_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.INFINITY, 1))
+			.setOutput(createEnchantedBook(Enchantments.INFINITY_ARROWS, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.SPECTRAL_ARROW)
 			.addCatalyst(4, EndItems.ETERNAL_CRYSTAL)
@@ -443,7 +443,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("luck_of_sea_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.LUCK_OF_THE_SEA, 1))
+			.setOutput(createEnchantedBook(Enchantments.FISHING_LUCK, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.EMERALD)
 			.addCatalyst(4, Items.FISHING_ROD)
@@ -457,7 +457,7 @@ public class InfusionRecipes {
 			.build();
 		InfusionRecipe.Builder.create("lure_book")
 			.setInput(Items.BOOK)
-			.setOutput(createEnchantedBook(Enchantments.LURE, 1))
+			.setOutput(createEnchantedBook(Enchantments.FISHING_SPEED, 1))
 			.addCatalyst(0, EndItems.ENCHANTED_PETAL)
 			.addCatalyst(2, Items.GOLD_NUGGET)
 			.addCatalyst(4, Items.FISHING_ROD)
@@ -585,7 +585,7 @@ public class InfusionRecipes {
 	
 	private static ItemStack createEnchantedBook(Enchantment enchantment, int level) {
 		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-		EnchantedBookItem.addEnchantment(book, new EnchantmentLevelEntry(enchantment, level));
+		EnchantedBookItem.addEnchantment(book, new EnchantmentInstance(enchantment, level));
 		return book;
 	}
 }

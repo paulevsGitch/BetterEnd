@@ -6,25 +6,25 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.TrapdoorBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
-public class EndTrapdoorBlock extends TrapdoorBlock implements IRenderTypeable, BlockPatterned {
+public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, BlockPatterned {
 	public EndTrapdoorBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).strength(3.0F, 3.0F).nonOpaque());
+		super(FabricBlockSettings.copyOf(source).strength(3.0F, 3.0F).noOcclusion());
 	}
 
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
 	}
 	
@@ -35,13 +35,13 @@ public class EndTrapdoorBlock extends TrapdoorBlock implements IRenderTypeable, 
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getId(this).getPath();
+		String block = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, block, block);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		String name = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_TRAPDOOR, new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
@@ -53,7 +53,7 @@ public class EndTrapdoorBlock extends TrapdoorBlock implements IRenderTypeable, 
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_TRAPDOOR;
 	}
 }

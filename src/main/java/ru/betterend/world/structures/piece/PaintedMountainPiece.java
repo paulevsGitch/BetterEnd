@@ -2,22 +2,22 @@ package ru.betterend.world.structures.piece;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.structure.StructureManager;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.util.MHelper;
 
@@ -33,11 +33,11 @@ public class PaintedMountainPiece extends MountainPiece {
 	}
 
 	@Override
-	protected void toNbt(CompoundTag tag) {
-		super.toNbt(tag);
+	protected void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
 		ListTag slise = new ListTag();
 		for (BlockState state: slises) {
-			slise.add(NbtHelper.fromBlockState(state));
+			slise.add(NbtUtils.writeBlockState(state));
 		}
 		tag.put("slises", slise);
 	}
@@ -48,18 +48,18 @@ public class PaintedMountainPiece extends MountainPiece {
 		ListTag slise = tag.getList("slises", 10);
 		slises = new BlockState[slise.size()];
 		for (int i = 0; i < slises.length; i++) {
-			slises[i] = NbtHelper.toBlockState(slise.getCompound(i));
+			slises[i] = NbtUtils.readBlockState(slise.getCompound(i));
 		}
 	}
 
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		int sx = chunkPos.getStartX();
-		int sz = chunkPos.getStartZ();
-		Mutable pos = new Mutable();
-		Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
-		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
-		Heightmap map2 = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
+	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+		int sx = chunkPos.getMinBlockX();
+		int sz = chunkPos.getMinBlockZ();
+		MutableBlockPos pos = new MutableBlockPos();
+		ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
+		Heightmap map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
+		Heightmap map2 = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE_WG);
 		for (int x = 0; x < 16; x++) {
 			int px = x + sx;
 			int px2 = px - center.getX();
@@ -73,13 +73,13 @@ public class PaintedMountainPiece extends MountainPiece {
 				if (dist < r2) {
 					pos.setZ(z);
 					dist = 1 - dist / r2;
-					int minY = map.get(x, z);
+					int minY = map.getFirstAvailable(x, z);
 					pos.setY(minY - 1);
 					while (chunk.getBlockState(pos).isAir() && pos.getY() > 50) {
 						pos.setY(minY --);
 					}
 					minY = pos.getY();
-					minY = Math.max(minY, map2.get(x, z));
+					minY = Math.max(minY, map2.getFirstAvailable(x, z));
 					if (minY > center.getY() - 8) {
 						float maxY = dist * height * getHeightClamp(world, 10, px, pz);
 						if (maxY > 0) {

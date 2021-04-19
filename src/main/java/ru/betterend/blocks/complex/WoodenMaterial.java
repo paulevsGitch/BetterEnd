@@ -1,15 +1,15 @@
 package ru.betterend.blocks.complex;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
-import net.minecraft.tag.Tag;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
 import ru.betterend.blocks.basis.BarkBlock;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndBarrelBlock;
@@ -62,8 +62,8 @@ public class WoodenMaterial {
 	public final Block shelf;
 	public final Block composter;
 	
-	public final Tag.Identified<Block> logBlockTag;
-	public final Tag.Identified<Item> logItemTag;
+	public final Tag.Named<Block> logBlockTag;
+	public final Tag.Named<Item> logItemTag;
 	
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);

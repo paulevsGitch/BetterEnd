@@ -1,7 +1,7 @@
 package ru.betterend.registry;
 
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.sounds.SoundEvent;
 import ru.betterend.BetterEnd;
 
 public class EndSounds {

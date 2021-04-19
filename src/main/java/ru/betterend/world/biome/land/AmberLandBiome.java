@@ -1,7 +1,7 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
+import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
@@ -31,7 +31,7 @@ public class AmberLandBiome extends EndBiome {
 				.addFeature(EndFeatures.BULB_MOSS_WOOD)
 				.addFeature(EndFeatures.CHARNIA_ORANGE)
 				.addFeature(EndFeatures.CHARNIA_RED)
-				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
+				.addStructureFeature(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 4)
 				.addMobSpawn(EndEntities.END_SLIME, 30, 1, 2));
 	}

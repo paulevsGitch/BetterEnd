@@ -7,40 +7,40 @@ import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.Material;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.util.BlocksHelper;
 
-public class VineBlock extends BlockBaseNotFull implements IRenderTypeable, Fertilizable {
+public class VineBlock extends BlockBaseNotFull implements IRenderTypeable, BonemealableBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
-	private static final VoxelShape VOXEL_SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
+	private static final VoxelShape VOXEL_SHAPE = Block.box(2, 0, 2, 14, 16, 14);
 	
 	public VineBlock() {
 		this(0, false);
@@ -53,63 +53,61 @@ public class VineBlock extends BlockBaseNotFull implements IRenderTypeable, Fert
 	public VineBlock(int light, boolean bottomOnly) {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
-				.sounds(BlockSoundGroup.GRASS)
-				.luminance((state) -> {
-					return bottomOnly ? state.get(SHAPE) == TripleShape.BOTTOM ? light : 0 : light;
-				})
 				.breakByHand(true)
-				.noCollision());
-		this.setDefaultState(this.stateManager.getDefaultState().with(SHAPE, TripleShape.BOTTOM));
+				.sound(SoundType.GRASS)
+				.lightLevel((state) -> bottomOnly ? state.getValue(SHAPE) == TripleShape.BOTTOM ? light : 0 : light)
+				.noCollission());
+		this.registerDefaultState(this.stateDefinition.any().setValue(SHAPE, TripleShape.BOTTOM));
 	}
 	
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		Vec3d vec3d = state.getModelOffset(view, pos);
-		return VOXEL_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z);
+	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+		Vec3 vec3d = state.getOffset(view, pos);
+		return VOXEL_SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
 	}
 
 	@Override
-	public AbstractBlock.OffsetType getOffsetType() {
-		return AbstractBlock.OffsetType.XZ;
+	public BlockBehaviour.OffsetType getOffsetType() {
+		return BlockBehaviour.OffsetType.XZ;
 	}
 	
-	public boolean canGenerate(BlockState state, WorldView world, BlockPos pos) {
+	public boolean canGenerate(BlockState state, LevelReader world, BlockPos pos) {
 		return isSupport(state, world, pos);
 	}
 
 	@Override
-	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return isSupport(state, world, pos);
 	}
 	
-	protected boolean isSupport(BlockState state, WorldView world, BlockPos pos) {
-		BlockState up = world.getBlockState(pos.up());
-		return up.isOf(this) || up.isIn(BlockTags.LEAVES) || sideCoversSmallSquare(world, pos.up(), Direction.DOWN);
+	protected boolean isSupport(BlockState state, LevelReader world, BlockPos pos) {
+		BlockState up = world.getBlockState(pos.above());
+		return up.is(this) || up.is(BlockTags.LEAVES) || canSupportCenter(world, pos.above(), Direction.DOWN);
 	}
 
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-		if (!canPlaceAt(state, world, pos)) {
-			return Blocks.AIR.getDefaultState();
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+		if (!canSurvive(state, world, pos)) {
+			return Blocks.AIR.defaultBlockState();
 		}
 		else {
-			if (world.getBlockState(pos.down()).getBlock() != this)
-				return state.with(SHAPE, TripleShape.BOTTOM);
-			else if (world.getBlockState(pos.up()).getBlock() != this)
-				return state.with(SHAPE, TripleShape.TOP);
-			return state.with(SHAPE, TripleShape.MIDDLE);
+			if (world.getBlockState(pos.below()).getBlock() != this)
+				return state.setValue(SHAPE, TripleShape.BOTTOM);
+			else if (world.getBlockState(pos.above()).getBlock() != this)
+				return state.setValue(SHAPE, TripleShape.TOP);
+			return state.setValue(SHAPE, TripleShape.MIDDLE);
 		}
 	}
 	
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		ItemStack tool = builder.get(LootContextParameters.TOOL);
-		if (tool != null && tool.getItem().isIn(FabricToolTags.SHEARS) || EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
+		if (tool != null && tool.getItem().is(FabricToolTags.SHEARS) || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
 		}
 		else {
@@ -123,27 +121,27 @@ public class VineBlock extends BlockBaseNotFull implements IRenderTypeable, Fert
 	}
 
 	@Override
-	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		while (world.getBlockState(pos).getBlock() == this) {
-			pos = pos.down();
+			pos = pos.below();
 		}
 		return world.getBlockState(pos).isAir();
 	}
 
 	@Override
-	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(Level world, Random random, BlockPos pos, BlockState state) {
 		while (world.getBlockState(pos).getBlock() == this) {
-			pos = pos.down();
+			pos = pos.below();
 		}
-		return world.isAir(pos);
+		return world.isEmptyBlock(pos);
 	}
 
 	@Override
-	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		while (world.getBlockState(pos).getBlock() == this) {
-			pos = pos.down();
+			pos = pos.below();
 		}
-		world.setBlockState(pos, getDefaultState());
-		BlocksHelper.setWithoutUpdate(world, pos, getDefaultState());
+		world.setBlockAndUpdate(pos, defaultBlockState());
+		BlocksHelper.setWithoutUpdate(world, pos, defaultBlockState());
 	}
 }

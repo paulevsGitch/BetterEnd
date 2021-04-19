@@ -3,9 +3,10 @@ package ru.betterend.world.structures.features;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import com.mojang.math.Vector3f;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -52,9 +53,9 @@ public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(1234);
 		cones = new SDFCoordModify().setFunction((pos) -> {
-			float dist = MHelper.length(pos.getX(), pos.getZ());
-			float y = pos.getY() + (float) noise.eval(pos.getX() * 0.1 + center.getX(), pos.getZ() * 0.1 + center.getZ()) * dist * 0.3F - dist * 0.15F;
-			pos.set(pos.getX(), y, pos.getZ());
+			float dist = MHelper.length(pos.x(), pos.z());
+			float y = pos.y() + (float) noise.eval(pos.x() * 0.1 + center.getX(), pos.z() * 0.1 + center.getZ()) * dist * 0.3F - dist * 0.15F;
+			pos.set(pos.x(), y, pos.z());
 		}).setSource(cones);
 		
 		SDFTranslate HEAD_POS = (SDFTranslate) new SDFTranslate().setSource(new SDFTranslate().setTranslate(0, 2.5F, 0).setSource(cones));
@@ -76,12 +77,12 @@ public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, count);
 		SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
 		SDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
-			return EndBlocks.MOSSY_GLOWSHROOM.log.getDefaultState();
+			return EndBlocks.MOSSY_GLOWSHROOM.log.defaultBlockState();
 		});
 		Vector3f pos = spline.get(spline.size() - 1);
 		float scale = MHelper.randRange(2F, 3.5F, random);
 		
-		HEAD_POS.setTranslate(pos.getX(), pos.getY(), pos.getZ());
+		HEAD_POS.setTranslate(pos.x(), pos.y(), pos.z());
 		rotRoots.setAngle(random.nextFloat() * MHelper.PI2);
 		function.setSourceA(sdf);
 		
@@ -91,32 +92,32 @@ public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
 				.addPostProcess((info) -> {
 					if (EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getState())) {
 						if (random.nextBoolean() && info.getStateUp().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_CAP) {
-							info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(MossyGlowshroomCapBlock.TRANSITION, true));
+							info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.defaultBlockState().setValue(MossyGlowshroomCapBlock.TRANSITION, true));
 							return info.getState();
 						}
 						else if (!EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp()) || !EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
-							info.setState(EndBlocks.MOSSY_GLOWSHROOM.bark.getDefaultState());
+							info.setState(EndBlocks.MOSSY_GLOWSHROOM.bark.defaultBlockState());
 							return info.getState();
 						}
 					}
 					else if (info.getState().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_CAP) {
 						if (EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown().getBlock())) {
-							info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.getDefaultState().with(MossyGlowshroomCapBlock.TRANSITION, true));
+							info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.defaultBlockState().setValue(MossyGlowshroomCapBlock.TRANSITION, true));
 							return info.getState();
 						}
 						
-						info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.getDefaultState());
+						info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.defaultBlockState());
 						return info.getState();
 					}
 					else if (info.getState().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE) {
 						for (Direction dir: BlocksHelper.HORIZONTAL) {
 							if (info.getState(dir) == AIR) {
-								info.setBlockPos(info.getPos().offset(dir), EndBlocks.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(FurBlock.FACING, dir));
+								info.setBlockPos(info.getPos().relative(dir), EndBlocks.MOSSY_GLOWSHROOM_FUR.defaultBlockState().setValue(FurBlock.FACING, dir));
 							}
 						}
 						
 						if (info.getStateDown().getBlock() != EndBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE) {
-							info.setBlockPos(info.getPos().down(), EndBlocks.MOSSY_GLOWSHROOM_FUR.getDefaultState().with(FurBlock.FACING, Direction.DOWN));
+							info.setBlockPos(info.getPos().below(), EndBlocks.MOSSY_GLOWSHROOM_FUR.defaultBlockState().setValue(FurBlock.FACING, Direction.DOWN));
 						}
 					}
 					return info.getState();

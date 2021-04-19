@@ -2,12 +2,12 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.util.BlocksHelper;
 
@@ -20,22 +20,22 @@ public class SingleInvertedScatterFeature extends InvertedScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		if (!world.isAir(blockPos)) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+		if (!world.isEmptyBlock(blockPos)) {
 			return false;
 		}
-		BlockState state = block.getDefaultState();
+		BlockState state = block.defaultBlockState();
 		if (block instanceof AttachedBlock) {
-			state = state.with(Properties.FACING, Direction.DOWN);
+			state = state.setValue(BlockStateProperties.FACING, Direction.DOWN);
 		}
-		return state.canPlaceAt(world, blockPos);
+		return state.canSurvive(world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		BlockState state = block.getDefaultState();
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
+		BlockState state = block.defaultBlockState();
 		if (block instanceof AttachedBlock) {
-			state = state.with(Properties.FACING, Direction.DOWN);
+			state = state.setValue(BlockStateProperties.FACING, Direction.DOWN);
 		}
 		BlocksHelper.setWithoutUpdate(world, blockPos, state);
 	}

@@ -2,12 +2,12 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
 import ru.betterend.util.BlocksHelper;
@@ -21,26 +21,26 @@ public class WallPlantFeature extends WallScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
 		if (block instanceof EndWallPlantBlock) {
-			BlockState state = block.getDefaultState().with(EndWallPlantBlock.FACING, dir);
-			return block.canPlaceAt(state, world, pos);
+			BlockState state = block.defaultBlockState().setValue(EndWallPlantBlock.FACING, dir);
+			return block.canSurvive(state, world, pos);
 		}
 		else if (block instanceof AttachedBlock) {
-			BlockState state = block.getDefaultState().with(Properties.FACING, dir);
-			return block.canPlaceAt(state, world, pos);
+			BlockState state = block.defaultBlockState().setValue(BlockStateProperties.FACING, dir);
+			return block.canSurvive(state, world, pos);
 		}
-		return block.canPlaceAt(block.getDefaultState(), world, pos);
+		return block.canSurvive(block.defaultBlockState(), world, pos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos pos, Direction dir) {
-		BlockState state = block.getDefaultState();
+	public void generate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
+		BlockState state = block.defaultBlockState();
 		if (block instanceof EndWallPlantBlock) {
-			state = state.with(EndWallPlantBlock.FACING, dir);
+			state = state.setValue(EndWallPlantBlock.FACING, dir);
 		}
 		else if (block instanceof AttachedBlock) {
-			state = state.with(Properties.FACING, dir);
+			state = state.setValue(BlockStateProperties.FACING, dir);
 		}
 		BlocksHelper.setWithoutUpdate(world, pos, state);
 	}

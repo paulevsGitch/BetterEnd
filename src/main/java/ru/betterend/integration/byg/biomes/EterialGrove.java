@@ -2,11 +2,11 @@ package ru.betterend.integration.byg.biomes;
 
 import java.util.List;
 
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.SpawnSettings.SpawnEntry;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
@@ -20,22 +20,22 @@ public class EterialGrove extends EndBiome {
 	
 	private static BiomeDefinition makeDef() {
 		Biome biome = Integrations.BYG.getBiome("ethereal_islands");
-		BiomeEffects effects = biome.getEffects();
+		BiomeSpecialEffects effects = biome.getSpecialEffects();
 		
 		BiomeDefinition def = new BiomeDefinition("eterial_grove")
 				.setSurface(biome.getGenerationSettings().getSurfaceBuilder().get())
 				.addFeature(BYGFeatures.BIG_ETHER_TREE);
 		
 		if (BetterEnd.isClient()) {
-			SoundEvent loop = effects.getLoopSound().get();
-			SoundEvent music = effects.getMusic().get().getSound();
-			SoundEvent additions = effects.getAdditionsSound().get().getSound();
-			SoundEvent mood = effects.getMoodSound().get().getSound();
+			SoundEvent loop = effects.getAmbientLoopSoundEvent().get();
+			SoundEvent music = effects.getBackgroundMusic().get().getEvent();
+			SoundEvent additions = effects.getAmbientAdditionsSettings().get().getSoundEvent();
+			SoundEvent mood = effects.getAmbientMoodSettings().get().getSoundEvent();
 			def.setLoop(loop).setMusic(music).setAdditions(additions).setMood(mood);
 		}
 		
-		for (SpawnGroup group: SpawnGroup.values()) {
-			List<SpawnEntry> list = biome.getSpawnSettings().getSpawnEntry(group);
+		for (MobCategory group: MobCategory.values()) {
+			List<SpawnerData> list = biome.getMobSettings().getMobs(group);
 			list.forEach((entry) -> {
 				def.addMobSpawn(entry);
 			});

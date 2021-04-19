@@ -1,12 +1,12 @@
 package ru.betterend.item;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.SpawnEggItem;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
 public class EndSpawnEggItem extends SpawnEggItem implements Patterned {
-	public EndSpawnEggItem(EntityType<?> type, int primaryColor, int secondaryColor, Settings settings) {
+	public EndSpawnEggItem(EntityType<?> type, int primaryColor, int secondaryColor, Properties settings) {
 		super(type, primaryColor, secondaryColor, settings);
 	}
 	

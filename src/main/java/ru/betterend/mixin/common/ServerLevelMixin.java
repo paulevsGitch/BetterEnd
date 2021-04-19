@@ -13,41 +13,40 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.WorldGenerationProgressListener;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.Spawner;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.level.ServerWorldProperties;
-import net.minecraft.world.level.storage.LevelStorage;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.progress.ChunkProgressListener;
+import net.minecraft.world.level.CustomSpawner;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.storage.LevelStorageSource;
+import net.minecraft.world.level.storage.ServerLevelData;
 import ru.betterend.BetterEnd;
 import ru.betterend.util.DataFixerUtil;
 import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
-@Mixin(ServerWorld.class)
-public class ServerWorldMixin {
+@Mixin(ServerLevel.class)
+public class ServerLevelMixin {
 	private static final int DEV_VERSION = be_getVersionInt("63.63.63");
 	private static final int FIX_VERSION = DEV_VERSION;
 	private static String lastWorld = null;
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey<World> registryKey, DimensionType dimensionType, WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long l, List<Spawner> list, boolean bl, CallbackInfo info) {
-		if (lastWorld != null && lastWorld.equals(session.getDirectoryName())) {
+	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, LevelStorageSource.LevelStorageAccess session, ServerLevelData properties, ResourceKey<Level> registryKey, DimensionType dimensionType, ChunkProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long l, List<CustomSpawner> list, boolean bl, CallbackInfo info) {
+		if (lastWorld != null && lastWorld.equals(session.getLevelId())) {
 			return;
 		}
 		
-		lastWorld = session.getDirectoryName();
+		lastWorld = session.getLevelId();
 		
-		@SuppressWarnings("resource")
-		ServerWorld world = (ServerWorld) (Object) this;
-		File dir = session.getWorldDirectory(world.getRegistryKey());
+		ServerLevel world = ServerLevel.class.cast(this);
+		File dir = session.getDimensionPath(world.dimension());
 		if (!new File(dir, "level.dat").exists()) {
 			dir = dir.getParentFile();
 		}
@@ -59,7 +58,7 @@ public class ServerWorldMixin {
 		WorldDataUtil.load(data);
 		CompoundTag root = WorldDataUtil.getRootTag();
 		int dataVersion = be_getVersionInt(root.getString("version"));
-		GeneratorOptions.setPortalPos(NbtHelper.toBlockPos(root.getCompound("portal")));
+		GeneratorOptions.setPortalPos(NbtUtils.readBlockPos(root.getCompound("portal")));
 		
 		if (dataVersion < version) {
 			if (version < FIX_VERSION) {
@@ -70,10 +69,10 @@ public class ServerWorldMixin {
 		}
 	}
 
-	@Inject(method = "getSpawnPos", at = @At("HEAD"), cancellable = true)
-	private void be_getSpawnPos(CallbackInfoReturnable<BlockPos> info) {
+	@Inject(method = "getSharedSpawnPos", at = @At("HEAD"), cancellable = true)
+	private void be_getSharedSpawnPos(CallbackInfoReturnable<BlockPos> info) {
 		if (GeneratorOptions.changeSpawn()) {
-			if (((ServerWorld) (Object) this).getRegistryKey() == World.END) {
+			if (ServerLevel.class.cast(this).dimension() == Level.END) {
 				info.setReturnValue(GeneratorOptions.getSpawn());
 				info.cancel();
 			}

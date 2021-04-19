@@ -2,17 +2,17 @@ package ru.betterend.world.structures.piece;
 
 import java.util.Random;
 
-import net.minecraft.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.structure.StructureManager;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
@@ -38,17 +38,17 @@ public class CavePiece extends BasePiece {
 	}
 	
 	@Override
-	public boolean generate(StructureWorldAccess world, StructureAccessor arg, ChunkGenerator chunkGenerator, Random random, BlockBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		int x1 = MHelper.max(this.boundingBox.minX, blockBox.minX);
-		int z1 = MHelper.max(this.boundingBox.minZ, blockBox.minZ);
-		int x2 = MHelper.min(this.boundingBox.maxX, blockBox.maxX);
-		int z2 = MHelper.min(this.boundingBox.maxZ, blockBox.maxZ);
-		int y1 = this.boundingBox.minY;
-		int y2 = this.boundingBox.maxY;
+	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+		int x1 = MHelper.max(this.boundingBox.x0, blockBox.x0);
+		int z1 = MHelper.max(this.boundingBox.z0, blockBox.z0);
+		int x2 = MHelper.min(this.boundingBox.x1, blockBox.x1);
+		int z2 = MHelper.min(this.boundingBox.z1, blockBox.z1);
+		int y1 = this.boundingBox.y0;
+		int y2 = this.boundingBox.y1;
 		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
-		Mutable pos = new Mutable();
+		MutableBlockPos pos = new MutableBlockPos();
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - center.getX();
 			xsq *= xsq;
@@ -66,8 +66,8 @@ public class CavePiece extends BasePiece {
 					double r2 = r - 4.5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r2 * r2) {
-						if (world.getBlockState(pos).isIn(EndTags.END_GROUND)) {
-							BlocksHelper.setWithoutUpdate(world, pos, AIR);
+						if (world.getBlockState(pos).is(EndTags.END_GROUND)) {
+							BlocksHelper.setWithoutUpdate(world, pos, CAVE_AIR);
 						}
 					}
 					else if (dist < r * r) {
@@ -83,14 +83,14 @@ public class CavePiece extends BasePiece {
 	}
 
 	@Override
-	protected void toNbt(CompoundTag tag) {
-		tag.put("center", NbtHelper.fromBlockPos(center));
+	protected void addAdditionalSaveData(CompoundTag tag) {
+		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 	}
 
 	@Override
 	protected void fromNbt(CompoundTag tag) {
-		center = NbtHelper.toBlockPos(tag.getCompound("center"));
+		center = NbtUtils.readBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 	}
@@ -102,6 +102,6 @@ public class CavePiece extends BasePiece {
 		int maxX = MHelper.floor(center.getX() + radius + 1);
 		int maxY = MHelper.floor(center.getY() + radius + 1);
 		int maxZ = MHelper.floor(center.getZ() + radius + 1);
-		this.boundingBox = new BlockBox(minX, minY, minZ, maxX, maxY, maxZ);
+		this.boundingBox = new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 }

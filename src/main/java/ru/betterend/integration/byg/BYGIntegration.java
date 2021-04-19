@@ -3,10 +3,10 @@ package ru.betterend.integration.byg;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.WeightedList;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.behavior.WeightedList;
+import net.minecraft.world.level.biome.Biome;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.ModIntegration;
 import ru.betterend.integration.byg.biomes.BYGBiomes;
@@ -40,11 +40,11 @@ public class BYGIntegration extends ModIntegration {
 			biomes.forEach((obj) -> {
 				Biome biome = this.getAndExecuteRuntime(biomeClass, obj, "getBiome");
 				if (biome != null) {
-					Identifier biomeID = BuiltinRegistries.BIOME.getId(biome);
+					ResourceLocation biomeID = BuiltinRegistries.BIOME.getKey(biome);
 					EndBiome endBiome = EndBiomes.getBiome(biomeID);
 					Biome edge = this.getAndExecuteRuntime(biomeClass, obj, "getEdge");
 					if (edge != null) {
-						Identifier edgeID = BuiltinRegistries.BIOME.getId(edge);
+						ResourceLocation edgeID = BuiltinRegistries.BIOME.getKey(edge);
 						EndBiomes.LAND_BIOMES.removeMutableBiome(edgeID);
 						EndBiomes.VOID_BIOMES.removeMutableBiome(edgeID);
 						EndBiome edgeBiome = EndBiomes.getBiome(edgeID);
@@ -56,7 +56,7 @@ public class BYGIntegration extends ModIntegration {
 							EndBiomes.LAND_BIOMES.removeMutableBiome(biomeID);
 							EndBiomes.VOID_BIOMES.addBiomeMutable(endBiome);
 						}
-						WeightedList<Identifier> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
+						WeightedList<ResourceLocation> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
 						if (subBiomes != null) {
 							subBiomes.stream().collect(Collectors.toList()).forEach((id) -> {
 								EndBiome subBiome = EndBiomes.getBiome(id);

@@ -1,6 +1,6 @@
 package ru.betterend.config;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class ConfigKey {
 	private final String path[];
@@ -14,7 +14,7 @@ public class ConfigKey {
 		this.root = path.length == 0 || (path.length == 1 && path[0].isEmpty());
 	}
 	
-	public ConfigKey(String entry, Identifier path) {
+	public ConfigKey(String entry, ResourceLocation path) {
 		this(entry, path.getNamespace(), path.getPath());
 	}
 

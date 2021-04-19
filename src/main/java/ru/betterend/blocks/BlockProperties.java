@@ -1,35 +1,35 @@
 package ru.betterend.blocks;
 
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import ru.betterend.registry.EndPortals;
 
 public class BlockProperties {
-	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.of("shape", HydraluxShape.class);
-	public final static EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.of("state", PedestalState.class);
-	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.of("shape", TripleShape.class);
-	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.of("shape", PentaShape.class);
+	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.create("shape", HydraluxShape.class);
+	public final static EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
+	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.create("shape", TripleShape.class);
+	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.create("shape", PentaShape.class);
 	
-	public static final BooleanProperty TRANSITION = BooleanProperty.of("transition");
-	public static final BooleanProperty HAS_LIGHT = BooleanProperty.of("has_light");
-	public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
-	public static final BooleanProperty IS_FLOOR = BooleanProperty.of("is_floor");
-	public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
-	public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
-	public static final BooleanProperty SMALL = BooleanProperty.of("small");
+	public static final BooleanProperty TRANSITION = BooleanProperty.create("transition");
+	public static final BooleanProperty HAS_LIGHT = BooleanProperty.create("has_light");
+	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
+	public static final BooleanProperty IS_FLOOR = BooleanProperty.create("is_floor");
+	public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
+	public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
+	public static final BooleanProperty SMALL = BooleanProperty.create("small");
 	
-	public static final IntProperty DESTRUCTION_LONG = IntProperty.of("destruction", 0, 8);
-	public static final IntProperty DESTRUCTION = IntProperty.of("destruction", 0, 2);
-	public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 3);
-	public static final IntProperty FULLNESS = IntProperty.of("fullness", 0, 3);
-	public static final IntProperty COLOR = IntProperty.of("color", 0, 7);
-	public static final IntProperty PORTAL = IntProperty.of("portal", 0, EndPortals.getCount());
-	public static final IntProperty SIZE = IntProperty.of("size", 0, 7);
-	public static final IntProperty AGE = IntProperty.of("age", 0, 3);
+	public static final IntegerProperty DESTRUCTION_LONG = IntegerProperty.create("destruction", 0, 8);
+	public static final IntegerProperty DESTRUCTION = IntegerProperty.create("destruction", 0, 2);
+	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
+	public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 3);
+	public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 7);
+	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
+	public static final IntegerProperty SIZE = IntegerProperty.create("size", 0, 7);
+	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
 	
-	public static enum TripleShape implements StringIdentifiable {
+	public static enum TripleShape implements StringRepresentable {
 		TOP("top"),
 		MIDDLE("middle"),
 		BOTTOM("bottom");
@@ -41,7 +41,7 @@ public class BlockProperties {
 		}
 
 		@Override
-		public String asString() {
+		public String getSerializedName() {
 			return name;
 		}
 		
@@ -51,7 +51,7 @@ public class BlockProperties {
 		}
 	}
 
-	public static enum PedestalState implements StringIdentifiable {
+	public static enum PedestalState implements StringRepresentable {
 		PEDESTAL_TOP("pedestal_top"),
 		COLUMN_TOP("column_top"),
 		BOTTOM("bottom"),
@@ -66,7 +66,7 @@ public class BlockProperties {
 		}
 	
 		@Override
-		public String asString() {
+		public String getSerializedName() {
 			return this.name;
 		}
 		
@@ -76,7 +76,7 @@ public class BlockProperties {
 		}
 	}
 	
-	public static enum HydraluxShape implements StringIdentifiable {
+	public static enum HydraluxShape implements StringRepresentable {
 		FLOWER_BIG_BOTTOM("flower_big_bottom", true),
 		FLOWER_BIG_TOP("flower_big_top", true),
 		FLOWER_SMALL_BOTTOM("flower_small_bottom", true),
@@ -93,7 +93,7 @@ public class BlockProperties {
 		}
 
 		@Override
-		public String asString() {
+		public String getSerializedName() {
 			return name;
 		}
 		
@@ -107,7 +107,7 @@ public class BlockProperties {
 		}
 	}
 	
-	public static enum PentaShape implements StringIdentifiable {
+	public static enum PentaShape implements StringRepresentable {
 		BOTTOM("bottom"),
 		PRE_BOTTOM("pre_bottom"),
 		MIDDLE("middle"),
@@ -121,7 +121,7 @@ public class BlockProperties {
 		}
 
 		@Override
-		public String asString() {
+		public String getSerializedName() {
 			return name;
 		}
 		
@@ -131,7 +131,7 @@ public class BlockProperties {
 		}
 	}
 	
-	public static enum LumecornShape implements StringIdentifiable {
+	public static enum LumecornShape implements StringRepresentable {
 		LIGHT_TOP("light_top", 15),
 		LIGHT_TOP_MIDDLE("light_top_middle", 15),
 		LIGHT_MIDDLE("light_middle", 15),
@@ -149,7 +149,7 @@ public class BlockProperties {
 		}
 
 		@Override
-		public String asString() {
+		public String getSerializedName() {
 			return name;
 		}
 		

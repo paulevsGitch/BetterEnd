@@ -5,11 +5,11 @@ import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import ru.betterend.BetterEnd;
 
 public class ItemUtil {
@@ -20,7 +20,7 @@ public class ItemUtil {
 				throw new IllegalStateException("Stack can't be null!");
 			}
 			Item item = stack.getItem();
-			return Registry.ITEM.getId(item) + ":" + stack.getCount();
+			return Registry.ITEM.getKey(item) + ":" + stack.getCount();
 		} catch (Exception ex) {
 			BetterEnd.LOGGER.error("ItemStack serialization error!", ex);
 		}
@@ -36,14 +36,14 @@ public class ItemUtil {
 			String[] parts = stackString.split(":");
 			if (parts.length < 2) return null;
 			if (parts.length == 2) {
-				Identifier itemId = new Identifier(stackString);
-				Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
+				ResourceLocation itemId = new ResourceLocation(stackString);
+				Item item = Registry.ITEM.getOptional(itemId).orElseThrow(() -> {
 					return new IllegalStateException("Output item " + itemId + " does not exists!");
 				});
 				return new ItemStack(item);
 			}
-			Identifier itemId = new Identifier(parts[0], parts[1]);
-			Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
+			ResourceLocation itemId = new ResourceLocation(parts[0], parts[1]);
+			Item item = Registry.ITEM.getOptional(itemId).orElseThrow(() -> {
 				return new IllegalStateException("Output item " + itemId + " does not exists!");
 			});
 			return new ItemStack(item, Integer.valueOf(parts[2]));
@@ -59,11 +59,11 @@ public class ItemUtil {
 			if (!recipe.has("item")) {
 				throw new IllegalStateException("Invalid JsonObject. Entry 'item' does not exists!");
 			}
-			Identifier itemId = new Identifier(JsonHelper.getString(recipe, "item"));
-			Item item = Registry.ITEM.getOrEmpty(itemId).orElseThrow(() -> {
+			ResourceLocation itemId = new ResourceLocation(GsonHelper.getAsString(recipe, "item"));
+			Item item = Registry.ITEM.getOptional(itemId).orElseThrow(() -> {
 				return new IllegalStateException("Output item " + itemId + " does not exists!");
 			});
-			int count = JsonHelper.getInt(recipe, "count", 1);
+			int count = GsonHelper.getAsInt(recipe, "count", 1);
 			return new ItemStack(item, count);
 		} catch (Exception ex) {
 			BetterEnd.LOGGER.error("ItemStack deserialization error!", ex);

@@ -7,21 +7,21 @@ import java.lang.reflect.Method;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
-import net.minecraft.tag.Tag;
-import net.minecraft.tag.Tag.Identified;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.Tag.Named;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.features.EndFeature;
 
@@ -36,8 +36,8 @@ public abstract class ModIntegration {
 		this.modID = modID;
 	}
 	
-	public Identifier getID(String name) {
-		return new Identifier(modID, name);
+	public ResourceLocation getID(String name) {
+		return new ResourceLocation(modID, name);
 	}
 	
 	public Block getBlock(String name) {
@@ -49,24 +49,24 @@ public abstract class ModIntegration {
 	}
 
 	public BlockState getDefaultState(String name) {
-		return getBlock(name).getDefaultState();
+		return getBlock(name).defaultBlockState();
 	}
 	
-	public RegistryKey<Biome> getKey(String name) {
-		return RegistryKey.of(Registry.BIOME_KEY, getID(name));
+	public ResourceKey<Biome> getKey(String name) {
+		return ResourceKey.create(Registry.BIOME_REGISTRY, getID(name));
 	}
 	
 	public boolean modIsInstalled() {
 		return FabricLoader.getInstance().isModLoaded(modID);
 	}
 	
-	public EndFeature getFeature(String featureID, String configuredFeatureID, GenerationStep.Feature featureStep) {
+	public EndFeature getFeature(String featureID, String configuredFeatureID, GenerationStep.Decoration featureStep) {
 		Feature<?> feature = Registry.FEATURE.get(getID(featureID));
 		ConfiguredFeature<?, ?> featureConfigured = BuiltinRegistries.CONFIGURED_FEATURE.get(getID(configuredFeatureID));
 		return new EndFeature(feature, featureConfigured, featureStep);
 	}
 	
-	public EndFeature getFeature(String name, GenerationStep.Feature featureStep) {
+	public EndFeature getFeature(String name, GenerationStep.Decoration featureStep) {
 		return getFeature(name, name, featureStep);
 	}
 	
@@ -197,15 +197,15 @@ public abstract class ModIntegration {
 		return null;
 	}
 	
-	public Tag.Identified<Item> getItemTag(String name) {
-		Identifier id = getID(name);
-		Tag<Item> tag = ItemTags.getTagGroup().getTag(id);
-		return tag == null ? (Identified<Item>) TagRegistry.item(id) : (Identified<Item>) tag;
+	public Tag.Named<Item> getItemTag(String name) {
+		ResourceLocation id = getID(name);
+		Tag<Item> tag = ItemTags.getAllTags().getTag(id);
+		return tag == null ? (Named<Item>) TagRegistry.item(id) : (Named<Item>) tag;
 	}
 	
-	public Tag.Identified<Block> getBlockTag(String name) {
-		Identifier id = getID(name);
-		Tag<Block> tag = BlockTags.getTagGroup().getTag(id);
-		return tag == null ? (Identified<Block>) TagRegistry.block(id) : (Identified<Block>) tag;
+	public Tag.Named<Block> getBlockTag(String name) {
+		ResourceLocation id = getID(name);
+		Tag<Block> tag = BlockTags.getAllTags().getTag(id);
+		return tag == null ? (Named<Block>) TagRegistry.block(id) : (Named<Block>) tag;
 	}
 }

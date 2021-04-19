@@ -3,87 +3,87 @@ package ru.betterend.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Flutterer;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.TargetFinder;
-import net.minecraft.entity.ai.control.FlightMoveControl;
-import net.minecraft.entity.ai.control.LookControl;
-import net.minecraft.entity.ai.goal.AnimalMateGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.pathing.BirdNavigation;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
-import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Heightmap.Type;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.util.RandomPos;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
-public class DragonflyEntity extends AnimalEntity implements Flutterer {
-	public DragonflyEntity(EntityType<DragonflyEntity> entityType, World world) {
+public class DragonflyEntity extends Animal implements FlyingAnimal {
+	public DragonflyEntity(EntityType<DragonflyEntity> entityType, Level world) {
 		super(entityType, world);
-		this.moveControl = new FlightMoveControl(this, 20, true);
+		this.moveControl = new FlyingMoveControl(this, 20, true);
 		this.lookControl = new DragonflyLookControl(this);
-		this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
-		this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
-		this.experiencePoints = 1;
+		this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+		this.xpReward = 1;
 	}
 
-	public static DefaultAttributeContainer.Builder createMobAttributes() {
+	public static AttributeSupplier.Builder createMobAttributes() {
 		return LivingEntity.createLivingAttributes()
-				.add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D)
-				.add(EntityAttributes.GENERIC_FLYING_SPEED, 1.0D)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1D);
+				.add(Attributes.MAX_HEALTH, 8.0D)
+				.add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.FLYING_SPEED, 1.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
 
 	@Override
-	protected EntityNavigation createNavigation(World world) {
-		BirdNavigation birdNavigation = new BirdNavigation(this, world) {
-			public boolean isValidPosition(BlockPos pos) {
-				BlockState state = this.world.getBlockState(pos);
-				return state.isAir() || !state.getMaterial().blocksMovement();
+	protected PathNavigation createNavigation(Level world) {
+		FlyingPathNavigation birdNavigation = new FlyingPathNavigation(this, world) {
+			public boolean isStableDestination(BlockPos pos) {
+				BlockState state = this.level.getBlockState(pos);
+				return state.isAir() || !state.getMaterial().blocksMotion();
 			}
 
 			public void tick() {
 				super.tick();
 			}
 		};
-		birdNavigation.setCanPathThroughDoors(false);
-		birdNavigation.setCanSwim(false);
-		birdNavigation.setCanEnterOpenDoors(true);
+		birdNavigation.setCanOpenDoors(false);
+		birdNavigation.setCanFloat(false);
+		birdNavigation.setCanPassDoors(true);
 		return birdNavigation;
 	}
 
 	@Override
-	public float getPathfindingFavor(BlockPos pos, WorldView world) {
+	public float getWalkTargetValue(BlockPos pos, LevelReader world) {
 		return world.getBlockState(pos).isAir() ? 10.0F : 0.0F;
 	}
 
 	@Override
-	protected void initGoals() {
-		this.goalSelector.add(1, new SwimGoal(this));
-		this.goalSelector.add(2, new AnimalMateGoal(this, 1.0D));
-		this.goalSelector.add(3, new FollowParentGoal(this, 1.0D));
-		this.goalSelector.add(4, new WanderAroundGoal());
+	protected void registerGoals() {
+		this.goalSelector.addGoal(1, new FloatGoal(this));
+		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+		this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.0D));
+		this.goalSelector.addGoal(4, new WanderAroundGoal());
 	}
 
 	@Override
@@ -92,22 +92,22 @@ public class DragonflyEntity extends AnimalEntity implements Flutterer {
 	}
 
 	@Override
-	protected boolean hasWings() {
+	protected boolean makeFlySound() {
 		return true;
 	}
 
 	@Override
-	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean causeFallDamage(float fallDistance, float damageMultiplier) {
 		return false;
 	}
 
 	@Override
-	public boolean canClimb() {
+	public boolean isMovementNoisy() {
 		return false;
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 
@@ -122,36 +122,36 @@ public class DragonflyEntity extends AnimalEntity implements Flutterer {
 	}
 
 	class DragonflyLookControl extends LookControl {
-		DragonflyLookControl(MobEntity entity) {
+		DragonflyLookControl(Mob entity) {
 			super(entity);
 		}
 
-		protected boolean shouldStayHorizontal() {
+		protected boolean resetXRotOnTick() {
 			return true;
 		}
 	}
 
 	class WanderAroundGoal extends Goal {
 		WanderAroundGoal() {
-			this.setControls(EnumSet.of(Goal.Control.MOVE));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
-		public boolean canStart() {
-			return DragonflyEntity.this.navigation.isIdle() && DragonflyEntity.this.random.nextInt(10) == 0;
+		public boolean canUse() {
+			return DragonflyEntity.this.navigation.isDone() && DragonflyEntity.this.random.nextInt(10) == 0;
 		}
 
-		public boolean shouldContinue() {
-			return DragonflyEntity.this.navigation.isFollowingPath();
+		public boolean canContinueToUse() {
+			return DragonflyEntity.this.navigation.isInProgress();
 		}
 
 		public void start() {
-			Vec3d vec3d = this.getRandomLocation();
+			Vec3 vec3d = this.getRandomLocation();
 			if (vec3d != null) {
 				BlockPos pos = new BlockPos(vec3d);
 				try {
-					Path path = DragonflyEntity.this.navigation.findPathTo(pos, 1);
+					Path path = DragonflyEntity.this.navigation.createPath(pos, 1);
 					if (path != null) {
-						DragonflyEntity.this.navigation.startMovingAlong(path, 1.0D);
+						DragonflyEntity.this.navigation.moveTo(path, 1.0D);
 					}
 				}
 				catch (Exception e) {}
@@ -159,41 +159,41 @@ public class DragonflyEntity extends AnimalEntity implements Flutterer {
 			super.start();
 		}
 
-		private Vec3d getRandomLocation() {
-			int h = BlocksHelper.downRay(DragonflyEntity.this.world, DragonflyEntity.this.getBlockPos(), 16);
-			Vec3d rotation = DragonflyEntity.this.getRotationVec(0.0F);
-			Vec3d airPos = TargetFinder.findAirTarget(DragonflyEntity.this, 8, 7, rotation, 1.5707964F, 2, 1);
+		private Vec3 getRandomLocation() {
+			int h = BlocksHelper.downRay(DragonflyEntity.this.level, DragonflyEntity.this.blockPosition(), 16);
+			Vec3 rotation = DragonflyEntity.this.getViewVector(0.0F);
+			Vec3 airPos = RandomPos.getAboveLandPos(DragonflyEntity.this, 8, 7, rotation, 1.5707964F, 2, 1);
 			if (airPos != null) {
 				if (isInVoid(airPos)) {
 					for (int i = 0; i < 8; i++) {
-						airPos = TargetFinder.findAirTarget(DragonflyEntity.this, 16, 7, rotation, MHelper.PI2, 2, 1);
+						airPos = RandomPos.getAboveLandPos(DragonflyEntity.this, 16, 7, rotation, MHelper.PI2, 2, 1);
 						if (airPos != null && !isInVoid(airPos)) {
 							return airPos;
 						}
 					}
 					return null;
 				}
-				if (h > 5 && airPos.getY() >= DragonflyEntity.this.getBlockPos().getY()) {
-					airPos = new Vec3d(airPos.x, airPos.y - h * 0.5, airPos.z);
+				if (h > 5 && airPos.y() >= DragonflyEntity.this.blockPosition().getY()) {
+					airPos = new Vec3(airPos.x, airPos.y - h * 0.5, airPos.z);
 				}
 				return airPos;
 			}
-			return TargetFinder.findGroundTarget(DragonflyEntity.this, 8, 4, -2, rotation, 1.5707963705062866D);
+			return RandomPos.getAirPos(DragonflyEntity.this, 8, 4, -2, rotation, 1.5707963705062866D);
 		}
 
-		private boolean isInVoid(Vec3d pos) {
-			int h = BlocksHelper.downRay(DragonflyEntity.this.world, new BlockPos(pos), 128);
+		private boolean isInVoid(Vec3 pos) {
+			int h = BlocksHelper.downRay(DragonflyEntity.this.level, new BlockPos(pos), 128);
 			return h > 100;
 		}
 	}
 
 	@Override
-	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+	public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
 		return EndEntities.DRAGONFLY.create(world);
 	}
 	
-	public static boolean canSpawn(EntityType<DragonflyEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		int y = world.getChunk(pos).sampleHeightmap(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
+	public static boolean canSpawn(EntityType<DragonflyEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
+		int y = world.getChunk(pos).getHeight(Types.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
 		return y > 0 && pos.getY() >= y;
 	}
 }

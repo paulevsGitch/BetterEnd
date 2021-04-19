@@ -13,39 +13,39 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.render.model.ModelLoader;
-import net.minecraft.client.render.model.json.JsonUnbakedModel;
-import net.minecraft.item.Item;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import ru.betterend.BetterEnd;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.world.generator.GeneratorOptions;
 
-@Mixin(ModelLoader.class)
+@Mixin(ModelBakery.class)
 public class ModelLoaderMixin {
 	@Final
 	@Shadow
 	private ResourceManager resourceManager;
 	
-	@Inject(method = "loadModelFromJson", at = @At("HEAD"), cancellable = true)
-	private void be_loadModelPattern(Identifier id, CallbackInfoReturnable<JsonUnbakedModel> info) {
+	@Inject(method = "loadBlockModel", at = @At("HEAD"), cancellable = true)
+	private void be_loadModelPattern(ResourceLocation id, CallbackInfoReturnable<BlockModel> info) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
-			Identifier modelId = new Identifier(id.getNamespace(), "models/" + id.getPath() + ".json");
-			JsonUnbakedModel model;
+			ResourceLocation modelId = new ResourceLocation(id.getNamespace(), "models/" + id.getPath() + ".json");
+			BlockModel model;
 			try (Resource resource = this.resourceManager.getResource(modelId)) {
 				Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-				model = JsonUnbakedModel.deserialize(reader);
-				model.id = id.toString();
+				model = BlockModel.fromStream(reader);
+				model.name = id.toString();
 				info.setReturnValue(model);
 			} catch (Exception ex) {
-				String data[] = id.getPath().split("/");
+				String[] data = id.getPath().split("/");
 				if (data.length > 1) {
-					Identifier itemId = new Identifier(id.getNamespace(), data[1]);
-					Optional<Block> block = Registry.BLOCK.getOrEmpty(itemId);
+					ResourceLocation itemId = new ResourceLocation(id.getNamespace(), data[1]);
+					Optional<Block> block = Registry.BLOCK.getOptional(itemId);
 					if (block.isPresent()) {
 						if (block.get() instanceof Patterned) {
 							Patterned patterned = (Patterned) block.get();
@@ -53,7 +53,7 @@ public class ModelLoaderMixin {
 							info.setReturnValue(model);
 						}
 					} else {
-						Optional<Item> item = Registry.ITEM.getOrEmpty(itemId);
+						Optional<Item> item = Registry.ITEM.getOptional(itemId);
 						if (item.isPresent() && item.get() instanceof Patterned) {
 							Patterned patterned = (Patterned) item.get();
 							model = this.be_getModel(data, id, patterned);
@@ -65,7 +65,7 @@ public class ModelLoaderMixin {
 		}
 	}
 	
-	private JsonUnbakedModel be_getModel(String data[], Identifier id, Patterned patterned) {
+	private BlockModel be_getModel(String[] data, ResourceLocation id, Patterned patterned) {
 		String pattern;
 		if (id.getPath().contains("item")) {
 			pattern = patterned.getModelPattern(id.getPath());
@@ -76,16 +76,16 @@ public class ModelLoaderMixin {
 				pattern = patterned.getModelPattern(data[1]);
 			}
 		}
-		JsonUnbakedModel model = JsonUnbakedModel.deserialize(pattern);
-		model.id = id.toString();
+		BlockModel model = BlockModel.fromString(pattern);
+		model.name = id.toString();
 		
 		return model;
 	}
 	
 	@ModifyVariable(method = "loadModel", ordinal = 2, at = @At(value = "INVOKE"))
-	public Identifier be_SwitchModel(Identifier id) {
+	public ResourceLocation be_switchModel(ResourceLocation id) {
 		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") && id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus") && !id.getPath().contains("custom_")) {
-			id = new Identifier(id.getPath().replace("chorus", "custom_chorus"));
+			id = new ResourceLocation(id.getPath().replace("chorus", "custom_chorus"));
 		}
 		return id;
 	}

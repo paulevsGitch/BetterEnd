@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.TransferRecipeDisplay;
 import me.shedaniel.rei.server.ContainerInfo;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.crafting.Recipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 
 public class REIAnvilDisplay implements TransferRecipeDisplay {
@@ -22,8 +22,8 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	
 	public REIAnvilDisplay(AnvilRecipe recipe) {
 		this.recipe = recipe;
-		this.input = EntryStack.ofIngredients(recipe.getPreviewInputs());
-		this.output = Collections.singletonList(EntryStack.create(recipe.getOutput()));
+		this.input = EntryStack.ofIngredients(recipe.getIngredients());
+		this.output = Collections.singletonList(EntryStack.create(recipe.getResultItem()));
 	}
 	
 	public int getDamage() {
@@ -39,7 +39,7 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	}
 	
 	@Override
-	public @NotNull Optional<Identifier> getRecipeLocation() {
+	public @NotNull Optional<ResourceLocation> getRecipeLocation() {
 		return Optional.ofNullable(recipe).map(Recipe::getId);
 	}
 
@@ -54,7 +54,7 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	}
 
 	@Override
-	public @NotNull Identifier getRecipeCategory() {
+	public @NotNull ResourceLocation getRecipeCategory() {
 		return REIPlugin.SMITHING;
 	}
 	
@@ -74,8 +74,8 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	}
 
 	@Override
-	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<ScreenHandler> containerInfo,
-			ScreenHandler container) {
+	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo,
+			AbstractContainerMenu container) {
 		return input;
 	}
 }

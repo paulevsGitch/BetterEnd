@@ -6,15 +6,15 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
@@ -22,32 +22,34 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class CaveChunkPopulatorFeature extends DefaultFeature {
 	private Supplier<EndCaveBiome> supplier;
-	
+
 	public CaveChunkPopulatorFeature(Supplier<EndCaveBiome> biome) {
 		this.supplier = biome;
 	}
-	
+
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		Set<BlockPos> floorPositions = Sets.newHashSet();
 		Set<BlockPos> ceilPositions = Sets.newHashSet();
 		int sx = (pos.getX() >> 4) << 4;
 		int sz = (pos.getZ() >> 4) << 4;
-		Mutable min = new Mutable().set(pos);
-		Mutable max = new Mutable().set(pos);
+		MutableBlockPos min = new MutableBlockPos().set(pos);
+		MutableBlockPos max = new MutableBlockPos().set(pos);
 		fillSets(sx, sz, world.getChunk(pos), floorPositions, ceilPositions, min, max);
 		EndCaveBiome biome = supplier.get();
-		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceConfig().getTopMaterial();
+		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 		placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		placeCeil(world, biome, ceilPositions, random);
 		BlocksHelper.fixBlocks(world, min, max);
 		return true;
 	}
-	
-	protected void fillSets(int sx, int sz, Chunk chunk, Set<BlockPos> floorPositions, Set<BlockPos> ceilPositions, Mutable min, Mutable max) {
-		Mutable mut = new Mutable();
-		Mutable mut2 = new Mutable();
-		Mutable mut3 = new Mutable();
+
+	protected void fillSets(int sx, int sz, ChunkAccess chunk, Set<BlockPos> floorPositions,
+			Set<BlockPos> ceilPositions, MutableBlockPos min, MutableBlockPos max) {
+		MutableBlockPos mut = new MutableBlockPos();
+		MutableBlockPos mut2 = new MutableBlockPos();
+		MutableBlockPos mut3 = new MutableBlockPos();
 		for (int x = 0; x < 16; x++) {
 			mut.setX(x);
 			mut2.setX(x);
@@ -55,19 +57,18 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 				mut.setZ(z);
 				mut2.setZ(z);
 				mut2.setY(0);
-				for (int y = 1; y < chunk.getHeight(); y++) {
+				for (int y = 1; y < chunk.getMaxBuildHeight(); y++) {
 					mut.setY(y);
 					BlockState top = chunk.getBlockState(mut);
 					BlockState bottom = chunk.getBlockState(mut2);
-					if (top.isAir() && (bottom.isIn(EndTags.GEN_TERRAIN) || bottom.isOf(Blocks.STONE))) {
+					if (top.isAir() && (bottom.is(EndTags.GEN_TERRAIN) || bottom.is(Blocks.STONE))) {
 						mut3.set(mut2).move(sx, 0, sz);
-						floorPositions.add(mut3.toImmutable());
+						floorPositions.add(mut3.immutable());
 						updateMin(mut3, min);
 						updateMax(mut3, max);
-					}
-					else if (bottom.isAir() && (top.isIn(EndTags.GEN_TERRAIN)|| top.isOf(Blocks.STONE))) {
+					} else if (bottom.isAir() && (top.is(EndTags.GEN_TERRAIN) || top.is(Blocks.STONE))) {
 						mut3.set(mut).move(sx, 0, sz);
-						ceilPositions.add(mut3.toImmutable());
+						ceilPositions.add(mut3.immutable());
 						updateMin(mut3, min);
 						updateMax(mut3, max);
 					}
@@ -76,8 +77,8 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			}
 		}
 	}
-	
-	private void updateMin(BlockPos pos, Mutable min) {
+
+	private void updateMin(BlockPos pos, MutableBlockPos min) {
 		if (pos.getX() < min.getX()) {
 			min.setX(pos.getX());
 		}
@@ -88,8 +89,8 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			min.setZ(pos.getZ());
 		}
 	}
-	
-	private void updateMax(BlockPos pos, Mutable max) {
+
+	private void updateMax(BlockPos pos, MutableBlockPos max) {
 		if (pos.getX() > max.getX()) {
 			max.setX(pos.getX());
 		}
@@ -100,21 +101,22 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			max.setZ(pos.getZ());
 		}
 	}
-	
-	protected void placeFloor(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
+
+	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random,
+			BlockState surfaceBlock) {
 		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.up(), null);
+					feature.place(world, null, random, pos.above(), null);
 				}
 			}
 		});
 	}
-	
-	protected void placeCeil(StructureWorldAccess world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
+
+	protected void placeCeil(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
 		float density = biome.getCeilDensity();
 		ceilPositions.forEach((pos) -> {
 			BlockState ceilBlock = biome.getCeil(pos);
@@ -124,7 +126,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.down(), null);
+					feature.place(world, null, random, pos.below(), null);
 				}
 			}
 		});

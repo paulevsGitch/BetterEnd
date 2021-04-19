@@ -1,11 +1,11 @@
 package ru.betterend.item;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
 public class PatternedItem extends Item implements Patterned {
-	public PatternedItem(Settings settings) {
+	public PatternedItem(Properties settings) {
 		super(settings);
 	}
 	

@@ -1,6 +1,6 @@
 package ru.betterend.registry;
 
-import net.minecraft.block.AbstractBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import ru.betterend.blocks.basis.VineBlock;
 
 public class FilaluxBlock extends VineBlock {
@@ -9,7 +9,7 @@ public class FilaluxBlock extends VineBlock {
 	}
 	
 	@Override
-	public AbstractBlock.OffsetType getOffsetType() {
-		return AbstractBlock.OffsetType.NONE;
+	public BlockBehaviour.OffsetType getOffsetType() {
+		return BlockBehaviour.OffsetType.NONE;
 	}
 }

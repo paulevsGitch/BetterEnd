@@ -5,24 +5,24 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.EndTerrainBlock;
@@ -33,24 +33,24 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	
 	public TripleTerrainBlock(MaterialColor color) {
 		super(color);
-		this.setDefaultState(this.getDefaultState().with(SHAPE, TripleShape.BOTTOM));
+		this.registerDefaultState(this.defaultBlockState().setValue(SHAPE, TripleShape.BOTTOM));
 	}
 	
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
 	
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		Direction dir = ctx.getSide();
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		Direction dir = ctx.getClickedFace();
 		TripleShape shape = dir == Direction.UP ? TripleShape.BOTTOM : dir == Direction.DOWN ? TripleShape.TOP : TripleShape.MIDDLE;
-		return this.getDefaultState().with(SHAPE, shape);
+		return this.defaultBlockState().setValue(SHAPE, shape);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		String name = Registry.BLOCK.getId(this).getPath();
+		String name = Registry.BLOCK.getKey(this).getPath();
 		if (block.endsWith("_middle")) {
 			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top", name + "_top");
 		}
@@ -62,22 +62,22 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_TRIPLE_ROTATED_TOP;
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		TripleShape shape = state.get(SHAPE);
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
-			return super.onUse(state, world, pos, player, hand, hit);
+			return super.use(state, world, pos, player, hand, hit);
 		}
-		return ActionResult.FAIL;
+		return InteractionResult.FAIL;
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		TripleShape shape = state.get(SHAPE);
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
 			super.randomTick(state, world, pos, random);
 			return;
@@ -86,39 +86,39 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 			boolean bottom = canSurviveBottom(world, pos);
 			if (shape == TripleShape.TOP) {
 				if (!bottom) {
-					world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
+					world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 				}
 			}
 			else {
-				boolean top = canSurvive(state, world, pos) || isMiddle(world.getBlockState(pos.up()));
+				boolean top = canSurvive(state, world, pos) || isMiddle(world.getBlockState(pos.above()));
 				if (!top && !bottom) {
-					world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
+					world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 				}
 				else if (top && !bottom) {
-					world.setBlockState(pos, state.with(SHAPE, TripleShape.BOTTOM));
+					world.setBlockAndUpdate(pos, state.setValue(SHAPE, TripleShape.BOTTOM));
 				}
 				else if (!top && bottom) {
-					world.setBlockState(pos, state.with(SHAPE, TripleShape.TOP));
+					world.setBlockAndUpdate(pos, state.setValue(SHAPE, TripleShape.TOP));
 				}
 			}
 		}
 	}
 	
-	protected boolean canSurviveBottom(WorldView world, BlockPos pos) {
-		BlockPos blockPos = pos.down();
+	protected boolean canSurviveBottom(LevelReader world, BlockPos pos) {
+		BlockPos blockPos = pos.below();
 		BlockState blockState = world.getBlockState(blockPos);
 		if (isMiddle(blockState)) {
 			return true;
 		}
-		else if (blockState.getFluidState().getLevel() == 8) {
+		else if (blockState.getFluidState().getAmount() == 8) {
 			return false;
 		}
 		else {
-			return !blockState.isSideSolidFullSquare(world, blockPos, Direction.UP);
+			return !blockState.isFaceSturdy(world, blockPos, Direction.UP);
 		}
 	}
 	
 	protected boolean isMiddle(BlockState state) {
-		return state.isOf(this) && state.get(SHAPE) == TripleShape.MIDDLE;
+		return state.is(this) && state.getValue(SHAPE) == TripleShape.MIDDLE;
 	}
 }

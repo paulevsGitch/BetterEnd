@@ -5,6 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import it.unimi.dsi.fastutil.ints.IntList;
 import me.shedaniel.math.Point;
@@ -15,9 +16,8 @@ import me.shedaniel.rei.api.widgets.Widgets;
 import me.shedaniel.rei.gui.entries.RecipeEntry;
 import me.shedaniel.rei.gui.entries.SimpleRecipeEntry;
 import me.shedaniel.rei.gui.widget.Widget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
@@ -25,16 +25,16 @@ import ru.betterend.util.LangUtil;
 
 public class REIInfusionCategory implements TransferRecipeCategory<REIInfusionDisplay> {
 	
-	private final static Identifier BACKGROUND = BetterEnd.makeID("textures/gui/rei_infusion.png");
+	private final static ResourceLocation BACKGROUND = BetterEnd.makeID("textures/gui/rei_infusion.png");
 
 	@Override
-	public @NotNull Identifier getIdentifier() {
+	public @NotNull ResourceLocation getIdentifier() {
 		return InfusionRecipe.ID;
 	}
 
 	@Override
 	public @NotNull String getCategoryName() {
-		return LangUtil.translate(EndBlocks.INFUSION_PEDESTAL.getTranslationKey());
+		return LangUtil.translate(EndBlocks.INFUSION_PEDESTAL.getDescriptionId());
 	}
 	
 	@Override
@@ -65,13 +65,13 @@ public class REIInfusionCategory implements TransferRecipeCategory<REIInfusionDi
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y + 24)).entries(inputEntries.get(6)).disableBackground().markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y - 24)).entries(inputEntries.get(8)).disableBackground().markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 80, centerPoint.y)).entries(outputEntries.get(0)).disableBackground().markOutput());
-		widgets.add(Widgets.createLabel(new Point(bounds.getMaxX() - 5, bounds.y + 6), new TranslatableText("category.rei.infusion.time&val", display.getInfusionTime()))
+		widgets.add(Widgets.createLabel(new Point(bounds.getMaxX() - 5, bounds.y + 6), new TranslatableComponent("category.rei.infusion.time&val", display.getInfusionTime()))
 				.noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		return widgets;
 	}
 
 	@Override
-	public void renderRedSlots(MatrixStack matrices, List<Widget> widgets, Rectangle bounds,
+	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds,
 			REIInfusionDisplay display, IntList redSlots) {}
 	
 	@Override

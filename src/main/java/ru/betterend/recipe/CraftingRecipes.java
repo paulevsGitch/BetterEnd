@@ -1,12 +1,12 @@
 package ru.betterend.recipe;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtil;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import ru.betterend.BetterEnd;
 import ru.betterend.item.GuideBookItem;
 import ru.betterend.recipe.builders.GridRecipe;
@@ -102,14 +102,14 @@ public class CraftingRecipes {
 		GridRecipe.make("sweet_berry_jelly", EndItems.SWEET_BERRY_JELLY)
 			.setList("JWSB")
 			.addMaterial('J', EndItems.GELATINE)
-			.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+			.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
 			.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
 			.build();
 		
 		GridRecipe.make("shadow_berry_jelly", EndItems.SHADOW_BERRY_JELLY)
 			.setList("JWSB")
 			.addMaterial('J', EndItems.GELATINE)
-			.addMaterial('W', PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+			.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
 			.addMaterial('S', Items.SUGAR)
 			.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
 			.build();

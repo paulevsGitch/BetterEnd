@@ -4,14 +4,14 @@ import java.util.Random;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.color.item.ItemColorProvider;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.registry.EndParticles;
@@ -25,7 +25,7 @@ public class TenaneaFlowersBlock extends VineBlock implements IColorProvider {
 	}
 
 	@Override
-	public BlockColorProvider getProvider() {
+	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
 			long i = (MHelper.getRandom(pos.getX(), pos.getZ()) & 63) + pos.getY();
 			double delta = i * 0.1;
@@ -37,9 +37,9 @@ public class TenaneaFlowersBlock extends VineBlock implements IColorProvider {
 			Vec3i color1 = COLORS[index];
 			Vec3i color2 = COLORS[index2];
 			
-			int r = MHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
-			int g = MHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
-			int b = MHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
+			int r = MHelper.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
+			int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
+			int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
 			float[] hsb = MHelper.fromRGBtoHSB(r, g, b);
 			
 			return MHelper.fromHSBtoRGB(hsb[0], MHelper.max(0.5F, hsb[1]), hsb[2]);
@@ -47,20 +47,20 @@ public class TenaneaFlowersBlock extends VineBlock implements IColorProvider {
 	}
 
 	@Override
-	public ItemColorProvider getItemProvider() {
+	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
 			return MHelper.color(255, 255, 255);
 		};
 	}
 	
 	@Override
-	public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-		super.randomDisplayTick(state, world, pos, random);
+	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
+		super.animateTick(state, world, pos, random);
 		if (random.nextInt(32) == 0) {
 			double x = (double) pos.getX() + random.nextGaussian() + 0.5;
 			double z = (double) pos.getZ() + random.nextGaussian() + 0.5;

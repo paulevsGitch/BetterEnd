@@ -1,7 +1,7 @@
 package ru.betterend.world.generator;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import ru.betterend.config.Configs;
 
 public class GeneratorOptions {
@@ -23,7 +23,7 @@ public class GeneratorOptions {
 	public static LayerOptions smallOptions;
 	private static boolean changeSpawn;
 	private static BlockPos spawn;
-	private static BlockPos portal = BlockPos.ORIGIN;
+	private static BlockPos portal = BlockPos.ZERO;
 	private static boolean replacePortal;
 	private static boolean replacePillars;
 	
@@ -55,11 +55,11 @@ public class GeneratorOptions {
 	}
 
 	public static int getBiomeSizeLand() {
-		return MathHelper.clamp(biomeSizeLand, 1, 8192);
+		return Mth.clamp(biomeSizeLand, 1, 8192);
 	}
 	
 	public static int getBiomeSizeVoid() {
-		return MathHelper.clamp(biomeSizeVoid, 1, 8192);
+		return Mth.clamp(biomeSizeVoid, 1, 8192);
 	}
 
 	public static boolean hasPortal() {

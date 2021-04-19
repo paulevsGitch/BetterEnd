@@ -3,9 +3,9 @@ package ru.betterend.blocks;
 import java.io.Reader;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.color.item.ItemColorProvider;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.BlocksHelper;
@@ -16,14 +16,14 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 	}
 	
 	@Override
-	public BlockColorProvider getProvider() {
+	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
 			return BlocksHelper.getBlockColor(this);
 		};
 	}
 
 	@Override
-	public ItemColorProvider getItemProvider() {
+	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
 			return BlocksHelper.getBlockColor(this);
 		};
@@ -42,7 +42,7 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_DIRECT;
 	}
 }

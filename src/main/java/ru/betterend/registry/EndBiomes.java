@@ -18,15 +18,15 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.biome.InternalBiomeData;
 import net.fabricmc.fabric.impl.biome.WeightedBiomePicker;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.Biomes;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.integration.Integrations;
@@ -61,10 +61,10 @@ import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
 
 public class EndBiomes {
-	private static final HashMap<Identifier, EndBiome> ID_MAP = Maps.newHashMap();
+	private static final HashMap<ResourceLocation, EndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
-	public static final Set<Identifier> FABRIC_VOID = Sets.newHashSet();
-	private static final Set<Identifier> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
+	public static final Set<ResourceLocation> FABRIC_VOID = Sets.newHashSet();
+	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
@@ -75,13 +75,13 @@ public class EndBiomes {
 	private static Registry<Biome> biomeRegistry;
 	
 	// Vanilla Land
-	public static final EndBiome END = registerBiome(BiomeKeys.THE_END, BiomeType.LAND, 1F);
-	public static final EndBiome END_MIDLANDS = registerSubBiome(BiomeKeys.END_MIDLANDS, END, 0.5F);
-	public static final EndBiome END_HIGHLANDS = registerSubBiome(BiomeKeys.END_HIGHLANDS, END, 0.5F);
+	public static final EndBiome END = registerBiome(Biomes.THE_END, BiomeType.LAND, 1F);
+	public static final EndBiome END_MIDLANDS = registerSubBiome(Biomes.END_MIDLANDS, END, 0.5F);
+	public static final EndBiome END_HIGHLANDS = registerSubBiome(Biomes.END_HIGHLANDS, END, 0.5F);
 	
 	// Vanilla Void
-	public static final EndBiome END_BARRENS = registerBiome(BiomeKeys.END_BARRENS, BiomeType.VOID, 1F);
-	public static final EndBiome SMALL_END_ISLANDS = registerBiome(BiomeKeys.SMALL_END_ISLANDS, BiomeType.VOID, 1);
+	public static final EndBiome END_BARRENS = registerBiome(Biomes.END_BARRENS, BiomeType.VOID, 1F);
+	public static final EndBiome SMALL_END_ISLANDS = registerBiome(Biomes.SMALL_END_ISLANDS, BiomeType.VOID, 1);
 	
 	// Better End Land
 	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new FoggyMushroomlandBiome(), BiomeType.LAND);
@@ -128,8 +128,8 @@ public class EndBiomes {
 		Map<String, JsonObject> configs = Maps.newHashMap();
 		
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getCategory() == Category.THEEND) {
-				Identifier id = biomeRegistry.getId(biome);
+			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {
+				ResourceLocation id = biomeRegistry.getKey(biome);
 				if (Configs.BIOME_CONFIG.getBoolean(id, "enabled", true)) {
 					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) {
 						JsonObject config = configs.get(id.getNamespace());
@@ -183,10 +183,10 @@ public class EndBiomes {
 	}
 	
 	private static void loadFabricAPIBiomes() {
-		List<RegistryKey<Biome>> biomes = Lists.newArrayList();
-		biomes.addAll(getBiomes(InternalBiomeData.getEndBiomesMap().get(BiomeKeys.SMALL_END_ISLANDS)));
-		biomes.addAll(getBiomes(InternalBiomeData.getEndBarrensMap().get(BiomeKeys.END_BARRENS)));
-		biomes.forEach((key) -> FABRIC_VOID.add(key.getValue()));
+		List<ResourceKey<Biome>> biomes = Lists.newArrayList();
+		biomes.addAll(getBiomes(InternalBiomeData.getEndBiomesMap().get(Biomes.SMALL_END_ISLANDS)));
+		biomes.addAll(getBiomes(InternalBiomeData.getEndBarrensMap().get(Biomes.END_BARRENS)));
+		biomes.forEach((key) -> FABRIC_VOID.add(key.location()));
 		
 		if (BetterEnd.isDevEnvironment()) {
 			System.out.println("==================================");
@@ -198,7 +198,7 @@ public class EndBiomes {
 		}
 	}
 	
-	private static List<RegistryKey<Biome>> getBiomes(WeightedBiomePicker picker) {
+	private static List<ResourceKey<Biome>> getBiomes(WeightedBiomePicker picker) {
 		IBiomeList biomeList = (IBiomeList) (Object) picker;
 		return biomeList == null ? Collections.emptyList() : biomeList.getBiomes();
 	}
@@ -219,7 +219,7 @@ public class EndBiomes {
 	 */
 	public static void initRegistry(MinecraftServer server) {
 		if (biomeRegistry == null) {
-			biomeRegistry = server.getRegistryManager().get(Registry.BIOME_KEY);
+			biomeRegistry = server.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
 		}
 	}
 	
@@ -243,7 +243,7 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
-		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance, true);
+		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, true);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
 			addToPicker(endBiome, type);
 		}
@@ -270,7 +270,7 @@ public class EndBiomes {
 	 * @return registered {@link EndBiome}
 	 */
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance, boolean hasCaves) {
-		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getId(biome), biome, fogDensity, genChance, hasCaves);
+		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
 			parent.addSubBiome(endBiome);
 			SUBBIOMES.add(endBiome);
@@ -338,9 +338,9 @@ public class EndBiomes {
 	/**
 	 * Link integration sub-biome with parent.
 	 * @param biome - {@link EndBiome} instance
-	 * @param parent - {@link Identifier} parent id
+	 * @param parent - {@link ResourceLocation} parent id
 	 */
-	public static void addSubBiomeIntegration(EndBiome biome, Identifier parent) {
+	public static void addSubBiomeIntegration(EndBiome biome, ResourceLocation parent) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			EndBiome parentBiome = ID_MAP.get(parent);
 			if (parentBiome != null && !parentBiome.containsSubBiome(biome)) {
@@ -349,11 +349,11 @@ public class EndBiomes {
 		}
 	}
 	
-	public static EndBiome registerBiome(RegistryKey<Biome> key, BiomeType type, float genChance) {
+	public static EndBiome registerBiome(ResourceKey<Biome> key, BiomeType type, float genChance) {
 		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
 	}
 	
-	public static EndBiome registerSubBiome(RegistryKey<Biome> key, EndBiome parent, float genChance) {
+	public static EndBiome registerSubBiome(ResourceKey<Biome> key, EndBiome parent, float genChance) {
 		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance, true);
 	}
 	
@@ -372,39 +372,39 @@ public class EndBiomes {
 	
 	private static void addLandBiomeToFabricApi(EndBiome biome) {
 		float weight = biome.getGenChanceImmutable();
-		RegistryKey<Biome> key = BuiltinRegistries.BIOME.getKey(biome.getBiome()).get();
-		InternalBiomeData.addEndBiomeReplacement(BiomeKeys.END_HIGHLANDS, key, weight);
-		InternalBiomeData.addEndBiomeReplacement(BiomeKeys.END_MIDLANDS, key, weight);
+		ResourceKey<Biome> key = BuiltinRegistries.BIOME.getResourceKey(biome.getBiome()).get();
+		InternalBiomeData.addEndBiomeReplacement(Biomes.END_HIGHLANDS, key, weight);
+		InternalBiomeData.addEndBiomeReplacement(Biomes.END_MIDLANDS, key, weight);
 	}
 	
 	private static void addVoidBiomeToFabricApi(EndBiome biome) {
 		float weight = biome.getGenChanceImmutable();
-		RegistryKey<Biome> key = BuiltinRegistries.BIOME.getKey(biome.getBiome()).get();
-		InternalBiomeData.addEndBiomeReplacement(BiomeKeys.SMALL_END_ISLANDS, key, weight);
+		ResourceKey<Biome> key = BuiltinRegistries.BIOME.getResourceKey(biome.getBiome()).get();
+		InternalBiomeData.addEndBiomeReplacement(Biomes.SMALL_END_ISLANDS, key, weight);
 	}
 	
 	public static EndBiome getFromBiome(Biome biome) {
-		return ID_MAP.getOrDefault(biomeRegistry.getId(biome), END);
+		return ID_MAP.getOrDefault(biomeRegistry.getKey(biome), END);
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static EndBiome getRenderBiome(Biome biome) {
 		EndBiome endBiome = CLIENT.get(biome);
 		if (endBiome == null) {
-			MinecraftClient minecraft = MinecraftClient.getInstance();
-			Identifier id = minecraft.world.getRegistryManager().get(Registry.BIOME_KEY).getId(biome);
+			Minecraft minecraft = Minecraft.getInstance();
+			ResourceLocation id = minecraft.level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(biome);
 			endBiome = id == null ? END : ID_MAP.getOrDefault(id, END);
 			CLIENT.put(biome, endBiome);
 		}
 		return endBiome;
 	}
 	
-	public static Identifier getBiomeID(Biome biome) {
-		Identifier id = biomeRegistry.getId(biome);
+	public static ResourceLocation getBiomeID(Biome biome) {
+		ResourceLocation id = biomeRegistry.getKey(biome);
 		return id == null ? END.getID() : id;
 	}
 
-	public static EndBiome getBiome(Identifier biomeID) {
+	public static EndBiome getBiome(ResourceLocation biomeID) {
 		return ID_MAP.getOrDefault(biomeID, END);
 	}
 
@@ -430,7 +430,7 @@ public class EndBiomes {
 		return (EndCaveBiome) CAVE_BIOMES.getBiome(random);
 	}
 	
-	public static boolean hasBiome(Identifier biomeID) {
+	public static boolean hasBiome(ResourceLocation biomeID) {
 		return ID_MAP.containsKey(biomeID);
 	}
 }

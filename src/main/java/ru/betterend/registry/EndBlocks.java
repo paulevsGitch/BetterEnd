@@ -1,13 +1,13 @@
 package ru.betterend.registry;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item.Settings;
-import net.minecraft.item.LilyPadItem;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.WaterLilyBlockItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.MaterialColor;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.*;
 import ru.betterend.blocks.basis.EndCropBlock;
@@ -39,17 +39,17 @@ import ru.betterend.item.material.EndToolMaterial;
 public class EndBlocks {
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new EndstoneDustBlock());
-	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new EndTerrainBlock(MaterialColor.LIGHT_BLUE));
-	public static final Block END_MOSS = registerBlock("end_moss", new EndTerrainBlock(MaterialColor.CYAN));
-	public static final Block CHORUS_NYLIUM = registerBlock("chorus_nylium", new EndTerrainBlock(MaterialColor.MAGENTA));
-	public static final Block CAVE_MOSS = registerBlock("cave_moss", new TripleTerrainBlock(MaterialColor.PURPLE));
-	public static final Block CRYSTAL_MOSS = registerBlock("crystal_moss", new EndTerrainBlock(MaterialColor.PINK));
+	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new EndTerrainBlock(MaterialColor.COLOR_LIGHT_BLUE));
+	public static final Block END_MOSS = registerBlock("end_moss", new EndTerrainBlock(MaterialColor.COLOR_CYAN));
+	public static final Block CHORUS_NYLIUM = registerBlock("chorus_nylium", new EndTerrainBlock(MaterialColor.COLOR_MAGENTA));
+	public static final Block CAVE_MOSS = registerBlock("cave_moss", new TripleTerrainBlock(MaterialColor.COLOR_PURPLE));
+	public static final Block CRYSTAL_MOSS = registerBlock("crystal_moss", new EndTerrainBlock(MaterialColor.COLOR_PINK));
 	public static final Block SHADOW_GRASS = registerBlock("shadow_grass", new ShadowGrassBlock());
-	public static final Block PINK_MOSS = registerBlock("pink_moss", new EndTerrainBlock(MaterialColor.PINK));
-	public static final Block AMBER_MOSS = registerBlock("amber_moss", new EndTerrainBlock(MaterialColor.ORANGE));
-	public static final Block JUNGLE_MOSS = registerBlock("jungle_moss", new EndTerrainBlock(MaterialColor.GREEN));
-	public static final Block SANGNUM = registerBlock("sangnum", new EndTerrainBlock(MaterialColor.RED));
-	public static final Block RUTISCUS = registerBlock("rutiscus", new EndTerrainBlock(MaterialColor.ORANGE));
+	public static final Block PINK_MOSS = registerBlock("pink_moss", new EndTerrainBlock(MaterialColor.COLOR_PINK));
+	public static final Block AMBER_MOSS = registerBlock("amber_moss", new EndTerrainBlock(MaterialColor.COLOR_ORANGE));
+	public static final Block JUNGLE_MOSS = registerBlock("jungle_moss", new EndTerrainBlock(MaterialColor.COLOR_GREEN));
+	public static final Block SANGNUM = registerBlock("sangnum", new EndTerrainBlock(MaterialColor.COLOR_RED));
+	public static final Block RUTISCUS = registerBlock("rutiscus", new EndTerrainBlock(MaterialColor.COLOR_ORANGE));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new EndPathBlock(END_MYCELIUM));
@@ -72,11 +72,11 @@ public class EndBlocks {
 	
 	// Rocks //
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
-	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
-	public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
-	public static final StoneMaterial VIRID_jADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.GREEN);
-	public static final StoneMaterial AZURE_jADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.LIGHT_BLUE);
-	public static final StoneMaterial SANDY_jADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.YELLOW);
+	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.COLOR_PURPLE);
+	public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.COLOR_BROWN);
+	public static final StoneMaterial VIRID_jADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.COLOR_GREEN);
+	public static final StoneMaterial AZURE_jADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.COLOR_LIGHT_BLUE);
+	public static final StoneMaterial SANDY_jADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.COLOR_YELLOW);
 	public static final Block BRIMSTONE = registerBlock("brimstone", new BrimstoneBlock());
 	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new SulphurCrystalBlock());
 	public static final Block MISSING_TILE = registerBlock("missing_tile", new MissingTileBlock());
@@ -106,49 +106,49 @@ public class EndBlocks {
 	public static final Block MOSSY_GLOWSHROOM_CAP = registerBlock("mossy_glowshroom_cap", new MossyGlowshroomCapBlock());
 	public static final Block MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlock("mossy_glowshroom_hymenophore", new GlowingHymenophoreBlock());
 	public static final Block MOSSY_GLOWSHROOM_FUR = registerBlock("mossy_glowshroom_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 16, true));
-	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
+	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.COLOR_GRAY, MaterialColor.WOOD);
 	
 	public static final Block PYTHADENDRON_SAPLING = registerBlock("pythadendron_sapling", new PythadendronSaplingBlock());
-	public static final Block PYTHADENDRON_LEAVES = registerBlock("pythadendron_leaves", new EndLeavesBlock(PYTHADENDRON_SAPLING, MaterialColor.MAGENTA));
-	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
+	public static final Block PYTHADENDRON_LEAVES = registerBlock("pythadendron_leaves", new EndLeavesBlock(PYTHADENDRON_SAPLING, MaterialColor.COLOR_MAGENTA));
+	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.COLOR_MAGENTA, MaterialColor.COLOR_PURPLE);
 	
 	public static final Block END_LOTUS_SEED = registerBlock("end_lotus_seed", new EndLotusSeedBlock());
 	public static final Block END_LOTUS_STEM = registerBlock("end_lotus_stem", new EndLotusStemBlock());
 	public static final Block END_LOTUS_LEAF = registerBlockNI("end_lotus_leaf", new EndLotusLeafBlock());
 	public static final Block END_LOTUS_FLOWER = registerBlockNI("end_lotus_flower", new EndLotusFlowerBlock());
-	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.LIGHT_BLUE, MaterialColor.CYAN);
+	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.COLOR_LIGHT_BLUE, MaterialColor.COLOR_CYAN);
 	
 	public static final Block LACUGROVE_SAPLING = registerBlock("lacugrove_sapling", new LacugroveSaplingBlock());
-	public static final Block LACUGROVE_LEAVES = registerBlock("lacugrove_leaves", new EndLeavesBlock(LACUGROVE_SAPLING, MaterialColor.CYAN));
-	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
+	public static final Block LACUGROVE_LEAVES = registerBlock("lacugrove_leaves", new EndLeavesBlock(LACUGROVE_SAPLING, MaterialColor.COLOR_CYAN));
+	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.COLOR_BROWN, MaterialColor.COLOR_YELLOW);
 	
 	public static final Block DRAGON_TREE_SAPLING = registerBlock("dragon_tree_sapling", new DragonTreeSaplingBlock());
-	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new EndLeavesBlock(DRAGON_TREE_SAPLING, MaterialColor.MAGENTA));
-	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
+	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new EndLeavesBlock(DRAGON_TREE_SAPLING, MaterialColor.COLOR_MAGENTA));
+	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.COLOR_BLACK, MaterialColor.COLOR_MAGENTA);
 	
 	public static final Block TENANEA_SAPLING = registerBlock("tenanea_sapling", new TenaneaSaplingBlock());
-	public static final Block TENANEA_LEAVES = registerBlock("tenanea_leaves", new EndLeavesBlock(TENANEA_SAPLING, MaterialColor.PINK));
+	public static final Block TENANEA_LEAVES = registerBlock("tenanea_leaves", new EndLeavesBlock(TENANEA_SAPLING, MaterialColor.COLOR_PINK));
 	public static final Block TENANEA_FLOWERS = registerBlock("tenanea_flowers", new TenaneaFlowersBlock());
 	public static final Block TENANEA_OUTER_LEAVES = registerBlock("tenanea_outer_leaves", new FurBlock(TENANEA_SAPLING, 32));
-	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
+	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.COLOR_BROWN, MaterialColor.COLOR_PINK);
 	
 	public static final Block HELIX_TREE_SAPLING = registerBlock("helix_tree_sapling", new HelixTreeSaplingBlock());
 	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new HelixTreeLeavesBlock());
-	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ORANGE);
+	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.COLOR_GRAY, MaterialColor.COLOR_ORANGE);
 	
 	public static final Block UMBRELLA_TREE_SAPLING = registerBlock("umbrella_tree_sapling", new UmbrellaTreeSaplingBlock());
 	public static final Block UMBRELLA_TREE_MEMBRANE = registerBlock("umbrella_tree_membrane", new UmbrellaTreeMembraneBlock());
 	public static final Block UMBRELLA_TREE_CLUSTER = registerBlock("umbrella_tree_cluster", new UmbrellaTreeClusterBlock());
 	public static final Block UMBRELLA_TREE_CLUSTER_EMPTY = registerBlock("umbrella_tree_cluster_empty", new UmbrellaTreeClusterEmptyBlock());
-	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
+	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.COLOR_BLUE, MaterialColor.COLOR_GREEN);
 	
 	public static final Block JELLYSHROOM_CAP_PURPLE = registerBlock("jellyshroom_cap_purple", new JellyshroomCapBlock(217, 142, 255, 164, 0, 255));
-	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
+	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.COLOR_PURPLE, MaterialColor.COLOR_LIGHT_BLUE);
 	
 	public static final Block LUCERNIA_SAPLING = registerBlock("lucernia_sapling", new TenaneaSaplingBlock());
-	public static final Block LUCERNIA_LEAVES = registerBlock("lucernia_leaves", new EndLeavesBlock(LUCERNIA_SAPLING, MaterialColor.ORANGE));
+	public static final Block LUCERNIA_LEAVES = registerBlock("lucernia_leaves", new EndLeavesBlock(LUCERNIA_SAPLING, MaterialColor.COLOR_ORANGE));
 	public static final Block LUCERNIA_OUTER_LEAVES = registerBlock("lucernia_outer_leaves", new FurBlock(LUCERNIA_SAPLING, 32));
-	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.ORANGE, MaterialColor.ORANGE);
+	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.COLOR_ORANGE, MaterialColor.COLOR_ORANGE);
 	
 	// Small Plants //
 	public static final Block UMBRELLA_MOSS = registerBlock("umbrella_moss", new UmbrellaMossBlock());
@@ -236,7 +236,7 @@ public class EndBlocks {
 	
 	public static final Block FLAMAEA = registerBlock("flamaea", new FlamaeaBlock());
 	
-	public static final Block CAVE_BUSH = registerBlock("cave_bush", new SimpleLeavesBlock(MaterialColor.MAGENTA));
+	public static final Block CAVE_BUSH = registerBlock("cave_bush", new SimpleLeavesBlock(MaterialColor.COLOR_MAGENTA));
 	
 	public static final Block MURKWEED = registerBlock("murkweed", new MurkweedBlock());
 	public static final Block NEEDLEGRASS = registerBlock("needlegrass", new NeedlegrassBlock());
@@ -273,8 +273,8 @@ public class EndBlocks {
 	public static final Block AMBER_ORE = registerBlock("amber_ore", new EndOreBlock(EndItems.RAW_AMBER, 1, 2, 4));
 	
 	// Materials //
-	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, EndToolMaterial.THALLASIUM, EndArmorMaterial.THALLASIUM);
-	public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.field_25708, 7F, 9F, EndToolMaterial.TERMINITE, EndArmorMaterial.TERMINITE);
+	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.COLOR_BLUE, EndToolMaterial.THALLASIUM, EndArmorMaterial.THALLASIUM);
+	public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.WARPED_WART_BLOCK, 7F, 9F, EndToolMaterial.TERMINITE, EndArmorMaterial.TERMINITE);
 	public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
 	public static final Block CHARCOAL_BLOCK = registerBlock("charcoal_block", new CharcoalBlock());
 	
@@ -314,7 +314,7 @@ public class EndBlocks {
 	
 	public static void register() {}
 	
-	public static Block registerBlock(Identifier id, Block block) {
+	public static Block registerBlock(ResourceLocation id, Block block) {
 		if (!Configs.BLOCK_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			return block;
 		}
@@ -326,9 +326,9 @@ public class EndBlocks {
 			maxCount = item.getStackSize();
 			placeOnWater = item.canPlaceOnWater();
 		}
-		Settings item = EndItems.makeBlockItemSettings().maxCount(maxCount);
+		Properties item = EndItems.makeBlockItemSettings().stacksTo(maxCount);
 		if (placeOnWater) {
-			EndItems.registerBlockItem(id, new LilyPadItem(block, item));
+			EndItems.registerBlockItem(id, new WaterLilyBlockItem(block, item));
 		}
 		else {
 			EndItems.registerBlockItem(id, new BlockItem(block, item));

@@ -5,20 +5,20 @@ import com.google.gson.JsonObject;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.BetterEndRecipe;
@@ -27,15 +27,15 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
-public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
+public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 	
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = EndRecipeManager.registerType(GROUP);
 	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
-	public final static Identifier ID = BetterEnd.makeID(GROUP);
+	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
 	
 	protected final RecipeType<?> type;
-	protected final Identifier id;
+	protected final ResourceLocation id;
 	protected final Ingredient primaryInput;
 	protected final Ingredient secondaryInput;
 	protected final ItemStack output;
@@ -43,7 +43,7 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	protected final float experience;
 	protected final int smeltTime;
 	
-	public AlloyingRecipe(Identifier id, String group, Ingredient primaryInput, Ingredient secondaryInput, ItemStack output, float experience, int smeltTime) {
+	public AlloyingRecipe(ResourceLocation id, String group, Ingredient primaryInput, Ingredient secondaryInput, ItemStack output, float experience, int smeltTime) {
 		this.group = group;
 		this.id = id;
 		this.primaryInput = primaryInput;
@@ -63,8 +63,8 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	}
 
 	@Override
-	public DefaultedList<Ingredient> getPreviewInputs() {
-		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
+	public NonNullList<Ingredient> getIngredients() {
+		NonNullList<Ingredient> defaultedList = NonNullList.create();
 		defaultedList.add(primaryInput);
 		defaultedList.add(secondaryInput);
 		
@@ -72,28 +72,28 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	}
 
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		return this.primaryInput.test(inv.getStack(0)) && this.secondaryInput.test(inv.getStack(1)) ||
-			   this.primaryInput.test(inv.getStack(1)) && this.secondaryInput.test(inv.getStack(0));
+	public boolean matches(Container inv, Level world) {
+		return this.primaryInput.test(inv.getItem(0)) && this.secondaryInput.test(inv.getItem(1)) ||
+			   this.primaryInput.test(inv.getItem(1)) && this.secondaryInput.test(inv.getItem(0));
 	}
 
 	@Override
-	public ItemStack craft(Inventory inv) {
+	public ItemStack assemble(Container inv) {
 		return this.output.copy();
 	}
 
 	@Override
-	public boolean fits(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return true;
 	}
 
 	@Override
-	public ItemStack getOutput() {
+	public ItemStack getResultItem() {
 		return this.output;
 	}
 
 	@Override
-	public Identifier getId() {
+	public ResourceLocation getId() {
 		return this.id;
 	}
 
@@ -114,7 +114,7 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public ItemStack getRecipeKindIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(EndBlocks.END_STONE_SMELTER);
 	}
 	
@@ -122,7 +122,7 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		private final static Builder INSTANCE = new Builder();
 		private static boolean exist;
 		
-		public static Builder create(Identifier id) {
+		public static Builder create(ResourceLocation id) {
 			INSTANCE.id = id;
 			INSTANCE.group = String.format("%s_%s", GROUP, id);
 			INSTANCE.primaryInput = null;
@@ -139,7 +139,7 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return create(BetterEnd.makeID(id));
 		}
 		
-		private Identifier id;
+		private ResourceLocation id;
 		private Ingredient primaryInput;
 		private Ingredient secondaryInput;
 		private ItemStack output;
@@ -155,33 +155,33 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return this;
 		}
 		
-		public Builder setPrimaryInput(ItemConvertible... inputs) {
-			for (ItemConvertible item : inputs) {
+		public Builder setPrimaryInput(ItemLike... inputs) {
+			for (ItemLike item : inputs) {
 				this.alright &= RecipeHelper.exists(item);
 			}
-			this.primaryInput = Ingredient.ofItems(inputs);
+			this.primaryInput = Ingredient.of(inputs);
 			return this;
 		}
 		
-		public Builder setSecondaryInput(ItemConvertible... inputs) {
-			for (ItemConvertible item : inputs) {
+		public Builder setSecondaryInput(ItemLike... inputs) {
+			for (ItemLike item : inputs) {
 				this.alright &= RecipeHelper.exists(item);
 			}
-			this.secondaryInput = Ingredient.ofItems(inputs);
+			this.secondaryInput = Ingredient.of(inputs);
 			return this;
 		}
 		
 		public Builder setPrimaryInput(Tag<Item> input) {
-			this.primaryInput = Ingredient.fromTag(input);
+			this.primaryInput = Ingredient.of(input);
 			return this;
 		}
 		
 		public Builder setSecondaryInput(Tag<Item> input) {
-			this.secondaryInput = Ingredient.fromTag(input);
+			this.secondaryInput = Ingredient.of(input);
 			return this;
 		}
 		
-		public Builder setInput(ItemConvertible primaryInput, ItemConvertible secondaryInput) {
+		public Builder setInput(ItemLike primaryInput, ItemLike secondaryInput) {
 			this.setPrimaryInput(primaryInput);
 			this.setSecondaryInput(secondaryInput);
 			return this;
@@ -193,7 +193,7 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 			return this;
 		}
 		
-		public Builder setOutput(ItemConvertible output, int amount) {
+		public Builder setOutput(ItemLike output, int amount) {
 			this.alright &= RecipeHelper.exists(output);
 			this.output = new ItemStack(output, amount);
 			return this;
@@ -238,28 +238,28 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 	
 	public static class Serializer implements RecipeSerializer<AlloyingRecipe> {
 		@Override
-		public AlloyingRecipe read(Identifier id, JsonObject json) {
-			JsonArray ingredients = JsonHelper.getArray(json, "ingredients");
+		public AlloyingRecipe fromJson(ResourceLocation id, JsonObject json) {
+			JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
 			Ingredient primaryInput = Ingredient.fromJson(ingredients.get(0));
 			Ingredient secondaryInput = Ingredient.fromJson(ingredients.get(1));
-			String group = JsonHelper.getString(json, "group", "");
-			JsonObject result = JsonHelper.getObject(json, "result");
+			String group = GsonHelper.getAsString(json, "group", "");
+			JsonObject result = GsonHelper.getAsJsonObject(json, "result");
 			ItemStack output = ItemUtil.fromJsonRecipe(result);
 			if (output == null) {
 				throw new IllegalStateException("Output item does not exists!");
 			}
-			float experience = JsonHelper.getFloat(json, "experience", 0.0F);
-			int smeltTime = JsonHelper.getInt(json, "smelttime", 350);
+			float experience = GsonHelper.getAsFloat(json, "experience", 0.0F);
+			int smeltTime = GsonHelper.getAsInt(json, "smelttime", 350);
 			
 			return new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime);
 		}
 
 		@Override
-		public AlloyingRecipe read(Identifier id, PacketByteBuf packetBuffer) {
-			String group = packetBuffer.readString(32767);
-			Ingredient primary = Ingredient.fromPacket(packetBuffer);
-			Ingredient secondary = Ingredient.fromPacket(packetBuffer);
-			ItemStack output = packetBuffer.readItemStack();
+		public AlloyingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf packetBuffer) {
+			String group = packetBuffer.readUtf(32767);
+			Ingredient primary = Ingredient.fromNetwork(packetBuffer);
+			Ingredient secondary = Ingredient.fromNetwork(packetBuffer);
+			ItemStack output = packetBuffer.readItem();
 			float experience = packetBuffer.readFloat();
 			int smeltTime = packetBuffer.readVarInt();
 			
@@ -267,11 +267,11 @@ public class AlloyingRecipe implements Recipe<Inventory>, BetterEndRecipe {
 		}
 
 		@Override
-		public void write(PacketByteBuf packetBuffer, AlloyingRecipe recipe) {
-			packetBuffer.writeString(recipe.group);
-			recipe.primaryInput.write(packetBuffer);
-			recipe.secondaryInput.write(packetBuffer);
-			packetBuffer.writeItemStack(recipe.output);
+		public void toNetwork(FriendlyByteBuf packetBuffer, AlloyingRecipe recipe) {
+			packetBuffer.writeUtf(recipe.group);
+			recipe.primaryInput.toNetwork(packetBuffer);
+			recipe.secondaryInput.toNetwork(packetBuffer);
+			packetBuffer.writeItem(recipe.output);
 			packetBuffer.writeFloat(recipe.experience);
 			packetBuffer.writeVarInt(recipe.smeltTime);
 		}

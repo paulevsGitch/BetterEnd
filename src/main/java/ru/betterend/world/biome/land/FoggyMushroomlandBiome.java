@@ -1,7 +1,7 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
+import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
@@ -37,7 +37,7 @@ public class FoggyMushroomlandBiome extends EndBiome {
 				.addFeature(EndFeatures.CHARNIA_CYAN)
 				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
 				.addFeature(EndFeatures.CHARNIA_RED_RARE)
-				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
+				.addStructureFeature(StructureFeatures.END_CITY)
 				.addMobSpawn(EndEntities.DRAGONFLY, 80, 2, 5)
 				.addMobSpawn(EndEntities.END_FISH, 20, 2, 5)
 				.addMobSpawn(EndEntities.CUBOZOA, 10, 3, 8)

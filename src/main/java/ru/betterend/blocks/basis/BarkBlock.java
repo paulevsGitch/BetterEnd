@@ -2,28 +2,28 @@ package ru.betterend.blocks.basis;
 
 import java.io.Reader;
 
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.patterns.Patterns;
 
 public class BarkBlock extends EndPillarBlock {
-	public BarkBlock(Settings settings) {
+	public BarkBlock(Properties settings) {
 		super(settings);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, getName(blockId), blockId.getPath());
 	}
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(data, getName(blockId), blockId.getPath());
 	}
 	
-	private String getName(Identifier blockId) {
+	private String getName(ResourceLocation blockId) {
 		String name = blockId.getPath();
 		return name.replace("_bark", "_log_side");
 	}

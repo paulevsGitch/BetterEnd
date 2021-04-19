@@ -3,8 +3,8 @@ package ru.betterend;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
@@ -76,9 +76,9 @@ public class BetterEnd implements ModInitializer {
 		
 		if (hasGuideBook()) {
 			PlayerAdvancementsEvents.PLAYER_ADVENCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
-				Identifier advId = new Identifier("minecraft:end/enter_end_gateway");
+				ResourceLocation advId = new ResourceLocation("minecraft:end/enter_end_gateway");
 				if (advId.equals(advancement.getId())) {
-					player.giveItemStack(new ItemStack(GuideBookItem.GUIDE_BOOK));
+					player.addItem(new ItemStack(GuideBookItem.GUIDE_BOOK));
 				}
 			});
 		}
@@ -88,8 +88,8 @@ public class BetterEnd implements ModInitializer {
 		return FabricLoader.getInstance().isModLoaded("patchouli");
 	}
 	
-	public static Identifier makeID(String path) {
-		return new Identifier(MOD_ID, path);
+	public static ResourceLocation makeID(String path) {
+		return new ResourceLocation(MOD_ID, path);
 	}
 	
 	public static String getStringId(String id) {

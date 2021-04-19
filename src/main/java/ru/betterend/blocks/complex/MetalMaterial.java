@@ -1,18 +1,19 @@
 package ru.betterend.blocks.complex;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.Settings;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MaterialColor;
 import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
 import ru.betterend.blocks.ChandelierBlock;
@@ -82,25 +83,25 @@ public class MetalMaterial {
 	public final Item leggings;
 	public final Item boots;
 	
-	public static MetalMaterial makeNormal(String name, MaterialColor color, ToolMaterial material, ArmorMaterial armor) {
+	public static MetalMaterial makeNormal(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
 		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeItemSettings(), material, armor);
 	}
 	
-	public static MetalMaterial makeNormal(String name, MaterialColor color, float hardness, float resistance, ToolMaterial material, ArmorMaterial armor) {
+	public static MetalMaterial makeNormal(String name, MaterialColor color, float hardness, float resistance, Tier material, ArmorMaterial armor) {
 		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeItemSettings(), material, armor);
 	}
 	
-	public static MetalMaterial makeOreless(String name, MaterialColor color, ToolMaterial material, ArmorMaterial armor) {
+	public static MetalMaterial makeOreless(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
 		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeItemSettings(), material, armor);
 	}
 	
-	public static MetalMaterial makeOreless(String name, MaterialColor color, float hardness, float resistance, ToolMaterial material, ArmorMaterial armor) {
+	public static MetalMaterial makeOreless(String name, MaterialColor color, float hardness, float resistance, Tier material, ArmorMaterial armor) {
 		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeItemSettings(), material, armor);
 	}
 	
-	private MetalMaterial(String name, boolean hasOre, FabricBlockSettings settings, Settings itemSettings, ToolMaterial material, ArmorMaterial armor) {
-		FabricBlockSettings lantern = FabricBlockSettings.copyOf(settings).sounds(BlockSoundGroup.LANTERN).hardness(1).resistance(1).luminance(15);
-		final int level = material.getMiningLevel();
+	private MetalMaterial(String name, boolean hasOre, FabricBlockSettings settings, Properties itemSettings, Tier material, ArmorMaterial armor) {
+		BlockBehaviour.Properties lanternProperties = FabricBlockSettings.copyOf(settings).hardness(1).resistance(1).luminance(15).sound(SoundType.LANTERN);
+		final int level = material.getLevel();
 		
 		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BlockBase(FabricBlockSettings.copyOf(Blocks.END_STONE))) : null;
 		block = EndBlocks.registerBlock(name + "_block", new BlockBase(settings));
@@ -109,13 +110,13 @@ public class MetalMaterial {
 		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(tile));
 		door = EndBlocks.registerBlock(name + "_door", new EndDoorBlock(block));
 		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new EndTrapdoorBlock(block));
-		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(block.getDefaultMaterialColor(), level));
+		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(block.defaultMaterialColor(), level));
 		bars = EndBlocks.registerBlock(name + "_bars", new EndMetalPaneBlock(block));
-		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(block.getDefaultMaterialColor()));
+		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(block.defaultMaterialColor()));
 		plate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(block));
 		
 		chandelier = EndBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(block));
-		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lantern));
+		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lanternProperties));
 		bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
 		
 		nugget = EndItems.registerItem(name + "_nugget", new PatternedItem(itemSettings));

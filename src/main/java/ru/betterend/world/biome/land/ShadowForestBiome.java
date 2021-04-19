@@ -1,8 +1,8 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
@@ -35,7 +35,7 @@ public class ShadowForestBiome extends EndBiome {
 				.addFeature(EndFeatures.TAIL_MOSS_WOOD)
 				.addFeature(EndFeatures.CHARNIA_PURPLE)
 				.addFeature(EndFeatures.CHARNIA_RED_RARE)
-				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
+				.addStructureFeature(StructureFeatures.END_CITY)
 				.addMobSpawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
 				.addMobSpawn(EntityType.ENDERMAN, 40, 1, 4)
 				.addMobSpawn(EntityType.PHANTOM, 1, 1, 2));

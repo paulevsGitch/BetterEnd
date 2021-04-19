@@ -7,34 +7,34 @@ import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.color.item.ItemColorProvider;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
@@ -47,31 +47,31 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 
 public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IRenderTypeable {
-	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.createCuboidShape(1, 0, 1, 15, 16, 15);
-	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
+	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
+	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.box(2, 0, 2, 14, 16, 14);
 	
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	
 	public RespawnObeliskBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.END_STONE).luminance((state) -> {
-			return (state.get(SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
+		super(FabricBlockSettings.copyOf(Blocks.END_STONE).lightLevel((state) -> {
+			return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
 		}));
 	}
 	
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ePos) {
-		return (state.get(SHAPE) == TripleShape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
+	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+		return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
 	}
 	
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
 	
 	@Override
-	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		for (int i = 0; i < 3; i++) {
-			if (!world.getBlockState(pos.up(i)).getMaterial().isReplaceable()) {
+			if (!world.getBlockState(pos.above(i)).getMaterial().isReplaceable()) {
 				return false;
 			}
 		}
@@ -79,59 +79,59 @@ public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IR
 	}
 	
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-		state = this.getDefaultState();
-		BlocksHelper.setWithUpdate(world, pos, state.with(SHAPE, TripleShape.BOTTOM));
-		BlocksHelper.setWithUpdate(world, pos.up(), state.with(SHAPE, TripleShape.MIDDLE));
-		BlocksHelper.setWithUpdate(world, pos.up(2), state.with(SHAPE, TripleShape.TOP));
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+		state = this.defaultBlockState();
+		BlocksHelper.setWithUpdate(world, pos, state.setValue(SHAPE, TripleShape.BOTTOM));
+		BlocksHelper.setWithUpdate(world, pos.above(), state.setValue(SHAPE, TripleShape.MIDDLE));
+		BlocksHelper.setWithUpdate(world, pos.above(2), state.setValue(SHAPE, TripleShape.TOP));
 	}
 	
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-		TripleShape shape = state.get(SHAPE);
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
-			if (world.getBlockState(pos.up()).isOf(this)) {
+			if (world.getBlockState(pos.above()).is(this)) {
 				return state;
 			}
 			else {
-				return Blocks.AIR.getDefaultState();
+				return Blocks.AIR.defaultBlockState();
 			}
 		}
 		else if (shape == TripleShape.MIDDLE) {
-			if (world.getBlockState(pos.up()).isOf(this) && world.getBlockState(pos.down()).isOf(this)) {
+			if (world.getBlockState(pos.above()).is(this) && world.getBlockState(pos.below()).is(this)) {
 				return state;
 			}
 			else {
-				return Blocks.AIR.getDefaultState();
+				return Blocks.AIR.defaultBlockState();
 			}
 		}
 		else {
-			if (world.getBlockState(pos.down()).isOf(this)) {
+			if (world.getBlockState(pos.below()).is(this)) {
 				return state;
 			}
 			else {
-				return Blocks.AIR.getDefaultState();
+				return Blocks.AIR.defaultBlockState();
 			}
 		}
 	}
 	
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (player.isCreative()) {
-			TripleShape shape = state.get(SHAPE);
+			TripleShape shape = state.getValue(SHAPE);
 			if (shape == TripleShape.MIDDLE) {
-				BlocksHelper.setWithUpdate(world, pos.down(), Blocks.AIR);
+				BlocksHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
 			}
 			else if (shape == TripleShape.TOP) {
-				BlocksHelper.setWithUpdate(world, pos.down(2), Blocks.AIR);
+				BlocksHelper.setWithUpdate(world, pos.below(2), Blocks.AIR);
 			}
 		}
-		super.onBreak(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 	
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		if (state.get(SHAPE) == TripleShape.BOTTOM) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		if (state.getValue(SHAPE) == TripleShape.BOTTOM) {
 			return Lists.newArrayList(new ItemStack(this));
 		}
 		else {
@@ -145,58 +145,58 @@ public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IR
 	}
 	
 	@Override
-	public BlockColorProvider getProvider() {
+	public BlockColor getProvider() {
 		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
 	}
 	
 	@Override
-	public ItemColorProvider getItemProvider() {
+	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
 			return MHelper.color(255, 255, 255);
 		};
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ItemStack itemStack = player.getStackInHand(hand);
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		ItemStack itemStack = player.getItemInHand(hand);
 		boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 5;
-		if (hand != Hand.MAIN_HAND || !canActivate) {
-			if (!world.isClient && !(itemStack.getItem() instanceof BlockItem) && !player.isCreative()) {
-				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-				serverPlayerEntity.sendMessage(new TranslatableText("message.betterend.fail_spawn"), true);
+		if (hand != InteractionHand.MAIN_HAND || !canActivate) {
+			if (!world.isClientSide && !(itemStack.getItem() instanceof BlockItem) && !player.isCreative()) {
+				ServerPlayer serverPlayerEntity = (ServerPlayer) player;
+				serverPlayerEntity.displayClientMessage(new TranslatableComponent("message.betterend.fail_spawn"), true);
 			}
-			return ActionResult.FAIL;
+			return InteractionResult.FAIL;
 		}
-		else if (!world.isClient) {
-			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-			serverPlayerEntity.setSpawnPoint(world.getRegistryKey(), pos, 0.0F, false, false);
-			serverPlayerEntity.sendMessage(new TranslatableText("message.betterend.set_spawn"), true);
+		else if (!world.isClientSide) {
+			ServerPlayer serverPlayerEntity = (ServerPlayer) player;
+			serverPlayerEntity.setRespawnPosition(world.dimension(), pos, 0.0F, false, false);
+			serverPlayerEntity.displayClientMessage(new TranslatableComponent("message.betterend.set_spawn"), true);
 			double px = pos.getX() + 0.5;
 			double py = pos.getY() + 0.5;
 			double pz = pos.getZ() + 0.5;
 			InfusionParticleType particle = new InfusionParticleType(new ItemStack(EndItems.AMBER_GEM));
-			if (world instanceof ServerWorld) {
+			if (world instanceof ServerLevel) {
 				double py1 = py;
 				double py2 = py - 0.2;
-				if (state.get(SHAPE) == TripleShape.BOTTOM) {
+				if (state.getValue(SHAPE) == TripleShape.BOTTOM) {
 					py1 += 1;
 					py2 += 2;
 				}
-				else if (state.get(SHAPE) == TripleShape.MIDDLE) {
+				else if (state.getValue(SHAPE) == TripleShape.MIDDLE) {
 					py1 += 0;
 					py2 += 1;
 				}
 				else {
 					py1 -= 2;
 				}
-				((ServerWorld) world).spawnParticles(particle, px, py1, pz, 20, 0.14, 0.5, 0.14, 0.1);
-				((ServerWorld) world).spawnParticles(particle, px, py2, pz, 20, 0.14, 0.3, 0.14, 0.1);
+				((ServerLevel) world).sendParticles(particle, px, py1, pz, 20, 0.14, 0.5, 0.14, 0.1);
+				((ServerLevel) world).sendParticles(particle, px, py2, pz, 20, 0.14, 0.3, 0.14, 0.1);
 			}
-            world.playSound(null, px, py, py, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundCategory.BLOCKS, 1F, 1F);
+            world.playSound(null, px, py, py, SoundEvents.RESPAWN_ANCHOR_SET_SPAWN, SoundSource.BLOCKS, 1F, 1F);
             if (!player.isCreative()) {
-            	itemStack.decrement(6);
+            	itemStack.shrink(6);
             }
 		}
-		return player.isCreative() ? ActionResult.PASS : ActionResult.success(world.isClient);
+		return player.isCreative() ? InteractionResult.PASS : InteractionResult.sidedSuccess(world.isClientSide);
 	}
 }

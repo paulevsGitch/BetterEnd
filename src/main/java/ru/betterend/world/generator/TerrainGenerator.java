@@ -7,9 +7,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.source.BiomeSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 
@@ -90,7 +90,7 @@ public class TerrainGenerator {
 		if (biomeSource instanceof BetterEndBiomeSource) {
 			return ((BetterEndBiomeSource) biomeSource).getLandBiome(x, 0, z);
 		}
-		return biomeSource.getBiomeForNoiseGen(x, 0, z);
+		return biomeSource.getNoiseBiome(x, 0, z);
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class TerrainGenerator {
 			}
 			if (dist > 0) {
 				LOCKER.unlock();
-				return MathHelper.floor(MathHelper.clamp(y + dist, y, y + 1) * SCALE_Y);
+				return Mth.floor(Mth.clamp(y + dist, y, y + 1) * SCALE_Y);
 			}
 		}
 		

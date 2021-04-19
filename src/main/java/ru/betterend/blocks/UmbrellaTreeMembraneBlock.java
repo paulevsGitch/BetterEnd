@@ -9,20 +9,20 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SlimeBlock;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.BlockView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlimeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -32,7 +32,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
 public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTypeable, BlockPatterned {
-	public static final IntProperty COLOR = BlockProperties.COLOR;
+	public static final IntegerProperty COLOR = BlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public UmbrellaTreeMembraneBlock() {
@@ -40,15 +40,15 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 	}
 	
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		double px = ctx.getBlockPos().getX() * 0.1;
-		double py = ctx.getBlockPos().getY() * 0.1;
-		double pz = ctx.getBlockPos().getZ() * 0.1;
-		return this.getDefaultState().with(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		double px = ctx.getClickedPos().getX() * 0.1;
+		double py = ctx.getClickedPos().getY() * 0.1;
+		double pz = ctx.getClickedPos().getZ() * 0.1;
+		return this.defaultBlockState().setValue(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
 	
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(COLOR);
 	}
 	
@@ -58,8 +58,8 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 	}
 	
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		if (state.get(COLOR) > 0) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		if (state.getValue(COLOR) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
 		}
 		else {
@@ -69,30 +69,30 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getId(this).getPath();
+		String block = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, block, block);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(this);
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SIMPLE;
 	}
 
 	@Override
-	public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
-		return state.get(COLOR) > 0;
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter world, BlockPos pos) {
+		return state.getValue(COLOR) > 0;
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-		if (state.get(COLOR) > 0) {
-			return super.isSideInvisible(state, stateFrom, direction);
+	public boolean skipRendering(BlockState state, BlockState stateFrom, Direction direction) {
+		if (state.getValue(COLOR) > 0) {
+			return super.skipRendering(state, stateFrom, direction);
 		}
 		else {
 			return false;

@@ -1,6 +1,6 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;

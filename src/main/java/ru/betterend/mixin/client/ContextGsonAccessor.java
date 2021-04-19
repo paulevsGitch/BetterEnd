@@ -5,10 +5,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import com.google.gson.Gson;
 
-import net.minecraft.client.render.model.json.ModelVariantMap;
+import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 
-@Mixin(ModelVariantMap.DeserializationContext.class)
+@Mixin(BlockModelDefinition.Context.class)
 public interface ContextGsonAccessor {
 	@Accessor
-	public Gson getGson();
+	Gson getGson();
 }

@@ -8,9 +8,9 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.StructureHelper;
@@ -23,7 +23,7 @@ public class EndBiome {
 	protected List<EndBiome> subbiomes = Lists.newArrayList();
 
 	protected final Biome biome;
-	protected final Identifier mcID;
+	protected final ResourceLocation mcID;
 	protected EndBiome edge;
 	protected int edgeSize;
 
@@ -50,7 +50,7 @@ public class EndBiome {
 		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
 	}
 
-	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
+	public EndBiome(ResourceLocation id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
 		this.mcID = id;
 		this.readStructureList();
 		this.biome = biome;
@@ -130,7 +130,7 @@ public class EndBiome {
 		return mcID.toString();
 	}
 
-	public Identifier getID() {
+	public ResourceLocation getID() {
 		return mcID;
 	}
 

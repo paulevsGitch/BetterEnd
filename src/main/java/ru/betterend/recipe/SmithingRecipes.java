@@ -1,6 +1,6 @@
 package ru.betterend.recipe;
 
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 import ru.betterend.recipe.builders.SmithingTableRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;

@@ -12,7 +12,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.JsonHelper;
+import net.minecraft.util.GsonHelper;
 import ru.betterend.util.JsonFactory;
 
 public final class ConfigKeeper {
@@ -109,7 +109,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public Boolean fromJson() {
-			return JsonHelper.getBoolean(location, key, defaultValue);
+			return GsonHelper.getAsBoolean(location, key, defaultValue);
 		}
 
 		@Override
@@ -126,7 +126,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public Float fromJson() {
-			return JsonHelper.getFloat(location, key, defaultValue);
+			return GsonHelper.getAsFloat(location, key, defaultValue);
 		}
 
 		@Override
@@ -143,7 +143,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public Float fromJson() {
-			return JsonHelper.getFloat(location, key, defaultValue);
+			return GsonHelper.getAsFloat(location, key, defaultValue);
 		}
 
 		@Override
@@ -165,7 +165,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public Integer fromJson() {
-			return JsonHelper.getInt(location, key, defaultValue);
+			return GsonHelper.getAsInt(location, key, defaultValue);
 		}
 
 		@Override
@@ -182,7 +182,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public Integer fromJson() {
-			return JsonHelper.getInt(location, key, defaultValue);
+			return GsonHelper.getAsInt(location, key, defaultValue);
 		}
 
 		@Override
@@ -199,7 +199,7 @@ public final class ConfigKeeper {
 
 		@Override
 		public String fromJson() {
-			return JsonHelper.getString(location, key, defaultValue);
+			return GsonHelper.getAsString(location, key, defaultValue);
 		}
 
 		@Override

@@ -5,26 +5,26 @@ import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.PiglinBrain;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
@@ -32,40 +32,40 @@ import ru.betterend.registry.EndBlockEntities;
 
 public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 	public EndBarrelBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).nonOpaque());
+		super(FabricBlockSettings.copyOf(source).noOcclusion());
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return EndBlockEntities.BARREL.instantiate();
+	public BlockEntity newBlockEntity(BlockGetter world) {
+		return EndBlockEntities.BARREL.create();
 	}
 
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		List<ItemStack> drop = super.getDroppedStacks(state, builder);
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		List<ItemStack> drop = super.getDrops(state, builder);
 		drop.add(new ItemStack(this.asItem()));
 		return drop;
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult hit) {
-		if (world.isClient) {
-			return ActionResult.SUCCESS;
+		if (world.isClientSide) {
+			return InteractionResult.SUCCESS;
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof EBarrelBlockEntity) {
-				player.openHandledScreen((EBarrelBlockEntity) blockEntity);
-				player.incrementStat(Stats.OPEN_BARREL);
-				PiglinBrain.onGuardedBlockInteracted(player, true);
+				player.openMenu((EBarrelBlockEntity) blockEntity);
+				player.awardStat(Stats.OPEN_BARREL);
+				PiglinAi.angerNearbyPiglins(player, true);
 			}
 
-			return ActionResult.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 	}
 
 	@Override
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EBarrelBlockEntity) {
 			((EBarrelBlockEntity) blockEntity).tick();
@@ -73,30 +73,30 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer,
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer,
 			ItemStack itemStack) {
-		if (itemStack.hasCustomName()) {
+		if (itemStack.hasCustomHoverName()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof EBarrelBlockEntity) {
-				((EBarrelBlockEntity) blockEntity).setCustomName(itemStack.getName());
+				((EBarrelBlockEntity) blockEntity).setCustomName(itemStack.getHoverName());
 			}
 		}
 	}
 	
 	@Override
 	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getId(this).getPath();
+		String block = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(data, block, block);
 	}
 	
 	@Override
 	public String getModelPattern(String block) {
-		String texture = Registry.BLOCK.getId(this).getPath();
+		String texture = Registry.BLOCK.getKey(this).getPath();
 		if (block.contains("open")) {
 			return Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
 		}
@@ -104,7 +104,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 	}
 	
 	@Override
-	public Identifier statePatternId() {
+	public ResourceLocation statePatternId() {
 		return Patterns.STATE_BARREL;
 	}
 }

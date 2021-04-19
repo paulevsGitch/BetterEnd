@@ -1,8 +1,8 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.world.entity.EntityType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
@@ -21,7 +21,7 @@ public class NeonOasisBiome extends EndBiome {
 				.setLoop(EndSounds.AMBIENT_DUST_WASTELANDS)
 				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.addFeature(EndFeatures.NEON_CACTUS)
-				.addStructureFeature(ConfiguredStructureFeatures.END_CITY)
+				.addStructureFeature(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

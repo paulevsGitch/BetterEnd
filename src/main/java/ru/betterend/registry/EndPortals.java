@@ -5,10 +5,10 @@ import java.io.File;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.ConfigWriter;
 import ru.betterend.util.JsonFactory;
@@ -16,7 +16,7 @@ import ru.betterend.util.MHelper;
 
 public class EndPortals {
 
-	public final static Identifier OVERWORLD_ID = World.OVERWORLD.getValue();
+	public final static ResourceLocation OVERWORLD_ID = Level.OVERWORLD.location();
 
 	private static PortalInfo[] portals;
 	
@@ -47,21 +47,21 @@ public class EndPortals {
 		return MHelper.max(portals.length - 1, 1);
 	}
 	
-	public static ServerWorld getWorld(MinecraftServer server, int portalId) {
+	public static ServerLevel getWorld(MinecraftServer server, int portalId) {
 		if (portalId < 0 || portalId >= portals.length) {
-			return server.getOverworld();
+			return server.overworld();
 		}
 		return portals[portalId].getWorld(server);
 	}
 
-	public static Identifier getWorldId(int portalId) {
+	public static ResourceLocation getWorldId(int portalId) {
 		if (portalId < 0 || portalId >= portals.length) {
 			return OVERWORLD_ID;
 		}
 		return portals[portalId].dimension;
 	}
 	
-	public static int getPortalIdByItem(Identifier item) {
+	public static int getPortalIdByItem(ResourceLocation item) {
 		for (int i = 0; i < portals.length; i++) {
 			if (portals[i].item.equals(item)) {
 				return i;
@@ -69,7 +69,7 @@ public class EndPortals {
 		}
 		return 0;
 	}
-	public static int getPortalIdByWorld(Identifier world) {
+	public static int getPortalIdByWorld(ResourceLocation world) {
 		for (int i = 0; i < portals.length; i++) {
 			if (portals[i].dimension.equals(world)) {
 				return i;
@@ -82,7 +82,7 @@ public class EndPortals {
 		return portals[state].color;
 	}
 	
-	public static boolean isAvailableItem(Identifier item) {
+	public static boolean isAvailableItem(ResourceLocation item) {
 		for (PortalInfo portal : portals) {
 			if (portal.item.equals(item)) {
 				return true;
@@ -102,42 +102,42 @@ public class EndPortals {
 	}
 	
 	private static PortalInfo makeDefault() {
-		return new PortalInfo(new Identifier("minecraft:overworld"), BetterEnd.makeID("eternal_crystal"), 255, 255, 255);
+		return new PortalInfo(new ResourceLocation("minecraft:overworld"), BetterEnd.makeID("eternal_crystal"), 255, 255, 255);
 	}
 	
 	private static class PortalInfo {
-		private final Identifier dimension;
-		private final Identifier item;
+		private final ResourceLocation dimension;
+		private final ResourceLocation item;
 		private final int color;
-		private ServerWorld world;
+		private ServerLevel world;
 		
 		PortalInfo(JsonObject obj) {
 			this(
-				new Identifier(JsonFactory.getString(obj, "dimension", "minecraft:overworld")),
-				new Identifier(JsonFactory.getString(obj, "item", "betterend:eternal_crystal")),
+				new ResourceLocation(JsonFactory.getString(obj, "dimension", "minecraft:overworld")),
+				new ResourceLocation(JsonFactory.getString(obj, "item", "betterend:eternal_crystal")),
 				JsonFactory.getInt(obj, "colorRed", 255),
 				JsonFactory.getInt(obj, "colorGreen", 255),
 				JsonFactory.getInt(obj, "colorBlue", 255)
 			);
 		}
 		
-		PortalInfo(Identifier dimension, Identifier item, int r, int g, int b) {
+		PortalInfo(ResourceLocation dimension, ResourceLocation item, int r, int g, int b) {
 			this.dimension = dimension;
 			this.item = item;
 			this.color = MHelper.color(r, g, b);
 		}
 		
-		ServerWorld getWorld(MinecraftServer server) {
+		ServerLevel getWorld(MinecraftServer server) {
 			if (world != null) {
 				return world;
 			}
-			for (ServerWorld world : server.getWorlds()) {
-				if (world.getRegistryKey().getValue().equals(dimension)) {
+			for (ServerLevel world : server.getAllLevels()) {
+				if (world.dimension().location().equals(dimension)) {
 					this.world = world;
 					return world;
 				}
 			}
-			return server.getOverworld();
+			return server.overworld();
 		}
 		
 		JsonObject toJson() {

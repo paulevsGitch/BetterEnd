@@ -2,21 +2,21 @@ package ru.betterend.item.material;
 
 import java.util.function.Supplier;
 
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.util.Lazy;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
-public enum EndToolMaterial implements ToolMaterial {
+public enum EndToolMaterial implements Tier {
 	THALLASIUM(2, 320, 7.0F, 1.5F, 12, () -> {
-		return Ingredient.ofItems(EndBlocks.THALLASIUM.ingot);
+		return Ingredient.of(EndBlocks.THALLASIUM.ingot);
 	}),
 	TERMINITE(3, 1230, 8.5F, 3.0F, 14, () -> {
-		return Ingredient.ofItems(EndBlocks.TERMINITE.ingot);
+		return Ingredient.of(EndBlocks.TERMINITE.ingot);
 	}),
 	AETERNIUM(5, 2196, 10.0F, 4.5F, 18, () -> {
-		return Ingredient.ofItems(EndItems.AETERNIUM_INGOT);
+		return Ingredient.of(EndItems.AETERNIUM_INGOT);
 	});
 
 	private final int durability;
@@ -24,7 +24,7 @@ public enum EndToolMaterial implements ToolMaterial {
 	private final float attackDamage;
 	private final int miningLevel;
 	private final int enchantability;
-	private final Lazy<Ingredient> repairIngredient;
+	private final LazyLoadedValue<Ingredient> repairIngredient;
 	
 	private EndToolMaterial(int miningLevel, int durability, float miningSpeed, float attackDamage, int enchantability,
 			Supplier<Ingredient> repairIngredient) {
@@ -34,31 +34,31 @@ public enum EndToolMaterial implements ToolMaterial {
 		this.attackDamage = attackDamage;
 		this.miningLevel = miningLevel;
 		this.enchantability = enchantability;
-		this.repairIngredient = new Lazy<>(repairIngredient);
+		this.repairIngredient = new LazyLoadedValue<>(repairIngredient);
 	}
 
 	@Override
-	public int getDurability() {
+	public int getUses() {
 		return this.durability;
 	}
 
 	@Override
-	public float getMiningSpeedMultiplier() {
+	public float getSpeed() {
 		return this.miningSpeed;
 	}
 
 	@Override
-	public float getAttackDamage() {
+	public float getAttackDamageBonus() {
 		return this.attackDamage;
 	}
 
 	@Override
-	public int getMiningLevel() {
+	public int getLevel() {
 		return this.miningLevel;
 	}
 
 	@Override
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 		return this.enchantability;
 	}
 

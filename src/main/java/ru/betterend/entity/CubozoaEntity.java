@@ -3,150 +3,157 @@ package ru.betterend.entity;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.SchoolingFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.AABB;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
 
-public class CubozoaEntity extends SchoolingFishEntity {
+public class CubozoaEntity extends AbstractSchoolingFish {
 	public static final int VARIANTS = 2;
-	private static final TrackedData<Byte> VARIANT = DataTracker.registerData(CubozoaEntity.class, TrackedDataHandlerRegistry.BYTE);
-	private static final TrackedData<Byte> SCALE = DataTracker.registerData(CubozoaEntity.class, TrackedDataHandlerRegistry.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(CubozoaEntity.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(CubozoaEntity.class, EntityDataSerializers.BYTE);
 
-	public CubozoaEntity(EntityType<CubozoaEntity> entityType, World world) {
+	public CubozoaEntity(EntityType<CubozoaEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
-		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
-		if (EndBiomes.getFromBiome(world.getBiome(getBlockPos())) == EndBiomes.SULPHUR_SPRINGS) {
-			this.dataTracker.set(VARIANT, (byte) 1);
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
+		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
+		
+		if (EndBiomes.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
+			this.entityData.set(VARIANT, (byte) 1);
 		}
 		
 		if (entityTag != null) {
-			if (entityTag.contains("variant"))
-				this.dataTracker.set(VARIANT, entityTag.getByte("variant"));
-			if (entityTag.contains("scale"))
-				this.dataTracker.set(SCALE, entityTag.getByte("scale"));
+			if (entityTag.contains("Variant")) {
+				this.entityData.set(VARIANT, entityTag.getByte("Variant"));
+			}
+			if (entityTag.contains("Scale")) {
+				this.entityData.set(SCALE, entityTag.getByte("Scale"));
+			}
 		}
 		
-		this.calculateDimensions();
+		this.refreshDimensions();
 		return data;
 	}
 
 	@Override
-	protected void initDataTracker() {
-		super.initDataTracker();
-		this.dataTracker.startTracking(VARIANT, (byte) 0);
-		this.dataTracker.startTracking(SCALE, (byte) this.getRandom().nextInt(16));
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, (byte) 0);
+		this.entityData.define(SCALE, (byte) this.getRandom().nextInt(16));
 	}
 
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
+	public void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
 		tag.putByte("Variant", (byte) getVariant());
-		tag.putByte("Scale", dataTracker.get(SCALE));
+		tag.putByte("Scale", getByteScale());
 	}
 
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
+	public void readAdditionalSaveData(CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
 		if (tag.contains("Variant")) {
-			this.dataTracker.set(VARIANT, tag.getByte("Variant"));
+			this.entityData.set(VARIANT, tag.getByte("Variant"));
 		}
 		if (tag.contains("Scale")) {
-			this.dataTracker.set(SCALE, tag.getByte("Scale"));
+			this.entityData.set(SCALE, tag.getByte("Scale"));
 		}
 	}
+	
+	@Override
+	protected ItemStack getBucketItemStack() {
+		ItemStack bucket = EndItems.BUCKET_CUBOZOA.getDefaultInstance();
+		CompoundTag tag = bucket.getOrCreateTag();
+		tag.putByte("Variant", entityData.get(VARIANT));
+		tag.putByte("Scale", entityData.get(SCALE));
+		return bucket;
+	}
 
-	public static DefaultAttributeContainer.Builder createMobAttributes() {
+	public static AttributeSupplier.Builder createMobAttributes() {
 		return LivingEntity.createLivingAttributes()
-				.add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0)
-				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5);
+				.add(Attributes.MAX_HEALTH, 2.0)
+				.add(Attributes.FOLLOW_RANGE, 16.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.5);
 	}
 
 	public int getVariant() {
-		return (int) this.dataTracker.get(VARIANT);
+		return (int) this.entityData.get(VARIANT);
+	}
+	
+	public byte getByteScale() {
+		return this.entityData.get(SCALE);
 	}
 
 	public float getScale() {
-		return this.dataTracker.get(SCALE) / 32F + 0.75F;
+		return getByteScale() / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<CubozoaEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		Box box = new Box(pos).expand(16);
-		List<CubozoaEntity> list = world.getEntitiesByClass(CubozoaEntity.class, box, (entity) -> {
+	public static boolean canSpawn(EntityType<CubozoaEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
+		AABB box = new AABB(pos).inflate(16);
+		List<CubozoaEntity> list = world.getEntitiesOfClass(CubozoaEntity.class, box, (entity) -> {
 			return true;
 		});
 		return list.size() < 9;
 	}
 
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return dimensions.height * 0.5F;
 	}
 	
 	@Override
-	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
+	protected void dropFromLootTable(DamageSource source, boolean causedByPlayer) {
 		int count = random.nextInt(3);
 		if (count > 0) {
-			ItemEntity drop = new ItemEntity(world, getX(), getY(), getZ(), new ItemStack(EndItems.GELATINE, count));
-			this.world.spawnEntity(drop);
+			ItemEntity drop = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(EndItems.GELATINE, count));
+			this.level.addFreshEntity(drop);
 		}
 	}
 
 	@Override
-	protected ItemStack getFishBucketItem() {
-		ItemStack bucket = EndItems.BUCKET_CUBOZOA.getDefaultStack();
-		CompoundTag tag = bucket.getOrCreateTag();
-		tag.putByte("variant", dataTracker.get(VARIANT));
-		tag.putByte("scale", dataTracker.get(SCALE));
-		return bucket;
-	}
-
-	@Override
 	protected SoundEvent getFlopSound() {
-		return SoundEvents.ENTITY_SALMON_FLOP;
+		return SoundEvents.SALMON_FLOP;
 	}
 	
 	@Override
-	public void onPlayerCollision(PlayerEntity player) {
-		if (player instanceof ServerPlayerEntity && player.damage(DamageSource.mob(this), 0.5F)) {
+	public void playerTouch(Player player) {
+		if (player instanceof ServerPlayer && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
 			if (!this.isSilent()) {
-				((ServerPlayerEntity) player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
+				((ServerPlayer) player).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
 			}
 			if (random.nextBoolean()) {
-				player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 0));
+				player.addEffect(new MobEffectInstance(MobEffects.POISON, 20, 0));
 			}
 		}
 	}
@@ -157,30 +164,30 @@ public class CubozoaEntity extends SchoolingFishEntity {
 		}
 
 		public void tick() {
-			if (this.entity.isSubmergedIn(FluidTags.WATER)) {
-				this.entity.setVelocity(this.entity.getVelocity().add(0.0D, 0.005D, 0.0D));
+			if (this.mob.isEyeInFluid(FluidTags.WATER)) {
+				this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
 			}
 
-			if (this.state == MoveControl.State.MOVE_TO && !this.entity.getNavigation().isIdle()) {
-				float f = (float) (this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
-				this.entity.setMovementSpeed(MathHelper.lerp(0.125F, this.entity.getMovementSpeed(), f));
-				double d = this.targetX - this.entity.getX();
-				double e = this.targetY - this.entity.getY();
-				double g = this.targetZ - this.entity.getZ();
+			if (this.operation == MoveControl.Operation.MOVE_TO && !this.mob.getNavigation().isDone()) {
+				float f = (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
+				this.mob.setSpeed(Mth.lerp(0.125F, this.mob.getSpeed(), f));
+				double d = this.wantedX - this.mob.getX();
+				double e = this.wantedY - this.mob.getY();
+				double g = this.wantedZ - this.mob.getZ();
 				if (e != 0.0D) {
-					double h = (double) MathHelper.sqrt(d * d + e * e + g * g);
-					this.entity.setVelocity(this.entity.getVelocity().add(0.0D, (double) this.entity.getMovementSpeed() * (e / h) * 0.1D, 0.0D));
+					double h = (double) Mth.sqrt(d * d + e * e + g * g);
+					this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, (double) this.mob.getSpeed() * (e / h) * 0.1D, 0.0D));
 				}
 
 				if (d != 0.0D || g != 0.0D) {
-					float i = (float) (MathHelper.atan2(g, d) * 57.2957763671875D) - 90.0F;
-					this.entity.yaw = this.changeAngle(this.entity.yaw, i, 90.0F);
-					this.entity.bodyYaw = this.entity.yaw;
+					float i = (float) (Mth.atan2(g, d) * 57.2957763671875D) - 90.0F;
+					this.mob.yRot = this.rotlerp(this.mob.yRot, i, 90.0F);
+					this.mob.yBodyRot = this.mob.yRot;
 				}
 
 			}
 			else {
-				this.entity.setMovementSpeed(0.0F);
+				this.mob.setSpeed(0.0F);
 			}
 		}
 	}

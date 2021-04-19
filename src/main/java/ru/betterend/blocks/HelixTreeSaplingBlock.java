@@ -1,6 +1,6 @@
 package ru.betterend.blocks;
 
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.blocks.basis.FeatureSaplingBlock;
 import ru.betterend.registry.EndFeatures;
 

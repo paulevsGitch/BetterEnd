@@ -69,7 +69,7 @@ public class EndFishEntity extends SchoolingFishEntity {
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
 		tag.putByte("Variant", (byte) getVariant());
-		tag.putByte("Scale", (byte) getScale());
+		tag.putByte("Scale", dataTracker.get(SCALE));
 	}
 
 	@Override

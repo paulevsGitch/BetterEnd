@@ -2,6 +2,7 @@ package ru.betterend.entity;
 
 import java.util.EnumSet;
 import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -31,8 +32,6 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
-import ru.betterend.entity.DragonflyEntity.DragonflyLookControl;
-import ru.betterend.entity.DragonflyEntity.WanderAroundGoal;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.util.BlocksHelper;

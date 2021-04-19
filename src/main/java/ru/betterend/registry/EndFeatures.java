@@ -2,15 +2,18 @@ package ru.betterend.registry;
 
 import java.util.List;
 import java.util.function.Supplier;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import com.google.common.collect.Lists;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePumpkinFeature;
 import ru.betterend.world.features.CharniaFeature;
@@ -27,7 +30,6 @@ import ru.betterend.world.features.HydraluxFeature;
 import ru.betterend.world.features.LanceleafFeature;
 import ru.betterend.world.features.MengerSpongeFeature;
 import ru.betterend.world.features.NeonCactusFeature;
-import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.SilkMothNestFeature;
 import ru.betterend.world.features.SingleInvertedScatterFeature;
 import ru.betterend.world.features.SinglePlantFeature;

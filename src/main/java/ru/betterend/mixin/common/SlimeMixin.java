@@ -1,8 +1,9 @@
 package ru.betterend.mixin.common;
 
-import net.minecraft.world.entity.monster.Slime;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+
+import net.minecraft.world.entity.monster.Slime;
 import ru.betterend.interfaces.ISlime;
 
 @Mixin(Slime.class)

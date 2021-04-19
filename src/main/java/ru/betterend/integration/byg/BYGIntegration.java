@@ -2,6 +2,7 @@ package ru.betterend.integration.byg;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.behavior.WeightedList;

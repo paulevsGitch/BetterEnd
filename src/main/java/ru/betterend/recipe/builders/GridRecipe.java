@@ -2,6 +2,9 @@ package ru.betterend.recipe.builders;
 
 import java.util.Arrays;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
@@ -13,7 +16,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.ItemLike;
-import com.google.common.collect.Maps;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;

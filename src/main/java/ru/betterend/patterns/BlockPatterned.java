@@ -1,6 +1,7 @@
 package ru.betterend.patterns;
 
 import java.io.Reader;
+
 import net.minecraft.resources.ResourceLocation;
 
 public interface BlockPatterned extends Patterned {

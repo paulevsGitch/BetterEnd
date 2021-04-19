@@ -1,6 +1,7 @@
 package ru.betterend.blocks.basis;
 
 import java.io.Reader;
+
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import ru.betterend.patterns.Patterns;

@@ -3,6 +3,10 @@ package ru.betterend.world.features.trees;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+
+import com.google.common.collect.Lists;
+import com.mojang.math.Vector3f;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
@@ -10,8 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import com.google.common.collect.Lists;
-import com.mojang.math.Vector3f;
 import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;

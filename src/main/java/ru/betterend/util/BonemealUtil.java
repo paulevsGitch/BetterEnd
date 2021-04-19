@@ -3,10 +3,12 @@ package ru.betterend.util;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.biome.EndBiome;

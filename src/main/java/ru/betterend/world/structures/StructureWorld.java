@@ -3,6 +3,7 @@ package ru.betterend.world.structures;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

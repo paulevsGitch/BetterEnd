@@ -2,6 +2,7 @@ package ru.betterend.integration.byg.biomes;
 
 import java.util.List;
 import java.util.function.Supplier;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.data.BuiltinRegistries;

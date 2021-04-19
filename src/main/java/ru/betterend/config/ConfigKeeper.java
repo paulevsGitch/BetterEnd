@@ -4,13 +4,15 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import net.minecraft.util.GsonHelper;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import net.minecraft.util.GsonHelper;
 import ru.betterend.util.JsonFactory;
 
 public final class ConfigKeeper {

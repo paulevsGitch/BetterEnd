@@ -3,9 +3,11 @@ package ru.betterend.world.generator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import net.minecraft.resources.ResourceLocation;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.world.biome.EndBiome;
 
 public class BiomePicker {

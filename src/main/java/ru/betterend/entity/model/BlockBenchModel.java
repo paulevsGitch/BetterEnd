@@ -1,6 +1,7 @@
 package ru.betterend.entity.model;
 
 import java.util.function.Function;
+
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;

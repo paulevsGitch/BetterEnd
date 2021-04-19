@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -46,9 +47,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockProperties;
-import ru.betterend.entity.SilkMothEntity.MothLookControl;
-import ru.betterend.entity.SilkMothEntity.ReturnToHiveGoal;
-import ru.betterend.entity.SilkMothEntity.WanderAroundGoal;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;

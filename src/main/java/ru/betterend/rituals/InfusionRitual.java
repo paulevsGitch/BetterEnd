@@ -1,6 +1,7 @@
 package ru.betterend.rituals;
 
 import java.awt.Point;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

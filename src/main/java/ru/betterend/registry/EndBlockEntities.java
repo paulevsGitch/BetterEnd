@@ -1,12 +1,14 @@
 package ru.betterend.registry;
 
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import com.google.common.collect.Lists;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EternalPedestal;

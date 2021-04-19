@@ -2,6 +2,11 @@ package ru.betterend.integration.byg.features;
 
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.mojang.math.Vector3f;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -12,9 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-import com.mojang.math.Vector3f;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;

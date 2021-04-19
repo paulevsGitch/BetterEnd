@@ -2,6 +2,7 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 import java.util.function.Function;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;

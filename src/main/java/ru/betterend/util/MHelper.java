@@ -1,7 +1,9 @@
 package ru.betterend.util;
 
-import com.mojang.math.Vector3f;
 import java.util.Random;
+
+import com.mojang.math.Vector3f;
+
 import net.minecraft.world.phys.Vec3;
 
 public class MHelper {

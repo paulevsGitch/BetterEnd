@@ -1,6 +1,7 @@
 package ru.betterend.particle;
 
 import java.util.Locale;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;

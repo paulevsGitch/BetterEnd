@@ -2,6 +2,7 @@ package ru.betterend.registry;
 
 import java.util.Collection;
 import java.util.function.Supplier;
+
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;

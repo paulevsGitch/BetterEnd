@@ -7,10 +7,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.Nullable;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;

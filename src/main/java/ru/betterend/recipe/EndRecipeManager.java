@@ -2,12 +2,14 @@ package ru.betterend.recipe;
 
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import com.google.common.collect.Maps;
 import ru.betterend.BetterEnd;
 
 public class EndRecipeManager {

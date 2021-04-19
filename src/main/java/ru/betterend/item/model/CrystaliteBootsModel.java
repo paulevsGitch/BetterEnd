@@ -1,11 +1,13 @@
 package ru.betterend.item.model;
 
 import java.util.Collections;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
-import com.google.common.collect.Lists;
 
 public class CrystaliteBootsModel extends HumanoidModel<LivingEntity> {
 

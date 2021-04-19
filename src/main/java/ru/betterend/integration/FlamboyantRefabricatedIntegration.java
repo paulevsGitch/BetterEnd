@@ -2,8 +2,10 @@ package ru.betterend.integration;
 
 import java.awt.Color;
 import java.util.Map;
-import net.minecraft.world.level.ItemLike;
+
 import com.google.common.collect.Maps;
+
+import net.minecraft.world.level.ItemLike;
 import ru.betterend.blocks.HydraluxPetalColoredBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.registry.EndBlocks;

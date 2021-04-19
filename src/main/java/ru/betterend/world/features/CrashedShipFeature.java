@@ -1,6 +1,7 @@
 package ru.betterend.world.features;
 
 import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelReader;

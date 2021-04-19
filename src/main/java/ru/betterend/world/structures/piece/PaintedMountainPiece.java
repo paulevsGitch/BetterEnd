@@ -1,6 +1,7 @@
 package ru.betterend.world.structures.piece;
 
 import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;

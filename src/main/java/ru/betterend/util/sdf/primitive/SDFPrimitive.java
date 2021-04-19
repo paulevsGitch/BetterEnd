@@ -1,6 +1,7 @@
 package ru.betterend.util.sdf.primitive;
 
 import java.util.function.Function;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;

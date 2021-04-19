@@ -1,6 +1,9 @@
 package ru.betterend.world.biome;
 
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +33,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeat
 import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
-import com.google.common.collect.Lists;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.util.MHelper;

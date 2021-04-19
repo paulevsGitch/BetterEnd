@@ -2,12 +2,14 @@ package ru.betterend.world.features.terrain.caves;
 
 import java.util.Random;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import com.google.common.collect.Sets;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;

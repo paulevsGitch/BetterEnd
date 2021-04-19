@@ -2,6 +2,7 @@ package ru.betterend.entity;
 
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;

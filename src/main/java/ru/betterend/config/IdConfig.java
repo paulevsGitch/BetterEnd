@@ -1,8 +1,10 @@
 package ru.betterend.config;
 
 import java.util.function.BiFunction;
-import net.minecraft.resources.ResourceLocation;
+
 import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.config.ConfigKeeper.Entry;
 import ru.betterend.config.ConfigKeeper.FloatRange;
 import ru.betterend.config.ConfigKeeper.IntegerRange;

@@ -1,9 +1,11 @@
 package ru.betterend.world.generator;
 
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
-import com.google.common.collect.Maps;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;

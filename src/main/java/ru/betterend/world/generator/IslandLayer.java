@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import net.minecraft.core.BlockPos;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import net.minecraft.core.BlockPos;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import ru.betterend.mixin.common.BiomeGenerationSettingsAccessor;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndStructures;

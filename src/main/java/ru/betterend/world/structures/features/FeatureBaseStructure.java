@@ -1,6 +1,7 @@
 package ru.betterend.world.structures.features;
 
 import java.util.Random;
+
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;

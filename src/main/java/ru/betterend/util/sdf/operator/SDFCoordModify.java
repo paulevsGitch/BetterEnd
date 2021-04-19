@@ -1,7 +1,8 @@
 package ru.betterend.util.sdf.operator;
 
-import com.mojang.math.Vector3f;
 import java.util.function.Consumer;
+
+import com.mojang.math.Vector3f;
 
 public class SDFCoordModify extends SDFUnary {
 	private static final Vector3f POS = new Vector3f();

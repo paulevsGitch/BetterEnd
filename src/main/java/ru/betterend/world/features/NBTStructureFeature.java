@@ -3,6 +3,7 @@ package ru.betterend.world.features;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;

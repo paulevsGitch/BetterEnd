@@ -2,15 +2,17 @@ package ru.betterend.mixin.client;
 
 import java.io.Reader;
 import java.io.StringReader;
-import net.minecraft.client.renderer.block.model.BlockModelDefinition;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.level.block.Block;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.gson.Gson;
+
+import net.minecraft.client.renderer.block.model.BlockModelDefinition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.block.Block;
 import ru.betterend.patterns.BlockPatterned;
 
 @Mixin(BlockModelDefinition.class)

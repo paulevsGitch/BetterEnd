@@ -81,8 +81,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 
 	protected abstract Set<BlockPos> generate(WorldGenLevel world, BlockPos center, int radius, Random random);
 
-	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random,
-			BlockState surfaceBlock) {
+	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
 		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);

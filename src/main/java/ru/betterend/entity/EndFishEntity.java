@@ -2,6 +2,7 @@ package ru.betterend.entity;
 
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -42,7 +43,13 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		if (EndBiomes.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
+		if (entityTag != null) {
+			if (entityTag.contains("variant"))
+				this.entityData.set(VARIANT, entityTag.getByte("variant"));
+			if (entityTag.contains("scale"))
+				this.entityData.set(SCALE, entityTag.getByte("scale"));
+		}
+		else if (EndBiomes.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
 			this.entityData.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
 		}
 		this.refreshDimensions();
@@ -60,7 +67,7 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putByte("Variant", (byte) getVariant());
-		tag.putByte("Scale", (byte) getScale());
+		tag.putByte("Scale", getByteScale());
 	}
 
 	@Override
@@ -76,7 +83,11 @@ public class EndFishEntity extends AbstractSchoolingFish {
 
 	@Override
 	protected ItemStack getBucketItemStack() {
-		return new ItemStack(EndItems.BUCKET_END_FISH);
+		ItemStack bucket = EndItems.BUCKET_END_FISH.getDefaultInstance();
+		CompoundTag tag = bucket.getOrCreateTag();
+		tag.putByte("variant", entityData.get(VARIANT));
+		tag.putByte("scale", entityData.get(SCALE));
+		return bucket;
 	}
 
 	@Override
@@ -121,8 +132,12 @@ public class EndFishEntity extends AbstractSchoolingFish {
 		return (int) this.entityData.get(VARIANT);
 	}
 	
+	public byte getByteScale() {
+		return this.entityData.get(SCALE);
+	}
+	
 	public float getScale() {
-		return this.entityData.get(SCALE) / 32F + 0.75F;
+		return getByteScale() / 32F + 0.75F;
 	}
 	
 	public static boolean canSpawn(EntityType<EndFishEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {

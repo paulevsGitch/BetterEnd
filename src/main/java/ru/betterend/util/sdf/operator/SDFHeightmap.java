@@ -1,6 +1,7 @@
 package ru.betterend.util.sdf.operator;
 
 import com.mojang.blaze3d.platform.NativeImage;
+
 import net.minecraft.util.Mth;
 
 public class SDFHeightmap extends SDFDisplacement {

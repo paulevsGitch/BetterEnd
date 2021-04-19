@@ -1,6 +1,7 @@
 package ru.betterend.world.features.terrain;
 
 import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;

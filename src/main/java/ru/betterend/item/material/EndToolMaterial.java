@@ -1,6 +1,7 @@
 package ru.betterend.item.material;
 
 import java.util.function.Supplier;
+
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;

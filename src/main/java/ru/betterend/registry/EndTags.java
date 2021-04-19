@@ -1,10 +1,10 @@
 package ru.betterend.registry;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
+
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;

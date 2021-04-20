@@ -13,7 +13,7 @@ public class RunedFlavolite extends BlockBase {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 
 	public RunedFlavolite() {
-		super(FabricBlockSettings.copyOf(EndBlocks.FLAVOLITE.polished).resistance(Blocks.OBSIDIAN.getExplosionResistance()).lightLevel(state -> {
+		super(FabricBlockSettings.copyOf(EndBlocks.FLAVOLITE.polished).resistance(Blocks.OBSIDIAN.getExplosionResistance()).luminance(state -> {
 			return state.getValue(ACTIVATED) ? 8 : 0;
 		}));
 		this.registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));

@@ -53,7 +53,7 @@ public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IR
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	
 	public RespawnObeliskBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.END_STONE).lightLevel((state) -> {
+		super(FabricBlockSettings.copyOf(Blocks.END_STONE).luminance((state) -> {
 			return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
 		}));
 	}

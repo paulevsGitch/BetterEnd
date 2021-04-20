@@ -27,7 +27,7 @@ public class CavePumpkinBlock extends BlockBaseNotFull implements IRenderTypeabl
 	private static final VoxelShape SHAPE_BIG;
 	
 	public CavePumpkinBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.PUMPKIN).lightLevel((state) -> state.getValue(SMALL) ? 10 : 15));
+		super(FabricBlockSettings.copyOf(Blocks.PUMPKIN).luminance((state) -> state.getValue(SMALL) ? 10 : 15));
 		registerDefaultState(defaultBlockState().setValue(SMALL, false));
 	}
 	

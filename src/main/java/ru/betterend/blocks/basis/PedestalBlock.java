@@ -86,7 +86,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	protected float height = 1.0F;
 	
 	public PedestalBlock(Block parent) {
-		super(FabricBlockSettings.copyOf(parent).lightLevel(state -> state.getValue(HAS_LIGHT) ? 12 : 0));
+		super(FabricBlockSettings.copyOf(parent).luminance(state -> state.getValue(HAS_LIGHT) ? 12 : 0));
 		this.registerDefaultState(stateDefinition.any().setValue(STATE, PedestalState.DEFAULT).setValue(HAS_ITEM, false).setValue(HAS_LIGHT, false));
 		this.parent = parent;
 	}

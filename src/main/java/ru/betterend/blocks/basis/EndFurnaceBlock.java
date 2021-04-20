@@ -31,7 +31,7 @@ import ru.betterend.patterns.Patterns;
 
 public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned, IRenderTypeable {
 	public EndFurnaceBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).lightLevel((state) -> {
+		super(FabricBlockSettings.copyOf(source).luminance((state) -> {
 			return state.getValue(LIT) ? 13 : 0;
 		}));
 	}

@@ -40,9 +40,7 @@ public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 		super(FabricBlockSettings.of(Material.WOOD)
 				.breakByTool(FabricToolTags.AXES)
 				.hardness(0.5F)
-				.lightLevel((state) -> {
-			return state.getValue(SHAPE).getLight();
-		}));
+				.luminance(state -> state.getValue(SHAPE).getLight()));
 	}
 	
 	@Override

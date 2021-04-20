@@ -44,7 +44,7 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	private static final EnumMap<Axis, VoxelShape> SMALL_SHAPES = Maps.newEnumMap(Axis.class);
 	
 	public NeonCactusBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.CACTUS).lightLevel(state -> {
+		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(state -> {
 			TripleShape shape = state.getValue(SHAPE);
 			if (shape == TripleShape.TOP) {
 				return 15;

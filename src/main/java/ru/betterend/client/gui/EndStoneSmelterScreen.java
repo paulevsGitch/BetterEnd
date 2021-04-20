@@ -2,7 +2,6 @@ package ru.betterend.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.components.ImageButton;
@@ -10,7 +9,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
@@ -28,43 +26,42 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 	
 	public EndStoneSmelterScreen(EndStoneSmelterScreenHandler handler, Inventory inventory, Component title) {
 		super(handler, inventory, title);
-		this.recipeBook = new EndStoneSmelterRecipeBookScreen();
+		recipeBook = new EndStoneSmelterRecipeBookScreen();
 	}
 	
 	public void init() {
 		super.init();
-		this.narrow = this.width < 379;
-		this.recipeBook.init(width, height, minecraft, narrow, menu);
-		this.leftPos = this.recipeBook.updateScreenPosition(narrow, width, imageWidth);
-		this.addButton(new ImageButton(leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
-			this.recipeBook.initVisuals(narrow);
-			this.recipeBook.toggleVisibility();
-			this.leftPos = this.recipeBook.updateScreenPosition(narrow, width, imageWidth);
-			((ImageButton) buttonWidget).setPosition(this.leftPos + 20, height / 2 - 49);
+		narrow = width < 379;
+		recipeBook.init(width, height, minecraft, narrow, menu);
+		leftPos = recipeBook.updateScreenPosition(narrow, width, imageWidth);
+		addButton(new ImageButton(leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
+			recipeBook.initVisuals(narrow);
+			recipeBook.toggleVisibility();
+			leftPos = recipeBook.updateScreenPosition(narrow, width, imageWidth);
+			((ImageButton) buttonWidget).setPosition(leftPos + 20, height / 2 - 49);
 		}));
-		this.titleLabelX = (this.imageWidth - this.font.width((FormattedText)this.title)) / 2;
+		titleLabelX = (imageWidth - font.width(title)) / 2;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		this.recipeBook.tick();
+		recipeBook.tick();
 	}
 
 	@Override
 	public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
-		this.renderBackground(matrices);
-		if (this.recipeBook.isVisible() && this.narrow) {
-			this.renderBg(matrices, delta, mouseX, mouseY);
-			this.recipeBook.render(matrices, mouseX, mouseY, delta);
+		renderBackground(matrices);
+		if (recipeBook.isVisible() && narrow) {
+			renderBg(matrices, delta, mouseX, mouseY);
+			recipeBook.render(matrices, mouseX, mouseY, delta);
 		} else {
-			this.recipeBook.render(matrices, mouseX, mouseY, delta);
+			recipeBook.render(matrices, mouseX, mouseY, delta);
 			super.render(matrices, mouseX, mouseY, delta);
-			this.recipeBook.renderGhostRecipe(matrices, leftPos, topPos, true, delta);
+			recipeBook.renderGhostRecipe(matrices, leftPos, topPos, true, delta);
 		}
-
-		this.renderTooltip(matrices, mouseX, mouseY);
-		this.recipeBook.renderTooltip(matrices, leftPos, topPos, mouseX, mouseY);
+		renderTooltip(matrices, mouseX, mouseY);
+		recipeBook.renderTooltip(matrices, leftPos, topPos, mouseX, mouseY);
 	}
 
 	@Override
@@ -72,7 +69,7 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 		if (this.recipeBook.mouseClicked(mouseX, mouseY, button)) {
 			return true;
 		} else {
-			return this.narrow && this.recipeBook.isVisible() ? true : super.mouseClicked(mouseX, mouseY, button);
+			return narrow && recipeBook.isVisible() || super.mouseClicked(mouseX, mouseY, button);
 		}
 	}
 
@@ -84,7 +81,7 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		return this.recipeBook.keyPressed(keyCode, scanCode, modifiers) ? false : super.keyPressed(keyCode, scanCode, modifiers);
+		return !recipeBook.keyPressed(keyCode, scanCode, modifiers) && super.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	@Override
@@ -95,36 +92,37 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 
 	@Override
 	public boolean charTyped(char chr, int keyCode) {
-		return this.recipeBook.charTyped(chr, keyCode) ? true : super.charTyped(chr, keyCode);
+		return recipeBook.charTyped(chr, keyCode) || super.charTyped(chr, keyCode);
 	}
 
 	@Override
 	public void recipesUpdated() {
-		this.recipeBook.recipesUpdated();
+		recipeBook.recipesUpdated();
 	}
 
 	@Override
 	public RecipeBookComponent getRecipeBookComponent() {
-		return this.recipeBook;
+		return recipeBook;
 	}
 
 	@Override
 	protected void renderBg(PoseStack matrices, float delta, int mouseX, int mouseY) {
+		if (minecraft == null) return;
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(INVENTORY_LOCATION);
-		this.blit(matrices, leftPos, topPos, 0, 0, imageWidth, imageHeight);
-		int p;
+		minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
+		blit(matrices, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+		int progress;
 		if (menu.isBurning()) {
-			p = menu.getFuelProgress();
-			this.blit(matrices, leftPos + 56, topPos + 36 + 12 - p, 176, 12 - p, 14, p + 1);
+			progress = menu.getFuelProgress();
+			blit(matrices, leftPos + 56, topPos + 36 + 12 - progress, 176, 12 - progress, 14, progress + 1);
 		}
-		p = menu.getSmeltProgress();
-		this.blit(matrices, leftPos + 92, topPos + 34, 176, 14, p + 1, 16);
+		progress = menu.getSmeltProgress();
+		blit(matrices, leftPos + 92, topPos + 34, 176, 14, progress + 1, 16);
 	}
 
 	@Override
 	public void removed() {
-		this.recipeBook.removed();
+		recipeBook.removed();
 		super.removed();
 	}
 }

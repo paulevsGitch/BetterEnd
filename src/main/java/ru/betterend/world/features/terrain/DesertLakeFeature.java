@@ -18,14 +18,14 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.features.DefaultFeature;
 
-public class EndLakeFeature extends DefaultFeature {
+public class DesertLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 	private static final MutableBlockPos POS = new MutableBlockPos();
 
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, NoneFeatureConfiguration featureConfig) {
-		double radius = MHelper.randRange(10.0, 20.0, random);
+		double radius = MHelper.randRange(8.0, 15.0, random);
 		double depth = radius * 0.5 * MHelper.randRange(0.8, 1.2, random);
 		int dist = MHelper.floor(radius);
 		int dist2 = MHelper.floor(radius * 1.5);
@@ -172,15 +172,21 @@ public class EndLakeFeature extends DefaultFeature {
 							}
 						}
 						// Make border
-						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
-							if (world.isEmptyBlock(POS.above())) {
-								state = world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState());
-								BlocksHelper.setWithoutUpdate(world, POS.below(), END_STONE);
+						else if (y2 + x2 + z2 <= rb) {
+							state = world.getBlockState(POS);
+							if (state.is(EndTags.GEN_TERRAIN) && world.isEmptyBlock(POS.above())) {
+								BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.END_MOSS);
 							}
-							else {
-								BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.ENDSTONE_DUST.defaultBlockState());
-								BlocksHelper.setWithoutUpdate(world, POS.below(), END_STONE);
+							else if (y < waterLevel) {
+								if (world.isEmptyBlock(POS.above())) {
+									state = world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+									BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState());
+									BlocksHelper.setWithoutUpdate(world, POS.below(), END_STONE);
+								}
+								else {
+									BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.ENDSTONE_DUST.defaultBlockState());
+									BlocksHelper.setWithoutUpdate(world, POS.below(), END_STONE);
+								}
 							}
 						}
 					}

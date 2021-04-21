@@ -43,6 +43,7 @@ import ru.betterend.world.features.bushes.LargeAmaranitaFeature;
 import ru.betterend.world.features.bushes.Lumecorn;
 import ru.betterend.world.features.bushes.TenaneaBushFeature;
 import ru.betterend.world.features.terrain.BigAuroraCrystalFeature;
+import ru.betterend.world.features.terrain.DesertLakeFeature;
 import ru.betterend.world.features.terrain.EndLakeFeature;
 import ru.betterend.world.features.terrain.FallenPillarFeature;
 import ru.betterend.world.features.terrain.FloatingSpireFeature;
@@ -186,6 +187,7 @@ public class EndFeatures {
 	public static final EndFeature END_LAKE = EndFeature.makeLakeFeature("end_lake", new EndLakeFeature(), 4);
 	public static final EndFeature END_LAKE_NORMAL = EndFeature.makeLakeFeature("end_lake_normal", new EndLakeFeature(), 20);
 	public static final EndFeature END_LAKE_RARE = EndFeature.makeLakeFeature("end_lake_rare", new EndLakeFeature(), 40);
+	public static final EndFeature DESERT_LAKE = EndFeature.makeLakeFeature("desert_lake", new DesertLakeFeature(), 8);
 	public static final EndFeature ROUND_CAVE = EndFeature.makeRawGenFeature("round_cave", new RoundCaveFeature(), 2);
 	public static final EndFeature SPIRE = EndFeature.makeRawGenFeature("spire", new SpireFeature(), 2);
 	public static final EndFeature FLOATING_SPIRE = EndFeature.makeRawGenFeature("floating_spire", new FloatingSpireFeature(), 8);

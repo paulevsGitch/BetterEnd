@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:block/cube_column",
+	"parent": "betterend:block/column_noshade",
 	"textures": {
 		"end": "betterend:block/neon_cactus_big_top",
 		"side": "betterend:block/neon_cactus_big_side"

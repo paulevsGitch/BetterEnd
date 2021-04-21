@@ -15,6 +15,7 @@ public class DustWastelandsBiome extends EndBiome {
 				.setFogDensity(2)
 				.setWaterAndFogColor(192, 180, 131)
 				.setSurface(EndBlocks.ENDSTONE_DUST)
+				.setDepth(1.5F)
 				.setParticles(ParticleTypes.WHITE_ASH, 0.01F)
 				.setLoop(EndSounds.AMBIENT_DUST_WASTELANDS)
 				.setMusic(EndSounds.MUSIC_OPENSPACE)

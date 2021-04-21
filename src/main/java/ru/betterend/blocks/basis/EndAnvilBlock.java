@@ -48,7 +48,10 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this));
+		ItemStack stack = new ItemStack(this);
+		int level = state.getValue(getDestructionProperty());
+		stack.getOrCreateTag().putInt("level", level);
+		return Collections.singletonList(stack);
 	}
 	
 	@Override

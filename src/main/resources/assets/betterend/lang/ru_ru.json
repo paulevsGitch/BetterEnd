@@ -867,5 +867,6 @@
 	"block.betterend.smaragdant_crystal_slab": "Смарагдантовая плита",
 	"block.betterend.smaragdant_crystal_stairs": "Смарагдантовые ступени",
 	"block.betterend.smaragdant_crystal_tiles": "Смарагдантовая плитка",
-	"block.betterend.smaragdant_crystal_wall": "Смарагдантовая стена"
+	"block.betterend.smaragdant_crystal_wall": "Смарагдантовая стена",
+	"message.betterend.anvil_damage": "§cПовреждение"
 }

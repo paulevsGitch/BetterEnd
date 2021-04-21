@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.*;
+import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.blocks.basis.EndCropBlock;
 import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
@@ -34,6 +35,7 @@ import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.ISpetialItem;
+import ru.betterend.item.EndAnvilItem;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 
@@ -332,7 +334,12 @@ public class EndBlocks {
 			EndItems.registerBlockItem(id, new WaterLilyBlockItem(block, item));
 		}
 		else {
-			EndItems.registerBlockItem(id, new BlockItem(block, item));
+			if (block instanceof EndAnvilBlock) {
+				EndItems.registerBlockItem(id, new EndAnvilItem(block));
+			}
+			else {
+				EndItems.registerBlockItem(id, new BlockItem(block, item));
+			}
 		}
 		if (block.defaultBlockState().getMaterial().isFlammable() && FlammableBlockRegistry.getDefaultInstance().get(block).getBurnChance() == 0) {
 			FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);

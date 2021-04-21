@@ -848,5 +848,6 @@
 	"block.betterend.smaragdant_crystal_slab": "Smaragdant Slab",
 	"block.betterend.smaragdant_crystal_stairs": "Smaragdant Stairs",
 	"block.betterend.smaragdant_crystal_tiles": "Smaragdant Tiles",
-	"block.betterend.smaragdant_crystal_wall": "Smaragdant Wall"
+	"block.betterend.smaragdant_crystal_wall": "Smaragdant Wall",
+	"message.betterend.anvil_damage": "§cDamage"
 }

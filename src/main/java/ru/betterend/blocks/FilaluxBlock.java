@@ -1,4 +1,4 @@
-package ru.betterend.registry;
+package ru.betterend.blocks;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import ru.betterend.blocks.basis.VineBlock;

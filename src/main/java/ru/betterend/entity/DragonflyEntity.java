@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -53,6 +54,11 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 				.add(Attributes.FOLLOW_RANGE, 16.0D)
 				.add(Attributes.FLYING_SPEED, 1.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.1D);
+	}
+	
+	@Override
+	public Entity getLeashHolder() {
+		return null;
 	}
 
 	@Override

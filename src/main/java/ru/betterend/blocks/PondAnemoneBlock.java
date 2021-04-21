@@ -1,4 +1,4 @@
-package ru.betterend.registry;
+package ru.betterend.blocks;
 
 import java.util.Random;
 

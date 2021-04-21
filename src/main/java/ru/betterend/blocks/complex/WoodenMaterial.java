@@ -1,6 +1,7 @@
 package ru.betterend.blocks.complex;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
@@ -147,6 +148,31 @@ public class WoodenMaterial {
 		logItemTag = EndTags.makeItemTag(name + "_logs");
 		TagHelper.addTag(logBlockTag, log_stripped, bark_stripped, log, bark);
 		TagHelper.addTag(logItemTag, log_stripped, bark_stripped, log, bark);
+		
+		FlammableBlockRegistry.getDefaultInstance().add(log, 5, 5);
+		FlammableBlockRegistry.getDefaultInstance().add(bark, 5, 5);
+		FlammableBlockRegistry.getDefaultInstance().add(log_stripped, 5, 5);
+		FlammableBlockRegistry.getDefaultInstance().add(bark_stripped, 5, 5);
+		
+		FlammableBlockRegistry.getDefaultInstance().add(planks, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(stairs, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(slab, 5, 20);
+		
+		FlammableBlockRegistry.getDefaultInstance().add(fence, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(gate, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(button, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(pressurePlate, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(trapdoor, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(door, 5, 20);
+		
+		FlammableBlockRegistry.getDefaultInstance().add(craftingTable, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ladder, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(sign, 5, 20);
+		
+		FlammableBlockRegistry.getDefaultInstance().add(chest, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(barrel, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(shelf, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(composter, 5, 20);
 	}
 	
 	public boolean isTreeLog(Block block) {

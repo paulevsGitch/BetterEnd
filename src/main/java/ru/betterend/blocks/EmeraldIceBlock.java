@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.BlockPatterned;
@@ -76,7 +77,13 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this));
+		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
+		if (tool != null && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) != 0) {
+			return Collections.singletonList(new ItemStack(this));
+		}
+		else {
+			return Collections.emptyList();
+		}
 	}
 	
 	@Override

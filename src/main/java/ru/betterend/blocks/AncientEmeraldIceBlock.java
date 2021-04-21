@@ -1,13 +1,20 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
@@ -48,5 +55,16 @@ public class AncientEmeraldIceBlock extends BlockBase {
 	
 	private void makeParticles(ServerLevel world, BlockPos pos, Random random) {
 		world.sendParticles(EndParticles.SNOWFLAKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0);
+	}
+	
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
+		if (tool != null && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) != 0) {
+			return Collections.singletonList(new ItemStack(this));
+		}
+		else {
+			return Collections.emptyList();
+		}
 	}
 }

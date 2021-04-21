@@ -17,6 +17,7 @@ public class DryShrublandBiome extends EndBiome {
 				.setPlantsColor(237, 122, 66)
 				.setSurface(EndBlocks.RUTISCUS)
 				.setMusic(EndSounds.MUSIC_OPENSPACE)
+				.addFeature(EndFeatures.LUCERNIA_BUSH_RARE)
 				.addFeature(EndFeatures.ORANGO)
 				.addFeature(EndFeatures.AERIDIUM)
 				.addFeature(EndFeatures.LUTEBUS)

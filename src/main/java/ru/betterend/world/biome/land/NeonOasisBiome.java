@@ -24,6 +24,9 @@ public class NeonOasisBiome extends EndBiome {
 				.addFeature(EndFeatures.NEON_CACTUS)
 				.addFeature(EndFeatures.UMBRELLA_MOSS)
 				.addFeature(EndFeatures.CREEPING_MOSS)
+				.addFeature(EndFeatures.CHARNIA_GREEN)
+				.addFeature(EndFeatures.CHARNIA_CYAN)
+				.addFeature(EndFeatures.CHARNIA_RED)
 				.addStructureFeature(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
 	}

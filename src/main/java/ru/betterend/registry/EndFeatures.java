@@ -93,6 +93,7 @@ public class EndFeatures {
 	public static final EndFeature LUMECORN = new EndFeature("lumecorn", new Lumecorn(), 5);
 	public static final EndFeature LARGE_AMARANITA = new EndFeature("large_amaranita", new LargeAmaranitaFeature(), 5);
 	public static final EndFeature LUCERNIA_BUSH = new EndFeature("lucernia_bush", new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.bark), 10);
+	public static final EndFeature LUCERNIA_BUSH_RARE = new EndFeature("lucernia_bush_rare", new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.bark), 1);
 	public static final EndFeature NEON_CACTUS = new EndFeature("neon_cactus", new NeonCactusFeature(), 2);
 	
 	// Plants //

@@ -54,9 +54,7 @@ public class TagHelper {
 	}
 	
 	public static Tag.Builder apply(Tag.Builder builder, Set<ResourceLocation> ids) {
-		ids.forEach((value) -> {
-			builder.addElement(value, "Better End Code");
-		});
+		ids.forEach(value -> builder.addElement(value, "Better End Code"));
 		return builder;
 	}
 	
@@ -69,11 +67,7 @@ public class TagHelper {
 		}
 		if (endTags != null) {
 			endTags.forEach((id, ids) -> {
-				if (tagsMap.containsKey(id)) {
-					apply(tagsMap.get(id), ids);
-				} else {
-					tagsMap.put(id, apply(Tag.Builder.tag(), ids));
-				}
+				apply(tagsMap.computeIfAbsent(id, key -> Tag.Builder.tag()), ids);
 			});
 		}
 	}

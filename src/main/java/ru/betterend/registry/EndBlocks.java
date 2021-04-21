@@ -1,5 +1,6 @@
 package ru.betterend.registry;
 
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -332,6 +333,9 @@ public class EndBlocks {
 		}
 		else {
 			EndItems.registerBlockItem(id, new BlockItem(block, item));
+		}
+		if (block.defaultBlockState().getMaterial().isFlammable() && FlammableBlockRegistry.getDefaultInstance().get(block).getBurnChance() == 0) {
+			FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);
 		}
 		return block;
 	}

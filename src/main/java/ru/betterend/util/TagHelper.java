@@ -66,9 +66,7 @@ public class TagHelper {
 			endTags = TAGS_ITEM;
 		}
 		if (endTags != null) {
-			endTags.forEach((id, ids) -> {
-				apply(tagsMap.computeIfAbsent(id, key -> Tag.Builder.tag()), ids);
-			});
+			endTags.forEach((id, ids) -> apply(tagsMap.computeIfAbsent(id, key -> Tag.Builder.tag()), ids));
 		}
 	}
 }

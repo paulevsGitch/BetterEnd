@@ -58,7 +58,7 @@ public class TagHelper {
 		return builder;
 	}
 	
-	public static void apply(String entry, Map<ResourceLocation, Tag.Builder> tagsMap) {
+	public static Map<ResourceLocation, Tag.Builder> apply(String entry, Map<ResourceLocation, Tag.Builder> tagsMap) {
 		Map<ResourceLocation, Set<ResourceLocation>> endTags = null;
 		if (entry.equals("block")) {
 			endTags = TAGS_BLOCK;
@@ -68,5 +68,6 @@ public class TagHelper {
 		if (endTags != null) {
 			endTags.forEach((id, ids) -> apply(tagsMap.computeIfAbsent(id, key -> Tag.Builder.tag()), ids));
 		}
+		return tagsMap;
 	}
 }

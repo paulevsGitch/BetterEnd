@@ -30,8 +30,6 @@ public class TagLoaderMixin {
 	@ModifyArg(method = "prepare", at = @At(value = "INVOKE",
 			target = "Ljava/util/concurrent/CompletableFuture;supplyAsync(Ljava/util/function/Supplier;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;"))
 	public Supplier<Map<ResourceLocation, Tag.Builder>> be_modifyTags(Supplier<Map<ResourceLocation, Tag.Builder>> supplier, Executor executor) {
-		Map<ResourceLocation, Tag.Builder> map = supplier.get();
-		TagHelper.apply(name, map);
-		return () -> map;
+		return () -> TagHelper.apply(name, supplier.get());
 	}
 }

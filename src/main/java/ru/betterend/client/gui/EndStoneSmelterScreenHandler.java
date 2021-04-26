@@ -128,7 +128,7 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 			ItemStack itemStack2 = slot.getItem();
 			itemStack = itemStack2.copy();
 			if (index == 3) {
-				if (moveItemStackTo(itemStack2, 4, 40, true)) {
+				if (!moveItemStackTo(itemStack2, 4, 40, true)) {
 					return ItemStack.EMPTY;
 				}
 				slot.onQuickCraft(itemStack2, itemStack);

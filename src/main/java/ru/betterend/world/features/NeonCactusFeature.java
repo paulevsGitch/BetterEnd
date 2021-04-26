@@ -6,10 +6,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
+import ru.betterend.blocks.BlockProperties.CactusBottom;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
@@ -31,9 +34,23 @@ public class NeonCactusFeature extends DefaultFeature {
 				break;
 			}
 			int size = (h - i) >> 2;
-			BlocksHelper.setWithUpdate(world, mut,
-					EndBlocks.NEON_CACTUS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, getBySize(size))
-							.setValue(BlockStateProperties.FACING, Direction.UP));
+			BlockState state = EndBlocks.NEON_CACTUS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, getBySize(size)).setValue(BlockStateProperties.FACING, Direction.UP);
+			if (i == 0) {
+				BlockState down = world.getBlockState(mut.below());
+				if (down.is(Blocks.END_STONE) || down.is(EndBlocks.ENDSTONE_DUST)) {
+					state = state.setValue(BlockProperties.CACTUS_BOTTOM, CactusBottom.SAND);
+				}
+				else if (down.is(EndBlocks.END_MOSS)) {
+					state = state.setValue(BlockProperties.CACTUS_BOTTOM, CactusBottom.MOSS);
+				}
+				else {
+					state = state.setValue(BlockProperties.CACTUS_BOTTOM, CactusBottom.EMPTY);
+				}
+			}
+			else {
+				state = state.setValue(BlockProperties.CACTUS_BOTTOM, CactusBottom.EMPTY);
+			}
+			BlocksHelper.setWithUpdate(world, mut, state);
 			if (i > 2 && i < (h - 1) && random.nextBoolean()) {
 				int length = h - i - MHelper.randRange(1, 2, random);
 				if (length > 0) {

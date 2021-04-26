@@ -1,13 +1,16 @@
 package ru.betterend.blocks;
 
 import java.util.EnumMap;
+import java.util.Random;
 
 import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -27,14 +30,18 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.betterend.blocks.BlockProperties.CactusBottom;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, IRenderTypeable {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
+	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = BlockProperties.CACTUS_BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 	
@@ -44,20 +51,32 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	private static final EnumMap<Axis, VoxelShape> SMALL_SHAPES = Maps.newEnumMap(Axis.class);
 	
 	public NeonCactusBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15));
+		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15).randomTicks());
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP).setValue(SHAPE, TripleShape.TOP));
 	}
 	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
-		stateManager.add(SHAPE, WATERLOGGED, FACING);
+		stateManager.add(SHAPE, CACTUS_BOTTOM, WATERLOGGED, FACING);
 	}
 	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-		LevelAccessor worldAccess = ctx.getLevel();
-		BlockPos blockPos = ctx.getClickedPos();
-		return this.defaultBlockState().setValue(WATERLOGGED, worldAccess.getFluidState(blockPos).getType() == Fluids.WATER).setValue(FACING, ctx.getClickedFace());
+		LevelAccessor world = ctx.getLevel();
+		BlockPos pos = ctx.getClickedPos();
+		Direction dir = ctx.getClickedFace();
+		BlockState down = world.getBlockState(pos.relative(dir.getOpposite()));
+		BlockState state = this.defaultBlockState().setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER).setValue(FACING, ctx.getClickedFace());
+		if (down.is(Blocks.END_STONE) || down.is(EndBlocks.ENDSTONE_DUST)) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
+		}
+		else if (down.is(EndBlocks.END_MOSS)) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.MOSS);
+		}
+		else {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY);
+		}
+		return state;
 	}
 	
 	@Override
@@ -79,6 +98,17 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		if ((Boolean) state.getValue(WATERLOGGED)) {
 			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+		}
+		Direction dir = state.getValue(FACING);
+		BlockState down = world.getBlockState(pos.relative(dir.getOpposite()));
+		if (down.is(Blocks.END_STONE) || down.is(EndBlocks.ENDSTONE_DUST)) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
+		}
+		else if (down.is(EndBlocks.END_MOSS)) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.MOSS);
+		}
+		else {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY);
 		}
 		return state;
 	}
@@ -103,6 +133,87 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 		}
 		else {
 			return shape == TripleShape.MIDDLE ? MEDIUM_SHAPES_OPEN.get(dir) : SMALL_SHAPES_OPEN.get(dir);
+		}
+	}
+	
+	@Override
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+		Direction dir = state.getValue(FACING);
+		if (!world.getBlockState(pos.relative(dir)).isAir() || world.getBlockState(pos.above()).is(this)) {
+			return;
+		}
+		int length = getLength(state, world, pos, 10);
+		if (length < 0 || length > 9) {
+			return;
+		}
+		int horizontal = getHorizontal(state, world, pos, 5);
+		if (horizontal > random.nextInt(2)) {
+			dir = Direction.UP;
+			if (!world.getBlockState(pos.above()).isAir()) {
+				return;
+			}
+		}
+		BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, dir);
+		BlocksHelper.setWithoutUpdate(world, pos.relative(dir), placement);
+		mutateStem(placement, world, pos, 10);
+	}
+	
+	private int getLength(BlockState state, ServerLevel world, BlockPos pos, int max) {
+		int length = 0;
+		Direction dir = state.getValue(FACING).getOpposite();
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
+		for (int i = 0; i < max; i++) {
+			mut.move(dir);
+			state = world.getBlockState(mut);
+			if (!state.is(this)) {
+				if (!state.is(EndTags.END_GROUND)) {
+					length = -1;
+				}
+				break;
+			}
+			dir = state.getValue(FACING).getOpposite();
+			length ++;
+		}
+		return length;
+	}
+	
+	private int getHorizontal(BlockState state, ServerLevel world, BlockPos pos, int max) {
+		int count = 0;
+		Direction dir = state.getValue(FACING).getOpposite();
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
+		for (int i = 0; i < max; i++) {
+			mut.move(dir);
+			state = world.getBlockState(mut);
+			if (!state.is(this)) {
+				break;
+			}
+			dir = state.getValue(FACING).getOpposite();
+			if (dir.getStepY() != 0) {
+				break;
+			}
+			count ++;
+		}
+		return count;
+	}
+	
+	private void mutateStem(BlockState state, ServerLevel world, BlockPos pos, int max) {
+		Direction dir = state.getValue(FACING).getOpposite();
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
+		for (int i = 0; i < max; i++) {
+			mut.move(dir);
+			state = world.getBlockState(mut);
+			if (!state.is(this)) {
+				return;
+			}
+			int size = i * 3 / max;
+			int src = state.getValue(SHAPE).getIndex();
+			if (src < size) {
+				TripleShape shape = TripleShape.fromIndex(size);
+				BlocksHelper.setWithoutUpdate(world, pos, state.setValue(SHAPE, shape));
+			}
+			else {
+				return;
+			}
 		}
 	}
 	

@@ -8,7 +8,8 @@ import ru.betterend.registry.EndPortals;
 
 public class BlockProperties {
 	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.create("shape", HydraluxShape.class);
-	public final static EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
+	public static final EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
+	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EnumProperty.create("bottom", CactusBottom.class);
 	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.create("shape", TripleShape.class);
 	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.create("shape", PentaShape.class);
 	
@@ -30,14 +31,16 @@ public class BlockProperties {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
 	
 	public static enum TripleShape implements StringRepresentable {
-		TOP("top"),
-		MIDDLE("middle"),
-		BOTTOM("bottom");
+		TOP("top", 0),
+		MIDDLE("middle", 1),
+		BOTTOM("bottom", 2);
 		
 		private final String name;
+		private final int index;
 		
-		TripleShape(String name) {
+		TripleShape(String name, int index) {
 			this.name = name;
+			this.index = index;
 		}
 
 		@Override
@@ -48,6 +51,14 @@ public class BlockProperties {
 		@Override
 		public String toString() {
 			return name;
+		}
+		
+		public int getIndex() {
+			return index;
+		}
+		
+		public static TripleShape fromIndex(int index) {
+			return index > 1 ? BOTTOM : index == 1 ? MIDDLE : TOP;
 		}
 	}
 
@@ -160,6 +171,28 @@ public class BlockProperties {
 		
 		public int getLight() {
 			return light;
+		}
+	}
+	
+	public static enum CactusBottom implements StringRepresentable {
+		EMPTY("empty"),
+		SAND("sand"),
+		MOSS("moss");
+		
+		private final String name;
+		
+		CactusBottom(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 }

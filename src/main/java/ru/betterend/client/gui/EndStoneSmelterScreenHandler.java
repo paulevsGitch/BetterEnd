@@ -44,19 +44,19 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 		this.propertyDelegate = propertyDelegate;
 		this.world = playerInventory.player.level;
 		
-		this.addDataSlots(propertyDelegate);
-		this.addSlot(new Slot(inventory, 0, 45, 17));
-		this.addSlot(new Slot(inventory, 1, 67, 17));
-		this.addSlot(new SmelterFuelSlot(this, inventory, 2, 56, 53));
-		this.addSlot(new SmelterOutputSlot(playerInventory.player, inventory, 3, 129, 35));
+		addDataSlots(propertyDelegate);
+		addSlot(new Slot(inventory, 0, 45, 17));
+		addSlot(new Slot(inventory, 1, 67, 17));
+		addSlot(new SmelterFuelSlot(this, inventory, 2, 56, 53));
+		addSlot(new SmelterOutputSlot(playerInventory.player, inventory, 3, 129, 35));
 
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+				addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
 		for(int i = 0; i < 9; ++i) {
-			this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+			addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
 		}
 	}
 	
@@ -74,12 +74,12 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 
 	@Override
 	public void clearCraftingContent() {
-		this.inventory.clearContent();
+		inventory.clearContent();
 	}
 
 	@Override
 	public boolean recipeMatches(Recipe<? super Container> recipe) {
-		return recipe.matches(this.inventory, this.world);
+		return recipe.matches(inventory, world);
 	}
 
 	@Override
@@ -109,11 +109,11 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return this.inventory.stillValid(player);
+		return inventory.stillValid(player);
 	}
 
 	protected boolean isSmeltable(ItemStack itemStack) {
-		return this.world.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, new SimpleContainer(itemStack), this.world).isPresent();
+		return world.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, new SimpleContainer(itemStack), world).isPresent();
 	}
 
 	public boolean isFuel(ItemStack itemStack) {
@@ -122,70 +122,69 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 	
 	@Override
 	public ItemStack quickMoveStack(Player player, int index) {
-		ItemStack itemStack = ItemStack.EMPTY;
-		Slot slot = this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
-			ItemStack itemStack2 = slot.getItem();
-			itemStack = itemStack2.copy();
-			if (index == 3) {
-				if (moveItemStackTo(itemStack2, 4, 40, true)) {
-					return ItemStack.EMPTY;
-				}
-				slot.onQuickCraft(itemStack2, itemStack);
-			} else if (index != 2 && index != 1 && index != 0) {
-				if (isSmeltable(itemStack2)) {
-					if (!moveItemStackTo(itemStack2, 0, 2, false)) {
-						return ItemStack.EMPTY;
-					}
-				} else if (isFuel(itemStack2)) {
-					if (!this.moveItemStackTo(itemStack2, 2, 3, false)) {
-						return ItemStack.EMPTY;
-					}
-				} else if (index < 31) {
-					if (!moveItemStackTo(itemStack2, 31, 40, false)) {
-						return ItemStack.EMPTY;
-					}
-				} else if (index < 40 && !moveItemStackTo(itemStack2, 4, 31, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (!moveItemStackTo(itemStack2, 4, 40, false)) {
+		Slot slot = slots.get(index);
+		if (slot == null || !slot.hasItem()) return ItemStack.EMPTY;
+
+		ItemStack slotStack = slot.getItem();
+		ItemStack itemStack = slotStack.copy();
+		if (index == 3) {
+			if (!moveItemStackTo(slotStack, 4, 40, true)) {
 				return ItemStack.EMPTY;
 			}
-
-			if (itemStack2.isEmpty()) {
-				slot.set(ItemStack.EMPTY);
-			} else {
-				slot.setChanged();
-			}
-
-			if (itemStack2.getCount() == itemStack.getCount()) {
+			slot.onQuickCraft(slotStack, itemStack);
+		} else if (index != 2 && index != 1 && index != 0) {
+			if (isSmeltable(slotStack)) {
+				if (!moveItemStackTo(slotStack, 0, 2, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (isFuel(slotStack)) {
+				if (!moveItemStackTo(slotStack, 2, 3, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (index < 31) {
+				if (!moveItemStackTo(slotStack, 31, 40, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (index < 40 && !moveItemStackTo(slotStack, 4, 31, false)) {
 				return ItemStack.EMPTY;
 			}
-
-			slot.onTake(player, itemStack2);
+		} else if (!moveItemStackTo(slotStack, 4, 40, false)) {
+			return ItemStack.EMPTY;
 		}
+
+		if (slotStack.isEmpty()) {
+			slot.set(ItemStack.EMPTY);
+		} else {
+			slot.setChanged();
+		}
+
+		if (slotStack.getCount() == itemStack.getCount()) {
+			return ItemStack.EMPTY;
+		}
+
+		slot.onTake(player, slotStack);
 
 		return itemStack;
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public int getSmeltProgress() {
-		int time = this.propertyDelegate.get(2);
-		int timeTotal = this.propertyDelegate.get(3);
+		int time = propertyDelegate.get(2);
+		int timeTotal = propertyDelegate.get(3);
 		return timeTotal != 0 && time != 0 ? time * 24 / timeTotal : 0;
 	}
 
 	@Environment(EnvType.CLIENT)
 	public int getFuelProgress() {
-		int fuelTime = this.propertyDelegate.get(1);
+		int fuelTime = propertyDelegate.get(1);
 		if (fuelTime == 0) {
 			fuelTime = 200;
 		}
-		return this.propertyDelegate.get(0) * 13 / fuelTime;
+		return propertyDelegate.get(0) * 13 / fuelTime;
 	}
 
 	@Environment(EnvType.CLIENT)
 	public boolean isBurning() {
-		return this.propertyDelegate.get(0) > 0;
+		return propertyDelegate.get(0) > 0;
 	}
 }

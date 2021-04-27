@@ -193,6 +193,10 @@ public class CraftingRecipes {
 		GridRecipe.make("silk_moth_hive", EndBlocks.SILK_MOTH_HIVE).setShape("#L#", "LML", "#L#").addMaterial('#', EndBlocks.TENANEA.planks).addMaterial('L', EndBlocks.TENANEA_LEAVES).addMaterial('M', EndItems.SILK_MOTH_MATRIX).build();
 		GridRecipe.make("cave_pumpkin_pie", EndItems.CAVE_PUMPKIN_PIE).setShape(" B ", "BPB", " B ").addMaterial('P', EndBlocks.CAVE_PUMPKIN).addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).build();
 		GridRecipe.make("cave_pumpkin_seeds", EndBlocks.CAVE_PUMPKIN_SEED).setOutputCount(4).setList("#").addMaterial('#', EndBlocks.CAVE_PUMPKIN).build();
+		
+		GridRecipe.make("neon_cactus_block", EndBlocks.NEON_CACTUS_BLOCK).setShape("##", "##").addMaterial('#', EndBlocks.NEON_CACTUS).build();
+		GridRecipe.make("neon_cactus_block_slab", EndBlocks.NEON_CACTUS_BLOCK_SLAB).setShape("###").setOutputCount(6).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();
+		GridRecipe.make("neon_cactus_block_stairs", EndBlocks.NEON_CACTUS_BLOCK_STAIRS).setShape("#  ", "## ", "###").setOutputCount(4).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

@@ -868,5 +868,9 @@
 	"block.betterend.smaragdant_crystal_stairs": "Смарагдантовые ступени",
 	"block.betterend.smaragdant_crystal_tiles": "Смарагдантовая плитка",
 	"block.betterend.smaragdant_crystal_wall": "Смарагдантовая стена",
-	"message.betterend.anvil_damage": "§cПовреждение"
+	"message.betterend.anvil_damage": "§cПовреждение",
+	
+	"block.betterend.neon_cactus_block": "Блок неонового кактуса",
+	"block.betterend.neon_cactus_slab": "Плита из неонового кактуса",
+	"block.betterend.neon_cactus_stairs": "Ступени из неонового кактуса"
 }

@@ -849,5 +849,9 @@
 	"block.betterend.smaragdant_crystal_stairs": "Smaragdant Stairs",
 	"block.betterend.smaragdant_crystal_tiles": "Smaragdant Tiles",
 	"block.betterend.smaragdant_crystal_wall": "Smaragdant Wall",
-	"message.betterend.anvil_damage": "§cDamage"
+	"message.betterend.anvil_damage": "§cDamage",
+	
+	"block.betterend.neon_cactus_block": "Neon Cactus Block",
+	"block.betterend.neon_cactus_slab": "Neon Cactus Slab",
+	"block.betterend.neon_cactus_stairs": "Neon Cactus Stairs"
 }

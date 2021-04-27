@@ -205,7 +205,10 @@ public class EndBlocks {
 	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 4, true));
 	public static final Block AMARANITA_CAP = registerBlock("amaranita_cap", new AmaranitaCapBlock());
 	
-	public static final Block NEON_CACTUS = registerBlock("neon_cactus", new NeonCactusBlock());
+	public static final Block NEON_CACTUS = registerBlock("neon_cactus", new NeonCactusPlantBlock());
+	public static final Block NEON_CACTUS_BLOCK = registerBlock("neon_cactus_block", new NeonCactusBlock());
+	public static final Block NEON_CACTUS_BLOCK_STAIRS = registerBlock("neon_cactus_stairs", new EndStairsBlock(NEON_CACTUS_BLOCK));
+	public static final Block NEON_CACTUS_BLOCK_SLAB = registerBlock("neon_cactus_slab", new EndSlabBlock(NEON_CACTUS_BLOCK));
 	
 	// Crops
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new ShadowBerryBlock());

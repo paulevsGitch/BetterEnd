@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
@@ -28,7 +29,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.BlockProperties.CactusBottom;
 import ru.betterend.blocks.BlockProperties.TripleShape;
@@ -45,11 +45,13 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 	
+	private static final EnumMap<Direction, VoxelShape> BIG_SHAPES_OPEN = Maps.newEnumMap(Direction.class);
 	private static final EnumMap<Direction, VoxelShape> MEDIUM_SHAPES_OPEN = Maps.newEnumMap(Direction.class);
 	private static final EnumMap<Direction, VoxelShape> SMALL_SHAPES_OPEN = Maps.newEnumMap(Direction.class);
+	private static final EnumMap<Axis, VoxelShape> BIG_SHAPES = Maps.newEnumMap(Axis.class);
 	private static final EnumMap<Axis, VoxelShape> MEDIUM_SHAPES = Maps.newEnumMap(Axis.class);
 	private static final EnumMap<Axis, VoxelShape> SMALL_SHAPES = Maps.newEnumMap(Axis.class);
-	private static final int MAX_LENGTH = 10;
+	private static final int MAX_LENGTH = 12;
 	
 	public NeonCactusBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15).randomTicks());
@@ -101,11 +103,14 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 		Direction dir = state.getValue(FACING);
-		BlockState down = world.getBlockState(pos.relative(dir.getOpposite()));
-		if (down.is(Blocks.END_STONE) || down.is(EndBlocks.ENDSTONE_DUST)) {
+		if (!canSurvive(state, world, pos)) {
+			return Blocks.AIR.defaultBlockState();
+		}
+		BlockState downState = world.getBlockState(pos.relative(dir.getOpposite()));
+		if (downState.is(Blocks.END_STONE) || downState.is(EndBlocks.ENDSTONE_DUST)) {
 			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
 		}
-		else if (down.is(EndBlocks.END_MOSS)) {
+		else if (downState.is(EndBlocks.END_MOSS)) {
 			state = state.setValue(CACTUS_BOTTOM, CactusBottom.MOSS);
 		}
 		else {
@@ -122,24 +127,38 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		TripleShape shape = state.getValue(SHAPE);
-		
-		if (shape == TripleShape.BOTTOM) {
-			return Shapes.block();
-		}
 		Direction dir = state.getValue(FACING);
 		BlockState next = view.getBlockState(pos.relative(dir));
 		if (next.is(this)) {
 			Axis axis = dir.getAxis();
+			if (shape == TripleShape.BOTTOM) {
+				return BIG_SHAPES.get(axis);
+			}
 			return shape == TripleShape.MIDDLE ? MEDIUM_SHAPES.get(axis) : SMALL_SHAPES.get(axis);
 		}
 		else {
+			if (shape == TripleShape.BOTTOM) {
+				return BIG_SHAPES_OPEN.get(dir);
+			}
 			return shape == TripleShape.MIDDLE ? MEDIUM_SHAPES_OPEN.get(dir) : SMALL_SHAPES_OPEN.get(dir);
 		}
 	}
 	
 	@Override
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		Direction dir = state.getValue(FACING);
+		BlockPos supportPos = pos.relative(dir.getOpposite());
+		BlockState support = level.getBlockState(supportPos);
+		return support.is(this) || support.isFaceSturdy(level, supportPos, dir);
+	}
+	
+	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		Direction dir = state.getValue(FACING);
+		if (!this.canSurvive(state, world, pos)) {
+			this.destroy(world, pos, state);
+			return;
+		} 
 		if (!world.isEmptyBlock(pos.relative(dir))) {
 			return;
 		}
@@ -227,20 +246,31 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	}
 	
 	static {
-		MEDIUM_SHAPES.put(Axis.X, Block.box(0, 2, 2, 16, 14, 14));
-		MEDIUM_SHAPES.put(Axis.Y, Block.box(2, 0, 2, 14, 16, 14));
-		MEDIUM_SHAPES.put(Axis.Z, Block.box(2, 2, 0, 14, 14, 16));
+		BIG_SHAPES.put(Axis.X, Block.box(0, 2, 2, 16, 14, 14));
+		BIG_SHAPES.put(Axis.Y, Block.box(2, 0, 2, 14, 16, 14));
+		BIG_SHAPES.put(Axis.Z, Block.box(2, 2, 0, 14, 14, 16));
+		
+		MEDIUM_SHAPES.put(Axis.X, Block.box(0, 3, 3, 16, 13, 13));
+		MEDIUM_SHAPES.put(Axis.Y, Block.box(3, 0, 3, 13, 16, 13));
+		MEDIUM_SHAPES.put(Axis.Z, Block.box(3, 3, 0, 13, 13, 16));
 		
 		SMALL_SHAPES.put(Axis.X, Block.box(0, 4, 4, 16, 12, 12));
 		SMALL_SHAPES.put(Axis.Y, Block.box(4, 0, 4, 12, 16, 12));
 		SMALL_SHAPES.put(Axis.Z, Block.box(4, 4, 0, 12, 12, 16));
 		
-		MEDIUM_SHAPES_OPEN.put(Direction.UP,    Block.box(2, 0, 2, 14, 14, 14));
-		MEDIUM_SHAPES_OPEN.put(Direction.DOWN,  Block.box(2, 2, 2, 14, 16, 14));
-		MEDIUM_SHAPES_OPEN.put(Direction.NORTH, Block.box(2, 2, 2, 14, 14, 16));
-		MEDIUM_SHAPES_OPEN.put(Direction.SOUTH, Block.box(2, 2, 0, 14, 14, 14));
-		MEDIUM_SHAPES_OPEN.put(Direction.WEST,  Block.box(2, 2, 2, 16, 14, 14));
-		MEDIUM_SHAPES_OPEN.put(Direction.EAST,  Block.box(0, 2, 2, 14, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.UP,    Block.box(2, 0, 2, 14, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.DOWN,  Block.box(2, 2, 2, 14, 16, 14));
+		BIG_SHAPES_OPEN.put(Direction.NORTH, Block.box(2, 2, 2, 14, 14, 16));
+		BIG_SHAPES_OPEN.put(Direction.SOUTH, Block.box(2, 2, 0, 14, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.WEST,  Block.box(2, 2, 2, 16, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.EAST,  Block.box(0, 2, 2, 14, 14, 14));
+		
+		MEDIUM_SHAPES_OPEN.put(Direction.UP,    Block.box(3, 0, 3, 13, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.DOWN,  Block.box(3, 3, 3, 13, 16, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.NORTH, Block.box(3, 3, 3, 13, 13, 16));
+		MEDIUM_SHAPES_OPEN.put(Direction.SOUTH, Block.box(3, 3, 0, 13, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.WEST,  Block.box(3, 3, 3, 16, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.EAST,  Block.box(0, 3, 3, 13, 13, 13));
 		
 		SMALL_SHAPES_OPEN.put(Direction.UP,    Block.box(4, 0, 4, 12, 12, 12));
 		SMALL_SHAPES_OPEN.put(Direction.DOWN,  Block.box(4, 4, 4, 12, 16, 12));

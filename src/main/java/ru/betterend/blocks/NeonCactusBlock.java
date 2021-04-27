@@ -49,6 +49,7 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	private static final EnumMap<Direction, VoxelShape> SMALL_SHAPES_OPEN = Maps.newEnumMap(Direction.class);
 	private static final EnumMap<Axis, VoxelShape> MEDIUM_SHAPES = Maps.newEnumMap(Axis.class);
 	private static final EnumMap<Axis, VoxelShape> SMALL_SHAPES = Maps.newEnumMap(Axis.class);
+	private static final int MAX_LENGTH = 10;
 	
 	public NeonCactusBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15).randomTicks());
@@ -139,23 +140,33 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		Direction dir = state.getValue(FACING);
-		if (!world.getBlockState(pos.relative(dir)).isAir() || world.getBlockState(pos.above()).is(this)) {
+		if (!world.isEmptyBlock(pos.relative(dir))) {
 			return;
 		}
-		int length = getLength(state, world, pos, 10);
-		if (length < 0 || length > 9) {
+		int length = getLength(state, world, pos, MAX_LENGTH);
+		if (length < 0 || length > MAX_LENGTH - 1) {
 			return;
 		}
-		int horizontal = getHorizontal(state, world, pos, 5);
-		if (horizontal > random.nextInt(2)) {
-			dir = Direction.UP;
-			if (!world.getBlockState(pos.above()).isAir()) {
-				return;
+		if (dir != Direction.UP) {
+			int horizontal = getHorizontal(state, world, pos, 2);
+			if (horizontal > random.nextInt(2)) {
+				dir = Direction.UP;
+				if (!world.getBlockState(pos.above()).isAir()) {
+					return;
+				}
+			}
+		}
+		else if (length > 1 && world.getBlockState(pos.below()).is(this)) {
+			Direction side = BlocksHelper.randomHorizontal(random);
+			BlockPos sidePos = pos.relative(side);
+			if (world.isEmptyBlock(sidePos)) {
+				BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, side);
+				BlocksHelper.setWithoutUpdate(world, sidePos, placement);
 			}
 		}
 		BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, dir);
 		BlocksHelper.setWithoutUpdate(world, pos.relative(dir), placement);
-		mutateStem(placement, world, pos, 10);
+		mutateStem(placement, world, pos, MAX_LENGTH);
 	}
 	
 	private int getLength(BlockState state, ServerLevel world, BlockPos pos, int max) {
@@ -205,14 +216,12 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 			if (!state.is(this)) {
 				return;
 			}
-			int size = i * 3 / max;
+			int size = (i + 2) * 3 / max;
 			int src = state.getValue(SHAPE).getIndex();
+			dir = state.getValue(FACING).getOpposite();
 			if (src < size) {
 				TripleShape shape = TripleShape.fromIndex(size);
-				BlocksHelper.setWithoutUpdate(world, pos, state.setValue(SHAPE, shape));
-			}
-			else {
-				return;
+				BlocksHelper.setWithoutUpdate(world, mut, state.setValue(SHAPE, shape));
 			}
 		}
 	}

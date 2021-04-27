@@ -2,8 +2,8 @@
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
 	"textures": {
 		"particle": "betterend:block/neon_cactus_medium_side",
-		"overlay": "betterend:block/neon_cactus_medium_side_dust_overlay",
-		"side": "betterend:block/neon_cactus_medium_side_dust",
+		"overlay": "betterend:block/neon_cactus_medium_side_moss_overlay",
+		"side": "betterend:block/neon_cactus_medium_side_moss",
 		"top": "betterend:block/neon_cactus_medium_top"
 	},
 	"elements": [ 	 

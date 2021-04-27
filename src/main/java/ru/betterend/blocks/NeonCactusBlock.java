@@ -11,8 +11,11 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -28,6 +31,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.BlockProperties.CactusBottom;
@@ -38,6 +42,7 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.MHelper;
 
 public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, IRenderTypeable {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
@@ -99,13 +104,14 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
+		if (!canSurvive(state, world, pos)) {
+			world.getBlockTicks().scheduleTick(pos, this, MHelper.randRange(1, 4, world.getRandom()));
+			return state;
+		}
 		if ((Boolean) state.getValue(WATERLOGGED)) {
 			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 		Direction dir = state.getValue(FACING);
-		if (!canSurvive(state, world, pos)) {
-			return Blocks.AIR.defaultBlockState();
-		}
 		BlockState downState = world.getBlockState(pos.relative(dir.getOpposite()));
 		if (downState.is(Blocks.END_STONE) || downState.is(EndBlocks.ENDSTONE_DUST)) {
 			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
@@ -117,6 +123,13 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 			state = state.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY);
 		}
 		return state;
+	}
+	
+	@Override
+	public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+		if (!blockState.canSurvive(serverLevel, blockPos)) {
+			serverLevel.destroyBlock(blockPos, true);
+		}
 	}
 	
 	@Override
@@ -154,11 +167,10 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
-		Direction dir = state.getValue(FACING);
 		if (!this.canSurvive(state, world, pos)) {
-			this.destroy(world, pos, state);
 			return;
 		} 
+		Direction dir = state.getValue(FACING);
 		if (!world.isEmptyBlock(pos.relative(dir))) {
 			return;
 		}
@@ -186,6 +198,16 @@ public class NeonCactusBlock extends BlockBaseNotFull implements SimpleWaterlogg
 		BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, dir);
 		BlocksHelper.setWithoutUpdate(world, pos.relative(dir), placement);
 		mutateStem(placement, world, pos, MAX_LENGTH);
+	}
+
+	@Override
+	public boolean isPathfindable(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, PathComputationType pathComputationType) {
+		return false;
+	}
+	
+	@Override
+	public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+		entity.hurt(DamageSource.CACTUS, 1.0F);
 	}
 	
 	private int getLength(BlockState state, ServerLevel world, BlockPos pos, int max) {

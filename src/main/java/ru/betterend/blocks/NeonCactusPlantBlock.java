@@ -107,10 +107,7 @@ public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWate
 	
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
-		if (!canSurvive(state, world, pos)) {
-			world.getBlockTicks().scheduleTick(pos, this, MHelper.randRange(1, 4, world.getRandom()));
-			return state;
-		}
+		world.getBlockTicks().scheduleTick(pos, this, 2);
 		if ((Boolean) state.getValue(WATERLOGGED)) {
 			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -131,7 +128,7 @@ public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWate
 	@Override
 	public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
 		if (!blockState.canSurvive(serverLevel, blockPos)) {
-			serverLevel.destroyBlock(blockPos, true);
+			serverLevel.destroyBlock(blockPos, true, null, 1);
 		}
 	}
 	
@@ -190,8 +187,8 @@ public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWate
 				}
 			}
 		}
-		else if (length > 1 && world.getBlockState(pos.below()).is(this)) {
-			Direction side = BlocksHelper.randomHorizontal(random);
+		else if (length > 1 && world.getBlockState(pos.relative(dir.getOpposite())).is(this)) {
+			Direction side = getSideDirection(world, pos, state, dir, random);
 			BlockPos sidePos = pos.relative(side);
 			if (world.isEmptyBlock(sidePos)) {
 				BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, side);
@@ -252,32 +249,7 @@ public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWate
 			}
 		}
 		else if (length > 1 && world.getBlockState(pos.below()).is(this)) {
-			MutableBlockPos iterPos = pos.mutable();
-			BlockState iterState = state;
-			Direction startDir = null;
-			Direction lastDir = null;
-			while (iterState.is(this)) {
-				startDir = iterState.getValue(FACING);
-				if (lastDir == null) {
-					for (Direction side: BlocksHelper.HORIZONTAL) {
-						BlockState sideState = world.getBlockState(iterPos.relative(side));
-						if (sideState.is(this)) {
-							Direction sideDir = sideState.getValue(FACING);
-							if (sideDir != side) {
-								continue;
-							}
-							lastDir = sideDir;
-						}
-					}
-				}
-				iterPos.move(dir);
-				iterState = world.getBlockState(iterPos);
-			}
-			
-			Direction side = lastDir == null ? BlocksHelper.randomHorizontal(random) : lastDir.getClockWise();
-			if (side.getOpposite() == startDir) {
-				side = side.getClockWise();
-			}
+			Direction side = getSideDirection(world, pos, state, dir, random);
 			BlockPos sidePos = pos.relative(side);
 			if (world.isEmptyBlock(sidePos)) {
 				BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, side);
@@ -290,6 +262,35 @@ public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWate
 		mutateStem(placement, world, pos, MAX_LENGTH);
 		pos.move(dir);
 		return true;
+	}
+	
+	private Direction getSideDirection(WorldGenLevel world, BlockPos pos, BlockState iterState, Direction dir, Random random) {
+		MutableBlockPos iterPos = pos.mutable();
+		Direction startDir = dir;
+		Direction lastDir = null;
+		while (iterState.is(this) && startDir.getAxis().isVertical()) {
+			startDir = iterState.getValue(FACING);
+			if (lastDir == null) {
+				for (Direction side: BlocksHelper.HORIZONTAL) {
+					BlockState sideState = world.getBlockState(iterPos.relative(side));
+					if (sideState.is(this)) {
+						Direction sideDir = sideState.getValue(FACING);
+						if (sideDir != side) {
+							continue;
+						}
+						lastDir = sideDir;
+					}
+				}
+			}
+			iterPos.move(dir);
+			iterState = world.getBlockState(iterPos);
+		}
+		
+		Direction side = lastDir == null ? BlocksHelper.randomHorizontal(random) : lastDir.getClockWise();
+		if (side.getOpposite() == startDir) {
+			side = side.getOpposite();
+		}
+		return side;
 	}
 
 	@Override

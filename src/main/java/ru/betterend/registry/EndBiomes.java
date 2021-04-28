@@ -130,7 +130,7 @@ public class EndBiomes {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {
 				ResourceLocation id = biomeRegistry.getKey(biome);
-				if (Configs.BIOME_CONFIG.getBoolean(id, "enabled", true)) {
+				if (!id.getNamespace().equals("ultra_amplified_dimension") && Configs.BIOME_CONFIG.getBoolean(id, "enabled", true)) {
 					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) {
 						JsonObject config = configs.get(id.getNamespace());
 						if (config == null) {

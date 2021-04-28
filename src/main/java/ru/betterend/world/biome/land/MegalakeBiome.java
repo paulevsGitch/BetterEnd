@@ -27,7 +27,7 @@ public class MegalakeBiome extends EndBiome {
 				.addFeature(EndFeatures.END_LILY_RARE)
 				.addFeature(EndFeatures.UMBRELLA_MOSS)
 				.addFeature(EndFeatures.CREEPING_MOSS)
-				.addFeature(EndFeatures.PEARLBERRY)
+				//.addFeature(EndFeatures.PEARLBERRY)
 				.addFeature(EndFeatures.CHARNIA_CYAN)
 				.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
 				.addFeature(EndFeatures.CHARNIA_RED_RARE)

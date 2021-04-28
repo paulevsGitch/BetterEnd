@@ -29,7 +29,7 @@ public class FoggyMushroomlandBiome extends EndBiome {
 				.addFeature(EndFeatures.UMBRELLA_MOSS)
 				.addFeature(EndFeatures.CREEPING_MOSS)
 				.addFeature(EndFeatures.DENSE_VINE)
-				.addFeature(EndFeatures.PEARLBERRY)
+				//.addFeature(EndFeatures.PEARLBERRY)
 				.addFeature(EndFeatures.CYAN_MOSS)
 				.addFeature(EndFeatures.CYAN_MOSS_WOOD)
 				.addFeature(EndFeatures.END_LILY)

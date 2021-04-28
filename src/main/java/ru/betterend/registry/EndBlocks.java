@@ -215,7 +215,7 @@ public class EndBlocks {
 	public static final Block BLOSSOM_BERRY = registerBlock("blossom_berry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, PINK_MOSS));
 	public static final Block AMBER_ROOT = registerBlock("amber_root_seed", new EndCropBlock(EndItems.AMBER_ROOT_RAW, AMBER_MOSS));
 	public static final Block CHORUS_MUSHROOM = registerBlock("chorus_mushroom_seed", new EndCropBlock(EndItems.CHORUS_MUSHROOM_RAW, CHORUS_NYLIUM));
-	public static final Block PEARLBERRY = registerBlock("pearlberry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, END_MOSS, END_MYCELIUM));
+	//public static final Block PEARLBERRY = registerBlock("pearlberry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, END_MOSS, END_MYCELIUM));
 	public static final Block CAVE_PUMPKIN_SEED = registerBlock("cave_pumpkin_seed", new CavePumpkinVineBlock());
 	public static final Block CAVE_PUMPKIN = registerBlock("cave_pumpkin", new CavePumpkinBlock());
 	

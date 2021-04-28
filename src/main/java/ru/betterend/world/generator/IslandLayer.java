@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import net.minecraft.core.BlockPos;
@@ -80,15 +79,17 @@ public class IslandLayer {
 			}
 		}
 		
-		if (GeneratorOptions.hasCentralIsland() && ix < 4 && iz < 4 && ix > -4 && iz > -4) {
-			List<BlockPos> remove = Lists.newArrayList();
-			positions.forEach((pos) -> {
-				int d = pos.getX() * pos.getX() + pos.getZ() * pos.getZ();
-				if (d < 12544) {
-					remove.add(pos);
+		if (GeneratorOptions.hasCentralIsland() && Math.abs(ix) < GeneratorOptions.getIslandDistChunk() && Math.abs(iz) < GeneratorOptions.getIslandDistChunk()) {
+			int count = positions.size();
+			for (int n = 0; n < count; n++) {
+				BlockPos pos = positions.get(n);
+				long d = (long) pos.getX() * (long) pos.getX() + (long) pos.getZ() * (long) pos.getZ();
+				if (d < GeneratorOptions.getIslandDistBlock()) {
+					positions.remove(n);
+					count--;
+					n--;
 				}
-			});
-			positions.removeAll(remove);
+			}
 			if (options.hasCentralIsland) {
 				positions.add(new BlockPos(0, 64, 0));
 			}

@@ -26,6 +26,8 @@ public class GeneratorOptions {
 	private static BlockPos portal = BlockPos.ZERO;
 	private static boolean replacePortal;
 	private static boolean replacePillars;
+	private static long islandDistBlock;
+	private static int islandDistChunk;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
@@ -52,6 +54,9 @@ public class GeneratorOptions {
 		);
 		replacePortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "customEndPortal", true);
 		replacePillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "customObsidianSpikes", true);
+		int circleRadius = Configs.GENERATOR_CONFIG.getInt("customGenerator", "voidRingSize", 1000);
+		islandDistBlock = (long) circleRadius * (long) circleRadius;
+		islandDistChunk = (circleRadius >> 3); // Twice bigger than normal
 	}
 
 	public static int getBiomeSizeLand() {
@@ -128,5 +133,13 @@ public class GeneratorOptions {
 	
 	public static boolean replacePillars() {
 		return replacePillars;
+	}
+
+	public static long getIslandDistBlock() {
+		return islandDistBlock;
+	}
+
+	public static int getIslandDistChunk() {
+		return islandDistChunk;
 	}
 }

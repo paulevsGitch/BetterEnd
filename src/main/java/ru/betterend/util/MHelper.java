@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.mojang.math.Vector3f;
 
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.phys.Vec3;
 
 public class MHelper {
@@ -12,6 +13,7 @@ public class MHelper {
 	public static final Random RANDOM = new Random();
 	private static final float RAD_TO_DEG = 57.295779513082320876798154814105F;
 	public static final float PHI = (float) (Math.PI * (3 - Math.sqrt(5)));
+	private static final Vec3i[] RANDOM_OFFSETS = new Vec3i[3 * 3 * 3 - 1];
 
 	public static int color(int r, int g, int b) {
 		return ALPHA | (r << 16) | (g << 8) | b;
@@ -345,5 +347,23 @@ public class MHelper {
 		float vx = (float) Math.sin(angleY);
 		float vz = (float) Math.cos(angleY);
 		return new Vector3f(vx, 0, vz);
+	}
+	
+	public static Vec3i[] getOffsets(Random random) {
+		MHelper.shuffle(RANDOM_OFFSETS, random);
+		return RANDOM_OFFSETS;
+	}
+	
+	static {
+		int index = 0;
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				for (int z = -1; z <= 1; z++) {
+					if (x != 0 || y != 0 || z != 0) {
+						RANDOM_OFFSETS[index++] = new Vec3i(x, y, z);
+					}
+				}
+			}
+		}
 	}
 }

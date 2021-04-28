@@ -26,8 +26,7 @@ import ru.betterend.world.biome.EndBiome;
 
 @Mixin(BoneMealItem.class)
 public class BoneMealItemMixin {
-	private static final MutableBlockPos POS = new MutableBlockPos();
-	private static final Vec3i[] DIR;
+	private static final MutableBlockPos BE_BLOCK_POS = new MutableBlockPos();
 
 	@Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
 	private void be_onUse(UseOnContext context, CallbackInfoReturnable<InteractionResult> info) {
@@ -81,15 +80,15 @@ public class BoneMealItemMixin {
 		for (int i = 0; i < 64; i++) {
 			int x = (int) (pos.getX() + world.random.nextGaussian() * 2);
 			int z = (int) (pos.getZ() + world.random.nextGaussian() * 2);
-			POS.setX(x);
-			POS.setZ(z);
+			BE_BLOCK_POS.setX(x);
+			BE_BLOCK_POS.setZ(z);
 			for (int y = y1; y >= y2; y--) {
-				POS.setY(y);
-				BlockPos down = POS.below();
-				if (world.isEmptyBlock(POS) && !world.isEmptyBlock(down)) {
+				BE_BLOCK_POS.setY(y);
+				BlockPos down = BE_BLOCK_POS.below();
+				if (world.isEmptyBlock(BE_BLOCK_POS) && !world.isEmptyBlock(down)) {
 					BlockState grass = be_getGrassState(world, down);
 					if (grass != null) {
-						BlocksHelper.setWithoutUpdate(world, POS, grass);
+						BlocksHelper.setWithoutUpdate(world, BE_BLOCK_POS, grass);
 						result = true;
 					}
 					break;
@@ -106,15 +105,15 @@ public class BoneMealItemMixin {
 		for (int i = 0; i < 64; i++) {
 			int x = (int) (pos.getX() + world.random.nextGaussian() * 2);
 			int z = (int) (pos.getZ() + world.random.nextGaussian() * 2);
-			POS.setX(x);
-			POS.setZ(z);
+			BE_BLOCK_POS.setX(x);
+			BE_BLOCK_POS.setZ(z);
 			for (int y = y1; y >= y2; y--) {
-				POS.setY(y);
-				BlockPos down = POS.below();
-				if (world.getBlockState(POS).is(Blocks.WATER) && world.getBlockState(down).is(EndTags.END_GROUND)) {
+				BE_BLOCK_POS.setY(y);
+				BlockPos down = BE_BLOCK_POS.below();
+				if (world.getBlockState(BE_BLOCK_POS).is(Blocks.WATER) && world.getBlockState(down).is(EndTags.END_GROUND)) {
 					BlockState grass = be_getWaterGrassState(world, down);
 					if (grass != null) {
-						BlocksHelper.setWithoutUpdate(world, POS, grass);
+						BlocksHelper.setWithoutUpdate(world, BE_BLOCK_POS, grass);
 						result = true;
 					}
 					break;
@@ -149,8 +148,8 @@ public class BoneMealItemMixin {
 	}
 
 	private BlockState be_getNylium(Level world, BlockPos pos) {
-		MHelper.shuffle(DIR, world.getRandom());
-		for (Vec3i dir : DIR) {
+		Vec3i[] offsets = MHelper.getOffsets(world.getRandom());
+		for (Vec3i dir : offsets) {
 			BlockPos p = pos.offset(dir);
 			BlockState state = world.getBlockState(p);
 			if (BlocksHelper.isEndNylium(state) && !world.getBlockState(p.above()).is(EndTags.END_GROUND)) {
@@ -158,19 +157,5 @@ public class BoneMealItemMixin {
 			}
 		}
 		return null;
-	}
-	
-	static {
-		int index = 0;
-		DIR = new Vec3i[3 * 3 * 3 - 1];
-		for (int x = -1; x <= 1; x++) {
-			for (int y = -1; y <= 1; y++) {
-				for (int z = -1; z <= 1; z++) {
-					if (x != 0 || y != 0 || z != 0) {
-						DIR[index++] = new Vec3i(x, y, z);
-					}
-				}
-			}
-		}
 	}
 }

@@ -89,12 +89,13 @@ public class BetterEndBiomeSource extends BiomeSource {
 			mapVoid.clearCache();
 		}
 		
+		EndBiome endBiome = null;
 		if (GeneratorOptions.useNewGenerator()) {
 			if (TerrainGenerator.isLand(biomeX, biomeZ)) {
-				return mapLand.getBiome(biomeX << 2, biomeZ << 2).getActualBiome();
+				endBiome = mapLand.getBiome(biomeX << 2, biomeZ << 2);
 			}
 			else {
-				return mapVoid.getBiome(biomeX << 2, biomeZ << 2).getActualBiome();
+				endBiome = mapVoid.getBiome(biomeX << 2, biomeZ << 2);
 			}
 		}
 		else {
@@ -104,9 +105,10 @@ public class BetterEndBiomeSource extends BiomeSource {
 				return barrens;
 			}
 			
-			EndBiome endBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
-			return endBiome.getActualBiome();
+			endBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		}
+		
+		return EndBiomes.getActualBiome(endBiome);
 	}
 	
 	public Biome getLandBiome(int biomeX, int biomeY, int biomeZ) {
@@ -124,7 +126,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 				return this.centerBiome;
 			}
 		}
-		return mapLand.getBiome(biomeX << 2, biomeZ << 2).getActualBiome();
+		return EndBiomes.getActualBiome(mapLand.getBiome(biomeX << 2, biomeZ << 2));
 	}
 
 	@Override

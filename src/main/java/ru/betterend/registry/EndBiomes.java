@@ -112,7 +112,9 @@ public class EndBiomes {
 	public static final EndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
 	public static final EndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
 	
-	public static void register() {}
+	public static void register() {
+		CAVE_BIOMES.rebuild();
+	}
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
 		EndBiomes.biomeRegistry = biomeRegistry;
@@ -406,6 +408,15 @@ public class EndBiomes {
 
 	public static EndBiome getBiome(ResourceLocation biomeID) {
 		return ID_MAP.getOrDefault(biomeID, END);
+	}
+	
+	public static Biome getActualBiome(EndBiome biome) {
+		Biome actual = biome.getActualBiome();
+		if (actual == null) {
+			biome.updateActualBiomes(biomeRegistry);
+			actual = biome.getActualBiome();
+		}
+		return actual;
 	}
 
 	public static List<EndBiome> getModBiomes() {

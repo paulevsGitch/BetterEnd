@@ -117,7 +117,8 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	private void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
 		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomes();
 		if (array != null) {
-			array.be_setBiome(biome.getActualBiome(), pos);
+			Biome bio = EndBiomes.getActualBiome(biome);
+			array.be_setBiome(bio, pos);
 		}
 	}
 

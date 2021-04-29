@@ -184,7 +184,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		return new BlockPos(pos.getX(), MHelper.randRange(bottom, top, random), pos.getZ());
 	}
 
-	private void fixBlocks(WorldGenLevel world, Set<BlockPos> caveBlocks) {
+	protected void fixBlocks(WorldGenLevel world, Set<BlockPos> caveBlocks) {
 		BlockPos pos = caveBlocks.iterator().next();
 		MutableBlockPos start = new MutableBlockPos().set(pos);
 		MutableBlockPos end = new MutableBlockPos().set(pos);

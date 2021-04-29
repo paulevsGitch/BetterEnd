@@ -56,4 +56,8 @@ public class EndCaveBiome extends EndBiome {
 	public BlockState getCeil(BlockPos pos) {
 		return null;
 	}
+	
+	public BlockState getWall(BlockPos pos) {
+		return null;
+	}
 }

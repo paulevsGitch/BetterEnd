@@ -77,9 +77,9 @@ public class EndBlocks {
 	public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
 	public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.COLOR_PURPLE);
 	public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.COLOR_BROWN);
-	public static final StoneMaterial VIRID_jADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.COLOR_GREEN);
-	public static final StoneMaterial AZURE_jADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.COLOR_LIGHT_BLUE);
-	public static final StoneMaterial SANDY_jADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.COLOR_YELLOW);
+	public static final StoneMaterial VIRID_JADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.COLOR_GREEN);
+	public static final StoneMaterial AZURE_JADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.COLOR_LIGHT_BLUE);
+	public static final StoneMaterial SANDY_JADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.COLOR_YELLOW);
 	public static final Block BRIMSTONE = registerBlock("brimstone", new BrimstoneBlock());
 	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new SulphurCrystalBlock());
 	public static final Block MISSING_TILE = registerBlock("missing_tile", new MissingTileBlock());

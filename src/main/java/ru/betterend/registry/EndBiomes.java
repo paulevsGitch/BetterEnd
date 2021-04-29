@@ -38,6 +38,7 @@ import ru.betterend.world.biome.cave.EmptyAuroraCaveBiome;
 import ru.betterend.world.biome.cave.EmptyEndCaveBiome;
 import ru.betterend.world.biome.cave.EmptySmaragdantCaveBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+import ru.betterend.world.biome.cave.JadeCaveBiome;
 import ru.betterend.world.biome.cave.LushAuroraCaveBiome;
 import ru.betterend.world.biome.cave.LushSmaragdantCaveBiome;
 import ru.betterend.world.biome.land.AmberLandBiome;
@@ -111,6 +112,7 @@ public class EndBiomes {
 	public static final EndCaveBiome LUSH_SMARAGDANT_CAVE = registerCaveBiome(new LushSmaragdantCaveBiome());
 	public static final EndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
 	public static final EndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
+	public static final EndCaveBiome JADE_CAVE = registerCaveBiome(new JadeCaveBiome());
 	
 	public static void register() {
 		CAVE_BIOMES.rebuild();

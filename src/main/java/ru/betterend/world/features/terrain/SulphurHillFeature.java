@@ -2,14 +2,14 @@ package ru.betterend.world.features.terrain;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -19,12 +19,13 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class SulphurHillFeature extends DefaultFeature {
 	@Override
-	public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, DefaultFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 57 || pos.getY() > 70) {
 			return false;
 		}
-		
+
 		int count = MHelper.randRange(5, 13, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		for (int i = 0; i < count; i++) {
@@ -38,14 +39,14 @@ public class SulphurHillFeature extends DefaultFeature {
 		}
 		return true;
 	}
-	
-	private void makeCircle(StructureWorldAccess world, BlockPos pos, OpenSimplexNoise noise, Random random) {
+
+	private void makeCircle(WorldGenLevel world, BlockPos pos, OpenSimplexNoise noise, Random random) {
 		int radius = MHelper.randRange(5, 9, random);
 		int min = -radius - 3;
 		int max = radius + 4;
-		Mutable mut = new Mutable();
-		BlockState rock = EndBlocks.SULPHURIC_ROCK.stone.getDefaultState();
-		BlockState brimstone = EndBlocks.BRIMSTONE.getDefaultState().with(BlockProperties.ACTIVE, true);
+		MutableBlockPos mut = new MutableBlockPos();
+		BlockState rock = EndBlocks.SULPHURIC_ROCK.stone.defaultBlockState();
+		BlockState brimstone = EndBlocks.BRIMSTONE.defaultBlockState().setValue(BlockProperties.ACTIVE, true);
 		for (int x = min; x < max; x++) {
 			int x2 = x * x;
 			int px = pos.getX() + x;
@@ -60,7 +61,7 @@ public class SulphurHillFeature extends DefaultFeature {
 				int d = x2 + z2;
 				mut.setY(pos.getY());
 				BlockState state = world.getBlockState(mut);
-				if (state.getMaterial().isReplaceable() || state.isOf(EndBlocks.HYDROTHERMAL_VENT)) {
+				if (state.getMaterial().isReplaceable() || state.is(EndBlocks.HYDROTHERMAL_VENT)) {
 					if (d < r2 * r2) {
 						BlocksHelper.setWithoutUpdate(world, mut, Blocks.WATER);
 						mut.move(Direction.DOWN);
@@ -76,8 +77,7 @@ public class SulphurHillFeature extends DefaultFeature {
 							BlocksHelper.setWithoutUpdate(world, mut, rock);
 							mut.move(Direction.DOWN);
 						}
-					}
-					else if (d < r1 * r1) {
+					} else if (d < r1 * r1) {
 						BlocksHelper.setWithoutUpdate(world, mut, brimstone);
 						mut.move(Direction.DOWN);
 						state = world.getBlockState(mut);

@@ -2,7 +2,7 @@ package ru.betterend.util.sdf.operator;
 
 import java.util.function.Function;
 
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
 
 public class SDFDisplacement extends SDFUnary {
 	private static final Vector3f POS = new Vector3f();

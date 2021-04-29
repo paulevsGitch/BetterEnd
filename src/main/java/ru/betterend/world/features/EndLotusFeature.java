@@ -2,9 +2,9 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.BlockEndLotusSeed;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import ru.betterend.blocks.EndLotusSeedBlock;
 import ru.betterend.registry.EndBlocks;
 
 public class EndLotusFeature extends UnderwaterPlantScatter {
@@ -13,8 +13,8 @@ public class EndLotusFeature extends UnderwaterPlantScatter {
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		BlockEndLotusSeed seed = (BlockEndLotusSeed) EndBlocks.END_LOTUS_SEED;
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
+		EndLotusSeedBlock seed = (EndLotusSeedBlock) EndBlocks.END_LOTUS_SEED;
 		seed.grow(world, random, blockPos);
 	}
 	

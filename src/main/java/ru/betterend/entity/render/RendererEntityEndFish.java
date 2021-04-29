@@ -1,53 +1,57 @@
 package ru.betterend.entity.render;
 
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import ru.betterend.BetterEnd;
-import ru.betterend.entity.EntityEndFish;
-import ru.betterend.entity.model.ModelEntityEndFish;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-public class RendererEntityEndFish extends MobEntityRenderer<EntityEndFish, ModelEntityEndFish> {
-	private static final Identifier[] TEXTURE = new Identifier[EntityEndFish.VARIANTS];
-	private static final RenderLayer[] GLOW = new RenderLayer[EntityEndFish.VARIANTS];
-	
-    public RendererEntityEndFish(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new ModelEntityEndFish(), 0.5f);
-        this.addFeature(new EyesFeatureRenderer<EntityEndFish, ModelEntityEndFish>(this) {
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.EyesLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import ru.betterend.BetterEnd;
+import ru.betterend.entity.EndFishEntity;
+import ru.betterend.entity.model.EndFishEntityModel;
+
+public class RendererEntityEndFish extends MobRenderer<EndFishEntity, EndFishEntityModel> {
+	private static final ResourceLocation[] TEXTURE = new ResourceLocation[EndFishEntity.VARIANTS];
+	private static final RenderType[] GLOW = new RenderType[EndFishEntity.VARIANTS];
+
+	public RendererEntityEndFish(EntityRenderDispatcher entityRenderDispatcher) {
+		super(entityRenderDispatcher, new EndFishEntityModel(), 0.5f);
+		this.addLayer(new EyesLayer<EndFishEntity, EndFishEntityModel>(this) {
 			@Override
-			public RenderLayer getEyesTexture() {
+			public RenderType renderType() {
 				return GLOW[0];
 			}
 
 			@Override
-			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, EntityEndFish entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+			public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, EndFishEntity entity,
+					float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw,
+					float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getVariant()]);
-				this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+				this.getParentModel().renderToBuffer(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY,
+						1.0F, 1.0F, 1.0F, 1.0F);
 			}
-        });
-    }
- 
-    @Override
-	protected void scale(EntityEndFish entity, MatrixStack matrixStack, float f) {
+		});
+	}
+
+	@Override
+	protected void scale(EndFishEntity entity, PoseStack matrixStack, float f) {
 		float scale = entity.getScale();
 		matrixStack.scale(scale, scale, scale);
 	}
-    
-    @Override
-    public Identifier getTexture(EntityEndFish entity) {
-        return TEXTURE[entity.getVariant()];
-    }
-    
-    static {
-    	for (int i = 0; i < EntityEndFish.VARIANTS; i++) {
-    		TEXTURE[i] = BetterEnd.makeID("textures/entity/end_fish/end_fish_" + i + ".png");
-    		GLOW[i] = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/end_fish/end_fish_" + i + "_glow.png"));
-    	}
-    }
+
+	@Override
+	public ResourceLocation getTextureLocation(EndFishEntity entity) {
+		return TEXTURE[entity.getVariant()];
+	}
+
+	static {
+		for (int i = 0; i < EndFishEntity.VARIANTS; i++) {
+			TEXTURE[i] = BetterEnd.makeID("textures/entity/end_fish/end_fish_" + i + ".png");
+			GLOW[i] = RenderType.eyes(BetterEnd.makeID("textures/entity/end_fish/end_fish_" + i + "_glow.png"));
+		}
+	}
 }

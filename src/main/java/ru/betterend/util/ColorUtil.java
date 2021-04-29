@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.platform.NativeImage;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.indigo.renderer.helper.ColorHelper;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.texture.NativeImage;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import ru.betterend.BetterEnd;
 
 @Environment(EnvType.CLIENT)
@@ -172,7 +172,7 @@ public class ColorUtil {
 	public static int colorBrigtness(int color, float val) {
 		RGBtoHSB((color >> 16) & 255, (color >> 8) & 255, color & 255, floatBuffer);
 		floatBuffer[2] += val / 10.0F;
-		floatBuffer[2] = MathHelper.clamp(floatBuffer[2], 0.0F, 1.0F);
+		floatBuffer[2] = Mth.clamp(floatBuffer[2], 0.0F, 1.0F);
 		return HSBtoRGB(floatBuffer[0], floatBuffer[1], floatBuffer[2]);
 	}
 	
@@ -190,25 +190,25 @@ public class ColorUtil {
 		return MHelper.pow2(r1 - r2) + MHelper.pow2(g1 - g2) + MHelper.pow2(b1 - b2);
 	}
 	
-	private static Map<Identifier, Integer> colorPalette = Maps.newHashMap();
+	private static Map<ResourceLocation, Integer> colorPalette = Maps.newHashMap();
 	
 	public static int extractColor(Item item) {
-		Identifier id = Registry.ITEM.getId(item);
-		if (id.equals(Registry.ITEM.getDefaultId())) return -1;
+		ResourceLocation id = Registry.ITEM.getKey(item);
+		if (id.equals(Registry.ITEM.getDefaultKey())) return -1;
 		if (colorPalette.containsKey(id)) {
 			return colorPalette.get(id);
 		}
-		Identifier texture;
+		ResourceLocation texture;
 		if (item instanceof BlockItem) {
-			texture = new Identifier(id.getNamespace(), "textures/block/" + id.getPath() + ".png");
+			texture = new ResourceLocation(id.getNamespace(), "textures/block/" + id.getPath() + ".png");
 		} else {
-			texture = new Identifier(id.getNamespace(), "textures/item/" + id.getPath() + ".png");
+			texture = new ResourceLocation(id.getNamespace(), "textures/item/" + id.getPath() + ".png");
 		}
 		NativeImage image = loadImage(texture, 16, 16);
 		List<Integer> colors = new ArrayList<>();
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < 16; j++) {
-				int col = image.getPixelColor(i, j);
+				int col = image.getPixelRGBA(i, j);
 				if (((col >> 24) & 255) > 0) {
 					colors.add(ABGRtoARGB(col));
 				}
@@ -225,10 +225,10 @@ public class ColorUtil {
 		return color;
 	}
 	
-	public static NativeImage loadImage(Identifier image, int w, int h) {
-		MinecraftClient minecraft = MinecraftClient.getInstance();
+	public static NativeImage loadImage(ResourceLocation image, int w, int h) {
+		Minecraft minecraft = Minecraft.getInstance();
 		ResourceManager resourceManager = minecraft.getResourceManager();
-		if (resourceManager.containsResource(image)) {
+		if (resourceManager.hasResource(image)) {
 			try (Resource resource = resourceManager.getResource(image)) {
 				return NativeImage.read(resource.getInputStream());			
 			} catch (IOException e) {

@@ -2,9 +2,9 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.basis.BlockPlantWithAge;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 
 public class LanceleafFeature extends ScatterFeature {
@@ -13,13 +13,13 @@ public class LanceleafFeature extends ScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return EndBlocks.LANCELEAF_SEED.canPlaceAt(AIR, world, blockPos);
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+		return EndBlocks.LANCELEAF_SEED.canSurvive(AIR, world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		BlockPlantWithAge seed = ((BlockPlantWithAge) EndBlocks.LANCELEAF_SEED);
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
+		EndPlantWithAgeBlock seed = ((EndPlantWithAgeBlock) EndBlocks.LANCELEAF_SEED);
 		seed.growAdult(world, random, blockPos);
 	}
 	

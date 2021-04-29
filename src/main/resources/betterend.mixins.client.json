@@ -7,16 +7,20 @@
 		"AbstractSoundInstanceAccessor",
 		"ClientPlayNetworkHandlerMixin",
 		"NamespaceResourceManagerMixin",
-		"DeserializationContextMixin",
 		"EnchantingTableBlockMixin",
 		"BackgroundRendererMixin",
 		"ClientRecipeBookMixin",
 		"ModelVariantMapMixin",
 		"MinecraftClientMixin",
+		"ContextGsonAccessor",
+	  	"PlayerRendererMixin",
 		"WorldRendererMixin",
 		"MusicTrackerMixin",
+		"AnvilScreenMixin",
+		"BiomeColorsMixin",
 		"ModelLoaderMixin",
-		"BiomeColorsMixin"
+	  	"LocalPlayerMixin",
+	  	"CapeLayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

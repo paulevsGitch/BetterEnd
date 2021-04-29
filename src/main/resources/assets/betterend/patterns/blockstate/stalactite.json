@@ -1,0 +1,21 @@
+{
+    "variants":
+	{
+        "size=0,is_floor=true": { "model": "betterend:pattern/%block%/%block%_0" },
+        "size=1,is_floor=true": { "model": "betterend:pattern/%block%/%block%_1" },
+        "size=2,is_floor=true": { "model": "betterend:pattern/%block%/%block%_2" },
+        "size=3,is_floor=true": { "model": "betterend:pattern/%block%/%block%_3" },
+        "size=4,is_floor=true": { "model": "betterend:pattern/%block%/%block%_4" },
+        "size=5,is_floor=true": { "model": "betterend:pattern/%block%/%block%_5" },
+        "size=6,is_floor=true": { "model": "betterend:pattern/%block%/%block%_6" },
+        "size=7,is_floor=true": { "model": "betterend:pattern/%block%/%block%_7" },
+		"size=0,is_floor=false": { "model": "betterend:pattern/%block%/%block%_0", "x": 180 },
+        "size=1,is_floor=false": { "model": "betterend:pattern/%block%/%block%_1", "x": 180 },
+        "size=2,is_floor=false": { "model": "betterend:pattern/%block%/%block%_2", "x": 180 },
+        "size=3,is_floor=false": { "model": "betterend:pattern/%block%/%block%_3", "x": 180 },
+        "size=4,is_floor=false": { "model": "betterend:pattern/%block%/%block%_4", "x": 180 },
+        "size=5,is_floor=false": { "model": "betterend:pattern/%block%/%block%_5", "x": 180 },
+        "size=6,is_floor=false": { "model": "betterend:pattern/%block%/%block%_6", "x": 180 },
+        "size=7,is_floor=false": { "model": "betterend:pattern/%block%/%block%_7", "x": 180 }
+    }
+}

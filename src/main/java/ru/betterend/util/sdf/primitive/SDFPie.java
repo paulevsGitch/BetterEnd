@@ -1,6 +1,6 @@
 package ru.betterend.util.sdf.primitive;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import ru.betterend.util.MHelper;
 
 public class SDFPie extends SDFPrimitive {
@@ -24,7 +24,7 @@ public class SDFPie extends SDFPrimitive {
 		float px = Math.abs(x);
 	    float l = MHelper.length(px, y, z) - radius;
 	    float m = MHelper.dot(px, z, sin, cos);
-	    m = MathHelper.clamp(m, 0, radius);
+	    m = Mth.clamp(m, 0, radius);
 		m = MHelper.length(px - sin * m, z - cos * m);
 	    return MHelper.max(l, m * (float) Math.signum(cos * px - sin * z));
 	}

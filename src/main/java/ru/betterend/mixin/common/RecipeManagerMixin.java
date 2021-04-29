@@ -15,35 +15,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.google.gson.JsonElement;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeManager;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.World;
+import net.minecraft.Util;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import ru.betterend.recipe.EndRecipeManager;
 
 @Mixin(RecipeManager.class)
-public class RecipeManagerMixin {
+public abstract class RecipeManagerMixin {
 	@Shadow
-	private Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes;
+	private Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes;
 
 	@Inject(method = "apply", at = @At(value = "RETURN"))
-	private void beSetRecipes(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo info) {
+	private void be_apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profiler, CallbackInfo info) {
 		recipes = EndRecipeManager.getMap(recipes);
 	}
 
 	@Shadow
-	private <C extends Inventory, T extends Recipe<C>> Map<Identifier, Recipe<C>> getAllOfType(RecipeType<T> type) {
+	private <C extends Container, T extends Recipe<C>> Map<ResourceLocation, Recipe<C>> byType(RecipeType<T> type) {
 		return null;
 	}
 
+	/**
+	 * @author paulevs
+	 * @reason Remove conflicts with vanilla tags
+	 * Change recipe order to show mod recipes first, helps when block have vanilla tag
+	 * (example - mod stone with vanilla tags and furnace from that stone)
+	 */
 	@Overwrite
-	public <C extends Inventory, T extends Recipe<C>> Optional<T> getFirstMatch(RecipeType<T> type, C inventory, World world) {
-		Collection<Recipe<C>> values = getAllOfType(type).values();
+	public <C extends Container, T extends Recipe<C>> Optional<T> getRecipeFor(RecipeType<T> type, C inventory, Level world) {
+		Collection<Recipe<C>> values = byType(type).values();
 		List<Recipe<C>> list = new ArrayList<Recipe<C>>(values);
 		list.sort((v1, v2) -> {
 			boolean b1 = v1.getId().getNamespace().equals("minecraft");
@@ -52,7 +58,7 @@ public class RecipeManagerMixin {
 		});
 
 		return list.stream().flatMap((recipe) -> {
-			return Util.stream(type.get(recipe, world, inventory));
+			return Util.toStream(type.tryMatch(recipe, world, inventory));
 		}).findFirst();
 	}
 }

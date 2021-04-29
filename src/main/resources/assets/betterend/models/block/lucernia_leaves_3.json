@@ -1,0 +1,6 @@
+{
+	"parent": "betterend:block/cube_noshade",
+	"textures": {
+		"texture": "betterend:block/lucernia_leaves_3"
+	}
+}

@@ -12,66 +12,67 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.JsonHelper;
+import net.minecraft.util.GsonHelper;
 import ru.betterend.util.JsonFactory;
 
 public final class ConfigKeeper {
 	
-	private Map<ConfigKey, Entry<?>> configEntries = Maps.newHashMap();
+	private final Map<ConfigKey, Entry<?>> configEntries = Maps.newHashMap();
 	private final JsonObject configObject;
+	private final ConfigWriter writer;
 	
-	public ConfigKeeper(JsonObject config) {
-		this.configObject = config;
+	private boolean changed = false;
+	
+	public ConfigKeeper(String group) {
+		this.writer = new ConfigWriter(group);
+		this.configObject = writer.load();
 	}
 	
-	private <T, E extends Entry<T>> void storeValue(ConfigKey key, E entry, T value) {
-		if (configObject == null) return;
-		
-		String group = key.getOwner();
-		JsonObject jsonGroup;
-		if (configObject.has(group)) {
-			jsonGroup = JsonHelper.getObject(configObject, group);
-		} else {
-			jsonGroup = new JsonObject();
-			configObject.add(group, jsonGroup);
-		}
-		String category = key.getCategory();
-		JsonObject jsonCategory;
-		if (jsonGroup.has(category)) {
-			jsonCategory = JsonHelper.getObject(jsonGroup, category);
-		} else {
-			jsonCategory = new JsonObject();
-			jsonGroup.add(category, jsonCategory);
-		}
-		String paramKey = key.getEntry();
-		paramKey += " [default: " + entry.getDefault() + "]";
-		entry.toJson(jsonCategory, paramKey, value);
+	public void save() {
+		if (!changed) return;
+		this.writer.save();
+		this.changed = false;
 	}
 	
-	private <T, E extends Entry<T>> T getValue(ConfigKey key, E entry) {
+	private <T, E extends Entry<T>> void initializeEntry(ConfigKey key, E entry) {
 		if (configObject == null) {
-			return entry.getDefault();
+			return;
+		}
+		String[] path = key.getPath();
+		JsonObject obj = configObject;
+		
+		if (!key.isRoot()) {
+			for (String group: path) {
+				JsonElement element = obj.get(group);
+				if (element == null || !element.isJsonObject()) {
+					element = new JsonObject();
+					obj.add(group, element);
+				}
+				obj = element.getAsJsonObject();
+			}
 		}
 		
-		String group = key.getOwner();
-		if (!configObject.has(group)) {
-			return entry.getDefault();
-		}
-		
-		JsonObject jsonGroup = JsonHelper.getObject(configObject, group);
-		String category = key.getCategory();
-		if (!jsonGroup.has(category)) {
-			return entry.getDefault();
-		}
-		
-		JsonObject jsonCategory = JsonHelper.getObject(jsonGroup, category);
 		String paramKey = key.getEntry();
 		paramKey += " [default: " + entry.getDefault() + "]";
-		if (!jsonCategory.has(paramKey)) {
+		
+		this.changed |= entry.setLocation(obj, paramKey);
+	}
+	
+	private <T, E extends Entry<T>> void storeValue(E entry, T value) {
+		if (configObject == null) {
+			return;
+		}
+		T val = entry.getValue();
+		if (value.equals(val)) return;
+		entry.toJson(value);
+		this.changed = true;
+	}
+	
+	private <T, E extends Entry<T>> T getValue(E entry) {
+		if (!entry.hasLocation()) {
 			return entry.getDefault();
 		}
-		
-		return entry.fromJson(jsonCategory.get(paramKey));
+		return entry.fromJson();
 	}
 	
 	@Nullable
@@ -93,9 +94,9 @@ public final class ConfigKeeper {
 	}
 
 	public <T, E extends Entry<T>> E registerEntry(ConfigKey key, E entry) {
-		entry.setWriter(value -> this.storeValue(key, entry, value));
-		entry.setReader(() -> { return this.getValue(key, entry); });
-		this.storeValue(key, entry, entry.getValue());
+		entry.setWriter(value -> this.storeValue(entry, value));
+		entry.setReader(() -> { return this.getValue(entry); });
+		this.initializeEntry(key, entry);
 		this.configEntries.put(key, entry);
 		return entry;
 	}
@@ -107,13 +108,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Boolean fromJson(JsonElement json) {
-			return json.getAsBoolean();
+		public Boolean fromJson() {
+			return GsonHelper.getAsBoolean(location, key, defaultValue);
 		}
 
 		@Override
-		public void toJson(JsonObject json, String key, Boolean value) {
-			json.addProperty(key, value);
+		public void toJson(Boolean value) {
+			this.location.addProperty(key, value);
 		}
 	}
 	
@@ -124,13 +125,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Float fromJson(JsonElement json) {
-			return json.getAsFloat();
+		public Float fromJson() {
+			return GsonHelper.getAsFloat(location, key, defaultValue);
 		}
 
 		@Override
-		public void toJson(JsonObject json, String key, Float value) {
-			json.addProperty(key, value);
+		public void toJson(Float value) {
+			this.location.addProperty(key, value);
 		}
 	}
 	
@@ -141,13 +142,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Float fromJson(JsonElement json) {
-			return json.getAsFloat();
+		public Float fromJson() {
+			return GsonHelper.getAsFloat(location, key, defaultValue);
 		}
 
 		@Override
-		public void toJson(JsonObject json, String key, Float value) {
-			json.addProperty(key, value);
+		public void toJson(Float value) {
+			this.location.addProperty(key, value);
 		}
 	}
 	
@@ -163,13 +164,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Integer fromJson(JsonElement json) {
-			return json.getAsInt();
+		public Integer fromJson() {
+			return GsonHelper.getAsInt(location, key, defaultValue);
 		}
 
 		@Override
-		public void toJson(JsonObject json, String key, Integer value) {
-			json.addProperty(key, value);
+		public void toJson(Integer value) {
+			this.location.addProperty(key, value);
 		}
 	}
 	
@@ -180,13 +181,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public Integer fromJson(JsonElement json) {
-			return json.getAsInt();
+		public Integer fromJson() {
+			return GsonHelper.getAsInt(location, key, defaultValue);
 		}
 
 		@Override
-		public void toJson(JsonObject json, String key, Integer value) {
-			json.addProperty(key, value);
+		public void toJson(Integer value) {
+			this.location.addProperty(key, value);
 		}
 	}
 	
@@ -197,13 +198,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public String fromJson(JsonElement json) {
-			return json.getAsString();
+		public String fromJson() {
+			return GsonHelper.getAsString(location, key, defaultValue);
 		}
 
 		@Override
-		public void toJson(JsonObject json, String key, String value) {
-			json.addProperty(key, value);
+		public void toJson(String value) {
+			this.location.addProperty(key, value);
 		}
 
 	}
@@ -226,13 +227,13 @@ public final class ConfigKeeper {
 		}
 
 		@Override
-		public T fromJson(JsonElement json) {
-			return JsonFactory.GSON.fromJson(json, type);
+		public T fromJson() {
+			return JsonFactory.GSON.fromJson(location.get(key), type);
 		}
 
 		@Override
-		public void toJson(JsonObject json, String key, T value) {
-			json.addProperty(key, JsonFactory.GSON.toJson(json, type));
+		public void toJson(T value) {
+			location.addProperty(key, JsonFactory.GSON.toJson(value, type));
 		}
 	}
 	
@@ -265,9 +266,11 @@ public final class ConfigKeeper {
 		protected final T defaultValue;
 		protected Consumer<T> writer;
 		protected Supplier<T> reader;
+		protected JsonObject location;
+		protected String key;
 		
-		public abstract T fromJson(JsonElement json);
-		public abstract void toJson(JsonObject json, String key, T value);
+		public abstract T fromJson();
+		public abstract void toJson(T value);
 		
 		public Entry (T defaultValue) {
 			this.defaultValue = defaultValue;
@@ -279,6 +282,21 @@ public final class ConfigKeeper {
 		
 		protected void setReader(Supplier<T> reader) {
 			this.reader = reader;
+		}
+		
+		protected boolean setLocation(JsonObject location, String key) {
+			this.location = location;
+			this.key = key;
+			if (!location.has(key)) {
+				this.toJson(defaultValue);
+				return true;
+			}
+			return false;
+		}
+		
+		protected boolean hasLocation() {
+			return this.location != null &&
+				   this.key != null;
 		}
 		
 		public T getValue() {

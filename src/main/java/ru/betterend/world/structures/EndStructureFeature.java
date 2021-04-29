@@ -3,22 +3,22 @@ package ru.betterend.world.structures;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.BetterEnd;
 
 public class EndStructureFeature {
 	private static final Random RANDOM = new Random(354);
-	private final StructureFeature<DefaultFeatureConfig> structure;
+	private final StructureFeature<NoneFeatureConfiguration> structure;
 	private final ConfiguredStructureFeature<?, ?> featureConfigured;
-	private final GenerationStep.Feature featureStep;
+	private final GenerationStep.Decoration featureStep;
 	
-	public EndStructureFeature(String name, StructureFeature<DefaultFeatureConfig> structure, GenerationStep.Feature step, int spacing, int separation) {
-		Identifier id = BetterEnd.makeID(name);
+	public EndStructureFeature(String name, StructureFeature<NoneFeatureConfiguration> structure, GenerationStep.Decoration step, int spacing, int separation) {
+		ResourceLocation id = BetterEnd.makeID(name);
 		
 		this.featureStep = step;
 		this.structure = FabricStructureBuilder.create(id, structure)
@@ -26,12 +26,12 @@ public class EndStructureFeature {
 		.defaultConfig(spacing, separation, RANDOM.nextInt(8192))
 		.register();
 
-		this.featureConfigured = this.structure.configure(DefaultFeatureConfig.DEFAULT);
+		this.featureConfigured = this.structure.configured(NoneFeatureConfiguration.NONE);
 		
-		BuiltinRegistries.add(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, id, this.featureConfigured);
+		BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, id, this.featureConfigured);
 	}
 
-	public StructureFeature<DefaultFeatureConfig> getStructure() {
+	public StructureFeature<NoneFeatureConfiguration> getStructure() {
 		return structure;
 	}
 
@@ -39,7 +39,7 @@ public class EndStructureFeature {
 		return featureConfigured;
 	}
 
-	public GenerationStep.Feature getFeatureStep() {
+	public GenerationStep.Decoration getFeatureStep() {
 		return featureStep;
 	}
 }

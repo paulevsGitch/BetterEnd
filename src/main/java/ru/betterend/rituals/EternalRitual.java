@@ -1,38 +1,50 @@
 package ru.betterend.rituals;
 
 import java.awt.Point;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Predicate;
 
+import org.jetbrains.annotations.Nullable;
+
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.data.worldgen.Features;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.material.Material;
+import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.EndPortalBlock;
 import ru.betterend.blocks.RunedFlavolite;
 import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
+import ru.betterend.registry.EndFeatures;
+import ru.betterend.registry.EndPortals;
 
 public class EternalRitual {
 	private final static Set<Point> STRUCTURE_MAP = Sets.newHashSet(
@@ -51,322 +63,322 @@ public class EternalRitual {
 	private final static Set<Point> BASE_MAP = Sets.newHashSet(
 			new Point(3, 0), new Point(2, 0), new Point(2, 1), new Point(1, 1),
 			new Point(1, 2), new Point(0, 1), new Point(0, 2));
-	
+
 	private final static Block BASE = EndBlocks.FLAVOLITE.tiles;
 	private final static Block PEDESTAL = EndBlocks.ETERNAL_PEDESTAL;
 	private final static Block FRAME = EndBlocks.FLAVOLITE_RUNED_ETERNAL;
 	private final static Block PORTAL = EndBlocks.END_PORTAL_BLOCK;
 	private final static BooleanProperty ACTIVE = BlockProperties.ACTIVE;
-	
-	private World world;
+
+	public final static int SEARCH_RADIUS = calculateSearchSteps(48);
+
+	private Level world;
 	private Direction.Axis axis;
+	private ResourceLocation targetWorldId;
 	private BlockPos center;
 	private BlockPos exit;
 	private boolean active = false;
-	
-	public EternalRitual(World world) {
+
+	public EternalRitual(Level world) {
 		this.world = world;
 	}
-	
-	public EternalRitual(World world, BlockPos initial) {
+
+	public EternalRitual(Level world, BlockPos initial) {
 		this(world);
 		this.configure(initial);
 	}
-	
-	public boolean hasWorld() {
-		return this.world != null;
-	}
-	
-	public void setWorld(World world) {
+
+	public void setWorld(Level world) {
 		this.world = world;
 	}
-	
-	private boolean isValid() {
-		return world != null && !world.isClient() &&
-			   center != null && axis != null &&
-			   world.getRegistryKey() != World.NETHER;
+
+	@Nullable
+	public ResourceLocation getTargetWorldId() {
+		return targetWorldId;
 	}
-	
+
+	private boolean isInvalid() {
+		return world == null || world.isClientSide() ||
+				center == null || axis == null;
+	}
+
 	public void checkStructure() {
-		if (!isValid()) return;
+		if (isInvalid()) return;
 		Direction moveX, moveY;
 		if (Direction.Axis.X == axis) {
 			moveX = Direction.EAST;
 			moveY = Direction.NORTH;
-		} else {
+		}
+		else {
 			moveX = Direction.SOUTH;
 			moveY = Direction.EAST;
 		}
-		boolean valid = this.checkFrame();
+		boolean valid = checkFrame(world, center.below());
+		Item item = null;
 		for (Point pos : STRUCTURE_MAP) {
-			BlockPos.Mutable checkPos = center.mutableCopy();
+			BlockPos.MutableBlockPos checkPos = center.mutable();
 			checkPos.move(moveX, pos.x).move(moveY, pos.y);
-			valid &= this.isActive(checkPos);
+			valid &= isActive(checkPos);
+			if (valid) {
+				EternalPedestalEntity pedestal = (EternalPedestalEntity) world.getBlockEntity(checkPos);
+				if (pedestal != null) {
+					Item pItem = pedestal.getItem(0).getItem();
+					if (item == null) {
+						item = pItem;
+					} else if (!item.equals(pItem)) {
+						valid = false;
+					}
+				}
+			}
 		}
-		if (valid) {
-			this.activatePortal();
+		if (valid && item != null) {
+			activatePortal(item);
 		}
 	}
-	
-	private boolean checkFrame() {
-		BlockPos framePos = center.down();
-		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
+
+	private boolean checkFrame(Level world, BlockPos framePos) {
+		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
 		boolean valid = true;
 		for (Point point : FRAME_MAP) {
-			BlockPos pos = framePos.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
+			BlockPos pos = framePos.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
 			BlockState state = world.getBlockState(pos);
 			valid &= state.getBlock() instanceof RunedFlavolite;
-			pos = framePos.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
+			pos = framePos.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
 			state = world.getBlockState(pos);
 			valid &= state.getBlock() instanceof RunedFlavolite;
 		}
 		return valid;
 	}
-	
+
 	public boolean isActive() {
-		return this.active;
+		return active;
 	}
-	
-	private void activatePortal() {
+
+	private void activatePortal(Item keyItem) {
 		if (active) return;
-		this.activatePortal(world, center);
-		this.doEffects((ServerWorld) world, center);
-		if (exit == null) {
-			this.exit = this.findPortalPos();
-		} else {
-			World targetWorld = this.getTargetWorld();
-			this.activatePortal(targetWorld, exit);
+		ResourceLocation itemId = Registry.ITEM.getKey(keyItem);
+		int portalId = EndPortals.getPortalIdByItem(itemId);
+		Level targetWorld = getTargetWorld(portalId);
+		ResourceLocation worldId = targetWorld.dimension().location();
+		try {
+			if (exit == null) {
+				initPortal(worldId, portalId);
+			} else {
+				if (!worldId.equals(targetWorldId)) {
+					initPortal(worldId, portalId);
+				} else if (!checkFrame(targetWorld, exit.below())) {
+					Direction.Axis portalAxis = (Direction.Axis.X == axis) ? Direction.Axis.Z : Direction.Axis.X;
+					generatePortal(targetWorld, exit, portalAxis, portalId);
+				}
+				activatePortal(targetWorld, exit, portalId);
+			}
+			activatePortal(world, center, portalId);
+			doEffects((ServerLevel) world, center);
+			active = true;
+		} catch (Exception ex) {
+			BetterEnd.LOGGER.error("Create End portals error.", ex);
+			removePortal(targetWorld, exit);
+			removePortal(world, center);
+			active = false;
 		}
-		this.active = true;
 	}
-	
-	private void doEffects(ServerWorld serverWorld, BlockPos center) {
+
+	private void initPortal(ResourceLocation worldId, int portalId) {
+		targetWorldId = worldId;
+		exit = findPortalPos(portalId);
+	}
+
+	private void doEffects(ServerLevel serverWorld, BlockPos center) {
 		Direction moveX, moveY;
 		if (Direction.Axis.X == axis) {
 			moveX = Direction.EAST;
 			moveY = Direction.NORTH;
-		} else {
+		}
+		else {
 			moveX = Direction.SOUTH;
 			moveY = Direction.EAST;
 		}
 		for (Point pos : STRUCTURE_MAP) {
-			BlockPos.Mutable p = center.mutableCopy();
+			BlockPos.MutableBlockPos p = center.mutable();
 			p.move(moveX, pos.x).move(moveY, pos.y);
-			serverWorld.spawnParticles(ParticleTypes.PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 1);
-			serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 0.3);
+			serverWorld.sendParticles(ParticleTypes.PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 1);
+			serverWorld.sendParticles(ParticleTypes.REVERSE_PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 0.3);
 		}
-		serverWorld.playSound(null, center, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.NEUTRAL, 16, 1);
+		serverWorld.playSound(null, center, SoundEvents.END_PORTAL_SPAWN, SoundSource.NEUTRAL, 16, 1);
 	}
-	
-	private void activatePortal(World world, BlockPos center) {
-		BlockPos framePos = center.down();
-		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
-		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
+
+	private void activatePortal(Level world, BlockPos center, int portalId) {
+		BlockPos framePos = center.below();
+		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
+		BlockState frame = FRAME.defaultBlockState().setValue(ACTIVE, true);
 		FRAME_MAP.forEach(point -> {
-			BlockPos pos = framePos.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
+			BlockPos pos = framePos.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
 			BlockState state = world.getBlockState(pos);
-			if (state.contains(ACTIVE) && !state.get(ACTIVE)) {
-				world.setBlockState(pos, frame);
+			if (state.hasProperty(ACTIVE) && !state.getValue(ACTIVE)) {
+				world.setBlockAndUpdate(pos, frame);
 			}
-			pos = framePos.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
+			pos = framePos.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
 			state = world.getBlockState(pos);
-			if (state.contains(ACTIVE) && !state.get(ACTIVE)) {
-				world.setBlockState(pos, frame);
+			if (state.hasProperty(ACTIVE) && !state.getValue(ACTIVE)) {
+				world.setBlockAndUpdate(pos, frame);
 			}
 		});
 		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
-		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis);
-		ParticleEffect effect = new BlockStateParticleEffect(ParticleTypes.BLOCK, portal);
-		ServerWorld serverWorld = (ServerWorld) world;
-		
+		BlockState portal = PORTAL.defaultBlockState().setValue(EndPortalBlock.AXIS, portalAxis).setValue(EndPortalBlock.PORTAL, portalId);
+		ParticleOptions effect = new BlockParticleOption(ParticleTypes.BLOCK, portal);
+		ServerLevel serverWorld = (ServerLevel) world;
+
 		PORTAL_MAP.forEach(point -> {
-			BlockPos pos = center.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
-			if (!world.getBlockState(pos).isOf(PORTAL)) {
-				world.setBlockState(pos, portal);
-				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
-				serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.3);
+			BlockPos pos = center.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
+			if (!world.getBlockState(pos).is(PORTAL)) {
+				world.setBlockAndUpdate(pos, portal);
+				serverWorld.sendParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
+				serverWorld.sendParticles(ParticleTypes.REVERSE_PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.3);
 			}
-			pos = center.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
-			if (!world.getBlockState(pos).isOf(PORTAL)) {
-				world.setBlockState(pos, portal);
-				serverWorld.spawnParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
-				serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.3);
+			pos = center.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
+			if (!world.getBlockState(pos).is(PORTAL)) {
+				world.setBlockAndUpdate(pos, portal);
+				serverWorld.sendParticles(effect, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
+				serverWorld.sendParticles(ParticleTypes.REVERSE_PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.3);
 			}
 		});
 	}
-	
-	public void removePortal() {
-		if (!active || !isValid()) return;
-		World targetWorld = this.getTargetWorld();
-		this.removePortal(world, center);
-		this.removePortal(targetWorld, exit);
+
+	public void disablePortal(int state) {
+		if (!active || isInvalid()) return;
+		removePortal(getTargetWorld(state), exit);
+		removePortal(world, center);
 	}
-	
-	private void removePortal(World world, BlockPos center) {
-		BlockPos framePos = center.down();
-		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
+
+	private void removePortal(Level world, BlockPos center) {
+		BlockPos framePos = center.below();
+		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
 		FRAME_MAP.forEach(point -> {
-			BlockPos pos = framePos.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
+			BlockPos pos = framePos.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
 			BlockState state = world.getBlockState(pos);
-			if (state.isOf(FRAME) && state.get(ACTIVE)) {
-				world.setBlockState(pos, state.with(ACTIVE, false));
+			if (state.is(FRAME) && state.getValue(ACTIVE)) {
+				world.setBlockAndUpdate(pos, state.setValue(ACTIVE, false));
 			}
-			pos = framePos.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
+			pos = framePos.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
 			state = world.getBlockState(pos);
-			if (state.isOf(FRAME) && state.get(ACTIVE)) {
-				world.setBlockState(pos, state.with(ACTIVE, false));
+			if (state.is(FRAME) && state.getValue(ACTIVE)) {
+				world.setBlockAndUpdate(pos, state.setValue(ACTIVE, false));
 			}
 		});
 		PORTAL_MAP.forEach(point -> {
-			BlockPos pos = center.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
-			if (world.getBlockState(pos).isOf(PORTAL)) {
+			BlockPos pos = center.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
+			if (world.getBlockState(pos).is(PORTAL)) {
 				world.removeBlock(pos, false);
 			}
-			pos = center.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
-			if (world.getBlockState(pos).isOf(PORTAL)) {
+			pos = center.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
+			if (world.getBlockState(pos).is(PORTAL)) {
 				world.removeBlock(pos, false);
 			}
 		});
 		this.active = false;
 	}
-	
-	private BlockPos findPortalPos() {
-		MinecraftServer server = world.getServer();
-		ServerWorld targetWorld = (ServerWorld) this.getTargetWorld();
-		Registry<DimensionType> registry = server.getRegistryManager().getDimensionTypes();
-		double mult = registry.get(DimensionType.THE_END_ID).getCoordinateScale();
-		BlockPos.Mutable basePos = center.mutableCopy().set(center.getX() / mult, center.getY(), center.getZ() / mult);
-		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
-		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) {
-			EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
-			if (portalAxis.equals(Direction.Axis.X)) {
-				return basePos.toImmutable();
-			} else {
-				return basePos.toImmutable();
+
+	@Nullable
+	private BlockPos findFrame(Level world, BlockPos.MutableBlockPos startPos) {
+		List<BlockPos.MutableBlockPos> foundPos = findAllBlockPos(world, startPos, (SEARCH_RADIUS >> 4) + 1, FRAME,
+				blockState -> blockState.is(FRAME) && !blockState.getValue(ACTIVE));
+		for(BlockPos.MutableBlockPos testPos : foundPos) {
+			if (checkFrame(world, testPos)) {
+				return testPos;
 			}
+		}
+		return null;
+	}
+
+	private BlockPos findPortalPos(int portalId) {
+		MinecraftServer server = world.getServer();
+		ServerLevel targetWorld = (ServerLevel) getTargetWorld(portalId);
+		Registry<DimensionType> registry = Objects.requireNonNull(server).registryAccess().dimensionTypes();
+		double multiplier = Objects.requireNonNull(registry.get(targetWorldId)).coordinateScale();
+		BlockPos.MutableBlockPos basePos = center.mutable().set(center.getX() / multiplier, center.getY(), center.getZ() / multiplier);
+		BlockPos framePos = findFrame(targetWorld, basePos.mutable());
+		if (framePos != null) {
+			return framePos.above();
+		}
+		Direction.Axis portalAxis = (Direction.Axis.X == axis) ? Direction.Axis.Z : Direction.Axis.X;
+		int worldCeil = targetWorld.getHeight() - 1;
+		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) {
+			generatePortal(targetWorld, basePos, portalAxis, portalId);
+			return basePos.immutable();
 		} else {
 			Direction direction = Direction.EAST;
-			BlockPos.Mutable checkPos = basePos.mutableCopy();
-			for (int step = 1; step < 64; step++) {
-				for (int i = 0; i < step; i++) {
-					checkPos.setY(5);
-					while(checkPos.getY() < world.getHeight()) {
-						if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
-							EternalRitual.generatePortal(targetWorld, checkPos, portalAxis);
-							if (portalAxis.equals(Direction.Axis.X)) {
-								return checkPos.toImmutable();
-							} else {
-								return checkPos.toImmutable();
+			BlockPos.MutableBlockPos checkPos = basePos.mutable();
+			int radius = (int) ((SEARCH_RADIUS / multiplier) + 1);
+			for (int step = 1; step < radius; step++) {
+				for (int i = 0; i < (step >> 1); i++) {
+					ChunkAccess chunk = targetWorld.getChunk(checkPos);
+					if (chunk != null) {
+						int surfaceY = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
+						int motionY = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, checkPos.getX() & 15, checkPos.getZ() & 15);
+						int ceil = Math.min(Math.max(surfaceY, motionY) + 1, worldCeil);
+						if (ceil < 5) continue;
+						checkPos.setY(ceil);
+						while (checkPos.getY() >= 5) {
+							if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
+								generatePortal(targetWorld, checkPos, portalAxis, portalId);
+								return checkPos.immutable();
 							}
+							checkPos.move(Direction.DOWN);
 						}
-						checkPos.move(Direction.UP);
 					}
 					checkPos.move(direction);
 				}
-				direction = direction.rotateYClockwise();
+				direction = direction.getClockWise();
 			}
 		}
-		if (targetWorld.getRegistryKey() == World.END) {
-			ConfiguredFeatures.END_ISLAND.generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.asLong()), basePos.down());
-		} else {
-			basePos.setY(targetWorld.getChunk(basePos).sampleHeightmap(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
+		if (targetWorld.dimension() == Level.END) {
+			Features.END_ISLAND.place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
+		} else if (targetWorld.dimension() == Level.OVERWORLD) {
+			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
 		}
-		EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
-		if (portalAxis.equals(Direction.Axis.X)) {
-			return basePos.toImmutable();
-		} else {
-			return basePos.toImmutable();
+		EndFeatures.BIOME_ISLAND.getFeatureConfigured().place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
+		generatePortal(targetWorld, basePos, portalAxis, portalId);
+		return basePos.immutable();
+	}
+
+	private Level getTargetWorld(int state) {
+		if (world.dimension() == Level.END) {
+			return EndPortals.getWorld(world.getServer(), state);
 		}
+		return Objects.requireNonNull(world.getServer()).getLevel(Level.END);
 	}
-	
-	private World getTargetWorld() {
-		RegistryKey<World> target = world.getRegistryKey() == World.END ? World.OVERWORLD : World.END;
-		return world.getServer().getWorld(target);
-	}
-	
-	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) {
+
+	private boolean checkIsAreaValid(Level world, BlockPos pos, Direction.Axis axis) {
+		if (pos.getY() >= world.getHeight() - 1) return false;
 		if (!isBaseValid(world, pos, axis)) return false;
 		return EternalRitual.checkArea(world, pos, axis);
 	}
-	
-	private boolean isBaseValid(World world, BlockPos pos, Direction.Axis axis) {
+
+	private boolean isBaseValid(Level world, BlockPos pos, Direction.Axis axis) {
 		boolean solid = true;
 		if (axis.equals(Direction.Axis.X)) {
-			pos = pos.down().add(0, 0, -3);
+			pos = pos.below().offset(0, 0, -3);
 			for (int i = 0; i < 7; i++) {
-				BlockPos checkPos = pos.add(0, 0, i);
+				BlockPos checkPos = pos.offset(0, 0, i);
 				BlockState state = world.getBlockState(checkPos);
-				solid &= this.validBlock(world, checkPos, state);
+				solid &= validBlock(world, checkPos, state);
 			}
-		} else {
-			pos = pos.down().add(-3, 0, 0);
+		}
+		else {
+			pos = pos.below().offset(-3, 0, 0);
 			for (int i = 0; i < 7; i++) {
-				BlockPos checkPos = pos.add(i, 0, 0);
+				BlockPos checkPos = pos.offset(i, 0, 0);
 				BlockState state = world.getBlockState(checkPos);
-				solid &= this.validBlock(world, checkPos, state);
+				solid &= validBlock(world, checkPos, state);
 			}
 		}
 		return solid;
 	}
-	
-	private boolean validBlock(World world, BlockPos pos, BlockState state) {
-		BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceConfig().getTopMaterial();
-		return state.isSolidBlock(world, pos) &&
-			   (EndTags.validGenBlock(state) ||
-			   state.isOf(surfaceBlock.getBlock()) ||
-			   state.isOf(Blocks.STONE) ||
-			   state.isOf(Blocks.SAND) ||
-			   state.isOf(Blocks.GRAVEL));
+
+	private boolean validBlock(Level world, BlockPos pos, BlockState state) {
+		return state.isRedstoneConductor(world, pos) && state.isCollisionShapeFullBlock(world, pos);
 	}
-	
-	public static void generatePortal(World world, BlockPos center, Direction.Axis axis) {
-		BlockPos framePos = center.down();
-		Direction moveDir = Direction.Axis.X == axis ? Direction.EAST: Direction.NORTH;
-		BlockState frame = FRAME.getDefaultState().with(ACTIVE, true);
-		FRAME_MAP.forEach(point -> {
-			BlockPos pos = framePos.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
-			world.setBlockState(pos, frame);
-			pos = framePos.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
-			world.setBlockState(pos, frame);
-		});
-		BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, axis);
-		PORTAL_MAP.forEach(point -> {
-			BlockPos pos = center.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
-			world.setBlockState(pos, portal);
-			pos = center.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
-			world.setBlockState(pos, portal);
-		});
-		generateBase(world, framePos, moveDir);
-	}
-	
-	private static void generateBase(World world, BlockPos center, Direction moveX) {
-		BlockState base = BASE.getDefaultState();
-		Direction moveY = moveX.rotateYClockwise();
-		BASE_MAP.forEach(point -> {
-			BlockPos pos = center.mutableCopy().move(moveX, point.x).move(moveY, point.y);
-			world.setBlockState(pos, base);
-			pos = center.mutableCopy().move(moveX, -point.x).move(moveY, point.y);
-			world.setBlockState(pos, base);
-			pos = center.mutableCopy().move(moveX, point.x).move(moveY, -point.y);
-			world.setBlockState(pos, base);
-			pos = center.mutableCopy().move(moveX, -point.x).move(moveY, -point.y);
-			world.setBlockState(pos, base);
-		});
-	}
-	
-	public static boolean checkArea(World world, BlockPos center, Direction.Axis axis) {
-		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
-		for (BlockPos checkPos : BlockPos.iterate(center.offset(moveDir.rotateYClockwise()), center.offset(moveDir.rotateYCounterclockwise()))) {
-			for (Point point : PORTAL_MAP) {
-				BlockPos pos = checkPos.mutableCopy().move(moveDir, point.x).move(Direction.UP, point.y);
-				if (!world.getBlockState(pos).isAir()) return false;
-				pos = checkPos.mutableCopy().move(moveDir, -point.x).move(Direction.UP, point.y);
-				if (!world.getBlockState(pos).isAir()) return false;
-			}
-		}
-		return true;
-	}
-	
+
 	public void configure(BlockPos initial) {
 		BlockPos checkPos = initial.east(12);
 		if (this.hasPedestal(checkPos)) {
@@ -398,11 +410,10 @@ public class EternalRitual {
 			checkPos = checkPos.east(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.north(5).east(4);
-				return;
 			} else {
 				this.center = initial.north(5).west(4);
-				return;
 			}
+			return;
 		}
 		checkPos = initial.south(10);
 		if (this.hasPedestal(checkPos)) {
@@ -410,11 +421,10 @@ public class EternalRitual {
 			checkPos = checkPos.east(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.south(5).east(4);
-				return;
 			} else {
 				this.center = initial.south(5).west(4);
-				return;
 			}
+			return;
 		}
 		checkPos = initial.east(10);
 		if (this.hasPedestal(checkPos)) {
@@ -422,11 +432,10 @@ public class EternalRitual {
 			checkPos = checkPos.south(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.east(5).south(4);
-				return;
 			} else {
 				this.center = initial.east(5).north(4);
-				return;
 			}
+			return;
 		}
 		checkPos = initial.west(10);
 		if (this.hasPedestal(checkPos)) {
@@ -434,46 +443,207 @@ public class EternalRitual {
 			checkPos = checkPos.south(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.west(5).south(4);
-				return;
 			} else {
 				this.center = initial.west(5).north(4);
-				return;
 			}
 		}
 	}
-	
+
 	private boolean hasPedestal(BlockPos pos) {
-		return world.getBlockState(pos).isOf(PEDESTAL);
+		return world.getBlockState(pos).is(PEDESTAL);
 	}
-	
+
 	private boolean isActive(BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
-		if (state.isOf(PEDESTAL)) {
+		if (state.is(PEDESTAL)) {
 			EternalPedestalEntity pedestal = (EternalPedestalEntity) world.getBlockEntity(pos);
-			if (!pedestal.hasRitual()) {
-				pedestal.linkRitual(this);
+			if (pedestal != null) {
+				if (!pedestal.hasRitual()) {
+					pedestal.linkRitual(this);
+				} else {
+					EternalRitual ritual = pedestal.getRitual();
+					if (!ritual.equals(this)) {
+						pedestal.linkRitual(this);
+					}
+				}
 			}
-			return state.get(ACTIVE);
+			return state.getValue(ACTIVE);
 		}
 		return false;
 	}
-	
+
 	public CompoundTag toTag(CompoundTag tag) {
-		tag.put("center", NbtHelper.fromBlockPos(center));
-		if (exit != null) {
-			tag.put("exit", NbtHelper.fromBlockPos(exit));
-		}
+		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putString("axis", axis.getName());
 		tag.putBoolean("active", active);
+		if (targetWorldId != null) {
+			tag.putString("key_item", targetWorldId.toString());
+		}
+		if (exit != null) {
+			tag.put("exit", NbtUtils.writeBlockPos(exit));
+		}
 		return tag;
 	}
-	
+
 	public void fromTag(CompoundTag tag) {
-		this.axis = Direction.Axis.fromName(tag.getString("axis"));
-		this.center = NbtHelper.toBlockPos(tag.getCompound("center"));
-		this.active = tag.getBoolean("active");
+		axis = Direction.Axis.byName(tag.getString("axis"));
+		center = NbtUtils.readBlockPos(tag.getCompound("center"));
+		active = tag.getBoolean("active");
 		if (tag.contains("exit")) {
-			this.exit = NbtHelper.toBlockPos(tag.getCompound("exit"));
+			exit = NbtUtils.readBlockPos(tag.getCompound("exit"));
 		}
+		if (tag.contains("key_item")) {
+			targetWorldId = new ResourceLocation(tag.getString("key_item"));
+		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		EternalRitual ritual = (EternalRitual) o;
+		return world.equals(ritual.world) &&
+				Objects.equals(center, ritual.center) &&
+				Objects.equals(exit, ritual.exit);
+	}
+
+	public static void generatePortal(Level world, BlockPos center, Direction.Axis axis, int portalId) {
+		BlockPos framePos = center.below();
+		Direction moveDir = Direction.Axis.X == axis ? Direction.EAST : Direction.NORTH;
+		BlockState frame = FRAME.defaultBlockState().setValue(ACTIVE, true);
+		FRAME_MAP.forEach(point -> {
+			BlockPos pos = framePos.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
+			world.setBlockAndUpdate(pos, frame);
+			pos = framePos.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
+			world.setBlockAndUpdate(pos, frame);
+		});
+		BlockState portal = PORTAL.defaultBlockState().setValue(EndPortalBlock.AXIS, axis).setValue(EndPortalBlock.PORTAL, portalId);
+		PORTAL_MAP.forEach(point -> {
+			BlockPos pos = center.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
+			world.setBlockAndUpdate(pos, portal);
+			pos = center.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
+			world.setBlockAndUpdate(pos, portal);
+		});
+		generateBase(world, framePos, moveDir);
+	}
+
+	private static void generateBase(Level world, BlockPos center, Direction moveX) {
+		BlockState base = BASE.defaultBlockState();
+		Direction moveY = moveX.getClockWise();
+		BASE_MAP.forEach(point -> {
+			BlockPos pos = center.mutable().move(moveX, point.x).move(moveY, point.y);
+			world.setBlockAndUpdate(pos, base);
+			pos = center.mutable().move(moveX, -point.x).move(moveY, point.y);
+			world.setBlockAndUpdate(pos, base);
+			pos = center.mutable().move(moveX, point.x).move(moveY, -point.y);
+			world.setBlockAndUpdate(pos, base);
+			pos = center.mutable().move(moveX, -point.x).move(moveY, -point.y);
+			world.setBlockAndUpdate(pos, base);
+		});
+	}
+
+	public static boolean checkArea(Level world, BlockPos center, Direction.Axis axis) {
+		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
+		for (BlockPos checkPos : BlockPos.betweenClosed(center.relative(moveDir.getClockWise()), center.relative(moveDir.getCounterClockWise()))) {
+			for (Point point : PORTAL_MAP) {
+				BlockPos pos = checkPos.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
+				BlockState state = world.getBlockState(pos);
+				if (isStateInvalid(state)) return false;
+				pos = checkPos.mutable().move(moveDir, -point.x).move(Direction.UP, point.y);
+				state = world.getBlockState(pos);
+				if (isStateInvalid(state)) return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean isStateInvalid(BlockState state) {
+		if (!state.getFluidState().isEmpty()) return true;
+		Material material = state.getMaterial();
+		return !material.isReplaceable() && !material.equals(Material.PLANT);
+	}
+
+	/**
+	 * @param world World for search
+	 * @param checkPos Start search position
+	 * @param radius Search radius
+	 * @param searchBlock Target block
+	 * @param condition Predicate for test block states in the chunk section
+	 *
+	 * @return Position of the first found block or null.
+	 */
+	@Nullable
+	public static BlockPos.MutableBlockPos findBlockPos(Level world, BlockPos.MutableBlockPos checkPos, int radius, Block searchBlock, Predicate<BlockState> condition) {
+		Direction moveDirection = Direction.EAST;
+		for (int step = 1; step < radius; step++) {
+			for (int i = 0; i < (step >> 1); i++) {
+				ChunkAccess chunk = world.getChunk(checkPos);
+				if (!(chunk instanceof LevelChunk) || ((LevelChunk) chunk).isEmpty()) continue;
+				for (LevelChunkSection section : chunk.getSections()) {
+					if (section == null || !section.getStates().maybeHas(condition)) continue;
+					for (int x = 0; x < 16; x++) {
+						for (int y = 0; y < 16; y++) {
+							for(int z = 0; z < 16; z++) {
+								BlockState checkState = section.getBlockState(x, y, z);
+								if (checkState.is(searchBlock)) {
+									int worldX = (chunk.getPos().x << 4) + x;
+									int worldY = section.bottomBlockY() + y;
+									int worldZ = (chunk.getPos().z << 4) + z;
+									checkPos.set(worldX, worldY, worldZ);
+									return checkPos;
+								}
+							}
+						}
+					}
+				}
+				checkPos.move(moveDirection, 16);
+			}
+			moveDirection = moveDirection.getClockWise();
+		}
+		return null;
+	}
+
+	/**
+	 * @param world World for search
+	 * @param checkPos Start search position
+	 * @param radius Search radius
+	 * @param searchBlock Target block
+	 * @param condition Predicate for test block states in the chunk section
+	 *
+	 * @return List of positions of the all found blocks or empty list.
+	 */
+	public static List<BlockPos.MutableBlockPos> findAllBlockPos(Level world, BlockPos.MutableBlockPos checkPos, int radius, Block searchBlock, Predicate<BlockState> condition) {
+		List<BlockPos.MutableBlockPos> posFound = Lists.newArrayList();
+		Direction moveDirection = Direction.EAST;
+		for (int step = 1; step < radius; step++) {
+			for (int i = 0; i < (step >> 1); i++) {
+				ChunkAccess chunk = world.getChunk(checkPos);
+				if (!(chunk instanceof LevelChunk) || ((LevelChunk) chunk).isEmpty()) continue;
+				for (LevelChunkSection section : chunk.getSections()) {
+					if (section == null || !section.getStates().maybeHas(condition)) continue;
+					for (int x = 0; x < 16; x++) {
+						for (int y = 0; y < 16; y++) {
+							for(int z = 0; z < 16; z++) {
+								BlockState checkState = section.getBlockState(x, y, z);
+								if (checkState.is(searchBlock)) {
+									int worldX = (chunk.getPos().x << 4) + x;
+									int worldY = section.bottomBlockY() + y;
+									int worldZ = (chunk.getPos().z << 4) + z;
+									checkPos.set(worldX, worldY, worldZ);
+									posFound.add(checkPos.mutable());
+								}
+							}
+						}
+					}
+				}
+				checkPos.move(moveDirection, 16);
+			}
+			moveDirection = moveDirection.getClockWise();
+		}
+		return posFound;
+	}
+
+	public static int calculateSearchSteps(int radius) {
+		return radius * 4 - 1;
 	}
 }

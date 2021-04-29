@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=up":    { "model": "betterend:pattern/%block%/%block%_floor" },
+        "facing=down":  { "model": "betterend:pattern/%block%/%block%_ceil" },
+        "facing=north": { "model": "betterend:pattern/%block%/%block%_wall", "y": 180 },
+        "facing=south": { "model": "betterend:pattern/%block%/%block%_wall" },
+        "facing=east":  { "model": "betterend:pattern/%block%/%block%_wall", "y": 270 },
+        "facing=west":  { "model": "betterend:pattern/%block%/%block%_wall", "y": 90 }
+    }
+}

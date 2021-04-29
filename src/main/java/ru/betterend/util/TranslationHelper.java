@@ -9,8 +9,8 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
@@ -27,7 +27,7 @@ public class TranslationHelper {
 		JsonObject translationRu = gson.fromJson(new InputStreamReader(streamRu), JsonObject.class);
 		
 		Registry.BLOCK.forEach((block) -> {
-			if (Registry.BLOCK.getId(block).getNamespace().equals(BetterEnd.MOD_ID)) {
+			if (Registry.BLOCK.getKey(block).getNamespace().equals(BetterEnd.MOD_ID)) {
 				String name = block.getName().getString();
 				if (!translationEn.has(name)) {
 					missingNamesEn.add(name);
@@ -39,7 +39,7 @@ public class TranslationHelper {
 		});
 		
 		EndItems.getModItems().forEach((item) -> {
-			String name = item.getName().getString();
+			String name = item.getDescription().getString();
 			if (!translationEn.has(name)) {
 				missingNamesEn.add(name);
 			}
@@ -61,7 +61,7 @@ public class TranslationHelper {
 		});
 		
 		Registry.ENTITY_TYPE.forEach((entity) -> {
-			Identifier id = Registry.ENTITY_TYPE.getId(entity);
+			ResourceLocation id = Registry.ENTITY_TYPE.getKey(entity);
 			if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 				String name = "entity." + BetterEnd.MOD_ID + "." + id.getPath();
 				if (!translationEn.has(name)) {

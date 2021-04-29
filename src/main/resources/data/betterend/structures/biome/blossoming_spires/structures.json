@@ -1,0 +1,12 @@
+{
+	"structures": [
+		{ "nbt": "ruins_1", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_2", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_3", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_4", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_5", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_6", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_7", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_8", "offsetY": 0, "terrainMerge": "surface" }
+	]
+}

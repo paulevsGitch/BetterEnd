@@ -6,32 +6,32 @@ import com.mojang.serialization.Codec;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.command.argument.ItemStackArgument;
-import net.minecraft.command.argument.ItemStringReader;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.commands.arguments.item.ItemInput;
+import net.minecraft.commands.arguments.item.ItemParser;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.util.ColorUtil;
 
-public class InfusionParticleType extends ParticleType<InfusionParticleType> implements ParticleEffect {
+public class InfusionParticleType extends ParticleType<InfusionParticleType> implements ParticleOptions {
 	public static final Codec<InfusionParticleType> CODEC = ItemStack.CODEC.xmap(itemStack -> {
 		return new InfusionParticleType(EndParticles.INFUSION, itemStack);
 	}, infusionParticleType -> {
 		return infusionParticleType.itemStack;
 	});
-	public static final ParticleEffect.Factory<InfusionParticleType> PARAMETERS_FACTORY = new ParticleEffect.Factory<InfusionParticleType>() {
-		public InfusionParticleType read(ParticleType<InfusionParticleType> particleType, StringReader stringReader) throws CommandSyntaxException {
+	public static final ParticleOptions.Deserializer<InfusionParticleType> PARAMETERS_FACTORY = new ParticleOptions.Deserializer<InfusionParticleType>() {
+		public InfusionParticleType fromCommand(ParticleType<InfusionParticleType> particleType, StringReader stringReader) throws CommandSyntaxException {
 			stringReader.expect(' ');
-			ItemStringReader itemStringReader = new ItemStringReader(stringReader, false).consume();
-			ItemStack itemStack = new ItemStackArgument(itemStringReader.getItem(), itemStringReader.getTag()).createStack(1, false);
+			ItemParser itemStringReader = new ItemParser(stringReader, false).parse();
+			ItemStack itemStack = new ItemInput(itemStringReader.getItem(), itemStringReader.getNbt()).createItemStack(1, false);
 			return new InfusionParticleType(particleType, itemStack);
 		}
 
-		public InfusionParticleType read(ParticleType<InfusionParticleType> particleType, PacketByteBuf packetByteBuf) {
-			return new InfusionParticleType(particleType, packetByteBuf.readItemStack());
+		public InfusionParticleType fromNetwork(ParticleType<InfusionParticleType> particleType, FriendlyByteBuf packetByteBuf) {
+			return new InfusionParticleType(particleType, packetByteBuf.readItem());
 		}
 	};
 	
@@ -60,17 +60,17 @@ public class InfusionParticleType extends ParticleType<InfusionParticleType> imp
 	}
 
 	@Override
-	public void write(PacketByteBuf buffer) {
-		buffer.writeItemStack(itemStack);
+	public void writeToNetwork(FriendlyByteBuf buffer) {
+		buffer.writeItem(itemStack);
 	}
 
 	@Override
-	public String asString() {
-		return Registry.PARTICLE_TYPE.getId(this).toString();
+	public String writeToString() {
+		return Registry.PARTICLE_TYPE.getKey(this).toString();
 	}
 
 	@Override
-	public Codec<InfusionParticleType> getCodec() {
+	public Codec<InfusionParticleType> codec() {
 		return CODEC;
 	}
 }

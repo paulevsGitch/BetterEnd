@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "axis=x": [
+			{ "model": "betterend:block/lucernia_bark", "x": 90, "y": 90, "weight": 16 },
+			{ "model": "betterend:block/lucernia_bark_2", "x": 90, "y": 90 },
+			{ "model": "betterend:block/lucernia_bark_3", "x": 90, "y": 90, "weight": 16 },
+			{ "model": "betterend:block/lucernia_bark_4", "x": 90, "y": 90 }
+		], 
+        "axis=y": [
+			{ "model": "betterend:block/lucernia_bark", "weight": 16 },
+			{ "model": "betterend:block/lucernia_bark_2" },
+			{ "model": "betterend:block/lucernia_bark_3", "weight": 16 },
+			{ "model": "betterend:block/lucernia_bark_4" }
+		], 
+        "axis=z": [
+			{ "model": "betterend:block/lucernia_bark", "x": 90, "weight": 16 },
+			{ "model": "betterend:block/lucernia_bark_2", "x": 90 },
+			{ "model": "betterend:block/lucernia_bark_3", "x": 90, "weight": 16 },
+			{ "model": "betterend:block/lucernia_bark_4", "x": 90 }
+		]
+    }
+}

@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "block/obsidian",
+		"east": "betterend:block/mossy_obsidian_side",
+		"north": "betterend:block/mossy_obsidian_side",
+		"particle": "betterend:block/mossy_obsidian_side",
+		"south": "betterend:block/mossy_obsidian_side",
+		"up": "betterend:block/sangnum_top",
+		"west": "betterend:block/mossy_obsidian_side"
+	}
+}

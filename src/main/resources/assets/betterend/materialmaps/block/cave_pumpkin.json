@@ -1,0 +1,14 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/cave_pumpkin_lantern_side",
+				"material": "betterend:glow_inc"
+			},
+			{
+				"sprite": "betterend:block/cave_pumpkin_lantern_bottom",
+				"material": "betterend:glow_inc"
+			}
+		]
+	}
+}

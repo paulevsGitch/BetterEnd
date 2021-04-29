@@ -1,30 +1,30 @@
 package ru.betterend.entity.render;
 
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.EyesLayer;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
-import ru.betterend.entity.EntityDragonfly;
-import ru.betterend.entity.model.ModelEntityDragonfly;
+import ru.betterend.entity.DragonflyEntity;
+import ru.betterend.entity.model.DragonflyEntityModel;
 
-public class RendererEntityDragonfly extends MobEntityRenderer<EntityDragonfly, ModelEntityDragonfly> {
-	private static final Identifier TEXTURE = BetterEnd.makeID("textures/entity/dragonfly.png");
-	private static final RenderLayer GLOW = RenderLayer.getEyes(BetterEnd.makeID("textures/entity/dragonfly_glow.png"));
-	
+public class RendererEntityDragonfly extends MobRenderer<DragonflyEntity, DragonflyEntityModel> {
+    private static final ResourceLocation TEXTURE = BetterEnd.makeID("textures/entity/dragonfly.png");
+    private static final RenderType GLOW = RenderType.eyes(BetterEnd.makeID("textures/entity/dragonfly_glow.png"));
+
     public RendererEntityDragonfly(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new ModelEntityDragonfly(), 0.5f);
-        this.addFeature(new EyesFeatureRenderer<EntityDragonfly, ModelEntityDragonfly>(this) {
-			@Override
-			public RenderLayer getEyesTexture() {
-				return GLOW;
-			}
+        super(entityRenderDispatcher, new DragonflyEntityModel(), 0.5f);
+        this.addLayer(new EyesLayer<DragonflyEntity, DragonflyEntityModel>(this) {
+            @Override
+            public RenderType renderType() {
+                return GLOW;
+            }
         });
     }
- 
+
     @Override
-    public Identifier getTexture(EntityDragonfly entity) {
+    public ResourceLocation getTextureLocation(DragonflyEntity entity) {
         return TEXTURE;
     }
 }

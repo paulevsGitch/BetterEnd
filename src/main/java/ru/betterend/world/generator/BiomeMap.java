@@ -1,18 +1,19 @@
 package ru.betterend.world.generator;
 
-import java.util.HashMap;
+import java.util.Map;
 
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.gen.ChunkRandom;
+import com.google.common.collect.Maps;
+
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
-public class BiomeMap
-{
-	private static final ChunkRandom RANDOM = new ChunkRandom();
+public class BiomeMap {
+	private static final WorldgenRandom RANDOM = new WorldgenRandom();
 	
-	private final HashMap<ChunkPos, BiomeChunk> maps = new HashMap<ChunkPos, BiomeChunk>();
+	private final Map<ChunkPos, BiomeChunk> maps = Maps.newHashMap();
 	private final int size;
 	private final int sizeXZ;
 	private final int depth;
@@ -20,8 +21,7 @@ public class BiomeMap
 	private final OpenSimplexNoise noiseZ;
 	private final BiomePicker picker;
 	
-	public BiomeMap(long seed, int size, BiomePicker picker)
-	{
+	public BiomeMap(long seed, int size, BiomePicker picker) {
 		maps.clear();
 		RANDOM.setSeed(seed);
 		noiseX = new OpenSimplexNoise(RANDOM.nextLong());
@@ -32,15 +32,13 @@ public class BiomeMap
 		this.picker = picker;
 	}
 	
-	public void clearCache()
-	{
+	public void clearCache() {
 		if (maps.size() > 32) {
 			maps.clear();
 		}
 	}
 	
-	private EndBiome getRawBiome(int bx, int bz)
-	{
+	private EndBiome getRawBiome(int bx, int bz) {
 		double x = (double) bx * size / sizeXZ;
 		double z = (double) bz * size / sizeXZ;
 		double nx = x;
@@ -49,8 +47,7 @@ public class BiomeMap
 		double px = bx * 0.2;
 		double pz = bz * 0.2;
 		
-		for (int i = 0; i < depth; i++)
-		{
+		for (int i = 0; i < depth; i++) {
 			nx = (x + noiseX.eval(px, pz)) / 2F;
 			nz = (z + noiseZ.eval(px, pz)) / 2F;
 			
@@ -72,9 +69,8 @@ public class BiomeMap
 		
 		ChunkPos cpos = new ChunkPos(MHelper.floor(x / BiomeChunk.WIDTH), MHelper.floor(z / BiomeChunk.WIDTH));
 		BiomeChunk chunk = maps.get(cpos);
-		if (chunk == null)
-		{
-			RANDOM.setTerrainSeed(cpos.x, cpos.z);
+		if (chunk == null) {
+			RANDOM.setBaseChunkSeed(cpos.x, cpos.z);
 			chunk = new BiomeChunk(this, RANDOM, picker);
 			maps.put(cpos, chunk);
 		}
@@ -82,15 +78,14 @@ public class BiomeMap
 		return chunk.getBiome(MHelper.floor(x), MHelper.floor(z));
 	}
 	
-	public EndBiome getBiome(int x, int z)
-	{
+	public EndBiome getBiome(int x, int z) {
 		EndBiome biome = getRawBiome(x, z);
 		
-		if (biome.hasEdge() || (biome.hasParentBiome() && biome.getParentBiome().hasEdge()))
-		{
+		if (biome.hasEdge() || (biome.hasParentBiome() && biome.getParentBiome().hasEdge())) {
 			EndBiome search = biome;
-			if (biome.hasParentBiome())
+			if (biome.hasParentBiome()) {
 				search = biome.getParentBiome();
+			}
 			int d = (int) Math.ceil(search.getEdgeSize() / 4F) << 2;
 			
 			boolean edge = !search.isSame(getRawBiome(x + d, z));
@@ -102,8 +97,7 @@ public class BiomeMap
 			edge = edge || !search.isSame(getRawBiome(x + 1, z - 1));
 			edge = edge || !search.isSame(getRawBiome(x + 1, z + 1));
 			
-			if (edge)
-			{
+			if (edge) {
 				biome = search.getEdge();
 			}
 		}

@@ -1,0 +1,32 @@
+{
+    "variants": {
+        "facing=north":  [
+			{ "model": "betterend:block/small_jellyshroom_wall_1", "y": 180 },
+			{ "model": "betterend:block/small_jellyshroom_wall_2", "y": 180 }
+		],
+        "facing=south":  [
+			{ "model": "betterend:block/small_jellyshroom_wall_1" },
+			{ "model": "betterend:block/small_jellyshroom_wall_2" }
+		],
+        "facing=east":  [
+			{ "model": "betterend:block/small_jellyshroom_wall_1", "y": 270 },
+			{ "model": "betterend:block/small_jellyshroom_wall_2", "y": 270 }
+		],
+        "facing=west":  [
+			{ "model": "betterend:block/small_jellyshroom_wall_1", "y": 90 },
+			{ "model": "betterend:block/small_jellyshroom_wall_2", "y": 90 }
+		],
+		"facing=up":    [
+			{ "model": "betterend:block/small_jellyshroom_floor" },
+			{ "model": "betterend:block/small_jellyshroom_floor", "y": 90 },
+			{ "model": "betterend:block/small_jellyshroom_floor", "y": 180 },
+			{ "model": "betterend:block/small_jellyshroom_floor", "y": 270 }
+		],
+        "facing=down":  [
+			{ "model": "betterend:block/small_jellyshroom_ceil" },
+			{ "model": "betterend:block/small_jellyshroom_ceil", "y": 90 },
+			{ "model": "betterend:block/small_jellyshroom_ceil", "y": 180 },
+			{ "model": "betterend:block/small_jellyshroom_ceil", "y": 270 }
+		]
+    }
+}

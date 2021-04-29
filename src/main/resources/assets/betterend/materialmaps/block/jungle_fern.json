@@ -1,0 +1,42 @@
+{
+	"defaultMap": {
+		"spriteMap": [
+			{
+				"sprite": "betterend:block/jungle_fern_leaf",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_leaf_2",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_leaf_3",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_middle",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_middle_2",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_middle_3",
+				"material": "betterend:waving_wall"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_spore",
+				"material": "betterend:waving_small"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_spore_2",
+				"material": "betterend:waving_small"
+			},
+			{
+				"sprite": "betterend:block/jungle_fern_spore_3",
+				"material": "betterend:waving_small"
+			}
+		]
+	}
+}

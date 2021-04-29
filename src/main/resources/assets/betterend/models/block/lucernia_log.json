@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterend:block/lucernia_log_top",
+		"east": "betterend:block/lucernia_log_side",
+		"north": "betterend:block/lucernia_log_side",
+		"particle": "betterend:block/lucernia_log_side",
+		"south": "betterend:block/lucernia_log_side",
+		"up": "betterend:block/lucernia_log_top",
+		"west": "betterend:block/lucernia_log_side"
+	}
+}

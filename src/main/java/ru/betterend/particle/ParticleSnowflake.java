@@ -2,18 +2,18 @@ package ru.betterend.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteBillboardParticle;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 import ru.betterend.util.MHelper;
 
 @Environment(EnvType.CLIENT)
-public class ParticleSnowflake extends SpriteBillboardParticle {
+public class ParticleSnowflake extends TextureSheetParticle {
 	private int ticks;
 	private double preVX;
 	private double preVY;
@@ -22,13 +22,13 @@ public class ParticleSnowflake extends SpriteBillboardParticle {
 	private double nextVY;
 	private double nextVZ;
 	
-	protected ParticleSnowflake(ClientWorld world, double x, double y, double z, double r, double g, double b, SpriteProvider sprites) {
+	protected ParticleSnowflake(ClientLevel world, double x, double y, double z, double r, double g, double b, SpriteSet sprites) {
 		super(world, x, y, z, r, g, b);
-		setSprite(sprites);
+		pickSprite(sprites);
 		
-		this.maxAge = MHelper.randRange(150, 300, random);
-		this.scale = MHelper.randRange(0.05F, 0.2F, random);
-		this.setColorAlpha(0F);
+		this.lifetime = MHelper.randRange(150, 300, random);
+		this.quadSize = MHelper.randRange(0.05F, 0.2F, random);
+		this.setAlpha(0F);
 		
 		preVX = random.nextGaussian() * 0.015;
 		preVY = random.nextGaussian() * 0.015;
@@ -57,39 +57,39 @@ public class ParticleSnowflake extends SpriteBillboardParticle {
 		double delta = (double) ticks / 200.0;
 		
 		if (this.age <= 40) {
-			this.setColorAlpha(this.age / 40F);
+			this.setAlpha(this.age / 40F);
 		}
-		else if (this.age >= this.maxAge - 40) {
-			this.setColorAlpha((this.maxAge - this.age) / 40F);
-		}
-		
-		if (this.age >= this.maxAge) {
-			this.markDead();
+		else if (this.age >= this.lifetime - 40) {
+			this.setAlpha((this.lifetime - this.age) / 40F);
 		}
 		
-		this.velocityX = MathHelper.lerp(delta, preVX, nextVX);
-		this.velocityY = MathHelper.lerp(delta, preVY, nextVY);
-		this.velocityZ = MathHelper.lerp(delta, preVZ, nextVZ);
+		if (this.age >= this.lifetime) {
+			this.remove();
+		}
+		
+		this.xd = Mth.lerp(delta, preVX, nextVX);
+		this.yd = Mth.lerp(delta, preVY, nextVY);
+		this.zd = Mth.lerp(delta, preVZ, nextVZ);
 		
 		super.tick();
 	}
 	
 	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static class FactorySnowflake implements ParticleFactory<DefaultParticleType> {
+	public static class FactorySnowflake implements ParticleProvider<SimpleParticleType> {
 
-		private final SpriteProvider sprites;
+		private final SpriteSet sprites;
 
-		public FactorySnowflake(SpriteProvider sprites) {
+		public FactorySnowflake(SpriteSet sprites) {
 			this.sprites = sprites;
 		}
 
 		@Override
-		public Particle createParticle(DefaultParticleType type, ClientWorld world, double x, double y, double z, double vX, double vY, double vZ) {
+		public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double vX, double vY, double vZ) {
 			return new ParticleSnowflake(world, x, y, z, 1, 1, 1, sprites);
 		}
 	}

@@ -1,49 +1,68 @@
 package ru.betterend.blocks;
 
+import java.util.Objects;
 import java.util.Random;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.NetherPortalBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.NetherPortalBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.dimension.DimensionType;
 import ru.betterend.client.render.ERenderLayer;
+import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
+import ru.betterend.registry.EndPortals;
+import ru.betterend.rituals.EternalRitual;
 
-public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable {
+public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable, IColorProvider {
+	public static final IntegerProperty PORTAL = BlockProperties.PORTAL;
+
 	public EndPortalBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getBlastResistance()).luminance(state -> {
-			return 12;
-		}));
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getExplosionResistance()).luminance(15));
+	}
+
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
+		builder.add(PORTAL);
 	}
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
 		if (random.nextInt(100) == 0) {
-			world.playSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
+			world.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		double x = pos.getX() + random.nextDouble();
 		double y = pos.getY() + random.nextDouble();
 		double z = pos.getZ() + random.nextDouble();
 		int k = random.nextInt(2) * 2 - 1;
-		if (!world.getBlockState(pos.west()).isOf(this) && !world.getBlockState(pos.east()).isOf(this)) {
+		if (!world.getBlockState(pos.west()).is(this) && !world.getBlockState(pos.east()).is(this)) {
 			x = pos.getX() + 0.5D + 0.25D * k;
 		} else {
 			z = pos.getZ() + 0.5D + 0.25D * k;
@@ -53,31 +72,49 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {}
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {}
 	
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		return state;
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers() && entity.canUsePortals()) {
-			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entity);
-			if (teleEntity.hasCooldown()) return;
-			boolean isOverworld = world.getRegistryKey().equals(World.OVERWORLD);
-			ServerWorld destination = ((ServerWorld) world).getServer().getWorld(isOverworld ? World.END : World.OVERWORLD);
-			BlockPos exitPos = this.findExitPos(destination, pos, entity);
-			if (exitPos == null) return;
-			if (entity instanceof ServerPlayerEntity) {
-				ServerPlayerEntity player = (ServerPlayerEntity) entity;
-				player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, entity.yaw, entity.pitch);
-				teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
-			} else {
-				teleEntity.beSetExitPos(exitPos);
-				entity.moveToWorld(destination);
-				teleEntity.beSetCooldown(300);
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		if (world.isClientSide || !validate(entity)) return;
+		entity.setPortalCooldown();
+		ServerLevel currentWorld = (ServerLevel) world;
+		MinecraftServer server = currentWorld.getServer();
+		ServerLevel targetWorld = EndPortals.getWorld(server, state.getValue(PORTAL));
+		boolean isInEnd = currentWorld.dimension().equals(Level.END);
+		ServerLevel destination = isInEnd ? targetWorld : server.getLevel(Level.END);
+		BlockPos exitPos = findExitPos(currentWorld, destination, pos, entity);
+		if (exitPos == null) return;
+		if (entity instanceof ServerPlayer) {
+			ServerPlayer player = (ServerPlayer) entity;
+			teleportPlayer(player, destination, exitPos);
+		} else {
+			TeleportingEntity teleEntity = (TeleportingEntity) entity;
+			teleEntity.be_setExitPos(exitPos);
+			Entity teleported = entity.changeDimension(destination);
+			if (teleported != null) {
+				teleported.setPortalCooldown();
 			}
+		}
+	}
+
+	private boolean validate(Entity entity) {
+		return !entity.isPassenger() && !entity.isVehicle() &&
+				entity.canChangeDimensions() && !entity.isOnPortalCooldown();
+	}
+
+	private void teleportPlayer(ServerPlayer player, ServerLevel destination, BlockPos exitPos) {
+		if (player.isCreative()) {
+			player.teleportTo(destination, exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5, player.yRot, player.xRot);
+		} else {
+			TeleportingEntity teleEntity = (TeleportingEntity) player;
+			teleEntity.be_setExitPos(exitPos);
+			player.changeDimension(destination);
 		}
 	}
 	
@@ -86,78 +123,70 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		return ERenderLayer.TRANSLUCENT;
 	}
 	
-	private BlockPos findExitPos(ServerWorld world, BlockPos pos, Entity entity) {
-		Registry<DimensionType> registry = world.getRegistryManager().getDimensionTypes();
-		double mult = registry.get(DimensionType.THE_END_ID).getCoordinateScale();
-		BlockPos.Mutable basePos;
-		if (world.getRegistryKey().equals(World.OVERWORLD)) {
-			basePos = pos.mutableCopy().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
-		} else {
-			basePos = pos.mutableCopy().set(pos.getX() * mult, pos.getY(), pos.getZ() * mult);
-		}
-		Direction direction = Direction.EAST;
-		BlockPos.Mutable checkPos = basePos.mutableCopy();
-		for (int step = 1; step < 64; step++) {
-			for (int i = 0; i < step; i++) {
-				checkPos.setY(5);
-				while(checkPos.getY() < world.getHeight()) {
-					BlockState state = world.getBlockState(checkPos);
-					if(state.isOf(this)) {
-						int offStep;
-						checkPos = this.findCenter(world, checkPos, state.get(AXIS));
-						if (state.get(AXIS).equals(Direction.Axis.X)) {
-							if (entity.getMovementDirection().getAxis() == Direction.Axis.X) {
-								offStep = entity.getMovementDirection() == Direction.EAST ? 1 : -1;
-								float rotation = entity.applyRotation(BlockRotation.CLOCKWISE_90);
-								entity.yaw = rotation;
-							} else {
-								offStep = entity.getMovementDirection() == Direction.NORTH ? 1 : -1;
-							}
-							return checkPos.add(0, 0, offStep);
-						} else {
-							if (entity.getMovementDirection().getAxis() == Direction.Axis.Z) {
-								offStep = entity.getMovementDirection() == Direction.SOUTH ? -1 : 1;
-								float rotation = entity.applyRotation(BlockRotation.CLOCKWISE_90);
-								entity.yaw = rotation;
-							} else {
-								offStep = entity.getMovementDirection() == Direction.EAST ? 1 : -1;
-							}
-							return checkPos.add(offStep, 0, 0);
-						}
-					}
-					checkPos.move(Direction.UP);
-				}
-				checkPos.move(direction);
+	private BlockPos findExitPos(ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos, Entity entity) {
+		if (targetWorld == null) return null;
+		Registry<DimensionType> registry = targetWorld.registryAccess().dimensionTypes();
+		ResourceLocation targetWorldId = targetWorld.dimension().location();
+		ResourceLocation currentWorldId = currentWorld.dimension().location();
+		double targetMultiplier = Objects.requireNonNull(registry.get(targetWorldId)).coordinateScale();
+		double currentMultiplier = Objects.requireNonNull(registry.get(currentWorldId)).coordinateScale();
+		double multiplier = targetMultiplier > currentMultiplier ? 1.0 / targetMultiplier : currentMultiplier;
+		BlockPos.MutableBlockPos basePos = currentPos.mutable().set(currentPos.getX() * multiplier, currentPos.getY(), currentPos.getZ() * multiplier);
+		BlockPos.MutableBlockPos checkPos = basePos.mutable();
+		BlockState currentState = currentWorld.getBlockState(currentPos);
+		int radius = (EternalRitual.SEARCH_RADIUS >> 4) + 1;
+		checkPos = EternalRitual.findBlockPos(targetWorld, checkPos, radius, this, state -> state.is(this) &&
+				state.getValue(PORTAL).equals(currentState.getValue(PORTAL)));
+		if (checkPos != null) {
+			BlockState checkState = targetWorld.getBlockState(checkPos);
+			Axis axis = checkState.getValue(AXIS);
+			checkPos = findCenter(targetWorld, checkPos, axis);
+			Direction frontDir = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE).getClockWise();
+			Direction entityDir = entity.getMotionDirection();
+			if (entityDir.getAxis().isVertical()) {
+				entityDir = frontDir;
 			}
-			direction = direction.rotateYClockwise();
+			if (frontDir != entityDir && frontDir.getOpposite() != entityDir) {
+				entity.rotate(Rotation.CLOCKWISE_90);
+				entityDir = entityDir.getClockWise();
+			}
+			return checkPos.relative(entityDir);
 		}
 		return null;
 	}
 	
-	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis) {
+	private BlockPos.MutableBlockPos findCenter(Level world, BlockPos.MutableBlockPos pos, Direction.Axis axis) {
+		return findCenter(world, pos, axis, 1);
+	}
+	
+	private BlockPos.MutableBlockPos findCenter(Level world, BlockPos.MutableBlockPos pos, Direction.Axis axis, int step) {
+		if (step > 8) return pos;
 		BlockState right, left;
 		Direction rightDir, leftDir;
-		if (axis == Direction.Axis.X) {
-			right = world.getBlockState(pos.east());
-			left = world.getBlockState(pos.west());
-			rightDir = Direction.EAST;
-			leftDir = Direction.WEST;
-		} else {
-			right = world.getBlockState(pos.south());
-			left = world.getBlockState(pos.north());
-			rightDir = Direction.SOUTH;
-			leftDir = Direction.NORTH;
-		}
-		BlockState down = world.getBlockState(pos.down());
-		if (down.isOf(this)) {
-			return findCenter(world, pos.move(Direction.DOWN), axis);
-		} else if (right.isOf(this) && left.isOf(this)) {
+		rightDir = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE);
+		leftDir = rightDir.getOpposite();
+		right = world.getBlockState(pos.relative(rightDir));
+		left = world.getBlockState(pos.relative(leftDir));
+		BlockState down = world.getBlockState(pos.below());
+		if (down.is(this)) {
+			return findCenter(world, pos.move(Direction.DOWN), axis, step);
+		} else if (right.is(this) && left.is(this)) {
 			return pos;
-		} else if (right.isOf(this)) {
-			return findCenter(world, pos.move(rightDir), axis);
-		} else if (left.isOf(this)) {
-			return findCenter(world, pos.move(leftDir), axis);
+		} else if (right.is(this)) {
+			return findCenter(world, pos.move(rightDir), axis, ++step);
+		} else if (left.is(this)) {
+			return findCenter(world, pos.move(leftDir), axis, ++step);
 		}
 		return pos;
+	}
+
+	@Override
+	public BlockColor getProvider() {
+		return (state, world, pos, tintIndex) -> EndPortals.getColor(state.getValue(PORTAL));
+	}
+
+	@Override
+	public ItemColor getItemProvider() {
+		return (stack, tintIndex) -> EndPortals.getColor(0);
 	}
 }

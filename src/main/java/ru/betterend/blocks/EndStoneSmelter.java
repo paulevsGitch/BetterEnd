@@ -1,138 +1,151 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.BlockHitResult;
 import ru.betterend.blocks.basis.BaseBlockWithEntity;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
 public class EndStoneSmelter extends BaseBlockWithEntity {
-	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-	public static final BooleanProperty LIT = Properties.LIT;
+	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	public static final String ID = "end_stone_smelter";
 
 	public EndStoneSmelter() {
-		super(FabricBlockSettings.of(Material.STONE, MaterialColor.GRAY)
+		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY)
 				.hardness(4F)
 				.resistance(100F)
-				.requiresTool()
-				.sounds(BlockSoundGroup.STONE));
-		this.setDefaultState(this.stateManager.getDefaultState()
-											  .with(FACING, Direction.NORTH)
-											  .with(LIT, false));
+				.requiresCorrectToolForDrops()
+				.sound(SoundType.STONE));
+		this.registerDefaultState(this.stateDefinition.any()
+											  .setValue(FACING, Direction.NORTH)
+											  .setValue(LIT, false));
 	}
 	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (world.isClient) {
-			return ActionResult.SUCCESS;
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (world.isClientSide) {
+			return InteractionResult.SUCCESS;
 		} else {
 			this.openScreen(world, pos, player);
-			return ActionResult.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 	}
 
-	private void openScreen(World world, BlockPos pos, PlayerEntity player) {
+	private void openScreen(Level world, BlockPos pos, Player player) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
-			player.openHandledScreen((EndStoneSmelterBlockEntity) blockEntity);
+			player.openMenu((EndStoneSmelterBlockEntity) blockEntity);
 		}
 	}
 	
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
 	}
 	
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
+	public BlockEntity newBlockEntity(BlockGetter world) {
 		return new EndStoneSmelterBlockEntity();
 	}
 	
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this));
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		List<ItemStack> drop = Lists.newArrayList(new ItemStack(this));
+		BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
+			EndStoneSmelterBlockEntity smelterBlockEntity = (EndStoneSmelterBlockEntity) blockEntity;
+			for (int i = 0; i < smelterBlockEntity.getContainerSize(); i++) {
+				ItemStack item = smelterBlockEntity.getItem(i);
+				if (!item.isEmpty()) {
+					drop.add(item);
+				}
+			}
+		}
+		return drop;
 	}
 
 	@Override
-	public boolean hasComparatorOutput(BlockState state) {
+	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
 
 	@Override
-	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
 		//TODO
-		return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation) {
-		return (BlockState)state.with(FACING, rotation.rotate((Direction)state.get(FACING)));
+	public BlockState rotate(BlockState state, Rotation rotation) {
+		return (BlockState)state.setValue(FACING, rotation.rotate((Direction)state.getValue(FACING)));
 	}
 
 	@Override
-	public BlockState mirror(BlockState state, BlockMirror mirror) {
-		return state.rotate(mirror.getRotation((Direction)state.get(FACING)));
+	public BlockState mirror(BlockState state, Mirror mirror) {
+		return state.rotate(mirror.getRotation((Direction)state.getValue(FACING)));
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, LIT);
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-		if (state.get(LIT)) {
+	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
+		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5D;
 			double y = pos.getY();
 			double z = pos.getZ() + 0.5D;
 			if (random.nextDouble() < 0.1D) {
-			   world.playSound(x, y, z, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+			   world.playLocalSound(x, y, z, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
 
-			Direction direction = (Direction)state.get(FACING);
+			Direction direction = (Direction)state.getValue(FACING);
 			Direction.Axis axis = direction.getAxis();
 			double defOffset = random.nextDouble() * 0.6D - 0.3D;
-			double offX = axis == Direction.Axis.X ? direction.getOffsetX() * 0.52D : defOffset;
+			double offX = axis == Direction.Axis.X ? direction.getStepX() * 0.52D : defOffset;
 			double offY = random.nextDouble() * 9.0D / 16.0D;
-			double offZ = axis == Direction.Axis.Z ? direction.getOffsetZ() * 0.52D : defOffset;
+			double offZ = axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : defOffset;
 			world.addParticle(ParticleTypes.SMOKE, x + offX, y + offY, z + offZ, 0.0D, 0.0D, 0.0D);
 		}
 	}

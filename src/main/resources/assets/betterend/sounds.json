@@ -1,5 +1,5 @@
 {
-	"betterend.music.foggy_mushroomland": {
+	"betterend.music.forest": {
 		"category": "music",
 		"sounds": [
 			{
@@ -11,102 +11,7 @@
 				"name": "betterend:music/dan_henig-nebular_focus",
 				"volume": 0.2,
 				"stream": false
-			}
-		]
-	},
-	"betterend.music.chorus_forest": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterend:music/emmit_fenn-creep",
-				"volume": 0.2,
-				"stream": false
 			},
-			{
-				"name": "betterend:music/jesse_gallagher-the_anunnaki_return",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterend.music.crystal_mountains": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterend:music/jesse_gallagher-spenta_mainyu",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterend:music/jesse_gallagher-obelisks",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterend.music.megalake": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterend:music/jesse_gallagher-the_blue_pearl",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterend:music/jesse_gallagher-venkatesananda",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterend.music.dust_wastelands": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterend:music/the-tides-ammil",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterend:music/vyen-amber",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterend.music.shadow_forest": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterend:music/i_think_i_can_help_you-the_six_realms",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterend:music/jesse_gallagher-maestro_tlakaelel",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterend.music.blossoming_spires": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterend:music/benjamin_martins-verve",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterend:music/the_tides-somnolent",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterend.music.amber_land": {
-		"category": "music",
-		"sounds": [
 			{
 				"name": "betterend:music/bobby_richards-two_moons",
 				"volume": 0.2,
@@ -119,7 +24,57 @@
 			}
 		]
 	},
-	"betterend.music.sulphur_springs": {
+	"betterend.music.water": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/jesse_gallagher-the_blue_pearl",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jesse_gallagher-venkatesananda",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/the_tides-somnolent",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/benjamin_martins-verve",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterend.music.dark": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/emmit_fenn-creep",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jesse_gallagher-the_anunnaki_return",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/i_think_i_can_help_you-the_six_realms",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/jesse_gallagher-maestro_tlakaelel",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterend.music.openspace": {
 		"category": "music",
 		"sounds": [
 			{
@@ -129,6 +84,16 @@
 			},
 			{
 				"name": "betterend:music/asher_fulero-elegy",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/the-tides-ammil",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/vyen-amber",
 				"volume": 0.2,
 				"stream": false
 			}
@@ -199,6 +164,26 @@
 			}
 		]
 	},
+	"betterend.ambient.umbrella_jungle": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/umbrella_jungle",
+				"volume": 1.0,
+				"stream": false
+			}
+		]
+	},
+	"betterend.ambient.glowing_grasslands": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/glowing_grasslands",
+				"volume": 1.0,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.entity.dragonfly": {
 		"category": "entity",
@@ -244,6 +229,16 @@
 		"sounds": [
 			{
 				"name": "betterend:entity/shadow_walker/shadow_walker_death",
+				"stream": false
+			}
+		]
+	},
+	
+	"betterend.record.strange_and_alien": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-strange_and_alien",
 				"stream": false
 			}
 		]

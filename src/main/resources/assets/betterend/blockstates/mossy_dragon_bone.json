@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=x": { "model": "betterend:block/mossy_dragon_bone_hor", "y": 90 },
+    "axis=y": { "model": "betterend:block/mossy_dragon_bone_ver" },
+    "axis=z": { "model": "betterend:block/mossy_dragon_bone_hor" }
+  }
+}

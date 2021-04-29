@@ -1,7 +1,7 @@
 package ru.betterend.util.sdf.operator;
 
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.util.math.Quaternion;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
 public class SDFRotation extends SDFUnary {
 	private static final Vector3f POS = new Vector3f();
@@ -15,7 +15,7 @@ public class SDFRotation extends SDFUnary {
 	@Override
 	public float getDistance(float x, float y, float z) {
 		POS.set(x, y, z);
-		POS.rotate(rotation);
-		return source.getDistance(POS.getX(), POS.getY(), POS.getZ());
+		POS.transform(rotation);
+		return source.getDistance(POS.x(), POS.y(), POS.z());
 	}
 }

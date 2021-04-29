@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs", 
-    "textures": {
-        "bottom": "betterend:block/violecite_bricks", 
-        "side": "betterend:block/violecite_bricks", 
-        "top": "betterend:block/violecite_bricks"
-    }
-}

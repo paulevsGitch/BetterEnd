@@ -1,0 +1,66 @@
+{
+    "variants": {
+        "bottom=empty,shape=bottom,facing=up":    { "model": "betterend:block/neon_cactus_big" },
+        "bottom=empty,shape=bottom,facing=down":  { "model": "betterend:block/neon_cactus_big", "x": 180 },
+        "bottom=empty,shape=bottom,facing=north": { "model": "betterend:block/neon_cactus_big", "x": 90 },
+        "bottom=empty,shape=bottom,facing=south": { "model": "betterend:block/neon_cactus_big", "x": 90, "y": 180 },
+        "bottom=empty,shape=bottom,facing=east":  { "model": "betterend:block/neon_cactus_big", "x": 90, "y": 90 },
+        "bottom=empty,shape=bottom,facing=west":  { "model": "betterend:block/neon_cactus_big", "x": 90, "y": 270 },
+		
+		"bottom=sand,shape=bottom,facing=up":    { "model": "betterend:block/neon_cactus_big_sand" },
+        "bottom=sand,shape=bottom,facing=down":  { "model": "betterend:block/neon_cactus_big_sand", "x": 180 },
+        "bottom=sand,shape=bottom,facing=north": { "model": "betterend:block/neon_cactus_big_sand", "x": 90 },
+        "bottom=sand,shape=bottom,facing=south": { "model": "betterend:block/neon_cactus_big_sand", "x": 90, "y": 180 },
+        "bottom=sand,shape=bottom,facing=east":  { "model": "betterend:block/neon_cactus_big_sand", "x": 90, "y": 90 },
+        "bottom=sand,shape=bottom,facing=west":  { "model": "betterend:block/neon_cactus_big_sand", "x": 90, "y": 270 },
+		
+		"bottom=moss,shape=bottom,facing=up":    { "model": "betterend:block/neon_cactus_big_moss" },
+        "bottom=moss,shape=bottom,facing=down":  { "model": "betterend:block/neon_cactus_big_moss", "x": 180 },
+        "bottom=moss,shape=bottom,facing=north": { "model": "betterend:block/neon_cactus_big_moss", "x": 90 },
+        "bottom=moss,shape=bottom,facing=south": { "model": "betterend:block/neon_cactus_big_moss", "x": 90, "y": 180 },
+        "bottom=moss,shape=bottom,facing=east":  { "model": "betterend:block/neon_cactus_big_moss", "x": 90, "y": 90 },
+        "bottom=moss,shape=bottom,facing=west":  { "model": "betterend:block/neon_cactus_big_moss", "x": 90, "y": 270 },
+		
+		"bottom=empty,shape=middle,facing=up":    { "model": "betterend:block/neon_cactus_medium" },
+        "bottom=empty,shape=middle,facing=down":  { "model": "betterend:block/neon_cactus_medium", "x": 180 },
+        "bottom=empty,shape=middle,facing=north": { "model": "betterend:block/neon_cactus_medium", "x": 90 },
+        "bottom=empty,shape=middle,facing=south": { "model": "betterend:block/neon_cactus_medium", "x": 90, "y": 180 },
+        "bottom=empty,shape=middle,facing=east":  { "model": "betterend:block/neon_cactus_medium", "x": 90, "y": 90 },
+        "bottom=empty,shape=middle,facing=west":  { "model": "betterend:block/neon_cactus_medium", "x": 90, "y": 270 },
+		
+		"bottom=sand,shape=middle,facing=up":    { "model": "betterend:block/neon_cactus_medium_sand" },
+        "bottom=sand,shape=middle,facing=down":  { "model": "betterend:block/neon_cactus_medium_sand", "x": 180 },
+        "bottom=sand,shape=middle,facing=north": { "model": "betterend:block/neon_cactus_medium_sand", "x": 90 },
+        "bottom=sand,shape=middle,facing=south": { "model": "betterend:block/neon_cactus_medium_sand", "x": 90, "y": 180 },
+        "bottom=sand,shape=middle,facing=east":  { "model": "betterend:block/neon_cactus_medium_sand", "x": 90, "y": 90 },
+        "bottom=sand,shape=middle,facing=west":  { "model": "betterend:block/neon_cactus_medium_sand", "x": 90, "y": 270 },
+		
+		"bottom=moss,shape=middle,facing=up":    { "model": "betterend:block/neon_cactus_medium_moss" },
+        "bottom=moss,shape=middle,facing=down":  { "model": "betterend:block/neon_cactus_medium_moss", "x": 180 },
+        "bottom=moss,shape=middle,facing=north": { "model": "betterend:block/neon_cactus_medium_moss", "x": 90 },
+        "bottom=moss,shape=middle,facing=south": { "model": "betterend:block/neon_cactus_medium_moss", "x": 90, "y": 180 },
+        "bottom=moss,shape=middle,facing=east":  { "model": "betterend:block/neon_cactus_medium_moss", "x": 90, "y": 90 },
+        "bottom=moss,shape=middle,facing=west":  { "model": "betterend:block/neon_cactus_medium_moss", "x": 90, "y": 270 },
+		
+		"bottom=empty,shape=top,facing=up":    { "model": "betterend:block/neon_cactus_small" },
+        "bottom=empty,shape=top,facing=down":  { "model": "betterend:block/neon_cactus_small", "x": 180 },
+        "bottom=empty,shape=top,facing=north": { "model": "betterend:block/neon_cactus_small", "x": 90 },
+        "bottom=empty,shape=top,facing=south": { "model": "betterend:block/neon_cactus_small", "x": 90, "y": 180 },
+        "bottom=empty,shape=top,facing=east":  { "model": "betterend:block/neon_cactus_small", "x": 90, "y": 90 },
+        "bottom=empty,shape=top,facing=west":  { "model": "betterend:block/neon_cactus_small", "x": 90, "y": 270 },
+		
+		"bottom=sand,shape=top,facing=up":    { "model": "betterend:block/neon_cactus_small_sand" },
+        "bottom=sand,shape=top,facing=down":  { "model": "betterend:block/neon_cactus_small_sand", "x": 180 },
+        "bottom=sand,shape=top,facing=north": { "model": "betterend:block/neon_cactus_small_sand", "x": 90 },
+        "bottom=sand,shape=top,facing=south": { "model": "betterend:block/neon_cactus_small_sand", "x": 90, "y": 180 },
+        "bottom=sand,shape=top,facing=east":  { "model": "betterend:block/neon_cactus_small_sand", "x": 90, "y": 90 },
+        "bottom=sand,shape=top,facing=west":  { "model": "betterend:block/neon_cactus_small_sand", "x": 90, "y": 270 },
+		
+		"bottom=moss,shape=top,facing=up":    { "model": "betterend:block/neon_cactus_small_moss" },
+        "bottom=moss,shape=top,facing=down":  { "model": "betterend:block/neon_cactus_small_moss", "x": 180 },
+        "bottom=moss,shape=top,facing=north": { "model": "betterend:block/neon_cactus_small_moss", "x": 90 },
+        "bottom=moss,shape=top,facing=south": { "model": "betterend:block/neon_cactus_small_moss", "x": 90, "y": 180 },
+        "bottom=moss,shape=top,facing=east":  { "model": "betterend:block/neon_cactus_small_moss", "x": 90, "y": 90 },
+        "bottom=moss,shape=top,facing=west":  { "model": "betterend:block/neon_cactus_small_moss", "x": 90, "y": 270 }
+    }
+}

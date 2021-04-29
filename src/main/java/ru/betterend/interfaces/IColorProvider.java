@@ -1,10 +1,10 @@
 package ru.betterend.interfaces;
 
-import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.color.item.ItemColorProvider;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.color.item.ItemColor;
 
 public interface IColorProvider {
-	BlockColorProvider getProvider();
+	BlockColor getProvider();
 
-	ItemColorProvider getItemProvider();
+	ItemColor getItemProvider();
 }

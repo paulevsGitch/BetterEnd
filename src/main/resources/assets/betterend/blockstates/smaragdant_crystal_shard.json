@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"facing=up":    { "model": "betterend:block/smaragdant_crystal_shard" },
+		"facing=down":  { "model": "betterend:block/smaragdant_crystal_shard", "x": 180 },
+		"facing=north": { "model": "betterend:block/smaragdant_crystal_shard", "x": 90 },
+		"facing=south": { "model": "betterend:block/smaragdant_crystal_shard", "x": 90, "y": 180 },
+		"facing=east":  { "model": "betterend:block/smaragdant_crystal_shard", "x": 90, "y": 90 },
+		"facing=west":  { "model": "betterend:block/smaragdant_crystal_shard", "x": 90, "y": 270 }
+	}
+}

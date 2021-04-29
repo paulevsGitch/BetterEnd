@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterend:block/moth_hive_side",
+		"east": "betterend:block/moth_hive_side",
+		"north": "betterend:block/moth_hive_front",
+		"particle": "betterend:block/moth_hive_side",
+		"south": "betterend:block/moth_hive_side",
+		"up": "betterend:block/moth_hive_side",
+		"west": "betterend:block/moth_hive_side"
+	}
+}

@@ -1,0 +1,81 @@
+{
+	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+	"textures": {
+		"particle": "betterend:block/amaranita_hymenophore_fur",
+		"texture": "betterend:block/amaranita_hymenophore_fur"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "PlaneX1",
+			"from": [ 5, 12, 0 ],
+			"to": [ 5.001, 16, 16 ],
+			"faces": {
+				"west": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" },
+				"east": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "PlaneX1",
+			"from": [ 11, 12, 0 ],
+			"to": [ 11.001, 16, 16 ],
+			"faces": {
+				"west": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" },
+				"east": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "PlaneX1",
+			"from": [ 16, 12, 0 ],
+			"to": [ 16.001, 16, 16 ],
+			"faces": {
+				"west": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" },
+				"east": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "PlaneX1",
+			"from": [ 0, 12, 0 ],
+			"to": [ 0.001, 16, 16 ],
+			"faces": {
+				"west": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" },
+				"east": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "PlaneZ11",
+			"from": [ 0, 12, 0 ],
+			"to": [ 16, 16, 0.001 ],
+			"faces": {
+				"north": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" },
+				"south": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "PlaneZ11",
+			"from": [ 0, 12, 5 ],
+			"to": [ 16, 16, 5.001 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" },
+				"south": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "PlaneZ11",
+			"from": [ 0, 12, 11 ],
+			"to": [ 16, 16, 11.001 ],
+			"faces": {
+				"north": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" },
+				"south": { "uv": [ 16, 0, 0, 4 ], "texture": "#texture" }
+			}
+		},
+		{
+			"__comment": "PlaneZ11",
+			"from": [ 0, 12, 16 ],
+			"to": [ 16, 16, 16.001 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" },
+				"south": { "uv": [ 0, 0, 16, 4 ], "texture": "#texture" }
+			}
+		}
+	]
+}

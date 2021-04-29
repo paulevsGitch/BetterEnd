@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "shape=light_bottom": { "model": "betterend:block/lumecorn_light_bottom" },
+        "shape=light_middle": { "model": "betterend:block/lumecorn_light_middle" },
+        "shape=light_top_middle": { "model": "betterend:block/lumecorn_light_top_middle" },
+        "shape=light_top": { "model": "betterend:block/lumecorn_light_top" },
+        "shape=middle": { "model": "betterend:block/lumecorn_middle" },
+        "shape=bottom_big": { "model": "betterend:block/lumecorn_roots_big" },
+        "shape=bottom_small": { "model": "betterend:block/lumecorn_roots_small" }
+    }
+}

@@ -1,0 +1,64 @@
+{
+    "name": "주입 의식",
+    "icon": "betterend:infusion_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "원소의 힘을 아이템에 주입합니다."
+        },
+        {
+            "type": "crafting",
+            "title": "재료 준비",
+            "text": "먼저 $(bold)주입 받침대$()와 8개의 $(bold)아무$() 받침대를 제작해야합니다.",
+            "recipe": "betterend:infusion_pedestal"
+        },
+        {
+            "type": "image",
+            "text": "그 다음 중앙에 주입 받침대를 설치한 후 주위에 다른 받침대를 설치합니다.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/infusion_ritual_start.png",
+                "betterend:textures/images/infusion_ritual/infusion_ritual_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "title": "주입",
+            "text": "구조물이 완성되면 주입을 할 수 있습니다.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_structure.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "주 재료는 $(bold)주입 받침대$()에 촉매는 다른 받침대에 놓습니다.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_ready.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "$(l:https://www.curseforge.com/minecraft/mc-mods/roughly-enough-items)REI$(/l)를 통해 제작법을 볼 수 있습니다.$(br2)주입을 시작하려면 주 재료를 마지막에 놓거나 $(bold)주입 받침대$()를 우클릭 하세요."
+        },
+        {
+            "type": "image",
+            "text": "완료될 때까지 기다려야 합니다.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_started.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "결과물을 가져가세요.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_finished.png"
+            ]
+        }
+    ]
+}

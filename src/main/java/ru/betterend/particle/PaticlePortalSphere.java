@@ -2,16 +2,16 @@ package ru.betterend.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.AnimatedParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SimpleAnimatedParticle;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 import ru.betterend.util.MHelper;
 
-public class PaticlePortalSphere extends AnimatedParticle {
+public class PaticlePortalSphere extends SimpleAnimatedParticle {
 	private int ticks;
 	private double preVX;
 	private double preVY;
@@ -20,14 +20,14 @@ public class PaticlePortalSphere extends AnimatedParticle {
 	private double nextVY;
 	private double nextVZ;
 	
-	public PaticlePortalSphere(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider) {
+	public PaticlePortalSphere(ClientLevel world, double x, double y, double z, SpriteSet spriteProvider) {
 		super(world, x, y, z, spriteProvider, 0);
-		setSprite(spriteProvider.getSprite(random));
-		this.maxAge = MHelper.randRange(20, 80, random);
-		this.scale = MHelper.randRange(0.05F, 0.15F, random);
+		setSprite(spriteProvider.get(random));
+		this.lifetime = MHelper.randRange(20, 80, random);
+		this.quadSize = MHelper.randRange(0.05F, 0.15F, random);
 		this.setColor(0xFEBBD5);
-		this.setTargetColor(0xBBFEE4);
-		this.setSpriteForAge(spriteProvider);
+		this.setFadeColor(0xBBFEE4);
+		this.setSpriteFromAge(spriteProvider);
 		
 		preVX = random.nextGaussian() * 0.02;
 		preVY = random.nextGaussian() * 0.02;
@@ -52,24 +52,24 @@ public class PaticlePortalSphere extends AnimatedParticle {
 		}
 		double delta = (double) ticks / 30.0;
 		
-		this.velocityX = MathHelper.lerp(delta, preVX, nextVX);
-		this.velocityY = MathHelper.lerp(delta, preVY, nextVY);
-		this.velocityZ = MathHelper.lerp(delta, preVZ, nextVZ);
+		this.xd = Mth.lerp(delta, preVX, nextVX);
+		this.yd = Mth.lerp(delta, preVY, nextVY);
+		this.zd = Mth.lerp(delta, preVZ, nextVZ);
 		
 		super.tick();
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static class FactoryPortalSphere implements ParticleFactory<DefaultParticleType> {
+	public static class FactoryPortalSphere implements ParticleProvider<SimpleParticleType> {
 
-		private final SpriteProvider sprites;
+		private final SpriteSet sprites;
 
-		public FactoryPortalSphere(SpriteProvider sprites) {
+		public FactoryPortalSphere(SpriteSet sprites) {
 			this.sprites = sprites;
 		}
 
 		@Override
-		public Particle createParticle(DefaultParticleType type, ClientWorld world, double x, double y, double z, double vX, double vY, double vZ) {
+		public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double vX, double vY, double vZ) {
 			return new PaticlePortalSphere(world, x, y, z, sprites);
 		}
 	}

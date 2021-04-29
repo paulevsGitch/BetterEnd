@@ -3,10 +3,10 @@ package ru.betterend.world.features;
 import java.util.Random;
 import java.util.function.Function;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 
@@ -18,11 +18,11 @@ public class MengerSpongeFeature extends UnderwaterPlantScatter {
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlocksHelper.setWithoutUpdate(world, blockPos, EndBlocks.MENGER_SPONGE_WET);
 		if (random.nextBoolean()) {
 			for (Direction dir: BlocksHelper.DIRECTIONS) {
-				BlockPos pos = blockPos.offset(dir);
+				BlockPos pos = blockPos.relative(dir);
 				if (REPLACE.apply(world.getBlockState(pos))) {
 					BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.MENGER_SPONGE_WET);
 				}
@@ -32,7 +32,7 @@ public class MengerSpongeFeature extends UnderwaterPlantScatter {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.isOf(EndBlocks.END_LOTUS_STEM)) {
+			if (state.is(EndBlocks.END_LOTUS_STEM)) {
 				return false;
 			}
 			return !state.getFluidState().isEmpty() || state.getMaterial().isReplaceable();

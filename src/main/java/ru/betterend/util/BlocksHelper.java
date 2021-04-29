@@ -2,34 +2,38 @@ package ru.betterend.util;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Property;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.WorldAccess;
-import ru.betterend.blocks.BlockBlueVine;
-import ru.betterend.blocks.basis.BlockDoublePlant;
-import ru.betterend.blocks.basis.BlockFur;
-import ru.betterend.blocks.basis.BlockVine;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import ru.betterend.blocks.BlueVineBlock;
+import ru.betterend.blocks.basis.DoublePlantBlock;
+import ru.betterend.blocks.basis.FurBlock;
+import ru.betterend.blocks.basis.StalactiteBlock;
+import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 
 public class BlocksHelper {
-	public static final BooleanProperty ROOTS = BooleanProperty.of("roots");
+	public static final BooleanProperty ROOTS = BooleanProperty.create("roots");
+	private static final Map<Block, Integer> COLOR_BY_BLOCK = Maps.newHashMap();
 	
 	public static final int FLAG_UPDATE_BLOCK = 1;
 	public static final int FLAG_SEND_CLIENT_CHANGES = 2;
@@ -42,9 +46,9 @@ public class BlocksHelper {
 	public static final Direction[] HORIZONTAL = makeHorizontal();
 	public static final Direction[] DIRECTIONS = Direction.values();
 	
-	private static final Mutable POS = new Mutable();
-	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
-	protected static final BlockState WATER = Blocks.WATER.getDefaultState();
+	private static final MutableBlockPos POS = new MutableBlockPos();
+	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
+	protected static final BlockState WATER = Blocks.WATER.defaultBlockState();
 
 	private static final Vec3i[] OFFSETS = new Vec3i[] {
 			new Vec3i(-1, -1, -1), new Vec3i(-1, -1, 0), new Vec3i(-1, -1, 1),
@@ -59,38 +63,46 @@ public class BlocksHelper {
 			new Vec3i(1, 0, -1), new Vec3i(1, 0, 0), new Vec3i(1, 0, 1),
 			new Vec3i(1, 1, -1), new Vec3i(1, 1, 0), new Vec3i(1, 1, 1)
 	};
-
-	public static void setWithoutUpdate(WorldAccess world, BlockPos pos, BlockState state) {
-		world.setBlockState(pos, state, SET_SILENT);
+	
+	public static void addBlockColor(Block block, int color) {
+		COLOR_BY_BLOCK.put(block, color);
 	}
 	
-	public static void setWithoutUpdate(WorldAccess world, BlockPos pos, Block block) {
-		world.setBlockState(pos, block.getDefaultState(), SET_SILENT);
-	}
-	
-	public static void setWithUpdate(WorldAccess world, BlockPos pos, BlockState state) {
-		world.setBlockState(pos, state, SET_OBSERV);
-	}
-	
-	public static void setWithUpdate(WorldAccess world, BlockPos pos, Block block) {
-		world.setBlockState(pos, block.getDefaultState(), SET_OBSERV);
+	public static int getBlockColor(Block block) {
+		return COLOR_BY_BLOCK.getOrDefault(block, 0xFF000000);
 	}
 
-	public static int upRay(WorldAccess world, BlockPos pos, int maxDist) {
+	public static void setWithoutUpdate(LevelAccessor world, BlockPos pos, BlockState state) {
+		world.setBlock(pos, state, SET_SILENT);
+	}
+	
+	public static void setWithoutUpdate(LevelAccessor world, BlockPos pos, Block block) {
+		world.setBlock(pos, block.defaultBlockState(), SET_SILENT);
+	}
+	
+	public static void setWithUpdate(LevelAccessor world, BlockPos pos, BlockState state) {
+		world.setBlock(pos, state, SET_OBSERV);
+	}
+	
+	public static void setWithUpdate(LevelAccessor world, BlockPos pos, Block block) {
+		world.setBlock(pos, block.defaultBlockState(), SET_OBSERV);
+	}
+
+	public static int upRay(LevelAccessor world, BlockPos pos, int maxDist) {
 		int length = 0;
-		for (int j = 1; j < maxDist && (world.isAir(pos.up(j))); j++)
+		for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.above(j))); j++)
 			length++;
 		return length;
 	}
 
-	public static int downRay(WorldAccess world, BlockPos pos, int maxDist) {
+	public static int downRay(LevelAccessor world, BlockPos pos, int maxDist) {
 		int length = 0;
-		for (int j = 1; j < maxDist && (world.isAir(pos.down(j))); j++)
+		for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.below(j))); j++)
 			length++;
 		return length;
 	}
 	
-	public static int downRayRep(WorldAccess world, BlockPos pos, int maxDist) {
+	public static int downRayRep(LevelAccessor world, BlockPos pos, int maxDist) {
 		POS.set(pos);
 		for (int j = 1; j < maxDist && (world.getBlockState(POS)).getMaterial().isReplaceable(); j++)
 		{
@@ -99,31 +111,31 @@ public class BlocksHelper {
 		return pos.getY() - POS.getY();
 	}
 	
-	public static int raycastSqr(WorldAccess world, BlockPos pos, int dx, int dy, int dz, int maxDist) {
+	public static int raycastSqr(LevelAccessor world, BlockPos pos, int dx, int dy, int dz, int maxDist) {
 		POS.set(pos);
 		for (int j = 1; j < maxDist && (world.getBlockState(POS)).getMaterial().isReplaceable(); j++)
 		{
 			POS.move(dx, dy, dz);
 		}
-		return (int) pos.getSquaredDistance(POS);
+		return (int) pos.distSqr(POS);
 	}
 
-	public static BlockState rotateHorizontal(BlockState state, BlockRotation rotation, Property<Direction> facing) {
-		return (BlockState) state.with(facing, rotation.rotate((Direction) state.get(facing)));
+	public static BlockState rotateHorizontal(BlockState state, Rotation rotation, Property<Direction> facing) {
+		return state.setValue(facing, rotation.rotate(state.getValue(facing)));
 	}
 
-	public static BlockState mirrorHorizontal(BlockState state, BlockMirror mirror, Property<Direction> facing) {
-		return state.rotate(mirror.getRotation((Direction) state.get(facing)));
+	public static BlockState mirrorHorizontal(BlockState state, Mirror mirror, Property<Direction> facing) {
+		return state.rotate(mirror.getRotation(state.getValue(facing)));
 	}
 
-	public static int getLengthDown(WorldAccess world, BlockPos pos, Block block) {
+	public static int getLengthDown(LevelAccessor world, BlockPos pos, Block block) {
 		int count = 1;
-		while (world.getBlockState(pos.down(count)).getBlock() == block)
+		while (world.getBlockState(pos.below(count)).getBlock() == block)
 			count++;
 		return count;
 	}
 
-	public static void cover(WorldAccess world, BlockPos center, Block ground, BlockState cover, int radius, Random random) {
+	public static void cover(LevelAccessor world, BlockPos center, Block ground, BlockState cover, int radius, Random random) {
 		HashSet<BlockPos> points = new HashSet<BlockPos>();
 		HashSet<BlockPos> points2 = new HashSet<BlockPos>();
 		if (world.getBlockState(center).getBlock() == ground) {
@@ -135,7 +147,7 @@ public class BlocksHelper {
 					BlockPos pos = iterator.next();
 					for (Vec3i offset : OFFSETS) {
 						if (random.nextBoolean()) {
-							BlockPos pos2 = pos.add(offset);
+							BlockPos pos2 = pos.offset(offset);
 							if (random.nextBoolean() && world.getBlockState(pos2).getBlock() == ground
 									&& !points.contains(pos2))
 								points2.add(pos2);
@@ -153,7 +165,7 @@ public class BlocksHelper {
 		}
 	}
 	
-	public static void fixBlocks(WorldAccess world, BlockPos start, BlockPos end) {
+	public static void fixBlocks(LevelAccessor world, BlockPos start, BlockPos end) {
 		BlockState state;
 		Set<BlockPos> doubleCheck = Sets.newHashSet();
 		for (int x = start.getX(); x <= end.getX(); x++) {
@@ -164,16 +176,16 @@ public class BlocksHelper {
 					POS.setY(y);
 					state = world.getBlockState(POS);
 					
-					if (state.getBlock() instanceof BlockFur) {
-						doubleCheck.add(POS.toImmutable());
+					if (state.getBlock() instanceof FurBlock) {
+						doubleCheck.add(POS.immutable());
 					}
 					// Liquids
 					else if (!state.getFluidState().isEmpty()) {
-						if (!state.canPlaceAt(world, POS)) {
+						if (!state.canSurvive(world, POS)) {
 							setWithoutUpdate(world, POS, WATER);
 							POS.setY(POS.getY() - 1);
 							state = world.getBlockState(POS);
-							while (!state.canPlaceAt(world, POS)) {
+							while (!state.canSurvive(world, POS)) {
 								state = state.getFluidState().isEmpty() ? AIR : WATER;
 								setWithoutUpdate(world, POS, state);
 								POS.setY(POS.getY() - 1);
@@ -181,7 +193,7 @@ public class BlocksHelper {
 							}
 						}
 						POS.setY(y - 1);
-						if (world.isAir(POS)) {
+						if (world.isEmptyBlock(POS)) {
 							POS.setY(y);
 							while (!world.getFluidState(POS).isEmpty()) {
 								setWithoutUpdate(world, POS, AIR);
@@ -190,32 +202,66 @@ public class BlocksHelper {
 							continue;
 						}
 						for (Direction dir : HORIZONTAL) {
-							if (world.isAir(POS.offset(dir))) {
-								world.getFluidTickScheduler().schedule(POS, state.getFluidState().getFluid(), 0);
+							if (world.isEmptyBlock(POS.relative(dir))) {
+								world.getLiquidTicks().scheduleTick(POS, state.getFluidState().getType(), 0);
 								break;
 							}
 						}
 					}
-					else if (!state.canPlaceAt(world, POS)) {
+					else if (state.is(EndBlocks.SMARAGDANT_CRYSTAL)) {
+						POS.setY(POS.getY() - 1);
+						if (world.isEmptyBlock(POS)) {
+							POS.setY(POS.getY() + 1);
+							while (state.is(EndBlocks.SMARAGDANT_CRYSTAL)) {
+								setWithoutUpdate(world, POS, AIR);
+								POS.setY(POS.getY() + 1);
+								state = world.getBlockState(POS);
+							}
+						}
+					}
+					else if (state.getBlock() instanceof StalactiteBlock) {
+						if (!state.canSurvive(world, POS)) {
+							if (world.getBlockState(POS.above()).getBlock() instanceof StalactiteBlock) {
+								while (state.getBlock() instanceof StalactiteBlock) {
+									setWithoutUpdate(world, POS, AIR);
+									POS.setY(POS.getY() + 1);
+									state = world.getBlockState(POS);
+								}
+							}
+							else {
+								while (state.getBlock() instanceof StalactiteBlock) {
+									setWithoutUpdate(world, POS, AIR);
+									POS.setY(POS.getY() - 1);
+									state = world.getBlockState(POS);
+								}
+							}
+						}
+					}
+					else if (state.is(EndBlocks.CAVE_PUMPKIN)) {
+						if (!world.getBlockState(POS.above()).is(EndBlocks.CAVE_PUMPKIN_SEED)) {
+							setWithoutUpdate(world, POS, AIR);
+						}
+					}
+					else if (!state.canSurvive(world, POS)) {
 						// Chorus
-						if (state.isOf(Blocks.CHORUS_PLANT)) {
+						if (state.is(Blocks.CHORUS_PLANT)) {
 							Set<BlockPos> ends = Sets.newHashSet();
 							Set<BlockPos> add = Sets.newHashSet();
-							ends.add(POS.toImmutable());
+							ends.add(POS.immutable());
 
 							for (int i = 0; i < 64 && !ends.isEmpty(); i++) {
 								ends.forEach((pos) -> {
 									setWithoutUpdate(world, pos, AIR);
 									for (Direction dir : HORIZONTAL) {
-										BlockPos p = pos.offset(dir);
+										BlockPos p = pos.relative(dir);
 										BlockState st = world.getBlockState(p);
-										if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER)) && !st.canPlaceAt(world, p)) {
+										if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(world, p)) {
 											add.add(p);
 										}
 									}
-									BlockPos p = pos.up();
+									BlockPos p = pos.above();
 									BlockState st = world.getBlockState(p);
-									if ((st.isOf(Blocks.CHORUS_PLANT) || st.isOf(Blocks.CHORUS_FLOWER)) && !st.canPlaceAt(world, p)) {
+									if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(world, p)) {
 										add.add(p);
 									}
 								});
@@ -225,8 +271,8 @@ public class BlocksHelper {
 							}
 						}
 						// Vines
-						else if (state.getBlock() instanceof BlockVine) {
-							while (world.getBlockState(POS).getBlock() instanceof BlockVine) {
+						else if (state.getBlock() instanceof VineBlock) {
+							while (world.getBlockState(POS).getBlock() instanceof VineBlock) {
 								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() - 1);
 							}
@@ -238,20 +284,20 @@ public class BlocksHelper {
 							POS.setY(POS.getY() - 1);
 							state = world.getBlockState(POS);
 
-							int ray = downRayRep(world, POS.toImmutable(), 64);
+							int ray = downRayRep(world, POS.immutable(), 64);
 							if (ray > 32) {
-								BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
+								BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.defaultBlockState());
 								if (world.getRandom().nextBoolean()) {
 									POS.setY(POS.getY() - 1);
 									state = world.getBlockState(POS);
-									BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
+									BlocksHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.defaultBlockState());
 								}
 							}
 							else {
 								POS.setY(y);
 								BlockState replacement = AIR;
 								for (Direction dir : HORIZONTAL) {
-									state = world.getBlockState(POS.offset(dir));
+									state = world.getBlockState(POS.relative(dir));
 									if (!state.getFluidState().isEmpty()) {
 										replacement = state;
 										break;
@@ -265,15 +311,15 @@ public class BlocksHelper {
 						// Blocks without support
 						else {
 							// Blue Vine
-							if (state.getBlock() instanceof BlockBlueVine) {
-								while (state.isOf(EndBlocks.BLUE_VINE) || state.isOf(EndBlocks.BLUE_VINE_LANTERN) || state.isOf(EndBlocks.BLUE_VINE_FUR)) {
+							if (state.getBlock() instanceof BlueVineBlock) {
+								while (state.is(EndBlocks.BLUE_VINE) || state.is(EndBlocks.BLUE_VINE_LANTERN) || state.is(EndBlocks.BLUE_VINE_FUR)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 									POS.setY(POS.getY() + 1);
 									state = world.getBlockState(POS);
 								}
 							}
 							// Double plants
-							if (state.getBlock() instanceof BlockDoublePlant) {
+							if (state.getBlock() instanceof DoublePlantBlock) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
@@ -289,18 +335,18 @@ public class BlocksHelper {
 		}
 		
 		doubleCheck.forEach((pos) -> {
-			if (!world.getBlockState(pos).canPlaceAt(world, pos)) {
+			if (!world.getBlockState(pos).canSurvive(world, pos)) {
 				BlocksHelper.setWithoutUpdate(world, pos, AIR);
 			}
 		});
 	}
 	
 	private static BlockState getAirOrFluid(BlockState state) {
-		return state.getFluidState().isEmpty() ? AIR : state.getFluidState().getBlockState();
+		return state.getFluidState().isEmpty() ? AIR : state.getFluidState().createLegacyBlock();
 	}
 	
 	public static boolean isEndNylium(Block block) {
-		return block.isIn(BlockTags.NYLIUM) && block.isIn(EndTags.END_GROUND);
+		return block.is(BlockTags.NYLIUM) && block.is(EndTags.END_GROUND);
 	}
 	
 	public static boolean isEndNylium(BlockState state) {
@@ -317,5 +363,9 @@ public class BlocksHelper {
 	
 	public static Direction randomDirection(Random random) {
 		return DIRECTIONS[random.nextInt(6)];
+	}
+
+	public static boolean isFluid(BlockState blockState) {
+		return !blockState.getFluidState().isEmpty();
 	}
 }

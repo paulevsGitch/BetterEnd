@@ -1,0 +1,8 @@
+{
+	"layers": [
+		{
+			"vertexSource": "betterend:shaders/material/wave.vert",
+			"fragmentSource": "betterend:shaders/material/glow_80_blue.frag"
+		}
+	]
+}

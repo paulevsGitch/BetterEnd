@@ -5,18 +5,19 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.CraftingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.recipe.ShapelessRecipe;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.level.ItemLike;
 import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.util.RecipeHelper;
 
@@ -24,7 +25,7 @@ public class GridRecipe {
 	private static final GridRecipe INSTANCE = new GridRecipe();
 	
 	private String name;
-	private ItemConvertible output;
+	private ItemLike output;
 	
 	private String group;
 	private RecipeType<?> type;
@@ -36,7 +37,7 @@ public class GridRecipe {
 	
 	private GridRecipe() {}
 	
-	public static GridRecipe make(String name, ItemConvertible output) {
+	public static GridRecipe make(String name, ItemLike output) {
 		INSTANCE.name = name;
 		INSTANCE.output = output;
 		
@@ -47,7 +48,7 @@ public class GridRecipe {
 		INSTANCE.materialKeys.clear();
 		INSTANCE.count = 1;
 		
-		INSTANCE.exist = RecipeHelper.exists(output);
+		INSTANCE.exist = Configs.RECIPE_CONFIG.getBoolean("grid", name, true) && RecipeHelper.exists(output);
 		
 		return INSTANCE;
 	}
@@ -69,18 +70,18 @@ public class GridRecipe {
 	}
 	
 	public GridRecipe addMaterial(char key, Tag<Item> value) {
-		return addMaterial(key, Ingredient.fromTag(value));
+		return addMaterial(key, Ingredient.of(value));
 	}
 	
 	public GridRecipe addMaterial(char key, ItemStack... value) {
-		return addMaterial(key, Ingredient.ofStacks(Arrays.stream(value)));
+		return addMaterial(key, Ingredient.of(Arrays.stream(value)));
 	}
 	
-	public GridRecipe addMaterial(char key, ItemConvertible... values) {
-		for (ItemConvertible item: values) {
+	public GridRecipe addMaterial(char key, ItemLike... values) {
+		for (ItemLike item: values) {
 			exist &= RecipeHelper.exists(item);
 		}
-		return addMaterial(key, Ingredient.ofItems(values));
+		return addMaterial(key, Ingredient.of(values));
 	}
 	
 	private GridRecipe addMaterial(char key, Ingredient value) {
@@ -93,8 +94,8 @@ public class GridRecipe {
 		return this;
 	}
 	
-	private DefaultedList<Ingredient> getMaterials(int width, int height) {
-		DefaultedList<Ingredient> materials = DefaultedList.ofSize(width * height, Ingredient.EMPTY);
+	private NonNullList<Ingredient> getMaterials(int width, int height) {
+		NonNullList<Ingredient> materials = NonNullList.withSize(width * height, Ingredient.EMPTY);
 		int pos = 0;
 		for (String line: shape) {
 			for (int i = 0; i < width; i++) {
@@ -111,8 +112,8 @@ public class GridRecipe {
 			int height = shape.length;
 			int width = shape[0].length();
 			ItemStack result = new ItemStack(output, count);
-			Identifier id = BetterEnd.makeID(name);
-			DefaultedList<Ingredient> materials = this.getMaterials(width, height);
+			ResourceLocation id = BetterEnd.makeID(name);
+			NonNullList<Ingredient> materials = this.getMaterials(width, height);
 			
 			CraftingRecipe recipe = shaped ? new ShapedRecipe(id, group, width, height, materials, result) : new ShapelessRecipe(id, group, result, materials);
 			EndRecipeManager.addRecipe(type, recipe);

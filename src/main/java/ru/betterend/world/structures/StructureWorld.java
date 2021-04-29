@@ -4,16 +4,16 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.chunk.Chunk;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 public class StructureWorld {
 	private Map<ChunkPos, Part> parts = Maps.newHashMap();
@@ -72,10 +72,10 @@ public class StructureWorld {
 		lastPart = part;
 	}
 	
-	public boolean placeChunk(StructureWorldAccess world, ChunkPos chunkPos) {
+	public boolean placeChunk(WorldGenLevel world, ChunkPos chunkPos) {
 		Part part = parts.get(chunkPos);
 		if (part != null) {
-			Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
+			ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
 			part.placeChunk(chunk);
 			return true;
 		}
@@ -98,11 +98,11 @@ public class StructureWorld {
 		return tag;
 	}
 	
-	public BlockBox getBounds() {
+	public BoundingBox getBounds() {
 		if (minX == Integer.MAX_VALUE || maxX == Integer.MIN_VALUE || minZ == Integer.MAX_VALUE || maxZ == Integer.MIN_VALUE) {
-			return BlockBox.empty();
+			return BoundingBox.getUnknownBox();
 		}
-		return new BlockBox(minX << 4, minY, minZ << 4, (maxX << 4) | 15, maxY, (maxZ << 4) | 15);
+		return new BoundingBox(minX << 4, minY, minZ << 4, (maxX << 4) | 15, maxY, (maxZ << 4) | 15);
 	}
 	
 	private static final class Part {
@@ -115,14 +115,14 @@ public class StructureWorld {
 			ListTag map2 = tag.getList("states", 10);
 			BlockState[] states = new BlockState[map2.size()];
 			for (int i = 0; i < states.length; i++) {
-				states[i] = NbtHelper.toBlockState((CompoundTag) map2.get(i));
+				states[i] = NbtUtils.readBlockState((CompoundTag) map2.get(i));
 			}
 			
 			map.forEach((element) -> {
 				CompoundTag block = (CompoundTag) element;
-				BlockPos pos = NbtHelper.toBlockPos(block.getCompound("pos"));
+				BlockPos pos = NbtUtils.readBlockPos(block.getCompound("pos"));
 				int stateID = block.getInt("state");
-				BlockState state = stateID < states.length ? states[stateID] : Block.getStateFromRawId(stateID);
+				BlockState state = stateID < states.length ? states[stateID] : Block.stateById(stateID);
 				blocks.put(pos, state);
 			});
 		}
@@ -132,7 +132,7 @@ public class StructureWorld {
 			blocks.put(inner, state);
 		}
 		
-		void placeChunk(Chunk chunk) {
+		void placeChunk(ChunkAccess chunk) {
 			blocks.forEach((pos, state) -> {
 				chunk.setBlockState(pos, state, false);
 			});
@@ -155,11 +155,11 @@ public class StructureWorld {
 				if (stateID < 0) {
 					stateID = id[0] ++;
 					states.put(state, stateID);
-					stateMap.add(NbtHelper.fromBlockState(state));
+					stateMap.add(NbtUtils.writeBlockState(state));
 				}
 				
 				CompoundTag block = new CompoundTag();
-				block.put("pos", NbtHelper.fromBlockPos(pos));
+				block.put("pos", NbtUtils.writeBlockPos(pos));
 				block.putInt("state", stateID);
 				map.add(block);
 			});

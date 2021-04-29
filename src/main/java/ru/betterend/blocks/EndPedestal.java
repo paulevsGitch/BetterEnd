@@ -3,14 +3,14 @@ package ru.betterend.blocks;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.basis.BlockPedestal;
+import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.patterns.Patterns;
 
-public class EndPedestal extends BlockPedestal {
+public class EndPedestal extends PedestalBlock {
 
 	public EndPedestal(Block parent) {
 		super(parent);
@@ -18,7 +18,7 @@ public class EndPedestal extends BlockPedestal {
 	
 	@Override
 	public String getModelPattern(String block) {
-		Identifier blockId = Registry.BLOCK.getId(parent);
+		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
 		String name = blockId.getPath();
 		Map<String, String> textures = new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;

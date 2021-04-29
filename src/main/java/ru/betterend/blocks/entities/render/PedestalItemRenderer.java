@@ -1,22 +1,24 @@
 package ru.betterend.blocks.entities.render;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.blocks.EternalPedestal;
-import ru.betterend.blocks.basis.BlockPedestal;
+import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.render.BeamRenderer;
 import ru.betterend.client.render.EndCrystalRenderer;
@@ -32,21 +34,23 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 	}
 
 	@Override
-	public void render(T blockEntity, float tickDelta, MatrixStack matrices,
-			VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void render(T blockEntity, float tickDelta, PoseStack matrices,
+			MultiBufferSource vertexConsumers, int light, int overlay) {
+
+		Level world = blockEntity.getLevel();
+		if (world == null || blockEntity.isEmpty()) return;
+
+		BlockState state = world.getBlockState(blockEntity.getBlockPos());
+		if (!(state.getBlock() instanceof PedestalBlock)) return;
 		
-		if (blockEntity.isEmpty()) return;
-		
-		BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
-		if (!(state.getBlock() instanceof BlockPedestal)) return;
-		
-		ItemStack activeItem = blockEntity.getStack(0);
-		matrices.push();
-		MinecraftClient minecraft = MinecraftClient.getInstance();
-		BakedModel model = minecraft.getItemRenderer().getHeldItemModel(activeItem, blockEntity.getWorld(), null);
-		Vector3f translate = model.getTransformation().ground.translation;
-		BlockPedestal pedestal = (BlockPedestal) state.getBlock();
-		matrices.translate(translate.getX(), translate.getY(), translate.getZ());
+		ItemStack activeItem = blockEntity.getItem(0);
+
+		matrices.pushPose();
+		Minecraft minecraft = Minecraft.getInstance();
+		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, world, null);
+		Vector3f translate = model.getTransforms().ground.translation;
+		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
+		matrices.translate(translate.x(), translate.y(), translate.z());
 		matrices.translate(0.5, pedestal.getHeight(state), 0.5);
 		if (activeItem.getItem() instanceof BlockItem) {
 			matrices.scale(1.5F, 1.5F, 1.5F);
@@ -54,12 +58,12 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 			matrices.scale(1.25F, 1.25F, 1.25F);
 		}
 		int age = blockEntity.getAge();
-		if (state.isOf(EndBlocks.ETERNAL_PEDESTAL) && state.get(EternalPedestal.ACTIVATED)) {
+		if (state.is(EndBlocks.ETERNAL_PEDESTAL) && state.getValue(EternalPedestal.ACTIVATED)) {
 			float[] colors = EternalCrystalRenderer.colors(age);
-			int y = blockEntity.getPos().getY();
+			int y = blockEntity.getBlockPos().getY();
 			
 			BeamRenderer.renderLightBeam(matrices, vertexConsumers, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.13F, 0.16F);
-			float altitude = MathHelper.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
+			float altitude = Mth.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
 			matrices.translate(0.0D, altitude, 0.0D);
 		}
 		if (activeItem.getItem() == Items.END_CRYSTAL) {
@@ -68,9 +72,9 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 			EternalCrystalRenderer.render(age, tickDelta, matrices, vertexConsumers, light);
 		} else {
 			float rotation = (age + tickDelta) / 25.0F + 6.0F;
-			matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(rotation));
-			minecraft.getItemRenderer().renderItem(activeItem, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, overlay, model);
+			matrices.mulPose(Vector3f.YP.rotation(rotation));
+			minecraft.getItemRenderer().render(activeItem, ItemTransforms.TransformType.GROUND, false, matrices, vertexConsumers, light, overlay, model);
 		}
-		matrices.pop();
+		matrices.popPose();
 	}
 }

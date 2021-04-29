@@ -2,7 +2,10 @@ package ru.betterend.util;
 
 import java.util.Random;
 
-import net.minecraft.client.util.math.Vector3f;
+import com.mojang.math.Vector3f;
+
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.phys.Vec3;
 
 public class MHelper {
 	public static final float PI2 = (float) (Math.PI * 2);
@@ -10,9 +13,17 @@ public class MHelper {
 	public static final Random RANDOM = new Random();
 	private static final float RAD_TO_DEG = 57.295779513082320876798154814105F;
 	public static final float PHI = (float) (Math.PI * (3 - Math.sqrt(5)));
+	private static final Vec3i[] RANDOM_OFFSETS = new Vec3i[3 * 3 * 3 - 1];
 
 	public static int color(int r, int g, int b) {
 		return ALPHA | (r << 16) | (g << 8) | b;
+	}
+	
+	public static int color(String hex) {
+		int r = Integer.parseInt(hex.substring(0, 2), 16);
+		int g = Integer.parseInt(hex.substring(2, 4), 16);
+		int b = Integer.parseInt(hex.substring(4, 6), 16);
+		return color(r, g, b);
 	}
 
 	public static int randRange(int min, int max, Random random) {
@@ -101,6 +112,10 @@ public class MHelper {
 		return (float) Math.sqrt(lengthSqr(x, y, z));
 	}
 	
+	public static double length(double x, double y, double z) {
+		return Math.sqrt(lengthSqr(x, y, z));
+	}
+	
 	public static float lengthSqr(float x, float y) {
 		return x * x + y * y;
 	}
@@ -154,6 +169,14 @@ public class MHelper {
 
 	public static int pow2(int i) {
 		return i * i;
+	}
+	
+	public static float pow2(float f) {
+		return f * f;
+	}
+	
+	public static double pow2(double d) {
+		return d * d;
 	}
 	
 	public static int fromHSBtoRGB(float hue, float saturation, float brightness) {
@@ -247,35 +270,100 @@ public class MHelper {
 		return values;
 	}
 	
-	public static final float radiandToDegrees(float value) {
+	public static Vec3 fromRGBtoHSBV(int r, int g, int b) {
+		int max = max(r, g, b);
+		int min = min(r, g, b);
+
+		float brightness = (float) max / 255.0F;
+		float saturation;
+		if (max != 0) {
+			saturation = (float) (max - min) / (float) max;
+		} else {
+			saturation = 0.0F;
+		}
+
+		float hue;
+		if (saturation == 0.0F) {
+			hue = 0.0F;
+		}
+		else {
+			float var9 = (float) (max - r) / (float) (max - min);
+			float var10 = (float) (max - g) / (float) (max - min);
+			float var11 = (float) (max - b) / (float) (max - min);
+			if (r == max) {
+				hue = var11 - var10;
+			} else if (g == max) {
+				hue = 2.0F + var9 - var11;
+			} else {
+				hue = 4.0F + var10 - var9;
+			}
+
+			hue /= 6.0F;
+			if (hue < 0.0F) {
+				++hue;
+			}
+		}
+		
+		return new Vec3(hue, saturation, brightness);
+	}
+	
+	public static final float radiansToDegrees(float value) {
 		return value * RAD_TO_DEG;
+	}
+	
+	public static final float degreesToRadians(float value) {
+		return value / RAD_TO_DEG;
 	}
 	
 	public static Vector3f cross(Vector3f vec1, Vector3f vec2)
 	{
-		float cx = vec1.getY() * vec2.getZ() - vec1.getZ() * vec2.getY();
-		float cy = vec1.getZ() * vec2.getX() - vec1.getX() * vec2.getZ();
-		float cz = vec1.getX() * vec2.getY() - vec1.getY() * vec2.getX();
+		float cx = vec1.y() * vec2.z() - vec1.z() * vec2.y();
+		float cy = vec1.z() * vec2.x() - vec1.x() * vec2.z();
+		float cz = vec1.x() * vec2.y() - vec1.y() * vec2.x();
 		return new Vector3f(cx, cy, cz);
 	}
 	
 	public static Vector3f normalize(Vector3f vec) {
-		float length = lengthSqr(vec.getX(), vec.getY(), vec.getZ());
+		float length = lengthSqr(vec.x(), vec.y(), vec.z());
 		if (length > 0) {
 			length = (float) Math.sqrt(length);
-			float x = vec.getX() / length;
-			float y = vec.getY() / length;
-			float z = vec.getZ() / length;
+			float x = vec.x() / length;
+			float y = vec.y() / length;
+			float z = vec.z() / length;
 			vec.set(x, y, z);
 		}
 		return vec;
 	}
 	
-	public static float angle(Vector3f vec1, Vector3f vec2)
-	{
-		float dot = vec1.getX() * vec2.getX() + vec1.getY() * vec2.getY() + vec1.getZ() * vec2.getZ();
-		float length1 = lengthSqr(vec1.getX(), vec1.getY(), vec1.getZ());
-		float length2 = lengthSqr(vec2.getX(), vec2.getY(), vec2.getZ());
+	public static float angle(Vector3f vec1, Vector3f vec2) {
+		float dot = vec1.x() * vec2.x() + vec1.y() * vec2.y() + vec1.z() * vec2.z();
+		float length1 = lengthSqr(vec1.x(), vec1.y(), vec1.z());
+		float length2 = lengthSqr(vec2.x(), vec2.y(), vec2.z());
 		return (float) Math.acos(dot / Math.sqrt(length1 * length2));
+	}
+	
+	public static Vector3f randomHorizontal(Random random) {
+		float angleY = MHelper.randRange(0, MHelper.PI2, random);
+		float vx = (float) Math.sin(angleY);
+		float vz = (float) Math.cos(angleY);
+		return new Vector3f(vx, 0, vz);
+	}
+	
+	public static Vec3i[] getOffsets(Random random) {
+		MHelper.shuffle(RANDOM_OFFSETS, random);
+		return RANDOM_OFFSETS;
+	}
+	
+	static {
+		int index = 0;
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				for (int z = -1; z <= 1; z++) {
+					if (x != 0 || y != 0 || z != 0) {
+						RANDOM_OFFSETS[index++] = new Vec3i(x, y, z);
+					}
+				}
+			}
+		}
 	}
 }

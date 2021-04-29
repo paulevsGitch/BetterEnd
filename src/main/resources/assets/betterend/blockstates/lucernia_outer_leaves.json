@@ -1,0 +1,56 @@
+{
+    "variants": {
+        "facing=north":  [
+			{ "model": "betterend:block/lucernia_outer_leaves_1", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_2", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_3", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_4", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_5", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_6", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_7", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_8", "y": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_9", "y": 180 }
+		],
+        "facing=south":  [
+			{ "model": "betterend:block/lucernia_outer_leaves_1" },
+			{ "model": "betterend:block/lucernia_outer_leaves_2" },
+			{ "model": "betterend:block/lucernia_outer_leaves_3" },
+			{ "model": "betterend:block/lucernia_outer_leaves_4" },
+			{ "model": "betterend:block/lucernia_outer_leaves_5" },
+			{ "model": "betterend:block/lucernia_outer_leaves_6" },
+			{ "model": "betterend:block/lucernia_outer_leaves_7" },
+			{ "model": "betterend:block/lucernia_outer_leaves_8" },
+			{ "model": "betterend:block/lucernia_outer_leaves_9" }
+		],
+        "facing=east":  [
+			{ "model": "betterend:block/lucernia_outer_leaves_1", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_2", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_3", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_4", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_5", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_6", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_7", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_8", "y": 270 },
+			{ "model": "betterend:block/lucernia_outer_leaves_9", "y": 270 }
+		],
+        "facing=west":  [
+			{ "model": "betterend:block/lucernia_outer_leaves_1", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_2", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_3", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_4", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_5", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_6", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_7", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_8", "y": 90 },
+			{ "model": "betterend:block/lucernia_outer_leaves_9", "y": 90 }
+		],
+		"facing=up": [
+			{ "model": "betterend:block/lucernia_outer_leaves_up_1" },
+			{ "model": "betterend:block/lucernia_outer_leaves_up_2" }
+		],
+        "facing=down": [
+			{ "model": "betterend:block/lucernia_outer_leaves_up_1", "x": 180 },
+			{ "model": "betterend:block/lucernia_outer_leaves_up_2", "x": 180 }
+		]
+    }
+}

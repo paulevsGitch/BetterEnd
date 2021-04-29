@@ -2,11 +2,11 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import ru.betterend.blocks.basis.BlockDoublePlant;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.util.BlocksHelper;
 
 public class UnderwaterPlantFeature extends UnderwaterPlantScatter {
@@ -18,17 +18,17 @@ public class UnderwaterPlantFeature extends UnderwaterPlantScatter {
 	}
 	
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return super.canSpawn(world, blockPos) && plant.canPlaceAt(plant.getDefaultState(), world, blockPos);
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+		return super.canSpawn(world, blockPos) && plant.canSurvive(plant.defaultBlockState(), world, blockPos);
 	}
 
 	@Override
-	public void generate(StructureWorldAccess world, Random random, BlockPos blockPos) {
-		if (plant instanceof BlockDoublePlant) {
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
+		if (plant instanceof DoublePlantBlock) {
 			int rot = random.nextInt(4);
-			BlockState state = plant.getDefaultState().with(BlockDoublePlant.ROTATION, rot);
+			BlockState state = plant.defaultBlockState().setValue(DoublePlantBlock.ROTATION, rot);
 			BlocksHelper.setWithoutUpdate(world, blockPos, state);
-			BlocksHelper.setWithoutUpdate(world, blockPos.up(), state.with(BlockDoublePlant.TOP, true));
+			BlocksHelper.setWithoutUpdate(world, blockPos.above(), state.setValue(DoublePlantBlock.TOP, true));
 		}
 		else {
 			BlocksHelper.setWithoutUpdate(world, blockPos, plant);

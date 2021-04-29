@@ -1,9 +1,8 @@
 package ru.betterend.blocks.entities;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -16,53 +15,47 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	}
 	
 	@Override
-	public void setLocation(World world, BlockPos pos) {
-		super.setLocation(world, pos);
+	public void setLevelAndPosition(Level world, BlockPos pos) {
+		super.setLevelAndPosition(world, pos);
 		if (hasRitual()) {
-			this.linkedRitual.setLocation(world, pos);
+			linkedRitual.setLocation(world, pos);
 		}
 	}
 	
 	public void linkRitual(InfusionRitual ritual) {
-		this.linkedRitual = ritual;
+		linkedRitual = ritual;
 	}
 	
 	public InfusionRitual getRitual() {
-		return this.linkedRitual;
+		return linkedRitual;
 	}
 	
 	public boolean hasRitual() {
-		return this.linkedRitual != null;
+		return linkedRitual != null;
 	}
 	
 	@Override
 	public void tick() {
 		if (hasRitual()) {
-			this.linkedRitual.tick();
+			linkedRitual.tick();
 		}
 		super.tick();
 	}
-	
-	@Override
-	public CompoundTag toInitialChunkDataTag() {
-		return this.toTag(new CompoundTag());
-	}
-	
-	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		super.fromTag(state, tag);
-		if (tag.contains("ritual")) {
-			this.linkedRitual = new InfusionRitual(world, pos);
-			this.linkedRitual.fromTag(tag.getCompound("ritual"));
-		}
-	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		super.toTag(tag);
+	public CompoundTag save(CompoundTag tag) {
 		if (hasRitual()) {
 			tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
 		}
-		return tag;
+		return super.save(tag);
+	}
+
+	@Override
+	protected void fromTag(CompoundTag tag) {
+		super.fromTag(tag);
+		if (tag.contains("ritual")) {
+			linkedRitual = new InfusionRitual(level, worldPosition);
+			linkedRitual.fromTag(tag.getCompound("ritual"));
+		}
 	}
 }

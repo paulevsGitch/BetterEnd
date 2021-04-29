@@ -8,9 +8,9 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import net.minecraft.structure.Structure;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import ru.betterend.config.Configs;
 import ru.betterend.util.JsonFactory;
 import ru.betterend.util.StructureHelper;
@@ -23,7 +23,7 @@ public class EndBiome {
 	protected List<EndBiome> subbiomes = Lists.newArrayList();
 
 	protected final Biome biome;
-	protected final Identifier mcID;
+	protected final ResourceLocation mcID;
 	protected EndBiome edge;
 	protected int edgeSize;
 
@@ -38,21 +38,26 @@ public class EndBiome {
 	private Biome actualBiome;
 
 	public EndBiome(BiomeDefinition definition) {
-		biome = definition.build();
-		mcID = definition.getID();
-		fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", definition.getFodDensity());
-		genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", definition.getGenChance());
-		hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", definition.hasCaves());
-		readStructureList();
+		this.mcID = definition.getID();
+		this.readStructureList();
+		if (structuresFeature != null) {
+			definition.addFeature(structuresFeature);
+		}
+		this.biome = definition.build();
+		this.fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", definition.getFodDensity());
+		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", definition.getGenChance());
+		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", definition.hasCaves());
+		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
 	}
 
-	public EndBiome(Identifier id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
-		this.biome = biome;
+	public EndBiome(ResourceLocation id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {
 		this.mcID = id;
+		this.readStructureList();
+		this.biome = biome;
 		this.fogDensity = Configs.BIOME_CONFIG.getFloat(mcID, "fog_density", fogDensity);
 		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(mcID, "generation_chance", genChance);
 		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(mcID, "has_caves", hasCaves);
-		readStructureList();
+		this.edgeSize = Configs.BIOME_CONFIG.getInt(mcID, "edge_size", 32);
 	}
 
 	public EndBiome getEdge() {
@@ -76,6 +81,10 @@ public class EndBiome {
 		maxSubBiomeChance += biome.mutateGenChance(maxSubBiomeChance);
 		biome.biomeParent = this;
 		subbiomes.add(biome);
+	}
+	
+	public boolean containsSubBiome(EndBiome biome) {
+		return subbiomes.contains(biome);
 	}
 
 	public EndBiome getSubBiome(Random random) {
@@ -121,7 +130,7 @@ public class EndBiome {
 		return mcID.toString();
 	}
 
-	public Identifier getID() {
+	public ResourceLocation getID() {
 		return mcID;
 	}
 
@@ -142,7 +151,7 @@ public class EndBiome {
 				List<StructureInfo> list = Lists.newArrayList();
 				enties.forEach((entry) -> {
 					JsonObject e = entry.getAsJsonObject();
-					Structure structure = StructureHelper.readStructure(path + e.get("nbt").getAsString() + ".nbt");
+					String structure = path + e.get("nbt").getAsString() + ".nbt";
 					TerrainMerge terrainMerge = TerrainMerge.getFromString(e.get("terrainMerge").getAsString());
 					int offsetY = e.get("offsetY").getAsInt();
 					list.add(new StructureInfo(structure, offsetY, terrainMerge));
@@ -156,10 +165,6 @@ public class EndBiome {
 	
 	public EndFeature getStructuresFeature() {
 		return structuresFeature;
-	}
-	
-	public void setActualBiome(Biome biome) {
-		this.actualBiome = biome;
 	}
 	
 	public Biome getActualBiome() {
@@ -176,5 +181,31 @@ public class EndBiome {
 	
 	public boolean hasCaves() {
 		return hasCaves;
+	}
+	
+	public void updateActualBiomes(Registry<Biome> biomeRegistry) {
+		subbiomes.forEach((sub) -> {
+			if (sub != this) {
+				sub.updateActualBiomes(biomeRegistry);
+			}
+		});
+		if (edge != null && edge != this) {
+			edge.updateActualBiomes(biomeRegistry);
+		}
+		this.actualBiome = biomeRegistry.get(mcID);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		EndBiome biome = (EndBiome) obj;
+		return biome == null ? false : biome.mcID.equals(mcID);
+	}
+	
+	@Override
+	public int hashCode() {
+		return mcID.hashCode();
 	}
 }

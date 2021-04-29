@@ -1,15 +1,24 @@
 package ru.betterend.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 public class RecipeHelper {
-	public static boolean exists(ItemConvertible item) {
+	public static boolean exists(ItemLike item) {
 		if (item instanceof Block) {
-			return Registry.BLOCK.getId((Block) item) != Registry.BLOCK.getDefaultId();
+			return Registry.BLOCK.getKey((Block) item) != Registry.BLOCK.getDefaultKey();
 		} else {
-			return Registry.ITEM.getId(item.asItem()) != Registry.ITEM.getDefaultId();
+			return Registry.ITEM.getKey(item.asItem()) != Registry.ITEM.getDefaultKey();
 		}
+	}
+	
+	public static boolean exists(ItemLike... items) {
+		for (ItemLike item : items) {
+			if (!exists(item)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

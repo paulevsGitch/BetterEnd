@@ -8,65 +8,65 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.RunArgs;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.gui.screen.CreditsScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.sound.MusicType;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.sound.MusicSound;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.WinScreen;
+import net.minecraft.client.main.GameConfig;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Registry;
+import net.minecraft.sounds.Music;
+import net.minecraft.sounds.Musics;
+import net.minecraft.world.level.Level;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.util.MHelper;
 
-@Mixin(MinecraftClient.class)
+@Mixin(Minecraft.class)
 public class MinecraftClientMixin {
 	@Shadow
-	public ClientPlayerEntity player;
+	public LocalPlayer player;
 	
 	@Shadow
-	public Screen currentScreen;
-	
-	@Shadow
+	public Screen screen;
+
 	@Final
-	public InGameHud inGameHud;
+	@Shadow
+	public Gui gui;
 	
 	@Shadow
-	public ClientWorld world;
-	
-	@Shadow
+	public ClientLevel level;
+
 	@Final
+	@Shadow
 	private BlockColors blockColors;
 
-	@Shadow
 	@Final
+	@Shadow
 	private ItemColors itemColors;
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void onInit(RunArgs args, CallbackInfo info) {
+	private void be_onInit(GameConfig args, CallbackInfo info) {
 		Registry.BLOCK.forEach(block -> {
 			if (block instanceof IColorProvider) {
 				IColorProvider provider = (IColorProvider) block;
-				blockColors.registerColorProvider(provider.getProvider(), block);
+				blockColors.register(provider.getProvider(), block);
 				itemColors.register(provider.getItemProvider(), block.asItem());
 			}
 		});
 	}
 	
-	@Inject(method = "getMusicType", at = @At("HEAD"), cancellable = true)
-	private void getEndMusic(CallbackInfoReturnable<MusicSound> info) {
-		if (!(this.currentScreen instanceof CreditsScreen) && this.player != null) {
-			if (this.player.world.getRegistryKey() == World.END) {
-				if (this.inGameHud.getBossBarHud().shouldPlayDragonMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
-					info.setReturnValue(MusicType.DRAGON);
+	@Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
+	private void be_getEndMusic(CallbackInfoReturnable<Music> info) {
+		if (!(this.screen instanceof WinScreen) && this.player != null) {
+			if (this.player.level.dimension() == Level.END) {
+				if (this.gui.getBossOverlay().shouldPlayMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
+					info.setReturnValue(Musics.END_BOSS);
 				}
 				else {
-					MusicSound sound = (MusicSound) this.world.getBiomeAccess().method_27344(this.player.getBlockPos()).getMusic().orElse(MusicType.END);
+					Music sound = (Music) this.level.getBiomeManager().getNoiseBiomeAtPosition(this.player.blockPosition()).getBackgroundMusic().orElse(Musics.END);
 					info.setReturnValue(sound);
 				}
 				info.cancel();

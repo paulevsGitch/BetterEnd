@@ -1,6 +1,6 @@
 package ru.betterend.world.features;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public class CharniaFeature extends UnderwaterPlantFeature {
 	public CharniaFeature(Block plant) {

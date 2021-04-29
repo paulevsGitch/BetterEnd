@@ -7,11 +7,11 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import ru.betterend.world.biome.EndBiome;
 
 public class BiomePicker {
-	private final Set<Identifier> immutableIDs = Sets.newHashSet();
+	private final Set<ResourceLocation> immutableIDs = Sets.newHashSet();
 	private final List<EndBiome> biomes = Lists.newArrayList();
 	private float maxChanceUnmutable = 0;
 	private float maxChance = 0;
@@ -28,28 +28,45 @@ public class BiomePicker {
 	
 	public void addBiomeMutable(EndBiome biome) {
 		biomes.add(biome);
-		maxChance = biome.mutateGenChance(maxChance);
 	}
 	
 	public void clearMutables() {
 		maxChance = maxChanceUnmutable;
-		for (int i = biomes.size() - 1; i >= biomeCount; i--)
+		for (int i = biomes.size() - 1; i >= biomeCount; i--) {
 			biomes.remove(i);
+		}
 	}
 	
 	public EndBiome getBiome(Random random) {
-		return tree.getBiome(random.nextFloat() * maxChance);
+		return biomes.isEmpty() ? null : tree.getBiome(random.nextFloat() * maxChance);
 	}
 	
 	public List<EndBiome> getBiomes() {
 		return biomes;
 	}
 	
-	public boolean containsImmutable(Identifier id) {
+	public boolean containsImmutable(ResourceLocation id) {
 		return immutableIDs.contains(id);
 	}
 	
+	public void removeMutableBiome(ResourceLocation id) {
+		for (int i = biomeCount; i < biomes.size(); i++) {
+			EndBiome biome = biomes.get(i);
+			if (biome.getID().equals(id)) {
+				biomes.remove(i);
+				break;
+			}
+		}
+	}
+	
 	public void rebuild() {
+		if (biomes.isEmpty()) {
+			return;
+		}
+		maxChance = maxChanceUnmutable;
+		for (int i = biomeCount; i < biomes.size(); i++) {
+			maxChance = biomes.get(i).mutateGenChance(maxChance);
+		}
 		tree = new WeighTree(biomes);
 	}
 }

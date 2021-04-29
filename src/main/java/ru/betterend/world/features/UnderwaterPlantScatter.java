@@ -2,38 +2,38 @@ package ru.betterend.world.features;
 
 import java.util.Random;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
 
 public abstract class UnderwaterPlantScatter extends ScatterFeature {
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	public UnderwaterPlantScatter(int radius) {
 		super(radius);
 	}
 	
 	@Override
-	protected BlockPos getCenterGround(StructureWorldAccess world, BlockPos pos) {
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		POS.setX(pos.getX());
 		POS.setZ(pos.getZ());
 		POS.setY(0);
-		return getGround(world, POS).toImmutable();
+		return getGround(world, POS).immutable();
 	}
 	
 	@Override
-	public boolean canGenerate(StructureWorldAccess world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return world.getBlockState(blockPos).isOf(Blocks.WATER);
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+		return world.getBlockState(blockPos).is(Blocks.WATER);
 	}
 	
 	@Override
-	protected boolean canSpawn(StructureWorldAccess world, BlockPos pos) {
-		return world.getBlockState(pos).isOf(Blocks.WATER);
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) {
+		return world.getBlockState(pos).is(Blocks.WATER);
 	}
 	
 	@Override
-	protected boolean getGroundPlant(StructureWorldAccess world, Mutable pos) {
+	protected boolean getGroundPlant(WorldGenLevel world, MutableBlockPos pos) {
 		return getGround(world, pos).getY() < 128;
 	}
 	
@@ -47,7 +47,7 @@ public abstract class UnderwaterPlantScatter extends ScatterFeature {
 		return 5;
 	}
 	
-	private BlockPos getGround(StructureWorldAccess world, Mutable pos) {
+	private BlockPos getGround(WorldGenLevel world, MutableBlockPos pos) {
 		while (pos.getY() < 128 && world.getFluidState(pos).isEmpty()) {
 			pos.setY(pos.getY() + 1);
 		}

@@ -1,7 +1,7 @@
 package ru.betterend.effects;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.world.item.enchantment.Enchantment;
 import ru.betterend.BetterEnd;
 import ru.betterend.effects.enchantment.EndVeilEnchantment;
 

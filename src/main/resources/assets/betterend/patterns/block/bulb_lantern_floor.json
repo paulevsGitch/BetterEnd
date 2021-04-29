@@ -1,0 +1,73 @@
+{
+	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
+	"parent": "block/block",
+	"textures": {
+		"overlay": "betterend:block/%glow%",
+		"metal": "betterend:block/%metal%",
+		"particle": "#overlay"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "Box1",
+			"from": [ 4, 0, 4 ],
+			"to": [ 12, 8, 12 ],
+			"shade": false,
+			"faces": {
+				"down": { "uv": [ 8, 0, 16, 8 ], "texture": "#metal" },
+				"up": { "uv": [ 0, 0, 8, 8 ], "texture": "#metal" },
+				"north": { "uv": [ 0, 8, 8, 16 ], "texture": "#metal" },
+				"south": { "uv": [ 0, 8, 8, 16 ], "texture": "#metal" },
+				"west": { "uv": [ 0, 8, 8, 16 ], "texture": "#metal" },
+				"east": { "uv": [ 0, 8, 8, 16 ], "texture": "#metal" }
+			}
+		},
+		{
+			"__comment": "Box1",
+			"from": [ 4, 0, 4 ],
+			"to": [ 12, 8, 12 ],
+			"shade": false,
+			"faces": {
+				"down": { "uv": [ 8, 0, 16, 8 ], "texture": "#overlay", "tintindex": 0 },
+				"up": { "uv": [ 0, 0, 8, 8 ], "texture": "#overlay", "tintindex": 0 },
+				"north": { "uv": [ 0, 8, 8, 16 ], "texture": "#overlay", "tintindex": 0 },
+				"south": { "uv": [ 0, 8, 8, 16 ], "texture": "#overlay", "tintindex": 0 },
+				"west": { "uv": [ 0, 8, 8, 16 ], "texture": "#overlay", "tintindex": 0 },
+				"east": { "uv": [ 0, 8, 8, 16 ], "texture": "#overlay", "tintindex": 0 }
+			}
+		},
+		{
+			"__comment": "Box11",
+			"from": [ 6, 8, 6 ],
+			"to": [ 10, 9, 10 ],
+			"faces": {
+				"up": { "uv": [ 10, 8, 14, 12 ], "texture": "#metal" },
+				"north": { "uv": [ 10, 12, 14, 13 ], "texture": "#metal" },
+				"south": { "uv": [ 10, 12, 14, 13 ], "texture": "#metal" },
+				"west": { "uv": [ 10, 12, 14, 13 ], "texture": "#metal" },
+				"east": { "uv": [ 10, 12, 14, 13 ], "texture": "#metal" }
+			}
+		},
+		{
+			"__comment": "PlaneX15",
+			"from": [ 7, 9, 7 ],
+			"to": [ 7.001, 12, 10 ],
+			"rotation": { "origin": [ 7, 13, 7 ], "axis": "y", "angle": 45 },
+			"shade": false,
+			"faces": {
+				"west": { "uv": [ 10, 13, 13, 16 ], "texture": "#metal" },
+				"east": { "uv": [ 10, 13, 13, 16 ], "texture": "#metal" }
+			}
+		},
+		{
+			"__comment": "PlaneX15",
+			"from": [ 9, 9, 7 ],
+			"to": [ 9.001, 12, 10 ],
+			"rotation": { "origin": [ 9, 13, 7 ], "axis": "y", "angle": -45 },
+			"shade": false,
+			"faces": {
+				"west": { "uv": [ 10, 13, 13, 16 ], "texture": "#metal" },
+				"east": { "uv": [ 10, 13, 13, 16 ], "texture": "#metal" }
+			}
+		}
+	]
+}

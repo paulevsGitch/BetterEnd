@@ -1,16 +1,16 @@
 package ru.betterend.tab;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public class CreativeTabs {
-	public static final ItemGroup TAB_BLOCKS;
-	public static final ItemGroup TAB_ITEMS;
+	public static final CreativeModeTab TAB_BLOCKS;
+	public static final CreativeModeTab TAB_ITEMS;
 
 	static {
 		TAB_BLOCKS = FabricItemGroupBuilder.create(BetterEnd.makeID("end_blocks"))
@@ -25,9 +25,5 @@ public class CreativeTabs {
 						stacks.add(new ItemStack(i));
 					}
 				}).build();
-		if (BetterEnd.isDevEnvironment()) {
-			System.out.println("CREATIVE_TAB_ITEMS: " + TAB_ITEMS.getName());
-			System.out.println("CREATIVE_TAB_BLOCKS: " + TAB_BLOCKS.getName());
-		}
 	}
 }

@@ -20,36 +20,10 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 public class TunelCaveFeature extends EndCaveFeature {
+	private static final OpenSimplexNoise BIOME_NOISE_X = new OpenSimplexNoise("biome_noise_x".hashCode());
+	private static final OpenSimplexNoise BIOME_NOISE_Z = new OpenSimplexNoise("biome_noise_z".hashCode());
+	
 	private Set<BlockPos> generate(WorldGenLevel world, BlockPos center, Random random) {
-		/*Random rand = new Random(world.getSeed());
-		OpenSimplexNoise noise1 = new OpenSimplexNoise(rand.nextInt());
-		OpenSimplexNoise noise2 = new OpenSimplexNoise(rand.nextInt());
-		OpenSimplexNoise noise3 = new OpenSimplexNoise(rand.nextInt());
-		int x1 = (center.getX() >> 4) << 4;
-		int z1 = (center.getZ() >> 4) << 4;
-		int x2 = x1 + 16;
-		int z2 = z1 + 16;
-		int y2 = world.getHeight();
-		Set<BlockPos> positions = Sets.newHashSet();
-		MutableBlockPos pos = new MutableBlockPos();
-		for (int x = x1; x < x2; x++) {
-			pos.setX(x);
-			for (int z = z1; z < z2; z++) {
-				pos.setZ(z);
-				for (int y = 0; y < y2; y++) {
-					pos.setY(y);
-					float v1 = Mth.abs((float) noise1.eval(x * 0.02, y * 0.02, z * 0.02));
-					float v2 = Mth.abs((float) noise2.eval(x * 0.02, y * 0.02, z * 0.02));
-					//float v3 = Mth.abs((float) noise3.eval(x * 0.02, y * 0.02, z * 0.02));
-					if (MHelper.max(v1, v2) > 0.7 && world.getBlockState(pos).is(EndTags.GEN_TERRAIN)) {
-						BlocksHelper.setWithoutUpdate(world, pos, AIR);
-						positions.add(pos.immutable());
-					}
-				}
-			}
-		}
-		return positions;*/
-		
 		int x1 = (center.getX() >> 4) << 4;
 		int z1 = (center.getZ() >> 4) << 4;
 		int x2 = x1 + 16;
@@ -92,8 +66,9 @@ public class TunelCaveFeature extends EndCaveFeature {
 			return false;
 		}
 
-		EndCaveBiome biome = EndBiomes.getCaveBiome(random);//EndBiomes.EMPTY_END_CAVE;
-		Set<BlockPos> caveBlocks = generate(world, pos, random);
+		EndCaveBiome biome = EndBiomes.getCaveBiome(random);
+		Set<BlockPos> preCaveBlocks = generate(world, pos, random);
+		Set<BlockPos> caveBlocks = mutateBlocks(preCaveBlocks);
 		if (!caveBlocks.isEmpty()) {
 			if (biome != null) {
 				setBiomes(world, biome, caveBlocks);
@@ -118,10 +93,22 @@ public class TunelCaveFeature extends EndCaveFeature {
 				placeCeil(world, biome, ceilPositions, random);
 				placeWalls(world, biome, caveBlocks, random);
 			}
-			fixBlocks(world, caveBlocks);
+			fixBlocks(world, preCaveBlocks);
 		}
 
 		return true;
+	}
+	
+	private Set<BlockPos> mutateBlocks(Set<BlockPos> caveBlocks) {
+		Set<BlockPos> result = Sets.newHashSet();
+		caveBlocks.forEach(pos -> {
+			int dx = pos.getX() + (int) (BIOME_NOISE_X.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
+			int dz = pos.getZ() + (int) (BIOME_NOISE_Z.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
+			if ((dx >> 4) == (pos.getX() >> 4) && (dz >> 4) == (pos.getZ() >> 4)) {
+				result.add(pos);
+			}
+		});
+		return result;
 	}
 
 	@Override

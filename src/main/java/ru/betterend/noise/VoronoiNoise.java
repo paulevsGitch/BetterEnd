@@ -52,6 +52,49 @@ public class VoronoiNoise {
 		return Math.sqrt(d);
 	}
 	
+	public Random getRandom(double x, double y, double z) {
+		int ix = MHelper.floor(x);
+		int iy = MHelper.floor(y);
+		int iz = MHelper.floor(z);
+		
+		float px = (float) (x - ix);
+		float py = (float) (y - iy);
+		float pz = (float) (z - iz);
+		
+		float d = 10;
+		
+		int posX = 0;
+		int posY = 0;
+		int posZ = 0;
+		
+		for (int pox = -1; pox < 2; pox++) {
+			for (int poy = -1; poy < 2; poy++) {
+				for (int poz = -1; poz < 2; poz++) {
+					RANDOM.setSeed(getSeed(pox + ix, poy + iy, poz + iz));
+					float pointX = pox + RANDOM.nextFloat();
+					float pointY = poy + RANDOM.nextFloat();
+					float pointZ = poz + RANDOM.nextFloat();
+					float d2 = MHelper.lengthSqr(pointX - px, pointY - py, pointZ - pz);
+					if (d2 < d) {
+						d = d2;
+						posX = pox;
+						posY = poy;
+						posZ = poz;
+					}
+				}
+			}
+		}
+		
+		posX += ix;
+		posY += iy;
+		posZ += iz;
+		
+		int seed = MHelper.getSeed(posY, posX, posZ);
+		RANDOM.setSeed(seed);
+		
+		return RANDOM;
+	}
+	
 	public BlockPos[] getPos(double x, double y, double z, double scale) {
 		int ix = MHelper.floor(x);
 		int iy = MHelper.floor(y);

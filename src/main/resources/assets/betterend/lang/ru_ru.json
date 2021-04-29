@@ -873,5 +873,6 @@
 	
 	"block.betterend.neon_cactus_block": "Блок неонового кактуса",
 	"block.betterend.neon_cactus_slab": "Плита из неонового кактуса",
-	"block.betterend.neon_cactus_stairs": "Ступени из неонового кактуса"
+	"block.betterend.neon_cactus_stairs": "Ступени из неонового кактуса",
+	"biome.betterend.jade_cave": "Нефритовая пещера"
 }

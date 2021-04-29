@@ -146,7 +146,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		blocks.forEach((pos) -> setBiome(world, pos, biome));
 	}
 
-	private void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
+	protected void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
 		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomes();
 		if (array != null) {
 			Biome bio = EndBiomes.getActualBiome(biome);
@@ -184,7 +184,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		return new BlockPos(pos.getX(), MHelper.randRange(bottom, top, random), pos.getZ());
 	}
 
-	private void fixBlocks(WorldGenLevel world, Set<BlockPos> caveBlocks) {
+	protected void fixBlocks(WorldGenLevel world, Set<BlockPos> caveBlocks) {
 		BlockPos pos = caveBlocks.iterator().next();
 		MutableBlockPos start = new MutableBlockPos().set(pos);
 		MutableBlockPos end = new MutableBlockPos().set(pos);
@@ -210,7 +210,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				end.setZ(bpos.getZ());
 			}
 		});
-		BlocksHelper.fixBlocks(world, start.offset(-5, -5, -5), end.offset(5, 5, 5));
+		BlocksHelper.fixBlocks(world, start.offset(-2, -2, -2), end.offset(2, 2, 2));
 	}
 
 	protected boolean isWaterNear(WorldGenLevel world, BlockPos pos) {

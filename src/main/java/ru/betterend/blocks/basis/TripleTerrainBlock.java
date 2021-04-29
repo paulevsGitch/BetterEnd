@@ -83,14 +83,14 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 			return;
 		}
 		else if (random.nextInt(16) == 0) {
-			boolean bottom = canSurviveBottom(world, pos);
+			boolean bottom = canStayBottom(world, pos);
 			if (shape == TripleShape.TOP) {
 				if (!bottom) {
 					world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 				}
 			}
 			else {
-				boolean top = canSurvive(state, world, pos) || isMiddle(world.getBlockState(pos.above()));
+				boolean top = canStay(state, world, pos) || isMiddle(world.getBlockState(pos.above()));
 				if (!top && !bottom) {
 					world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 				}
@@ -104,7 +104,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 		}
 	}
 	
-	protected boolean canSurviveBottom(LevelReader world, BlockPos pos) {
+	protected boolean canStayBottom(LevelReader world, BlockPos pos) {
 		BlockPos blockPos = pos.below();
 		BlockState blockState = world.getBlockState(blockPos);
 		if (isMiddle(blockState)) {

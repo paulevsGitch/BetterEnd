@@ -74,13 +74,12 @@ public class EndTerrainBlock extends BlockBase {
 	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
-		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
+		if (random.nextInt(16) == 0 && !canStay(state, world, pos)) {
 			world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 		}
 	}
 
-	@Override
-	public boolean canSurvive(BlockState state, LevelReader worldView, BlockPos pos) {
+	public boolean canStay(BlockState state, LevelReader worldView, BlockPos pos) {
 		BlockPos blockPos = pos.above();
 		BlockState blockState = worldView.getBlockState(blockPos);
 		if (blockState.is(Blocks.SNOW) && (Integer) blockState.getValue(SnowLayerBlock.LAYERS) == 1) {

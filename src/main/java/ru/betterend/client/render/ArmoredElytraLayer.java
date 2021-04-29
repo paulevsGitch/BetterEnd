@@ -2,6 +2,7 @@ package ru.betterend.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,10 +16,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
-import ru.betterend.BetterEnd;
 import ru.betterend.item.ArmoredElytra;
 import ru.betterend.item.model.ArmoredElytraModel;
-import ru.betterend.registry.EndItems;
 
 public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>> extends ElytraLayer<T, M> {
 	private final ArmoredElytraModel<T> elytraModel = new ArmoredElytraModel<>();

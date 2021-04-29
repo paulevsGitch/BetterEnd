@@ -161,9 +161,8 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', block, tile).setGroup("end_metal_slabs").build();
 		GridRecipe.make(name + "_chain", chain).setShape("N", "#", "N").addMaterial('#', ingot).addMaterial('N', nugget).setGroup("end_metal_chain").build();
 		GridRecipe.make(name + "_anvil", anvil).setShape("###", " I ", "III").addMaterial('#', block, tile).addMaterial('I', ingot).setGroup("end_metal_anvil").build();
-		GridRecipe.make(name + "bulb_lantern", bulb_lantern).setShape("C", "I", "#").addMaterial('C', chain).addMaterial('I', ingot).addMaterial('#', EndItems.GLOWING_BULB).build();
+		GridRecipe.make(name + "_bulb_lantern", bulb_lantern).setShape("C", "I", "#").addMaterial('C', chain).addMaterial('I', ingot).addMaterial('#', EndItems.GLOWING_BULB).build();
 		
-		GridRecipe.make(name + "_smith_table", Blocks.SMITHING_TABLE).setShape("II", "##", "##").addMaterial('#', ItemTags.PLANKS).addMaterial('I', ingot).setGroup("smith_table").build();
 		GridRecipe.make(name + "_chandelier", chandelier).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		
 		// Tools & armor into nuggets
@@ -201,9 +200,7 @@ public class MetalMaterial {
 		
 		TagHelper.addTag(BlockTags.ANVIL, anvil);
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
-		TagHelper.addTag(EndTags.IRON_INGOTS, ingot);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
-		
 		TagHelper.addTag(EndTags.DRAGON_IMMUNE, ore, bars);
 	}
 }

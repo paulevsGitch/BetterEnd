@@ -18,6 +18,7 @@ import net.minecraft.tags.TagCollection;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.Block;
@@ -148,6 +149,9 @@ public class EndTags {
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
 		
 		TagHelper.addTag(EndTags.DRAGON_IMMUNE, EndBlocks.ENDER_ORE, EndBlocks.ETERNAL_PEDESTAL, EndBlocks.FLAVOLITE_RUNED_ETERNAL, EndBlocks.FLAVOLITE_RUNED);
+		
+		TagHelper.addTag(EndTags.IRON_INGOTS, Items.IRON_INGOT);
+		TagHelper.addTag(EndTags.IRON_INGOTS, EndBlocks.TERMINITE.ingot);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

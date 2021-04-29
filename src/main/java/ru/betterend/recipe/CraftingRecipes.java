@@ -1,5 +1,6 @@
 package ru.betterend.recipe;
 
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -197,6 +198,18 @@ public class CraftingRecipes {
 		GridRecipe.make("neon_cactus_block", EndBlocks.NEON_CACTUS_BLOCK).setShape("##", "##").addMaterial('#', EndBlocks.NEON_CACTUS).build();
 		GridRecipe.make("neon_cactus_block_slab", EndBlocks.NEON_CACTUS_BLOCK_SLAB).setShape("###").setOutputCount(6).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();
 		GridRecipe.make("neon_cactus_block_stairs", EndBlocks.NEON_CACTUS_BLOCK_STAIRS).setShape("#  ", "## ", "###").setOutputCount(4).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();
+		
+		GridRecipe.make("tag_smith_table", Blocks.SMITHING_TABLE).setShape("II", "##", "##").addMaterial('#', ItemTags.PLANKS).addMaterial('I', EndTags.IRON_INGOTS).build();
+		GridRecipe.make("tag_cauldron", Blocks.CAULDRON).setShape("I I", "I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
+		GridRecipe.make("tag_hopper", Blocks.HOPPER).setShape("I I", "ICI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('C', EndTags.ITEM_CHEST).build();
+		GridRecipe.make("tag_piston", Blocks.PISTON).setShape("WWW", "CIC", "CDC").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).addMaterial('C', Items.COBBLESTONE).build();
+		GridRecipe.make("tag_rail", Blocks.RAIL).setShape("I I", "ISI", "I I").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STICK).build();
+		GridRecipe.make("tag_stonecutter", Blocks.STONECUTTER).setShape(" I ", "SSS").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STONE).build();
+		
+		GridRecipe.make("tag_bucket", Items.BUCKET).setShape("I I", " I ").addMaterial('I', EndTags.IRON_INGOTS).build();
+		GridRecipe.make("tag_compass", Items.COMPASS).setShape(" I ", "IDI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).build();
+		GridRecipe.make("tag_minecart", Items.MINECART).setShape("I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
+		GridRecipe.make("tag_shield", Items.SHIELD).setShape("WIW", "WWW", " W ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('W', ItemTags.PLANKS).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

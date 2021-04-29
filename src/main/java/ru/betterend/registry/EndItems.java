@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -19,28 +20,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.DispenserBlock;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.item.DrinkItem;
-import ru.betterend.item.EnchantedPetalItem;
-import ru.betterend.item.EndArmorItem;
-import ru.betterend.item.EndBucketItem;
-import ru.betterend.item.EndSpawnEggItem;
-import ru.betterend.item.EternalCrystalItem;
-import ru.betterend.item.PatternedDiscItem;
-import ru.betterend.item.PatternedItem;
+import ru.betterend.interfaces.BreakableItem;
+import ru.betterend.item.*;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndAxeItem;
@@ -89,7 +75,8 @@ public class EndItems {
 	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	
+	public static final Item ARMORED_ELYTRA = registerItem("elytra_armored", new ArmoredElytra("elytra_armored", AETERNIUM_INGOT, 700, 0.96D, true));
+
 	// Tools //
 	public static final TieredItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new EndShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings().fireResistant()));
 	public static final TieredItem AETERNIUM_SWORD = registerTool("aeternium_sword", new EndSwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, makeItemSettings().fireResistant()));
@@ -152,6 +139,9 @@ public class EndItems {
 			return item;
 		}
 		registerItem(id, item, MOD_ITEMS);
+		if (item instanceof BreakableItem) {
+			((BreakableItem) item).registerBrokenItem();
+		}
 		return item;
 	}
 	
@@ -193,7 +183,7 @@ public class EndItems {
 		} else if (item instanceof EndHoeItem) {
 			TagHelper.addTag((Tag.Named<Item>) FabricToolTags.HOES, item);
 		} else if (item instanceof EndHammerItem) {
-			TagHelper.addTag((Tag.Named<Item>) EndTags.HAMMERS, item);
+			TagHelper.addTag(EndTags.HAMMERS, item);
 		}
 		
 		return item;

@@ -73,15 +73,20 @@ public class SmithingRecipes {
 			.build();
 		
 		SmithingTableRecipe.create("thallasium_anvil_updrade")
-		.setResult(EndBlocks.TERMINITE.anvil)
-		.setBase(EndBlocks.THALLASIUM.anvil)
-		.setAddition(EndBlocks.TERMINITE.block)
-		.build();
-		
+			.setResult(EndBlocks.TERMINITE.anvil)
+			.setBase(EndBlocks.THALLASIUM.anvil)
+			.setAddition(EndBlocks.TERMINITE.block)
+			.build();
 		SmithingTableRecipe.create("terminite_anvil_updrade")
-		.setResult(EndBlocks.AETERNIUM_ANVIL)
-		.setBase(EndBlocks.TERMINITE.anvil)
-		.setAddition(EndBlocks.AETERNIUM_BLOCK)
-		.build();
+			.setResult(EndBlocks.AETERNIUM_ANVIL)
+			.setBase(EndBlocks.TERMINITE.anvil)
+			.setAddition(EndBlocks.AETERNIUM_BLOCK)
+			.build();
+
+		SmithingTableRecipe.create("armored_elytra")
+			.setResult(EndItems.ARMORED_ELYTRA)
+			.setBase(Items.ELYTRA)
+			.setAddition(EndItems.AETERNIUM_INGOT)
+			.build();
 	}
 }

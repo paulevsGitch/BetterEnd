@@ -11,6 +11,6 @@ public class PatternedItem extends Item implements Patterned {
 	
 	@Override
 	public String getModelPattern(String name) {
-		return Patterns.createJson(Patterns.ITEM_GENERATED, name);
+		return Patterns.createItemGenerated(name);
 	}
 }

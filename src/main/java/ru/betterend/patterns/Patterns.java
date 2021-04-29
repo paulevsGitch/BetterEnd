@@ -116,6 +116,10 @@ public class Patterns {
 	public final static ResourceLocation ITEM_GENERATED = BetterEnd.makeID("patterns/item/pattern_item_generated.json");
 	public final static ResourceLocation ITEM_HANDHELD = BetterEnd.makeID("patterns/item/pattern_item_handheld.json");
 	public final static ResourceLocation ITEM_SPAWN_EGG = BetterEnd.makeID("patterns/item/pattern_item_spawn_egg.json");
+
+	public static String createItemGenerated(String name) {
+		return createJson(ITEM_GENERATED, name);
+	}
 	
 	public static String createJson(Reader data, String parent, String block) {
 		try (BufferedReader buffer = new BufferedReader(data)) {

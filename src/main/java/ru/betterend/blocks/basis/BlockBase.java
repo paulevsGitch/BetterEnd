@@ -24,10 +24,10 @@ public class BlockBase extends Block implements BlockPatterned {
 		return Collections.singletonList(new ItemStack(this));
 	}
 
-	@Override
-	public BlockModel getBlockModel(BlockState state) {
-		return null;
-	}
+//	@Override
+//	public BlockModel getBlockModel(BlockState state) {
+//		return null;
+//	}
 
 	@Override
 	public String getStatesPattern(Reader data) {

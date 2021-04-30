@@ -5,6 +5,8 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.UnbakedModel;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,6 +32,21 @@ public class ModelLoaderMixin {
 	@Final
 	@Shadow
 	private ResourceManager resourceManager;
+
+	@Inject(method = "getModel", at = @At("HEAD"), cancellable = true)
+	public void be_registerModel(ResourceLocation resourceLocation, CallbackInfoReturnable<UnbakedModel> info) {
+		if (resourceLocation.getNamespace().equals(BetterEnd.MOD_ID)) {
+			if (resourceLocation instanceof ModelResourceLocation) {
+				ModelResourceLocation modelId = (ModelResourceLocation) resourceLocation;
+				String variant = modelId.getVariant();
+				if (variant.equals("inventory")) {
+
+				} else {
+					System.out.println(modelId.getVariant());
+				}
+			}
+		}
+	}
 	
 	@Inject(method = "loadBlockModel", at = @At("HEAD"), cancellable = true)
 	private void be_loadModelPattern(ResourceLocation id, CallbackInfoReturnable<BlockModel> info) {

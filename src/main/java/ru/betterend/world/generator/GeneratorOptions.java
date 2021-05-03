@@ -28,6 +28,7 @@ public class GeneratorOptions {
 	private static boolean replacePillars;
 	private static long islandDistBlock;
 	private static int islandDistChunk;
+	private static boolean directSpikeHeight;
 	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
@@ -141,5 +142,15 @@ public class GeneratorOptions {
 
 	public static int getIslandDistChunk() {
 		return islandDistChunk;
+	}
+	
+	public static void setDirectSpikeHeight() {
+		directSpikeHeight = true;
+	}
+	
+	public static boolean isDirectSpikeHeight() {
+		boolean height = directSpikeHeight;
+		directSpikeHeight = false;
+		return height;
 	}
 }

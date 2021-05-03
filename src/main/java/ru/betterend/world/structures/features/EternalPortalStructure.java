@@ -27,9 +27,9 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 	
 	@Override
 	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
-		long x = chunkPos.x;
-		long z = chunkPos.z;
-		if (x * x + z * z < 10000) {
+		long x = (long) chunkPos.x * (long) chunkPos.x;
+		long z = (long) chunkPos.z * (long) chunkPos.z;
+		if (x + z < 1024L) {
 			return false;
 		}
 		if (chunkGenerator.getBaseHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Heightmap.Types.WORLD_SURFACE_WG) < 10) {

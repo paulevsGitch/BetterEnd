@@ -18,6 +18,7 @@
 		"RecipeManagerAccessor",
 		"EnchantmentMenuMixin",
 		"MinecraftServerMixin",
+		"EndDragonFightMixin",
 		"BlockBehaviourMixin",
 		"DimensionTypeMixin",
 		"RecipeManagerMixin",

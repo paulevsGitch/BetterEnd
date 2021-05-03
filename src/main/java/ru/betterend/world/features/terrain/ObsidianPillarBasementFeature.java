@@ -26,18 +26,15 @@ import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianPillarBasementFeature extends DefaultFeature {
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		pos = getPosOnSurface(world,
-				new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
+		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		if (!world.getBlockState(pos.below(5)).is(EndTags.GEN_TERRAIN)) {
 			return false;
 		}
 
 		float height = MHelper.randRange(10F, 35F, random);
 		float radius = MHelper.randRange(2F, 5F, random);
-		SDF pillar = new SDFCappedCone().setRadius1(radius).setRadius2(radius).setHeight(height * 0.5F)
-				.setBlock(Blocks.OBSIDIAN);
+		SDF pillar = new SDFCappedCone().setRadius1(radius).setRadius2(radius).setHeight(height * 0.5F).setBlock(Blocks.OBSIDIAN);
 		pillar = new SDFTranslate().setTranslate(0, height * 0.5F - 3, 0).setSource(pillar);
 		SDF cut = new SDFFlatland().setBlock(Blocks.OBSIDIAN);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
@@ -52,7 +49,6 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 		vec = MHelper.randomHorizontal(random);
 		angle = random.nextFloat() * 0.2F;
 		pillar = new SDFRotation().setRotation(vec, angle).setSource(pillar);
-
 		BlockState mossy = EndBlocks.MOSSY_OBSIDIAN.defaultBlockState();
 		pillar.addPostProcess((info) -> {
 			if (info.getStateUp().isAir() && random.nextFloat() > 0.1F) {
@@ -60,8 +56,7 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(EndTags.GEN_TERRAIN)
-					|| state.getMaterial().equals(Material.PLANT);
+			return state.getMaterial().isReplaceable() || state.is(EndTags.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 
 		return true;

@@ -121,10 +121,16 @@ public class TunelCaveFeature extends EndCaveFeature {
 	private Set<BlockPos> mutateBlocks(Set<BlockPos> caveBlocks) {
 		Set<BlockPos> result = Sets.newHashSet();
 		caveBlocks.forEach(pos -> {
-			int dx = pos.getX() + (int) (BIOME_NOISE_X.eval(pos.getX() * 0.3, pos.getZ() * 0.3) * 10);
-			int dz = pos.getZ() + (int) (BIOME_NOISE_Z.eval(pos.getX() * 0.3, pos.getZ() * 0.3) * 10);
-			if ((dx >> 4) == (pos.getX() >> 4) && (dz >> 4) == (pos.getZ() >> 4)) {
-				result.add(pos);
+			int dx = pos.getX() + Mth.floor(BIOME_NOISE_X.eval(pos.getX() * 0.1, pos.getZ() * 0.1) * 3);
+			int dz = pos.getZ() + Mth.floor(BIOME_NOISE_Z.eval(pos.getX() * 0.1, pos.getZ() * 0.1) * 3);
+			if (dx >> 4 == pos.getX() >> 4 && dz >> 4 == pos.getZ() >> 4) {
+				int cx = ((pos.getX() >> 4) << 4) | 8;
+				int cz = ((pos.getZ() >> 4) << 4) | 8;
+				dx = pos.getX() - cx;
+				dz = pos.getZ() - cz;
+				if (dx * dx + dz * dz < 64) {
+					result.add(pos);
+				}
 			}
 		});
 		return result;

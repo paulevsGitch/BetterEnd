@@ -1,9 +1,7 @@
 package ru.betterend.registry;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -19,40 +17,19 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.DispenserBlock;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.BreakableItem;
-import ru.betterend.item.ArmoredElytra;
-import ru.betterend.item.DrinkItem;
-import ru.betterend.item.EnchantedPetalItem;
-import ru.betterend.item.EndArmorItem;
-import ru.betterend.item.EndBucketItem;
-import ru.betterend.item.EndSpawnEggItem;
-import ru.betterend.item.EternalCrystalItem;
-import ru.betterend.item.PatternedDiscItem;
-import ru.betterend.item.PatternedItem;
+import ru.betterend.item.*;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
-import ru.betterend.item.tool.EndAxeItem;
-import ru.betterend.item.tool.EndHammerItem;
-import ru.betterend.item.tool.EndHoeItem;
-import ru.betterend.item.tool.EndPickaxeItem;
-import ru.betterend.item.tool.EndShovelItem;
-import ru.betterend.item.tool.EndSwordItem;
+import ru.betterend.item.tool.*;
 import ru.betterend.tab.CreativeTabs;
 import ru.betterend.util.TagHelper;
+
+import java.util.List;
 
 public class EndItems {
 	private static final List<Item> MOD_BLOCKS = Lists.newArrayList();
@@ -245,12 +222,14 @@ public class EndItems {
 		return registerDrink(name, builder.build());
 	}
 
-	public static Properties makeItemSettings() {
-		return new Item.Properties().tab(CreativeTabs.TAB_ITEMS);
+	public static FabricItemSettings makeItemSettings() {
+		FabricItemSettings properties = new FabricItemSettings();
+		return (FabricItemSettings) properties.tab(CreativeTabs.TAB_ITEMS);
 	}
 	
-	public static Properties makeBlockItemSettings() {
-		return new Item.Properties().tab(CreativeTabs.TAB_BLOCKS);
+	public static FabricItemSettings makeBlockItemSettings() {
+		FabricItemSettings properties = new FabricItemSettings();
+		return (FabricItemSettings) properties.tab(CreativeTabs.TAB_BLOCKS);
 	}
 
 	public static void register() {}

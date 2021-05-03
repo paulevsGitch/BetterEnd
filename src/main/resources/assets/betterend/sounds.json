@@ -214,7 +214,7 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/caves",
-				"volume": 1.0,
+				"volume": 0.5,
 				"stream": false
 			}
 		]

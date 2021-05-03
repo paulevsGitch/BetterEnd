@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.EndPodiumFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -40,7 +41,7 @@ public class EndPodiumFeatureMixin {
 			blockPos = be_updatePos(blockPos, world);
 			StructureTemplate structure = StructureHelper.readStructure(BetterEnd.makeID(active ? "portal/end_portal_active" : "portal/end_portal_inactive"));
 			BlockPos size = structure.getSize();
-			blockPos = blockPos.offset(-(size.getX() >> 1), -3, -(size.getZ() >> 1));
+			blockPos = blockPos.offset(-(size.getX() >> 1), -1, -(size.getZ() >> 1));
 			structure.placeInWorldChunk(world, blockPos, new StructurePlaceSettings(), random);
 			info.setReturnValue(true);
 			info.cancel();
@@ -56,7 +57,7 @@ public class EndPodiumFeatureMixin {
 		if (GeneratorOptions.useNewGenerator()) {
 			BlockPos pos = GeneratorOptions.getPortalPos();
 			if (pos.equals(BlockPos.ZERO)) {
-				int y = world.getChunk(blockPos).getHeight(Types.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
+				int y = world.getChunk(0, 0, ChunkStatus.FULL).getHeight(Types.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
 				if (y < 1) {
 					y = 65;
 				}

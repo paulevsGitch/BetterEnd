@@ -202,7 +202,7 @@ public class CraftingRecipes {
 		GridRecipe.make("tag_smith_table", Blocks.SMITHING_TABLE).setShape("II", "##", "##").addMaterial('#', ItemTags.PLANKS).addMaterial('I', EndTags.IRON_INGOTS).build();
 		GridRecipe.make("tag_cauldron", Blocks.CAULDRON).setShape("I I", "I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
 		GridRecipe.make("tag_hopper", Blocks.HOPPER).setShape("I I", "ICI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('C', EndTags.ITEM_CHEST).build();
-		GridRecipe.make("tag_piston", Blocks.PISTON).setShape("WWW", "CIC", "CDC").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).addMaterial('C', Items.COBBLESTONE).build();
+		GridRecipe.make("tag_piston", Blocks.PISTON).setShape("WWW", "CIC", "CDC").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).addMaterial('C', Items.COBBLESTONE).addMaterial('W', ItemTags.PLANKS).build();
 		GridRecipe.make("tag_rail", Blocks.RAIL).setShape("I I", "ISI", "I I").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STICK).build();
 		GridRecipe.make("tag_stonecutter", Blocks.STONECUTTER).setShape(" I ", "SSS").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STONE).build();
 		

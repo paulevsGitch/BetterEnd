@@ -26,7 +26,7 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 	private static final StructureTemplate STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
 	
 	@Override
-	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
+	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
 		long x = (long) chunkPos.x * (long) chunkPos.x;
 		long z = (long) chunkPos.z * (long) chunkPos.z;
 		if (x + z < 1024L) {
@@ -35,7 +35,7 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 		if (chunkGenerator.getBaseHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Heightmap.Types.WORLD_SURFACE_WG) < 10) {
 			return false;
 		}
-		return super.shouldStartAt(chunkGenerator, biomeSource, worldSeed, chunkRandom, chunkX, chunkZ, biome, chunkPos, featureConfig);
+		return super.isFeatureChunk(chunkGenerator, biomeSource, worldSeed, chunkRandom, chunkX, chunkZ, biome, chunkPos, featureConfig);
 	}
 	
 	@Override

@@ -88,12 +88,16 @@ public class TunelCaveFeature extends EndCaveFeature {
 				Set<BlockPos> floorPositions = Sets.newHashSet();
 				Set<BlockPos> ceilPositions = Sets.newHashSet();
 				MutableBlockPos mut = new MutableBlockPos();
+				Set<BlockPos> remove = Sets.newHashSet();
 				caveBlocks.forEach((bpos) -> {
 					mut.set(bpos);
-					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
+					int height = world.getHeight(Types.WORLD_SURFACE, bpos.getX(), bpos.getZ());
+					if (mut.getY() >= height) {
+						remove.add(bpos);
+					}
+					else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 						mut.setY(bpos.getY() - 1);
-						int height = world.getHeight(Types.WORLD_SURFACE, pos.getX(), pos.getZ());
-						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN) && mut.getY() < height) {
+						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
 							floorPositions.add(mut.immutable());
 						}
 						mut.setY(bpos.getY() + 1);
@@ -105,6 +109,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 				placeFloor(world, biome, floorPositions, random, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, random);
+				caveBlocks.removeAll(remove);
 				placeWalls(world, biome, caveBlocks, random);
 			}
 			fixBlocks(world, preCaveBlocks);
@@ -116,8 +121,8 @@ public class TunelCaveFeature extends EndCaveFeature {
 	private Set<BlockPos> mutateBlocks(Set<BlockPos> caveBlocks) {
 		Set<BlockPos> result = Sets.newHashSet();
 		caveBlocks.forEach(pos -> {
-			int dx = pos.getX() + (int) (BIOME_NOISE_X.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
-			int dz = pos.getZ() + (int) (BIOME_NOISE_Z.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
+			int dx = pos.getX() + (int) (BIOME_NOISE_X.eval(pos.getX() * 0.3, pos.getZ() * 0.3) * 10);
+			int dz = pos.getZ() + (int) (BIOME_NOISE_Z.eval(pos.getX() * 0.3, pos.getZ() * 0.3) * 10);
 			if ((dx >> 4) == (pos.getX() >> 4) && (dz >> 4) == (pos.getZ() >> 4)) {
 				result.add(pos);
 			}

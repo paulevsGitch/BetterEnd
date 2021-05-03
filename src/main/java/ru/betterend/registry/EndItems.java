@@ -91,7 +91,7 @@ public class EndItems {
 	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
 	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item ARMORED_ELYTRA = registerItem("elytra_armored", new ArmoredElytra("elytra_armored", AETERNIUM_INGOT, 700, 0.96D, true));
+	public static final Item ARMORED_ELYTRA = registerItem("elytra_armored", new ArmoredElytra("elytra_armored", Items.PHANTOM_MEMBRANE, 700, 0.96D, true));
 
 	// Tools //
 	public static final TieredItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new EndShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings().fireResistant()));

@@ -5,7 +5,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.BiomeDefinition;
 
 public class JadeCaveBiome extends EndCaveBiome {
@@ -18,7 +17,6 @@ public class JadeCaveBiome extends EndCaveBiome {
 			.setFogColor(118, 150, 112)
 			.setFogDensity(2.0F)
 			.setWaterAndFogColor(95, 223, 255)
-			.setMusic(EndSounds.MUSIC_FOREST)
 		);
 		JADE[0] = EndBlocks.VIRID_JADESTONE.stone.defaultBlockState();
 		JADE[1] = EndBlocks.AZURE_JADESTONE.stone.defaultBlockState();

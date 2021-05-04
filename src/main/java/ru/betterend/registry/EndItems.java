@@ -21,7 +21,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.DispenserBlock;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.interfaces.BreakableItem;
+import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.item.*;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
@@ -132,8 +132,8 @@ public class EndItems {
 			return item;
 		}
 		registerItem(id, item, MOD_ITEMS);
-		if (item instanceof BreakableItem) {
-			((BreakableItem) item).registerBrokenItem();
+		if (item instanceof MultiModelItem) {
+			((MultiModelItem) item).registerModelPredicate();
 		}
 		return item;
 	}

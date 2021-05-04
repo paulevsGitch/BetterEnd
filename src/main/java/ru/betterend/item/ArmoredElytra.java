@@ -1,7 +1,7 @@
 package ru.betterend.item;
 
-import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,12 +10,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.BreakableItem;
-import ru.betterend.patterns.Patterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.registry.EndItems;
 
-public class ArmoredElytra extends ElytraItem implements BreakableItem {
+public class ArmoredElytra extends ElytraItem implements MultiModelItem {
 
 	private final ResourceLocation wingTexture;
 	private final Item repairItem;
@@ -35,6 +33,7 @@ public class ArmoredElytra extends ElytraItem implements BreakableItem {
 		return movementFactor;
 	}
 
+	@Environment(EnvType.CLIENT)
 	public ResourceLocation getWingTexture() {
 		return wingTexture;
 	}
@@ -45,7 +44,8 @@ public class ArmoredElytra extends ElytraItem implements BreakableItem {
 	}
 
 	@Override
-	public void registerBrokenItem() {
+	@Environment(EnvType.CLIENT)
+	public void registerModelPredicate() {
 		FabricModelPredicateProviderRegistry.register(this, new ResourceLocation("broken"),
 				(itemStack, clientLevel, livingEntity) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F);
 	}

@@ -132,9 +132,6 @@ public class EndItems {
 			return item;
 		}
 		registerItem(id, item, MOD_ITEMS);
-		if (item instanceof MultiModelItem) {
-			((MultiModelItem) item).registerModelPredicate();
-		}
 		return item;
 	}
 	

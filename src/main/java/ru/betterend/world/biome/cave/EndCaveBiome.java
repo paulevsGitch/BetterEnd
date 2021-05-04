@@ -7,6 +7,7 @@ import net.minecraft.world.entity.ai.behavior.WeightedList;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.EndFeature;
@@ -26,6 +27,8 @@ public class EndCaveBiome extends EndBiome {
 			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) EndBiomes.getBiome(definition.getID()))
 		);
 		definition.addFeature(feature).setCaveBiome();
+		definition.setMusic(EndSounds.MUSIC_CAVES);
+		definition.setLoop(EndSounds.AMBIENT_CAVES);
 		return definition;
 	}
 	

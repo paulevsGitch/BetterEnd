@@ -34,6 +34,7 @@
 		"AnvilMenuMixin",
 		"TagLoaderMixin",
 		"EnderManMixin",
+		"EndSpikeMixin",
 		"MonsterMixin",
 		"EntityMixin",
 		"PlayerMixin",

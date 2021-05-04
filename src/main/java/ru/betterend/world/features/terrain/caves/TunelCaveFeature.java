@@ -11,6 +11,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -24,8 +25,13 @@ public class TunelCaveFeature extends EndCaveFeature {
 	private static final OpenSimplexNoise BIOME_NOISE_Z = new OpenSimplexNoise("biome_noise_z".hashCode());
 	
 	private Set<BlockPos> generate(WorldGenLevel world, BlockPos center, Random random) {
-		int x1 = (center.getX() >> 4) << 4;
-		int z1 = (center.getZ() >> 4) << 4;
+		int cx = center.getX() >> 4;
+		int cz = center.getZ() >> 4;
+		if ((long) cx * (long) cx + (long) cz + (long) cz < 256) {
+			return Sets.newHashSet();
+		}
+		int x1 = cx << 4;
+		int z1 = cz << 4;
 		int x2 = x1 + 16;
 		int z2 = z1 + 16;
 		int y2 = world.getHeight();
@@ -43,12 +49,19 @@ public class TunelCaveFeature extends EndCaveFeature {
 				for (int y = 0; y < y2; y++) {
 					pos.setY(y);
 					float val = Mth.abs((float) noiseH.eval(x * 0.02, y * 0.01, z * 0.02));
-					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;//Mth.abs(y - 50 + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F;
+					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(x * 0.1, y * 0.1, z * 0.1) * 0.12F;
 					vert *= vert;
 					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(EndTags.GEN_TERRAIN)) {
 						BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						positions.add(pos.immutable());
+						int height = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+						if (height < pos.getY() + 4) {
+							while (pos.getY() < height) {
+								pos.setY(pos.getY() + 1);
+								BlocksHelper.setWithoutUpdate(world, pos, AIR);
+							}
+						}
 					}
 				}
 			}
@@ -75,9 +88,14 @@ public class TunelCaveFeature extends EndCaveFeature {
 				Set<BlockPos> floorPositions = Sets.newHashSet();
 				Set<BlockPos> ceilPositions = Sets.newHashSet();
 				MutableBlockPos mut = new MutableBlockPos();
+				Set<BlockPos> remove = Sets.newHashSet();
 				caveBlocks.forEach((bpos) -> {
 					mut.set(bpos);
-					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
+					int height = world.getHeight(Types.WORLD_SURFACE, bpos.getX(), bpos.getZ());
+					if (mut.getY() >= height) {
+						remove.add(bpos);
+					}
+					else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 						mut.setY(bpos.getY() - 1);
 						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
 							floorPositions.add(mut.immutable());
@@ -91,6 +109,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 				placeFloor(world, biome, floorPositions, random, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, random);
+				caveBlocks.removeAll(remove);
 				placeWalls(world, biome, caveBlocks, random);
 			}
 			fixBlocks(world, preCaveBlocks);
@@ -102,10 +121,16 @@ public class TunelCaveFeature extends EndCaveFeature {
 	private Set<BlockPos> mutateBlocks(Set<BlockPos> caveBlocks) {
 		Set<BlockPos> result = Sets.newHashSet();
 		caveBlocks.forEach(pos -> {
-			int dx = pos.getX() + (int) (BIOME_NOISE_X.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
-			int dz = pos.getZ() + (int) (BIOME_NOISE_Z.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
-			if ((dx >> 4) == (pos.getX() >> 4) && (dz >> 4) == (pos.getZ() >> 4)) {
-				result.add(pos);
+			int dx = pos.getX() + Mth.floor(BIOME_NOISE_X.eval(pos.getX() * 0.1, pos.getZ() * 0.1) * 3);
+			int dz = pos.getZ() + Mth.floor(BIOME_NOISE_Z.eval(pos.getX() * 0.1, pos.getZ() * 0.1) * 3);
+			if (dx >> 4 == pos.getX() >> 4 && dz >> 4 == pos.getZ() >> 4) {
+				int cx = ((pos.getX() >> 4) << 4) | 8;
+				int cz = ((pos.getZ() >> 4) << 4) | 8;
+				dx = pos.getX() - cx;
+				dz = pos.getZ() - cz;
+				if (dx * dx + dz * dz < 64) {
+					result.add(pos);
+				}
 			}
 		});
 		return result;

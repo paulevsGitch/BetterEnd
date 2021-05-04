@@ -99,6 +99,31 @@
 			}
 		]
 	},
+	"betterend.music.caves": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/godmode-future_rennaisance",
+				"volume": 0.1,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/futuremono-moonrise",
+				"volume": 0.1,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/emmit_fenn-wander",
+				"volume": 0.1,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/corbyn_kites-orbit",
+				"volume": 0.1,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",
@@ -180,6 +205,16 @@
 			{
 				"name": "betterend:ambient/glowing_grasslands",
 				"volume": 1.0,
+				"stream": false
+			}
+		]
+	},
+	"betterend.ambient.caves": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/caves",
+				"volume": 0.5,
 				"stream": false
 			}
 		]

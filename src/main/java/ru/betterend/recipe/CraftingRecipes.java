@@ -201,7 +201,7 @@ public class CraftingRecipes {
 		GridRecipe.make("filalux_lantern", EndBlocks.FILALUX_LANTERN).setShape("###", "###", "###").addMaterial('#', EndBlocks.FILALUX).build();
 		
 		GridRecipe.make("silk_moth_hive", EndBlocks.SILK_MOTH_HIVE).setShape("#L#", "LML", "#L#").addMaterial('#', EndBlocks.TENANEA.planks).addMaterial('L', EndBlocks.TENANEA_LEAVES).addMaterial('M', EndItems.SILK_MOTH_MATRIX).build();
-		GridRecipe.make("cave_pumpkin_pie", EndItems.CAVE_PUMPKIN_PIE).setShape(" B ", "BPB", " B ").addMaterial('P', EndBlocks.CAVE_PUMPKIN).addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).build();
+		GridRecipe.make("cave_pumpkin_pie", EndItems.CAVE_PUMPKIN_PIE).setShape("SBS", "BPB", "SBS").addMaterial('P', EndBlocks.CAVE_PUMPKIN).addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).addMaterial('S', Items.SUGAR).build();
 		GridRecipe.make("cave_pumpkin_seeds", EndBlocks.CAVE_PUMPKIN_SEED).setOutputCount(4).setList("#").addMaterial('#', EndBlocks.CAVE_PUMPKIN).build();
 		
 		GridRecipe.make("neon_cactus_block", EndBlocks.NEON_CACTUS_BLOCK).setShape("##", "##").addMaterial('#', EndBlocks.NEON_CACTUS).build();
@@ -219,6 +219,8 @@ public class CraftingRecipes {
 		GridRecipe.make("tag_compass", Items.COMPASS).setShape(" I ", "IDI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).build();
 		GridRecipe.make("tag_minecart", Items.MINECART).setShape("I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
 		GridRecipe.make("tag_shield", Items.SHIELD).setShape("WIW", "WWW", " W ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('W', ItemTags.PLANKS).build();
+		
+		GridRecipe.make("sugar_from_root", Items.SUGAR).setList("###").addMaterial('#', EndItems.AMBER_ROOT_RAW).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

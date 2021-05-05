@@ -856,5 +856,8 @@
 	"block.betterend.neon_cactus_slab": "Neon Cactus Slab",
 	"block.betterend.neon_cactus_stairs": "Neon Cactus Stairs",
 	"biome.betterend.jade_cave": "Jade Cave",
-	"item.betterend.blossom_berry_jelly": "Blossom Berry Jelly"
+	"item.betterend.blossom_berry_jelly": "Blossom Berry Jelly",
+	"item.betterend.aeternium_forged_plate": "Aeternium Forged Plate",
+	"item.betterend.terminite_forged_plate": "Terminite Forged Plate",
+	"item.betterend.thallasium_forged_plate": "Thallasium Forged Plate"
 }

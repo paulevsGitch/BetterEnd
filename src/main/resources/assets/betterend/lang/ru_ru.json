@@ -875,5 +875,8 @@
 	"block.betterend.neon_cactus_slab": "Плита из неонового кактуса",
 	"block.betterend.neon_cactus_stairs": "Ступени из неонового кактуса",
 	"biome.betterend.jade_cave": "Нефритовая пещера",
-	"item.betterend.blossom_berry_jelly": "Желе из цветущей ягоды"
+	"item.betterend.blossom_berry_jelly": "Желе из цветущей ягоды",
+	"item.betterend.aeternium_forged_plate": "Этериевая кованная пластина",
+	"item.betterend.terminite_forged_plate": "Терминитовая кованная пластина",
+	"item.betterend.thallasium_forged_plate": "Талласиевая кованная пластина"
 }

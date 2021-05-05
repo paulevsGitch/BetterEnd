@@ -61,6 +61,7 @@ public class EndItems {
 	public final static Item ENDER_DUST = registerItem("ender_dust");
 	public final static Item ENDER_SHARD = registerItem("ender_shard");
 	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot");
+	public final static Item AETERNIUM_FORGED_PLATE = registerItem("aeternium_forged_plate");
 	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
 	public final static Item END_LILY_LEAF_DRIED = registerItem("end_lily_leaf_dried");
 	public final static Item CRYSTAL_SHARDS = registerItem("crystal_shards");

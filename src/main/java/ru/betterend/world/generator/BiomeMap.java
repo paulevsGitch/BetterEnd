@@ -20,6 +20,7 @@ public class BiomeMap {
 	private final OpenSimplexNoise noiseX;
 	private final OpenSimplexNoise noiseZ;
 	private final BiomePicker picker;
+	private final long seed;
 	
 	public BiomeMap(long seed, int size, BiomePicker picker) {
 		maps.clear();
@@ -30,6 +31,11 @@ public class BiomeMap {
 		depth = (int) Math.ceil(Math.log(size) / Math.log(2)) - 2;
 		this.size = 1 << depth;
 		this.picker = picker;
+		this.seed = seed;
+	}
+	
+	public long getSeed() {
+		return seed;
 	}
 	
 	public void clearCache() {

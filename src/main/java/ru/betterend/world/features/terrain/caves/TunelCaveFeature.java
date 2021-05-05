@@ -1,8 +1,10 @@
 package ru.betterend.world.features.terrain.caves;
 
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import net.minecraft.core.BlockPos;
@@ -21,9 +23,6 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 public class TunelCaveFeature extends EndCaveFeature {
-	private static final OpenSimplexNoise BIOME_NOISE_X = new OpenSimplexNoise("biome_noise_x".hashCode());
-	private static final OpenSimplexNoise BIOME_NOISE_Z = new OpenSimplexNoise("biome_noise_z".hashCode());
-	
 	private Set<BlockPos> generate(WorldGenLevel world, BlockPos center, Random random) {
 		int cx = center.getX() >> 4;
 		int cz = center.getZ() >> 4;
@@ -78,62 +77,63 @@ public class TunelCaveFeature extends EndCaveFeature {
 		if (biomeMissingCaves(world, pos)) {
 			return false;
 		}
-
-		EndCaveBiome biome = EndBiomes.getCaveBiome(random);
-		Set<BlockPos> preCaveBlocks = generate(world, pos, random);
-		Set<BlockPos> caveBlocks = mutateBlocks(preCaveBlocks);
-		if (!caveBlocks.isEmpty()) {
-			if (biome != null) {
-				setBiomes(world, biome, caveBlocks);
-				Set<BlockPos> floorPositions = Sets.newHashSet();
-				Set<BlockPos> ceilPositions = Sets.newHashSet();
-				MutableBlockPos mut = new MutableBlockPos();
-				Set<BlockPos> remove = Sets.newHashSet();
-				caveBlocks.forEach((bpos) -> {
-					mut.set(bpos);
-					int height = world.getHeight(Types.WORLD_SURFACE, bpos.getX(), bpos.getZ());
-					if (mut.getY() >= height) {
-						remove.add(bpos);
-					}
-					else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
-						mut.setY(bpos.getY() - 1);
-						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
-							floorPositions.add(mut.immutable());
-						}
-						mut.setY(bpos.getY() + 1);
-						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
-							ceilPositions.add(mut.immutable());
-						}
-					}
-				});
-				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-				placeFloor(world, biome, floorPositions, random, surfaceBlock);
-				placeCeil(world, biome, ceilPositions, random);
-				caveBlocks.removeAll(remove);
-				placeWalls(world, biome, caveBlocks, random);
-			}
-			fixBlocks(world, preCaveBlocks);
+		
+		Set<BlockPos> caveBlocks = generate(world, pos, random);
+		if (caveBlocks.isEmpty()) {
+			return false;
 		}
-
-		return true;
-	}
-	
-	private Set<BlockPos> mutateBlocks(Set<BlockPos> caveBlocks) {
-		Set<BlockPos> result = Sets.newHashSet();
-		caveBlocks.forEach(pos -> {
-			int dx = pos.getX() + Mth.floor(BIOME_NOISE_X.eval(pos.getX() * 0.1, pos.getZ() * 0.1) * 3);
-			int dz = pos.getZ() + Mth.floor(BIOME_NOISE_Z.eval(pos.getX() * 0.1, pos.getZ() * 0.1) * 3);
-			if (dx >> 4 == pos.getX() >> 4 && dz >> 4 == pos.getZ() >> 4) {
-				int cx = ((pos.getX() >> 4) << 4) | 8;
-				int cz = ((pos.getZ() >> 4) << 4) | 8;
-				dx = pos.getX() - cx;
-				dz = pos.getZ() - cz;
-				if (dx * dx + dz * dz < 64) {
-					result.add(pos);
+		
+		Map<EndCaveBiome, Set<BlockPos>> floorSets = Maps.newHashMap();
+		Map<EndCaveBiome, Set<BlockPos>> ceilSets = Maps.newHashMap();
+		MutableBlockPos mut = new MutableBlockPos();
+		Set<BlockPos> remove = Sets.newHashSet();
+		caveBlocks.forEach((bpos) -> {
+			mut.set(bpos);
+			EndCaveBiome bio = EndBiomes.getCaveBiome(bpos.getX(), bpos.getZ());
+			int height = world.getHeight(Types.WORLD_SURFACE, bpos.getX(), bpos.getZ());
+			if (mut.getY() >= height) {
+				remove.add(bpos);
+			}
+			else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
+				mut.setY(bpos.getY() - 1);
+				if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+					Set<BlockPos> floorPositions = floorSets.get(bio);
+					if (floorPositions == null) {
+						floorPositions = Sets.newHashSet();
+						floorSets.put(bio, floorPositions);
+					}
+					floorPositions.add(mut.immutable());
 				}
+				mut.setY(bpos.getY() + 1);
+				if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+					Set<BlockPos> ceilPositions = ceilSets.get(bio);
+					if (ceilPositions == null) {
+						ceilPositions = Sets.newHashSet();
+						ceilSets.put(bio, ceilPositions);
+					}
+					ceilPositions.add(mut.immutable());
+				}
+				setBiome(world, bpos, bio);
 			}
 		});
-		return result;
+		caveBlocks.removeAll(remove);
+		
+		if (caveBlocks.isEmpty()) {
+			return true;
+		}
+		
+		floorSets.forEach((biome, floorPositions) -> {
+			BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+			placeFloor(world, biome, floorPositions, random, surfaceBlock);
+		});
+		ceilSets.forEach((biome, ceilPositions) -> {
+			placeCeil(world, biome, ceilPositions, random);
+		});
+		EndCaveBiome biome = EndBiomes.getCaveBiome(pos.getX(), pos.getZ());
+		placeWalls(world, biome, caveBlocks, random);
+		fixBlocks(world, caveBlocks);
+
+		return true;
 	}
 
 	@Override

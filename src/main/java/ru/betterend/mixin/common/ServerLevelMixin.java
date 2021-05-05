@@ -27,6 +27,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.ServerLevelData;
 import ru.betterend.BetterEnd;
+import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.DataFixerUtil;
 import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
@@ -46,6 +47,7 @@ public class ServerLevelMixin {
 		lastWorld = session.getLevelId();
 		
 		ServerLevel world = ServerLevel.class.cast(this);
+		EndBiomes.onWorldLoad(world.getSeed());
 		File dir = session.getDimensionPath(world.dimension());
 		if (!new File(dir, "level.dat").exists()) {
 			dir = dir.getParentFile();

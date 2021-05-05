@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
@@ -58,8 +57,10 @@ import ru.betterend.world.biome.land.PaintedMountainsBiome;
 import ru.betterend.world.biome.land.ShadowForestBiome;
 import ru.betterend.world.biome.land.SulphurSpringsBiome;
 import ru.betterend.world.biome.land.UmbrellaJungleBiome;
+import ru.betterend.world.generator.BiomeMap;
 import ru.betterend.world.generator.BiomePicker;
 import ru.betterend.world.generator.BiomeType;
+import ru.betterend.world.generator.GeneratorOptions;
 
 public class EndBiomes {
 	private static final HashMap<ResourceLocation, EndBiome> ID_MAP = Maps.newHashMap();
@@ -74,6 +75,7 @@ public class EndBiomes {
 	private static final JsonObject EMPTY_JSON = new JsonObject();
 	
 	private static Registry<Biome> biomeRegistry;
+	private static BiomeMap caveBiomeMap;
 	
 	// Vanilla Land
 	public static final EndBiome END = registerBiome(Biomes.THE_END, BiomeType.LAND, 1F);
@@ -116,6 +118,12 @@ public class EndBiomes {
 	
 	public static void register() {
 		CAVE_BIOMES.rebuild();
+	}
+	
+	public static void onWorldLoad(long seed) {
+		if (caveBiomeMap == null || caveBiomeMap.getSeed() != seed) {
+			caveBiomeMap = new BiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+		}
 	}
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
@@ -439,8 +447,8 @@ public class EndBiomes {
 		return biome;
 	}
 	
-	public static EndCaveBiome getCaveBiome(Random random) {
-		return (EndCaveBiome) CAVE_BIOMES.getBiome(random);
+	public static EndCaveBiome getCaveBiome(int x, int z) {
+		return (EndCaveBiome) caveBiomeMap.getBiome(x, z);
 	}
 	
 	public static boolean hasBiome(ResourceLocation biomeID) {

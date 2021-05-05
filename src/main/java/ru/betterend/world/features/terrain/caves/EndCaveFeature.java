@@ -51,7 +51,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			return false;
 		}
 
-		EndCaveBiome biome = EndBiomes.getCaveBiome(random);
+		EndCaveBiome biome = EndBiomes.getCaveBiome(pos.getX(), pos.getZ());
 		Set<BlockPos> caveBlocks = generate(world, center, radius, random);
 		if (!caveBlocks.isEmpty()) {
 			if (biome != null) {

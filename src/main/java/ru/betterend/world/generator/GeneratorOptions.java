@@ -7,6 +7,7 @@ import ru.betterend.config.Configs;
 public class GeneratorOptions {
 	private static int biomeSizeLand;
 	private static int biomeSizeVoid;
+	private static int biomeSizeCaves;
 	private static boolean hasPortal;
 	private static boolean hasPillars;
 	private static boolean hasDragonFights;
@@ -33,6 +34,7 @@ public class GeneratorOptions {
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
 		biomeSizeVoid = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeVoid", 256);
+		biomeSizeCaves = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeCaves", 32);
 		hasPortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "hasPortal", true);
 		hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
@@ -66,6 +68,10 @@ public class GeneratorOptions {
 	
 	public static int getBiomeSizeVoid() {
 		return Mth.clamp(biomeSizeVoid, 1, 8192);
+	}
+	
+	public static int getBiomeSizeCaves() {
+		return Mth.clamp(biomeSizeCaves, 1, 8192);
 	}
 
 	public static boolean hasPortal() {

@@ -188,6 +188,7 @@ public class CraftingRecipes {
 		registerHammer("diamond", Items.DIAMOND, EndItems.DIAMOND_HAMMER);
 
 		GridRecipe.make("charcoal_block", EndBlocks.CHARCOAL_BLOCK).setShape("###", "###", "###").addMaterial('#', Items.CHARCOAL).build();
+		GridRecipe.make("charcoal_from_block", Items.CHARCOAL).setOutputCount(9).setList("#").addMaterial('#', EndBlocks.CHARCOAL_BLOCK).build();
 		GridRecipe.make("end_stone_furnace", EndBlocks.END_STONE_FURNACE).setShape("###", "# #", "###").addMaterial('#', Blocks.END_STONE).build();
 		GridRecipe.make("filalux_lantern", EndBlocks.FILALUX_LANTERN).setShape("###", "###", "###").addMaterial('#', EndBlocks.FILALUX).build();
 		

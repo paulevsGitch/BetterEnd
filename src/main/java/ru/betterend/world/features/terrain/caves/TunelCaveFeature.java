@@ -9,8 +9,10 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
@@ -51,12 +53,12 @@ public class TunelCaveFeature extends EndCaveFeature {
 					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(x * 0.1, y * 0.1, z * 0.1) * 0.12F;
 					vert *= vert;
-					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(EndTags.GEN_TERRAIN)) {
+					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(EndTags.GEN_TERRAIN) && noWaterNear(world, pos)) {
 						BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						positions.add(pos.immutable());
 						int height = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 						if (height < pos.getY() + 4) {
-							while (pos.getY() < height) {
+							while (pos.getY() < height && noWaterNear(world, pos)) {
 								pos.setY(pos.getY() + 1);
 								BlocksHelper.setWithoutUpdate(world, pos, AIR);
 							}
@@ -66,6 +68,23 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 		}
 		return positions;
+	}
+	
+	private boolean noWaterNear(WorldGenLevel world, BlockPos pos) {
+		BlockPos above1 = pos.above();
+		BlockPos above2 = pos.above(2);
+		if (!world.getFluidState(above1).isEmpty() || !world.getFluidState(above2).isEmpty()) {
+			return false;
+		}
+		for (Direction dir: BlocksHelper.HORIZONTAL) {
+			if (!world.getFluidState(above1.relative(dir)).isEmpty()) {
+				return false;
+			}
+			if (!world.getFluidState(above2.relative(dir)).isEmpty()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	@Override
@@ -145,7 +164,9 @@ public class TunelCaveFeature extends EndCaveFeature {
 	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
 		float density = biome.getFloorDensity() * 0.2F;
 		floorPositions.forEach((pos) -> {
-			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
+			if (!surfaceBlock.is(Blocks.END_STONE)) {
+				BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
+			}
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {

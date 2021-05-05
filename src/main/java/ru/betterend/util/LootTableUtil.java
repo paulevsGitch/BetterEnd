@@ -23,7 +23,7 @@ public class LootTableUtil {
 				
 				builder = FabricLootPoolBuilder.builder();
 				builder.setRolls(RandomValueBounds.between(0, 5));
-				builder.withCondition(LootItemRandomChanceCondition.randomChance(0.05f).build());
+				builder.withCondition(LootItemRandomChanceCondition.randomChance(0.1f).build());
 				builder.withEntry(LootItem.lootTableItem(EndItems.MUSIC_DISC_STRANGE_AND_ALIEN).build());
 				builder.withEntry(LootItem.lootTableItem(EndItems.MUSIC_DISC_GRASPING_AT_STARS).build());
 				builder.withEntry(LootItem.lootTableItem(EndItems.MUSIC_DISC_ENDSEEKER).build());

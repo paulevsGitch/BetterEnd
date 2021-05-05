@@ -101,19 +101,27 @@ public class CraftingRecipes {
 		GridRecipe.make("petal_white_dye", Items.WHITE_DYE).setList("#").addMaterial('#', EndItems.HYDRALUX_PETAL).build();
 		
 		GridRecipe.make("sweet_berry_jelly", EndItems.SWEET_BERRY_JELLY)
-			.setList("JWSB")
-			.addMaterial('J', EndItems.GELATINE)
-			.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
-			.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
-			.build();
+		.setList("JWSB")
+		.addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
+		.build();
 		
 		GridRecipe.make("shadow_berry_jelly", EndItems.SHADOW_BERRY_JELLY)
-			.setList("JWSB")
-			.addMaterial('J', EndItems.GELATINE)
-			.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
-			.addMaterial('S', Items.SUGAR)
-			.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
-			.build();
+		.setList("JWSB")
+		.addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR)
+		.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
+		.build();
+		
+		GridRecipe.make("shadow_berry_jelly", EndItems.BLOSSOM_BERRY_JELLY)
+		.setList("JWSB")
+		.addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR)
+		.addMaterial('B', EndItems.BLOSSOM_BERRY)
+		.build();
 		
 		GridRecipe.make("sulphur_gunpowder", Items.GUNPOWDER).setList("SCB").addMaterial('S', EndItems.CRYSTALLINE_SULPHUR).addMaterial('C', Items.COAL, Items.CHARCOAL).addMaterial('B', Items.BONE_MEAL).build();
 		

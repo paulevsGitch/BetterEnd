@@ -29,6 +29,7 @@ public class NourishIntegration extends ModIntegration {
 			EndItems.BLOSSOM_BERRY,
 			EndItems.SHADOW_BERRY_JELLY, 
 			EndItems.SWEET_BERRY_JELLY,
+			EndItems.BLOSSOM_BERRY_JELLY,
 			EndItems.AMBER_ROOT_RAW,
 			EndItems.CHORUS_MUSHROOM_RAW,
 			EndItems.CHORUS_MUSHROOM_COOKED,
@@ -46,6 +47,7 @@ public class NourishIntegration extends ModIntegration {
 			sweets,
 			EndItems.SHADOW_BERRY_JELLY,
 			EndItems.SWEET_BERRY_JELLY,
+			EndItems.BLOSSOM_BERRY_JELLY,
 			EndItems.CAVE_PUMPKIN_PIE
 		);
 	}

@@ -148,7 +148,7 @@ public class EndBlocks {
 	public static final Block JELLYSHROOM_CAP_PURPLE = registerBlock("jellyshroom_cap_purple", new JellyshroomCapBlock(217, 142, 255, 164, 0, 255));
 	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.COLOR_PURPLE, MaterialColor.COLOR_LIGHT_BLUE);
 	
-	public static final Block LUCERNIA_SAPLING = registerBlock("lucernia_sapling", new TenaneaSaplingBlock());
+	public static final Block LUCERNIA_SAPLING = registerBlock("lucernia_sapling", new LucerniaSaplingBlock());
 	public static final Block LUCERNIA_LEAVES = registerBlock("lucernia_leaves", new EndLeavesBlock(LUCERNIA_SAPLING, MaterialColor.COLOR_ORANGE));
 	public static final Block LUCERNIA_OUTER_LEAVES = registerBlock("lucernia_outer_leaves", new FurBlock(LUCERNIA_SAPLING, 32));
 	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.COLOR_ORANGE, MaterialColor.COLOR_ORANGE);

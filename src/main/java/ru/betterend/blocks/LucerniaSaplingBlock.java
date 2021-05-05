@@ -8,18 +8,18 @@ import ru.betterend.blocks.basis.FeatureSaplingBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
-public class TenaneaSaplingBlock extends FeatureSaplingBlock {
-	public TenaneaSaplingBlock() {
+public class LucerniaSaplingBlock extends FeatureSaplingBlock {
+	public LucerniaSaplingBlock() {
 		super();
 	}
 
 	@Override
 	protected Feature<?> getFeature() {
-		return EndFeatures.TENANEA.getFeature();
+		return EndFeatures.LUCERNIA.getFeature();
 	}
 	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-		return world.getBlockState(pos.below()).is(EndBlocks.PINK_MOSS);
+		return world.getBlockState(pos.below()).is(EndBlocks.RUTISCUS);
 	}
 }

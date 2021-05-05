@@ -120,8 +120,8 @@ public class EndItems {
 	public final static Item SHADOW_BERRY_COOKED = registerFood("shadow_berry_cooked", 6, 0.7F);
 	public final static Item END_FISH_RAW = registerFood("end_fish_raw", Foods.SALMON);
 	public final static Item END_FISH_COOKED = registerFood("end_fish_cooked", Foods.COOKED_SALMON);
-	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new EndBucketItem());
-	public final static Item BUCKET_CUBOZOA  = registerItem("bucket_cubozoa", new EndBucketItem());
+	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new EndBucketItem(EndEntities.END_FISH));
+	public final static Item BUCKET_CUBOZOA  = registerItem("bucket_cubozoa", new EndBucketItem(EndEntities.CUBOZOA));
 	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 6, 0.75F);
 	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 7, 0.75F, new MobEffectInstance(MobEffects.NIGHT_VISION, 400));
 	public final static Item BLOSSOM_BERRY = registerFood("blossom_berry", Foods.APPLE);

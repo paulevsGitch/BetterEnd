@@ -31,7 +31,10 @@ public class EndSounds {
 	public static final SoundEvent ENTITY_SHADOW_WALKER_DEATH = register("entity", "shadow_walker_death");
 	
 	// Records
-	public static final SoundEvent STRANGE_AND_ALIEN = register("record", "strange_and_alien");
+	public static final SoundEvent RECORD_STRANGE_AND_ALIEN = register("record", "strange_and_alien");
+	public static final SoundEvent RECORD_GRASPING_AT_STARS = register("record", "grasping_at_stars");
+	public static final SoundEvent RECORD_ENDSEEKER = register("record", "endseeker");
+	public static final SoundEvent RECORD_EO_DRACONA = register("record", "eo_dracona");
 	
 	public static void register() {}
 	

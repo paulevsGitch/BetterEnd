@@ -80,7 +80,10 @@ public class EndItems {
 	public final static Item SILK_MOTH_MATRIX = registerItem("silk_moth_matrix");
 	
 	// Music Discs
-	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerDisc("music_disc_strange_and_alien", 0, EndSounds.STRANGE_AND_ALIEN);
+	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerDisc("music_disc_strange_and_alien", 0, EndSounds.RECORD_STRANGE_AND_ALIEN);
+	public final static Item MUSIC_DISC_GRASPING_AT_STARS = registerDisc("music_disc_grasping_at_stars", 0, EndSounds.RECORD_GRASPING_AT_STARS);
+	public final static Item MUSIC_DISC_ENDSEEKER = registerDisc("music_disc_endseeker", 0, EndSounds.RECORD_ENDSEEKER);
+	public final static Item MUSIC_DISC_EO_DRACONA = registerDisc("music_disc_eo_dracona", 0, EndSounds.RECORD_EO_DRACONA);
 	
 	// Armor //
 	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireResistant()));

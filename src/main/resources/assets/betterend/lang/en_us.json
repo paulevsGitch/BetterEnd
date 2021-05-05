@@ -821,6 +821,12 @@
 	
 	"item.betterend.music_disc_strange_and_alien": "§bMusic Disc§r",
 	"item.betterend.music_disc_strange_and_alien.desc": "§5Firel§r - §fStrange And Alien§r",
+	"item.betterend.music_disc_grasping_at_stars": "§bMusic Disc§r",
+	"item.betterend.music_disc_grasping_at_stars.desc": "§5Firel§r - §fGrasping At Stars§r",
+	"item.betterend.music_disc_endseeker": "§bMusic Disc§r",
+	"item.betterend.music_disc_endseeker.desc": "§5Firel§r - §fEndseeker§r",
+	"item.betterend.music_disc_eo_dracona": "§bMusic Disc§r",
+	"item.betterend.music_disc_eo_dracona.desc": "§5Firel§r - §fEo Dracona§r",
 	
 	"block.betterend.hydralux_petal_block_amber": "Amber Petal Block",
 	"block.betterend.hydralux_petal_block_beige": "Beige Petal Block",

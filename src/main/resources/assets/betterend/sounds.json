@@ -277,5 +277,32 @@
 				"stream": false
 			}
 		]
+	},
+	"betterend.record.grasping_at_stars": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-grasping_at_stars",
+				"stream": false
+			}
+		]
+	},
+	"betterend.record.endseeker": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-endseeker",
+				"stream": false
+			}
+		]
+	},
+	"betterend.record.eo_dracona": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-eo_dracona",
+				"stream": false
+			}
+		]
 	}
 }

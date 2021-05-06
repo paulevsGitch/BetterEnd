@@ -95,7 +95,7 @@ public class ServerLevelMixin {
 		method = "tickChunk",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"
+			target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"
 		)
 	)
 	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {

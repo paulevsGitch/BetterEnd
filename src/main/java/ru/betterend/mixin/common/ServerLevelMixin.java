@@ -3,7 +3,6 @@ package ru.betterend.mixin.common;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
@@ -11,7 +10,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -25,36 +23,40 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.progress.ChunkProgressListener;
-import net.minecraft.tags.Tag;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraft.world.level.storage.WritableLevelData;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.DataFixerUtil;
-import ru.betterend.util.TagHelper;
 import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerLevel.class)
-public class ServerLevelMixin {
-	private static final int DEV_VERSION = be_getVersionInt("63.63.63");
-	private static final int FIX_VERSION = DEV_VERSION;
-	private static String lastWorld = null;
+public abstract class ServerLevelMixin extends Level {
+	private static final int BE_DEV_VERSION = be_getVersionInt("63.63.63");
+	private static final int BE_FIX_VERSION = BE_DEV_VERSION;
+	private static String be_lastWorld = null;
+	
+	protected ServerLevelMixin(WritableLevelData writableLevelData, ResourceKey<Level> resourceKey, DimensionType dimensionType, Supplier<ProfilerFiller> supplier, boolean bl, boolean bl2, long l) {
+		super(writableLevelData, resourceKey, dimensionType, supplier, bl, bl2, l);
+	}
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, LevelStorageSource.LevelStorageAccess session, ServerLevelData properties, ResourceKey<Level> registryKey, DimensionType dimensionType, ChunkProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long l, List<CustomSpawner> list, boolean bl, CallbackInfo info) {
-		if (lastWorld != null && lastWorld.equals(session.getLevelId())) {
+		if (be_lastWorld != null && be_lastWorld.equals(session.getLevelId())) {
 			return;
 		}
 		
-		lastWorld = session.getLevelId();
+		be_lastWorld = session.getLevelId();
 		
 		ServerLevel world = ServerLevel.class.cast(this);
 		EndBiomes.onWorldLoad(world.getSeed());
@@ -65,7 +67,7 @@ public class ServerLevelMixin {
 		File data = new File(dir, "data/betterend_data.nbt");
 		
 		ModMetadata meta = FabricLoader.getInstance().getModContainer(BetterEnd.MOD_ID).get().getMetadata();
-		int version = BetterEnd.isDevEnvironment() ? DEV_VERSION : be_getVersionInt(meta.getVersion().toString());
+		int version = BetterEnd.isDevEnvironment() ? BE_DEV_VERSION : be_getVersionInt(meta.getVersion().toString());
 		
 		WorldDataUtil.load(data);
 		CompoundTag root = WorldDataUtil.getRootTag();
@@ -73,7 +75,7 @@ public class ServerLevelMixin {
 		GeneratorOptions.setPortalPos(NbtUtils.readBlockPos(root.getCompound("portal")));
 		
 		if (dataVersion < version) {
-			if (version < FIX_VERSION) {
+			if (version < BE_FIX_VERSION) {
 				DataFixerUtil.fixData(data.getParentFile());
 			}
 			root.putString("version", be_getVersionString(version));
@@ -99,7 +101,12 @@ public class ServerLevelMixin {
 		)
 	)
 	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
-		System.out.println(state);
+		if (state.is(Blocks.ICE)) {
+			ResourceLocation biome = EndBiomes.getBiomeID(getBiome(pos));
+			if (biome.getNamespace().equals(BetterEnd.MOD_ID)) {
+				state = EndBlocks.EMERALD_ICE.defaultBlockState();
+			}
+		}
 		return state;
 	}
 	

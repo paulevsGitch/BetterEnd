@@ -16,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.dimension.end.DragonRespawnAnimation;
 import net.minecraft.world.level.dimension.end.EndDragonFight;
@@ -70,7 +71,19 @@ public class EndDragonFightMixin {
 			List<EndCrystal> crystals = Lists.newArrayList();
 			BlockPos center = GeneratorOptions.getPortalPos().above(5);
 			for (Direction dir : BlocksHelper.HORIZONTAL) {
-				List<EndCrystal> crystalList = level.getEntitiesOfClass(EndCrystal.class, new AABB(center.relative(dir, 4)));
+				BlockPos central = center.relative(dir, 4);
+				List<EndCrystal> crystalList = level.getEntitiesOfClass(EndCrystal.class, new AABB(central.below(10).south().west(), central.above(10).north().east()));
+				
+				int count = crystalList.size();
+				for (int n = 0; n < count; n++) {
+					EndCrystal crystal = crystalList.get(n);
+					if (!level.getBlockState(crystal.blockPosition().below()).is(Blocks.BEDROCK)) {
+						crystalList.remove(n);
+						count--;
+						n--;
+					}
+				}
+				
 				if (crystalList.isEmpty()) {
 					info.cancel();
 					return;

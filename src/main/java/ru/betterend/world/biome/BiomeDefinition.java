@@ -68,6 +68,7 @@ public class BiomeDefinition {
 	private float genChance = 1F;
 	private boolean hasCaves = true;
 	private boolean isCaveBiome = false;
+	private float temperature = 1F;
 	
 	private ConfiguredSurfaceBuilder<?> surface;
 
@@ -115,6 +116,11 @@ public class BiomeDefinition {
 	
 	public BiomeDefinition setDepth(float depth) {
 		this.depth = depth;
+		return this;
+	}
+	
+	public BiomeDefinition setTemperature(float temperature) {
+		this.temperature = temperature;
 		return this;
 	}
 
@@ -263,7 +269,7 @@ public class BiomeDefinition {
 				.biomeCategory(isCaveBiome ? BiomeCategory.NONE : BiomeCategory.THEEND)
 				.depth(depth)
 				.scale(0.2F)
-				.temperature(2.0F)
+				.temperature(temperature)
 				.downfall(0.0F)
 				.specialEffects(effects.build())
 				.mobSpawnSettings(spawnSettings.build())

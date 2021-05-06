@@ -3,11 +3,15 @@ package ru.betterend.mixin.common;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -17,11 +21,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.progress.ChunkProgressListener;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorageSource;
@@ -29,6 +38,7 @@ import net.minecraft.world.level.storage.ServerLevelData;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.DataFixerUtil;
+import ru.betterend.util.TagHelper;
 import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -79,6 +89,18 @@ public class ServerLevelMixin {
 				info.cancel();
 			}
 		}
+	}
+	
+	@ModifyArg(
+		method = "tickChunk",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"
+		)
+	)
+	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
+		System.out.println(state);
+		return state;
 	}
 	
 	private static int be_getVersionInt(String version) {

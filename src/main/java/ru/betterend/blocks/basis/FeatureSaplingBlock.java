@@ -15,7 +15,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -24,14 +24,15 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndTags;
 
-public abstract class FeatureSaplingBlock extends BlockBaseNotFull implements BonemealableBlock, IRenderTypeable {
+public abstract class FeatureSaplingBlock extends SaplingBlock implements IRenderTypeable, BlockPatterned {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 	
 	public FeatureSaplingBlock() {
-		super(FabricBlockSettings.of(Material.PLANT)
+		super(null, FabricBlockSettings.of(Material.PLANT)
 				.breakByHand(true)
 				.collidable(false)
 				.instabreak()
@@ -40,7 +41,7 @@ public abstract class FeatureSaplingBlock extends BlockBaseNotFull implements Bo
 	}
 	
 	public FeatureSaplingBlock(int light) {
-		super(FabricBlockSettings.of(Material.PLANT)
+		super(null, FabricBlockSettings.of(Material.PLANT)
 				.breakByHand(true)
 				.collidable(false)
 				.luminance(light)
@@ -70,18 +71,18 @@ public abstract class FeatureSaplingBlock extends BlockBaseNotFull implements Bo
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
-		return true;
-	}
-
-	@Override
 	public boolean isBonemealSuccess(Level world, Random random, BlockPos pos, BlockState state) {
 		return random.nextInt(16) == 0;
 	}
 
 	@Override
-	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
+	public void advanceTree(ServerLevel world, BlockPos pos, BlockState blockState, Random random) {
 		getFeature().place(world, world.getChunkSource().getGenerator(), random, pos, null);
+	}
+
+	@Override
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+		this.tick(state, world, pos, random);
 	}
 
 	@Override

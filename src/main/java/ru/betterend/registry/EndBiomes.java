@@ -230,7 +230,7 @@ public class EndBiomes {
 	 * @param server - {@link MinecraftServer}
 	 */
 	public static void initRegistry(MinecraftServer server) {
-		if (biomeRegistry == null) {
+		if (biomeRegistry == null || biomeRegistry == BuiltinRegistries.BIOME) {
 			biomeRegistry = server.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
 		}
 	}

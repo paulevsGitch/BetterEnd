@@ -257,7 +257,7 @@ public class EndFeatures {
 		addFeature(ENDER_ORE, features);
 		addFeature(CRASHED_SHIP, features);
 		
-		if (EndBiomes.getBiome(id).hasCaves()) {
+		if (EndBiomes.getBiome(id).hasCaves() && !EndBiomes.VOID_BIOMES.containsImmutable(id)) {
 			addFeature(ROUND_CAVE, features);
 			addFeature(TUNEL_CAVE, features);
 		}

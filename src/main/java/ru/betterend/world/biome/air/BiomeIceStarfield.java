@@ -15,6 +15,7 @@ public class BiomeIceStarfield extends EndBiome {
 				.setFogDensity(2.2F)
 				.setFoliageColor(193, 244, 244)
 				.setGenChance(0.25F)
+				.setCaves(false)
 				.setParticles(EndParticles.SNOWFLAKE, 0.002F)
 				.addStructureFeature(EndStructures.GIANT_ICE_STAR)
 				.addFeature(EndFeatures.ICE_STAR)

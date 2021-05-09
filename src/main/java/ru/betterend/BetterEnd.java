@@ -39,6 +39,8 @@ import ru.betterend.world.surface.SurfaceBuilders;
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
 	public static final Logger LOGGER = Logger.get();
+	private static boolean hasHydrogen;
+	
 	@Override
 	public void onInitialize() {
 		EndPortals.loadPortals();
@@ -70,6 +72,7 @@ public class BetterEnd implements ModInitializer {
 		if (hasGuideBook()) {
 			GuideBookItem.register();
 		}
+		hasHydrogen = FabricLoader.getInstance().isModLoaded("hydrogen");
 		
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 		Configs.saveConfigs();
@@ -86,6 +89,10 @@ public class BetterEnd implements ModInitializer {
 	
 	public static boolean hasGuideBook() {
 		return FabricLoader.getInstance().isModLoaded("patchouli");
+	}
+	
+	public static boolean hasHydrogen() {
+		return hasHydrogen;
 	}
 	
 	public static ResourceLocation makeID(String path) {

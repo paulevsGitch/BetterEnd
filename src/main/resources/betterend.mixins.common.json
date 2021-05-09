@@ -22,7 +22,6 @@
 		"BlockBehaviourMixin",
 		"DimensionTypeMixin",
 		"RecipeManagerMixin",
-		"ArmorItemAccessor",
 		"BoneMealItemMixin",
 		"CraftingMenuMixin",
 		"LivingEntityMixin",

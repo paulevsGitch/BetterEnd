@@ -33,15 +33,7 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.DispenserBlock;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.item.ArmoredElytra;
-import ru.betterend.item.DrinkItem;
-import ru.betterend.item.EnchantedPetalItem;
-import ru.betterend.item.EndArmorItem;
-import ru.betterend.item.EndBucketItem;
-import ru.betterend.item.EndSpawnEggItem;
-import ru.betterend.item.EternalCrystalItem;
-import ru.betterend.item.PatternedDiscItem;
-import ru.betterend.item.PatternedItem;
+import ru.betterend.item.*;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndAxeItem;
@@ -90,10 +82,10 @@ public class EndItems {
 	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings().fireResistant()));
 	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings().fireResistant()));
 	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings().fireResistant()));
-	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.HEAD, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
+	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new CrystaliteHelmet());
+	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new CrystaliteChestplate());
+	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new CrystaliteLeggings());
+	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new CrystaliteBoots());
 	public static final Item ARMORED_ELYTRA = registerItem("elytra_armored", new ArmoredElytra("elytra_armored", EndArmorMaterial.AETERNIUM, Items.PHANTOM_MEMBRANE, 900, 0.96D, true));
 
 	// Tools //

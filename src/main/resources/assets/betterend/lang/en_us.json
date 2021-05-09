@@ -865,5 +865,7 @@
 	"item.betterend.blossom_berry_jelly": "Blossom Berry Jelly",
 	"item.betterend.aeternium_forged_plate": "Aeternium Forged Plate",
 	"item.betterend.terminite_forged_plate": "Terminite Forged Plate",
-	"item.betterend.thallasium_forged_plate": "Thallasium Forged Plate"
+	"item.betterend.thallasium_forged_plate": "Thallasium Forged Plate",
+
+  	"attribute.name.generic.blindness_resistance": "Blindness Resistance"
 }

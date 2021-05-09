@@ -881,5 +881,7 @@
 	"item.betterend.blossom_berry_jelly": "Желе из цветущей ягоды",
 	"item.betterend.aeternium_forged_plate": "Этериевая кованная пластина",
 	"item.betterend.terminite_forged_plate": "Терминитовая кованная пластина",
-	"item.betterend.thallasium_forged_plate": "Талласиевая кованная пластина"
+	"item.betterend.thallasium_forged_plate": "Талласиевая кованная пластина",
+
+  	"attribute.name.generic.blindness_resistance": "Сопротивление ослеплению"
 }

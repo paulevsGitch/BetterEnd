@@ -63,8 +63,8 @@ public abstract class LivingEntityMixin extends Entity {
 	private Entity lastAttacker;
 
 	@Inject(method = "createLivingAttributes", at = @At("RETURN"), cancellable = true)
-	private static void be_createLivingAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> info) {
-		info.setReturnValue(EndAttributes.addLivingEntityAttributes(info.getReturnValue()));
+	private static void be_addLivingAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> info) {
+		EndAttributes.addLivingEntityAttributes(info.getReturnValue());
 	}
 
 	@Inject(method = "tickEffects", at = @At("HEAD"))

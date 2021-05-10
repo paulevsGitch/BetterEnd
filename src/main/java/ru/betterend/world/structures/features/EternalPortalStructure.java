@@ -40,11 +40,11 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 	
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-		return SDFStructureStart::new;
+		return PortalStructureStart::new;
 	}
 	
-	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
-		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ, BoundingBox box, int references, long seed) {
+	public static class PortalStructureStart extends StructureStart<NoneFeatureConfiguration> {
+		public PortalStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ, BoundingBox box, int references, long seed) {
 			super(feature, chunkX, chunkZ, box, references, seed);
 		}
 

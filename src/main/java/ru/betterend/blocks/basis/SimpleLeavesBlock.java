@@ -43,7 +43,7 @@ public class SimpleLeavesBlock extends BlockBaseNotFull implements IRenderTypeab
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(Patterns.BLOCK_BASE, texture, texture);
 	}

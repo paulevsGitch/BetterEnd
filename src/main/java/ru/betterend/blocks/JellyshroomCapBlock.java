@@ -73,7 +73,7 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, 
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		return Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
 	}
 	

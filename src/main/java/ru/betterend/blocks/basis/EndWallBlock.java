@@ -37,7 +37,7 @@ public class EndWallBlock extends WallBlock implements BlockPatterned {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		if (block.contains("item")) {

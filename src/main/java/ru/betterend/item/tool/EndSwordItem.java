@@ -12,7 +12,7 @@ public class EndSwordItem extends SwordItem implements DynamicAttributeTool, Pat
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

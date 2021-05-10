@@ -34,7 +34,7 @@ public class EndShovelItem extends ShovelItem implements DynamicAttributeTool, P
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

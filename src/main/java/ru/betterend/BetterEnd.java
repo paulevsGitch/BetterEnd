@@ -95,6 +95,10 @@ public class BetterEnd implements ModInitializer {
 	public static String getStringId(String id) {
 		return String.format("%s:%s", MOD_ID, id);
 	}
+
+	public static boolean isModId(ResourceLocation id) {
+		return id.getNamespace().equals(MOD_ID);
+	}
 	
 	public static boolean isDevEnvironment() {
 		return FabricLoader.getInstance().isDevelopmentEnvironment();

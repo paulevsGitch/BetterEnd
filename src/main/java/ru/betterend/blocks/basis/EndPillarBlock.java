@@ -36,7 +36,7 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockPatterned
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(Patterns.BLOCK_PILLAR, texture, texture);
 	}

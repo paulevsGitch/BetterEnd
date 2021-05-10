@@ -78,7 +78,7 @@ public class EndOreBlock extends OreBlock implements BlockPatterned {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
 	}

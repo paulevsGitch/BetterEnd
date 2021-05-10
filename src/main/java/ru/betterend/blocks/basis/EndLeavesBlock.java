@@ -60,7 +60,7 @@ public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRend
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		String blockId = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId, blockId);
 	}

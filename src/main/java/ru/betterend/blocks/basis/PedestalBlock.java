@@ -341,7 +341,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
 		String name = blockId.getPath();
 		Map<String, String> textures = new HashMap<String, String>() {

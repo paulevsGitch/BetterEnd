@@ -10,7 +10,7 @@ public class PatternedItem extends Item implements Patterned {
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createItemGenerated(name);
 	}
 }

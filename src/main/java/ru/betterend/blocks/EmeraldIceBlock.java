@@ -93,7 +93,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
 	}

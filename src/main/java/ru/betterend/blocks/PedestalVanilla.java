@@ -16,7 +16,7 @@ public class PedestalVanilla extends PedestalBlock {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
 		String name = blockId.getPath().replace("_block", "");
 		Map<String, String> textures = new HashMap<String, String>() {

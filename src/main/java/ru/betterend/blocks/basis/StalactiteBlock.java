@@ -192,7 +192,7 @@ public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());

@@ -16,7 +16,7 @@ public class EnchantedPetalItem extends PatternedItem {
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_GENERATED, "item/hydralux_petal");
 	}
 }

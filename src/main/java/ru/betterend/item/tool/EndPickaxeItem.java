@@ -38,7 +38,7 @@ public class EndPickaxeItem extends PickaxeItem implements DynamicAttributeTool,
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

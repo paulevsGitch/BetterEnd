@@ -95,7 +95,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
 		if (block.contains("open")) {
 			return Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);

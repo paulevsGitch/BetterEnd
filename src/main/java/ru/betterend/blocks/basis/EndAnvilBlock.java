@@ -61,7 +61,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%anvil%", blockId.getPath());

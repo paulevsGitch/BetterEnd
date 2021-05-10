@@ -152,7 +152,7 @@ public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialI
 	}
 	
 	@Override
-	public String getModelPattern(String path) {
+	public String getModelString(String path) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		if (path.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, path);

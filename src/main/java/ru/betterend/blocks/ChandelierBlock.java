@@ -46,7 +46,7 @@ public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, B
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());

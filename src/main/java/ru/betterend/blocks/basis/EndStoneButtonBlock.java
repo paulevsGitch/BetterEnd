@@ -36,7 +36,7 @@ public class EndStoneButtonBlock extends StoneButtonBlock implements BlockPatter
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		if (block.contains("item")) {

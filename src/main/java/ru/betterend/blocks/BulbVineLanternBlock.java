@@ -60,7 +60,7 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%glow%", getGlowTexture());

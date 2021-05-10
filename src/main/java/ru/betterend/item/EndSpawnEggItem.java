@@ -11,7 +11,7 @@ public class EndSpawnEggItem extends SpawnEggItem implements Patterned {
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_SPAWN_EGG, name);
 	}
 }

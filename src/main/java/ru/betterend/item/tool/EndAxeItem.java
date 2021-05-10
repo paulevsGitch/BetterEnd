@@ -26,7 +26,7 @@ public class EndAxeItem extends AxeItem implements DynamicAttributeTool, Pattern
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

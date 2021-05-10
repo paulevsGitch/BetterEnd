@@ -36,7 +36,7 @@ public class EndSlabBlock extends SlabBlock implements BlockPatterned {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		return Patterns.createJson(Patterns.BLOCK_SLAB, parentId.getPath(), blockId.getPath());

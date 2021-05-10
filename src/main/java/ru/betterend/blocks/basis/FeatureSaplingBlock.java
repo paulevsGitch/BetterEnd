@@ -104,7 +104,7 @@ public abstract class FeatureSaplingBlock extends BlockBaseNotFull implements Bo
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		if (block.contains("item")) {
 			block = block.split("/")[1];
 			return Patterns.createJson(Patterns.ITEM_BLOCK, block);

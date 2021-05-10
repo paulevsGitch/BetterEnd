@@ -33,7 +33,7 @@ public class EndCraftingTableBlock extends CraftingTableBlock implements BlockPa
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		String blockName = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_SIDED, new HashMap<String, String>() {

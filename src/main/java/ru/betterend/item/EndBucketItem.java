@@ -12,7 +12,7 @@ public class EndBucketItem extends BucketItem implements Patterned {
 	}
 
 	@Override
-	public String getModelPattern(String name) {
+	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_GENERATED, name);
 	}
 }

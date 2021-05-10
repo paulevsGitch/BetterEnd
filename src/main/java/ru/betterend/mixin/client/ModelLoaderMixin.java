@@ -1,59 +1,79 @@
 package ru.betterend.mixin.client;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
-
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.client.resources.model.UnbakedModel;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.BetterEnd;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.world.generator.GeneratorOptions;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
 @Mixin(ModelBakery.class)
-public class ModelLoaderMixin {
+public abstract class ModelLoaderMixin {
 	@Final
 	@Shadow
 	private ResourceManager resourceManager;
+	@Final
+	@Shadow
+	private Map<ResourceLocation, UnbakedModel> unbakedCache;
 
-	@Inject(method = "getModel", at = @At("HEAD"), cancellable = true)
-	public void be_registerModel(ResourceLocation resourceLocation, CallbackInfoReturnable<UnbakedModel> info) {
-		if (resourceLocation.getNamespace().equals(BetterEnd.MOD_ID)) {
-			if (resourceLocation instanceof ModelResourceLocation) {
-				ModelResourceLocation modelId = (ModelResourceLocation) resourceLocation;
-				String variant = modelId.getVariant();
-				if (variant.equals("inventory")) {
+	@Shadow
+	protected abstract void cacheAndQueueDependencies(ResourceLocation resourceLocation, UnbakedModel unbakedModel);
 
-				} else {
-					System.out.println(modelId.getVariant());
+	@Inject(method = "loadModel", at = @At("HEAD"), cancellable = true)
+	private void be_loadModels(ResourceLocation resourceLocation, CallbackInfo info) {
+		if (BetterEnd.isModId(resourceLocation) && resourceLocation instanceof ModelResourceLocation) {
+			ResourceLocation clearLoc = new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath());
+			ModelResourceLocation modelLoc = (ModelResourceLocation) resourceLocation;
+			if (Objects.equals(modelLoc.getVariant(), "inventory")) {
+				ResourceLocation itemModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "models/" + resourceLocation.getPath() + ".json");
+				if (!resourceManager.hasResource(itemModelLoc)) {
+					Item item = Registry.ITEM.get(clearLoc);
+					if (item instanceof Patterned) {
+						BlockModel model = ((Patterned) item).getItemModel();
+						ResourceLocation itemLoc = new ResourceLocation(resourceLocation.getNamespace(), "item/" + resourceLocation.getPath());
+						model.name = itemLoc.toString();
+						cacheAndQueueDependencies(modelLoc, model);
+						unbakedCache.put(modelLoc, model);
+						info.cancel();
+					}
+				}
+			} else {
+				ResourceLocation blockstateId = new ResourceLocation(resourceLocation.getNamespace(), "blockstates/" + resourceLocation.getPath() + ".json");
+				if (!resourceManager.hasResource(blockstateId)) {
+
 				}
 			}
 		}
 	}
-	
+
 	@Inject(method = "loadBlockModel", at = @At("HEAD"), cancellable = true)
 	private void be_loadModelPattern(ResourceLocation id, CallbackInfoReturnable<BlockModel> info) {
-		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
+		if (BetterEnd.isModId(id)) {
 			ResourceLocation modelId = new ResourceLocation(id.getNamespace(), "models/" + id.getPath() + ".json");
 			BlockModel model;
-			try (Resource resource = this.resourceManager.getResource(modelId)) {
+			try (Resource resource = resourceManager.getResource(modelId)) {
 				Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
 				model = BlockModel.fromStream(reader);
 				model.name = id.toString();
@@ -66,14 +86,14 @@ public class ModelLoaderMixin {
 					if (block.isPresent()) {
 						if (block.get() instanceof Patterned) {
 							Patterned patterned = (Patterned) block.get();
-							model = this.be_getModel(data, id, patterned);
+							model = be_getModel(data, id, patterned);
 							info.setReturnValue(model);
 						}
 					} else {
 						Optional<Item> item = Registry.ITEM.getOptional(itemId);
 						if (item.isPresent() && item.get() instanceof Patterned) {
 							Patterned patterned = (Patterned) item.get();
-							model = this.be_getModel(data, id, patterned);
+							model = be_getModel(data, id, patterned);
 							info.setReturnValue(model);
 						}
 					}
@@ -81,16 +101,16 @@ public class ModelLoaderMixin {
 			}
 		}
 	}
-	
+
 	private BlockModel be_getModel(String[] data, ResourceLocation id, Patterned patterned) {
 		String pattern;
 		if (id.getPath().contains("item")) {
-			pattern = patterned.getModelPattern(id.getPath());
+			pattern = patterned.getModelString(id.getPath());
 		} else {
 			if (data.length > 2) {
-				pattern = patterned.getModelPattern(data[2]);
+				pattern = patterned.getModelString(data[2]);
 			} else {
-				pattern = patterned.getModelPattern(data[1]);
+				pattern = patterned.getModelString(data[1]);
 			}
 		}
 		BlockModel model = BlockModel.fromString(pattern);

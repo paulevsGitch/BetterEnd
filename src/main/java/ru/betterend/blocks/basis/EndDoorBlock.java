@@ -43,7 +43,7 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockPat
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		String blockId = Registry.BLOCK.getKey(this).getPath();
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, block);

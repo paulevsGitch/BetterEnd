@@ -32,7 +32,7 @@ public class EndComposterBlock extends ComposterBlock implements BlockPatterned 
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		String blockName = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_COMPOSTER, blockName);

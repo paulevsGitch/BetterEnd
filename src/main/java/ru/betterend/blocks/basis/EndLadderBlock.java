@@ -144,7 +144,7 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_BLOCK, blockId.getPath());

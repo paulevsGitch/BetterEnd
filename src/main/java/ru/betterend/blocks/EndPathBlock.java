@@ -55,7 +55,7 @@ public class EndPathBlock extends BlockBaseNotFull {
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		String name = Registry.BLOCK.getKey(this).getPath();
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%top%", name + "_top");

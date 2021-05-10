@@ -40,7 +40,7 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		String name = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_TRAPDOOR, new HashMap<String, String>() {

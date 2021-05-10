@@ -883,5 +883,9 @@
 	"item.betterend.terminite_forged_plate": "Терминитовая кованная пластина",
 	"item.betterend.thallasium_forged_plate": "Талласиевая кованная пластина",
 
-  	"attribute.name.generic.blindness_resistance": "Сопротивление ослеплению"
+  	"attribute.name.generic.blindness_resistance": "Сопротивление ослеплению",
+
+	"tooltip.armor.crystalite_set": "Бонус сета: Регенерация I",
+	"tooltip.armor.crystalite_chest": "Эффект: Ускорение I",
+	"tooltip.armor.crystalite_boots": "Эффект: Стремительность I"
 }

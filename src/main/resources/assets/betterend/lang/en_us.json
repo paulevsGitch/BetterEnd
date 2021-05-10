@@ -867,5 +867,9 @@
 	"item.betterend.terminite_forged_plate": "Terminite Forged Plate",
 	"item.betterend.thallasium_forged_plate": "Thallasium Forged Plate",
 
-  	"attribute.name.generic.blindness_resistance": "Blindness Resistance"
+  	"attribute.name.generic.blindness_resistance": "Blindness Resistance",
+
+  	"tooltip.armor.crystalite_set": "Set bonus: Regeneration I",
+  	"tooltip.armor.crystalite_chest": "Effect: Dig Speed I",
+  	"tooltip.armor.crystalite_boots": "Effect: Swiftness I"
 }

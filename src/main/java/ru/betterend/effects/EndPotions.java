@@ -16,7 +16,7 @@ public class EndPotions {
 	public final static Potion LONG_END_VEIL = registerPotion("long_end_veil", EndStatusEffects.END_VEIL, 9600);
 	
 	public static Potion registerPotion(String name, MobEffect effect, int duration) {
-		return registerPotion(name, new Potion(name, new MobEffectInstance[]{ new MobEffectInstance(effect, duration) }));
+		return registerPotion(name, new Potion(name, new MobEffectInstance(effect, duration)));
 	}
 	
 	public static Potion registerPotion(String name, Potion potion) {

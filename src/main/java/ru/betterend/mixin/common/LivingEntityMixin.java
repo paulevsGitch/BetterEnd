@@ -1,7 +1,22 @@
 package ru.betterend.mixin.common;
 
-import java.util.Collection;
-
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.item.ElytraItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -10,26 +25,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.item.ElytraItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
+import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.item.ArmoredElytra;
+import ru.betterend.item.CrystaliteArmor;
+import ru.betterend.registry.EndAttributes;
+
+import java.util.Collection;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -56,7 +57,37 @@ public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract boolean isFallFlying();
 
+	@Shadow
+	public abstract AttributeMap getAttributes();
+
 	private Entity lastAttacker;
+
+	@Inject(method = "createLivingAttributes", at = @At("RETURN"), cancellable = true)
+	private static void be_createLivingAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> info) {
+		info.setReturnValue(EndAttributes.addLivingEntityAttributes(info.getReturnValue()));
+	}
+
+	@Inject(method = "tickEffects", at = @At("HEAD"))
+	protected void be_applyEffects(CallbackInfo info) {
+		if (!level.isClientSide()) {
+			LivingEntity owner = LivingEntity.class.cast(this);
+			if (CrystaliteArmor.hasFullSet(owner)) {
+				CrystaliteArmor.applySetEffect(owner);
+			}
+			getArmorSlots().forEach(itemStack -> {
+				if (itemStack.getItem() instanceof MobEffectApplier) {
+					((MobEffectApplier) itemStack.getItem()).applyEffect(owner);
+				}
+			});
+		}
+	}
+
+	@Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
+	public void be_canBeAffected(MobEffectInstance mobEffectInstance, CallbackInfoReturnable<Boolean> info) {
+		if (mobEffectInstance.getEffect() == MobEffects.BLINDNESS && getAttributes().getValue(EndAttributes.BLINDNESS_RESISTANCE) > 0.0) {
+			info.setReturnValue(false);
+		}
+	}
 
 	@Inject(method = "hurt", at = @At("HEAD"))
 	public void be_hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
@@ -80,9 +111,8 @@ public abstract class LivingEntityMixin extends Entity {
 			if (isFlying && !onGround && !isPassenger() && !hasEffect(MobEffects.LEVITATION)) {
 				if (ElytraItem.isFlyEnabled(itemStack)) {
 					if ((fallFlyTicks + 1) % 20 == 0) {
-						itemStack.hurtAndBreak(1, LivingEntity.class.cast(this), (livingEntity) -> {
-							livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST);
-						});
+						itemStack.hurtAndBreak(1, LivingEntity.class.cast(this),
+								livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
 					}
 					isFlying = true;
 				} else {

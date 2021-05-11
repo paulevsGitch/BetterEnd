@@ -14,6 +14,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.BetterEnd;
 
 public class Patterns {
@@ -156,7 +157,7 @@ public class Patterns {
 			}
 			return json;
 		} catch (Exception ex) {
-			return null;
+			return "";
 		}
 	}
 }

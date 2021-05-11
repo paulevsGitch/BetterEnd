@@ -7,7 +7,11 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import com.mojang.math.Transformation;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -69,6 +73,11 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 		return Patterns.createJson(Patterns.BLOCK_ANVIL, map);
 	}
 
+	@Override
+	public BlockModel getItemModel() {
+		return getBlockModel(defaultBlockState());
+	}
+
 	protected String getTop(ResourceLocation blockId, String block) {
 		if (block.contains("item")) {
 			return blockId.getPath() + "_top_0";
@@ -80,5 +89,19 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_ANVIL;
+	}
+
+	@Override
+	public BlockModel getBlockModel(BlockState blockState) {
+		Direction facing = blockState.getValue(FACING);
+		int destruction = blockState.getValue(DESTRUCTION);
+		MultiVariant variant;
+		Transformation transform;
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+		Map<String, String> map = Maps.newHashMap();
+		map.put("%anvil%", blockId.getPath());
+		map.put("%top%", "_top_" + destruction);
+		String jsonString = Patterns.createJson(Patterns.BLOCK_ANVIL, map);
+		return BlockModel.fromString(jsonString);
 	}
 }

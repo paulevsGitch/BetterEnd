@@ -1,5 +1,6 @@
 package ru.betterend.mixin.client;
 
+import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -8,6 +9,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Final;
@@ -19,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.BetterEnd;
+import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -41,28 +44,47 @@ public abstract class ModelLoaderMixin {
 	@Shadow
 	protected abstract void cacheAndQueueDependencies(ResourceLocation resourceLocation, UnbakedModel unbakedModel);
 
+	@Shadow
+	protected abstract BlockModel loadBlockModel(ResourceLocation resourceLocation);
+
 	@Inject(method = "loadModel", at = @At("HEAD"), cancellable = true)
 	private void be_loadModels(ResourceLocation resourceLocation, CallbackInfo info) {
 		if (BetterEnd.isModId(resourceLocation) && resourceLocation instanceof ModelResourceLocation) {
-			ResourceLocation clearLoc = new ResourceLocation(resourceLocation.getNamespace(), resourceLocation.getPath());
+			String modId = resourceLocation.getNamespace();
+			String path = resourceLocation.getPath();
+			ResourceLocation clearLoc = new ResourceLocation(modId, path);
 			ModelResourceLocation modelLoc = (ModelResourceLocation) resourceLocation;
 			if (Objects.equals(modelLoc.getVariant(), "inventory")) {
-				ResourceLocation itemModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "models/" + resourceLocation.getPath() + ".json");
+				ResourceLocation itemLoc = new ResourceLocation(modId, "item/" + path);
+				ResourceLocation itemModelLoc = new ResourceLocation(modId, "models/" + itemLoc.getPath() + ".json");
 				if (!resourceManager.hasResource(itemModelLoc)) {
 					Item item = Registry.ITEM.get(clearLoc);
 					if (item instanceof Patterned) {
 						BlockModel model = ((Patterned) item).getItemModel();
-						ResourceLocation itemLoc = new ResourceLocation(resourceLocation.getNamespace(), "item/" + resourceLocation.getPath());
-						model.name = itemLoc.toString();
+						if (model != null) {
+							model.name = itemLoc.toString();
+						} else {
+							model = loadBlockModel(itemLoc);
+						}
 						cacheAndQueueDependencies(modelLoc, model);
 						unbakedCache.put(modelLoc, model);
 						info.cancel();
 					}
 				}
 			} else {
-				ResourceLocation blockstateId = new ResourceLocation(resourceLocation.getNamespace(), "blockstates/" + resourceLocation.getPath() + ".json");
+				ResourceLocation blockstateId = new ResourceLocation(modId, "blockstates/" + path + ".json");
 				if (!resourceManager.hasResource(blockstateId)) {
-
+					Block block = Registry.BLOCK.get(clearLoc);
+					if (block instanceof BlockPatterned) {
+						block.getStateDefinition().getPossibleStates().forEach(blockState -> {
+							UnbakedModel model = ((BlockPatterned) block).getBlockModel(blockState);
+							if (model != null) {
+								ModelResourceLocation stateLoc = BlockModelShaper.stateToModelLocation(clearLoc, blockState);
+								cacheAndQueueDependencies(stateLoc, model);
+							}
+						});
+						info.cancel();
+					}
 				}
 			}
 		}

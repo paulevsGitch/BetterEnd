@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.patterns.BlockPatterned;
 import ru.betterend.patterns.Patterns;
 
-public class EndPillarBlock extends RotatedPillarBlock implements BlockPatterned {
+public abstract class EndPillarBlock extends RotatedPillarBlock implements BlockPatterned {
 	public EndPillarBlock(Properties settings) {
 		super(settings);
 	}
@@ -27,6 +28,11 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockPatterned
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
+	}
+
+	@Override
+	public BlockModel getItemModel() {
+		return getBlockModel(defaultBlockState());
 	}
 	
 	@Override

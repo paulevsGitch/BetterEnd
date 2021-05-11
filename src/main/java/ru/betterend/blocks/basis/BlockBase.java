@@ -24,11 +24,6 @@ public class BlockBase extends Block implements BlockPatterned {
 		return Collections.singletonList(new ItemStack(this));
 	}
 
-//	@Override
-//	public BlockModel getBlockModel(BlockState state) {
-//		return null;
-//	}
-
 	@Override
 	public String getStatesPattern(Reader data) {
 		String block = Registry.BLOCK.getKey(this).getPath();
@@ -36,13 +31,23 @@ public class BlockBase extends Block implements BlockPatterned {
 	}
 
 	@Override
-	public String getModelPattern(String block) {
+	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
+		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), blockId.getPath());
+	}
+
+	@Override
+	public BlockModel getItemModel() {
+		return getBlockModel(defaultBlockState());
 	}
 
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SIMPLE;
+	}
+
+	@Override
+	public BlockModel getBlockModel(BlockState blockState) {
+		return BlockModel.fromString(getModelString(""));
 	}
 }

@@ -26,11 +26,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndTags;
 
-public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, Patterned {
+public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ModelProvider {
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = Mth.createInsecureUUID(ThreadLocalRandom.current());
 	
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers;

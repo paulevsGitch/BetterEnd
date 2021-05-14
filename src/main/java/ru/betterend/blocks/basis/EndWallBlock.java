@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndWallBlock extends WallBlock implements BlockPatterned {
+public class EndWallBlock extends WallBlock implements BlockModelProvider {
 	
 	private final Block parent;
 	

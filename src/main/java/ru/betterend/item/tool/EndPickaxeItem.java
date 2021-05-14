@@ -12,10 +12,10 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndPickaxeItem extends PickaxeItem implements DynamicAttributeTool, Patterned {
+public class EndPickaxeItem extends PickaxeItem implements DynamicAttributeTool, ModelProvider {
 	public EndPickaxeItem(Tier material, int attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
 	}

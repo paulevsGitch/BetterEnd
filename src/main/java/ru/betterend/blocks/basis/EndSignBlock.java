@@ -40,11 +40,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.interfaces.ISpetialItem;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialItem {
+public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpetialItem {
 	public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
 	public static final BooleanProperty FLOOR = BooleanProperty.create("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {

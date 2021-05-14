@@ -11,6 +11,7 @@ import com.mojang.math.Transformation;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -23,11 +24,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.apache.commons.lang3.tuple.Triple;
 import ru.betterend.blocks.BlockProperties;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
+public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	private static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION;
 	protected final int level;
 	
@@ -73,11 +75,6 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 		return Patterns.createJson(Patterns.BLOCK_ANVIL, map);
 	}
 
-	@Override
-	public BlockModel getItemModel() {
-		return getBlockModel(defaultBlockState());
-	}
-
 	protected String getTop(ResourceLocation blockId, String block) {
 		if (block.contains("item")) {
 			return blockId.getPath() + "_top_0";
@@ -92,16 +89,25 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
+	public BlockModel getModel() {
+		return null;
+	}
+
+	@Override
+	public Triple<ResourceLocation, MultiVariant, BlockModel> getBlockModels(BlockState blockState) {
 		Direction facing = blockState.getValue(FACING);
 		int destruction = blockState.getValue(DESTRUCTION);
-		MultiVariant variant;
-		Transformation transform;
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+		ResourceLocation modelId = new ResourceLocation(blockId.getNamespace(),
+				blockId.getPath() + "/" + facing + "/destruction_" + destruction);
+		Transformation transform = new Transformation(null, facing.getRotation(), null, null);
+		Variant variant = new Variant(modelId, transform, false, 1);
+		MultiVariant weightedModel = new MultiVariant(Collections.singletonList(variant));
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%anvil%", blockId.getPath());
 		map.put("%top%", "_top_" + destruction);
 		String jsonString = Patterns.createJson(Patterns.BLOCK_ANVIL, map);
-		return BlockModel.fromString(jsonString);
+		BlockModel blockModel = BlockModel.fromString(jsonString);
+		return Triple.of(modelId, weightedModel, blockModel);
 	}
 }

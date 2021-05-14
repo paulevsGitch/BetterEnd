@@ -2,6 +2,7 @@ package ru.betterend.mixin.client;
 
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -9,9 +10,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.apache.commons.lang3.tuple.Triple;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,8 +22,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.BetterEnd;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.BlockModelProvider;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.world.generator.GeneratorOptions;
 
 import java.io.InputStreamReader;
@@ -59,8 +60,8 @@ public abstract class ModelLoaderMixin {
 				ResourceLocation itemModelLoc = new ResourceLocation(modId, "models/" + itemLoc.getPath() + ".json");
 				if (!resourceManager.hasResource(itemModelLoc)) {
 					Item item = Registry.ITEM.get(clearLoc);
-					if (item instanceof Patterned) {
-						BlockModel model = ((Patterned) item).getItemModel();
+					if (item instanceof ModelProvider) {
+						BlockModel model = ((ModelProvider) item).getModel();
 						if (model != null) {
 							model.name = itemLoc.toString();
 						} else {
@@ -75,12 +76,13 @@ public abstract class ModelLoaderMixin {
 				ResourceLocation blockstateId = new ResourceLocation(modId, "blockstates/" + path + ".json");
 				if (!resourceManager.hasResource(blockstateId)) {
 					Block block = Registry.BLOCK.get(clearLoc);
-					if (block instanceof BlockPatterned) {
+					if (block instanceof BlockModelProvider) {
 						block.getStateDefinition().getPossibleStates().forEach(blockState -> {
-							UnbakedModel model = ((BlockPatterned) block).getBlockModel(blockState);
-							if (model != null) {
+							Triple<ResourceLocation, MultiVariant, BlockModel> models = ((BlockModelProvider) block).getBlockModels(blockState);
+							if (models != null) {
 								ModelResourceLocation stateLoc = BlockModelShaper.stateToModelLocation(clearLoc, blockState);
-								cacheAndQueueDependencies(stateLoc, model);
+								cacheAndQueueDependencies(stateLoc, models.getMiddle());
+								unbakedCache.put(models.getLeft(), models.getRight());
 							}
 						});
 						info.cancel();
@@ -106,16 +108,16 @@ public abstract class ModelLoaderMixin {
 					ResourceLocation itemId = new ResourceLocation(id.getNamespace(), data[1]);
 					Optional<Block> block = Registry.BLOCK.getOptional(itemId);
 					if (block.isPresent()) {
-						if (block.get() instanceof Patterned) {
-							Patterned patterned = (Patterned) block.get();
-							model = be_getModel(data, id, patterned);
+						if (block.get() instanceof ModelProvider) {
+							ModelProvider modelProvider = (ModelProvider) block.get();
+							model = be_getModel(data, id, modelProvider);
 							info.setReturnValue(model);
 						}
 					} else {
 						Optional<Item> item = Registry.ITEM.getOptional(itemId);
-						if (item.isPresent() && item.get() instanceof Patterned) {
-							Patterned patterned = (Patterned) item.get();
-							model = be_getModel(data, id, patterned);
+						if (item.isPresent() && item.get() instanceof ModelProvider) {
+							ModelProvider modelProvider = (ModelProvider) item.get();
+							model = be_getModel(data, id, modelProvider);
 							info.setReturnValue(model);
 						}
 					}
@@ -124,15 +126,15 @@ public abstract class ModelLoaderMixin {
 		}
 	}
 
-	private BlockModel be_getModel(String[] data, ResourceLocation id, Patterned patterned) {
+	private BlockModel be_getModel(String[] data, ResourceLocation id, ModelProvider modelProvider) {
 		String pattern;
 		if (id.getPath().contains("item")) {
-			pattern = patterned.getModelString(id.getPath());
+			pattern = modelProvider.getModelString(id.getPath());
 		} else {
 			if (data.length > 2) {
-				pattern = patterned.getModelString(data[2]);
+				pattern = modelProvider.getModelString(data[2]);
 			} else {
-				pattern = patterned.getModelString(data[1]);
+				pattern = modelProvider.getModelString(data[1]);
 			}
 		}
 		BlockModel model = BlockModel.fromString(pattern);

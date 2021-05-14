@@ -26,10 +26,10 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.blocks.entities.EFurnaceBlockEntity;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned, IRenderTypeable {
+public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider, IRenderTypeable {
 	public EndFurnaceBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).luminance((state) -> {
 			return state.getValue(LIT) ? 13 : 0;

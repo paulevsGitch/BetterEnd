@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndComposterBlock extends ComposterBlock implements BlockPatterned {
+public class EndComposterBlock extends ComposterBlock implements BlockModelProvider {
 	public EndComposterBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source));
 	}

@@ -21,10 +21,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.basis.EndLanternBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class BulbVineLanternBlock extends EndLanternBlock implements IRenderTypeable, BlockPatterned {
+public class BulbVineLanternBlock extends EndLanternBlock implements IRenderTypeable, BlockModelProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
 	

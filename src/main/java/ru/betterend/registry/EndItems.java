@@ -34,15 +34,8 @@ import net.minecraft.world.level.block.DispenserBlock;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.BreakableItem;
-import ru.betterend.item.ArmoredElytra;
-import ru.betterend.item.DrinkItem;
-import ru.betterend.item.EnchantedPetalItem;
-import ru.betterend.item.EndArmorItem;
-import ru.betterend.item.EndBucketItem;
-import ru.betterend.item.EndSpawnEggItem;
-import ru.betterend.item.EternalCrystalItem;
-import ru.betterend.item.PatternedDiscItem;
-import ru.betterend.item.PatternedItem;
+import ru.betterend.item.*;
+import ru.betterend.item.ModelProviderItem;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndAxeItem;
@@ -136,11 +129,11 @@ public class EndItems {
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);
 	
 	public static Item registerDisc(String name, int power, SoundEvent sound) {
-		return registerItem(BetterEnd.makeID(name), new PatternedDiscItem(power, sound, makeItemSettings()));
+		return registerItem(BetterEnd.makeID(name), new ModelProviderDiscItem(power, sound, makeItemSettings()));
 	}
 	
 	public static Item registerItem(String name) {
-		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));
+		return registerItem(BetterEnd.makeID(name), new ModelProviderItem(makeItemSettings()));
 	}
 	
 	public static Item registerItem(String name, Item item) {
@@ -229,7 +222,7 @@ public class EndItems {
 	}
 	
 	public static Item registerFood(String name, FoodProperties foodComponent) {
-		return registerItem(name, new PatternedItem(makeItemSettings().food(foodComponent)));
+		return registerItem(name, new ModelProviderItem(makeItemSettings().food(foodComponent)));
 	}
 	
 	public static Item registerDrink(String name) {

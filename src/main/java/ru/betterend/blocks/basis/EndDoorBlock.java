@@ -15,10 +15,10 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockPatterned {
+public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockModelProvider {
 	public EndDoorBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).strength(3F, 3F).noOcclusion());
 	}

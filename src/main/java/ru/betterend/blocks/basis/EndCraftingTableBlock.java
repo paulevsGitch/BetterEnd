@@ -13,10 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CraftingTableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndCraftingTableBlock extends CraftingTableBlock implements BlockPatterned {
+public class EndCraftingTableBlock extends CraftingTableBlock implements BlockModelProvider {
 	public EndCraftingTableBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source));
 	}

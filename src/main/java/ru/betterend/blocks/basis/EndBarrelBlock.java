@@ -26,11 +26,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
-public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
+public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	public EndBarrelBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).noOcclusion());
 	}

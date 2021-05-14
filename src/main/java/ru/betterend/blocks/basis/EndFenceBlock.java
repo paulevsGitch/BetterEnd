@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndFenceBlock extends FenceBlock implements BlockPatterned {
+public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 	private final Block parent;
 	
 	public EndFenceBlock(Block source) {

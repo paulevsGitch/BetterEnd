@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WeightedPressurePlateBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndMetalPlateBlock extends WeightedPressurePlateBlock implements BlockPatterned {
+public class EndMetalPlateBlock extends WeightedPressurePlateBlock implements BlockModelProvider {
 	private final Block parent;
 	
 	public EndMetalPlateBlock(Block source) {

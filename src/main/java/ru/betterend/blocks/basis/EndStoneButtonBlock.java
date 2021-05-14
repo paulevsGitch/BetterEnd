@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StoneButtonBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndStoneButtonBlock extends StoneButtonBlock implements BlockPatterned {
+public class EndStoneButtonBlock extends StoneButtonBlock implements BlockModelProvider {
 	private final Block parent;
 	
 	public EndStoneButtonBlock(Block source) {

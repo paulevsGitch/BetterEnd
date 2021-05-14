@@ -11,10 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndShovelItem extends ShovelItem implements DynamicAttributeTool, Patterned {
+public class EndShovelItem extends ShovelItem implements DynamicAttributeTool, ModelProvider {
 	public EndShovelItem(Tier material, float attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
 	}

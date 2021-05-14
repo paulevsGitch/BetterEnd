@@ -17,10 +17,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndMetalPaneBlock extends IronBarsBlock implements BlockPatterned, IRenderTypeable {
+public class EndMetalPaneBlock extends IronBarsBlock implements BlockModelProvider, IRenderTypeable {
 	public EndMetalPaneBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).strength(5.0F, 6.0F).noOcclusion());
 	}

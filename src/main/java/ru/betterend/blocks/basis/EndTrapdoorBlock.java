@@ -15,10 +15,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, BlockPatterned {
+public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, BlockModelProvider {
 	public EndTrapdoorBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).strength(3.0F, 3.0F).noOcclusion());
 	}

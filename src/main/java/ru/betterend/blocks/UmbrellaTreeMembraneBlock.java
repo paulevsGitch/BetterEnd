@@ -26,12 +26,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
-public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTypeable, BlockPatterned {
+public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider {
 	public static final IntegerProperty COLOR = BlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	

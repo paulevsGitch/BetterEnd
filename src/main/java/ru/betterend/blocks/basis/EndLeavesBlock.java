@@ -22,11 +22,11 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
 
-public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRenderTypeable {
+public class EndLeavesBlock extends LeavesBlock implements BlockModelProvider, IRenderTypeable {
 	private final Block sapling;
 	
 	public EndLeavesBlock(Block sapling, MaterialColor color) {

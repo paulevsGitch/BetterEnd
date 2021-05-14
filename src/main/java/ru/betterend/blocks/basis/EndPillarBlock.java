@@ -13,10 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public abstract class EndPillarBlock extends RotatedPillarBlock implements BlockPatterned {
+public abstract class EndPillarBlock extends RotatedPillarBlock implements BlockModelProvider {
 	public EndPillarBlock(Properties settings) {
 		super(settings);
 	}
@@ -31,8 +31,8 @@ public abstract class EndPillarBlock extends RotatedPillarBlock implements Block
 	}
 
 	@Override
-	public BlockModel getItemModel() {
-		return getBlockModel(defaultBlockState());
+	public BlockModel getModel() {
+		return null;
 	}
 	
 	@Override

@@ -9,10 +9,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndAxeItem extends AxeItem implements DynamicAttributeTool, Patterned {
+public class EndAxeItem extends AxeItem implements DynamicAttributeTool, ModelProvider {
 	public EndAxeItem(Tier material, float attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
 	}

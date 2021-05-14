@@ -13,10 +13,10 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import ru.betterend.mixin.common.ArmorItemAccessor;
-import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndArmorItem extends ArmorItem implements Patterned {
+public class EndArmorItem extends ArmorItem implements ModelProvider {
 	public EndArmorItem(ArmorMaterial material, EquipmentSlot slot, Item.Properties settings) {
 		super(material, slot, settings);
 

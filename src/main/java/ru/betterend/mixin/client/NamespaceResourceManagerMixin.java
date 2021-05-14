@@ -17,7 +17,7 @@ import net.minecraft.server.packs.resources.FallbackResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.level.block.Block;
 import ru.betterend.BetterEnd;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 
 @Mixin(FallbackResourceManager.class)
 public abstract class NamespaceResourceManagerMixin {
@@ -35,8 +35,8 @@ public abstract class NamespaceResourceManagerMixin {
 			if (data.length > 1) {
 				ResourceLocation blockId = BetterEnd.makeID(data[1].replace(".json", ""));
 				Block block = Registry.BLOCK.get(blockId);
-				if (block instanceof BlockPatterned) {
-					ResourceLocation stateId = ((BlockPatterned) block).statePatternId();
+				if (block instanceof BlockModelProvider) {
+					ResourceLocation stateId = ((BlockModelProvider) block).statePatternId();
 					try {
 						List<Resource> resources = Lists.newArrayList();
 						Resource stateRes = this.getResource(stateId);

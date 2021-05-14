@@ -5,16 +5,18 @@ import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import org.apache.commons.lang3.tuple.Triple;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class BlockBase extends Block implements BlockPatterned {
+public class BlockBase extends Block implements BlockModelProvider {
 	public BlockBase(Properties settings) {
 		super(settings);
 	}
@@ -37,8 +39,8 @@ public class BlockBase extends Block implements BlockPatterned {
 	}
 
 	@Override
-	public BlockModel getItemModel() {
-		return getBlockModel(defaultBlockState());
+	public BlockModel getModel() {
+		return getBlockModels(defaultBlockState());
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class BlockBase extends Block implements BlockPatterned {
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
+	public Triple<ResourceLocation, MultiVariant, BlockModel> getBlockModels(BlockState blockState) {
 		return BlockModel.fromString(getModelString(""));
 	}
 }

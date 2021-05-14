@@ -3,9 +3,12 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
+import org.apache.commons.lang3.tuple.Triple;
 import ru.betterend.patterns.Patterns;
 
 public class BarkBlock extends EndPillarBlock {
@@ -26,7 +29,7 @@ public class BarkBlock extends EndPillarBlock {
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
+	public Triple<ResourceLocation, MultiVariant, BlockModel> getBlockModels(BlockState blockState) {
 
 		return null;
 	}

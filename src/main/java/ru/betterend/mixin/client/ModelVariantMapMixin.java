@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 
 @Mixin(BlockModelDefinition.class)
 public abstract class ModelVariantMapMixin {
@@ -21,8 +21,8 @@ public abstract class ModelVariantMapMixin {
 	@Inject(method = "fromStream", at = @At("HEAD"), cancellable = true)
 	private static void be_deserializeBlockState(BlockModelDefinition.Context context, Reader reader, CallbackInfoReturnable<BlockModelDefinition> info) {
 		Block block = context.getDefinition().any().getBlock();
-		if (block instanceof BlockPatterned) {
-			String pattern = ((BlockPatterned) block).getStatesPattern(reader);
+		if (block instanceof BlockModelProvider) {
+			String pattern = ((BlockModelProvider) block).getStatesPattern(reader);
 			Gson gson = ContextGsonAccessor.class.cast(context).getGson();
 			BlockModelDefinition map = GsonHelper.fromJson(gson, new StringReader(pattern), BlockModelDefinition.class);
 			info.setReturnValue(map);

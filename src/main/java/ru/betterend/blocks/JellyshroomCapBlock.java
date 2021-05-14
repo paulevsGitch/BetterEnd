@@ -25,11 +25,11 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
 
-public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockPatterned, IColorProvider {
+public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider, IColorProvider {
 	public static final IntegerProperty COLOR = BlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	private final Vec3i colorStart;

@@ -19,10 +19,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, BlockPatterned {
+public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, BlockModelProvider {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public ChandelierBlock(Block source) {

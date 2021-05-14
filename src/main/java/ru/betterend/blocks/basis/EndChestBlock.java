@@ -13,11 +13,11 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
-public class EndChestBlock extends ChestBlock implements BlockPatterned {
+public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	private final Block parent;
 	
 	public EndChestBlock(Block source) {

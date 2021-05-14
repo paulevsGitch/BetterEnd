@@ -10,11 +10,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.BreakableItem;
-import ru.betterend.patterns.Patterned;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndItems;
 
-public class ArmoredElytra extends ElytraItem implements EquipmentSlotProvider, BreakableItem, Patterned {
+public class ArmoredElytra extends ElytraItem implements EquipmentSlotProvider, BreakableItem, ModelProvider {
 
 	private final ResourceLocation wingTexture;
 	private final Item repairItem;

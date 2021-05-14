@@ -15,10 +15,10 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
-public class EndChainBlock extends ChainBlock implements BlockPatterned, IRenderTypeable {
+public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRenderTypeable {
 	public EndChainBlock(MaterialColor color) {
 		super(FabricBlockSettings.copyOf(Blocks.CHAIN).materialColor(color));
 	}

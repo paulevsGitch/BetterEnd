@@ -27,7 +27,7 @@ import ru.betterend.blocks.basis.EndStairsBlock;
 import ru.betterend.blocks.basis.EndTrapdoorBlock;
 import ru.betterend.blocks.basis.EndWoodenPlateBlock;
 import ru.betterend.item.EndArmorItem;
-import ru.betterend.item.PatternedItem;
+import ru.betterend.item.ModelProviderItem;
 import ru.betterend.item.tool.EndAxeItem;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.item.tool.EndHoeItem;
@@ -119,8 +119,8 @@ public class MetalMaterial {
 		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lanternProperties));
 		bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
 		
-		nugget = EndItems.registerItem(name + "_nugget", new PatternedItem(itemSettings));
-		ingot = EndItems.registerItem(name + "_ingot", new PatternedItem(itemSettings));
+		nugget = EndItems.registerItem(name + "_nugget", new ModelProviderItem(itemSettings));
+		ingot = EndItems.registerItem(name + "_ingot", new ModelProviderItem(itemSettings));
 		
 		shovelHead = EndItems.registerItem(name + "_shovel_head");
 		pickaxeHead = EndItems.registerItem(name + "_pickaxe_head");

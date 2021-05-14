@@ -20,11 +20,11 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.util.MHelper;
 
-public class EndOreBlock extends OreBlock implements BlockPatterned {
+public class EndOreBlock extends OreBlock implements BlockModelProvider {
 	private final Item dropItem;
 	private final int minCount;
 	private final int maxCount;

@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import org.apache.commons.lang3.tuple.Triple;
 import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 
@@ -40,7 +39,7 @@ public class BlockBase extends Block implements BlockModelProvider {
 
 	@Override
 	public BlockModel getModel() {
-		return getBlockModels(defaultBlockState());
+		return getModelVariant(defaultBlockState());
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class BlockBase extends Block implements BlockModelProvider {
 	}
 
 	@Override
-	public Triple<ResourceLocation, MultiVariant, BlockModel> getBlockModels(BlockState blockState) {
+	public MultiVariant getModelVariant(BlockState blockState) {
 		return BlockModel.fromString(getModelString(""));
 	}
 }

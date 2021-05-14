@@ -12,6 +12,7 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -78,11 +79,12 @@ public abstract class ModelLoaderMixin {
 					Block block = Registry.BLOCK.get(clearLoc);
 					if (block instanceof BlockModelProvider) {
 						block.getStateDefinition().getPossibleStates().forEach(blockState -> {
-							Triple<ResourceLocation, MultiVariant, BlockModel> models = ((BlockModelProvider) block).getBlockModels(blockState);
-							if (models != null) {
+							MultiVariant modelVariant = ((BlockModelProvider) block).getModelVariant(blockState);
+							Pair<ResourceLocation, BlockModel> modelData = ((BlockModelProvider) block).getBlockModel(blockState);
+							if (modelVariant != null) {
 								ModelResourceLocation stateLoc = BlockModelShaper.stateToModelLocation(clearLoc, blockState);
-								cacheAndQueueDependencies(stateLoc, models.getMiddle());
-								unbakedCache.put(models.getLeft(), models.getRight());
+								cacheAndQueueDependencies(stateLoc, modelVariant);
+								unbakedCache.put(modelData.getLeft(), modelData.getRight());
 							}
 						});
 						info.cancel();

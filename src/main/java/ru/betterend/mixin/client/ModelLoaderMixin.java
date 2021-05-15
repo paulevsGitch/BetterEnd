@@ -79,12 +79,14 @@ public abstract class ModelLoaderMixin {
 					Block block = Registry.BLOCK.get(clearLoc);
 					if (block instanceof BlockModelProvider) {
 						block.getStateDefinition().getPossibleStates().forEach(blockState -> {
-							MultiVariant modelVariant = ((BlockModelProvider) block).getModelVariant(blockState);
-							Pair<ResourceLocation, BlockModel> modelData = ((BlockModelProvider) block).getBlockModel(blockState);
-							if (modelVariant != null) {
-								ModelResourceLocation stateLoc = BlockModelShaper.stateToModelLocation(clearLoc, blockState);
+							ModelResourceLocation stateLoc = BlockModelShaper.stateToModelLocation(clearLoc, blockState);
+							MultiVariant modelVariant = ((BlockModelProvider) block).getModelVariant(stateLoc, blockState);
+							BlockModel blockModel = ((BlockModelProvider) block).getBlockModel(blockState);
+							if (modelVariant != null && blockModel != null) {
 								cacheAndQueueDependencies(stateLoc, modelVariant);
-								unbakedCache.put(modelData.getLeft(), modelData.getRight());
+								unbakedCache.put(stateLoc, blockModel);
+							} else {
+								BetterEnd.LOGGER.warning("Error loading models for {}", clearLoc);
 							}
 						});
 						info.cancel();

@@ -4,8 +4,10 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.math.Transformation;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -34,12 +36,12 @@ public class BlockBase extends Block implements BlockModelProvider {
 	@Override
 	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), blockId.getPath());
+		return Patterns.createBlockSimple(blockId.getPath());
 	}
 
 	@Override
 	public BlockModel getModel() {
-		return getModelVariant(defaultBlockState());
+		return getBlockModel(defaultBlockState());
 	}
 
 	@Override
@@ -48,7 +50,15 @@ public class BlockBase extends Block implements BlockModelProvider {
 	}
 
 	@Override
-	public MultiVariant getModelVariant(BlockState blockState) {
-		return BlockModel.fromString(getModelString(""));
+	public BlockModel getBlockModel(BlockState blockState) {
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+		String pattern = Patterns.createBlockSimple(blockId.getPath());
+		return BlockModelProvider.createBlockModel(blockId, pattern);
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		Variant variant = new Variant(resourceLocation, Transformation.identity(), false, 1);
+		return new MultiVariant(Collections.singletonList(variant));
 	}
 }

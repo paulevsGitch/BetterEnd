@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -102,9 +104,35 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 		}
 		return Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
 	}
-	
+
+	@Override
+	public BlockModel getModel() {
+		return getBlockModel(defaultBlockState());
+	}
+
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_BARREL;
+	}
+
+	@Override
+	public BlockModel getBlockModel(BlockState blockState) {
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+		String texture = blockId.getPath();
+		String pattern;
+		if (blockState.getValue(OPEN)) {
+			pattern = Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
+		} else {
+			pattern = Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
+		}
+		if (pattern != null) {
+			return BlockModelProvider.createBlockModel(blockId, pattern);
+		}
+		return null;
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		return BlockModelProvider.createFacingModel(resourceLocation, blockState.getValue(FACING));
 	}
 }

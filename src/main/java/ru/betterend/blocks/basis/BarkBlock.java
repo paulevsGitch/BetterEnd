@@ -2,6 +2,7 @@ package ru.betterend.blocks.basis;
 
 import java.io.Reader;
 
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -26,8 +27,12 @@ public class BarkBlock extends EndPillarBlock {
 	}
 
 	@Override
-	public MultiVariant getModelVariant(BlockState blockState) {
+	public BlockModel getBlockModel(BlockState blockState) {
+		return null;
+	}
 
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
 		return null;
 	}
 

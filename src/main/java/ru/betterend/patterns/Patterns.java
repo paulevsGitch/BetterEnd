@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Maps;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.Nullable;
@@ -121,6 +122,13 @@ public class Patterns {
 	public static String createItemGenerated(String name) {
 		return createJson(ITEM_GENERATED, name);
 	}
+
+	public static String createBlockSimple(String name) {
+		return Patterns.createJson(Patterns.BLOCK_BASE, name, name);
+	}
+	public static String createBlockPillar(String name) {
+		return Patterns.createJson(Patterns.BLOCK_PILLAR, name, name);
+	}
 	
 	public static String createJson(Reader data, String parent, String block) {
 		try (BufferedReader buffer = new BufferedReader(data)) {
@@ -160,4 +168,5 @@ public class Patterns {
 			return "";
 		}
 	}
+
 }

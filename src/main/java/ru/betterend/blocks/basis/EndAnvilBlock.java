@@ -24,8 +24,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
@@ -91,38 +89,22 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 
 	@Override
 	public BlockModel getModel() {
-		return null;
+		return getBlockModel(defaultBlockState());
 	}
 
 	@Override
-	public Pair<ResourceLocation, BlockModel> getBlockModel(BlockState blockState) {
-		Direction facing = blockState.getValue(FACING);
+	public BlockModel getBlockModel(BlockState blockState) {
 		int destruction = blockState.getValue(DESTRUCTION);
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation modelId = createModelId(blockId, facing, destruction);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%anvil%", blockId.getPath());
 		map.put("%top%", "_top_" + destruction);
-		String jsonString = Patterns.createJson(Patterns.BLOCK_ANVIL, map);
-		BlockModel blockModel = BlockModel.fromString(jsonString);
-
-		return Pair.of(modelId, blockModel);
+		String pattern = Patterns.createJson(Patterns.BLOCK_ANVIL, map);
+		return BlockModelProvider.createBlockModel(blockId, pattern);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(BlockState blockState) {
-		Direction facing = blockState.getValue(FACING);
-		int destruction = blockState.getValue(DESTRUCTION);
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation modelId = createModelId(blockId, facing, destruction);
-		Transformation transform = new Transformation(null, facing.getRotation(), null, null);
-		Variant variant = new Variant(modelId, transform, false, 1);
-
-		return new MultiVariant(Collections.singletonList(variant));
-	}
-
-	protected ResourceLocation createModelId(ResourceLocation blockId, Direction facing, int destruction) {
-		return new ResourceLocation(blockId.getNamespace(),
-				blockId.getPath() + "/" + facing + "/destruction_" + destruction);
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		return BlockModelProvider.createFacingModel(resourceLocation, blockState.getValue(FACING));
 	}
 }

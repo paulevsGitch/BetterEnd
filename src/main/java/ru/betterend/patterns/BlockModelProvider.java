@@ -18,11 +18,6 @@ public interface BlockModelProvider extends ModelProvider {
 	BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState);
 	MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState);
 
-	static BlockModel createItemModel(String name) {
-		String pattern = Patterns.createItemGenerated("item/" + name);
-		return BlockModel.fromString(pattern);
-	}
-
 	static BlockModel createBlockModel(ResourceLocation blockId, String pattern) {
 		BlockModel model = BlockModel.fromString(pattern);
 		ResourceLocation modelLoc = new ResourceLocation(blockId.getNamespace(), "blocks/" + blockId.getPath());

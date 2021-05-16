@@ -15,9 +15,4 @@ public class ModelProviderDiscItem extends RecordItem implements ModelProvider {
 	public String getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_GENERATED, name);
 	}
-
-	@Override
-	public BlockModel getModel() {
-		return null;
-	}
 }

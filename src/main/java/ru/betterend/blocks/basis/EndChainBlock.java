@@ -19,6 +19,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.patterns.BlockModelProvider;
+import ru.betterend.patterns.ModelProvider;
 import ru.betterend.patterns.Patterns;
 
 public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRenderTypeable {
@@ -48,7 +49,7 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return BlockModelProvider.createItemModel(blockId.getPath());
+		return ModelProvider.createItemModel(blockId.getPath());
 	}
 
 	@Override

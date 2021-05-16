@@ -5,5 +5,13 @@ import net.minecraft.resources.ResourceLocation;
 
 public interface ModelProvider {
 	String getModelString(String name);
-	BlockModel getModel(ResourceLocation resourceLocation);
+
+	default BlockModel getModel(ResourceLocation resourceLocation) {
+		return createItemModel(resourceLocation.getPath());
+	}
+
+	static BlockModel createItemModel(String name) {
+		String pattern = Patterns.createItemGenerated("item/" + name);
+		return BlockModel.fromString(pattern);
+	}
 }

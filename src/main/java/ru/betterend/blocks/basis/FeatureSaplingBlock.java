@@ -28,11 +28,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndTags;
 
-public abstract class FeatureSaplingBlock extends SaplingBlock implements IRenderTypeable, BlockPatterned {
+public abstract class FeatureSaplingBlock extends SaplingBlock implements IRenderTypeable, BlockModelProvider {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 
 	public FeatureSaplingBlock() {

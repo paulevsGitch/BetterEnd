@@ -54,22 +54,22 @@ public class SmithingRecipes {
 		SmithingTableRecipe.create("aeternium_helmet")
 			.setResult(EndItems.AETERNIUM_HELMET)
 			.setBase(EndBlocks.TERMINITE.helmet)
-			.setAddition(EndItems.AETERNIUM_INGOT)
+			.setAddition(EndItems.AETERNIUM_FORGED_PLATE)
 			.build();
 		SmithingTableRecipe.create("aeternium_chestplate")
 			.setResult(EndItems.AETERNIUM_CHESTPLATE)
 			.setBase(EndBlocks.TERMINITE.chestplate)
-			.setAddition(EndItems.AETERNIUM_INGOT)
+			.setAddition(EndItems.AETERNIUM_FORGED_PLATE)
 			.build();
 		SmithingTableRecipe.create("aeternium_leggings")
 			.setResult(EndItems.AETERNIUM_LEGGINGS)
 			.setBase(EndBlocks.TERMINITE.leggings)
-			.setAddition(EndItems.AETERNIUM_INGOT)
+			.setAddition(EndItems.AETERNIUM_FORGED_PLATE)
 			.build();
 		SmithingTableRecipe.create("aeternium_boots")
 			.setResult(EndItems.AETERNIUM_BOOTS)
 			.setBase(EndBlocks.TERMINITE.boots)
-			.setAddition(EndItems.AETERNIUM_INGOT)
+			.setAddition(EndItems.AETERNIUM_FORGED_PLATE)
 			.build();
 		
 		SmithingTableRecipe.create("thallasium_anvil_updrade")
@@ -80,7 +80,7 @@ public class SmithingRecipes {
 		SmithingTableRecipe.create("terminite_anvil_updrade")
 			.setResult(EndBlocks.AETERNIUM_ANVIL)
 			.setBase(EndBlocks.TERMINITE.anvil)
-			.setAddition(EndBlocks.AETERNIUM_BLOCK)
+			.setAddition(EndItems.AETERNIUM_INGOT)
 			.build();
 
 		SmithingTableRecipe.create("armored_elytra")

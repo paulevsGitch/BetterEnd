@@ -8,6 +8,8 @@
 		"ClientPlayNetworkHandlerMixin",
 		"NamespaceResourceManagerMixin",
 		"EnchantingTableBlockMixin",
+	  	"HumanoidMobRendererMixin",
+	  	"ArmorStandRendererMixin",
 		"BackgroundRendererMixin",
 		"ClientRecipeBookMixin",
 		"ModelVariantMapMixin",

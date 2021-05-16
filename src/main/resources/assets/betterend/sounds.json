@@ -99,6 +99,31 @@
 			}
 		]
 	},
+	"betterend.music.caves": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/godmode-future_rennaisance",
+				"volume": 0.1,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/futuremono-moonrise",
+				"volume": 0.1,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/emmit_fenn-wander",
+				"volume": 0.1,
+				"stream": false
+			},
+			{
+				"name": "betterend:music/corbyn_kites-orbit",
+				"volume": 0.1,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.ambient.foggy_mushroomland": {
 		"category": "ambient",
@@ -184,6 +209,16 @@
 			}
 		]
 	},
+	"betterend.ambient.caves": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/caves",
+				"volume": 0.5,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterend.entity.dragonfly": {
 		"category": "entity",
@@ -239,6 +274,33 @@
 		"sounds": [
 			{
 				"name": "betterend:records/firel-strange_and_alien",
+				"stream": false
+			}
+		]
+	},
+	"betterend.record.grasping_at_stars": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-grasping_at_stars",
+				"stream": false
+			}
+		]
+	},
+	"betterend.record.endseeker": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-endseeker",
+				"stream": false
+			}
+		]
+	},
+	"betterend.record.eo_dracona": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterend:records/firel-eo_dracona",
 				"stream": false
 			}
 		]

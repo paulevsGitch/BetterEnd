@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -21,7 +22,6 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -33,9 +33,7 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.DispenserBlock;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.interfaces.BreakableItem;
 import ru.betterend.item.*;
-import ru.betterend.item.ModelProviderItem;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndAxeItem;
@@ -55,6 +53,7 @@ public class EndItems {
 	public final static Item ENDER_DUST = registerItem("ender_dust");
 	public final static Item ENDER_SHARD = registerItem("ender_shard");
 	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot");
+	public final static Item AETERNIUM_FORGED_PLATE = registerItem("aeternium_forged_plate");
 	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
 	public final static Item END_LILY_LEAF_DRIED = registerItem("end_lily_leaf_dried");
 	public final static Item CRYSTAL_SHARDS = registerItem("crystal_shards");
@@ -73,18 +72,21 @@ public class EndItems {
 	public final static Item SILK_MOTH_MATRIX = registerItem("silk_moth_matrix");
 	
 	// Music Discs
-	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerDisc("music_disc_strange_and_alien", 0, EndSounds.STRANGE_AND_ALIEN);
+	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerDisc("music_disc_strange_and_alien", 0, EndSounds.RECORD_STRANGE_AND_ALIEN);
+	public final static Item MUSIC_DISC_GRASPING_AT_STARS = registerDisc("music_disc_grasping_at_stars", 0, EndSounds.RECORD_GRASPING_AT_STARS);
+	public final static Item MUSIC_DISC_ENDSEEKER = registerDisc("music_disc_endseeker", 0, EndSounds.RECORD_ENDSEEKER);
+	public final static Item MUSIC_DISC_EO_DRACONA = registerDisc("music_disc_eo_dracona", 0, EndSounds.RECORD_EO_DRACONA);
 	
 	// Armor //
 	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireResistant()));
 	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings().fireResistant()));
 	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings().fireResistant()));
 	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings().fireResistant()));
-	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.HEAD, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.CHEST, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.LEGS, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new EndArmorItem(EndArmorMaterial.CRYSTALITE, EquipmentSlot.FEET, makeItemSettings().rarity(Rarity.UNCOMMON)));
-	public static final Item ARMORED_ELYTRA = registerItem("elytra_armored", new ArmoredElytra("elytra_armored", AETERNIUM_INGOT, 700, 0.96D, true));
+	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new CrystaliteHelmet());
+	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new CrystaliteChestplate());
+	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new CrystaliteLeggings());
+	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new CrystaliteBoots());
+	public static final Item ARMORED_ELYTRA = registerItem("elytra_armored", new ArmoredElytra("elytra_armored", EndArmorMaterial.AETERNIUM, Items.PHANTOM_MEMBRANE, 900, 0.96D, true));
 
 	// Tools //
 	public static final TieredItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new EndShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings().fireResistant()));
@@ -114,10 +116,11 @@ public class EndItems {
 	public final static Item SHADOW_BERRY_COOKED = registerFood("shadow_berry_cooked", 6, 0.7F);
 	public final static Item END_FISH_RAW = registerFood("end_fish_raw", Foods.SALMON);
 	public final static Item END_FISH_COOKED = registerFood("end_fish_cooked", Foods.COOKED_SALMON);
-	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new EndBucketItem());
-	public final static Item BUCKET_CUBOZOA  = registerItem("bucket_cubozoa", new EndBucketItem());
-	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 6, 0.75F);
-	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 7, 0.75F, new MobEffectInstance(MobEffects.NIGHT_VISION, 400));
+	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new EndBucketItem(EndEntities.END_FISH));
+	public final static Item BUCKET_CUBOZOA  = registerItem("bucket_cubozoa", new EndBucketItem(EndEntities.CUBOZOA));
+	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 8, 0.7F);
+	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 6, 0.8F, new MobEffectInstance(MobEffects.NIGHT_VISION, 400));
+	public final static Item BLOSSOM_BERRY_JELLY = registerFood("blossom_berry_jelly", 8, 0.7F);
 	public final static Item BLOSSOM_BERRY = registerFood("blossom_berry", Foods.APPLE);
 	public final static Item AMBER_ROOT_RAW = registerFood("amber_root_raw", 2, 0.8F);
 	public final static Item CHORUS_MUSHROOM_RAW = registerFood("chorus_mushroom_raw", 3, 0.5F);
@@ -129,11 +132,11 @@ public class EndItems {
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);
 	
 	public static Item registerDisc(String name, int power, SoundEvent sound) {
-		return registerItem(BetterEnd.makeID(name), new ModelProviderDiscItem(power, sound, makeItemSettings()));
+		return registerItem(BetterEnd.makeID(name), new PatternedDiscItem(power, sound, makeItemSettings()));
 	}
 	
 	public static Item registerItem(String name) {
-		return registerItem(BetterEnd.makeID(name), new ModelProviderItem(makeItemSettings()));
+		return registerItem(BetterEnd.makeID(name), new PatternedItem(makeItemSettings()));
 	}
 	
 	public static Item registerItem(String name, Item item) {
@@ -148,9 +151,6 @@ public class EndItems {
 			return item;
 		}
 		registerItem(id, item, MOD_ITEMS);
-		if (item instanceof BreakableItem) {
-			((BreakableItem) item).registerBrokenItem();
-		}
 		return item;
 	}
 	
@@ -222,7 +222,7 @@ public class EndItems {
 	}
 	
 	public static Item registerFood(String name, FoodProperties foodComponent) {
-		return registerItem(name, new ModelProviderItem(makeItemSettings().food(foodComponent)));
+		return registerItem(name, new PatternedItem(makeItemSettings().food(foodComponent)));
 	}
 	
 	public static Item registerDrink(String name) {
@@ -238,12 +238,14 @@ public class EndItems {
 		return registerDrink(name, builder.build());
 	}
 
-	public static Properties makeItemSettings() {
-		return new Item.Properties().tab(CreativeTabs.TAB_ITEMS);
+	public static FabricItemSettings makeItemSettings() {
+		FabricItemSettings properties = new FabricItemSettings();
+		return (FabricItemSettings) properties.tab(CreativeTabs.TAB_ITEMS);
 	}
 	
-	public static Properties makeBlockItemSettings() {
-		return new Item.Properties().tab(CreativeTabs.TAB_BLOCKS);
+	public static FabricItemSettings makeBlockItemSettings() {
+		FabricItemSettings properties = new FabricItemSettings();
+		return (FabricItemSettings) properties.tab(CreativeTabs.TAB_BLOCKS);
 	}
 
 	public static void register() {}

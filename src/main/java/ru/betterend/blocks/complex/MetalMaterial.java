@@ -49,7 +49,7 @@ public class MetalMaterial {
 	public final Block block;
 	public final Block tile;
 	public final Block bars;
-	public final Block plate;
+	public final Block pressurePlate;
 	public final Block door;
 	public final Block trapdoor;
 	public final Block anvil;
@@ -78,6 +78,7 @@ public class MetalMaterial {
 	public final Item hoe;
 	public final Item hammer;
 	
+	public final Item forgedPlate;
 	public final Item helmet;
 	public final Item chestplate;
 	public final Item leggings;
@@ -113,7 +114,7 @@ public class MetalMaterial {
 		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(block.defaultMaterialColor(), level));
 		bars = EndBlocks.registerBlock(name + "_bars", new EndMetalPaneBlock(block));
 		chain = EndBlocks.registerBlock(name + "_chain", new EndChainBlock(block.defaultMaterialColor()));
-		plate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(block));
+		pressurePlate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(block));
 		
 		chandelier = EndBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(block));
 		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lanternProperties));
@@ -136,6 +137,7 @@ public class MetalMaterial {
 		hoe = EndItems.registerTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, itemSettings));
 		hammer = EndItems.registerTool(name + "_hammer", new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
 		
+		forgedPlate = EndItems.registerItem(name + "_forged_plate");
 		helmet = EndItems.registerItem(name + "_helmet", new EndArmorItem(armor, EquipmentSlot.HEAD, itemSettings));
 		chestplate = EndItems.registerItem(name + "_chestplate", new EndArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
 		leggings = EndItems.registerItem(name + "_leggings", new EndArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
@@ -148,13 +150,14 @@ public class MetalMaterial {
 		
 		// Basic recipes
 		GridRecipe.make(name + "_ingot_from_nuggets", ingot).setShape("###", "###", "###").addMaterial('#', nugget).setGroup("end_metal_ingots_nug").build();
+		GridRecipe.make(name + "_nuggets_from_ingot", nugget).setOutputCount(9).setList("#").addMaterial('#', ingot).setGroup("end_metal_nuggets_ing").build();
 		GridRecipe.make(name + "_block", block).setShape("###", "###", "###").addMaterial('#', ingot).setGroup("end_metal_blocks").build();
 		GridRecipe.make(name + "_ingot_from_block", ingot).setOutputCount(9).setList("#").addMaterial('#', block).setGroup("end_metal_ingots").build();
 		
 		// Block recipes
 		GridRecipe.make(name + "_tile", tile).setOutputCount(4).setShape("##", "##").addMaterial('#', block).setGroup("end_metal_tiles").build();
 		GridRecipe.make(name + "_bars", bars).setOutputCount(16).setShape("###", "###").addMaterial('#', ingot).setGroup("end_metal_bars").build();
-		GridRecipe.make(name + "_plate", plate).setShape("##").addMaterial('#', ingot).setGroup("end_metal_plates").build();
+		GridRecipe.make(name + "_pressure_plate", pressurePlate).setShape("##").addMaterial('#', ingot).setGroup("end_metal_plates").build();
 		GridRecipe.make(name + "_door", door).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', ingot).setGroup("end_metal_doors").build();
 		GridRecipe.make(name + "_trapdoor", trapdoor).setShape("##", "##").addMaterial('#', ingot).setGroup("end_metal_trapdoors").build();
 		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', block, tile).setGroup("end_metal_stairs").build();
@@ -182,6 +185,7 @@ public class MetalMaterial {
 		AnvilRecipe.Builder.create(name + "_axe_head").setInput(ingot).setInputCount(3).setOutput(axeHead).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
 		AnvilRecipe.Builder.create(name + "_hoe_head").setInput(ingot).setInputCount(2).setOutput(hoeHead).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
 		AnvilRecipe.Builder.create(name + "_sword_blade").setInput(ingot).setOutput(swordBlade).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
+		AnvilRecipe.Builder.create(name + "_forged_plate").setInput(ingot).setOutput(forgedPlate).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
 		
 		// Tools from parts
 		SmithingTableRecipe.create(name + "_hammer").setResult(hammer).setBase(block).setAddition(Items.STICK).build();
@@ -193,10 +197,10 @@ public class MetalMaterial {
 		SmithingTableRecipe.create(name + "_shovel").setResult(shovel).setBase(shovelHead).setAddition(Items.STICK).build();
 		
 		// Armor crafting
-		GridRecipe.make(name + "_helmet", helmet).setShape("###", "# #").addMaterial('#', ingot).setGroup("end_metal_helmets").build();
-		GridRecipe.make(name + "_chestplate", chestplate).setShape("# #", "###", "###").addMaterial('#', ingot).setGroup("end_metal_chestplates").build();
-		GridRecipe.make(name + "_leggings", leggings).setShape("###", "# #", "# #").addMaterial('#', ingot).setGroup("end_metal_leggings").build();
-		GridRecipe.make(name + "_boots", boots).setShape("# #", "# #").addMaterial('#', ingot).setGroup("end_metal_boots").build();
+		GridRecipe.make(name + "_helmet", helmet).setShape("###", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_helmets").build();
+		GridRecipe.make(name + "_chestplate", chestplate).setShape("# #", "###", "###").addMaterial('#', forgedPlate).setGroup("end_metal_chestplates").build();
+		GridRecipe.make(name + "_leggings", leggings).setShape("###", "# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_leggings").build();
+		GridRecipe.make(name + "_boots", boots).setShape("# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_boots").build();
 		
 		TagHelper.addTag(BlockTags.ANVIL, anvil);
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);

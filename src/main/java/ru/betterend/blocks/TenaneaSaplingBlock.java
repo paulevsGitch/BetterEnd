@@ -15,11 +15,11 @@ public class TenaneaSaplingBlock extends FeatureSaplingBlock {
 
 	@Override
 	protected Feature<?> getFeature() {
-		return EndFeatures.LUCERNIA.getFeature();
+		return EndFeatures.TENANEA.getFeature();
 	}
 	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-		return world.getBlockState(pos.below()).is(EndBlocks.RUTISCUS);
+		return world.getBlockState(pos.below()).is(EndBlocks.PINK_MOSS);
 	}
 }

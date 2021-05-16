@@ -21,7 +21,8 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 		super(NoneFeatureConfiguration.CODEC);
 	}
 	
-	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
+	@Override
+	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
 		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 20;
 	}
 

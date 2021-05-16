@@ -26,25 +26,25 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 	private static final StructureTemplate STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
 	
 	@Override
-	protected boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
-		long x = chunkPos.x;
-		long z = chunkPos.z;
-		if (x * x + z * z < 10000) {
+	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
+		long x = (long) chunkPos.x * (long) chunkPos.x;
+		long z = (long) chunkPos.z * (long) chunkPos.z;
+		if (x + z < 1024L) {
 			return false;
 		}
 		if (chunkGenerator.getBaseHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Heightmap.Types.WORLD_SURFACE_WG) < 10) {
 			return false;
 		}
-		return super.shouldStartAt(chunkGenerator, biomeSource, worldSeed, chunkRandom, chunkX, chunkZ, biome, chunkPos, featureConfig);
+		return super.isFeatureChunk(chunkGenerator, biomeSource, worldSeed, chunkRandom, chunkX, chunkZ, biome, chunkPos, featureConfig);
 	}
 	
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-		return SDFStructureStart::new;
+		return PortalStructureStart::new;
 	}
 	
-	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
-		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ, BoundingBox box, int references, long seed) {
+	public static class PortalStructureStart extends StructureStart<NoneFeatureConfiguration> {
+		public PortalStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ, BoundingBox box, int references, long seed) {
 			super(feature, chunkX, chunkZ, box, references, seed);
 		}
 

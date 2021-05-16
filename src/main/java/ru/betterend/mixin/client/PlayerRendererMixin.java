@@ -21,6 +21,6 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
 
 	@Inject(method = "<init>(Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;Z)V", at = @At("TAIL"))
 	public void be_addCustomLayer(EntityRenderDispatcher entityRenderDispatcher, boolean bl, CallbackInfo info) {
-		addLayer(new ArmoredElytraLayer<>(PlayerRenderer.class.cast(this)));
+		addLayer(new ArmoredElytraLayer<>(this));
 	}
 }

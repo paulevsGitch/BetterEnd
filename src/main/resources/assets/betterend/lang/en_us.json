@@ -506,7 +506,7 @@
 	"block.betterend.vent_bubble_column": "Vent Bubble Column",
 	"block.betterend.respawn_obelisk": "Respawn Obelisk",
 	"message.betterend.set_spawn": "\u00A7b\u00A7lYour spawn point is set here",
-	"message.betterend.fail_spawn": "\u00A7c\u00A7lYour need to hold 6 Amber Gems to set your spawn point",
+	"message.betterend.fail_spawn": "\u00A7c\u00A7lYou need to hold 6 Amber Gems to set your spawn point",
 	
 	"block.betterend.dragon_tree_composter": "Dragon Tree Composter",
 	"block.betterend.end_lotus_composter": "End Lotus Composter",
@@ -821,6 +821,12 @@
 	
 	"item.betterend.music_disc_strange_and_alien": "§bMusic Disc§r",
 	"item.betterend.music_disc_strange_and_alien.desc": "§5Firel§r - §fStrange And Alien§r",
+	"item.betterend.music_disc_grasping_at_stars": "§bMusic Disc§r",
+	"item.betterend.music_disc_grasping_at_stars.desc": "§5Firel§r - §fGrasping At Stars§r",
+	"item.betterend.music_disc_endseeker": "§bMusic Disc§r",
+	"item.betterend.music_disc_endseeker.desc": "§5Firel§r - §fEndseeker§r",
+	"item.betterend.music_disc_eo_dracona": "§bMusic Disc§r",
+	"item.betterend.music_disc_eo_dracona.desc": "§5Firel§r - §fEo Dracona§r",
 	
 	"block.betterend.hydralux_petal_block_amber": "Amber Petal Block",
 	"block.betterend.hydralux_petal_block_beige": "Beige Petal Block",
@@ -855,5 +861,15 @@
 	"block.betterend.neon_cactus_block": "Neon Cactus Block",
 	"block.betterend.neon_cactus_slab": "Neon Cactus Slab",
 	"block.betterend.neon_cactus_stairs": "Neon Cactus Stairs",
-	"biome.betterend.jade_cave": "Jade Cave"
+	"biome.betterend.jade_cave": "Jade Cave",
+	"item.betterend.blossom_berry_jelly": "Blossom Berry Jelly",
+	"item.betterend.aeternium_forged_plate": "Aeternium Forged Plate",
+	"item.betterend.terminite_forged_plate": "Terminite Forged Plate",
+	"item.betterend.thallasium_forged_plate": "Thallasium Forged Plate",
+
+  	"attribute.name.generic.blindness_resistance": "Blindness Resistance",
+
+  	"tooltip.armor.crystalite_set": "Set bonus: Regeneration I",
+  	"tooltip.armor.crystalite_chest": "Effect: Dig Speed I",
+  	"tooltip.armor.crystalite_boots": "Effect: Swiftness I"
 }

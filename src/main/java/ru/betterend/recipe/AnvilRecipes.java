@@ -63,5 +63,12 @@ public class AnvilRecipes {
 			.setToolLevel(4)
 			.setDamage(6)
 			.build();
+		AnvilRecipe.Builder.create("aeternium_forged_plate")
+		.setInput(EndItems.AETERNIUM_INGOT)
+		.setOutput(EndItems.AETERNIUM_FORGED_PLATE)
+		.setAnvilLevel(anvilLevel)
+		.setToolLevel(4)
+		.setDamage(6)
+		.build();
 	}
 }

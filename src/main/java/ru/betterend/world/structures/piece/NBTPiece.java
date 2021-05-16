@@ -48,7 +48,7 @@ public class NBTPiece extends BasePiece {
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag tag) {
-		tag.putString("id", structureID.toString());
+		tag.putString("structureID", structureID.toString());
 		tag.putInt("rotation", rotation.ordinal());
 		tag.putInt("mirror", mirror.ordinal());
 		tag.putInt("erosion", erosion);
@@ -58,7 +58,7 @@ public class NBTPiece extends BasePiece {
 
 	@Override
 	protected void fromNbt(CompoundTag tag) {
-		structureID = new ResourceLocation(tag.getString("id"));
+		structureID = new ResourceLocation(tag.getString("structureID"));
 		rotation = Rotation.values()[tag.getInt("rotation")];
 		mirror = Mirror.values()[tag.getInt("mirror")];
 		erosion = tag.getInt("erosion");

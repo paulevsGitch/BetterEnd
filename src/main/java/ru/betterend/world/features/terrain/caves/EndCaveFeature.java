@@ -51,7 +51,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			return false;
 		}
 
-		EndCaveBiome biome = EndBiomes.getCaveBiome(random);
+		EndCaveBiome biome = EndBiomes.getCaveBiome(pos.getX(), pos.getZ());
 		Set<BlockPos> caveBlocks = generate(world, center, radius, random);
 		if (!caveBlocks.isEmpty()) {
 			if (biome != null) {
@@ -88,7 +88,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
 		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
-			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
+			if (!surfaceBlock.is(Blocks.END_STONE)) {
+				BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
+			}
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {

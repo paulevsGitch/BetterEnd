@@ -101,19 +101,27 @@ public class CraftingRecipes {
 		GridRecipe.make("petal_white_dye", Items.WHITE_DYE).setList("#").addMaterial('#', EndItems.HYDRALUX_PETAL).build();
 		
 		GridRecipe.make("sweet_berry_jelly", EndItems.SWEET_BERRY_JELLY)
-			.setList("JWSB")
-			.addMaterial('J', EndItems.GELATINE)
-			.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
-			.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
-			.build();
+		.setList("JWSB")
+		.addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR).addMaterial('B', Items.SWEET_BERRIES)
+		.build();
 		
 		GridRecipe.make("shadow_berry_jelly", EndItems.SHADOW_BERRY_JELLY)
-			.setList("JWSB")
-			.addMaterial('J', EndItems.GELATINE)
-			.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
-			.addMaterial('S', Items.SUGAR)
-			.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
-			.build();
+		.setList("JWSB")
+		.addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR)
+		.addMaterial('B', EndItems.SHADOW_BERRY_COOKED)
+		.build();
+		
+		GridRecipe.make("shadow_berry_jelly", EndItems.BLOSSOM_BERRY_JELLY)
+		.setList("JWSB")
+		.addMaterial('J', EndItems.GELATINE)
+		.addMaterial('W', PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+		.addMaterial('S', Items.SUGAR)
+		.addMaterial('B', EndItems.BLOSSOM_BERRY)
+		.build();
 		
 		GridRecipe.make("sulphur_gunpowder", Items.GUNPOWDER).setList("SCB").addMaterial('S', EndItems.CRYSTALLINE_SULPHUR).addMaterial('C', Items.COAL, Items.CHARCOAL).addMaterial('B', Items.BONE_MEAL).build();
 		
@@ -188,11 +196,12 @@ public class CraftingRecipes {
 		registerHammer("diamond", Items.DIAMOND, EndItems.DIAMOND_HAMMER);
 
 		GridRecipe.make("charcoal_block", EndBlocks.CHARCOAL_BLOCK).setShape("###", "###", "###").addMaterial('#', Items.CHARCOAL).build();
+		GridRecipe.make("charcoal_from_block", Items.CHARCOAL).setOutputCount(9).setList("#").addMaterial('#', EndBlocks.CHARCOAL_BLOCK).build();
 		GridRecipe.make("end_stone_furnace", EndBlocks.END_STONE_FURNACE).setShape("###", "# #", "###").addMaterial('#', Blocks.END_STONE).build();
 		GridRecipe.make("filalux_lantern", EndBlocks.FILALUX_LANTERN).setShape("###", "###", "###").addMaterial('#', EndBlocks.FILALUX).build();
 		
 		GridRecipe.make("silk_moth_hive", EndBlocks.SILK_MOTH_HIVE).setShape("#L#", "LML", "#L#").addMaterial('#', EndBlocks.TENANEA.planks).addMaterial('L', EndBlocks.TENANEA_LEAVES).addMaterial('M', EndItems.SILK_MOTH_MATRIX).build();
-		GridRecipe.make("cave_pumpkin_pie", EndItems.CAVE_PUMPKIN_PIE).setShape(" B ", "BPB", " B ").addMaterial('P', EndBlocks.CAVE_PUMPKIN).addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).build();
+		GridRecipe.make("cave_pumpkin_pie", EndItems.CAVE_PUMPKIN_PIE).setShape("SBS", "BPB", "SBS").addMaterial('P', EndBlocks.CAVE_PUMPKIN).addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).addMaterial('S', Items.SUGAR).build();
 		GridRecipe.make("cave_pumpkin_seeds", EndBlocks.CAVE_PUMPKIN_SEED).setOutputCount(4).setList("#").addMaterial('#', EndBlocks.CAVE_PUMPKIN).build();
 		
 		GridRecipe.make("neon_cactus_block", EndBlocks.NEON_CACTUS_BLOCK).setShape("##", "##").addMaterial('#', EndBlocks.NEON_CACTUS).build();
@@ -202,7 +211,7 @@ public class CraftingRecipes {
 		GridRecipe.make("tag_smith_table", Blocks.SMITHING_TABLE).setShape("II", "##", "##").addMaterial('#', ItemTags.PLANKS).addMaterial('I', EndTags.IRON_INGOTS).build();
 		GridRecipe.make("tag_cauldron", Blocks.CAULDRON).setShape("I I", "I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
 		GridRecipe.make("tag_hopper", Blocks.HOPPER).setShape("I I", "ICI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('C', EndTags.ITEM_CHEST).build();
-		GridRecipe.make("tag_piston", Blocks.PISTON).setShape("WWW", "CIC", "CDC").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).addMaterial('C', Items.COBBLESTONE).build();
+		GridRecipe.make("tag_piston", Blocks.PISTON).setShape("WWW", "CIC", "CDC").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).addMaterial('C', Items.COBBLESTONE).addMaterial('W', ItemTags.PLANKS).build();
 		GridRecipe.make("tag_rail", Blocks.RAIL).setShape("I I", "ISI", "I I").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STICK).build();
 		GridRecipe.make("tag_stonecutter", Blocks.STONECUTTER).setShape(" I ", "SSS").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STONE).build();
 		
@@ -210,6 +219,8 @@ public class CraftingRecipes {
 		GridRecipe.make("tag_compass", Items.COMPASS).setShape(" I ", "IDI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).build();
 		GridRecipe.make("tag_minecart", Items.MINECART).setShape("I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
 		GridRecipe.make("tag_shield", Items.SHIELD).setShape("WIW", "WWW", " W ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('W', ItemTags.PLANKS).build();
+		
+		GridRecipe.make("sugar_from_root", Items.SUGAR).setList("###").addMaterial('#', EndItems.AMBER_ROOT_RAW).build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

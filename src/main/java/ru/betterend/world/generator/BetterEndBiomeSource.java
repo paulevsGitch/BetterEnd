@@ -95,6 +95,9 @@ public class BetterEndBiomeSource extends BiomeSource {
 				endBiome = mapLand.getBiome(biomeX << 2, biomeZ << 2);
 			}
 			else {
+				if (!GeneratorOptions.noRingVoid() && dist <= 65536L) {
+					return barrens;
+				}
 				endBiome = mapVoid.getBiome(biomeX << 2, biomeZ << 2);
 			}
 		}

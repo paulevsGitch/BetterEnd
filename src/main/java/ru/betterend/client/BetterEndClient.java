@@ -7,6 +7,8 @@ import net.minecraft.core.Registry;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
+import ru.betterend.interfaces.MultiModelItem;
+import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndBlockEntityRenders;
 import ru.betterend.registry.EndEntitiesRenders;
 import ru.betterend.registry.EndModelProviders;
@@ -23,6 +25,8 @@ public class BetterEndClient implements ClientModInitializer {
 		EndParticles.register();
 		EndEntitiesRenders.register();
 		EndModelProviders.register();
+		MultiModelItem.register();
+		CrystaliteArmor.registerTooltips();
 		ClientOptions.init();
 		
 		if (BetterEnd.isDevEnvironment()) {

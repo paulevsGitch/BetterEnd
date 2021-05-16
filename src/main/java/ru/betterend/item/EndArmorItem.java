@@ -1,25 +1,19 @@
 package ru.betterend.item;
 
-import java.util.UUID;
-
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-
-import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import ru.betterend.mixin.common.ArmorItemAccessor;
-import ru.betterend.patterns.ModelProvider;
+import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
 
-public class EndArmorItem extends ArmorItem implements ModelProvider {
+import java.util.UUID;
+
+public class EndArmorItem extends ArmorItem implements Patterned {
 
 	protected static final UUID[] ARMOR_MODIFIER_UUID_PER_SLOT = new UUID[] {
 			UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"),
@@ -54,7 +48,7 @@ public class EndArmorItem extends ArmorItem implements ModelProvider {
 	}
 
 	@Override
-	public String getModelString(String name) {
+	public String getModelPattern(String name) {
 		return Patterns.createItemGenerated(name);
 	}
 }

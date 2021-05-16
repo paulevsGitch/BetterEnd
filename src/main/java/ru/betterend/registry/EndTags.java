@@ -151,7 +151,7 @@ public class EndTags {
 		TagHelper.addTag(EndTags.DRAGON_IMMUNE, EndBlocks.ENDER_ORE, EndBlocks.ETERNAL_PEDESTAL, EndBlocks.FLAVOLITE_RUNED_ETERNAL, EndBlocks.FLAVOLITE_RUNED);
 		
 		TagHelper.addTag(EndTags.IRON_INGOTS, Items.IRON_INGOT);
-		TagHelper.addTag(EndTags.IRON_INGOTS, EndBlocks.TERMINITE.ingot);
+		TagHelper.addTag(EndTags.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
 	}
 	
 	public static void addSurfaceBlock(Block block) {

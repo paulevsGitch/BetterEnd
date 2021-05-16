@@ -27,6 +27,7 @@ public class TenaneaFlowersBlock extends VineBlock implements IColorProvider {
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
+			if (pos == null) pos = BlockPos.ZERO;
 			long i = (MHelper.getRandom(pos.getX(), pos.getZ()) & 63) + pos.getY();
 			double delta = i * 0.1;
 			int index = MHelper.floor(delta);

@@ -63,6 +63,7 @@ public class SpikeFeatureMixin {
 			minY = world.getChunk(x >> 4, z >> 4).getHeight(Types.WORLD_SURFACE, x & 15, z);
 		}
 		
+		GeneratorOptions.setDirectSpikeHeight();
 		int maxY = minY + spike.getHeight() - 64;
 		
 		if (GeneratorOptions.replacePillars() && be_radiusInRange(radius)) {

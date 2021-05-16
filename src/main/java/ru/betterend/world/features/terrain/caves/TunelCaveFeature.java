@@ -1,16 +1,21 @@
 package ru.betterend.world.features.terrain.caves;
 
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -20,12 +25,14 @@ import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 public class TunelCaveFeature extends EndCaveFeature {
-	private static final OpenSimplexNoise BIOME_NOISE_X = new OpenSimplexNoise("biome_noise_x".hashCode());
-	private static final OpenSimplexNoise BIOME_NOISE_Z = new OpenSimplexNoise("biome_noise_z".hashCode());
-	
 	private Set<BlockPos> generate(WorldGenLevel world, BlockPos center, Random random) {
-		int x1 = (center.getX() >> 4) << 4;
-		int z1 = (center.getZ() >> 4) << 4;
+		int cx = center.getX() >> 4;
+		int cz = center.getZ() >> 4;
+		if ((long) cx * (long) cx + (long) cz + (long) cz < 256) {
+			return Sets.newHashSet();
+		}
+		int x1 = cx << 4;
+		int z1 = cz << 4;
 		int x2 = x1 + 16;
 		int z2 = z1 + 16;
 		int y2 = world.getHeight();
@@ -43,17 +50,41 @@ public class TunelCaveFeature extends EndCaveFeature {
 				for (int y = 0; y < y2; y++) {
 					pos.setY(y);
 					float val = Mth.abs((float) noiseH.eval(x * 0.02, y * 0.01, z * 0.02));
-					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;//Mth.abs(y - 50 + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F;
+					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(x * 0.1, y * 0.1, z * 0.1) * 0.12F;
 					vert *= vert;
-					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(EndTags.GEN_TERRAIN)) {
+					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(EndTags.GEN_TERRAIN) && noWaterNear(world, pos)) {
 						BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						positions.add(pos.immutable());
+						int height = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+						if (height < pos.getY() + 4) {
+							while (pos.getY() < height && noWaterNear(world, pos)) {
+								pos.setY(pos.getY() + 1);
+								BlocksHelper.setWithoutUpdate(world, pos, AIR);
+							}
+						}
 					}
 				}
 			}
 		}
 		return positions;
+	}
+	
+	private boolean noWaterNear(WorldGenLevel world, BlockPos pos) {
+		BlockPos above1 = pos.above();
+		BlockPos above2 = pos.above(2);
+		if (!world.getFluidState(above1).isEmpty() || !world.getFluidState(above2).isEmpty()) {
+			return false;
+		}
+		for (Direction dir: BlocksHelper.HORIZONTAL) {
+			if (!world.getFluidState(above1.relative(dir)).isEmpty()) {
+				return false;
+			}
+			if (!world.getFluidState(above2.relative(dir)).isEmpty()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	@Override
@@ -65,50 +96,63 @@ public class TunelCaveFeature extends EndCaveFeature {
 		if (biomeMissingCaves(world, pos)) {
 			return false;
 		}
-
-		EndCaveBiome biome = EndBiomes.getCaveBiome(random);
-		Set<BlockPos> preCaveBlocks = generate(world, pos, random);
-		Set<BlockPos> caveBlocks = mutateBlocks(preCaveBlocks);
-		if (!caveBlocks.isEmpty()) {
-			if (biome != null) {
-				setBiomes(world, biome, caveBlocks);
-				Set<BlockPos> floorPositions = Sets.newHashSet();
-				Set<BlockPos> ceilPositions = Sets.newHashSet();
-				MutableBlockPos mut = new MutableBlockPos();
-				caveBlocks.forEach((bpos) -> {
-					mut.set(bpos);
-					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
-						mut.setY(bpos.getY() - 1);
-						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
-							floorPositions.add(mut.immutable());
-						}
-						mut.setY(bpos.getY() + 1);
-						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
-							ceilPositions.add(mut.immutable());
-						}
-					}
-				});
-				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-				placeFloor(world, biome, floorPositions, random, surfaceBlock);
-				placeCeil(world, biome, ceilPositions, random);
-				placeWalls(world, biome, caveBlocks, random);
-			}
-			fixBlocks(world, preCaveBlocks);
+		
+		Set<BlockPos> caveBlocks = generate(world, pos, random);
+		if (caveBlocks.isEmpty()) {
+			return false;
 		}
-
-		return true;
-	}
-	
-	private Set<BlockPos> mutateBlocks(Set<BlockPos> caveBlocks) {
-		Set<BlockPos> result = Sets.newHashSet();
-		caveBlocks.forEach(pos -> {
-			int dx = pos.getX() + (int) (BIOME_NOISE_X.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
-			int dz = pos.getZ() + (int) (BIOME_NOISE_Z.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 5);
-			if ((dx >> 4) == (pos.getX() >> 4) && (dz >> 4) == (pos.getZ() >> 4)) {
-				result.add(pos);
+		
+		Map<EndCaveBiome, Set<BlockPos>> floorSets = Maps.newHashMap();
+		Map<EndCaveBiome, Set<BlockPos>> ceilSets = Maps.newHashMap();
+		MutableBlockPos mut = new MutableBlockPos();
+		Set<BlockPos> remove = Sets.newHashSet();
+		caveBlocks.forEach((bpos) -> {
+			mut.set(bpos);
+			EndCaveBiome bio = EndBiomes.getCaveBiome(bpos.getX(), bpos.getZ());
+			int height = world.getHeight(Types.WORLD_SURFACE, bpos.getX(), bpos.getZ());
+			if (mut.getY() >= height) {
+				remove.add(bpos);
+			}
+			else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
+				mut.setY(bpos.getY() - 1);
+				if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+					Set<BlockPos> floorPositions = floorSets.get(bio);
+					if (floorPositions == null) {
+						floorPositions = Sets.newHashSet();
+						floorSets.put(bio, floorPositions);
+					}
+					floorPositions.add(mut.immutable());
+				}
+				mut.setY(bpos.getY() + 1);
+				if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+					Set<BlockPos> ceilPositions = ceilSets.get(bio);
+					if (ceilPositions == null) {
+						ceilPositions = Sets.newHashSet();
+						ceilSets.put(bio, ceilPositions);
+					}
+					ceilPositions.add(mut.immutable());
+				}
+				setBiome(world, bpos, bio);
 			}
 		});
-		return result;
+		caveBlocks.removeAll(remove);
+		
+		if (caveBlocks.isEmpty()) {
+			return true;
+		}
+		
+		floorSets.forEach((biome, floorPositions) -> {
+			BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+			placeFloor(world, biome, floorPositions, random, surfaceBlock);
+		});
+		ceilSets.forEach((biome, ceilPositions) -> {
+			placeCeil(world, biome, ceilPositions, random);
+		});
+		EndCaveBiome biome = EndBiomes.getCaveBiome(pos.getX(), pos.getZ());
+		placeWalls(world, biome, caveBlocks, random);
+		fixBlocks(world, caveBlocks);
+
+		return true;
 	}
 
 	@Override
@@ -120,7 +164,9 @@ public class TunelCaveFeature extends EndCaveFeature {
 	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
 		float density = biome.getFloorDensity() * 0.2F;
 		floorPositions.forEach((pos) -> {
-			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
+			if (!surfaceBlock.is(Blocks.END_STONE)) {
+				BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
+			}
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {

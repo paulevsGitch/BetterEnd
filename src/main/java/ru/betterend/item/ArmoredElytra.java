@@ -2,18 +2,14 @@ package ru.betterend.item;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.BreakableItem;
-import ru.betterend.patterns.ModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.registry.EndItems;
 
 import java.util.UUID;

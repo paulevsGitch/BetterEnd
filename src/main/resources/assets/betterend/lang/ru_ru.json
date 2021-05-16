@@ -840,6 +840,9 @@
 	"item.betterend.cave_pumpkin_pie": "Пирог из пещерной тыквы",
 	
 	"item.betterend.music_disc_strange_and_alien": "§bПластинка§r",
+	"item.betterend.music_disc_grasping_at_stars": "§bПластинка§r",
+	"item.betterend.music_disc_endseeker": "§bПластинка§r",
+	"item.betterend.music_disc_eo_dracona": "§bПластинка§r",
 	
 	"block.betterend.hydralux_petal_block_amber": "Янтарный блок лепестков",
 	"block.betterend.hydralux_petal_block_beige": "Бежевый блок лепестков",
@@ -874,5 +877,15 @@
 	"block.betterend.neon_cactus_block": "Блок неонового кактуса",
 	"block.betterend.neon_cactus_slab": "Плита из неонового кактуса",
 	"block.betterend.neon_cactus_stairs": "Ступени из неонового кактуса",
-	"biome.betterend.jade_cave": "Нефритовая пещера"
+	"biome.betterend.jade_cave": "Нефритовая пещера",
+	"item.betterend.blossom_berry_jelly": "Желе из цветущей ягоды",
+	"item.betterend.aeternium_forged_plate": "Этериевая кованная пластина",
+	"item.betterend.terminite_forged_plate": "Терминитовая кованная пластина",
+	"item.betterend.thallasium_forged_plate": "Талласиевая кованная пластина",
+
+  	"attribute.name.generic.blindness_resistance": "Сопротивление ослеплению",
+
+	"tooltip.armor.crystalite_set": "Бонус сета: Регенерация I",
+	"tooltip.armor.crystalite_chest": "Эффект: Ускорение I",
+	"tooltip.armor.crystalite_boots": "Эффект: Стремительность I"
 }

@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -37,9 +39,24 @@ public class EndComposterBlock extends ComposterBlock implements BlockModelProvi
 		String blockName = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_COMPOSTER, blockName);
 	}
-	
+
+	@Override
+	public BlockModel getModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
+	}
+
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_COMPOSTER;
+	}
+
+	@Override
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		return null;
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		return null;
 	}
 }

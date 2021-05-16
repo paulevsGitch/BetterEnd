@@ -15,25 +15,15 @@ public class BarkBlock extends EndPillarBlock {
 	}
 	
 	@Override
-	public String getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BASE, getName(blockId), blockId.getPath());
-	}
-
-	@Override
 	public String getStatesPattern(Reader data) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(data, getName(blockId), blockId.getPath());
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
-		return null;
-	}
-
-	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		return null;
+	protected String createBlockPattern() {
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+		return Patterns.createJson(Patterns.BLOCK_BASE, getName(blockId), blockId.getPath());
 	}
 
 	private String getName(ResourceLocation blockId) {

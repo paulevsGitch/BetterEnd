@@ -4,6 +4,8 @@ import java.io.Reader;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -21,9 +23,7 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	private final Block parent;
 	
 	public EndChestBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).noOcclusion(), () -> {
-			return EndBlockEntities.CHEST;
-		});
+		super(FabricBlockSettings.copyOf(source).noOcclusion(), () -> EndBlockEntities.CHEST);
 		this.parent = source;
 	}
 	
@@ -57,9 +57,27 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 		}
 		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
 	}
-	
+
+	@Override
+	public BlockModel getModel(ResourceLocation blockId) {
+		String pattern = Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
+		return BlockModel.fromString(pattern);
+	}
+
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SIMPLE;
+	}
+
+	@Override
+	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
+		String pattern = Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
+		return BlockModel.fromString(pattern);
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		return BlockModelProvider.createBlockSimple(resourceLocation);
 	}
 }

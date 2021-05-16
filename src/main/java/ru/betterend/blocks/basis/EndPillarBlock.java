@@ -36,8 +36,8 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 	}
 
 	@Override
-	public BlockModel getModel() {
-		return null;
+	public BlockModel getModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
 	}
 	
 	@Override
@@ -57,8 +57,7 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		BlockModel model = BlockModel.fromString(createBlockPattern());
 		ResourceLocation modelLoc = new ResourceLocation(blockId.getNamespace(), "blocks/" + blockId.getPath());
 		model.name = modelLoc.toString();
@@ -67,23 +66,10 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 
 	@Override
 	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		Direction.Axis axis = blockState.getValue(AXIS);
-		Transformation transform = Transformation.identity();
-		switch (axis) {
-			case X: {
-				transform = new Transformation(null, Vector3f.ZP.rotationDegrees(90), null, null);
-				break;
-			}
-			case Z: {
-				transform = new Transformation(null, Vector3f.XP.rotationDegrees(90), null, null);
-				break;
-			}
-		}
-		Variant variant = new Variant(resourceLocation, transform, false, 1);
-		return new MultiVariant(Collections.singletonList(variant));
+		return BlockModelProvider.createRotatedModel(resourceLocation, blockState.getValue(AXIS));
 	}
 
-	private String createBlockPattern() {
+	protected String createBlockPattern() {
 		String texture = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createBlockPillar(texture);
 	}

@@ -106,8 +106,8 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public BlockModel getModel() {
-		return getBlockModel(defaultBlockState());
+	public BlockModel getModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
@@ -116,8 +116,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String texture = blockId.getPath();
 		String pattern;
 		if (blockState.getValue(OPEN)) {

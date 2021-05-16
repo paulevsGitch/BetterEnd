@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -38,16 +41,33 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	public String getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());
+			return Patterns.createItemGenerated(block);
 		}
 		return Patterns.createJson(Patterns.BLOCK_CHAIN, blockId.getPath(), blockId.getPath());
 	}
-	
+
+	@Override
+	public BlockModel getModel(ResourceLocation blockId) {
+		return BlockModelProvider.createItemModel(blockId.getPath());
+	}
+
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_CHAIN;
 	}
-	
+
+	@Override
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		String pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, blockId.getPath(), blockId.getPath());
+		return BlockModelProvider.createBlockModel(blockId, pattern);
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		Direction.Axis axis = blockState.getValue(AXIS);
+		return BlockModelProvider.createRotatedModel(resourceLocation, axis);
+	}
+
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;

@@ -62,7 +62,7 @@ public abstract class ModelLoaderMixin {
 				if (!resourceManager.hasResource(itemModelLoc)) {
 					Item item = Registry.ITEM.get(clearLoc);
 					if (item instanceof ModelProvider) {
-						BlockModel model = ((ModelProvider) item).getModel();
+						BlockModel model = ((ModelProvider) item).getModel(clearLoc);
 						if (model != null) {
 							model.name = itemLoc.toString();
 						} else {
@@ -81,7 +81,7 @@ public abstract class ModelLoaderMixin {
 						block.getStateDefinition().getPossibleStates().forEach(blockState -> {
 							ModelResourceLocation stateLoc = BlockModelShaper.stateToModelLocation(clearLoc, blockState);
 							MultiVariant modelVariant = ((BlockModelProvider) block).getModelVariant(stateLoc, blockState);
-							BlockModel blockModel = ((BlockModelProvider) block).getBlockModel(blockState);
+							BlockModel blockModel = ((BlockModelProvider) block).getBlockModel(clearLoc, blockState);
 							if (modelVariant != null && blockModel != null) {
 								cacheAndQueueDependencies(stateLoc, modelVariant);
 								unbakedCache.put(stateLoc, blockModel);

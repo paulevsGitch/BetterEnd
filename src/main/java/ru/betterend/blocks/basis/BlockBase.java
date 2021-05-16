@@ -40,8 +40,8 @@ public class BlockBase extends Block implements BlockModelProvider {
 	}
 
 	@Override
-	public BlockModel getModel() {
-		return getBlockModel(defaultBlockState());
+	public BlockModel getModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
@@ -50,15 +50,13 @@ public class BlockBase extends Block implements BlockModelProvider {
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String pattern = Patterns.createBlockSimple(blockId.getPath());
 		return BlockModelProvider.createBlockModel(blockId, pattern);
 	}
 
 	@Override
 	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		Variant variant = new Variant(resourceLocation, Transformation.identity(), false, 1);
-		return new MultiVariant(Collections.singletonList(variant));
+		return BlockModelProvider.createBlockSimple(resourceLocation);
 	}
 }

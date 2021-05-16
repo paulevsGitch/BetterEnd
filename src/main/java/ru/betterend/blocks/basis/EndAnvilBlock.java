@@ -88,14 +88,13 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public BlockModel getModel() {
-		return getBlockModel(defaultBlockState());
+	public BlockModel getModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
-	public BlockModel getBlockModel(BlockState blockState) {
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		int destruction = blockState.getValue(DESTRUCTION);
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%anvil%", blockId.getPath());
 		map.put("%top%", "_top_" + destruction);

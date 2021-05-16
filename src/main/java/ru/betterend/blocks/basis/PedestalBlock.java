@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.client.renderer.block.model.BlockModel;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Lists;
@@ -42,6 +43,7 @@ import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
+import ru.betterend.patterns.BlockModelProvider;
 import ru.betterend.patterns.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
@@ -367,7 +369,53 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 		}
 		return Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
 	}
-	
+
+	@Override
+	public BlockModel getModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
+	}
+
+	@Override
+	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
+		String name = blockId.getPath();
+		Map<String, String> textures = new HashMap<String, String>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("%mod%", blockId.getNamespace() );
+				put("%top%", name + "_top");
+				put("%base%", name + "_base");
+				put("%pillar%", name + "_pillar");
+				put("%bottom%", name + "_bottom");
+			}
+		};
+		PedestalState state = blockState.getValue(STATE);
+		String pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
+		switch (state) {
+			case COLUMN_TOP: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
+				break;
+			}
+			case COLUMN: {
+				pattern = Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
+				break;
+			}
+			case PEDESTAL_TOP: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
+				break;
+			}
+			case BOTTOM: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
+				break;
+			}
+			case PILLAR: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
+				break;
+			}
+		}
+		return BlockModelProvider.createBlockModel(resourceLocation, pattern);
+	}
+
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_PEDESTAL;

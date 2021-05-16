@@ -51,7 +51,7 @@ public abstract class ModelLoaderMixin {
 
 	@Inject(method = "loadModel", at = @At("HEAD"), cancellable = true)
 	private void be_loadModels(ResourceLocation resourceLocation, CallbackInfo info) {
-		if (BetterEnd.isModId(resourceLocation) && resourceLocation instanceof ModelResourceLocation) {
+		if (resourceLocation instanceof ModelResourceLocation) {
 			String modId = resourceLocation.getNamespace();
 			String path = resourceLocation.getPath();
 			ResourceLocation clearLoc = new ResourceLocation(modId, path);

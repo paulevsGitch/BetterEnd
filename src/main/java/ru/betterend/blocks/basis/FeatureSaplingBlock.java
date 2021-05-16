@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -125,5 +127,16 @@ public abstract class FeatureSaplingBlock extends SaplingBlock implements IRende
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SAPLING;
+	}
+
+	@Override
+	public BlockModel getModel(ResourceLocation resourceLocation) {
+		return BlockModelProvider.createBlockItem(resourceLocation);
+	}
+
+	@Override
+	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		String pattern = Patterns.createJson(Patterns.BLOCK_CROSS, resourceLocation.getPath());
+		return BlockModel.fromString(pattern);
 	}
 }

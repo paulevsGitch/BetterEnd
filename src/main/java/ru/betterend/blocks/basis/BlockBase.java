@@ -48,15 +48,4 @@ public class BlockBase extends Block implements BlockModelProvider {
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_SIMPLE;
 	}
-
-	@Override
-	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
-		String pattern = Patterns.createBlockSimple(blockId.getPath());
-		return BlockModelProvider.createBlockModel(blockId, pattern);
-	}
-
-	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		return BlockModelProvider.createBlockSimple(resourceLocation);
-	}
 }

@@ -15,8 +15,20 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface BlockModelProvider extends ModelProvider {
 	String getStatesPattern(Reader data);
 	ResourceLocation statePatternId();
-	BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState);
-	MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState);
+
+	default BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		String pattern = Patterns.createBlockSimple(resourceLocation.getPath());
+		return createBlockModel(resourceLocation, pattern);
+	}
+
+	default MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		return createBlockSimple(resourceLocation);
+	}
+
+	static BlockModel createBlockItem(ResourceLocation resourceLocation) {
+		String pattern = Patterns.createJson(Patterns.ITEM_BLOCK, resourceLocation.getPath());
+		return BlockModel.fromString(pattern);
+	}
 
 	static BlockModel createBlockModel(ResourceLocation blockId, String pattern) {
 		BlockModel model = BlockModel.fromString(pattern);

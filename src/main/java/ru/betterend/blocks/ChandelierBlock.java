@@ -19,8 +19,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
 public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, BlockModelProvider {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);

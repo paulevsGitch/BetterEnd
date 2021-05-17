@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.item.material.EndToolMaterial;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 
 public class AeterniumAnvil extends EndAnvilBlock {

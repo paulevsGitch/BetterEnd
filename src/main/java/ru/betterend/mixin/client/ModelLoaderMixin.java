@@ -8,12 +8,10 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,13 +21,12 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.BetterEnd;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.ModelProvider;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.world.generator.GeneratorOptions;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,7 +66,7 @@ public abstract class ModelLoaderMixin {
 							model = loadBlockModel(itemLoc);
 						}
 						cacheAndQueueDependencies(modelLoc, model);
-						unbakedCache.put(modelLoc, model);
+						unbakedCache.put(itemLoc, model);
 						info.cancel();
 					}
 				}
@@ -79,14 +76,13 @@ public abstract class ModelLoaderMixin {
 					Block block = Registry.BLOCK.get(clearLoc);
 					if (block instanceof BlockModelProvider) {
 						block.getStateDefinition().getPossibleStates().forEach(blockState -> {
+							System.out.println(blockState);
 							ModelResourceLocation stateLoc = BlockModelShaper.stateToModelLocation(clearLoc, blockState);
 							MultiVariant modelVariant = ((BlockModelProvider) block).getModelVariant(stateLoc, blockState);
-							BlockModel blockModel = ((BlockModelProvider) block).getBlockModel(clearLoc, blockState);
-							if (modelVariant != null && blockModel != null) {
+							if (modelVariant != null) {
 								cacheAndQueueDependencies(stateLoc, modelVariant);
-								unbakedCache.put(stateLoc, blockModel);
 							} else {
-								BetterEnd.LOGGER.warning("Error loading models for {}", clearLoc);
+								BetterEnd.LOGGER.warning("Error loading variant: {}", stateLoc);
 							}
 						});
 						info.cancel();
@@ -97,31 +93,38 @@ public abstract class ModelLoaderMixin {
 	}
 
 	@Inject(method = "loadBlockModel", at = @At("HEAD"), cancellable = true)
-	private void be_loadModelPattern(ResourceLocation id, CallbackInfoReturnable<BlockModel> info) {
-		if (BetterEnd.isModId(id)) {
-			ResourceLocation modelId = new ResourceLocation(id.getNamespace(), "models/" + id.getPath() + ".json");
-			BlockModel model;
-			try (Resource resource = resourceManager.getResource(modelId)) {
-				Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-				model = BlockModel.fromStream(reader);
-				model.name = id.toString();
-				info.setReturnValue(model);
-			} catch (Exception ex) {
-				String[] data = id.getPath().split("/");
+	private void be_loadModelPattern(ResourceLocation modelId, CallbackInfoReturnable<BlockModel> info) {
+		ResourceLocation modelLocation = new ResourceLocation(modelId.getNamespace(), "models/" + modelId.getPath() + ".json");
+		if (!resourceManager.hasResource(modelLocation)) {
+			BlockState blockState = ModelsHelper.getBlockState(modelId);
+			if (blockState != null) {
+				Block block = blockState.getBlock();
+				if (block instanceof BlockModelProvider) {
+					ResourceLocation blockId = Registry.BLOCK.getKey(block);
+					BlockModel model = ((BlockModelProvider) block).getBlockModel(blockId, blockState);
+					if (model != null) {
+						model.name = modelId.toString();
+						info.setReturnValue(model);
+					} else {
+						BetterEnd.LOGGER.warning("Error loading model: {}", modelId);
+					}
+				}
+			} else {
+				String[] data = modelId.getPath().split("/");
 				if (data.length > 1) {
-					ResourceLocation itemId = new ResourceLocation(id.getNamespace(), data[1]);
+					ResourceLocation itemId = new ResourceLocation(modelId.getNamespace(), data[1]);
 					Optional<Block> block = Registry.BLOCK.getOptional(itemId);
 					if (block.isPresent()) {
 						if (block.get() instanceof ModelProvider) {
 							ModelProvider modelProvider = (ModelProvider) block.get();
-							model = be_getModel(data, id, modelProvider);
+							BlockModel model = be_getModel(data, modelId, modelProvider);
 							info.setReturnValue(model);
 						}
 					} else {
 						Optional<Item> item = Registry.ITEM.getOptional(itemId);
 						if (item.isPresent() && item.get() instanceof ModelProvider) {
 							ModelProvider modelProvider = (ModelProvider) item.get();
-							model = be_getModel(data, id, modelProvider);
+							BlockModel model = be_getModel(data, modelId, modelProvider);
 							info.setReturnValue(model);
 						}
 					}

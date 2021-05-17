@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Lists;
@@ -43,8 +44,8 @@ import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -344,18 +345,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	
 	@Override
 	public String getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
-		String name = blockId.getPath();
-		Map<String, String> textures = new HashMap<String, String>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("%mod%", blockId.getNamespace() );
-				put("%top%", name + "_top");
-				put("%base%", name + "_base");
-				put("%pillar%", name + "_pillar");
-				put("%bottom%", name + "_bottom");
-			}
-		};
+		Map<String, String> textures = createTexturesMap();
 		if (block.contains("column_top")) {
 			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
 		} else if (block.contains("column")) {
@@ -377,18 +367,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 
 	@Override
 	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
-		String name = blockId.getPath();
-		Map<String, String> textures = new HashMap<String, String>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("%mod%", blockId.getNamespace() );
-				put("%top%", name + "_top");
-				put("%base%", name + "_base");
-				put("%pillar%", name + "_pillar");
-				put("%bottom%", name + "_bottom");
-			}
-		};
+		Map<String, String> textures = createTexturesMap();
 		PedestalState state = blockState.getValue(STATE);
 		String pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
 		switch (state) {
@@ -413,12 +392,35 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 				break;
 			}
 		}
-		return BlockModelProvider.createBlockModel(resourceLocation, pattern);
+		return BlockModel.fromString(pattern);
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		PedestalState state = blockState.getValue(STATE);
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
+				"block/" + resourceLocation.getPath() + "_" + state);
+		return super.getModelVariant(modelId, blockState);
 	}
 
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_PEDESTAL;
+	}
+
+	protected Map<String, String> createTexturesMap() {
+		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
+		String name = blockId.getPath();
+		return new HashMap<String, String>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("%mod%", blockId.getNamespace() );
+				put("%top%", name + "_top");
+				put("%base%", name + "_base");
+				put("%pillar%", name + "_pillar");
+				put("%bottom%", name + "_bottom");
+			}
+		};
 	}
 	
 	static {

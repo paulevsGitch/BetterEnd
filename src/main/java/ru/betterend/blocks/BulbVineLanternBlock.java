@@ -21,8 +21,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.basis.EndLanternBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
 public class BulbVineLanternBlock extends EndLanternBlock implements IRenderTypeable, BlockModelProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);

@@ -16,11 +16,12 @@ import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.ModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.Patterns;
 
 public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRenderTypeable {
 	public EndChainBlock(MaterialColor color) {
@@ -59,14 +60,20 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 
 	@Override
 	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
-		String pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, blockId.getPath(), blockId.getPath());
-		return BlockModelProvider.createBlockModel(blockId, pattern);
+		String name = blockId.getPath();
+		String pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, name, name);
+		if (pattern != null) {
+			return BlockModel.fromString(pattern);
+		}
+		return null;
 	}
 
 	@Override
 	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
 		Direction.Axis axis = blockState.getValue(AXIS);
-		return BlockModelProvider.createRotatedModel(resourceLocation, axis);
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
+				"block/" + resourceLocation.getPath());
+		return ModelsHelper.createRotatedModel(modelId, axis);
 	}
 
 	@Override

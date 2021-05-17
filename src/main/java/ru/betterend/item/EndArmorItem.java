@@ -8,8 +8,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import ru.betterend.patterns.ModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.Patterns;
 
 import java.util.UUID;
 

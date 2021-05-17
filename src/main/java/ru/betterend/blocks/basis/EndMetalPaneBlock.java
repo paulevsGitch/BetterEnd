@@ -17,8 +17,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
 public class EndMetalPaneBlock extends IronBarsBlock implements BlockModelProvider, IRenderTypeable {
 	public EndMetalPaneBlock(Block source) {

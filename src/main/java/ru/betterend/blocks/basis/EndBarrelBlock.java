@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -28,8 +29,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
 public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
@@ -125,13 +127,17 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 			pattern = Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
 		}
 		if (pattern != null) {
-			return BlockModelProvider.createBlockModel(blockId, pattern);
+			return BlockModel.fromString(pattern);
 		}
 		return null;
 	}
 
 	@Override
 	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		return BlockModelProvider.createFacingModel(resourceLocation, blockState.getValue(FACING));
+		String open = blockState.getValue(OPEN) ? "_open" : "";
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
+				"block/" + resourceLocation.getPath() + open);
+		ModelsHelper.addBlockState(blockState, modelId);
+		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING));
 	}
 }

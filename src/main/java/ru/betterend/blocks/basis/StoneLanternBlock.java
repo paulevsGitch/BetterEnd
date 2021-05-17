@@ -17,7 +17,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.interfaces.IColorProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.util.MHelper;
 
 public class StoneLanternBlock extends EndLanternBlock implements IColorProvider {

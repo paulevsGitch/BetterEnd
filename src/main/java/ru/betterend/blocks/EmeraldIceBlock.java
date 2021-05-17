@@ -27,8 +27,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
 public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderTypeable, BlockModelProvider {
 	public EmeraldIceBlock() {

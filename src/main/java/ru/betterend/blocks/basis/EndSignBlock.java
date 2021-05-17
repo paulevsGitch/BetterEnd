@@ -40,8 +40,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.entities.ESignBlockEntity;
 import ru.betterend.interfaces.ISpetialItem;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.util.BlocksHelper;
 
 public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpetialItem {

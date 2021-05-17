@@ -15,8 +15,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CraftingTableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 
 public class EndCraftingTableBlock extends CraftingTableBlock implements BlockModelProvider {
 	public EndCraftingTableBlock(Block source) {
@@ -78,10 +79,5 @@ public class EndCraftingTableBlock extends CraftingTableBlock implements BlockMo
 			}
 		});
 		return BlockModel.fromString(pattern);
-	}
-
-	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		return BlockModelProvider.createBlockSimple(resourceLocation);
 	}
 }

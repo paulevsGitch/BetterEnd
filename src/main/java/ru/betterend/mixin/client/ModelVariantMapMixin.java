@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import net.minecraft.client.renderer.block.model.BlockModelDefinition;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
-import ru.betterend.patterns.BlockModelProvider;
+import ru.betterend.client.models.BlockModelProvider;
 
 @Mixin(BlockModelDefinition.class)
 public abstract class ModelVariantMapMixin {

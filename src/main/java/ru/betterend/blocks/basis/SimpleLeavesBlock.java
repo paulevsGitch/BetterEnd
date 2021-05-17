@@ -10,7 +10,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 
 public class SimpleLeavesBlock extends BlockBaseNotFull implements IRenderTypeable {
 	public SimpleLeavesBlock(MaterialColor color) {

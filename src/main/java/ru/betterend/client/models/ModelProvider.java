@@ -1,4 +1,4 @@
-package ru.betterend.patterns;
+package ru.betterend.client.models;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;

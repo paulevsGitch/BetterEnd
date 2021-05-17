@@ -17,7 +17,7 @@ import net.minecraft.server.packs.resources.FallbackResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.level.block.Block;
 import ru.betterend.BetterEnd;
-import ru.betterend.patterns.BlockModelProvider;
+import ru.betterend.client.models.BlockModelProvider;
 
 @Mixin(FallbackResourceManager.class)
 public abstract class NamespaceResourceManagerMixin {

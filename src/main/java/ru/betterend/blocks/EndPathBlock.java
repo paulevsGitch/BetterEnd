@@ -22,7 +22,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 
 public class EndPathBlock extends BlockBaseNotFull {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);

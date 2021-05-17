@@ -1,10 +1,9 @@
 package ru.betterend.item;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.RecordItem;
-import ru.betterend.patterns.ModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.Patterns;
 
 public class ModelProviderDiscItem extends RecordItem implements ModelProvider {
 	public ModelProviderDiscItem(int comparatorOutput, SoundEvent sound, Properties settings) {

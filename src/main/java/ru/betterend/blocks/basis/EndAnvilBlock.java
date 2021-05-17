@@ -7,12 +7,9 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import com.mojang.math.Transformation;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
-import net.minecraft.client.renderer.block.model.Variant;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -25,8 +22,9 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.blocks.BlockProperties;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 
 public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	private static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION;
@@ -94,16 +92,25 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 
 	@Override
 	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
-		int destruction = blockState.getValue(DESTRUCTION);
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%anvil%", blockId.getPath());
-		map.put("%top%", "_top_" + destruction);
-		String pattern = Patterns.createJson(Patterns.BLOCK_ANVIL, map);
-		return BlockModelProvider.createBlockModel(blockId, pattern);
+		IntegerProperty destructionProperty = getDestructionProperty();
+		int destruction = blockState.getValue(destructionProperty);
+		String name = blockId.getPath();
+		Map<String, String> textures = Maps.newHashMap();
+		textures.put("%anvil%", name);
+		textures.put("%top%", name + "_top_" + destruction);
+		String pattern = Patterns.createJson(Patterns.BLOCK_ANVIL, textures);
+		return BlockModel.fromString(pattern);
 	}
 
 	@Override
 	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		return BlockModelProvider.createFacingModel(resourceLocation, blockState.getValue(FACING));
+		IntegerProperty destructionProperty = getDestructionProperty();
+		int destruction = blockState.getValue(destructionProperty);
+		String modId = resourceLocation.getNamespace();
+		String modelId = "block/" + resourceLocation.getPath() + "_top_" + destruction;
+		ResourceLocation modelLocation = new ResourceLocation(modId, modelId);
+		System.out.println(modelLocation);
+		ModelsHelper.addBlockState(blockState, modelLocation);
+		return ModelsHelper.createFacingModel(modelLocation, blockState.getValue(FACING).getOpposite());
 	}
 }

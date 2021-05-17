@@ -4,12 +4,9 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
-import com.mojang.math.Transformation;
-import com.mojang.math.Vector3f;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
-import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -18,8 +15,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 
 public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProvider {
 	public EndPillarBlock(Properties settings) {
@@ -48,7 +46,8 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 	
 	@Override
 	public String getModelString(String block) {
-		return createBlockPattern();
+		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+		return createBlockPattern(blockId);
 	}
 	
 	@Override
@@ -58,19 +57,18 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 
 	@Override
 	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
-		BlockModel model = BlockModel.fromString(createBlockPattern());
-		ResourceLocation modelLoc = new ResourceLocation(blockId.getNamespace(), "blocks/" + blockId.getPath());
-		model.name = modelLoc.toString();
-		return model;
+		return BlockModel.fromString(createBlockPattern(blockId));
 	}
 
 	@Override
 	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
-		return BlockModelProvider.createRotatedModel(resourceLocation, blockState.getValue(AXIS));
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
+				"block/" + resourceLocation.getPath());
+		ModelsHelper.addBlockState(blockState, modelId);
+		return ModelsHelper.createRotatedModel(modelId, blockState.getValue(AXIS));
 	}
 
-	protected String createBlockPattern() {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createBlockPillar(texture);
+	protected String createBlockPattern(ResourceLocation blockId) {
+		return Patterns.createBlockPillar(blockId.getPath());
 	}
 }

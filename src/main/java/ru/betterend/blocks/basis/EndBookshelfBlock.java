@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 
 public class EndBookshelfBlock extends BlockBase {
 	public EndBookshelfBlock(Block source) {

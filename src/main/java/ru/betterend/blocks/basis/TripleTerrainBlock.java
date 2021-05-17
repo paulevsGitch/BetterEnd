@@ -26,7 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.EndTerrainBlock;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 
 public class TripleTerrainBlock extends EndTerrainBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;

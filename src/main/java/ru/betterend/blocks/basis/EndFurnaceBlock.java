@@ -8,7 +8,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
@@ -24,16 +27,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.blocks.entities.EFurnaceBlockEntity;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
 public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider, IRenderTypeable {
 	public EndFurnaceBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).luminance((state) -> {
-			return state.getValue(LIT) ? 13 : 0;
-		}));
+		super(FabricBlockSettings.copyOf(source).luminance(state -> state.getValue(LIT) ? 13 : 0));
 	}
 
 	@Override
@@ -65,7 +67,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 		if (block.contains("_on")) {
 			map.put("%front%", blockId.getPath() + "_front_on");
 			map.put("%glow%", blockId.getPath() + "_glow");
-			return Patterns.createJson(Patterns.BLOCK_FURNACE_GLOW, map);
+			return Patterns.createJson(Patterns.BLOCK_FURNACE_LIT, map);
 		}
 		else {
 			map.put("%front%", blockId.getPath() + "_front");
@@ -76,6 +78,38 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 	@Override
 	public ResourceLocation statePatternId() {
 		return Patterns.STATE_FURNACE;
+	}
+
+	@Override
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		String blockName = blockId.getPath();
+		Map<String, String> textures = Maps.newHashMap();
+		textures.put("%top%", blockName + "_top");
+		textures.put("%side%", blockName + "_side");
+		String pattern;
+		if (blockState.getValue(LIT)) {
+			textures.put("%front%", blockName + "_front_on");
+			textures.put("%glow%", blockName + "_glow");
+			pattern = Patterns.createJson(Patterns.BLOCK_FURNACE_LIT, textures);
+		} else {
+			textures.put("%front%", blockName + "_front");
+			pattern = Patterns.createJson(Patterns.BLOCK_FURNACE, textures);
+		}
+		return BlockModel.fromString(pattern);
+	}
+
+	@Override
+	public BlockModel getModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+		String lit = blockState.getValue(LIT) ? "_lit" : "";
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
+				"block/" + resourceLocation.getPath() + lit);
+		ModelsHelper.addBlockState(blockState, modelId);
+		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING));
 	}
 
 	@Override

@@ -31,7 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 
 public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer, IRenderTypeable {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

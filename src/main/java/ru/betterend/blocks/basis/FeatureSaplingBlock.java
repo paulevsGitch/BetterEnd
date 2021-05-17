@@ -7,7 +7,6 @@ import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -28,10 +27,11 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockModelProvider;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndTags;
 
 public abstract class FeatureSaplingBlock extends SaplingBlock implements IRenderTypeable, BlockModelProvider {
@@ -131,7 +131,7 @@ public abstract class FeatureSaplingBlock extends SaplingBlock implements IRende
 
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
-		return BlockModelProvider.createBlockItem(resourceLocation);
+		return ModelsHelper.createBlockItem(resourceLocation);
 	}
 
 	@Override

@@ -35,7 +35,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import ru.betterend.blocks.basis.BlockBase;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
 
 public class EndTerrainBlock extends BlockBase {
 	private Block pathBlock;

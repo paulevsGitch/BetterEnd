@@ -26,7 +26,7 @@ public class BetterEndClient implements ClientModInitializer {
 		EndEntitiesRenders.register();
 		EndModelProviders.register();
 		MultiModelItem.register();
-		CrystaliteArmor.registerTooltips();
+		//CrystaliteArmor.registerTooltips();
 		ClientOptions.init();
 		
 		if (BetterEnd.isDevEnvironment()) {

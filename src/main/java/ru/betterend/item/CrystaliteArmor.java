@@ -39,7 +39,7 @@ public class CrystaliteArmor extends EndArmorItem {
 		owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_HEALTH_REGEN));
 	}
 
-	@Environment(EnvType.CLIENT)
+	/*@Environment(EnvType.CLIENT)
 	public static void registerTooltips() {
 		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
 			if (stack.getItem() instanceof CrystaliteArmor) {
@@ -63,7 +63,7 @@ public class CrystaliteArmor extends EndArmorItem {
 				}
 			}
 		});
-	}
+	}*/
 
 	static {
 		Style descStyle = Style.EMPTY.applyFormats(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC);

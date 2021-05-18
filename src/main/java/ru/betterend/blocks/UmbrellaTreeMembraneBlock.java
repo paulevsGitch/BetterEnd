@@ -1,6 +1,5 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -67,22 +66,11 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 			return MHelper.RANDOM.nextInt(4) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.UMBRELLA_TREE_SAPLING)) : Collections.emptyList();
 		}
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
 	}
 
 	@Override

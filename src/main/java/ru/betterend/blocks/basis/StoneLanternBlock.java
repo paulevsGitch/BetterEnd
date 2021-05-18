@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -9,7 +8,6 @@ import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -62,12 +60,7 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(IS_FLOOR) ? SHAPE_FLOOR : SHAPE_CEIL;
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_STONE_LANTERN;
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
@@ -76,10 +69,5 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 		}
 		return Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_FLOOR, texture, texture);
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
-	}
+
 }

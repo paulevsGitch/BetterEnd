@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -45,12 +44,6 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
-	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, blockId, blockId);
 	}
 
 	@Override
@@ -141,11 +134,6 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
 		Variant variant = new Variant(modelId, rotation.getRotation(), false, 1);
 		return new MultiVariant(Lists.newArrayList(variant));
-	}
-
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_DOOR;
 	}
 
 	protected DoorType getDoorType(BlockState blockState) {

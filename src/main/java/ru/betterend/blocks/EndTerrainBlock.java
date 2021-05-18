@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -100,9 +99,5 @@ public class EndTerrainBlock extends BlockBase {
 		map.put("%bottom%", "minecraft:block/end_stone");
 		return Patterns.createJson(Patterns.BLOCK_TOP_SIDE_BOTTOM, map);
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_ROTATED_TOP;
-	}
+
 }

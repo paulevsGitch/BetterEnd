@@ -15,9 +15,6 @@ import ru.betterend.BetterEnd;
 import static net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION;
 
 public interface BlockModelProvider extends ModelProvider {
-	String getStatesPattern(Reader data);
-	ResourceLocation statePatternId();
-
 	@Nullable
 	default BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Optional<String> pattern = Patterns.createBlockSimple(resourceLocation.getPath());

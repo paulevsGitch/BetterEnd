@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -137,13 +136,7 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, blockId, blockId);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -152,9 +145,5 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 		}
 		return Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_LADDER;
-	}
+
 }

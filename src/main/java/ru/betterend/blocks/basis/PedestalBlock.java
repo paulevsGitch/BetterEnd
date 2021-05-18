@@ -1,7 +1,6 @@
 package ru.betterend.blocks.basis;
 
 import java.awt.Point;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -338,13 +337,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
 		return state.getValue(HAS_ITEM) ? 15 : 0;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, texture, texture);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		Map<String, String> textures = createTexturesMap();
@@ -404,11 +397,6 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 				"block/" + resourceLocation.getPath() + "_" + state);
 		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
 		return ModelsHelper.createBlockSimple(modelId);
-	}
-
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_PEDESTAL;
 	}
 
 	protected Map<String, String> createTexturesMap() {

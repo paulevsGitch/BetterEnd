@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -53,24 +51,13 @@ public class EndLeavesBlock extends LeavesBlock implements BlockModelProvider, I
 				.isViewBlocking((state, world, pos) -> false));
 		this.sapling = sapling;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, blockId, blockId);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		String blockId = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId, blockId);
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
-	}
-	
+
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;

@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -111,23 +109,12 @@ public abstract class FeatureSaplingBlock extends SaplingBlock implements IRende
 	}
 
 	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-
-	@Override
 	public Optional<String> getModelString(String block) {
 		if (block.contains("item")) {
 			block = block.split("/")[1];
 			return Patterns.createJson(Patterns.ITEM_BLOCK, block);
 		}
 		return Patterns.createJson(Patterns.BLOCK_CROSS, block);
-	}
-
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SAPLING;
 	}
 
 	@Override

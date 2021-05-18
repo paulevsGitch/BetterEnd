@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -144,14 +143,7 @@ public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpet
 
 		return null;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String path) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
@@ -160,12 +152,7 @@ public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpet
 		}
 		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
-	}
-	
+
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return (BlockState) state.setValue(ROTATION, rotation.rotate((Integer) state.getValue(ROTATION), 16));

@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -93,13 +92,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 			}
 		}
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
@@ -112,11 +105,6 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
-	}
-
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_BARREL;
 	}
 
 	@Override

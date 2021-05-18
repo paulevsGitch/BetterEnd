@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -28,14 +27,7 @@ public class EndMetalPlateBlock extends WeightedPressurePlateBlock implements Bl
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -45,9 +37,5 @@ public class EndMetalPlateBlock extends WeightedPressurePlateBlock implements Bl
 		}
 		return Patterns.createJson(Patterns.BLOCK_PLATE_UP, parentId.getPath(), blockId.getPath());
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_PLATE;
-	}
+
 }

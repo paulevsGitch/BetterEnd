@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -35,13 +34,7 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -54,11 +47,6 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
 		return ModelProvider.createItemModel(blockId.getPath());
-	}
-
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_CHAIN;
 	}
 
 	@Override

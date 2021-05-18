@@ -1,6 +1,5 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,13 +52,7 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -83,9 +76,5 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 	protected String getGlowTexture() {
 		return "bulb_vine_lantern_bulb";
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_BULB_LANTERN;
-	}
+
 }

@@ -1,6 +1,5 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.EnumMap;
 import java.util.Optional;
 
@@ -39,13 +38,7 @@ public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, B
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -62,12 +55,7 @@ public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, B
 			return Patterns.createJson(Patterns.BLOCK_CHANDELIER_FLOOR, blockId.getPath());
 		}
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_CHANDELIER;
-	}
-	
+
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Block.box(5, 0, 5, 11, 13, 11));
 		BOUNDING_SHAPES.put(Direction.DOWN, Block.box(5, 3, 5, 11, 16, 11));

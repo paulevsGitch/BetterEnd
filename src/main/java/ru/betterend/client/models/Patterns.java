@@ -18,39 +18,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import ru.betterend.BetterEnd;
 
 public class Patterns {
-	
-	//Blockstates
-	public final static ResourceLocation STATE_SIMPLE = BetterEnd.makeID("patterns/blockstate/block.json");
-	public final static ResourceLocation STATE_SLAB = BetterEnd.makeID("patterns/blockstate/slab.json");
-	public final static ResourceLocation STATE_STAIRS = BetterEnd.makeID("patterns/blockstate/stairs.json");
-	public final static ResourceLocation STATE_WALL = BetterEnd.makeID("patterns/blockstate/wall.json");
-	public final static ResourceLocation STATE_FENCE = BetterEnd.makeID("patterns/blockstate/fence.json");
-	public final static ResourceLocation STATE_BUTTON = BetterEnd.makeID("patterns/blockstate/button.json");
-	public final static ResourceLocation STATE_PILLAR = BetterEnd.makeID("patterns/blockstate/pillar.json");
-	public final static ResourceLocation STATE_PLATE = BetterEnd.makeID("patterns/blockstate/pressure_plate.json");
-	public final static ResourceLocation STATE_PLATE_ROTATED = BetterEnd.makeID("patterns/blockstate/pressure_plate_rotated.json");
-	public final static ResourceLocation STATE_DOOR = BetterEnd.makeID("patterns/blockstate/door.json");
-	public final static ResourceLocation STATE_SAPLING = BetterEnd.makeID("patterns/blockstate/sapling.json");
-	public final static ResourceLocation STATE_GATE = BetterEnd.makeID("patterns/blockstate/fence_gate.json");
-	public final static ResourceLocation STATE_TRAPDOOR = BetterEnd.makeID("patterns/blockstate/trapdoor.json");
-	public final static ResourceLocation STATE_LADDER = BetterEnd.makeID("patterns/blockstate/ladder.json");
-	public final static ResourceLocation STATE_BARREL = BetterEnd.makeID("patterns/blockstate/barrel.json");
-	public final static ResourceLocation STATE_PEDESTAL = BetterEnd.makeID("patterns/blockstate/pedestal.json");
-	public final static ResourceLocation STATE_STONE_LANTERN = BetterEnd.makeID("patterns/blockstate/stone_lantern.json");
-	public final static ResourceLocation STATE_DIRECT = BetterEnd.makeID("patterns/blockstate/direct.json");
-	public final static ResourceLocation STATE_BULB_LANTERN = BetterEnd.makeID("patterns/blockstate/bulb_lantern.json");
-	public final static ResourceLocation STATE_COMPOSTER = BetterEnd.makeID("patterns/blockstate/composter.json");
-	public final static ResourceLocation STATE_BARS = BetterEnd.makeID("patterns/blockstate/bars.json");
-	public final static ResourceLocation STATE_ANVIL = BetterEnd.makeID("patterns/blockstate/anvil.json");
-	public final static ResourceLocation STATE_ANVIL_LONG = BetterEnd.makeID("patterns/blockstate/anvil_long.json");
-	public final static ResourceLocation STATE_CHAIN = BetterEnd.makeID("patterns/blockstate/chain.json");
-	public final static ResourceLocation STATE_CHANDELIER = BetterEnd.makeID("patterns/blockstate/chandelier.json");
-	public final static ResourceLocation STATE_FURNACE = BetterEnd.makeID("patterns/blockstate/furnace.json");
-	public final static ResourceLocation STATE_ROTATED_TOP = BetterEnd.makeID("patterns/blockstate/rotated_top.json");
-	public final static ResourceLocation STATE_TRIPLE_ROTATED_TOP = BetterEnd.makeID("patterns/blockstate/triple_rotated_top.json");
-	public final static ResourceLocation STATE_STALACTITE = BetterEnd.makeID("patterns/blockstate/stalactite.json");
-	
-	//Models Block
+	//Block Models
 	public final static ResourceLocation BLOCK_EMPTY = BetterEnd.makeID("patterns/block/empty.json");
 	public final static ResourceLocation BLOCK_BASE = BetterEnd.makeID("patterns/block/block.json");
 	public final static ResourceLocation BLOCK_SIDED = BetterEnd.makeID("patterns/block/block_sided.json");
@@ -108,7 +76,7 @@ public class Patterns {
 	public final static ResourceLocation BLOCK_TOP_SIDE_BOTTOM = BetterEnd.makeID("patterns/block/top_side_bottom.json");
 	public final static ResourceLocation BLOCK_PATH = BetterEnd.makeID("patterns/block/path.json");
 	
-	//Models Item
+	//Item Models
 	public final static ResourceLocation ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");
 	public final static ResourceLocation ITEM_FENCE = BetterEnd.makeID("patterns/item/pattern_fence.json");
 	public final static ResourceLocation ITEM_BUTTON = BetterEnd.makeID("patterns/item/pattern_button.json");

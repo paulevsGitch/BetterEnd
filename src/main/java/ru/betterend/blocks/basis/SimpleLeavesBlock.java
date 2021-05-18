@@ -1,11 +1,9 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -36,22 +34,11 @@ public class SimpleLeavesBlock extends BlockBaseNotFull implements IRenderTypeab
 				.isSuffocating((state, world, pos) -> false)
 				.isViewBlocking((state, world, pos) -> false));
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, texture, texture);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(Patterns.BLOCK_BASE, texture, texture);
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
 	}
 
 	@Override

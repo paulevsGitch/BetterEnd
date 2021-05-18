@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,14 +39,7 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 		drop.add(new ItemStack(this.asItem()));
 		return drop;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String path) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -62,11 +54,6 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	public BlockModel getModel(ResourceLocation blockId) {
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
 		return pattern.map(BlockModel::fromString).orElse(null);
-	}
-
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
 	}
 
 	@Override

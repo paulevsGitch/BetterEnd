@@ -201,12 +201,7 @@ public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterlogg
 		}
 		return Patterns.createJson(Patterns.BLOCK_CROSS_SHADED, block);
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_STALACTITE;
-	}
-	
+
 	@Override
 	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;

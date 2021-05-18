@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -61,12 +60,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 		map.put("%bottom%", "minecraft:block/end_stone");
 		return Patterns.createJson(Patterns.BLOCK_TOP_SIDE_BOTTOM, map);
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_TRIPLE_ROTATED_TOP;
-	}
-	
+
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		TripleShape shape = state.getValue(SHAPE);

@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,22 +38,11 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 	public BlockModel getModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, texture, texture);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return createBlockPattern(blockId);
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_PILLAR;
 	}
 
 	@Override

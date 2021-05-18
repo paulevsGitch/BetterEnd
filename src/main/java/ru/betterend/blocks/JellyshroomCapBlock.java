@@ -1,6 +1,5 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,9 +8,7 @@ import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -66,23 +63,12 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, 
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Lists.newArrayList(new ItemStack(this));
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		return Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
-	}
-	
+
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {

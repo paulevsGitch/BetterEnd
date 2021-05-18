@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -58,13 +57,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 		stack.getOrCreateTag().putInt("level", level);
 		return Collections.singletonList(stack);
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -80,11 +73,6 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 		}
 		char last = block.charAt(block.length() - 1);
 		return blockId.getPath() + "_top_" + last;
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_ANVIL;
 	}
 
 	@Override

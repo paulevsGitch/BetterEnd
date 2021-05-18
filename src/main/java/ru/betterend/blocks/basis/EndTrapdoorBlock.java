@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,13 +32,7 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -52,9 +45,5 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 			}
 		});
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_TRAPDOOR;
-	}
+
 }

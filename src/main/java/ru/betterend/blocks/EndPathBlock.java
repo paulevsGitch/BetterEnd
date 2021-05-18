@@ -10,7 +10,6 @@ import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -63,9 +62,5 @@ public class EndPathBlock extends BlockBaseNotFull {
 		map.put("%side%", name.replace("_path", "") + "_side");
 		return Patterns.createJson(Patterns.BLOCK_PATH, map);
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_ROTATED_TOP;
-	}
+
 }

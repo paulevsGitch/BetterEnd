@@ -1,6 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -52,13 +51,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 			player.awardStat(Stats.INTERACT_WITH_FURNACE);
 		}
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
@@ -74,11 +67,6 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 			map.put("%front%", blockId.getPath() + "_front");
 			return Patterns.createJson(Patterns.BLOCK_FURNACE, map);
 		}
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_FURNACE;
 	}
 
 	@Override

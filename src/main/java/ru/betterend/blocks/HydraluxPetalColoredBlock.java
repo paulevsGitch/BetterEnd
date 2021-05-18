@@ -1,12 +1,10 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.resources.ResourceLocation;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.util.BlocksHelper;
@@ -29,21 +27,11 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 			return BlocksHelper.getBlockColor(this);
 		};
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String path = "betterend:block/block_petal_colored";
-		return Patterns.createJson(data, path, path);
-	}
-	
+
 	@Override
 	public Optional<String> getModelString(String block) {
 		String path = "betterend:block/block_petal_colored";
 		return Patterns.createJson(Patterns.BLOCK_PETAL_COLORED, path, path);
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_DIRECT;
-	}
+
 }

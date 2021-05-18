@@ -22,7 +22,8 @@
 		"BiomeColorsMixin",
 		"ModelLoaderMixin",
 	  	"LocalPlayerMixin",
-	  	"CapeLayerMixin"
+	  	"CapeLayerMixin",
+	  	"ItemStackMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

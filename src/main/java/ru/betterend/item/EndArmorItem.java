@@ -1,7 +1,10 @@
 package ru.betterend.item;
 
+import java.util.UUID;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -10,8 +13,6 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import ru.betterend.patterns.Patterned;
 import ru.betterend.patterns.Patterns;
-
-import java.util.UUID;
 
 public class EndArmorItem extends ArmorItem implements Patterned {
 

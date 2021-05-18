@@ -1,10 +1,14 @@
 package ru.betterend.item;
 
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -13,6 +17,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import ru.betterend.effects.EndStatusEffects;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.registry.EndItems;
@@ -38,32 +44,31 @@ public class CrystaliteArmor extends EndArmorItem {
 	public static void applySetEffect(LivingEntity owner) {
 		owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_HEALTH_REGEN));
 	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> lines, TooltipFlag tooltip) {
+		super.appendHoverText(stack, level, lines, tooltip);
+		
+		boolean hasSet = false;
+		Player owner = Minecraft.getInstance().player;
+		if (owner != null) {
+			hasSet = hasFullSet(owner);
+		}
+		
+		TranslatableComponent setDesc = new TranslatableComponent("tooltip.armor.crystalite_set");
+		setDesc.setStyle(Style.EMPTY.applyFormats(hasSet ? ChatFormatting.BLUE : ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		lines.add(TextComponent.EMPTY);
+		lines.add(setDesc);
 
-	/*@Environment(EnvType.CLIENT)
-	public static void registerTooltips() {
-		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
-			if (stack.getItem() instanceof CrystaliteArmor) {
-				boolean hasSet = false;
-				Player owner = Minecraft.getInstance().player;
-				if (owner != null) {
-					hasSet = hasFullSet(owner);
-				}
-
-				TranslatableComponent setDesc = new TranslatableComponent("tooltip.armor.crystalite_set");
-				setDesc.setStyle(Style.EMPTY.applyFormats(hasSet ? ChatFormatting.BLUE : ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-				lines.add(TextComponent.EMPTY);
-				lines.add(setDesc);
-
-				if (stack.getItem() == EndItems.CRYSTALITE_CHESTPLATE) {
-					lines.add(1, TextComponent.EMPTY);
-					lines.add(2, CHEST_DESC);
-				} else if (stack.getItem() == EndItems.CRYSTALITE_BOOTS) {
-					lines.add(1, TextComponent.EMPTY);
-					lines.add(2, BOOTS_DESC);
-				}
-			}
-		});
-	}*/
+		if (stack.getItem() == EndItems.CRYSTALITE_CHESTPLATE) {
+			lines.add(1, TextComponent.EMPTY);
+			lines.add(2, CHEST_DESC);
+		} else if (stack.getItem() == EndItems.CRYSTALITE_BOOTS) {
+			lines.add(1, TextComponent.EMPTY);
+			lines.add(2, BOOTS_DESC);
+		}
+	}
 
 	static {
 		Style descStyle = Style.EMPTY.applyFormats(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC);

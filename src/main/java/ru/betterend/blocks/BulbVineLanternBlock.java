@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.io.Reader;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
@@ -60,7 +61,7 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%glow%", getGlowTexture());

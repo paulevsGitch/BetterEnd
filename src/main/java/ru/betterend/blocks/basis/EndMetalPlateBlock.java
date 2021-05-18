@@ -3,6 +3,7 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.Registry;
@@ -36,7 +37,7 @@ public class EndMetalPlateBlock extends WeightedPressurePlateBlock implements Bl
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		if (block.contains("down")) {

@@ -3,10 +3,13 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +43,7 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createItemGenerated(block);
@@ -61,18 +64,16 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	@Override
 	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String name = blockId.getPath();
-		String pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, name, name);
-		if (pattern != null) {
-			return BlockModel.fromString(pattern);
-		}
-		return null;
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, name, name);
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		Direction.Axis axis = blockState.getValue(AXIS);
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath());
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
 		return ModelsHelper.createRotatedModel(modelId, axis);
 	}
 

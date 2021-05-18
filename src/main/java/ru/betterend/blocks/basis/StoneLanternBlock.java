@@ -1,6 +1,7 @@
 package ru.betterend.blocks.basis;
 
 import java.io.Reader;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
@@ -68,7 +69,7 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
 		if (block.contains("ceil")) {
 			return Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_CEIL, texture, texture);

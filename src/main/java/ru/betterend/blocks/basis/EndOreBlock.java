@@ -3,6 +3,7 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -78,7 +79,7 @@ public class EndOreBlock extends OreBlock implements BlockModelProvider {
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
 	}

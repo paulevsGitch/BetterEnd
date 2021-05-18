@@ -8,6 +8,8 @@ import ru.betterend.client.models.ModelProvider;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndItems;
 
+import java.util.Optional;
+
 public class EnchantedPetalItem extends ModelProviderItem {
 	public EnchantedPetalItem() {
 		super(EndItems.makeItemSettings().rarity(Rarity.RARE).stacksTo(16));
@@ -19,7 +21,7 @@ public class EnchantedPetalItem extends ModelProviderItem {
 	}
 	
 	@Override
-	public String getModelString(String name) {
+	public Optional<String> getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_GENERATED, "item/hydralux_petal");
 	}
 

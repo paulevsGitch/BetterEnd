@@ -3,10 +3,13 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +37,7 @@ public class EndComposterBlock extends ComposterBlock implements BlockModelProvi
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		String blockName = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_COMPOSTER, blockName);
@@ -56,7 +59,7 @@ public class EndComposterBlock extends ComposterBlock implements BlockModelProvi
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		return null;
 	}
 }

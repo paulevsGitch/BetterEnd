@@ -12,6 +12,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import ru.betterend.client.models.ModelProvider;
 import ru.betterend.client.models.Patterns;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class EndArmorItem extends ArmorItem implements ModelProvider {
@@ -49,7 +50,7 @@ public class EndArmorItem extends ArmorItem implements ModelProvider {
 	}
 
 	@Override
-	public String getModelString(String name) {
+	public Optional<String> getModelString(String name) {
 		return Patterns.createItemGenerated(name);
 	}
 }

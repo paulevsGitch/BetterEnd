@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.client.models.ModelProvider;
 import ru.betterend.client.models.Patterns;
 
+import java.util.Optional;
+
 public class EndPickaxeItem extends PickaxeItem implements DynamicAttributeTool, ModelProvider {
 	public EndPickaxeItem(Tier material, int attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
@@ -38,7 +40,7 @@ public class EndPickaxeItem extends PickaxeItem implements DynamicAttributeTool,
 	}
 	
 	@Override
-	public String getModelString(String name) {
+	public Optional<String> getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

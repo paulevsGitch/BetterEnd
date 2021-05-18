@@ -7,19 +7,21 @@ import net.minecraft.world.item.SpawnEggItem;
 import ru.betterend.client.models.ModelProvider;
 import ru.betterend.client.models.Patterns;
 
+import java.util.Optional;
+
 public class EndSpawnEggItem extends SpawnEggItem implements ModelProvider {
 	public EndSpawnEggItem(EntityType<?> type, int primaryColor, int secondaryColor, Properties settings) {
 		super(type, primaryColor, secondaryColor, settings);
 	}
 	
 	@Override
-	public String getModelString(String name) {
+	public Optional<String> getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_SPAWN_EGG, name);
 	}
 
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
-		String pattern = Patterns.createJson(Patterns.ITEM_SPAWN_EGG, resourceLocation.getPath());
-		return BlockModel.fromString(pattern);
+		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_SPAWN_EGG, resourceLocation.getPath());
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 }

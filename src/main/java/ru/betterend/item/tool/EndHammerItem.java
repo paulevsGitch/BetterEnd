@@ -1,5 +1,6 @@
 package ru.betterend.item.tool;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.google.common.collect.ImmutableMultimap;
@@ -135,7 +136,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, M
 	}
 	
 	@Override
-	public String getModelString(String name) {
+	public Optional<String> getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

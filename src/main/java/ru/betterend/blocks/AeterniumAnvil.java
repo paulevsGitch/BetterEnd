@@ -11,21 +11,15 @@ import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 
 public class AeterniumAnvil extends EndAnvilBlock {
-	private static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION_LONG;
+	private static final IntegerProperty DESTRUCTION_LONG = BlockProperties.DESTRUCTION_LONG;
 	
 	public AeterniumAnvil() {
 		super(EndBlocks.AETERNIUM_BLOCK.defaultMaterialColor(), EndToolMaterial.AETERNIUM.getLevel());
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(DESTRUCTION);
-		builder.add(FACING);
-	}
-
-	@Override
 	public IntegerProperty getDestructionProperty() {
-		return DESTRUCTION;
+		return DESTRUCTION_LONG;
 	}
 
 	@Override

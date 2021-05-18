@@ -4,12 +4,14 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +40,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(DESTRUCTION);
+		builder.add(getDestructionProperty());
 	}
 
 	public IntegerProperty getDestructionProperty() {
@@ -64,7 +66,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%anvil%", blockId.getPath());
@@ -98,19 +100,18 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%anvil%", name);
 		textures.put("%top%", name + "_top_" + destruction);
-		String pattern = Patterns.createJson(Patterns.BLOCK_ANVIL, textures);
-		return BlockModel.fromString(pattern);
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_ANVIL, textures);
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		IntegerProperty destructionProperty = getDestructionProperty();
 		int destruction = blockState.getValue(destructionProperty);
 		String modId = resourceLocation.getNamespace();
 		String modelId = "block/" + resourceLocation.getPath() + "_top_" + destruction;
 		ResourceLocation modelLocation = new ResourceLocation(modId, modelId);
-		System.out.println(modelLocation);
-		ModelsHelper.addBlockState(blockState, modelLocation);
+		registerBlockModel(resourceLocation, modelLocation, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelLocation, blockState.getValue(FACING).getOpposite());
 	}
 }

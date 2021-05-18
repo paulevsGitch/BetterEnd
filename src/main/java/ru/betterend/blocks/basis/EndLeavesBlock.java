@@ -3,6 +3,7 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.common.collect.Lists;
 
@@ -60,7 +61,7 @@ public class EndLeavesBlock extends LeavesBlock implements BlockModelProvider, I
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		String blockId = Registry.BLOCK.getKey(this).getPath();
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId, blockId);
 	}

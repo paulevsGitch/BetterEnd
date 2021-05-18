@@ -3,6 +3,7 @@ package ru.betterend.blocks;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
@@ -93,7 +94,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
 	}

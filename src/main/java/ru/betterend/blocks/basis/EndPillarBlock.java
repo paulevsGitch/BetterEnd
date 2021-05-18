@@ -3,11 +3,13 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
-import net.minecraft.core.Direction;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -45,7 +47,7 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return createBlockPattern(blockId);
 	}
@@ -57,18 +59,19 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 
 	@Override
 	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
-		return BlockModel.fromString(createBlockPattern(blockId));
+		Optional<String> pattern = createBlockPattern(blockId);
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath());
-		ModelsHelper.addBlockState(blockState, modelId);
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
 		return ModelsHelper.createRotatedModel(modelId, blockState.getValue(AXIS));
 	}
 
-	protected String createBlockPattern(ResourceLocation blockId) {
+	protected Optional<String> createBlockPattern(ResourceLocation blockId) {
 		return Patterns.createBlockPillar(blockId.getPath());
 	}
 }

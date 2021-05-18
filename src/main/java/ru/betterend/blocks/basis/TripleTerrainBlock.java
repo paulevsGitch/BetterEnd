@@ -1,6 +1,7 @@
 package ru.betterend.blocks.basis;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import com.google.common.collect.Maps;
@@ -49,7 +50,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		String name = Registry.BLOCK.getKey(this).getPath();
 		if (block.endsWith("_middle")) {
 			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top", name + "_top");

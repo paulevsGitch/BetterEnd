@@ -3,6 +3,7 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
@@ -31,7 +32,7 @@ public class BlockBase extends Block implements BlockModelProvider {
 	}
 
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createBlockSimple(blockId.getPath());
 	}

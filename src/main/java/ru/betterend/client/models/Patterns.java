@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
@@ -117,14 +118,14 @@ public class Patterns {
 	public final static ResourceLocation ITEM_HANDHELD = BetterEnd.makeID("patterns/item/pattern_item_handheld.json");
 	public final static ResourceLocation ITEM_SPAWN_EGG = BetterEnd.makeID("patterns/item/pattern_item_spawn_egg.json");
 
-	public static String createItemGenerated(String name) {
+	public static Optional<String> createItemGenerated(String name) {
 		return createJson(ITEM_GENERATED, name);
 	}
 
-	public static String createBlockSimple(String name) {
+	public static Optional<String> createBlockSimple(String name) {
 		return Patterns.createJson(Patterns.BLOCK_BASE, name, name);
 	}
-	public static String createBlockPillar(String name) {
+	public static Optional<String> createBlockPillar(String name) {
 		return Patterns.createJson(Patterns.BLOCK_PILLAR, name, name);
 	}
 	
@@ -138,22 +139,22 @@ public class Patterns {
 		}
 	}
 	
-	public static String createJson(ResourceLocation patternId, String parent, String block) {
+	public static Optional<String> createJson(ResourceLocation patternId, String parent, String block) {
 		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
-			return createJson(new InputStreamReader(input, StandardCharsets.UTF_8), parent, block);
+			return Optional.ofNullable(createJson(new InputStreamReader(input, StandardCharsets.UTF_8), parent, block));
 		} catch (Exception ex) {
-			return null;
+			return Optional.empty();
 		}
 	}
 
-	public static String createJson(ResourceLocation patternId, String texture) {
+	public static Optional<String> createJson(ResourceLocation patternId, String texture) {
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%texture%", texture);
 		return createJson(patternId, textures);
 	}
 
-	public static String createJson(ResourceLocation patternId, Map<String, String> textures) {
+	public static Optional<String> createJson(ResourceLocation patternId, Map<String, String> textures) {
 		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
 			String json = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))
@@ -161,9 +162,9 @@ public class Patterns {
 			for (Entry<String, String> texture : textures.entrySet()) {
 				json = json.replace(texture.getKey(), texture.getValue());
 			}
-			return json;
+			return Optional.of(json);
 		} catch (Exception ex) {
-			return "";
+			return Optional.empty();
 		}
 	}
 

@@ -1,6 +1,7 @@
 package ru.betterend.blocks.basis;
 
 import java.io.Reader;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
@@ -144,7 +145,7 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_BLOCK, blockId.getPath());

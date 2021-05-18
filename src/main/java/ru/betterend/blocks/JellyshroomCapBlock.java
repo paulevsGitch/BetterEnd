@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.io.Reader;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.common.collect.Lists;
 
@@ -73,7 +74,7 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, 
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		return Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
 	}
 	

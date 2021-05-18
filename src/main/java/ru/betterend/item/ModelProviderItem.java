@@ -6,13 +6,15 @@ import net.minecraft.world.item.Item;
 import ru.betterend.client.models.ModelProvider;
 import ru.betterend.client.models.Patterns;
 
+import java.util.Optional;
+
 public class ModelProviderItem extends Item implements ModelProvider {
 	public ModelProviderItem(Properties settings) {
 		super(settings);
 	}
 	
 	@Override
-	public String getModelString(String name) {
+	public Optional<String> getModelString(String name) {
 		return Patterns.createItemGenerated(name);
 	}
 

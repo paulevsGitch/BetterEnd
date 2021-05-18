@@ -1,6 +1,7 @@
 package ru.betterend.blocks.basis;
 
 import java.io.Reader;
+import java.util.Optional;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +19,7 @@ public class BarkBlock extends EndPillarBlock {
 	}
 
 	@Override
-	protected String createBlockPattern(ResourceLocation blockId) {
+	protected Optional<String> createBlockPattern(ResourceLocation blockId) {
 		blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BASE, getName(blockId), blockId.getPath());
 	}

@@ -3,6 +3,7 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
@@ -152,7 +153,7 @@ public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpet
 	}
 	
 	@Override
-	public String getModelString(String path) {
+	public Optional<String> getModelString(String path) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		if (path.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, path);

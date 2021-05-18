@@ -4,10 +4,10 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.CraftingTableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 
 public class EndCraftingTableBlock extends CraftingTableBlock implements BlockModelProvider {
@@ -36,7 +35,7 @@ public class EndCraftingTableBlock extends CraftingTableBlock implements BlockMo
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		String blockName = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_SIDED, new HashMap<String, String>() {
@@ -66,7 +65,7 @@ public class EndCraftingTableBlock extends CraftingTableBlock implements BlockMo
 	@Override
 	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String blockName = blockId.getPath();
-		String pattern = Patterns.createJson(Patterns.BLOCK_SIDED, new HashMap<String, String>() {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_SIDED, new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
 			{
 				put("%particle%", blockName + "_front");
@@ -78,6 +77,6 @@ public class EndCraftingTableBlock extends CraftingTableBlock implements BlockMo
 				put("%east%", blockName + "_side");
 			}
 		});
-		return BlockModel.fromString(pattern);
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 }

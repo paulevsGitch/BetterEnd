@@ -2,13 +2,15 @@ package ru.betterend.blocks.basis;
 
 import java.io.Reader;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -99,7 +101,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		String texture = Registry.BLOCK.getKey(this).getPath();
 		if (block.contains("open")) {
 			return Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
@@ -120,24 +122,21 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	@Override
 	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String texture = blockId.getPath();
-		String pattern;
+		Optional<String> pattern;
 		if (blockState.getValue(OPEN)) {
 			pattern = Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
 		} else {
 			pattern = Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
 		}
-		if (pattern != null) {
-			return BlockModel.fromString(pattern);
-		}
-		return null;
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String open = blockState.getValue(OPEN) ? "_open" : "";
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + open);
-		ModelsHelper.addBlockState(blockState, modelId);
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING));
 	}
 }

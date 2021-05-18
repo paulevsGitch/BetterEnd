@@ -3,6 +3,7 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -116,7 +117,7 @@ public abstract class FeatureSaplingBlock extends SaplingBlock implements IRende
 	}
 
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		if (block.contains("item")) {
 			block = block.split("/")[1];
 			return Patterns.createJson(Patterns.ITEM_BLOCK, block);
@@ -136,7 +137,7 @@ public abstract class FeatureSaplingBlock extends SaplingBlock implements IRende
 
 	@Override
 	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
-		String pattern = Patterns.createJson(Patterns.BLOCK_CROSS, resourceLocation.getPath());
-		return BlockModel.fromString(pattern);
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_CROSS, resourceLocation.getPath());
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 }

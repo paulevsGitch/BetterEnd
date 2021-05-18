@@ -3,8 +3,10 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +42,7 @@ public class EndBookshelfBlock extends BlockBase {
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(Patterns.BLOCK_BOOKSHELF, getName(blockId), blockId.getPath());
 	}
@@ -50,7 +52,14 @@ public class EndBookshelfBlock extends BlockBase {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		return Patterns.createJson(data, getName(blockId), blockId.getPath());
 	}
-	
+
+	@Override
+	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_BOOKSHELF,
+				getName(blockId), blockId.getPath());
+		return pattern.map(BlockModel::fromString).orElse(null);
+	}
+
 	private String getName(ResourceLocation blockId) {
 		String name = blockId.getPath();
 		return name.replace("_bookshelf", "");

@@ -5,9 +5,11 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Lists;
@@ -344,7 +346,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		Map<String, String> textures = createTexturesMap();
 		if (block.contains("column_top")) {
 			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
@@ -369,7 +371,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Map<String, String> textures = createTexturesMap();
 		PedestalState state = blockState.getValue(STATE);
-		String pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
 		switch (state) {
 			case COLUMN_TOP: {
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
@@ -392,15 +394,16 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 				break;
 			}
 		}
-		return BlockModel.fromString(pattern);
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		PedestalState state = blockState.getValue(STATE);
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + "_" + state);
-		return super.getModelVariant(modelId, blockState);
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		return ModelsHelper.createBlockSimple(modelId);
 	}
 
 	@Override

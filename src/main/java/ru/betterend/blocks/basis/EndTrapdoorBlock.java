@@ -4,6 +4,7 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.Registry;
@@ -40,7 +41,7 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		String name = blockId.getPath();
 		return Patterns.createJson(Patterns.BLOCK_TRAPDOOR, new HashMap<String, String>() {

@@ -2,6 +2,7 @@ package ru.betterend.blocks;
 
 import java.io.Reader;
 import java.util.EnumMap;
+import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
@@ -46,7 +47,7 @@ public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, B
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());

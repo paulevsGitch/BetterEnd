@@ -33,6 +33,8 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.client.models.Patterns;
 
+import java.util.Optional;
+
 public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer, IRenderTypeable {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
@@ -192,7 +194,7 @@ public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		if (block.contains("item")) {
 			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());

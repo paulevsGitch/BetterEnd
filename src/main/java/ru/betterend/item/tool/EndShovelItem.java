@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.client.models.ModelProvider;
 import ru.betterend.client.models.Patterns;
 
+import java.util.Optional;
+
 public class EndShovelItem extends ShovelItem implements DynamicAttributeTool, ModelProvider {
 	public EndShovelItem(Tier material, float attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
@@ -34,7 +36,7 @@ public class EndShovelItem extends ShovelItem implements DynamicAttributeTool, M
 	}
 	
 	@Override
-	public String getModelString(String name) {
+	public Optional<String> getModelString(String name) {
 		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
 	}
 }

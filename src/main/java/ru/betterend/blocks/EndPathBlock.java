@@ -3,6 +3,7 @@ package ru.betterend.blocks;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
@@ -55,7 +56,7 @@ public class EndPathBlock extends BlockBaseNotFull {
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		String name = Registry.BLOCK.getKey(this).getPath();
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%top%", name + "_top");

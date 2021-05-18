@@ -3,6 +3,7 @@ package ru.betterend.blocks.basis;
 import java.io.Reader;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -10,8 +11,8 @@ import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
@@ -59,7 +60,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 	}
 	
 	@Override
-	public String getModelString(String block) {
+	public Optional<String> getModelString(String block) {
 		ResourceLocation blockId = Registry.BLOCK.getKey(this);
 		Map<String, String> map = Maps.newHashMap();
 		map.put("%top%", blockId.getPath() + "_top");
@@ -86,7 +87,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%top%", blockName + "_top");
 		textures.put("%side%", blockName + "_side");
-		String pattern;
+		Optional<String> pattern;
 		if (blockState.getValue(LIT)) {
 			textures.put("%front%", blockName + "_front_on");
 			textures.put("%glow%", blockName + "_glow");
@@ -95,7 +96,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 			textures.put("%front%", blockName + "_front");
 			pattern = Patterns.createJson(Patterns.BLOCK_FURNACE, textures);
 		}
-		return BlockModel.fromString(pattern);
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
@@ -104,11 +105,11 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState) {
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String lit = blockState.getValue(LIT) ? "_lit" : "";
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + lit);
-		ModelsHelper.addBlockState(blockState, modelId);
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING));
 	}
 

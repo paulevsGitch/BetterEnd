@@ -1,5 +1,7 @@
 package ru.betterend.item;
 
+import java.util.UUID;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
@@ -7,12 +9,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ElytraItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.registry.EndItems;
-
-import java.util.UUID;
 
 public class ArmoredElytra extends EndArmorItem implements MultiModelItem {
 

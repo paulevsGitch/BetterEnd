@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
@@ -59,7 +60,6 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	@Override
 	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.createBlockEmpty(parentId);
 	}
 }

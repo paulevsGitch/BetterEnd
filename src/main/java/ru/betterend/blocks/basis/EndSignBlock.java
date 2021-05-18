@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -38,7 +39,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.entities.ESignBlockEntity;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.interfaces.ISpetialItem;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.Patterns;
@@ -79,14 +82,15 @@ public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpet
 	
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		if (placer != null && placer instanceof Player) {
+		if (placer instanceof Player) {
 			ESignBlockEntity sign = (ESignBlockEntity) world.getBlockEntity(pos);
-			if (!world.isClientSide) {
-				sign.setAllowedPlayerEditor((Player) placer);
-				((ServerPlayer) placer).connection.send(new ClientboundOpenSignEditorPacket(pos));
-			}
-			else {
-				sign.setEditable(true);
+			if (sign != null) {
+				if (!world.isClientSide) {
+					sign.setAllowedPlayerEditor((Player) placer);
+					((ServerPlayer) placer).connection.send(new ClientboundOpenSignEditorPacket(pos));
+				} else {
+					sign.setEditable(true);
+				}
 			}
 		}
 	}
@@ -128,8 +132,7 @@ public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpet
 			BlockPos blockPos = ctx.getClickedPos();
 			Direction[] directions = ctx.getNearestLookingDirections();
 
-			for (int i = 0; i < directions.length; ++i) {
-				Direction direction = directions[i];
+			for (Direction direction : directions) {
 				if (direction.getAxis().isHorizontal()) {
 					Direction dir = direction.getOpposite();
 					int rot = Mth.floor((180.0 + dir.toYRot() * 16.0 / 360.0) + 0.5 + 4) & 15;
@@ -151,6 +154,12 @@ public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpet
 			return Patterns.createJson(Patterns.ITEM_GENERATED, path);
 		}
 		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
+	}
+
+	@Override
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
+		return ModelsHelper.createBlockEmpty(parentId);
 	}
 
 	@Override

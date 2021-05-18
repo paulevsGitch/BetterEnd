@@ -1,8 +1,11 @@
 package ru.betterend.blocks.basis;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -19,6 +22,9 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import ru.betterend.blocks.BlockProperties;
+import ru.betterend.client.models.ModelsHelper;
+
+import java.util.Map;
 
 public class EndLanternBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
@@ -115,5 +121,14 @@ public class EndLanternBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
+	}
+
+	@Override
+	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		String floor = blockState.getValue(IS_FLOOR) ? "_floor" : "";
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
+				"block/" + resourceLocation.getPath() + floor);
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		return ModelsHelper.createBlockSimple(modelId);
 	}
 }

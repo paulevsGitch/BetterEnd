@@ -10,7 +10,9 @@ import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +24,11 @@ import java.util.Optional;
 public class ModelsHelper {
 	public static BlockModel createBlockItem(ResourceLocation resourceLocation) {
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_BLOCK, resourceLocation.getPath());
+		return pattern.map(BlockModel::fromString).orElse(null);
+	}
+
+	public static BlockModel createBlockEmpty(ResourceLocation resourceLocation) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_EMPTY, resourceLocation.getPath());
 		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 

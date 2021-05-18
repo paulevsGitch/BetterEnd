@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.basis.EndLanternBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -65,6 +67,17 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 		else {
 			return Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_FLOOR, map);
 		}
+	}
+
+	@Override
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		Map<String, String> textures = Maps.newHashMap();
+		textures.put("%glow%", getGlowTexture());
+		textures.put("%metal%", getMetalTexture(resourceLocation));
+		Optional<String> pattern = blockState.getValue(IS_FLOOR) ?
+				Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_FLOOR, textures) :
+				Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_CEIL, textures);
+		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 	
 	protected String getMetalTexture(ResourceLocation blockId) {

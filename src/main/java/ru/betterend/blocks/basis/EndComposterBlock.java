@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.Patterns;
 
@@ -38,16 +38,16 @@ public class EndComposterBlock extends ComposterBlock implements BlockModelProvi
 
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
-		return getBlockModel(resourceLocation, defaultBlockState());
+		return (BlockModel) getBlockModel(resourceLocation, defaultBlockState());
 	}
 
 	@Override
-	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		return null;
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		return null;
 	}
 }

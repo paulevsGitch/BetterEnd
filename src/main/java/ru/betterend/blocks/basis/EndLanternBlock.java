@@ -1,7 +1,6 @@
 package ru.betterend.blocks.basis;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -124,7 +123,7 @@ public class EndLanternBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String floor = blockState.getValue(IS_FLOOR) ? "_floor" : "";
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + floor);

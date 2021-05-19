@@ -2,16 +2,29 @@ package ru.betterend.blocks.basis;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import com.google.common.collect.Lists;
+import com.mojang.math.Transformation;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.renderer.block.model.multipart.Condition;
+import net.minecraft.client.renderer.block.model.multipart.MultiPart;
+import net.minecraft.client.renderer.block.model.multipart.Selector;
+import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.Patterns;
 
@@ -41,4 +54,57 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 		return Patterns.createJson(Patterns.BLOCK_FENCE_POST, parentId.getPath(), blockId.getPath());
 	}
 
+	@Override
+	public BlockModel getModel(ResourceLocation blockId) {
+		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
+		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_FENCE, parentId.getPath(), blockId.getPath());
+		return pattern.map(BlockModel::fromString).orElse(null);
+	}
+
+	@Override
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		ResourceLocation postId = new ResourceLocation(blockId.getNamespace(),
+				"block/" + blockId.getPath() + "_post");
+		ResourceLocation sideId = new ResourceLocation(blockId.getNamespace(),
+				"block/" + blockId.getPath() + "_side");
+		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
+		if (blockId.equals(postId)) {
+			Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FENCE_POST, parentId.getPath(), blockId.getPath());
+			return pattern.map(BlockModel::fromString).orElse(null);
+		}
+		if (blockId.equals(sideId)) {
+			Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FENCE_SIDE, parentId.getPath(), blockId.getPath());
+			return pattern.map(BlockModel::fromString).orElse(null);
+		}
+		return null;
+	}
+
+	@Override
+	public UnbakedModel getModelVariant(ResourceLocation blockId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation postId = new ResourceLocation(blockId.getNamespace(),
+				"block/" + blockId.getPath() + "_post");
+		ResourceLocation sideId = new ResourceLocation(blockId.getNamespace(),
+				"block/" + blockId.getPath() + "_side");
+		registerBlockModel(blockId, postId, blockState, modelCache);
+		registerBlockModel(blockId, sideId, blockState, modelCache);
+
+		StateDefinition<Block, BlockState> blockStateDefinition = getStateDefinition();
+		MultiVariant postVariant = new MultiVariant(Lists.newArrayList(
+				new Variant(postId, Transformation.identity(), false, 1)));
+		MultiVariant sideNorth = new MultiVariant(Lists.newArrayList(
+				new Variant(sideId, Transformation.identity(), true, 1)));
+		MultiVariant sideEast = new MultiVariant(Lists.newArrayList(
+				new Variant(sideId, BlockModelRotation.X0_Y90.getRotation(), true, 1)));
+		MultiVariant sideSouth = new MultiVariant(Lists.newArrayList(
+				new Variant(sideId, BlockModelRotation.X0_Y180.getRotation(), true, 1)));
+		MultiVariant sideWest = new MultiVariant(Lists.newArrayList(
+				new Variant(sideId, BlockModelRotation.X0_Y270.getRotation(), true, 1)));
+		return new MultiPart(blockStateDefinition, Lists.newArrayList(
+				new Selector(Condition.TRUE, postVariant),
+				new Selector(stateDefinition -> state -> state.getValue(NORTH), sideNorth),
+				new Selector(stateDefinition -> state -> state.getValue(EAST), sideEast),
+				new Selector(stateDefinition -> state -> state.getValue(SOUTH), sideSouth),
+				new Selector(stateDefinition -> state -> state.getValue(WEST), sideWest)
+		));
+	}
 }

@@ -79,7 +79,7 @@ public abstract class ModelLoaderMixin {
 								.filter(state -> modelId.equals(BlockModelShaper.stateToModelLocation(clearLoc, state)))
 								.findFirst();
 						if (stateOptional.isPresent()) {
-							MultiVariant modelVariant = ((BlockModelProvider) block).getModelVariant(modelId, stateOptional.get(), unbakedCache);
+							UnbakedModel modelVariant = ((BlockModelProvider) block).getModelVariant(modelId, stateOptional.get(), unbakedCache);
 							if (modelVariant != null) {
 								cacheAndQueueDependencies(modelId, modelVariant);
 							} else {

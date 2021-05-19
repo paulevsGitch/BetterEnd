@@ -46,14 +46,14 @@ public class EndSlabBlock extends SlabBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_SLAB, parentId.getPath(), blockId.getPath());
 		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		SlabType type = blockState.getValue(TYPE);
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + "_" + type);

@@ -7,7 +7,6 @@ import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.ModelsHelper;
@@ -104,11 +104,11 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return getBlockModel(blockId, defaultBlockState());
+		return (BlockModel) getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
-	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String texture = blockId.getPath();
 		Optional<String> pattern;
 		if (blockState.getValue(OPEN)) {
@@ -120,7 +120,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String open = blockState.getValue(OPEN) ? "_open" : "";
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + open);

@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.UnbakedModel;
 import org.jetbrains.annotations.Nullable;
 
@@ -357,11 +356,11 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return getBlockModel(blockId, defaultBlockState());
+		return (BlockModel) getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
-	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Map<String, String> textures = createTexturesMap();
 		PedestalState state = blockState.getValue(STATE);
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
@@ -391,7 +390,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		PedestalState state = blockState.getValue(STATE);
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + "_" + state);

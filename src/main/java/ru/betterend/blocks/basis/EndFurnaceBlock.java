@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -26,6 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.entities.EFurnaceBlockEntity;
 import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
@@ -70,7 +70,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 	}
 
 	@Override
-	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String blockName = blockId.getPath();
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%top%", blockName + "_top");
@@ -89,11 +89,11 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
-		return getBlockModel(resourceLocation, defaultBlockState());
+		return (BlockModel) getBlockModel(resourceLocation, defaultBlockState());
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String lit = blockState.getValue(LIT) ? "_lit" : "";
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + lit);

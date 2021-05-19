@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
@@ -58,7 +60,7 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		return ModelsHelper.createBlockEmpty(parentId);
 	}

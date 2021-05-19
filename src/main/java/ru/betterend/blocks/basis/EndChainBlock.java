@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -18,6 +17,7 @@ import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -50,14 +50,14 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	}
 
 	@Override
-	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String name = blockId.getPath();
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, name, name);
 		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		Direction.Axis axis = blockState.getValue(AXIS);
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath());

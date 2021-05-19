@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.ModelsHelper;
@@ -77,11 +77,11 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return getBlockModel(blockId, defaultBlockState());
+		return (BlockModel) getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
-	public BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		IntegerProperty destructionProperty = getDestructionProperty();
 		int destruction = blockState.getValue(destructionProperty);
 		String name = blockId.getPath();
@@ -93,7 +93,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public MultiVariant getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		IntegerProperty destructionProperty = getDestructionProperty();
 		int destruction = blockState.getValue(destructionProperty);
 		String modId = resourceLocation.getNamespace();

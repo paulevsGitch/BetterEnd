@@ -97,35 +97,35 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 		switch (facing) {
 			case EAST: {
 				if (hinge && open) {
-					rotation = BlockModelRotation.by(0, 90);
+					rotation = BlockModelRotation.X0_Y90;
 				} else if (open) {
-					rotation = BlockModelRotation.by(0, 270);
+					rotation = BlockModelRotation.X0_Y270;
 				}
 				break;
 			}
 			case SOUTH: {
 				if (!hinge && !open || hinge && !open) {
-					rotation = BlockModelRotation.by(0, 90);
+					rotation = BlockModelRotation.X0_Y90;
 				} else if (hinge) {
-					rotation = BlockModelRotation.by(0, 180);
+					rotation = BlockModelRotation.X0_Y180;
 				}
 				break;
 			}
 			case WEST: {
 				if (!hinge && !open || hinge && !open) {
-					rotation = BlockModelRotation.by(0, 180);
+					rotation = BlockModelRotation.X0_Y180;
 				} else if (hinge) {
-					rotation = BlockModelRotation.by(0, 270);
+					rotation = BlockModelRotation.X0_Y270;
 				} else {
-					rotation = BlockModelRotation.by(0, 90);
+					rotation = BlockModelRotation.X0_Y90;
 				}
 				break;
 			}
 			case NORTH: {
 				if (!hinge && !open || hinge && !open) {
-					rotation = BlockModelRotation.by(0, 270);
+					rotation = BlockModelRotation.X0_Y270;
 				} else if (!hinge) {
-					rotation = BlockModelRotation.by(0, 180);
+					rotation = BlockModelRotation.X0_Y180;
 				}
 				break;
 			}

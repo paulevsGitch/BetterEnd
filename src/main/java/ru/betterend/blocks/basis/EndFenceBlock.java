@@ -25,8 +25,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.Nullable;
+import ru.betterend.BetterEnd;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.Patterns;
+
+import static net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION;
 
 public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 	private final Block parent;
@@ -63,11 +66,12 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 
 	@Override
 	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
-		ResourceLocation postId = new ResourceLocation(blockId.getNamespace(),
-				"block/" + blockId.getPath() + "_post");
-		ResourceLocation sideId = new ResourceLocation(blockId.getNamespace(),
-				"block/" + blockId.getPath() + "_side");
+		ResourceLocation thisId = Registry.BLOCK.getKey(this);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
+		ResourceLocation postId = new ResourceLocation(thisId.getNamespace(),
+				"block/" + thisId.getPath() + "_post");
+		ResourceLocation sideId = new ResourceLocation(thisId.getNamespace(),
+				"block/" + thisId.getPath() + "_side");
 		if (blockId.equals(postId)) {
 			Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FENCE_POST, parentId.getPath(), blockId.getPath());
 			return pattern.map(BlockModel::fromString).orElse(null);
@@ -85,10 +89,9 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 				"block/" + blockId.getPath() + "_post");
 		ResourceLocation sideId = new ResourceLocation(blockId.getNamespace(),
 				"block/" + blockId.getPath() + "_side");
-		registerBlockModel(blockId, postId, blockState, modelCache);
-		registerBlockModel(blockId, sideId, blockState, modelCache);
+		registerBlockModel(postId, postId, blockState, modelCache);
+		registerBlockModel(sideId, sideId, blockState, modelCache);
 
-		StateDefinition<Block, BlockState> blockStateDefinition = getStateDefinition();
 		MultiVariant postVariant = new MultiVariant(Lists.newArrayList(
 				new Variant(postId, Transformation.identity(), false, 1)));
 		MultiVariant sideNorth = new MultiVariant(Lists.newArrayList(
@@ -99,6 +102,7 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 				new Variant(sideId, BlockModelRotation.X0_Y180.getRotation(), true, 1)));
 		MultiVariant sideWest = new MultiVariant(Lists.newArrayList(
 				new Variant(sideId, BlockModelRotation.X0_Y270.getRotation(), true, 1)));
+		StateDefinition<Block, BlockState> blockStateDefinition = getStateDefinition();
 		return new MultiPart(blockStateDefinition, Lists.newArrayList(
 				new Selector(Condition.TRUE, postVariant),
 				new Selector(stateDefinition -> state -> state.getValue(NORTH), sideNorth),

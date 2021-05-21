@@ -3,6 +3,7 @@ package ru.betterend.mixin.client;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.renderer.block.model.multipart.MultiPart;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -81,7 +82,14 @@ public abstract class ModelLoaderMixin {
 						if (stateOptional.isPresent()) {
 							UnbakedModel modelVariant = ((BlockModelProvider) block).getModelVariant(modelId, stateOptional.get(), unbakedCache);
 							if (modelVariant != null) {
-								cacheAndQueueDependencies(modelId, modelVariant);
+								if (modelVariant instanceof MultiPart) {
+									block.getStateDefinition().getPossibleStates().forEach(state -> {
+										ResourceLocation stateId = BlockModelShaper.stateToModelLocation(clearLoc, state);
+										cacheAndQueueDependencies(stateId, modelVariant);
+									});
+								} else {
+									cacheAndQueueDependencies(modelId, modelVariant);
+								}
 							} else {
 								BetterEnd.LOGGER.warning("Error loading variant: {}", modelId);
 							}

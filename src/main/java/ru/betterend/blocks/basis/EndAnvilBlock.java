@@ -100,6 +100,6 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 		String modelId = "block/" + resourceLocation.getPath() + "_top_" + destruction;
 		ResourceLocation modelLocation = new ResourceLocation(modId, modelId);
 		registerBlockModel(resourceLocation, modelLocation, blockState, modelCache);
-		return ModelsHelper.createFacingModel(modelLocation, blockState.getValue(FACING).getOpposite());
+		return ModelsHelper.createFacingModel(modelLocation, blockState.getValue(FACING), false, false);
 	}
 }

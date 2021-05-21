@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.client.models.BlockModelProvider;
@@ -133,8 +134,7 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + "_" + doorType);
 		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
-		Variant variant = new Variant(modelId, rotation.getRotation(), false, 1);
-		return new MultiVariant(Lists.newArrayList(variant));
+		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}
 
 	protected DoorType getDoorType(BlockState blockState) {

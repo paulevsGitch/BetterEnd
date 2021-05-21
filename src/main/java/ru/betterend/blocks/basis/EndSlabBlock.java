@@ -59,9 +59,7 @@ public class EndSlabBlock extends SlabBlock implements BlockModelProvider {
 				"block/" + resourceLocation.getPath() + "_" + type);
 		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
 		if (type == SlabType.TOP) {
-			BlockModelRotation rotation = BlockModelRotation.by(180, 0);
-			Variant variant = new Variant(modelId, rotation.getRotation(), true, 1);
-			return new MultiVariant(Lists.newArrayList(variant));
+			return ModelsHelper.createMultiVariant(modelId, BlockModelRotation.X180_Y0.getRotation(), true);
 		}
 		return ModelsHelper.createBlockSimple(modelId);
 	}

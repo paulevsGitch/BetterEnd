@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class ModelsHelper {
@@ -32,86 +33,65 @@ public class ModelsHelper {
 		return pattern.map(BlockModel::fromString).orElse(null);
 	}
 
-	public static MultiVariant createBlockSimple(ResourceLocation resourceLocation) {
-		Variant variant = new Variant(resourceLocation, Transformation.identity(), false, 1);
+	public static MultiVariant createMultiVariant(ResourceLocation resourceLocation, Transformation transform, boolean uvLock) {
+		Variant variant = new Variant(resourceLocation, transform, uvLock, 1);
 		return new MultiVariant(Lists.newArrayList(variant));
 	}
 
-	public static MultiVariant createFacingModel(ResourceLocation resourceLocation, Direction facing) {
-		BlockModelRotation rotation = BlockModelRotation.by(0, (int) facing.getOpposite().toYRot());
-		Variant variant = new Variant(resourceLocation, rotation.getRotation(), false, 1);
-		return new MultiVariant(Lists.newArrayList(variant));
+	public static MultiVariant createBlockSimple(ResourceLocation resourceLocation) {
+		return createMultiVariant(resourceLocation, Transformation.identity(), false);
+	}
+
+	public static MultiVariant createFacingModel(ResourceLocation resourceLocation, Direction facing, boolean uvLock, boolean inverted) {
+		if (inverted) {
+			facing = facing.getOpposite();
+		}
+		BlockModelRotation rotation = BlockModelRotation.by(0, (int) facing.toYRot());
+		return createMultiVariant(resourceLocation, rotation.getRotation(), uvLock);
 	}
 
 	public static MultiVariant createRotatedModel(ResourceLocation resourceLocation, Direction.Axis axis) {
 		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
 		switch (axis) {
-			case X: {
-				rotation = BlockModelRotation.by(90, 90);
-				break;
-			}
-			case Z: {
-				rotation = BlockModelRotation.by(90, 0);
-				break;
-			}
+			case X: rotation = BlockModelRotation.X90_Y90; break;
+			case Z: rotation = BlockModelRotation.X90_Y0; break;
 		}
-		Variant variant = new Variant(resourceLocation, rotation.getRotation(), false, 1);
-		return new MultiVariant(Lists.newArrayList(variant));
+		return createMultiVariant(resourceLocation, rotation.getRotation(), false);
 	}
 
 	public static class MultiPartBuilder {
 
-		private final List<ModelPart> modelParts = Lists.newArrayList();
+		private final static MultiPartBuilder BUILDER = new MultiPartBuilder();
 
+		public static MultiPartBuilder create(StateDefinition<Block, BlockState> stateDefinition) {
+			BUILDER.stateDefinition = stateDefinition;
+			BUILDER.modelParts.clear();
+			return BUILDER;
+		}
+
+		private final List<ModelPart> modelParts = Lists.newArrayList();
 		private StateDefinition<Block, BlockState> stateDefinition;
-		private ModelPart activePart;
 
 		private MultiPartBuilder() {}
 
-		public MultiPartBuilder create(StateDefinition<Block, BlockState> stateDefinition) {
-			this.stateDefinition = stateDefinition;
-			return this;
-		}
-
-		public MultiPartBuilder createPart(ResourceLocation modelId) {
-			activePart = new ModelPart(modelId);
-			return this;
-		}
-
-		public MultiPartBuilder setCondition(Condition condition) {
-			activePart.condition = condition;
-			return this;
-		}
-
-		public MultiPartBuilder setTransformation(Transformation transform) {
-			activePart.transform = transform;
-			return this;
-		}
-
-		public MultiPartBuilder setUVLock(boolean value) {
-			activePart.uvLock = value;
-			return this;
-		}
-
-		public MultiPartBuilder savePart() {
-			if (activePart != null) {
-				modelParts.add(activePart);
-			}
-			return this;
+		public ModelPart part(ResourceLocation modelId) {
+			return new ModelPart(modelId);
 		}
 
 		public MultiPart build() {
-			List<Selector> selectors = Lists.newArrayList();
-			modelParts.forEach(modelPart -> {
-				MultiVariant variant = new MultiVariant(Lists.newArrayList(
-						new Variant(modelPart.modelId, modelPart.transform, modelPart.uvLock, 1)));
-				selectors.add(new Selector(modelPart.condition, variant));
-			});
-			modelParts.clear();
-			return new MultiPart(stateDefinition, selectors);
+			if (modelParts.size() > 0) {
+				List<Selector> selectors = Lists.newArrayList();
+				modelParts.forEach(modelPart -> {
+					MultiVariant variant = createMultiVariant(modelPart.modelId, modelPart.transform, modelPart.uvLock);
+					selectors.add(new Selector(modelPart.condition, variant));
+				});
+				modelParts.clear();
+				return new MultiPart(stateDefinition, selectors);
+			}
+			throw new IllegalStateException("At least one model part need to be created.");
 		}
 
-		private static class ModelPart {
+		public class ModelPart {
 			private final ResourceLocation modelId;
 			private Transformation transform = Transformation.identity();
 			private Condition condition = Condition.TRUE;
@@ -119,6 +99,25 @@ public class ModelsHelper {
 
 			private ModelPart(ResourceLocation modelId) {
 				this.modelId = modelId;
+			}
+
+			public ModelPart setCondition(Function<BlockState, Boolean> condition) {
+				this.condition = stateDefinition -> condition::apply;
+				return this;
+			}
+
+			public ModelPart setTransformation(Transformation transform) {
+				this.transform = transform;
+				return this;
+			}
+
+			public ModelPart setUVLock(boolean value) {
+				this.uvLock = value;
+				return this;
+			}
+
+			public void save() {
+				modelParts.add(this);
 			}
 		}
 	}

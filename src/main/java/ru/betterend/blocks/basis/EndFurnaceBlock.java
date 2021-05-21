@@ -98,7 +98,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + lit);
 		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
-		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING));
+		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING), false, true);
 	}
 
 	@Override

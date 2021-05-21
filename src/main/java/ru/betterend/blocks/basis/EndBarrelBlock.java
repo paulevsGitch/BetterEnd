@@ -7,8 +7,10 @@ import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -125,6 +127,15 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
 				"block/" + resourceLocation.getPath() + open);
 		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
-		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING));
+		Direction facing = blockState.getValue(FACING);
+		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
+		switch (facing) {
+			case NORTH: rotation = BlockModelRotation.X90_Y0; break;
+			case EAST: rotation = BlockModelRotation.X90_Y90; break;
+			case SOUTH: rotation = BlockModelRotation.X90_Y180; break;
+			case WEST: rotation = BlockModelRotation.X90_Y270; break;
+			case DOWN: rotation = BlockModelRotation.X180_Y0; break;
+		}
+		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}
 }

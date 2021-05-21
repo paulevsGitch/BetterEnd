@@ -1,19 +1,7 @@
 package ru.betterend.blocks.basis;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import com.google.common.collect.Lists;
-import com.mojang.math.Transformation;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
-import net.minecraft.client.renderer.block.model.Variant;
-import net.minecraft.client.renderer.block.model.multipart.Condition;
-import net.minecraft.client.renderer.block.model.multipart.MultiPart;
-import net.minecraft.client.renderer.block.model.multipart.Selector;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
@@ -22,14 +10,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.Nullable;
-import ru.betterend.BetterEnd;
 import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper.MultiPartBuilder;
 import ru.betterend.client.models.Patterns;
 
-import static net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 	private final Block parent;
@@ -92,23 +82,16 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 		registerBlockModel(postId, postId, blockState, modelCache);
 		registerBlockModel(sideId, sideId, blockState, modelCache);
 
-		MultiVariant postVariant = new MultiVariant(Lists.newArrayList(
-				new Variant(postId, Transformation.identity(), false, 1)));
-		MultiVariant sideNorth = new MultiVariant(Lists.newArrayList(
-				new Variant(sideId, Transformation.identity(), true, 1)));
-		MultiVariant sideEast = new MultiVariant(Lists.newArrayList(
-				new Variant(sideId, BlockModelRotation.X0_Y90.getRotation(), true, 1)));
-		MultiVariant sideSouth = new MultiVariant(Lists.newArrayList(
-				new Variant(sideId, BlockModelRotation.X0_Y180.getRotation(), true, 1)));
-		MultiVariant sideWest = new MultiVariant(Lists.newArrayList(
-				new Variant(sideId, BlockModelRotation.X0_Y270.getRotation(), true, 1)));
-		StateDefinition<Block, BlockState> blockStateDefinition = getStateDefinition();
-		return new MultiPart(blockStateDefinition, Lists.newArrayList(
-				new Selector(Condition.TRUE, postVariant),
-				new Selector(stateDefinition -> state -> state.getValue(NORTH), sideNorth),
-				new Selector(stateDefinition -> state -> state.getValue(EAST), sideEast),
-				new Selector(stateDefinition -> state -> state.getValue(SOUTH), sideSouth),
-				new Selector(stateDefinition -> state -> state.getValue(WEST), sideWest)
-		));
+		MultiPartBuilder builder = MultiPartBuilder.create(stateDefinition);
+		builder.part(sideId).setCondition(state -> state.getValue(NORTH)).setUVLock(true).save();
+		builder.part(sideId).setCondition(state -> state.getValue(EAST))
+				.setTransformation(BlockModelRotation.X0_Y90.getRotation()).setUVLock(true).save();
+		builder.part(sideId).setCondition(state -> state.getValue(SOUTH))
+				.setTransformation(BlockModelRotation.X0_Y180.getRotation()).setUVLock(true).save();
+		builder.part(sideId).setCondition(state -> state.getValue(WEST))
+				.setTransformation(BlockModelRotation.X0_Y270.getRotation()).setUVLock(true).save();
+		builder.part(postId).save();
+
+		return builder.build();
 	}
 }

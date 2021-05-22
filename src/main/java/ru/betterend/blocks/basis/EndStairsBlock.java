@@ -79,7 +79,8 @@ public class EndStairsBlock extends StairBlock implements BlockModelProvider {
 	@Override
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String state = "";
-		switch (blockState.getValue(SHAPE)) {
+		StairsShape shape = blockState.getValue(SHAPE);
+		switch (shape) {
 			case INNER_LEFT:
 			case INNER_RIGHT:
 				state = "_inner"; break;
@@ -90,7 +91,6 @@ public class EndStairsBlock extends StairBlock implements BlockModelProvider {
 		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + state);
 		registerBlockModel(stateId, modelId, blockState, modelCache);
 
-		StairsShape shape = blockState.getValue(SHAPE);
 		boolean isTop = blockState.getValue(HALF) == Half.TOP;
 		boolean isLeft = shape == StairsShape.INNER_LEFT ||
 						shape == StairsShape.OUTER_LEFT;
@@ -100,32 +100,19 @@ public class EndStairsBlock extends StairBlock implements BlockModelProvider {
 		int x = isTop ? 180 : 0;
 		switch (blockState.getValue(FACING)) {
 			case NORTH:
-				if (isTop) {
-					if (!isRight) y = 270;
-				} else {
-					y = (isLeft) ? 180 : 270;
-				}
+				if (isTop && !isRight) y = 270;
+				else if (!isTop) y = isLeft ? 180 : 270;
 				break;
 			case EAST:
-				if (isTop) {
-					if (isRight) y = 90;
-				} else {
-					if (isLeft) y = 270;
-				}
+				if (isTop && isRight) y = 90;
+				else if (!isTop && isLeft) y = 270;
 				break;
 			case SOUTH:
-				if (isTop) {
-					y = (isRight) ? 180 : 90;
-				} else {
-					if (!isLeft) y = 90;
-				}
+				if (isTop) y = isRight ? 180 : 90;
+				else if (!isLeft) y = 90;
 				break;
 			case WEST:
-				if (isTop) {
-					y = isRight ? 270 : 180;
-				} else {
-					y = isLeft ? 90 : 180;
-				}
+				y = (isTop && isRight) ? 270 : (!isTop && isLeft) ? 90 : 180;
 				break;
 		}
 		BlockModelRotation rotation = BlockModelRotation.by(x, y);

@@ -356,11 +356,11 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return (BlockModel) getBlockModel(blockId, defaultBlockState());
+		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Map<String, String> textures = createTexturesMap();
 		PedestalState state = blockState.getValue(STATE);
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
@@ -386,7 +386,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 				break;
 			}
 		}
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

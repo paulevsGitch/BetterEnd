@@ -28,6 +28,7 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,7 +55,7 @@ public abstract class ModelLoaderMixin {
 			String path = resourceLocation.getPath();
 			ResourceLocation clearLoc = new ResourceLocation(modId, path);
 			ModelResourceLocation modelId = (ModelResourceLocation) resourceLocation;
-			if (Objects.equals(modelId.getVariant(), "inventory")) {
+			if ("inventory".equals(modelId.getVariant())) {
 				ResourceLocation itemLoc = new ResourceLocation(modId, "item/" + path);
 				ResourceLocation itemModelLoc = new ResourceLocation(modId, "models/" + itemLoc.getPath() + ".json");
 				if (!resourceManager.hasResource(itemModelLoc)) {
@@ -76,14 +77,15 @@ public abstract class ModelLoaderMixin {
 				if (!resourceManager.hasResource(stateLoc)) {
 					Block block = Registry.BLOCK.get(clearLoc);
 					if (block instanceof BlockModelProvider) {
-						Optional<BlockState> stateOptional = block.getStateDefinition().getPossibleStates().stream()
+						List<BlockState> possibleStates = block.getStateDefinition().getPossibleStates();
+						Optional<BlockState> possibleState = possibleStates.stream()
 								.filter(state -> modelId.equals(BlockModelShaper.stateToModelLocation(clearLoc, state)))
 								.findFirst();
-						if (stateOptional.isPresent()) {
-							UnbakedModel modelVariant = ((BlockModelProvider) block).getModelVariant(modelId, stateOptional.get(), unbakedCache);
+						if (possibleState.isPresent()) {
+							UnbakedModel modelVariant = ((BlockModelProvider) block).getModelVariant(modelId, possibleState.get(), unbakedCache);
 							if (modelVariant != null) {
 								if (modelVariant instanceof MultiPart) {
-									block.getStateDefinition().getPossibleStates().forEach(state -> {
+									possibleStates.forEach(state -> {
 										ResourceLocation stateId = BlockModelShaper.stateToModelLocation(clearLoc, state);
 										cacheAndQueueDependencies(stateId, modelVariant);
 									});

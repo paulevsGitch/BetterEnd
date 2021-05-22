@@ -1,8 +1,11 @@
 package ru.betterend.blocks.basis;
 
+import java.util.Map;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -25,6 +28,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.client.models.BlockModelProvider;
@@ -146,4 +151,21 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 		return Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
 	}
 
+	@Override
+	public BlockModel getModel(ResourceLocation blockId) {
+		return ModelsHelper.createBlockItem(blockId);
+	}
+
+	@Override
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
+		return ModelsHelper.fromPattern(pattern);
+	}
+
+	@Override
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING), false, true);
+	}
 }

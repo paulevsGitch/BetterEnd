@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
@@ -19,6 +18,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.AuroraCrystalBlock;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.util.MHelper;
@@ -75,11 +75,11 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		String blockName = resourceLocation.getPath();
 		Optional<String> pattern = blockState.getValue(IS_FLOOR) ?
 				Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_FLOOR, blockName, blockName) :
 				Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_CEIL, blockName, blockName);
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 }

@@ -70,7 +70,7 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String blockName = blockId.getPath();
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%top%", blockName + "_top");
@@ -84,12 +84,12 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 			textures.put("%front%", blockName + "_front");
 			pattern = Patterns.createJson(Patterns.BLOCK_FURNACE, textures);
 		}
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
-		return (BlockModel) getBlockModel(resourceLocation, defaultBlockState());
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 
 	@Override

@@ -13,9 +13,9 @@ import ru.betterend.BetterEnd;
 import static net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION;
 
 public interface BlockModelProvider extends ModelProvider {
-	default @Nullable UnbakedModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+	default @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Optional<String> pattern = Patterns.createBlockSimple(resourceLocation.getPath());
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	default UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {

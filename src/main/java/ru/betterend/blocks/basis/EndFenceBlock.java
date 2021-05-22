@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.Nullable;
 import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.ModelsHelper.MultiPartBuilder;
 import ru.betterend.client.models.Patterns;
 
@@ -51,11 +52,11 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 	public BlockModel getModel(ResourceLocation blockId) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_FENCE, parentId.getPath(), blockId.getPath());
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		ResourceLocation thisId = Registry.BLOCK.getKey(this);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		ResourceLocation postId = new ResourceLocation(thisId.getNamespace(),
@@ -64,11 +65,11 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 				"block/" + thisId.getPath() + "_side");
 		if (blockId.equals(postId)) {
 			Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FENCE_POST, parentId.getPath(), blockId.getPath());
-			return pattern.map(BlockModel::fromString).orElse(null);
+			return ModelsHelper.fromPattern(pattern);
 		}
 		if (blockId.equals(sideId)) {
 			Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FENCE_SIDE, parentId.getPath(), blockId.getPath());
-			return pattern.map(BlockModel::fromString).orElse(null);
+			return ModelsHelper.fromPattern(pattern);
 		}
 		return null;
 	}
@@ -83,14 +84,14 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 		registerBlockModel(sideId, sideId, blockState, modelCache);
 
 		MultiPartBuilder builder = MultiPartBuilder.create(stateDefinition);
-		builder.part(sideId).setCondition(state -> state.getValue(NORTH)).setUVLock(true).save();
+		builder.part(sideId).setCondition(state -> state.getValue(NORTH)).setUVLock(true).add();
 		builder.part(sideId).setCondition(state -> state.getValue(EAST))
-				.setTransformation(BlockModelRotation.X0_Y90.getRotation()).setUVLock(true).save();
+				.setTransformation(BlockModelRotation.X0_Y90.getRotation()).setUVLock(true).add();
 		builder.part(sideId).setCondition(state -> state.getValue(SOUTH))
-				.setTransformation(BlockModelRotation.X0_Y180.getRotation()).setUVLock(true).save();
+				.setTransformation(BlockModelRotation.X0_Y180.getRotation()).setUVLock(true).add();
 		builder.part(sideId).setCondition(state -> state.getValue(WEST))
-				.setTransformation(BlockModelRotation.X0_Y270.getRotation()).setUVLock(true).save();
-		builder.part(postId).save();
+				.setTransformation(BlockModelRotation.X0_Y270.getRotation()).setUVLock(true).add();
+		builder.part(postId).add();
 
 		return builder.build();
 	}

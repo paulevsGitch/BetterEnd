@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 
 import java.util.Optional;
@@ -22,6 +23,6 @@ public class EndSpawnEggItem extends SpawnEggItem implements ModelProvider {
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_SPAWN_EGG, resourceLocation.getPath());
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 }

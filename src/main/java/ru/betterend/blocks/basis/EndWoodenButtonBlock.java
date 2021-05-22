@@ -7,6 +7,8 @@ import java.util.Optional;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WoodButtonBlock;
@@ -15,30 +17,14 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.Patterns;
 
-public class EndWoodenButtonBlock extends WoodButtonBlock implements BlockModelProvider {
-	private final Block parent;
-	
+public class EndWoodenButtonBlock extends EndButtonBlock {
+
 	public EndWoodenButtonBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).strength(0.5F, 0.5F).noOcclusion());
-		this.parent = source;
+		super(source, FabricBlockSettings.copyOf(source).strength(0.5F, 0.5F).noOcclusion(), true);
 	}
 
 	@Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this));
+	protected SoundEvent getSound(boolean clicked) {
+		return clicked ? SoundEvents.WOODEN_BUTTON_CLICK_ON : SoundEvents.WOODEN_BUTTON_CLICK_OFF;
 	}
-
-	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_BUTTON, parentId.getPath(), blockId.getPath());
-		}
-		if (block.contains("pressed")) {
-			return Patterns.createJson(Patterns.BLOCK_BUTTON_PRESSED, parentId.getPath(), blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_BUTTON, parentId.getPath(), blockId.getPath());
-	}
-
 }

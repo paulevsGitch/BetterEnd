@@ -23,14 +23,24 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class ModelsHelper {
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	public static BlockModel fromPattern(Optional<String> pattern) {
+		return pattern.map(BlockModel::fromString).orElse(null);
+	}
+
+	public static BlockModel createItemModel(String name) {
+		Optional<String> pattern = Patterns.createItemGenerated("item/" + name);
+		return fromPattern(pattern);
+	}
+
 	public static BlockModel createBlockItem(ResourceLocation resourceLocation) {
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_BLOCK, resourceLocation.getPath());
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return fromPattern(pattern);
 	}
 
 	public static BlockModel createBlockEmpty(ResourceLocation resourceLocation) {
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_EMPTY, resourceLocation.getPath());
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return fromPattern(pattern);
 	}
 
 	public static MultiVariant createMultiVariant(ResourceLocation resourceLocation, Transformation transform, boolean uvLock) {
@@ -116,7 +126,7 @@ public class ModelsHelper {
 				return this;
 			}
 
-			public void save() {
+			public void add() {
 				modelParts.add(this);
 			}
 		}

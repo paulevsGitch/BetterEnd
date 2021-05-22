@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndItems;
 
@@ -27,6 +27,6 @@ public class EnchantedPetalItem extends ModelProviderItem {
 
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
-		return ModelProvider.createItemModel("hydralux_petal");
+		return ModelsHelper.createItemModel("hydralux_petal");
 	}
 }

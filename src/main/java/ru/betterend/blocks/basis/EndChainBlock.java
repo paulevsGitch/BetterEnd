@@ -22,7 +22,6 @@ import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.ModelProvider;
 import ru.betterend.client.models.Patterns;
 
 public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRenderTypeable {
@@ -46,14 +45,14 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return ModelProvider.createItemModel(blockId.getPath());
+		return ModelsHelper.createItemModel(blockId.getPath());
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String name = blockId.getPath();
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, name, name);
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

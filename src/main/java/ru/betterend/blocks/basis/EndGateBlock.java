@@ -51,7 +51,7 @@ public class EndGateBlock extends FenceGateBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		boolean inWall = blockState.getValue(IN_WALL);
 		boolean isOpen = blockState.getValue(OPEN);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
@@ -63,7 +63,7 @@ public class EndGateBlock extends FenceGateBlock implements BlockModelProvider {
 			pattern = isOpen ? Patterns.createJson(Patterns.BLOCK_GATE_OPEN, parentId.getPath(), blockId.getPath()) :
 					Patterns.createJson(Patterns.BLOCK_GATE_CLOSED, parentId.getPath(), blockId.getPath());
 		}
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

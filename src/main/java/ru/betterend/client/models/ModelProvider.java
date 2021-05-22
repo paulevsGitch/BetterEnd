@@ -9,11 +9,6 @@ public interface ModelProvider {
 	Optional<String> getModelString(String name);
 
 	default BlockModel getModel(ResourceLocation resourceLocation) {
-		return createItemModel(resourceLocation.getPath());
-	}
-
-	static BlockModel createItemModel(String name) {
-		Optional<String> pattern = Patterns.createItemGenerated("item/" + name);
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.createItemModel(resourceLocation.getPath());
 	}
 }

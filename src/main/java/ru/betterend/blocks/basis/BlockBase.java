@@ -32,6 +32,6 @@ public class BlockBase extends Block implements BlockModelProvider {
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return (BlockModel) getBlockModel(blockId, defaultBlockState());
+		return getBlockModel(blockId, defaultBlockState());
 	}
 }

@@ -77,11 +77,11 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return (BlockModel) getBlockModel(blockId, defaultBlockState());
+		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		IntegerProperty destructionProperty = getDestructionProperty();
 		int destruction = blockState.getValue(destructionProperty);
 		String name = blockId.getPath();
@@ -89,7 +89,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 		textures.put("%anvil%", name);
 		textures.put("%top%", name + "_top_" + destruction);
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_ANVIL, textures);
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.MultiVariant;
-import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
@@ -67,7 +64,7 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		String blockName = resourceLocation.getPath();
 		DoorType doorType = getDoorType(blockState);
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM, blockName, blockName);
@@ -85,7 +82,7 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 				break;
 			}
 		}
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

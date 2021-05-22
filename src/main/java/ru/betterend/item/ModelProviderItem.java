@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 
 import java.util.Optional;
@@ -20,6 +21,6 @@ public class ModelProviderItem extends Item implements ModelProvider {
 
 	@Override
 	public BlockModel getModel(ResourceLocation resourceLocation) {
-		return ModelProvider.createItemModel(resourceLocation.getPath());
+		return ModelsHelper.createItemModel(resourceLocation.getPath());
 	}
 }

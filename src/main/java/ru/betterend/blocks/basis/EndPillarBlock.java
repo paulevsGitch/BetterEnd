@@ -36,7 +36,7 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return (BlockModel) getBlockModel(blockId, defaultBlockState());
+		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		Optional<String> pattern = createBlockPattern(blockId);
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

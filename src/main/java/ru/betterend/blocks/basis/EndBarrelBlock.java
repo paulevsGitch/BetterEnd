@@ -106,11 +106,11 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
-		return (BlockModel) getBlockModel(blockId, defaultBlockState());
+		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String texture = blockId.getPath();
 		Optional<String> pattern;
 		if (blockState.getValue(OPEN)) {
@@ -118,7 +118,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 		} else {
 			pattern = Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
 		}
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

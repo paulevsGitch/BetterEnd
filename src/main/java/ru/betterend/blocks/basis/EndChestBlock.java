@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -56,11 +55,11 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	@Override
 	public BlockModel getModel(ResourceLocation blockId) {
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
-		return pattern.map(BlockModel::fromString).orElse(null);
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override
-	public @Nullable UnbakedModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		return ModelsHelper.createBlockEmpty(parentId);
 	}

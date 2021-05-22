@@ -1,14 +1,23 @@
 package ru.betterend.blocks.basis;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import com.mojang.math.Transformation;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.MultiVariant;
+import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,9 +32,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.EndTerrainBlock;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 
 public class TripleTerrainBlock extends EndTerrainBlock {
@@ -47,19 +57,6 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 		TripleShape shape = dir == Direction.UP ? TripleShape.BOTTOM : dir == Direction.DOWN ? TripleShape.TOP : TripleShape.MIDDLE;
 		return this.defaultBlockState().setValue(SHAPE, shape);
 	}
-	
-	@Override
-	public Optional<String> getModelString(String block) {
-		String name = Registry.BLOCK.getKey(this).getPath();
-		if (block.endsWith("_middle")) {
-			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top", name + "_top");
-		}
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%top%", "betterend:block/" + name + "_top");
-		map.put("%side%", "betterend:block/" + name + "_side");
-		map.put("%bottom%", "minecraft:block/end_stone");
-		return Patterns.createJson(Patterns.BLOCK_TOP_SIDE_BOTTOM, map);
-	}
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -75,9 +72,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
 			super.randomTick(state, world, pos, random);
-			return;
-		}
-		else if (random.nextInt(16) == 0) {
+		} else if (random.nextInt(16) == 0) {
 			boolean bottom = canStayBottom(world, pos);
 			if (shape == TripleShape.TOP) {
 				if (!bottom) {
@@ -88,11 +83,9 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 				boolean top = canStay(state, world, pos) || isMiddle(world.getBlockState(pos.above()));
 				if (!top && !bottom) {
 					world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
-				}
-				else if (top && !bottom) {
+				} else if (top && !bottom) {
 					world.setBlockAndUpdate(pos, state.setValue(SHAPE, TripleShape.BOTTOM));
-				}
-				else if (!top && bottom) {
+				} else if (!top) {
 					world.setBlockAndUpdate(pos, state.setValue(SHAPE, TripleShape.TOP));
 				}
 			}
@@ -104,16 +97,72 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 		BlockState blockState = world.getBlockState(blockPos);
 		if (isMiddle(blockState)) {
 			return true;
-		}
-		else if (blockState.getFluidState().getAmount() == 8) {
+		} else if (blockState.getFluidState().getAmount() == 8) {
 			return false;
-		}
-		else {
+		} else {
 			return !blockState.isFaceSturdy(world, blockPos, Direction.UP);
 		}
 	}
-	
-	protected boolean isMiddle(BlockState state) {
-		return state.is(this) && state.getValue(SHAPE) == TripleShape.MIDDLE;
+
+	@Override
+	public Optional<String> getModelString(String block) {
+		String name = Registry.BLOCK.getKey(this).getPath();
+		if (block.endsWith("_middle")) {
+			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top", name + "_top");
+		}
+		Map<String, String> map = Maps.newHashMap();
+		map.put("%top%", "betterend:block/" + name + "_top");
+		map.put("%side%", "betterend:block/" + name + "_side");
+		map.put("%bottom%", "minecraft:block/end_stone");
+		return Patterns.createJson(Patterns.BLOCK_TOP_SIDE_BOTTOM, map);
+	}
+
+	@Override
+	public BlockModel getModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
+	}
+
+	@Override
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		String name = resourceLocation.getPath();
+		Optional<String> pattern;
+		if (isMiddle(blockState)) {
+			pattern = Patterns.createBlockSimple(name + "_top");
+		} else {
+			Map<String, String> textures = Maps.newHashMap();
+			textures.put("%top%", "betterend:block/" + name + "_top");
+			textures.put("%side%", "betterend:block/" + name + "_side");
+			textures.put("%bottom%", "minecraft:block/end_stone");
+			pattern = Patterns.createJson(Patterns.BLOCK_TOP_SIDE_BOTTOM, textures);
+		}
+		return ModelsHelper.fromPattern(pattern);
+	}
+
+	@Override
+	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		boolean isMiddle = isMiddle(blockState);
+		String middle = isMiddle ? "_middle" : "";
+		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
+				"block/" + resourceLocation.getPath() + middle);
+		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		if (isMiddle) {
+			List<Variant> variants = Lists.newArrayList();
+			for (BlockModelRotation rotation : BlockModelRotation.values()) {
+				variants.add(new Variant(modelId, rotation.getRotation(), false, 1));
+			}
+			return new MultiVariant(variants);
+		} else if (blockState.getValue(SHAPE) == TripleShape.TOP) {
+			return new MultiVariant(Lists.newArrayList(
+				new Variant(modelId, BlockModelRotation.X180_Y0.getRotation(), false, 1),
+				new Variant(modelId, BlockModelRotation.X180_Y90.getRotation(), false, 1),
+				new Variant(modelId, BlockModelRotation.X180_Y180.getRotation(), false, 1),
+				new Variant(modelId, BlockModelRotation.X180_Y270.getRotation(), false, 1)
+			));
+		}
+		return ModelsHelper.createRandomTopModel(modelId);
+	}
+
+	protected boolean isMiddle(BlockState blockState) {
+		return blockState.is(this) && blockState.getValue(SHAPE) == TripleShape.MIDDLE;
 	}
 }

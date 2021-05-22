@@ -69,6 +69,15 @@ public class ModelsHelper {
 		return createMultiVariant(resourceLocation, rotation.getRotation(), false);
 	}
 
+	public static MultiVariant createRandomTopModel(ResourceLocation resourceLocation) {
+		return new MultiVariant(Lists.newArrayList(
+			new Variant(resourceLocation, Transformation.identity(), false, 1),
+			new Variant(resourceLocation, BlockModelRotation.X0_Y90.getRotation(), false, 1),
+			new Variant(resourceLocation, BlockModelRotation.X0_Y180.getRotation(), false, 1),
+			new Variant(resourceLocation, BlockModelRotation.X0_Y270.getRotation(), false, 1)
+		));
+	}
+
 	public static class MultiPartBuilder {
 
 		private final static MultiPartBuilder BUILDER = new MultiPartBuilder();

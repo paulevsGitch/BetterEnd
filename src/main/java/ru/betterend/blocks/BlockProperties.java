@@ -30,7 +30,7 @@ public class BlockProperties {
 	public static final IntegerProperty SIZE = IntegerProperty.create("size", 0, 7);
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
 	
-	public static enum TripleShape implements StringRepresentable {
+	public enum TripleShape implements StringRepresentable {
 		TOP("top", 0),
 		MIDDLE("middle", 1),
 		BOTTOM("bottom", 2);
@@ -62,7 +62,7 @@ public class BlockProperties {
 		}
 	}
 
-	public static enum PedestalState implements StringRepresentable {
+	public enum PedestalState implements StringRepresentable {
 		PEDESTAL_TOP("pedestal_top"),
 		COLUMN_TOP("column_top"),
 		BOTTOM("bottom"),
@@ -87,7 +87,7 @@ public class BlockProperties {
 		}
 	}
 	
-	public static enum HydraluxShape implements StringRepresentable {
+	public enum HydraluxShape implements StringRepresentable {
 		FLOWER_BIG_BOTTOM("flower_big_bottom", true),
 		FLOWER_BIG_TOP("flower_big_top", true),
 		FLOWER_SMALL_BOTTOM("flower_small_bottom", true),
@@ -118,7 +118,7 @@ public class BlockProperties {
 		}
 	}
 	
-	public static enum PentaShape implements StringRepresentable {
+	public enum PentaShape implements StringRepresentable {
 		BOTTOM("bottom"),
 		PRE_BOTTOM("pre_bottom"),
 		MIDDLE("middle"),
@@ -142,7 +142,7 @@ public class BlockProperties {
 		}
 	}
 	
-	public static enum LumecornShape implements StringRepresentable {
+	public enum LumecornShape implements StringRepresentable {
 		LIGHT_TOP("light_top", 15),
 		LIGHT_TOP_MIDDLE("light_top_middle", 15),
 		LIGHT_MIDDLE("light_middle", 15),
@@ -174,7 +174,7 @@ public class BlockProperties {
 		}
 	}
 	
-	public static enum CactusBottom implements StringRepresentable {
+	public enum CactusBottom implements StringRepresentable {
 		EMPTY("empty"),
 		SAND("sand"),
 		MOSS("moss");

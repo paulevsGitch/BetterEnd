@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.EndTerrainBlock;
+import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;

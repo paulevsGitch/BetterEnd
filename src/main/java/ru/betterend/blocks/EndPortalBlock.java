@@ -1,6 +1,7 @@
 package ru.betterend.blocks;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.api.EnvType;
@@ -9,6 +10,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
@@ -90,32 +92,19 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		ServerLevel destination = isInEnd ? targetWorld : server.getLevel(Level.END);
 		BlockPos exitPos = findExitPos(currentWorld, destination, pos, entity);
 		if (exitPos == null) return;
-		if (entity instanceof ServerPlayer) {
-			ServerPlayer player = (ServerPlayer) entity;
-			teleportPlayer(player, destination, exitPos);
+		if (entity instanceof ServerPlayer && ((ServerPlayer) entity).isCreative()) {
+			((ServerPlayer) entity).teleportTo(destination, exitPos.getX() + 0.5, exitPos.getY(),
+					exitPos.getZ() + 0.5, entity.yRot, entity.xRot);
 		} else {
-			TeleportingEntity teleEntity = (TeleportingEntity) entity;
-			teleEntity.be_setExitPos(exitPos);
-			Entity teleported = entity.changeDimension(destination);
-			if (teleported != null) {
-				teleported.setPortalCooldown();
-			}
+			((TeleportingEntity) entity).be_setExitPos(exitPos);
+			Optional<Entity> teleported = Optional.ofNullable(entity.changeDimension(destination));
+			teleported.ifPresent(Entity::setPortalCooldown);
 		}
 	}
 
 	private boolean validate(Entity entity) {
 		return !entity.isPassenger() && !entity.isVehicle() &&
 				entity.canChangeDimensions() && !entity.isOnPortalCooldown();
-	}
-
-	private void teleportPlayer(ServerPlayer player, ServerLevel destination, BlockPos exitPos) {
-		if (player.isCreative()) {
-			player.teleportTo(destination, exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5, player.yRot, player.xRot);
-		} else {
-			TeleportingEntity teleEntity = (TeleportingEntity) player;
-			teleEntity.be_setExitPos(exitPos);
-			player.changeDimension(destination);
-		}
 	}
 	
 	@Override
@@ -131,8 +120,8 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		double targetMultiplier = Objects.requireNonNull(registry.get(targetWorldId)).coordinateScale();
 		double currentMultiplier = Objects.requireNonNull(registry.get(currentWorldId)).coordinateScale();
 		double multiplier = targetMultiplier > currentMultiplier ? 1.0 / targetMultiplier : currentMultiplier;
-		BlockPos.MutableBlockPos basePos = currentPos.mutable().set(currentPos.getX() * multiplier, currentPos.getY(), currentPos.getZ() * multiplier);
-		BlockPos.MutableBlockPos checkPos = basePos.mutable();
+		MutableBlockPos basePos = currentPos.mutable().set(currentPos.getX() * multiplier, currentPos.getY(), currentPos.getZ() * multiplier);
+		MutableBlockPos checkPos = basePos.mutable();
 		BlockState currentState = currentWorld.getBlockState(currentPos);
 		int radius = (EternalRitual.SEARCH_RADIUS >> 4) + 1;
 		checkPos = EternalRitual.findBlockPos(targetWorld, checkPos, radius, this, state -> state.is(this) &&
@@ -155,11 +144,11 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable
 		return null;
 	}
 	
-	private BlockPos.MutableBlockPos findCenter(Level world, BlockPos.MutableBlockPos pos, Direction.Axis axis) {
+	private MutableBlockPos findCenter(Level world, MutableBlockPos pos, Direction.Axis axis) {
 		return findCenter(world, pos, axis, 1);
 	}
 	
-	private BlockPos.MutableBlockPos findCenter(Level world, BlockPos.MutableBlockPos pos, Direction.Axis axis, int step) {
+	private MutableBlockPos findCenter(Level world, MutableBlockPos pos, Direction.Axis axis, int step) {
 		if (step > 8) return pos;
 		BlockState right, left;
 		Direction rightDir, leftDir;

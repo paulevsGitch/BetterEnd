@@ -53,6 +53,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	private int lastSentExp;
 
 	private BlockPos exitPos;
+	private int be_teleportDelay = 0;
 
 	public ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile profile) {
 		super(world, pos, yaw, profile);
@@ -111,9 +112,23 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 				lastSentHealth = -1.0F;
 				lastSentFood = -1;
 			}
+			be_teleportDelay = 100;
 			be_resetExitPos();
 			info.setReturnValue(player);
 		}
+	}
+
+	@Inject(method = "tick", at = @At("TAIL"))
+	public void be_decreaseCooldawn(CallbackInfo info) {
+		if (be_teleportDelay > 0) be_teleportDelay--;
+	}
+
+	@Override
+	public int getDimensionChangingDelay() {
+		if (be_teleportDelay > 0) {
+			return be_teleportDelay;
+		}
+		return super.getDimensionChangingDelay();
 	}
 
 	@Shadow

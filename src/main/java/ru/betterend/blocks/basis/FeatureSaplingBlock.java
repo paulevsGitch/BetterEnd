@@ -1,14 +1,14 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -26,13 +26,15 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndTags;
 
-public abstract class FeatureSaplingBlock extends SaplingBlock implements IRenderTypeable, BlockPatterned {
+public abstract class FeatureSaplingBlock extends SaplingBlock implements IRenderTypeable, BlockModelProvider {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 
 	public FeatureSaplingBlock() {
@@ -108,22 +110,13 @@ public abstract class FeatureSaplingBlock extends SaplingBlock implements IRende
 	}
 
 	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return ModelsHelper.createBlockItem(resourceLocation);
 	}
 
 	@Override
-	public String getModelPattern(String block) {
-		if (block.contains("item")) {
-			block = block.split("/")[1];
-			return Patterns.createJson(Patterns.ITEM_BLOCK, block);
-		}
-		return Patterns.createJson(Patterns.BLOCK_CROSS, block);
-	}
-
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SAPLING;
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_CROSS, resourceLocation.getPath());
+		return ModelsHelper.fromPattern(pattern);
 	}
 }

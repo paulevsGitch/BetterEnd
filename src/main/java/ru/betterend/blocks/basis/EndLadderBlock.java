@@ -1,8 +1,11 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
+import java.util.Map;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -25,13 +28,15 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable, BlockPatterned {
+public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable, BlockModelProvider {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape EAST_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 16.0D);
@@ -136,24 +141,22 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, blockId, blockId);
+	public BlockModel getItemModel(ResourceLocation blockId) {
+		return ModelsHelper.createBlockItem(blockId);
 	}
-	
+
 	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_BLOCK, blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
+
 	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_LADDER;
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath());
+		registerBlockModel(stateId, modelId, blockState, modelCache);
+		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING), false, true);
 	}
 }

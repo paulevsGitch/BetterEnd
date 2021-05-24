@@ -1,13 +1,15 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -23,17 +25,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.entities.EFurnaceBlockEntity;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
-public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned, IRenderTypeable {
+public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider, IRenderTypeable {
 	public EndFurnaceBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).luminance((state) -> {
-			return state.getValue(LIT) ? 13 : 0;
-		}));
+		super(FabricBlockSettings.copyOf(source).luminance(state -> state.getValue(LIT) ? 13 : 0));
 	}
 
 	@Override
@@ -49,33 +51,37 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockPatterned, IRe
 			player.awardStat(Stats.INTERACT_WITH_FURNACE);
 		}
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-	
-	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%top%", blockId.getPath() + "_top");
-		map.put("%side%", blockId.getPath() + "_side");
-		if (block.contains("_on")) {
-			map.put("%front%", blockId.getPath() + "_front_on");
-			map.put("%glow%", blockId.getPath() + "_glow");
-			return Patterns.createJson(Patterns.BLOCK_FURNACE_GLOW, map);
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		String blockName = blockId.getPath();
+		Map<String, String> textures = Maps.newHashMap();
+		textures.put("%top%", blockName + "_top");
+		textures.put("%side%", blockName + "_side");
+		Optional<String> pattern;
+		if (blockState.getValue(LIT)) {
+			textures.put("%front%", blockName + "_front_on");
+			textures.put("%glow%", blockName + "_glow");
+			pattern = Patterns.createJson(Patterns.BLOCK_FURNACE_LIT, textures);
+		} else {
+			textures.put("%front%", blockName + "_front");
+			pattern = Patterns.createJson(Patterns.BLOCK_FURNACE, textures);
 		}
-		else {
-			map.put("%front%", blockId.getPath() + "_front");
-			return Patterns.createJson(Patterns.BLOCK_FURNACE, map);
-		}
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
+
 	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_FURNACE;
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
+	}
+
+	@Override
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		String lit = blockState.getValue(LIT) ? "_lit" : "";
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + lit);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
+		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING), false, true);
 	}
 
 	@Override

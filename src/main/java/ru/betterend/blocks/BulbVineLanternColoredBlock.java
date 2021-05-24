@@ -14,16 +14,12 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 
 	@Override
 	public BlockColor getProvider() {
-		return (state, world, pos, tintIndex) -> {
-			return getColor();
-		};
+		return (state, world, pos, tintIndex) -> getColor();
 	}
 
 	@Override
 	public ItemColor getItemProvider() {
-		return (stack, tintIndex) -> {
-			return getColor();
-		};
+		return (stack, tintIndex) -> getColor();
 	}
 	
 	private int getColor() {

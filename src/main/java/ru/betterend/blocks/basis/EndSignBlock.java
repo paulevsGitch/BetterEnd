@@ -1,10 +1,11 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -38,13 +39,15 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.entities.ESignBlockEntity;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.interfaces.ISpetialItem;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.util.BlocksHelper;
 
-public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialItem {
+public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpetialItem {
 	public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
 	public static final BooleanProperty FLOOR = BooleanProperty.create("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
@@ -79,14 +82,15 @@ public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialI
 	
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		if (placer != null && placer instanceof Player) {
+		if (placer instanceof Player) {
 			ESignBlockEntity sign = (ESignBlockEntity) world.getBlockEntity(pos);
-			if (!world.isClientSide) {
-				sign.setAllowedPlayerEditor((Player) placer);
-				((ServerPlayer) placer).connection.send(new ClientboundOpenSignEditorPacket(pos));
-			}
-			else {
-				sign.setEditable(true);
+			if (sign != null) {
+				if (!world.isClientSide) {
+					sign.setAllowedPlayerEditor((Player) placer);
+					((ServerPlayer) placer).connection.send(new ClientboundOpenSignEditorPacket(pos));
+				} else {
+					sign.setEditable(true);
+				}
 			}
 		}
 	}
@@ -128,8 +132,7 @@ public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialI
 			BlockPos blockPos = ctx.getClickedPos();
 			Direction[] directions = ctx.getNearestLookingDirections();
 
-			for (int i = 0; i < directions.length; ++i) {
-				Direction direction = directions[i];
+			for (Direction direction : directions) {
 				if (direction.getAxis().isHorizontal()) {
 					Direction dir = direction.getOpposite();
 					int rot = Mth.floor((180.0 + dir.toYRot() * 16.0 / 360.0) + 0.5 + 4) & 15;
@@ -143,28 +146,13 @@ public class EndSignBlock extends SignBlock implements BlockPatterned, ISpetialI
 
 		return null;
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
+		return ModelsHelper.createBlockEmpty(parentId);
 	}
-	
-	@Override
-	public String getModelPattern(String path) {
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		if (path.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_GENERATED, path);
-		}
-		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
-	}
-	
+
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return (BlockState) state.setValue(ROTATION, rotation.rotate((Integer) state.getValue(ROTATION), 16));

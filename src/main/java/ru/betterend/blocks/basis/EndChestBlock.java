@@ -1,9 +1,10 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -13,17 +14,17 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
-public class EndChestBlock extends ChestBlock implements BlockPatterned {
+public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	private final Block parent;
 	
 	public EndChestBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).noOcclusion(), () -> {
-			return EndBlockEntities.CHEST;
-		});
+		super(FabricBlockSettings.copyOf(source).noOcclusion(), () -> EndBlockEntities.CHEST);
 		this.parent = source;
 	}
 	
@@ -40,26 +41,16 @@ public class EndChestBlock extends ChestBlock implements BlockPatterned {
 		drop.add(new ItemStack(this.asItem()));
 		return drop;
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		return Patterns.createJson(data, parentId.getPath(), blockId.getPath());
+	public BlockModel getItemModel(ResourceLocation blockId) {
+		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
+
 	@Override
-	public String getModelPattern(String path) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		if (path.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
+		return ModelsHelper.createBlockEmpty(parentId);
 	}
 }

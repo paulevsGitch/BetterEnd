@@ -1,14 +1,15 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.common.collect.Lists;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -26,12 +27,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.MHelper;
 
-public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTypeable, BlockPatterned {
+public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider {
 	public static final IntegerProperty COLOR = BlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
@@ -66,23 +67,6 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 			return MHelper.RANDOM.nextInt(4) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.UMBRELLA_TREE_SAPLING)) : Collections.emptyList();
 		}
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
-	}
-	
-	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
-	}
 
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter world, BlockPos pos) {
@@ -97,5 +81,10 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 }

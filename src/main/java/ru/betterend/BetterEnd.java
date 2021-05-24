@@ -9,7 +9,7 @@ import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
-import ru.betterend.events.PlayerAdvancementsEvents;
+import ru.betterend.events.PlayerAdvancementsCallback;
 import ru.betterend.integration.Integrations;
 import ru.betterend.item.GuideBookItem;
 import ru.betterend.recipe.AlloyingRecipes;
@@ -78,7 +78,7 @@ public class BetterEnd implements ModInitializer {
 		Configs.saveConfigs();
 		
 		if (hasGuideBook()) {
-			PlayerAdvancementsEvents.PLAYER_ADVENCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
+			PlayerAdvancementsCallback.PLAYER_ADVANCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
 				ResourceLocation advId = new ResourceLocation("minecraft:end/enter_end_gateway");
 				if (advId.equals(advancement.getId())) {
 					player.addItem(new ItemStack(GuideBookItem.GUIDE_BOOK));
@@ -101,6 +101,10 @@ public class BetterEnd implements ModInitializer {
 	
 	public static String getStringId(String id) {
 		return String.format("%s:%s", MOD_ID, id);
+	}
+
+	public static boolean isModId(ResourceLocation id) {
+		return id.getNamespace().equals(MOD_ID);
 	}
 	
 	public static boolean isDevEnvironment() {

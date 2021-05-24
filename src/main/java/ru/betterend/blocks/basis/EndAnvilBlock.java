@@ -1,13 +1,15 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -19,11 +21,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.BlockProperties;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 
-public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
+public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	private static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION;
 	protected final int level;
 	
@@ -35,7 +39,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(DESTRUCTION);
+		builder.add(getDestructionProperty());
 	}
 
 	public IntegerProperty getDestructionProperty() {
@@ -53,21 +57,6 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 		stack.getOrCreateTag().putInt("level", level);
 		return Collections.singletonList(stack);
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
-	}
-	
-	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%anvil%", blockId.getPath());
-		map.put("%top%", getTop(blockId, block));
-		return Patterns.createJson(Patterns.BLOCK_ANVIL, map);
-	}
 
 	protected String getTop(ResourceLocation blockId, String block) {
 		if (block.contains("item")) {
@@ -76,9 +65,32 @@ public class EndAnvilBlock extends AnvilBlock implements BlockPatterned {
 		char last = block.charAt(block.length() - 1);
 		return blockId.getPath() + "_top_" + last;
 	}
-	
+
 	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_ANVIL;
+	public BlockModel getItemModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
+	}
+
+	@Override
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		IntegerProperty destructionProperty = getDestructionProperty();
+		int destruction = blockState.getValue(destructionProperty);
+		String name = blockId.getPath();
+		Map<String, String> textures = Maps.newHashMap();
+		textures.put("%anvil%", name);
+		textures.put("%top%", name + "_top_" + destruction);
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_ANVIL, textures);
+		return ModelsHelper.fromPattern(pattern);
+	}
+
+	@Override
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		IntegerProperty destructionProperty = getDestructionProperty();
+		int destruction = blockState.getValue(destructionProperty);
+		String modId = stateId.getNamespace();
+		String modelId = "block/" + stateId.getPath() + "_top_" + destruction;
+		ResourceLocation modelLocation = new ResourceLocation(modId, modelId);
+		registerBlockModel(stateId, modelLocation, blockState, modelCache);
+		return ModelsHelper.createFacingModel(modelLocation, blockState.getValue(FACING), false, false);
 	}
 }

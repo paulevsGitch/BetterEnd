@@ -6,13 +6,11 @@
 	"client": [
 		"AbstractSoundInstanceAccessor",
 		"ClientPlayNetworkHandlerMixin",
-		"NamespaceResourceManagerMixin",
 		"EnchantingTableBlockMixin",
 	  	"HumanoidMobRendererMixin",
 	  	"ArmorStandRendererMixin",
 		"BackgroundRendererMixin",
 		"ClientRecipeBookMixin",
-		"ModelVariantMapMixin",
 		"MinecraftClientMixin",
 		"ContextGsonAccessor",
 	  	"PlayerRendererMixin",

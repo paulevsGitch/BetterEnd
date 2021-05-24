@@ -1,10 +1,11 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
+import net.minecraft.client.renderer.block.model.BlockModel;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -25,12 +26,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
-public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderTypeable, BlockPatterned {
+public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderTypeable, BlockModelProvider {
 	public EmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.ICE));
 	}
@@ -85,21 +87,9 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 			return Collections.emptyList();
 		}
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
-	}
-	
-	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 }

@@ -1,11 +1,16 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -25,12 +30,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.entities.EBarrelBlockEntity;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlockEntities;
 
-public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
+public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	public EndBarrelBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).noOcclusion());
 	}
@@ -87,24 +94,39 @@ public class EndBarrelBlock extends BarrelBlock implements BlockPatterned {
 			}
 		}
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
+	public BlockModel getItemModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
 	}
-	
+
 	@Override
-	public String getModelPattern(String block) {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		if (block.contains("open")) {
-			return Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		String texture = blockId.getPath();
+		Optional<String> pattern;
+		if (blockState.getValue(OPEN)) {
+			pattern = Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
+		} else {
+			pattern = Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
 		}
-		return Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
+
 	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_BARREL;
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		String open = blockState.getValue(OPEN) ? "_open" : "";
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + open);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
+		Direction facing = blockState.getValue(FACING);
+		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
+		switch (facing) {
+			case NORTH: rotation = BlockModelRotation.X90_Y0; break;
+			case EAST: rotation = BlockModelRotation.X90_Y90; break;
+			case SOUTH: rotation = BlockModelRotation.X90_Y180; break;
+			case WEST: rotation = BlockModelRotation.X90_Y270; break;
+			case DOWN: rotation = BlockModelRotation.X180_Y0; break;
+		}
+		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}
 }

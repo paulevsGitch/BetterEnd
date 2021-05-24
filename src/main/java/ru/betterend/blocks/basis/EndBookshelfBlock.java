@@ -1,10 +1,11 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +16,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import ru.betterend.patterns.Patterns;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 
 public class EndBookshelfBlock extends BlockBase {
 	public EndBookshelfBlock(Block source) {
@@ -33,24 +36,14 @@ public class EndBookshelfBlock extends BlockBase {
 		}
 		return Collections.singletonList(new ItemStack(Items.BOOK, 3));
 	}
-	
+
 	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_BOOKSHELF,
+				getName(blockId), blockId.getPath());
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
-	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BOOKSHELF, getName(blockId), blockId.getPath());
-	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, getName(blockId), blockId.getPath());
-	}
-	
+
 	private String getName(ResourceLocation blockId) {
 		String name = blockId.getPath();
 		return name.replace("_bookshelf", "");

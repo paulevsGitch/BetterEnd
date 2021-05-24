@@ -13,7 +13,7 @@ import ru.betterend.blocks.basis.EndPillarBlock;
 import ru.betterend.blocks.basis.EndSlabBlock;
 import ru.betterend.blocks.basis.EndStairsBlock;
 import ru.betterend.blocks.basis.EndStoneButtonBlock;
-import ru.betterend.blocks.basis.EndStonelateBlock;
+import ru.betterend.blocks.basis.EndStonePlateBlock;
 import ru.betterend.blocks.basis.EndWallBlock;
 import ru.betterend.blocks.basis.StoneLanternBlock;
 import ru.betterend.recipe.CraftingRecipes;
@@ -54,7 +54,7 @@ public class StoneMaterial {
 		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(stone));
 		wall = EndBlocks.registerBlock(name + "_wall", new EndWallBlock(stone));
 		button = EndBlocks.registerBlock(name + "_button", new EndStoneButtonBlock(stone));
-		pressure_plate = EndBlocks.registerBlock(name + "_plate", new EndStonelateBlock(stone));
+		pressure_plate = EndBlocks.registerBlock(name + "_plate", new EndStonePlateBlock(stone));
 		pedestal = EndBlocks.registerBlock(name + "_pedestal", new EndPedestal(stone));
 		lantern = EndBlocks.registerBlock(name + "_lantern", new StoneLanternBlock(stone));
 		

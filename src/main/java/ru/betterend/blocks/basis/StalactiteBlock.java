@@ -1,6 +1,9 @@
 package ru.betterend.blocks.basis;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -28,10 +31,15 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.BlockProperties;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.Patterns;
+
+import java.util.Map;
+import java.util.Optional;
 
 public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer, IRenderTypeable {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -192,19 +200,20 @@ public class StalactiteBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	}
 	
 	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_CROSS_SHADED, block);
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_CROSS_SHADED, resourceLocation.getPath());
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
+
 	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_STALACTITE;
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		BlockModelRotation rotation = blockState.getValue(IS_FLOOR) ? BlockModelRotation.X0_Y0 : BlockModelRotation.X180_Y0;
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				stateId.getPath() +  "_" + blockState.getValue(SIZE));
+		registerBlockModel(modelId, modelId, blockState, modelCache);
+		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}
-	
+
 	@Override
 	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;

@@ -18,7 +18,7 @@ import ru.betterend.registry.EndItems;
 import ru.betterend.util.LangUtil;
 import vazkii.patchouli.api.PatchouliAPI;
 
-public class GuideBookItem extends PatternedItem {
+public class GuideBookItem extends ModelProviderItem {
 	public final static ResourceLocation BOOK_ID = BetterEnd.makeID("guidebook");
 	public static final Item GUIDE_BOOK = EndItems.registerItem(BOOK_ID, new GuideBookItem());
 	

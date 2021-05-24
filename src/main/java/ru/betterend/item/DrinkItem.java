@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-public class DrinkItem extends PatternedItem {
+public class DrinkItem extends ModelProviderItem {
 	public DrinkItem(Properties settings) {
 		super(settings);
 	}

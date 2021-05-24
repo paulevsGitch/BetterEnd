@@ -1,5 +1,6 @@
 package ru.betterend.item.tool;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.google.common.collect.ImmutableMultimap;
@@ -9,7 +10,9 @@ import com.google.common.collect.Sets;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,11 +29,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import ru.betterend.patterns.Patterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.ItemModelProvider;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndTags;
 
-public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, Patterned {
+public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ItemModelProvider {
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = Mth.createInsecureUUID(ThreadLocalRandom.current());
 	
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers;
@@ -57,9 +61,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, P
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		stack.hurtAndBreak(1, attacker, ((entity) -> {
-			entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-		}));
+		stack.hurtAndBreak(1, attacker, ((entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
 		
 		return true;
 	}
@@ -67,9 +69,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, P
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity miner) {
 		if (state.getDestroySpeed(world, pos) != 0.0F) {
-			stack.hurtAndBreak(1, miner, ((entity) -> {
-				entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-			}));
+			stack.hurtAndBreak(1, miner, ((entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
 		}
 
 		return true;
@@ -81,13 +81,13 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, P
 			return this.getTier().getSpeed() * 2.0F;
 		}
 		if (isCorrectToolForDrops(state)) {
-			float mult = 1.0F;
+			float mult;
 			if (state.is(Blocks.DIAMOND_BLOCK) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.LAPIS_BLOCK) || state.is(Blocks.REDSTONE_BLOCK)) {
 				mult = this.getTier().getSpeed();
 			} else {
 				mult = this.getTier().getSpeed() / 2.0F;
 			}
-			return mult > 1.0F ? mult : 1.0F;
+			return Math.max(mult, 1.0F);
 		}
 		return 1.0F;
 	}
@@ -135,7 +135,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, P
 	}
 	
 	@Override
-	public String getModelPattern(String name) {
-		return Patterns.createJson(Patterns.ITEM_HANDHELD, name);
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return ModelsHelper.createHandheldItem(resourceLocation.getPath());
 	}
 }

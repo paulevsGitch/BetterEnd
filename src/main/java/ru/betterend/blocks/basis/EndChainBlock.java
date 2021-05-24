@@ -1,10 +1,14 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -13,12 +17,14 @@ import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 
-public class EndChainBlock extends ChainBlock implements BlockPatterned, IRenderTypeable {
+public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRenderTypeable {
 	public EndChainBlock(MaterialColor color) {
 		super(FabricBlockSettings.copyOf(Blocks.CHAIN).materialColor(color));
 	}
@@ -27,27 +33,28 @@ public class EndChainBlock extends ChainBlock implements BlockPatterned, IRender
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(data, blockId.getPath(), blockId.getPath());
+	public BlockModel getItemModel(ResourceLocation blockId) {
+		return ModelsHelper.createItemModel(blockId.getPath());
 	}
-	
+
 	@Override
-	public String getModelPattern(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_CHAIN, blockId.getPath(), blockId.getPath());
+	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
+		String name = blockId.getPath();
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_CHAIN, name, name);
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
+
 	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_CHAIN;
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		Direction.Axis axis = blockState.getValue(AXIS);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath());
+		registerBlockModel(stateId, modelId, blockState, modelCache);
+		return ModelsHelper.createRotatedModel(modelId, axis);
 	}
-	
+
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;

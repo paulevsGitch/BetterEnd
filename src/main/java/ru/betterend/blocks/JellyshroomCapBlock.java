@@ -1,14 +1,14 @@
 package ru.betterend.blocks;
 
-import java.io.Reader;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.core.Registry;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -21,15 +21,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.util.MHelper;
 
-public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockPatterned, IColorProvider {
+public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider, IColorProvider {
 	public static final IntegerProperty COLOR = BlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	private final Vec3i colorStart;
@@ -65,23 +67,18 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, 
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Lists.newArrayList(new ItemStack(this));
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		String block = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, block, block);
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
-	
+
 	@Override
-	public String getModelPattern(String block) {
-		return Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
+		return ModelsHelper.fromPattern(pattern);
 	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
-	}
-	
+
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
-import ru.betterend.events.PlayerAdvancementsEvents;
+import ru.betterend.events.PlayerAdvancementsCallback;
 
 @Mixin(PlayerAdvancements.class)
 public abstract class PlayerAdvancementsMixin {
@@ -22,6 +22,6 @@ public abstract class PlayerAdvancementsMixin {
 			target = "Lnet/minecraft/advancements/AdvancementRewards;grant(Lnet/minecraft/server/level/ServerPlayer;)V",
 			shift = Shift.AFTER))
 	public void be_award(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> info) {
-		PlayerAdvancementsEvents.PLAYER_ADVENCEMENT_COMPLETE.invoker().onAdvancementComplete(player, advancement, criterionName);
+		PlayerAdvancementsCallback.PLAYER_ADVANCEMENT_COMPLETE.invoker().onAdvancementComplete(player, advancement, criterionName);
 	}
 }

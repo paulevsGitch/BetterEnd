@@ -1,11 +1,13 @@
 package ru.betterend.blocks.basis;
 
 import java.awt.Point;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.UnbakedModel;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Lists;
@@ -42,7 +44,8 @@ import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -333,18 +336,55 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
 		return state.getValue(HAS_ITEM) ? 15 : 0;
 	}
-	
+
 	@Override
-	public String getStatesPattern(Reader data) {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, texture, texture);
+	public BlockModel getItemModel(ResourceLocation blockId) {
+		return getBlockModel(blockId, defaultBlockState());
 	}
-	
+
 	@Override
-	public String getModelPattern(String block) {
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		Map<String, String> textures = createTexturesMap();
+		PedestalState state = blockState.getValue(STATE);
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
+		switch (state) {
+			case COLUMN_TOP: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
+				break;
+			}
+			case COLUMN: {
+				pattern = Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
+				break;
+			}
+			case PEDESTAL_TOP: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
+				break;
+			}
+			case BOTTOM: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
+				break;
+			}
+			case PILLAR: {
+				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
+				break;
+			}
+		}
+		return ModelsHelper.fromPattern(pattern);
+	}
+
+	@Override
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		PedestalState state = blockState.getValue(STATE);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + "_" + state);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
+		return ModelsHelper.createBlockSimple(modelId);
+	}
+
+	protected Map<String, String> createTexturesMap() {
 		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
 		String name = blockId.getPath();
-		Map<String, String> textures = new HashMap<String, String>() {
+		return new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
 			{
 				put("%mod%", blockId.getNamespace() );
@@ -354,23 +394,6 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 				put("%bottom%", name + "_bottom");
 			}
 		};
-		if (block.contains("column_top")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
-		} else if (block.contains("column")) {
-			return Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
-		} else if (block.contains("top")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
-		} else if (block.contains("bottom")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
-		} else if (block.contains("pillar")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
-		}
-		return Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_PEDESTAL;
 	}
 	
 	static {

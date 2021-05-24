@@ -30,7 +30,7 @@ public class StrippableBarkBlock extends BarkBlock {
 			world.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
 			if (!world.isClientSide) {
 				world.setBlock(pos, striped.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
-				if (player != null && !player.isCreative()) {
+				if (!player.isCreative()) {
 					player.getMainHandItem().hurt(1, world.random, (ServerPlayer) player);
 				}
 			}

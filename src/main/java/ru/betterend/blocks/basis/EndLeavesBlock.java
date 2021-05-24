@@ -1,13 +1,14 @@
 package ru.betterend.blocks.basis;
 
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -22,11 +23,11 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.patterns.BlockPatterned;
-import ru.betterend.patterns.Patterns;
+import ru.betterend.client.models.BlockModelProvider;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.util.MHelper;
 
-public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRenderTypeable {
+public class EndLeavesBlock extends LeavesBlock implements BlockModelProvider, IRenderTypeable {
 	private final Block sapling;
 	
 	public EndLeavesBlock(Block sapling, MaterialColor color) {
@@ -52,24 +53,7 @@ public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRend
 				.isViewBlocking((state, world, pos) -> false));
 		this.sapling = sapling;
 	}
-	
-	@Override
-	public String getStatesPattern(Reader data) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(data, blockId, blockId);
-	}
-	
-	@Override
-	public String getModelPattern(String block) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId, blockId);
-	}
-	
-	@Override
-	public ResourceLocation statePatternId() {
-		return Patterns.STATE_SIMPLE;
-	}
-	
+
 	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
@@ -89,5 +73,10 @@ public class EndLeavesBlock extends LeavesBlock implements BlockPatterned, IRend
 			return Lists.newArrayList();
 		}
 		return MHelper.RANDOM.nextInt(16) == 0 ? Lists.newArrayList(new ItemStack(sapling)) : Lists.newArrayList();
+	}
+
+	@Override
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 }

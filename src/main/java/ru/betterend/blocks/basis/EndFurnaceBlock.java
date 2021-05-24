@@ -53,23 +53,6 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%top%", blockId.getPath() + "_top");
-		map.put("%side%", blockId.getPath() + "_side");
-		if (block.contains("_on")) {
-			map.put("%front%", blockId.getPath() + "_front_on");
-			map.put("%glow%", blockId.getPath() + "_glow");
-			return Patterns.createJson(Patterns.BLOCK_FURNACE_LIT, map);
-		}
-		else {
-			map.put("%front%", blockId.getPath() + "_front");
-			return Patterns.createJson(Patterns.BLOCK_FURNACE, map);
-		}
-	}
-
-	@Override
 	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		String blockName = blockId.getPath();
 		Map<String, String> textures = Maps.newHashMap();
@@ -88,16 +71,16 @@ public class EndFurnaceBlock extends FurnaceBlock implements BlockModelProvider,
 	}
 
 	@Override
-	public BlockModel getModel(ResourceLocation resourceLocation) {
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String lit = blockState.getValue(LIT) ? "_lit" : "";
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + lit);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + lit);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING), false, true);
 	}
 

@@ -8,7 +8,9 @@ import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -53,12 +55,6 @@ public class EndLeavesBlock extends LeavesBlock implements BlockModelProvider, I
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId, blockId);
-	}
-
-	@Override
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
@@ -77,5 +73,10 @@ public class EndLeavesBlock extends LeavesBlock implements BlockModelProvider, I
 			return Lists.newArrayList();
 		}
 		return MHelper.RANDOM.nextInt(16) == 0 ? Lists.newArrayList(new ItemStack(sapling)) : Lists.newArrayList();
+	}
+
+	@Override
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 }

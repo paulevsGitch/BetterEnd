@@ -36,20 +36,7 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_FENCE, parentId.getPath(), blockId.getPath());
-		}
-		if (block.contains("side")) {
-			return Patterns.createJson(Patterns.BLOCK_FENCE_SIDE, parentId.getPath(), blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_FENCE_POST, parentId.getPath(), blockId.getPath());
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_FENCE, parentId.getPath(), blockId.getPath());
 		return ModelsHelper.fromPattern(pattern);
@@ -57,29 +44,24 @@ public class EndFenceBlock extends FenceBlock implements BlockModelProvider {
 
 	@Override
 	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
-		ResourceLocation thisId = Registry.BLOCK.getKey(this);
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		ResourceLocation postId = new ResourceLocation(thisId.getNamespace(),
-				"block/" + thisId.getPath() + "_post");
-		ResourceLocation sideId = new ResourceLocation(thisId.getNamespace(),
-				"block/" + thisId.getPath() + "_side");
-		if (blockId.equals(postId)) {
-			Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FENCE_POST, parentId.getPath(), blockId.getPath());
-			return ModelsHelper.fromPattern(pattern);
+		String path = blockId.getPath();
+		Optional<String> pattern = Optional.empty();
+		if (path.endsWith("_post")) {
+			pattern = Patterns.createJson(Patterns.BLOCK_FENCE_POST, parentId.getPath(), blockId.getPath());
 		}
-		if (blockId.equals(sideId)) {
-			Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FENCE_SIDE, parentId.getPath(), blockId.getPath());
-			return ModelsHelper.fromPattern(pattern);
+		if (path.endsWith("_side")) {
+			pattern = Patterns.createJson(Patterns.BLOCK_FENCE_SIDE, parentId.getPath(), blockId.getPath());
 		}
-		return null;
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation blockId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
-		ResourceLocation postId = new ResourceLocation(blockId.getNamespace(),
-				"block/" + blockId.getPath() + "_post");
-		ResourceLocation sideId = new ResourceLocation(blockId.getNamespace(),
-				"block/" + blockId.getPath() + "_side");
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation postId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + "_post");
+		ResourceLocation sideId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + "_side");
 		registerBlockModel(postId, postId, blockState, modelCache);
 		registerBlockModel(sideId, sideId, blockState, modelCache);
 

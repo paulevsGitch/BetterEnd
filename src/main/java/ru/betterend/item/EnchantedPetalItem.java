@@ -21,12 +21,7 @@ public class EnchantedPetalItem extends ModelProviderItem {
 	}
 	
 	@Override
-	public Optional<String> getModelString(String name) {
-		return Patterns.createJson(Patterns.ITEM_GENERATED, "item/hydralux_petal");
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation resourceLocation) {
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return ModelsHelper.createItemModel("hydralux_petal");
 	}
 }

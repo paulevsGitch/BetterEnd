@@ -58,15 +58,6 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 		return Collections.singletonList(stack);
 	}
 
-	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%anvil%", blockId.getPath());
-		map.put("%top%", getTop(blockId, block));
-		return Patterns.createJson(Patterns.BLOCK_ANVIL, map);
-	}
-
 	protected String getTop(ResourceLocation blockId, String block) {
 		if (block.contains("item")) {
 			return blockId.getPath() + "_top_0";
@@ -76,7 +67,7 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
 	}
 
@@ -93,13 +84,13 @@ public class EndAnvilBlock extends AnvilBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		IntegerProperty destructionProperty = getDestructionProperty();
 		int destruction = blockState.getValue(destructionProperty);
-		String modId = resourceLocation.getNamespace();
-		String modelId = "block/" + resourceLocation.getPath() + "_top_" + destruction;
+		String modId = stateId.getNamespace();
+		String modelId = "block/" + stateId.getPath() + "_top_" + destruction;
 		ResourceLocation modelLocation = new ResourceLocation(modId, modelId);
-		registerBlockModel(resourceLocation, modelLocation, blockState, modelCache);
+		registerBlockModel(stateId, modelLocation, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelLocation, blockState.getValue(FACING), false, false);
 	}
 }

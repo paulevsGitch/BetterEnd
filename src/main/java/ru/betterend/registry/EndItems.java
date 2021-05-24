@@ -117,7 +117,7 @@ public class EndItems {
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);
 	
 	public static Item registerDisc(String name, int power, SoundEvent sound) {
-		return registerItem(BetterEnd.makeID(name), new ModelProviderDiscItem(power, sound, makeItemSettings()));
+		return registerItem(BetterEnd.makeID(name), new EndDiscItem(power, sound, makeItemSettings()));
 	}
 	
 	public static Item registerItem(String name) {

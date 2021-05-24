@@ -148,15 +148,6 @@ public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpet
 	}
 
 	@Override
-	public Optional<String> getModelString(String path) {
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		if (path.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_GENERATED, path);
-		}
-		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
-	}
-
-	@Override
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
 		return ModelsHelper.createBlockEmpty(parentId);

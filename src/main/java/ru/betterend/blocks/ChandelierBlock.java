@@ -1,11 +1,15 @@
 package ru.betterend.blocks;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -16,7 +20,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.basis.AttachedBlock;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.client.models.BlockModelProvider;
@@ -40,20 +46,51 @@ public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, B
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_GENERATED, "item/" + blockId.getPath());
+	public BlockModel getItemModel(ResourceLocation blockId) {
+		return ModelsHelper.createItemModel(blockId.getPath());
+	}
+
+	@Override
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		Optional<String> pattern;
+		switch (blockState.getValue(FACING)) {
+			case UP:
+				pattern = Patterns.createJson(Patterns.BLOCK_CHANDELIER_FLOOR, resourceLocation.getPath());
+				break;
+			case DOWN:
+				pattern = Patterns.createJson(Patterns.BLOCK_CHANDELIER_CEIL, resourceLocation.getPath());
+				break;
+			default:
+				pattern = Patterns.createJson(Patterns.BLOCK_CHANDELIER_WALL, resourceLocation.getPath());
 		}
-		else if (block.contains("ceil")) {
-			return Patterns.createJson(Patterns.BLOCK_CHANDELIER_CEIL, blockId.getPath());
+		return ModelsHelper.fromPattern(pattern);
+	}
+
+	@Override
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		String state = "_wall";
+		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
+		switch (blockState.getValue(FACING)) {
+			case UP:
+				state = "_floor";
+				break;
+			case DOWN:
+				state = "_ceil";
+				break;
+			case EAST:
+				rotation = BlockModelRotation.X0_Y270;
+				break;
+			case NORTH:
+				rotation = BlockModelRotation.X0_Y180;
+				break;
+			case WEST:
+				rotation = BlockModelRotation.X0_Y90;
+				break;
 		}
-		else if (block.contains("wall")) {
-			return Patterns.createJson(Patterns.BLOCK_CHANDELIER_WALL, blockId.getPath());
-		}
-		else {
-			return Patterns.createJson(Patterns.BLOCK_CHANDELIER_FLOOR, blockId.getPath());
-		}
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + state);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
+		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}
 
 	static {

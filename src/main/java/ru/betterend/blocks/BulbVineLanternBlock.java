@@ -57,20 +57,6 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%glow%", getGlowTexture());
-		map.put("%metal%", getMetalTexture(blockId));
-		if (block.contains("item") || block.contains("ceil")) {
-			return Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_CEIL, map);
-		}
-		else {
-			return Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_FLOOR, map);
-		}
-	}
-
-	@Override
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%glow%", getGlowTexture());

@@ -123,11 +123,11 @@ public class EndLanternBlock extends BlockBaseNotFull implements SimpleWaterlogg
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String floor = blockState.getValue(IS_FLOOR) ? "_floor" : "";
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + floor);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + floor);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createBlockSimple(modelId);
 	}
 }

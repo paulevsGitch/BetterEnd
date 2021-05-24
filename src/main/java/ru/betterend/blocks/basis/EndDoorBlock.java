@@ -46,24 +46,6 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		String blockId = Registry.BLOCK.getKey(this).getPath();
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_GENERATED, block);
-		}
-		if (block.contains("top_hinge")) {
-			return Patterns.createJson(Patterns.BLOCK_DOOR_TOP_HINGE, blockId, blockId);
-		}
-		if (block.contains("bottom_hinge")) {
-			return Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM_HINGE, blockId, blockId);
-		}
-		if (block.contains("top")) {
-			return Patterns.createJson(Patterns.BLOCK_DOOR_TOP, blockId, blockId);
-		}
-		return Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM, blockId, blockId);
-	}
-
-	@Override
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		String blockName = resourceLocation.getPath();
 		DoorType doorType = getDoorType(blockState);
@@ -86,7 +68,7 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		Direction facing = blockState.getValue(FACING);
 		DoorType doorType = getDoorType(blockState);
 		boolean open = blockState.getValue(OPEN);
@@ -128,9 +110,9 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 				break;
 			}
 		}
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + "_" + doorType);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + "_" + doorType);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}
 

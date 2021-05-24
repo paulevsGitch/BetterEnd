@@ -34,20 +34,8 @@ public class EndGateBlock extends FenceGateBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		if (block.contains("wall")) {
-			if (block.contains("open")) {
-				return Patterns.createJson(Patterns.BLOCK_GATE_OPEN_WALL, parentId.getPath(), blockId.getPath());
-			} else {
-				return Patterns.createJson(Patterns.BLOCK_GATE_CLOSED_WALL, parentId.getPath(), blockId.getPath());
-			}
-		}
-		if (block.contains("open")) {
-			return Patterns.createJson(Patterns.BLOCK_GATE_OPEN, parentId.getPath(), blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_GATE_CLOSED, parentId.getPath(), blockId.getPath());
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 
 	@Override
@@ -67,13 +55,13 @@ public class EndGateBlock extends FenceGateBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		boolean inWall = blockState.getValue(IN_WALL);
 		boolean isOpen = blockState.getValue(OPEN);
 		String state = "" + (inWall ? "_wall" : "") + (isOpen ? "_open" : "_closed");
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + state);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + state);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING), true, false);
 	}
 }

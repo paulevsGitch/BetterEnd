@@ -8,7 +8,9 @@ import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Vec3i;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -19,6 +21,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -65,8 +69,14 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, 
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		return Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
+	}
+
+	@Override
+	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
+		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
+		return ModelsHelper.fromPattern(pattern);
 	}
 
 	@Override

@@ -43,17 +43,7 @@ public class EndChestBlock extends ChestBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public Optional<String> getModelString(String path) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		if (path.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_EMPTY, parentId.getPath());
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_CHEST, blockId.getPath());
 		return ModelsHelper.fromPattern(pattern);
 	}

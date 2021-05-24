@@ -59,16 +59,7 @@ public class EndPathBlock extends BlockBaseNotFull {
 	}
 	
 	@Override
-	public Optional<String> getModelString(String block) {
-		String name = Registry.BLOCK.getKey(this).getPath();
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%top%", name + "_top");
-		map.put("%side%", name.replace("_path", "") + "_side");
-		return Patterns.createJson(Patterns.BLOCK_PATH, map);
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
 	}
 
@@ -83,8 +74,9 @@ public class EndPathBlock extends BlockBaseNotFull {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath());
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createRandomTopModel(modelId);
 	}
 }

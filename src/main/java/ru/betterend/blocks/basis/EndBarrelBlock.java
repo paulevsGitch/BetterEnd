@@ -96,16 +96,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		if (block.contains("open")) {
-			return Patterns.createJson(Patterns.BLOCK_BARREL_OPEN, texture, texture);
-		}
-		return Patterns.createJson(Patterns.BLOCK_BOTTOM_TOP, texture, texture);
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
 	}
 
@@ -122,11 +113,11 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String open = blockState.getValue(OPEN) ? "_open" : "";
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + open);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + open);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		Direction facing = blockState.getValue(FACING);
 		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
 		switch (facing) {

@@ -9,13 +9,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import ru.betterend.client.models.ModelProvider;
+import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.client.models.Patterns;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class EndArmorItem extends ArmorItem implements ModelProvider {
+public class EndArmorItem extends ArmorItem implements ItemModelProvider {
 
 	protected static final UUID[] ARMOR_MODIFIER_UUID_PER_SLOT = new UUID[] {
 			UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"),
@@ -47,10 +47,5 @@ public class EndArmorItem extends ArmorItem implements ModelProvider {
 			defaultModifiers.removeAll(attribute);
 		}
 		defaultModifiers.put(attribute, modifier);
-	}
-
-	@Override
-	public Optional<String> getModelString(String name) {
-		return Patterns.createItemGenerated(name);
 	}
 }

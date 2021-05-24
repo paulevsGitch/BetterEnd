@@ -32,14 +32,7 @@ public class EndComposterBlock extends ComposterBlock implements BlockModelProvi
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		String blockName = blockId.getPath();
-		return Patterns.createJson(Patterns.BLOCK_COMPOSTER, blockName);
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation resourceLocation) {
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 
@@ -50,28 +43,22 @@ public class EndComposterBlock extends ComposterBlock implements BlockModelProvi
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
-
-		ResourceLocation content_1 = new ResourceLocation("block/composter_contents1");
-		ResourceLocation content_2 = new ResourceLocation("block/composter_contents2");
-		ResourceLocation content_3 = new ResourceLocation("block/composter_contents3");
-		ResourceLocation content_4 = new ResourceLocation("block/composter_contents4");
-		ResourceLocation content_5 = new ResourceLocation("block/composter_contents5");
-		ResourceLocation content_6 = new ResourceLocation("block/composter_contents6");
-		ResourceLocation content_7 = new ResourceLocation("block/composter_contents7");
-		ResourceLocation content_8 = new ResourceLocation("block/composter_contents_ready");
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath());
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 
 		MultiPartBuilder builder = MultiPartBuilder.create(stateDefinition);
-		builder.part(content_1).setCondition(state -> state.getValue(LEVEL) == 1).add();
-		builder.part(content_2).setCondition(state -> state.getValue(LEVEL) == 2).add();
-		builder.part(content_3).setCondition(state -> state.getValue(LEVEL) == 3).add();
-		builder.part(content_4).setCondition(state -> state.getValue(LEVEL) == 4).add();
-		builder.part(content_5).setCondition(state -> state.getValue(LEVEL) == 5).add();
-		builder.part(content_6).setCondition(state -> state.getValue(LEVEL) == 6).add();
-		builder.part(content_7).setCondition(state -> state.getValue(LEVEL) == 7).add();
-		builder.part(content_8).setCondition(state -> state.getValue(LEVEL) == 8).add();
+		LEVEL.getPossibleValues().forEach(level -> {
+			if (level > 0) {
+				ResourceLocation contentId;
+				if (level > 7) {
+					contentId = new ResourceLocation("block/composter_contents_ready");
+				} else {
+					contentId = new ResourceLocation("block/composter_contents" + level);
+				}
+				builder.part(contentId).setCondition(state -> state.getValue(LEVEL).equals(level)).add();
+			}
+		});
 		builder.part(modelId).add();
 
 		return builder.build();

@@ -37,20 +37,7 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		String name = blockId.getPath();
-		return Patterns.createJson(Patterns.BLOCK_TRAPDOOR, new HashMap<String, String>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("%block%", name);
-				put("%texture%", name.replace("trapdoor", "door_side"));
-			}
-		});
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation resourceLocation) {
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 
@@ -68,8 +55,9 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath());
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		boolean isTop = blockState.getValue(HALF) == Half.TOP;
 		boolean isOpen = blockState.getValue(OPEN);
 		int y = 0;

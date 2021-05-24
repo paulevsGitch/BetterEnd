@@ -105,20 +105,7 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		String name = Registry.BLOCK.getKey(this).getPath();
-		if (block.endsWith("_middle")) {
-			return Patterns.createJson(Patterns.BLOCK_BASE, name + "_top", name + "_top");
-		}
-		Map<String, String> map = Maps.newHashMap();
-		map.put("%top%", "betterend:block/" + name + "_top");
-		map.put("%side%", "betterend:block/" + name + "_side");
-		map.put("%bottom%", "minecraft:block/end_stone");
-		return Patterns.createJson(Patterns.BLOCK_TOP_SIDE_BOTTOM, map);
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
 	}
 
@@ -139,12 +126,12 @@ public class TripleTerrainBlock extends EndTerrainBlock {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		boolean isMiddle = isMiddle(blockState);
 		String middle = isMiddle ? "_middle" : "";
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + middle);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + middle);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		if (isMiddle) {
 			List<Variant> variants = Lists.newArrayList();
 			for (BlockModelRotation rotation : BlockModelRotation.values()) {

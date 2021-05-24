@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -68,12 +69,6 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
-	}
-
-	@Override
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.getValue(COLOR) > 0;
 	}
@@ -86,5 +81,10 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 }

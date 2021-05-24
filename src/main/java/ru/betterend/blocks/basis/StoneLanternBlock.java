@@ -66,15 +66,6 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		String texture = Registry.BLOCK.getKey(this).getPath();
-		if (block.contains("ceil")) {
-			return Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_CEIL, texture, texture);
-		}
-		return Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_FLOOR, texture, texture);
-	}
-
-	@Override
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		String blockName = resourceLocation.getPath();
 		Optional<String> pattern = blockState.getValue(IS_FLOOR) ?

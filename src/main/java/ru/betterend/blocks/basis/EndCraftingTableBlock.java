@@ -30,25 +30,7 @@ public class EndCraftingTableBlock extends CraftingTableBlock implements BlockMo
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		String blockName = blockId.getPath();
-		return Patterns.createJson(Patterns.BLOCK_SIDED, new HashMap<String, String>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("%particle%", blockName + "_front");
-				put("%down%", blockName + "_bottom");
-				put("%up%", blockName + "_top");
-				put("%north%", blockName + "_front");
-				put("%south%", blockName + "_side");
-				put("%west%", blockName + "_front");
-				put("%east%", blockName + "_side");
-			}
-		});
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation resourceLocation) {
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 

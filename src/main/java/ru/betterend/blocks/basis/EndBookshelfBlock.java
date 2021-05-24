@@ -38,12 +38,6 @@ public class EndBookshelfBlock extends BlockBase {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BOOKSHELF, getName(blockId), blockId.getPath());
-	}
-
-	@Override
 	public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_BOOKSHELF,
 				getName(blockId), blockId.getPath());

@@ -338,24 +338,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		Map<String, String> textures = createTexturesMap();
-		if (block.contains("column_top")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
-		} else if (block.contains("column")) {
-			return Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
-		} else if (block.contains("top")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
-		} else if (block.contains("bottom")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
-		} else if (block.contains("pillar")) {
-			return Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
-		}
-		return Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
 	}
 
@@ -390,11 +373,11 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		PedestalState state = blockState.getValue(STATE);
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + "_" + state);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + "_" + state);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createBlockSimple(modelId);
 	}
 

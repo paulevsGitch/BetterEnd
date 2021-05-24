@@ -35,16 +35,7 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		if (block.contains("item")) {
-			return Patterns.createItemGenerated(block);
-		}
-		return Patterns.createJson(Patterns.BLOCK_CHAIN, blockId.getPath(), blockId.getPath());
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		return ModelsHelper.createItemModel(blockId.getPath());
 	}
 
@@ -56,11 +47,11 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		Direction.Axis axis = blockState.getValue(AXIS);
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath());
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath());
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createRotatedModel(modelId, axis);
 	}
 

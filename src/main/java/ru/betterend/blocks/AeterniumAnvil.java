@@ -40,12 +40,12 @@ public class AeterniumAnvil extends EndAnvilBlock {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		int damage = getDamageState(blockState);
-		String modId = resourceLocation.getNamespace();
-		String modelId = "block/" + resourceLocation.getPath() + "_top_" + damage;
+		String modId = stateId.getNamespace();
+		String modelId = "block/" + stateId.getPath() + "_top_" + damage;
 		ResourceLocation modelLocation = new ResourceLocation(modId, modelId);
-		registerBlockModel(resourceLocation, modelLocation, blockState, modelCache);
+		registerBlockModel(stateId, modelLocation, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelLocation, blockState.getValue(FACING), false, false);
 	}
 

@@ -38,21 +38,7 @@ public class EndStairsBlock extends StairBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_STAIR, parentId.getPath(), blockId.getPath());
-		if (block.contains("inner")) {
-			pattern = Patterns.createJson(Patterns.BLOCK_STAIR_INNER, parentId.getPath(), blockId.getPath());
-		}
-		if (block.contains("outer")) {
-			pattern = Patterns.createJson(Patterns.BLOCK_STAIR_OUTER, parentId.getPath(), blockId.getPath());
-		}
-		return pattern;
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation resourceLocation) {
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 

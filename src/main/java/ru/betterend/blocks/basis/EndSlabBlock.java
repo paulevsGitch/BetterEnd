@@ -36,10 +36,8 @@ public class EndSlabBlock extends SlabBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		ResourceLocation parentId = Registry.BLOCK.getKey(parent);
-		return Patterns.createJson(Patterns.BLOCK_SLAB, parentId.getPath(), blockId.getPath());
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
 
 	@Override
@@ -50,11 +48,11 @@ public class EndSlabBlock extends SlabBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		SlabType type = blockState.getValue(TYPE);
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(),
-				"block/" + resourceLocation.getPath() + "_" + type);
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
+				"block/" + stateId.getPath() + "_" + type);
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		if (type == SlabType.TOP) {
 			return ModelsHelper.createMultiVariant(modelId, BlockModelRotation.X180_Y0.getRotation(), true);
 		}

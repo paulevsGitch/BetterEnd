@@ -110,16 +110,7 @@ public abstract class FeatureSaplingBlock extends SaplingBlock implements IRende
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		if (block.contains("item")) {
-			block = block.split("/")[1];
-			return Patterns.createJson(Patterns.ITEM_BLOCK, block);
-		}
-		return Patterns.createJson(Patterns.BLOCK_CROSS, block);
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation resourceLocation) {
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return ModelsHelper.createBlockItem(resourceLocation);
 	}
 

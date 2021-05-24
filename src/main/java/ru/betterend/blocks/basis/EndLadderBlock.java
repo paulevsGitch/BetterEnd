@@ -143,16 +143,7 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		if (block.contains("item")) {
-			return Patterns.createJson(Patterns.ITEM_BLOCK, blockId.getPath());
-		}
-		return Patterns.createJson(Patterns.BLOCK_LADDER, blockId.getPath());
-	}
-
-	@Override
-	public BlockModel getModel(ResourceLocation blockId) {
+	public BlockModel getItemModel(ResourceLocation blockId) {
 		return ModelsHelper.createBlockItem(blockId);
 	}
 
@@ -163,9 +154,9 @@ public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable,
 	}
 
 	@Override
-	public UnbakedModel getModelVariant(ResourceLocation resourceLocation, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
-		ResourceLocation modelId = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-		registerBlockModel(resourceLocation, modelId, blockState, modelCache);
+	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath());
+		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createFacingModel(modelId, blockState.getValue(FACING), false, true);
 	}
 }

@@ -33,6 +33,11 @@ public class ModelsHelper {
 		return fromPattern(pattern);
 	}
 
+	public static BlockModel createHandheldItem(String name) {
+		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_HANDHELD, "item/" + name);
+		return fromPattern(pattern);
+	}
+
 	public static BlockModel createBlockItem(ResourceLocation resourceLocation) {
 		Optional<String> pattern = Patterns.createJson(Patterns.ITEM_BLOCK, resourceLocation.getPath());
 		return fromPattern(pattern);

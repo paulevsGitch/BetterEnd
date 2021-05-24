@@ -2,11 +2,10 @@ package ru.betterend.blocks.basis;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.core.Registry;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
@@ -21,16 +20,15 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.Patterns;
 import ru.betterend.util.MHelper;
 
 public class EndOreBlock extends OreBlock implements BlockModelProvider {
 	private final Item dropItem;
 	private final int minCount;
 	private final int maxCount;
-	private final int expirience;
+	private final int experience;
 	
-	public EndOreBlock(Item drop, int minCount, int maxCount, int expirience) {
+	public EndOreBlock(Item drop, int minCount, int maxCount, int experience) {
 		super(FabricBlockSettings.of(Material.STONE, MaterialColor.SAND)
 				.hardness(3F)
 				.resistance(9F)
@@ -39,12 +37,12 @@ public class EndOreBlock extends OreBlock implements BlockModelProvider {
 		this.dropItem = drop;
 		this.minCount = minCount;
 		this.maxCount = maxCount;
-		this.expirience = expirience;
+		this.experience = experience;
 	}
 	
 	@Override
 	protected int xpOnDrop(Random random) {
-		return this.expirience > 0 ? random.nextInt(expirience) + 1 : 0;
+		return this.experience > 0 ? random.nextInt(experience) + 1 : 0;
 	}
 
 	@Override
@@ -72,9 +70,7 @@ public class EndOreBlock extends OreBlock implements BlockModelProvider {
 	}
 
 	@Override
-	public Optional<String> getModelString(String block) {
-		ResourceLocation blockId = Registry.BLOCK.getKey(this);
-		return Patterns.createJson(Patterns.BLOCK_BASE, blockId.getPath(), block);
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return getBlockModel(resourceLocation, defaultBlockState());
 	}
-
 }

@@ -21,9 +21,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.util.MHelper;
+import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.StructureHelper;
 
 public class CrashedShipFeature extends NBTStructureFeature {
 	private static final StructureProcessor REPLACER;

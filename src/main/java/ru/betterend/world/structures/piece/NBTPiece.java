@@ -17,8 +17,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureMana
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import ru.bclib.util.MHelper;
+import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.util.StructureHelper;
 
 public class NBTPiece extends BasePiece {
 	private ResourceLocation structureID;

@@ -86,8 +86,8 @@ public class EndBlocks {
 	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new SulphurCrystalBlock());
 	public static final Block MISSING_TILE = registerBlock("missing_tile", new MissingTileBlock());
 	
-	public static final Block FLAVOLITE_RUNED = registerBlock("flavolite_runed", new RunedFlavolite());
-	public static final Block FLAVOLITE_RUNED_ETERNAL = registerBlock("flavolite_runed_eternal", new EternalRunedFlavolite());
+	public static final Block FLAVOLITE_RUNED = registerBlock("flavolite_runed", new RunedFlavolite(false));
+	public static final Block FLAVOLITE_RUNED_ETERNAL = registerBlock("flavolite_runed_eternal", new RunedFlavolite(true));
 	
 	public static final Block ANDESITE_PEDESTAL = registerBlock("andesite_pedestal", new PedestalVanilla(Blocks.ANDESITE));
 	public static final Block DIORITE_PEDESTAL = registerBlock("diorite_pedestal", new PedestalVanilla(Blocks.DIORITE));

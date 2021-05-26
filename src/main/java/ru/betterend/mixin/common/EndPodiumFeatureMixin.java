@@ -20,8 +20,8 @@ import net.minecraft.world.level.levelgen.feature.EndPodiumFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.util.StructureHelper;
 import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 

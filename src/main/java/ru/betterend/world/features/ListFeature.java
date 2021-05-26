@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.StructureHelper;
 
 public class ListFeature extends NBTStructureFeature {
 	private final List<StructureInfo> list;

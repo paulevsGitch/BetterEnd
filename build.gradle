@@ -10,14 +10,22 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+def env = System.getenv()
+
 repositories {
     maven { url "https://maven.dblsaiko.net/" }
     maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
 	maven { url "https://maven.fabricmc.net/" }
 	maven { url 'https://maven.blamejared.com' }
 	maven { url "https://maven.shedaniel.me/" }
+	maven {
+		url "https://maven.pkg.github.com/paulevsgitch/bclib/"
+		credentials {
+			username = env.GITHUB_USER
+			password = env.GITHUB_TOKEN
+		}
+	}
 	maven { url 'https://jitpack.io' }
-	jcenter()
 }
 
 apply plugin: 'maven'
@@ -29,6 +37,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
 	useApi "vazkii.patchouli:Patchouli:1.16.4-${project.patchouli_version}"
+	useApi "ru.bclib:bclib:0.1.1"
 	
 	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"

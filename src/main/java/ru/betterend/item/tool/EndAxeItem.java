@@ -13,9 +13,6 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.client.models.ModelsHelper;
-import ru.betterend.client.models.Patterns;
-
-import java.util.Optional;
 
 public class EndAxeItem extends AxeItem implements DynamicAttributeTool, ItemModelProvider {
 	public EndAxeItem(Tier material, float attackDamage, float attackSpeed, Properties settings) {

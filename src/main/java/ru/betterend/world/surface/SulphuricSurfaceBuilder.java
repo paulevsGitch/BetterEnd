@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
+import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.MHelper;
 
 public class SulphuricSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderBaseConfiguration> {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(5123);

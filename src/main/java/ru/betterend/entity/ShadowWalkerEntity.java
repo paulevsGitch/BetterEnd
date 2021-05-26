@@ -26,8 +26,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.util.MHelper;
 
 public class ShadowWalkerEntity extends Monster {
 	public ShadowWalkerEntity(EntityType<ShadowWalkerEntity> entityType, Level world) {

@@ -16,12 +16,12 @@ import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.BonemealUtil;
-import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
 @Mixin(BoneMealItem.class)

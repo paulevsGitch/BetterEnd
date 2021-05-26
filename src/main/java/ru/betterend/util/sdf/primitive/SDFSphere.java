@@ -1,6 +1,6 @@
 package ru.betterend.util.sdf.primitive;
 
-import ru.betterend.util.MHelper;
+import ru.bclib.util.MHelper;
 
 public class SDFSphere extends SDFPrimitive {
 	private float radius;

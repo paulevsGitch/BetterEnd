@@ -29,12 +29,12 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.entity.SilkMothEntity;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public class SilkMothHiveBlock extends BlockBase {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;

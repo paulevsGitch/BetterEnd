@@ -13,8 +13,8 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
+import ru.bclib.util.ColorUtil;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.util.ColorUtil;
 
 public class InfusionParticleType extends ParticleType<InfusionParticleType> implements ParticleOptions {
 	public static final Codec<InfusionParticleType> CODEC = ItemStack.CODEC.xmap(itemStack -> {

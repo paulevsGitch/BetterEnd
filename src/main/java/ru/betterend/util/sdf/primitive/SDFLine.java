@@ -1,7 +1,7 @@
 package ru.betterend.util.sdf.primitive;
 
 import net.minecraft.util.Mth;
-import ru.betterend.util.MHelper;
+import ru.bclib.util.MHelper;
 
 public class SDFLine extends SDFPrimitive {
 	private float radius;

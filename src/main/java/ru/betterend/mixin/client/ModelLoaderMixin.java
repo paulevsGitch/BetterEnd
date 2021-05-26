@@ -1,5 +1,17 @@
 package ru.betterend.mixin.client;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.multipart.MultiPart;
@@ -13,21 +25,10 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.world.generator.GeneratorOptions;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Mixin(ModelBakery.class)
 public abstract class ModelLoaderMixin {

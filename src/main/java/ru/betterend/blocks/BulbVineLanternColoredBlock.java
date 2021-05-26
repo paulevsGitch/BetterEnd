@@ -3,9 +3,9 @@ package ru.betterend.blocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
+import ru.bclib.util.ColorUtil;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements IColorProvider {
 	public BulbVineLanternColoredBlock(FabricBlockSettings settings) {
@@ -27,8 +27,8 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 		int b = (color & 255);
 		int g = ((color >> 8) & 255);
 		int r = ((color >> 16) & 255);
-		float[] hsv = MHelper.fromRGBtoHSB(r, g, b);
-		return MHelper.fromHSBtoRGB(hsv[0], hsv[1], hsv[1] > 0.2 ? 1 : hsv[2]);
+		float[] hsv = ColorUtil.RGBtoHSB(r, g, b, new float[3]);
+		return ColorUtil.HSBtoRGB(hsv[0], hsv[1], hsv[1] > 0.2 ? 1 : hsv[2]);
 	}
 	
 	@Override

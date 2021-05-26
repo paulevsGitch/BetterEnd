@@ -7,11 +7,11 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties.HydraluxShape;
 import ru.betterend.blocks.basis.UnderwaterPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public class HydraluxSaplingBlock extends UnderwaterPlantWithAgeBlock {
 	@Override

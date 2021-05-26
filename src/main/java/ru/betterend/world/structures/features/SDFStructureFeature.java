@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import ru.betterend.util.MHelper;
+import ru.bclib.util.MHelper;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.world.structures.piece.VoxelPiece;
 

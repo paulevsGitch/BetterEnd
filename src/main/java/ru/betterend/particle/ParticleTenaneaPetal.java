@@ -12,9 +12,9 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
+import ru.bclib.util.MHelper;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.MHelper;
 
 @Environment(EnvType.CLIENT)
 public class ParticleTenaneaPetal extends TextureSheetParticle {

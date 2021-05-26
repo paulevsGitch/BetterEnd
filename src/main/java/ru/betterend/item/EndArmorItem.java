@@ -1,5 +1,7 @@
 package ru.betterend.item;
 
+import java.util.UUID;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -10,10 +12,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import ru.betterend.client.models.ItemModelProvider;
-import ru.betterend.client.models.Patterns;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public class EndArmorItem extends ArmorItem implements ItemModelProvider {
 

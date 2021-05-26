@@ -6,10 +6,10 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import net.minecraft.world.level.ItemLike;
+import ru.bclib.util.ColorUtil;
 import ru.betterend.blocks.HydraluxPetalColoredBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.MHelper;
 
 public class FlamboyantRefabricatedIntegration extends ModIntegration {
 	public FlamboyantRefabricatedIntegration() {
@@ -18,24 +18,8 @@ public class FlamboyantRefabricatedIntegration extends ModIntegration {
 
 	@Override
 	public void register() {
-		/*Class<?> fDyeColor = getClass("com.github.EltrutCo.flamboyant.items.FDyeColor");
-		Object[] values = getStaticFieldValue(fDyeColor, "VALUES");
-		
-		if (values == null) {
-			return;
-		}*/
-		
 		Map<Integer, String> colors = Maps.newHashMap();
 		Map<Integer, ItemLike> dyes = Maps.newHashMap();
-		/*for (Object val: values) {
-			Integer color = (Integer) getFieldValue(fDyeColor, "signColor", val);
-			String name = (String) getFieldValue(fDyeColor, "name", val);
-			if (color != null && name != null) {
-				colors.put(color, name);
-				System.out.println(name + " " + color + " " + new Color(color));
-				dyes.put(color, getItem(name + "_dye"));
-			}
-		}*/
 		
 		addColor("fead1d", "amber", colors, dyes);
 		addColor("bd9a5f", "beige", colors, dyes);
@@ -58,7 +42,7 @@ public class FlamboyantRefabricatedIntegration extends ModIntegration {
 	}
 	
 	private void addColor(String hex, String name, Map<Integer, String> colors, Map<Integer, ItemLike> dyes) {
-		int color = MHelper.color(hex);
+		int color = ColorUtil.color(hex);
 		colors.put(color, name);
 		dyes.put(color, getItem(name + "_dye"));
 		

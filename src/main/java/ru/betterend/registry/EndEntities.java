@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityType.EntityFactory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
+import ru.bclib.util.ColorUtil;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.entity.CubozoaEntity;
@@ -19,16 +20,15 @@ import ru.betterend.entity.EndFishEntity;
 import ru.betterend.entity.EndSlimeEntity;
 import ru.betterend.entity.ShadowWalkerEntity;
 import ru.betterend.entity.SilkMothEntity;
-import ru.betterend.util.MHelper;
 import ru.betterend.util.SpawnHelper;
 
 public class EndEntities {
-	public static final EntityType<DragonflyEntity> DRAGONFLY = register("dragonfly", MobCategory.AMBIENT, 0.6F, 0.5F, DragonflyEntity::new, DragonflyEntity.createMobAttributes(), true, MHelper.color(32, 42, 176), MHelper.color(115, 225, 249));
-	public static final EntityType<EndSlimeEntity> END_SLIME = register("end_slime", MobCategory.MONSTER, 2F, 2F, EndSlimeEntity::new, EndSlimeEntity.createMobAttributes(), false, MHelper.color(28, 28, 28), MHelper.color(99, 11, 99));
-	public static final EntityType<EndFishEntity> END_FISH = register("end_fish", MobCategory.WATER_AMBIENT, 0.5F, 0.5F, EndFishEntity::new, EndFishEntity.createMobAttributes(), true, MHelper.color(3, 50, 76), MHelper.color(120, 206, 255));
-	public static final EntityType<ShadowWalkerEntity> SHADOW_WALKER = register("shadow_walker", MobCategory.MONSTER, 0.6F, 1.95F, ShadowWalkerEntity::new, ShadowWalkerEntity.createMobAttributes(), true, MHelper.color(30, 30, 30), MHelper.color(5, 5, 5));
-	public static final EntityType<CubozoaEntity> CUBOZOA = register("cubozoa", MobCategory.WATER_AMBIENT, 0.6F, 1F, CubozoaEntity::new, CubozoaEntity.createMobAttributes(), true, MHelper.color(151, 77, 181), MHelper.color(93, 176, 238));
-	public static final EntityType<SilkMothEntity> SILK_MOTH = register("silk_moth", MobCategory.AMBIENT, 0.6F, 0.6F, SilkMothEntity::new, SilkMothEntity.createMobAttributes(), true, MHelper.color(198, 138, 204), MHelper.color(242, 220, 236));
+	public static final EntityType<DragonflyEntity> DRAGONFLY = register("dragonfly", MobCategory.AMBIENT, 0.6F, 0.5F, DragonflyEntity::new, DragonflyEntity.createMobAttributes(), true, ColorUtil.color(32, 42, 176), ColorUtil.color(115, 225, 249));
+	public static final EntityType<EndSlimeEntity> END_SLIME = register("end_slime", MobCategory.MONSTER, 2F, 2F, EndSlimeEntity::new, EndSlimeEntity.createMobAttributes(), false, ColorUtil.color(28, 28, 28), ColorUtil.color(99, 11, 99));
+	public static final EntityType<EndFishEntity> END_FISH = register("end_fish", MobCategory.WATER_AMBIENT, 0.5F, 0.5F, EndFishEntity::new, EndFishEntity.createMobAttributes(), true, ColorUtil.color(3, 50, 76), ColorUtil.color(120, 206, 255));
+	public static final EntityType<ShadowWalkerEntity> SHADOW_WALKER = register("shadow_walker", MobCategory.MONSTER, 0.6F, 1.95F, ShadowWalkerEntity::new, ShadowWalkerEntity.createMobAttributes(), true, ColorUtil.color(30, 30, 30), ColorUtil.color(5, 5, 5));
+	public static final EntityType<CubozoaEntity> CUBOZOA = register("cubozoa", MobCategory.WATER_AMBIENT, 0.6F, 1F, CubozoaEntity::new, CubozoaEntity.createMobAttributes(), true, ColorUtil.color(151, 77, 181), ColorUtil.color(93, 176, 238));
+	public static final EntityType<SilkMothEntity> SILK_MOTH = register("silk_moth", MobCategory.AMBIENT, 0.6F, 0.6F, SilkMothEntity::new, SilkMothEntity.createMobAttributes(), true, ColorUtil.color(198, 138, 204), ColorUtil.color(242, 220, 236));
 	
 	public static void register() {
 		SpawnHelper.restrictionAir(DRAGONFLY, DragonflyEntity::canSpawn);

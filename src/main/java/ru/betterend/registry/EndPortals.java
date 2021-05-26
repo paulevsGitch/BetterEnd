@@ -9,10 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import ru.bclib.util.ColorUtil;
+import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.ConfigWriter;
 import ru.betterend.util.JsonFactory;
-import ru.betterend.util.MHelper;
 
 public class EndPortals {
 
@@ -124,7 +125,7 @@ public class EndPortals {
 		PortalInfo(ResourceLocation dimension, ResourceLocation item, int r, int g, int b) {
 			this.dimension = dimension;
 			this.item = item;
-			this.color = MHelper.color(r, g, b);
+			this.color = ColorUtil.color(r, g, b);
 		}
 		
 		ServerLevel getWorld(MinecraftServer server) {

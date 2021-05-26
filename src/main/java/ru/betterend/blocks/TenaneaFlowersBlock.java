@@ -12,10 +12,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.util.ColorUtil;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.util.MHelper;
 
 public class TenaneaFlowersBlock extends VineBlock implements IColorProvider {
 	public static final Vec3i[] COLORS;
@@ -41,16 +42,16 @@ public class TenaneaFlowersBlock extends VineBlock implements IColorProvider {
 			int r = MHelper.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
 			int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
 			int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
-			float[] hsb = MHelper.fromRGBtoHSB(r, g, b);
+			float[] hsb = ColorUtil.RGBtoHSB(r, g, b, new float[3]);
 			
-			return MHelper.fromHSBtoRGB(hsb[0], MHelper.max(0.5F, hsb[1]), hsb[2]);
+			return ColorUtil.HSBtoRGB(hsb[0], MHelper.max(0.5F, hsb[1]), hsb[2]);
 		};
 	}
 
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
-			return MHelper.color(255, 255, 255);
+			return ColorUtil.color(255, 255, 255);
 		};
 	}
 	

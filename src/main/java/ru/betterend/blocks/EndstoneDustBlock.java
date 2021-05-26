@@ -14,11 +14,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.util.MHelper;
+import ru.bclib.util.ColorUtil;
 
 public class EndstoneDustBlock extends FallingBlock {
 	@Environment(EnvType.CLIENT)
-	private static final int COLOR = MHelper.color(226, 239, 168);
+	private static final int COLOR = ColorUtil.color(226, 239, 168);
 	
 	public EndstoneDustBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SAND)

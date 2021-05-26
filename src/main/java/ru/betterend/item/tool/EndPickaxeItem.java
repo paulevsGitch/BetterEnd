@@ -16,9 +16,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.client.models.ModelsHelper;
-import ru.betterend.client.models.Patterns;
-
-import java.util.Optional;
 
 public class EndPickaxeItem extends PickaxeItem implements DynamicAttributeTool, ItemModelProvider {
 	public EndPickaxeItem(Tier material, int attackDamage, float attackSpeed, Properties settings) {

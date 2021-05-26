@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -17,12 +18,11 @@ import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
-import org.jetbrains.annotations.Nullable;
+import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.Patterns;
 
 public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRenderTypeable {
 	public EndChainBlock(MaterialColor color) {

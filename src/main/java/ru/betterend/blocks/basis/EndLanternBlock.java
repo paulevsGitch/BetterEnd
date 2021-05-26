@@ -1,5 +1,7 @@
 package ru.betterend.blocks.basis;
 
+import java.util.Map;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
@@ -22,8 +24,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.models.ModelsHelper;
-
-import java.util.Map;
 
 public class EndLanternBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;

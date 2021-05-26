@@ -6,8 +6,8 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
+import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.MHelper;
 import ru.betterend.world.biome.EndBiome;
 
 public class BiomeMap {

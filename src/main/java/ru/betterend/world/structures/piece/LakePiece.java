@@ -24,13 +24,13 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.material.FluidState;
+import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public class LakePiece extends BasePiece {
 	private static final BlockState ENDSTONE = Blocks.END_STONE.defaultBlockState();
@@ -104,12 +104,12 @@ public class LakePiece extends BasePiece {
 				if (clamp < 0.01) continue;
 				
 				double n = noise.eval(nx, nz) * 1.5 + 1.5;
-				double x3 = MHelper.pow2(x2 + noise.eval(nx, nz, 100) * 10);
-				double z3 = MHelper.pow2(z2 + noise.eval(nx, nz, -100) * 10);
+				double x3 = MHelper.sqr(x2 + noise.eval(nx, nz, 100) * 10);
+				double z3 = MHelper.sqr(z2 + noise.eval(nx, nz, -100) * 10);
 				
 				for (int y = minY; y <= maxY; y++) {
 					mut.setY((int) (y + n));
-					double y2 = MHelper.pow2((y - center.getY()) * aspect);
+					double y2 = MHelper.sqr((y - center.getY()) * aspect);
 					double r2 = radius * clamp;
 					double r3 = r2 + 8;
 					r2 *= r2;

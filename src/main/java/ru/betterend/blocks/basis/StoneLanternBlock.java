@@ -2,12 +2,13 @@ package ru.betterend.blocks.basis;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -16,12 +17,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import ru.bclib.util.ColorUtil;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.client.models.ModelsHelper;
-import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.client.models.Patterns;
-import ru.betterend.util.MHelper;
+import ru.betterend.interfaces.IColorProvider;
 
 public class StoneLanternBlock extends EndLanternBlock implements IColorProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(3, 1, 3, 13, 16, 13);
@@ -49,14 +50,14 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 			int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
 			int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
 			
-			return MHelper.color(r, g, b);
+			return ColorUtil.color(r, g, b);
 		};
 	}
 
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
-			return MHelper.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
+			return ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
 		};
 	}
 	

@@ -16,9 +16,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.ChorusPlantFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ChorusPlantFeature.class)

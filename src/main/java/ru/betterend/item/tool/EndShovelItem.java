@@ -15,9 +15,6 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.client.models.ModelsHelper;
-import ru.betterend.client.models.Patterns;
-
-import java.util.Optional;
 
 public class EndShovelItem extends ShovelItem implements DynamicAttributeTool, ItemModelProvider {
 	public EndShovelItem(Tier material, float attackDamage, float attackSpeed, Properties settings) {

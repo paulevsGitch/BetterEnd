@@ -19,12 +19,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.util.ColorUtil;
+import ru.bclib.util.MHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndItems;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.MHelper;
 
 public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTypeable, IColorProvider {
 	public static final Vec3i[] COLORS;
@@ -60,14 +61,14 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 			int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
 			int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
 			
-			return MHelper.color(r, g, b);
+			return ColorUtil.color(r, g, b);
 		};
 	}
 
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
-			return MHelper.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
+			return ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
 		};
 	}
 

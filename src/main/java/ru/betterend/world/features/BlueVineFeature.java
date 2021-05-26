@@ -4,10 +4,10 @@ import java.util.Random;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public class BlueVineFeature extends ScatterFeature {
 	private boolean small;

@@ -1,20 +1,22 @@
 package ru.betterend.blocks;
 
+import java.util.Map;
+import java.util.Optional;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Maps;
+
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Map;
-import java.util.Optional;
 
 public class AeterniumAnvil extends EndAnvilBlock {
 	private static final IntegerProperty DESTRUCTION_LONG = BlockProperties.DESTRUCTION_LONG;

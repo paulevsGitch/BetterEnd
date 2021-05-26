@@ -6,8 +6,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
+import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.MHelper;
 
 public class DestructionStructureProcessor extends StructureProcessor {
 	private int chance = 4;

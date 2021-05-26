@@ -8,8 +8,8 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.util.MHelper;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public abstract class InvertedScatterFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();

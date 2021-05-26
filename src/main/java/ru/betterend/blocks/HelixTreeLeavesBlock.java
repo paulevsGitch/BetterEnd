@@ -23,11 +23,12 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.util.ColorUtil;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.MHelper;
 
 public class HelixTreeLeavesBlock extends BlockBase implements IColorProvider {
 	public static final IntegerProperty COLOR = BlockProperties.COLOR;
@@ -50,14 +51,14 @@ public class HelixTreeLeavesBlock extends BlockBase implements IColorProvider {
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
-			return MHelper.color(237, getGreen(state.getValue(COLOR)), 20);
+			return ColorUtil.color(237, getGreen(state.getValue(COLOR)), 20);
 		};
 	}
 
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
-			return MHelper.color(237, getGreen(4), 20);
+			return ColorUtil.color(237, getGreen(4), 20);
 		};
 	}
 	

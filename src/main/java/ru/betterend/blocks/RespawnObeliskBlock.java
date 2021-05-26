@@ -35,6 +35,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.util.ColorUtil;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
@@ -44,7 +45,6 @@ import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IRenderTypeable {
 	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
@@ -152,7 +152,7 @@ public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IR
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
-			return MHelper.color(255, 255, 255);
+			return ColorUtil.color(255, 255, 255);
 		};
 	}
 

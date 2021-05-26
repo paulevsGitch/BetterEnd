@@ -22,11 +22,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties.HydraluxShape;
 import ru.betterend.blocks.basis.UnderwaterPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-import ru.betterend.util.MHelper;
 
 public class HydraluxBlock extends UnderwaterPlantBlock {
 	public static final EnumProperty<HydraluxShape> SHAPE = BlockProperties.HYDRALUX_SHAPE;

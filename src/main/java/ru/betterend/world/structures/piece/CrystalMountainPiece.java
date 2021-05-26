@@ -18,11 +18,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.MHelper;
 
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;

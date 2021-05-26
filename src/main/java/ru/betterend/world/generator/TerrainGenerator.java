@@ -10,8 +10,8 @@ import com.google.common.collect.Lists;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
+import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.MHelper;
 
 public class TerrainGenerator {
 	private static final ReentrantLock LOCKER = new ReentrantLock();

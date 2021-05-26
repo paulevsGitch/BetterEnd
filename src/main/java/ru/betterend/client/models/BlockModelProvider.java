@@ -1,16 +1,17 @@
 package ru.betterend.client.models;
 
+import static net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION;
+
 import java.util.Map;
 import java.util.Optional;
+
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 import ru.betterend.BetterEnd;
-
-import static net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION;
 
 public interface BlockModelProvider extends ItemModelProvider {
 	default @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {

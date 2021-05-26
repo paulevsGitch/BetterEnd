@@ -29,10 +29,10 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
+import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.ClientOptions;
 import ru.betterend.util.BackgroundInfo;
-import ru.betterend.util.MHelper;
 
 @Mixin(LevelRenderer.class)
 public class WorldRendererMixin {

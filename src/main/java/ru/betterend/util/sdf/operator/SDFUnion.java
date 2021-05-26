@@ -1,6 +1,6 @@
 package ru.betterend.util.sdf.operator;
 
-import ru.betterend.util.MHelper;
+import ru.bclib.util.MHelper;
 
 public class SDFUnion extends SDFBinary {
 	@Override

@@ -33,16 +33,16 @@ import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeat
 import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
+import ru.bclib.util.ColorUtil;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.util.MHelper;
 import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.structures.EndStructureFeature;
 import ru.betterend.world.surface.DoubleBlockSurfaceBuilder;
 import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BiomeDefinition {
-	private static final int DEF_FOLIAGE = MHelper.color(197, 210, 112);
+	private static final int DEF_FOLIAGE = ColorUtil.color(197, 210, 112);
 	
 	private final List<ConfiguredStructureFeature<?, ?>> structures = Lists.newArrayList();
 	private final List<FeatureInfo> features = Lists.newArrayList();
@@ -172,7 +172,7 @@ public class BiomeDefinition {
 		r = Mth.clamp(r, 0, 255);
 		g = Mth.clamp(g, 0, 255);
 		b = Mth.clamp(b, 0, 255);
-		return MHelper.color(r, g, b);
+		return ColorUtil.color(r, g, b);
 	}
 
 	public BiomeDefinition setFogColor(int r, int g, int b) {

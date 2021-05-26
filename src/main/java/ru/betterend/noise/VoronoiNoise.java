@@ -3,7 +3,7 @@ package ru.betterend.noise;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
-import ru.betterend.util.MHelper;
+import ru.bclib.util.MHelper;
 
 public class VoronoiNoise {
 	private static final Random RANDOM = new Random();

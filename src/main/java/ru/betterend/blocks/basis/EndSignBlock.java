@@ -2,7 +2,8 @@ package ru.betterend.blocks.basis;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+
+import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -39,12 +40,10 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.entities.ESignBlockEntity;
+import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.interfaces.ISpetialItem;
-import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.Patterns;
 import ru.betterend.util.BlocksHelper;
 
 public class EndSignBlock extends SignBlock implements BlockModelProvider, ISpetialItem {

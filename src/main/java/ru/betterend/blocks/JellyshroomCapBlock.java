@@ -3,6 +3,8 @@ package ru.betterend.blocks;
 import java.util.List;
 import java.util.Optional;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Lists;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -21,15 +23,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
-import org.jetbrains.annotations.Nullable;
+import ru.bclib.util.ColorUtil;
+import ru.bclib.util.MHelper;
+import ru.betterend.client.models.BlockModelProvider;
 import ru.betterend.client.models.ModelsHelper;
+import ru.betterend.client.models.Patterns;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.Patterns;
-import ru.betterend.util.MHelper;
 
 public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider, IColorProvider {
 	public static final IntegerProperty COLOR = BlockProperties.COLOR;
@@ -42,7 +44,7 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, 
 		super(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK));
 		colorStart = new Vec3i(r1, g1, b1);
 		colorEnd = new Vec3i(r2, g2, b2);
-		coloritem = MHelper.color((r1 + r2) >> 1, (g1 + g2) >> 1, (b1 + b2) >> 1);
+		coloritem = ColorUtil.color((r1 + r2) >> 1, (g1 + g2) >> 1, (b1 + b2) >> 1);
 	}
 	
 	@Override
@@ -86,7 +88,7 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, 
 			int r = Mth.floor(Mth.lerp(delta, colorStart.getX() / 255F, colorEnd.getX() / 255F) * 255F);
 			int g = Mth.floor(Mth.lerp(delta, colorStart.getY() / 255F, colorEnd.getY() / 255F) * 255F);
 			int b = Mth.floor(Mth.lerp(delta, colorStart.getZ() / 255F, colorEnd.getZ() / 255F) * 255F);
-			return MHelper.color(r, g, b);
+			return ColorUtil.color(r, g, b);
 		};
 	}
 

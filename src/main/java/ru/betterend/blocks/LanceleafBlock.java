@@ -15,10 +15,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
+import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties.PentaShape;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.MHelper;
 
 public class LanceleafBlock extends EndPlantBlock {
 	public static final EnumProperty<PentaShape> SHAPE = BlockProperties.PENTA_SHAPE;

@@ -17,9 +17,9 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.util.MHelper;
 
 public abstract class MountainPiece extends BasePiece {
 	protected Map<Integer, Integer> heightmap = Maps.newHashMap();

@@ -7,8 +7,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
+import ru.bclib.util.MHelper;
 import ru.betterend.entity.EndSlimeEntity;
-import ru.betterend.util.MHelper;
 
 public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> {
 	private final ModelPart flower;

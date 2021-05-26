@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.util.MHelper;
 import ru.betterend.item.tool.EndHammerItem;
-import ru.betterend.util.MHelper;
 
 @Mixin(BlockBehaviour.class)
 public abstract class BlockBehaviourMixin {

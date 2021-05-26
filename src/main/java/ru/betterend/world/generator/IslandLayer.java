@@ -8,8 +8,8 @@ import java.util.Random;
 import com.google.common.collect.Maps;
 
 import net.minecraft.core.BlockPos;
+import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.MHelper;
 import ru.betterend.util.sdf.SDF;
 import ru.betterend.util.sdf.operator.SDFRadialNoiseMap;
 import ru.betterend.util.sdf.operator.SDFScale;

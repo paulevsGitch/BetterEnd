@@ -1,8 +1,8 @@
 package ru.betterend.util.sdf.operator;
 
 import net.minecraft.util.Mth;
+import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.MHelper;
 
 public class SDFRadialNoiseMap extends SDFDisplacement {
 	private static final float SIN = Mth.sin(0.5F);

@@ -1,6 +1,5 @@
 package ru.betterend.item.tool;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import com.google.common.collect.ImmutableMultimap;
@@ -31,7 +30,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.client.models.ModelsHelper;
-import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndTags;
 
 public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ItemModelProvider {

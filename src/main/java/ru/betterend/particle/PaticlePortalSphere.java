@@ -9,7 +9,7 @@ import net.minecraft.client.particle.SimpleAnimatedParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
-import ru.betterend.util.MHelper;
+import ru.bclib.util.MHelper;
 
 public class PaticlePortalSphere extends SimpleAnimatedParticle {
 	private int ticks;

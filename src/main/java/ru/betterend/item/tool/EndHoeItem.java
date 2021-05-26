@@ -6,9 +6,6 @@ import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Tier;
 import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.client.models.ModelsHelper;
-import ru.betterend.client.models.Patterns;
-
-import java.util.Optional;
 
 public class EndHoeItem extends HoeItem implements ItemModelProvider {
 	public EndHoeItem(Tier material, int attackDamage, float attackSpeed, Properties settings) {

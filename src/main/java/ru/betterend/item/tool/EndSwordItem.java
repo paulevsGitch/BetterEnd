@@ -7,9 +7,6 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import ru.betterend.client.models.ItemModelProvider;
 import ru.betterend.client.models.ModelsHelper;
-import ru.betterend.client.models.Patterns;
-
-import java.util.Optional;
 
 public class EndSwordItem extends SwordItem implements DynamicAttributeTool, ItemModelProvider {
 	public EndSwordItem(Tier material, int attackDamage, float attackSpeed, Properties settings) {

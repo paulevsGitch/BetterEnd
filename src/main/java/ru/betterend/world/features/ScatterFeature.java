@@ -7,9 +7,9 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 public abstract class ScatterFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();

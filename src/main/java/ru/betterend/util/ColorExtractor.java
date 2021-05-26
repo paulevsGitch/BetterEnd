@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import ru.bclib.util.ColorUtil;
+
 public class ColorExtractor {
 	private List<Center> centers = new ArrayList<>();
 	private List<Integer> colors;

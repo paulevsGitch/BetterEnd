@@ -19,8 +19,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.util.MHelper;
 import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.util.MHelper;
 
 public class EndOreBlock extends OreBlock implements BlockModelProvider {
 	private final Item dropItem;

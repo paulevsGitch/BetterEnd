@@ -14,15 +14,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockAndTintGetter;
+import ru.bclib.util.ColorUtil;
 import ru.betterend.client.ClientOptions;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.MHelper;
 
 @Mixin(BiomeColors.class)
 public class BiomeColorsMixin {
-	private static final int POISON_COLOR = MHelper.color(92, 160, 78);
-	private static final int STREAM_COLOR = MHelper.color(105, 213, 244);
+	private static final int POISON_COLOR = ColorUtil.color(92, 160, 78);
+	private static final int STREAM_COLOR = ColorUtil.color(105, 213, 244);
 	private static final Point[] OFFSETS;
 	private static final boolean HAS_SODIUM;
 	

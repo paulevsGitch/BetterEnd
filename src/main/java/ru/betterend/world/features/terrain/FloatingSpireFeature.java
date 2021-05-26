@@ -11,13 +11,13 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.sdf.SDF;
+import ru.bclib.sdf.operator.SDFDisplacement;
+import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFDisplacement;
-import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class FloatingSpireFeature extends SpireFeature {
 	@Override

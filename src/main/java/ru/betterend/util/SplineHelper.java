@@ -13,10 +13,10 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.sdf.SDF;
+import ru.bclib.sdf.operator.SDFUnion;
+import ru.bclib.sdf.primitive.SDFLine;
 import ru.bclib.util.MHelper;
-import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFUnion;
-import ru.betterend.util.sdf.primitive.SDFLine;
 
 public class SplineHelper {
 	public static List<Vector3f> makeSpline(float x1, float y1, float z1, float x2, float y2, float z2, int points) {

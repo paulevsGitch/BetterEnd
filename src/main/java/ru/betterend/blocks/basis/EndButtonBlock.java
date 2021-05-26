@@ -56,23 +56,22 @@ public abstract class EndButtonBlock extends ButtonBlock implements BlockModelPr
 	@Override
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String powered = blockState.getValue(POWERED) ? "_powered" : "";
-		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
-				"block/" + stateId.getPath() + powered);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + powered);
 		registerBlockModel(stateId, modelId, blockState, modelCache);
 		AttachFace face = blockState.getValue(FACE);
 		boolean isCeiling = face == AttachFace.CEILING;
 		int x = 0, y = 0;
 		switch (face) {
 			case CEILING: x = 180; break;
-			case WALL:
-			default: x = 90; break;
+			case WALL: x = 90; break;
+			default: break;
 		}
 		switch (blockState.getValue(FACING)) {
 			case NORTH: if (isCeiling) { y = 180; } break;
 			case EAST: y = isCeiling ? 270 : 90; break;
 			case SOUTH: if(!isCeiling) { y = 180; } break;
-			case WEST:
-			default: y = isCeiling ? 90 : 270; break;
+			case WEST: y = isCeiling ? 90 : 270; break;
+			default: break;
 		}
 		BlockModelRotation rotation = BlockModelRotation.by(x, y);
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), face == AttachFace.WALL);

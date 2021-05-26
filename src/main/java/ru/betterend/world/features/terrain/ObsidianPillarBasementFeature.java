@@ -11,17 +11,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.sdf.SDF;
+import ru.bclib.sdf.operator.SDFDisplacement;
+import ru.bclib.sdf.operator.SDFRotation;
+import ru.bclib.sdf.operator.SDFSubtraction;
+import ru.bclib.sdf.operator.SDFTranslate;
+import ru.bclib.sdf.primitive.SDFCappedCone;
+import ru.bclib.sdf.primitive.SDFFlatland;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFDisplacement;
-import ru.betterend.util.sdf.operator.SDFRotation;
-import ru.betterend.util.sdf.operator.SDFSubtraction;
-import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.primitive.SDFCappedCone;
-import ru.betterend.util.sdf.primitive.SDFFlatland;
 import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianPillarBasementFeature extends DefaultFeature {

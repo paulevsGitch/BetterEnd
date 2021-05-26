@@ -17,14 +17,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.sdf.PosInfo;
+import ru.bclib.sdf.SDF;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.SplineHelper;
-import ru.betterend.util.sdf.PosInfo;
-import ru.betterend.util.sdf.SDF;
 import ru.betterend.world.features.DefaultFeature;
 
 public class GiganticAmaranitaFeature extends DefaultFeature {

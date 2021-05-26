@@ -115,8 +115,7 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 	@Override
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String open = blockState.getValue(OPEN) ? "_open" : "";
-		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
-				"block/" + stateId.getPath() + open);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + open);
 		registerBlockModel(stateId, modelId, blockState, modelCache);
 		Direction facing = blockState.getValue(FACING);
 		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
@@ -125,8 +124,8 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 			case EAST: rotation = BlockModelRotation.X90_Y90; break;
 			case SOUTH: rotation = BlockModelRotation.X90_Y180; break;
 			case WEST: rotation = BlockModelRotation.X90_Y270; break;
-			case DOWN:
-			default: rotation = BlockModelRotation.X180_Y0; break;
+			case DOWN: rotation = BlockModelRotation.X180_Y0; break;
+			default: break;
 		}
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}

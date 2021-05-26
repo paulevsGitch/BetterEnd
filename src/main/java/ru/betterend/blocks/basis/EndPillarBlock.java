@@ -47,8 +47,7 @@ public class EndPillarBlock extends RotatedPillarBlock implements BlockModelProv
 
 	@Override
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
-		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
-				"block/" + stateId.getPath());
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath());
 		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createRotatedModel(modelId, blockState.getValue(AXIS));
 	}

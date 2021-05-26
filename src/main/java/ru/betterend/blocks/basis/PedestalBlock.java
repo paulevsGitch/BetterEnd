@@ -361,9 +361,9 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
 				break;
 			case PILLAR:
-			default:
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
 				break;
+			default: break;
 		}
 		return ModelsHelper.fromPattern(pattern);
 	}

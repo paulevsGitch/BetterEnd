@@ -69,7 +69,8 @@ public class ModelsHelper {
 		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
 		switch (axis) {
 			case X: rotation = BlockModelRotation.X90_Y90; break;
-			case Z: default: rotation = BlockModelRotation.X90_Y0; break;
+			case Z: rotation = BlockModelRotation.X90_Y0; break;
+			default: break;
 		}
 		return createMultiVariant(resourceLocation, rotation.getRotation(), false);
 	}

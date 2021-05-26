@@ -58,8 +58,9 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 				pattern = Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM_HINGE, blockName, blockName);
 				break;
 			case TOP:
-			default:
 				pattern = Patterns.createJson(Patterns.BLOCK_DOOR_TOP, blockName, blockName);
+				break;
+			default:
 				break;
 		}
 		return ModelsHelper.fromPattern(pattern);
@@ -76,33 +77,39 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 			case EAST:
 				if (hinge && open) {
 					rotation = BlockModelRotation.X0_Y90;
-				} else if (open) {
+				}
+				else if (open) {
 					rotation = BlockModelRotation.X0_Y270;
 				}
 				break;
 			case SOUTH:
 				if (!hinge && !open || hinge && !open) {
 					rotation = BlockModelRotation.X0_Y90;
-				} else if (hinge) {
+				}
+				else if (hinge) {
 					rotation = BlockModelRotation.X0_Y180;
 				}
 				break;
 			case WEST:
 				if (!hinge && !open || hinge && !open) {
 					rotation = BlockModelRotation.X0_Y180;
-				} else if (hinge) {
+				}
+				else if (hinge) {
 					rotation = BlockModelRotation.X0_Y270;
-				} else {
+				}
+				else {
 					rotation = BlockModelRotation.X0_Y90;
 				}
 				break;
 			case NORTH:
-			default:
 				if (!hinge && !open || hinge && !open) {
 					rotation = BlockModelRotation.X0_Y270;
-				} else if (!hinge) {
+				}
+				else if (!hinge) {
 					rotation = BlockModelRotation.X0_Y180;
 				}
+				break;
+			default:
 				break;
 		}
 		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
@@ -130,10 +137,7 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 	}
 
 	protected enum DoorType implements StringRepresentable {
-		BOTTOM_HINGE("bottom_hinge"),
-		TOP_HINGE("top_hinge"),
-		BOTTOM("bottom"),
-		TOP("top");
+		BOTTOM_HINGE("bottom_hinge"), TOP_HINGE("top_hinge"), BOTTOM("bottom"), TOP("top");
 
 		private final String name;
 

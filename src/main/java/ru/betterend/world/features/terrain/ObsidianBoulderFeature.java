@@ -9,14 +9,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.sdf.SDF;
+import ru.bclib.sdf.operator.SDFDisplacement;
+import ru.bclib.sdf.operator.SDFScale3D;
+import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFDisplacement;
-import ru.betterend.util.sdf.operator.SDFScale3D;
-import ru.betterend.util.sdf.primitive.SDFSphere;
 import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianBoulderFeature extends DefaultFeature {

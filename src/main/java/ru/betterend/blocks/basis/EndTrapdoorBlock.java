@@ -77,9 +77,9 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 				y = (isTop && isOpen) ? 0 : 180;
 				break;
 			case WEST:
-			default:
 				y = (isTop && isOpen) ? 90 : 270;
 				break;
+			default: break;
 		}
 		BlockModelRotation rotation = BlockModelRotation.by(x, y);
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);

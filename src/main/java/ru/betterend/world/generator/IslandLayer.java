@@ -8,14 +8,14 @@ import java.util.Random;
 import com.google.common.collect.Maps;
 
 import net.minecraft.core.BlockPos;
+import ru.bclib.sdf.SDF;
+import ru.bclib.sdf.operator.SDFRadialNoiseMap;
+import ru.bclib.sdf.operator.SDFScale;
+import ru.bclib.sdf.operator.SDFSmoothUnion;
+import ru.bclib.sdf.operator.SDFTranslate;
+import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFRadialNoiseMap;
-import ru.betterend.util.sdf.operator.SDFScale;
-import ru.betterend.util.sdf.operator.SDFSmoothUnion;
-import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.primitive.SDFCappedCone;
 
 public class IslandLayer {
 	private static final Random RANDOM = new Random();

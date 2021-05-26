@@ -69,12 +69,10 @@ public class EndStairsBlock extends StairBlock implements BlockModelProvider {
 		StairsShape shape = blockState.getValue(SHAPE);
 		switch (shape) {
 			case INNER_LEFT:
-			case INNER_RIGHT:
-				state = "_inner"; break;
+			case INNER_RIGHT: state = "_inner"; break;
 			case OUTER_LEFT:
-			case OUTER_RIGHT:
-			default:
-				state = "_outer"; break;
+			case OUTER_RIGHT: state = "_outer"; break;
+			default: break;
 		}
 		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + state);
 		registerBlockModel(stateId, modelId, blockState, modelCache);
@@ -100,9 +98,9 @@ public class EndStairsBlock extends StairBlock implements BlockModelProvider {
 				else if (!isLeft) y = 90;
 				break;
 			case WEST:
-			default:
 				y = (isTop && isRight) ? 270 : (!isTop && isLeft) ? 90 : 180;
 				break;
+			default: break;
 		}
 		BlockModelRotation rotation = BlockModelRotation.by(x, y);
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), true);

@@ -7,6 +7,20 @@ import com.mojang.math.Vector3f;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import ru.bclib.sdf.SDF;
+import ru.bclib.sdf.operator.SDFBinary;
+import ru.bclib.sdf.operator.SDFCoordModify;
+import ru.bclib.sdf.operator.SDFFlatWave;
+import ru.bclib.sdf.operator.SDFRound;
+import ru.bclib.sdf.operator.SDFScale;
+import ru.bclib.sdf.operator.SDFScale3D;
+import ru.bclib.sdf.operator.SDFSmoothUnion;
+import ru.bclib.sdf.operator.SDFSubtraction;
+import ru.bclib.sdf.operator.SDFTranslate;
+import ru.bclib.sdf.operator.SDFUnion;
+import ru.bclib.sdf.primitive.SDFCappedCone;
+import ru.bclib.sdf.primitive.SDFPrimitive;
+import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.basis.FurBlock;
@@ -14,20 +28,6 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.SplineHelper;
-import ru.betterend.util.sdf.SDF;
-import ru.betterend.util.sdf.operator.SDFBinary;
-import ru.betterend.util.sdf.operator.SDFCoordModify;
-import ru.betterend.util.sdf.operator.SDFFlatWave;
-import ru.betterend.util.sdf.operator.SDFRound;
-import ru.betterend.util.sdf.operator.SDFScale;
-import ru.betterend.util.sdf.operator.SDFScale3D;
-import ru.betterend.util.sdf.operator.SDFSmoothUnion;
-import ru.betterend.util.sdf.operator.SDFSubtraction;
-import ru.betterend.util.sdf.operator.SDFTranslate;
-import ru.betterend.util.sdf.operator.SDFUnion;
-import ru.betterend.util.sdf.primitive.SDFCappedCone;
-import ru.betterend.util.sdf.primitive.SDFPrimitive;
-import ru.betterend.util.sdf.primitive.SDFSphere;
 
 public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
 	@Override

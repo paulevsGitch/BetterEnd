@@ -23,11 +23,11 @@ import ru.bclib.sdf.operator.SDFSmoothUnion;
 import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.util.MHelper;
+import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.HelixTreeLeavesBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.SplineHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class HelixTreeFeature extends DefaultFeature {

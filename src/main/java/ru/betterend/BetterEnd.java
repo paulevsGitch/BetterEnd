@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
@@ -30,7 +31,6 @@ import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BonemealUtil;
 import ru.betterend.util.DataFixerUtil;
-import ru.betterend.util.Logger;
 import ru.betterend.util.LootTableUtil;
 import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.generator.GeneratorOptions;
@@ -38,7 +38,7 @@ import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
-	public static final Logger LOGGER = Logger.get();
+	public static final Logger LOGGER = new Logger(MOD_ID);
 	private static boolean hasHydrogen;
 	
 	@Override

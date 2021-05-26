@@ -22,10 +22,10 @@ import ru.bclib.sdf.operator.SDFSubtraction;
 import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
+import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.SplineHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class JellyshroomFeature extends DefaultFeature {

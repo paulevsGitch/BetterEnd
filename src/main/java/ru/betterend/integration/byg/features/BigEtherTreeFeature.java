@@ -14,21 +14,19 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.material.Material;
 import ru.bclib.sdf.SDF;
 import ru.bclib.util.MHelper;
+import ru.bclib.util.SplineHelper;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.SplineHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class BigEtherTreeFeature extends DefaultFeature {
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
 			return false;
 
 		BlockState log = Integrations.BYG.getDefaultState("ether_log");
 		BlockState wood = Integrations.BYG.getDefaultState("ether_wood");
-		// BlockState leaves = Integrations.BYG.getDefaultState("ether_leaves");
 		Function<BlockPos, BlockState> splinePlacer = (bpos) -> {
 			return log;
 		};
@@ -51,7 +49,6 @@ public class BigEtherTreeFeature extends DefaultFeature {
 			List<Vector3f> branch = SplineHelper.makeSpline(0, 0, 0, length, 0, 0, points < 2 ? 2 : points);
 			SplineHelper.powerOffset(branch, length, 2F);
 			int rotCount = MHelper.randRange(5, 7, random);
-			// float startRad = MathHelper.lerp(splinePos, 2.3F, 0.8F) * 0.8F;
 			Vector3f start = SplineHelper.getPos(trunk, splinePos * (trunk.size() - 1));
 			for (int j = 0; j < rotCount; j++) {
 				float angle = startAngle + (float) j / rotCount * MHelper.PI2;
@@ -76,9 +73,4 @@ public class BigEtherTreeFeature extends DefaultFeature {
 
 		return true;
 	}
-
-	// private void makeLeavesSphere(StructureWorldAccess world, BlockPos pos,
-	// BlockState leaves, Function<BlockState, Boolean> ignore) {
-	//
-	// }
 }

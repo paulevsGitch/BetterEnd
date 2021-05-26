@@ -22,12 +22,12 @@ import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.sdf.primitive.SDFPrimitive;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
+import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlocksHelper;
-import ru.betterend.util.SplineHelper;
 
 public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
 	@Override

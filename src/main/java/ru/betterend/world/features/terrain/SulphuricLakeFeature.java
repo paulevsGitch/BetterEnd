@@ -14,12 +14,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluids;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -60,7 +60,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 				int dist = x2 + z2;
 				if (dist <= r) {
 					POS.setY(getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).is(EndTags.GEN_TERRAIN)) {
+					if (world.getBlockState(POS).is(TagAPI.GEN_TERRAIN)) {
 						if (isBorder(world, POS)) {
 							if (random.nextInt(8) > 0) {
 								brimstone.add(POS.immutable());
@@ -93,7 +93,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							brimstone.remove(POS);
 							for (Direction dir : BlocksHelper.HORIZONTAL) {
 								BlockPos offseted = POS.relative(dir);
-								if (world.getBlockState(offseted).is(EndTags.GEN_TERRAIN)) {
+								if (world.getBlockState(offseted).is(TagAPI.GEN_TERRAIN)) {
 									brimstone.add(offseted);
 								}
 							}
@@ -102,7 +102,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 								brimstone.remove(POS);
 								for (Direction dir : BlocksHelper.HORIZONTAL) {
 									BlockPos offseted = POS.relative(dir);
-									if (world.getBlockState(offseted).is(EndTags.GEN_TERRAIN)) {
+									if (world.getBlockState(offseted).is(TagAPI.GEN_TERRAIN)) {
 										brimstone.add(offseted);
 									}
 								}
@@ -118,7 +118,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 					}
 				} else if (dist < r2) {
 					POS.setY(getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).is(EndTags.GEN_TERRAIN)) {
+					if (world.getBlockState(POS).is(TagAPI.GEN_TERRAIN)) {
 						brimstone.add(POS.immutable());
 						if (random.nextBoolean()) {
 							brimstone.add(POS.below());

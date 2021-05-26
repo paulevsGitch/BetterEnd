@@ -18,9 +18,9 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.TagAPI;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
@@ -53,7 +53,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(x * 0.1, y * 0.1, z * 0.1) * 0.12F;
 					vert *= vert;
-					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(EndTags.GEN_TERRAIN) && noWaterNear(world, pos)) {
+					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && noWaterNear(world, pos)) {
 						BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						positions.add(pos.immutable());
 						int height = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
@@ -115,7 +115,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 			else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 				mut.setY(bpos.getY() - 1);
-				if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
 					Set<BlockPos> floorPositions = floorSets.get(bio);
 					if (floorPositions == null) {
 						floorPositions = Sets.newHashSet();
@@ -124,7 +124,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 					floorPositions.add(mut.immutable());
 				}
 				mut.setY(bpos.getY() + 1);
-				if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
 					Set<BlockPos> ceilPositions = ceilSets.get(bio);
 					if (ceilPositions == null) {
 						ceilPositions = Sets.newHashSet();

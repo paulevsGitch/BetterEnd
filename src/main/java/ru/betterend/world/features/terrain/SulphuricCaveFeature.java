@@ -16,12 +16,12 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -42,7 +42,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		bpos.setY(top - 1);
 
 		BlockState state = world.getBlockState(bpos);
-		while (!state.is(EndTags.GEN_TERRAIN) && bpos.getY() > 5) {
+		while (!state.is(TagAPI.GEN_TERRAIN) && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -51,7 +51,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		}
 		top = (int) (bpos.getY() - (radius * 1.3F + 5));
 
-		while (state.is(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+		while (state.is(TagAPI.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -102,7 +102,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 						}
 					} else if (dist < r2 * r2) {
 						state = world.getBlockState(mut);
-						if (state.is(EndTags.GEN_TERRAIN) || state.is(Blocks.AIR)) {
+						if (state.is(TagAPI.GEN_TERRAIN) || state.is(Blocks.AIR)) {
 							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1)
 									+ noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
 							if (v > 0.4) {
@@ -132,7 +132,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 						mut.setY(mut.getY() - 1);
 						state = world.getBlockState(mut);
 					}
-					if (state.is(EndTags.GEN_TERRAIN)
+					if (state.is(TagAPI.GEN_TERRAIN)
 							&& !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
 						for (int j = 0; j <= dist; j++) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
@@ -167,7 +167,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	}
 
 	private boolean isReplaceable(BlockState state) {
-		return state.is(EndTags.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT)
+		return state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT)
 				|| state.is(EndBlocks.VENT_BUBBLE_COLUMN) || state.is(EndBlocks.SULPHUR_CRYSTAL)
 				|| state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT)
 				|| state.getMaterial().equals(Material.WATER_PLANT) || state.getMaterial().equals(Material.LEAVES);

@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFBinary;
 import ru.bclib.sdf.operator.SDFCoordModify;
@@ -32,7 +33,6 @@ import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -86,12 +86,14 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 					info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.defaultBlockState()
 							.setValue(MossyGlowshroomCapBlock.TRANSITION, true));
 					return info.getState();
-				} else if (!EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp())
+				}
+				else if (!EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp())
 						|| !EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown())) {
 					info.setState(EndBlocks.MOSSY_GLOWSHROOM.bark.defaultBlockState());
 					return info.getState();
 				}
-			} else if (info.getState().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_CAP) {
+			}
+			else if (info.getState().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_CAP) {
 				if (EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown().getBlock())) {
 					info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.defaultBlockState()
 							.setValue(MossyGlowshroomCapBlock.TRANSITION, true));
@@ -100,7 +102,8 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 
 				info.setState(EndBlocks.MOSSY_GLOWSHROOM_CAP.defaultBlockState());
 				return info.getState();
-			} else if (info.getState().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE) {
+			}
+			else if (info.getState().getBlock() == EndBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE) {
 				for (Direction dir : BlocksHelper.HORIZONTAL) {
 					if (info.getState(dir) == AIR) {
 						info.setBlockPos(info.getPos().relative(dir),
@@ -123,8 +126,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		SDFCappedCone cone1 = new SDFCappedCone().setHeight(2.5F).setRadius1(1.5F).setRadius2(2.5F);
 		SDFCappedCone cone2 = new SDFCappedCone().setHeight(3F).setRadius1(2.5F).setRadius2(13F);
 		SDF posedCone2 = new SDFTranslate().setTranslate(0, 5, 0).setSource(cone2);
-		SDF posedCone3 = new SDFTranslate().setTranslate(0, 12F, 0)
-				.setSource(new SDFScale().setScale(2).setSource(cone2));
+		SDF posedCone3 = new SDFTranslate().setTranslate(0, 12F, 0).setSource(new SDFScale().setScale(2).setSource(cone2));
 		SDF upCone = new SDFSubtraction().setSourceA(posedCone2).setSourceB(posedCone3);
 		SDF wave = new SDFFlatWave().setRaysCount(12).setIntensity(1.3F).setSource(upCone);
 		SDF cones = new SDFSmoothUnion().setRadius(3).setSourceA(cone1).setSourceB(wave);
@@ -163,7 +165,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 				.setSourceB(new SDFUnion().setSourceA(HEAD_POS).setSourceB(ROOTS_ROT));
 
 		REPLACE = (state) -> {
-			if (state.is(EndTags.END_GROUND)) {
+			if (state.is(TagAPI.END_GROUND)) {
 				return true;
 			}
 			if (state.getMaterial().equals(Material.PLANT)) {

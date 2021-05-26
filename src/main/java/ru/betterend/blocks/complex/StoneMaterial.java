@@ -6,6 +6,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.TagHelper;
 import ru.betterend.blocks.EndPedestal;
 import ru.betterend.blocks.basis.BlockBase;
@@ -21,7 +22,6 @@ import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-import ru.betterend.registry.EndTags;
 
 public class StoneMaterial {
 	public final Block stone;
@@ -90,15 +90,15 @@ public class StoneMaterial {
 		TagHelper.addTag(ItemTags.STONE_BRICKS, bricks);
 		TagHelper.addTag(ItemTags.STONE_CRAFTING_MATERIALS, stone);
 		TagHelper.addTag(ItemTags.STONE_TOOL_MATERIALS, stone);
-		TagHelper.addTag(EndTags.FURNACES, furnace);
+		TagHelper.addTag(TagAPI.FURNACES, furnace);
 		
 		// Block Tags //
 		TagHelper.addTag(BlockTags.STONE_BRICKS, bricks);
 		TagHelper.addTag(BlockTags.WALLS, wall, brick_wall);
 		TagHelper.addTag(BlockTags.SLABS, slab, brick_slab);
 		TagHelper.addTags(pressure_plate, BlockTags.PRESSURE_PLATES, BlockTags.STONE_PRESSURE_PLATES);
-		TagHelper.addTag(EndTags.END_STONES, stone);
+		TagHelper.addTag(TagAPI.END_STONES, stone);
 		
-		TagHelper.addTag(EndTags.DRAGON_IMMUNE, stone, stairs, slab, wall);
+		TagHelper.addTag(TagAPI.DRAGON_IMMUNE, stone, stairs, slab, wall);
 	}
 }

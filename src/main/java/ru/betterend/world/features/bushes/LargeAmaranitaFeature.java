@@ -9,11 +9,11 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -21,7 +21,7 @@ public class LargeAmaranitaFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
 			return false;
 
 		MutableBlockPos mut = new MutableBlockPos().set(pos);

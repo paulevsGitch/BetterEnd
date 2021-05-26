@@ -6,7 +6,6 @@
 	"client": [
 		"AbstractSoundInstanceAccessor",
 		"ClientPlayNetworkHandlerMixin",
-		"EnchantingTableBlockMixin",
 	  	"HumanoidMobRendererMixin",
 	  	"ArmorStandRendererMixin",
 		"BackgroundRendererMixin",

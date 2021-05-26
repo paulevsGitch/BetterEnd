@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -25,7 +26,6 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -37,7 +37,7 @@ public class LacugroveFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).is(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
 		float size = MHelper.randRange(15, 25, random);
@@ -82,7 +82,7 @@ public class LacugroveFeature extends DefaultFeature {
 					boolean generate = false;
 					for (int y = minY; y < maxY; y++) {
 						mut.setY(y);
-						if (world.getBlockState(mut).is(EndTags.END_GROUND)) {
+						if (world.getBlockState(mut).is(TagAPI.END_GROUND)) {
 							generate = true;
 							break;
 						}
@@ -93,7 +93,7 @@ public class LacugroveFeature extends DefaultFeature {
 							mut.setY(y);
 							BlockState state = world.getBlockState(mut);
 							if (state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT)
-									|| state.is(EndTags.END_GROUND)) {
+									|| state.is(TagAPI.END_GROUND)) {
 								BlocksHelper.setWithoutUpdate(world, mut,
 										y == top ? EndBlocks.LACUGROVE.bark : EndBlocks.LACUGROVE.log);
 							} else {
@@ -180,7 +180,7 @@ public class LacugroveFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.is(EndTags.END_GROUND)) {
+			if (state.is(TagAPI.END_GROUND)) {
 				return true;
 			}
 			if (EndBlocks.LACUGROVE.isTreeLog(state)) {

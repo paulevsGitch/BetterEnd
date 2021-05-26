@@ -6,16 +6,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.TagAPI;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public class CavePumpkinFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.above()).is(EndTags.GEN_TERRAIN) || !world.isEmptyBlock(pos)
+		if (!world.getBlockState(pos.above()).is(TagAPI.GEN_TERRAIN) || !world.isEmptyBlock(pos)
 				|| !world.isEmptyBlock(pos.below())) {
 			return false;
 		}

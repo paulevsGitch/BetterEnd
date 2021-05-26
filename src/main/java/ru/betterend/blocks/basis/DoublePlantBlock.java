@@ -34,10 +34,10 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.api.TagAPI;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public class DoublePlantBlock extends BlockBaseNotFull implements IRenderTypeable, BonemealableBlock {
@@ -94,7 +94,7 @@ public class DoublePlantBlock extends BlockBaseNotFull implements IRenderTypeabl
 	}
 
 	protected boolean isTerrain(BlockState state) {
-		return state.is(EndTags.END_GROUND);
+		return state.is(TagAPI.END_GROUND);
 	}
 	
 	@Override

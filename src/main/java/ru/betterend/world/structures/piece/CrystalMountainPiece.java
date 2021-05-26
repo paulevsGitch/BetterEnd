@@ -18,11 +18,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.registry.EndTags;
 
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;
@@ -68,7 +68,7 @@ public class CrystalMountainPiece extends MountainPiece {
 						continue;
 					}
 					pos.setY(minY);
-					while (!chunk.getBlockState(pos).is(EndTags.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(pos.below()).is(Blocks.CAVE_AIR)) {
+					while (!chunk.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(pos.below()).is(Blocks.CAVE_AIR)) {
 						pos.setY(pos.getY() - 1);
 					}
 					minY = pos.getY();

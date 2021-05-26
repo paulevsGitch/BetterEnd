@@ -9,12 +9,12 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFRotation;
 import ru.bclib.sdf.primitive.SDFHexPrism;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -38,7 +38,7 @@ public class BigAuroraCrystalFeature extends DefaultFeature {
 		Vector3f vec = MHelper.randomHorizontal(random);
 		prism = new SDFRotation().setRotation(vec, random.nextFloat()).setSource(prism);
 		prism.setReplaceFunction((bState) -> {
-			return bState.getMaterial().isReplaceable() || bState.is(EndTags.GEN_TERRAIN)
+			return bState.getMaterial().isReplaceable() || bState.is(TagAPI.GEN_TERRAIN)
 					|| bState.getMaterial().equals(Material.PLANT) || bState.getMaterial().equals(Material.LEAVES);
 		});
 		prism.fillRecursive(world, pos);

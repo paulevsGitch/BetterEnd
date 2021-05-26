@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.StructureHelper;
-import ru.betterend.registry.EndTags;
 
 public class ListFeature extends NBTStructureFeature {
 	private final List<StructureInfo> list;
@@ -30,7 +30,7 @@ public class ListFeature extends NBTStructureFeature {
 	protected boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random) {
 		int cx = pos.getX() >> 4;
 		int cz = pos.getZ() >> 4;
-		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.below()).is(EndTags.GEN_TERRAIN);
+		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.below()).is(TagAPI.GEN_TERRAIN);
 	}
 
 	@Override

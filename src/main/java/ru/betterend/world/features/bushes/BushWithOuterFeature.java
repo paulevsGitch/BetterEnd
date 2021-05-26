@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFScale3D;
@@ -21,7 +22,6 @@ import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -41,8 +41,8 @@ public class BushWithOuterFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND)
-				&& !world.getBlockState(pos.above()).getBlock().is(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND)
+				&& !world.getBlockState(pos.above()).getBlock().is(TagAPI.END_GROUND))
 			return false;
 
 		float radius = MHelper.randRange(1.8F, 3.5F, random);

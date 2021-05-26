@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFSmoothUnion;
@@ -24,7 +25,6 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.registry.EndTags;
 import ru.betterend.world.features.DefaultFeature;
 
 public class SpireFeature extends DefaultFeature {
@@ -34,8 +34,8 @@ public class SpireFeature extends DefaultFeature {
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
 		pos = getPosOnSurfaceWG(world, pos);
-		if (pos.getY() < 10 || !world.getBlockState(pos.below(3)).is(EndTags.GEN_TERRAIN)
-				|| !world.getBlockState(pos.below(6)).is(EndTags.GEN_TERRAIN)) {
+		if (pos.getY() < 10 || !world.getBlockState(pos.below(3)).is(TagAPI.GEN_TERRAIN)
+				|| !world.getBlockState(pos.below(6)).is(TagAPI.GEN_TERRAIN)) {
 			return false;
 		}
 
@@ -83,7 +83,7 @@ public class SpireFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.is(EndTags.END_GROUND)) {
+			if (state.is(TagAPI.END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() instanceof LeavesBlock) {

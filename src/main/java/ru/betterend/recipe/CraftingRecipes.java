@@ -8,12 +8,12 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import ru.bclib.api.TagAPI;
 import ru.betterend.BetterEnd;
 import ru.betterend.item.GuideBookItem;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-import ru.betterend.registry.EndTags;
 
 public class CraftingRecipes {
 	
@@ -41,7 +41,7 @@ public class CraftingRecipes {
 			.setShape("T#T", "V V", "T#T")
 			.addMaterial('#', Blocks.END_STONE_BRICKS)
 			.addMaterial('T', EndBlocks.THALLASIUM.ingot)
-			.addMaterial('V', EndTags.FURNACES)
+			.addMaterial('V', TagAPI.FURNACES)
 			.build();
 		
 		registerPedestal("andesite_pedestal", EndBlocks.ANDESITE_PEDESTAL, Blocks.POLISHED_ANDESITE_SLAB, Blocks.POLISHED_ANDESITE);
@@ -145,13 +145,13 @@ public class CraftingRecipes {
 		GridRecipe.make("hopper", Blocks.HOPPER)
 			.setShape("I I", "ICI", " I ")
 			.addMaterial('I', Items.IRON_INGOT)
-			.addMaterial('C', EndTags.ITEM_CHEST)
+			.addMaterial('C', TagAPI.ITEM_CHEST)
 			.build();
 		
 		GridRecipe.make("shulker_box", Blocks.SHULKER_BOX)
 			.setShape("S", "C", "S")
 			.addMaterial('S', Items.SHULKER_SHELL)
-			.addMaterial('C', EndTags.ITEM_CHEST)
+			.addMaterial('C', TagAPI.ITEM_CHEST)
 			.build();
 		
 		GridRecipe.make("twisted_umbrella_moss_dye", Items.PURPLE_DYE).setList("#").addMaterial('#', EndBlocks.TWISTED_UMBRELLA_MOSS).build();
@@ -208,17 +208,17 @@ public class CraftingRecipes {
 		GridRecipe.make("neon_cactus_block_slab", EndBlocks.NEON_CACTUS_BLOCK_SLAB).setShape("###").setOutputCount(6).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();
 		GridRecipe.make("neon_cactus_block_stairs", EndBlocks.NEON_CACTUS_BLOCK_STAIRS).setShape("#  ", "## ", "###").setOutputCount(4).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();
 		
-		GridRecipe.make("tag_smith_table", Blocks.SMITHING_TABLE).setShape("II", "##", "##").addMaterial('#', ItemTags.PLANKS).addMaterial('I', EndTags.IRON_INGOTS).build();
-		GridRecipe.make("tag_cauldron", Blocks.CAULDRON).setShape("I I", "I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
-		GridRecipe.make("tag_hopper", Blocks.HOPPER).setShape("I I", "ICI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('C', EndTags.ITEM_CHEST).build();
-		GridRecipe.make("tag_piston", Blocks.PISTON).setShape("WWW", "CIC", "CDC").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).addMaterial('C', Items.COBBLESTONE).addMaterial('W', ItemTags.PLANKS).build();
-		GridRecipe.make("tag_rail", Blocks.RAIL).setShape("I I", "ISI", "I I").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STICK).build();
-		GridRecipe.make("tag_stonecutter", Blocks.STONECUTTER).setShape(" I ", "SSS").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('S', Items.STONE).build();
+		GridRecipe.make("tag_smith_table", Blocks.SMITHING_TABLE).setShape("II", "##", "##").addMaterial('#', ItemTags.PLANKS).addMaterial('I', TagAPI.IRON_INGOTS).build();
+		GridRecipe.make("tag_cauldron", Blocks.CAULDRON).setShape("I I", "I I", "III").addMaterial('I', TagAPI.IRON_INGOTS).build();
+		GridRecipe.make("tag_hopper", Blocks.HOPPER).setShape("I I", "ICI", " I ").addMaterial('I', TagAPI.IRON_INGOTS).addMaterial('C', TagAPI.ITEM_CHEST).build();
+		GridRecipe.make("tag_piston", Blocks.PISTON).setShape("WWW", "CIC", "CDC").addMaterial('I', TagAPI.IRON_INGOTS).addMaterial('D', Items.REDSTONE).addMaterial('C', Items.COBBLESTONE).addMaterial('W', ItemTags.PLANKS).build();
+		GridRecipe.make("tag_rail", Blocks.RAIL).setShape("I I", "ISI", "I I").addMaterial('I', TagAPI.IRON_INGOTS).addMaterial('S', Items.STICK).build();
+		GridRecipe.make("tag_stonecutter", Blocks.STONECUTTER).setShape(" I ", "SSS").addMaterial('I', TagAPI.IRON_INGOTS).addMaterial('S', Items.STONE).build();
 		
-		GridRecipe.make("tag_bucket", Items.BUCKET).setShape("I I", " I ").addMaterial('I', EndTags.IRON_INGOTS).build();
-		GridRecipe.make("tag_compass", Items.COMPASS).setShape(" I ", "IDI", " I ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('D', Items.REDSTONE).build();
-		GridRecipe.make("tag_minecart", Items.MINECART).setShape("I I", "III").addMaterial('I', EndTags.IRON_INGOTS).build();
-		GridRecipe.make("tag_shield", Items.SHIELD).setShape("WIW", "WWW", " W ").addMaterial('I', EndTags.IRON_INGOTS).addMaterial('W', ItemTags.PLANKS).build();
+		GridRecipe.make("tag_bucket", Items.BUCKET).setShape("I I", " I ").addMaterial('I', TagAPI.IRON_INGOTS).build();
+		GridRecipe.make("tag_compass", Items.COMPASS).setShape(" I ", "IDI", " I ").addMaterial('I', TagAPI.IRON_INGOTS).addMaterial('D', Items.REDSTONE).build();
+		GridRecipe.make("tag_minecart", Items.MINECART).setShape("I I", "III").addMaterial('I', TagAPI.IRON_INGOTS).build();
+		GridRecipe.make("tag_shield", Items.SHIELD).setShape("WIW", "WWW", " W ").addMaterial('I', TagAPI.IRON_INGOTS).addMaterial('W', ItemTags.PLANKS).build();
 		
 		GridRecipe.make("sugar_from_root", Items.SUGAR).setList("###").addMaterial('#', EndItems.AMBER_ROOT_RAW).build();
 	}

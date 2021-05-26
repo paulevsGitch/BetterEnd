@@ -22,6 +22,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties.LumecornShape;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
@@ -29,7 +30,6 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-import ru.betterend.registry.EndTags;
 
 public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create("shape", LumecornShape.class);
@@ -62,7 +62,7 @@ public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
-			return world.getBlockState(pos.below()).is(EndTags.END_GROUND);
+			return world.getBlockState(pos.below()).is(TagAPI.END_GROUND);
 		}
 		else if (shape == LumecornShape.LIGHT_TOP) {
 			return world.getBlockState(pos.below()).is(this);

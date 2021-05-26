@@ -24,12 +24,12 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.material.FluidState;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public class LakePiece extends BasePiece {
@@ -117,7 +117,7 @@ public class LakePiece extends BasePiece {
 					double dist = x3 + y2 + z3;
 					if (dist < r2) {
 						BlockState state = chunk.getBlockState(mut);
-						if (state.is(EndTags.GEN_TERRAIN) || state.isAir()) {
+						if (state.is(TagAPI.GEN_TERRAIN) || state.isAir()) {
 							state = mut.getY() < center.getY() ? WATER : CAVE_AIR;
 							chunk.setBlockState(mut, state, false);
 						}

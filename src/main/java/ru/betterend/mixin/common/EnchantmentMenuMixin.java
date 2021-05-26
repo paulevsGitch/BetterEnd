@@ -20,7 +20,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import ru.betterend.registry.EndTags;
+import ru.bclib.api.TagAPI;
 
 @Mixin(EnchantmentMenu.class)
 public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
@@ -68,28 +68,28 @@ public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 					for (j = -1; j <= 1; ++j) {
 						for (int k = -1; k <= 1; ++k) {
 							if ((j != 0 || k != 0) && world.isEmptyBlock(blockPos.offset(k, 0, j)) && world.isEmptyBlock(blockPos.offset(k, 1, j))) {
-								if (world.getBlockState(blockPos.offset(k * 2, 0, j * 2)).is(EndTags.BOOKSHELVES)) {
+								if (world.getBlockState(blockPos.offset(k * 2, 0, j * 2)).is(TagAPI.BOOKSHELVES)) {
 									++i;
 								}
 
-								if (world.getBlockState(blockPos.offset(k * 2, 1, j * 2)).is(EndTags.BOOKSHELVES)) {
+								if (world.getBlockState(blockPos.offset(k * 2, 1, j * 2)).is(TagAPI.BOOKSHELVES)) {
 									++i;
 								}
 
 								if (k != 0 && j != 0) {
-									if (world.getBlockState(blockPos.offset(k * 2, 0, j)).is(EndTags.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k * 2, 0, j)).is(TagAPI.BOOKSHELVES)) {
 										++i;
 									}
 
-									if (world.getBlockState(blockPos.offset(k * 2, 1, j)).is(EndTags.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k * 2, 1, j)).is(TagAPI.BOOKSHELVES)) {
 										++i;
 									}
 
-									if (world.getBlockState(blockPos.offset(k, 0, j * 2)).is(EndTags.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k, 0, j * 2)).is(TagAPI.BOOKSHELVES)) {
 										++i;
 									}
 
-									if (world.getBlockState(blockPos.offset(k, 1, j * 2)).is(EndTags.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k, 1, j * 2)).is(TagAPI.BOOKSHELVES)) {
 										++i;
 									}
 								}

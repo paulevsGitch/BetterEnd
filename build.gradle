@@ -37,7 +37,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
 	useApi "vazkii.patchouli:Patchouli:1.16.4-${project.patchouli_version}"
-	useApi "ru.bclib:bclib:0.1.1"
+	useApi "ru.bclib:bclib:${project.bclib_version}"
 	
 	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"

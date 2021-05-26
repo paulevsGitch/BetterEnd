@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFFlatWave;
 import ru.bclib.sdf.operator.SDFScale3D;
@@ -25,7 +26,6 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.world.features.DefaultFeature;
 
 public class JellyshroomFeature extends DefaultFeature {
@@ -35,7 +35,7 @@ public class JellyshroomFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
 			return false;
 
 		BlockState bark = EndBlocks.JELLYSHROOM.bark.defaultBlockState();
@@ -89,7 +89,7 @@ public class JellyshroomFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(EndTags.GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.GEN_TERRAIN)) {
 				SplineHelper.fillSpline(branch, world, wood, pos, REPLACE);
 			}
 		}
@@ -118,7 +118,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 
 		REPLACE = (state) -> {
-			if (state.is(EndTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
+			if (state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

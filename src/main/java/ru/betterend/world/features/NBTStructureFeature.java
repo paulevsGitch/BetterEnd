@@ -22,8 +22,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
+import ru.bclib.api.TagAPI;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.processors.DestructionStructureProcessor;
 
@@ -125,11 +125,11 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 					mut.setZ(z);
 					mut.setY(surfMax);
 					BlockState state = world.getBlockState(mut);
-					if (!state.is(EndTags.GEN_TERRAIN) && state.isFaceSturdy(world, mut, Direction.DOWN)) {
+					if (!state.is(TagAPI.GEN_TERRAIN) && state.isFaceSturdy(world, mut, Direction.DOWN)) {
 						for (int i = 0; i < 10; i++) {
 							mut.setY(mut.getY() - 1);
 							BlockState stateSt = world.getBlockState(mut);
-							if (!stateSt.is(EndTags.GEN_TERRAIN)) {
+							if (!stateSt.is(TagAPI.GEN_TERRAIN)) {
 								if (merge == TerrainMerge.SURFACE) {
 									SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings()
 											.getSurfaceBuilderConfig();
@@ -140,7 +140,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 									BlocksHelper.setWithoutUpdate(world, mut, state);
 								}
 							} else {
-								if (stateSt.is(EndTags.END_GROUND) && state.getMaterial().isSolidBlocking()) {
+								if (stateSt.is(TagAPI.END_GROUND) && state.getMaterial().isSolidBlocking()) {
 									if (merge == TerrainMerge.SURFACE) {
 										SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings()
 												.getSurfaceBuilderConfig();

@@ -37,6 +37,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties.CactusBottom;
 import ru.betterend.blocks.BlockProperties.TripleShape;
@@ -44,7 +45,6 @@ import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, IRenderTypeable {
@@ -311,7 +311,7 @@ public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWate
 			mut.move(dir);
 			state = world.getBlockState(mut);
 			if (!state.is(this)) {
-				if (!state.is(EndTags.END_GROUND)) {
+				if (!state.is(TagAPI.END_GROUND)) {
 					length = -1;
 				}
 				break;

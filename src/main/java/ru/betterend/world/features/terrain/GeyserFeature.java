@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFCoordModify;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -35,7 +36,6 @@ import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -57,7 +57,7 @@ public class GeyserFeature extends DefaultFeature {
 		MutableBlockPos bpos = new MutableBlockPos().set(pos);
 		bpos.setY(bpos.getY() - 1);
 		BlockState state = world.getBlockState(bpos);
-		while (state.is(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+		while (state.is(TagAPI.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -182,7 +182,7 @@ public class GeyserFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.is(EndTags.GEN_TERRAIN)
+				if (state.is(TagAPI.GEN_TERRAIN)
 						&& !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
@@ -221,7 +221,7 @@ public class GeyserFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.is(EndTags.GEN_TERRAIN)) {
+				if (state.is(TagAPI.GEN_TERRAIN)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 						mut.setY(mut.getY() + 1);
@@ -252,12 +252,11 @@ public class GeyserFeature extends DefaultFeature {
 
 	static {
 		REPLACE1 = (state) -> {
-			return state.isAir() || (state.is(EndTags.GEN_TERRAIN));
+			return state.isAir() || (state.is(TagAPI.GEN_TERRAIN));
 		};
 
 		REPLACE2 = (state) -> {
-			if (state.is(EndTags.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT)
-					|| state.is(EndBlocks.SULPHUR_CRYSTAL)) {
+			if (state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT) || state.is(EndBlocks.SULPHUR_CRYSTAL)) {
 				return true;
 			}
 			if (state.getMaterial().equals(Material.PLANT)) {
@@ -267,8 +266,7 @@ public class GeyserFeature extends DefaultFeature {
 		};
 
 		IGNORE = (state) -> {
-			return state.is(Blocks.WATER) || state.is(Blocks.CAVE_AIR) || state.is(EndBlocks.SULPHURIC_ROCK.stone)
-					|| state.is(EndBlocks.BRIMSTONE);
+			return state.is(Blocks.WATER) || state.is(Blocks.CAVE_AIR) || state.is(EndBlocks.SULPHURIC_ROCK.stone) || state.is(EndBlocks.BRIMSTONE);
 		};
 	}
 }

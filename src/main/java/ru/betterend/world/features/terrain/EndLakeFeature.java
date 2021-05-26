@@ -11,10 +11,10 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -110,11 +110,11 @@ public class EndLakeFeature extends DefaultFeature {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.is(EndTags.GEN_TERRAIN)) {
+								if (state.is(TagAPI.GEN_TERRAIN)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								}
 								pos = POS.below();
-								if (world.getBlockState(pos).is(EndTags.GEN_TERRAIN)) {
+								if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
 									state = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 									if (y > waterLevel + 1)
 										BlocksHelper.setWithoutUpdate(world, pos, state);
@@ -162,7 +162,7 @@ public class EndLakeFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(world, POS, state);
 							}
 							pos = POS.below();
-							if (world.getBlockState(pos).getBlock().is(EndTags.GEN_TERRAIN)) {
+							if (world.getBlockState(pos).getBlock().is(TagAPI.GEN_TERRAIN)) {
 								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
 							}
 							pos = POS.above();
@@ -195,7 +195,7 @@ public class EndLakeFeature extends DefaultFeature {
 
 	private boolean canReplace(BlockState state) {
 		return state.getMaterial().isReplaceable()
-				|| state.is(EndTags.GEN_TERRAIN)
+				|| state.is(TagAPI.GEN_TERRAIN)
 				|| state.is(EndBlocks.ENDSTONE_DUST)
 				|| state.getMaterial().equals(Material.PLANT)
 				|| state.getMaterial().equals(Material.WATER_PLANT)

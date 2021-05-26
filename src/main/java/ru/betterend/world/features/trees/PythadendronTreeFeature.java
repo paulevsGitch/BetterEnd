@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -26,7 +27,6 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -36,10 +36,10 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	private static final Function<PosInfo, BlockState> POST;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (world.getBlockState(pos.below()).getBlock() != EndBlocks.CHORUS_NYLIUM)
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
+		if (world.getBlockState(pos.below()).getBlock() != EndBlocks.CHORUS_NYLIUM) {
 			return false;
+		}
 		BlocksHelper.setWithoutUpdate(world, pos, AIR);
 
 		float size = MHelper.randRange(10, 20, random);
@@ -168,7 +168,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.is(EndTags.END_GROUND)) {
+			if (state.is(TagAPI.END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == EndBlocks.PYTHADENDRON_LEAVES) {

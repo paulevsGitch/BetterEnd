@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFRotation;
@@ -21,14 +22,13 @@ import ru.bclib.sdf.primitive.SDFFlatland;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianPillarBasementFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
 		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
-		if (!world.getBlockState(pos.below(5)).is(EndTags.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(5)).is(TagAPI.GEN_TERRAIN)) {
 			return false;
 		}
 
@@ -56,7 +56,7 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(EndTags.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
+			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 
 		return true;

@@ -29,11 +29,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.api.TagAPI;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public class SmallJellyshroomBlock extends AttachedBlock implements IRenderTypeable, BonemealableBlock {
@@ -87,7 +87,7 @@ public class SmallJellyshroomBlock extends AttachedBlock implements IRenderTypea
 
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
-		return state.getValue(FACING) == Direction.UP && world.getBlockState(pos.below()).is(EndTags.END_GROUND);
+		return state.getValue(FACING) == Direction.UP && world.getBlockState(pos.below()).is(TagAPI.END_GROUND);
 	}
 
 	@Override

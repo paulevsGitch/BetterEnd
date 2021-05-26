@@ -19,10 +19,10 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.interfaces.IBiomeArray;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
@@ -63,11 +63,11 @@ public abstract class EndCaveFeature extends DefaultFeature {
 					mut.set(bpos);
 					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 						mut.setY(bpos.getY() - 1);
-						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+						if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
 							floorPositions.add(mut.immutable());
 						}
 						mut.setY(bpos.getY() + 1);
-						if (world.getBlockState(mut).is(EndTags.GEN_TERRAIN)) {
+						if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
 							ceilPositions.add(mut.immutable());
 						}
 					}
@@ -124,7 +124,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				if (wallBlock != null) {
 					for (Vec3i offset: SPHERE) {
 						BlockPos wallPos = pos.offset(offset);
-						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos).is(EndTags.GEN_TERRAIN)) {
+						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos).is(TagAPI.GEN_TERRAIN)) {
 							wallBlock = biome.getWall(wallPos);
 							BlocksHelper.setWithoutUpdate(world, wallPos, wallBlock);
 							placed.add(wallPos);
@@ -164,7 +164,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		bpos.setY(top - 1);
 
 		BlockState state = world.getBlockState(bpos);
-		while (!state.is(EndTags.GEN_TERRAIN) && bpos.getY() > 5) {
+		while (!state.is(TagAPI.GEN_TERRAIN) && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -173,7 +173,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		}
 		top = (int) (bpos.getY() - (radius * 1.3F + 5));
 
-		while (state.is(EndTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+		while (state.is(TagAPI.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}

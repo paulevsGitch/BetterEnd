@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.TagAPI;
 import ru.betterend.blocks.basis.StalactiteBlock;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -43,7 +43,7 @@ public class StalactiteFeature extends DefaultFeature {
 			mut.setY(pos.getY() + i * dir);
 			BlockState state = world.getBlockState(mut);
 			if (!state.getMaterial().isReplaceable()) {
-				stalagnate = state.is(EndTags.GEN_TERRAIN);
+				stalagnate = state.is(TagAPI.GEN_TERRAIN);
 				height = i;
 				break;
 			}

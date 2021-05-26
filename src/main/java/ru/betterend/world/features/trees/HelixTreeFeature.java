@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.AABB;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFRotation;
@@ -26,7 +27,6 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.HelixTreeLeavesBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -36,7 +36,7 @@ public class HelixTreeFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
 			return false;
 		BlocksHelper.setWithoutUpdate(world, pos, AIR);
 

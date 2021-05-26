@@ -30,9 +30,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.api.TagAPI;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.registry.EndTags;
 
 public class EndPlantBlock extends BlockBaseNotFull implements IRenderTypeable, BonemealableBlock {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
@@ -84,7 +84,7 @@ public class EndPlantBlock extends BlockBaseNotFull implements IRenderTypeable, 
 	}
 	
 	protected boolean isTerrain(BlockState state) {
-		return state.is(EndTags.END_GROUND);
+		return state.is(TagAPI.END_GROUND);
 	}
 
 	@Override

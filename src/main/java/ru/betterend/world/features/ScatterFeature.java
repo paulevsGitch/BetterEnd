@@ -7,8 +7,8 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 
 public abstract class ScatterFeature extends DefaultFeature {
@@ -31,7 +31,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) {
 		if (pos.getY() < 5) {
 			return false;
-		} else if (!world.getBlockState(pos.below()).is(EndTags.END_GROUND)) {
+		} else if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 			return false;
 		}
 		return true;

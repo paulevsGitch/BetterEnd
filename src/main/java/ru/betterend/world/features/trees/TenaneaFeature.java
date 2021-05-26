@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFScale;
@@ -30,7 +31,6 @@ import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -43,7 +43,7 @@ public class TenaneaFeature extends DefaultFeature {
 	@Override
 	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
 			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(EndTags.END_GROUND))
+		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
 			return false;
 
 		float size = MHelper.randRange(7, 10, random);
@@ -173,7 +173,7 @@ public class TenaneaFeature extends DefaultFeature {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.is(EndTags.END_GROUND)) {
+			if (state.is(TagAPI.END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == EndBlocks.TENANEA_LEAVES) {

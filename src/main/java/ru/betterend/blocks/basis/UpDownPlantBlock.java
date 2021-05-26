@@ -26,9 +26,9 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.api.TagAPI;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.registry.EndTags;
 
 public class UpDownPlantBlock extends BlockBaseNotFull implements IRenderTypeable {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 16, 12);
@@ -54,7 +54,7 @@ public class UpDownPlantBlock extends BlockBaseNotFull implements IRenderTypeabl
 	}
 	
 	protected boolean isTerrain(BlockState state) {
-		return state.is(EndTags.END_GROUND);
+		return state.is(TagAPI.END_GROUND);
 	}
 	
 	protected boolean isSupport(BlockState state, LevelReader world, BlockPos pos) {

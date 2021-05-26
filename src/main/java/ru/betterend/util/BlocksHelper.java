@@ -23,13 +23,13 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import ru.bclib.api.TagAPI;
 import ru.betterend.blocks.BlueVineBlock;
 import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.blocks.basis.StalactiteBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 
 public class BlocksHelper {
 	public static final BooleanProperty ROOTS = BooleanProperty.create("roots");
@@ -346,7 +346,7 @@ public class BlocksHelper {
 	}
 	
 	public static boolean isEndNylium(Block block) {
-		return block.is(BlockTags.NYLIUM) && block.is(EndTags.END_GROUND);
+		return block.is(BlockTags.NYLIUM) && block.is(TagAPI.END_GROUND);
 	}
 	
 	public static boolean isEndNylium(BlockState state) {

@@ -11,7 +11,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.TagHelper;
+import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.BarkBlock;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndBarrelBlock;
@@ -34,7 +36,6 @@ import ru.betterend.blocks.basis.EndWoodenPlateBlock;
 import ru.betterend.blocks.basis.StrippableBarkBlock;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndTags;
 
 public class WoodenMaterial {
 	public final Block log;
@@ -127,7 +128,7 @@ public class WoodenMaterial {
 		TagHelper.addTags(slab, ItemTags.WOODEN_SLABS, ItemTags.SLABS);
 		TagHelper.addTags(stairs, ItemTags.WOODEN_STAIRS, ItemTags.STAIRS);
 		TagHelper.addTags(trapdoor, ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS);
-		TagHelper.addTag(EndTags.ITEM_CHEST, chest);
+		TagHelper.addTag(TagAPI.ITEM_CHEST, chest);
 		
 		// Block Tags //
 		TagHelper.addTag(BlockTags.PLANKS, planks);
@@ -141,11 +142,11 @@ public class WoodenMaterial {
 		TagHelper.addTags(slab, BlockTags.WOODEN_SLABS, BlockTags.SLABS);
 		TagHelper.addTags(stairs, BlockTags.WOODEN_STAIRS, BlockTags.STAIRS);
 		TagHelper.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
-		TagHelper.addTag(EndTags.BOOKSHELVES, shelf);
-		TagHelper.addTag(EndTags.BLOCK_CHEST, chest);
+		TagHelper.addTag(TagAPI.BOOKSHELVES, shelf);
+		TagHelper.addTag(TagAPI.BLOCK_CHEST, chest);
 		
-		logBlockTag = EndTags.makeBlockTag(name + "_logs");
-		logItemTag = EndTags.makeItemTag(name + "_logs");
+		logBlockTag = TagAPI.makeBlockTag(BetterEnd.MOD_ID, name + "_logs");
+		logItemTag = TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_logs");
 		TagHelper.addTag(logBlockTag, log_stripped, bark_stripped, log, bark);
 		TagHelper.addTag(logItemTag, log_stripped, bark_stripped, log, bark);
 		

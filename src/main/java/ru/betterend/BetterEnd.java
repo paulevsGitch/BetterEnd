@@ -29,7 +29,7 @@ import ru.betterend.registry.EndPortals;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.BonemealUtil;
+import ru.betterend.util.BonemealPlants;
 import ru.betterend.util.DataFixerUtil;
 import ru.betterend.util.LootTableUtil;
 import ru.betterend.world.generator.BetterEndBiomeSource;
@@ -64,7 +64,7 @@ public class BetterEnd implements ModInitializer {
 		InfusionRecipes.register();
 		EndStructures.register();
 		Integrations.register();
-		BonemealUtil.init();
+		BonemealPlants.init();
 		GeneratorOptions.init();
 		DataFixerUtil.init();
 		LootTableUtil.init();

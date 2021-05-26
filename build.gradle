@@ -18,6 +18,7 @@ repositories {
 	maven { url "https://maven.fabricmc.net/" }
 	maven { url 'https://maven.blamejared.com' }
 	maven { url "https://maven.shedaniel.me/" }
+	maven { url 'https://jitpack.io' }
 	maven {
 		url "https://maven.pkg.github.com/paulevsgitch/bclib/"
 		credentials {
@@ -25,7 +26,6 @@ repositories {
 			password = env.GITHUB_TOKEN
 		}
 	}
-	maven { url 'https://jitpack.io' }
 }
 
 apply plugin: 'maven'

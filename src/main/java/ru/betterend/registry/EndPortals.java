@@ -5,6 +5,7 @@ import java.io.File;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +13,6 @@ import net.minecraft.world.level.Level;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.config.ConfigWriter;
 import ru.betterend.util.JsonFactory;
 
 public class EndPortals {
@@ -22,7 +22,7 @@ public class EndPortals {
 	private static PortalInfo[] portals;
 	
 	public static void loadPortals() {
-		File file = new File(ConfigWriter.MOD_CONFIG_DIR, "portals.json");
+		File file = new File(FabricLoader.getInstance().getConfigDir().toString(), "betterend/portals.json");
 		JsonObject json;
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();

@@ -1,7 +1,7 @@
 package ru.betterend.world.generator;
 
 import net.minecraft.util.Mth;
-import ru.betterend.config.PathConfig;
+import ru.bclib.config.PathConfig;
 
 public class LayerOptions {
 	public final float distance;

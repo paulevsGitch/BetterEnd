@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
+import ru.bclib.util.TagHelper;
 import ru.betterend.blocks.EndPedestal;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndPillarBlock;
@@ -13,7 +14,6 @@ import ru.betterend.blocks.basis.EndWallBlock;
 import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.TagHelper;
 
 public class CrystalSubblocksMaterial {
 	public final Block polished;

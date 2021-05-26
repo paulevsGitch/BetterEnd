@@ -2,8 +2,8 @@ package ru.betterend.integration;
 
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import ru.bclib.util.TagHelper;
 import ru.betterend.registry.EndItems;
-import ru.betterend.util.TagHelper;
 
 public class NourishIntegration extends ModIntegration {
 	public NourishIntegration() {

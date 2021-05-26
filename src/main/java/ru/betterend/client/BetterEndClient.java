@@ -8,6 +8,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.events.ItemTooltipCallback;
@@ -19,7 +20,6 @@ import ru.betterend.registry.EndEntitiesRenders;
 import ru.betterend.registry.EndModelProviders;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndScreens;
-import ru.betterend.util.TranslationHelper;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override
@@ -35,7 +35,7 @@ public class BetterEndClient implements ClientModInitializer {
 		registerTooltips();
 		
 		if (BetterEnd.isDevEnvironment()) {
-			TranslationHelper.printMissingNames();
+			TranslationHelper.printMissingNames(BetterEnd.MOD_ID);
 		}
 	}
 

@@ -6,6 +6,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.util.TagHelper;
 import ru.betterend.blocks.EndPedestal;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndFurnaceBlock;
@@ -21,7 +22,6 @@ import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.TagHelper;
 
 public class StoneMaterial {
 	public final Block stone;

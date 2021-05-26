@@ -7,13 +7,13 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.behavior.WeightedList;
 import net.minecraft.world.level.biome.Biome;
+import ru.bclib.util.TagHelper;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.ModIntegration;
 import ru.betterend.integration.byg.biomes.BYGBiomes;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.TagHelper;
 import ru.betterend.world.biome.EndBiome;
 
 public class BYGIntegration extends ModIntegration {

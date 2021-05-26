@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
@@ -33,7 +34,6 @@ import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
-import ru.betterend.util.TagHelper;
 
 public class EndTags {
 	// Table with common (c) tags:

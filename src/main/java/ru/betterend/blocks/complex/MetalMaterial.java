@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.util.TagHelper;
 import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
 import ru.betterend.blocks.ChandelierBlock;
@@ -42,7 +43,6 @@ import ru.betterend.recipe.builders.SmithingTableRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.TagHelper;
 
 public class MetalMaterial {
 	public final Block ore;

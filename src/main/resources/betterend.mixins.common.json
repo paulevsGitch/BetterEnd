@@ -31,7 +31,6 @@
 		"AnvilBlockMixin",
 		"PlayerListMixin",
 		"AnvilMenuMixin",
-		"TagLoaderMixin",
 		"EnderManMixin",
 		"EndSpikeMixin",
 		"MonsterMixin",

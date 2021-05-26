@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.util.TagHelper;
 import ru.betterend.blocks.basis.BarkBlock;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.blocks.basis.EndBarrelBlock;
@@ -34,7 +35,6 @@ import ru.betterend.blocks.basis.StrippableBarkBlock;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndTags;
-import ru.betterend.util.TagHelper;
 
 public class WoodenMaterial {
 	public final Block log;

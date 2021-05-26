@@ -30,6 +30,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.DispenserBlock;
+import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.item.ArmoredElytra;
@@ -54,7 +55,6 @@ import ru.betterend.item.tool.EndPickaxeItem;
 import ru.betterend.item.tool.EndShovelItem;
 import ru.betterend.item.tool.EndSwordItem;
 import ru.betterend.tab.CreativeTabs;
-import ru.betterend.util.TagHelper;
 
 public class EndItems {
 	private static final List<Item> MOD_BLOCKS = Lists.newArrayList();

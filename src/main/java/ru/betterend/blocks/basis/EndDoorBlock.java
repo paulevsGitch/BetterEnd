@@ -51,18 +51,16 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 		DoorType doorType = getDoorType(blockState);
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM, blockName, blockName);
 		switch (doorType) {
-			case TOP_HINGE: {
+			case TOP_HINGE:
 				pattern = Patterns.createJson(Patterns.BLOCK_DOOR_TOP_HINGE, blockName, blockName);
 				break;
-			}
-			case BOTTOM_HINGE: {
+			case BOTTOM_HINGE:
 				pattern = Patterns.createJson(Patterns.BLOCK_DOOR_BOTTOM_HINGE, blockName, blockName);
 				break;
-			}
-			case TOP: {
+			case TOP:
+			default:
 				pattern = Patterns.createJson(Patterns.BLOCK_DOOR_TOP, blockName, blockName);
 				break;
-			}
 		}
 		return ModelsHelper.fromPattern(pattern);
 	}
@@ -75,23 +73,21 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 		boolean hinge = doorType.isHinge();
 		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
 		switch (facing) {
-			case EAST: {
+			case EAST:
 				if (hinge && open) {
 					rotation = BlockModelRotation.X0_Y90;
 				} else if (open) {
 					rotation = BlockModelRotation.X0_Y270;
 				}
 				break;
-			}
-			case SOUTH: {
+			case SOUTH:
 				if (!hinge && !open || hinge && !open) {
 					rotation = BlockModelRotation.X0_Y90;
 				} else if (hinge) {
 					rotation = BlockModelRotation.X0_Y180;
 				}
 				break;
-			}
-			case WEST: {
+			case WEST:
 				if (!hinge && !open || hinge && !open) {
 					rotation = BlockModelRotation.X0_Y180;
 				} else if (hinge) {
@@ -100,15 +96,14 @@ public class EndDoorBlock extends DoorBlock implements IRenderTypeable, BlockMod
 					rotation = BlockModelRotation.X0_Y90;
 				}
 				break;
-			}
-			case NORTH: {
+			case NORTH:
+			default:
 				if (!hinge && !open || hinge && !open) {
 					rotation = BlockModelRotation.X0_Y270;
 				} else if (!hinge) {
 					rotation = BlockModelRotation.X0_Y180;
 				}
 				break;
-			}
 		}
 		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
 				"block/" + stateId.getPath() + "_" + doorType);

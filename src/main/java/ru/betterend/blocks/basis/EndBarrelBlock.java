@@ -125,7 +125,8 @@ public class EndBarrelBlock extends BarrelBlock implements BlockModelProvider {
 			case EAST: rotation = BlockModelRotation.X90_Y90; break;
 			case SOUTH: rotation = BlockModelRotation.X90_Y180; break;
 			case WEST: rotation = BlockModelRotation.X90_Y270; break;
-			case DOWN: rotation = BlockModelRotation.X180_Y0; break;
+			case DOWN:
+			default: rotation = BlockModelRotation.X180_Y0; break;
 		}
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}

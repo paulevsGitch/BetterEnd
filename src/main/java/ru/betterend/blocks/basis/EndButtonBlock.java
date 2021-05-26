@@ -64,13 +64,15 @@ public abstract class EndButtonBlock extends ButtonBlock implements BlockModelPr
 		int x = 0, y = 0;
 		switch (face) {
 			case CEILING: x = 180; break;
-			case WALL: x = 90; break;
+			case WALL:
+			default: x = 90; break;
 		}
 		switch (blockState.getValue(FACING)) {
 			case NORTH: if (isCeiling) { y = 180; } break;
 			case EAST: y = isCeiling ? 270 : 90; break;
 			case SOUTH: if(!isCeiling) { y = 180; } break;
-			case WEST: y = isCeiling ? 90 : 270; break;
+			case WEST:
+			default: y = isCeiling ? 90 : 270; break;
 		}
 		BlockModelRotation rotation = BlockModelRotation.by(x, y);
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), face == AttachFace.WALL);

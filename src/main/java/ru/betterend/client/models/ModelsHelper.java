@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 @Environment(EnvType.CLIENT)
 public class ModelsHelper {
-	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 	public static BlockModel fromPattern(Optional<String> pattern) {
 		return pattern.map(BlockModel::fromString).orElse(null);
 	}
@@ -70,7 +69,7 @@ public class ModelsHelper {
 		BlockModelRotation rotation = BlockModelRotation.X0_Y0;
 		switch (axis) {
 			case X: rotation = BlockModelRotation.X90_Y90; break;
-			case Z: rotation = BlockModelRotation.X90_Y0; break;
+			case Z: default: rotation = BlockModelRotation.X90_Y0; break;
 		}
 		return createMultiVariant(resourceLocation, rotation.getRotation(), false);
 	}

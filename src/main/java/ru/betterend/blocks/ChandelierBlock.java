@@ -84,6 +84,7 @@ public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, B
 				rotation = BlockModelRotation.X0_Y180;
 				break;
 			case WEST:
+			default:
 				rotation = BlockModelRotation.X0_Y90;
 				break;
 		}

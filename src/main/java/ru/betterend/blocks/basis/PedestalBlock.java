@@ -348,26 +348,22 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 		PedestalState state = blockState.getValue(STATE);
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
 		switch (state) {
-			case COLUMN_TOP: {
+			case COLUMN_TOP:
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
 				break;
-			}
-			case COLUMN: {
+			case COLUMN:
 				pattern = Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
 				break;
-			}
-			case PEDESTAL_TOP: {
+			case PEDESTAL_TOP:
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
 				break;
-			}
-			case BOTTOM: {
+			case BOTTOM:
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
 				break;
-			}
-			case PILLAR: {
+			case PILLAR:
+			default:
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
 				break;
-			}
 		}
 		return ModelsHelper.fromPattern(pattern);
 	}

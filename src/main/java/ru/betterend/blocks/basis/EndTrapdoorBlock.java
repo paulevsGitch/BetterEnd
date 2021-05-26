@@ -77,6 +77,7 @@ public class EndTrapdoorBlock extends TrapDoorBlock implements IRenderTypeable, 
 				y = (isTop && isOpen) ? 0 : 180;
 				break;
 			case WEST:
+			default:
 				y = (isTop && isOpen) ? 90 : 270;
 				break;
 		}

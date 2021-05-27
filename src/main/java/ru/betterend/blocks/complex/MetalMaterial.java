@@ -85,19 +85,19 @@ public class MetalMaterial {
 	public final Item boots;
 	
 	public static MetalMaterial makeNormal(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeItemSettings(), material, armor);
+		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	public static MetalMaterial makeNormal(String name, MaterialColor color, float hardness, float resistance, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeItemSettings(), material, armor);
+		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	public static MetalMaterial makeOreless(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeItemSettings(), material, armor);
+		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	public static MetalMaterial makeOreless(String name, MaterialColor color, float hardness, float resistance, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeItemSettings(), material, armor);
+		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	private MetalMaterial(String name, boolean hasOre, FabricBlockSettings settings, Properties itemSettings, Tier material, ArmorMaterial armor) {
@@ -120,28 +120,28 @@ public class MetalMaterial {
 		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lanternProperties));
 		bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
 		
-		nugget = EndItems.registerItem(name + "_nugget", new ModelProviderItem(itemSettings));
-		ingot = EndItems.registerItem(name + "_ingot", new ModelProviderItem(itemSettings));
+		nugget = EndItems.registerEndItem(name + "_nugget", new ModelProviderItem(itemSettings));
+		ingot = EndItems.registerEndItem(name + "_ingot", new ModelProviderItem(itemSettings));
 		
-		shovelHead = EndItems.registerItem(name + "_shovel_head");
-		pickaxeHead = EndItems.registerItem(name + "_pickaxe_head");
-		axeHead = EndItems.registerItem(name + "_axe_head");
-		hoeHead = EndItems.registerItem(name + "_hoe_head");
-		swordBlade = EndItems.registerItem(name + "_sword_blade");
-		swordHandle = EndItems.registerItem(name + "_sword_handle");
+		shovelHead = EndItems.registerEndItem(name + "_shovel_head");
+		pickaxeHead = EndItems.registerEndItem(name + "_pickaxe_head");
+		axeHead = EndItems.registerEndItem(name + "_axe_head");
+		hoeHead = EndItems.registerEndItem(name + "_hoe_head");
+		swordBlade = EndItems.registerEndItem(name + "_sword_blade");
+		swordHandle = EndItems.registerEndItem(name + "_sword_handle");
 		
-		shovel = EndItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.5F, -3.0F, itemSettings));
-		sword = EndItems.registerTool(name + "_sword", new EndSwordItem(material, 3, -2.4F, itemSettings));
-		pickaxe = EndItems.registerTool(name + "_pickaxe", new EndPickaxeItem(material, 1, -2.8F, itemSettings));
-		axe = EndItems.registerTool(name + "_axe", new EndAxeItem(material, 6.0F, -3.0F, itemSettings));
-		hoe = EndItems.registerTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, itemSettings));
-		hammer = EndItems.registerTool(name + "_hammer", new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
+		shovel = EndItems.registerEndTool(name + "_shovel", new EndShovelItem(material, 1.5F, -3.0F, itemSettings));
+		sword = EndItems.registerEndTool(name + "_sword", new EndSwordItem(material, 3, -2.4F, itemSettings));
+		pickaxe = EndItems.registerEndTool(name + "_pickaxe", new EndPickaxeItem(material, 1, -2.8F, itemSettings));
+		axe = EndItems.registerEndTool(name + "_axe", new EndAxeItem(material, 6.0F, -3.0F, itemSettings));
+		hoe = EndItems.registerEndTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, itemSettings));
+		hammer = EndItems.registerEndTool(name + "_hammer", new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
 		
-		forgedPlate = EndItems.registerItem(name + "_forged_plate");
-		helmet = EndItems.registerItem(name + "_helmet", new EndArmorItem(armor, EquipmentSlot.HEAD, itemSettings));
-		chestplate = EndItems.registerItem(name + "_chestplate", new EndArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
-		leggings = EndItems.registerItem(name + "_leggings", new EndArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
-		boots = EndItems.registerItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));
+		forgedPlate = EndItems.registerEndItem(name + "_forged_plate");
+		helmet = EndItems.registerEndItem(name + "_helmet", new EndArmorItem(armor, EquipmentSlot.HEAD, itemSettings));
+		chestplate = EndItems.registerEndItem(name + "_chestplate", new EndArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
+		leggings = EndItems.registerEndItem(name + "_leggings", new EndArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
+		boots = EndItems.registerEndItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));
 		
 		if (hasOre) {
 			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").buildWithBlasting();

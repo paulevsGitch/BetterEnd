@@ -1,22 +1,20 @@
 package ru.betterend.registry;
 
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.minecraft.core.Registry;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.WaterLilyBlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
+import org.jetbrains.annotations.NotNull;
+import ru.bclib.blocks.BasePathBlock;
+import ru.bclib.registry.BlocksRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.*;
-import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.blocks.basis.EndCropBlock;
 import ru.betterend.blocks.basis.EndFurnaceBlock;
 import ru.betterend.blocks.basis.EndLeavesBlock;
 import ru.betterend.blocks.basis.EndOreBlock;
-import ru.betterend.blocks.basis.EndPathBlock;
 import ru.betterend.blocks.basis.EndPillarBlock;
 import ru.betterend.blocks.basis.EndSlabBlock;
 import ru.betterend.blocks.basis.EndStairsBlock;
@@ -36,12 +34,11 @@ import ru.betterend.blocks.complex.MetalMaterial;
 import ru.betterend.blocks.complex.StoneMaterial;
 import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.Configs;
-import ru.betterend.interfaces.ISpetialItem;
-import ru.betterend.item.EndAnvilItem;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
+import ru.betterend.tab.CreativeTabs;
 
-public class EndBlocks {
+public class EndBlocks extends BlocksRegistry {
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new EndstoneDustBlock());
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new EndTerrainBlock(MaterialColor.COLOR_LIGHT_BLUE));
@@ -57,17 +54,17 @@ public class EndBlocks {
 	public static final Block RUTISCUS = registerBlock("rutiscus", new EndTerrainBlock(MaterialColor.COLOR_ORANGE));
 	
 	// Roads //
-	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new EndPathBlock(END_MYCELIUM));
-	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new EndPathBlock(END_MOSS));
-	public static final Block CHORUS_NYLIUM_PATH = registerBlock("chorus_nylium_path", new EndPathBlock(CHORUS_NYLIUM));
-	public static final Block CAVE_MOSS_PATH = registerBlock("cave_moss_path", new EndPathBlock(CAVE_MOSS));
-	public static final Block CRYSTAL_MOSS_PATH = registerBlock("crystal_moss_path", new EndPathBlock(CRYSTAL_MOSS));
-	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new EndPathBlock(SHADOW_GRASS));
-	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new EndPathBlock(PINK_MOSS));
-	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new EndPathBlock(AMBER_MOSS));
-	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new EndPathBlock(JUNGLE_MOSS));
-	public static final Block SANGNUM_PATH = registerBlock("sangnum_path", new EndPathBlock(SANGNUM));
-	public static final Block RUTISCUS_PATH = registerBlock("rutiscus_path", new EndPathBlock(RUTISCUS));
+	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BasePathBlock(END_MYCELIUM));
+	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new BasePathBlock(END_MOSS));
+	public static final Block CHORUS_NYLIUM_PATH = registerBlock("chorus_nylium_path", new BasePathBlock(CHORUS_NYLIUM));
+	public static final Block CAVE_MOSS_PATH = registerBlock("cave_moss_path", new BasePathBlock(CAVE_MOSS));
+	public static final Block CRYSTAL_MOSS_PATH = registerBlock("crystal_moss_path", new BasePathBlock(CRYSTAL_MOSS));
+	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new BasePathBlock(SHADOW_GRASS));
+	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new BasePathBlock(PINK_MOSS));
+	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new BasePathBlock(AMBER_MOSS));
+	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new BasePathBlock(JUNGLE_MOSS));
+	public static final Block SANGNUM_PATH = registerBlock("sangnum_path", new BasePathBlock(SANGNUM));
+	public static final Block RUTISCUS_PATH = registerBlock("rutiscus_path", new BasePathBlock(RUTISCUS));
 	
 	public static final Block MOSSY_OBSIDIAN = registerBlock("mossy_obsidian", new MossyObsidian());
 	public static final Block DRAGON_BONE_BLOCK = registerBlock("dragon_bone_block", new EndPillarBlock(Blocks.BONE_BLOCK));
@@ -96,7 +93,7 @@ public class EndBlocks {
 	public static final Block PURPUR_PEDESTAL = registerBlock("purpur_pedestal", new PedestalVanilla(Blocks.PURPUR_BLOCK));
 	
 	public static final Block HYDROTHERMAL_VENT = registerBlock("hydrothermal_vent", new HydrothermalVentBlock());
-	public static final Block VENT_BUBBLE_COLUMN = registerBlockNI("vent_bubble_column", new VentBubbleColumnBlock());
+	public static final Block VENT_BUBBLE_COLUMN = registerEndBlockOnly("vent_bubble_column", new VentBubbleColumnBlock());
 	
 	public static final Block DENSE_SNOW = registerBlock("dense_snow", new DenseSnowBlock());
 	public static final Block EMERALD_ICE = registerBlock("emerald_ice", new EmeraldIceBlock());
@@ -119,8 +116,8 @@ public class EndBlocks {
 	
 	public static final Block END_LOTUS_SEED = registerBlock("end_lotus_seed", new EndLotusSeedBlock());
 	public static final Block END_LOTUS_STEM = registerBlock("end_lotus_stem", new EndLotusStemBlock());
-	public static final Block END_LOTUS_LEAF = registerBlockNI("end_lotus_leaf", new EndLotusLeafBlock());
-	public static final Block END_LOTUS_FLOWER = registerBlockNI("end_lotus_flower", new EndLotusFlowerBlock());
+	public static final Block END_LOTUS_LEAF = registerEndBlockOnly("end_lotus_leaf", new EndLotusLeafBlock());
+	public static final Block END_LOTUS_FLOWER = registerEndBlockOnly("end_lotus_flower", new EndLotusFlowerBlock());
 	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.COLOR_LIGHT_BLUE, MaterialColor.COLOR_CYAN);
 	
 	public static final Block LACUGROVE_SAPLING = registerBlock("lacugrove_sapling", new LacugroveSaplingBlock());
@@ -180,15 +177,15 @@ public class EndBlocks {
 	public static final Block LAMELLARIUM = registerBlock("lamellarium", new TerrainPlantBlock(RUTISCUS));
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlueVineSeedBlock());
-	public static final Block BLUE_VINE = registerBlockNI("blue_vine", new BlueVineBlock());
+	public static final Block BLUE_VINE = registerEndBlockOnly("blue_vine", new BlueVineBlock());
 	public static final Block BLUE_VINE_LANTERN = registerBlock("blue_vine_lantern", new BlueVineLanternBlock());
 	public static final Block BLUE_VINE_FUR = registerBlock("blue_vine_fur", new FurBlock(BLUE_VINE_SEED, 15, 3, false));
 	
 	public static final Block LANCELEAF_SEED = registerBlock("lanceleaf_seed", new LanceleafSeedBlock());
-	public static final Block LANCELEAF = registerBlockNI("lanceleaf", new LanceleafBlock());
+	public static final Block LANCELEAF = registerEndBlockOnly("lanceleaf", new LanceleafBlock());
 	
 	public static final Block GLOWING_PILLAR_SEED = registerBlock("glowing_pillar_seed", new GlowingPillarSeedBlock());
-	public static final Block GLOWING_PILLAR_ROOTS = registerBlockNI("glowing_pillar_roots", new GlowingPillarRootsBlock());
+	public static final Block GLOWING_PILLAR_ROOTS = registerEndBlockOnly("glowing_pillar_roots", new GlowingPillarRootsBlock());
 	public static final Block GLOWING_PILLAR_LUMINOPHOR = registerBlock("glowing_pillar_luminophor", new GlowingPillarLuminophorBlock());
 	public static final Block GLOWING_PILLAR_LEAVES = registerBlock("glowing_pillar_leaves", new FurBlock(GLOWING_PILLAR_SEED, 15, 3, false));
 	
@@ -196,10 +193,10 @@ public class EndBlocks {
 	public static final Block BOLUX_MUSHROOM = registerBlock("bolux_mushroom", new BoluxMushroomBlock());
 	
 	public static final Block LUMECORN_SEED = registerBlock("lumecorn_seed", new LumecornSeedBlock());
-	public static final Block LUMECORN = registerBlockNI("lumecorn", new LumecornBlock());
+	public static final Block LUMECORN = registerEndBlockOnly("lumecorn", new LumecornBlock());
 	
 	public static final Block SMALL_AMARANITA_MUSHROOM = registerBlock("small_amaranita_mushroom", new SmallAmaranitaBlock());
-	public static final Block LARGE_AMARANITA_MUSHROOM = registerBlockNI("large_amaranita_mushroom", new LargeAmaranitaBlock());
+	public static final Block LARGE_AMARANITA_MUSHROOM = registerEndBlockOnly("large_amaranita_mushroom", new LargeAmaranitaBlock());
 	public static final Block AMARANITA_STEM = registerBlock("amaranita_stem", new AmaranitaStemBlock());
 	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaStemBlock());
 	public static final Block AMARANITA_HYMENOPHORE = registerBlock("amaranita_hymenophore", new AmaranitaHymenophoreBlock());
@@ -232,11 +229,11 @@ public class EndBlocks {
 	public static final Block CHARNIA_CYAN = registerBlock("charnia_cyan", new CharniaBlock());
 	public static final Block CHARNIA_GREEN = registerBlock("charnia_green", new CharniaBlock());
 	
-	public static final Block END_LILY = registerBlockNI("end_lily", new EndLilyBlock());
+	public static final Block END_LILY = registerEndBlockOnly("end_lily", new EndLilyBlock());
 	public static final Block END_LILY_SEED = registerBlock("end_lily_seed", new EndLilySeedBlock());
 	
 	public static final Block HYDRALUX_SAPLING = registerBlock("hydralux_sapling", new HydraluxSaplingBlock());	
-	public static final Block HYDRALUX = registerBlockNI("hydralux", new HydraluxBlock());
+	public static final Block HYDRALUX = registerEndBlockOnly("hydralux", new HydraluxBlock());
 	public static final Block HYDRALUX_PETAL_BLOCK = registerBlock("hydralux_petal_block", new HydraluxPetalBlock());
 	public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial(HydraluxPetalColoredBlock::new, HYDRALUX_PETAL_BLOCK, true);
 	
@@ -318,45 +315,47 @@ public class EndBlocks {
 	public static final Block AETERNIUM_ANVIL = registerBlock("aeternium_anvil", new AeterniumAnvil());
 	
 	// Technical
-	public static final Block END_PORTAL_BLOCK = registerBlockNI("end_portal_block", new EndPortalBlock());
-	
-	public static void register() {}
-	
+	public static final Block END_PORTAL_BLOCK = registerEndBlockOnly("end_portal_block", new EndPortalBlock());
+
+	private static BlocksRegistry BLOCKS_REGISTRY;
+
+	private EndBlocks(CreativeModeTab creativeTab) {
+		super(creativeTab);
+	}
+
 	public static Block registerBlock(ResourceLocation id, Block block) {
 		if (!Configs.BLOCK_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			return block;
 		}
-		Registry.register(Registry.BLOCK, id, block);
-		int maxCount = 64;
-		boolean placeOnWater = false;
-		if (block instanceof ISpetialItem) {
-			ISpetialItem item = (ISpetialItem) block;
-			maxCount = item.getStackSize();
-			placeOnWater = item.canPlaceOnWater();
-		}
-		Properties item = EndItems.makeBlockItemSettings().stacksTo(maxCount);
-		if (placeOnWater) {
-			EndItems.registerBlockItem(id, new WaterLilyBlockItem(block, item));
-		}
-		else {
-			if (block instanceof EndAnvilBlock) {
-				EndItems.registerBlockItem(id, new EndAnvilItem(block));
-			}
-			else {
-				EndItems.registerBlockItem(id, new BlockItem(block, item));
-			}
-		}
-		if (block.defaultBlockState().getMaterial().isFlammable() && FlammableBlockRegistry.getDefaultInstance().get(block).getBurnChance() == 0) {
-			FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);
-		}
+		getBlockRegistry().register(id, block);
 		return block;
 	}
 	
 	public static Block registerBlock(String name, Block block) {
-		return registerBlock(BetterEnd.makeID(name), block);
+		if (!Configs.BLOCK_CONFIG.getBooleanRoot(name, true)) {
+			return block;
+		}
+		return getBlockRegistry().register(name, block);
 	}
 	
-	public static Block registerBlockNI(String name, Block block) {
-		return Registry.register(Registry.BLOCK, BetterEnd.makeID(name), block);
+	public static Block registerEndBlockOnly(String name, Block block) {
+		return getBlockRegistry().registerBlockOnly(name, block);
+	}
+
+	public static FabricItemSettings makeBlockItemSettings() {
+		return getBlockRegistry().makeItemSettings();
+	}
+
+	@Override
+	public ResourceLocation createModId(String name) {
+		return BetterEnd.makeID(name);
+	}
+
+	@NotNull
+	private static BlocksRegistry getBlockRegistry() {
+		if (BLOCKS_REGISTRY == null) {
+			BLOCKS_REGISTRY = new EndBlocks(CreativeTabs.TAB_BLOCKS);
+		}
+		return BLOCKS_REGISTRY;
 	}
 }

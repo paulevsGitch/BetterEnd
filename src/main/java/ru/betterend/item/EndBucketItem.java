@@ -8,6 +8,6 @@ import ru.betterend.registry.EndItems;
 
 public class EndBucketItem extends FishBucketItem implements ItemModelProvider {
 	public EndBucketItem(EntityType<?> type) {
-		super(type, Fluids.WATER, EndItems.makeItemSettings().stacksTo(1));
+		super(type, Fluids.WATER, EndItems.makeEndItemSettings().stacksTo(1));
 	}
 }

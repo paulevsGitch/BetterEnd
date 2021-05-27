@@ -7,10 +7,11 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import ru.bclib.items.BaseArmorItem;
 import ru.betterend.effects.EndStatusEffects;
 import ru.betterend.item.material.EndArmorMaterial;
 
-public class CrystaliteArmor extends EndArmorItem {
+public class CrystaliteArmor extends BaseArmorItem {
 
 	public final static TranslatableComponent CHEST_DESC;
 	public final static TranslatableComponent BOOTS_DESC;

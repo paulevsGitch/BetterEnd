@@ -5,6 +5,6 @@ import ru.betterend.registry.EndItems;
 
 public class EternalCrystalItem extends ModelProviderItem {
 	public EternalCrystalItem() {
-		super(EndItems.makeItemSettings().stacksTo(16).rarity(Rarity.EPIC));
+		super(EndItems.makeEndItemSettings().stacksTo(16).rarity(Rarity.EPIC));
 	}
 }

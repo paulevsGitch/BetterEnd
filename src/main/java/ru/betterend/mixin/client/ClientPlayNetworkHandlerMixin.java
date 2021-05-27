@@ -12,8 +12,8 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.network.protocol.game.ClientboundOpenSignEditorPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import ru.betterend.blocks.entities.ESignBlockEntity;
-import ru.betterend.client.gui.BlockSignEditScreen;
+import ru.bclib.blockentities.BaseSignBlockEntity;
+import ru.bclib.client.gui.BlockSignEditScreen;
 
 @Mixin(ClientPacketListener.class)
 public class ClientPlayNetworkHandlerMixin
@@ -28,8 +28,8 @@ public class ClientPlayNetworkHandlerMixin
 	public void be_openSignEditor(ClientboundOpenSignEditorPacket packet, CallbackInfo info) {
 		PacketUtils.ensureRunningOnSameThread(packet, ClientPacketListener.class.cast(this), minecraft);
 		BlockEntity blockEntity = level.getBlockEntity(packet.getPos());
-		if (blockEntity instanceof ESignBlockEntity) {
-			ESignBlockEntity sign = (ESignBlockEntity) blockEntity;
+		if (blockEntity instanceof BaseSignBlockEntity) {
+			BaseSignBlockEntity sign = (BaseSignBlockEntity) blockEntity;
 			minecraft.setScreen(new BlockSignEditScreen(sign));
 			info.cancel();
 		}

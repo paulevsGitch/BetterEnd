@@ -22,7 +22,7 @@ import ru.betterend.registry.EndItems;
 public class CrystaliteBoots extends CrystaliteArmor implements MobEffectApplier {
 
 	public CrystaliteBoots() {
-		super(EquipmentSlot.FEET, EndItems.makeItemSettings().rarity(Rarity.RARE));
+		super(EquipmentSlot.FEET, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
 	}
 
 	@Override

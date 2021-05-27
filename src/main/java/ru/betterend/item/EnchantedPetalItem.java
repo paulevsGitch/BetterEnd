@@ -9,7 +9,7 @@ import ru.betterend.registry.EndItems;
 
 public class EnchantedPetalItem extends ModelProviderItem {
 	public EnchantedPetalItem() {
-		super(EndItems.makeItemSettings().rarity(Rarity.RARE).stacksTo(16));
+		super(EndItems.makeEndItemSettings().rarity(Rarity.RARE).stacksTo(16));
 	}
 
 	@Override

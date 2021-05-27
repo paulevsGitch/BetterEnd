@@ -53,7 +53,7 @@ public class EndEntities {
 		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity).dimensions(fixedSize ? EntityDimensions.fixed(width, height) : EntityDimensions.scalable(width, height)).build();
 		if (Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			FabricDefaultAttributeRegistry.register(type, attributes);
-			EndItems.registerEgg("spawn_egg_" + name, type, eggColor, dotsColor);
+			EndItems.registerEndEgg("spawn_egg_" + name, type, eggColor, dotsColor);
 			return Registry.register(Registry.ENTITY_TYPE, BetterEnd.makeID(name), type);
 		}
 		return type;

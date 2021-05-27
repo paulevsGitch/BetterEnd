@@ -16,11 +16,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.blocks.basis.EndAnvilBlock;
-import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndBlocks;
 
 public class EndAnvilItem extends BlockItem {
 	public EndAnvilItem(Block block) {
-		super(block, EndItems.makeBlockItemSettings());
+		super(block, EndBlocks.makeBlockItemSettings());
 	}
 	
 	@Override

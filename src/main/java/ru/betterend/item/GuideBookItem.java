@@ -20,12 +20,12 @@ import vazkii.patchouli.api.PatchouliAPI;
 
 public class GuideBookItem extends ModelProviderItem {
 	public final static ResourceLocation BOOK_ID = BetterEnd.makeID("guidebook");
-	public static final Item GUIDE_BOOK = EndItems.registerItem(BOOK_ID, new GuideBookItem());
+	public static final Item GUIDE_BOOK = EndItems.registerEndItem(BOOK_ID, new GuideBookItem());
 	
 	public static void register() {}
 	
 	public GuideBookItem() {
-		super(EndItems.makeItemSettings().stacksTo(1));
+		super(EndItems.makeEndItemSettings().stacksTo(1));
 	}
 	
     @Override

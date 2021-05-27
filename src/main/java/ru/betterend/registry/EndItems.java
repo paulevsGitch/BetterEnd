@@ -2,35 +2,19 @@ package ru.betterend.registry;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.core.BlockSource;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.level.block.DispenserBlock;
-import ru.bclib.util.TagHelper;
+import net.minecraft.world.item.*;
+import ru.bclib.items.BaseArmorItem;
+import ru.bclib.items.tool.*;
+import ru.bclib.registry.ItemsRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.item.ArmoredElytra;
@@ -42,8 +26,6 @@ import ru.betterend.item.DrinkItem;
 import ru.betterend.item.EnchantedPetalItem;
 import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.EndBucketItem;
-import ru.betterend.item.EndDiscItem;
-import ru.betterend.item.EndSpawnEggItem;
 import ru.betterend.item.EternalCrystalItem;
 import ru.betterend.item.ModelProviderItem;
 import ru.betterend.item.material.EndArmorMaterial;
@@ -56,216 +38,162 @@ import ru.betterend.item.tool.EndShovelItem;
 import ru.betterend.item.tool.EndSwordItem;
 import ru.betterend.tab.CreativeTabs;
 
-public class EndItems {
-	private static final List<Item> MOD_BLOCKS = Lists.newArrayList();
-	private static final List<Item> MOD_ITEMS = Lists.newArrayList();
-	
+public class EndItems extends ItemsRegistry {
 	// Materials //
-	public final static Item ENDER_DUST = registerItem("ender_dust");
-	public final static Item ENDER_SHARD = registerItem("ender_shard");
-	public final static Item AETERNIUM_INGOT = registerItem("aeternium_ingot");
-	public final static Item AETERNIUM_FORGED_PLATE = registerItem("aeternium_forged_plate");
-	public final static Item END_LILY_LEAF = registerItem("end_lily_leaf");
-	public final static Item END_LILY_LEAF_DRIED = registerItem("end_lily_leaf_dried");
-	public final static Item CRYSTAL_SHARDS = registerItem("crystal_shards");
-	public final static Item RAW_AMBER = registerItem("raw_amber");
-	public final static Item AMBER_GEM = registerItem("amber_gem");
-	public final static Item GLOWING_BULB = registerItem("glowing_bulb");
-	public final static Item CRYSTALLINE_SULPHUR = registerItem("crystalline_sulphur");
-	public final static Item HYDRALUX_PETAL = registerItem("hydralux_petal");
-	public final static Item GELATINE = registerItem("gelatine");
-	public static final Item ETERNAL_CRYSTAL = registerItem("eternal_crystal", new EternalCrystalItem());
-	public final static Item ENCHANTED_PETAL = registerItem("enchanted_petal", new EnchantedPetalItem());
-	public final static Item LEATHER_STRIPE = registerItem("leather_stripe");
-	public final static Item LEATHER_WRAPPED_STICK = registerItem("leather_wrapped_stick");
-	public final static Item SILK_FIBER = registerItem("silk_fiber");
-	public final static Item LUMECORN_ROD = registerItem("lumecorn_rod");
-	public final static Item SILK_MOTH_MATRIX = registerItem("silk_moth_matrix");
+	public final static Item ENDER_DUST = registerEndItem("ender_dust");
+	public final static Item ENDER_SHARD = registerEndItem("ender_shard");
+	public final static Item AETERNIUM_INGOT = registerEndItem("aeternium_ingot");
+	public final static Item AETERNIUM_FORGED_PLATE = registerEndItem("aeternium_forged_plate");
+	public final static Item END_LILY_LEAF = registerEndItem("end_lily_leaf");
+	public final static Item END_LILY_LEAF_DRIED = registerEndItem("end_lily_leaf_dried");
+	public final static Item CRYSTAL_SHARDS = registerEndItem("crystal_shards");
+	public final static Item RAW_AMBER = registerEndItem("raw_amber");
+	public final static Item AMBER_GEM = registerEndItem("amber_gem");
+	public final static Item GLOWING_BULB = registerEndItem("glowing_bulb");
+	public final static Item CRYSTALLINE_SULPHUR = registerEndItem("crystalline_sulphur");
+	public final static Item HYDRALUX_PETAL = registerEndItem("hydralux_petal");
+	public final static Item GELATINE = registerEndItem("gelatine");
+	public static final Item ETERNAL_CRYSTAL = registerEndItem("eternal_crystal", new EternalCrystalItem());
+	public final static Item ENCHANTED_PETAL = registerEndItem("enchanted_petal", new EnchantedPetalItem());
+	public final static Item LEATHER_STRIPE = registerEndItem("leather_stripe");
+	public final static Item LEATHER_WRAPPED_STICK = registerEndItem("leather_wrapped_stick");
+	public final static Item SILK_FIBER = registerEndItem("silk_fiber");
+	public final static Item LUMECORN_ROD = registerEndItem("lumecorn_rod");
+	public final static Item SILK_MOTH_MATRIX = registerEndItem("silk_moth_matrix");
 	
 	// Music Discs
-	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerDisc("music_disc_strange_and_alien", 0, EndSounds.RECORD_STRANGE_AND_ALIEN);
-	public final static Item MUSIC_DISC_GRASPING_AT_STARS = registerDisc("music_disc_grasping_at_stars", 0, EndSounds.RECORD_GRASPING_AT_STARS);
-	public final static Item MUSIC_DISC_ENDSEEKER = registerDisc("music_disc_endseeker", 0, EndSounds.RECORD_ENDSEEKER);
-	public final static Item MUSIC_DISC_EO_DRACONA = registerDisc("music_disc_eo_dracona", 0, EndSounds.RECORD_EO_DRACONA);
+	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerEndDisc("music_disc_strange_and_alien", 0, EndSounds.RECORD_STRANGE_AND_ALIEN);
+	public final static Item MUSIC_DISC_GRASPING_AT_STARS = registerEndDisc("music_disc_grasping_at_stars", 0, EndSounds.RECORD_GRASPING_AT_STARS);
+	public final static Item MUSIC_DISC_ENDSEEKER = registerEndDisc("music_disc_endseeker", 0, EndSounds.RECORD_ENDSEEKER);
+	public final static Item MUSIC_DISC_EO_DRACONA = registerEndDisc("music_disc_eo_dracona", 0, EndSounds.RECORD_EO_DRACONA);
 	
 	// Armor //
-	public static final Item AETERNIUM_HELMET = registerItem("aeternium_helmet", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeItemSettings().fireResistant()));
-	public static final Item AETERNIUM_CHESTPLATE = registerItem("aeternium_chestplate", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeItemSettings().fireResistant()));
-	public static final Item AETERNIUM_LEGGINGS = registerItem("aeternium_leggings", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeItemSettings().fireResistant()));
-	public static final Item AETERNIUM_BOOTS = registerItem("aeternium_boots", new EndArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeItemSettings().fireResistant()));
-	public static final Item CRYSTALITE_HELMET = registerItem("crystalite_helmet", new CrystaliteHelmet());
-	public static final Item CRYSTALITE_CHESTPLATE = registerItem("crystalite_chestplate", new CrystaliteChestplate());
-	public static final Item CRYSTALITE_LEGGINGS = registerItem("crystalite_leggings", new CrystaliteLeggings());
-	public static final Item CRYSTALITE_BOOTS = registerItem("crystalite_boots", new CrystaliteBoots());
-	public static final Item ARMORED_ELYTRA = registerItem("elytra_armored", new ArmoredElytra("elytra_armored", EndArmorMaterial.AETERNIUM, Items.PHANTOM_MEMBRANE, 900, 0.96D, true));
+	public static final Item AETERNIUM_HELMET = registerEndItem("aeternium_helmet", new BaseArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.HEAD, makeEndItemSettings().fireResistant()));
+	public static final Item AETERNIUM_CHESTPLATE = registerEndItem("aeternium_chestplate", new BaseArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.CHEST, makeEndItemSettings().fireResistant()));
+	public static final Item AETERNIUM_LEGGINGS = registerEndItem("aeternium_leggings", new BaseArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.LEGS, makeEndItemSettings().fireResistant()));
+	public static final Item AETERNIUM_BOOTS = registerEndItem("aeternium_boots", new BaseArmorItem(EndArmorMaterial.AETERNIUM, EquipmentSlot.FEET, makeEndItemSettings().fireResistant()));
+	public static final Item CRYSTALITE_HELMET = registerEndItem("crystalite_helmet", new CrystaliteHelmet());
+	public static final Item CRYSTALITE_CHESTPLATE = registerEndItem("crystalite_chestplate", new CrystaliteChestplate());
+	public static final Item CRYSTALITE_LEGGINGS = registerEndItem("crystalite_leggings", new CrystaliteLeggings());
+	public static final Item CRYSTALITE_BOOTS = registerEndItem("crystalite_boots", new CrystaliteBoots());
+	public static final Item ARMORED_ELYTRA = registerEndItem("elytra_armored", new ArmoredElytra("elytra_armored", EndArmorMaterial.AETERNIUM, Items.PHANTOM_MEMBRANE, 900, 0.96D, true));
 
 	// Tools //
-	public static final TieredItem AETERNIUM_SHOVEL = registerTool("aeternium_shovel", new EndShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeItemSettings().fireResistant()));
-	public static final TieredItem AETERNIUM_SWORD = registerTool("aeternium_sword", new EndSwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, makeItemSettings().fireResistant()));
-	public static final TieredItem AETERNIUM_PICKAXE = registerTool("aeternium_pickaxe", new EndPickaxeItem(EndToolMaterial.AETERNIUM, 1, -2.8F, makeItemSettings().fireResistant()));
-	public static final TieredItem AETERNIUM_AXE = registerTool("aeternium_axe", new EndAxeItem(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, makeItemSettings().fireResistant()));
-	public static final TieredItem AETERNIUM_HOE = registerTool("aeternium_hoe", new EndHoeItem(EndToolMaterial.AETERNIUM, -3, 0.0F, makeItemSettings().fireResistant()));
-	public static final TieredItem AETERNIUM_HAMMER = registerTool("aeternium_hammer", new EndHammerItem(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeItemSettings().fireResistant()));
+	public static final TieredItem AETERNIUM_SHOVEL = registerEndTool("aeternium_shovel", new BaseShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeEndItemSettings().fireResistant()));
+	public static final TieredItem AETERNIUM_SWORD = registerEndTool("aeternium_sword", new BaseSwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, makeEndItemSettings().fireResistant()));
+	public static final TieredItem AETERNIUM_PICKAXE = registerEndTool("aeternium_pickaxe", new BasePickaxeItem(EndToolMaterial.AETERNIUM, 1, -2.8F, makeEndItemSettings().fireResistant()));
+	public static final TieredItem AETERNIUM_AXE = registerEndTool("aeternium_axe", new BaseAxeItem(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, makeEndItemSettings().fireResistant()));
+	public static final TieredItem AETERNIUM_HOE = registerEndTool("aeternium_hoe", new BaseHoeItem(EndToolMaterial.AETERNIUM, -3, 0.0F, makeEndItemSettings().fireResistant()));
+	public static final TieredItem AETERNIUM_HAMMER = registerEndTool("aeternium_hammer", new EndHammerItem(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeEndItemSettings().fireResistant()));
 	
 	// Toolparts //
-	public final static Item AETERNIUM_SHOVEL_HEAD = registerItem("aeternium_shovel_head");
-	public final static Item AETERNIUM_PICKAXE_HEAD = registerItem("aeternium_pickaxe_head");
-	public final static Item AETERNIUM_AXE_HEAD = registerItem("aeternium_axe_head");
-	public final static Item AETERNIUM_HOE_HEAD = registerItem("aeternium_hoe_head");
-	public final static Item AETERNIUM_HAMMER_HEAD = registerItem("aeternium_hammer_head");
-	public final static Item AETERNIUM_SWORD_BLADE = registerItem("aeternium_sword_blade");
-	public final static Item AETERNIUM_SWORD_HANDLE = registerItem("aeternium_sword_handle");
+	public final static Item AETERNIUM_SHOVEL_HEAD = registerEndItem("aeternium_shovel_head");
+	public final static Item AETERNIUM_PICKAXE_HEAD = registerEndItem("aeternium_pickaxe_head");
+	public final static Item AETERNIUM_AXE_HEAD = registerEndItem("aeternium_axe_head");
+	public final static Item AETERNIUM_HOE_HEAD = registerEndItem("aeternium_hoe_head");
+	public final static Item AETERNIUM_HAMMER_HEAD = registerEndItem("aeternium_hammer_head");
+	public final static Item AETERNIUM_SWORD_BLADE = registerEndItem("aeternium_sword_blade");
+	public final static Item AETERNIUM_SWORD_HANDLE = registerEndItem("aeternium_sword_handle");
 
 	// Hammers //
-	public static final TieredItem IRON_HAMMER = registerTool("iron_hammer", new EndHammerItem(Tiers.IRON, 5.0F, -3.2F, 0.2D, makeItemSettings()));
-	public static final TieredItem GOLDEN_HAMMER = registerTool("golden_hammer", new EndHammerItem(Tiers.GOLD, 4.5F, -3.4F, 0.3D, makeItemSettings()));
-	public static final TieredItem DIAMOND_HAMMER = registerTool("diamond_hammer", new EndHammerItem(Tiers.DIAMOND, 5.5F, -3.1F, 0.2D, makeItemSettings()));
-	public static final TieredItem NETHERITE_HAMMER = registerTool("netherite_hammer", new EndHammerItem(Tiers.NETHERITE, 5.0F, -3.0F, 0.2D, makeItemSettings().fireResistant()));
+	public static final TieredItem IRON_HAMMER = registerEndTool("iron_hammer", new EndHammerItem(Tiers.IRON, 5.0F, -3.2F, 0.2D, makeEndItemSettings()));
+	public static final TieredItem GOLDEN_HAMMER = registerEndTool("golden_hammer", new EndHammerItem(Tiers.GOLD, 4.5F, -3.4F, 0.3D, makeEndItemSettings()));
+	public static final TieredItem DIAMOND_HAMMER = registerEndTool("diamond_hammer", new EndHammerItem(Tiers.DIAMOND, 5.5F, -3.1F, 0.2D, makeEndItemSettings()));
+	public static final TieredItem NETHERITE_HAMMER = registerEndTool("netherite_hammer", new EndHammerItem(Tiers.NETHERITE, 5.0F, -3.0F, 0.2D, makeEndItemSettings().fireResistant()));
 	
 	// Food //
-	public final static Item SHADOW_BERRY_RAW = registerFood("shadow_berry_raw", 4, 0.5F);
-	public final static Item SHADOW_BERRY_COOKED = registerFood("shadow_berry_cooked", 6, 0.7F);
-	public final static Item END_FISH_RAW = registerFood("end_fish_raw", Foods.SALMON);
-	public final static Item END_FISH_COOKED = registerFood("end_fish_cooked", Foods.COOKED_SALMON);
-	public final static Item BUCKET_END_FISH = registerItem("bucket_end_fish", new EndBucketItem(EndEntities.END_FISH));
-	public final static Item BUCKET_CUBOZOA  = registerItem("bucket_cubozoa", new EndBucketItem(EndEntities.CUBOZOA));
-	public final static Item SWEET_BERRY_JELLY = registerFood("sweet_berry_jelly", 8, 0.7F);
-	public final static Item SHADOW_BERRY_JELLY = registerFood("shadow_berry_jelly", 6, 0.8F, new MobEffectInstance(MobEffects.NIGHT_VISION, 400));
-	public final static Item BLOSSOM_BERRY_JELLY = registerFood("blossom_berry_jelly", 8, 0.7F);
-	public final static Item BLOSSOM_BERRY = registerFood("blossom_berry", Foods.APPLE);
-	public final static Item AMBER_ROOT_RAW = registerFood("amber_root_raw", 2, 0.8F);
-	public final static Item CHORUS_MUSHROOM_RAW = registerFood("chorus_mushroom_raw", 3, 0.5F);
-	public final static Item CHORUS_MUSHROOM_COOKED = registerFood("chorus_mushroom_cooked", Foods.MUSHROOM_STEW);
-	public final static Item BOLUX_MUSHROOM_COOKED = registerFood("bolux_mushroom_cooked", Foods.MUSHROOM_STEW);
-	public final static Item CAVE_PUMPKIN_PIE = registerFood("cave_pumpkin_pie", Foods.PUMPKIN_PIE);
-	
+	public final static Item SHADOW_BERRY_RAW = registerEndFood("shadow_berry_raw", 4, 0.5F);
+	public final static Item SHADOW_BERRY_COOKED = registerEndFood("shadow_berry_cooked", 6, 0.7F);
+	public final static Item END_FISH_RAW = registerEndFood("end_fish_raw", Foods.SALMON);
+	public final static Item END_FISH_COOKED = registerEndFood("end_fish_cooked", Foods.COOKED_SALMON);
+	public final static Item BUCKET_END_FISH = registerEndItem("bucket_end_fish", new EndBucketItem(EndEntities.END_FISH));
+	public final static Item BUCKET_CUBOZOA  = registerEndItem("bucket_cubozoa", new EndBucketItem(EndEntities.CUBOZOA));
+	public final static Item SWEET_BERRY_JELLY = registerEndFood("sweet_berry_jelly", 8, 0.7F);
+	public final static Item SHADOW_BERRY_JELLY = registerEndFood("shadow_berry_jelly", 6, 0.8F, new MobEffectInstance(MobEffects.NIGHT_VISION, 400));
+	public final static Item BLOSSOM_BERRY_JELLY = registerEndFood("blossom_berry_jelly", 8, 0.7F);
+	public final static Item BLOSSOM_BERRY = registerEndFood("blossom_berry", Foods.APPLE);
+	public final static Item AMBER_ROOT_RAW = registerEndFood("amber_root_raw", 2, 0.8F);
+	public final static Item CHORUS_MUSHROOM_RAW = registerEndFood("chorus_mushroom_raw", 3, 0.5F);
+	public final static Item CHORUS_MUSHROOM_COOKED = registerEndFood("chorus_mushroom_cooked", Foods.MUSHROOM_STEW);
+	public final static Item BOLUX_MUSHROOM_COOKED = registerEndFood("bolux_mushroom_cooked", Foods.MUSHROOM_STEW);
+	public final static Item CAVE_PUMPKIN_PIE = registerEndFood("cave_pumpkin_pie", Foods.PUMPKIN_PIE);
 	// Drinks //
-	public final static Item UMBRELLA_CLUSTER_JUICE = registerDrink("umbrella_cluster_juice", 5, 0.7F);
-	
-	public static Item registerDisc(String name, int power, SoundEvent sound) {
-		return registerItem(BetterEnd.makeID(name), new EndDiscItem(power, sound, makeItemSettings()));
+	public final static Item UMBRELLA_CLUSTER_JUICE = registerEndDrink("umbrella_cluster_juice", 5, 0.7F);
+
+	private final static ItemsRegistry ITEM_REGISTRY = new EndItems(CreativeTabs.TAB_ITEMS);
+
+	protected EndItems(CreativeModeTab creativeTab) {
+		super(creativeTab);
+	}
+
+	public static Item registerEndDisc(String name, int power, SoundEvent sound) {
+		return ITEM_REGISTRY.registerDisc(name, power, sound);
 	}
 	
-	public static Item registerItem(String name) {
-		return registerItem(BetterEnd.makeID(name), new ModelProviderItem(makeItemSettings()));
+	public static Item registerEndItem(String name) {
+		return ITEM_REGISTRY.registerItem(name);
 	}
 	
-	public static Item registerItem(String name, Item item) {
-		return registerItem(BetterEnd.makeID(name), item);
+	public static Item registerEndItem(String name, Item item) {
+		return ITEM_REGISTRY.register(BetterEnd.makeID(name), item);
 	}
 	
-	public static Item registerItem(ResourceLocation id, Item item) {
+	public static Item registerEndItem(ResourceLocation id, Item item) {
 		if (item instanceof ArmorItem) {
-			return registerArmor(id, item);
+			return registerEndArmor(id, item);
 		}
 		if (!Configs.ITEM_CONFIG.getBoolean("items", id.getPath(), true)) {
 			return item;
 		}
-		registerItem(id, item, MOD_ITEMS);
+		ITEM_REGISTRY.register(id, item);
 		return item;
 	}
 	
-	public static Item registerBlockItem(ResourceLocation id, Item item) {
-		registerItem(id, item, MOD_BLOCKS);
-		return item;
-	}
-	
-	private static void registerItem(ResourceLocation id, Item item, List<Item> registry) {
-		if (item != Items.AIR) {
-			Registry.register(Registry.ITEM, id, item);
-			registry.add(item);
-		}
-	}
-	
-	private static Item registerArmor(ResourceLocation id, Item item) {
-		if (!Configs.ITEM_CONFIG.getBoolean("armor", id.getPath(), true)) {
+	private static Item registerEndArmor(ResourceLocation itemId, Item item) {
+		if (!Configs.ITEM_CONFIG.getBoolean("armor", itemId.getPath(), true)) {
 			return item;
 		}
-		registerItem(id, item, MOD_ITEMS);
+		ITEM_REGISTRY.register(itemId, item);
 		return item;
 	}
 	
-	public static TieredItem registerTool(String name, TieredItem item) {
-		ResourceLocation id = BetterEnd.makeID(name);
-		if (!Configs.ITEM_CONFIG.getBoolean("tools", id.getPath(), true)) {
+	public static TieredItem registerEndTool(String name, TieredItem item) {
+		if (!Configs.ITEM_CONFIG.getBoolean("tools", name, true)) {
 			return item;
 		}
-		registerItem(id, item, MOD_ITEMS);
-		
-		if (item instanceof ShovelItem) {
-			TagHelper.addTag((Tag.Named<Item>) FabricToolTags.SHOVELS, item);
-		} else if (item instanceof SwordItem) {
-			TagHelper.addTag((Tag.Named<Item>) FabricToolTags.SWORDS, item);
-		} else if (item instanceof EndPickaxeItem) {
-			TagHelper.addTag((Tag.Named<Item>) FabricToolTags.PICKAXES, item);
-		} else if (item instanceof EndAxeItem) {
-			TagHelper.addTag((Tag.Named<Item>) FabricToolTags.AXES, item);
-		} else if (item instanceof EndHoeItem) {
-			TagHelper.addTag((Tag.Named<Item>) FabricToolTags.HOES, item);
-		} else if (item instanceof EndHammerItem) {
-			TagHelper.addTag(EndTags.HAMMERS, item);
-		}
-		
-		return item;
+		return ITEM_REGISTRY.registerTool(name, item);
 	}
 	
-	public static Item registerEgg(String name, EntityType<?> type, int background, int dots) {
-		SpawnEggItem item = new EndSpawnEggItem(type, background, dots, makeItemSettings());
-		DefaultDispenseItemBehavior behavior = new DefaultDispenseItemBehavior() {
-			public ItemStack execute(BlockSource pointer, ItemStack stack) {
-				Direction direction = pointer.getBlockState().getValue(DispenserBlock.FACING);
-				EntityType<?> entityType = ((SpawnEggItem) stack.getItem()).getType(stack.getTag());
-				entityType.spawn(pointer.getLevel(), stack, null, pointer.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
-				stack.shrink(1);
-				return stack;
-			}
-		};
-		DispenserBlock.registerBehavior(item, behavior);
-		return registerItem(name, item);
+	public static Item registerEndEgg(String name, EntityType<?> type, int background, int dots) {
+		return ITEM_REGISTRY.registerEgg(name, type, background, dots);
 	}
 	
-	public static Item registerFood(String name, int hunger, float saturation, MobEffectInstance... effects) {
-		FoodProperties.Builder builder = new FoodProperties.Builder().nutrition(hunger).saturationMod(saturation);
-		for (MobEffectInstance effect: effects) {
-			builder.effect(effect, 1F);
-		}
-		return registerFood(name, builder.build());
+	public static Item registerEndFood(String name, int hunger, float saturation, MobEffectInstance... effects) {
+		return ITEM_REGISTRY.registerFood(name, hunger, saturation, effects);
 	}
 	
-	public static Item registerFood(String name, FoodProperties foodComponent) {
-		return registerItem(name, new ModelProviderItem(makeItemSettings().food(foodComponent)));
+	public static Item registerEndFood(String name, FoodProperties foodComponent) {
+		return ITEM_REGISTRY.registerFood(name, foodComponent);
 	}
 	
-	public static Item registerDrink(String name) {
-		return registerItem(name, new DrinkItem(makeItemSettings().stacksTo(1)));
+	public static Item registerEndDrink(String name) {
+		return ITEM_REGISTRY.registerDrink(name);
 	}
 	
-	public static Item registerDrink(String name, FoodProperties foodComponent) {
-		return registerItem(name, new DrinkItem(makeItemSettings().stacksTo(1).food(foodComponent)));
+	public static Item registerEndDrink(String name, FoodProperties foodComponent) {
+		return ITEM_REGISTRY.registerDrink(name, foodComponent);
 	}
 	
-	public static Item registerDrink(String name, int hunger, float saturation) {
-		FoodProperties.Builder builder = new FoodProperties.Builder().nutrition(hunger).saturationMod(saturation);
-		return registerDrink(name, builder.build());
+	public static Item registerEndDrink(String name, int hunger, float saturation) {
+		return ITEM_REGISTRY.registerDrink(name, hunger, saturation);
 	}
 
-	public static FabricItemSettings makeItemSettings() {
-		FabricItemSettings properties = new FabricItemSettings();
-		return (FabricItemSettings) properties.tab(CreativeTabs.TAB_ITEMS);
-	}
-	
-	public static FabricItemSettings makeBlockItemSettings() {
-		FabricItemSettings properties = new FabricItemSettings();
-		return (FabricItemSettings) properties.tab(CreativeTabs.TAB_BLOCKS);
+	public static FabricItemSettings makeEndItemSettings() {
+		return ITEM_REGISTRY.makeItemSettings();
 	}
 
-	public static void register() {}
-	
-	public static List<Item> getModBlocks() {
-		return MOD_BLOCKS;
-	}
-
-	public static List<Item> getModItems() {
-		return MOD_ITEMS;
+	@Override
+	public ResourceLocation createModId(String name) {
+		return BetterEnd.makeID(name);
 	}
 }

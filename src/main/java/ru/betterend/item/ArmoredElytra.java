@@ -30,8 +30,8 @@ public class ArmoredElytra extends EndArmorItem implements MultiModelItem {
 
 	public ArmoredElytra(String name, ArmorMaterial material, Item repairItem, int durability, double movementFactor, boolean fireproof) {
 		super(material, EquipmentSlot.CHEST, fireproof ?
-				EndItems.makeItemSettings().durability(durability).rarity(Rarity.EPIC).fireResistant() :
-				EndItems.makeItemSettings().durability(durability).rarity(Rarity.EPIC));
+				EndItems.makeEndItemSettings().durability(durability).rarity(Rarity.EPIC).fireResistant() :
+				EndItems.makeEndItemSettings().durability(durability).rarity(Rarity.EPIC));
 		this.wingTexture = BetterEnd.makeID("textures/entity/" + name + ".png");
 		this.repairItem = repairItem;
 		this.movementFactor = movementFactor;

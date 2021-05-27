@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
+import org.jetbrains.annotations.NotNull;
 import ru.bclib.items.BaseArmorItem;
 import ru.bclib.items.tool.*;
 import ru.bclib.registry.ItemsRegistry;
@@ -120,22 +121,22 @@ public class EndItems extends ItemsRegistry {
 	// Drinks //
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerEndDrink("umbrella_cluster_juice", 5, 0.7F);
 
-	private final static ItemsRegistry ITEM_REGISTRY = new EndItems(CreativeTabs.TAB_ITEMS);
+	private static ItemsRegistry ITEM_REGISTRY;
 
 	protected EndItems(CreativeModeTab creativeTab) {
 		super(creativeTab);
 	}
 
 	public static Item registerEndDisc(String name, int power, SoundEvent sound) {
-		return ITEM_REGISTRY.registerDisc(name, power, sound);
+		return getItemRegistry().registerDisc(name, power, sound);
 	}
 	
 	public static Item registerEndItem(String name) {
-		return ITEM_REGISTRY.registerItem(name);
+		return getItemRegistry().registerItem(name);
 	}
 	
 	public static Item registerEndItem(String name, Item item) {
-		return ITEM_REGISTRY.register(BetterEnd.makeID(name), item);
+		return getItemRegistry().register(BetterEnd.makeID(name), item);
 	}
 	
 	public static Item registerEndItem(ResourceLocation id, Item item) {
@@ -145,7 +146,7 @@ public class EndItems extends ItemsRegistry {
 		if (!Configs.ITEM_CONFIG.getBoolean("items", id.getPath(), true)) {
 			return item;
 		}
-		ITEM_REGISTRY.register(id, item);
+		getItemRegistry().register(id, item);
 		return item;
 	}
 	
@@ -153,7 +154,7 @@ public class EndItems extends ItemsRegistry {
 		if (!Configs.ITEM_CONFIG.getBoolean("armor", itemId.getPath(), true)) {
 			return item;
 		}
-		ITEM_REGISTRY.register(itemId, item);
+		getItemRegistry().register(itemId, item);
 		return item;
 	}
 	
@@ -161,31 +162,31 @@ public class EndItems extends ItemsRegistry {
 		if (!Configs.ITEM_CONFIG.getBoolean("tools", name, true)) {
 			return item;
 		}
-		return ITEM_REGISTRY.registerTool(name, item);
+		return getItemRegistry().registerTool(name, item);
 	}
 	
 	public static Item registerEndEgg(String name, EntityType<?> type, int background, int dots) {
-		return ITEM_REGISTRY.registerEgg(name, type, background, dots);
+		return getItemRegistry().registerEgg(name, type, background, dots);
 	}
 	
 	public static Item registerEndFood(String name, int hunger, float saturation, MobEffectInstance... effects) {
-		return ITEM_REGISTRY.registerFood(name, hunger, saturation, effects);
+		return getItemRegistry().registerFood(name, hunger, saturation, effects);
 	}
 	
 	public static Item registerEndFood(String name, FoodProperties foodComponent) {
-		return ITEM_REGISTRY.registerFood(name, foodComponent);
+		return getItemRegistry().registerFood(name, foodComponent);
 	}
 	
 	public static Item registerEndDrink(String name) {
-		return ITEM_REGISTRY.registerDrink(name);
+		return getItemRegistry().registerDrink(name);
 	}
 	
 	public static Item registerEndDrink(String name, FoodProperties foodComponent) {
-		return ITEM_REGISTRY.registerDrink(name, foodComponent);
+		return getItemRegistry().registerDrink(name, foodComponent);
 	}
 	
 	public static Item registerEndDrink(String name, int hunger, float saturation) {
-		return ITEM_REGISTRY.registerDrink(name, hunger, saturation);
+		return getItemRegistry().registerDrink(name, hunger, saturation);
 	}
 
 	public static FabricItemSettings makeEndItemSettings() {
@@ -195,5 +196,13 @@ public class EndItems extends ItemsRegistry {
 	@Override
 	public ResourceLocation createModId(String name) {
 		return BetterEnd.makeID(name);
+	}
+
+	@NotNull
+	private static ItemsRegistry getItemRegistry() {
+		if (ITEM_REGISTRY == null) {
+			ITEM_REGISTRY = new EndItems(CreativeTabs.TAB_ITEMS);
+		}
+		return ITEM_REGISTRY;
 	}
 }

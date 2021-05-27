@@ -11,23 +11,7 @@ import ru.bclib.blocks.BasePathBlock;
 import ru.bclib.registry.BlocksRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.*;
-import ru.betterend.blocks.basis.EndCropBlock;
-import ru.betterend.blocks.basis.EndFurnaceBlock;
-import ru.betterend.blocks.basis.EndLeavesBlock;
-import ru.betterend.blocks.basis.EndOreBlock;
-import ru.betterend.blocks.basis.EndPillarBlock;
-import ru.betterend.blocks.basis.EndSlabBlock;
-import ru.betterend.blocks.basis.EndStairsBlock;
-import ru.betterend.blocks.basis.EndTerrainBlock;
-import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
-import ru.betterend.blocks.basis.EndWallPlantBlock;
-import ru.betterend.blocks.basis.FurBlock;
-import ru.betterend.blocks.basis.SimpleLeavesBlock;
-import ru.betterend.blocks.basis.StalactiteBlock;
-import ru.betterend.blocks.basis.StoneLanternBlock;
-import ru.betterend.blocks.basis.TripleTerrainBlock;
-import ru.betterend.blocks.basis.VineBlock;
-import ru.betterend.blocks.basis.WallMushroomBlock;
+import ru.betterend.blocks.basis.*;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.blocks.complex.CrystalSubblocksMaterial;
 import ru.betterend.blocks.complex.MetalMaterial;
@@ -37,6 +21,8 @@ import ru.betterend.config.Configs;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
+
+import java.util.function.Supplier;
 
 public class EndBlocks extends BlocksRegistry {
 	// Terrain //
@@ -54,17 +40,17 @@ public class EndBlocks extends BlocksRegistry {
 	public static final Block RUTISCUS = registerBlock("rutiscus", new EndTerrainBlock(MaterialColor.COLOR_ORANGE));
 	
 	// Roads //
-	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BasePathBlock(END_MYCELIUM));
-	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new BasePathBlock(END_MOSS));
-	public static final Block CHORUS_NYLIUM_PATH = registerBlock("chorus_nylium_path", new BasePathBlock(CHORUS_NYLIUM));
-	public static final Block CAVE_MOSS_PATH = registerBlock("cave_moss_path", new BasePathBlock(CAVE_MOSS));
-	public static final Block CRYSTAL_MOSS_PATH = registerBlock("crystal_moss_path", new BasePathBlock(CRYSTAL_MOSS));
-	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new BasePathBlock(SHADOW_GRASS));
-	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new BasePathBlock(PINK_MOSS));
-	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new BasePathBlock(AMBER_MOSS));
-	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new BasePathBlock(JUNGLE_MOSS));
-	public static final Block SANGNUM_PATH = registerBlock("sangnum_path", new BasePathBlock(SANGNUM));
-	public static final Block RUTISCUS_PATH = registerBlock("rutiscus_path", new BasePathBlock(RUTISCUS));
+	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new EndPathBlock(END_MYCELIUM));
+	public static final Block END_MOSS_PATH = registerBlock("end_moss_path", new EndPathBlock(END_MOSS));
+	public static final Block CHORUS_NYLIUM_PATH = registerBlock("chorus_nylium_path", new EndPathBlock(CHORUS_NYLIUM));
+	public static final Block CAVE_MOSS_PATH = registerBlock("cave_moss_path", new EndPathBlock(CAVE_MOSS));
+	public static final Block CRYSTAL_MOSS_PATH = registerBlock("crystal_moss_path", new EndPathBlock(CRYSTAL_MOSS));
+	public static final Block SHADOW_GRASS_PATH = registerBlock("shadow_grass_path", new EndPathBlock(SHADOW_GRASS));
+	public static final Block PINK_MOSS_PATH = registerBlock("pink_moss_path", new EndPathBlock(PINK_MOSS));
+	public static final Block AMBER_MOSS_PATH = registerBlock("amber_moss_path", new EndPathBlock(AMBER_MOSS));
+	public static final Block JUNGLE_MOSS_PATH = registerBlock("jungle_moss_path", new EndPathBlock(JUNGLE_MOSS));
+	public static final Block SANGNUM_PATH = registerBlock("sangnum_path", new EndPathBlock(SANGNUM));
+	public static final Block RUTISCUS_PATH = registerBlock("rutiscus_path", new EndPathBlock(RUTISCUS));
 	
 	public static final Block MOSSY_OBSIDIAN = registerBlock("mossy_obsidian", new MossyObsidian());
 	public static final Block DRAGON_BONE_BLOCK = registerBlock("dragon_bone_block", new EndPillarBlock(Blocks.BONE_BLOCK));

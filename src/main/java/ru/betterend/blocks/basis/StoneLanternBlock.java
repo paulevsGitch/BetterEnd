@@ -17,10 +17,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.AuroraCrystalBlock;
-import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.interfaces.IColorProvider;
 

@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import ru.bclib.items.ModelProviderItem;
 
 public class DrinkItem extends ModelProviderItem {
 	public DrinkItem(Properties settings) {

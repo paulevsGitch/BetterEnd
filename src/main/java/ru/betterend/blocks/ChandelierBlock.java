@@ -21,9 +21,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.client.models.BlockModelProvider;
+import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.basis.AttachedBlock;
-import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -47,7 +47,7 @@ public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, B
 
 	@Override
 	public BlockModel getItemModel(ResourceLocation blockId) {
-		return ModelsHelper.createItemModel(blockId.getPath());
+		return ModelsHelper.createItemModel(blockId);
 	}
 
 	@Override

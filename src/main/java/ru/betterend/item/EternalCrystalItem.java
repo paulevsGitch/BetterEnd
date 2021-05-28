@@ -1,6 +1,7 @@
 package ru.betterend.item;
 
 import net.minecraft.world.item.Rarity;
+import ru.bclib.items.ModelProviderItem;
 import ru.betterend.registry.EndItems;
 
 public class EternalCrystalItem extends ModelProviderItem {

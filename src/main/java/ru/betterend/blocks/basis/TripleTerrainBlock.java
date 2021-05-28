@@ -32,9 +32,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 
 public class TripleTerrainBlock extends EndTerrainBlock {

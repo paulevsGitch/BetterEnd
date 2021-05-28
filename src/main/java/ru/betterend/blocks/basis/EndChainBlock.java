@@ -18,8 +18,8 @@ import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.client.models.BlockModelProvider;
-import ru.betterend.client.models.ModelsHelper;
+import ru.bclib.client.models.BlockModelProvider;
+import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -36,7 +36,7 @@ public class EndChainBlock extends ChainBlock implements BlockModelProvider, IRe
 
 	@Override
 	public BlockModel getItemModel(ResourceLocation blockId) {
-		return ModelsHelper.createItemModel(blockId.getPath());
+		return ModelsHelper.createItemModel(blockId);
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package ru.betterend.registry;
 
-import java.util.List;
-
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -18,25 +16,10 @@ import ru.bclib.items.tool.*;
 import ru.bclib.registry.ItemsRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.item.ArmoredElytra;
-import ru.betterend.item.CrystaliteBoots;
-import ru.betterend.item.CrystaliteChestplate;
-import ru.betterend.item.CrystaliteHelmet;
-import ru.betterend.item.CrystaliteLeggings;
-import ru.betterend.item.DrinkItem;
-import ru.betterend.item.EnchantedPetalItem;
-import ru.betterend.item.EndArmorItem;
-import ru.betterend.item.EndBucketItem;
-import ru.betterend.item.EternalCrystalItem;
-import ru.betterend.item.ModelProviderItem;
+import ru.betterend.item.*;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
-import ru.betterend.item.tool.EndAxeItem;
 import ru.betterend.item.tool.EndHammerItem;
-import ru.betterend.item.tool.EndHoeItem;
-import ru.betterend.item.tool.EndPickaxeItem;
-import ru.betterend.item.tool.EndShovelItem;
-import ru.betterend.item.tool.EndSwordItem;
 import ru.betterend.tab.CreativeTabs;
 
 public class EndItems extends ItemsRegistry {

@@ -82,7 +82,7 @@ public class EndTags {
 		TagAPI.addEndGround(EndBlocks.ENDSTONE_DUST);
 		TagAPI.addEndGround(EndBlocks.AMBER_ORE);
 		
-		EndItems.getModBlocks().forEach(blockItem -> {
+		EndItems.getModBlocks(BetterEnd.MOD_ID).forEach(blockItem -> {
 			Block block = ((BlockItem) blockItem).getBlock();
 			if (block instanceof EndTerrainBlock) {
 				TagAPI.addEndGround(block);
@@ -106,7 +106,7 @@ public class EndTags {
 		});
 		
 		List<Item> hammers = Lists.newArrayList();
-		EndItems.getModItems().forEach(item -> {
+		EndItems.getModItems(BetterEnd.MOD_ID).forEach(item -> {
 			if (item.isEdible()) {
 				FoodProperties food = item.getFoodProperties();
 				if (food != null) {

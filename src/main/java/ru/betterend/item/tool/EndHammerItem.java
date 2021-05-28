@@ -28,8 +28,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import ru.betterend.client.models.ItemModelProvider;
-import ru.betterend.client.models.ModelsHelper;
+import ru.bclib.client.models.ItemModelProvider;
+import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.registry.EndTags;
 
 public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ItemModelProvider {
@@ -134,6 +134,6 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	
 	@Override
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
-		return ModelsHelper.createHandheldItem(resourceLocation.getPath());
+		return ModelsHelper.createHandheldItem(resourceLocation);
 	}
 }

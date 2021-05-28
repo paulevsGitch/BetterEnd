@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import ru.bclib.items.ModelProviderItem;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.LangUtil;

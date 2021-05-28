@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.betterend.client.models.BlockModelProvider;
+import ru.bclib.client.models.BlockModelProvider;
 
 public class BlockBase extends Block implements BlockModelProvider {
 	public BlockBase(Properties settings) {

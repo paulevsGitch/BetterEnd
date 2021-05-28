@@ -6,8 +6,8 @@ import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
-import ru.betterend.client.models.ItemModelProvider;
-import ru.betterend.client.models.ModelsHelper;
+import ru.bclib.client.models.ItemModelProvider;
+import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 
 public class EndSpawnEggItem extends SpawnEggItem implements ItemModelProvider {

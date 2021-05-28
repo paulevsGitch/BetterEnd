@@ -10,7 +10,7 @@ import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.betterend.client.models.ModelsHelper;
+import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.util.BlocksHelper;
@@ -22,16 +22,12 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 	
 	@Override
 	public BlockColor getProvider() {
-		return (state, world, pos, tintIndex) -> {
-			return BlocksHelper.getBlockColor(this);
-		};
+		return (state, world, pos, tintIndex) -> BlocksHelper.getBlockColor(this);
 	}
 
 	@Override
 	public ItemColor getItemProvider() {
-		return (stack, tintIndex) -> {
-			return BlocksHelper.getBlockColor(this);
-		};
+		return (stack, tintIndex) -> BlocksHelper.getBlockColor(this);
 	}
 
 	@Override

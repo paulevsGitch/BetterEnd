@@ -6,6 +6,8 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import ru.bclib.blocks.BaseChestBlock;
+import ru.bclib.registry.BaseRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EternalPedestal;
@@ -34,17 +36,11 @@ public class EndBlockEntities {
 	public static void register() {}
 	
 	static Block[] getPedestals() {
-		List<Block> result = Lists.newArrayList();
-		EndItems.getModBlocks().forEach((item) -> {
-			if (item instanceof BlockItem) {
-				Block block = ((BlockItem) item).getBlock();
-				if (block instanceof EternalPedestal ||
-					block instanceof InfusionPedestal) return;
-				if (block instanceof PedestalBlock) {
-					result.add(block);
-				}
-			}
-		});
-		return result.toArray(new Block[] {});
+		return BaseRegistry.getRegisteredBlocks().values().stream()
+				.filter(item -> item instanceof BlockItem)
+				.map(item -> ((BlockItem) item).getBlock())
+				.filter(block -> block instanceof PedestalBlock &&
+						!(block instanceof EternalPedestal || block instanceof InfusionPedestal))
+				.toArray(Block[]::new);
 	}
 }

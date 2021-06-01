@@ -1,4 +1,12 @@
+buildscript {
+	dependencies {
+		classpath 'org.kohsuke:github-api:1.114'
+	}
+}
+
 plugins {
+	id 'idea'
+	id 'eclipse'
 	id 'fabric-loom' version '0.7-SNAPSHOT'
 	id 'maven-publish'
 }
@@ -10,8 +18,6 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-def env = System.getenv()
-
 repositories {
     maven { url "https://maven.dblsaiko.net/" }
     maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
@@ -19,13 +25,6 @@ repositories {
 	maven { url 'https://maven.blamejared.com' }
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url 'https://jitpack.io' }
-	maven {
-		url "https://maven.pkg.github.com/paulevsgitch/bclib/"
-		credentials {
-			username = env.GITHUB_USER
-			password = env.GITHUB_TOKEN
-		}
-	}
 }
 
 apply plugin: 'maven'
@@ -37,7 +36,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
 	useApi "vazkii.patchouli:Patchouli:1.16.4-${project.patchouli_version}"
-	useApi "ru.bclib:bclib:${project.bclib_version}"
+	useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
 	
 	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
@@ -91,16 +90,56 @@ tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 }
 
+javadoc {
+	options.tags = ["reason"]
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 // if it is present.
 // If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = "sources"
+	classifier = 'sources'
 	from sourceSets.main.allSource
 }
 
 jar {
 	from "LICENSE"
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
+
+def env = System.getenv()
+
+import org.kohsuke.github.GHReleaseBuilder
+import org.kohsuke.github.GitHub
+
+task github(dependsOn: [remapJar, sourcesJar, javadocJar]) {
+	onlyIf {
+		env.GITHUB_TOKEN
+	}
+
+	doLast {
+		def github = GitHub.connectUsingOAuth(env.GITHUB_TOKEN as String)
+		def repository = github.getRepository("paulevsGitch/BetterEnd")
+
+		def releaseBuilder = new GHReleaseBuilder(repository, version as String)
+		releaseBuilder.name("${archivesBaseName}-${version}")
+		releaseBuilder.body("A changelog can be found at https://github.com/paulevsGitch/BetterEnd/commits")
+		releaseBuilder.commitish("master")
+
+		def ghRelease = releaseBuilder.create()
+		ghRelease.uploadAsset(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"), "application/java-archive");
+		ghRelease.uploadAsset(file("${project.buildDir}/libs/${archivesBaseName}-${version}-sources.jar"), "application/java-archive");
+		ghRelease.uploadAsset(file("${project.buildDir}/libs/${archivesBaseName}-${version}-javadoc.jar"), "application/java-archive");
+	}
 }
 
 // configure the maven publication

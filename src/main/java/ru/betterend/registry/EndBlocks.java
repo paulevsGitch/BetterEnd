@@ -7,11 +7,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
 import org.jetbrains.annotations.NotNull;
-import ru.bclib.blocks.BasePathBlock;
+import ru.bclib.blocks.*;
+import ru.bclib.registry.BaseBlockEntities;
 import ru.bclib.registry.BlocksRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.*;
 import ru.betterend.blocks.basis.*;
+import ru.betterend.blocks.basis.SimpleLeavesBlock;
+import ru.betterend.blocks.basis.StalactiteBlock;
+import ru.betterend.blocks.basis.TripleTerrainBlock;
+import ru.betterend.blocks.basis.VineBlock;
+import ru.betterend.blocks.basis.WallMushroomBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.blocks.complex.CrystalSubblocksMaterial;
 import ru.betterend.blocks.complex.MetalMaterial;
@@ -313,15 +319,24 @@ public class EndBlocks extends BlocksRegistry {
 		if (!Configs.BLOCK_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			return block;
 		}
+		if (block instanceof BaseChestBlock) {
+			BaseBlockEntities.CHEST.registerBlock(block);
+		}
+		if (block instanceof BaseSignBlock) {
+			BaseBlockEntities.SIGN.registerBlock(block);
+		}
+		if (block instanceof BaseBarrelBlock) {
+			BaseBlockEntities.BARREL.registerBlock(block);
+		}
+		if (block instanceof BaseFurnaceBlock) {
+			BaseBlockEntities.FURNACE.registerBlock(block);
+		}
 		getBlockRegistry().register(id, block);
 		return block;
 	}
 	
 	public static Block registerBlock(String name, Block block) {
-		if (!Configs.BLOCK_CONFIG.getBooleanRoot(name, true)) {
-			return block;
-		}
-		return getBlockRegistry().register(name, block);
+		return registerBlock(BetterEnd.makeID(name), block);
 	}
 	
 	public static Block registerEndBlockOnly(String name, Block block) {

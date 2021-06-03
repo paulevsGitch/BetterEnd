@@ -37,7 +37,7 @@ dependencies {
 	
 	useApi "vazkii.patchouli:Patchouli:1.16.4-${project.patchouli_version}"
 	useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
-	
+
 	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 	//useOptional "grondag:canvas-mc116:${project.canvas_version}"

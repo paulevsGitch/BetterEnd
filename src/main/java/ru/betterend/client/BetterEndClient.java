@@ -8,6 +8,14 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import ru.bclib.blocks.BaseChestBlock;
+import ru.bclib.blocks.BaseSignBlock;
+import ru.bclib.client.render.BaseChestBlockEntityRenderer;
+import ru.bclib.client.render.BaseSignBlockEntityRenderer;
+import ru.bclib.registry.BaseRegistry;
 import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.render.ERenderLayer;
@@ -21,6 +29,8 @@ import ru.betterend.registry.EndModelProviders;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndScreens;
 
+import java.util.List;
+
 public class BetterEndClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
@@ -32,6 +42,7 @@ public class BetterEndClient implements ClientModInitializer {
 		EndModelProviders.register();
 		MultiModelItem.register();
 		ClientOptions.init();
+		registerRenderers();
 		registerTooltips();
 		
 		if (BetterEnd.isDevEnvironment()) {
@@ -66,5 +77,13 @@ public class BetterEndClient implements ClientModInitializer {
 					BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
 			}
 		});
+	}
+
+	private static void registerRenderers() {
+		List<Item> modBlocks = BaseRegistry.getModBlocks(BetterEnd.MOD_ID);
+		modBlocks.stream().filter(item -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BaseChestBlock)
+				.map(item -> ((BlockItem) item).getBlock()).forEach(BaseChestBlockEntityRenderer::registerRenderLayer);
+		modBlocks.stream().filter(item -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BaseSignBlock)
+				.map(item -> ((BlockItem) item).getBlock()).forEach(BaseSignBlockEntityRenderer::registerRenderLayer);
 	}
 }

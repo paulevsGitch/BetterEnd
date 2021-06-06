@@ -8,9 +8,9 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
-import ru.betterend.util.BlocksHelper;
 
 public class WallPlantFeature extends WallScatterFeature {
 	private final Block block;

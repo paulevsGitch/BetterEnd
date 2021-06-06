@@ -16,7 +16,8 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
-import ru.betterend.util.BlocksHelper;
+import ru.bclib.util.BlocksHelper;
+import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 import ru.betterend.world.features.DefaultFeature;
 
@@ -40,7 +41,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 		placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		placeCeil(world, biome, ceilPositions, random);
-		BlocksHelper.fixBlocks(world, min, max);
+		BlockFixer.fixBlocks(world, min, max);
 		return true;
 	}
 

@@ -24,6 +24,7 @@ import ru.bclib.sdf.operator.SDFScale3D;
 import ru.bclib.sdf.operator.SDFSubtraction;
 import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFSphere;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.BlockProperties;
@@ -31,7 +32,6 @@ import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class TenaneaFeature extends DefaultFeature {

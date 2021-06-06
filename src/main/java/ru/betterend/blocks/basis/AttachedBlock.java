@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import ru.betterend.util.BlocksHelper;
+import ru.bclib.util.BlocksHelper;
 
 public abstract class AttachedBlock extends BlockBaseNotFull {
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;

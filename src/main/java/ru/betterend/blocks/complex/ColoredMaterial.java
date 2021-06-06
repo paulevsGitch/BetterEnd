@@ -12,9 +12,9 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class ColoredMaterial {
 	private static final Map<Integer, ItemLike> DYES = Maps.newHashMap();

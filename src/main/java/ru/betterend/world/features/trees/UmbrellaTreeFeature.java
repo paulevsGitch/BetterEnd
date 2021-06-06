@@ -26,12 +26,12 @@ import ru.bclib.sdf.operator.SDFSubtraction;
 import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.sdf.primitive.SDFSphere;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.UmbrellaTreeClusterBlock;
 import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class UmbrellaTreeFeature extends DefaultFeature {

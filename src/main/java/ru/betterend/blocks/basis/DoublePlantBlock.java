@@ -35,10 +35,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.util.BlocksHelper;
 
 public class DoublePlantBlock extends BlockBaseNotFull implements IRenderTypeable, BonemealableBlock {
 	private static final VoxelShape SHAPE = Block.box(4, 2, 4, 12, 16, 12);

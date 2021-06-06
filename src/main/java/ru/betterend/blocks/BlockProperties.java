@@ -20,6 +20,7 @@ public class BlockProperties {
 	public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
 	public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 	public static final BooleanProperty SMALL = BooleanProperty.create("small");
+	public static final BooleanProperty ROOTS = BooleanProperty.create("roots");
 	
 	public static final IntegerProperty DESTRUCTION_LONG = IntegerProperty.create("destruction", 0, 8);
 	public static final IntegerProperty DESTRUCTION = IntegerProperty.create("destruction", 0, 2);

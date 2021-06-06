@@ -1,5 +1,7 @@
 package ru.betterend.client;
 
+import java.util.List;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.ChatFormatting;
@@ -10,7 +12,6 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseSignBlock;
 import ru.bclib.client.render.BaseChestBlockEntityRenderer;
@@ -28,8 +29,6 @@ import ru.betterend.registry.EndEntitiesRenders;
 import ru.betterend.registry.EndModelProviders;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndScreens;
-
-import java.util.List;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override

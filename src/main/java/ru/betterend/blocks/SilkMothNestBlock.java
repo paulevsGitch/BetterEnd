@@ -39,6 +39,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
@@ -46,7 +47,6 @@ import ru.betterend.entity.SilkMothEntity;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
-import ru.betterend.util.BlocksHelper;
 
 public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
 	public static final BooleanProperty ACTIVE = BlockProperties.ACTIVE;

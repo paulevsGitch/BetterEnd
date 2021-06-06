@@ -25,10 +25,10 @@ import ru.bclib.sdf.operator.SDFFlatWave;
 import ru.bclib.sdf.operator.SDFSmoothUnion;
 import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.sdf.primitive.SDFSphere;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.integration.Integrations;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class NightshadeRedwoodTreeFeature extends DefaultFeature {

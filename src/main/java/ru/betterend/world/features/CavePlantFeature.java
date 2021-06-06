@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import ru.betterend.util.BlocksHelper;
+import ru.bclib.util.BlocksHelper;
 
 public class CavePlantFeature extends FullHeightScatterFeature {
 	private final Block plant;

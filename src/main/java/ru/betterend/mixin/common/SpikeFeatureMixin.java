@@ -25,9 +25,9 @@ import net.minecraft.world.level.levelgen.feature.SpikeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.SpikeConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 

@@ -11,9 +11,9 @@ import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.client.models.ModelsHelper;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.interfaces.IColorProvider;
-import ru.betterend.util.BlocksHelper;
 
 public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements IColorProvider {
 	public HydraluxPetalColoredBlock(FabricBlockSettings settings) {

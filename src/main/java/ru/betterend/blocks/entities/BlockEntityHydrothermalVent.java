@@ -1,18 +1,14 @@
 package ru.betterend.blocks.entities;
 
-import com.mojang.math.Vector3f;
-import net.minecraft.core.BlockPos;
+import java.util.List;
+
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,9 +19,6 @@ import ru.betterend.item.ArmoredElytra;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
-
-import java.util.Comparator;
-import java.util.List;
 
 public class BlockEntityHydrothermalVent extends BlockEntity implements TickableBlockEntity {
 

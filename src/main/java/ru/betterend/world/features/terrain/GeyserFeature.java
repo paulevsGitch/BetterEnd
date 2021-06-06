@@ -31,12 +31,13 @@ import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.sdf.primitive.SDFFlatland;
 import ru.bclib.sdf.primitive.SDFPrimitive;
 import ru.bclib.sdf.primitive.SDFSphere;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.BlockFixer;
 import ru.betterend.world.features.DefaultFeature;
 
 public class GeyserFeature extends DefaultFeature {
@@ -245,7 +246,7 @@ public class GeyserFeature extends DefaultFeature {
 		double distance = radius1 * 1.7;
 		BlockPos start = pos.offset(-distance, -halfHeight - 15 - distance, -distance);
 		BlockPos end = pos.offset(distance, -halfHeight - 5 + distance, distance);
-		BlocksHelper.fixBlocks(world, start, end);
+		BlockFixer.fixBlocks(world, start, end);
 
 		return true;
 	}

@@ -31,10 +31,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.util.BlocksHelper;
 
 public class EndLadderBlock extends BlockBaseNotFull implements IRenderTypeable, BlockModelProvider {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;

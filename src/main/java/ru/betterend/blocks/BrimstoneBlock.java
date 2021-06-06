@@ -20,9 +20,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class BrimstoneBlock extends BlockBase {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;

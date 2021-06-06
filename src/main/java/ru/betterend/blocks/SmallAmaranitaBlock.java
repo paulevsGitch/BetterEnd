@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.util.BlocksHelper;
 
 public class SmallAmaranitaBlock extends EndPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 10, 12);

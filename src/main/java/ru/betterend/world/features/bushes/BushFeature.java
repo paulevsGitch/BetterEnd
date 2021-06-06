@@ -19,9 +19,9 @@ import ru.bclib.sdf.operator.SDFScale3D;
 import ru.bclib.sdf.operator.SDFSubtraction;
 import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFSphere;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class BushFeature extends DefaultFeature {

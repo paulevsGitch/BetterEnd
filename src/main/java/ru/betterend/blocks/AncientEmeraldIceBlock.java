@@ -15,11 +15,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.util.BlocksHelper;
 
 public class AncientEmeraldIceBlock extends BlockBase {
 	public AncientEmeraldIceBlock() {

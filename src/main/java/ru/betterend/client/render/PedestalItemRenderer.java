@@ -20,9 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
-import ru.betterend.client.render.BeamRenderer;
-import ru.betterend.client.render.EndCrystalRenderer;
-import ru.betterend.client.render.EternalCrystalRenderer;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 

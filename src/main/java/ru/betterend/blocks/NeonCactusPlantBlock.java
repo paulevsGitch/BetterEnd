@@ -38,6 +38,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties.CactusBottom;
 import ru.betterend.blocks.BlockProperties.TripleShape;
@@ -45,7 +46,6 @@ import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class NeonCactusPlantBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, IRenderTypeable {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;

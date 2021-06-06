@@ -17,12 +17,13 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.BlockFixer;
 import ru.betterend.world.features.DefaultFeature;
 
 public class SulphuricCaveFeature extends DefaultFeature {
@@ -161,7 +162,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 			}
 		}
 
-		BlocksHelper.fixBlocks(world, new BlockPos(x1, y1, z1), new BlockPos(x2, y2, z2));
+		BlockFixer.fixBlocks(world, new BlockPos(x1, y1, z1), new BlockPos(x2, y2, z2));
 
 		return true;
 	}

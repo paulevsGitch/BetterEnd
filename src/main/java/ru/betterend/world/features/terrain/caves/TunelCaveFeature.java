@@ -19,9 +19,9 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 public class TunelCaveFeature extends EndCaveFeature {

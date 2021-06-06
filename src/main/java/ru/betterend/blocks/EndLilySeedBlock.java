@@ -5,10 +5,10 @@ import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.material.Fluids;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.UnderwaterPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class EndLilySeedBlock extends UnderwaterPlantWithAgeBlock {
 	@Override

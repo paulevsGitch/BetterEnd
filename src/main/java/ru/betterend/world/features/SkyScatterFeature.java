@@ -6,8 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.util.BlocksHelper;
 
 public abstract class SkyScatterFeature extends ScatterFeature {
 	public SkyScatterFeature(int radius) {

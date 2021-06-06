@@ -1,6 +1,12 @@
 package ru.betterend.blocks;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Lists;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
@@ -17,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
-import org.jetbrains.annotations.Nullable;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.util.ColorUtil;
@@ -27,9 +32,6 @@ import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
-
-import java.util.List;
-import java.util.Optional;
 
 public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider, IColorProvider {
 	public static final IntegerProperty COLOR = BlockProperties.COLOR;

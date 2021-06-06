@@ -13,9 +13,9 @@ import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFRotation;
 import ru.bclib.sdf.primitive.SDFHexPrism;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class BigAuroraCrystalFeature extends DefaultFeature {

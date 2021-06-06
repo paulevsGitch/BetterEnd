@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.dimension.end.DragonRespawnAnimation;
 import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.phys.AABB;
-import ru.betterend.util.BlocksHelper;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(EndDragonFight.class)

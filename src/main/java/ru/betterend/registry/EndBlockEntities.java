@@ -1,21 +1,21 @@
 package ru.betterend.registry;
 
-import com.google.common.collect.Lists;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.registry.BaseRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.EternalPedestal;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.basis.PedestalBlock;
-import ru.betterend.blocks.entities.*;
-
-import java.util.List;
+import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
+import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
+import ru.betterend.blocks.entities.EternalPedestalEntity;
+import ru.betterend.blocks.entities.InfusionPedestalEntity;
+import ru.betterend.blocks.entities.PedestalBlockEntity;
 
 public class EndBlockEntities {
 	public final static BlockEntityType<EndStoneSmelterBlockEntity> END_STONE_SMELTER = registerBlockEntity(EndStoneSmelter.ID,

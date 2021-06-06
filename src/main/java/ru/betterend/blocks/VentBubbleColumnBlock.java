@@ -29,8 +29,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class VentBubbleColumnBlock extends Block implements BucketPickup, LiquidBlockContainer {
 	public VentBubbleColumnBlock() {

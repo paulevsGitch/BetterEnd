@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.betterend.util.BlocksHelper;
+import ru.bclib.util.BlocksHelper;
 
 public abstract class DefaultFeature extends Feature<NoneFeatureConfiguration> {
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();

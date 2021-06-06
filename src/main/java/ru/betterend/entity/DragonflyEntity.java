@@ -33,10 +33,10 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.util.BlocksHelper;
 
 public class DragonflyEntity extends Animal implements FlyingAnimal {
 	public DragonflyEntity(EntityType<DragonflyEntity> entityType, Level world) {

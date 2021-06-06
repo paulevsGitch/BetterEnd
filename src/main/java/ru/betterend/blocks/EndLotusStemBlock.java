@@ -25,11 +25,11 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
-import ru.betterend.util.BlocksHelper;
 
 public class EndLotusStemBlock extends BlockBase implements SimpleWaterloggedBlock, IRenderTypeable {
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;

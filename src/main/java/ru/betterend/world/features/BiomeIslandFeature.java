@@ -16,8 +16,8 @@ import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFCappedCone;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.BlocksHelper;
 
 public class BiomeIslandFeature extends DefaultFeature {
 	private static final MutableBlockPos CENTER = new MutableBlockPos();

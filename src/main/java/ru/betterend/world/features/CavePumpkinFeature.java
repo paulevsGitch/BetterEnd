@@ -7,9 +7,9 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class CavePumpkinFeature extends DefaultFeature {
 	@Override

@@ -27,13 +27,13 @@ import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.sdf.primitive.SDFPrimitive;
 import ru.bclib.sdf.primitive.SDFSphere;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.features.DefaultFeature;
 
 public class MossyGlowshroomFeature extends DefaultFeature {

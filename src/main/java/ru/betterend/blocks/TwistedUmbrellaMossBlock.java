@@ -9,10 +9,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class TwistedUmbrellaMossBlock extends EndPlantBlock {
 	public TwistedUmbrellaMossBlock() {

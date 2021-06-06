@@ -38,10 +38,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.util.BlocksHelper;
 import ru.betterend.world.biome.EndBiome;
 
 public class EndSlimeEntity extends Slime {

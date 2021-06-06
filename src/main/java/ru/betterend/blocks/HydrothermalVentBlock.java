@@ -36,11 +36,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.util.BlocksHelper;
 
 public class HydrothermalVentBlock extends BlockBaseNotFull implements EntityBlock, LiquidBlockContainer, SimpleWaterloggedBlock {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

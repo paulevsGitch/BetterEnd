@@ -23,7 +23,7 @@ import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
-import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.BlockFixer;
 
 public class CrashedShipFeature extends NBTStructureFeature {
 	private static final StructureProcessor REPLACER;
@@ -99,8 +99,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		structure.placeInWorldChunk(world, center, placementData.setBoundingBox(bounds), random);
 
 		StructureHelper.erodeIntense(world, bounds, random);
-		BlocksHelper.fixBlocks(world, new BlockPos(bounds.x0, bounds.y0, bounds.z0),
-				new BlockPos(bounds.x1, bounds.y1, bounds.z1));
+		BlockFixer.fixBlocks(world, new BlockPos(bounds.x0, bounds.y0, bounds.z0), new BlockPos(bounds.x1, bounds.y1, bounds.z1));
 
 		return true;
 	}

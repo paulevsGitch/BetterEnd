@@ -6,8 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.DoublePlantBlock;
-import ru.betterend.util.BlocksHelper;
 
 public class UnderwaterPlantFeature extends UnderwaterPlantScatter {
 	private final Block plant;

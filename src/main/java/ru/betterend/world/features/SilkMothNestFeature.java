@@ -12,9 +12,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.BlocksHelper;
 
 public class SilkMothNestFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();

@@ -23,8 +23,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import ru.bclib.api.TagAPI;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.util.BlocksHelper;
+import ru.betterend.util.BlockFixer;
 import ru.betterend.world.processors.DestructionStructureProcessor;
 
 public abstract class NBTStructureFeature extends DefaultFeature {
@@ -131,21 +132,22 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 							BlockState stateSt = world.getBlockState(mut);
 							if (!stateSt.is(TagAPI.GEN_TERRAIN)) {
 								if (merge == TerrainMerge.SURFACE) {
-									SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings()
-											.getSurfaceBuilderConfig();
+									SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
 									boolean isTop = mut.getY() == surfMax && state.getMaterial().isSolidBlocking();
 									BlockState top = isTop ? config.getTopMaterial() : config.getUnderMaterial();
 									BlocksHelper.setWithoutUpdate(world, mut, top);
-								} else {
+								}
+								else {
 									BlocksHelper.setWithoutUpdate(world, mut, state);
 								}
-							} else {
+							}
+							else {
 								if (stateSt.is(TagAPI.END_GROUND) && state.getMaterial().isSolidBlocking()) {
 									if (merge == TerrainMerge.SURFACE) {
-										SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings()
-												.getSurfaceBuilderConfig();
+										SurfaceBuilderConfiguration config = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
 										BlocksHelper.setWithoutUpdate(world, mut, config.getUnderMaterial());
-									} else {
+									}
+									else {
 										BlocksHelper.setWithoutUpdate(world, mut, state);
 									}
 								}
@@ -156,8 +158,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 				}
 			}
 		}
-		BlocksHelper.fixBlocks(world, new BlockPos(x1, center.getY(), z1),
-				new BlockPos(x2, center.getY() + offset.getY(), z2));
+		BlockFixer.fixBlocks(world, new BlockPos(x1, center.getY(), z1), new BlockPos(x2, center.getY() + offset.getY(), z2));
 
 		return true;
 	}
@@ -175,8 +176,7 @@ public abstract class NBTStructureFeature extends DefaultFeature {
 		String nm = resource.getPath();
 
 		try {
-			InputStream inputstream = MinecraftServer.class
-					.getResourceAsStream("/data/" + ns + "/structures/" + nm + ".nbt");
+			InputStream inputstream = MinecraftServer.class.getResourceAsStream("/data/" + ns + "/structures/" + nm + ".nbt");
 			return readStructureFromStream(inputstream);
 		} catch (IOException e) {
 			e.printStackTrace();

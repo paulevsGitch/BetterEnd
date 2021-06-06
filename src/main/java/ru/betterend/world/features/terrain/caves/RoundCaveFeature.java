@@ -11,9 +11,9 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.util.BlocksHelper;
 
 public class RoundCaveFeature extends EndCaveFeature {
 	@Override

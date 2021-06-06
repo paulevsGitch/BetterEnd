@@ -20,9 +20,9 @@ import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.sdf.primitive.SDFFlatland;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianPillarBasementFeature extends DefaultFeature {
 	@Override

@@ -11,7 +11,7 @@ import ru.betterend.world.biome.BiomeDefinition;
 
 public class LushAuroraCaveBiome extends EndCaveBiome {
 	public LushAuroraCaveBiome() {
-		super(new BiomeDefinition("lush_aurora_cave")
+		super((BiomeDefinition) new BiomeDefinition("lush_aurora_cave")
 				.setFogColor(150, 30, 68)
 				.setFogDensity(2.0F)
 				.setPlantsColor(108, 25, 46)

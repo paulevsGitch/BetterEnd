@@ -11,7 +11,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class LanternWoodsBiome extends EndBiome {
 	public LanternWoodsBiome() {
-		super(new BiomeDefinition("lantern_woods")
+		super((BiomeDefinition) new BiomeDefinition("lantern_woods")
 				.setFogColor(189, 82, 70)
 				.setFogDensity(1.1F)
 				.setWaterAndFogColor(171, 234, 226)

@@ -11,7 +11,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.world.features.DefaultFeature;
+import ru.bclib.world.features.DefaultFeature;
 
 public class SingleBlockFeature extends DefaultFeature {
 	private final Block block;

@@ -12,7 +12,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class ShadowForestBiome extends EndBiome {
 	public ShadowForestBiome() {
-		super(new BiomeDefinition("shadow_forest")
+		super((BiomeDefinition) new BiomeDefinition("shadow_forest")
 				.setFogColor(0, 0, 0)
 				.setFogDensity(2.5F)
 				.setPlantsColor(45, 45, 45)

@@ -7,8 +7,10 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.behavior.WeightedList;
 import net.minecraft.world.level.biome.Biome;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.TagHelper;
+import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.ModIntegration;
 import ru.betterend.integration.byg.biomes.BYGBiomes;
@@ -41,13 +43,13 @@ public class BYGIntegration extends ModIntegration {
 				Biome biome = this.getAndExecuteRuntime(biomeClass, obj, "getBiome");
 				if (biome != null) {
 					ResourceLocation biomeID = BuiltinRegistries.BIOME.getKey(biome);
-					EndBiome endBiome = EndBiomes.getBiome(biomeID);
+					BCLBiome endBiome = BiomeAPI.getBiome(biomeID);
 					Biome edge = this.getAndExecuteRuntime(biomeClass, obj, "getEdge");
 					if (edge != null) {
 						ResourceLocation edgeID = BuiltinRegistries.BIOME.getKey(edge);
 						EndBiomes.LAND_BIOMES.removeMutableBiome(edgeID);
 						EndBiomes.VOID_BIOMES.removeMutableBiome(edgeID);
-						EndBiome edgeBiome = EndBiomes.getBiome(edgeID);
+						BCLBiome edgeBiome = BiomeAPI.getBiome(edgeID);
 						endBiome.setEdge(edgeBiome);
 					}
 					else {
@@ -59,7 +61,7 @@ public class BYGIntegration extends ModIntegration {
 						WeightedList<ResourceLocation> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
 						if (subBiomes != null) {
 							subBiomes.stream().collect(Collectors.toList()).forEach((id) -> {
-								EndBiome subBiome = EndBiomes.getBiome(id);
+								BCLBiome subBiome = BiomeAPI.getBiome(id);
 								EndBiomes.LAND_BIOMES.removeMutableBiome(id);
 								EndBiomes.VOID_BIOMES.removeMutableBiome(id);
 								if (!endBiome.containsSubBiome(subBiome)) {

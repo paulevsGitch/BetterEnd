@@ -10,11 +10,11 @@ import ru.betterend.world.biome.EndBiome;
 
 public class BlossomingSpiresBiome extends EndBiome {
 	public BlossomingSpiresBiome() {
-		super(new BiomeDefinition("blossoming_spires")
+		super((BiomeDefinition) new BiomeDefinition("blossoming_spires")
+				.setCaves(false)
 				.setFogColor(241, 146, 229)
 				.setFogDensity(1.7F)
 				.setPlantsColor(122, 45, 122)
-				.setCaves(false)
 				.setSurface(EndBlocks.PINK_MOSS)
 				.setMusic(EndSounds.MUSIC_FOREST)
 				.setLoop(EndSounds.AMBIENT_BLOSSOMING_SPIRES)

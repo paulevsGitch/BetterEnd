@@ -22,7 +22,7 @@ public class EterialGrove extends EndBiome {
 		Biome biome = Integrations.BYG.getBiome("ethereal_islands");
 		BiomeSpecialEffects effects = biome.getSpecialEffects();
 		
-		BiomeDefinition def = new BiomeDefinition("eterial_grove")
+		BiomeDefinition def = (BiomeDefinition) new BiomeDefinition("eterial_grove")
 				.setSurface(biome.getGenerationSettings().getSurfaceBuilder().get())
 				.addFeature(BYGFeatures.BIG_ETHER_TREE);
 		

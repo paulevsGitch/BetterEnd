@@ -12,7 +12,8 @@ import ru.betterend.world.biome.EndBiome;
 
 public class MegalakeGroveBiome extends EndBiome {
 	public MegalakeGroveBiome() {
-		super(new BiomeDefinition("megalake_grove")
+		super((BiomeDefinition) new BiomeDefinition("megalake_grove")
+				.addStructureFeature(EndStructures.MEGALAKE_SMALL)
 				.setPlantsColor(73, 210, 209)
 				.setFogColor(178, 209, 248)
 				.setWaterAndFogColor(96, 163, 255)
@@ -22,7 +23,6 @@ public class MegalakeGroveBiome extends EndBiome {
 				.setLoop(EndSounds.AMBIENT_MEGALAKE_GROVE)
 				.setSurface(EndBlocks.END_MOSS)
 				.setDepth(0F)
-				.addStructureFeature(EndStructures.MEGALAKE_SMALL)
 				.addFeature(EndFeatures.LACUGROVE)
 				.addFeature(EndFeatures.END_LOTUS)
 				.addFeature(EndFeatures.END_LOTUS_LEAF)

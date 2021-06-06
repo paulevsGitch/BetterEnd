@@ -6,11 +6,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.behavior.WeightedList;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import ru.betterend.registry.EndBiomes;
+import ru.bclib.api.BiomeAPI;
+import ru.bclib.world.features.BCLFeature;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
-import ru.betterend.world.features.EndFeature;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
 public class EndCaveBiome extends EndBiome {
@@ -22,11 +23,11 @@ public class EndCaveBiome extends EndBiome {
 	}
 	
 	private static BiomeDefinition makeDef(BiomeDefinition definition) {
-		EndFeature feature = EndFeature.makeChunkFeature(
-			definition.getID().getPath() + "_cave_populator",
-			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) EndBiomes.getBiome(definition.getID()))
+		BCLFeature feature = BCLFeature.makeChunkFeature(
+			BetterEnd.makeID(definition.getID().getPath() + "_cave_populator"),
+			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(definition.getID()))
 		);
-		definition.addFeature(feature).setCaveBiome();
+		definition.setCaveBiome().addFeature(feature);
 		definition.setMusic(EndSounds.MUSIC_CAVES);
 		definition.setLoop(EndSounds.AMBIENT_CAVES);
 		return definition;

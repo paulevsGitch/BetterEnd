@@ -38,11 +38,12 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.world.biome.EndBiome;
 
 public class EndSlimeEntity extends Slime {
 	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(EndSlimeEntity.class, EntityDataSerializers.BYTE);
@@ -75,7 +76,7 @@ public class EndSlimeEntity extends Slime {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		EndBiome biome = EndBiomes.getFromBiome(world.getBiome(blockPosition()));
+		BCLBiome biome = BiomeAPI.getFromBiome(world.getBiome(blockPosition()));
 		if (biome == EndBiomes.FOGGY_MUSHROOMLAND) {
 			this.setMossy();
 		}
@@ -204,7 +205,7 @@ public class EndSlimeEntity extends Slime {
 	
 	private static boolean isPermanentBiome(ServerLevelAccessor world, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
-		return EndBiomes.getFromBiome(biome) == EndBiomes.CHORUS_FOREST;
+		return BiomeAPI.getFromBiome(biome) == EndBiomes.CHORUS_FOREST;
 	}
 	
 	private static boolean notManyEntities(ServerLevelAccessor world, BlockPos pos, int radius, int maxCount) {

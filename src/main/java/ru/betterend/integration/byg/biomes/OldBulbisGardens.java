@@ -34,7 +34,7 @@ public class OldBulbisGardens extends EndBiome {
 		
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
 		Block origin = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial().getBlock();
-		BiomeDefinition def = new BiomeDefinition("old_bulbis_gardens")
+		BiomeDefinition def = (BiomeDefinition) new BiomeDefinition("old_bulbis_gardens")
 				.setFogColor(215, 132, 207)
 				.setFogDensity(1.8F)
 				.setWaterAndFogColor(40, 0, 56)

@@ -22,8 +22,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
-import ru.betterend.world.features.EndFeature;
 
 public abstract class ModIntegration {
 	private final String modID;
@@ -60,13 +60,13 @@ public abstract class ModIntegration {
 		return FabricLoader.getInstance().isModLoaded(modID);
 	}
 	
-	public EndFeature getFeature(String featureID, String configuredFeatureID, GenerationStep.Decoration featureStep) {
+	public BCLFeature getFeature(String featureID, String configuredFeatureID, GenerationStep.Decoration featureStep) {
 		Feature<?> feature = Registry.FEATURE.get(getID(featureID));
 		ConfiguredFeature<?, ?> featureConfigured = BuiltinRegistries.CONFIGURED_FEATURE.get(getID(configuredFeatureID));
-		return new EndFeature(feature, featureConfigured, featureStep);
+		return new BCLFeature(feature, featureConfigured, featureStep);
 	}
 	
-	public EndFeature getFeature(String name, GenerationStep.Decoration featureStep) {
+	public BCLFeature getFeature(String name, GenerationStep.Decoration featureStep) {
 		return getFeature(name, name, featureStep);
 	}
 	

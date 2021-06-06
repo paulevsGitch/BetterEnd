@@ -25,7 +25,7 @@ public class NightshadeRedwoods extends EndBiome {
 		Biome biome = Integrations.BYG.getBiome("nightshade_forest");
 		BiomeSpecialEffects effects = biome.getSpecialEffects();
 		
-		BiomeDefinition def = new BiomeDefinition("nightshade_redwoods")
+		BiomeDefinition def = (BiomeDefinition) new BiomeDefinition("nightshade_redwoods")
 				.setFogColor(140, 108, 47)
 				.setFogDensity(1.5F)
 				.setWaterAndFogColor(55, 70, 186)

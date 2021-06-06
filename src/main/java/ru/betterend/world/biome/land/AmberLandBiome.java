@@ -12,7 +12,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class AmberLandBiome extends EndBiome {
 	public AmberLandBiome() {
-		super(new BiomeDefinition("amber_land")
+		super((BiomeDefinition) new BiomeDefinition("amber_land")
 				.setFogColor(255, 184, 71)
 				.setFogDensity(2.0F)
 				.setPlantsColor(219, 115, 38)

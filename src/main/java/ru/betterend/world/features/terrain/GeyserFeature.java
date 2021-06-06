@@ -33,12 +33,12 @@ import ru.bclib.sdf.primitive.SDFPrimitive;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.util.BlockFixer;
-import ru.betterend.world.features.DefaultFeature;
 
 public class GeyserFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE1;

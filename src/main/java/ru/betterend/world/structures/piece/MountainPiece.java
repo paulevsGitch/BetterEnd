@@ -17,9 +17,9 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.EndBiomes;
 
 public abstract class MountainPiece extends BasePiece {
 	protected Map<Integer, Integer> heightmap = Maps.newHashMap();
@@ -43,7 +43,7 @@ public abstract class MountainPiece extends BasePiece {
 		this.seed2 = random.nextInt();
 		this.noise1 = new OpenSimplexNoise(this.seed1);
 		this.noise2 = new OpenSimplexNoise(this.seed2);
-		this.biomeID = EndBiomes.getBiomeID(biome);
+		this.biomeID = BiomeAPI.getBiomeID(biome);
 		makeBoundingBox();
 	}
 
@@ -82,7 +82,7 @@ public abstract class MountainPiece extends BasePiece {
 			return h;
 		}
 		
-		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
+		if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, -10);
 			return -10;
 		}

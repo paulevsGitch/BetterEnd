@@ -14,7 +14,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class ChorusForestBiome extends EndBiome {
 	public ChorusForestBiome() {
-		super(new BiomeDefinition("chorus_forest")
+		super((BiomeDefinition) new BiomeDefinition("chorus_forest")
 				.setFogColor(87, 26, 87)
 				.setFogDensity(1.5F)
 				.setPlantsColor(122, 45, 122)

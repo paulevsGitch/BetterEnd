@@ -11,6 +11,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.primitive.SDFSphere;
@@ -62,7 +63,7 @@ public class FloatingSpireFeature extends SpireFeature {
 		sdf.fillRecursive(world, center);
 
 		support.forEach((bpos) -> {
-			if (EndBiomes.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
+			if (BiomeAPI.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
 				EndFeatures.TENANEA_BUSH.getFeature().place(world, chunkGenerator, random, bpos, null);
 			}
 		});

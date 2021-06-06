@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 
 public abstract class WallScatterFeature extends DefaultFeature {
 	private static final Direction[] DIR = BlocksHelper.makeHorizontal();

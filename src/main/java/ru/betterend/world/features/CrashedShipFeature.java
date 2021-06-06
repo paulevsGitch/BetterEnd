@@ -23,6 +23,7 @@ import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
+import ru.bclib.world.features.NBTStructureFeature;
 import ru.betterend.util.BlockFixer;
 
 public class CrashedShipFeature extends NBTStructureFeature {

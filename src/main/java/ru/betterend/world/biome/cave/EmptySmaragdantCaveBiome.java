@@ -6,7 +6,7 @@ import ru.betterend.world.biome.BiomeDefinition;
 
 public class EmptySmaragdantCaveBiome extends EndCaveBiome {
 	public EmptySmaragdantCaveBiome() {
-		super(new BiomeDefinition("empty_smaragdant_cave")
+		super((BiomeDefinition) new BiomeDefinition("empty_smaragdant_cave")
 				.setFogColor(0, 253, 182)
 				.setFogDensity(2.0F)
 				.setPlantsColor(0, 131, 145)

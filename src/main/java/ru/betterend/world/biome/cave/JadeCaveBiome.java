@@ -13,7 +13,7 @@ public class JadeCaveBiome extends EndCaveBiome {
 	private static final BlockState[] JADE = new BlockState[3];
 	
 	public JadeCaveBiome() {
-		super(new BiomeDefinition("jade_cave")
+		super((BiomeDefinition) new BiomeDefinition("jade_cave")
 			.setFogColor(118, 150, 112)
 			.setFogDensity(2.0F)
 			.setWaterAndFogColor(95, 223, 255)

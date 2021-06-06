@@ -11,7 +11,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class UmbrellaJungleBiome extends EndBiome {
 	public UmbrellaJungleBiome() {
-		super(new BiomeDefinition("umbrella_jungle")
+		super((BiomeDefinition) new BiomeDefinition("umbrella_jungle")
 				.setFogColor(87, 223, 221)
 				.setWaterAndFogColor(119, 198, 253)
 				.setFoliageColor(27, 183, 194)

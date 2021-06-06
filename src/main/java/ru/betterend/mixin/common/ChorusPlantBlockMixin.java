@@ -31,7 +31,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		super(settings);
 	}
 
-	@Inject(method = "<init>*", at = @At("TAIL"))
+	/*@Inject(method = "<init>*", at = @At("TAIL"))
 	private void beOnInit(BlockBehaviour.Properties settings, CallbackInfo info) {
 		if (GeneratorOptions.changeChorusPlant()) {
 			this.registerDefaultState(this.defaultBlockState().setValue(BlockProperties.ROOTS, false));
@@ -118,5 +118,5 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			info.setReturnValue(plant);
 			info.cancel();
 		}
-	}
+	}*/
 }

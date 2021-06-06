@@ -5,7 +5,7 @@ import ru.betterend.world.biome.BiomeDefinition;
 
 public class EmptyEndCaveBiome extends EndCaveBiome {
 	public EmptyEndCaveBiome() {
-		super(new BiomeDefinition("empty_end_cave").setFogDensity(2.0F));
+		super((BiomeDefinition) new BiomeDefinition("empty_end_cave").setFogDensity(2.0F));
 		this.addFloorFeature(EndFeatures.END_STONE_STALAGMITE, 1);
 		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE, 1);
 	}

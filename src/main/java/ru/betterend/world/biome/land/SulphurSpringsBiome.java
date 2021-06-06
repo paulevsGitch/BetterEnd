@@ -11,15 +11,15 @@ import ru.betterend.world.surface.SurfaceBuilders;
 
 public class SulphurSpringsBiome extends EndBiome {
 	public SulphurSpringsBiome() {
-		super(new BiomeDefinition("sulphur_springs")
-				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE)
+		super((BiomeDefinition) new BiomeDefinition("sulphur_springs")
+				.setCaves(false)
+				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE.configured(SurfaceBuilders.DEFAULT_END_CONFIG))
 				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.setLoop(EndSounds.AMBIENT_SULPHUR_SPRINGS)
 				.setWaterColor(25, 90, 157)
 				.setWaterFogColor(30, 65, 61)
 				.setFogColor(207, 194, 62)
 				.setFogDensity(1.5F)
-				.setCaves(false)
 				.setDepth(0F)
 				.setParticles(EndParticles.SULPHUR_PARTICLE, 0.001F)
 				.addFeature(EndFeatures.GEYSER)

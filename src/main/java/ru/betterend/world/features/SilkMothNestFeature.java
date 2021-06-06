@@ -13,6 +13,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.util.BlocksHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.registry.EndBlocks;
 

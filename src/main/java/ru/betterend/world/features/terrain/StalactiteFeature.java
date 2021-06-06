@@ -13,8 +13,8 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.basis.StalactiteBlock;
-import ru.betterend.world.features.DefaultFeature;
 
 public class StalactiteFeature extends DefaultFeature {
 	private final boolean ceiling;

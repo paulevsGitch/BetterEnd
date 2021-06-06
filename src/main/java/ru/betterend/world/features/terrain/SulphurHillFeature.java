@@ -12,10 +12,10 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.features.DefaultFeature;
 
 public class SulphurHillFeature extends DefaultFeature {
 	@Override

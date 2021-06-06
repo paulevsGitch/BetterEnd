@@ -24,11 +24,11 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.material.FluidState;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
 
@@ -53,7 +53,7 @@ public class LakePiece extends BasePiece {
 		this.seed = random.nextInt();
 		this.noise = new OpenSimplexNoise(this.seed);
 		this.aspect = radius / depth;
-		this.biomeID = EndBiomes.getBiomeID(biome);
+		this.biomeID = BiomeAPI.getBiomeID(biome);
 		makeBoundingBox();
 	}
 
@@ -214,7 +214,7 @@ public class LakePiece extends BasePiece {
 			return h;
 		}
 		
-		if (!EndBiomes.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
+		if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, (byte) 0);
 			return 0;
 		}

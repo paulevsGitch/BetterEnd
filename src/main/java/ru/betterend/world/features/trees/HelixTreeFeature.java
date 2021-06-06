@@ -26,9 +26,9 @@ import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.HelixTreeLeavesBlock;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.features.DefaultFeature;
 
 public class HelixTreeFeature extends DefaultFeature {
 	private static final Function<PosInfo, BlockState> POST;

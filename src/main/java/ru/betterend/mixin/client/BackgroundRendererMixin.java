@@ -22,10 +22,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.material.FluidState;
+import ru.bclib.api.BiomeAPI;
+import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.client.ClientOptions;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BackgroundInfo;
-import ru.betterend.world.biome.EndBiome;
 
 @Mixin(FogRenderer.class)
 public class BackgroundRendererMixin {
@@ -74,7 +74,7 @@ public class BackgroundRendererMixin {
 		Biome biome = entity.level.getBiome(entity.blockPosition());
 		FluidState fluidState = camera.getFluidInCamera();
 		if (ClientOptions.useFogDensity() && biome.getBiomeCategory() == BiomeCategory.THEEND && fluidState.isEmpty()) {
-			EndBiome endBiome = EndBiomes.getRenderBiome(biome);
+			BCLBiome endBiome = BiomeAPI.getRenderBiome(biome);
 			
 			if (fogDensity == 0) {
 				fogDensity = endBiome.getFogDensity();

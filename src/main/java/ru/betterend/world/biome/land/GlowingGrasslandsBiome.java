@@ -11,7 +11,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class GlowingGrasslandsBiome extends EndBiome {
 	public GlowingGrasslandsBiome() {
-		super(new BiomeDefinition("glowing_grasslands")
+		super((BiomeDefinition) new BiomeDefinition("glowing_grasslands")
 				.setFogColor(99, 228, 247)
 				.setFogDensity(1.3F)
 				.setParticles(EndParticles.FIREFLY, 0.001F)

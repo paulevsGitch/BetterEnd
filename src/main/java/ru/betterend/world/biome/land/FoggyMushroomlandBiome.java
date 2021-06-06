@@ -13,7 +13,8 @@ import ru.betterend.world.biome.EndBiome;
 
 public class FoggyMushroomlandBiome extends EndBiome {
 	public FoggyMushroomlandBiome() {
-		super(new BiomeDefinition("foggy_mushroomland")
+		super((BiomeDefinition) new BiomeDefinition("foggy_mushroomland")
+				.addStructureFeature(EndStructures.GIANT_MOSSY_GLOWSHROOM)
 				.setPlantsColor(73, 210, 209)
 				.setFogColor(41, 122, 173)
 				.setFogDensity(3)
@@ -22,7 +23,6 @@ public class FoggyMushroomlandBiome extends EndBiome {
 				.setParticles(EndParticles.GLOWING_SPHERE, 0.001F)
 				.setLoop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
 				.setMusic(EndSounds.MUSIC_FOREST)
-				.addStructureFeature(EndStructures.GIANT_MOSSY_GLOWSHROOM)
 				.addFeature(EndFeatures.END_LAKE)
 				.addFeature(EndFeatures.MOSSY_GLOWSHROOM)
 				.addFeature(EndFeatures.BLUE_VINE)

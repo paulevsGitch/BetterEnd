@@ -28,9 +28,9 @@ import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.features.DefaultFeature;
 
 public class DragonTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;

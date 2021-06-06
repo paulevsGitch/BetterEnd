@@ -14,6 +14,9 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.TheEndBiomeSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.SimplexNoise;
+import ru.bclib.api.BiomeAPI;
+import ru.bclib.world.biomes.BCLBiome;
+import ru.bclib.world.generator.BiomeMap;
 import ru.betterend.BetterEnd;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
@@ -89,10 +92,10 @@ public class BetterEndBiomeSource extends BiomeSource {
 			mapVoid.clearCache();
 		}
 		
-		EndBiome endBiome = null;
+		BCLBiome endBiome = null;
 		if (GeneratorOptions.useNewGenerator()) {
 			if (TerrainGenerator.isLand(biomeX, biomeZ)) {
-				endBiome = mapLand.getBiome(biomeX << 2, biomeZ << 2);
+				endBiome = (EndBiome) mapLand.getBiome(biomeX << 2, biomeZ << 2);
 			}
 			else {
 				if (!GeneratorOptions.noRingVoid() && dist <= 65536L) {
@@ -111,7 +114,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 			endBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		}
 		
-		return EndBiomes.getActualBiome(endBiome);
+		return BiomeAPI.getActualBiome(endBiome);
 	}
 	
 	public Biome getLandBiome(int biomeX, int biomeY, int biomeZ) {
@@ -129,7 +132,7 @@ public class BetterEndBiomeSource extends BiomeSource {
 				return this.centerBiome;
 			}
 		}
-		return EndBiomes.getActualBiome(mapLand.getBiome(biomeX << 2, biomeZ << 2));
+		return BiomeAPI.getActualBiome(mapLand.getBiome(biomeX << 2, biomeZ << 2));
 	}
 
 	@Override

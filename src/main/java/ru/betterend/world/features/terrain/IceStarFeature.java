@@ -17,8 +17,8 @@ import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.features.DefaultFeature;
 
 public class IceStarFeature extends DefaultFeature {
 	private final float minSize;

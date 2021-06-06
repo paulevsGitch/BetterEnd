@@ -10,7 +10,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class DryShrublandBiome extends EndBiome {
 	public DryShrublandBiome() {
-		super(new BiomeDefinition("dry_shrubland")
+		super((BiomeDefinition) new BiomeDefinition("dry_shrubland")
 				.setFogColor(132, 35, 13)
 				.setFogDensity(1.2F)
 				.setWaterAndFogColor(113, 88, 53)

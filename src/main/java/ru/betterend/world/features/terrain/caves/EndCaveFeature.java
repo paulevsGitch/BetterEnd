@@ -19,15 +19,16 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.interfaces.IBiomeArray;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
-import ru.betterend.world.features.DefaultFeature;
 
 public abstract class EndCaveFeature extends DefaultFeature {
 	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
@@ -152,7 +153,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	protected void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
 		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomes();
 		if (array != null) {
-			Biome bio = EndBiomes.getActualBiome(biome);
+			Biome bio = BiomeAPI.getActualBiome(biome);
 			array.be_setBiome(bio, pos);
 		}
 	}
@@ -229,8 +230,8 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		for (int x = -2; x < 3; x++) {
 			for (int z = -2; z < 3; z++) {
 				Biome biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
-				EndBiome endBiome = EndBiomes.getFromBiome(biome);
-				if (!endBiome.hasCaves() && EndBiomes.LAND_BIOMES.containsImmutable(endBiome.getID())) {
+				EndBiome endBiome = (EndBiome) BiomeAPI.getFromBiome(biome);
+				if (endBiome != null && !endBiome.hasCaves() && EndBiomes.LAND_BIOMES.containsImmutable(endBiome.getID())) {
 					return true;
 				}
 			}

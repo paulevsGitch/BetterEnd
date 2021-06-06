@@ -15,9 +15,9 @@ import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFScale3D;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.features.DefaultFeature;
 
 public class ObsidianBoulderFeature extends DefaultFeature {
 	@Override

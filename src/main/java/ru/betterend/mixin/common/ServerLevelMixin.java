@@ -33,6 +33,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.level.storage.WritableLevelData;
+import ru.bclib.api.BiomeAPI;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
@@ -102,7 +103,7 @@ public abstract class ServerLevelMixin extends Level {
 	)
 	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
 		if (state.is(Blocks.ICE)) {
-			ResourceLocation biome = EndBiomes.getBiomeID(getBiome(pos));
+			ResourceLocation biome = BiomeAPI.getBiomeID(getBiome(pos));
 			if (biome.getNamespace().equals(BetterEnd.MOD_ID)) {
 				state = EndBlocks.EMERALD_ICE.defaultBlockState();
 			}

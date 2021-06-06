@@ -10,7 +10,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class DustWastelandsBiome extends EndBiome {
 	public DustWastelandsBiome() {
-		super(new BiomeDefinition("dust_wastelands")
+		super((BiomeDefinition) new BiomeDefinition("dust_wastelands")
 				.setFogColor(226, 239, 168)
 				.setFogDensity(2)
 				.setWaterAndFogColor(192, 180, 131)

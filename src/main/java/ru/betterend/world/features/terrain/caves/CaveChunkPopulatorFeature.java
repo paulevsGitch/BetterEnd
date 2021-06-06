@@ -17,9 +17,9 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
-import ru.betterend.world.features.DefaultFeature;
 
 public class CaveChunkPopulatorFeature extends DefaultFeature {
 	private Supplier<EndCaveBiome> supplier;

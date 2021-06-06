@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.features.DefaultFeature;
 
 public abstract class ScatterFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();

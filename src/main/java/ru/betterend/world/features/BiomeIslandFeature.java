@@ -17,6 +17,7 @@ import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.util.BlocksHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 
 public class BiomeIslandFeature extends DefaultFeature {

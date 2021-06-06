@@ -11,7 +11,7 @@ import ru.betterend.world.biome.EndBiome;
 
 public class NeonOasisBiome extends EndBiome {
 	public NeonOasisBiome() {
-		super(new BiomeDefinition("neon_oasis")
+		super((BiomeDefinition) new BiomeDefinition("neon_oasis")
 				.setGenChance(0.5F)
 				.setFogColor(226, 239, 168)
 				.setFogDensity(2)

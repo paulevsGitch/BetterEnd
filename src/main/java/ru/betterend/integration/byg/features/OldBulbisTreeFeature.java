@@ -25,9 +25,9 @@ import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
+import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.integration.Integrations;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.world.features.DefaultFeature;
 
 public class OldBulbisTreeFeature extends DefaultFeature {
 	private static final List<Vector3f> SPLINE;

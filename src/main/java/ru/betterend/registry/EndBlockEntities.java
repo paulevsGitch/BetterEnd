@@ -36,7 +36,7 @@ public class EndBlockEntities {
 	public static void register() {}
 	
 	static Block[] getPedestals() {
-		return BaseRegistry.getRegisteredBlocks().values().stream()
+		return EndBlocks.getModBlocks().stream()
 				.filter(item -> item instanceof BlockItem)
 				.map(item -> ((BlockItem) item).getBlock())
 				.filter(block -> block instanceof PedestalBlock &&

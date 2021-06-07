@@ -80,11 +80,11 @@ public class REIPlugin implements REIPluginV0 {
 	}
 
 	static {
-		List<EntryStack> anvils = Lists.newArrayList(EntryStack.ofItems(EndItems.getModBlocks(BetterEnd.MOD_ID).stream()
+		List<EntryStack> anvils = Lists.newArrayList(EntryStack.ofItems(EndBlocks.getModBlocks().stream()
 				.filter(item -> ((BlockItem) item).getBlock() instanceof EndAnvilBlock).collect(Collectors.toList())));
 		anvils.add(0, EntryStack.create(Blocks.ANVIL));
 		ANVILS = anvils.toArray(new EntryStack[0]);
-		FURNACES = Lists.newArrayList(EntryStack.ofItems(EndItems.getModBlocks(BetterEnd.MOD_ID).stream()
+		FURNACES = Lists.newArrayList(EntryStack.ofItems(EndBlocks.getModBlocks().stream()
 				.filter(item -> ((BlockItem) item).getBlock() instanceof EndFurnaceBlock).collect(Collectors.toList())))
 				.toArray(new EntryStack[0]);
 	}

@@ -81,8 +81,8 @@ public class EndTags {
 		TagAPI.addEndGround(EndBlocks.THALLASIUM.ore);
 		TagAPI.addEndGround(EndBlocks.ENDSTONE_DUST);
 		TagAPI.addEndGround(EndBlocks.AMBER_ORE);
-		
-		EndItems.getModBlocks(BetterEnd.MOD_ID).forEach(blockItem -> {
+
+		EndBlocks.getModBlocks().forEach(blockItem -> {
 			Block block = ((BlockItem) blockItem).getBlock();
 			if (block instanceof EndTerrainBlock) {
 				TagAPI.addEndGround(block);

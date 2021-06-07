@@ -1,5 +1,6 @@
 package ru.betterend.registry;
 
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -43,6 +44,8 @@ import ru.betterend.config.Configs;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
+
+import java.util.List;
 
 public class EndBlocks extends BlocksRegistry {
 	// Terrain //
@@ -327,6 +330,10 @@ public class EndBlocks extends BlocksRegistry {
 
 	private EndBlocks(CreativeModeTab creativeTab) {
 		super(creativeTab);
+	}
+
+	public static List<Item> getModBlocks() {
+		return getModBlocks(BetterEnd.MOD_ID);
 	}
 
 	public static Block registerBlock(ResourceLocation id, Block block) {

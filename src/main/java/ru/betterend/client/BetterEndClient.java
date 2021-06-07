@@ -24,11 +24,7 @@ import ru.betterend.events.ItemTooltipCallback;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.item.CrystaliteArmor;
-import ru.betterend.registry.EndBlockEntityRenders;
-import ru.betterend.registry.EndEntitiesRenders;
-import ru.betterend.registry.EndModelProviders;
-import ru.betterend.registry.EndParticles;
-import ru.betterend.registry.EndScreens;
+import ru.betterend.registry.*;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override
@@ -79,7 +75,7 @@ public class BetterEndClient implements ClientModInitializer {
 	}
 
 	private static void registerRenderers() {
-		List<Item> modBlocks = BaseRegistry.getModBlocks(BetterEnd.MOD_ID);
+		List<Item> modBlocks = EndBlocks.getModBlocks();
 		modBlocks.stream().filter(item -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BaseChestBlock)
 				.map(item -> ((BlockItem) item).getBlock()).forEach(BaseChestBlockEntityRenderer::registerRenderLayer);
 		modBlocks.stream().filter(item -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BaseSignBlock)

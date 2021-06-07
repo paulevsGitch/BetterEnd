@@ -39,6 +39,8 @@ import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.tab.CreativeTabs;
 
+import java.util.List;
+
 public class EndItems extends ItemsRegistry {
 	// Materials //
 	public final static Item ENDER_DUST = registerEndItem("ender_dust");
@@ -125,6 +127,10 @@ public class EndItems extends ItemsRegistry {
 
 	protected EndItems(CreativeModeTab creativeTab) {
 		super(creativeTab);
+	}
+
+	public static List<Item> getModItems() {
+		return getModItems(BetterEnd.MOD_ID);
 	}
 
 	public static Item registerEndDisc(String name, int power, SoundEvent sound) {

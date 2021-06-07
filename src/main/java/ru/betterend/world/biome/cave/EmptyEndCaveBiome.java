@@ -1,11 +1,12 @@
 package ru.betterend.world.biome.cave;
 
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.world.biome.BiomeDefinition;
 
 public class EmptyEndCaveBiome extends EndCaveBiome {
 	public EmptyEndCaveBiome() {
-		super((BiomeDefinition) new BiomeDefinition("empty_end_cave").setFogDensity(2.0F));
+		super(new BCLBiomeDef(BetterEnd.makeID("empty_end_cave")).setFogDensity(2.0F));
 		this.addFloorFeature(EndFeatures.END_STONE_STALAGMITE, 1);
 		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE, 1);
 	}

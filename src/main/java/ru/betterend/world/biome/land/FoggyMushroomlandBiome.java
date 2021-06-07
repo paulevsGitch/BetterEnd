@@ -2,19 +2,20 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class FoggyMushroomlandBiome extends EndBiome {
 	public FoggyMushroomlandBiome() {
-		super((BiomeDefinition) new BiomeDefinition("foggy_mushroomland")
-				.addStructureFeature(EndStructures.GIANT_MOSSY_GLOWSHROOM)
+		super(new BCLBiomeDef(BetterEnd.makeID("foggy_mushroomland"))
+				.addStructureFeature(EndStructures.GIANT_MOSSY_GLOWSHROOM.getFeatureConfigured())
 				.setPlantsColor(73, 210, 209)
 				.setFogColor(41, 122, 173)
 				.setFogDensity(3)

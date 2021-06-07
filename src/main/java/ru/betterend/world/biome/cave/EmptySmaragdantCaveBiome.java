@@ -1,12 +1,13 @@
 package ru.betterend.world.biome.cave;
 
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.world.biome.BiomeDefinition;
 
 public class EmptySmaragdantCaveBiome extends EndCaveBiome {
 	public EmptySmaragdantCaveBiome() {
-		super((BiomeDefinition) new BiomeDefinition("empty_smaragdant_cave")
+		super(new BCLBiomeDef(BetterEnd.makeID("empty_smaragdant_cave"))
 				.setFogColor(0, 253, 182)
 				.setFogDensity(2.0F)
 				.setPlantsColor(0, 131, 145)

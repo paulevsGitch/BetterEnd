@@ -7,10 +7,10 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class EterialGrove extends EndBiome {
@@ -18,11 +18,11 @@ public class EterialGrove extends EndBiome {
 		super(makeDef());
 	}
 	
-	private static BiomeDefinition makeDef() {
+	private static BCLBiomeDef makeDef() {
 		Biome biome = Integrations.BYG.getBiome("ethereal_islands");
 		BiomeSpecialEffects effects = biome.getSpecialEffects();
 		
-		BiomeDefinition def = (BiomeDefinition) new BiomeDefinition("eterial_grove")
+		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("eterial_grove"))
 				.setSurface(biome.getGenerationSettings().getSurfaceBuilder().get())
 				.addFeature(BYGFeatures.BIG_ETHER_TREE);
 		

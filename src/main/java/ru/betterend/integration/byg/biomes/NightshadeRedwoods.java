@@ -9,11 +9,11 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class NightshadeRedwoods extends EndBiome {
@@ -21,11 +21,11 @@ public class NightshadeRedwoods extends EndBiome {
 		super(makeDef());
 	}
 	
-	private static BiomeDefinition makeDef() {
+	private static BCLBiomeDef makeDef() {
 		Biome biome = Integrations.BYG.getBiome("nightshade_forest");
 		BiomeSpecialEffects effects = biome.getSpecialEffects();
 		
-		BiomeDefinition def = (BiomeDefinition) new BiomeDefinition("nightshade_redwoods")
+		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("nightshade_redwoods"))
 				.setFogColor(140, 108, 47)
 				.setFogDensity(1.5F)
 				.setWaterAndFogColor(55, 70, 186)

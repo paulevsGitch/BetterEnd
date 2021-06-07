@@ -1,19 +1,20 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class MegalakeGroveBiome extends EndBiome {
 	public MegalakeGroveBiome() {
-		super((BiomeDefinition) new BiomeDefinition("megalake_grove")
-				.addStructureFeature(EndStructures.MEGALAKE_SMALL)
+		super(new BCLBiomeDef(BetterEnd.makeID("megalake_grove"))
+				.addStructureFeature(EndStructures.MEGALAKE_SMALL.getFeatureConfigured())
 				.setPlantsColor(73, 210, 209)
 				.setFogColor(178, 209, 248)
 				.setWaterAndFogColor(96, 163, 255)

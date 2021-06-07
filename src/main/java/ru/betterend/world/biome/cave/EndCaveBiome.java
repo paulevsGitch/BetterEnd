@@ -4,13 +4,14 @@ import java.util.Random;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.behavior.WeightedList;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.bclib.api.BiomeAPI;
+import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
@@ -18,16 +19,16 @@ public class EndCaveBiome extends EndBiome {
 	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
 	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
 	
-	public EndCaveBiome(BiomeDefinition definition) {
+	public EndCaveBiome(BCLBiomeDef definition) {
 		super(makeDef(definition));
 	}
 	
-	private static BiomeDefinition makeDef(BiomeDefinition definition) {
+	private static BCLBiomeDef makeDef(BCLBiomeDef definition) {
 		BCLFeature feature = BCLFeature.makeChunkFeature(
 			BetterEnd.makeID(definition.getID().getPath() + "_cave_populator"),
 			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(definition.getID()))
 		);
-		definition.setCaveBiome().addFeature(feature);
+		definition.setCategory(BiomeCategory.NONE).addFeature(feature);
 		definition.setMusic(EndSounds.MUSIC_CAVES);
 		definition.setLoop(EndSounds.AMBIENT_CAVES);
 		return definition;

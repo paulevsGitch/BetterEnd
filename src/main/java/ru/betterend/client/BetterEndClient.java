@@ -1,5 +1,7 @@
 package ru.betterend.client;
 
+import java.util.List;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.ChatFormatting;
@@ -20,9 +22,12 @@ import ru.betterend.events.ItemTooltipCallback;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.item.CrystaliteArmor;
-import ru.betterend.registry.*;
-
-import java.util.List;
+import ru.betterend.registry.EndBlockEntityRenders;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.registry.EndEntitiesRenders;
+import ru.betterend.registry.EndModelProviders;
+import ru.betterend.registry.EndParticles;
+import ru.betterend.registry.EndScreens;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override

@@ -5,16 +5,17 @@ import net.minecraft.data.worldgen.Features;
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class ChorusForestBiome extends EndBiome {
 	public ChorusForestBiome() {
-		super((BiomeDefinition) new BiomeDefinition("chorus_forest")
+		super(new BCLBiomeDef(BetterEnd.makeID("chorus_forest"))
 				.setFogColor(87, 26, 87)
 				.setFogDensity(1.5F)
 				.setPlantsColor(122, 45, 122)

@@ -1,5 +1,7 @@
 package ru.betterend.registry;
 
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -38,8 +40,6 @@ import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.tab.CreativeTabs;
-
-import java.util.List;
 
 @SuppressWarnings("unused")
 public class EndItems extends ItemsRegistry {

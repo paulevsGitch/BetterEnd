@@ -1,12 +1,13 @@
 package ru.betterend.world.biome.cave;
 
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.world.biome.BiomeDefinition;
 
 public class EmptyAuroraCaveBiome extends EndCaveBiome {
 	public EmptyAuroraCaveBiome() {
-		super((BiomeDefinition) new BiomeDefinition("empty_aurora_cave")
+		super(new BCLBiomeDef(BetterEnd.makeID("empty_aurora_cave"))
 				.setFogColor(150, 30, 68)
 				.setFogDensity(2.0F)
 				.setPlantsColor(108, 25, 46)

@@ -16,11 +16,11 @@ import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class OldBulbisGardens extends EndBiome {
@@ -28,13 +28,13 @@ public class OldBulbisGardens extends EndBiome {
 		super(makeDef());
 	}
 	
-	private static BiomeDefinition makeDef() {
+	private static BCLBiomeDef makeDef() {
 		Biome biome = Integrations.BYG.getBiome("bulbis_gardens");
 		BiomeSpecialEffects effects = biome.getSpecialEffects();
 		
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
 		Block origin = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial().getBlock();
-		BiomeDefinition def = (BiomeDefinition) new BiomeDefinition("old_bulbis_gardens")
+		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("old_bulbis_gardens"))
 				.setFogColor(215, 132, 207)
 				.setFogDensity(1.8F)
 				.setWaterAndFogColor(40, 0, 56)

@@ -1,18 +1,19 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.surface.SurfaceBuilders;
 
 public class SulphurSpringsBiome extends EndBiome {
 	public SulphurSpringsBiome() {
-		super((BiomeDefinition) new BiomeDefinition("sulphur_springs")
-				.setCaves(false)
+		super(new BCLBiomeDef(BetterEnd.makeID("sulphur_springs"))
+				.addCustomData("has_caves", false)
 				.setSurface(SurfaceBuilders.SULPHURIC_SURFACE.configured(SurfaceBuilders.DEFAULT_END_CONFIG))
 				.setMusic(EndSounds.MUSIC_OPENSPACE)
 				.setLoop(EndSounds.AMBIENT_SULPHUR_SPRINGS)

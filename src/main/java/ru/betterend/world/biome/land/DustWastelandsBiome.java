@@ -3,14 +3,15 @@ package ru.betterend.world.biome.land;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class DustWastelandsBiome extends EndBiome {
 	public DustWastelandsBiome() {
-		super((BiomeDefinition) new BiomeDefinition("dust_wastelands")
+		super(new BCLBiomeDef(BetterEnd.makeID("dust_wastelands"))
 				.setFogColor(226, 239, 168)
 				.setFogDensity(2)
 				.setWaterAndFogColor(192, 180, 131)

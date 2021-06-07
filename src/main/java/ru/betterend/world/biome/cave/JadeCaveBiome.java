@@ -3,9 +3,10 @@ package ru.betterend.world.biome.cave;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.biome.BiomeDefinition;
 
 public class JadeCaveBiome extends EndCaveBiome {
 	private static final OpenSimplexNoise WALL_NOISE = new OpenSimplexNoise("jade_cave".hashCode());
@@ -13,7 +14,7 @@ public class JadeCaveBiome extends EndCaveBiome {
 	private static final BlockState[] JADE = new BlockState[3];
 	
 	public JadeCaveBiome() {
-		super((BiomeDefinition) new BiomeDefinition("jade_cave")
+		super(new BCLBiomeDef(BetterEnd.makeID("jade_cave"))
 			.setFogColor(118, 150, 112)
 			.setFogDensity(2.0F)
 			.setWaterAndFogColor(95, 223, 255)

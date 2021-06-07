@@ -2,16 +2,17 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class GlowingGrasslandsBiome extends EndBiome {
 	public GlowingGrasslandsBiome() {
-		super((BiomeDefinition) new BiomeDefinition("glowing_grasslands")
+		super(new BCLBiomeDef(BetterEnd.makeID("glowing_grasslands"))
 				.setFogColor(99, 228, 247)
 				.setFogDensity(1.3F)
 				.setParticles(EndParticles.FIREFLY, 0.001F)

@@ -1,16 +1,17 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class DragonGraveyardsBiome extends EndBiome {
 	public DragonGraveyardsBiome() {
-		super((BiomeDefinition) new BiomeDefinition("dragon_graveyards")
+		super(new BCLBiomeDef(BetterEnd.makeID("dragon_graveyards"))
 				.setGenChance(0.1F)
 				.setFogColor(244, 46, 79)
 				.setFogDensity(1.3F)

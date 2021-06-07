@@ -1,17 +1,18 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class BlossomingSpiresBiome extends EndBiome {
 	public BlossomingSpiresBiome() {
-		super((BiomeDefinition) new BiomeDefinition("blossoming_spires")
-				.setCaves(false)
+		super(new BCLBiomeDef(BetterEnd.makeID("blossoming_spires"))
+				.addCustomData("has_caves", false)
 				.setFogColor(241, 146, 229)
 				.setFogDensity(1.7F)
 				.setPlantsColor(122, 45, 122)

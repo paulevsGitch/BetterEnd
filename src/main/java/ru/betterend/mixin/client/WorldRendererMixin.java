@@ -29,10 +29,10 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
+import ru.bclib.util.BackgroundInfo;
 import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.ClientOptions;
-import ru.betterend.util.BackgroundInfo;
 
 @Mixin(LevelRenderer.class)
 public class WorldRendererMixin {
@@ -149,11 +149,11 @@ public class WorldRendererMixin {
 				matrices.popPose();
 			}
 			
-			float a = (BackgroundInfo.fog - 1F);
+			float a = (BackgroundInfo.fogDensity - 1F);
 			if (a > 0) {
 				if (a > 1) a = 1;
 				textureManager.bind(FOG);
-				be_renderBuffer(matrices, fog, DefaultVertexFormat.POSITION_TEX, BackgroundInfo.red, BackgroundInfo.green, BackgroundInfo.blue, a);
+				be_renderBuffer(matrices, fog, DefaultVertexFormat.POSITION_TEX, BackgroundInfo.fogColorRed, BackgroundInfo.fogColorGreen, BackgroundInfo.fogColorBlue, a);
 			}
 
 			RenderSystem.disableTexture();

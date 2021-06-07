@@ -1,6 +1,10 @@
 package ru.betterend.registry;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 import com.google.common.collect.Lists;
+
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
@@ -28,9 +32,6 @@ import ru.betterend.blocks.basis.SimpleLeavesBlock;
 import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
-
-import java.util.List;
-import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 public class EndTags {

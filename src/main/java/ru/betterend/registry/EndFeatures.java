@@ -18,12 +18,11 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.world.biomes.BCLBiome;
+import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.complex.StoneMaterial;
-import ru.betterend.world.biome.BiomeDefinition;
-import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePumpkinFeature;
@@ -298,12 +297,10 @@ public class EndFeatures {
 		addFeature(CRASHED_SHIP, features);
 		
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
-		if (bclbiome instanceof EndBiome) {
-			EndBiome endBiome = (EndBiome) bclbiome;
-			if (endBiome.hasCaves() && !EndBiomes.VOID_BIOMES.containsImmutable(id)) {
-				addFeature(ROUND_CAVE, features);
-				addFeature(TUNEL_CAVE, features);
-			}
+		boolean hasCaves = bclbiome.getCustomData("has_caves", true);
+		if (hasCaves && !EndBiomes.VOID_BIOMES.containsImmutable(id)) {
+			addFeature(ROUND_CAVE, features);
+			addFeature(TUNEL_CAVE, features);
 		}
 		
 		BCLFeature feature = BiomeAPI.getBiome(id).getStructuresFeature();
@@ -312,13 +309,14 @@ public class EndFeatures {
 		}
 	}
 	
-	public static void addDefaultFeatures(BiomeDefinition def) {
+	public static void addDefaultFeatures(BCLBiomeDef def) {
 		def.addFeature(FLAVOLITE_LAYER);
 		def.addFeature(THALLASIUM_ORE);
 		def.addFeature(ENDER_ORE);
 		def.addFeature(CRASHED_SHIP);
 		
-		if (def.hasCaves()) {
+		boolean hasCaves = def.getCustomData("has_caves", true);
+		if (hasCaves) {
 			def.addFeature(ROUND_CAVE);
 			def.addFeature(TUNEL_CAVE);
 		}

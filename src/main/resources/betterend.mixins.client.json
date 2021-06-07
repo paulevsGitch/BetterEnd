@@ -8,7 +8,6 @@
 		"ClientPlayNetworkHandlerMixin",
 	  	"HumanoidMobRendererMixin",
 	  	"ArmorStandRendererMixin",
-		"BackgroundRendererMixin",
 		"ClientRecipeBookMixin",
 		"MinecraftClientMixin",
 		"ContextGsonAccessor",

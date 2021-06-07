@@ -2,16 +2,17 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class UmbrellaJungleBiome extends EndBiome {
 	public UmbrellaJungleBiome() {
-		super((BiomeDefinition) new BiomeDefinition("umbrella_jungle")
+		super(new BCLBiomeDef(BetterEnd.makeID("umbrella_jungle"))
 				.setFogColor(87, 223, 221)
 				.setWaterAndFogColor(119, 198, 253)
 				.setFoliageColor(27, 183, 194)

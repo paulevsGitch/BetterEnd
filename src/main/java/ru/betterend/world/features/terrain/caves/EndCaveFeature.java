@@ -23,11 +23,11 @@ import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.interfaces.IBiomeArray;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
-import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 public abstract class EndCaveFeature extends DefaultFeature {
@@ -230,8 +230,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		for (int x = -2; x < 3; x++) {
 			for (int z = -2; z < 3; z++) {
 				Biome biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
-				EndBiome endBiome = (EndBiome) BiomeAPI.getFromBiome(biome);
-				if (endBiome != null && !endBiome.hasCaves() && EndBiomes.LAND_BIOMES.containsImmutable(endBiome.getID())) {
+				BCLBiome endBiome = BiomeAPI.getFromBiome(biome);
+				boolean hasCaves = endBiome.getCustomData("has_caves", true);
+				if (!hasCaves && EndBiomes.LAND_BIOMES.containsImmutable(endBiome.getID())) {
 					return true;
 				}
 			}

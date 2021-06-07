@@ -268,6 +268,7 @@ public class EndBiomes {
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance, boolean hasCaves) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
+			BiomeAPI.registerBiome(endBiome);
 			parent.addSubBiome(endBiome);
 			SUBBIOMES.add(endBiome);
 			SUBBIOMES_UNMUTABLES.add(endBiome.getID());
@@ -284,7 +285,7 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-			BiomeAPI.registerBiomeDirectly(biome);
+			BiomeAPI.registerBiome(biome);
 			parent.addSubBiome(biome);
 			SUBBIOMES.add(biome);
 			SUBBIOMES_UNMUTABLES.add(biome.getID());
@@ -302,7 +303,7 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-			BiomeAPI.registerBiomeDirectly(biome);
+			BiomeAPI.registerBiome(biome);
 			addToPicker(biome, type);
 			ID_MAP.put(biome.getID(), biome);
 			if (type == BiomeType.LAND) {
@@ -322,7 +323,7 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerSubBiomeIntegration(EndBiome biome) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-			BiomeAPI.registerBiomeDirectly(biome);
+			BiomeAPI.registerBiome(biome);
 			SUBBIOMES.add(biome);
 			SUBBIOMES_UNMUTABLES.add(biome.getID());
 			ID_MAP.put(biome.getID(), biome);
@@ -364,7 +365,7 @@ public class EndBiomes {
 	
 	public static EndCaveBiome registerCaveBiome(EndCaveBiome biome) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-			BiomeAPI.registerBiomeDirectly(biome);
+			BiomeAPI.registerBiome(biome);
 			CAVE_BIOMES.addBiome(biome);
 			ID_MAP.put(biome.getID(), biome);
 		}

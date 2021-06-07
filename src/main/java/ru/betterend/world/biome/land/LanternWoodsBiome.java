@@ -2,16 +2,17 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
+import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.BiomeDefinition;
 import ru.betterend.world.biome.EndBiome;
 
 public class LanternWoodsBiome extends EndBiome {
 	public LanternWoodsBiome() {
-		super((BiomeDefinition) new BiomeDefinition("lantern_woods")
+		super(new BCLBiomeDef(BetterEnd.makeID("lantern_woods"))
 				.setFogColor(189, 82, 70)
 				.setFogDensity(1.1F)
 				.setWaterAndFogColor(171, 234, 226)

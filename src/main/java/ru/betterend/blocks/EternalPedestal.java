@@ -28,6 +28,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndPortals;
 import ru.betterend.rituals.EternalRitual;
 
+@SuppressWarnings("deprecation")
 public class EternalPedestal extends PedestalBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	
@@ -74,6 +75,7 @@ public class EternalPedestal extends PedestalBlock {
 	}
 	
 	@Override
+	@Deprecated
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		BlockState updated = super.updateShape(state, direction, newState, world, pos, posFrom);
 		if (!updated.is(this)) return updated;
@@ -84,6 +86,7 @@ public class EternalPedestal extends PedestalBlock {
 	}
 	
 	@Override
+	@Deprecated
 	public float getDestroyProgress(BlockState state, Player player, BlockGetter world, BlockPos pos) {
 		return 0.0F;
 	}
@@ -126,5 +129,10 @@ public class EternalPedestal extends PedestalBlock {
 	@Override
 	public BlockEntity newBlockEntity(BlockGetter world) {
 		return new EternalPedestalEntity();
+	}
+
+	@Override
+	public boolean hasUniqueEntity() {
+		return true;
 	}
 }

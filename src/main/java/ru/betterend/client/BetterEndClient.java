@@ -1,7 +1,5 @@
 package ru.betterend.client;
 
-import java.util.List;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.ChatFormatting;
@@ -10,13 +8,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseSignBlock;
 import ru.bclib.client.render.BaseChestBlockEntityRenderer;
 import ru.bclib.client.render.BaseSignBlockEntityRenderer;
-import ru.bclib.registry.BaseRegistry;
 import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.render.ERenderLayer;
@@ -25,6 +21,8 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.*;
+
+import java.util.List;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override
@@ -75,10 +73,8 @@ public class BetterEndClient implements ClientModInitializer {
 	}
 
 	private static void registerRenderers() {
-		List<Item> modBlocks = EndBlocks.getModBlocks();
-		modBlocks.stream().filter(item -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BaseChestBlock)
-				.map(item -> ((BlockItem) item).getBlock()).forEach(BaseChestBlockEntityRenderer::registerRenderLayer);
-		modBlocks.stream().filter(item -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof BaseSignBlock)
-				.map(item -> ((BlockItem) item).getBlock()).forEach(BaseSignBlockEntityRenderer::registerRenderLayer);
+		List<Block> modBlocks = EndBlocks.getModBlocks();
+		modBlocks.stream().filter(BaseChestBlock.class::isInstance).forEach(BaseChestBlockEntityRenderer::registerRenderLayer);
+		modBlocks.stream().filter(BaseSignBlock.class::isInstance).forEach(BaseSignBlockEntityRenderer::registerRenderLayer);
 	}
 }

@@ -1,10 +1,6 @@
 package ru.betterend.registry;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
@@ -16,7 +12,6 @@ import net.minecraft.tags.Tag;
 import net.minecraft.tags.Tag.Named;
 import net.minecraft.tags.TagCollection;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
@@ -34,6 +29,10 @@ import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 
+import java.util.List;
+import java.util.function.Supplier;
+
+@SuppressWarnings("unused")
 public class EndTags {
 	// Table with common (c) tags:
 	// https://fabricmc.net/wiki/tutorial:tags
@@ -82,8 +81,7 @@ public class EndTags {
 		TagAPI.addEndGround(EndBlocks.ENDSTONE_DUST);
 		TagAPI.addEndGround(EndBlocks.AMBER_ORE);
 
-		EndBlocks.getModBlocks().forEach(blockItem -> {
-			Block block = ((BlockItem) blockItem).getBlock();
+		EndBlocks.getModBlocks().forEach(block -> {
 			if (block instanceof EndTerrainBlock) {
 				TagAPI.addEndGround(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);

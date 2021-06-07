@@ -41,6 +41,7 @@ import ru.betterend.tab.CreativeTabs;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class EndItems extends ItemsRegistry {
 	// Materials //
 	public final static Item ENDER_DUST = registerEndItem("ender_dust");

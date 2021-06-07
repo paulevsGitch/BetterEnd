@@ -49,6 +49,7 @@ import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
+@SuppressWarnings("deprecation")
 public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
@@ -65,8 +66,8 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	 * 
 	 * Register new Pedestal block with Better End mod id.
 	 * 
-	 * @param name
-	 * @param source
+	 * @param name pedestal name
+	 * @param source source block
 	 * @return new Pedestal block with Better End id.
 	 */
 	public static Block registerPedestal(String name, Block source) {
@@ -77,8 +78,8 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	 * 
 	 * Register new Pedestal block with specified mod id.
 	 * 
-	 * @param id
-	 * @param source
+	 * @param id pedestal id
+	 * @param source source block
 	 * @return new Pedestal block with specified id.
 	 */
 	public static Block registerPedestal(ResourceLocation id, Block source) {
@@ -102,6 +103,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 	
 	@Override
+	@Deprecated
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (world.isClientSide || !state.is(this)) return InteractionResult.CONSUME;
 		if (!isPlaceable(state)) {
@@ -166,6 +168,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 	
 	@Override
+	@Deprecated
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		BlockState updated = getUpdatedState(state, direction, newState, world, pos, posFrom);
 		if (!updated.is(this)) return updated;
@@ -291,6 +294,7 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	}
 	
 	@Override
+	@Deprecated
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.is(this)) {
 			switch(state.getValue(STATE)) {
@@ -326,13 +330,19 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	public BlockEntity newBlockEntity(BlockGetter world) {
 		return new PedestalBlockEntity();
 	}
+
+	public boolean hasUniqueEntity() {
+		return false;
+	}
 	
 	@Override
+	@Deprecated
 	public boolean hasAnalogOutputSignal(BlockState state) {
 		return state.getBlock() instanceof PedestalBlock;
 	}
 	
 	@Override
+	@Deprecated
 	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
 		return state.getValue(HAS_ITEM) ? 15 : 0;
 	}

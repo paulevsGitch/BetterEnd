@@ -1,10 +1,6 @@
 package ru.betterend.integration.rei;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
-
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
@@ -13,7 +9,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.level.block.Blocks;
 import ru.betterend.BetterEnd;
@@ -23,7 +18,9 @@ import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndItems;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
 public class REIPlugin implements REIPluginV0 {
@@ -81,11 +78,11 @@ public class REIPlugin implements REIPluginV0 {
 
 	static {
 		List<EntryStack> anvils = Lists.newArrayList(EntryStack.ofItems(EndBlocks.getModBlocks().stream()
-				.filter(item -> ((BlockItem) item).getBlock() instanceof EndAnvilBlock).collect(Collectors.toList())));
+				.filter(EndAnvilBlock.class::isInstance).collect(Collectors.toList())));
 		anvils.add(0, EntryStack.create(Blocks.ANVIL));
 		ANVILS = anvils.toArray(new EntryStack[0]);
 		FURNACES = Lists.newArrayList(EntryStack.ofItems(EndBlocks.getModBlocks().stream()
-				.filter(item -> ((BlockItem) item).getBlock() instanceof EndFurnaceBlock).collect(Collectors.toList())))
+				.filter(EndFurnaceBlock.class::isInstance).collect(Collectors.toList())))
 				.toArray(new EntryStack[0]);
 	}
 }

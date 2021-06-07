@@ -14,6 +14,7 @@ import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.rituals.InfusionRitual;
 
+@SuppressWarnings("deprecation")
 public class InfusionPedestal extends PedestalBlock {
 	private static final VoxelShape SHAPE_DEFAULT;
 	private static final VoxelShape SHAPE_PEDESTAL_TOP;
@@ -42,8 +43,14 @@ public class InfusionPedestal extends PedestalBlock {
 	public BlockEntity newBlockEntity(BlockGetter world) {
 		return new InfusionPedestalEntity();
 	}
-	
+
 	@Override
+	public boolean hasUniqueEntity() {
+		return true;
+	}
+
+	@Override
+	@Deprecated
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.is(this)) {
 			switch(state.getValue(STATE)) {

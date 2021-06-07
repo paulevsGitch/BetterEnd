@@ -1,14 +1,13 @@
 package ru.betterend.registry;
 
-import net.minecraft.world.item.Item;
-import org.jetbrains.annotations.NotNull;
-
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
+import org.jetbrains.annotations.NotNull;
 import ru.bclib.blocks.BaseBarrelBlock;
 import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseFurnaceBlock;
@@ -17,36 +16,17 @@ import ru.bclib.registry.BaseBlockEntities;
 import ru.bclib.registry.BlocksRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.*;
-import ru.betterend.blocks.basis.EndCropBlock;
-import ru.betterend.blocks.basis.EndFurnaceBlock;
-import ru.betterend.blocks.basis.EndLeavesBlock;
-import ru.betterend.blocks.basis.EndOreBlock;
-import ru.betterend.blocks.basis.EndPathBlock;
-import ru.betterend.blocks.basis.EndPillarBlock;
-import ru.betterend.blocks.basis.EndSlabBlock;
-import ru.betterend.blocks.basis.EndStairsBlock;
-import ru.betterend.blocks.basis.EndTerrainBlock;
-import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
-import ru.betterend.blocks.basis.EndWallPlantBlock;
-import ru.betterend.blocks.basis.FurBlock;
-import ru.betterend.blocks.basis.SimpleLeavesBlock;
-import ru.betterend.blocks.basis.StalactiteBlock;
-import ru.betterend.blocks.basis.StoneLanternBlock;
-import ru.betterend.blocks.basis.TripleTerrainBlock;
-import ru.betterend.blocks.basis.VineBlock;
-import ru.betterend.blocks.basis.WallMushroomBlock;
-import ru.betterend.blocks.complex.ColoredMaterial;
-import ru.betterend.blocks.complex.CrystalSubblocksMaterial;
-import ru.betterend.blocks.complex.MetalMaterial;
-import ru.betterend.blocks.complex.StoneMaterial;
-import ru.betterend.blocks.complex.WoodenMaterial;
+import ru.betterend.blocks.basis.*;
+import ru.betterend.blocks.complex.*;
 import ru.betterend.config.Configs;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 public class EndBlocks extends BlocksRegistry {
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new EndstoneDustBlock());
@@ -332,8 +312,9 @@ public class EndBlocks extends BlocksRegistry {
 		super(creativeTab);
 	}
 
-	public static List<Item> getModBlocks() {
-		return getModBlocks(BetterEnd.MOD_ID);
+	public static List<Block> getModBlocks() {
+		return getModBlocks(BetterEnd.MOD_ID).stream().filter(BlockItem.class::isInstance)
+				.map(item -> ((BlockItem) item).getBlock()).collect(Collectors.toList());
 	}
 
 	public static Block registerBlock(ResourceLocation id, Block block) {

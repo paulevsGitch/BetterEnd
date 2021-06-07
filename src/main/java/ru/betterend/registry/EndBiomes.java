@@ -19,7 +19,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.Biomes;
@@ -72,8 +71,6 @@ public class EndBiomes {
 	public static final BiomePicker CAVE_BIOMES = new BiomePicker();
 	public static final List<BCLBiome> SUBBIOMES = Lists.newArrayList();
 	private static final JsonObject EMPTY_JSON = new JsonObject();
-	
-	private static Registry<Biome> biomeRegistry;
 	private static BiomeMap caveBiomeMap;
 	
 	// Vanilla Land
@@ -126,8 +123,6 @@ public class EndBiomes {
 	}
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
-		EndBiomes.biomeRegistry = biomeRegistry;
-		
 		LAND_BIOMES.clearMutables();
 		VOID_BIOMES.clearMutables();
 		CAVE_BIOMES.clearMutables();
@@ -221,16 +216,6 @@ public class EndBiomes {
 		}
 		else {
 			return EMPTY_JSON;
-		}
-	}
-	
-	/**
-	 * Initialize registry if it was not initialized in world generation (when using mods/datapacks, that overrides the End generation)
-	 * @param server - {@link MinecraftServer}
-	 */
-	public static void initRegistry(MinecraftServer server) {
-		if (biomeRegistry == null || biomeRegistry == BuiltinRegistries.BIOME) {
-			biomeRegistry = server.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
 		}
 	}
 	

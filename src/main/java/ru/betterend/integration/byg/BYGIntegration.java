@@ -16,7 +16,6 @@ import ru.betterend.integration.ModIntegration;
 import ru.betterend.integration.byg.biomes.BYGBiomes;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndBiomes;
-import ru.betterend.world.biome.EndBiome;
 
 public class BYGIntegration extends ModIntegration {
 	public BYGIntegration() {

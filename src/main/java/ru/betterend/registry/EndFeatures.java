@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import ru.bclib.api.BiomeAPI;
+import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.BetterEnd;
@@ -296,10 +297,13 @@ public class EndFeatures {
 		addFeature(ENDER_ORE, features);
 		addFeature(CRASHED_SHIP, features);
 		
-		EndBiome endBiome = (EndBiome) BiomeAPI.getBiome(id);
-		if (endBiome != null && endBiome.hasCaves() && !EndBiomes.VOID_BIOMES.containsImmutable(id)) {
-			addFeature(ROUND_CAVE, features);
-			addFeature(TUNEL_CAVE, features);
+		BCLBiome bclbiome = BiomeAPI.getBiome(id);
+		if (bclbiome instanceof EndBiome) {
+			EndBiome endBiome = (EndBiome) bclbiome;
+			if (endBiome.hasCaves() && !EndBiomes.VOID_BIOMES.containsImmutable(id)) {
+				addFeature(ROUND_CAVE, features);
+				addFeature(TUNEL_CAVE, features);
+			}
 		}
 		
 		BCLFeature feature = BiomeAPI.getBiome(id).getStructuresFeature();

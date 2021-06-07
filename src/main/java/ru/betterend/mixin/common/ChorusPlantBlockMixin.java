@@ -1,9 +1,29 @@
 package ru.betterend.mixin.common;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChorusPlantBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import ru.bclib.api.TagAPI;
+import ru.betterend.blocks.VanillaBlockProperties;
+import ru.betterend.registry.EndBlocks;
+import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
 public abstract class ChorusPlantBlockMixin extends Block {
@@ -11,10 +31,10 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		super(settings);
 	}
 
-	/*@Inject(method = "<init>*", at = @At("TAIL"))
+	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void beOnInit(BlockBehaviour.Properties settings, CallbackInfo info) {
 		if (GeneratorOptions.changeChorusPlant()) {
-			this.registerDefaultState(this.defaultBlockState().setValue(BlockProperties.ROOTS, false));
+			this.registerDefaultState(this.defaultBlockState().setValue(VanillaBlockProperties.ROOTS, false));
 		}
 	}
 	
@@ -22,7 +42,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	private void be_createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo info) {
 		GeneratorOptions.init();
 		if (GeneratorOptions.changeChorusPlant()) {
-			builder.add(BlockProperties.ROOTS);
+			builder.add(VanillaBlockProperties.ROOTS);
 		}
 	}
 
@@ -33,7 +53,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockState plant = info.getReturnValue();
 		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 			if (GeneratorOptions.changeChorusPlant()) {
-				info.setReturnValue(plant.setValue(BlockProperties.ROOTS, true).setValue(BlockStateProperties.DOWN, true));
+				info.setReturnValue(plant.setValue(VanillaBlockProperties.ROOTS, true).setValue(BlockStateProperties.DOWN, true));
 			}
 			else {
 				info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
@@ -51,7 +71,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		if (plant.is(Blocks.CHORUS_PLANT)) {
 			if (blockGetter.getBlockState(blockPos.below()).is(TagAPI.END_GROUND)) {
 				if (GeneratorOptions.changeChorusPlant()) {
-					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true).setValue(BlockProperties.ROOTS, true));
+					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true).setValue(VanillaBlockProperties.ROOTS, true));
 				}
 				else {
 					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
@@ -60,7 +80,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			}
 			else {
 				if (GeneratorOptions.changeChorusPlant()) {
-					info.setReturnValue(plant.setValue(BlockProperties.ROOTS, false));
+					info.setReturnValue(plant.setValue(VanillaBlockProperties.ROOTS, false));
 				}
 				info.cancel();
 			}
@@ -82,7 +102,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		if (plant.is(Blocks.CHORUS_PLANT)) {
 			if (world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 				if (GeneratorOptions.changeChorusPlant()) {
-					plant = plant.setValue(BlockStateProperties.DOWN, true).setValue(BlockProperties.ROOTS, true);
+					plant = plant.setValue(BlockStateProperties.DOWN, true).setValue(VanillaBlockProperties.ROOTS, true);
 				}
 				else {
 					plant = plant.setValue(BlockStateProperties.DOWN, true);
@@ -91,12 +111,12 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			}
 			else {
 				if (GeneratorOptions.changeChorusPlant()) {
-					plant = plant.setValue(BlockProperties.ROOTS, false);
+					plant = plant.setValue(VanillaBlockProperties.ROOTS, false);
 				}
 				info.cancel();
 			}
 			info.setReturnValue(plant);
 			info.cancel();
 		}
-	}*/
+	}
 }

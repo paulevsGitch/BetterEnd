@@ -28,7 +28,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.BlockProperties;
+import ru.betterend.blocks.VanillaBlockProperties;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -62,7 +62,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 				if (i < 5) {
 					this.placeGrownFlower(world, up, i + 1);
 					if (GeneratorOptions.changeChorusPlant()) {
-						BlocksHelper.setWithoutUpdate(world, pos, plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true).setValue(BlockProperties.ROOTS, true));
+						BlocksHelper.setWithoutUpdate(world, pos, plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true).setValue(VanillaBlockProperties.ROOTS, true));
 					}
 					else {
 						BlocksHelper.setWithoutUpdate(world, pos, plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true));
@@ -77,7 +77,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	private static void be_generatePlant(LevelAccessor world, BlockPos pos, Random random, int size, CallbackInfo info) {
 		BlockState state = world.getBlockState(pos);
 		if (GeneratorOptions.changeChorusPlant() && state.is(Blocks.CHORUS_PLANT)) {
-			BlocksHelper.setWithoutUpdate(world, pos, state.setValue(BlockProperties.ROOTS, true));
+			BlocksHelper.setWithoutUpdate(world, pos, state.setValue(VanillaBlockProperties.ROOTS, true));
 		}
 	}
 	

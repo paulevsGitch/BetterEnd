@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.feature.ChorusPlantFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.BlockProperties;
+import ru.betterend.blocks.VanillaBlockProperties;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -31,7 +31,7 @@ public class ChorusPlantFeatureMixin {
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
 			if (bottom.is(Blocks.CHORUS_PLANT)) {
 				if ((GeneratorOptions.changeChorusPlant())) {
-					BlocksHelper.setWithoutUpdate(structureWorldAccess, blockPos, bottom.setValue(BlockProperties.ROOTS, true).setValue(PipeBlock.DOWN, true));
+					BlocksHelper.setWithoutUpdate(structureWorldAccess, blockPos, bottom.setValue(VanillaBlockProperties.ROOTS, true).setValue(PipeBlock.DOWN, true));
 				}
 				else {
 					BlocksHelper.setWithoutUpdate(structureWorldAccess, blockPos, bottom.setValue(PipeBlock.DOWN, true));

@@ -25,10 +25,10 @@ import net.minecraft.world.level.levelgen.feature.SpikeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.SpikeConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(SpikeFeature.class)
@@ -51,12 +51,12 @@ public class SpikeFeatureMixin {
 		long lz = (long) z;
 		if (lx * lx + lz * lz < 10000) {
 			String pillarID = String.format("%d_%d", x, z);
-			CompoundTag pillar = WorldDataUtil.getCompoundTag("pillars");
+			CompoundTag pillar = WorldDataAPI.getCompoundTag(BetterEnd.MOD_ID, "pillars");
 			boolean haveValue = pillar.contains(pillarID);
 			minY = haveValue ? pillar.getInt(pillarID) : world.getChunk(x >> 4, z >> 4).getHeight(Types.WORLD_SURFACE, x & 15, z);
 			if (!haveValue) {
 				pillar.putInt(pillarID, minY);
-				WorldDataUtil.saveFile();
+				WorldDataAPI.saveFile(BetterEnd.MOD_ID);
 			}
 		}
 		else {

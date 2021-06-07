@@ -20,9 +20,9 @@ import net.minecraft.world.level.levelgen.feature.EndPodiumFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(EndPodiumFeature.class)
@@ -63,8 +63,8 @@ public class EndPodiumFeatureMixin {
 				}
 				pos = new BlockPos(pos.getX(), y, pos.getZ());
 				GeneratorOptions.setPortalPos(pos);
-				WorldDataUtil.getRootTag().put("portal", NbtUtils.writeBlockPos(pos));
-				WorldDataUtil.saveFile();
+				WorldDataAPI.getRootTag(BetterEnd.MOD_ID).put("portal", NbtUtils.writeBlockPos(pos));
+				WorldDataAPI.saveFile(BetterEnd.MOD_ID);
 			}
 			return pos;
 		}

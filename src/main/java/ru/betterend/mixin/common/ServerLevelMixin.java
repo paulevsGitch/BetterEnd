@@ -1,8 +1,6 @@
 package ru.betterend.mixin.common;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
@@ -13,11 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -37,14 +31,10 @@ import ru.bclib.api.BiomeAPI;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.DataFixerUtil;
-import ru.betterend.util.WorldDataUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin extends Level {
-	private static final int BE_DEV_VERSION = be_getVersionInt("63.63.63");
-	private static final int BE_FIX_VERSION = BE_DEV_VERSION;
 	private static String be_lastWorld = null;
 	
 	protected ServerLevelMixin(WritableLevelData writableLevelData, ResourceKey<Level> resourceKey, DimensionType dimensionType, Supplier<ProfilerFiller> supplier, boolean bl, boolean bl2, long l) {
@@ -58,30 +48,8 @@ public abstract class ServerLevelMixin extends Level {
 		}
 		
 		be_lastWorld = session.getLevelId();
-		
 		ServerLevel world = ServerLevel.class.cast(this);
 		EndBiomes.onWorldLoad(world.getSeed());
-		File dir = session.getDimensionPath(world.dimension());
-		if (!new File(dir, "level.dat").exists()) {
-			dir = dir.getParentFile();
-		}
-		File data = new File(dir, "data/betterend_data.nbt");
-		
-		ModMetadata meta = FabricLoader.getInstance().getModContainer(BetterEnd.MOD_ID).get().getMetadata();
-		int version = BetterEnd.isDevEnvironment() ? BE_DEV_VERSION : be_getVersionInt(meta.getVersion().toString());
-		
-		WorldDataUtil.load(data);
-		CompoundTag root = WorldDataUtil.getRootTag();
-		int dataVersion = be_getVersionInt(root.getString("version"));
-		GeneratorOptions.setPortalPos(NbtUtils.readBlockPos(root.getCompound("portal")));
-		
-		if (dataVersion < version) {
-			if (version < BE_FIX_VERSION) {
-				DataFixerUtil.fixData(data.getParentFile());
-			}
-			root.putString("version", be_getVersionString(version));
-			WorldDataUtil.saveFile();
-		}
 	}
 
 	@Inject(method = "getSharedSpawnPos", at = @At("HEAD"), cancellable = true)
@@ -109,25 +77,5 @@ public abstract class ServerLevelMixin extends Level {
 			}
 		}
 		return state;
-	}
-	
-	private static int be_getVersionInt(String version) {
-		if (version.isEmpty()) {
-			return 0;
-		}
-		try {
-			String[] values = version.split("\\.");
-			return Integer.parseInt(values[0]) << 12 | Integer.parseInt(values[1]) << 6 | Integer.parseInt(values[1]);
-		}
-		catch (Exception e) {
-			return 0;
-		}
-	}
-	
-	private static String be_getVersionString(int version) {
-		int a = (version >> 12) & 63;
-		int b = (version >> 6) & 63;
-		int c = version & 63;
-		return String.format(Locale.ROOT, "%d.%d.%d", a, b, c);
 	}
 }

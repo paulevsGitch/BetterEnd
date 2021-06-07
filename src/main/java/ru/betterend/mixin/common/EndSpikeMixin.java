@@ -9,7 +9,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.levelgen.feature.SpikeFeature.EndSpike;
-import ru.betterend.util.WorldDataUtil;
+import ru.bclib.api.WorldDataAPI;
+import ru.betterend.BetterEnd;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(EndSpike.class)
@@ -24,7 +25,7 @@ public class EndSpikeMixin {
 			int x = getCenterX();
 			int z = getCenterZ();
 			String pillarID = String.format("%d_%d", x, z);
-			CompoundTag pillar = WorldDataUtil.getCompoundTag("pillars");
+			CompoundTag pillar = WorldDataAPI.getCompoundTag(BetterEnd.MOD_ID, "pillars");
 			int minY = pillar.contains(pillarID) ? pillar.getInt(pillarID) : 65;
 			int maxY = minY + height - 54;
 			info.setReturnValue(maxY);

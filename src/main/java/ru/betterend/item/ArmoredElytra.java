@@ -1,7 +1,5 @@
 package ru.betterend.item;
 
-import java.util.UUID;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
@@ -14,13 +12,13 @@ import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import ru.bclib.items.BaseArmorItem;
 import ru.betterend.BetterEnd;
+import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.registry.EndItems;
 
-public class ArmoredElytra extends EndArmorItem implements MultiModelItem {
-
-	private static final UUID ARMOR_MODIFIER_UUID_CHEST = ARMOR_MODIFIER_UUID_PER_SLOT[2];
+public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, FallFlyingItem {
 
 	private final ResourceLocation wingTexture;
 	private final Item repairItem;
@@ -37,18 +35,20 @@ public class ArmoredElytra extends EndArmorItem implements MultiModelItem {
 		this.movementFactor = movementFactor;
 		this.defense = (int) ((double) material.getDefenseForSlot(EquipmentSlot.CHEST) / 1.75);
 		this.toughness = material.getToughness() / 1.75F;
-		addAttributeModifier(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIER_UUID_CHEST,
+		addAttributeModifier(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2],
 				"Armor modifier", defense, AttributeModifier.Operation.ADDITION));
-		addAttributeModifier(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIER_UUID_CHEST,
+		addAttributeModifier(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2],
 				"Armor toughness", toughness, AttributeModifier.Operation.ADDITION));
 	}
 
+	@Override
 	public double getMovementFactor() {
 		return movementFactor;
 	}
 
+	@Override
 	@Environment(EnvType.CLIENT)
-	public ResourceLocation getWingTexture() {
+	public ResourceLocation getModelTexture() {
 		return wingTexture;
 	}
 

@@ -18,6 +18,7 @@ import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
+import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.item.ArmoredElytra;
 
 @Mixin(LocalPlayer.class)
@@ -36,7 +37,7 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
 			shift = Shift.AFTER))
 	public void be_aiStep(CallbackInfo info) {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
-		if (itemStack.getItem() instanceof ArmoredElytra && ElytraItem.isFlyEnabled(itemStack) && tryToStartFallFlying()) {
+		if (itemStack.getItem() instanceof FallFlyingItem && ElytraItem.isFlyEnabled(itemStack) && tryToStartFallFlying()) {
 			connection.send(new ServerboundPlayerCommandPacket(LocalPlayer.class.cast(this), ServerboundPlayerCommandPacket.Action.START_FALL_FLYING));
 		}
 	}

@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import ru.betterend.blocks.HydrothermalVentBlock;
+import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.item.ArmoredElytra;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
@@ -65,6 +66,6 @@ public class BlockEntityHydrothermalVent extends BlockEntity implements Tickable
 
 	private boolean hasElytra(LivingEntity entity) {
 		Item item = entity.getItemBySlot(EquipmentSlot.CHEST).getItem();
-		return item instanceof ElytraItem || item instanceof ArmoredElytra;
+		return item instanceof ElytraItem || item instanceof FallFlyingItem;
 	}
 }

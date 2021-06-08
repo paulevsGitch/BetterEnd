@@ -15,7 +15,7 @@ public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 
 	public ModelPart leftShoulder;
 	public ModelPart rightShoulder;
-	private boolean thinArms;
+	private final boolean thinArms;
 	
 	public CrystaliteChestplateModel(float scale, boolean thinArms) {
 		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);

@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
@@ -67,13 +68,15 @@ public class CrystaliteArmorProvider implements ModelProvider, TextureProvider {
 	}
 	
 	public Iterable<Item> getRenderedItems() {
-		return Lists.newArrayList(EndItems.CRYSTALITE_HELMET, EndItems.CRYSTALITE_CHESTPLATE, EndItems.CRYSTALITE_LEGGINGS, EndItems.CRYSTALITE_BOOTS);
+		return Lists.newArrayList(
+				EndItems.CRYSTALITE_HELMET,
+				EndItems.CRYSTALITE_CHESTPLATE,
+				EndItems.CRYSTALITE_ELYTRA,
+				EndItems.CRYSTALITE_LEGGINGS,
+				EndItems.CRYSTALITE_BOOTS);
 	}
 	
 	private boolean isStackValid(ItemStack stack) {
-		return stack.getItem() == EndItems.CRYSTALITE_HELMET ||
-			   stack.getItem() == EndItems.CRYSTALITE_CHESTPLATE ||
-			   stack.getItem() == EndItems.CRYSTALITE_LEGGINGS ||
-			   stack.getItem() == EndItems.CRYSTALITE_BOOTS;
+		return stack.getItem() instanceof CrystaliteArmor;
 	}
 }

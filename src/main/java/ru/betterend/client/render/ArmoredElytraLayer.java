@@ -16,7 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
-import ru.betterend.item.ArmoredElytra;
+import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.item.model.ArmoredElytraModel;
 
 public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>> extends ElytraLayer<T, M> {
@@ -28,8 +28,8 @@ public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>
 
 	public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f, float g, float h, float j, float k, float l) {
 		ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-		if (itemStack.getItem() instanceof ArmoredElytra) {
-			ResourceLocation wingsTexture = ((ArmoredElytra) itemStack.getItem()).getWingTexture();
+		if (itemStack.getItem() instanceof FallFlyingItem) {
+			ResourceLocation wingsTexture = ((FallFlyingItem) itemStack.getItem()).getModelTexture();
 			if (livingEntity instanceof AbstractClientPlayer) {
 				AbstractClientPlayer abstractClientPlayer = (AbstractClientPlayer) livingEntity;
 				if (abstractClientPlayer.isElytraLoaded() && abstractClientPlayer.getElytraTextureLocation() != null) {

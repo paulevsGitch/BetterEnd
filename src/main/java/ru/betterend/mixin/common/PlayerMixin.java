@@ -24,6 +24,7 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.TripleShape;
+import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.item.ArmoredElytra;
 import ru.betterend.registry.EndBlocks;
 
@@ -49,7 +50,7 @@ public abstract class PlayerMixin extends LivingEntity {
 	public void be_tryToStartFlying(CallbackInfoReturnable<Boolean> info) {
 		if (!onGround && !isFallFlying() && !isInWater() && !hasEffect(MobEffects.LEVITATION)) {
 			ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
-			if (itemStack.getItem() instanceof ArmoredElytra && ElytraItem.isFlyEnabled(itemStack)) {
+			if (itemStack.getItem() instanceof FallFlyingItem && ElytraItem.isFlyEnabled(itemStack)) {
 				setSharedFlag(7, true);
 				info.setReturnValue(true);
 			}

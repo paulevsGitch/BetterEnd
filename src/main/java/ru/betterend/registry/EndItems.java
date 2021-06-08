@@ -28,14 +28,7 @@ import ru.bclib.items.tool.BaseSwordItem;
 import ru.bclib.registry.ItemsRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.item.ArmoredElytra;
-import ru.betterend.item.CrystaliteBoots;
-import ru.betterend.item.CrystaliteChestplate;
-import ru.betterend.item.CrystaliteHelmet;
-import ru.betterend.item.CrystaliteLeggings;
-import ru.betterend.item.EnchantedPetalItem;
-import ru.betterend.item.EndBucketItem;
-import ru.betterend.item.EternalCrystalItem;
+import ru.betterend.item.*;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndHammerItem;
@@ -58,13 +51,14 @@ public class EndItems extends ItemsRegistry {
 	public final static Item HYDRALUX_PETAL = registerEndItem("hydralux_petal");
 	public final static Item GELATINE = registerEndItem("gelatine");
 	public static final Item ETERNAL_CRYSTAL = registerEndItem("eternal_crystal", new EternalCrystalItem());
-	public final static Item ENCHANTED_PETAL = registerEndItem("enchanted_petal", new EnchantedPetalItem());
+	public final static Item ENCHANTED_PETAL = registerEndItem("enchanted_petal", new EnchantedItem(HYDRALUX_PETAL));
 	public final static Item LEATHER_STRIPE = registerEndItem("leather_stripe");
 	public final static Item LEATHER_WRAPPED_STICK = registerEndItem("leather_wrapped_stick");
 	public final static Item SILK_FIBER = registerEndItem("silk_fiber");
 	public final static Item LUMECORN_ROD = registerEndItem("lumecorn_rod");
 	public final static Item SILK_MOTH_MATRIX = registerEndItem("silk_moth_matrix");
-	
+	public final static Item ENCHANTED_MEMBRANE = registerEndItem("enchanted_membrane", new EnchantedItem(Items.PHANTOM_MEMBRANE));
+
 	// Music Discs
 	public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerEndDisc("music_disc_strange_and_alien", 0, EndSounds.RECORD_STRANGE_AND_ALIEN);
 	public final static Item MUSIC_DISC_GRASPING_AT_STARS = registerEndDisc("music_disc_grasping_at_stars", 0, EndSounds.RECORD_GRASPING_AT_STARS);
@@ -81,6 +75,7 @@ public class EndItems extends ItemsRegistry {
 	public static final Item CRYSTALITE_LEGGINGS = registerEndItem("crystalite_leggings", new CrystaliteLeggings());
 	public static final Item CRYSTALITE_BOOTS = registerEndItem("crystalite_boots", new CrystaliteBoots());
 	public static final Item ARMORED_ELYTRA = registerEndItem("elytra_armored", new ArmoredElytra("elytra_armored", EndArmorMaterial.AETERNIUM, Items.PHANTOM_MEMBRANE, 900, 0.96D, true));
+	public static final Item CRYSTALITE_ELYTRA = registerEndItem("elytra_crystalite", new CrystaliteElytra(650, 0.98D));
 
 	// Tools //
 	public static final TieredItem AETERNIUM_SHOVEL = registerEndTool("aeternium_shovel", new BaseShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeEndItemSettings().fireResistant()));

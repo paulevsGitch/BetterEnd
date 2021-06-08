@@ -33,7 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import ru.betterend.interfaces.MobEffectApplier;
-import ru.betterend.item.ArmoredElytra;
+import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndAttributes;
 
@@ -111,7 +111,7 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "updateFallFlying", at = @At("HEAD"), cancellable = true)
 	private void be_updateFallFlying(CallbackInfo info) {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
-		if (!level.isClientSide && itemStack.getItem() instanceof ArmoredElytra) {
+		if (!level.isClientSide && itemStack.getItem() instanceof FallFlyingItem) {
 			boolean isFlying = getSharedFlag(7);
 			if (isFlying && !onGround && !isPassenger() && !hasEffect(MobEffects.LEVITATION)) {
 				if (ElytraItem.isFlyEnabled(itemStack)) {
@@ -136,7 +136,7 @@ public abstract class LivingEntityMixin extends Entity {
 			shift = Shift.AFTER), cancellable = true)
 	public void be_travel(Vec3 vec3, CallbackInfo info) {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
-		if (isFallFlying() && itemStack.getItem() instanceof ArmoredElytra) {
+		if (isFallFlying() && itemStack.getItem() instanceof FallFlyingItem) {
 			Vec3 moveDelta = getDeltaMovement();
 			if (moveDelta.y > -0.5D) {
 				fallDistance = 1.0F;
@@ -166,7 +166,7 @@ public abstract class LivingEntityMixin extends Entity {
 				moveDelta = moveDelta.add((lookAngle.x / k * l - moveDelta.x) * 0.1D, 0.0D, (lookAngle.z / k * l - moveDelta.z) * 0.1D);
 			}
 			moveDelta = moveDelta.multiply(0.9900000095367432D, 0.9800000190734863D, 0.9900000095367432D);
-			double movementFactor = ((ArmoredElytra) itemStack.getItem()).getMovementFactor();
+			double movementFactor = ((FallFlyingItem) itemStack.getItem()).getMovementFactor();
 			moveDelta = moveDelta.multiply(movementFactor, 1.0D, movementFactor);
 			setDeltaMovement(moveDelta);
 			move(MoverType.SELF, moveDelta);

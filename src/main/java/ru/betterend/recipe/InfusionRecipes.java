@@ -82,6 +82,15 @@ public class InfusionRecipes {
 			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
 			.setTime(75)
 			.build();
+		InfusionRecipe.Builder.create("enchanted_membrane")
+			.setInput(Items.PHANTOM_MEMBRANE)
+			.setOutput(EndItems.ENCHANTED_MEMBRANE)
+			.addCatalyst(0, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(2, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(4, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
+			.setTime(75)
+			.build();
 
 		InfusionRecipe.Builder.create("protection_book")
 			.setInput(Items.BOOK)

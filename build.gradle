@@ -121,7 +121,7 @@ def env = System.getenv()
 import org.kohsuke.github.GHReleaseBuilder
 import org.kohsuke.github.GitHub
 
-task github(dependsOn: [remapJar, sourcesJar, javadocJar]) {
+task release(dependsOn: [remapJar, sourcesJar, javadocJar]) {
 	onlyIf {
 		env.GITHUB_TOKEN
 	}

@@ -19,6 +19,8 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 		super.setLevelAndPosition(world, pos);
 		if (hasRitual()) {
 			linkedRitual.setLocation(world, pos);
+		} else {
+			linkRitual(new InfusionRitual(this, world, pos));
 		}
 	}
 	
@@ -54,7 +56,7 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	protected void fromTag(CompoundTag tag) {
 		super.fromTag(tag);
 		if (tag.contains("ritual")) {
-			linkedRitual = new InfusionRitual(level, worldPosition);
+			linkedRitual = new InfusionRitual(this, level, worldPosition);
 			linkedRitual.fromTag(tag.getCompound("ritual"));
 		}
 	}

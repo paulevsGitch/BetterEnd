@@ -127,13 +127,13 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			
 			return INSTANCE;
 		}
-		
+
+		private final Ingredient[] catalysts = new Ingredient[8];
 		private ResourceLocation id;
 		private Ingredient input;
 		private ItemStack output;
 		private String group;
 		private int time = 1;
-		private Ingredient[] catalysts = new Ingredient[8];
 		
 		private Builder() {
 			Arrays.fill(catalysts, Ingredient.EMPTY);
@@ -212,23 +212,23 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			recipe.group = GsonHelper.getAsString(json, "group", GROUP);
 			recipe.time = GsonHelper.getAsInt(json, "time", 1);
 			
-			JsonObject catalysts = GsonHelper.convertToJsonObject(json, "catalysts");
+			JsonObject catalysts = GsonHelper.getAsJsonObject(json, "catalysts");
 			ItemStack catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "north", ""));
-			recipe.catalysts[0] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[0] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "north_east", ""));
-			recipe.catalysts[1] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[1] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "east", ""));
-			recipe.catalysts[2] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[2] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "south_east", ""));
-			recipe.catalysts[3] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[3] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "south", ""));
-			recipe.catalysts[4] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[4] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "south_west", ""));
-			recipe.catalysts[5] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[5] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "west", ""));
-			recipe.catalysts[6] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[6] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "north_west", ""));
-			recipe.catalysts[7] = Ingredient.of(Arrays.stream(new ItemStack[] { catalyst }));
+			recipe.catalysts[7] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			
 			return recipe;
 		}

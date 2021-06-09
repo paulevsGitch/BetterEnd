@@ -1,8 +1,7 @@
 package ru.betterend.rituals;
 
-import java.awt.Point;
-
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -16,10 +15,20 @@ import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
 
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class InfusionRitual implements Container {
 	private static final Point[] PEDESTALS_MAP = new Point[] {
-		new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2),
-		new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)
+			new Point(0, 3),
+			new Point(2, 2),
+			new Point(3, 0),
+			new Point(2, -2),
+			new Point(0, -3),
+			new Point(-2, -2),
+			new Point(-3, 0),
+			new Point(-2, 2)
 	};
 
 	private Level world;
@@ -29,35 +38,25 @@ public class InfusionRitual implements Container {
 	private boolean hasRecipe = false;
 	private int progress = 0;
 	private int time = 0;
-	
-	private InfusionPedestalEntity input;
+
 	private final PedestalBlockEntity[] catalysts = new PedestalBlockEntity[8];
+	private final InfusionPedestalEntity input;
 	
-	public InfusionRitual(Level world, BlockPos pos) {
+	public InfusionRitual(InfusionPedestalEntity pedestal, Level world, BlockPos pos) {
+		this.input = pedestal;
 		this.world = world;
 		this.worldPos = pos;
-		this.configure();
-	}
-	
-	public static Point[] getMap() {
-		return PEDESTALS_MAP;
+		configure();
 	}
 	
 	public void configure() {
-		if (world == null || world.isClientSide || worldPos == null) return;
-		BlockEntity inputEntity = world.getBlockEntity(worldPos);
-		if (inputEntity instanceof InfusionPedestalEntity) {
-			input = (InfusionPedestalEntity) inputEntity;
-		}
-		int i = 0;
-		for(Point point : PEDESTALS_MAP) {
-			BlockPos.MutableBlockPos checkPos = worldPos.mutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
+		if (world == null || worldPos == null || world.isClientSide) return;
+		for (int i = 0; i < catalysts.length; i++) {
+			Point point = PEDESTALS_MAP[i];
+			MutableBlockPos checkPos = worldPos.mutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
 			BlockEntity catalystEntity = world.getBlockEntity(checkPos);
 			if (catalystEntity instanceof PedestalBlockEntity) {
 				catalysts[i] = (PedestalBlockEntity) catalystEntity;
-				i++;
-			} else {
-				break;
 			}
 		}
 	}
@@ -67,34 +66,36 @@ public class InfusionRitual implements Container {
 		InfusionRecipe recipe = world.getRecipeManager().getRecipeFor(InfusionRecipe.TYPE, this, world).orElse(null);
 		if (hasRecipe()) {
 			if (recipe == null) {
-				stop();
+				reset();
 				return false;
-			} else if (recipe.getInfusionTime() != time) {
-				activeRecipe = recipe;
-				time = activeRecipe.getInfusionTime();
-				progress = 0;
-				setChanged();
-			} else if (activeRecipe == null) {
-				activeRecipe = recipe;
+			} else if (activeRecipe == null || recipe.getInfusionTime() != time) {
+				updateRecipe(recipe);
 			}
 			return true;
 		}
 		if (recipe != null) {
-			activeRecipe = recipe;
-			time = activeRecipe.getInfusionTime();
-			hasRecipe = true;
-			progress = 0;
-			setChanged();
+			updateRecipe(recipe);
 			return true;
 		}
 		return false;
 	}
+
+	private void updateRecipe(InfusionRecipe recipe) {
+		activeRecipe = recipe;
+		hasRecipe = true;
+		resetTimer();
+		setChanged();
+	}
+
+	private void resetTimer() {
+		time = activeRecipe != null ? activeRecipe.getInfusionTime() : 0;
+		progress = 0;
+	}
 	
-	public void stop() {
+	public void reset() {
 		activeRecipe = null;
 		hasRecipe = false;
-		progress = 0;
-		time = 0;
+		resetTimer();
 		setChanged();
 	}
 	
@@ -103,7 +104,6 @@ public class InfusionRitual implements Container {
 			configure();
 			isDirty = false;
 		}
-		if (!isValid() || !hasRecipe()) return;
 		if (!checkRecipe()) return;
 		progress++;
 		if (progress == time) {
@@ -112,9 +112,9 @@ public class InfusionRitual implements Container {
 			for (PedestalBlockEntity catalyst : catalysts) {
 				catalyst.removeItemNoUpdate(0);
 			}
-			stop();
+			reset();
 		} else {
-			ServerLevel world = (ServerLevel) this.world;
+			ServerLevel serverLevel = (ServerLevel) world;
 			BlockPos target = worldPos.above();
 			double tx = target.getX() + 0.5;
 			double ty = target.getY() + 0.5;
@@ -126,11 +126,11 @@ public class InfusionRitual implements Container {
 					double sx = start.getX() + 0.5;
 					double sy = start.getY() + 1.25;
 					double sz = start.getZ() + 0.5;
-					world.sendParticles(new InfusionParticleType(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
+					serverLevel.sendParticles(new InfusionParticleType(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
 				}
 			}
 		}
-		
+
 	}
 	
 	@Override
@@ -140,10 +140,7 @@ public class InfusionRitual implements Container {
 	
 	public boolean isValid() {
 		if (world == null || world.isClientSide || worldPos == null || input == null) return false;
-		for (PedestalBlockEntity catalyst : catalysts) {
-			if (catalyst == null) return false;
-		}
-		return true;
+		return Arrays.stream(catalysts).noneMatch(Objects::isNull);
 	}
 	
 	public boolean hasRecipe() {
@@ -240,5 +237,9 @@ public class InfusionRitual implements Container {
 			tag.putInt("time", time);
 		}
 		return tag;
+	}
+
+	public static Point[] getMap() {
+		return PEDESTALS_MAP;
 	}
 }

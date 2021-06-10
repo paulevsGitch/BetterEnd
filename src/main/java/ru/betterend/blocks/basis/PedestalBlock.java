@@ -44,12 +44,13 @@ import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.BlockProperties;
 import ru.betterend.blocks.BlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
+import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "unused"})
 public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
@@ -130,7 +131,26 @@ public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
 		}
 		return InteractionResult.PASS;
 	}
-	
+
+	@Override
+	public void destroy(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
+		MutableBlockPos posMutable = new MutableBlockPos();
+		for (Point point: InfusionRitual.getMap()) {
+			posMutable.set(blockPos).move(point.x, 0, point.y);
+			BlockState state = levelAccessor.getBlockState(posMutable);
+			if (state.getBlock() instanceof InfusionPedestal) {
+				BlockEntity blockEntity = levelAccessor.getBlockEntity(posMutable);
+				if (blockEntity instanceof InfusionPedestalEntity) {
+					InfusionPedestalEntity pedestal = (InfusionPedestalEntity) blockEntity;
+					if (pedestal.hasRitual()) {
+						pedestal.getRitual().markDirty();
+					}
+				}
+				break;
+			}
+		}
+	}
+
 	public void checkRitual(Level world, BlockPos pos) {
 		MutableBlockPos posMutable = new MutableBlockPos();
 		for (Point point: InfusionRitual.getMap()) {

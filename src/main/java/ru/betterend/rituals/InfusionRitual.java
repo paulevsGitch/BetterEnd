@@ -57,6 +57,8 @@ public class InfusionRitual implements Container {
 			BlockEntity catalystEntity = world.getBlockEntity(checkPos);
 			if (catalystEntity instanceof PedestalBlockEntity) {
 				catalysts[i] = (PedestalBlockEntity) catalystEntity;
+			} else {
+				catalysts[i] = null;
 			}
 		}
 	}
@@ -215,6 +217,10 @@ public class InfusionRitual implements Container {
 				catalyst.setChanged();
 			}
 		}
+	}
+
+	public void markDirty() {
+		this.isDirty = true;
 	}
 
 	@Override

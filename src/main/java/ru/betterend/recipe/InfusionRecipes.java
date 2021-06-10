@@ -72,6 +72,20 @@ public class InfusionRecipes {
 			.addCatalyst(6, EndItems.CRYSTAL_SHARDS)
 			.setTime(150)
 			.build();
+
+		InfusionRecipe.Builder.create("crystalite_elytra")
+			.setInput(Items.ELYTRA)
+			.setOutput(EndItems.CRYSTALITE_ELYTRA)
+			.addCatalyst(0, EndItems.AMBER_GEM)
+			.addCatalyst(1, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(2, EndItems.ENCHANTED_MEMBRANE)
+			.addCatalyst(3, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(4, EndItems.ENCHANTED_MEMBRANE)
+			.addCatalyst(5, EndItems.CRYSTAL_SHARDS)
+			.addCatalyst(6, EndItems.ENCHANTED_MEMBRANE)
+			.addCatalyst(7, EndItems.CRYSTAL_SHARDS)
+			.setTime(500)
+			.build();
 		
 		InfusionRecipe.Builder.create("enchanted_petal")
 			.setInput(EndItems.HYDRALUX_PETAL)

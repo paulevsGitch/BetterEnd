@@ -1,9 +1,6 @@
 package ru.betterend.util;
 
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -11,13 +8,15 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.blocks.BaseDoublePlantBlock;
+import ru.bclib.blocks.BaseVineBlock;
+import ru.bclib.blocks.StalactiteBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.BlueVineBlock;
-import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.blocks.basis.FurBlock;
-import ru.betterend.blocks.basis.StalactiteBlock;
-import ru.betterend.blocks.basis.VineBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Set;
 
 public class BlockFixer {
 	private static final MutableBlockPos POS = new MutableBlockPos();
@@ -130,8 +129,8 @@ public class BlockFixer {
 							}
 						}
 						// Vines
-						else if (state.getBlock() instanceof VineBlock) {
-							while (world.getBlockState(POS).getBlock() instanceof VineBlock) {
+						else if (state.getBlock() instanceof BaseVineBlock) {
+							while (world.getBlockState(POS).getBlock() instanceof BaseVineBlock) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() - 1);
 							}
@@ -178,7 +177,7 @@ public class BlockFixer {
 								}
 							}
 							// Double plants
-							if (state.getBlock() instanceof DoublePlantBlock) {
+							if (state.getBlock() instanceof BaseDoublePlantBlock) {
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 								BlocksHelper.setWithoutUpdate(world, POS, AIR);

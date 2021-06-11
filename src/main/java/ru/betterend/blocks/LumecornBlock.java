@@ -1,8 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -23,15 +20,19 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
+import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.BlockProperties.LumecornShape;
-import ru.betterend.blocks.basis.BlockBaseNotFull;
+import ru.betterend.blocks.EndBlockProperties.LumecornShape;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
-public class LumecornBlock extends BlockBaseNotFull implements IRenderTypeable {
+import java.util.Collections;
+import java.util.List;
+
+@SuppressWarnings("deprecation")
+public class LumecornBlock extends BaseBlockNotFull implements IRenderTypeable {
 	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create("shape", LumecornShape.class);
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape SHAPE_TOP = Block.box(6, 0, 6, 10, 8, 10);

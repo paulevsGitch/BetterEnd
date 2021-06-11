@@ -5,9 +5,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import ru.betterend.blocks.basis.UnderwaterPlantBlock;
+import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 
-public class CharniaBlock extends UnderwaterPlantBlock {
+public class CharniaBlock extends EndUnderwaterPlantBlock {
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return canSupportCenter(world, pos.below(), Direction.UP) && world.getFluidState(pos).getType() == Fluids.WATER;

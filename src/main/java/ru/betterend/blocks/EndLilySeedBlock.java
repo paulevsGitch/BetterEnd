@@ -1,14 +1,16 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import ru.bclib.api.TagAPI;
+import ru.bclib.blocks.BlockProperties.TripleShape;
+import ru.bclib.blocks.UnderwaterPlantWithAgeBlock;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.UnderwaterPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class EndLilySeedBlock extends UnderwaterPlantWithAgeBlock {
 	@Override
@@ -30,5 +32,10 @@ public class EndLilySeedBlock extends UnderwaterPlantWithAgeBlock {
 			up = up.above();
 		}
 		return world.isEmptyBlock(up);
+	}
+
+	@Override
+	protected boolean isTerrain(BlockState state) {
+		return state.is(TagAPI.END_GROUND);
 	}
 }

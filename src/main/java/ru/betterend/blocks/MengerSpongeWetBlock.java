@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -19,13 +17,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.basis.BlockBaseNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTypeable {
+import java.util.Random;
+
+@SuppressWarnings("deprecation")
+public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTypeable {
 	public MengerSpongeWetBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).noOcclusion());
 	}
@@ -35,7 +36,7 @@ public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTyp
 		if (world.dimensionType().ultraWarm()) {
 			world.setBlock(pos, EndBlocks.MENGER_SPONGE.defaultBlockState(), 3);
 			world.levelEvent(2009, pos, 0);
-			world.playSound((Player) null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
+			world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
 		}
 	}
 
@@ -47,9 +48,9 @@ public class MengerSpongeWetBlock extends BlockBaseNotFull implements IRenderTyp
 			BlockPos blockPos = pos.relative(direction);
 			BlockState blockState = world.getBlockState(blockPos);
 			if (!state.canOcclude() || !blockState.isFaceSturdy(world, blockPos, direction.getOpposite())) {
-				double x = (double) pos.getX();
-				double y = (double) pos.getY();
-				double z = (double) pos.getZ();
+				double x = pos.getX();
+				double y = pos.getY();
+				double z = pos.getZ();
 				if (direction == Direction.DOWN) {
 					y -= 0.05;
 					x += random.nextDouble();

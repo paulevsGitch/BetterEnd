@@ -18,7 +18,7 @@ import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
-import ru.betterend.blocks.BlockProperties;
+import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -173,7 +173,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private void placeBrimstone(WorldGenLevel world, BlockPos pos, Random random) {
 		BlockState state = getBrimstone(world, pos);
 		BlocksHelper.setWithoutUpdate(world, pos, state);
-		if (state.getValue(BlockProperties.ACTIVE)) {
+		if (state.getValue(EndBlockProperties.ACTIVE)) {
 			makeShards(world, pos, random);
 		}
 	}
@@ -181,7 +181,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private BlockState getBrimstone(WorldGenLevel world, BlockPos pos) {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			if (world.getBlockState(pos.relative(dir)).is(Blocks.WATER)) {
-				return EndBlocks.BRIMSTONE.defaultBlockState().setValue(BlockProperties.ACTIVE, true);
+				return EndBlocks.BRIMSTONE.defaultBlockState().setValue(EndBlockProperties.ACTIVE, true);
 			}
 		}
 		return EndBlocks.BRIMSTONE.defaultBlockState();

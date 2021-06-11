@@ -8,9 +8,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.bclib.blocks.BaseBlock;
 
-public class HydraluxPetalBlock extends BlockBase {
+public class HydraluxPetalBlock extends BaseBlock {
 	public HydraluxPetalBlock() {
 		this(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.AXES)

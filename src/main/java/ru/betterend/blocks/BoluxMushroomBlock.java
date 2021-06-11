@@ -1,10 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -17,6 +13,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.List;
+import java.util.Random;
 
 public class BoluxMushroomBlock extends EndPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 9, 15);

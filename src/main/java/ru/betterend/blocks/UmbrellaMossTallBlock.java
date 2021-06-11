@@ -1,16 +1,16 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.betterend.blocks.basis.DoublePlantBlock;
+import ru.bclib.blocks.BaseDoublePlantBlock;
 import ru.betterend.registry.EndBlocks;
 
-public class UmbrellaMossTallBlock extends DoublePlantBlock {
+import java.util.Random;
+
+public class UmbrellaMossTallBlock extends BaseDoublePlantBlock {
 	public UmbrellaMossTallBlock() {
 		super(12);
 	}

@@ -5,6 +5,5 @@ import net.minecraft.client.color.item.ItemColor;
 
 public interface IColorProvider {
 	BlockColor getProvider();
-
 	ItemColor getItemProvider();
 }

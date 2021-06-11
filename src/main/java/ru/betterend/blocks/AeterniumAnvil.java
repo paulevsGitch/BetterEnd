@@ -12,6 +12,7 @@ import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.client.models.Patterns;
@@ -28,6 +29,15 @@ public class AeterniumAnvil extends EndAnvilBlock {
 	@Override
 	public IntegerProperty getDestructionProperty() {
 		return DESTRUCTION_LONG;
+	}
+
+	@Override
+	public IntegerProperty getDurability() {
+		if (durability == null) {
+			this.maxDamage = 8;
+			this.durability = IntegerProperty.create("durability", 0, maxDamage);
+		}
+		return durability;
 	}
 
 	@Override

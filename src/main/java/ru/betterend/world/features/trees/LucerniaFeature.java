@@ -17,6 +17,8 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
+import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFScale;
@@ -28,8 +30,6 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
-import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -77,12 +77,10 @@ public class LucerniaFeature extends DefaultFeature {
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
 		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 2F;
-		}).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return MHelper.randRange(-1.5F, 1.5F, random);
-		}).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) ->
+				(float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 2F).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) ->
+				MHelper.randRange(-1.5F, 1.5F, random)).setSource(sphere);
 
 		MutableBlockPos mut = new MutableBlockPos();
 		for (Direction d1 : BlocksHelper.HORIZONTAL) {
@@ -204,9 +202,7 @@ public class LucerniaFeature extends DefaultFeature {
 			return state.getMaterial().isReplaceable();
 		};
 
-		IGNORE = (state) -> {
-			return EndBlocks.LUCERNIA.isTreeLog(state);
-		};
+		IGNORE = EndBlocks.LUCERNIA::isTreeLog;
 
 		SPLINE = Lists.newArrayList(new Vector3f(0.00F, 0.00F, 0.00F), new Vector3f(0.10F, 0.35F, 0.00F),
 				new Vector3f(0.20F, 0.50F, 0.00F), new Vector3f(0.30F, 0.55F, 0.00F), new Vector3f(0.42F, 0.70F, 0.00F),

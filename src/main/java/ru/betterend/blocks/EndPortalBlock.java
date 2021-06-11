@@ -41,7 +41,7 @@ import ru.betterend.registry.EndPortals;
 import ru.betterend.rituals.EternalRitual;
 
 public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable, IColorProvider {
-	public static final IntegerProperty PORTAL = BlockProperties.PORTAL;
+	public static final IntegerProperty PORTAL = EndBlockProperties.PORTAL;
 
 	public EndPortalBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getExplosionResistance()).luminance(15));

@@ -4,11 +4,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import ru.betterend.blocks.basis.FeatureSaplingBlock;
+import ru.bclib.blocks.FeatureSaplingBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
 public class MossyGlowshroomSaplingBlock extends FeatureSaplingBlock {
+
 	public MossyGlowshroomSaplingBlock() {
 		super(7);
 	}

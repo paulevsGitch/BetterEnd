@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -17,9 +15,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.betterend.blocks.basis.UnderwaterPlantBlock;
+import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 
-public class PondAnemoneBlock extends UnderwaterPlantBlock {
+import java.util.Random;
+
+public class PondAnemoneBlock extends EndUnderwaterPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
 	
 	public PondAnemoneBlock() {

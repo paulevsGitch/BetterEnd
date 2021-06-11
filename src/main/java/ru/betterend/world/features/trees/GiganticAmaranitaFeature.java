@@ -1,11 +1,6 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -18,14 +13,18 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
+import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
-import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class GiganticAmaranitaFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -48,9 +47,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 		BlocksHelper.setWithoutUpdate(world, pos, AIR);
 
 		float radius = size * 0.17F;// MHelper.randRange(0.8F, 1.2F, random);
-		SDF function = SplineHelper.buildSDF(spline, radius, 0.2F, (bpos) -> {
-			return EndBlocks.AMARANITA_STEM.defaultBlockState();
-		});
+		SDF function = SplineHelper.buildSDF(spline, radius, 0.2F, (bpos) -> EndBlocks.AMARANITA_STEM.defaultBlockState());
 
 		Vector3f capPos = spline.get(spline.size() - 1);
 		makeHead(world, pos.offset(capPos.x() + 0.5F, capPos.y() + 1.5F, capPos.z() + 0.5F), Mth.floor(size / 1.6F));
@@ -99,7 +96,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 						mut.move(Direction.DOWN);
 						if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_FUR.defaultBlockState()
-									.setValue(AttachedBlock.FACING, Direction.DOWN));
+									.setValue(BaseAttachedBlock.FACING, Direction.DOWN));
 						}
 					}
 				}
@@ -164,13 +161,13 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 								Direction dir = Direction.fromAxisAndDirection(axis,
 										distance < 0 ? AxisDirection.NEGATIVE : AxisDirection.POSITIVE);
 								BlocksHelper.setWithoutUpdate(world, offseted, EndBlocks.AMARANITA_FUR
-										.defaultBlockState().setValue(AttachedBlock.FACING, dir));
+										.defaultBlockState().setValue(BaseAttachedBlock.FACING, dir));
 							}
 							mut.move(Direction.DOWN);
 						}
 						if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_FUR.defaultBlockState()
-									.setValue(AttachedBlock.FACING, Direction.DOWN));
+									.setValue(BaseAttachedBlock.FACING, Direction.DOWN));
 						}
 					}
 				}
@@ -278,13 +275,13 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 								Direction dir = Direction.fromAxisAndDirection(axis,
 										distance < 0 ? AxisDirection.NEGATIVE : AxisDirection.POSITIVE);
 								BlocksHelper.setWithoutUpdate(world, offseted, EndBlocks.AMARANITA_FUR
-										.defaultBlockState().setValue(AttachedBlock.FACING, dir));
+										.defaultBlockState().setValue(BaseAttachedBlock.FACING, dir));
 							}
 							mut.move(Direction.DOWN);
 						}
 						if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_FUR.defaultBlockState()
-									.setValue(AttachedBlock.FACING, Direction.DOWN));
+									.setValue(BaseAttachedBlock.FACING, Direction.DOWN));
 						}
 					}
 				}
@@ -335,9 +332,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 			return state.getMaterial().isReplaceable();
 		};
 
-		IGNORE = (state) -> {
-			return EndBlocks.DRAGON_TREE.isTreeLog(state);
-		};
+		IGNORE = EndBlocks.DRAGON_TREE::isTreeLog;
 
 		POST = (info) -> {
 			if (!info.getStateUp().is(EndBlocks.AMARANITA_STEM) || !info.getStateDown().is(EndBlocks.AMARANITA_STEM)) {

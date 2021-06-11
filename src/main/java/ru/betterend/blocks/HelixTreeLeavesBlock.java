@@ -1,10 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.client.color.block.BlockColor;
@@ -23,15 +19,18 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.blocks.BaseBlock;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
-public class HelixTreeLeavesBlock extends BlockBase implements IColorProvider {
-	public static final IntegerProperty COLOR = BlockProperties.COLOR;
+import java.util.Collections;
+import java.util.List;
+
+public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
+	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public HelixTreeLeavesBlock() {

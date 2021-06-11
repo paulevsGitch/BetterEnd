@@ -17,12 +17,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import ru.bclib.blocks.BaseBlock;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
-public class UmbrellaTreeClusterBlock extends BlockBase {
+public class UmbrellaTreeClusterBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public UmbrellaTreeClusterBlock() {

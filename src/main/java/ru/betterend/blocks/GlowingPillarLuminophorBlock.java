@@ -14,11 +14,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.bclib.blocks.BaseBlock;
 import ru.betterend.registry.EndBlocks;
 
-public class GlowingPillarLuminophorBlock extends BlockBase {
-	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
+public class GlowingPillarLuminophorBlock extends BaseBlock {
+	public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;
 	
 	public GlowingPillarLuminophorBlock() {
 		super(FabricBlockSettings.of(Material.LEAVES)

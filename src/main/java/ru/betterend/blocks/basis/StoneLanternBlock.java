@@ -24,6 +24,7 @@ import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.interfaces.IColorProvider;
 
+@SuppressWarnings("deprecation")
 public class StoneLanternBlock extends EndLanternBlock implements IColorProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(3, 1, 3, 13, 16, 13);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(3, 0, 3, 13, 15, 13);
@@ -56,9 +57,7 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 
 	@Override
 	public ItemColor getItemProvider() {
-		return (stack, tintIndex) -> {
-			return ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
-		};
+		return (stack, tintIndex) -> ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
 	}
 	
 	@Override

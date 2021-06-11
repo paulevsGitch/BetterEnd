@@ -1,17 +1,17 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.EndLotusLeafBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class EndLotusLeafFeature extends ScatterFeature {
 	public EndLotusLeafFeature(int radius) {

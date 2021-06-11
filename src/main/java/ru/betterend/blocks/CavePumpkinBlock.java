@@ -1,8 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -16,12 +13,16 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.betterend.blocks.basis.BlockBaseNotFull;
+import ru.bclib.blocks.BaseBlockNotFull;
+import ru.bclib.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class CavePumpkinBlock extends BlockBaseNotFull implements IRenderTypeable {
+import java.util.Collections;
+import java.util.List;
+
+public class CavePumpkinBlock extends BaseBlockNotFull implements IRenderTypeable {
 	public static final BooleanProperty SMALL = BlockProperties.SMALL;
 	private static final VoxelShape SHAPE_SMALL;
 	private static final VoxelShape SHAPE_BIG;
@@ -40,8 +41,9 @@ public class CavePumpkinBlock extends BlockBaseNotFull implements IRenderTypeabl
 	public ERenderLayer getRenderLayer() {
 		return ERenderLayer.CUTOUT;
 	}
-	
+
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return state.getValue(SMALL) ? SHAPE_SMALL : SHAPE_BIG;
 	}

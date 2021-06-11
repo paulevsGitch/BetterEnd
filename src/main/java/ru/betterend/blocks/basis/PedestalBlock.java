@@ -40,9 +40,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.blocks.BaseBlockNotFull;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
-import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.BlockProperties.PedestalState;
+import ru.betterend.blocks.EndBlockProperties;
+import ru.betterend.blocks.EndBlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
@@ -51,9 +53,9 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
 @SuppressWarnings({"deprecation", "unused"})
-public class PedestalBlock extends BlockBaseNotFull implements EntityBlock {
-	public final static EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
-	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
+public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
+	public final static EnumProperty<PedestalState> STATE = EndBlockProperties.PEDESTAL_STATE;
+	public static final BooleanProperty HAS_ITEM = EndBlockProperties.HAS_ITEM;
 	public static final BooleanProperty HAS_LIGHT = BlockProperties.HAS_LIGHT;
 	
 	private static final VoxelShape SHAPE_DEFAULT;

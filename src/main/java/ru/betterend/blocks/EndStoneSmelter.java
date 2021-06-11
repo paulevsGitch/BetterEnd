@@ -1,10 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -21,12 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -38,9 +29,13 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import ru.betterend.blocks.basis.BaseBlockWithEntity;
+import ru.bclib.blocks.BaseBlockWithEntity;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
+import java.util.List;
+import java.util.Random;
+
+@SuppressWarnings("deprecation")
 public class EndStoneSmelter extends BaseBlockWithEntity {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -117,12 +112,12 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
-		return (BlockState)state.setValue(FACING, rotation.rotate((Direction)state.getValue(FACING)));
+		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
-		return state.rotate(mirror.getRotation((Direction)state.getValue(FACING)));
+		return state.rotate(mirror.getRotation(state.getValue(FACING)));
 	}
 
 	@Override
@@ -140,7 +135,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 			   world.playLocalSound(x, y, z, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
 
-			Direction direction = (Direction)state.getValue(FACING);
+			Direction direction = state.getValue(FACING);
 			Direction.Axis axis = direction.getAxis();
 			double defOffset = random.nextDouble() * 0.6D - 0.3D;
 			double offX = axis == Direction.Axis.X ? direction.getStepX() * 0.52D : defOffset;

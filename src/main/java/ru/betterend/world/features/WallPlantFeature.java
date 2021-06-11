@@ -1,16 +1,16 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
+
+import java.util.Random;
 
 public class WallPlantFeature extends WallScatterFeature {
 	private final Block block;
@@ -26,7 +26,7 @@ public class WallPlantFeature extends WallScatterFeature {
 			BlockState state = block.defaultBlockState().setValue(EndWallPlantBlock.FACING, dir);
 			return block.canSurvive(state, world, pos);
 		}
-		else if (block instanceof AttachedBlock) {
+		else if (block instanceof BaseAttachedBlock) {
 			BlockState state = block.defaultBlockState().setValue(BlockStateProperties.FACING, dir);
 			return block.canSurvive(state, world, pos);
 		}
@@ -39,7 +39,7 @@ public class WallPlantFeature extends WallScatterFeature {
 		if (block instanceof EndWallPlantBlock) {
 			state = state.setValue(EndWallPlantBlock.FACING, dir);
 		}
-		else if (block instanceof AttachedBlock) {
+		else if (block instanceof BaseAttachedBlock) {
 			state = state.setValue(BlockStateProperties.FACING, dir);
 		}
 		BlocksHelper.setWithoutUpdate(world, pos, state);

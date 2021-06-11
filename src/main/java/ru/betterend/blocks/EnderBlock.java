@@ -9,9 +9,9 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.bclib.blocks.BaseBlock;
 
-public class EnderBlock extends BlockBase {
+public class EnderBlock extends BaseBlock {
 
 	public EnderBlock() {
 		super(FabricBlockSettings.of(Material.STONE, MaterialColor.WARPED_WART_BLOCK)

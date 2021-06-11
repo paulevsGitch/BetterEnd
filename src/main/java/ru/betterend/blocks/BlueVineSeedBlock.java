@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -9,10 +7,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.BlockProperties.TripleShape;
+import ru.bclib.blocks.BlockProperties;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 	@Override
@@ -22,11 +22,11 @@ public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 		if (h < height + 1) {
 			return;
 		}
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.BOTTOM));
 		for (int i = 1; i < height; i++) {
-			BlocksHelper.setWithoutUpdate(world, pos.above(i), EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(world, pos.above(i), EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.MIDDLE));
 		}
-		BlocksHelper.setWithoutUpdate(world, pos.above(height), EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+		BlocksHelper.setWithoutUpdate(world, pos.above(height), EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.TOP));
 		placeLantern(world, pos.above(height + 1));
 	}
 	

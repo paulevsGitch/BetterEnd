@@ -30,7 +30,7 @@ import ru.betterend.rituals.EternalRitual;
 
 @SuppressWarnings("deprecation")
 public class EternalPedestal extends PedestalBlock {
-	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
+	public static final BooleanProperty ACTIVATED = EndBlockProperties.ACTIVE;
 	
 	public EternalPedestal() {
 		super(EndBlocks.FLAVOLITE_RUNED_ETERNAL);
@@ -104,8 +104,8 @@ public class EternalPedestal extends PedestalBlock {
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.is(this)) {
-			BlockProperties.PedestalState currentState = state.getValue(BlockProperties.PEDESTAL_STATE);
-			if (currentState.equals(BlockProperties.PedestalState.BOTTOM) || currentState.equals(BlockProperties.PedestalState.PILLAR)) {
+			EndBlockProperties.PedestalState currentState = state.getValue(EndBlockProperties.PEDESTAL_STATE);
+			if (currentState.equals(EndBlockProperties.PedestalState.BOTTOM) || currentState.equals(EndBlockProperties.PedestalState.PILLAR)) {
 				return Lists.newArrayList();
 			}
 		}

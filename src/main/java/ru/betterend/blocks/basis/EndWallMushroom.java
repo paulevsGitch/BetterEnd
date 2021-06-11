@@ -2,14 +2,12 @@ package ru.betterend.blocks.basis;
 
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.TagAPI;
-import ru.bclib.blocks.BasePlantWithAgeBlock;
+import ru.bclib.blocks.WallMushroomBlock;
 
-public abstract class EndPlantWithAgeBlock extends BasePlantWithAgeBlock {
+public class EndWallMushroom extends WallMushroomBlock {
 
-	public EndPlantWithAgeBlock() {}
-
-	public EndPlantWithAgeBlock(Properties settings) {
-		super(settings);
+	public EndWallMushroom(int light) {
+		super(light);
 	}
 
 	@Override

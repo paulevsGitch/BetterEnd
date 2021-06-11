@@ -30,7 +30,7 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
 public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider {
-	public static final IntegerProperty COLOR = BlockProperties.COLOR;
+	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public UmbrellaTreeMembraneBlock() {

@@ -49,7 +49,7 @@ import net.minecraft.world.phys.Vec3;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.BlockProperties;
+import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
@@ -289,14 +289,14 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 			if (dx + dy + dz < 1) {
 				BlockState state = SilkMothEntity.this.level.getBlockState(hivePos);
 				if (state.is(EndBlocks.SILK_MOTH_NEST) || state.is(EndBlocks.SILK_MOTH_HIVE)) {
-					int fullness = state.getValue(BlockProperties.FULLNESS);
+					int fullness = state.getValue(EndBlockProperties.FULLNESS);
 					boolean isHive = state.is(EndBlocks.SILK_MOTH_HIVE);
 					if (fullness < 3 && (isHive || SilkMothEntity.this.random.nextBoolean())) {
 						fullness += isHive ? MHelper.randRange(1, 2, random) : 1;
 						if (fullness > 3) {
 							fullness = 3;
 						}
-						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state.setValue(BlockProperties.FULLNESS, fullness));
+						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state.setValue(EndBlockProperties.FULLNESS, fullness));
 					}
 					SilkMothEntity.this.level.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BEEHIVE_ENTER, SoundSource.BLOCKS, 1, 1);
 					SilkMothEntity.this.remove();

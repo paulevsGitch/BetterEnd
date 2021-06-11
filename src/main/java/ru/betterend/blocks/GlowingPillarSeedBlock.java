@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -13,13 +11,17 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.BlockProperties.TripleShape;
+import ru.bclib.blocks.BlockProperties;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Random;
+
 public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
+
 	public GlowingPillarSeedBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
@@ -42,14 +44,12 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 		BlockState roots = EndBlocks.GLOWING_PILLAR_ROOTS.defaultBlockState();
 		if (height < 2) {
 			BlocksHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
-			mut.move(Direction.UP);
-		}
-		else {
+		} else {
 			BlocksHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 			mut.move(Direction.UP);
 			BlocksHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
-			mut.move(Direction.UP);
 		}
+		mut.move(Direction.UP);
 		BlocksHelper.setWithUpdate(world, mut, EndBlocks.GLOWING_PILLAR_LUMINOPHOR.defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir: BlocksHelper.DIRECTIONS) {
 			pos = mut.relative(dir);

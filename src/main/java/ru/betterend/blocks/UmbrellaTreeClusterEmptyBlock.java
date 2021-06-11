@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -11,12 +9,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.blocks.BaseBlock;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
-public class UmbrellaTreeClusterEmptyBlock extends BlockBase {
-	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
+import java.util.Random;
+
+public class UmbrellaTreeClusterEmptyBlock extends BaseBlock {
+	public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;
 	
 	public UmbrellaTreeClusterEmptyBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK)

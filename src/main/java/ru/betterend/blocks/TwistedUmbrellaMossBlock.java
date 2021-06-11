@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -9,10 +7,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.blocks.BaseDoublePlantBlock;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.basis.DoublePlantBlock;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class TwistedUmbrellaMossBlock extends EndPlantBlock {
 	public TwistedUmbrellaMossBlock() {
@@ -42,8 +42,8 @@ public class TwistedUmbrellaMossBlock extends EndPlantBlock {
     @Override
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
     	int rot = world.random.nextInt(4);
-		BlockState bs = EndBlocks.TWISTED_UMBRELLA_MOSS_TALL.defaultBlockState().setValue(DoublePlantBlock.ROTATION, rot);
+		BlockState bs = EndBlocks.TWISTED_UMBRELLA_MOSS_TALL.defaultBlockState().setValue(BaseDoublePlantBlock.ROTATION, rot);
 		BlocksHelper.setWithoutUpdate(world, pos, bs);
-		BlocksHelper.setWithoutUpdate(world, pos.above(), bs.setValue(DoublePlantBlock.TOP, true));
+		BlocksHelper.setWithoutUpdate(world, pos.above(), bs.setValue(BaseDoublePlantBlock.TOP, true));
 	}
 }

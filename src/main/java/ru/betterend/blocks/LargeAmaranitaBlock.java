@@ -17,7 +17,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.betterend.blocks.BlockProperties.TripleShape;
+import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 

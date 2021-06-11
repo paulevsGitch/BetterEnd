@@ -34,7 +34,7 @@ import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
 
 public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider, IColorProvider {
-	public static final IntegerProperty COLOR = BlockProperties.COLOR;
+	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	private final Vec3i colorStart;
 	private final Vec3i colorEnd;

@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -29,16 +27,18 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import ru.bclib.blocks.BaseBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.entity.SilkMothEntity;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
 
-public class SilkMothHiveBlock extends BlockBase {
+import java.util.Random;
+
+public class SilkMothHiveBlock extends BaseBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final IntegerProperty FULLNESS = BlockProperties.FULLNESS;
+	public static final IntegerProperty FULLNESS = EndBlockProperties.FULLNESS;
 	
 	public SilkMothHiveBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByHand(true).hardness(0.5F).resistance(0.1F).sound(SoundType.WOOL).noOcclusion().randomTicks());

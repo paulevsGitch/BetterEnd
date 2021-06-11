@@ -20,12 +20,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.interfaces.FallFlyingItem;
-import ru.betterend.item.ArmoredElytra;
 import ru.betterend.registry.EndBlocks;
 
 @Mixin(Player.class)

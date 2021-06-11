@@ -1,11 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
@@ -35,10 +30,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+import ru.bclib.blocks.BaseBlock;
+import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.ColorUtil;
-import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.interfaces.IRenderTypeable;
@@ -46,7 +43,9 @@ import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
-public class RespawnObeliskBlock extends BlockBase implements IColorProvider, IRenderTypeable {
+import java.util.List;
+
+public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IRenderTypeable {
 	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
 	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.box(2, 0, 2, 14, 16, 14);
 	

@@ -1,13 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Optional;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Maps;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
@@ -21,14 +14,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
-import ru.betterend.blocks.basis.AttachedBlock;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 
-public class ChandelierBlock extends AttachedBlock implements IRenderTypeable, BlockModelProvider {
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Optional;
+
+public class ChandelierBlock extends BaseAttachedBlock implements IRenderTypeable, BlockModelProvider {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public ChandelierBlock(Block source) {

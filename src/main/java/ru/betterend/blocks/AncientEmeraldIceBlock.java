@@ -1,9 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,13 +11,17 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.blocks.BaseBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
 
-public class AncientEmeraldIceBlock extends BlockBase {
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+public class AncientEmeraldIceBlock extends BaseBlock {
 	public AncientEmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.BLUE_ICE).randomTicks());
 	}

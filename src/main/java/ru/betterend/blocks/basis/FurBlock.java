@@ -23,11 +23,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.util.MHelper;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 
-public class FurBlock extends AttachedBlock implements IRenderTypeable {
+public class FurBlock extends BaseAttachedBlock implements IRenderTypeable {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	private final ItemLike drop;
 	private final int dropChance;

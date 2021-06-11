@@ -1,9 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
@@ -13,11 +10,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
+import ru.bclib.blocks.BaseBlock;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.registry.EndBlocks;
 
-public class RunedFlavolite extends BlockBase {
+import java.util.List;
+
+public class RunedFlavolite extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 
 	public RunedFlavolite(boolean unbreakable) {

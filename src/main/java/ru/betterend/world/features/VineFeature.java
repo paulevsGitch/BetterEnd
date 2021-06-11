@@ -1,15 +1,15 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.blocks.BaseVineBlock;
+import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.VineBlock;
+
+import java.util.Random;
 
 public class VineFeature extends InvertedScatterFeature {
 	private final Block vineBlock;
@@ -20,7 +20,7 @@ public class VineFeature extends InvertedScatterFeature {
 		super(6);
 		this.vineBlock = vineBlock;
 		this.maxLength = maxLength;
-		this.vine = vineBlock instanceof VineBlock;
+		this.vine = vineBlock instanceof BaseVineBlock;
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class VineFeature extends InvertedScatterFeature {
 	
 	private boolean canPlaceBlock(BlockState state, WorldGenLevel world, BlockPos blockPos) {
 		if (vine) {
-			return ((VineBlock) vineBlock).canGenerate(state, world, blockPos);
+			return ((BaseVineBlock) vineBlock).canGenerate(state, world, blockPos);
 		}
 		else {
 			return vineBlock.canSurvive(state, world, blockPos);

@@ -1,9 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Queue;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,12 +16,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
-import ru.betterend.blocks.basis.BlockBaseNotFull;
+import ru.bclib.blocks.BaseBlockNotFull;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class MengerSpongeBlock extends BlockBaseNotFull implements IRenderTypeable {
+import java.util.Queue;
+
+@SuppressWarnings("deprecation")
+public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTypeable {
 	public MengerSpongeBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SPONGE).noOcclusion());
 	}
@@ -46,18 +46,15 @@ public class MengerSpongeBlock extends BlockBaseNotFull implements IRenderTypeab
 
 	private boolean absorbWater(LevelAccessor world, BlockPos pos) {
 		Queue<Tuple<BlockPos, Integer>> queue = Lists.newLinkedList();
-		queue.add(new Tuple<BlockPos, Integer>(pos, 0));
+		queue.add(new Tuple<>(pos, 0));
 		int i = 0;
 
 		while (!queue.isEmpty()) {
 			Tuple<BlockPos, Integer> pair = queue.poll();
-			BlockPos blockPos = (BlockPos) pair.getA();
-			int j = (Integer) pair.getB();
-			Direction[] var8 = Direction.values();
-			int var9 = var8.length;
+			BlockPos blockPos = pair.getA();
+			int j = pair.getB();
 
-			for (int var10 = 0; var10 < var9; ++var10) {
-				Direction direction = var8[var10];
+			for (Direction direction : Direction.values()) {
 				BlockPos blockPos2 = blockPos.relative(direction);
 				BlockState blockState = world.getBlockState(blockPos2);
 				FluidState fluidState = world.getFluidState(blockPos2);
@@ -66,23 +63,21 @@ public class MengerSpongeBlock extends BlockBaseNotFull implements IRenderTypeab
 					if (blockState.getBlock() instanceof BucketPickup && ((BucketPickup) blockState.getBlock()).takeLiquid(world, blockPos2, blockState) != Fluids.EMPTY) {
 						++i;
 						if (j < 6) {
-							queue.add(new Tuple<BlockPos, Integer>(blockPos2, j + 1));
+							queue.add(new Tuple<>(blockPos2, j + 1));
 						}
-					}
-					else if (blockState.getBlock() instanceof LiquidBlock) {
+					} else if (blockState.getBlock() instanceof LiquidBlock) {
 						world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
 						++i;
 						if (j < 6) {
-							queue.add(new Tuple<BlockPos, Integer>(blockPos2, j + 1));
+							queue.add(new Tuple<>(blockPos2, j + 1));
 						}
-					}
-					else if (material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) {
+					} else if (material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) {
 						BlockEntity blockEntity = blockState.getBlock().isEntityBlock() ? world.getBlockEntity(blockPos2) : null;
 						dropResources(blockState, world, blockPos2, blockEntity);
 						world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
 						++i;
 						if (j < 6) {
-							queue.add(new Tuple<BlockPos, Integer>(blockPos2, j + 1));
+							queue.add(new Tuple<>(blockPos2, j + 1));
 						}
 					}
 				}

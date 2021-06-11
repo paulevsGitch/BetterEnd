@@ -22,10 +22,12 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import ru.bclib.blocks.BaseBlockNotFull;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
-import ru.betterend.blocks.BlockProperties;
 
-public class EndLanternBlock extends BlockBaseNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {
+@SuppressWarnings("deprecation")
+public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	

@@ -9,11 +9,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.bclib.blocks.BaseBlock;
 import ru.betterend.registry.EndBlocks;
 
-public class MossyGlowshroomCapBlock extends BlockBase {
-	public static final BooleanProperty TRANSITION = BlockProperties.TRANSITION;
+public class MossyGlowshroomCapBlock extends BaseBlock {
+	public static final BooleanProperty TRANSITION = EndBlockProperties.TRANSITION;
 	
 	public MossyGlowshroomCapBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sound(SoundType.WOOD));

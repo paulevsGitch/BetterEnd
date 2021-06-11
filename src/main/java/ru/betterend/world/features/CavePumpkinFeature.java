@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
-import ru.betterend.blocks.BlockProperties;
+import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.registry.EndBlocks;
 
 public class CavePumpkinFeature extends DefaultFeature {
@@ -23,10 +23,10 @@ public class CavePumpkinFeature extends DefaultFeature {
 
 		int age = random.nextInt(4);
 		BlocksHelper.setWithoutUpdate(world, pos,
-				EndBlocks.CAVE_PUMPKIN_SEED.defaultBlockState().setValue(BlockProperties.AGE, age));
+				EndBlocks.CAVE_PUMPKIN_SEED.defaultBlockState().setValue(EndBlockProperties.AGE, age));
 		if (age > 1) {
 			BlocksHelper.setWithoutUpdate(world, pos.below(),
-					EndBlocks.CAVE_PUMPKIN.defaultBlockState().setValue(BlockProperties.SMALL, age < 3));
+					EndBlocks.CAVE_PUMPKIN.defaultBlockState().setValue(EndBlockProperties.SMALL, age < 3));
 		}
 
 		return true;

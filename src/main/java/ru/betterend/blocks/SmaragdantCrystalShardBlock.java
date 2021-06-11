@@ -1,9 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.EnumMap;
-
 import com.google.common.collect.Maps;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -20,19 +17,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.*;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.betterend.blocks.basis.AttachedBlock;
+import ru.bclib.blocks.BaseAttachedBlock;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 
-public class SmaragdantCrystalShardBlock extends AttachedBlock implements IRenderTypeable, SimpleWaterloggedBlock, LiquidBlockContainer {
+import java.util.EnumMap;
+
+@SuppressWarnings("deprecation")
+public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements IRenderTypeable, SimpleWaterloggedBlock, LiquidBlockContainer {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
@@ -91,7 +87,7 @@ public class SmaragdantCrystalShardBlock extends AttachedBlock implements IRende
 	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-		Direction direction = (Direction) state.getValue(FACING);
+		Direction direction = state.getValue(FACING);
 		BlockPos blockPos = pos.relative(direction.getOpposite());
 		return world.getBlockState(blockPos).isFaceSturdy(world, blockPos, direction);
 	}

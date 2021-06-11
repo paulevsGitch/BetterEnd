@@ -1,9 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Map;
-
 import com.google.common.collect.Maps;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,11 +8,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -25,13 +18,17 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.blocks.BaseBlock;
+import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 
-public class EndLotusStemBlock extends BlockBase implements SimpleWaterloggedBlock, IRenderTypeable {
+import java.util.Map;
+
+@SuppressWarnings("deprecation")
+public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlock, IRenderTypeable {
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty LEAF = BooleanProperty.create("leaf");
@@ -55,7 +52,7 @@ public class EndLotusStemBlock extends BlockBase implements SimpleWaterloggedBlo
 	
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return (Boolean) state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
@@ -77,7 +74,7 @@ public class EndLotusStemBlock extends BlockBase implements SimpleWaterloggedBlo
 
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
-		if ((Boolean) state.getValue(WATERLOGGED)) {
+		if (state.getValue(WATERLOGGED)) {
 			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 		return state;

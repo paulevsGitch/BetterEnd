@@ -13,10 +13,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
-import ru.betterend.blocks.basis.BlockBase;
+import ru.bclib.blocks.BaseBlock;
+import ru.bclib.blocks.BlockProperties;
 import ru.betterend.registry.EndBlocks;
 
-public class BlueVineLanternBlock extends BlockBase {
+public class BlueVineLanternBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public BlueVineLanternBlock() {

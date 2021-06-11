@@ -1,11 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -30,13 +25,18 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.UnderwaterPlantBlock;
+import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
-public class EndLilyBlock extends UnderwaterPlantBlock {
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+public class EndLilyBlock extends EndUnderwaterPlantBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(4, 0, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_TOP = Block.box(2, 0, 2, 14, 6, 14);

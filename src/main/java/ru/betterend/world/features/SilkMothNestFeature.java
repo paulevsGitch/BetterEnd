@@ -1,7 +1,5 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -12,10 +10,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
-import ru.betterend.blocks.BlockProperties;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class SilkMothNestFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();
@@ -26,10 +26,7 @@ public class SilkMothNestFeature extends DefaultFeature {
 			state = world.getBlockState(pos);
 			if ((state.isAir() || state.is(EndBlocks.TENANEA_OUTER_LEAVES)) && world.isEmptyBlock(pos.below())) {
 				for (Direction dir : BlocksHelper.HORIZONTAL) {
-					if (world.getBlockState(pos.below().relative(dir)).getMaterial().blocksMotion()) {
-						return false;
-					}
-					return true;
+					return !world.getBlockState(pos.below().relative(dir)).getMaterial().blocksMotion();
 				}
 			}
 		}

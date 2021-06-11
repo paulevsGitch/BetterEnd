@@ -12,28 +12,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import ru.bclib.api.TagAPI;
+import ru.bclib.blocks.*;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.basis.BarkBlock;
-import ru.betterend.blocks.basis.BlockBase;
-import ru.betterend.blocks.basis.EndBarrelBlock;
-import ru.betterend.blocks.basis.EndBlockStripableLogLog;
-import ru.betterend.blocks.basis.EndBookshelfBlock;
-import ru.betterend.blocks.basis.EndChestBlock;
-import ru.betterend.blocks.basis.EndComposterBlock;
-import ru.betterend.blocks.basis.EndCraftingTableBlock;
-import ru.betterend.blocks.basis.EndDoorBlock;
-import ru.betterend.blocks.basis.EndFenceBlock;
-import ru.betterend.blocks.basis.EndGateBlock;
-import ru.betterend.blocks.basis.EndLadderBlock;
-import ru.betterend.blocks.basis.EndPillarBlock;
-import ru.betterend.blocks.basis.EndSignBlock;
-import ru.betterend.blocks.basis.EndSlabBlock;
-import ru.betterend.blocks.basis.EndStairsBlock;
-import ru.betterend.blocks.basis.EndTrapdoorBlock;
-import ru.betterend.blocks.basis.EndWoodenButtonBlock;
-import ru.betterend.blocks.basis.EndWoodenPlateBlock;
-import ru.betterend.blocks.basis.StrippableBarkBlock;
 import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 
@@ -70,30 +51,30 @@ public class WoodenMaterial {
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);
 		
-		log_stripped = EndBlocks.registerBlock(name + "_stripped_log", new EndPillarBlock(materialPlanks));
-		bark_stripped = EndBlocks.registerBlock(name + "_stripped_bark", new BarkBlock(materialPlanks));
+		log_stripped = EndBlocks.registerBlock(name + "_stripped_log", new BaseRotatedPillarBlock(materialPlanks));
+		bark_stripped = EndBlocks.registerBlock(name + "_stripped_bark", new BaseBarkBlock(materialPlanks));
 		
-		log = EndBlocks.registerBlock(name + "_log", new EndBlockStripableLogLog(woodColor, log_stripped));
-		bark = EndBlocks.registerBlock(name + "_bark", new StrippableBarkBlock(woodColor, bark_stripped));
+		log = EndBlocks.registerBlock(name + "_log", new BaseStripableLogBlock(woodColor, log_stripped));
+		bark = EndBlocks.registerBlock(name + "_bark", new StripableBarkBlock(woodColor, bark_stripped));
 		
-		planks = EndBlocks.registerBlock(name + "_planks", new BlockBase(materialPlanks));
-		stairs = EndBlocks.registerBlock(name + "_stairs", new EndStairsBlock(planks));
-		slab = EndBlocks.registerBlock(name + "_slab", new EndSlabBlock(planks));
-		fence = EndBlocks.registerBlock(name + "_fence", new EndFenceBlock(planks));
-		gate = EndBlocks.registerBlock(name + "_gate", new EndGateBlock(planks));
-		button = EndBlocks.registerBlock(name + "_button", new EndWoodenButtonBlock(planks));
-		pressurePlate = EndBlocks.registerBlock(name + "_plate", new EndWoodenPlateBlock(planks));
-		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new EndTrapdoorBlock(planks));
-		door = EndBlocks.registerBlock(name + "_door", new EndDoorBlock(planks));
+		planks = EndBlocks.registerBlock(name + "_planks", new BaseBlock(materialPlanks));
+		stairs = EndBlocks.registerBlock(name + "_stairs", new BaseStairsBlock(planks));
+		slab = EndBlocks.registerBlock(name + "_slab", new BaseSlabBlock(planks));
+		fence = EndBlocks.registerBlock(name + "_fence", new BaseFenceBlock(planks));
+		gate = EndBlocks.registerBlock(name + "_gate", new BaseGateBlock(planks));
+		button = EndBlocks.registerBlock(name + "_button", new BaseWoodenButtonBlock(planks));
+		pressurePlate = EndBlocks.registerBlock(name + "_plate", new WoodenPressurePlateBlock(planks));
+		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new BaseTrapdoorBlock(planks));
+		door = EndBlocks.registerBlock(name + "_door", new BaseDoorBlock(planks));
 		
-		craftingTable = EndBlocks.registerBlock(name + "_crafting_table", new EndCraftingTableBlock(planks));
-		ladder = EndBlocks.registerBlock(name + "_ladder", new EndLadderBlock(planks));
-		sign = EndBlocks.registerBlock(name + "_sign", new EndSignBlock(planks));
+		craftingTable = EndBlocks.registerBlock(name + "_crafting_table", new BaseCraftingTableBlock(planks));
+		ladder = EndBlocks.registerBlock(name + "_ladder", new BaseLadderBlock(planks));
+		sign = EndBlocks.registerBlock(name + "_sign", new BaseSignBlock(planks));
 		
-		chest = EndBlocks.registerBlock(name + "_chest", new EndChestBlock(planks));
-		barrel = EndBlocks.registerBlock(name + "_barrel", new EndBarrelBlock(planks));
-		shelf = EndBlocks.registerBlock(name + "_bookshelf", new EndBookshelfBlock(planks));
-		composter = EndBlocks.registerBlock(name + "_composter", new EndComposterBlock(planks));
+		chest = EndBlocks.registerBlock(name + "_chest", new BaseFenceBlock(planks));
+		barrel = EndBlocks.registerBlock(name + "_barrel", new BaseBarrelBlock(planks));
+		shelf = EndBlocks.registerBlock(name + "_bookshelf", new BaseBookshelfBlock(planks));
+		composter = EndBlocks.registerBlock(name + "_composter", new BaseComposterBlock(planks));
 		
 		// Recipes //
 		GridRecipe.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();

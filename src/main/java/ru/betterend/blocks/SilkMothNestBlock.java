@@ -1,9 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -21,11 +17,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -39,19 +31,23 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.blocks.BaseBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.basis.BlockBase;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.entity.SilkMothEntity;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
 
-public class SilkMothNestBlock extends BlockBase implements IRenderTypeable {
-	public static final BooleanProperty ACTIVE = BlockProperties.ACTIVE;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+public class SilkMothNestBlock extends BaseBlock implements IRenderTypeable {
+	public static final BooleanProperty ACTIVE = EndBlockProperties.ACTIVE;
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final IntegerProperty FULLNESS = BlockProperties.FULLNESS;
+	public static final IntegerProperty FULLNESS = EndBlockProperties.FULLNESS;
 	private static final VoxelShape TOP = box(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape BOTTOM = box(0, 0, 0, 16, 16, 16);
 	

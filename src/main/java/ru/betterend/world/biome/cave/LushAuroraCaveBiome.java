@@ -2,10 +2,9 @@ package ru.betterend.world.biome.cave;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.BlockProperties;
-import ru.betterend.blocks.BlockProperties.TripleShape;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -44,6 +43,6 @@ public class LushAuroraCaveBiome extends EndCaveBiome {
 	
 	@Override
 	public BlockState getCeil(BlockPos pos) {
-		return EndBlocks.CAVE_MOSS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		return EndBlocks.CAVE_MOSS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.TOP);
 	}
 }

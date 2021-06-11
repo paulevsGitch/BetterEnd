@@ -20,14 +20,16 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.WaterFluid;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.blocks.BaseBlockNotFull;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.BlockProperties.TripleShape;
-import ru.betterend.blocks.basis.BlockBaseNotFull;
+import ru.bclib.blocks.BlockProperties;
 import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-public class EndLotusLeafBlock extends BlockBaseNotFull implements IRenderTypeable {
+@SuppressWarnings("deprecation")
+public class EndLotusLeafBlock extends BaseBlockNotFull implements IRenderTypeable {
 	public static final EnumProperty<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape VSHAPE = Block.box(0, 0, 0, 16, 1, 16);

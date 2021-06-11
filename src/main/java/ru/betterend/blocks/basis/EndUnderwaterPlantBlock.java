@@ -2,17 +2,17 @@ package ru.betterend.blocks.basis;
 
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.TagAPI;
-import ru.bclib.blocks.BaseUnderwaterWallPlantBlock;
+import ru.bclib.blocks.UnderwaterPlantBlock;
 
-public class EndUnderwaterWallPlantBlock extends BaseUnderwaterWallPlantBlock {
+public class EndUnderwaterPlantBlock extends UnderwaterPlantBlock {
 
-	public EndUnderwaterWallPlantBlock() {}
+	public EndUnderwaterPlantBlock() {}
 
-	public EndUnderwaterWallPlantBlock(int light) {
+	public EndUnderwaterPlantBlock(int light) {
 		super(light);
 	}
 
-	public EndUnderwaterWallPlantBlock(Properties settings) {
+	public EndUnderwaterPlantBlock(Properties settings) {
 		super(settings);
 	}
 

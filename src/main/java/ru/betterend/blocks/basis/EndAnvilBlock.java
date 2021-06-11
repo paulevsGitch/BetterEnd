@@ -1,24 +1,37 @@
 package ru.betterend.blocks.basis;
 
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.MaterialColor;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraft.world.level.storage.loot.LootContext;
 import ru.bclib.blocks.BaseAnvilBlock;
+import ru.betterend.blocks.complex.MetalMaterial;
+import ru.betterend.item.EndAnvilItem;
+
+import java.util.List;
+import java.util.Objects;
 
 public class EndAnvilBlock extends BaseAnvilBlock {
 
 	protected final int level;
 	protected IntegerProperty durability;
-	protected int maxDamage;
+	protected MetalMaterial metalMaterial;
+	protected int maxDurability;
 	
 	public EndAnvilBlock(MaterialColor color, int level) {
 		super(color);
 		this.level = level;
+	}
+
+	public EndAnvilBlock(MetalMaterial metalMaterial, MaterialColor color, int level) {
+		this(color, level);
+		this.metalMaterial = metalMaterial;
 	}
 
 	public int getDurability(BlockState blockState) {
@@ -31,14 +44,36 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 
 	public IntegerProperty getDurability() {
 		if (durability == null) {
-			this.maxDamage = 5;
-			this.durability = IntegerProperty.create("durability", 0, maxDamage);
+			this.maxDurability = 5;
+			this.durability = IntegerProperty.create("durability", 0, maxDurability);
 		}
 		return durability;
 	}
 
-	public int getMaxDamage() {
-		return maxDamage;
+	public int getMaxDurability() {
+		return maxDurability;
+	}
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		List<ItemStack> drops = super.getDrops(state, builder);
+		ItemStack itemStack = drops.get(0);
+		itemStack.getOrCreateTag().putInt(EndAnvilItem.DURABILITY, state.getValue(durability));
+		return drops;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public Item asItem() {
+		if (metalMaterial != null) {
+			return metalMaterial.anvilItem;
+		}
+		return Item.byBlock(this);
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
+		return Objects.requireNonNull(super.getStateForPlacement(blockPlaceContext)).setValue(durability, maxDurability);
 	}
 
 	@Override
@@ -56,11 +91,12 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 		if (anvilBlock instanceof EndAnvilBlock) {
 			EndAnvilBlock endAnvilBlock = (EndAnvilBlock) anvilBlock;
 			IntegerProperty durability = endAnvilBlock.getDurability();
-			int damage = blockState.getValue(durability) + 1;
-			if (damage <= endAnvilBlock.getMaxDamage()) {
+			int damage = blockState.getValue(durability) - 1;
+			if (damage > 0) {
 				return blockState.setValue(durability, damage);
 			}
-			blockState = blockState.setValue(durability, 0);
+			int maxDurability = endAnvilBlock.getMaxDurability();
+			blockState = blockState.setValue(durability, maxDurability);
 		}
 		return getDamagedState(blockState);
 	}
@@ -68,7 +104,7 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 	private static BlockState getDamagedState(BlockState fallingState) {
 		Block anvilBlock = fallingState.getBlock();
 		if (anvilBlock instanceof EndAnvilBlock) {
-			IntegerProperty destructionProperty = ((EndAnvilBlock) anvilBlock).getDestructionProperty();
+			IntegerProperty destructionProperty = EndAnvilBlock.DESTRUCTION;
 			int destruction = fallingState.getValue(destructionProperty) + 1;
 			if (destructionProperty.getPossibleValues().contains(destruction)) {
 				try {

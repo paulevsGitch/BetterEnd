@@ -22,6 +22,7 @@ import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
 import ru.betterend.blocks.ChandelierBlock;
 import ru.betterend.blocks.basis.*;
+import ru.betterend.item.EndAnvilItem;
 import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.recipe.builders.*;
@@ -37,7 +38,6 @@ public class MetalMaterial {
 	public final Block pressurePlate;
 	public final Block door;
 	public final Block trapdoor;
-	public final Block anvil;
 	public final Block chain;
 	public final Block stairs;
 	public final Block slab;
@@ -45,7 +45,10 @@ public class MetalMaterial {
 	public final Block chandelier;
 	public final Block bulb_lantern;
 	public final ColoredMaterial bulb_lantern_colored;
-	
+
+	public final Block anvilBlock;
+	public final Item anvilItem;
+
 	public final Item nugget;
 	public final Item ingot;
 	
@@ -96,7 +99,6 @@ public class MetalMaterial {
 		slab = EndBlocks.registerBlock(name + "_slab", new BaseSlabBlock(tile));
 		door = EndBlocks.registerBlock(name + "_door", new BaseDoorBlock(block));
 		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new BaseTrapdoorBlock(block));
-		anvil = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(block.defaultMaterialColor(), level));
 		bars = EndBlocks.registerBlock(name + "_bars", new BaseMetalBarsBlock(block));
 		chain = EndBlocks.registerBlock(name + "_chain", new BaseChainBlock(block.defaultMaterialColor()));
 		pressurePlate = EndBlocks.registerBlock(name + "_plate", new WoodenPressurePlateBlock(block));
@@ -104,7 +106,7 @@ public class MetalMaterial {
 		chandelier = EndBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(block));
 		bulb_lantern = EndBlocks.registerBlock(name + "_bulb_lantern", new BulbVineLanternBlock(lanternProperties));
 		bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
-		
+
 		nugget = EndItems.registerEndItem(name + "_nugget", new ModelProviderItem(itemSettings));
 		ingot = EndItems.registerEndItem(name + "_ingot", new ModelProviderItem(itemSettings));
 		
@@ -127,6 +129,9 @@ public class MetalMaterial {
 		chestplate = EndItems.registerEndItem(name + "_chestplate", new EndArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
 		leggings = EndItems.registerEndItem(name + "_leggings", new EndArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
 		boots = EndItems.registerEndItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));
+
+		anvilBlock = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(this, block.defaultMaterialColor(), level));
+		anvilItem = EndItems.registerEndItem(name + "_anvil_item", new EndAnvilItem(anvilBlock));
 		
 		if (hasOre) {
 			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").buildWithBlasting();
@@ -148,7 +153,7 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', block, tile).setGroup("end_metal_stairs").build();
 		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', block, tile).setGroup("end_metal_slabs").build();
 		GridRecipe.make(name + "_chain", chain).setShape("N", "#", "N").addMaterial('#', ingot).addMaterial('N', nugget).setGroup("end_metal_chain").build();
-		GridRecipe.make(name + "_anvil", anvil).setShape("###", " I ", "III").addMaterial('#', block, tile).addMaterial('I', ingot).setGroup("end_metal_anvil").build();
+		GridRecipe.make(name + "_anvil", anvilBlock).setShape("###", " I ", "III").addMaterial('#', block, tile).addMaterial('I', ingot).setGroup("end_metal_anvil").build();
 		GridRecipe.make(name + "_bulb_lantern", bulb_lantern).setShape("C", "I", "#").addMaterial('C', chain).addMaterial('I', ingot).addMaterial('#', EndItems.GLOWING_BULB).build();
 		
 		GridRecipe.make(name + "_chandelier", chandelier).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
@@ -187,7 +192,7 @@ public class MetalMaterial {
 		GridRecipe.make(name + "_leggings", leggings).setShape("###", "# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_leggings").build();
 		GridRecipe.make(name + "_boots", boots).setShape("# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_boots").build();
 		
-		TagHelper.addTag(BlockTags.ANVIL, anvil);
+		TagHelper.addTag(BlockTags.ANVIL, anvilBlock);
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
 		TagHelper.addTag(EndTags.DRAGON_IMMUNE, ore, bars);

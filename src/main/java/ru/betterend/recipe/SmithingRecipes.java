@@ -73,13 +73,13 @@ public class SmithingRecipes {
 			.build();
 		
 		SmithingTableRecipe.create("thallasium_anvil_updrade")
-			.setResult(EndBlocks.TERMINITE.anvil)
-			.setBase(EndBlocks.THALLASIUM.anvil)
+			.setResult(EndBlocks.TERMINITE.anvilBlock)
+			.setBase(EndBlocks.THALLASIUM.anvilBlock)
 			.setAddition(EndBlocks.TERMINITE.block)
 			.build();
 		SmithingTableRecipe.create("terminite_anvil_updrade")
 			.setResult(EndBlocks.AETERNIUM_ANVIL)
-			.setBase(EndBlocks.TERMINITE.anvil)
+			.setBase(EndBlocks.TERMINITE.anvilBlock)
 			.setAddition(EndItems.AETERNIUM_INGOT)
 			.build();
 

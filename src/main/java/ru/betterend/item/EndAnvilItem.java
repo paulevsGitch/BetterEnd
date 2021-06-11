@@ -2,6 +2,9 @@ package ru.betterend.item;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.api.EnvType;
@@ -15,30 +18,34 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.client.models.BlockModelProvider;
+import ru.bclib.client.models.ItemModelProvider;
+import ru.bclib.items.BaseAnvilItem;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.registry.EndBlocks;
 
-public class EndAnvilItem extends BlockItem {
-	public EndAnvilItem(Block block) {
-		super(block, EndBlocks.makeBlockItemSettings());
+public class EndAnvilItem extends BaseAnvilItem {
+
+	public final static String DURABILITY = "durability";
+
+	public EndAnvilItem(Block anvilBlock) {
+		super(anvilBlock, EndBlocks.makeBlockItemSettings());
 	}
-	
+
 	@Override
+	@SuppressWarnings("ConstantConditions")
 	protected BlockState getPlacementState(BlockPlaceContext blockPlaceContext) {
 		BlockState blockState = super.getPlacementState(blockPlaceContext);
 		ItemStack stack = blockPlaceContext.getItemInHand();
-		int level = stack.getOrCreateTag().getInt("level");
-		blockState = blockState.setValue(((EndAnvilBlock) blockState.getBlock()).getDestructionProperty(), level);
+		int durability = stack.getOrCreateTag().getInt(DURABILITY);
+		blockState = blockState.setValue(((EndAnvilBlock) blockState.getBlock()).getDurability(), durability);
 		return blockState;
 	}
 
 	@Override
-	@Environment(EnvType.CLIENT)
-	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
-		super.appendHoverText(itemStack, level, list, tooltipFlag);
-		int l = itemStack.getOrCreateTag().getInt("level");
-		if (l > 0) {
-			list.add(new TranslatableComponent("message.betterend.anvil_damage").append(": " + l));
-		}
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		Block block = getBlock();
+		ResourceLocation blockId = Registry.BLOCK.getKey(block);
+		return ((ItemModelProvider) block).getItemModel(blockId);
 	}
 }

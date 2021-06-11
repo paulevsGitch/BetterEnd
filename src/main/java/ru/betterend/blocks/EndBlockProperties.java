@@ -4,15 +4,15 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import ru.bclib.blocks.BlockProperties;
 import ru.betterend.registry.EndPortals;
 
-public class EndBlockProperties {
+public class EndBlockProperties extends BlockProperties {
 	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.create("shape", HydraluxShape.class);
 	public static final EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
 	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EnumProperty.create("bottom", CactusBottom.class);
 	
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
-	
 	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
 	
 	public enum PedestalState implements StringRepresentable {

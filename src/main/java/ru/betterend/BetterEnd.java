@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
@@ -41,6 +42,7 @@ public class BetterEnd implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
+		WorldDataAPI.registerModCache(MOD_ID);
 		EndPortals.loadPortals();
 		EndSounds.register();
 		EndBlockEntities.register();

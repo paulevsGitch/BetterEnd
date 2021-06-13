@@ -14,7 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 public class EndCrystalRenderer {
 	private static final ResourceLocation CRYSTAL_TEXTURE = new ResourceLocation("textures/entity/end_crystal/end_crystal.png");
 	private static final ResourceLocation CRYSTAL_BEAM_TEXTURE = new ResourceLocation("textures/entity/end_crystal/end_crystal_beam.png");
-	private static final RenderType CRYSTAL_BEAM_LAYER;
 	private static final RenderType END_CRYSTAL;
 	private static final ModelPart CORE;
 	private static final ModelPart FRAME;
@@ -45,7 +44,7 @@ public class EndCrystalRenderer {
 	
 	static {
 		END_CRYSTAL = RenderType.entityCutoutNoCull(CRYSTAL_TEXTURE);
-		CRYSTAL_BEAM_LAYER = RenderType.entitySmoothCutout(CRYSTAL_BEAM_TEXTURE);
+		RenderType.entitySmoothCutout(CRYSTAL_BEAM_TEXTURE);
 		SINE_45_DEGREES = (float) Math.sin(0.7853981633974483D);
 		FRAME = new ModelPart(64, 32, 0, 0);
 		FRAME.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);

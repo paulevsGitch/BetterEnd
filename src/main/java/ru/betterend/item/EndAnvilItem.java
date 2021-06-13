@@ -21,7 +21,6 @@ public class EndAnvilItem extends BaseAnvilItem {
 	}
 
 	@Override
-	@SuppressWarnings("ConstantConditions")
 	protected BlockState getPlacementState(BlockPlaceContext blockPlaceContext) {
 		BlockState blockState = super.getPlacementState(blockPlaceContext);
 		ItemStack stack = blockPlaceContext.getItemInHand();

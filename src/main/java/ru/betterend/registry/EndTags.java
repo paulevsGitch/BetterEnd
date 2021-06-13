@@ -33,7 +33,6 @@ import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 
-@SuppressWarnings("unused")
 public class EndTags {
 	// Table with common (c) tags:
 	// https://fabricmc.net/wiki/tutorial:tags

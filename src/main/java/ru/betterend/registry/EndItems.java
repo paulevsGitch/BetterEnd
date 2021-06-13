@@ -42,7 +42,6 @@ import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.tab.CreativeTabs;
 
-@SuppressWarnings("unused")
 public class EndItems extends ItemsRegistry {
 	// Materials //
 	public final static Item ENDER_DUST = registerEndItem("ender_dust");

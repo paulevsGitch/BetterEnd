@@ -52,7 +52,7 @@ import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
-@SuppressWarnings({"deprecation", "unused"})
+@SuppressWarnings({"deprecation"})
 public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	public final static EnumProperty<PedestalState> STATE = EndBlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = EndBlockProperties.HAS_ITEM;

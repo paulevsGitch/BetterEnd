@@ -47,7 +47,6 @@ import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
 
-@SuppressWarnings("unused")
 public class EndBlocks extends BlocksRegistry {
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new EndstoneDustBlock());

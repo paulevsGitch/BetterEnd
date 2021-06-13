@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -47,6 +48,10 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
+			if (pos == null) {
+				pos = BlockPos.ZERO;
+			};
+			
 			long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
 			double delta = i * 0.1;
 			int index = MHelper.floor(delta);

@@ -9,26 +9,20 @@ import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.client.models.ModelsHelper;
-import ru.bclib.util.ColorUtil;
-import ru.bclib.util.MHelper;
-import ru.betterend.blocks.AuroraCrystalBlock;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.interfaces.IColorProvider;
+import ru.betterend.registry.EndBlocks;
 
-@SuppressWarnings("deprecation")
 public class StoneLanternBlock extends EndLanternBlock implements IColorProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(3, 1, 3, 13, 16, 13);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(3, 0, 3, 13, 15, 13);
-	private static final Vec3i[] COLORS = AuroraCrystalBlock.COLORS;
 	
 	public StoneLanternBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).luminance(15));
@@ -36,28 +30,12 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	
 	@Override
 	public BlockColor getProvider() {
-		return (state, world, pos, tintIndex) -> {
-			long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
-			double delta = i * 0.1;
-			int index = MHelper.floor(delta);
-			int index2 = (index + 1) & 3;
-			delta -= index;
-			index &= 3;
-			
-			Vec3i color1 = COLORS[index];
-			Vec3i color2 = COLORS[index2];
-			
-			int r = MHelper.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
-			int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
-			int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
-			
-			return ColorUtil.color(r, g, b);
-		};
+		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
 	}
 
 	@Override
 	public ItemColor getItemProvider() {
-		return (stack, tintIndex) -> ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
+		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getItemProvider();
 	}
 	
 	@Override

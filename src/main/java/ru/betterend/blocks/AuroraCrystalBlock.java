@@ -20,15 +20,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IColorProvider;
-import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndItems;
 import ru.betterend.registry.EndTags;
 
-public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTypeable, IColorProvider {
+public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyped, IColorProvider {
 	public static final Vec3i[] COLORS;
 	private static final int MIN_DROP = 1;
 	private static final int MAX_DROP = 4;

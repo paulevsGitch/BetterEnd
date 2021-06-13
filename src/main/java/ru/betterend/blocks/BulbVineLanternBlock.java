@@ -22,12 +22,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.betterend.blocks.basis.EndLanternBlock;
 import ru.betterend.client.models.Patterns;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IRenderTypeable;
 
-public class BulbVineLanternBlock extends EndLanternBlock implements IRenderTypeable, BlockModelProvider {
+public class BulbVineLanternBlock extends EndLanternBlock implements IRenderTyped, BlockModelProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
 	

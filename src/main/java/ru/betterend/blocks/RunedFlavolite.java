@@ -1,6 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.List;
+
 import com.google.common.collect.Lists;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
@@ -14,8 +17,6 @@ import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.List;
 
 public class RunedFlavolite extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;

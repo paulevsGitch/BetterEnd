@@ -1,6 +1,10 @@
 package ru.betterend.integration.rei;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.google.common.collect.Lists;
+
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
@@ -18,9 +22,6 @@ import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
 public class REIPlugin implements REIPluginV0 {

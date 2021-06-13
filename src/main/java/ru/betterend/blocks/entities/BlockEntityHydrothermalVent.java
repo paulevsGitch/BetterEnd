@@ -16,7 +16,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import ru.betterend.blocks.HydrothermalVentBlock;
 import ru.betterend.interfaces.FallFlyingItem;
-import ru.betterend.item.ArmoredElytra;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;

@@ -4,8 +4,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import ru.bclib.blocks.UpDownPlantBlock;
 import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.UpDownPlantBlock;
 import ru.betterend.registry.EndBlocks;
 
 public class BlueVineBlock extends UpDownPlantBlock {

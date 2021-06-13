@@ -1,5 +1,7 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -12,8 +14,6 @@ import net.minecraft.world.level.material.MaterialColor;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
 
 public class UmbrellaTreeClusterEmptyBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;

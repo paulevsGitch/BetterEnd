@@ -1,5 +1,8 @@
 package ru.betterend.blocks.basis;
 
+import java.util.List;
+import java.util.Objects;
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -13,9 +16,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.bclib.blocks.BaseAnvilBlock;
 import ru.betterend.blocks.complex.MetalMaterial;
 import ru.betterend.item.EndAnvilItem;
-
-import java.util.List;
-import java.util.Objects;
 
 public class EndAnvilBlock extends BaseAnvilBlock {
 

@@ -1,5 +1,7 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -18,15 +20,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import ru.bclib.blocks.BaseBlockNotFull;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 
-import java.util.Random;
-
 @SuppressWarnings("deprecation")
-public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTypeable {
+public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyped {
 	public MengerSpongeWetBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).noOcclusion());
 	}

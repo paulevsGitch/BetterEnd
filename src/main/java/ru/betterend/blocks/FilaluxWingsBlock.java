@@ -1,6 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.EnumMap;
+
 import com.google.common.collect.Maps;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -13,12 +16,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseAttachedBlock;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IRenderTypeable;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IRenderTyped;
 
-import java.util.EnumMap;
-
-public class FilaluxWingsBlock extends BaseAttachedBlock implements IRenderTypeable {
+public class FilaluxWingsBlock extends BaseAttachedBlock implements IRenderTyped {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public FilaluxWingsBlock() {

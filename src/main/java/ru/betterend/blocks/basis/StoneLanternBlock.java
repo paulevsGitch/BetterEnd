@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.client.models.ModelsHelper;
+import ru.bclib.interfaces.IColorProvider;
 import ru.betterend.client.models.Patterns;
-import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.registry.EndBlocks;
 
 public class StoneLanternBlock extends EndLanternBlock implements IColorProvider {

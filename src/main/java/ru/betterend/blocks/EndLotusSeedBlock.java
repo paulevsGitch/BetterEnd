@@ -1,5 +1,7 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -11,8 +13,6 @@ import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.blocks.UnderwaterPlantWithAgeBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
 
 public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 	@Override

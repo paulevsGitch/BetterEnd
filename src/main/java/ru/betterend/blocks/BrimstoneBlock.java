@@ -1,5 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -16,13 +20,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MaterialColor;
-import org.jetbrains.annotations.Nullable;
 import ru.bclib.blocks.BaseBlock;
-import ru.bclib.util.BlocksHelper;
 import ru.bclib.blocks.BlockProperties;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
 
 public class BrimstoneBlock extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;

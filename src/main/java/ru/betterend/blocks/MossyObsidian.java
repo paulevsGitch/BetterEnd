@@ -1,5 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,10 +19,6 @@ import net.minecraft.world.level.lighting.LayerLightEngine;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseBlock;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 public class MossyObsidian extends BaseBlock {
 	public MossyObsidian() {

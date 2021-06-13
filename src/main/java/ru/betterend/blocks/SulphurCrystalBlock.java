@@ -1,7 +1,12 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.List;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -20,24 +25,24 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.*;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseAttachedBlock;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.MHelper;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.List;
-
 @SuppressWarnings("deprecation")
-public class SulphurCrystalBlock extends BaseAttachedBlock implements IRenderTypeable, SimpleWaterloggedBlock, LiquidBlockContainer {
+public class SulphurCrystalBlock extends BaseAttachedBlock implements IRenderTyped, SimpleWaterloggedBlock, LiquidBlockContainer {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

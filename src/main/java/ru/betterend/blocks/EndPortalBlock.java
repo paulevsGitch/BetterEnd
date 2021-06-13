@@ -32,15 +32,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.dimension.DimensionType;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IColorProvider;
-import ru.betterend.interfaces.IRenderTypeable;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndPortals;
 import ru.betterend.rituals.EternalRitual;
 
-public class EndPortalBlock extends NetherPortalBlock implements IRenderTypeable, IColorProvider {
+public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, IColorProvider {
 	public static final IntegerProperty PORTAL = EndBlockProperties.PORTAL;
 
 	public EndPortalBlock() {

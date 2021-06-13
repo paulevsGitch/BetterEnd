@@ -1,5 +1,7 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.color.block.BlockColor;
@@ -11,12 +13,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.blocks.BaseVineBlock;
+import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
-import ru.betterend.interfaces.IColorProvider;
 import ru.betterend.registry.EndParticles;
-
-import java.util.Random;
 
 public class TenaneaFlowersBlock extends BaseVineBlock implements IColorProvider {
 	public static final Vec3i[] COLORS;

@@ -15,11 +15,11 @@ import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseSignBlock;
 import ru.bclib.client.render.BaseChestBlockEntityRenderer;
 import ru.bclib.client.render.BaseSignBlockEntityRenderer;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.client.render.ERenderLayer;
 import ru.betterend.events.ItemTooltipCallback;
-import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndBlockEntityRenders;
@@ -67,8 +67,8 @@ public class BetterEndClient implements ClientModInitializer {
 		RenderType cutout = RenderType.cutout();
 		RenderType translucent = RenderType.translucent();
 		Registry.BLOCK.forEach(block -> {
-			if (block instanceof IRenderTypeable) {
-				ERenderLayer layer = ((IRenderTypeable) block).getRenderLayer();
+			if (block instanceof IRenderTyped) {
+				ERenderLayer layer = ((IRenderTyped) block).getRenderLayer();
 				if (layer == ERenderLayer.CUTOUT)
 					BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
 				else if (layer == ERenderLayer.TRANSLUCENT)

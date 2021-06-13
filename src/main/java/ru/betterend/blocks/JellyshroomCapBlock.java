@@ -25,15 +25,15 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.client.models.Patterns;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IColorProvider;
-import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.noise.OpenSimplexNoise;
 
-public class JellyshroomCapBlock extends SlimeBlock implements IRenderTypeable, BlockModelProvider, IColorProvider {
+public class JellyshroomCapBlock extends SlimeBlock implements IRenderTyped, BlockModelProvider, IColorProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	private final Vec3i colorStart;

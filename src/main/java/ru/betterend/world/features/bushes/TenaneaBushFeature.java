@@ -1,6 +1,11 @@
 package ru.betterend.world.features.bushes;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 import com.google.common.collect.Lists;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -25,10 +30,6 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
 
 public class TenaneaBushFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;

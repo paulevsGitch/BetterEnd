@@ -1,19 +1,20 @@
 package ru.betterend.blocks;
 
+import java.util.List;
+
 import com.google.common.collect.Lists;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.blocks.BaseVineBlock;
+import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-
-import java.util.List;
 
 public class BulbVineBlock extends BaseVineBlock {
 	public BulbVineBlock() {

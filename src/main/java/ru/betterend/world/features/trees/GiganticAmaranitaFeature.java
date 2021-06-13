@@ -1,6 +1,11 @@
 package ru.betterend.world.features.trees;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 import com.mojang.math.Vector3f;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -21,10 +26,6 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
 
 public class GiganticAmaranitaFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;

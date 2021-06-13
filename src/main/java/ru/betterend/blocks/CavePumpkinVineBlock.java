@@ -1,5 +1,7 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -15,8 +17,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BlockProperties;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
 
 public class CavePumpkinVineBlock extends EndPlantWithAgeBlock {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 16, 12);

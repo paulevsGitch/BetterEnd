@@ -1,5 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,10 +20,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseRotatedPillarBlock;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class MossyDragonBoneBlock extends BaseRotatedPillarBlock {

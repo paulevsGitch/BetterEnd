@@ -1,5 +1,8 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -12,14 +15,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.PentaShape;
 import ru.bclib.util.MHelper;
-import ru.bclib.blocks.BlockProperties;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Collections;
-import java.util.List;
 
 public class LanceleafBlock extends EndPlantBlock {
 

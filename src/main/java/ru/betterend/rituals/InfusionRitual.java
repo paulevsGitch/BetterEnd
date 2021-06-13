@@ -1,5 +1,9 @@
 package ru.betterend.rituals;
 
+import java.awt.Point;
+import java.util.Arrays;
+import java.util.Objects;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -14,10 +18,6 @@ import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
-
-import java.awt.*;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class InfusionRitual implements Container {
 	private static final Point[] PEDESTALS_MAP = new Point[] {

@@ -21,8 +21,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
 import net.minecraft.world.level.Level;
+import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.util.MHelper;
-import ru.betterend.interfaces.IColorProvider;
 
 @Mixin(Minecraft.class)
 public class MinecraftClientMixin {

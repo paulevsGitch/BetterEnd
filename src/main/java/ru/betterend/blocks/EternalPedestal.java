@@ -28,7 +28,6 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndPortals;
 import ru.betterend.rituals.EternalRitual;
 
-@SuppressWarnings("deprecation")
 public class EternalPedestal extends PedestalBlock {
 	public static final BooleanProperty ACTIVATED = EndBlockProperties.ACTIVE;
 	

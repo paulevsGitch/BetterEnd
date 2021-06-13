@@ -1,18 +1,18 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.bclib.blocks.BlockProperties;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
 
 public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 	@Override

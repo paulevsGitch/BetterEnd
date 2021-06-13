@@ -1,6 +1,11 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import com.google.common.collect.Lists;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -31,10 +36,6 @@ import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 public class EndLilyBlock extends EndUnderwaterPlantBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;

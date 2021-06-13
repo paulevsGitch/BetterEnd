@@ -1,5 +1,7 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -11,8 +13,6 @@ import ru.bclib.blocks.BaseDoublePlantBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
 
 public class TwistedUmbrellaMossBlock extends EndPlantBlock {
 	public TwistedUmbrellaMossBlock() {

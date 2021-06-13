@@ -1,5 +1,8 @@
 package ru.betterend.blocks;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -9,13 +12,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseBlock;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IRenderTypeable;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IRenderTyped;
 
-import java.util.Collections;
-import java.util.List;
-
-public class DenseEmeraldIceBlock extends BaseBlock implements IRenderTypeable {
+public class DenseEmeraldIceBlock extends BaseBlock implements IRenderTyped {
 	public DenseEmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.PACKED_ICE));
 	}

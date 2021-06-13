@@ -1,7 +1,12 @@
 package ru.betterend.blocks;
 
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Random;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -26,16 +31,12 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseAttachedBlock;
+import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.client.render.ERenderLayer;
-import ru.betterend.interfaces.IRenderTypeable;
 import ru.betterend.registry.EndFeatures;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Random;
-
-public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderTypeable, BonemealableBlock {
+public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderTyped, BonemealableBlock {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public SmallJellyshroomBlock() {

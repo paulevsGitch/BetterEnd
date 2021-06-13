@@ -1,5 +1,10 @@
 package ru.betterend.registry;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
+
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -7,21 +12,40 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
-import org.jetbrains.annotations.NotNull;
-import ru.bclib.blocks.*;
+import ru.bclib.blocks.BaseBarrelBlock;
+import ru.bclib.blocks.BaseChestBlock;
+import ru.bclib.blocks.BaseCropBlock;
+import ru.bclib.blocks.BaseFurnaceBlock;
+import ru.bclib.blocks.BaseLeavesBlock;
+import ru.bclib.blocks.BaseOreBlock;
+import ru.bclib.blocks.BasePathBlock;
+import ru.bclib.blocks.BaseRotatedPillarBlock;
+import ru.bclib.blocks.BaseSignBlock;
+import ru.bclib.blocks.BaseSlabBlock;
+import ru.bclib.blocks.BaseStairsBlock;
+import ru.bclib.blocks.BaseVineBlock;
+import ru.bclib.blocks.SimpleLeavesBlock;
+import ru.bclib.blocks.StalactiteBlock;
 import ru.bclib.registry.BaseBlockEntities;
 import ru.bclib.registry.BlocksRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.*;
-import ru.betterend.blocks.basis.*;
-import ru.betterend.blocks.complex.*;
+import ru.betterend.blocks.basis.EndTerrainBlock;
+import ru.betterend.blocks.basis.EndTripleTerrain;
+import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
+import ru.betterend.blocks.basis.EndWallMushroom;
+import ru.betterend.blocks.basis.EndWallPlantBlock;
+import ru.betterend.blocks.basis.FurBlock;
+import ru.betterend.blocks.basis.StoneLanternBlock;
+import ru.betterend.blocks.complex.ColoredMaterial;
+import ru.betterend.blocks.complex.CrystalSubblocksMaterial;
+import ru.betterend.blocks.complex.MetalMaterial;
+import ru.betterend.blocks.complex.StoneMaterial;
+import ru.betterend.blocks.complex.WoodenMaterial;
 import ru.betterend.config.Configs;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class EndBlocks extends BlocksRegistry {

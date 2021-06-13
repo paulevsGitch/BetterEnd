@@ -15,7 +15,7 @@ import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseSignBlock;
 import ru.bclib.client.render.BaseChestBlockEntityRenderer;
 import ru.bclib.client.render.BaseSignBlockEntityRenderer;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
@@ -68,10 +68,10 @@ public class BetterEndClient implements ClientModInitializer {
 		RenderType translucent = RenderType.translucent();
 		Registry.BLOCK.forEach(block -> {
 			if (block instanceof IRenderTyped) {
-				ERenderLayer layer = ((IRenderTyped) block).getRenderLayer();
-				if (layer == ERenderLayer.CUTOUT)
+				BCLRenderLayer layer = ((IRenderTyped) block).getRenderLayer();
+				if (layer == BCLRenderLayer.CUTOUT)
 					BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
-				else if (layer == ERenderLayer.TRANSLUCENT)
+				else if (layer == BCLRenderLayer.TRANSLUCENT)
 					BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
 			}
 		});

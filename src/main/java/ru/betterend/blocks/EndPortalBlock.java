@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.dimension.DimensionType;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.betterend.interfaces.TeleportingEntity;
@@ -108,8 +108,8 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, I
 	}
 	
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.TRANSLUCENT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.TRANSLUCENT;
 	}
 	
 	private BlockPos findExitPos(ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos, Entity entity) {

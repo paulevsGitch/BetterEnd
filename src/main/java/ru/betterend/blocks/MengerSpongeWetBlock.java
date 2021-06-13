@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import ru.bclib.blocks.BaseBlockNotFull;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
@@ -96,8 +96,8 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 	}
 	
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.CUTOUT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.CUTOUT;
 	}
 	
 	@Override

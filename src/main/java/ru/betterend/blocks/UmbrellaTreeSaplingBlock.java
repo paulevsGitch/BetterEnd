@@ -5,7 +5,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.bclib.blocks.FeatureSaplingBlock;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
@@ -25,7 +25,7 @@ public class UmbrellaTreeSaplingBlock extends FeatureSaplingBlock {
 	}
 	
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.TRANSLUCENT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.TRANSLUCENT;
 	}
 }

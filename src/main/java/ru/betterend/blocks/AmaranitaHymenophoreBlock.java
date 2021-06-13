@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.blocks.BaseBlock;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 
 public class AmaranitaHymenophoreBlock extends BaseBlock implements IRenderTyped {
@@ -14,7 +14,7 @@ public class AmaranitaHymenophoreBlock extends BaseBlock implements IRenderTyped
 	}
 
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.CUTOUT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.CUTOUT;
 	}
 }

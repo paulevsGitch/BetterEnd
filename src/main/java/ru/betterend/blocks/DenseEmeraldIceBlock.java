@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseBlock;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 
 public class DenseEmeraldIceBlock extends BaseBlock implements IRenderTyped {
@@ -21,8 +21,8 @@ public class DenseEmeraldIceBlock extends BaseBlock implements IRenderTyped {
 	}
 
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.TRANSLUCENT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.TRANSLUCENT;
 	}
 	
 	@Override

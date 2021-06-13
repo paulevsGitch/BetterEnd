@@ -38,7 +38,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
@@ -141,8 +141,8 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 	}
 
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.TRANSLUCENT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.TRANSLUCENT;
 	}
 	
 	@Override

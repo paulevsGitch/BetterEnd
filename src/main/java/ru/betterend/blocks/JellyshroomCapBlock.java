@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.ColorUtil;
@@ -61,8 +61,8 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTyped, Blo
 	}
 	
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.TRANSLUCENT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.TRANSLUCENT;
 	}
 	
 	@Override

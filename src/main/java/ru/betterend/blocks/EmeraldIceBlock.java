@@ -25,7 +25,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.client.models.BlockModelProvider;
-import ru.bclib.client.render.ERenderLayer;
+import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 
 public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderTyped, BlockModelProvider {
@@ -34,8 +34,8 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 	}
 
 	@Override
-	public ERenderLayer getRenderLayer() {
-		return ERenderLayer.TRANSLUCENT;
+	public BCLRenderLayer getRenderLayer() {
+		return BCLRenderLayer.TRANSLUCENT;
 	}
 
 	@Override

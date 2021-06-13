@@ -10,7 +10,6 @@
 	  	"ArmorStandRendererMixin",
 		"ClientRecipeBookMixin",
 		"MinecraftClientMixin",
-		"ContextGsonAccessor",
 	  	"PlayerRendererMixin",
 		"WorldRendererMixin",
 		"MusicTrackerMixin",

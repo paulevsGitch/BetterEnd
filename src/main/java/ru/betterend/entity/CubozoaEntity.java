@@ -12,8 +12,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,7 +24,6 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -155,40 +152,6 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 			}
 			if (random.nextBoolean()) {
 				player.addEffect(new MobEffectInstance(MobEffects.POISON, 20, 0));
-			}
-		}
-	}
-
-	static class CubozoaMoveControl extends MoveControl {
-		CubozoaMoveControl(CubozoaEntity owner) {
-			super(owner);
-		}
-
-		public void tick() {
-			if (this.mob.isEyeInFluid(FluidTags.WATER)) {
-				this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
-			}
-
-			if (this.operation == MoveControl.Operation.MOVE_TO && !this.mob.getNavigation().isDone()) {
-				float f = (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
-				this.mob.setSpeed(Mth.lerp(0.125F, this.mob.getSpeed(), f));
-				double d = this.wantedX - this.mob.getX();
-				double e = this.wantedY - this.mob.getY();
-				double g = this.wantedZ - this.mob.getZ();
-				if (e != 0.0D) {
-					double h = (double) Mth.sqrt(d * d + e * e + g * g);
-					this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, (double) this.mob.getSpeed() * (e / h) * 0.1D, 0.0D));
-				}
-
-				if (d != 0.0D || g != 0.0D) {
-					float i = (float) (Mth.atan2(g, d) * 57.2957763671875D) - 90.0F;
-					this.mob.yRot = this.rotlerp(this.mob.yRot, i, 90.0F);
-					this.mob.yBodyRot = this.mob.yRot;
-				}
-
-			}
-			else {
-				this.mob.setSpeed(0.0F);
 			}
 		}
 	}

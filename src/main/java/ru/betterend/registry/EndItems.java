@@ -127,7 +127,7 @@ public class EndItems extends ItemsRegistry {
 	// Drinks //
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerEndDrink("umbrella_cluster_juice", 5, 0.7F);
 
-	private static ItemsRegistry ITEM_REGISTRY;
+	private static ItemsRegistry itemRegistry;
 
 	protected EndItems(CreativeModeTab creativeTab) {
 		super(creativeTab);
@@ -200,7 +200,7 @@ public class EndItems extends ItemsRegistry {
 	}
 
 	public static FabricItemSettings makeEndItemSettings() {
-		return ITEM_REGISTRY.makeItemSettings();
+		return itemRegistry.makeItemSettings();
 	}
 
 	@Override
@@ -210,9 +210,9 @@ public class EndItems extends ItemsRegistry {
 
 	@NotNull
 	private static ItemsRegistry getItemRegistry() {
-		if (ITEM_REGISTRY == null) {
-			ITEM_REGISTRY = new EndItems(CreativeTabs.TAB_ITEMS);
+		if (itemRegistry == null) {
+			itemRegistry = new EndItems(CreativeTabs.TAB_ITEMS);
 		}
-		return ITEM_REGISTRY;
+		return itemRegistry;
 	}
 }

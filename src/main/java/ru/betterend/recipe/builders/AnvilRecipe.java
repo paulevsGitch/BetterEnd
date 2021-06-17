@@ -23,10 +23,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import ru.bclib.recipes.BCLRecipeManager;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.BetterEndRecipe;
-import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
@@ -34,8 +34,8 @@ import ru.betterend.util.RecipeHelper;
 public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 	
 	public final static String GROUP = "smithing";
-	public final static RecipeType<AnvilRecipe> TYPE = EndRecipeManager.registerType(GROUP);
-	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
+	public final static RecipeType<AnvilRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
+	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
 	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
 	
 	private final ResourceLocation id;
@@ -254,7 +254,7 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 					BetterEnd.LOGGER.warning("Output for Anvil recipe can't be 'null', recipe {} will be ignored!", id);
 					return;
 				}
-				if (EndRecipeManager.getRecipe(TYPE, id) != null) {
+				if (BCLRecipeManager.getRecipe(TYPE, id) != null) {
 					BetterEnd.LOGGER.warning("Can't add Anvil recipe! Id {} already exists!", id);
 					return;
 				}
@@ -262,7 +262,7 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 					BetterEnd.LOGGER.debug("Can't add Anvil recipe {}! Ingeredient or output not exists.", id);
 					return;
 				}
-				EndRecipeManager.addRecipe(TYPE, new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage));
+				BCLRecipeManager.addRecipe(TYPE, new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage));
 			}
 		}
 	}

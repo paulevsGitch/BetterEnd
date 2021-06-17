@@ -19,10 +19,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import ru.bclib.recipes.BCLRecipeManager;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.BetterEndRecipe;
-import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
@@ -30,8 +30,8 @@ import ru.betterend.util.RecipeHelper;
 public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 	
 	public final static String GROUP = "alloying";
-	public final static RecipeType<AlloyingRecipe> TYPE = EndRecipeManager.registerType(GROUP);
-	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
+	public final static RecipeType<AlloyingRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
+	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
 	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
 	
 	protected final RecipeType<?> type;
@@ -223,7 +223,7 @@ public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 					BetterEnd.LOGGER.warning("Output for Alloying can't be 'null', recipe {} will be ignored!", id);
 					return;
 				}
-				if (EndRecipeManager.getRecipe(TYPE, id) != null) {
+				if (BCLRecipeManager.getRecipe(TYPE, id) != null) {
 					BetterEnd.LOGGER.warning("Can't add Alloying recipe! Id {} already exists!", id);
 					return;
 				}
@@ -231,7 +231,7 @@ public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 					BetterEnd.LOGGER.debug("Can't add Alloying recipe {}! Ingeredient or output not exists.", id);
 					return;
 				}
-				EndRecipeManager.addRecipe(TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
+				BCLRecipeManager.addRecipe(TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
 			}
 		}
 	}

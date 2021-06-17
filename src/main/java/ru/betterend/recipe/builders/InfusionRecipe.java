@@ -17,18 +17,18 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import ru.bclib.recipes.BCLRecipeManager;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.BetterEndRecipe;
-import ru.betterend.recipe.EndRecipeManager;
 import ru.betterend.rituals.InfusionRitual;
 import ru.betterend.util.ItemUtil;
 
 public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 	
 	public final static String GROUP = "infusion";
-	public final static RecipeType<InfusionRecipe> TYPE = EndRecipeManager.registerType(GROUP);
-	public final static Serializer SERIALIZER = EndRecipeManager.registerSerializer(GROUP, new Serializer());
+	public final static RecipeType<InfusionRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
+	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
 	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
 	
 	private final ResourceLocation id;
@@ -194,7 +194,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 					BetterEnd.LOGGER.warning("At least one catalyst must be non empty, recipe {} will be ignored!", id);
 					return;
 				}
-				EndRecipeManager.addRecipe(TYPE, recipe);
+				BCLRecipeManager.addRecipe(TYPE, recipe);
 			}
 		}
 	}

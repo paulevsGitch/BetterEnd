@@ -9,10 +9,12 @@ import ru.bclib.blocks.BaseRotatedPillarBlock;
 import ru.bclib.blocks.BaseSlabBlock;
 import ru.bclib.blocks.BaseStairsBlock;
 import ru.bclib.blocks.BaseWallBlock;
+import ru.bclib.recipes.GridRecipe;
 import ru.bclib.util.TagHelper;
+import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndPedestal;
+import ru.betterend.config.Configs;
 import ru.betterend.recipe.CraftingRecipes;
-import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.registry.EndBlocks;
 
 public class CrystalSubblocksMaterial {
@@ -43,18 +45,18 @@ public class CrystalSubblocksMaterial {
 		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new BaseWallBlock(bricks));
 		
 		// Recipes //
-		GridRecipe.make(name + "_bricks", bricks).setOutputCount(4).setShape("##", "##").addMaterial('#', source).setGroup("end_bricks").build();
-		GridRecipe.make(name + "_polished", polished).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
-		GridRecipe.make(name + "_tiles", tiles).setOutputCount(4).setShape("##", "##").addMaterial('#', polished).setGroup("end_small_tile").build();
-		GridRecipe.make(name + "_pillar", pillar).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks", bricks).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', source).setGroup("end_bricks").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_polished", polished).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_tiles", tiles).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', polished).setGroup("end_small_tile").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_pillar", pillar).checkConfig(Configs.RECIPE_CONFIG).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar").build();
 		
-		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', source).setGroup("end_stone_stairs").build();
-		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', source).setGroup("end_stone_slabs").build();
-		GridRecipe.make(name + "_bricks_stairs", brick_stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', bricks).setGroup("end_stone_stairs").build();
-		GridRecipe.make(name + "_bricks_slab", brick_slab).setOutputCount(6).setShape("###").addMaterial('#', bricks).setGroup("end_stone_slabs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_stairs", stairs).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', source).setGroup("end_stone_stairs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_slab", slab).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###").addMaterial('#', source).setGroup("end_stone_slabs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_stairs", brick_stairs).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', bricks).setGroup("end_stone_stairs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_slab", brick_slab).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###").addMaterial('#', bricks).setGroup("end_stone_slabs").build();
 		
-		GridRecipe.make(name + "_wall", wall).setOutputCount(6).setShape("###", "###").addMaterial('#', source).setGroup("end_wall").build();
-		GridRecipe.make(name + "_bricks_wall", brick_wall).setOutputCount(6).setShape("###", "###").addMaterial('#', bricks).setGroup("end_wall").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_wall", wall).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###", "###").addMaterial('#', source).setGroup("end_wall").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_wall", brick_wall).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###", "###").addMaterial('#', bricks).setGroup("end_wall").build();
 		
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		

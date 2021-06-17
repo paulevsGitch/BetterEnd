@@ -28,18 +28,20 @@ import ru.bclib.items.tool.BaseHoeItem;
 import ru.bclib.items.tool.BasePickaxeItem;
 import ru.bclib.items.tool.BaseShovelItem;
 import ru.bclib.items.tool.BaseSwordItem;
+import ru.bclib.recipes.GridRecipe;
 import ru.bclib.util.TagHelper;
+import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
 import ru.betterend.blocks.ChandelierBlock;
 import ru.betterend.blocks.basis.EndAnvilBlock;
+import ru.betterend.config.Configs;
 import ru.betterend.item.EndAnvilItem;
 import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.FurnaceRecipe;
-import ru.betterend.recipe.builders.GridRecipe;
 import ru.betterend.recipe.builders.SmithingTableRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -154,24 +156,24 @@ public class MetalMaterial {
 		}
 		
 		// Basic recipes
-		GridRecipe.make(name + "_ingot_from_nuggets", ingot).setShape("###", "###", "###").addMaterial('#', nugget).setGroup("end_metal_ingots_nug").build();
-		GridRecipe.make(name + "_nuggets_from_ingot", nugget).setOutputCount(9).setList("#").addMaterial('#', ingot).setGroup("end_metal_nuggets_ing").build();
-		GridRecipe.make(name + "_block", block).setShape("###", "###", "###").addMaterial('#', ingot).setGroup("end_metal_blocks").build();
-		GridRecipe.make(name + "_ingot_from_block", ingot).setOutputCount(9).setList("#").addMaterial('#', block).setGroup("end_metal_ingots").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_ingot_from_nuggets", ingot).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "###", "###").addMaterial('#', nugget).setGroup("end_metal_ingots_nug").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_nuggets_from_ingot", nugget).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(9).setList("#").addMaterial('#', ingot).setGroup("end_metal_nuggets_ing").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_block", block).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "###", "###").addMaterial('#', ingot).setGroup("end_metal_blocks").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_ingot_from_block", ingot).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(9).setList("#").addMaterial('#', block).setGroup("end_metal_ingots").build();
 		
 		// Block recipes
-		GridRecipe.make(name + "_tile", tile).setOutputCount(4).setShape("##", "##").addMaterial('#', block).setGroup("end_metal_tiles").build();
-		GridRecipe.make(name + "_bars", bars).setOutputCount(16).setShape("###", "###").addMaterial('#', ingot).setGroup("end_metal_bars").build();
-		GridRecipe.make(name + "_pressure_plate", pressurePlate).setShape("##").addMaterial('#', ingot).setGroup("end_metal_plates").build();
-		GridRecipe.make(name + "_door", door).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', ingot).setGroup("end_metal_doors").build();
-		GridRecipe.make(name + "_trapdoor", trapdoor).setShape("##", "##").addMaterial('#', ingot).setGroup("end_metal_trapdoors").build();
-		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', block, tile).setGroup("end_metal_stairs").build();
-		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', block, tile).setGroup("end_metal_slabs").build();
-		GridRecipe.make(name + "_chain", chain).setShape("N", "#", "N").addMaterial('#', ingot).addMaterial('N', nugget).setGroup("end_metal_chain").build();
-		GridRecipe.make(name + "_anvil", anvilBlock).setShape("###", " I ", "III").addMaterial('#', block, tile).addMaterial('I', ingot).setGroup("end_metal_anvil").build();
-		GridRecipe.make(name + "_bulb_lantern", bulb_lantern).setShape("C", "I", "#").addMaterial('C', chain).addMaterial('I', ingot).addMaterial('#', EndItems.GLOWING_BULB).build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_tile", tile).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', block).setGroup("end_metal_tiles").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bars", bars).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(16).setShape("###", "###").addMaterial('#', ingot).setGroup("end_metal_bars").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_pressure_plate", pressurePlate).checkConfig(Configs.RECIPE_CONFIG).setShape("##").addMaterial('#', ingot).setGroup("end_metal_plates").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_door", door).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', ingot).setGroup("end_metal_doors").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_trapdoor", trapdoor).checkConfig(Configs.RECIPE_CONFIG).setShape("##", "##").addMaterial('#', ingot).setGroup("end_metal_trapdoors").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_stairs", stairs).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', block, tile).setGroup("end_metal_stairs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_slab", slab).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###").addMaterial('#', block, tile).setGroup("end_metal_slabs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_chain", chain).checkConfig(Configs.RECIPE_CONFIG).setShape("N", "#", "N").addMaterial('#', ingot).addMaterial('N', nugget).setGroup("end_metal_chain").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_anvil", anvilBlock).checkConfig(Configs.RECIPE_CONFIG).setShape("###", " I ", "III").addMaterial('#', block, tile).addMaterial('I', ingot).setGroup("end_metal_anvil").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bulb_lantern", bulb_lantern).checkConfig(Configs.RECIPE_CONFIG).setShape("C", "I", "#").addMaterial('C', chain).addMaterial('I', ingot).addMaterial('#', EndItems.GLOWING_BULB).build();
 		
-		GridRecipe.make(name + "_chandelier", chandelier).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_chandelier", chandelier).checkConfig(Configs.RECIPE_CONFIG).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		
 		// Tools & armor into nuggets
 		FurnaceRecipe.make(name + "_axe_nugget", axe, nugget).setGroup("end_nugget").buildWithBlasting();
@@ -202,10 +204,10 @@ public class MetalMaterial {
 		SmithingTableRecipe.create(name + "_shovel").setResult(shovel).setBase(shovelHead).setAddition(Items.STICK).build();
 		
 		// Armor crafting
-		GridRecipe.make(name + "_helmet", helmet).setShape("###", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_helmets").build();
-		GridRecipe.make(name + "_chestplate", chestplate).setShape("# #", "###", "###").addMaterial('#', forgedPlate).setGroup("end_metal_chestplates").build();
-		GridRecipe.make(name + "_leggings", leggings).setShape("###", "# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_leggings").build();
-		GridRecipe.make(name + "_boots", boots).setShape("# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_boots").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_helmet", helmet).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_helmets").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_chestplate", chestplate).checkConfig(Configs.RECIPE_CONFIG).setShape("# #", "###", "###").addMaterial('#', forgedPlate).setGroup("end_metal_chestplates").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_leggings", leggings).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_leggings").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_boots", boots).checkConfig(Configs.RECIPE_CONFIG).setShape("# #", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_boots").build();
 		
 		TagHelper.addTag(BlockTags.ANVIL, anvilBlock);
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);

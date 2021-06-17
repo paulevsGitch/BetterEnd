@@ -12,8 +12,10 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MaterialColor;
+import ru.bclib.recipes.GridRecipe;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.recipe.builders.GridRecipe;
+import ru.betterend.BetterEnd;
+import ru.betterend.config.Configs;
 import ru.betterend.registry.EndBlocks;
 
 public class ColoredMaterial {
@@ -32,10 +34,10 @@ public class ColoredMaterial {
 			Block block = constructor.apply(FabricBlockSettings.copyOf(source).materialColor(MaterialColor.COLOR_BLACK));
 			EndBlocks.registerBlock(blockName, block);
 			if (craftEight) {
-				GridRecipe.make(blockName, block).setOutputCount(8).setShape("###", "#D#", "###").addMaterial('#', source).addMaterial('D', dyes.get(color)).build();
+				GridRecipe.make(BetterEnd.MOD_ID, blockName, block).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(8).setShape("###", "#D#", "###").addMaterial('#', source).addMaterial('D', dyes.get(color)).build();
 			}
 			else {
-				GridRecipe.make(blockName, block).setList("#D").addMaterial('#', source).addMaterial('D', dyes.get(color)).build();
+				GridRecipe.make(BetterEnd.MOD_ID, blockName, block).checkConfig(Configs.RECIPE_CONFIG).setList("#D").addMaterial('#', source).addMaterial('D', dyes.get(color)).build();
 			}
 			this.colors.put(color, block);
 			BlocksHelper.addBlockColor(block, color);

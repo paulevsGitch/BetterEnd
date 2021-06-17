@@ -31,9 +31,10 @@ import ru.bclib.blocks.BaseTrapdoorBlock;
 import ru.bclib.blocks.BaseWoodenButtonBlock;
 import ru.bclib.blocks.StripableBarkBlock;
 import ru.bclib.blocks.WoodenPressurePlateBlock;
+import ru.bclib.recipes.GridRecipe;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
-import ru.betterend.recipe.builders.GridRecipe;
+import ru.betterend.config.Configs;
 import ru.betterend.registry.EndBlocks;
 
 public class WoodenMaterial {
@@ -95,25 +96,25 @@ public class WoodenMaterial {
 		composter = EndBlocks.registerBlock(name + "_composter", new BaseComposterBlock(planks));
 		
 		// Recipes //
-		GridRecipe.make(name + "_planks", planks).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();
-		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
-		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', planks).setGroup("end_planks_slabs").build();
-		GridRecipe.make(name + "_fence", fence).setOutputCount(3).setShape("#I#", "#I#").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_fences").build();
-		GridRecipe.make(name + "_gate", gate).setShape("I#I", "I#I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_gates").build();
-		GridRecipe.make(name + "_button", button).setList("#").addMaterial('#', planks).setGroup("end_planks_buttons").build();
-		GridRecipe.make(name + "_pressure_plate", pressurePlate).setShape("##").addMaterial('#', planks).setGroup("end_planks_plates").build();
-		GridRecipe.make(name + "_trapdoor", trapdoor).setOutputCount(2).setShape("###", "###").addMaterial('#', planks).setGroup("end_trapdoors").build();
-		GridRecipe.make(name + "_door", door).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', planks).setGroup("end_doors").build();
-		GridRecipe.make(name + "_crafting_table", craftingTable).setShape("##", "##").addMaterial('#', planks).setGroup("end_tables").build();
-		GridRecipe.make(name + "_ladder", ladder).setOutputCount(3).setShape("I I", "I#I", "I I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_ladders").build();
-		GridRecipe.make(name + "_sign", sign).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
-		GridRecipe.make(name + "_chest", chest).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
-		GridRecipe.make(name + "_barrel", barrel).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
-		GridRecipe.make(name + "_bookshelf", shelf).setShape("###", "PPP", "###").addMaterial('#', planks).addMaterial('P', Items.BOOK).setGroup("end_bookshelves").build();
-		GridRecipe.make(name + "_bark", bark).setShape("##", "##").addMaterial('#', log).setOutputCount(3).build();
-		GridRecipe.make(name + "_log", log).setShape("##", "##").addMaterial('#', bark).setOutputCount(3).build();
-		GridRecipe.make(name + "_composter", composter).setShape("# #", "# #", "###").addMaterial('#', slab).build();
-		GridRecipe.make(name + "_shulker", Items.SHULKER_BOX).setShape("S", "#", "S").addMaterial('S', Items.SHULKER_SHELL).addMaterial('#', chest).build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_planks", planks).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_stairs", stairs).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_slab", slab).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###").addMaterial('#', planks).setGroup("end_planks_slabs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_fence", fence).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(3).setShape("#I#", "#I#").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_fences").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_gate", gate).checkConfig(Configs.RECIPE_CONFIG).setShape("I#I", "I#I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_planks_gates").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_button", button).checkConfig(Configs.RECIPE_CONFIG).setList("#").addMaterial('#', planks).setGroup("end_planks_buttons").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_pressure_plate", pressurePlate).checkConfig(Configs.RECIPE_CONFIG).setShape("##").addMaterial('#', planks).setGroup("end_planks_plates").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_trapdoor", trapdoor).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(2).setShape("###", "###").addMaterial('#', planks).setGroup("end_trapdoors").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_door", door).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(3).setShape("##", "##", "##").addMaterial('#', planks).setGroup("end_doors").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_crafting_table", craftingTable).checkConfig(Configs.RECIPE_CONFIG).setShape("##", "##").addMaterial('#', planks).setGroup("end_tables").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_ladder", ladder).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(3).setShape("I I", "I#I", "I I").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_ladders").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_sign", sign).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(3).setShape("###", "###", " I ").addMaterial('#', planks).addMaterial('I', Items.STICK).setGroup("end_signs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_chest", chest).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "# #", "###").addMaterial('#', planks).setGroup("end_chests").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_barrel", barrel).checkConfig(Configs.RECIPE_CONFIG).setShape("#S#", "# #", "#S#").addMaterial('#', planks).addMaterial('S', slab).setGroup("end_barrels").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bookshelf", shelf).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "PPP", "###").addMaterial('#', planks).addMaterial('P', Items.BOOK).setGroup("end_bookshelves").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bark", bark).checkConfig(Configs.RECIPE_CONFIG).setShape("##", "##").addMaterial('#', log).setOutputCount(3).build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_log", log).checkConfig(Configs.RECIPE_CONFIG).setShape("##", "##").addMaterial('#', bark).setOutputCount(3).build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_composter", composter).checkConfig(Configs.RECIPE_CONFIG).setShape("# #", "# #", "###").addMaterial('#', slab).build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_shulker", Items.SHULKER_BOX).checkConfig(Configs.RECIPE_CONFIG).setShape("S", "#", "S").addMaterial('S', Items.SHULKER_SHELL).addMaterial('#', chest).build();
 		
 		// Item Tags //
 		TagHelper.addTag(ItemTags.PLANKS, planks);

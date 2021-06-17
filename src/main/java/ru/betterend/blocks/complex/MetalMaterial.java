@@ -30,6 +30,7 @@ import ru.bclib.items.tool.BaseShovelItem;
 import ru.bclib.items.tool.BaseSwordItem;
 import ru.bclib.recipes.FurnaceRecipe;
 import ru.bclib.recipes.GridRecipe;
+import ru.bclib.recipes.SmithingTableRecipe;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BulbVineLanternBlock;
@@ -42,7 +43,6 @@ import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
-import ru.betterend.recipe.builders.SmithingTableRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 import ru.betterend.registry.EndTags;
@@ -195,13 +195,13 @@ public class MetalMaterial {
 		AnvilRecipe.Builder.create(name + "_forged_plate").setInput(ingot).setOutput(forgedPlate).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();
 		
 		// Tools from parts
-		SmithingTableRecipe.create(name + "_hammer").setResult(hammer).setBase(block).setAddition(Items.STICK).build();
-		SmithingTableRecipe.create(name + "_axe").setResult(axe).setBase(axeHead).setAddition(Items.STICK).build();
-		SmithingTableRecipe.create(name + "_pickaxe").setResult(pickaxe).setBase(pickaxeHead).setAddition(Items.STICK).build();
-		SmithingTableRecipe.create(name + "_hoe").setResult(hoe).setBase(hoeHead).setAddition(Items.STICK).build();
-		SmithingTableRecipe.create(name + "_sword_handle").setResult(swordHandle).setBase(ingot).setAddition(Items.STICK).build();
-		SmithingTableRecipe.create(name + "_sword").setResult(sword).setBase(swordBlade).setAddition(swordHandle).build();
-		SmithingTableRecipe.create(name + "_shovel").setResult(shovel).setBase(shovelHead).setAddition(Items.STICK).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, name + "_hammer").checkConfig(Configs.RECIPE_CONFIG).setResult(hammer).setBase(block).setAddition(Items.STICK).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, name + "_axe").checkConfig(Configs.RECIPE_CONFIG).setResult(axe).setBase(axeHead).setAddition(Items.STICK).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, name + "_pickaxe").checkConfig(Configs.RECIPE_CONFIG).setResult(pickaxe).setBase(pickaxeHead).setAddition(Items.STICK).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, name + "_hoe").checkConfig(Configs.RECIPE_CONFIG).setResult(hoe).setBase(hoeHead).setAddition(Items.STICK).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, name + "_sword_handle").checkConfig(Configs.RECIPE_CONFIG).setResult(swordHandle).setBase(ingot).setAddition(Items.STICK).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, name + "_sword").checkConfig(Configs.RECIPE_CONFIG).setResult(sword).setBase(swordBlade).setAddition(swordHandle).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, name + "_shovel").checkConfig(Configs.RECIPE_CONFIG).setResult(shovel).setBase(shovelHead).setAddition(Items.STICK).build();
 		
 		// Armor crafting
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_helmet", helmet).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "# #").addMaterial('#', forgedPlate).setGroup("end_metal_helmets").build();

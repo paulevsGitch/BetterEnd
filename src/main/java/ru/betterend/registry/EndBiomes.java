@@ -2,7 +2,6 @@ package ru.betterend.registry;
 
 import java.io.InputStream;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,13 +21,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.Biomes;
+import ru.bclib.BCLib;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.ModIntegrationAPI;
 import ru.bclib.util.JsonFactory;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.generator.BiomeMap;
 import ru.bclib.world.generator.BiomePicker;
-import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.integration.EndBiomeIntegration;
 import ru.betterend.interfaces.IBiomeList;
@@ -62,8 +61,7 @@ import ru.betterend.world.generator.BiomeType;
 import ru.betterend.world.generator.GeneratorOptions;
 
 public class EndBiomes {
-	private static final HashMap<ResourceLocation, EndBiome> ID_MAP = Maps.newHashMap();
-	private static final HashMap<Biome, EndBiome> CLIENT = Maps.newHashMap();
+	private static final Map<ResourceLocation, EndBiome> ID_MAP = Maps.newHashMap();
 	public static final Set<ResourceLocation> FABRIC_VOID = Sets.newHashSet();
 	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
 	
@@ -182,8 +180,6 @@ public class EndBiomes {
 		SUBBIOMES.forEach((endBiome) -> {
 			endBiome.updateActualBiomes(biomeRegistry);
 		});
-		
-		CLIENT.clear();
 	}
 	
 	private static void rebuildPicker(BiomePicker picker, Registry<Biome> biomeRegistry) {
@@ -200,7 +196,7 @@ public class EndBiomes {
 		biomes.forEach((key) -> FABRIC_VOID.add(key.location()));
 		FABRIC_VOID.removeIf(id -> id.getNamespace().equals("endplus"));
 		
-		if (BetterEnd.isDevEnvironment()) {
+		if (BCLib.isDevEnvironment()) {
 			System.out.println("==================================");
 			System.out.println("Added void biomes from Fabric API:");
 			FABRIC_VOID.forEach((id) -> {

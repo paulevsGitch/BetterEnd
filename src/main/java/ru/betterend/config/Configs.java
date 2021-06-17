@@ -2,6 +2,7 @@ package ru.betterend.config;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import ru.bclib.BCLib;
 import ru.bclib.config.EntryConfig;
 import ru.bclib.config.IdConfig;
 import ru.bclib.config.PathConfig;
@@ -26,7 +27,7 @@ public class Configs {
 		GENERATOR_CONFIG.saveChanges();
 		RECIPE_CONFIG.saveChanges();
 		
-		if (BetterEnd.isClient()) {
+		if (BCLib.isClient()) {
 			CLENT_CONFIG.saveChanges();
 		}
 	}

@@ -16,6 +16,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import ru.bclib.BCLib;
 import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
@@ -44,7 +45,7 @@ public class OldBulbisGardens extends EndBiome {
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(BYGFeatures.OLD_BULBIS_TREE);
 		
-		if (BetterEnd.isClient()) {
+		if (BCLib.isClient()) {
 			SoundEvent loop = effects.getAmbientLoopSoundEvent().get();
 			SoundEvent music = effects.getBackgroundMusic().get().getEvent();
 			SoundEvent additions = effects.getAmbientAdditionsSettings().get().getSoundEvent();

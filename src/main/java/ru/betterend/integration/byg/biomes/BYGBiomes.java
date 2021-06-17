@@ -10,7 +10,9 @@ public class BYGBiomes {
 	public static final EndBiome NIGHTSHADE_REDWOODS = EndBiomes.registerSubBiomeIntegration(new NightshadeRedwoods());
 	//public static final EndBiome ETHERIAL_GROVE = EndBiomes.registerSubBiomeIntegration(new EterialGrove());
 	
-	public static void register() {}
+	public static void register() {
+		System.out.println("Registered " + OLD_BULBIS_GARDENS);
+	}
 	
 	public static void addBiomes() {
 		EndBiomes.addSubBiomeIntegration(OLD_BULBIS_GARDENS, Integrations.BYG.getID("bulbis_gardens"));

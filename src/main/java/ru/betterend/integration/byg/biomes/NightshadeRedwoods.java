@@ -9,6 +9,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import ru.bclib.BCLib;
 import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
@@ -39,7 +40,7 @@ public class NightshadeRedwoods extends EndBiome {
 				.addFeature(BYGFeatures.NIGHTSHADE_MOSS_WOOD)
 				.addFeature(BYGFeatures.NIGHTSHADE_MOSS);
 		
-		if (BetterEnd.isClient()) {
+		if (BCLib.isClient()) {
 			SoundEvent loop = effects.getAmbientLoopSoundEvent().get();
 			SoundEvent music = effects.getBackgroundMusic().get().getEvent();
 			SoundEvent additions = effects.getAmbientAdditionsSettings().get().getSoundEvent();

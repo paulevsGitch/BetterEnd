@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.Block;
+import ru.bclib.BCLib;
 import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseSignBlock;
 import ru.bclib.client.render.BCLRenderLayer;
@@ -43,7 +44,7 @@ public class BetterEndClient implements ClientModInitializer {
 		registerRenderers();
 		registerTooltips();
 		
-		if (BetterEnd.isDevEnvironment()) {
+		if (BCLib.isDevEnvironment()) {
 			TranslationHelper.printMissingNames(BetterEnd.MOD_ID);
 		}
 	}

@@ -1,17 +1,14 @@
 package ru.betterend;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
-import ru.bclib.api.ModIntegrationAPI;
 import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
 import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndPotions;
-import ru.betterend.integration.EndBiomeIntegration;
 import ru.betterend.integration.Integrations;
 import ru.betterend.recipe.AlloyingRecipes;
 import ru.betterend.recipe.AnvilRecipes;
@@ -63,18 +60,9 @@ public class BetterEnd implements ModInitializer {
 		GeneratorOptions.init();
 		DataFixerUtil.init();
 		LootTableUtil.init();
-		Integrations.init();
-		initIntegrationBiomes();
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
+		Integrations.init();
 		Configs.saveConfigs();
-	}
-	
-	private void initIntegrationBiomes() {
-		ModIntegrationAPI.getIntegrations().forEach(integration -> {
-			if (integration instanceof EndBiomeIntegration && integration.modIsInstalled()) {
-				((EndBiomeIntegration) integration).biomeRegister();
-			}
-		});
 	}
 	
 	public static ResourceLocation makeID(String path) {
@@ -87,13 +75,5 @@ public class BetterEnd implements ModInitializer {
 
 	public static boolean isModId(ResourceLocation id) {
 		return id.getNamespace().equals(MOD_ID);
-	}
-	
-	public static boolean isDevEnvironment() {
-		return FabricLoader.getInstance().isDevelopmentEnvironment();
-	}
-	
-	public static boolean isClient() {
-		return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
 	}
 }

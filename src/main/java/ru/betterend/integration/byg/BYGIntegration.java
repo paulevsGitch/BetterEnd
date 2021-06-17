@@ -32,6 +32,7 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 		}
 		BYGBlocks.register();
 		BYGFeatures.register();
+		BYGBiomes.register();
 	}
 
 	@Override
@@ -77,10 +78,5 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 				}
 			});
 		}
-	}
-
-	@Override
-	public void biomeRegister() {
-		BYGBiomes.register();
 	}
 }

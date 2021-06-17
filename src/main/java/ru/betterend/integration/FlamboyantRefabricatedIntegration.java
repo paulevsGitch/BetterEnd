@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import net.minecraft.world.level.ItemLike;
+import ru.bclib.integration.ModIntegration;
 import ru.bclib.util.ColorUtil;
 import ru.betterend.blocks.HydraluxPetalColoredBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
@@ -17,7 +18,7 @@ public class FlamboyantRefabricatedIntegration extends ModIntegration {
 	}
 
 	@Override
-	public void register() {
+	public void init() {
 		Map<Integer, String> colors = Maps.newHashMap();
 		Map<Integer, ItemLike> dyes = Maps.newHashMap();
 		

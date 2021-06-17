@@ -12,6 +12,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkBiomeContainer;
 import ru.betterend.BetterEnd;
+import ru.betterend.integration.Integrations;
 import ru.betterend.interfaces.IBiomeArray;
 
 @Mixin(ChunkBiomeContainer.class)
@@ -39,7 +40,7 @@ public class ChunkBiomeContainerMixin implements IBiomeArray {
 		int biomeZ = pos.getZ() >> 2;
 		int index = be_getArrayIndex(biomeX, biomeY, biomeZ);
 		
-		if (BetterEnd.hasHydrogen()) {
+		if (Integrations.hasHydrogen()) {
 			try {
 				ChunkBiomeContainer self = (ChunkBiomeContainer) (Object) this;
 				BitStorage storage = be_getHydrogenStorage(self);

@@ -23,13 +23,14 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.Biomes;
 import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.ModIntegrationAPI;
 import ru.bclib.util.JsonFactory;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.generator.BiomeMap;
 import ru.bclib.world.generator.BiomePicker;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.integration.Integrations;
+import ru.betterend.integration.EndBiomeIntegration;
 import ru.betterend.interfaces.IBiomeList;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.air.BiomeIceStarfield;
@@ -167,7 +168,11 @@ public class EndBiomes {
 				}
 			}
 		});
-		Integrations.addBiomes();
+		ModIntegrationAPI.getIntegrations().forEach(integration -> {
+			if (integration instanceof EndBiomeIntegration && integration.modIsInstalled()) {
+				((EndBiomeIntegration) integration).addBiomes();
+			}
+		});
 		Configs.BIOME_CONFIG.saveChanges();
 		
 		rebuildPicker(LAND_BIOMES, biomeRegistry);

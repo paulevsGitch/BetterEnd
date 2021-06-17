@@ -2,6 +2,7 @@ package ru.betterend.integration;
 
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import ru.bclib.integration.ModIntegration;
 import ru.bclib.util.TagHelper;
 import ru.betterend.registry.EndItems;
 
@@ -11,7 +12,7 @@ public class NourishIntegration extends ModIntegration {
 	}
 
 	@Override
-	public void register() {
+	public void init() {
 		Tag.Named<Item> fats = getItemTag("fats");
 		Tag.Named<Item> fruit = getItemTag("fruit");
 		Tag.Named<Item> protein = getItemTag("protein");

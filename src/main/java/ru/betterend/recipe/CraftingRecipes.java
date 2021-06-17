@@ -11,23 +11,12 @@ import ru.bclib.api.TagAPI;
 import ru.bclib.recipes.GridRecipe;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.item.GuideBookItem;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public class CraftingRecipes {
 
 	public static void register() {
-		if (BetterEnd.hasGuideBook()) {
-			GridRecipe.make(BetterEnd.MOD_ID, "guide_book", GuideBookItem.GUIDE_BOOK)
-					.checkConfig(Configs.RECIPE_CONFIG)
-					.setShape("D", "B", "C")
-					.addMaterial('D', EndItems.ENDER_DUST)
-					.addMaterial('B', Items.BOOK)
-					.addMaterial('C', EndItems.CRYSTAL_SHARDS)
-					.build();
-		}
-
 		GridRecipe.make(BetterEnd.MOD_ID, "ender_perl_to_block", EndBlocks.ENDER_BLOCK)
 				.checkConfig(Configs.RECIPE_CONFIG)
 				.setShape("OO", "OO")

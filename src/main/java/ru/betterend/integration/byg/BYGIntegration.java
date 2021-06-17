@@ -7,27 +7,31 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.behavior.WeightedList;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
+import ru.bclib.integration.ModIntegration;
 import ru.bclib.util.TagHelper;
 import ru.bclib.world.biomes.BCLBiome;
+import ru.betterend.integration.EndBiomeIntegration;
 import ru.betterend.integration.Integrations;
-import ru.betterend.integration.ModIntegration;
 import ru.betterend.integration.byg.biomes.BYGBiomes;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndBiomes;
 
-public class BYGIntegration extends ModIntegration {
+public class BYGIntegration extends ModIntegration implements EndBiomeIntegration {
 	public BYGIntegration() {
 		super("byg");
 	}
 
 	@Override
-	public void register() {
-		TagHelper.addTags(Integrations.BYG.getBlock("ivis_phylium"), TagAPI.END_GROUND, TagAPI.GEN_TERRAIN);
+	public void init() {
+		Block block = Integrations.BYG.getBlock("ivis_phylium");
+		if (block != null) {
+			TagHelper.addTags(block, TagAPI.END_GROUND, TagAPI.GEN_TERRAIN);
+		}
 		BYGBlocks.register();
 		BYGFeatures.register();
-		BYGBiomes.register();
 	}
 
 	@Override
@@ -73,5 +77,10 @@ public class BYGIntegration extends ModIntegration {
 				}
 			});
 		}
+	}
+
+	@Override
+	public void biomeRegister() {
+		BYGBiomes.register();
 	}
 }

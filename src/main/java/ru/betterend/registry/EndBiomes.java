@@ -193,6 +193,7 @@ public class EndBiomes {
 		biomes.addAll(getBiomes(InternalBiomeData.getEndBiomesMap().get(Biomes.SMALL_END_ISLANDS)));
 		biomes.addAll(getBiomes(InternalBiomeData.getEndBarrensMap().get(Biomes.END_BARRENS)));
 		biomes.forEach((key) -> FABRIC_VOID.add(key.location()));
+		FABRIC_VOID.removeIf(id -> id.getNamespace().equals("endplus"));
 		
 		if (BetterEnd.isDevEnvironment()) {
 			System.out.println("==================================");

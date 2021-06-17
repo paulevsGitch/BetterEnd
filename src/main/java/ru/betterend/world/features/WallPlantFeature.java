@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import ru.bclib.blocks.BaseAttachedBlock;
+import ru.bclib.blocks.BaseWallPlantBlock;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.basis.EndWallPlantBlock;
 
 public class WallPlantFeature extends WallScatterFeature {
 	private final Block block;
@@ -22,8 +22,8 @@ public class WallPlantFeature extends WallScatterFeature {
 
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
-		if (block instanceof EndWallPlantBlock) {
-			BlockState state = block.defaultBlockState().setValue(EndWallPlantBlock.FACING, dir);
+		if (block instanceof BaseWallPlantBlock) {
+			BlockState state = block.defaultBlockState().setValue(BaseWallPlantBlock.FACING, dir);
 			return block.canSurvive(state, world, pos);
 		}
 		else if (block instanceof BaseAttachedBlock) {
@@ -36,8 +36,8 @@ public class WallPlantFeature extends WallScatterFeature {
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
 		BlockState state = block.defaultBlockState();
-		if (block instanceof EndWallPlantBlock) {
-			state = state.setValue(EndWallPlantBlock.FACING, dir);
+		if (block instanceof BaseWallPlantBlock) {
+			state = state.setValue(BaseWallPlantBlock.FACING, dir);
 		}
 		else if (block instanceof BaseAttachedBlock) {
 			state = state.setValue(BlockStateProperties.FACING, dir);

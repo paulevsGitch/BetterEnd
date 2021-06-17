@@ -28,6 +28,7 @@ import ru.bclib.items.tool.BaseHoeItem;
 import ru.bclib.items.tool.BasePickaxeItem;
 import ru.bclib.items.tool.BaseShovelItem;
 import ru.bclib.items.tool.BaseSwordItem;
+import ru.bclib.recipes.FurnaceRecipe;
 import ru.bclib.recipes.GridRecipe;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
@@ -41,7 +42,6 @@ import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
-import ru.betterend.recipe.builders.FurnaceRecipe;
 import ru.betterend.recipe.builders.SmithingTableRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -151,7 +151,7 @@ public class MetalMaterial {
 		anvilItem = EndItems.registerEndItem(name + "_anvil_item", new EndAnvilItem(anvilBlock));
 		
 		if (hasOre) {
-			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").buildWithBlasting();
+			FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_ingot_furnace", ore, ingot).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_ingot").buildWithBlasting();
 			AlloyingRecipe.Builder.create(name + "_ingot_alloy").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
 		}
 		
@@ -176,15 +176,15 @@ public class MetalMaterial {
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_chandelier", chandelier).checkConfig(Configs.RECIPE_CONFIG).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', EndItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
 		
 		// Tools & armor into nuggets
-		FurnaceRecipe.make(name + "_axe_nugget", axe, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_hoe_nugget", hoe, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_pickaxe_nugget", pickaxe, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_sword_nugget", sword, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_hammer_nugget", hammer, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_helmet_nugget", helmet, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_chestplate_nugget", chestplate, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_leggings_nugget", leggings, nugget).setGroup("end_nugget").buildWithBlasting();
-		FurnaceRecipe.make(name + "_boots_nugget", boots, nugget).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_axe_nugget", axe, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_hoe_nugget", hoe, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_pickaxe_nugget", pickaxe, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_sword_nugget", sword, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_hammer_nugget", hammer, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_helmet_nugget", helmet, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_chestplate_nugget", chestplate, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_leggings_nugget", leggings, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
+		FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_boots_nugget", boots, nugget).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_nugget").buildWithBlasting();
 		
 		// Tool parts from ingots
 		AnvilRecipe.Builder.create(name + "_shovel_head").setInput(ingot).setOutput(shovelHead).setAnvilLevel(level).setToolLevel(level).setDamage(level).build();

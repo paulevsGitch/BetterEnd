@@ -5,22 +5,22 @@
 			{
 				"name": "betterend:music/dan_henig-eternal_garden",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/dan_henig-nebular_focus",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/bobby_richards-two_moons",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/astron-peaceful_mind",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -30,22 +30,22 @@
 			{
 				"name": "betterend:music/jesse_gallagher-the_blue_pearl",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/jesse_gallagher-venkatesananda",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/the_tides-somnolent",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/benjamin_martins-verve",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -55,22 +55,22 @@
 			{
 				"name": "betterend:music/emmit_fenn-creep",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/jesse_gallagher-the_anunnaki_return",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/i_think_i_can_help_you-the_six_realms",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/jesse_gallagher-maestro_tlakaelel",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -80,22 +80,22 @@
 			{
 				"name": "betterend:music/godmode-melancholia",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/asher_fulero-elegy",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/the-tides-ammil",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/vyen-amber",
 				"volume": 0.2,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -105,22 +105,22 @@
 			{
 				"name": "betterend:music/godmode-future_rennaisance",
 				"volume": 0.1,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/futuremono-moonrise",
 				"volume": 0.1,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/emmit_fenn-wander",
 				"volume": 0.1,
-				"stream": false
+				"stream": true
 			},
 			{
 				"name": "betterend:music/corbyn_kites-orbit",
 				"volume": 0.1,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -130,7 +130,7 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/foggy_mushroomland",
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -139,7 +139,7 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/chorus_forest",
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -148,7 +148,7 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/megalake",
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -157,7 +157,7 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/dust_wastelands",
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -166,7 +166,7 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/megalake_grove",
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -175,7 +175,7 @@
 		"sounds": [
 			{
 				"name": "betterend:ambient/blossoming_spires",
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -185,7 +185,7 @@
 			{
 				"name": "betterend:ambient/sulphur_springs",
 				"volume": 0.3,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -195,7 +195,7 @@
 			{
 				"name": "betterend:ambient/umbrella_jungle",
 				"volume": 1.0,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -205,7 +205,7 @@
 			{
 				"name": "betterend:ambient/glowing_grasslands",
 				"volume": 1.0,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -215,7 +215,7 @@
 			{
 				"name": "betterend:ambient/caves",
 				"volume": 0.5,
-				"stream": false
+				"stream": true
 			}
 		]
 	},
@@ -225,15 +225,18 @@
 		"sounds": [
 			{
 				"name": "betterend:entity/dragonfly/dragonfly_1",
-				"stream": false
+				"stream": false,
+				"attenuation_distance": 16
 			},
 			{
 				"name": "betterend:entity/dragonfly/dragonfly_2",
-				"stream": false
+				"stream": false,
+				"attenuation_distance": 16
 			},
 			{
 				"name": "betterend:entity/dragonfly/dragonfly_3",
-				"stream": false
+				"stream": false,
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -242,11 +245,13 @@
 		"sounds": [
 			{
 				"name": "betterend:entity/shadow_walker/shadow_walker_1",
-				"stream": false
+				"stream": false,
+				"attenuation_distance": 16
 			},
 			{
 				"name": "betterend:entity/shadow_walker/shadow_walker_2",
-				"stream": false
+				"stream": false,
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -255,7 +260,8 @@
 		"sounds": [
 			{
 				"name": "betterend:entity/shadow_walker/shadow_walker_damage",
-				"stream": false
+				"stream": false,
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -264,7 +270,8 @@
 		"sounds": [
 			{
 				"name": "betterend:entity/shadow_walker/shadow_walker_death",
-				"stream": false
+				"stream": false,
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -274,7 +281,8 @@
 		"sounds": [
 			{
 				"name": "betterend:records/firel-strange_and_alien",
-				"stream": false
+				"stream": true,
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -283,7 +291,8 @@
 		"sounds": [
 			{
 				"name": "betterend:records/firel-grasping_at_stars",
-				"stream": false
+				"stream": true,
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -292,7 +301,8 @@
 		"sounds": [
 			{
 				"name": "betterend:records/firel-endseeker",
-				"stream": false
+				"stream": true,
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -301,7 +311,8 @@
 		"sounds": [
 			{
 				"name": "betterend:records/firel-eo_dracona",
-				"stream": false
+				"stream": true,
+				"attenuation_distance": 16
 			}
 		]
 	}

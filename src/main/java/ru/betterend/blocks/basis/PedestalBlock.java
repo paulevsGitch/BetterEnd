@@ -118,7 +118,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 			if (pedestal.isEmpty()) {
 				ItemStack itemStack = player.getItemInHand(hand);
 				if (itemStack.isEmpty()) return InteractionResult.CONSUME;
-				pedestal.setItem(0, itemStack.split(1));
+				pedestal.setItem(0, itemStack);
 				checkRitual(world, pos);
 				return InteractionResult.SUCCESS;
 			} else {

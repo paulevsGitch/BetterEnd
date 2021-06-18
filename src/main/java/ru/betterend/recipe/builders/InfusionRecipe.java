@@ -66,7 +66,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 
 	@Override
 	public ItemStack assemble(InfusionRitual ritual) {
-		return this.output.copy();
+		return output.copy();
 	}
 
 	@Override

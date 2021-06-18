@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -109,11 +110,8 @@ public class InfusionRitual implements Container {
 		if (!checkRecipe()) return;
 		progress++;
 		if (progress == time) {
-			input.removeItemNoUpdate(0);
+			clearContent();
 			input.setItem(0, activeRecipe.assemble(this));
-			for (PedestalBlockEntity catalyst : catalysts) {
-				catalyst.removeItemNoUpdate(0);
-			}
 			reset();
 		} else {
 			ServerLevel serverLevel = (ServerLevel) world;
@@ -159,9 +157,7 @@ public class InfusionRitual implements Container {
 	public void clearContent() {
 		if (!isValid()) return;
 		input.clearContent();
-		for (PedestalBlockEntity catalyst : catalysts) {
-			catalyst.clearContent();
-		}
+		Arrays.stream(catalysts).forEach(PedestalBlockEntity::clearContent);
 	}
 
 	@Override
@@ -213,9 +209,7 @@ public class InfusionRitual implements Container {
 	public void setChanged() {
 		if (isValid()) {
 			input.setChanged();
-			for (PedestalBlockEntity catalyst : catalysts) {
-				catalyst.setChanged();
-			}
+			Arrays.stream(catalysts).forEach(PedestalBlockEntity::setChanged);
 		}
 	}
 

@@ -75,7 +75,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Ticka
 
 	@Override
 	public void setItem(int slot, ItemStack stack) {
-		activeItem = stack;
+		activeItem = stack.split(1);
 		setChanged();
 	}
 	

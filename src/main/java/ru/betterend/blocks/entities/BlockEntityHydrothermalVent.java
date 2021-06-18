@@ -31,9 +31,10 @@ public class BlockEntityHydrothermalVent extends BlockEntity implements Tickable
 	@Override
 	public void tick() {
 		if (level != null) {
-			if (level.random.nextInt(20) == 0) {
-				BlockState state = getBlockState();
-				if (state.is(EndBlocks.HYDROTHERMAL_VENT) && state.getValue(HydrothermalVentBlock.ACTIVATED)) {
+			BlockState state = getBlockState();
+			if (state.is(EndBlocks.HYDROTHERMAL_VENT)) {
+				boolean active = state.getValue(HydrothermalVentBlock.ACTIVATED);
+				if (active && level.random.nextInt(20) == 0) {
 					double x = worldPosition.getX() + level.random.nextDouble();
 					double y = worldPosition.getY() + 0.9 + level.random.nextDouble() * 0.3;
 					double z = worldPosition.getZ() + level.random.nextDouble();
@@ -43,21 +44,23 @@ public class BlockEntityHydrothermalVent extends BlockEntity implements Tickable
 						level.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
 					}
 				}
-			}
-			MutableBlockPos mutable = worldPosition.mutable().move(Direction.UP);
-			AABB box = new AABB(mutable.offset(-1, 0, -1), mutable.offset(1, 25, 1));
-			List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, box);
-			if (entities.size() > 0) {
-				while (mutable.getY() < box.maxY) {
-					BlockState blockState = level.getBlockState(mutable);
-					if (blockState.isSolidRender(level, mutable)) break;
-					if (blockState.isAir()) {
-						float force = (float) ((1.0 - (mutable.getY() / box.maxY)) / 5.0);
-						entities.stream().filter(entity -> (int) entity.getY() == mutable.getY() &&
-								hasElytra(entity) && entity.isFallFlying())
-								.forEach(entity -> entity.moveRelative(force, POSITIVE_Y));
+				MutableBlockPos mutable = worldPosition.mutable().move(Direction.UP);
+				int height = active ? 85 : 25;
+				AABB box = new AABB(mutable.offset(-1, 0, -1), mutable.offset(1, height, 1));
+				List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, box);
+				if (entities.size() > 0) {
+					while (mutable.getY() < box.maxY) {
+						BlockState blockState = level.getBlockState(mutable);
+						if (blockState.isSolidRender(level, mutable)) break;
+						if (blockState.isAir()) {
+							double mult = active ? 3.0 : 5.0;
+							float force = (float) ((1.0 - (mutable.getY() / box.maxY)) / mult);
+							entities.stream().filter(entity -> (int) entity.getY() == mutable.getY() &&
+									hasElytra(entity) && entity.isFallFlying())
+									.forEach(entity -> entity.moveRelative(force, POSITIVE_Y));
+						}
+						mutable.move(Direction.UP);
 					}
-					mutable.move(Direction.UP);
 				}
 			}
 		}

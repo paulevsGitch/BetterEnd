@@ -20,14 +20,12 @@ group = project.maven_group
 
 repositories {
     maven { url "https://maven.dblsaiko.net/" }
-    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
+    maven { url "https://server.bbkr.space:8081/artifactory/libs-release/" }
 	maven { url "https://maven.fabricmc.net/" }
 	maven { url 'https://maven.blamejared.com' }
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url 'https://jitpack.io' }
 }
-
-apply plugin: 'maven'
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -72,14 +70,11 @@ def useApi(String dep) {
 
 processResources {
 	inputs.property "version", project.version
+	duplicatesStrategy = 'WARN'
 
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
 		expand "version": project.version
-	}
-
-	from(sourceSets.main.resources.srcDirs) {
-		exclude "fabric.mod.json"
 	}
 }
 
@@ -143,21 +138,21 @@ task release(dependsOn: [remapJar, sourcesJar, javadocJar]) {
 }
 
 // configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
-	}
-}
+//publishing {
+//	publications {
+//		mavenJava(MavenPublication) {
+//			artifact(remapJar) {
+//				builtBy remapJar
+//			}
+//			artifact(sourcesJar) {
+//				builtBy remapSourcesJar
+//			}
+//		}
+//	}
+//
+//	// select the repositories you want to publish to
+//	repositories {
+//		// uncomment to publish to the local maven
+//		// mavenLocal()
+//	}
+//}

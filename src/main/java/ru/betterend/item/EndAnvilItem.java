@@ -1,5 +1,7 @@
 package ru.betterend.item;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -30,6 +32,7 @@ public class EndAnvilItem extends BaseAnvilItem {
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		Block block = getBlock();
 		ResourceLocation blockId = Registry.BLOCK.getKey(block);

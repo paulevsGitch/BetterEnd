@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
@@ -85,6 +87,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}

@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
@@ -44,6 +46,7 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		String blockName = resourceLocation.getPath();
 		Optional<String> pattern = blockState.getValue(IS_FLOOR) ?

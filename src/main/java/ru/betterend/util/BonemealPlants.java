@@ -22,10 +22,10 @@ public class BonemealPlants {
 		BonemealAPI.addLandGrass(EndBlocks.TWISTED_UMBRELLA_MOSS, EndBlocks.JUNGLE_MOSS);
 		BonemealAPI.addLandGrass(EndBlocks.JUNGLE_MOSS, EndBlocks.SMALL_JELLYSHROOM, 0.1F);
 		
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.END_MOSS, EndBlocks.BLOOMING_COOKSONIA);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.END_MOSS, EndBlocks.VAIOLUSH_FERN);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.END_MOSS, EndBlocks.FRACTURN);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.END_MOSS, EndBlocks.SALTEAGO);
+		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.BLOOMING_COOKSONIA, EndBlocks.END_MOSS);
+		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.VAIOLUSH_FERN, EndBlocks.END_MOSS);
+		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.FRACTURN, EndBlocks.END_MOSS);
+		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.SALTEAGO, EndBlocks.END_MOSS);
 		
 		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.END_MOSS, EndBlocks.CREEPING_MOSS, 0.1F);
 		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.END_MOSS, EndBlocks.UMBRELLA_MOSS, 0.1F);
@@ -37,7 +37,7 @@ public class BonemealPlants {
 		BonemealAPI.addLandGrass(EndBlocks.RUTISCUS, EndBlocks.LAMELLARIUM);
 		
 		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.RUTISCUS, EndBlocks.AERIDIUM, 0.2F);
-		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.RUTISCUS, EndBlocks.LAMELLARIUM);
+		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.LAMELLARIUM, EndBlocks.RUTISCUS);
 		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.RUTISCUS, EndBlocks.BOLUX_MUSHROOM, 0.05F);
 		
 		BonemealAPI.addLandGrass(EndBlocks.GLOBULAGUS, EndBlocks.SANGNUM, EndBlocks.MOSSY_OBSIDIAN, EndBlocks.MOSSY_DRAGON_BONE);
@@ -48,7 +48,7 @@ public class BonemealPlants {
 		
 		BonemealAPI.addLandGrass(EndBlocks.GLOBULAGUS, EndBlocks.MOSSY_DRAGON_BONE);
 		BonemealAPI.addLandGrass(EndBlocks.CLAWFERN, EndBlocks.MOSSY_DRAGON_BONE);
-		BonemealAPI.addLandGrass(EndBlocks.SMALL_AMARANITA_MUSHROOM, EndBlocks.MOSSY_DRAGON_BONE, 0.1F);
+		BonemealAPI.addLandGrass(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
 		
 		BonemealAPI.addLandGrass(EndBlocks.GLOBULAGUS, EndBlocks.MOSSY_OBSIDIAN);
 		BonemealAPI.addLandGrass(EndBlocks.CLAWFERN, EndBlocks.MOSSY_OBSIDIAN);

@@ -210,7 +210,7 @@ public class EndBlocks extends BlocksRegistry {
 	public static final Block AMARANITA_HYPHAE = registerBlock("amaranita_hyphae", new AmaranitaStemBlock());
 	public static final Block AMARANITA_HYMENOPHORE = registerBlock("amaranita_hymenophore", new AmaranitaHymenophoreBlock());
 	public static final Block AMARANITA_LANTERN = registerBlock("amaranita_lantern", new GlowingHymenophoreBlock());
-	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 4, true));
+	public static final Block AMARANITA_FUR = registerBlock("amaranita_fur", new FurBlock(SMALL_AMARANITA_MUSHROOM, 15, 4, true));
 	public static final Block AMARANITA_CAP = registerBlock("amaranita_cap", new AmaranitaCapBlock());
 	
 	public static final Block NEON_CACTUS = registerBlock("neon_cactus", new NeonCactusPlantBlock());

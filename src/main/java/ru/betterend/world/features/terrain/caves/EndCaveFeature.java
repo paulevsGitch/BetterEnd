@@ -58,19 +58,17 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		if (!caveBlocks.isEmpty()) {
 			if (biome != null) {
 				setBiomes(world, biome, caveBlocks);
-				Set<BlockPos> floorPositions = Sets.newHashSet();
-				Set<BlockPos> ceilPositions = Sets.newHashSet();
-				MutableBlockPos mut = new MutableBlockPos();
-				caveBlocks.forEach((bpos) -> {
-					mut.set(bpos);
-					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
-						mut.setY(bpos.getY() - 1);
-						if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
-							floorPositions.add(mut.immutable());
+				Set<BlockPos> floorPositions = Sets.newConcurrentHashSet();
+				Set<BlockPos> ceilPositions = Sets.newConcurrentHashSet();
+				caveBlocks.parallelStream().forEach((bpos) -> {
+					if (world.getBlockState(bpos).getMaterial().isReplaceable()) {
+						BlockPos side = bpos.below();
+						if (world.getBlockState(side).is(TagAPI.GEN_TERRAIN)) {
+							floorPositions.add(side);
 						}
-						mut.setY(bpos.getY() + 1);
-						if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
-							ceilPositions.add(mut.immutable());
+						side = bpos.above();
+						if (world.getBlockState(side).is(TagAPI.GEN_TERRAIN)) {
+							ceilPositions.add(side);
 						}
 					}
 				});

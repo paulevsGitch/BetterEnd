@@ -3,6 +3,7 @@ package ru.betterend.world.features.terrain.caves;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -34,55 +36,56 @@ public class TunelCaveFeature extends EndCaveFeature {
 		if ((long) cx * (long) cx + (long) cz + (long) cz < 256) {
 			return Sets.newHashSet();
 		}
+		
 		int x1 = cx << 4;
 		int z1 = cz << 4;
 		int x2 = x1 + 16;
 		int z2 = z1 + 16;
-		int y2 = world.getHeight();
+		
 		Random rand = new Random(world.getSeed());
 		OpenSimplexNoise noiseH = new OpenSimplexNoise(rand.nextInt());
 		OpenSimplexNoise noiseV = new OpenSimplexNoise(rand.nextInt());
 		OpenSimplexNoise noiseD = new OpenSimplexNoise(rand.nextInt());
 		
-		Set<BlockPos> positions = Sets.newHashSet();
-		MutableBlockPos pos = new MutableBlockPos();
+		Set<BlockPos> positions = Sets.newConcurrentHashSet();
 		
-		float a = hasCaves(world, pos.set(x1, 0, z1)) ? 1F : 0F;
-		float b = hasCaves(world, pos.set(x2, 0, z1)) ? 1F : 0F;
-		float c = hasCaves(world, pos.set(x1, 0, z2)) ? 1F : 0F;
-		float d = hasCaves(world, pos.set(x2, 0, z2)) ? 1F : 0F;
+		float a = hasCaves(world, new BlockPos(x1, 0, z1)) ? 1F : 0F;
+		float b = hasCaves(world, new BlockPos(x2, 0, z1)) ? 1F : 0F;
+		float c = hasCaves(world, new BlockPos(x1, 0, z2)) ? 1F : 0F;
+		float d = hasCaves(world, new BlockPos(x2, 0, z2)) ? 1F : 0F;
 		
-		for (int x = x1; x < x2; x++) {
-			pos.setX(x);
-			float dx = (float) (x - x1) / 16F;
+		ChunkAccess chunk = world.getChunk(cx, cz);
+		IntStream.range(0, 256).parallel().forEach(index -> {
+			MutableBlockPos pos = new MutableBlockPos();
+			int x = index & 15;
+			int z = index >> 4;
+			int wheight = chunk.getHeight(Types.WORLD_SURFACE_WG, x, z);
+			float dx = x / 16F;
+			float dz = z / 16F;
+			pos.setX(x + x1);
+			pos.setZ(z + z1);
 			float da = Mth.lerp(dx, a, b);
 			float db = Mth.lerp(dx, c, d);
-			for (int z = z1; z < z2; z++) {
-				pos.setZ(z);
-				float dz = (float) (z - z1) / 16F;
-				float density = 1 - Mth.lerp(dz, da, db);
-				int wheight = world.getHeight(Types.WORLD_SURFACE_WG, x, z);
-				for (int y = 0; y < y2; y++) {
+			float density = 1 - Mth.lerp(dz, da, db);
+			if (density < 0.5) {
+				for (int y = 0; y < wheight; y++) {
 					pos.setY(y);
 					float gradient = 1 - Mth.clamp((wheight - y) * 0.1F, 0F, 1F);
-					float val = Mth.abs((float) noiseH.eval(x * 0.02, y * 0.01, z * 0.02));
-					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;
-					float dist = (float) noiseD.eval(x * 0.1, y * 0.1, z * 0.1) * 0.12F;
+					if (gradient > 0.5) {
+						break;
+					}
+					float val = Mth.abs((float) noiseH.eval(pos.getX() * 0.02, y * 0.01, pos.getZ() * 0.02));
+					float vert = Mth.sin((y + (float) noiseV.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * 20) * 0.1F) * 0.9F;
+					float dist = (float) noiseD.eval(pos.getX() * 0.1, y * 0.1, pos.getZ() * 0.1) * 0.12F;
 					val = (val + vert * vert + dist) + density + gradient;
 					if (val < 0.15 && world.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && noWaterNear(world, pos)) {
-						BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						positions.add(pos.immutable());
-						int height = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-						if (height < pos.getY() + 4) {
-							while (pos.getY() < height && noWaterNear(world, pos)) {
-								pos.setY(pos.getY() + 1);
-								BlocksHelper.setWithoutUpdate(world, pos, AIR);
-							}
-						}
 					}
 				}
 			}
-		}
+		});
+		positions.forEach(bpos -> BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR));
+		
 		return positions;
 	}
 	

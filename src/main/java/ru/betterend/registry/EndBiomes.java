@@ -153,7 +153,6 @@ public class EndBiomes {
 							hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
 						}
 						EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
-						System.out.println("Added biome: " + endBiome);
 
 						if (isVoid) {
 							VOID_BIOMES.addBiomeMutable(endBiome);

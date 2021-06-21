@@ -1,20 +1,14 @@
 package ru.betterend.registry;
 
 import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Lists;
 
-import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.tags.Tag.Named;
-import net.minecraft.tags.TagCollection;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
@@ -39,43 +33,12 @@ public class EndTags {
 	// https://fabricmc.net/wiki/tutorial:tags
 	
 	// Block Tags
-	public static final Tag.Named<Block> PEDESTALS = makeBlockTag("pedestal");
-	public static final Tag.Named<Block> END_STONES = makeCommonBlockTag("end_stones");
-	public static final Tag.Named<Block> DRAGON_IMMUNE = getMCBlockTag("dragon_immune");
+	public static final Tag.Named<Block> PEDESTALS = TagAPI.makeBlockTag(BetterEnd.MOD_ID, "pedestal");
+	public static final Tag.Named<Block> END_STONES = TagAPI.makeCommonBlockTag("end_stones");
+	public static final Tag.Named<Block> DRAGON_IMMUNE = TagAPI.getMCBlockTag("dragon_immune");
 	
 	// Item Tags
-	public final static Tag.Named<Item> HAMMERS = makeFabricItemTag("hammers");
-
-	public static <T> Tag.Named<T> makeTag(Supplier<TagCollection<T>> containerSupplier, ResourceLocation id) {
-		Tag<T> tag = containerSupplier.get().getTag(id);
-		return tag == null ? TagRegistry.create(id, containerSupplier) : (Named<T>) tag;
-	}
-
-	public static Tag.Named<Block> makeBlockTag(String name) {
-		return makeTag(BlockTags::getAllTags, BetterEnd.makeID(name));
-	}
-	
-	public static Tag.Named<Item> makeItemTag(String name) {
-		return makeTag(ItemTags::getAllTags, BetterEnd.makeID(name));
-	}
-	
-	public static Tag.Named<Block> makeCommonBlockTag(String name) {
-		return makeTag(BlockTags::getAllTags, new ResourceLocation("c", name));
-	}
-	
-	public static Tag.Named<Item> makeCommonItemTag(String name) {
-		return makeTag(ItemTags::getAllTags, new ResourceLocation("c", name));
-	}
-
-	public static Tag.Named<Item> makeFabricItemTag(String name) {
-		return makeTag(ItemTags::getAllTags, new ResourceLocation("fabric", name));
-	}
-	
-	public static Tag.Named<Block> getMCBlockTag(String name) {
-		ResourceLocation id = new ResourceLocation(name);
-		Tag<Block> tag = BlockTags.getAllTags().getTag(id);
-		return tag == null ? (Named<Block>) TagRegistry.block(id) : (Named<Block>) tag;
-	}
+	public final static Tag.Named<Item> HAMMERS = TagAPI.makeItemTag("fabric", "hammers");
 	
 	public static void register() {
 		TagAPI.addEndGround(EndBlocks.THALLASIUM.ore);
@@ -104,6 +67,8 @@ public class EndTags {
 				ComposterBlockAccessor.callAdd(0.1F, block);
 			}
 		});
+		TagAPI.addEndGround(EndBlocks.CAVE_MOSS);
+		TagHelper.addTag(BlockTags.NYLIUM, EndBlocks.CAVE_MOSS);
 		BonemealAPI.addSpreadableBlock(EndBlocks.CAVE_MOSS);
 		
 		List<Item> hammers = Lists.newArrayList();

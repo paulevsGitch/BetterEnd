@@ -12,14 +12,17 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
+import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.world.biome.cave.EndCaveBiome;
@@ -43,17 +46,30 @@ public class TunelCaveFeature extends EndCaveFeature {
 		
 		Set<BlockPos> positions = Sets.newHashSet();
 		MutableBlockPos pos = new MutableBlockPos();
+		
+		float a = hasCaves(world, pos.set(x1, 0, z1)) ? 1F : 0F;
+		float b = hasCaves(world, pos.set(x2, 0, z1)) ? 1F : 0F;
+		float c = hasCaves(world, pos.set(x1, 0, z2)) ? 1F : 0F;
+		float d = hasCaves(world, pos.set(x2, 0, z2)) ? 1F : 0F;
+		
 		for (int x = x1; x < x2; x++) {
 			pos.setX(x);
+			float dx = (float) (x - x1) / 16F;
+			float da = Mth.lerp(dx, a, b);
+			float db = Mth.lerp(dx, c, d);
 			for (int z = z1; z < z2; z++) {
 				pos.setZ(z);
+				float dz = (float) (z - z1) / 16F;
+				float density = 1 - Mth.lerp(dz, da, db);
+				int wheight = world.getHeight(Types.WORLD_SURFACE_WG, x, z);
 				for (int y = 0; y < y2; y++) {
 					pos.setY(y);
+					float gradient = 1 - Mth.clamp((wheight - y) * 0.1F, 0F, 1F);
 					float val = Mth.abs((float) noiseH.eval(x * 0.02, y * 0.01, z * 0.02));
 					float vert = Mth.sin((y + (float) noiseV.eval(x * 0.01, z * 0.01) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(x * 0.1, y * 0.1, z * 0.1) * 0.12F;
-					vert *= vert;
-					if (val + vert + dist < 0.15 && world.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && noWaterNear(world, pos)) {
+					val = (val + vert * vert + dist) + density + gradient;
+					if (val < 0.15 && world.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && noWaterNear(world, pos)) {
 						BlocksHelper.setWithoutUpdate(world, pos, AIR);
 						positions.add(pos.immutable());
 						int height = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
@@ -191,5 +207,18 @@ public class TunelCaveFeature extends EndCaveFeature {
 				}
 			}
 		});
+	}
+	
+	protected boolean hasCaves(WorldGenLevel world, BlockPos pos) {
+		return hasCavesInBiome(world, pos.offset(-8, 0, -8)) &&
+				hasCavesInBiome(world, pos.offset(8, 0, -8)) &&
+				hasCavesInBiome(world, pos.offset(-8, 0, 8)) &&
+				hasCavesInBiome(world, pos.offset(8, 0, 8));
+	}
+	
+	protected boolean hasCavesInBiome(WorldGenLevel world, BlockPos pos) {
+		Biome biome = world.getBiome(pos);
+		BCLBiome endBiome = BiomeAPI.getFromBiome(biome);
+		return endBiome.getCustomData("has_caves", true);
 	}
 }

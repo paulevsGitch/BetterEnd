@@ -61,7 +61,6 @@ import ru.betterend.world.generator.BiomeType;
 import ru.betterend.world.generator.GeneratorOptions;
 
 public class EndBiomes {
-	private static final Map<ResourceLocation, EndBiome> ID_MAP = Maps.newHashMap();
 	public static final Set<ResourceLocation> FABRIC_VOID = Sets.newHashSet();
 	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
 	
@@ -154,6 +153,7 @@ public class EndBiomes {
 							hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
 						}
 						EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
+						System.out.println("Added biome: " + endBiome);
 
 						if (isVoid) {
 							VOID_BIOMES.addBiomeMutable(endBiome);
@@ -161,7 +161,7 @@ public class EndBiomes {
 						else {
 							LAND_BIOMES.addBiomeMutable(endBiome);
 						}
-						ID_MAP.put(id, endBiome);
+						BiomeAPI.registerBiome(endBiome);
 					}
 				}
 			}
@@ -274,7 +274,7 @@ public class EndBiomes {
 			parent.addSubBiome(endBiome);
 			SUBBIOMES.add(endBiome);
 			SUBBIOMES_UNMUTABLES.add(endBiome.getID());
-			ID_MAP.put(endBiome.getID(), endBiome);
+			BiomeAPI.registerBiome(endBiome);
 		}
 		return endBiome;
 	}
@@ -291,7 +291,6 @@ public class EndBiomes {
 			parent.addSubBiome(biome);
 			SUBBIOMES.add(biome);
 			SUBBIOMES_UNMUTABLES.add(biome.getID());
-			ID_MAP.put(biome.getID(), biome);
 			BiomeAPI.addEndLandBiomeToFabricApi(biome);
 		}
 		return biome;
@@ -307,7 +306,6 @@ public class EndBiomes {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(biome);
 			addToPicker(biome, type);
-			ID_MAP.put(biome.getID(), biome);
 			if (type == BiomeType.LAND) {
 				BiomeAPI.addEndLandBiomeToFabricApi(biome);
 			}
@@ -328,7 +326,6 @@ public class EndBiomes {
 			BiomeAPI.registerBiome(biome);
 			SUBBIOMES.add(biome);
 			SUBBIOMES_UNMUTABLES.add(biome.getID());
-			ID_MAP.put(biome.getID(), biome);
 			BiomeAPI.addEndLandBiomeToFabricApi(biome);
 		}
 		return biome;
@@ -341,7 +338,7 @@ public class EndBiomes {
 	 */
 	public static void addSubBiomeIntegration(EndBiome biome, ResourceLocation parent) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-			EndBiome parentBiome = ID_MAP.get(parent);
+			BCLBiome parentBiome = BiomeAPI.getBiome(parent);
 			if (parentBiome != null && !parentBiome.containsSubBiome(biome)) {
 				parentBiome.addSubBiome(biome);
 			}
@@ -369,16 +366,11 @@ public class EndBiomes {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(biome);
 			CAVE_BIOMES.addBiome(biome);
-			ID_MAP.put(biome.getID(), biome);
 		}
 		return biome;
 	}
 	
 	public static EndCaveBiome getCaveBiome(int x, int z) {
 		return (EndCaveBiome) caveBiomeMap.getBiome(x, z);
-	}
-	
-	public static boolean hasBiome(ResourceLocation biomeID) {
-		return ID_MAP.containsKey(biomeID);
 	}
 }

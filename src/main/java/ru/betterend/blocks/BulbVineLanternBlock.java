@@ -7,6 +7,8 @@ import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Maps;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -57,6 +59,7 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%glow%", getGlowTexture());

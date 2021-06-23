@@ -16,6 +16,7 @@ import ru.bclib.blocks.BaseBarkBlock;
 import ru.bclib.blocks.BaseBarrelBlock;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BaseBookshelfBlock;
+import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseComposterBlock;
 import ru.bclib.blocks.BaseCraftingTableBlock;
 import ru.bclib.blocks.BaseDoorBlock;
@@ -90,7 +91,7 @@ public class WoodenMaterial {
 		ladder = EndBlocks.registerBlock(name + "_ladder", new BaseLadderBlock(planks));
 		sign = EndBlocks.registerBlock(name + "_sign", new BaseSignBlock(planks));
 		
-		chest = EndBlocks.registerBlock(name + "_chest", new BaseFenceBlock(planks));
+		chest = EndBlocks.registerBlock(name + "_chest", new BaseChestBlock(planks));
 		barrel = EndBlocks.registerBlock(name + "_barrel", new BaseBarrelBlock(planks));
 		shelf = EndBlocks.registerBlock(name + "_bookshelf", new BaseBookshelfBlock(planks));
 		composter = EndBlocks.registerBlock(name + "_composter", new BaseComposterBlock(planks));

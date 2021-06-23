@@ -2,6 +2,7 @@ package ru.betterend.world.features.terrain.caves;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import com.google.common.collect.Sets;
 
@@ -30,47 +31,45 @@ public class RoundCaveFeature extends EndCaveFeature {
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		
-		BlockState state;
-		MutableBlockPos bpos = new MutableBlockPos();
-		Set<BlockPos> blocks = Sets.newHashSet();
-		for (int x = x1; x <= x2; x++) {
-			int xsq = x - center.getX();
-			xsq *= xsq;
+		int dx = x2 - x1 + 1;
+		int dz = z2 - z1 + 1;
+		int count = dx * dz;
+		Set<BlockPos> blocks = Sets.newConcurrentHashSet();
+		IntStream.range(0, count).parallel().forEach(index -> {
+			MutableBlockPos bpos = new MutableBlockPos();
+			int x = (index % dx) + x1;
+			int z = (index / dx) + z1;
 			bpos.setX(x);
-			for (int z = z1; z <= z2; z++) {
-				int zsq = z - center.getZ();
-				zsq *= zsq;
-				bpos.setZ(z);
-				for (int y = y1; y <= y2; y++) {
-					int ysq = y - center.getY();
-					ysq *= 1.6;
-					ysq *= ysq;
+			bpos.setZ(z);
+			int xsq = MHelper.sqr(x - center.getX());
+			int zsq = MHelper.sqr(z - center.getZ());
+			int dxz = xsq + zsq;
+			BlockState state;
+			for (int y = y1; y <= y2; y++) {
+				int ysq = (int) MHelper.sqr((y - center.getY()) * 1.6);
+				double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
+				double dist = dxz + ysq;
+				if (dist < r * r) {
 					bpos.setY(y);
-					double r = noise.eval(x * 0.1, y * 0.1, z * 0.1) * nr + hr;
-					double dist = xsq + ysq + zsq;
-					if (dist < r * r) {
-						state = world.getBlockState(bpos);
-						if (isReplaceable(state) && !isWaterNear(world, bpos)) {
-							BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
-							blocks.add(bpos.immutable());
-							
-							while (state.getMaterial().equals(Material.LEAVES)) {
-								BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
-								bpos.setY(bpos.getY() + 1);
-								state = world.getBlockState(bpos);
-							}
-							
-							bpos.setY(y - 1);
-							while (state.getMaterial().equals(Material.LEAVES)) {
-								BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
-								bpos.setY(bpos.getY() - 1);
-								state = world.getBlockState(bpos);
-							}
+					state = world.getBlockState(bpos);
+					if (isReplaceable(state) && !isWaterNear(world, bpos)) {
+						blocks.add(bpos.immutable());
+						
+						while (state.getMaterial().equals(Material.LEAVES)) {
+							bpos.setY(bpos.getY() + 1);
+							state = world.getBlockState(bpos);
+						}
+						
+						bpos.setY(y - 1);
+						while (state.getMaterial().equals(Material.LEAVES)) {
+							bpos.setY(bpos.getY() - 1);
+							state = world.getBlockState(bpos);
 						}
 					}
 				}
 			}
-		}
+		});
+		blocks.forEach(bpos -> BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR));
 		
 		return blocks;
 	}

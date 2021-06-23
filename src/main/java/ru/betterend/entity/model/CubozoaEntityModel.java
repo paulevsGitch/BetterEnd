@@ -2,46 +2,66 @@ package ru.betterend.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import ru.betterend.entity.CubozoaEntity;
 
 public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
-	private final ModelPart model;
-	private final ModelPart main_cube_r1;
-	private final ModelPart tentacle_center_1;
-	private final ModelPart tentacle_1;
-	private final ModelPart tentacle_center_2;
-	private final ModelPart tentacle_2;
-	private final ModelPart tentacle_center_3;
-	private final ModelPart tentacle_3;
-	private final ModelPart tentacle_center_4;
-	private final ModelPart tentacle_4;
-	private float scaleY;
-	private float scaleXZ;
+    private final static int TENTACLE_COUNT = 4;
 
-	public CubozoaEntityModel() {
-		super(RenderType::entityTranslucent);
-		
-		texWidth = 48;
-		texHeight = 48;
-		
-		model = new ModelPart(this);
+    private final ModelPart model;
+    private final ModelPart[] tentacle_center;
+    private final ModelPart[] tentacle;
+    private float scaleY;
+    private float scaleXZ;
+
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = new MeshDefinition();
+        PartDefinition modelPartData = modelData.getRoot();
+
+        PartDefinition bodyPart = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create()
+                .texOffs(0, 17)
+                .addBox(-2.0F, -12.5F, -2.0F, 4.0F, 4.0F, 4.0F), PartPose.offset(0.0F, 24.0F, 0.0F));
+		/*model = new ModelPart(this);
 		model.setPos(0.0F, 24.0F, 0.0F);
-		model.texOffs(0, 17).addBox(-2.0F, -12.5F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F);
+		model.texOffs(0, 17).addBox(-2.0F, -12.5F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F);*/
 
-		main_cube_r1 = new ModelPart(this);
+        bodyPart.addOrReplaceChild("main_cube_r1", CubeListBuilder.create()
+                .texOffs(0, 0)
+                .addBox(-5.0F, -7.0F, -5.0F, 10.0F, 7.0F, 10.0F), PartPose.offsetAndRotation(0.0F, -14.0F, 0.0F, 0.0F, 0.0F, -3.1416F));
+
+		/*main_cube_r1 = new ModelPart(this);
 		main_cube_r1.setPos(0.0F, -14.0F, 0.0F);
 		model.addChild(main_cube_r1);
 		setRotationAngle(main_cube_r1, 0.0F, 0.0F, -3.1416F);
-		main_cube_r1.texOffs(0, 0).addBox(-5.0F, -7.0F, -5.0F, 10.0F, 7.0F, 10.0F, 0.0F);
+		main_cube_r1.texOffs(0, 0).addBox(-5.0F, -7.0F, -5.0F, 10.0F, 7.0F, 10.0F, 0.0F);*/
+        float[] angles = {0, (float)Math.PI/-2, (float)Math.PI, (float)Math.PI/2};
 
-		tentacle_center_1 = new ModelPart(this);
+        for (int i=1; i<=TENTACLE_COUNT; i++){
+            PartDefinition tentaclePart = bodyPart
+                    .addOrReplaceChild("tentacle_center_"+i,
+                            CubeListBuilder.create(),
+                            PartPose.offsetAndRotation(
+                                    0.0F, 0.0F, 0.0F,
+                                    0.0F, -1.5708F, 0.0F
+                            )
+                    );
+
+            tentaclePart.addOrReplaceChild("tentacle_"+i, CubeListBuilder.create()
+                            .texOffs(16, 17)
+                            .addBox(-4.0F, 0.0F, 0.0F, 8.0F, 7.0F, 0.0F),
+                    PartPose.offset(0.0F, -7.0F, 4.5F));
+        }
+        /*tentacle_center_1 = new ModelPart(this);
 		tentacle_center_1.setPos(0.0F, 0.0F, 0.0F);
 		model.addChild(tentacle_center_1);
-		
 
 		tentacle_1 = new ModelPart(this);
 		tentacle_1.setPos(0.0F, -7.0F, 4.5F);
@@ -52,7 +72,6 @@ public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
 		tentacle_center_2.setPos(0.0F, 0.0F, 0.0F);
 		model.addChild(tentacle_center_2);
 		setRotationAngle(tentacle_center_2, 0.0F, -1.5708F, 0.0F);
-		
 
 		tentacle_2 = new ModelPart(this);
 		tentacle_2.setPos(0.0F, -7.0F, 4.5F);
@@ -63,7 +82,6 @@ public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
 		tentacle_center_3.setPos(0.0F, 0.0F, 0.0F);
 		model.addChild(tentacle_center_3);
 		setRotationAngle(tentacle_center_3, 0.0F, 3.1416F, 0.0F);
-		
 
 		tentacle_3 = new ModelPart(this);
 		tentacle_3.setPos(0.0F, -7.0F, 4.5F);
@@ -74,31 +92,47 @@ public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
 		tentacle_center_4.setPos(0.0F, 0.0F, 0.0F);
 		model.addChild(tentacle_center_4);
 		setRotationAngle(tentacle_center_4, 0.0F, 1.5708F, 0.0F);
-		
+
 
 		tentacle_4 = new ModelPart(this);
 		tentacle_4.setPos(0.0F, -7.0F, 4.5F);
 		tentacle_center_4.addChild(tentacle_4);
-		tentacle_4.texOffs(16, 17).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 7.0F, 0.0F, 0.0F);
-	}
-	
-	@Override
-	public void setupAnim(CubozoaEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		float sin = Mth.sin(animationProgress * 0.13F);
-		scaleY = sin * 0.1F + 0.9F;
-		scaleXZ = Mth.sin(animationProgress * 0.13F + 3.14F) * 0.1F + 0.9F;
-		
-		tentacle_1.xRot = sin * 0.15F;
-		tentacle_2.xRot = sin * 0.15F;
-		tentacle_3.xRot = sin * 0.15F;
-		tentacle_4.xRot = sin * 0.15F;
-	}
+		tentacle_4.texOffs(16, 17).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 7.0F, 0.0F, 0.0F);*/
 
-	@Override
-	public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		matrices.pushPose();
-		matrices.scale(scaleXZ, scaleY, scaleXZ);
-		model.render(matrices, vertices, light, overlay);
-		matrices.popPose();
-	}
+		/* texWidth = 48;
+		texHeight = 48; */
+        return LayerDefinition.create(modelData, 48, 48);
+    }
+
+    public CubozoaEntityModel(ModelPart modelPart) {
+        super(RenderType::entityTranslucent);
+
+        tentacle = new ModelPart[TENTACLE_COUNT];
+        tentacle_center = new ModelPart[TENTACLE_COUNT];
+
+        model = modelPart.getChild(PartNames.BODY);
+        for (int i=1; i<=TENTACLE_COUNT; i++){
+            tentacle_center[i] = model.getChild("tentacle_center_"+i);
+            tentacle[i] = tentacle_center[i].getChild("tentacle_"+i);
+        }
+    }
+
+    @Override
+    public void setupAnim(CubozoaEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        float sin = Mth.sin(animationProgress * 0.13F);
+        scaleY = sin * 0.1F + 0.9F;
+        scaleXZ = Mth.sin(animationProgress * 0.13F + 3.14F) * 0.1F + 0.9F;
+
+        for (int i=1; i<=TENTACLE_COUNT; i++){
+            tentacle[i].xRot = sin * 0.15f;
+        }
+    }
+
+    @Override
+    public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+        matrices.pushPose();
+        matrices.scale(scaleXZ, scaleY, scaleXZ);
+        model.render(matrices, vertices, light, overlay);
+        matrices.popPose();
+    }
 }

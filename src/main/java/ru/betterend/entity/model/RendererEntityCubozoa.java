@@ -1,11 +1,11 @@
-package ru.betterend.entity.render;
+package ru.betterend.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -13,13 +13,14 @@ import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.CubozoaEntity;
 import ru.betterend.entity.model.CubozoaEntityModel;
+import ru.betterend.registry.EndEntitiesRenders;
 
 public class RendererEntityCubozoa extends MobRenderer<CubozoaEntity, CubozoaEntityModel> {
 	private static final ResourceLocation[] TEXTURE = new ResourceLocation[2];
 	private static final RenderType[] GLOW = new RenderType[2];
 
-	public RendererEntityCubozoa(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new CubozoaEntityModel(), 0.5f);
+	public RendererEntityCubozoa(EntityRendererProvider.Context ctx) {
+		super(ctx, new CubozoaEntityModel(ctx.bakeLayer(EndEntitiesRenders.DRAGONFLY_MODEL)), 0.5f);
 		this.addLayer(new EyesLayer<CubozoaEntity, CubozoaEntityModel>(this) {
 			@Override
 			public RenderType renderType() {

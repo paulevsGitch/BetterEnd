@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -235,8 +237,8 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		@Nullable
 		private Vec3 getRandomLocation() {
 			Vec3 vec3d3 = SilkMothEntity.this.getViewVector(0.0F);
-			Vec3 vec3d4 = RandomPos.getAboveLandPos(SilkMothEntity.this, 8, 7, vec3d3, 1.5707964F, 2, 1);
-			return vec3d4 != null ? vec3d4 : RandomPos.getAirPos(SilkMothEntity.this, 8, 4, -2, vec3d3, 1.5707963705062866D);
+			Vec3 vec3d4 = HoverRandomPos.getPos(SilkMothEntity.this, 8, 7, vec3d3.x, vec3d3.z, 1.5707964F, 3, 1);
+			return vec3d4 != null ? vec3d4 : AirAndWaterRandomPos.getPos(SilkMothEntity.this, 8, 4, -2, vec3d3.x, vec3d3.z, 1.5707963705062866D);
 		}
 	}
 	
@@ -295,7 +297,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state.setValue(EndBlockProperties.FULLNESS, fullness));
 					}
 					SilkMothEntity.this.level.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BEEHIVE_ENTER, SoundSource.BLOCKS, 1, 1);
-					SilkMothEntity.this.remove();
+					SilkMothEntity.this.discard();
 				}
 				else {
 					SilkMothEntity.this.hivePos = null;

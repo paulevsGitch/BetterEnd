@@ -50,7 +50,6 @@ import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.EndBlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
-import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.models.Patterns;

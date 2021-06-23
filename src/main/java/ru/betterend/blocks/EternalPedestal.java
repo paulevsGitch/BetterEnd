@@ -126,8 +126,8 @@ public class EternalPedestal extends PedestalBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter world) {
-		return new EternalPedestalEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new EternalPedestalEntity(blockPos, blockState);
 	}
 
 	@Override

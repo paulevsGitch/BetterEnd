@@ -3,7 +3,7 @@ package ru.betterend.world.biome.cave;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.ai.behavior.WeightedList;
+import net.minecraft.world.entity.ai.behavior.ShufflingList;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -16,8 +16,8 @@ import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
 public class EndCaveBiome extends EndBiome {
-	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
-	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
+	private ShufflingList<Feature<?>> floorFeatures = new ShufflingList<Feature<?>>();
+	private ShufflingList<Feature<?>> ceilFeatures = new ShufflingList<Feature<?>>();
 	
 	public EndCaveBiome(BCLBiomeDef definition) {
 		super(makeDef(definition));

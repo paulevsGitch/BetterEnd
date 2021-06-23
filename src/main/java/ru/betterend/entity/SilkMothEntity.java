@@ -16,7 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -162,7 +162,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 	}
 
 	@Override
-	public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		return EndEntities.SILK_MOTH.create(world);
 	}
 	

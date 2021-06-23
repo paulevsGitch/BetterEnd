@@ -6,7 +6,7 @@ import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -194,7 +194,7 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 	}
 
 	@Override
-	public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		return EndEntities.DRAGONFLY.create(world);
 	}
 	

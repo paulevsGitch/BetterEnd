@@ -355,8 +355,8 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter world) {
-		return new PedestalBlockEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new PedestalBlockEntity(blockPos, blockState);
 	}
 
 	public boolean hasUniqueEntity() {
@@ -440,7 +440,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 
 	@Nullable
 	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> blockEntityType, BlockEntityType<E> blockEntityType2, BlockEntityTicker<? super E> blockEntityTicker) {
-		return blockEntityType2 == blockEntityType ? blockEntityTicker : null;
+		return blockEntityType2 == blockEntityType ? (BlockEntityTicker<A>) blockEntityTicker : null;
 	}
 	
 	static {

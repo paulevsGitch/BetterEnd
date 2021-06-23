@@ -20,7 +20,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 	private final int maxAge = 314;
 	private int age;
 	
-	public PedestalBlockEntity(BlockPos blockPos, BlockState blockState) {
+	public PedestalBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
 		super(EndBlockEntities.PEDESTAL, blockPos, blockState);
 	}
 	
@@ -132,12 +132,16 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 		}
 	}
 
-	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
-		if (!blockEntity.isEmpty()) {
-			blockEntity.age++;
-			if (blockEntity.age > blockEntity.maxAge) {
-				blockEntity.age = 0;
+	protected void tick(Level tickLevel, BlockPos tickPos, BlockState tickState){
+		if (!this.isEmpty()) {
+			this.age++;
+			if (this.age > this.maxAge) {
+				this.age = 0;
 			}
 		}
+	}
+
+	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
+		blockEntity.tick(tickLevel, tickPos, tickState);
 	}
 }

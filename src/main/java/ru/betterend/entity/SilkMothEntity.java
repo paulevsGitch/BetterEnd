@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.world.entity.*;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -16,11 +17,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -142,18 +138,18 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 	}
 
 	@Override
-	protected boolean makeFlySound() {
-		return true;
-	}
-
-	@Override
-	public boolean causeFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 
 	@Override
-	public boolean isMovementNoisy() {
-		return false;
+	protected Entity.MovementEmission getMovementEmission() {
+		return Entity.MovementEmission.EVENTS;
+	}
+
+	@Override
+	public boolean isFlying() {
+		return !this.onGround;
 	}
 
 	@Override

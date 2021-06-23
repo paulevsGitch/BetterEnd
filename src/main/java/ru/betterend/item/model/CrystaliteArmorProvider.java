@@ -7,8 +7,6 @@ import com.google.common.collect.Lists;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry.ModelProvider;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry.TextureProvider;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +18,7 @@ import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
-public class CrystaliteArmorProvider implements ModelProvider, TextureProvider {
+public class CrystaliteArmorProvider /*implements ModelProvider, TextureProvider*/ {
 	private final static ResourceLocation FIRST_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_1.png");
 	private final static ResourceLocation SECOND_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_2.png");
 	private final static CrystaliteHelmetModel HELMET_MODEL = new CrystaliteHelmetModel(1.0F);

@@ -24,7 +24,7 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
-public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEntityRenderer<T> {
+public class PedestalItemRenderer<T extends PedestalBlockEntity> implements BlockEntityRenderer<T> {
 	
 	public PedestalItemRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);

@@ -3,6 +3,7 @@ package ru.betterend.blocks.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -10,13 +11,21 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 
 	private InfusionRitual linkedRitual;
 	
-	public InfusionPedestalEntity() {
-		super(EndBlockEntities.INFUSION_PEDESTAL);
+	public InfusionPedestalEntity(BlockPos blockPos, BlockState blockState) {
+		super(EndBlockEntities.INFUSION_PEDESTAL, blockPos, blockState);
+	}
+
+	@Override
+	public void setLevel(Level world){
+		super.setLevel(world);
+		if (hasRitual()) {
+			linkedRitual.setLocation(world, this.getBlockPos());
+		} else {
+			linkRitual(new InfusionRitual(this, world, this.getBlockPos()));
+		}
 	}
 	
-	@Override
 	public void setLevelAndPosition(Level world, BlockPos pos) {
-		super.setLevelAndPosition(world, pos);
 		if (hasRitual()) {
 			linkedRitual.setLocation(world, pos);
 		} else {
@@ -37,11 +46,11 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	}
 	
 	@Override
-	public void tick() {
+	protected void tick(Level tickLevel, BlockPos tickPos, BlockState tickState){
 		if (hasRitual()) {
 			linkedRitual.tick();
 		}
-		super.tick();
+		super.tick(tickLevel, tickPos, tickState);
 	}
 
 	@Override

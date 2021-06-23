@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Lists;
@@ -48,9 +50,11 @@ import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.EndBlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
+import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.models.Patterns;
+import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -427,6 +431,16 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 				put("%bottom%", name + "_bottom");
 			}
 		};
+	}
+
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, EndBlockEntities.PEDESTAL, PedestalBlockEntity::tick);
+	}
+
+	@Nullable
+	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> blockEntityType, BlockEntityType<E> blockEntityType2, BlockEntityTicker<? super E> blockEntityTicker) {
+		return blockEntityType2 == blockEntityType ? blockEntityTicker : null;
 	}
 	
 	static {

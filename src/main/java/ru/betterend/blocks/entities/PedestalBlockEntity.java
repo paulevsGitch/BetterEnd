@@ -19,9 +19,13 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 	
 	private final int maxAge = 314;
 	private int age;
+
+	public PedestalBlockEntity(BlockPos blockPos, BlockState blockState) {
+		this(EndBlockEntities.PEDESTAL, blockPos, blockState);
+	}
 	
 	public PedestalBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
-		super(EndBlockEntities.PEDESTAL, blockPos, blockState);
+		super(blockEntityType, blockPos, blockState);
 	}
 	
 	public PedestalBlockEntity(BlockEntityType<?> type) {

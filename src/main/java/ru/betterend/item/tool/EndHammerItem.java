@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -40,7 +41,8 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
 	public EndHammerItem(Tier material, float attackDamage, float attackSpeed, double knockback, Properties settings) {
-		super(attackDamage, attackSpeed, material, Sets.newHashSet(), settings);
+		//we override all methods that access BlockTags.MINEABLE_WITH_PICKAXE in the superclass, so this should not matter
+		super(attackDamage, attackSpeed, material, BlockTags.MINEABLE_WITH_PICKAXE, settings);
 
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", attackDamage + material.getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));

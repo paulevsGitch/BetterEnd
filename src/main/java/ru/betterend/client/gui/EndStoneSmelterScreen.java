@@ -32,13 +32,14 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 	
 	public void init() {
 		super.init();
+		//TODO: test in 1.17
 		narrow = width < 379;
 		recipeBook.init(width, height, minecraft, narrow, menu);
-		leftPos = recipeBook.updateScreenPosition(narrow, width, imageWidth);
-		addButton(new ImageButton(leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
-			recipeBook.initVisuals(narrow);
+		leftPos = recipeBook.updateScreenPosition(width, imageWidth);
+		addRenderableWidget(new ImageButton(leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
+			recipeBook.initVisuals();
 			recipeBook.toggleVisibility();
-			leftPos = recipeBook.updateScreenPosition(narrow, width, imageWidth);
+			leftPos = recipeBook.updateScreenPosition( width, imageWidth);
 			((ImageButton) buttonWidget).setPosition(leftPos + 20, height / 2 - 49);
 		}));
 		titleLabelX = (imageWidth - font.width(title)) / 2;
@@ -109,8 +110,10 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 	@Override
 	protected void renderBg(PoseStack matrices, float delta, int mouseX, int mouseY) {
 		if (minecraft == null) return;
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
+		//TODO: verify
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
+		//minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
 		blit(matrices, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 		int progress;
 		if (menu.isBurning()) {

@@ -5,6 +5,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -56,15 +61,47 @@ public class EternalCrystalRenderer {
 		
 		return ColorUtil.toFloatArray(ColorUtil.color(r, g, b));
 	}
+
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		modelPartData.addOrReplaceChild("SHARDS_0", CubeListBuilder.create()
+						.addBox(-5.0f, 1.0f, -3.0f, 2.0f, 8.0f, 2.0f)
+						.texOffs(2, 4),
+				PartPose.ZERO);
+
+		modelPartData.addOrReplaceChild("SHARDS_1", CubeListBuilder.create()
+						.addBox(3.0f, -1.0f, -1.0f, 2.0f, 8.0f, 2.0f)
+						.texOffs(2, 4),
+				PartPose.ZERO);
+
+		modelPartData.addOrReplaceChild("SHARDS_2", CubeListBuilder.create()
+						.addBox(-1.0f, 0.0f, -5.0f, 2.0f, 4.0f, 2.0f)
+						.texOffs(2, 4),
+				PartPose.ZERO);
+
+		modelPartData.addOrReplaceChild("SHARDS_3", CubeListBuilder.create()
+						.addBox(0.0f, 3.0f, 4.0f, 2.0f, 6.0f, 2.0f)
+						.texOffs(2, 4),
+				PartPose.ZERO);
+
+		modelPartData.addOrReplaceChild("CORE", CubeListBuilder.create()
+						.addBox(-2.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f)
+						.texOffs(0, 0),
+				PartPose.ZERO);
+
+		return LayerDefinition.create(modelData, 16, 16);
+	}
 	
 	static {
 		RENDER_LAYER = RenderType.beaconBeam(BetterEnd.makeID("textures/entity/eternal_crystal.png"), true);
 		SHARDS = new ModelPart[4];
-		SHARDS[0] = new ModelPart(16, 16, 2, 4).addBox(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS[1] = new ModelPart(16, 16, 2, 4).addBox(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS[2] = new ModelPart(16, 16, 2, 4).addBox(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
-		SHARDS[3] = new ModelPart(16, 16, 2, 4).addBox(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
-		CORE = new ModelPart(16, 16, 0, 0);
-		CORE.addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
+
+		ModelPart root = getTexturedModelData().bakeRoot();
+		SHARDS[0] = root.getChild("SHARDS_0");
+		SHARDS[1] = root.getChild("SHARDS_1");
+		SHARDS[2] = root.getChild("SHARDS_2");
+		SHARDS[3] = root.getChild("SHARDS_3");
+		CORE = root.getChild("CORE");
 	}
 }

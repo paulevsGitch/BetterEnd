@@ -106,7 +106,6 @@ public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
 
     public CubozoaEntityModel(ModelPart modelPart) {
         super(RenderType::entityTranslucent);
-
         tentacle = new ModelPart[TENTACLE_COUNT];
         tentacle_center = new ModelPart[TENTACLE_COUNT];
 

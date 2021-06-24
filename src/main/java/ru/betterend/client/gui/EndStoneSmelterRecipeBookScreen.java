@@ -79,7 +79,8 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 			int slotX = this.fuelSlot.x + x;
 			int slotY = this.fuelSlot.y + y;
 			GuiComponent.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822018048);
-			this.minecraft.getItemRenderer().renderAndDecorateItem(minecraft.player, this.getFuel().getDefaultInstance(), slotX, slotY);
+			//TODO: test k=0
+			this.minecraft.getItemRenderer().renderAndDecorateItem(minecraft.player, this.getFuel().getDefaultInstance(), slotX, slotY,0);
 			RenderSystem.depthFunc(516);
 			GuiComponent.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822083583);
 			RenderSystem.depthFunc(515);

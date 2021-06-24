@@ -9,6 +9,8 @@ class ModelPart {
     int u=0, v=0;
     float bx=0,by=0,bz=0,ba=0,bb=0,bc=0;
     float scale = 1;
+    static int wd = 64;
+    static int hg = 32;
 
 
     boolean hadBox = false;
@@ -21,6 +23,15 @@ class ModelPart {
         this.name = name;
         this.u = u;
         this.v = v;
+        parts.add(this);
+    }
+
+    ModelPart(int wd, int hg, int u, int v, String name){
+        this.name = name;
+        this.u = u;
+        this.v = v;
+        ModelPart.wd = wd;
+        ModelPart.hg = hg;
         parts.add(this);
     }
 
@@ -47,6 +58,9 @@ class ModelPart {
         this.u=u;
         this.v=v;
         return this;
+    }
+    ModelPart addBox(float x, float y, float z, float a, float b, float c){
+        return addBox(x, y, z, a, b, c, 1);
     }
 
     ModelPart addBox(float x, float y, float z, float a, float b, float c, float _d){
@@ -108,7 +122,7 @@ class ModelPart {
             System.out.println(p);
             System.out.println();
         }
-        System.out.println("return LayerDefinition.create(modelData, 48, 48);");
+        System.out.println("return LayerDefinition.create(modelData, "+wd+", "+hg+");");
 	    System.out.println("}");
 
         System.out.println();
@@ -131,14 +145,12 @@ public class Convert {
     }
     public void c (){
         float scale = 0;
-        ModelPart body = new ModelPart(this, 16, 16, "body");
-		body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
-		body.setPos(0.0F, 0.0F, 0.0F);
-		ModelPart leftLeg = new ModelPart(this, 0, 32, "leftLeg");
-		leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
-		leftLeg.setPos(1.9F, 12.0F, 0.0F);
-		ModelPart rightLeg = new ModelPart(this, 0, 16, "rightLeg");
-		rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
-		rightLeg.setPos(-1.9F, 12.0F, 0.0F);
+        ModelPart[] SHARDS = new ModelPart[4];
+        SHARDS[0] = new ModelPart(16, 16, 2, 4, "SHARDS[0]").addBox(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[1] = new ModelPart(16, 16, 2, 4, "SHARDS[1]").addBox(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[2] = new ModelPart(16, 16, 2, 4, "SHARDS[2]").addBox(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
+		SHARDS[3] = new ModelPart(16, 16, 2, 4, "SHARDS[3]").addBox(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
+		ModelPart CORE = new ModelPart(16, 16, 0, 0, "CORE");
+		CORE.addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
     }
 }

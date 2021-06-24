@@ -46,7 +46,8 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
 
 		matrices.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
-		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, world, null);
+		//TODO: check i=0
+		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, world, null, 0);
 		Vector3f translate = model.getTransforms().ground.translation;
 		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
 		matrices.translate(translate.x(), translate.y(), translate.z());

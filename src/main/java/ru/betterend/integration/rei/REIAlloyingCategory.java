@@ -1,43 +1,42 @@
 package ru.betterend.integration.rei;
 
-import java.text.DecimalFormat;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import it.unimi.dsi.fastutil.ints.IntList;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.TransferRecipeCategory;
-import me.shedaniel.rei.api.widgets.Widgets;
-import me.shedaniel.rei.gui.entries.RecipeEntry;
-import me.shedaniel.rei.gui.entries.SimpleRecipeEntry;
-import me.shedaniel.rei.gui.widget.Widget;
+import me.shedaniel.rei.api.client.gui.DisplayRenderer;
+import me.shedaniel.rei.api.client.gui.SimpleDisplayRenderer;
+import me.shedaniel.rei.api.client.gui.widgets.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widgets;
+import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.LangUtil;
 
-public class REIAlloyingCategory implements TransferRecipeCategory<REIAlloyingDisplay> {
+import java.text.DecimalFormat;
+import java.util.List;
+
+public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingDisplay> {
 
 	@Override
-	public @NotNull ResourceLocation getIdentifier() {
+	public @NotNull CategoryIdentifier getCategoryIdentifier() {
 		return AlloyingRecipe.ID;
 	}
 
 	@Override
-	public @NotNull String getCategoryName() {
-		return LangUtil.translate(EndBlocks.END_STONE_SMELTER.getDescriptionId());
+	public @NotNull Component getTitle() {
+		return new TranslatableComponent(EndBlocks.END_STONE_SMELTER.getDescriptionId());
 	}
 	
 	@Override
-	public @NotNull EntryStack getLogo() {
+	public @NotNull EntryStack getIcon() {
 		return REIPlugin.END_STONE_SMELTER;
 	}
 	
@@ -53,14 +52,14 @@ public class REIAlloyingCategory implements TransferRecipeCategory<REIAlloyingDi
 		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 5, bounds.y + 5),
 				new TranslatableComponent("category.rei.cooking.time&xp", df.format(display.getXp()), df.format(smeltTime / 20D))).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		widgets.add(Widgets.createArrow(new Point(startPoint.x + 24, startPoint.y + 8)).animationDurationTicks(smeltTime));
-		List<List<EntryStack>> inputEntries = display.getInputEntries();
+		List<EntryIngredient> inputEntries = display.getInputEntries();
 		widgets.add(Widgets.createSlot(new Point(startPoint.x - 20, startPoint.y + 1)).entries(inputEntries.get(0)).markInput());
 		if (inputEntries.size() > 1) {
 			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(inputEntries.get(1)).markInput());
 		} else {
 			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(Lists.newArrayList()).markInput());
 		}
-		widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9)).entries(display.getResultingEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());
 		return widgets;
 	}
 
@@ -78,8 +77,8 @@ public class REIAlloyingCategory implements TransferRecipeCategory<REIAlloyingDi
 	}
 	
 	@Override
-	public @NotNull RecipeEntry getSimpleRenderer(REIAlloyingDisplay recipe) {
-		return SimpleRecipeEntry.from(recipe.getInputEntries(), recipe.getResultingEntries());
+	public DisplayRenderer getDisplayRenderer(REIAlloyingDisplay recipe) {
+		return SimpleDisplayRenderer.from(recipe.getInputEntries(), recipe.getOutputEntries());
 	}
 	
 	@Override

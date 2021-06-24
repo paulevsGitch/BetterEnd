@@ -19,15 +19,16 @@ import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
 public class CrystaliteArmorProvider /*implements ModelProvider, TextureProvider*/ {
+	//TODO: find new registry
 	private final static ResourceLocation FIRST_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_1.png");
 	private final static ResourceLocation SECOND_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_2.png");
-	private final static CrystaliteHelmetModel HELMET_MODEL = new CrystaliteHelmetModel(1.0F);
-	private final static CrystaliteChestplateModel CHEST_MODEL = CrystaliteChestplateModel.regularModel(null);
-	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = CrystaliteChestplateModel.thinModel(null);
-	private final static CrystaliteLeggingsModel LEGGINGS_MODEL = new CrystaliteLeggingsModel(1.0F);
-	private final static CrystaliteBootsModel BOOTS_MODEL = new CrystaliteBootsModel(1.0F);
+	private final static CrystaliteHelmetModel HELMET_MODEL = CrystaliteHelmetModel.createModel(null);
+	private final static CrystaliteChestplateModel CHEST_MODEL = CrystaliteChestplateModel.createRegularModel(null);
+	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = CrystaliteChestplateModel.createThinModel(null);
+	private final static CrystaliteLeggingsModel LEGGINGS_MODEL = CrystaliteLeggingsModel.createModel(null);
+	private final static CrystaliteBootsModel BOOTS_MODEL = CrystaliteBootsModel.createModel(null);
 	
-	@Override
+	//@Override
 	public @NotNull ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot,
 			boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
 		if (!isStackValid(stack)) return defaultTexture;
@@ -35,7 +36,7 @@ public class CrystaliteArmorProvider /*implements ModelProvider, TextureProvider
 		return FIRST_LAYER;
 	}
 
-	@Override
+	//@Override
 	public @NotNull HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack,
 			EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
 		if (!isStackValid(stack)) return defaultModel;

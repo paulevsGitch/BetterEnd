@@ -7,12 +7,14 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
+import ru.betterend.registry.EndEntitiesRenders;
 
 @Environment(EnvType.CLIENT)
 public class CrystaliteHelmetModel extends HumanoidModel<LivingEntity> {
@@ -29,6 +31,12 @@ public class CrystaliteHelmetModel extends HumanoidModel<LivingEntity> {
 
 		return LayerDefinition.create(modelData, 64, 48);
 	}
+
+	public static CrystaliteHelmetModel createModel(EntityModelSet entityModelSet){
+		return new CrystaliteHelmetModel(entityModelSet==null?getTexturedModelData().bakeRoot():entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_HELMET));
+	}
+
+
 	public CrystaliteHelmetModel(ModelPart modelPart) {
 		super(modelPart, RenderType::entityTranslucent);
 

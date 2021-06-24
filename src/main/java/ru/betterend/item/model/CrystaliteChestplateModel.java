@@ -69,14 +69,12 @@ public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 
 	final ModelPart localBody;
 
-	public static CrystaliteChestplateModel regularModel(EntityModelSet entityModelSet){
-		if (entityModelSet==null) throw new RuntimeException("Need to get a ModelSet");
-		return new CrystaliteChestplateModel(entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE), false);
+	public static CrystaliteChestplateModel createRegularModel(EntityModelSet entityModelSet){
+		return new CrystaliteChestplateModel(entityModelSet==null?getRegularTexturedModelData().bakeRoot():entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE), false);
 	}
 
-	public static CrystaliteChestplateModel thinModel(EntityModelSet entityModelSet){
-		if (entityModelSet==null) throw new RuntimeException("Need to get a ModelSet");
-		return new CrystaliteChestplateModel(entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE_THIN), true);
+	public static CrystaliteChestplateModel createThinModel(EntityModelSet entityModelSet){
+		return new CrystaliteChestplateModel(entityModelSet==null?getThinTexturedModelData().bakeRoot():entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE_THIN), true);
 	}
 
 	protected CrystaliteChestplateModel(ModelPart modelPart, boolean thinArms) {

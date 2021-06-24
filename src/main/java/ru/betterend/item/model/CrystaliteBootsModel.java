@@ -5,11 +5,13 @@ import java.util.Collections;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
+import ru.betterend.registry.EndEntitiesRenders;
 
 public class CrystaliteBootsModel extends HumanoidModel<LivingEntity> {
 
@@ -33,6 +35,10 @@ public class CrystaliteBootsModel extends HumanoidModel<LivingEntity> {
 				PartPose.offset(-1.9f, 12.0f, 0.0f));
 
 		return LayerDefinition.create(modelData, 64, 48);
+	}
+
+	public static CrystaliteBootsModel createModel(EntityModelSet entityModelSet){
+		return new CrystaliteBootsModel(entityModelSet==null?getTexturedModelData().bakeRoot():entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_BOOTS));
 	}
 	
 	public CrystaliteBootsModel(ModelPart modelPart) {

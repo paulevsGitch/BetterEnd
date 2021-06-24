@@ -8,14 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.model.*;
-import ru.betterend.entity.render.RendererEntityCubozoa;
-import ru.betterend.entity.render.RendererEntityDragonfly;
-import ru.betterend.entity.render.RendererEntityEndFish;
-import ru.betterend.entity.render.RendererEntityEndSlime;
-import ru.betterend.entity.render.RendererEntityShadowWalker;
-import ru.betterend.entity.render.SilkMothEntityRenderer;
-import ru.betterend.item.model.ArmoredElytraModel;
-import ru.betterend.item.model.CrystaliteChestplateModel;
+import ru.betterend.entity.render.*;
+import ru.betterend.item.model.*;
 
 public class EndEntitiesRenders {
 
@@ -30,6 +24,9 @@ public class EndEntitiesRenders {
 	public static final ModelLayerLocation ARMORED_ELYTRA = registerMain("armored_elytra");
 	public static final ModelLayerLocation CRYSTALITE_CHESTPLATE = registerMain("crystalite_chestplate");
 	public static final ModelLayerLocation CRYSTALITE_CHESTPLATE_THIN = registerMain("crystalite_chestplate_thin");
+	public static final ModelLayerLocation CRYSTALITE_HELMET = registerMain("crystalite_helmet");
+	public static final ModelLayerLocation CRYSTALITE_LEGGINGS = registerMain("crystalite_leggings");
+	public static final ModelLayerLocation CRYSTALITE_BOOTS = registerMain("crystalite_boots");
 
 	public static void register() {
 		register(EndEntities.DRAGONFLY, RendererEntityDragonfly.class);
@@ -49,6 +46,9 @@ public class EndEntitiesRenders {
 		EntityModelLayerRegistry.registerModelLayer(ARMORED_ELYTRA, ArmoredElytraModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(CRYSTALITE_CHESTPLATE, CrystaliteChestplateModel::getRegularTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(CRYSTALITE_CHESTPLATE_THIN, CrystaliteChestplateModel::getThinTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(CRYSTALITE_HELMET, CrystaliteHelmetModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(CRYSTALITE_LEGGINGS, CrystaliteLeggingsModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(CRYSTALITE_BOOTS, CrystaliteBootsModel::getTexturedModelData);
 	}
 
 	private static void register(EntityType<?> type, Class<? extends MobRenderer<?, ?>> renderer) {

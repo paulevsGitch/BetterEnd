@@ -5,12 +5,14 @@ import java.util.Collections;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
+import ru.betterend.registry.EndEntitiesRenders;
 
 public class CrystaliteLeggingsModel extends HumanoidModel<LivingEntity> {
 	public static LayerDefinition getTexturedModelData() {
@@ -39,6 +41,10 @@ public class CrystaliteLeggingsModel extends HumanoidModel<LivingEntity> {
 	final ModelPart myBody;
 	final ModelPart myLeftLeg;
 	final ModelPart myRightLeg;
+
+	public static CrystaliteLeggingsModel createModel(EntityModelSet entityModelSet){
+		return new CrystaliteLeggingsModel(entityModelSet==null?getTexturedModelData().bakeRoot():entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_LEGGINGS));
+	}
 
 	public CrystaliteLeggingsModel(ModelPart modelPart) {
 		super(modelPart, RenderType::entityTranslucent);

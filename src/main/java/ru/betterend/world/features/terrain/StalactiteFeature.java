@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.StalactiteBlock;
@@ -28,8 +29,10 @@ public class StalactiteFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		WorldGenLevel world = featureConfig.level();
 		if (!isGround(world.getBlockState(ceiling ? pos.above() : pos.below()).getBlock())) {
 			return false;
 		}

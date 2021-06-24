@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -21,8 +22,11 @@ import ru.betterend.integration.Integrations;
 
 public class BigEtherTreeFeature extends DefaultFeature {
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		WorldGenLevel world = featureConfig.level();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
 		BlockState log = Integrations.BYG.getDefaultState("ether_log");

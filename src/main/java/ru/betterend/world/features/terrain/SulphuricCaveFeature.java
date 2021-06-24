@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -32,8 +33,10 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	private static final Direction[] HORIZONTAL = BlocksHelper.makeHorizontal();
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		WorldGenLevel world = featureConfig.level();
 		int radius = MHelper.randRange(10, 30, random);
 
 		int top = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());

@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFRotation;
@@ -34,8 +35,10 @@ public class IceStarFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		WorldGenLevel world = featureConfig.level();
 		float size = MHelper.randRange(minSize, maxSize, random);
 		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);

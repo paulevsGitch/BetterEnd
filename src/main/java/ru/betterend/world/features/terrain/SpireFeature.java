@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.BiomeAPI;
@@ -32,8 +33,11 @@ public class SpireFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		WorldGenLevel world = featureConfig.level();
+		ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 10 || !world.getBlockState(pos.below(3)).is(TagAPI.GEN_TERRAIN)
 				|| !world.getBlockState(pos.below(6)).is(TagAPI.GEN_TERRAIN)) {
@@ -68,7 +72,7 @@ public class SpireFeature extends DefaultFeature {
 
 		support.forEach((bpos) -> {
 			if (BiomeAPI.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
-				EndFeatures.TENANEA_BUSH.getFeature().place(world, chunkGenerator, random, bpos, null);
+				EndFeatures.TENANEA_BUSH.getFeature().place(new FeaturePlaceContext<>(world, chunkGenerator, random, bpos, null));
 			}
 		});
 

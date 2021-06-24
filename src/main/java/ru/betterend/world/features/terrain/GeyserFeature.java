@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -47,9 +48,11 @@ public class GeyserFeature extends DefaultFeature {
 	private static final Direction[] HORIZONTAL = BlocksHelper.makeHorizontal();
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		pos = getPosOnSurfaceWG(world, pos);
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final WorldGenLevel world = featureConfig.level();
+		final BlockPos pos = getPosOnSurfaceWG(world, featureConfig.origin());
+		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 
 		if (pos.getY() < 10) {
 			return false;
@@ -241,7 +244,7 @@ public class GeyserFeature extends DefaultFeature {
 			}
 		}
 
-		EndFeatures.SULPHURIC_LAKE.getFeature().place(world, chunkGenerator, random, pos, null);
+		EndFeatures.SULPHURIC_LAKE.getFeature().place(new FeaturePlaceContext<>(world, chunkGenerator, random, pos, null));
 
 		double distance = radius1 * 1.7;
 		BlockPos start = pos.offset(-distance, -halfHeight - 15 - distance, -distance);

@@ -8,17 +8,31 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
 
 @Environment(EnvType.CLIENT)
 public class CrystaliteHelmetModel extends HumanoidModel<LivingEntity> {
+	final ModelPart myHat;
+	public static LayerDefinition getTexturedModelData() {
+		final float scale = 1.0f;
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		CubeDeformation deformation_hat = new CubeDeformation(scale + 0.5f);
+		PartDefinition hat = modelPartData.addOrReplaceChild(PartNames.HAT, CubeListBuilder.create()
+						.addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, deformation_hat)
+						.texOffs(0, 0),
+				PartPose.ZERO);
 
-	public CrystaliteHelmetModel(float scale) {
-		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
-		this.hat = new ModelPart(this, 0, 0);
-		this.hat.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, scale + 0.5F);
-		this.hat.setPos(0.0F, 0.0F, 0.0F);
+		return LayerDefinition.create(modelData, 64, 48);
+	}
+	public CrystaliteHelmetModel(ModelPart modelPart) {
+		super(modelPart, RenderType::entityTranslucent);
+
+		myHat = modelPart.getChild(PartNames.HAT);
 	}
 	
 	@Override
@@ -28,6 +42,6 @@ public class CrystaliteHelmetModel extends HumanoidModel<LivingEntity> {
 	
 	@Override
 	protected Iterable<ModelPart> bodyParts() {
-		return Lists.newArrayList(hat);
+		return Lists.newArrayList(myHat);
 	}
 }

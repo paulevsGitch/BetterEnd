@@ -8,6 +8,7 @@ class ModelPart {
     float x=0, y=0, z=0, rx=0, ry=0, rz=0;
     int u=0, v=0;
     float bx=0,by=0,bz=0,ba=0,bb=0,bc=0;
+    float scale = 1;
 
 
     boolean hadBox = false;
@@ -55,6 +56,7 @@ class ModelPart {
         ba=a;
         bb=b;
         bc=c;
+        scale = _d;
         hadBox = true;
         return this;
     }
@@ -71,11 +73,20 @@ class ModelPart {
     }
 
     public String toString(){
+        String s = "";
         String pName = parent==null?"modelPartData":parent.name;
-        String s = "PartDefinition " + name + " = ";        
+        if (scale!=1){
+            s += "CubeDeformation deformation_"+name+" = new CubeDeformation("+scale+"f);\n";
+        }
+        s += "PartDefinition " + name + " = ";        
         s +=  pName+".addOrReplaceChild(\""+name+"\", CubeListBuilder.create()\n";
         if (this.mirror) s+= ".mirror()\n";        
-        if (this.hadBox) s+= ".addBox("+bx+"f, "+by+"f, "+bz+"f, "+ba+"f, "+bb+"f, "+bc+"f)\n";
+        if (this.hadBox) {
+            if (scale!=1)
+            s+= ".addBox("+bx+"f, "+by+"f, "+bz+"f, "+ba+"f, "+bb+"f, "+bc+"f, deformation_"+name+")\n";
+            else
+            s+= ".addBox("+bx+"f, "+by+"f, "+bz+"f, "+ba+"f, "+bb+"f, "+bc+"f)\n";
+        }
         s+= ".texOffs("+u+", "+v+"),\n";                        
         if (x==0 && y==0 && z==0 && rx==0 && ry==0 && rz==0){
             s+= "PartPose.ZERO";
@@ -119,27 +130,15 @@ public class Convert {
         p.setRotationAngle(x, y, z);
     }
     public void c (){
-        boolean thinArms = true;
         float scale = 0;
         ModelPart body = new ModelPart(this, 16, 16, "body");
-		body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale + 0.25F);
+		body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
 		body.setPos(0.0F, 0.0F, 0.0F);
-		if (thinArms) {
-			ModelPart leftShoulder = new ModelPart(this, 41, 32, "leftShoulder");
-			leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
-			leftShoulder.setPos(5.0F, 2.5F, 0.0F);
-			leftShoulder.mirror = true;
-			ModelPart rightShoulder = new ModelPart(this, 41, 16, "rightShoulder");
-			rightShoulder.addBox(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
-			rightShoulder.setPos(-5.0F, 2.5F, 10.0F);
-		} else {
-			ModelPart leftShoulder = new ModelPart(this, 40, 32, "leftShoulder");
-			leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
-			leftShoulder.setPos(5.0F, 2.0F, 0.0F);
-			leftShoulder.mirror = true;
-			ModelPart rightShoulder = new ModelPart(this, 40, 16, "rightShoulder");
-			rightShoulder.addBox(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
-			rightShoulder.setPos(-5.0F, 2.0F, 10.0F);
-		}
+		ModelPart leftLeg = new ModelPart(this, 0, 32, "leftLeg");
+		leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
+		leftLeg.setPos(1.9F, 12.0F, 0.0F);
+		ModelPart rightLeg = new ModelPart(this, 0, 16, "rightLeg");
+		rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
+		rightLeg.setPos(-1.9F, 12.0F, 0.0F);
     }
 }

@@ -6,6 +6,8 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -13,15 +15,31 @@ public class CrystaliteBootsModel extends HumanoidModel<LivingEntity> {
 
 	public ModelPart leftBoot;
 	public ModelPart rightBoot;
+
+	public static LayerDefinition getTexturedModelData() {
+		final float scale = 1.0f;
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		CubeDeformation deformation = new CubeDeformation(scale + 0.25f);
+
+		modelPartData.addOrReplaceChild("leftBoot", CubeListBuilder.create()
+						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+						.texOffs(0, 32),
+				PartPose.offset(1.9f, 12.0f, 0.0f));
+
+		modelPartData.addOrReplaceChild("rightBoot", CubeListBuilder.create()
+						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+						.texOffs(0, 16),
+				PartPose.offset(-1.9f, 12.0f, 0.0f));
+
+		return LayerDefinition.create(modelData, 64, 48);
+	}
 	
-	public CrystaliteBootsModel(float scale) {
-		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
-		this.leftBoot = new ModelPart(this, 0, 32);
-		this.leftBoot.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.25F);
-		this.leftBoot.setPos(1.9F, 12.0F, 0.0F);
-		this.rightBoot = new ModelPart(this, 0, 16);
-		this.rightBoot.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.25F);
-		this.rightBoot.setPos(-1.9F, 12.0F, 0.0F);
+	public CrystaliteBootsModel(ModelPart modelPart) {
+		super(modelPart, RenderType::entityTranslucent);
+
+		leftBoot = modelPart.getChild("leftBoot");
+		rightBoot = modelPart.getChild("rightBoot");
 	}
 	
 	@Override

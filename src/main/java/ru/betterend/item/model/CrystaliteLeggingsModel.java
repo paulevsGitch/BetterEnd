@@ -6,22 +6,46 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
 
 public class CrystaliteLeggingsModel extends HumanoidModel<LivingEntity> {
+	public static LayerDefinition getTexturedModelData() {
+		float scale = 1.0f;
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		CubeDeformation deformation = new CubeDeformation(scale);
+		modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create()
+						.addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, deformation)
+						.texOffs(16, 16),
+				PartPose.ZERO);
 
-	public CrystaliteLeggingsModel(float scale) {
-		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
-		this.body = new ModelPart(this, 16, 16);
-		this.body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
-		this.body.setPos(0.0F, 0.0F, 0.0F);
-		this.leftLeg = new ModelPart(this, 0, 32);
-		this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
-		this.leftLeg.setPos(1.9F, 12.0F, 0.0F);
-		this.rightLeg = new ModelPart(this, 0, 16);
-		this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
-		this.rightLeg.setPos(-1.9F, 12.0F, 0.0F);
+		modelPartData.addOrReplaceChild(PartNames.LEFT_LEG, CubeListBuilder.create()
+						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+						.texOffs(0, 32),
+				PartPose.offset(1.9f, 12.0f, 0.0f));
+
+		modelPartData.addOrReplaceChild(PartNames.RIGHT_LEG, CubeListBuilder.create()
+						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+						.texOffs(0, 16),
+				PartPose.offset(-1.9f, 12.0f, 0.0f));
+
+		return LayerDefinition.create(modelData, 64, 48);
+	}
+
+	final ModelPart myBody;
+	final ModelPart myLeftLeg;
+	final ModelPart myRightLeg;
+
+	public CrystaliteLeggingsModel(ModelPart modelPart) {
+		super(modelPart, RenderType::entityTranslucent);
+
+		myBody = modelPart.getChild(PartNames.BODY);
+		myLeftLeg = modelPart.getChild(PartNames.LEFT_LEG);
+		myRightLeg = modelPart.getChild(PartNames.RIGHT_LEG);
 	}
 
 	@Override
@@ -31,6 +55,6 @@ public class CrystaliteLeggingsModel extends HumanoidModel<LivingEntity> {
 	
 	@Override
 	protected Iterable<ModelPart> bodyParts() {
-		return Lists.newArrayList(body, rightLeg, leftLeg);
+		return Lists.newArrayList(myBody, myRightLeg, myLeftLeg);
 	}
 }

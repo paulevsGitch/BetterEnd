@@ -1,7 +1,5 @@
 package ru.betterend.world.biome.cave;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.behavior.ShufflingList;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
@@ -12,12 +10,15 @@ import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndSounds;
+import ru.betterend.util.ShuffelingListExtended;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
+import java.util.Random;
+
 public class EndCaveBiome extends EndBiome {
-	private ShufflingList<Feature<?>> floorFeatures = new ShufflingList<Feature<?>>();
-	private ShufflingList<Feature<?>> ceilFeatures = new ShufflingList<Feature<?>>();
+	final private ShufflingList<Feature<?>> floorFeatures = new ShufflingList<>();
+	final private ShufflingList<Feature<?>> ceilFeatures = new ShufflingList<>();
 	
 	public EndCaveBiome(BCLBiomeDef definition) {
 		super(makeDef(definition));
@@ -42,12 +43,12 @@ public class EndCaveBiome extends EndBiome {
 		ceilFeatures.add(feature, weight);
 	}
 	
-	public Feature<?> getFloorFeature(Random random) {
-		return floorFeatures.isEmpty() ? null : floorFeatures.getOne(random);
+	public Feature<?> getFloorFeature() {
+		return ((ShuffelingListExtended<Feature<?>>)floorFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>)floorFeatures).getOne();
 	}
 	
-	public Feature<?> getCeilFeature(Random random) {
-		return ceilFeatures.isEmpty() ? null : ceilFeatures.getOne(random);
+	public Feature<?> getCeilFeature() {
+		return ((ShuffelingListExtended<Feature<?>>)ceilFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>)ceilFeatures).getOne();
 	}
 	
 	public float getFloorDensity() {

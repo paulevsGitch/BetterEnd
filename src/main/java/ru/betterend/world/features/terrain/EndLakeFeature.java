@@ -1,13 +1,10 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.FluidState;
@@ -20,6 +17,8 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
 
+import java.util.Random;
+
 public class EndLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
@@ -28,7 +27,7 @@ public class EndLakeFeature extends DefaultFeature {
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
-		final BlockPos blockPos = featureConfig.origin();
+		BlockPos blockPos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		double radius = MHelper.randRange(10.0, 20.0, random);
 		double depth = radius * 0.5 * MHelper.randRange(0.8, 1.2, random);

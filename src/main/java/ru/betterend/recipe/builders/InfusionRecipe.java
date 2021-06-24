@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.google.gson.JsonObject;
 
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.NonNullList;
@@ -29,7 +30,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 	public final static String GROUP = "infusion";
 	public final static RecipeType<InfusionRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
 	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
-	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
+	public final static CategoryIdentifier ID = CategoryIdentifier.of(BetterEnd.MOD_ID, GROUP);
 	
 	private final ResourceLocation id;
 	private final Ingredient[] catalysts;

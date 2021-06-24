@@ -1,4 +1,4 @@
-package ru.betterend.entity.model;
+package ru.betterend.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

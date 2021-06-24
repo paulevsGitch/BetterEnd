@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -18,7 +19,7 @@ public class VoxelPiece extends BasePiece {
 	private StructureWorld world;
 	
 	public VoxelPiece(Consumer<StructureWorld> function, int id) {
-		super(EndStructures.VOXEL_PIECE, id);
+		super(EndStructures.VOXEL_PIECE, id, null);
 		world = new StructureWorld();
 		function.accept(world);
 		this.boundingBox = world.getBounds();
@@ -30,7 +31,7 @@ public class VoxelPiece extends BasePiece {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag compoundTag) {
 		tag.put("world", world.toBNT());
 	}
 

@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
@@ -34,7 +35,7 @@ public abstract class MountainPiece extends BasePiece {
 	protected int seed2;
 	
 	public MountainPiece(StructurePieceType type, BlockPos center, float radius, float height, Random random, Biome biome) {
-		super(type, random.nextInt());
+		super(type, random.nextInt(), null);
 		this.center = center;
 		this.radius = radius;
 		this.height = height;
@@ -53,7 +54,7 @@ public abstract class MountainPiece extends BasePiece {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("height", height);

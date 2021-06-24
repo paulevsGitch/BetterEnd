@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -30,7 +31,7 @@ public class NBTPiece extends BasePiece {
 	private boolean cover;
 	
 	public NBTPiece(ResourceLocation structureID, StructureTemplate structure, BlockPos pos, int erosion, boolean cover, Random random) {
-		super(EndStructures.NBT_PIECE, random.nextInt());
+		super(EndStructures.NBT_PIECE, random.nextInt(), null);
 		this.structureID = structureID;
 		this.structure = structure;
 		this.rotation = Rotation.getRandom(random);
@@ -47,7 +48,7 @@ public class NBTPiece extends BasePiece {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.putString("structureID", structureID.toString());
 		tag.putInt("rotation", rotation.ordinal());
 		tag.putInt("mirror", mirror.ordinal());

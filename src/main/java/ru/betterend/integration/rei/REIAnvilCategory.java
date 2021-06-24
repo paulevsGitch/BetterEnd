@@ -54,7 +54,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		List<EntryIngredient> inputEntries = display.getInputEntries();
 		EntryIngredient materials = inputEntries.get(1);
 		int anvilLevel = display.getAnvilLevel();
-		Collection<EntryStack<?>> anvils = Arrays.stream(REIPlugin.ANVILS).filter(anvil -> {
+		List anvils = Arrays.stream(REIPlugin.ANVILS).filter(anvil -> {
 			Block block = ((BlockItem) anvil.getValue()).getBlock();
 			if (block instanceof EndAnvilBlock) {
 				return ((EndAnvilBlock) block).getCraftingLevel() >= anvilLevel;

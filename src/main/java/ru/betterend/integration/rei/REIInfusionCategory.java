@@ -5,8 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.ints.IntList;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.client.gui.DisplayRenderer;
-import me.shedaniel.rei.api.client.gui.SimpleDisplayRenderer;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
@@ -18,7 +16,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import ru.betterend.BetterEnd;
-import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.List;

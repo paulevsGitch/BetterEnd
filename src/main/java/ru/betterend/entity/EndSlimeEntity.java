@@ -116,7 +116,7 @@ public class EndSlimeEntity extends Slime {
 	}
 	
 	@Override
-	public void remove() {
+	public void remove(RemovalReason reason) {
 		int i = this.getSize();
 		if (!this.level.isClientSide && i > 1 && this.isDeadOrDying()) {
 			Component text = this.getCustomName();
@@ -144,7 +144,8 @@ public class EndSlimeEntity extends Slime {
 				this.level.addFreshEntity(slimeEntity);
 			}
 		}
-		this.removed = true;
+
+		((ISlime)this).entityRemove(reason);
 	}
 	
 	@Override

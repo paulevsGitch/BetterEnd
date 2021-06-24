@@ -20,7 +20,7 @@ public class RendererEntityCubozoa extends MobRenderer<CubozoaEntity, CubozoaEnt
 	private static final RenderType[] GLOW = new RenderType[2];
 
 	public RendererEntityCubozoa(EntityRendererProvider.Context ctx) {
-		super(ctx, new CubozoaEntityModel(ctx.bakeLayer(EndEntitiesRenders.DRAGONFLY_MODEL)), 0.5f);
+		super(ctx, new CubozoaEntityModel(ctx.bakeLayer(EndEntitiesRenders.CUBOZOA_MODEL)), 0.5f);
 		this.addLayer(new EyesLayer<CubozoaEntity, CubozoaEntityModel>(this) {
 			@Override
 			public RenderType renderType() {

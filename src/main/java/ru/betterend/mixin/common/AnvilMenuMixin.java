@@ -72,7 +72,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 			slotsChanged(inputSlots);
 			access.execute((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
-				if (!player.abilities.instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
+				if (!player.getAbilities().instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
 					BlockState landingState = EndAnvilBlock.applyDamage(anvilState);
 					if (landingState == null) {
 						world.removeBlock(blockPos, false);

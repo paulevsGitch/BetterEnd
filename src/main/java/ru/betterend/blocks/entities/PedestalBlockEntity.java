@@ -28,10 +28,6 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 		super(blockEntityType, blockPos, blockState);
 	}
 	
-	public PedestalBlockEntity(BlockEntityType<?> type) {
-		super(type);
-	}
-	
 	public int getAge() {
 		return age;
 	}

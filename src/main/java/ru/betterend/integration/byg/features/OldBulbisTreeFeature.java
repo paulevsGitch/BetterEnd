@@ -13,6 +13,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
@@ -36,11 +37,13 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 	private static final List<Vector3f> SIDE;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		WorldGenLevel world = featureConfig.level();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
-		if (!world.getBlockState(pos.below(4)).getBlock().is(TagAPI.GEN_TERRAIN))
+		if (!world.getBlockState(pos.below(4)).is(TagAPI.GEN_TERRAIN))
 			return false;
 
 		BlockState stem = Integrations.BYG.getDefaultState("bulbis_stem");

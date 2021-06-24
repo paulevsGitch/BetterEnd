@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -39,10 +40,12 @@ public class BushWithOuterFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND)
-				&& !world.getBlockState(pos.above()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		WorldGenLevel world = featureConfig.level();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)
+				&& !world.getBlockState(pos.above()).is(TagAPI.END_GROUND))
 			return false;
 
 		float radius = MHelper.randRange(1.8F, 3.5F, random);

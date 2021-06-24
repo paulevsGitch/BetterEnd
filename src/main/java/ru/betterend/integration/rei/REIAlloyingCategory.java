@@ -27,7 +27,7 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 
 	@Override
 	public @NotNull CategoryIdentifier getCategoryIdentifier() {
-		return AlloyingRecipe.ID;
+		return REIPlugin.ALLOYING;
 	}
 
 	@Override
@@ -74,11 +74,6 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 			GuiComponent.fill(matrices, startPoint.x + 1, startPoint.y + 1, startPoint.x + 1 + 16, startPoint.y + 1 + 16, 1090453504);
 		}
 		matrices.popPose();
-	}
-	
-	@Override
-	public DisplayRenderer getDisplayRenderer(REIAlloyingDisplay recipe) {
-		return SimpleDisplayRenderer.from(recipe.getInputEntries(), recipe.getOutputEntries());
 	}
 	
 	@Override

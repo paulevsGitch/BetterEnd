@@ -1,13 +1,11 @@
 package ru.betterend.integration.rei;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
-
-import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
-import me.shedaniel.rei.api.plugins.REIPluginV0;
+import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
+import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.plugin.DefaultPlugin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -23,14 +21,18 @@ import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+//https://github.com/shedaniel/RoughlyEnoughItems/blob/6.x-1.17/default-plugin/src/main/java/me/shedaniel/rei/plugin/client/DefaultClientPlugin.java
 @Environment(EnvType.CLIENT)
-public class REIPlugin implements REIPluginV0 {
+public class REIPlugin implements REIClientPlugin {
 
 	public final static ResourceLocation PLUGIN_ID = BetterEnd.makeID("rei_plugin");
-	public final static ResourceLocation ALLOYING_FUEL = BetterEnd.makeID("alloying_fuel");
-	public final static ResourceLocation ALLOYING = AlloyingRecipe.ID;
-	public final static ResourceLocation SMITHING = AnvilRecipe.ID;
-	public final static ResourceLocation INFUSION = InfusionRecipe.ID;
+	public final static CategoryIdentifier ALLOYING_FUEL =  CategoryIdentifier.of(BetterEnd.MOD_ID, "alloying_fuel");
+	public final static CategoryIdentifier ALLOYING = AlloyingRecipe.ID;
+	public final static CategoryIdentifier SMITHING = CategoryIdentifier.of(BetterEnd.MOD_ID, AnvilRecipe.ID.getPath());
+	public final static CategoryIdentifier INFUSION = InfusionRecipe.ID;
 
 	public final static EntryStack END_STONE_SMELTER = EntryStack.create(EndBlocks.END_STONE_SMELTER);
 	public final static EntryStack INFUSION_RITUAL = EntryStack.create(EndBlocks.INFUSION_PEDESTAL);
@@ -69,12 +71,13 @@ public class REIPlugin implements REIPluginV0 {
     }
 	
 	@Override
-	public void registerPluginCategories(RecipeHelper recipeHelper) {
-		recipeHelper.registerCategories(
+	public void registerCategories(CategoryRegistry registry) {
+		registry.add(
 				new REIAlloyingFuelCategory(),
 				new REIAlloyingCategory(),
 				new REIInfusionCategory(),
-				new REIAnvilCategory());
+				new REIAnvilCategory()
+		);
 	}
 
 	static {

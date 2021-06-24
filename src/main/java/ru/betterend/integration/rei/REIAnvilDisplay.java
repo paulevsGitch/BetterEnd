@@ -1,29 +1,27 @@
 package ru.betterend.integration.rei;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import org.jetbrains.annotations.NotNull;
-
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.TransferRecipeDisplay;
-import me.shedaniel.rei.server.ContainerInfo;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
+import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.Recipe;
+import org.jetbrains.annotations.NotNull;
 import ru.betterend.recipe.builders.AnvilRecipe;
 
-public class REIAnvilDisplay implements TransferRecipeDisplay {
+import java.util.Collections;
+import java.util.Optional;
+
+public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
 	
 	private final AnvilRecipe recipe;
-	private final List<List<EntryStack>> input;
-	private final List<EntryStack> output;
 	
 	public REIAnvilDisplay(AnvilRecipe recipe) {
+		super(
+				EntryIngredients.ofIngredients(recipe.getIngredients()),
+				Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
+		);
 		this.recipe = recipe;
-		this.input = EntryStack.ofIngredients(recipe.getIngredients());
-		this.output = Collections.singletonList(EntryStack.create(recipe.getResultItem()));
 	}
 	
 	public int getDamage() {
@@ -37,31 +35,21 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 	public int getAnvilLevel() {
 		return recipe.getAnvilLevel();
 	}
-	
+
 	@Override
-	public @NotNull Optional<ResourceLocation> getRecipeLocation() {
+	public @NotNull Optional<ResourceLocation> getDisplayLocation() {
 		return Optional.ofNullable(recipe).map(Recipe::getId);
 	}
 
 	@Override
-	public @NotNull List<List<EntryStack>> getInputEntries() {
-		return this.input;
-	}
-	
-	@Override
-	public @NotNull List<List<EntryStack>> getResultingEntries() {
-		return Collections.singletonList(output);
-	}
-
-	@Override
-	public @NotNull ResourceLocation getRecipeCategory() {
+	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return REIPlugin.SMITHING;
 	}
 	
-	@Override
-	public @NotNull List<List<EntryStack>> getRequiredEntries() {
-		return input;
-	}
+	// @Override
+	// public @NotNull List<List<EntryStack>> getRequiredEntries() {
+	// 	return input;
+	// }
 
 	@Override
 	public int getWidth() {
@@ -73,9 +61,9 @@ public class REIAnvilDisplay implements TransferRecipeDisplay {
 		return 1;
 	}
 
-	@Override
-	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo,
-			AbstractContainerMenu container) {
-		return input;
-	}
+	// @Override
+	// public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo,
+	//		AbstractContainerMenu container) {
+	//	return input;
+	// }
 }

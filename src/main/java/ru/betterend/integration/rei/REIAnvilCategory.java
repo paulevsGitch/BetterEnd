@@ -1,49 +1,47 @@
 package ru.betterend.integration.rei;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import it.unimi.dsi.fastutil.ints.IntList;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.TransferRecipeCategory;
-import me.shedaniel.rei.api.widgets.Widgets;
-import me.shedaniel.rei.gui.entries.RecipeEntry;
-import me.shedaniel.rei.gui.entries.SimpleRecipeEntry;
-import me.shedaniel.rei.gui.widget.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widgets;
+import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 import ru.betterend.blocks.basis.EndAnvilBlock;
-import ru.betterend.util.LangUtil;
 
-public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay> {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay> {
 
 	@Override
-	public @NotNull ResourceLocation getIdentifier() {
+	public @NotNull CategoryIdentifier getCategoryIdentifier() {
 		return REIPlugin.SMITHING;
 	}
 
 	@Override
-	public @NotNull String getCategoryName() {
-		return LangUtil.translate(Blocks.ANVIL.getDescriptionId());
+	public @NotNull Component getTitle() {
+		return new TranslatableComponent(Blocks.ANVIL.getDescriptionId());
 	}
-	
+
 	@Override
-	public @NotNull EntryStack getLogo() {
+	public @NotNull EntryStack getIcon() {
 		return REIPlugin.ANVILS[0];
 	}
+
 	
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIAnvilDisplay display, Rectangle bounds) {
@@ -53,23 +51,23 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 		int x = startPoint.x + 10;
 		int y = startPoint.y;
 		widgets.add(Widgets.createResultSlotBackground(new Point(x + 61, y + 5)));
-		List<List<EntryStack>> inputEntries = display.getInputEntries();
-		List<EntryStack> materials = inputEntries.get(1);
+		List<EntryIngredient> inputEntries = display.getInputEntries();
+		EntryIngredient materials = inputEntries.get(1);
 		int anvilLevel = display.getAnvilLevel();
-		List<EntryStack> anvils = Arrays.stream(REIPlugin.ANVILS).filter(anvil -> {
-			Block block = ((BlockItem) anvil.getItem()).getBlock();
+		Collection<EntryStack<?>> anvils = Arrays.stream(REIPlugin.ANVILS).filter(anvil -> {
+			Block block = ((BlockItem) anvil.getValue()).getBlock();
 			if (block instanceof EndAnvilBlock) {
 				return ((EndAnvilBlock) block).getCraftingLevel() >= anvilLevel;
 			}
 			return anvilLevel == 1;
 		}).collect(Collectors.toList());
-		materials.forEach(entryStack -> entryStack.setAmount(display.getInputCount()));
+		//materials.forEach(entryStack -> entryStack.setAmount(display.getInputCount()));
 		widgets.add(Widgets.createArrow(new Point(x + 24, y + 4)));
 		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 7, bounds.y + bounds.height - 15),
 				new TranslatableComponent("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		widgets.add(Widgets.createSlot(new Point(x - 20, y + 4)).entries(materials).markInput());
 		widgets.add(Widgets.createSlot(new Point(x + 1, y + 4)).entries(inputEntries.get(0)).markInput());
-		widgets.add(Widgets.createSlot(new Point(x + 61, y + 5)).entries(display.getResultingEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(new Point(x + 61, y + 5)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());
 		widgets.add(Widgets.createSlot(new Point(x - 9, y + 25)).entries(anvils));
 
 		return widgets;
@@ -86,11 +84,6 @@ public class REIAnvilCategory implements TransferRecipeCategory<REIAnvilDisplay>
 			GuiComponent.fill(matrices, startPoint.x + 1, startPoint.y + 3, startPoint.x + 1 + 16, startPoint.y + 3 + 16, 1090453504);
 		}
 		matrices.popPose();
-	}
-	
-	@Override
-	public @NotNull RecipeEntry getSimpleRenderer(REIAnvilDisplay recipe) {
-		return SimpleRecipeEntry.from(Collections.singletonList(recipe.getInputEntries().get(0)), recipe.getResultingEntries());
 	}
 	
 	@Override

@@ -28,8 +28,6 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 	private Recipe<?> recipe;
 	private float xp;
 	private double smeltTime;
-
-
 	
 	public REIAlloyingDisplay(AlloyingRecipe recipe) {
 		super(
@@ -62,7 +60,7 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
-		return AlloyingRecipe.ID;
+		return REIPlugin.ALLOYING;
 	}
 	
 	// @Override

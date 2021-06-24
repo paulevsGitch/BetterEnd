@@ -99,8 +99,8 @@ public abstract class LivingEntityMixin extends Entity {
 		this.lastAttacker = source.getEntity();
 	}
 	
-	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V"))
-	private float be_increaseKnockback(float value, double x, double z) {
+	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V"), index=0)
+	private double be_increaseKnockback(double value, double x, double z) {
 		if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) lastAttacker;
 			value += this.be_getKnockback(attacker.getMainHandItem().getItem());

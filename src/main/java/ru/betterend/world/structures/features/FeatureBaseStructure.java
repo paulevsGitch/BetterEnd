@@ -3,6 +3,7 @@ package ru.betterend.world.structures.features;
 import java.util.Random;
 
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.Blocks;
@@ -22,12 +23,12 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 	}
 	
 	@Override
-	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig) {
-		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 20;
+	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig, LevelHeightAccessor levelHeightAccessor) {
+		return getGenerationHeight(pos, chunkGenerator, levelHeightAccessor) >= 20;
 	}
 
-	private static int getGenerationHeight(int chunkX, int chunkZ, ChunkGenerator chunkGenerator) {
-		Random random = new Random((long) (chunkX + chunkZ * 10387313));
+	private static int getGenerationHeight(ChunkPos chunkPos, ChunkGenerator chunkGenerator, LevelHeightAccessor levelHeightAccessor) {
+		Random random = new Random((long) (chunkPos.x + chunkPos.z * 10387313));
 		Rotation blockRotation = Rotation.getRandom(random);
 		int i = 5;
 		int j = 5;
@@ -40,12 +41,12 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 			j = -5;
 		}
 
-		int k = (chunkX << 4) + 7;
-		int l = (chunkZ << 4) + 7;
-		int m = chunkGenerator.getFirstOccupiedHeight(k, l, Heightmap.Types.WORLD_SURFACE_WG);
-		int n = chunkGenerator.getFirstOccupiedHeight(k, l + j, Heightmap.Types.WORLD_SURFACE_WG);
-		int o = chunkGenerator.getFirstOccupiedHeight(k + i, l, Heightmap.Types.WORLD_SURFACE_WG);
-		int p = chunkGenerator.getFirstOccupiedHeight(k + i, l + j, Heightmap.Types.WORLD_SURFACE_WG);
+		int k = chunkPos.getBlockX(7);
+		int l = chunkPos.getBlockZ(7);
+		int m = chunkGenerator.getFirstOccupiedHeight(k, l, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
+		int n = chunkGenerator.getFirstOccupiedHeight(k, l + j, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
+		int o = chunkGenerator.getFirstOccupiedHeight(k + i, l, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
+		int p = chunkGenerator.getFirstOccupiedHeight(k + i, l + j, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
 		return Math.min(Math.min(m, n), Math.min(o, p));
 	}
 }

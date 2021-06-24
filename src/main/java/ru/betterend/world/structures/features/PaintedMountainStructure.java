@@ -2,6 +2,8 @@ package ru.betterend.world.structures.features;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,15 +27,15 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 	}
 	
 	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
-		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ, BoundingBox box, int references, long seed) {
-			super(feature, chunkX, chunkZ, box, references, seed);
+		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos chunkPos, int references, long seed) {
+			super(feature, chunkPos, references, seed);
 		}
 
 		@Override
-		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager manager, int chunkX, int chunkZ, Biome biome, NoneFeatureConfiguration config) {
-			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
-			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
-			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG);
+		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
+			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
+			int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
+			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 			if (y > 50) {
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.4F, 0.6F, random);
@@ -44,7 +46,8 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 				}
 				this.pieces.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises ));
 			}
-			this.calculateBoundingBox();
+
+			//this.calculateBoundingBox();
 		}
 	}
 	

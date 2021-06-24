@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.model.CubozoaEntityModel;
 import ru.betterend.entity.model.DragonflyEntityModel;
+import ru.betterend.entity.model.EndFishEntityModel;
 import ru.betterend.entity.model.EndSlimeEntityModel;
 import ru.betterend.entity.render.RendererEntityCubozoa;
 import ru.betterend.entity.render.RendererEntityDragonfly;
@@ -18,10 +19,12 @@ import ru.betterend.entity.render.RendererEntityShadowWalker;
 import ru.betterend.entity.render.SilkMothEntityRenderer;
 
 public class EndEntitiesRenders {
-	public static final ModelLayerLocation CUBOZOA_MODEL = registerMain("cubozoa");
+
 	public static final ModelLayerLocation DRAGONFLY_MODEL = registerMain("dragonfly");
 	public static final ModelLayerLocation END_SLIME_SHELL_MODEL = registerMain("endslime_shell");
 	public static final ModelLayerLocation END_SLIME_MODEL = registerMain("endslime");
+	public static final ModelLayerLocation END_FISH_MODEL = registerMain("endfish");
+	public static final ModelLayerLocation CUBOZOA_MODEL = registerMain("cubozoa");
 
 	public static void register() {
 		register(EndEntities.DRAGONFLY, RendererEntityDragonfly.class);
@@ -34,6 +37,7 @@ public class EndEntitiesRenders {
 		EntityModelLayerRegistry.registerModelLayer(DRAGONFLY_MODEL, DragonflyEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(END_SLIME_SHELL_MODEL, EndSlimeEntityModel::getShellOnlyTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(END_SLIME_MODEL, EndSlimeEntityModel::getCompleteTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(END_FISH_MODEL, EndFishEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(CUBOZOA_MODEL, CubozoaEntityModel::getTexturedModelData);
 	}
 

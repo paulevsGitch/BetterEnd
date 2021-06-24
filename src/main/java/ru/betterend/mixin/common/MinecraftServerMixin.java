@@ -22,7 +22,7 @@ import net.minecraft.world.level.storage.WorldData;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(MinecraftServer.class)
-public class MinecraftServerMixin {
+public abstract class MinecraftServerMixin {
 	@Shadow
 	private ServerResources resources;
 	
@@ -35,7 +35,7 @@ public class MinecraftServerMixin {
 	protected WorldData worldData;
 	
 	@Inject(method = "overworld", at = @At(value = "HEAD"), cancellable = true)
-	private final void be_overworld(CallbackInfoReturnable<ServerLevel> info) {
+	private void be_overworld(CallbackInfoReturnable<ServerLevel> info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
 			ServerLevel world = levels.get(Level.END);
 			if (world == null) {
@@ -47,7 +47,7 @@ public class MinecraftServerMixin {
 	}
 	
 	@Inject(method = "createLevels", at = @At(value = "TAIL"))
-	private final void be_createLevels(ChunkProgressListener worldGenerationProgressListener, CallbackInfo info) {
+	private void be_createLevels(ChunkProgressListener worldGenerationProgressListener, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
 			ServerLevel world = levels.get(Level.END);
 			if (world == null) {
@@ -57,20 +57,20 @@ public class MinecraftServerMixin {
 			ServerLevelData serverWorldProperties = worldData.overworldData();
 			net.minecraft.world.level.levelgen.WorldGenSettings generatorOptions = worldData.worldGenSettings();
 			boolean bl = generatorOptions.isDebug();
-			setInitialSpawn(world, serverWorldProperties, generatorOptions.generateBonusChest(), bl, true);
+			setInitialSpawn(world, serverWorldProperties, generatorOptions.generateBonusChest(), bl);
 		}
 	}
-	
+
+	@Shadow private static void setInitialSpawn(ServerLevel serverLevel, ServerLevelData serverLevelData, boolean bl, boolean bl2) {};
+
 	@Inject(method = "setInitialSpawn", at = @At(value = "HEAD"), cancellable = true)
-	private static void be_setInitialSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) {
+	private static void be_setInitialSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd() && world.dimension() == Level.OVERWORLD) {
 			info.cancel();
 		}
 	}
 	
-	@Shadow
-	private static void setInitialSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, boolean bl) {}
-	
+
 	@Shadow
 	public PlayerList getPlayerList() {
 		return null;

@@ -19,9 +19,9 @@ import ru.betterend.interfaces.TeleportingEntity;
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
 	@Shadow
-	public float yRot;
+	private float yRot;
 	@Shadow
-	public float xRot;
+	private float xRot;
 
 	@Shadow
 	public Level level;

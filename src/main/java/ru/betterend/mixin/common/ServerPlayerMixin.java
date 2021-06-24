@@ -132,7 +132,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	}
 
 	@Shadow
-	abstract ServerLevel getLevel();
+	public abstract ServerLevel getLevel();
 
 	@Shadow
 	abstract void triggerDimensionChangeTriggers(ServerLevel origin);

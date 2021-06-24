@@ -7,8 +7,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import ru.betterend.util.ShuffelingListExtended;
 
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Stream;
 
 @Mixin(ShufflingList.class)
 public abstract class ShuffelingListMixin<U> implements ShuffelingListExtended<U> {

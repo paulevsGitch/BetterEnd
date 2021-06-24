@@ -163,9 +163,9 @@ public class PlayerListMixin {
 			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
 					new ServerPlayer[] { serverPlayer }));
 
-			for (int i = 0; i < this.players.size(); ++i) {
+			for (ServerPlayer player : this.players) {
 				serverPlayer.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
-						new ServerPlayer[] { (ServerPlayer) this.players.get(i) }));
+						new ServerPlayer[]{(ServerPlayer) player}));
 			}
 
 			serverLevel3.addNewPlayer(serverPlayer);
@@ -176,10 +176,7 @@ public class PlayerListMixin {
 						this.server.isResourcePackRequired(), this.server.getResourcePackPrompt());
 			}
 
-			Iterator<?> var24 = serverPlayer.getActiveEffects().iterator();
-
-			while (var24.hasNext()) {
-				MobEffectInstance statusEffectInstance = (MobEffectInstance) var24.next();
+			for (MobEffectInstance statusEffectInstance : serverPlayer.getActiveEffects()) {
 				serverPlayNetworkHandler
 						.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), statusEffectInstance));
 			}

@@ -30,9 +30,9 @@ public class StalactiteFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
-		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		if (!isGround(world.getBlockState(ceiling ? pos.above() : pos.below()).getBlock())) {
 			return false;
 		}

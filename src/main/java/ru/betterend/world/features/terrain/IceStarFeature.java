@@ -36,9 +36,9 @@ public class IceStarFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final WorldGenLevel world = featureConfig.level();
 		float size = MHelper.randRange(minSize, maxSize, random);
 		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);

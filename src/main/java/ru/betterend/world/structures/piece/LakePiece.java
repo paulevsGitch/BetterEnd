@@ -59,7 +59,7 @@ public class LakePiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public LakePiece(StructureManager manager, CompoundTag tag) {
+	public LakePiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.LAKE_PIECE, tag);
 		makeBoundingBox();
 	}

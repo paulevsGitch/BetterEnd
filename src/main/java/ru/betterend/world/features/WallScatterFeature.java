@@ -28,9 +28,9 @@ public abstract class WallScatterFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
-		BlockPos center = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final Random random = featureConfig.random();
+		final BlockPos center = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		int maxY = world.getHeight(Heightmap.Types.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlocksHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		if (maxY < 10 || maxY < minY) {

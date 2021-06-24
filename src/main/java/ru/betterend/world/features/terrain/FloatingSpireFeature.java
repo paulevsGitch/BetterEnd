@@ -24,10 +24,10 @@ import ru.betterend.registry.EndFeatures;
 public class FloatingSpireFeature extends SpireFeature {
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
-		ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
+		final WorldGenLevel world = featureConfig.level();
+		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		int minY = getYOnSurface(world, pos.getX(), pos.getZ());
 		int y = minY > 57 ? MHelper.floor(MHelper.randRange(minY, minY * 2, random) * 0.5F + 32)
 				: MHelper.randRange(64, 192, random);

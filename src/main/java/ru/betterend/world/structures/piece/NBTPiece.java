@@ -43,7 +43,7 @@ public class NBTPiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public NBTPiece(StructureManager manager, CompoundTag tag) {
+	public NBTPiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.NBT_PIECE, tag);
 		makeBoundingBox();
 	}

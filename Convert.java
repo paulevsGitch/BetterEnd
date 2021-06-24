@@ -119,10 +119,27 @@ public class Convert {
         p.setRotationAngle(x, y, z);
     }
     public void c (){
-        ModelPart leftWing = new ModelPart(this, 22, 0, "leftWing");
-		leftWing.addBox(-10.0F, 0.0F, 0.0F, 10.0F, 20.0F, 2.0F, 1.0F);
-		ModelPart rightWing = new ModelPart(this, 22, 0, "rightWing");
-		rightWing.mirror = true;
-		rightWing.addBox(0.0F, 0.0F, 0.0F, 10.0F, 20.0F, 2.0F, 1.0F);
+        boolean thinArms = true;
+        float scale = 0;
+        ModelPart body = new ModelPart(this, 16, 16, "body");
+		body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale + 0.25F);
+		body.setPos(0.0F, 0.0F, 0.0F);
+		if (thinArms) {
+			ModelPart leftShoulder = new ModelPart(this, 41, 32, "leftShoulder");
+			leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
+			leftShoulder.setPos(5.0F, 2.5F, 0.0F);
+			leftShoulder.mirror = true;
+			ModelPart rightShoulder = new ModelPart(this, 41, 16, "rightShoulder");
+			rightShoulder.addBox(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
+			rightShoulder.setPos(-5.0F, 2.5F, 10.0F);
+		} else {
+			ModelPart leftShoulder = new ModelPart(this, 40, 32, "leftShoulder");
+			leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
+			leftShoulder.setPos(5.0F, 2.0F, 0.0F);
+			leftShoulder.mirror = true;
+			ModelPart rightShoulder = new ModelPart(this, 40, 16, "rightShoulder");
+			rightShoulder.addBox(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
+			rightShoulder.setPos(-5.0F, 2.0F, 10.0F);
+		}
     }
 }

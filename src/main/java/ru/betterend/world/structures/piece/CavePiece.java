@@ -33,7 +33,7 @@ public class CavePiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public CavePiece(StructureManager manager, CompoundTag tag) {
+	public CavePiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.CAVE_PIECE, tag);
 		makeBoundingBox();
 	}

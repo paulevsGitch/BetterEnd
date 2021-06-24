@@ -58,9 +58,9 @@ public abstract class ScatterFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos center = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final WorldGenLevel world = featureConfig.level();
 		center = getCenterGround(world, center);
 
 		if (!canSpawn(world, center)) {

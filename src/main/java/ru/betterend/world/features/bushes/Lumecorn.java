@@ -21,9 +21,9 @@ import ru.betterend.registry.EndBlocks;
 public class Lumecorn extends DefaultFeature {
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
-		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 

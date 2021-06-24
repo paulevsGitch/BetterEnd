@@ -34,10 +34,10 @@ public class SpireFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
-		ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
+		final WorldGenLevel world = featureConfig.level();
+		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 10 || !world.getBlockState(pos.below(3)).is(TagAPI.GEN_TERRAIN)
 				|| !world.getBlockState(pos.below(6)).is(TagAPI.GEN_TERRAIN)) {

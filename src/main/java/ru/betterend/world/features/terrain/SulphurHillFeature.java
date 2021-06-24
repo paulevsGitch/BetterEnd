@@ -21,9 +21,9 @@ import ru.betterend.registry.EndBlocks;
 public class SulphurHillFeature extends DefaultFeature {
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final WorldGenLevel world = featureConfig.level();
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 57 || pos.getY() > 70) {
 			return false;

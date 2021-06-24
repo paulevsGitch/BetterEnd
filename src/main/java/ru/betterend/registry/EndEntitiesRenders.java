@@ -15,6 +15,7 @@ import ru.betterend.entity.render.RendererEntityEndSlime;
 import ru.betterend.entity.render.RendererEntityShadowWalker;
 import ru.betterend.entity.render.SilkMothEntityRenderer;
 import ru.betterend.item.model.ArmoredElytraModel;
+import ru.betterend.item.model.CrystaliteChestplateModel;
 
 public class EndEntitiesRenders {
 
@@ -27,6 +28,8 @@ public class EndEntitiesRenders {
 
 	//Not sure if this should go to another registry
 	public static final ModelLayerLocation ARMORED_ELYTRA = registerMain("armored_elytra");
+	public static final ModelLayerLocation CRYSTALITE_CHESTPLATE = registerMain("crystalite_chestplate");
+	public static final ModelLayerLocation CRYSTALITE_CHESTPLATE_THIN = registerMain("crystalite_chestplate_thin");
 
 	public static void register() {
 		register(EndEntities.DRAGONFLY, RendererEntityDragonfly.class);
@@ -44,6 +47,8 @@ public class EndEntitiesRenders {
 		EntityModelLayerRegistry.registerModelLayer(SILK_MOTH_MODEL, SilkMothEntityModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(ARMORED_ELYTRA, ArmoredElytraModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(CRYSTALITE_CHESTPLATE, CrystaliteChestplateModel::getRegularTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(CRYSTALITE_CHESTPLATE_THIN, CrystaliteChestplateModel::getThinTexturedModelData);
 	}
 
 	private static void register(EntityType<?> type, Class<? extends MobRenderer<?, ?>> renderer) {

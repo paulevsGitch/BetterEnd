@@ -27,9 +27,9 @@ public class DesertLakeFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos blockPos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final WorldGenLevel world = featureConfig.level();
 		double radius = MHelper.randRange(8.0, 15.0, random);
 		double depth = radius * 0.5 * MHelper.randRange(0.8, 1.2, random);
 		int dist = MHelper.floor(radius);

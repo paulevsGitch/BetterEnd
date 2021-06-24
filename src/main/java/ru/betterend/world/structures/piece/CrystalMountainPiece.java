@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -32,8 +33,8 @@ public class CrystalMountainPiece extends MountainPiece {
 		top = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 
-	public CrystalMountainPiece(StructureManager manager, CompoundTag tag) {
-		super(EndStructures.MOUNTAIN_PIECE, manager, tag);
+	public CrystalMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
+		super(EndStructures.MOUNTAIN_PIECE, serverLevel, tag);
 	}
 
 	@Override

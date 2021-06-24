@@ -6,40 +6,85 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import ru.betterend.registry.EndEntitiesRenders;
 
 public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 
 	public ModelPart leftShoulder;
 	public ModelPart rightShoulder;
 	private final boolean thinArms;
-	
-	public CrystaliteChestplateModel(float scale, boolean thinArms) {
-		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
-		this.thinArms = thinArms;
-		this.body = new ModelPart(this, 16, 16);
-		this.body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale + 0.25F);
-		this.body.setPos(0.0F, 0.0F, 0.0F);
+
+	public static LayerDefinition getRegularTexturedModelData(){
+		return getTexturedModelData(1.0f, false);
+	}
+
+	public static LayerDefinition getThinTexturedModelData(){
+		return getTexturedModelData(1.0f, true);
+	}
+
+	private static LayerDefinition getTexturedModelData(float scale, boolean thinArms) {
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		CubeDeformation deformation = new CubeDeformation(scale + 0.25F);
+		PartDefinition body = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create()
+						.addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, deformation)
+						.texOffs(16, 16),
+				PartPose.ZERO);
+
 		if (thinArms) {
-			this.leftShoulder = new ModelPart(this, 41, 32);
-			this.leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
-			this.leftShoulder.setPos(5.0F, 2.5F, 0.0F);
-			this.leftShoulder.mirror = true;
-			this.rightShoulder = new ModelPart(this, 41, 16);
-			this.rightShoulder.addBox(-2.0F, -2.5F, -2.0F, 3.0F, 12.0F, 4.0F, scale + 0.35F);
-			this.rightShoulder.setPos(-5.0F, 2.5F, 10.0F);
+			deformation = new CubeDeformation(scale + 0.45F);
+			PartDefinition leftShoulder = modelPartData.addOrReplaceChild("leftShoulder", CubeListBuilder.create()
+							.mirror()
+							.addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+							.texOffs(40, 32),
+					PartPose.offset(5.0f, 2.0f, 0.0f));
+
+			PartDefinition rightShoulder = modelPartData.addOrReplaceChild("rightShoulder", CubeListBuilder.create()
+							.addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+							.texOffs(40, 16),
+					PartPose.offset(-5.0f, 2.0f, 10.0f));
 		} else {
-			this.leftShoulder = new ModelPart(this, 40, 32);
-			this.leftShoulder.addBox(-1.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
-			this.leftShoulder.setPos(5.0F, 2.0F, 0.0F);
-			this.leftShoulder.mirror = true;
-			this.rightShoulder = new ModelPart(this, 40, 16);
-			this.rightShoulder.addBox(-3.0F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.45F);
-			this.rightShoulder.setPos(-5.0F, 2.0F, 10.0F);
+			deformation = new CubeDeformation(scale + 0.45F);
+			PartDefinition leftShoulder = modelPartData.addOrReplaceChild("leftShoulder", CubeListBuilder.create()
+							.mirror()
+							.addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+							.texOffs(40, 32),
+					PartPose.offset(5.0f, 2.0f, 0.0f));
+
+			PartDefinition rightShoulder = modelPartData.addOrReplaceChild("rightShoulder", CubeListBuilder.create()
+							.addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
+							.texOffs(40, 16),
+					PartPose.offset(-5.0f, 2.0f, 10.0f));
 		}
+		return LayerDefinition.create(modelData, 64, 48);
+	}
+
+	final ModelPart localBody;
+
+	public static CrystaliteChestplateModel regularModel(EntityModelSet entityModelSet){
+		if (entityModelSet==null) throw new RuntimeException("Need to get a ModelSet");
+		return new CrystaliteChestplateModel(entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE), false);
+	}
+
+	public static CrystaliteChestplateModel thinModel(EntityModelSet entityModelSet){
+		if (entityModelSet==null) throw new RuntimeException("Need to get a ModelSet");
+		return new CrystaliteChestplateModel(entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE_THIN), true);
+	}
+
+	protected CrystaliteChestplateModel(ModelPart modelPart, boolean thinArms) {
+		super(modelPart, RenderType::entityTranslucent);
+		this.thinArms = thinArms;
+		localBody = modelPart.getChild(PartNames.BODY);
+		leftShoulder = modelPart.getChild("leftShoulder");
+		rightShoulder = modelPart.getChild("rightShoulder");
 	}
 	
 	@Override
@@ -56,7 +101,7 @@ public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 	
 	@Override
 	protected Iterable<ModelPart> bodyParts() {
-		return Lists.newArrayList(body, leftShoulder, rightShoulder);
+		return Lists.newArrayList(localBody, leftShoulder, rightShoulder);
 	}
 	
 	@Override

@@ -34,9 +34,9 @@ public class SulphuricCaveFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final WorldGenLevel world = featureConfig.level();
 		int radius = MHelper.randRange(10, 30, random);
 
 		int top = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());

@@ -22,9 +22,9 @@ import ru.betterend.registry.EndBlocks;
 public class BigAuroraCrystalFeature extends DefaultFeature {
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
+		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final WorldGenLevel world = featureConfig.level();
 		int maxY = pos.getY() + BlocksHelper.upRay(world, pos, 16);
 		int minY = pos.getY() - BlocksHelper.downRay(world, pos, 16);
 

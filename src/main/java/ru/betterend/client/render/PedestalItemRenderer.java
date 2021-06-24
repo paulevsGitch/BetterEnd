@@ -27,7 +27,7 @@ import ru.betterend.registry.EndItems;
 public class PedestalItemRenderer<T extends PedestalBlockEntity> implements BlockEntityRenderer<T> {
 	
 	public PedestalItemRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher);
+		super();
 	}
 
 	@Override

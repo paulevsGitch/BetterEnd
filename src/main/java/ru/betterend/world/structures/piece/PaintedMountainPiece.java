@@ -29,8 +29,8 @@ public class PaintedMountainPiece extends MountainPiece {
 		this.slises = slises;
 	}
 
-	public PaintedMountainPiece(StructureManager manager, CompoundTag tag) {
-		super(EndStructures.PAINTED_MOUNTAIN_PIECE, manager, tag);
+	public PaintedMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
+		super(EndStructures.PAINTED_MOUNTAIN_PIECE, serverLevel, tag);
 	}
 
 	@Override

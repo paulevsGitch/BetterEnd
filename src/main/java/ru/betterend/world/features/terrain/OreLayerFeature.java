@@ -37,9 +37,9 @@ public class OreLayerFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		Random random = featureConfig.random();
-		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		float radius = this.radius * 0.5F;
 		int r = MHelper.floor(radius + 1);
 		int posX = MHelper.randRange(Math.max(r - 16, 0), Math.min(31 - r, 15), random) + pos.getX();

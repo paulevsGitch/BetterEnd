@@ -25,13 +25,13 @@ public class VoxelPiece extends BasePiece {
 		this.boundingBox = world.getBounds();
 	}
 
-	public VoxelPiece(StructureManager manager, CompoundTag tag) {
+	public VoxelPiece(ServerLevel level, CompoundTag tag) {
 		super(EndStructures.VOXEL_PIECE, tag);
 		this.boundingBox = world.getBounds();
 	}
 
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag compoundTag) {
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.put("world", world.toBNT());
 	}
 

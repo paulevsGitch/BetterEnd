@@ -48,7 +48,7 @@ public abstract class MountainPiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public MountainPiece(StructurePieceType type, StructureManager manager, CompoundTag tag) {
+	public MountainPiece(StructurePieceType type, ServerLevel serverLevel, CompoundTag tag) {
 		super(type, tag);
 		makeBoundingBox();
 	}
@@ -130,9 +130,11 @@ public abstract class MountainPiece extends BasePiece {
 	
 	private void makeBoundingBox() {
 		int minX = MHelper.floor(center.getX() - radius);
+		int minY = MHelper.floor(center.getY() - radius);
 		int minZ = MHelper.floor(center.getZ() - radius);
 		int maxX = MHelper.floor(center.getX() + radius + 1);
+		int maxY = MHelper.floor(center.getY() + radius + 1);
 		int maxZ = MHelper.floor(center.getZ() + radius + 1);
-		this.boundingBox = new BoundingBox(minX, minZ, maxX, maxZ);
+		this.boundingBox = new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 }

@@ -1,13 +1,7 @@
 package ru.betterend.world.features.terrain.caves;
 
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.IntStream;
-
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -17,9 +11,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
@@ -28,6 +22,11 @@ import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 public class TunelCaveFeature extends EndCaveFeature {
 	private Set<BlockPos> generate(WorldGenLevel world, BlockPos center, Random random) {
@@ -107,7 +106,10 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 	
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 2500) {
 			return false;
 		}
@@ -189,7 +191,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.place(world, null, random, pos.above(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
 				}
 			}
 		});
@@ -206,7 +208,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.place(world, null, random, pos.below(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
 				}
 			}
 		});

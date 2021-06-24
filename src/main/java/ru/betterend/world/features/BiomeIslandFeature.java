@@ -31,8 +31,8 @@ public class BiomeIslandFeature extends DefaultFeature {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		BlockPos pos = featureConfig.origin();
-		WorldGenLevel world = featureConfig.level();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		Biome biome = world.getBiome(pos);
 		SurfaceBuilderConfiguration surfaceConfig = biome.getGenerationSettings().getSurfaceBuilderConfig();
 		BlockState topMaterial = surfaceConfig.getTopMaterial();

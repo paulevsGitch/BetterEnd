@@ -22,8 +22,8 @@ public class CrystaliteArmorProvider /*implements ModelProvider, TextureProvider
 	private final static ResourceLocation FIRST_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_1.png");
 	private final static ResourceLocation SECOND_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_2.png");
 	private final static CrystaliteHelmetModel HELMET_MODEL = new CrystaliteHelmetModel(1.0F);
-	private final static CrystaliteChestplateModel CHEST_MODEL = new CrystaliteChestplateModel(1.0F, false);
-	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = new CrystaliteChestplateModel(1.0F, true);
+	private final static CrystaliteChestplateModel CHEST_MODEL = CrystaliteChestplateModel.regularModel(null);
+	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = CrystaliteChestplateModel.thinModel(null);
 	private final static CrystaliteLeggingsModel LEGGINGS_MODEL = new CrystaliteLeggingsModel(1.0F);
 	private final static CrystaliteBootsModel BOOTS_MODEL = new CrystaliteBootsModel(1.0F);
 	

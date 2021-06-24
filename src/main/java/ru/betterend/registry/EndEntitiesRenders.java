@@ -14,6 +14,7 @@ import ru.betterend.entity.render.RendererEntityEndFish;
 import ru.betterend.entity.render.RendererEntityEndSlime;
 import ru.betterend.entity.render.RendererEntityShadowWalker;
 import ru.betterend.entity.render.SilkMothEntityRenderer;
+import ru.betterend.item.model.ArmoredElytraModel;
 
 public class EndEntitiesRenders {
 
@@ -23,6 +24,9 @@ public class EndEntitiesRenders {
 	public static final ModelLayerLocation END_FISH_MODEL = registerMain("endfish");
 	public static final ModelLayerLocation CUBOZOA_MODEL = registerMain("cubozoa");
 	public static final ModelLayerLocation SILK_MOTH_MODEL = registerMain("silkmoth");
+
+	//Not sure if this should go to another registry
+	public static final ModelLayerLocation ARMORED_ELYTRA = registerMain("armored_elytra");
 
 	public static void register() {
 		register(EndEntities.DRAGONFLY, RendererEntityDragonfly.class);
@@ -38,6 +42,8 @@ public class EndEntitiesRenders {
 		EntityModelLayerRegistry.registerModelLayer(END_FISH_MODEL, EndFishEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(CUBOZOA_MODEL, CubozoaEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(SILK_MOTH_MODEL, SilkMothEntityModel::getTexturedModelData);
+
+		EntityModelLayerRegistry.registerModelLayer(ARMORED_ELYTRA, ArmoredElytraModel::getTexturedModelData);
 	}
 
 	private static void register(EntityType<?> type, Class<? extends MobRenderer<?, ?>> renderer) {

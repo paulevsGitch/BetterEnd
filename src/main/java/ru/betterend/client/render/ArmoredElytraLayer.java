@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -18,12 +19,14 @@ import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
 import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.item.model.ArmoredElytraModel;
+import ru.betterend.registry.EndEntitiesRenders;
 
 public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>> extends ElytraLayer<T, M> {
-	private final ArmoredElytraModel<T> elytraModel = new ArmoredElytraModel<>();
+	private final ArmoredElytraModel<T> elytraModel;
 
-	public ArmoredElytraLayer(RenderLayerParent<T, M> renderLayerParent) {
-		super(renderLayerParent);
+	public ArmoredElytraLayer(RenderLayerParent<T, M> renderLayerParent, EntityModelSet entityModelSet) {
+		super(renderLayerParent, entityModelSet);
+		elytraModel = new ArmoredElytraModel<>(entityModelSet.bakeLayer(EndEntitiesRenders.ARMORED_ELYTRA));
 	}
 
 	public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f, float g, float h, float j, float k, float l) {

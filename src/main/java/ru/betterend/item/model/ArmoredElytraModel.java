@@ -4,6 +4,12 @@ import com.google.common.collect.ImmutableList;
 
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
@@ -12,12 +18,25 @@ public class ArmoredElytraModel<T extends LivingEntity> extends AgeableListModel
 	private final ModelPart rightWing;
 	private final ModelPart leftWing;
 
-	public ArmoredElytraModel() {
-		this.leftWing = new ModelPart(this, 22, 0);
-		this.leftWing.addBox(-10.0F, 0.0F, 0.0F, 10.0F, 20.0F, 2.0F, 1.0F);
-		this.rightWing = new ModelPart(this, 22, 0);
-		this.rightWing.mirror = true;
-		this.rightWing.addBox(0.0F, 0.0F, 0.0F, 10.0F, 20.0F, 2.0F, 1.0F);
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		modelPartData.addOrReplaceChild(PartNames.LEFT_WING, CubeListBuilder.create()
+						.addBox(-10.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f)
+						.texOffs(22, 0),
+				PartPose.ZERO);
+
+		modelPartData.addOrReplaceChild(PartNames.RIGHT_WING, CubeListBuilder.create()
+						.mirror()
+						.addBox(0.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f)
+						.texOffs(22, 0),
+				PartPose.ZERO);
+
+		return LayerDefinition.create(modelData, 48, 48);
+	}
+	public ArmoredElytraModel(ModelPart modelPart) {
+		leftWing = modelPart.getChild(PartNames.LEFT_WING);
+		rightWing = modelPart.getChild(PartNames.RIGHT_WING);
 	}
 
 	protected Iterable<ModelPart> headParts() {

@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.BlockItem;
@@ -26,7 +28,7 @@ import ru.betterend.registry.EndItems;
 @Environment(EnvType.CLIENT)
 public class PedestalItemRenderer<T extends PedestalBlockEntity> implements BlockEntityRenderer<T> {
 	
-	public PedestalItemRenderer(BlockEntityRenderDispatcher dispatcher) {
+	public PedestalItemRenderer(BlockEntityRendererProvider.Context ctx) {
 		super();
 	}
 

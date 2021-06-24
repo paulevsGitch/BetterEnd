@@ -2,6 +2,7 @@ package ru.betterend.mixin.client;
 
 import java.util.Random;
 
+import com.mojang.math.Matrix4f;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -92,7 +93,7 @@ public class WorldRendererMixin {
 	}
 	
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
-	private void be_renderBetterEndSky(PoseStack matrices, float tickDelta, CallbackInfo info) {
+	private void be_renderBetterEndSky(PoseStack matrices, Matrix4f matrix4f, float tickDelta, Runnable runnable, CallbackInfo info) {
 		if (ClientOptions.isCustomSky() && minecraft.level.effects().skyType() == DimensionSpecialEffects.SkyType.END) {
 			time = (ticks % 360000) * 0.000017453292F;
 			time2 = time * 2;
@@ -108,8 +109,9 @@ public class WorldRendererMixin {
 				RenderSystem.depthMask(false);
 			}
 			else {
-				RenderSystem.enableAlphaTest();
-				RenderSystem.alphaFunc(516, 0.0F);
+				//TODO: Removed in 1.17
+				//RenderSystem.enableAlphaTest();
+				//RenderSystem.alphaFunc(516, 0.0F);
 				RenderSystem.enableBlend();
 			}
 			
@@ -120,23 +122,27 @@ public class WorldRendererMixin {
 			if (blindA > 0) {
 				matrices.pushPose();
 				matrices.mulPose(new Quaternion(0, time, 0, false));
-				textureManager.bind(HORIZON);
+				RenderSystem.setShaderTexture(0, HORIZON);
+				//textureManager.bind(HORIZON);
 				be_renderBuffer(matrices, horizon, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
 				matrices.popPose();
 				
 				matrices.pushPose();
 				matrices.mulPose(new Quaternion(0, -time, 0, false));
-				textureManager.bind(NEBULA_1);
+				//textureManager.bind(NEBULA_1);
+				RenderSystem.setShaderTexture(0, NEBULA_1);
 				be_renderBuffer(matrices, nebulas1, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.popPose();
 				
 				matrices.pushPose();
 				matrices.mulPose(new Quaternion(0, time2, 0, false));
-				textureManager.bind(NEBULA_2);
+				//textureManager.bind(NEBULA_2);
+				RenderSystem.setShaderTexture(0, NEBULA_2);
 				be_renderBuffer(matrices, nebulas2, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.popPose();
-				
-				textureManager.bind(STARS);
+
+				//textureManager.bind(STARS);
+				RenderSystem.setShaderTexture(0, STARS);
 				
 				matrices.pushPose();
 				matrices.mulPose(axis3.rotation(time));
@@ -152,7 +158,8 @@ public class WorldRendererMixin {
 			float a = (BackgroundInfo.fogDensity - 1F);
 			if (a > 0) {
 				if (a > 1) a = 1;
-				textureManager.bind(FOG);
+				RenderSystem.setShaderTexture(0, FOG);
+				//textureManager.bind(FOG);
 				be_renderBuffer(matrices, fog, DefaultVertexFormat.POSITION_TEX, BackgroundInfo.fogColorRed, BackgroundInfo.fogColorGreen, BackgroundInfo.fogColorBlue, a);
 			}
 
@@ -178,10 +185,12 @@ public class WorldRendererMixin {
 	}
 	
 	private void be_renderBuffer(PoseStack matrices, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) {
-		RenderSystem.color4f(r, g, b, a);
+		RenderSystem.setShaderColor(r, g, b, a);
 		buffer.bind();
-		format.setupBufferState(0L);
-        buffer.draw(matrices.last().pose(), 7);
+		//format.setupBufferState(0L);
+        //buffer.draw(matrices.last().pose(), 7);
+		format.setupBufferState();
+		buffer.draw();
         VertexBuffer.unbind();
         format.clearBufferState();
 	}
@@ -203,7 +212,10 @@ public class WorldRendererMixin {
 			buffer.close();
 		}
 
-		buffer = new VertexBuffer(DefaultVertexFormat.POSITION);
+		//TODO: Test if this is working correct
+		//Format is set in the DrawState
+		//buffer = new VertexBuffer(DefaultVertexFormat.POSITION);
+		buffer = new VertexBuffer();
 		be_makeStars(bufferBuilder, minSize, maxSize, count, seed);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
@@ -216,7 +228,8 @@ public class WorldRendererMixin {
 			buffer.close();
 		}
 
-		buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		// buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		buffer = new VertexBuffer();
 		be_makeUVStars(bufferBuilder, minSize, maxSize, count, seed);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
@@ -229,7 +242,8 @@ public class WorldRendererMixin {
 			buffer.close();
 		}
 
-		buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		// buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		buffer = new VertexBuffer();
 		be_makeFarFog(bufferBuilder, minSize, maxSize, count, seed);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
@@ -242,7 +256,8 @@ public class WorldRendererMixin {
 			buffer.close();
 		}
 
-		buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		// buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		buffer = new VertexBuffer();
 		be_makeCylinder(bufferBuilder, 16, 50, 100);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
@@ -255,7 +270,8 @@ public class WorldRendererMixin {
 			buffer.close();
 		}
 
-		buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		// buffer = new VertexBuffer(DefaultVertexFormat.POSITION_TEX);
+		buffer = new VertexBuffer();
 		be_makeCylinder(bufferBuilder, 16, 50, 70);
 		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
@@ -265,7 +281,7 @@ public class WorldRendererMixin {
 	
 	private void be_makeStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
-		buffer.begin(7, DefaultVertexFormat.POSITION);
+		buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
 		for (int i = 0; i < count; ++i) {
 			double posX = random.nextDouble() * 2.0 - 1.0;
@@ -308,7 +324,7 @@ public class WorldRendererMixin {
 	
 	private void be_makeUVStars(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
-		buffer.begin(7, DefaultVertexFormat.POSITION_TEX);
+		buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
 		for (int i = 0; i < count; ++i) {
 			double posX = random.nextDouble() * 2.0 - 1.0;
@@ -356,7 +372,7 @@ public class WorldRendererMixin {
 	
 	private void be_makeFarFog(BufferBuilder buffer, double minSize, double maxSize, int count, long seed) {
 		Random random = new Random(seed);
-		buffer.begin(7, DefaultVertexFormat.POSITION_TEX);
+		buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
 		for (int i = 0; i < count; ++i) {
 			double posX = random.nextDouble() * 2.0 - 1.0;
@@ -406,7 +422,7 @@ public class WorldRendererMixin {
 	}
 	
 	private void be_makeCylinder(BufferBuilder buffer, int segments, double height, double radius) {
-		buffer.begin(7, DefaultVertexFormat.POSITION_TEX);
+		buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 		for (int i = 0; i < segments; i ++) {
 			double a1 = (double) i * Math.PI * 2.0 / (double) segments;
 			double a2 = (double) (i + 1) * Math.PI * 2.0 / (double) segments;

@@ -51,13 +51,13 @@ public class EndCrystalRenderer {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 		modelPartData.addOrReplaceChild("FRAME", CubeListBuilder.create()
-						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f)
-						.texOffs(0, 0),
+                        .texOffs(0, 0)
+						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),						
 				PartPose.ZERO);
 
 		modelPartData.addOrReplaceChild("CORE", CubeListBuilder.create()
-						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f)
-						.texOffs(32, 0),
+                        .texOffs(32, 0)
+						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),
 				PartPose.ZERO);
 
 		return LayerDefinition.create(modelData, 64, 32);

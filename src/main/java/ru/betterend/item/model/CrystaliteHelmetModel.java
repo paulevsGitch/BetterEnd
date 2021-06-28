@@ -15,6 +15,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.LivingEntity;
 import ru.betterend.registry.EndEntitiesRenders;
+import shadow.fabric.impl.client.rendering.ArmorProviderExtensions;
 
 @Environment(EnvType.CLIENT)
 public class CrystaliteHelmetModel extends HumanoidModel<LivingEntity> {
@@ -23,10 +24,22 @@ public class CrystaliteHelmetModel extends HumanoidModel<LivingEntity> {
 		final float scale = 1.0f;
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
+
+		// TODO: see if we need to subclass HumanoidModel
+		// Humanoid model tries to retrieve all parts in it's constructor,
+		// so we need to add empty Nodes
+		modelPartData.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);
+		//modelPartData.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
+
 		CubeDeformation deformation_hat = new CubeDeformation(scale + 0.5f);
 		PartDefinition hat = modelPartData.addOrReplaceChild(PartNames.HAT, CubeListBuilder.create()
-						.addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, deformation_hat)
-						.texOffs(0, 0),
+                        .texOffs(0, 0)
+						.addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, deformation_hat),
 				PartPose.ZERO);
 
 		return LayerDefinition.create(modelData, 64, 48);

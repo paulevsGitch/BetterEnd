@@ -22,16 +22,27 @@ public class CrystaliteBootsModel extends HumanoidModel<LivingEntity> {
 		final float scale = 1.0f;
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
-		CubeDeformation deformation = new CubeDeformation(scale + 0.25f);
 
+		// TODO: see if we need to subclass HumanoidModel
+		// Humanoid model tries to retrieve all parts in it's constructor,
+		// so we need to add empty Nodes
+		modelPartData.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
+
+		CubeDeformation deformation = new CubeDeformation(scale + 0.25f);
 		modelPartData.addOrReplaceChild("leftBoot", CubeListBuilder.create()
-						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
-						.texOffs(0, 32),
+                        .texOffs(0, 32)
+						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
 				PartPose.offset(1.9f, 12.0f, 0.0f));
 
 		modelPartData.addOrReplaceChild("rightBoot", CubeListBuilder.create()
-						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
-						.texOffs(0, 16),
+                        .texOffs(0, 16)
+						.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
 				PartPose.offset(-1.9f, 12.0f, 0.0f));
 
 		return LayerDefinition.create(modelData, 64, 48);

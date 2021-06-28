@@ -94,14 +94,18 @@ class ModelPart {
         }
         s += "PartDefinition " + name + " = ";        
         s +=  pName+".addOrReplaceChild(\""+name+"\", CubeListBuilder.create()\n";
-        if (this.mirror) s+= ".mirror()\n";        
+        if (this.mirror) s+= ".mirror()\n";  
+        s+= ".texOffs("+u+", "+v+")";                              
         if (this.hadBox) {
+            s+= "\n";
             if (scale!=1)
-            s+= ".addBox("+bx+"f, "+by+"f, "+bz+"f, "+ba+"f, "+bb+"f, "+bc+"f, deformation_"+name+")\n";
+                s+= ".addBox("+bx+"f, "+by+"f, "+bz+"f, "+ba+"f, "+bb+"f, "+bc+"f, deformation_"+name+"),\n";
             else
-            s+= ".addBox("+bx+"f, "+by+"f, "+bz+"f, "+ba+"f, "+bb+"f, "+bc+"f)\n";
+                s+= ".addBox("+bx+"f, "+by+"f, "+bz+"f, "+ba+"f, "+bb+"f, "+bc+"f),\n";
+        } else {
+            s+= ",\n";
         }
-        s+= ".texOffs("+u+", "+v+"),\n";                        
+        
         if (x==0 && y==0 && z==0 && rx==0 && ry==0 && rz==0){
             s+= "PartPose.ZERO";
         } else if (rx==0 && ry==0 && rz==0){
@@ -144,13 +148,33 @@ public class Convert {
         p.setRotationAngle(x, y, z);
     }
     public void c (){
-        float scale = 0;
-        ModelPart[] SHARDS = new ModelPart[4];
-        SHARDS[0] = new ModelPart(16, 16, 2, 4, "SHARDS[0]").addBox(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS[1] = new ModelPart(16, 16, 2, 4, "SHARDS[1]").addBox(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS[2] = new ModelPart(16, 16, 2, 4, "SHARDS[2]").addBox(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
-		SHARDS[3] = new ModelPart(16, 16, 2, 4, "SHARDS[3]").addBox(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
-		ModelPart CORE = new ModelPart(16, 16, 0, 0, "CORE");
-		CORE.addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
+        float scale = 1;
+        ModelPart partC = new ModelPart(64, 64, 0, 19, "partC");
+		partC.addBox(1.0F, 0.0F, 1.0F, 14.0F, 9.0F, 14.0F, 0.0F);
+		ModelPart partA = new ModelPart(64, 64, 0, 0,"partA");
+		partA.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
+		partA.y = 9.0F;
+		partA.z = 1.0F;
+		ModelPart partB = new ModelPart(64, 64, 0, 0, "partB");
+		partB.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
+		partB.y = 8.0F;
+		ModelPart partRightC = new ModelPart(64, 64, 0, 19, "partRightC");
+		partRightC.addBox(1.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
+		ModelPart partRightA = new ModelPart(64, 64, 0, 0, "partRightA");
+		partRightA.addBox(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
+		partRightA.y = 9.0F;
+		partRightA.z = 1.0F;
+		ModelPart partRightB = new ModelPart(64, 64, 0, 0, "partRightB");
+		partRightB.addBox(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
+		partRightB.y = 8.0F;
+		ModelPart partLeftC = new ModelPart(64, 64, 0, 19, "partLeftC");
+		partLeftC.addBox(0.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
+		ModelPart partLeftA = new ModelPart(64, 64, 0, 0, "partLeftA");
+		partLeftA.addBox(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
+		partLeftA.y = 9.0F;
+		partLeftA.z = 1.0F;
+		ModelPart partLeftB = new ModelPart(64, 64, 0, 0, "partLeftB");
+		partLeftB.addBox(0.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
+		partLeftB.y = 8.0F;
     }
 }

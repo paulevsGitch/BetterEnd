@@ -5,6 +5,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.ListModel;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,6 +17,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import ru.bclib.util.MHelper;
 import ru.betterend.entity.EndSlimeEntity;
+import ru.betterend.registry.EndEntitiesRenders;
 
 public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> {
 	private final ModelPart innerCube;
@@ -120,8 +123,10 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 		return LayerDefinition.create(modelData, 64, 32);
 	}
 
-	public EndSlimeEntityModel(ModelPart modelPart, boolean onlyShell) {
+	public EndSlimeEntityModel(EntityModelSet modelSet, boolean onlyShell){
 		super(RenderType::entityCutout);
+
+		ModelPart modelPart = modelSet.bakeLayer(onlyShell ? EndEntitiesRenders.END_SLIME_SHELL_MODEL : EndEntitiesRenders.END_SLIME_MODEL);
 
 		innerCube = modelPart.getChild(PartNames.BODY);
 		if (!onlyShell) {

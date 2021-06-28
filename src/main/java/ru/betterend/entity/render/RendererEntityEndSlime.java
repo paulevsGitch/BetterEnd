@@ -22,7 +22,7 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 	private static final RenderType GLOW[] = new RenderType[4];
 
 	public RendererEntityEndSlime(EntityRendererProvider.Context ctx) {
-		super(ctx, new EndSlimeEntityModel<>(ctx.bakeLayer(EndEntitiesRenders.END_SLIME_MODEL)), 0.25f);
+		super(ctx, new EndSlimeEntityModel<>(ctx.getModelSet(), false), 0.25f);
 		this.addLayer(new OverlayFeatureRenderer<EndSlimeEntity>(this, ctx));
 		this.addLayer(new EyesLayer<EndSlimeEntity, EndSlimeEntityModel<EndSlimeEntity>>(this) {
 			@Override
@@ -73,8 +73,8 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 
 		public OverlayFeatureRenderer(RenderLayerParent<T, EndSlimeEntityModel<T>> featureRendererContext, EntityRendererProvider.Context ctx) {
 			super(featureRendererContext);
-			modelOrdinal = new EndSlimeEntityModel<>(ctx.bakeLayer(EndEntitiesRenders.END_SLIME_SHELL_MODEL));
-			modelLake = new EndSlimeEntityModel<>(ctx.bakeLayer(EndEntitiesRenders.END_SLIME_SHELL_MODEL));
+			modelOrdinal = new EndSlimeEntityModel<>(ctx.getModelSet(), true);
+			modelLake = new EndSlimeEntityModel<>(ctx.getModelSet(), true);
 		}
 
 		public void render(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, T livingEntity,

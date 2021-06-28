@@ -122,7 +122,7 @@ public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
         scaleY = sin * 0.1F + 0.9F;
         scaleXZ = Mth.sin(animationProgress * 0.13F + 3.14F) * 0.1F + 0.9F;
 
-        for (int i=1; i<=TENTACLE_COUNT; i++){
+        for (int i=0; i<TENTACLE_COUNT; i++){
             tentacle[i].xRot = sin * 0.15f;
         }
     }

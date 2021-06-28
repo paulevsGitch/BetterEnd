@@ -66,28 +66,28 @@ public class EternalCrystalRenderer {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 		modelPartData.addOrReplaceChild("SHARDS_0", CubeListBuilder.create()
-						.addBox(-5.0f, 1.0f, -3.0f, 2.0f, 8.0f, 2.0f)
-						.texOffs(2, 4),
+                        .texOffs(2, 4)
+						.addBox(-5.0f, 1.0f, -3.0f, 2.0f, 8.0f, 2.0f),
 				PartPose.ZERO);
 
 		modelPartData.addOrReplaceChild("SHARDS_1", CubeListBuilder.create()
-						.addBox(3.0f, -1.0f, -1.0f, 2.0f, 8.0f, 2.0f)
-						.texOffs(2, 4),
+                        .texOffs(2, 4)
+						.addBox(3.0f, -1.0f, -1.0f, 2.0f, 8.0f, 2.0f),
 				PartPose.ZERO);
 
 		modelPartData.addOrReplaceChild("SHARDS_2", CubeListBuilder.create()
-						.addBox(-1.0f, 0.0f, -5.0f, 2.0f, 4.0f, 2.0f)
-						.texOffs(2, 4),
+                        .texOffs(2, 4)
+						.addBox(-1.0f, 0.0f, -5.0f, 2.0f, 4.0f, 2.0f),
 				PartPose.ZERO);
 
 		modelPartData.addOrReplaceChild("SHARDS_3", CubeListBuilder.create()
-						.addBox(0.0f, 3.0f, 4.0f, 2.0f, 6.0f, 2.0f)
-						.texOffs(2, 4),
+                        .texOffs(2, 4)
+						.addBox(0.0f, 3.0f, 4.0f, 2.0f, 6.0f, 2.0f),
 				PartPose.ZERO);
 
 		modelPartData.addOrReplaceChild("CORE", CubeListBuilder.create()
-						.addBox(-2.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f)
-						.texOffs(0, 0),
+                        .texOffs(0, 0)
+						.addBox(-2.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f),
 				PartPose.ZERO);
 
 		return LayerDefinition.create(modelData, 16, 16);

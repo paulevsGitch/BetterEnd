@@ -33,35 +33,47 @@ public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 	private static LayerDefinition getTexturedModelData(float scale, boolean thinArms) {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
+
+		// TODO: see if we need to subclass HumanoidModel
+		// Humanoid model tries to retrieve all parts in it's constructor,
+		// so we need to add empty Nodes
+		modelPartData.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+		// modelPartData.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.ZERO);
+		modelPartData.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
+
 		CubeDeformation deformation = new CubeDeformation(scale + 0.25F);
 		PartDefinition body = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create()
-						.addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, deformation)
-						.texOffs(16, 16),
+                        .texOffs(16, 16)
+						.addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, deformation),
 				PartPose.ZERO);
 
 		if (thinArms) {
 			deformation = new CubeDeformation(scale + 0.45F);
 			PartDefinition leftShoulder = modelPartData.addOrReplaceChild("leftShoulder", CubeListBuilder.create()
 							.mirror()
-							.addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
-							.texOffs(40, 32),
+                            .texOffs(40, 32)
+							.addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
 					PartPose.offset(5.0f, 2.0f, 0.0f));
 
 			PartDefinition rightShoulder = modelPartData.addOrReplaceChild("rightShoulder", CubeListBuilder.create()
-							.addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
-							.texOffs(40, 16),
+                            .texOffs(40, 16)
+							.addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
 					PartPose.offset(-5.0f, 2.0f, 10.0f));
 		} else {
 			deformation = new CubeDeformation(scale + 0.45F);
 			PartDefinition leftShoulder = modelPartData.addOrReplaceChild("leftShoulder", CubeListBuilder.create()
 							.mirror()
-							.addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
-							.texOffs(40, 32),
+                            .texOffs(40, 32)
+							.addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
 					PartPose.offset(5.0f, 2.0f, 0.0f));
 
 			PartDefinition rightShoulder = modelPartData.addOrReplaceChild("rightShoulder", CubeListBuilder.create()
-							.addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation)
-							.texOffs(40, 16),
+                            .texOffs(40, 16)
+							.addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
 					PartPose.offset(-5.0f, 2.0f, 10.0f));
 		}
 		return LayerDefinition.create(modelData, 64, 48);

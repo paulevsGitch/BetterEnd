@@ -432,8 +432,9 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		};
 	}
 
+	@Override
 	@Nullable
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockEntityType<T> blockEntityType) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
 		return level.isClientSide() ? null : createTickerHelper(blockEntityType, EndBlockEntities.PEDESTAL, PedestalBlockEntity::tick);
 	}
 

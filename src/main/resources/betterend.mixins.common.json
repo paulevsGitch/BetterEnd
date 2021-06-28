@@ -2,7 +2,7 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "ru.betterend.mixin.common",
-	"compatibilityLevel": "JAVA_8",
+	"compatibilityLevel": "JAVA_16",
 	"mixins": [
 		"BiomeGenerationSettingsAccessor",
 		"NoiseBasedChunkGeneratorMixin",
@@ -22,7 +22,7 @@
 		"CraftingMenuMixin",
 		"LivingEntityMixin",
 		"ServerPlayerMixin",
-	  	"SpikeFeatureMixin",
+        "SpikeFeatureMixin",
 		"ServerLevelMixin",
 		"PlayerListMixin",
 		"AnvilMenuMixin",
@@ -31,7 +31,8 @@
 		"MonsterMixin",
 		"EntityMixin",
 		"PlayerMixin",
-		"SlimeMixin"
+		"SlimeMixin",
+        "ShuffelingListMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityType.EntityFactory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
 import ru.bclib.util.ColorUtil;
@@ -47,8 +48,8 @@ public class EndEntities {
 		}
 		return type;
 	}
-	
-	private static <T extends LivingEntity> EntityType<T> register(String name, MobCategory group, float width, float height, EntityFactory<T> entity, Builder attributes, boolean fixedSize, int eggColor, int dotsColor) {
+
+	private static <T extends Mob> EntityType<T> register(String name, MobCategory group, float width, float height, EntityFactory<T> entity, Builder attributes, boolean fixedSize, int eggColor, int dotsColor) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity).dimensions(fixedSize ? EntityDimensions.fixed(width, height) : EntityDimensions.scalable(width, height)).build();
 		if (Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true)) {

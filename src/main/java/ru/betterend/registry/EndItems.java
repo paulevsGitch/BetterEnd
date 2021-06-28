@@ -2,6 +2,7 @@ package ru.betterend.registry;
 
 import java.util.List;
 
+import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -175,7 +176,7 @@ public class EndItems extends ItemsRegistry {
 		return getItemRegistry().registerTool(name, item);
 	}
 	
-	public static Item registerEndEgg(String name, EntityType<?> type, int background, int dots) {
+	public static Item registerEndEgg(String name, EntityType<? extends Mob> type, int background, int dots) {
 		return getItemRegistry().registerEgg(name, type, background, dots);
 	}
 	

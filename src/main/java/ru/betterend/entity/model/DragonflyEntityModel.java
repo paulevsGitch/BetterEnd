@@ -145,15 +145,15 @@ public class DragonflyEntityModel extends BlockBenchModel<DragonflyEntity> {
         super(RenderType::entityCutout);
 
         model = modelPart.getChild(PartNames.BODY);
-        head = modelPart.getChild(PartNames.HEAD);
-        tail = modelPart.getChild(PartNames.TAIL);
-        tail_2 = modelPart.getChild(PartNames.TAIL_FIN);
-        wing_1 = modelPart.getChild(PartNames.LEFT_WING);
-        wing_2 = modelPart.getChild(PartNames.RIGHT_WING);
-        wing_3 = modelPart.getChild(PartNames.LEFT_WING_TIP);
-        wing_4 = modelPart.getChild(PartNames.RIGHT_WING_BASE);
-        legs_1 = modelPart.getChild(PartNames.LEFT_LEG);
-        legs_2 = modelPart.getChild(PartNames.RIGHT_LEG);
+        head = model.getChild(PartNames.HEAD);
+        tail = model.getChild(PartNames.TAIL);
+        tail_2 = tail.getChild(PartNames.TAIL_FIN);
+        wing_1 = model.getChild(PartNames.LEFT_WING);
+        wing_2 = model.getChild(PartNames.RIGHT_WING);
+        wing_3 = model.getChild(PartNames.LEFT_WING_BASE);
+        wing_4 = model.getChild(PartNames.RIGHT_WING_BASE);
+        legs_1 = model.getChild(PartNames.LEFT_LEG);
+        legs_2 = model.getChild(PartNames.RIGHT_LEG);
     }
 
     @Override

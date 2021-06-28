@@ -5,6 +5,7 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryStack;
+import me.shedaniel.rei.api.common.plugins.REIServerPlugin;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.impl.ClientInternals;
@@ -20,6 +21,7 @@ import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -27,7 +29,8 @@ import java.util.stream.Collectors;
 
 //https://github.com/shedaniel/RoughlyEnoughItems/blob/6.x-1.17/default-plugin/src/main/java/me/shedaniel/rei/plugin/client/DefaultClientPlugin.java
 @Environment(EnvType.CLIENT)
-public class REIPlugin implements REIClientPlugin {
+@ApiStatus.Internal
+public class REIPlugin implements me.shedaniel.rei.api.client.plugins.REIClientPlugin {
 
 	public final static ResourceLocation PLUGIN_ID = BetterEnd.makeID("rei_plugin");
 	public final static CategoryIdentifier ALLOYING_FUEL =  CategoryIdentifier.of(BetterEnd.MOD_ID, "alloying_fuel");

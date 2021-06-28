@@ -120,15 +120,23 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 		return LayerDefinition.create(modelData, 64, 32);
 	}
 
-	public EndSlimeEntityModel(ModelPart modelPart) {
+	public EndSlimeEntityModel(ModelPart modelPart, boolean onlyShell) {
 		super(RenderType::entityCutout);
 
 		innerCube = modelPart.getChild(PartNames.BODY);
-		rightEye = modelPart.getChild(PartNames.RIGHT_EYE);
-		leftEye = modelPart.getChild(PartNames.LEFT_EYE);
-		mouth = modelPart.getChild(PartNames.MOUTH);
-		flower = modelPart.getChild("flower");
-		crop = modelPart.getChild("crop");
+		if (!onlyShell) {
+			rightEye = modelPart.getChild(PartNames.RIGHT_EYE);
+			leftEye = modelPart.getChild(PartNames.LEFT_EYE);
+			mouth = modelPart.getChild(PartNames.MOUTH);
+			flower = modelPart.getChild("flower");
+			crop = modelPart.getChild("crop");
+		} else {
+			rightEye = null;
+			leftEye = null;
+			mouth = null;
+			flower = null;
+			crop = null;
+		}
 	}
 
 	@Override
@@ -144,8 +152,16 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 		crop.render(matrices, vertices, light, overlay);
 	}
 
+	private boolean isOnlyShell(){
+		return rightEye==null;
+	}
+
 	@Override
 	public Iterable<ModelPart> parts() {
-		return ImmutableList.of(this.innerCube, this.rightEye, this.leftEye, this.mouth);
+		if (isOnlyShell()) {
+			return ImmutableList.of(this.innerCube);
+		} else {
+			return ImmutableList.of(this.innerCube, this.rightEye, this.leftEye, this.mouth);
+		}
 	}
 }

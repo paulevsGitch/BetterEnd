@@ -111,8 +111,8 @@ public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
 
         model = modelPart.getChild(PartNames.BODY);
         for (int i=1; i<=TENTACLE_COUNT; i++){
-            tentacle_center[i] = model.getChild("tentacle_center_"+i);
-            tentacle[i] = tentacle_center[i].getChild("tentacle_"+i);
+            tentacle_center[i-1] = model.getChild("tentacle_center_"+i);
+            tentacle[i-1] = tentacle_center[i-1].getChild("tentacle_"+i);
         }
     }
 

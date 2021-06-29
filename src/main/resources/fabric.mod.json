@@ -31,11 +31,8 @@
 			"ru.betterend.client.BetterEndClient"
 		],
 		"rei_plugins": [
-    		"ru.betterend.integration.rei.REIPlugin"
-  		],
-		"rei_containers": [
-			"ru.betterend.integration.rei.REIContainer"
-		]
+            "ru.betterend.integration.rei.REIPlugin"
+        ]
 	},
 	"mixins": [
 		"betterend.mixins.common.json",

@@ -11,17 +11,18 @@ import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,11 +40,12 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 
 	@Override
 	public @NotNull EntryStack getIcon() {
-		return REIPlugin.ANVILS[0];
+		//return REIPluginClient.ANVILS[0];
+		return EntryStacks.of(Items.COAL);
 	}
 
 	
-	@Override
+	/*@Override
 	public @NotNull List<Widget> setupDisplay(REIAnvilDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
 		List<Widget> widgets = Lists.newArrayList();
@@ -54,7 +56,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		List<EntryIngredient> inputEntries = display.getInputEntries();
 		EntryIngredient materials = inputEntries.get(1);
 		int anvilLevel = display.getAnvilLevel();
-		List anvils = Arrays.stream(REIPlugin.ANVILS).filter(anvil -> {
+		List anvils = Arrays.stream(REIPluginClient.ANVILS).filter(anvil -> {
 			Block block = ((BlockItem) anvil.getValue()).getBlock();
 			if (block instanceof EndAnvilBlock) {
 				return ((EndAnvilBlock) block).getCraftingLevel() >= anvilLevel;
@@ -71,7 +73,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		widgets.add(Widgets.createSlot(new Point(x - 9, y + 25)).entries(anvils));
 
 		return widgets;
-	}
+	}*/
 
 	@Override
 	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAnvilDisplay display,

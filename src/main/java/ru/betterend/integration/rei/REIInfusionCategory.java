@@ -11,9 +11,11 @@ import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
@@ -36,7 +38,8 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 	
 	@Override
 	public @NotNull EntryStack getIcon() {
-		return REIPlugin.INFUSION_RITUAL;
+		//return REIPluginClient.INFUSION_RITUAL;
+		return EntryStacks.of(Items.COAL);
 	}
 
 	

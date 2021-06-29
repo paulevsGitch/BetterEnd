@@ -28,27 +28,23 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 	private Recipe<?> recipe;
 	private float xp;
 	private double smeltTime;
+
+
 	
 	public REIAlloyingDisplay(AlloyingRecipe recipe) {
+		this(recipe, recipe.getExperience(), recipe.getSmeltTime());
+	}
+	protected REIAlloyingDisplay(Recipe<?> recipe, float xp, double smeltTime) {
 		super(
 				EntryIngredients.ofIngredients(recipe.getIngredients()),
 				Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
 		);
 		this.recipe = recipe;
-		this.xp = recipe.getExperience();
-		this.smeltTime = recipe.getSmeltTime();
+		this.xp = xp;
+		this.smeltTime = smeltTime;
 	}
-	
-	public REIAlloyingDisplay(BlastingRecipe recipe) {
-		super(
-				EntryIngredients.ofIngredients(recipe.getIngredients()),
-				Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
-		);
-		this.recipe = recipe;
-		this.xp = recipe.getExperience();
-		this.smeltTime = recipe.getCookingTime();
-	}
-	
+
+
 	public static List<EntryStack> getFuel() {
 		return fuel;
 	}

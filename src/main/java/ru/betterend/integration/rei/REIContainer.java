@@ -1,5 +1,8 @@
 package ru.betterend.integration.rei;
 
+import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
+import ru.betterend.recipe.builders.AlloyingRecipe;
+
 public class REIContainer implements Runnable {
 
 	@Override

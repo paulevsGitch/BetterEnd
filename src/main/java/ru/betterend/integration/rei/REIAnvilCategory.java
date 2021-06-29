@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -61,7 +62,11 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		EntryIngredient materials = inputEntries.get(1);
 		int anvilLevel = display.getAnvilLevel();
 		List anvils = Arrays.stream(ANVILS).filter(anvil -> {
-			Block block = ((BlockItem) anvil.getValue()).getBlock();
+			Object value = anvil.getValue();
+			if (value instanceof ItemStack){
+				value = ((ItemStack) value).getItem();
+			}
+			Block block = ((BlockItem) value).getBlock();
 			if (block instanceof EndAnvilBlock) {
 				return ((EndAnvilBlock) block).getCraftingLevel() >= anvilLevel;
 			}

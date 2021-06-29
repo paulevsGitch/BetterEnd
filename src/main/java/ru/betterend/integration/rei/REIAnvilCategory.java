@@ -27,6 +27,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay> {
+	private final EntryStack[] ANVILS;
+
+	REIAnvilCategory(EntryStack[] anvils){
+		ANVILS = anvils;
+	}
 
 	@Override
 	public @NotNull CategoryIdentifier getCategoryIdentifier() {
@@ -40,12 +45,11 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 
 	@Override
 	public @NotNull EntryStack getIcon() {
-		//return REIPluginClient.ANVILS[0];
-		return EntryStacks.of(Items.COAL);
+		return ANVILS[0];
 	}
 
 	
-	/*@Override
+	@Override
 	public @NotNull List<Widget> setupDisplay(REIAnvilDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
 		List<Widget> widgets = Lists.newArrayList();
@@ -56,7 +60,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		List<EntryIngredient> inputEntries = display.getInputEntries();
 		EntryIngredient materials = inputEntries.get(1);
 		int anvilLevel = display.getAnvilLevel();
-		List anvils = Arrays.stream(REIPluginClient.ANVILS).filter(anvil -> {
+		List anvils = Arrays.stream(ANVILS).filter(anvil -> {
 			Block block = ((BlockItem) anvil.getValue()).getBlock();
 			if (block instanceof EndAnvilBlock) {
 				return ((EndAnvilBlock) block).getCraftingLevel() >= anvilLevel;
@@ -73,7 +77,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		widgets.add(Widgets.createSlot(new Point(x - 9, y + 25)).entries(anvils));
 
 		return widgets;
-	}*/
+	}
 
 	@Override
 	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAnvilDisplay display,

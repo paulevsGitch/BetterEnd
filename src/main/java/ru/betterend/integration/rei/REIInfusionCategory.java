@@ -25,6 +25,11 @@ import java.util.List;
 public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionDisplay> {
 	
 	private final static ResourceLocation BACKGROUND = BetterEnd.makeID("textures/gui/rei_infusion.png");
+	private final EntryStack ICON;
+
+	REIInfusionCategory(EntryStack icon){
+		ICON = icon;
+	}
 
 	@Override
 	public @NotNull CategoryIdentifier getCategoryIdentifier() {
@@ -38,8 +43,7 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 	
 	@Override
 	public @NotNull EntryStack getIcon() {
-		//return REIPluginClient.INFUSION_RITUAL;
-		return EntryStacks.of(Items.COAL);
+		return ICON;
 	}
 
 	

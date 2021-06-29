@@ -23,6 +23,10 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingDisplay> {
+	private final EntryStack ICON;
+	REIAlloyingCategory(EntryStack icon){
+		ICON = icon;
+	}
 
 	@Override
 	public @NotNull CategoryIdentifier getCategoryIdentifier() {
@@ -36,8 +40,7 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 	
 	@Override
 	public @NotNull EntryStack getIcon() {
-		//return REIPluginClient.END_STONE_SMELTER;
-		return EntryStacks.of(Items.COAL);
+		return ICON;
 	}
 	
 	@Override

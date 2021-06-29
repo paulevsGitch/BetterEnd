@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class REIAlloyingFuelDisplay extends BasicDisplay {
+public class REIAlloyingFuelDisplay extends BasicDisplay {
 	private final int fuelTime;
 
 	public REIAlloyingFuelDisplay(List<EntryIngredient> fuel, CompoundTag tag) {
@@ -24,10 +24,10 @@ public abstract class REIAlloyingFuelDisplay extends BasicDisplay {
 		this.fuelTime = fuelTime;
 	}*/
 
-	/*@Override
+	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
-		return REIPluginClient.ALLOYING_FUEL;
-	}*/
+		return REIPlugin.ALLOYING_FUEL;
+	}
 
 	public int getFuelTime() {
 		return fuelTime;

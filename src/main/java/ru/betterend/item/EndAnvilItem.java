@@ -27,7 +27,9 @@ public class EndAnvilItem extends BaseAnvilItem {
 		BlockState blockState = super.getPlacementState(blockPlaceContext);
 		ItemStack stack = blockPlaceContext.getItemInHand();
 		int durability = stack.getOrCreateTag().getInt(DURABILITY);
-		blockState = blockState.setValue(((EndAnvilBlock) blockState.getBlock()).getDurability(), durability);
+		if (blockState!=null) {
+			blockState = blockState.setValue(((EndAnvilBlock) blockState.getBlock()).getDurability(), durability);
+		}
 		return blockState;
 	}
 

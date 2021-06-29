@@ -46,6 +46,7 @@ def useOptional(String dep) {
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "net.fabricmc"
 		if (!dep.contains("me.shedaniel")) {
+			exclude group: "me.shedaniel.cloth"
 			exclude group: "me.shedaniel"
 		}
 	}
@@ -53,6 +54,7 @@ def useOptional(String dep) {
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "net.fabricmc"
 		if (!dep.contains("me.shedaniel")) {
+			exclude group: "me.shedaniel.cloth"
 			exclude group: "me.shedaniel"
 		}
 	}
@@ -63,6 +65,7 @@ def useApi(String dep) {
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "net.fabricmc"
 		if (!dep.contains("me.shedaniel")) {
+			exclude group: "me.shedaniel.cloth"
 			exclude group: "me.shedaniel"
 		}
 	}

@@ -32,6 +32,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.item.CrystaliteArmor;
@@ -89,8 +90,12 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
 	public void be_canBeAffected(MobEffectInstance mobEffectInstance, CallbackInfoReturnable<Boolean> info) {
-		if (mobEffectInstance.getEffect() == MobEffects.BLINDNESS && getAttributes().getValue(EndAttributes.BLINDNESS_RESISTANCE) > 0.0) {
-			info.setReturnValue(false);
+		try {
+			if (mobEffectInstance.getEffect() == MobEffects.BLINDNESS && getAttributes().getValue(EndAttributes.BLINDNESS_RESISTANCE) > 0.0) {
+				info.setReturnValue(false);
+			}
+		} catch (Exception ex) {
+			BetterEnd.LOGGER.warning("Blindness resistance attribute haven't registered.");
 		}
 	}
 

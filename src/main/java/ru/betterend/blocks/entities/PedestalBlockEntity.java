@@ -132,16 +132,12 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 		}
 	}
 
-	protected void tick(Level tickLevel, BlockPos tickPos, BlockState tickState){
-		if (!this.isEmpty()) {
-			this.age++;
-			if (this.age > this.maxAge) {
-				this.age = 0;
+	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
+		if (!blockEntity.isEmpty()) {
+			blockEntity.age++;
+			if (blockEntity.age > blockEntity.maxAge) {
+				blockEntity.age = 0;
 			}
 		}
-	}
-
-	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
-		blockEntity.tick(tickLevel, tickPos, tickState);
 	}
 }

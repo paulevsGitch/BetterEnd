@@ -44,13 +44,12 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	public boolean hasRitual() {
 		return linkedRitual != null;
 	}
-	
-	@Override
-	protected void tick(Level tickLevel, BlockPos tickPos, BlockState tickState){
-		if (hasRitual()) {
-			linkedRitual.tick();
+
+	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, InfusionPedestalEntity blockEntity) {
+		if (blockEntity.hasRitual()) {
+			blockEntity.linkedRitual.tick();
 		}
-		super.tick(tickLevel, tickPos, tickState);
+		PedestalBlockEntity.tick(tickLevel, tickPos, tickState, blockEntity);
 	}
 
 	@Override

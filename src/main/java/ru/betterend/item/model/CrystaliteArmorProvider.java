@@ -1,5 +1,7 @@
 package ru.betterend.item.model;
 
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.world.item.ArmorMaterial;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,9 +18,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndItems;
+import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 
 @Environment(EnvType.CLIENT)
-public class CrystaliteArmorProvider /*implements ModelProvider, TextureProvider*/ {
+public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProvider, ArmorRenderingRegistry.TextureProvider {
 	//TODO: find new registry
 	private final static ResourceLocation FIRST_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_1.png");
 	private final static ResourceLocation SECOND_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_2.png");
@@ -27,7 +30,7 @@ public class CrystaliteArmorProvider /*implements ModelProvider, TextureProvider
 	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = CrystaliteChestplateModel.createThinModel(null);
 	private final static CrystaliteLeggingsModel LEGGINGS_MODEL = CrystaliteLeggingsModel.createModel(null);
 	private final static CrystaliteBootsModel BOOTS_MODEL = CrystaliteBootsModel.createModel(null);
-	
+
 	//@Override
 	public @NotNull ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot,
 			boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {

@@ -2,7 +2,9 @@ package ru.betterend.mixin.client;
 
 import java.util.Random;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.math.Matrix4f;
+import net.minecraft.client.renderer.GameRenderer;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -113,6 +115,7 @@ public class WorldRendererMixin {
 				//RenderSystem.enableAlphaTest();
 				//RenderSystem.alphaFunc(516, 0.0F);
 				RenderSystem.enableBlend();
+				RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			}
 			
 			float blindA = 1F - BackgroundInfo.blindness;
@@ -123,35 +126,31 @@ public class WorldRendererMixin {
 				matrices.pushPose();
 				matrices.mulPose(new Quaternion(0, time, 0, false));
 				RenderSystem.setShaderTexture(0, HORIZON);
-				//textureManager.bind(HORIZON);
-				be_renderBuffer(matrices, horizon, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
+				be_renderBuffer(matrices, matrix4f, horizon, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
 				matrices.popPose();
 				
 				matrices.pushPose();
 				matrices.mulPose(new Quaternion(0, -time, 0, false));
-				//textureManager.bind(NEBULA_1);
 				RenderSystem.setShaderTexture(0, NEBULA_1);
-				be_renderBuffer(matrices, nebulas1, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
+				be_renderBuffer(matrices, matrix4f, nebulas1, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.popPose();
 				
 				matrices.pushPose();
 				matrices.mulPose(new Quaternion(0, time2, 0, false));
-				//textureManager.bind(NEBULA_2);
 				RenderSystem.setShaderTexture(0, NEBULA_2);
-				be_renderBuffer(matrices, nebulas2, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
+				be_renderBuffer(matrices, matrix4f, nebulas2, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.popPose();
 
-				//textureManager.bind(STARS);
 				RenderSystem.setShaderTexture(0, STARS);
 				
 				matrices.pushPose();
 				matrices.mulPose(axis3.rotation(time));
-				be_renderBuffer(matrices, stars3, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind06);
+				be_renderBuffer(matrices, matrix4f ,stars3, DefaultVertexFormat.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind06);
 				matrices.popPose();
 				
 				matrices.pushPose();
 				matrices.mulPose(axis4.rotation(time2));
-				be_renderBuffer(matrices, stars4, DefaultVertexFormat.POSITION_TEX, 1F, 1F, 1F, blind06);
+				be_renderBuffer(matrices, matrix4f, stars4, DefaultVertexFormat.POSITION_TEX, 1F, 1F, 1F, blind06);
 				matrices.popPose();
 			}
 			
@@ -159,8 +158,7 @@ public class WorldRendererMixin {
 			if (a > 0) {
 				if (a > 1) a = 1;
 				RenderSystem.setShaderTexture(0, FOG);
-				//textureManager.bind(FOG);
-				be_renderBuffer(matrices, fog, DefaultVertexFormat.POSITION_TEX, BackgroundInfo.fogColorRed, BackgroundInfo.fogColorGreen, BackgroundInfo.fogColorBlue, a);
+				be_renderBuffer(matrices, matrix4f, fog, DefaultVertexFormat.POSITION_TEX, BackgroundInfo.fogColorRed, BackgroundInfo.fogColorGreen, BackgroundInfo.fogColorBlue, a);
 			}
 
 			RenderSystem.disableTexture();
@@ -168,29 +166,30 @@ public class WorldRendererMixin {
 			if (blindA > 0) {
 				matrices.pushPose();
 				matrices.mulPose(axis1.rotation(time3));
-				be_renderBuffer(matrices, stars1, DefaultVertexFormat.POSITION, 1, 1, 1, blind06);
+				be_renderBuffer(matrices, matrix4f, stars1, DefaultVertexFormat.POSITION, 1, 1, 1, blind06);
 				matrices.popPose();
 				
 				matrices.pushPose();
 				matrices.mulPose(axis2.rotation(time2));
-				be_renderBuffer(matrices, stars2, DefaultVertexFormat.POSITION, 0.95F, 0.64F, 0.93F, blind06);
+				be_renderBuffer(matrices, matrix4f, stars2, DefaultVertexFormat.POSITION, 0.95F, 0.64F, 0.93F, blind06);
 				matrices.popPose();
 			}
 			
 			RenderSystem.enableTexture();
 			RenderSystem.depthMask(true);
+			RenderSystem.defaultBlendFunc();
+			RenderSystem.disableBlend();
 			
 			info.cancel();
 		}
 	}
 	
-	private void be_renderBuffer(PoseStack matrices, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) {
+	private void be_renderBuffer(PoseStack matrices, Matrix4f matrix4f, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) {
 		RenderSystem.setShaderColor(r, g, b, a);
 		buffer.bind();
-		//format.setupBufferState(0L);
-        //buffer.draw(matrices.last().pose(), 7);
 		format.setupBufferState();
-		buffer.draw();
+		buffer.drawWithShader(matrices.last().pose(), matrix4f, GameRenderer.getPositionTexShader());
+
         VertexBuffer.unbind();
         format.clearBufferState();
 	}

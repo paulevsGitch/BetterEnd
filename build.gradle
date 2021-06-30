@@ -43,30 +43,30 @@ dependencies {
 
 def useOptional(String dep) {
 	dependencies.modRuntime (dep) {
-		exclude group: "net.fabricmc.fabric-api"
-		exclude group: "net.fabricmc"
+		exclude group: 'net.fabricmc.fabric-api'
+		exclude group: 'net.fabricmc'
 		if (!dep.contains("me.shedaniel")) {
-			exclude group: "me.shedaniel.cloth"
-			exclude group: "me.shedaniel"
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'me.shedaniel'
 		}
 	}
 	dependencies.modCompileOnly (dep) {
-		exclude group: "net.fabricmc.fabric-api"
-		exclude group: "net.fabricmc"
+		exclude group: 'net.fabricmc.fabric-api'
+		exclude group: 'net.fabricmc'
 		if (!dep.contains("me.shedaniel")) {
-			exclude group: "me.shedaniel.cloth"
-			exclude group: "me.shedaniel"
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'me.shedaniel'
 		}
 	}
 }
 
 def useApi(String dep) {
 	dependencies.modApi (dep) {
-		exclude group: "net.fabricmc.fabric-api"
-		exclude group: "net.fabricmc"
+		exclude group: 'net.fabricmc.fabric-api'
+		exclude group: 'net.fabricmc'
 		if (!dep.contains("me.shedaniel")) {
-			exclude group: "me.shedaniel.cloth"
-			exclude group: "me.shedaniel"
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'me.shedaniel'
 		}
 	}
 }

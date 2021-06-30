@@ -95,7 +95,7 @@ public abstract class LivingEntityMixin extends Entity {
 				info.setReturnValue(false);
 			}
 		} catch (Exception ex) {
-			BetterEnd.LOGGER.warning("Blindness resistance attribute haven't registered.");
+			BetterEnd.LOGGER.warning("Blindness resistance attribute haven't been registered.");
 		}
 	}
 

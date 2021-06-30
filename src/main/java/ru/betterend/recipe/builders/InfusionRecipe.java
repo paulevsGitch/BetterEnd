@@ -4,11 +4,15 @@ import java.util.Arrays;
 
 import com.google.gson.JsonObject;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagLoader;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -17,6 +21,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.GsonAdapterFactory;
 import ru.bclib.recipes.BCLRecipeManager;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -208,6 +213,15 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			recipe.output = ItemUtil.fromJsonRecipe(result);
 			if (recipe.output == null) {
 				throw new IllegalStateException("Output item does not exists!");
+			}
+			if (result.has("nbt")) {
+				try {
+					String nbtData = GsonHelper.getAsString(result, "nbt");
+					CompoundTag nbt = TagParser.parseTag(nbtData);
+					recipe.output.setTag(nbt);
+				} catch (CommandSyntaxException ex) {
+					BetterEnd.LOGGER.warning("Error parse nbt data for output.", ex);
+				}
 			}
 			recipe.group = GsonHelper.getAsString(json, "group", GROUP);
 			recipe.time = GsonHelper.getAsInt(json, "time", 1);

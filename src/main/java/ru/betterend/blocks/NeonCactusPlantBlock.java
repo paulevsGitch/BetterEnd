@@ -7,7 +7,6 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -64,7 +63,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 	private static final int MAX_LENGTH = 12;
 	
 	public NeonCactusPlantBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15).randomTicks());
+		super(BlocksHelper.copySettingsOf(Blocks.CACTUS).luminance(15).randomTicks());
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP).setValue(SHAPE, TripleShape.TOP));
 	}
 	

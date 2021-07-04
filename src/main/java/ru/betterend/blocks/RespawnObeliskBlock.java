@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Lists;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
@@ -54,7 +53,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	
 	public RespawnObeliskBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.END_STONE).luminance((state) -> {
+		super(BlocksHelper.copySettingsOf(Blocks.END_STONE).luminance((state) -> {
 			return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
 		}));
 	}

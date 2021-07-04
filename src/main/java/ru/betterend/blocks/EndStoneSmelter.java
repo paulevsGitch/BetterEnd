@@ -1,9 +1,15 @@
 package ru.betterend.blocks;
 
+import java.util.List;
+import java.util.Random;
+
 import com.google.common.collect.Lists;
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,7 +22,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -30,13 +41,9 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 import ru.bclib.blocks.BaseBlockWithEntity;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.registry.EndBlockEntities;
-
-import java.util.List;
-import java.util.Random;
 
 public class EndStoneSmelter extends BaseBlockWithEntity {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -47,6 +54,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY)
 				.hardness(4F)
 				.resistance(100F)
+                .breakByTool(FabricToolTags.PICKAXES)
 				.requiresCorrectToolForDrops()
 				.sound(SoundType.STONE));
 		this.registerDefaultState(this.stateDefinition.any()

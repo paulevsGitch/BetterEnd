@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,7 +27,7 @@ import ru.betterend.registry.EndBlocks;
 @SuppressWarnings("deprecation")
 public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyped {
 	public MengerSpongeWetBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).noOcclusion());
+		super(BlocksHelper.copySettingsOf(Blocks.WET_SPONGE).noOcclusion());
 	}
 
 	@Override

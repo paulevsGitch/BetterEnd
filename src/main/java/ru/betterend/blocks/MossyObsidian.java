@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -19,10 +18,11 @@ import net.minecraft.world.level.lighting.LayerLightEngine;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseBlock;
+import ru.bclib.util.BlocksHelper;
 
 public class MossyObsidian extends BaseBlock {
 	public MossyObsidian() {
-		super(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).hardness(3).randomTicks());
+		super(BlocksHelper.copySettingsOf(Blocks.OBSIDIAN).hardness(3).randomTicks());
 	}
 	
 	@Override

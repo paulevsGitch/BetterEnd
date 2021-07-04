@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -19,6 +18,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 
@@ -27,7 +27,7 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	private static final VoxelShape SHAPE_FLOOR = Block.box(3, 0, 3, 13, 15, 13);
 	
 	public StoneLanternBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source).luminance(15));
+		super(BlocksHelper.copySettingsOf(source).luminance(15));
 	}
 	
 	@Override

@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -29,10 +28,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.util.BlocksHelper;
 
 public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderTyped, BlockModelProvider {
 	public EmeraldIceBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.ICE));
+		super(BlocksHelper.copySettingsOf(Blocks.ICE));
 	}
 
 	@Override

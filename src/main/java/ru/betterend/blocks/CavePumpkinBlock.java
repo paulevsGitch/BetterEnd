@@ -3,7 +3,6 @@ package ru.betterend.blocks;
 import java.util.Collections;
 import java.util.List;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -20,6 +19,7 @@ import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 
 public class CavePumpkinBlock extends BaseBlockNotFull implements IRenderTyped {
@@ -28,7 +28,7 @@ public class CavePumpkinBlock extends BaseBlockNotFull implements IRenderTyped {
 	private static final VoxelShape SHAPE_BIG;
 	
 	public CavePumpkinBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.PUMPKIN).luminance((state) -> state.getValue(SMALL) ? 10 : 15));
+		super(BlocksHelper.copySettingsOf(Blocks.PUMPKIN).luminance((state) -> state.getValue(SMALL) ? 10 : 15));
 		registerDefaultState(defaultBlockState().setValue(SMALL, false));
 	}
 	

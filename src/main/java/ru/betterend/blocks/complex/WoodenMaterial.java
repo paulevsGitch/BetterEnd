@@ -33,6 +33,7 @@ import ru.bclib.blocks.BaseWoodenButtonBlock;
 import ru.bclib.blocks.StripableBarkBlock;
 import ru.bclib.blocks.WoodenPressurePlateBlock;
 import ru.bclib.recipes.GridRecipe;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -69,7 +70,7 @@ public class WoodenMaterial {
 	public final Tag.Named<Item> logItemTag;
 	
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
-		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);
+		FabricBlockSettings materialPlanks = BlocksHelper.copySettingsOf(Blocks.OAK_PLANKS).materialColor(planksColor);
 		
 		log_stripped = EndBlocks.registerBlock(name + "_stripped_log", new BaseRotatedPillarBlock(materialPlanks));
 		bark_stripped = EndBlocks.registerBlock(name + "_stripped_bark", new BaseBarkBlock(materialPlanks));

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -40,7 +39,7 @@ public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlo
 	private static final Map<Axis, VoxelShape> SHAPES = Maps.newEnumMap(Axis.class);
 	
 	public EndLotusStemBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS));
+		super(BlocksHelper.copySettingsOf(Blocks.OAK_PLANKS));
 		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(SHAPE, TripleShape.MIDDLE).setValue(LEAF, false).setValue(FACING, Direction.UP));
 	}
 	

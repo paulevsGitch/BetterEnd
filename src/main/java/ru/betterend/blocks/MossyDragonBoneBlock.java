@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -19,12 +18,13 @@ import net.minecraft.world.level.lighting.LayerLightEngine;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseRotatedPillarBlock;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 
 @SuppressWarnings("deprecation")
 public class MossyDragonBoneBlock extends BaseRotatedPillarBlock {
 	public MossyDragonBoneBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).hardness(0.5F).randomTicks());
+		super(BlocksHelper.copySettingsOf(Blocks.BONE_BLOCK).hardness(0.5F).randomTicks());
 	}
 	
 	@Override

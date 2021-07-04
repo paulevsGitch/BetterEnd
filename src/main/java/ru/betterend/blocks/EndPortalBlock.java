@@ -6,7 +6,6 @@ import java.util.Random;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
@@ -35,6 +34,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.util.BlocksHelper;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndPortals;
@@ -44,7 +44,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, I
 	public static final IntegerProperty PORTAL = EndBlockProperties.PORTAL;
 
 	public EndPortalBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getExplosionResistance()).luminance(15));
+		super(BlocksHelper.copySettingsOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getExplosionResistance()).luminance(15));
 	}
 
 	@Override

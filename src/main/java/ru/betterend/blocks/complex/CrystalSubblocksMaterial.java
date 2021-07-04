@@ -10,6 +10,7 @@ import ru.bclib.blocks.BaseSlabBlock;
 import ru.bclib.blocks.BaseStairsBlock;
 import ru.bclib.blocks.BaseWallBlock;
 import ru.bclib.recipes.GridRecipe;
+import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndPedestal;
@@ -31,7 +32,7 @@ public class CrystalSubblocksMaterial {
 	public final Block brick_wall;
 	
 	public CrystalSubblocksMaterial(String name, Block source) {
-		FabricBlockSettings material = FabricBlockSettings.copyOf(source);
+		FabricBlockSettings material = BlocksHelper.copySettingsOf(source);
 		polished = EndBlocks.registerBlock(name + "_polished", new BaseBlock(material));
 		tiles = EndBlocks.registerBlock(name + "_tiles", new BaseBlock(material));
 		pillar = EndBlocks.registerBlock(name + "_pillar", new BaseRotatedPillarBlock(material));

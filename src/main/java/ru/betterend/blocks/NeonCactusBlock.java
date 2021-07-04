@@ -1,11 +1,11 @@
 package ru.betterend.blocks;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.world.level.block.Blocks;
 import ru.bclib.blocks.BaseRotatedPillarBlock;
-import ru.bclib.util.BlocksHelper;
 
 public class NeonCactusBlock extends BaseRotatedPillarBlock {
 	public NeonCactusBlock() {
-		super(BlocksHelper.copySettingsOf(Blocks.CACTUS).luminance(15));
+		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15));
 	}
 }

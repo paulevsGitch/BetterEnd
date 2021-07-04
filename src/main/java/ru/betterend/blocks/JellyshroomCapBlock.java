@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -29,7 +30,6 @@ import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.interfaces.IRenderTyped;
-import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.client.models.Patterns;
@@ -43,7 +43,7 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTyped, Blo
 	private final int coloritem;
 	
 	public JellyshroomCapBlock(int r1, int g1, int b1, int r2, int g2, int b2) {
-		super(BlocksHelper.copySettingsOf(Blocks.SLIME_BLOCK));
+		super(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK));
 		colorStart = new Vec3i(r1, g1, b1);
 		colorEnd = new Vec3i(r2, g2, b2);
 		coloritem = ColorUtil.color((r1 + r2) >> 1, (g1 + g2) >> 1, (b1 + b2) >> 1);

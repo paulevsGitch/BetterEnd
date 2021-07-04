@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,7 +29,7 @@ public class BrimstoneBlock extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	
 	public BrimstoneBlock() {
-		super(BlocksHelper.copySettingsOf(Blocks.END_STONE).materialColor(MaterialColor.COLOR_BROWN).randomTicks());
+		super(FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(MaterialColor.COLOR_BROWN).randomTicks());
 		registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));
 	}
 	

@@ -3,7 +3,6 @@ package ru.betterend.blocks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SoundType;
@@ -18,8 +17,7 @@ public class AeterniumBlock extends BaseBlock {
 		super(FabricBlockSettings.of(Material.METAL, MaterialColor.COLOR_GRAY)
 				.hardness(65F)
 				.resistance(1200F)
-                .breakByTool(FabricToolTags.PICKAXES)
-				.requiresCorrectToolForDrops()                
+				.requiresCorrectToolForDrops()
 				.sound(SoundType.NETHERITE_BLOCK));
 	}
 

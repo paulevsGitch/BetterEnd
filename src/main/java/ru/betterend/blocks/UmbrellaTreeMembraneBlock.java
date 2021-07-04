@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
-import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -34,7 +34,7 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public UmbrellaTreeMembraneBlock() {
-		super(BlocksHelper.copySettingsOf(Blocks.SLIME_BLOCK));
+		super(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK));
 	}
 	
 	@Override

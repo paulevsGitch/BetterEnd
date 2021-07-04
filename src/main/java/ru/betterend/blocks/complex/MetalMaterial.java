@@ -31,7 +31,6 @@ import ru.bclib.items.tool.BaseSwordItem;
 import ru.bclib.recipes.FurnaceRecipe;
 import ru.bclib.recipes.GridRecipe;
 import ru.bclib.recipes.SmithingTableRecipe;
-import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BulbVineLanternBlock;
@@ -91,26 +90,26 @@ public class MetalMaterial {
 	public final Item boots;
 	
 	public static MetalMaterial makeNormal(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, true, BlocksHelper.copySettingsOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeEndItemSettings(), material, armor);
+		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	public static MetalMaterial makeNormal(String name, MaterialColor color, float hardness, float resistance, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, true, BlocksHelper.copySettingsOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeEndItemSettings(), material, armor);
+		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	public static MetalMaterial makeOreless(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, false, BlocksHelper.copySettingsOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeEndItemSettings(), material, armor);
+		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	public static MetalMaterial makeOreless(String name, MaterialColor color, float hardness, float resistance, Tier material, ArmorMaterial armor) {
-		return new MetalMaterial(name, false, BlocksHelper.copySettingsOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeEndItemSettings(), material, armor);
+		return new MetalMaterial(name, false, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color).hardness(hardness).resistance(resistance), EndItems.makeEndItemSettings(), material, armor);
 	}
 	
 	private MetalMaterial(String name, boolean hasOre, FabricBlockSettings settings, Properties itemSettings, Tier material, ArmorMaterial armor) {
 		BlockBehaviour.Properties lanternProperties = FabricBlockSettings.copyOf(settings).hardness(1).resistance(1).luminance(15).sound(SoundType.LANTERN);
 		final int level = material.getLevel();
 		
-		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseBlock(BlocksHelper.copySettingsOf(Blocks.END_STONE))) : null;
+		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseBlock(FabricBlockSettings.copyOf(Blocks.END_STONE))) : null;
 		block = EndBlocks.registerBlock(name + "_block", new BaseBlock(settings));
 		tile = EndBlocks.registerBlock(name + "_tile", new BaseBlock(settings));
 		stairs = EndBlocks.registerBlock(name + "_stairs", new BaseStairsBlock(tile));

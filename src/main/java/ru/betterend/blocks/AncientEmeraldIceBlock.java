@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -22,7 +23,7 @@ import ru.betterend.registry.EndParticles;
 
 public class AncientEmeraldIceBlock extends BaseBlock {
 	public AncientEmeraldIceBlock() {
-		super(BlocksHelper.copySettingsOf(Blocks.BLUE_ICE).randomTicks());
+		super(FabricBlockSettings.copyOf(Blocks.BLUE_ICE).randomTicks());
 	}
 	
 	@Override

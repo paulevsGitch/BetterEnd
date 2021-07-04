@@ -4,6 +4,7 @@ import java.util.Queue;
 
 import com.google.common.collect.Lists;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -16,17 +17,17 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
-import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 
 @SuppressWarnings("deprecation")
 public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped {
 	public MengerSpongeBlock() {
-		super(BlocksHelper.copySettingsOf(Blocks.SPONGE).noOcclusion());
+		super(FabricBlockSettings.copyOf(Blocks.SPONGE).noOcclusion());
 	}
 	
 	@Override

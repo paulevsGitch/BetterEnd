@@ -6,9 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.google.common.collect.Lists;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.jetbrains.annotations.Nullable;
 
+import com.google.common.collect.Lists;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
@@ -28,8 +34,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -40,12 +44,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
-import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.EndBlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
@@ -97,7 +98,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	protected float height = 1.0F;
 	
 	public PedestalBlock(Block parent) {
-		super(BlocksHelper.copySettingsOf(parent).luminance(state -> state.getValue(HAS_LIGHT) ? 12 : 0));
+		super(FabricBlockSettings.copyOf(parent).luminance(state -> state.getValue(HAS_LIGHT) ? 12 : 0));
 		this.registerDefaultState(stateDefinition.any().setValue(STATE, PedestalState.DEFAULT).setValue(HAS_ITEM, false).setValue(HAS_LIGHT, false));
 		this.parent = parent;
 	}

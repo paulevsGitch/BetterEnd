@@ -16,7 +16,6 @@ import ru.bclib.blocks.BaseStoneButtonBlock;
 import ru.bclib.blocks.BaseWallBlock;
 import ru.bclib.blocks.StonePressurePlateBlock;
 import ru.bclib.recipes.GridRecipe;
-import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndPedestal;
@@ -47,7 +46,7 @@ public class StoneMaterial {
 	public final Block furnace;
 	
 	public StoneMaterial(String name, MaterialColor color) {
-		FabricBlockSettings material = BlocksHelper.copySettingsOf(Blocks.END_STONE).materialColor(color);
+		FabricBlockSettings material = FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color);
 		
 		stone = EndBlocks.registerBlock(name, new BaseBlock(material));
 		polished = EndBlocks.registerBlock(name + "_polished", new BaseBlock(material));

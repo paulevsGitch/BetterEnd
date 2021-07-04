@@ -10,7 +10,7 @@ import com.google.common.collect.Maps;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -28,20 +28,13 @@ import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
-import ru.bclib.util.BlocksHelper;
 import ru.betterend.client.models.Patterns;
 
 public class ChandelierBlock extends BaseAttachedBlock implements IRenderTyped, BlockModelProvider {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public ChandelierBlock(Block source) {
-		super(BlocksHelper.copySettingsOf(source)
-				.breakByTool(FabricToolTags.PICKAXES)
-            	.luminance(15)
-            	.noCollission()
-            	.noOcclusion()
-            	.requiresCorrectToolForDrops()
-        );
+		super(FabricBlockSettings.copyOf(source).luminance(15).noCollission().noOcclusion().requiresCorrectToolForDrops());
 	}
 	
 	@Override

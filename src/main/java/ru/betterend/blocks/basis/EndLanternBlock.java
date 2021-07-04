@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +27,6 @@ import net.minecraft.world.level.material.Fluids;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
-import ru.bclib.util.BlocksHelper;
 
 @SuppressWarnings("deprecation")
 public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {
@@ -34,7 +34,7 @@ public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterlogg
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
 	public EndLanternBlock(Block source) {
-		this(BlocksHelper.copySettingsOf(source).luminance(15).noOcclusion());
+		this(FabricBlockSettings.copyOf(source).luminance(15).noOcclusion());
 	}
 	
 	public EndLanternBlock(Properties settings) {

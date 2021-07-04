@@ -1,0 +1,31 @@
+{
+  "replace": "false",
+  "values": [
+    "betterend:amaranita_cap",
+    "betterend:amaranita_hymenophore",
+    "betterend:amaranita_lantern",
+    "betterend:aurant_polypore",
+    "betterend:blue_vine_lantern",
+    "betterend:filalux_lantern",
+    "betterend:hydralux_petal_block",
+    "betterend:hydralux_petal_block_black",
+    "betterend:hydralux_petal_block_blue",
+    "betterend:hydralux_petal_block_brown",
+    "betterend:hydralux_petal_block_cyan",
+    "betterend:hydralux_petal_block_gray",
+    "betterend:hydralux_petal_block_green",
+    "betterend:hydralux_petal_block_light_blue",
+    "betterend:hydralux_petal_block_light_gray",
+    "betterend:hydralux_petal_block_lime",
+    "betterend:hydralux_petal_block_magenta",
+    "betterend:hydralux_petal_block_orange",
+    "betterend:hydralux_petal_block_pink",
+    "betterend:hydralux_petal_block_purple",
+    "betterend:hydralux_petal_block_red",
+    "betterend:hydralux_petal_block_white",
+    "betterend:hydralux_petal_block_yellow",
+    "betterend:mossy_glowshroom_cap",
+    "betterend:mossy_glowshroom_hymenophore",
+    "betterend:purple_polypore"
+  ]
+}

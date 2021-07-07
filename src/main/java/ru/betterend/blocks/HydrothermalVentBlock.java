@@ -129,16 +129,16 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
-		if (!state.getValue(ACTIVATED) && random.nextBoolean()) {
-			super.animateTick(state, world, pos, random);
+		super.animateTick(state, world, pos, random);
+		if (random.nextBoolean()) {
 			double x = pos.getX() + random.nextDouble();
 			double y = pos.getY() + 0.9 + random.nextDouble() * 0.3;
 			double z = pos.getZ() + random.nextDouble();
-			if (state.getValue(WATERLOGGED)) {
+			if (state.getValue(ACTIVATED)) {
 				world.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
 			}
 			else {
-				world.addParticle(ParticleTypes.SMOKE, x, y, z, 0, 0, 0);
+				world.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0, 0, 0);
 			}
 		}
 	}

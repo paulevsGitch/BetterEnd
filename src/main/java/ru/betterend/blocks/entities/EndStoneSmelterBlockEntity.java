@@ -274,7 +274,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 					blockEntity.smeltTime = 0;
 				}
 			}
-
+			burning = blockEntity.isBurning();
 			if (initialBurning != burning) {
 				tickLevel.setBlock(tickPos, tickState.setValue(EndStoneSmelter.LIT, burning), 3);
 				blockEntity.setChanged();

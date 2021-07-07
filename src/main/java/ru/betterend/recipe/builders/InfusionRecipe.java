@@ -4,10 +4,13 @@ import java.util.Arrays;
 
 import com.google.gson.JsonObject;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -209,6 +212,15 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			recipe.output = ItemUtil.fromJsonRecipe(result);
 			if (recipe.output == null) {
 				throw new IllegalStateException("Output item does not exists!");
+			}
+			if (result.has("nbt")) {
+				try {
+					String nbtData = GsonHelper.getAsString(result, "nbt");
+					CompoundTag nbt = TagParser.parseTag(nbtData);
+					recipe.output.setTag(nbt);
+				} catch (CommandSyntaxException ex) {
+					BetterEnd.LOGGER.warning("Error parse nbt data for output.", ex);
+				}
 			}
 			recipe.group = GsonHelper.getAsString(json, "group", GROUP);
 			recipe.time = GsonHelper.getAsInt(json, "time", 1);

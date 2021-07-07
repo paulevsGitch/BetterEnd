@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.api.TagAPI;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.interfaces.IRenderTyped;
@@ -36,7 +37,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 	public AuroraCrystalBlock() {
 		super(FabricBlockSettings.of(Material.GLASS)
 				.breakByTool(FabricToolTags.PICKAXES)
-				.breakByTool(EndTags.HAMMERS)
+				.breakByTool(TagAPI.HAMMERS)
 				.hardness(1F)
 				.resistance(1F)
 				.luminance(15)

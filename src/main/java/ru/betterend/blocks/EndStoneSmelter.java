@@ -45,13 +45,12 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 
 	public EndStoneSmelter() {
 		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY)
+				.luminance(state -> state.getValue(LIT) ? 15 : 0)
 				.hardness(4F)
 				.resistance(100F)
 				.requiresCorrectToolForDrops()
 				.sound(SoundType.STONE));
-		registerDefaultState(this.stateDefinition.any()
-											  .setValue(FACING, Direction.NORTH)
-											  .setValue(LIT, false));
+		registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
 	}
 	
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {

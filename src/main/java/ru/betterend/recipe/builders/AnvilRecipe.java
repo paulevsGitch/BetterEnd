@@ -26,6 +26,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import ru.bclib.api.TagAPI;
 import ru.bclib.recipes.BCLRecipeManager;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -98,7 +99,7 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 	
 	public boolean matches(Container craftingInventory) {
 		ItemStack hammer = craftingInventory.getItem(1);
-		if (hammer.isEmpty() || !EndTags.HAMMERS.contains(hammer.getItem())) {
+		if (hammer.isEmpty() || !TagAPI.HAMMERS.contains(hammer.getItem())) {
 			return false;
 		}
 		ItemStack material = craftingInventory.getItem(0);
@@ -124,7 +125,7 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
-		defaultedList.add(Ingredient.of(EndTags.HAMMERS.getValues().stream().filter(hammer ->
+		defaultedList.add(Ingredient.of(TagAPI.HAMMERS.getValues().stream().filter(hammer ->
 				((TieredItem) hammer).getTier().getLevel() >= toolLevel).map(ItemStack::new)));
 		defaultedList.add(input);
 		

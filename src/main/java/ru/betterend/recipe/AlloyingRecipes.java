@@ -1,23 +1,31 @@
 package ru.betterend.recipe;
 
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+import ru.betterend.registry.EndTags;
 
 public class AlloyingRecipes {
 	public static void register() {
 		AlloyingRecipe.Builder.create("additional_iron")
-			.setInput(Blocks.IRON_ORE, Blocks.IRON_ORE)
+			.setInput(EndTags.ALLOYING_IRON, EndTags.ALLOYING_IRON)
 			.setOutput(Items.IRON_INGOT, 3)
 			.setExpiriense(2.1F)
 			.build();
 		AlloyingRecipe.Builder.create("additional_gold")
-			.setInput(Blocks.GOLD_ORE, Blocks.GOLD_ORE)
+			.setInput(EndTags.ALLOYING_GOLD, EndTags.ALLOYING_GOLD)
 			.setOutput(Items.GOLD_INGOT, 3)
 			.setExpiriense(3F)
 			.build();
+		AlloyingRecipe.Builder.create("additional_gold")
+				.setInput(EndTags.ALLOYING_COPPER, EndTags.ALLOYING_COPPER)
+				.setOutput(Items.COPPER_INGOT, 3)
+				.setExpiriense(3F)
+				.build();
 		AlloyingRecipe.Builder.create("additional_netherite")
 			.setInput(Blocks.ANCIENT_DEBRIS, Blocks.ANCIENT_DEBRIS)
 			.setOutput(Items.NETHERITE_SCRAP, 3)

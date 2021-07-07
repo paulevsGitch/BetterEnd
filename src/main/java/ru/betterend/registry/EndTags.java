@@ -11,6 +11,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.Block;
@@ -35,10 +36,10 @@ public class EndTags {
 	// Block Tags
 	public static final Tag.Named<Block> PEDESTALS = TagAPI.makeBlockTag(BetterEnd.MOD_ID, "pedestal");
 	public static final Tag.Named<Block> END_STONES = TagAPI.makeCommonBlockTag("end_stones");
-	public static final Tag.Named<Block> DRAGON_IMMUNE = TagAPI.getMCBlockTag("dragon_immune");
-	
-	// Item Tags
-	public final static Tag.Named<Item> HAMMERS = TagAPI.makeItemTag("fabric", "hammers");
+
+	public static final Tag.Named<Item> ALLOYING_IRON = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_iron");
+	public static final Tag.Named<Item> ALLOYING_GOLD = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_gold");
+	public static final Tag.Named<Item> ALLOYING_COPPER = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_copper");
 	
 	public static void register() {
 		TagAPI.addEndGround(EndBlocks.THALLASIUM.ore);
@@ -84,7 +85,7 @@ public class EndTags {
 				hammers.add(item);
 			}
 		});
-		ToolManagerImpl.tag(HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
+		ToolManagerImpl.tag(TagAPI.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
 		
 		TagHelper.addTag(
 			TagAPI.GEN_TERRAIN,
@@ -101,13 +102,17 @@ public class EndTags {
 		TagHelper.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
-		TagHelper.addTag(EndTags.DRAGON_IMMUNE,
+		TagHelper.addTag(TagAPI.DRAGON_IMMUNE,
 			EndBlocks.ENDER_ORE,
 			EndBlocks.ETERNAL_PEDESTAL,
 			EndBlocks.FLAVOLITE_RUNED_ETERNAL,
 			EndBlocks.FLAVOLITE_RUNED
 		);
 		TagHelper.addTag(TagAPI.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
+
+		TagHelper.addTag(ALLOYING_IRON, Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE, Items.RAW_IRON);
+		TagHelper.addTag(ALLOYING_GOLD, Items.GOLD_ORE, Items.DEEPSLATE_GOLD_ORE, Items.RAW_GOLD);
+		TagHelper.addTag(ALLOYING_COPPER, Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
 	}
 	
 	public static void addTerrainTags(Registry<Biome> biomeRegistry) {

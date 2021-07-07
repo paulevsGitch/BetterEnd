@@ -215,8 +215,8 @@ public class EndFeatures {
 	public static final BCLFeature TUNEL_CAVE = BCLFeature.makeChunkFeature(BetterEnd.makeID("tunel_cave"), new TunelCaveFeature());
 	
 	// Ores //
-	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 32, 12, 0, 5, 128);
-	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 16, 4, 0, 5, 128);
+	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 24, 8, 0, 5, 128);
+	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 12, 4, 0, 5, 128);
 	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 24, 6, 0, 5, 128);
 	public static final BCLFeature VIOLECITE_LAYER = registerLayer("violecite_layer", EndBlocks.VIOLECITE, 15, 16, 128, 8);
 	public static final BCLFeature FLAVOLITE_LAYER = registerLayer("flavolite_layer", EndBlocks.FLAVOLITE, 12, 16, 128, 6);

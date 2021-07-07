@@ -3,6 +3,7 @@ package ru.betterend.blocks.complex;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
@@ -19,6 +20,7 @@ import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BaseChainBlock;
 import ru.bclib.blocks.BaseDoorBlock;
 import ru.bclib.blocks.BaseMetalBarsBlock;
+import ru.bclib.blocks.BaseOreBlock;
 import ru.bclib.blocks.BaseSlabBlock;
 import ru.bclib.blocks.BaseStairsBlock;
 import ru.bclib.blocks.BaseTrapdoorBlock;
@@ -68,6 +70,7 @@ public class MetalMaterial {
 	public final Block anvilBlock;
 	public final Item anvilItem;
 
+	public final Item rawOre;
 	public final Item nugget;
 	public final Item ingot;
 	
@@ -90,6 +93,8 @@ public class MetalMaterial {
 	public final Item chestplate;
 	public final Item leggings;
 	public final Item boots;
+
+	public final Tag.Named<Item> alloyingOre;
 	
 	public static MetalMaterial makeNormal(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
 		return new MetalMaterial(name, true, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).materialColor(color), EndItems.makeEndItemSettings(), material, armor);
@@ -110,8 +115,14 @@ public class MetalMaterial {
 	private MetalMaterial(String name, boolean hasOre, FabricBlockSettings settings, Properties itemSettings, Tier material, ArmorMaterial armor) {
 		BlockBehaviour.Properties lanternProperties = FabricBlockSettings.copyOf(settings).hardness(1).resistance(1).luminance(15).sound(SoundType.LANTERN);
 		final int level = material.getLevel();
-		
-		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseBlock(FabricBlockSettings.copyOf(Blocks.END_STONE))) : null;
+
+		rawOre = hasOre ? EndItems.registerEndItem(name + "_raw", new ModelProviderItem(itemSettings)) : null;
+		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseOreBlock(rawOre, 1, 3, 1)) : null;
+		alloyingOre = hasOre ? TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_alloying") : null;
+		if (hasOre) {
+			TagHelper.addTag(alloyingOre, ore, rawOre);
+		}
+
 		block = EndBlocks.registerBlock(name + "_block", new BaseBlock(settings));
 		tile = EndBlocks.registerBlock(name + "_tile", new BaseBlock(settings));
 		stairs = EndBlocks.registerBlock(name + "_stairs", new BaseStairsBlock(tile));
@@ -153,8 +164,9 @@ public class MetalMaterial {
 		anvilItem = EndItems.registerEndItem(name + "_anvil_item", new EndAnvilItem(anvilBlock));
 		
 		if (hasOre) {
-			FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_ingot_furnace", ore, ingot).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_ingot").buildWithBlasting();
-			AlloyingRecipe.Builder.create(name + "_ingot_alloy").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
+			FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_ingot_furnace_ore", ore, ingot).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_ingot").buildWithBlasting();
+			FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_ingot_furnace_raw", rawOre, ingot).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_ingot").buildWithBlasting();
+			AlloyingRecipe.Builder.create(name + "_ingot_alloy").setInput(alloyingOre, alloyingOre).setOutput(ingot, 3).setExpiriense(2.1F).build();
 		}
 		
 		// Basic recipes

@@ -28,11 +28,9 @@ import ru.betterend.util.ItemUtil;
 import ru.betterend.util.RecipeHelper;
 
 public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
-
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
 	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
-	public final static CategoryIdentifier ID = CategoryIdentifier.of(BetterEnd.MOD_ID, GROUP);
 
 	protected final RecipeType<?> type;
 	protected final ResourceLocation id;

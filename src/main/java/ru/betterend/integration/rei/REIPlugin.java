@@ -31,9 +31,9 @@ import java.util.stream.Collectors;
 public class REIPlugin implements REIClientPlugin {
 	public final static ResourceLocation PLUGIN_ID = BetterEnd.makeID("rei_plugin");
 	public final static CategoryIdentifier ALLOYING_FUEL = CategoryIdentifier.of(BetterEnd.MOD_ID, "alloying_fuel");
-	public final static CategoryIdentifier ALLOYING = AlloyingRecipe.ID;
+	public final static CategoryIdentifier ALLOYING = CategoryIdentifier.of(BetterEnd.MOD_ID, AlloyingRecipe.GROUP);
 	public final static CategoryIdentifier SMITHING = CategoryIdentifier.of(BetterEnd.MOD_ID, AnvilRecipe.ID.getPath());
-	public final static CategoryIdentifier INFUSION = InfusionRecipe.ID;
+	public final static CategoryIdentifier INFUSION = CategoryIdentifier.of(BetterEnd.MOD_ID, InfusionRecipe.GROUP);
 
 	private EntryStack END_STONE_SMELTER;
 	private EntryStack INFUSION_RITUAL;

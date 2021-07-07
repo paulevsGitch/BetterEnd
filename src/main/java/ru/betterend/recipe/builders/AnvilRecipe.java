@@ -34,7 +34,6 @@ import ru.betterend.util.RecipeHelper;
 import java.util.Objects;
 
 public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
-
 	public final static String GROUP = "smithing";
 	public final static RecipeType<AnvilRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
 	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());

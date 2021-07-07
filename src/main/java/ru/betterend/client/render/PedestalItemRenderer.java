@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.BlockItem;
@@ -24,10 +26,10 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
-public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEntityRenderer<T> {
+public class PedestalItemRenderer<T extends PedestalBlockEntity> implements BlockEntityRenderer<T> {
 	
-	public PedestalItemRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher);
+	public PedestalItemRenderer(BlockEntityRendererProvider.Context ctx) {
+		super();
 	}
 
 	@Override
@@ -44,7 +46,8 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> extends BlockEn
 
 		matrices.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
-		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, world, null);
+		//TODO: check i=0
+		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, world, null, 0);
 		Vector3f translate = model.getTransforms().ground.translation;
 		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
 		matrices.translate(translate.x(), translate.y(), translate.z());

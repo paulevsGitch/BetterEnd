@@ -46,7 +46,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		}
 	}
 
-	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "getStateForPlacement(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
 	private void be_getStateForPlacement(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
 		BlockPos pos = ctx.getClickedPos();
 		Level world = ctx.getLevel();

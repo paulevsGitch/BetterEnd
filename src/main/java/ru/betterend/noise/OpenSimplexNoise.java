@@ -16,7 +16,7 @@ package ru.betterend.noise;
  *   will be the same when ported to other languages.
  */
 
-public class OpenSimplexNoise {
+public final class OpenSimplexNoise {
 	private static final double STRETCH_CONSTANT_2D = -0.211324865405187; // (1/Math.sqrt(2+1)-1)/2;
 	private static final double SQUISH_CONSTANT_2D = 0.366025403784439; // (Math.sqrt(2+1)-1)/2;
 	private static final double STRETCH_CONSTANT_3D = -1.0 / 6; // (1/Math.sqrt(3+1)-1)/3;

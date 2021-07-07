@@ -8,9 +8,11 @@ import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -46,7 +48,7 @@ public class LakePiece extends BasePiece {
 	private ResourceLocation biomeID;
 	
 	public LakePiece(BlockPos center, float radius, float depth, Random random, Biome biome) {
-		super(EndStructures.LAKE_PIECE, random.nextInt());
+		super(EndStructures.LAKE_PIECE, random.nextInt(), null);
 		this.center = center;
 		this.radius = radius;
 		this.depth = depth;
@@ -57,13 +59,13 @@ public class LakePiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public LakePiece(StructureManager manager, CompoundTag tag) {
+	public LakePiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.LAKE_PIECE, tag);
 		makeBoundingBox();
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("depth", depth);
@@ -84,10 +86,10 @@ public class LakePiece extends BasePiece {
 
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		int minY = this.boundingBox.y0;
-		int maxY = this.boundingBox.y1;
-		int sx = chunkPos.x << 4;
-		int sz = chunkPos.z << 4;
+		int minY = this.boundingBox.minY();
+		int maxY = this.boundingBox.maxY();
+		int sx = SectionPos.sectionToBlockCoord(chunkPos.x);
+		int sz = SectionPos.sectionToBlockCoord(chunkPos.z);
 		MutableBlockPos mut = new MutableBlockPos();
 		ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
 		for (int x = 0; x < 16; x++) {
@@ -144,8 +146,8 @@ public class LakePiece extends BasePiece {
 	}
 	
 	private void fixWater(WorldGenLevel world, ChunkAccess chunk, MutableBlockPos mut, Random random, int sx, int sz) {
-		int minY = this.boundingBox.y0;
-		int maxY = this.boundingBox.y1;
+		int minY = this.boundingBox.minY();
+		int maxY = this.boundingBox.maxY();
 		for (int x = 0; x < 16; x++) {
 			mut.setX(x);
 			for (int z = 0; z < 16; z++) {

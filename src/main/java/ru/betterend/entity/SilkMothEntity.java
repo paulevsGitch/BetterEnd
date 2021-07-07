@@ -4,6 +4,9 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -16,11 +19,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -142,18 +140,18 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 	}
 
 	@Override
-	protected boolean makeFlySound() {
-		return true;
-	}
-
-	@Override
-	public boolean causeFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 
 	@Override
-	public boolean isMovementNoisy() {
-		return false;
+	protected Entity.MovementEmission getMovementEmission() {
+		return Entity.MovementEmission.EVENTS;
+	}
+
+	@Override
+	public boolean isFlying() {
+		return !this.onGround;
 	}
 
 	@Override
@@ -162,7 +160,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 	}
 
 	@Override
-	public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		return EndEntities.SILK_MOTH.create(world);
 	}
 	
@@ -239,8 +237,8 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		@Nullable
 		private Vec3 getRandomLocation() {
 			Vec3 vec3d3 = SilkMothEntity.this.getViewVector(0.0F);
-			Vec3 vec3d4 = RandomPos.getAboveLandPos(SilkMothEntity.this, 8, 7, vec3d3, 1.5707964F, 2, 1);
-			return vec3d4 != null ? vec3d4 : RandomPos.getAirPos(SilkMothEntity.this, 8, 4, -2, vec3d3, 1.5707963705062866D);
+			Vec3 vec3d4 = HoverRandomPos.getPos(SilkMothEntity.this, 8, 7, vec3d3.x, vec3d3.z, 1.5707964F, 3, 1);
+			return vec3d4 != null ? vec3d4 : AirAndWaterRandomPos.getPos(SilkMothEntity.this, 8, 4, -2, vec3d3.x, vec3d3.z, 1.5707963705062866D);
 		}
 	}
 	
@@ -299,7 +297,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state.setValue(EndBlockProperties.FULLNESS, fullness));
 					}
 					SilkMothEntity.this.level.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BEEHIVE_ENTER, SoundSource.BLOCKS, 1, 1);
-					SilkMothEntity.this.remove();
+					SilkMothEntity.this.discard();
 				}
 				else {
 					SilkMothEntity.this.hivePos = null;

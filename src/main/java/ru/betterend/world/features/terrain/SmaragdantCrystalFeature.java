@@ -8,6 +8,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
@@ -17,8 +18,10 @@ import ru.betterend.registry.EndBlocks;
 
 public class SmaragdantCrystalFeature extends DefaultFeature {
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		if (!world.getBlockState(pos.below()).is(TagAPI.GEN_TERRAIN)) {
 			return false;
 		}

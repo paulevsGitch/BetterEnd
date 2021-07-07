@@ -54,7 +54,7 @@ public class NightshadeRedwoods extends EndBiome {
 		});
 		
 		for (MobCategory group: MobCategory.values()) {
-			List<SpawnerData> list = biome.getMobSettings().getMobs(group);
+			List<SpawnerData> list = biome.getMobSettings().getMobs(group).unwrap();
 			list.forEach((entry) -> {
 				def.addMobSpawn(entry);
 			});

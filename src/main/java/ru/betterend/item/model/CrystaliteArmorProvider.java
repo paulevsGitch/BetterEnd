@@ -1,5 +1,7 @@
 package ru.betterend.item.model;
 
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.world.item.ArmorMaterial;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -7,8 +9,6 @@ import com.google.common.collect.Lists;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry.ModelProvider;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry.TextureProvider;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
@@ -18,18 +18,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndItems;
+import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 
 @Environment(EnvType.CLIENT)
-public class CrystaliteArmorProvider implements ModelProvider, TextureProvider {
+public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProvider, ArmorRenderingRegistry.TextureProvider {
+	//TODO: find new registry
 	private final static ResourceLocation FIRST_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_1.png");
 	private final static ResourceLocation SECOND_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_2.png");
-	private final static CrystaliteHelmetModel HELMET_MODEL = new CrystaliteHelmetModel(1.0F);
-	private final static CrystaliteChestplateModel CHEST_MODEL = new CrystaliteChestplateModel(1.0F, false);
-	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = new CrystaliteChestplateModel(1.0F, true);
-	private final static CrystaliteLeggingsModel LEGGINGS_MODEL = new CrystaliteLeggingsModel(1.0F);
-	private final static CrystaliteBootsModel BOOTS_MODEL = new CrystaliteBootsModel(1.0F);
-	
-	@Override
+	private final static CrystaliteHelmetModel HELMET_MODEL = CrystaliteHelmetModel.createModel(null);
+	private final static CrystaliteChestplateModel CHEST_MODEL = CrystaliteChestplateModel.createRegularModel(null);
+	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = CrystaliteChestplateModel.createThinModel(null);
+	private final static CrystaliteLeggingsModel LEGGINGS_MODEL = CrystaliteLeggingsModel.createModel(null);
+	private final static CrystaliteBootsModel BOOTS_MODEL = CrystaliteBootsModel.createModel(null);
+
+	//@Override
 	public @NotNull ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot,
 			boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
 		if (!isStackValid(stack)) return defaultTexture;
@@ -37,7 +39,7 @@ public class CrystaliteArmorProvider implements ModelProvider, TextureProvider {
 		return FIRST_LAYER;
 	}
 
-	@Override
+	//@Override
 	public @NotNull HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack,
 			EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
 		if (!isStackValid(stack)) return defaultModel;

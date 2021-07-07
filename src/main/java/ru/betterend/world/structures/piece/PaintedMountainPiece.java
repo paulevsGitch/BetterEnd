@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -28,13 +29,13 @@ public class PaintedMountainPiece extends MountainPiece {
 		this.slises = slises;
 	}
 
-	public PaintedMountainPiece(StructureManager manager, CompoundTag tag) {
-		super(EndStructures.PAINTED_MOUNTAIN_PIECE, manager, tag);
+	public PaintedMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
+		super(EndStructures.PAINTED_MOUNTAIN_PIECE, serverLevel, tag);
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
-		super.addAdditionalSaveData(tag);
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+		super.addAdditionalSaveData(serverLevel, tag);
 		ListTag slise = new ListTag();
 		for (BlockState state: slises) {
 			slise.add(NbtUtils.writeBlockState(state));

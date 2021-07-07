@@ -1,12 +1,7 @@
 package ru.betterend.world.features.terrain.caves;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -15,9 +10,9 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
@@ -30,6 +25,10 @@ import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 public abstract class EndCaveFeature extends DefaultFeature {
 	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 	protected static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
@@ -37,7 +36,10 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	private static final Vec3i[] SPHERE;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 2500) {
 			return false;
 		}
@@ -58,19 +60,17 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		if (!caveBlocks.isEmpty()) {
 			if (biome != null) {
 				setBiomes(world, biome, caveBlocks);
-				Set<BlockPos> floorPositions = Sets.newHashSet();
-				Set<BlockPos> ceilPositions = Sets.newHashSet();
-				MutableBlockPos mut = new MutableBlockPos();
-				caveBlocks.forEach((bpos) -> {
-					mut.set(bpos);
-					if (world.getBlockState(mut).getMaterial().isReplaceable()) {
-						mut.setY(bpos.getY() - 1);
-						if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
-							floorPositions.add(mut.immutable());
+				Set<BlockPos> floorPositions = Sets.newConcurrentHashSet();
+				Set<BlockPos> ceilPositions = Sets.newConcurrentHashSet();
+				caveBlocks.parallelStream().forEach((bpos) -> {
+					if (world.getBlockState(bpos).getMaterial().isReplaceable()) {
+						BlockPos side = bpos.below();
+						if (world.getBlockState(side).is(TagAPI.GEN_TERRAIN)) {
+							floorPositions.add(side);
 						}
-						mut.setY(bpos.getY() + 1);
-						if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
-							ceilPositions.add(mut.immutable());
+						side = bpos.above();
+						if (world.getBlockState(side).is(TagAPI.GEN_TERRAIN)) {
+							ceilPositions.add(side);
 						}
 					}
 				});
@@ -94,9 +94,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getFloorFeature(random);
+				Feature<?> feature = biome.getFloorFeature();
 				if (feature != null) {
-					feature.place(world, null, random, pos.above(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
 				}
 			}
 		});
@@ -110,9 +110,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, pos, ceilBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getCeilFeature(random);
+				Feature<?> feature = biome.getCeilFeature();
 				if (feature != null) {
-					feature.place(world, null, random, pos.below(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
 				}
 			}
 		});

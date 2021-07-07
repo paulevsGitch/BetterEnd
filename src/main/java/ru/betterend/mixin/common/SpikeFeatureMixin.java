@@ -1,40 +1,39 @@
 package ru.betterend.mixin.common;
 
-import java.util.Random;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.SpikeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.SpikeConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.generator.GeneratorOptions;
 
+import java.util.Random;
+
 @Mixin(SpikeFeature.class)
 public class SpikeFeatureMixin {
 	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
-	private void be_place(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, SpikeConfiguration endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info) {
+	private void be_place(FeaturePlaceContext<SpikeConfiguration> featurePlaceContext, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPillars()) {
 			info.setReturnValue(false);
 		}
@@ -70,7 +69,7 @@ public class SpikeFeatureMixin {
 			radius--;
 			StructureTemplate base = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_base_" + radius));
 			StructureTemplate top = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_top_" + radius + (spike.isGuarded() ? "_cage" : "")));
-			BlockPos side = base.getSize();
+			Vec3i side = base.getSize();
 			BlockPos pos1 = new BlockPos(x - (side.getX() >> 1), minY - 3, z - (side.getZ() >> 1));
 			minY = pos1.getY() + side.getY();
 			side = top.getSize();
@@ -78,8 +77,8 @@ public class SpikeFeatureMixin {
 			maxY = pos2.getY();
 			
 			StructurePlaceSettings data = new StructurePlaceSettings();
-			base.placeInWorldChunk(world, pos1, data, random);
-			top.placeInWorldChunk(world, pos2, data, random);
+			base.placeInWorld(world, pos1, pos1, data, random, 2);
+			top.placeInWorld(world, pos2, pos2, data, random, 2);
 			
 			int r2 = radius * radius + 1;
 			MutableBlockPos mut = new MutableBlockPos();

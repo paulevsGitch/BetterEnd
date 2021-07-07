@@ -1,29 +1,16 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
-import ru.bclib.sdf.operator.SDFBinary;
-import ru.bclib.sdf.operator.SDFCoordModify;
-import ru.bclib.sdf.operator.SDFFlatWave;
-import ru.bclib.sdf.operator.SDFScale;
-import ru.bclib.sdf.operator.SDFScale3D;
-import ru.bclib.sdf.operator.SDFSmoothUnion;
-import ru.bclib.sdf.operator.SDFSubtraction;
-import ru.bclib.sdf.operator.SDFTranslate;
-import ru.bclib.sdf.operator.SDFUnion;
+import ru.bclib.sdf.operator.*;
 import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.sdf.primitive.SDFPrimitive;
 import ru.bclib.sdf.primitive.SDFSphere;
@@ -35,6 +22,10 @@ import ru.betterend.blocks.MossyGlowshroomCapBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class MossyGlowshroomFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -49,8 +40,10 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 	private static final SDFPrimitive ROOTS;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos,
-			NoneFeatureConfiguration featureConfig) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos blockPos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		BlockState down = world.getBlockState(blockPos.below());
 		if (!down.is(EndBlocks.END_MYCELIUM) && !down.is(EndBlocks.END_MOSS))
 			return false;

@@ -108,6 +108,11 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 	}
 
 	@Override
+	public boolean shouldMoveToInventory(int i) {
+		return i != this.getResultSlotIndex();
+	}
+
+	@Override
 	public boolean stillValid(Player player) {
 		return inventory.stillValid(player);
 	}

@@ -96,7 +96,7 @@ public class ShadowWalkerEntity extends Monster {
 	}
 	
 	@Override
-	protected float getVoicePitch() {
+	public float getVoicePitch() {
 		return MHelper.randRange(0.75F, 1.25F, random);
 	}
 	

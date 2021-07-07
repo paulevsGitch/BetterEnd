@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Lists;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -49,6 +53,7 @@ import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.models.Patterns;
+import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -349,8 +354,8 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter world) {
-		return new PedestalBlockEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new PedestalBlockEntity(blockPos, blockState);
 	}
 
 	public boolean hasUniqueEntity() {
@@ -370,11 +375,13 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation blockId) {
 		return getBlockModel(blockId, defaultBlockState());
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Map<String, String> textures = createTexturesMap();
 		PedestalState state = blockState.getValue(STATE);
@@ -401,6 +408,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		PedestalState state = blockState.getValue(STATE);
 		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
@@ -422,6 +430,22 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 				put("%bottom%", name + "_bottom");
 			}
 		};
+	}
+
+	@Override
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		if (level.isClientSide) return null;
+
+		BlockEntityTicker<T> ticker = createTickerHelper(blockEntityType, EndBlockEntities.PEDESTAL, PedestalBlockEntity::tick);
+		if (ticker!=null) return ticker;
+
+		return createTickerHelper(blockEntityType, EndBlockEntities.INFUSION_PEDESTAL, InfusionPedestalEntity::tick);
+	}
+
+	@Nullable
+	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> blockEntityType, BlockEntityType<E> blockEntityType2, BlockEntityTicker<? super E> blockEntityTicker) {
+		return blockEntityType2 == blockEntityType ? (BlockEntityTicker<A>) blockEntityTicker : null;
 	}
 	
 	static {

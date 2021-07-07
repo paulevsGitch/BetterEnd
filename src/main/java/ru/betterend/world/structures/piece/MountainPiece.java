@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
@@ -34,7 +35,7 @@ public abstract class MountainPiece extends BasePiece {
 	protected int seed2;
 	
 	public MountainPiece(StructurePieceType type, BlockPos center, float radius, float height, Random random, Biome biome) {
-		super(type, random.nextInt());
+		super(type, random.nextInt(), null);
 		this.center = center;
 		this.radius = radius;
 		this.height = height;
@@ -47,13 +48,13 @@ public abstract class MountainPiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public MountainPiece(StructurePieceType type, StructureManager manager, CompoundTag tag) {
+	public MountainPiece(StructurePieceType type, ServerLevel serverLevel, CompoundTag tag) {
 		super(type, tag);
 		makeBoundingBox();
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("height", height);
@@ -129,9 +130,11 @@ public abstract class MountainPiece extends BasePiece {
 	
 	private void makeBoundingBox() {
 		int minX = MHelper.floor(center.getX() - radius);
+		int minY = MHelper.floor(center.getY() - radius);
 		int minZ = MHelper.floor(center.getZ() - radius);
 		int maxX = MHelper.floor(center.getX() + radius + 1);
+		int maxY = MHelper.floor(center.getY() + radius + 1);
 		int maxZ = MHelper.floor(center.getZ() + radius + 1);
-		this.boundingBox = new BoundingBox(minX, minZ, maxX, maxZ);
+		this.boundingBox = new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 }

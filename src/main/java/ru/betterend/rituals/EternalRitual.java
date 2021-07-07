@@ -293,7 +293,7 @@ public class EternalRitual {
 	private BlockPos findPortalPos(int portalId) {
 		MinecraftServer server = world.getServer();
 		ServerLevel targetWorld = (ServerLevel) getTargetWorld(portalId);
-		Registry<DimensionType> registry = Objects.requireNonNull(server).registryAccess().dimensionTypes();
+		Registry<DimensionType> registry = Objects.requireNonNull(server).registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
 		double multiplier = Objects.requireNonNull(registry.get(targetWorldId)).coordinateScale();
 		BlockPos.MutableBlockPos basePos = center.mutable().set(center.getX() / multiplier, center.getY(), center.getZ() / multiplier);
 		BlockPos framePos = findFrame(targetWorld, basePos.mutable());

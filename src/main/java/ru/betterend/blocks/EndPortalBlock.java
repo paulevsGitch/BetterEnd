@@ -94,7 +94,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, I
 		if (exitPos == null) return;
 		if (entity instanceof ServerPlayer && ((ServerPlayer) entity).isCreative()) {
 			((ServerPlayer) entity).teleportTo(destination, exitPos.getX() + 0.5, exitPos.getY(),
-					exitPos.getZ() + 0.5, entity.yRot, entity.xRot);
+					exitPos.getZ() + 0.5, entity.getYRot(), entity.getXRot());
 		} else {
 			((TeleportingEntity) entity).be_setExitPos(exitPos);
 			Optional<Entity> teleported = Optional.ofNullable(entity.changeDimension(destination));
@@ -114,7 +114,7 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, I
 	
 	private BlockPos findExitPos(ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos, Entity entity) {
 		if (targetWorld == null) return null;
-		Registry<DimensionType> registry = targetWorld.registryAccess().dimensionTypes();
+		Registry<DimensionType> registry = targetWorld.registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
 		ResourceLocation targetWorldId = targetWorld.dimension().location();
 		ResourceLocation currentWorldId = currentWorld.dimension().location();
 		double targetMultiplier = Objects.requireNonNull(registry.get(targetWorldId)).coordinateScale();

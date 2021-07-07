@@ -61,7 +61,7 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 				FluidState fluidState = world.getFluidState(blockPos2);
 				Material material = blockState.getMaterial();
 				if (fluidState.is(FluidTags.WATER)) {
-					if (blockState.getBlock() instanceof BucketPickup && ((BucketPickup) blockState.getBlock()).takeLiquid(world, blockPos2, blockState) != Fluids.EMPTY) {
+					if (blockState.getBlock() instanceof BucketPickup && !((BucketPickup) blockState.getBlock()).pickupBlock(world, blockPos2, blockState).isEmpty()) {
 						++i;
 						if (j < 6) {
 							queue.add(new Tuple<>(blockPos2, j + 1));
@@ -73,7 +73,7 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 							queue.add(new Tuple<>(blockPos2, j + 1));
 						}
 					} else if (material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) {
-						BlockEntity blockEntity = blockState.getBlock().isEntityBlock() ? world.getBlockEntity(blockPos2) : null;
+						BlockEntity blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(blockPos2) : null;
 						dropResources(blockState, world, blockPos2, blockEntity);
 						world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
 						++i;

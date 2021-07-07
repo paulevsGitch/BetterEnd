@@ -3,9 +3,11 @@ package ru.betterend.world.structures.piece;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -30,7 +32,7 @@ public class NBTPiece extends BasePiece {
 	private boolean cover;
 	
 	public NBTPiece(ResourceLocation structureID, StructureTemplate structure, BlockPos pos, int erosion, boolean cover, Random random) {
-		super(EndStructures.NBT_PIECE, random.nextInt());
+		super(EndStructures.NBT_PIECE, random.nextInt(), null);
 		this.structureID = structureID;
 		this.structure = structure;
 		this.rotation = Rotation.getRandom(random);
@@ -41,13 +43,13 @@ public class NBTPiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public NBTPiece(StructureManager manager, CompoundTag tag) {
+	public NBTPiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.NBT_PIECE, tag);
 		makeBoundingBox();
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
+	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.putString("structureID", structureID.toString());
 		tag.putInt("rotation", rotation.ordinal());
 		tag.putInt("mirror", mirror.ordinal());
@@ -69,16 +71,18 @@ public class NBTPiece extends BasePiece {
 
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		BoundingBox bounds = new BoundingBox(blockBox);
-		bounds.y1 = this.boundingBox.y1;
-		bounds.y0 = this.boundingBox.y0;
+		BoundingBox bounds = BoundingBox.fromCorners(
+				new Vec3i(blockBox.minX(),  this.boundingBox.minY(), blockBox.minZ()),
+				new Vec3i(blockBox.maxX(),  this.boundingBox.maxX(), blockBox.maxZ())
+		);
 		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
-		structure.placeInWorldChunk(world, pos, placementData, random);
+		structure.placeInWorld(world, pos, pos, placementData, random, 2);
 		if (erosion > 0) {
-			bounds.x1 = MHelper.min(bounds.x1, boundingBox.x1);
-			bounds.x0 = MHelper.max(bounds.x0, boundingBox.x0);
-			bounds.z1 = MHelper.min(bounds.z1, boundingBox.z1);
-			bounds.z0 = MHelper.max(bounds.z0, boundingBox.z0);
+			int x1 = MHelper.min(bounds.maxX(), boundingBox.maxX());
+			int x0 = MHelper.max(bounds.minX(), boundingBox.minX());
+			int z1 = MHelper.min(bounds.maxZ(), boundingBox.maxZ());
+			int z0 = MHelper.max(bounds.minZ(), boundingBox.minZ());
+			bounds = BoundingBox.fromCorners(new Vec3i(x0, bounds.minY(), z0), new Vec3i(x1, bounds.maxY(), z1));
 			StructureHelper.erode(world, bounds, erosion, random);
 		}
 		if (cover) {

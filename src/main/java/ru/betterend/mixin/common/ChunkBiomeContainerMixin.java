@@ -27,11 +27,7 @@ public class ChunkBiomeContainerMixin implements IBiomeArray {
 
 	@Final
 	@Shadow
-	public static int HORIZONTAL_MASK;
-
-	@Final
-	@Shadow
-	public static int VERTICAL_MASK;
+	private static int HORIZONTAL_MASK;
 
 	@Override
 	public void be_setBiome(Biome biome, BlockPos pos) {
@@ -78,9 +74,12 @@ public class ChunkBiomeContainerMixin implements IBiomeArray {
 		biomes[index] = biome;
 	}
 
+	@Shadow @Final private int quartMinY;
+	@Shadow @Final private int quartHeight;
+
 	private int be_getArrayIndex(int biomeX, int biomeY, int biomeZ) {
 		int i = biomeX & HORIZONTAL_MASK;
-		int j = Mth.clamp(biomeY, 0, VERTICAL_MASK);
+		int j = Mth.clamp(biomeY - this.quartMinY, 0, this.quartHeight);
 		int k = biomeZ & HORIZONTAL_MASK;
 		return j << WIDTH_BITS + WIDTH_BITS | k << WIDTH_BITS | i;
 	}

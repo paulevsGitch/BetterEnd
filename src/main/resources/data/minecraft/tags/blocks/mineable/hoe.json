@@ -1,0 +1,14 @@
+{
+  "replace": "false",
+  "values": [
+    "betterend:amber_root_seed",
+    "betterend:blossom_berry_seed",
+    "betterend:chorus_mushroom_seed",
+    "betterend:dragon_tree_leaves",
+    "betterend:lacugrove_leaves",
+    "betterend:lucernia_leaves",
+    "betterend:pythadendron_leaves",
+    "betterend:shadow_berry",
+    "betterend:tenanea_leaves"
+  ]
+}

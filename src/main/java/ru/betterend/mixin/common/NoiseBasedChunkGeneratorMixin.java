@@ -32,8 +32,8 @@ public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
 		TerrainGenerator.initNoise(seed);
 	}
 	
-	@Inject(method = "fillNoiseColumn([DII)V", at = @At("HEAD"), cancellable = true, allow = 2)
-	private void be_fillNoiseColumn(double[] buffer, int x, int z, CallbackInfo info) {
+	@Inject(method = "fillNoiseColumn([DIIII)V", at = @At("HEAD"), cancellable = true, allow = 2)
+	private void be_fillNoiseColumn(double[] buffer, int x, int z, int k, int l, CallbackInfo info) {
 		if (GeneratorOptions.useNewGenerator() && settings.get().stable(NoiseGeneratorSettings.END)) {
 			TerrainGenerator.fillTerrainDensity(buffer, x, z, getBiomeSource());
 			info.cancel();

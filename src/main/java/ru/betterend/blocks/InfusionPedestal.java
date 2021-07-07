@@ -44,8 +44,8 @@ public class InfusionPedestal extends PedestalBlock {
 	}
 	
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter world) {
-		return new InfusionPedestalEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new InfusionPedestalEntity(blockPos, blockState);
 	}
 
 	@Override

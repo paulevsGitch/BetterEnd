@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.biomes.BCLBiomeDef;
+import ru.bclib.world.features.BCLDecorators;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.BetterEnd;
@@ -239,7 +240,9 @@ public class EndFeatures {
 	public static final DefaultFeature END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, Blocks.END_STONE, EndBlocks.CAVE_MOSS);
 	public static final DefaultFeature END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, EndBlocks.CAVE_MOSS);
 	public static final DefaultFeature CAVE_PUMPKIN = new CavePumpkinFeature();
-	
+
+
+
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
 		return BCLFeature.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
 	}

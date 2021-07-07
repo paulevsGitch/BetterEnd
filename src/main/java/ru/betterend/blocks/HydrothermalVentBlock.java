@@ -108,8 +108,8 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter world) {
-		return new BlockEntityHydrothermalVent();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new BlockEntityHydrothermalVent(pos, state);
 	}
 
 	@Override

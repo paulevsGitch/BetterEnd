@@ -1,5 +1,7 @@
 package ru.betterend.item;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -25,11 +27,14 @@ public class EndAnvilItem extends BaseAnvilItem {
 		BlockState blockState = super.getPlacementState(blockPlaceContext);
 		ItemStack stack = blockPlaceContext.getItemInHand();
 		int durability = stack.getOrCreateTag().getInt(DURABILITY);
-		blockState = blockState.setValue(((EndAnvilBlock) blockState.getBlock()).getDurability(), durability);
+		if (blockState!=null) {
+			blockState = blockState.setValue(((EndAnvilBlock) blockState.getBlock()).getDurability(), durability);
+		}
 		return blockState;
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		Block block = getBlock();
 		ResourceLocation blockId = Registry.BLOCK.getKey(block);

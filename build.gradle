@@ -19,8 +19,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    maven { url "https://maven.dblsaiko.net/" }
-    maven { url "https://server.bbkr.space:8081/artifactory/libs-release/" }
+    maven { url "https://maven.dblsaiko.net/" }    
 	maven { url "https://maven.fabricmc.net/" }
 	maven { url 'https://maven.blamejared.com' }
 	maven { url "https://maven.shedaniel.me/" }
@@ -33,48 +32,55 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
-	useApi "vazkii.patchouli:Patchouli:1.16.4-${project.patchouli_version}"
+	useApi "vazkii.patchouli:Patchouli:1.17-${project.patchouli_version}"
 	useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
 
-	useOptional "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-	useOptional "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+	useOptional "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+	useOptional "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	//useOptional "grondag:canvas-mc116:${project.canvas_version}"
 }
 
 def useOptional(String dep) {
 	dependencies.modRuntime (dep) {
-		exclude group: "net.fabricmc.fabric-api"
-		exclude group: "net.fabricmc"
+		exclude group: 'net.fabricmc.fabric-api'
+		exclude group: 'net.fabricmc'
 		if (!dep.contains("me.shedaniel")) {
-			exclude group: "me.shedaniel"
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'me.shedaniel'
 		}
 	}
 	dependencies.modCompileOnly (dep) {
-		exclude group: "net.fabricmc.fabric-api"
-		exclude group: "net.fabricmc"
+		exclude group: 'net.fabricmc.fabric-api'
+		exclude group: 'net.fabricmc'
 		if (!dep.contains("me.shedaniel")) {
-			exclude group: "me.shedaniel"
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'me.shedaniel'
 		}
 	}
 }
 
 def useApi(String dep) {
 	dependencies.modApi (dep) {
-		exclude group: "net.fabricmc.fabric-api"
-		exclude group: "net.fabricmc"
+		exclude group: 'net.fabricmc.fabric-api'
+		exclude group: 'net.fabricmc'
 		if (!dep.contains("me.shedaniel")) {
-			exclude group: "me.shedaniel"
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'me.shedaniel'
 		}
 	}
 }
 
 processResources {
 	inputs.property "version", project.version
-	duplicatesStrategy = 'WARN'
+	duplicatesStrategy = 'EXCLUDE'
 
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
 		expand "version": project.version
+	}
+
+	from(sourceSets.main.resources.srcDirs) {
+		exclude "fabric.mod.json"
 	}
 }
 

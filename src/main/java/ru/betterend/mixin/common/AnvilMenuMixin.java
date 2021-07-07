@@ -65,14 +65,14 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 	}
 	
 	@Inject(method = "onTake", at = @At("HEAD"), cancellable = true)
-	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
+	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfo info) {
 		if (be_currentRecipe != null) {
 			inputSlots.getItem(0).shrink(be_currentRecipe.getInputCount());
 			stack = be_currentRecipe.craft(inputSlots, player);
 			slotsChanged(inputSlots);
 			access.execute((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
-				if (!player.abilities.instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
+				if (!player.getAbilities().instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
 					BlockState landingState = EndAnvilBlock.applyDamage(anvilState);
 					if (landingState == null) {
 						world.removeBlock(blockPos, false);
@@ -85,7 +85,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 					world.levelEvent(1030, blockPos, 0);
 				}
 			});
-			info.setReturnValue(stack);
+			//TODO: no more return, does this still work?
+			//info.setReturnValue(stack);
 		}
 	}
 	

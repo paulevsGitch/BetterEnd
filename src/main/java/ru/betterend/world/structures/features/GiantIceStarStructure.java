@@ -8,6 +8,8 @@ import com.mojang.math.Vector3f;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -103,18 +105,19 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 	}
 	
 	public static class StarStructureStart extends StructureStart<NoneFeatureConfiguration> {
-		public StarStructureStart(StructureFeature<NoneFeatureConfiguration> feature, int chunkX, int chunkZ, BoundingBox box, int references, long seed) {
-			super(feature, chunkX, chunkZ, box, references, seed);
+		public StarStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos pos, int references, long seed) {
+			super(feature, pos, references, seed);
 		}
 
 		@Override
-		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager manager, int chunkX, int chunkZ, Biome biome, NoneFeatureConfiguration config) {
-			int x = (chunkX << 4) | MHelper.randRange(4, 12, random);
-			int z = (chunkZ << 4) | MHelper.randRange(4, 12, random);
+		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
+			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
+			int z = chunkPos.getBlockZ( MHelper.randRange(4, 12, random));
 			BlockPos start = new BlockPos(x, MHelper.randRange(32, 128, random), z);
 			VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
 			this.pieces.add(piece);
-			this.calculateBoundingBox();
+
+			//this.calculateBoundingBox();
 		}
 	}
 }

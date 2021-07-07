@@ -16,6 +16,8 @@ import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.placement.ConfiguredDecorator;
 import ru.bclib.BCLib;
 import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.betterend.BetterEnd;
@@ -23,6 +25,14 @@ import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.EndBiome;
+
+class FeaturesAccesor extends Features{
+	static ConfiguredDecorator<?> shadowHEIGHTMAP_SQUARE;
+
+	static {
+		shadowHEIGHTMAP_SQUARE = Decorators.HEIGHTMAP_SQUARE;
+	}
+}
 
 public class OldBulbisGardens extends EndBiome {
 	public OldBulbisGardens() {
@@ -54,7 +64,7 @@ public class OldBulbisGardens extends EndBiome {
 		}
 		
 		for (MobCategory group: MobCategory.values()) {
-			List<SpawnerData> list = biome.getMobSettings().getMobs(group);
+			List<SpawnerData> list = biome.getMobSettings().getMobs(group).unwrap();
 			list.forEach((entry) -> {
 				def.addMobSpawn(entry);
 			});
@@ -70,7 +80,7 @@ public class OldBulbisGardens extends EndBiome {
 				getter = vegetal.get(i);
 				ConfiguredFeature<?, ?> feature = getter.get();
 				ResourceLocation id = BetterEnd.makeID("obg_feature_" + i);
-				feature = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(1));
+				feature = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.decorated(FeaturesAccesor.shadowHEIGHTMAP_SQUARE).countRandom(1));
 				def.addFeature(Decoration.VEGETAL_DECORATION, feature);
 			}
 			// Grasses and other features

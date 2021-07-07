@@ -69,7 +69,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
-			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), yRot, xRot));
+			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), getYRot(), getXRot()));
 		}
 	}
 
@@ -85,21 +85,21 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 			connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
 			PlayerList playerManager = server.getPlayerList();
 			playerManager.sendPlayerPermissionLevel(player);
-			serverWorld.removePlayerImmediately(player);
-			removed = false;
+			serverWorld.removePlayerImmediately(player, RemovalReason.CHANGED_DIMENSION);
+			unsetRemoved();
 			PortalInfo teleportTarget = findDimensionEntryPoint(destination);
 			if (teleportTarget != null) {
 				serverWorld.getProfiler().push("moving");
 				serverWorld.getProfiler().pop();
 				serverWorld.getProfiler().push("placing");
-				setLevel(destination);
+				this.level = destination;
 				destination.addDuringPortalTeleport(player);
 				setRot(teleportTarget.yRot, teleportTarget.xRot);
 				moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z);
 				serverWorld.getProfiler().pop();
 				triggerDimensionChangeTriggers(serverWorld);
 				gameMode.setLevel(destination);
-				connection.send(new ClientboundPlayerAbilitiesPacket(abilities));
+				connection.send(new ClientboundPlayerAbilitiesPacket(getAbilities()));
 				playerManager.sendLevelInfo(player, destination);
 				playerManager.sendAllPlayerInfo(player);
 
@@ -132,7 +132,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	}
 
 	@Shadow
-	abstract ServerLevel getLevel();
+	public abstract ServerLevel getLevel();
 
 	@Shadow
 	abstract void triggerDimensionChangeTriggers(ServerLevel origin);

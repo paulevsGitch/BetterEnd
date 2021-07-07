@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -56,7 +57,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-		if (tool != null && tool.getItem().is(FabricToolTags.SHEARS) || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+		if (tool != null && tool.is(FabricToolTags.SHEARS) || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
 		}
 		else {
@@ -99,6 +100,6 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 	@Override
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
-		EndFeatures.JELLYSHROOM.getFeature().place(world, null, random, pos, null);
+		EndFeatures.JELLYSHROOM.getFeature().place(new FeaturePlaceContext<>(world, null, random, pos, null));
 	}
 }

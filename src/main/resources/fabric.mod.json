@@ -31,22 +31,20 @@
 			"ru.betterend.client.BetterEndClient"
 		],
 		"rei_plugins": [
-    		"ru.betterend.integration.rei.REIPlugin"
-  		],
-		"rei_containers": [
-			"ru.betterend.integration.rei.REIContainer"
-		]
+            "ru.betterend.integration.rei.REIPlugin"
+        ]
 	},
 	"mixins": [
 		"betterend.mixins.common.json",
-		"betterend.mixins.client.json"
+		"betterend.mixins.client.json",
+        "betterend.mixins.shadow.json"
 	],
 
 	"depends": {
-		"fabricloader": ">=0.11.0",
-		"fabric": ">=0.32.0",
-		"minecraft": ">=1.16.4",
-	  	"bclib": ">=0.1.38"
+		"fabricloader": ">=0.11.6",
+		"fabric": ">=0.36.0",
+		"minecraft": ">=1.17",
+        "bclib": ">=0.2.0"
 	},
 	"suggests": {
 		"byg": ">=1.1.3",

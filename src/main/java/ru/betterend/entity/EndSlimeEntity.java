@@ -116,7 +116,7 @@ public class EndSlimeEntity extends Slime {
 	}
 	
 	@Override
-	public void remove() {
+	public void remove(RemovalReason reason) {
 		int i = this.getSize();
 		if (!this.level.isClientSide && i > 1 && this.isDeadOrDying()) {
 			Component text = this.getCustomName();
@@ -144,7 +144,8 @@ public class EndSlimeEntity extends Slime {
 				this.level.addFreshEntity(slimeEntity);
 			}
 		}
-		this.removed = true;
+
+		((ISlime)this).entityRemove(reason);
 	}
 	
 	@Override
@@ -322,7 +323,7 @@ public class EndSlimeEntity extends Slime {
 				return false;
 			}
 			else {
-				return livingEntity instanceof Player && ((Player) livingEntity).abilities.invulnerable ? false : EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
+				return livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable ? false : EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 			}
 		}
 
@@ -339,7 +340,7 @@ public class EndSlimeEntity extends Slime {
 			else if (!livingEntity.isAlive()) {
 				return false;
 			}
-			else if (livingEntity instanceof Player && ((Player) livingEntity).abilities.invulnerable) {
+			else if (livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable) {
 				return false;
 			}
 			else {
@@ -349,7 +350,7 @@ public class EndSlimeEntity extends Slime {
 
 		public void tick() {
 			EndSlimeEntity.this.lookAt(EndSlimeEntity.this.getTarget(), 10.0F, 10.0F);
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.yRot, EndSlimeEntity.this.isDealsDamage());
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.getYRot(), EndSlimeEntity.this.isDealsDamage());
 		}
 	}
 
@@ -360,7 +361,7 @@ public class EndSlimeEntity extends Slime {
 
 		public EndSlimeMoveControl(EndSlimeEntity slime) {
 			super(slime);
-			this.targetYaw = 180.0F * slime.yRot / 3.1415927F;
+			this.targetYaw = 180.0F * slime.getYRot() / 3.1415927F;
 		}
 
 		public void look(float targetYaw, boolean jumpOften) {
@@ -374,9 +375,9 @@ public class EndSlimeEntity extends Slime {
 		}
 
 		public void tick() {
-			this.mob.yRot = this.rotlerp(this.mob.yRot, this.targetYaw, 90.0F);
-			this.mob.yHeadRot = this.mob.yRot;
-			this.mob.yBodyRot = this.mob.yRot;
+			this.mob.setYRot(this.rotlerp(this.mob.getYRot(), this.targetYaw, 90.0F));
+			this.mob.yHeadRot = this.mob.getYRot();
+			this.mob.yBodyRot = this.mob.getYRot();
 			if (this.operation != MoveControl.Operation.MOVE_TO) {
 				this.mob.setZza(0.0F);
 			}

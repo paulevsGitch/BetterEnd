@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
@@ -29,7 +30,10 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		Set<BlockPos> floorPositions = Sets.newHashSet();
 		Set<BlockPos> ceilPositions = Sets.newHashSet();
 		int sx = (pos.getX() >> 4) << 4;
@@ -109,9 +113,9 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getFloorFeature(random);
+				Feature<?> feature = biome.getFloorFeature();
 				if (feature != null) {
-					feature.place(world, null, random, pos.above(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
 				}
 			}
 		});
@@ -125,9 +129,9 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, pos, ceilBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getCeilFeature(random);
+				Feature<?> feature = biome.getCeilFeature();
 				if (feature != null) {
-					feature.place(world, null, random, pos.below(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
 				}
 			}
 		});

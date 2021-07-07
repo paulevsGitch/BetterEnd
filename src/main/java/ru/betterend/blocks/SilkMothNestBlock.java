@@ -150,7 +150,7 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (hand == InteractionHand.MAIN_HAND) {
 			ItemStack stack = player.getMainHandItem();
-			if (stack.getItem().is(FabricToolTags.SHEARS) && state.getValue(ACTIVE) && state.getValue(FULLNESS) == 3) {
+			if (stack.is(FabricToolTags.SHEARS) && state.getValue(ACTIVE) && state.getValue(FULLNESS) == 3) {
 				BlocksHelper.setWithUpdate(world, pos, state.setValue(FULLNESS, 0));
 				Direction dir = state.getValue(FACING);
 				double px = pos.getX() + dir.getStepX() + 0.5;

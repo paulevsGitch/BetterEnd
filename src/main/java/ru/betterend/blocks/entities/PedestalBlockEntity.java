@@ -1,30 +1,31 @@
 package ru.betterend.blocks.entities;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndItems;
 
-public class PedestalBlockEntity extends BlockEntity implements Container, TickableBlockEntity, BlockEntityClientSerializable {
+public class PedestalBlockEntity extends BlockEntity implements Container, BlockEntityClientSerializable {
 	private ItemStack activeItem = ItemStack.EMPTY;
 	
 	private final int maxAge = 314;
 	private int age;
-	
-	public PedestalBlockEntity() {
-		super(EndBlockEntities.PEDESTAL);
+
+	public PedestalBlockEntity(BlockPos blockPos, BlockState blockState) {
+		this(EndBlockEntities.PEDESTAL, blockPos, blockState);
 	}
 	
-	public PedestalBlockEntity(BlockEntityType<?> type) {
-		super(type);
+	public PedestalBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
+		super(blockEntityType, blockPos, blockState);
 	}
 	
 	public int getAge() {
@@ -103,8 +104,8 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Ticka
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
+	public void load(CompoundTag tag) {
+		super.load(tag);
 		fromTag(tag);
 	}
 
@@ -131,12 +132,11 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Ticka
 		}
 	}
 
-	@Override
-	public void tick() {
-		if (!isEmpty()) {
-			age++;
-			if (age > maxAge) {
-				age = 0;
+	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
+		if (!blockEntity.isEmpty()) {
+			blockEntity.age++;
+			if (blockEntity.age > blockEntity.maxAge) {
+				blockEntity.age = 0;
 			}
 		}
 	}

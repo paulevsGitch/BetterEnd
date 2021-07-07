@@ -6,6 +6,11 @@ import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -41,14 +46,30 @@ public class EndCrystalRenderer {
 		CORE.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY);
 		matrices.popPose();
 	}
+
+	public static LayerDefinition getTexturedModelData() {
+		MeshDefinition modelData = new MeshDefinition();
+		PartDefinition modelPartData = modelData.getRoot();
+		modelPartData.addOrReplaceChild("FRAME", CubeListBuilder.create()
+                        .texOffs(0, 0)
+						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),						
+				PartPose.ZERO);
+
+		modelPartData.addOrReplaceChild("CORE", CubeListBuilder.create()
+                        .texOffs(32, 0)
+						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),
+				PartPose.ZERO);
+
+		return LayerDefinition.create(modelData, 64, 32);
+	}
 	
 	static {
 		END_CRYSTAL = RenderType.entityCutoutNoCull(CRYSTAL_TEXTURE);
 		RenderType.entitySmoothCutout(CRYSTAL_BEAM_TEXTURE);
 		SINE_45_DEGREES = (float) Math.sin(0.7853981633974483D);
-		FRAME = new ModelPart(64, 32, 0, 0);
-		FRAME.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-		CORE = new ModelPart(64, 32, 32, 0);
-		CORE.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
+
+		ModelPart root = getTexturedModelData().bakeRoot();
+		FRAME = root.getChild("FRAME");
+		CORE = root.getChild("CORE");
 	}
 }

@@ -63,7 +63,8 @@ public class BetterEndBiomeSource extends BiomeSource {
 	private static List<Biome> getBiomes(Registry<Biome> biomeRegistry) {
 		List<Biome> list = Lists.newArrayList();
 		biomeRegistry.forEach((biome) -> {
-			if (EndBiomes.hasBiome(biomeRegistry.getKey(biome))) {
+			BCLBiome bclBiome = BiomeAPI.getBiome(biomeRegistry.getKey(biome));
+			if (bclBiome instanceof EndBiome) {
 				list.add(biome);
 			}
 		});

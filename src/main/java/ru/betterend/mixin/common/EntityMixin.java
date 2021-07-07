@@ -19,11 +19,10 @@ import ru.betterend.interfaces.TeleportingEntity;
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity {
 	@Shadow
-	public float yRot;
+	private float yRot;
 	@Shadow
-	public float xRot;
-	@Shadow
-	public boolean removed;
+	private float xRot;
+
 	@Shadow
 	public Level level;
 	
@@ -40,11 +39,16 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Shadow
 	protected abstract PortalInfo findDimensionEntryPoint(ServerLevel destination);
 
+	@Shadow
+	protected abstract void removeAfterChangingDimensions();
+
+	@Shadow public abstract boolean isRemoved();
+
 	private BlockPos exitPos;
 
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
 	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
-		if (!removed && be_canTeleport() && level instanceof ServerLevel) {
+		if (!isRemoved() && be_canTeleport() && level instanceof ServerLevel) {
 			unRide();
 			level.getProfiler().push("changeDimension");
 			level.getProfiler().push("reposition");
@@ -54,11 +58,14 @@ public abstract class EntityMixin implements TeleportingEntity {
 				Entity entity = getType().create(destination);
 				if (entity != null) {
 					entity.restoreFrom(Entity.class.cast(this));
-					entity.moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z, teleportTarget.yRot, entity.xRot);
+					entity.moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z, teleportTarget.yRot, entity.getXRot());
 					entity.setDeltaMovement(teleportTarget.speed);
-					destination.addFromAnotherDimension(entity);
+					//TODO: check if this works as intended in 1.17
+
+					destination.addDuringTeleport(entity);
 				}
-				removed = true;
+
+				this.removeAfterChangingDimensions();
 				level.getProfiler().pop();
 				((ServerLevel) level).resetEmptyTime();
 				destination.resetEmptyTime();

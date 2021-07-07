@@ -17,11 +17,10 @@ import ru.bclib.util.ColorUtil;
 import ru.betterend.registry.EndParticles;
 
 public class InfusionParticleType extends ParticleType<InfusionParticleType> implements ParticleOptions {
-	public static final Codec<InfusionParticleType> CODEC = ItemStack.CODEC.xmap(itemStack -> {
-		return new InfusionParticleType(EndParticles.INFUSION, itemStack);
-	}, infusionParticleType -> {
-		return infusionParticleType.itemStack;
-	});
+	public static final Codec<InfusionParticleType> CODEC = ItemStack.CODEC.xmap(
+			itemStack -> new InfusionParticleType(EndParticles.INFUSION, itemStack),
+			infusionParticleType -> infusionParticleType.itemStack);
+
 	public static final ParticleOptions.Deserializer<InfusionParticleType> PARAMETERS_FACTORY = new ParticleOptions.Deserializer<InfusionParticleType>() {
 		public InfusionParticleType fromCommand(ParticleType<InfusionParticleType> particleType, StringReader stringReader) throws CommandSyntaxException {
 			stringReader.expect(' ');
@@ -35,8 +34,8 @@ public class InfusionParticleType extends ParticleType<InfusionParticleType> imp
 		}
 	};
 	
-	private ParticleType<InfusionParticleType> type;
-	private ItemStack itemStack;
+	private final ParticleType<InfusionParticleType> type;
+	private final ItemStack itemStack;
 	
 	public InfusionParticleType(ParticleType<InfusionParticleType> particleType, ItemStack stack) {
 		super(true, PARAMETERS_FACTORY);

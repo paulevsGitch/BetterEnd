@@ -3,6 +3,7 @@ package ru.betterend.recipe.builders;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.NonNullList;
@@ -32,7 +33,7 @@ public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
 	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
-	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
+	public final static CategoryIdentifier ID = CategoryIdentifier.of(BetterEnd.MOD_ID, GROUP);
 	
 	protected final RecipeType<?> type;
 	protected final ResourceLocation id;

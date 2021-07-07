@@ -4,9 +4,12 @@ import java.util.Objects;
 
 import com.google.gson.JsonObject;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
@@ -275,6 +278,15 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 			ItemStack output = ItemUtil.fromJsonRecipe(result);
 			if (output == null) {
 				throw new IllegalStateException("Output item does not exists!");
+			}
+			if (result.has("nbt")) {
+				try {
+					String nbtData = GsonHelper.getAsString(result, "nbt");
+					CompoundTag nbt = TagParser.parseTag(nbtData);
+					output.setTag(nbt);
+				} catch (CommandSyntaxException ex) {
+					BetterEnd.LOGGER.warning("Error parse nbt data for output.", ex);
+				}
 			}
 			int inputCount = GsonHelper.getAsInt(json, "inputCount", 1);
 			int toolLevel = GsonHelper.getAsInt(json, "toolLevel", 1);

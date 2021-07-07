@@ -32,6 +32,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.item.CrystaliteArmor;
@@ -89,8 +90,12 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
 	public void be_canBeAffected(MobEffectInstance mobEffectInstance, CallbackInfoReturnable<Boolean> info) {
-		if (mobEffectInstance.getEffect() == MobEffects.BLINDNESS && getAttributes().getValue(EndAttributes.BLINDNESS_RESISTANCE) > 0.0) {
-			info.setReturnValue(false);
+		try {
+			if (mobEffectInstance.getEffect() == MobEffects.BLINDNESS && getAttributes().getValue(EndAttributes.BLINDNESS_RESISTANCE) > 0.0) {
+				info.setReturnValue(false);
+			}
+		} catch (Exception ex) {
+			BetterEnd.LOGGER.warning("Blindness resistance attribute haven't been registered.");
 		}
 	}
 
@@ -99,8 +104,8 @@ public abstract class LivingEntityMixin extends Entity {
 		this.lastAttacker = source.getEntity();
 	}
 	
-	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(FDD)V"))
-	private float be_increaseKnockback(float value, double x, double z) {
+	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V"), index=0)
+	private double be_increaseKnockback(double value, double x, double z) {
 		if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) lastAttacker;
 			value += this.be_getKnockback(attacker.getMainHandItem().getItem());
@@ -144,9 +149,9 @@ public abstract class LivingEntityMixin extends Entity {
 
 			Vec3 lookAngle = getLookAngle();
 			double d = 0.08D;
-			float rotX = xRot * 0.017453292F;
+			float rotX = getXRot() * 0.017453292F;
 			double k = Math.sqrt(lookAngle.x * lookAngle.x + lookAngle.z * lookAngle.z);
-			double l = Math.sqrt(getHorizontalDistanceSqr(moveDelta));
+			double l = moveDelta.horizontalDistance();
 			double lookLen = lookAngle.length();
 			float n = Mth.cos(rotX);
 			n = (float) (n * n * Math.min(1.0D, lookLen / 0.4D));
@@ -172,7 +177,7 @@ public abstract class LivingEntityMixin extends Entity {
 			move(MoverType.SELF, moveDelta);
 			if (!level.isClientSide) {
 				if (horizontalCollision) {
-					coef = Math.sqrt(getHorizontalDistanceSqr(moveDelta));
+					coef = moveDelta.horizontalDistance();
 					double r = l - coef;
 					float dmg = (float) (r * 10.0D - 3.0D);
 					if (dmg > 0.0F) {

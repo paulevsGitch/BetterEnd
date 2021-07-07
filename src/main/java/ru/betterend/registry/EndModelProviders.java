@@ -2,8 +2,8 @@ package ru.betterend.registry;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 import ru.betterend.item.model.CrystaliteArmorProvider;
+import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 
 @Environment(EnvType.CLIENT)
 public class EndModelProviders {

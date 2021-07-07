@@ -2,6 +2,7 @@ package ru.betterend.blocks.entities;
 
 import java.util.List;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -9,8 +10,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -20,18 +21,16 @@ import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
 
-public class BlockEntityHydrothermalVent extends BlockEntity implements TickableBlockEntity {
+public class BlockEntityHydrothermalVent extends BlockEntity {
 
 	private final static Vec3 POSITIVE_Y = new Vec3(0.0f, 1.0f, 0.0f);
 
-	public BlockEntityHydrothermalVent() {
-		super(EndBlockEntities.HYDROTHERMAL_VENT);
+	public BlockEntityHydrothermalVent(BlockPos blockPos, BlockState blockState) {
+		super(EndBlockEntities.HYDROTHERMAL_VENT, blockPos, blockState);
 	}
 
-	@Override
-	public void tick() {
+	public static void tick(Level level, BlockPos worldPosition, BlockState state, BlockEntityHydrothermalVent blockEntity) {
 		if (level != null) {
-			BlockState state = getBlockState();
 			if (state.is(EndBlocks.HYDROTHERMAL_VENT)) {
 				boolean active = state.getValue(HydrothermalVentBlock.ACTIVATED);
 				if (active && level.random.nextInt(20) == 0) {
@@ -56,7 +55,7 @@ public class BlockEntityHydrothermalVent extends BlockEntity implements Tickable
 							double mult = active ? 3.0 : 5.0;
 							float force = (float) ((1.0 - (mutable.getY() / box.maxY)) / mult);
 							entities.stream().filter(entity -> (int) entity.getY() == mutable.getY() &&
-									hasElytra(entity) && entity.isFallFlying())
+									blockEntity.hasElytra(entity) && entity.isFallFlying())
 									.forEach(entity -> entity.moveRelative(force, POSITIVE_Y));
 						}
 						mutable.move(Direction.UP);

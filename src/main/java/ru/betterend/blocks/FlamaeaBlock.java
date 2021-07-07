@@ -18,8 +18,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.interfaces.ISpetialItem;
 import ru.betterend.blocks.basis.EndPlantBlock;
-import ru.betterend.interfaces.ISpetialItem;
 
 public class FlamaeaBlock extends EndPlantBlock implements ISpetialItem {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);

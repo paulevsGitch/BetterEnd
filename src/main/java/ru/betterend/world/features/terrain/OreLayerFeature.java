@@ -7,6 +7,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFCoordModify;
@@ -35,8 +36,10 @@ public class OreLayerFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		float radius = this.radius * 0.5F;
 		int r = MHelper.floor(radius + 1);
 		int posX = MHelper.randRange(Math.max(r - 16, 0), Math.min(31 - r, 15), random) + pos.getX();

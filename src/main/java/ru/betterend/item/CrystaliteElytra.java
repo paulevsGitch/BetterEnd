@@ -63,6 +63,6 @@ public class CrystaliteElytra extends CrystaliteArmor implements MultiModelItem,
 	@Override
 	public void registerModelPredicate() {
 		FabricModelPredicateProviderRegistry.register(this, new ResourceLocation("broken"),
-				(itemStack, clientLevel, livingEntity) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F);
+				(itemStack, clientLevel, livingEntity, i) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F);
 	}
 }

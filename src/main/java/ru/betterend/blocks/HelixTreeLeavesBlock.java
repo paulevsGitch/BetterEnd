@@ -79,7 +79,7 @@ public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
 		if (tool != null) {
-			if (tool.getItem().is(FabricToolTags.SHEARS) || tool.isCorrectToolForDrops(state) || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+			if (tool.is(FabricToolTags.SHEARS) || tool.isCorrectToolForDrops(state) || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
 				return Collections.singletonList(new ItemStack(this));
 			}
 			int fortune = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);

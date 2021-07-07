@@ -1,5 +1,6 @@
 package ru.betterend.blocks;
 
+import java.util.Optional;
 import java.util.Random;
 
 import net.fabricmc.api.EnvType;
@@ -9,9 +10,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -38,9 +42,9 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 	}
 
 	@Override
-	public Fluid takeLiquid(LevelAccessor world, BlockPos pos, BlockState state) {
+	public ItemStack pickupBlock(LevelAccessor world, BlockPos pos, BlockState state) {
 		world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
-		return Fluids.WATER;
+		return new ItemStack(Items.WATER_BUCKET);
 	}
 	
 	@Override
@@ -119,5 +123,12 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return Fluids.WATER.getSource(false);
+	}
+
+
+
+	@Override
+	public Optional<SoundEvent> getPickupSound() {
+		return Fluids.WATER.getPickupSound();
 	}
 }

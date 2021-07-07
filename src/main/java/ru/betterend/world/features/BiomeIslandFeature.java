@@ -9,6 +9,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
@@ -29,8 +30,9 @@ public class BiomeIslandFeature extends DefaultFeature {
 	private static BlockState underBlock = Blocks.DIRT.defaultBlockState();
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		Biome biome = world.getBiome(pos);
 		SurfaceBuilderConfiguration surfaceConfig = biome.getGenerationSettings().getSurfaceBuilderConfig();
 		BlockState topMaterial = surfaceConfig.getTopMaterial();

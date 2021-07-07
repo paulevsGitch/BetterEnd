@@ -8,6 +8,8 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 import io.netty.util.internal.ThreadLocalRandom;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
@@ -133,6 +135,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	}
 	
 	@Override
+	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return ModelsHelper.createHandheldItem(resourceLocation);
 	}

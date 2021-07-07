@@ -246,7 +246,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 				if (recipe == null) {
 					recipe = level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, this, level).orElse(null);
 				}
-				boolean accepted = this.canAcceptRecipeOutput(recipe);
+				boolean accepted = canAcceptRecipeOutput(recipe);
 				if (!burning && accepted) {
 					burnTime = getFuelTime(fuel);
 					fuelTime = burnTime;
@@ -265,7 +265,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 				}
 
 				if (burning && accepted) {
-					this.smeltTime++;
+					smeltTime++;
 					if (smeltTime == smeltTimeTotal) {
 						smeltTime = 0;
 						smeltTimeTotal = getSmeltTime();
@@ -276,7 +276,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 					smeltTime = 0;
 				}
 			}
-
+			burning = isBurning();
 			if (initialBurning != burning) {
 				level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(EndStoneSmelter.LIT, burning), 3);
 				setChanged();

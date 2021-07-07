@@ -52,7 +52,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 				.resistance(100F)
 				.requiresCorrectToolForDrops()
 				.sound(SoundType.STONE));
-		this.registerDefaultState(this.stateDefinition.any()
+		registerDefaultState(this.stateDefinition.any()
 											  .setValue(FACING, Direction.NORTH)
 											  .setValue(LIT, false));
 	}
@@ -75,7 +75,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-		return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+		return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
 	}
 	
 	@Override

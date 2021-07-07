@@ -81,6 +81,7 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}

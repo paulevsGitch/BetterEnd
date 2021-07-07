@@ -252,7 +252,8 @@ public class EndFeatures {
 	}
 	
 	private static BCLFeature registerLake(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		return BCLFeature.makeLakeFeature(BetterEnd.makeID(name), feature, chance);
+		//return BCLFeature.makeLakeFeature(BetterEnd.makeID(name), feature, chance);
+		return BCLFeature.makeRawGenFeature(BetterEnd.makeID(name), feature, chance);
 	}
 	
 	private static BCLFeature registerChanced(String name, Feature<NoneFeatureConfiguration> feature, int chance) {

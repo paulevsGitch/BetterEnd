@@ -41,6 +41,7 @@ import ru.betterend.item.EternalCrystalItem;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndHammerItem;
+import ru.betterend.item.tool.EndPickaxe;
 import ru.betterend.tab.CreativeTabs;
 
 public class EndItems extends ItemsRegistry {
@@ -88,7 +89,7 @@ public class EndItems extends ItemsRegistry {
 	// Tools //
 	public static final TieredItem AETERNIUM_SHOVEL = registerEndTool("aeternium_shovel", new BaseShovelItem(EndToolMaterial.AETERNIUM, 1.5F, -3.0F, makeEndItemSettings().fireResistant()));
 	public static final TieredItem AETERNIUM_SWORD = registerEndTool("aeternium_sword", new BaseSwordItem(EndToolMaterial.AETERNIUM, 3, -2.4F, makeEndItemSettings().fireResistant()));
-	public static final TieredItem AETERNIUM_PICKAXE = registerEndTool("aeternium_pickaxe", new BasePickaxeItem(EndToolMaterial.AETERNIUM, 1, -2.8F, makeEndItemSettings().fireResistant()));
+	public static final TieredItem AETERNIUM_PICKAXE = registerEndTool("aeternium_pickaxe", new EndPickaxe(EndToolMaterial.AETERNIUM, 1, -2.8F, makeEndItemSettings().fireResistant()));
 	public static final TieredItem AETERNIUM_AXE = registerEndTool("aeternium_axe", new BaseAxeItem(EndToolMaterial.AETERNIUM, 5.0F, -3.0F, makeEndItemSettings().fireResistant()));
 	public static final TieredItem AETERNIUM_HOE = registerEndTool("aeternium_hoe", new BaseHoeItem(EndToolMaterial.AETERNIUM, -3, 0.0F, makeEndItemSettings().fireResistant()));
 	public static final TieredItem AETERNIUM_HAMMER = registerEndTool("aeternium_hammer", new EndHammerItem(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeEndItemSettings().fireResistant()));

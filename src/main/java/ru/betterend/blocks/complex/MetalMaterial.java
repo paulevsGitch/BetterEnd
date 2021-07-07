@@ -41,6 +41,7 @@ import ru.betterend.config.Configs;
 import ru.betterend.item.EndAnvilItem;
 import ru.betterend.item.EndArmorItem;
 import ru.betterend.item.tool.EndHammerItem;
+import ru.betterend.item.tool.EndPickaxe;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.registry.EndBlocks;
@@ -136,7 +137,7 @@ public class MetalMaterial {
 		
 		shovel = EndItems.registerEndTool(name + "_shovel", new BaseShovelItem(material, 1.5F, -3.0F, itemSettings));
 		sword = EndItems.registerEndTool(name + "_sword", new BaseSwordItem(material, 3, -2.4F, itemSettings));
-		pickaxe = EndItems.registerEndTool(name + "_pickaxe", new BasePickaxeItem(material, 1, -2.8F, itemSettings));
+		pickaxe = EndItems.registerEndTool(name + "_pickaxe", new EndPickaxe(material, 1, -2.8F, itemSettings));
 		axe = EndItems.registerEndTool(name + "_axe", new BaseAxeItem(material, 6.0F, -3.0F, itemSettings));
 		hoe = EndItems.registerEndTool(name + "_hoe", new BaseHoeItem(material, -3, 0.0F, itemSettings));
 		hammer = EndItems.registerEndTool(name + "_hammer", new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));

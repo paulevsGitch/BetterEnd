@@ -46,8 +46,8 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 	}
 
 	@Override
-	public void tick() {
-		super.tick();
+	public void containerTick() {
+		super.containerTick();
 		recipeBook.tick();
 	}
 

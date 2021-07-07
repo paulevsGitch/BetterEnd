@@ -1,14 +1,13 @@
 package ru.betterend.mixin.common;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.levelgen.feature.SpikeFeature.EndSpike;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.levelgen.feature.SpikeFeature.EndSpike;
 import ru.bclib.api.WorldDataAPI;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.generator.GeneratorOptions;
@@ -31,12 +30,12 @@ public class EndSpikeMixin {
 			info.setReturnValue(maxY);
 		}
 	}
-	
+
 	@Shadow
 	public int getCenterX() {
 		return 0;
 	}
-	
+
 	@Shadow
 	public int getCenterZ() {
 		return 0;

@@ -21,7 +21,7 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> getColor();
 	}
-	
+
 	private int getColor() {
 		int color = BlocksHelper.getBlockColor(this);
 		int b = (color & 255);
@@ -30,7 +30,7 @@ public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements
 		float[] hsv = ColorUtil.RGBtoHSB(r, g, b, new float[3]);
 		return ColorUtil.HSBtoRGB(hsv[0], hsv[1], hsv[1] > 0.2 ? 1 : hsv[2]);
 	}
-	
+
 	@Override
 	protected String getGlowTexture() {
 		return "bulb_vine_lantern_overlay";

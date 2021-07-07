@@ -11,13 +11,11 @@ import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
 public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay> {
 	private final EntryStack[] ANVILS;
 
-	REIAnvilCategory(EntryStack[] anvils){
+	REIAnvilCategory(EntryStack[] anvils) {
 		ANVILS = anvils;
 	}
 
@@ -49,7 +47,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		return ANVILS[0];
 	}
 
-	
+
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIAnvilDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
@@ -63,7 +61,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		int anvilLevel = display.getAnvilLevel();
 		List anvils = Arrays.stream(ANVILS).filter(anvil -> {
 			Object value = anvil.getValue();
-			if (value instanceof ItemStack){
+			if (value instanceof ItemStack) {
 				value = ((ItemStack) value).getItem();
 			}
 			Block block = ((BlockItem) value).getBlock();
@@ -86,7 +84,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 
 	@Override
 	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAnvilDisplay display,
-			IntList redSlots) {
+							   IntList redSlots) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 27);
 		matrices.pushPose();
 		matrices.translate(0, 0, 400);
@@ -96,7 +94,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		}
 		matrices.popPose();
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 60;

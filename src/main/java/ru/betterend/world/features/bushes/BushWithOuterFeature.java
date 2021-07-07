@@ -1,8 +1,5 @@
 package ru.betterend.world.features.bushes;
 
-import java.util.Random;
-import java.util.function.Function;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -10,7 +7,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
@@ -25,6 +21,9 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
+
+import java.util.Random;
+import java.util.function.Function;
 
 public class BushWithOuterFeature extends DefaultFeature {
 	private static final Direction[] DIRECTIONS = Direction.values();
@@ -66,7 +65,8 @@ public class BushWithOuterFeature extends DefaultFeature {
 				int distance = info.getPos().distManhattan(pos);
 				if (distance < 7) {
 					return info.getState().setValue(LeavesBlock.DISTANCE, distance);
-				} else {
+				}
+				else {
 					return AIR;
 				}
 			}
@@ -91,7 +91,8 @@ public class BushWithOuterFeature extends DefaultFeature {
 				if (leaves instanceof LeavesBlock) {
 					BlocksHelper.setWithoutUpdate(world, p,
 							leaves.defaultBlockState().setValue(LeavesBlock.DISTANCE, 1));
-				} else {
+				}
+				else {
 					BlocksHelper.setWithoutUpdate(world, p, leaves.defaultBlockState());
 				}
 			}

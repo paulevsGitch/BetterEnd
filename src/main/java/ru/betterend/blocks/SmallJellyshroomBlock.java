@@ -1,12 +1,7 @@
 package ru.betterend.blocks;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -37,9 +32,13 @@ import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndFeatures;
 
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Random;
+
 public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderTyped, BonemealableBlock {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
-	
+
 	public SmallJellyshroomBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
@@ -53,7 +52,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -64,7 +63,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 			return Lists.newArrayList();
 		}
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		Direction direction = state.getValue(FACING);
@@ -72,12 +71,12 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 		BlockState support = world.getBlockState(blockPos);
 		return canSupportCenter(world, blockPos, direction) && support.canOcclude() && support.getLightEmission() == 0;
 	}
-	
+
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-	
+
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Block.box(3, 0, 3, 13, 16, 13));
 		BOUNDING_SHAPES.put(Direction.DOWN, Block.box(3, 0, 3, 13, 16, 13));

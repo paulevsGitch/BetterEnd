@@ -71,7 +71,8 @@ public class SulphuricLakeFeature extends DefaultFeature {
 										brimstone.add(POS.below(2));
 									}
 								}
-							} else {
+							}
+							else {
 								if (!isAbsoluteBorder(world, POS)) {
 									BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
 									world.getLiquidTicks().scheduleTick(POS, Fluids.WATER, 0);
@@ -82,14 +83,16 @@ public class SulphuricLakeFeature extends DefaultFeature {
 											brimstone.add(POS.below(3));
 										}
 									}
-								} else {
+								}
+								else {
 									brimstone.add(POS.immutable());
 									if (random.nextBoolean()) {
 										brimstone.add(POS.below());
 									}
 								}
 							}
-						} else {
+						}
+						else {
 							BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
 							brimstone.remove(POS);
 							for (Direction dir : BlocksHelper.HORIZONTAL) {
@@ -117,7 +120,8 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							}
 						}
 					}
-				} else if (dist < r2) {
+				}
+				else if (dist < r2) {
 					POS.setY(getYOnSurface(world, x, z) - 1);
 					if (world.getBlockState(POS).is(TagAPI.GEN_TERRAIN)) {
 						brimstone.add(POS.immutable());

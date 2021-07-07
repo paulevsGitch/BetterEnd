@@ -3,10 +3,8 @@ package ru.betterend.entity.model;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -30,6 +28,7 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 	public static LayerDefinition getShellOnlyTexturedModelData() {
 		return getTexturedModelData(true);
 	}
+
 	public static LayerDefinition getCompleteTexturedModelData() {
 		return getTexturedModelData(false);
 	}
@@ -38,92 +37,74 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 
-		//this.innerCube = new ModelPart(this, 0, 16);
 		if (onlyShell) {
-			modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create()
+			modelPartData.addOrReplaceChild(PartNames.BODY,
+					CubeListBuilder
+							.create()
 							.texOffs(0, 0)
 							.addBox(-4.0F, 16.0F, -4.0F, 8.0F, 8.0F, 8.0F),
-					PartPose.ZERO);
-			/* this.innerCube.texOffs(0, 0);
-			this.innerCube.addBox(-4.0F, 16.0F, -4.0F, 8.0F, 8.0F, 8.0F);*/
-		} else {
-			modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create()
+					PartPose.ZERO
+			);
+		}
+		else {
+			modelPartData.addOrReplaceChild(PartNames.BODY,
+					CubeListBuilder
+							.create()
 							.texOffs(0, 16)
 							.addBox(-3.0F, 17.0F, -3.0F, 6.0F, 6.0F, 6.0F),
-					PartPose.ZERO);
-			//this.innerCube.addBox(-3.0F, 17.0F, -3.0F, 6.0F, 6.0F, 6.0F);
+					PartPose.ZERO
+			);
 
-			modelPartData.addOrReplaceChild(PartNames.RIGHT_EYE, CubeListBuilder.create()
+			modelPartData.addOrReplaceChild(PartNames.RIGHT_EYE,
+					CubeListBuilder
+							.create()
 							.texOffs(32, 0)
 							.addBox(-3.25F, 18.0F, -3.5F, 2.0F, 2.0F, 2.0F),
-					PartPose.ZERO);
-			//this.rightEye = new ModelPart(this, 32, 0);
-			//this.rightEye.addBox(-3.25F, 18.0F, -3.5F, 2.0F, 2.0F, 2.0F);
+					PartPose.ZERO
+			);
 
-			modelPartData.addOrReplaceChild(PartNames.LEFT_EYE, CubeListBuilder.create()
+			modelPartData.addOrReplaceChild(PartNames.LEFT_EYE,
+					CubeListBuilder
+							.create()
 							.texOffs(32, 4)
 							.addBox(1.25F, 18.0F, -3.5F, 2.0F, 2.0F, 2.0F),
-					PartPose.ZERO);
-			//this.leftEye = new ModelPart(this, 32, 4);
-			//this.leftEye.addBox(1.25F, 18.0F, -3.5F, 2.0F, 2.0F, 2.0F);
+					PartPose.ZERO
+			);
 
-			modelPartData.addOrReplaceChild(PartNames.MOUTH, CubeListBuilder.create()
+			modelPartData.addOrReplaceChild(PartNames.MOUTH,
+					CubeListBuilder
+							.create()
 							.texOffs(32, 8)
 							.addBox(0.0F, 21.0F, -3.5F, 1.0F, 1.0F, 1.0F),
-					PartPose.ZERO);
-			//this.mouth = new ModelPart(this, 32, 8);
-			//this.mouth.addBox(0.0F, 21.0F, -3.5F, 1.0F, 1.0F, 1.0F);
+					PartPose.ZERO
+			);
 
 			PartDefinition flowerPart = modelPartData.addOrReplaceChild("flower", CubeListBuilder.create(), PartPose.ZERO);
 			PartDefinition cropPart = modelPartData.addOrReplaceChild("crop", CubeListBuilder.create(), PartPose.ZERO);
 
 			for (int i = 0; i < 6; i++) {
-				final PartDefinition parent = i<4?flowerPart:cropPart;
-				final float rot = MHelper.degreesToRadians( i<4 ? (i * 45F) : ((i-4) * 90F + 45F) );
+				final PartDefinition parent = i < 4 ? flowerPart : cropPart;
+				final float rot = MHelper.degreesToRadians(i < 4 ? (i * 45F) : ((i - 4) * 90F + 45F));
 
-				PartDefinition petalRotPart = parent.addOrReplaceChild("petalRot_"+i,
+				PartDefinition petalRotPart = parent.addOrReplaceChild("petalRot_" + i,
 						CubeListBuilder.create(),
-						PartPose.offsetAndRotation(0,0,0,0,rot, 0));
+						PartPose.offsetAndRotation(0, 0, 0, 0, rot, 0));
 
 
-				petalRotPart.addOrReplaceChild("petal_"+i,
-						CubeListBuilder.create()
+				petalRotPart.addOrReplaceChild("petal_" + i,
+						CubeListBuilder
+								.create()
 								.texOffs(40, 0)
 								.addBox(0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F),
-						PartPose.offset(-4, 8, 0));
+						PartPose.offset(-4, 8, 0)
+				);
 			}
-			/* this.flower = new ModelPart(this);
-			for (int i = 0; i < 4; i++) {
-				ModelPart petalRot = new ModelPart(this);
-				petalRot.yRot = MHelper.degreesToRadians(i * 45F);
-
-				ModelPart petal = new ModelPart(this, 40, 0);
-				petal.setPos(-4, 8, 0);
-				petal.addBox(0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F, 0.0F);
-
-				this.flower.addChild(petalRot);
-				petalRot.addChild(petal);
-			}
-			this.crop = new ModelPart(this);
-
-			for (int i = 0; i < 2; i++) {
-				ModelPart petalRot = new ModelPart(this);
-				petalRot.yRot = MHelper.degreesToRadians(i * 90F + 45F);
-
-				ModelPart petal = new ModelPart(this, 40, 0);
-				petal.setPos(-4, 8, 0);
-				petal.addBox(0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F, 0.0F);
-
-				this.crop.addChild(petalRot);
-				petalRot.addChild(petal);
-			}
-			 */
 		}
 
 		return LayerDefinition.create(modelData, 64, 32);
 	}
 
-	public EndSlimeEntityModel(EntityModelSet modelSet, boolean onlyShell){
+	public EndSlimeEntityModel(EntityModelSet modelSet, boolean onlyShell) {
 		super(RenderType::entityCutout);
 
 		ModelPart modelPart = modelSet.bakeLayer(onlyShell ? EndEntitiesRenders.END_SLIME_SHELL_MODEL : EndEntitiesRenders.END_SLIME_MODEL);
@@ -135,7 +116,8 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 			mouth = modelPart.getChild(PartNames.MOUTH);
 			flower = modelPart.getChild("flower");
 			crop = modelPart.getChild("crop");
-		} else {
+		}
+		else {
 			rightEye = null;
 			leftEye = null;
 			mouth = null;
@@ -145,8 +127,7 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw,
-			float headPitch) {
+	public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 	}
 
 	public void renderFlower(PoseStack matrices, VertexConsumer vertices, int light, int overlay) {
@@ -157,15 +138,16 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends ListModel<T> 
 		crop.render(matrices, vertices, light, overlay);
 	}
 
-	private boolean isOnlyShell(){
-		return rightEye==null;
+	private boolean isOnlyShell() {
+		return rightEye == null;
 	}
 
 	@Override
 	public Iterable<ModelPart> parts() {
 		if (isOnlyShell()) {
 			return ImmutableList.of(this.innerCube);
-		} else {
+		}
+		else {
 			return ImmutableList.of(this.innerCube, this.rightEye, this.leftEye, this.mouth);
 		}
 	}

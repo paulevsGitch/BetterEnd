@@ -1,9 +1,5 @@
 package ru.betterend.item;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.network.chat.Component;
@@ -15,9 +11,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.effects.EndStatusEffects;
 import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.registry.EndItems;
+
+import java.util.List;
 
 public class CrystaliteBoots extends CrystaliteArmor implements MobEffectApplier {
 

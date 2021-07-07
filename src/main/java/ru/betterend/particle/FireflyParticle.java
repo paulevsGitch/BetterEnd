@@ -19,7 +19,7 @@ public class FireflyParticle extends SimpleAnimatedParticle {
 	private double nextVX;
 	private double nextVY;
 	private double nextVZ;
-	
+
 	protected FireflyParticle(ClientLevel world, double x, double y, double z, SpriteSet sprites, double r, double g, double b) {
 		super(world, x, y, z, sprites, 0);
 		setSprite(sprites.get(random));
@@ -28,16 +28,16 @@ public class FireflyParticle extends SimpleAnimatedParticle {
 		this.setFadeColor(15916745);
 		this.setSpriteFromAge(sprites);
 		this.setAlpha(0);
-		
+
 		preVX = random.nextGaussian() * 0.02;
 		preVY = random.nextGaussian() * 0.02;
 		preVZ = random.nextGaussian() * 0.02;
-		
+
 		nextVX = random.nextGaussian() * 0.02;
 		nextVY = random.nextGaussian() * 0.02;
 		nextVZ = random.nextGaussian() * 0.02;
 	}
-	
+
 	@Override
 	public void tick() {
 		int ticks = this.age & 31;
@@ -50,18 +50,18 @@ public class FireflyParticle extends SimpleAnimatedParticle {
 			nextVZ = random.nextGaussian() * 0.02;
 		}
 		double delta = (double) ticks / 31.0;
-		
+
 		this.xd = Mth.lerp(delta, preVX, nextVX);
 		this.yd = Mth.lerp(delta, preVY, nextVY);
 		this.zd = Mth.lerp(delta, preVZ, nextVZ);
-		
+
 		if (this.age <= 60) {
 			this.setAlpha(this.age / 60F);
 		}
 		else if (this.age > lifetime - 60) {
 			this.setAlpha((lifetime - this.age) / 60F);
 		}
-		
+
 		super.tick();
 	}
 

@@ -1,15 +1,10 @@
 package ru.betterend.integration.byg.features;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.base.Function;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
@@ -19,6 +14,9 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.integration.Integrations;
+
+import java.util.List;
+import java.util.Random;
 
 public class BigEtherTreeFeature extends DefaultFeature {
 	@Override

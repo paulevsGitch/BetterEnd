@@ -17,7 +17,7 @@ public class LucerniaSaplingBlock extends FeatureSaplingBlock {
 	protected Feature<?> getFeature() {
 		return EndFeatures.LUCERNIA.getFeature();
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.RUTISCUS);

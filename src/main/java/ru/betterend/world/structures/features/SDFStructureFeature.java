@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.level.ChunkPos;
@@ -11,22 +9,23 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import ru.bclib.sdf.SDF;
 import ru.bclib.util.MHelper;
 import ru.betterend.world.structures.piece.VoxelPiece;
 
+import java.util.Random;
+
 public abstract class SDFStructureFeature extends FeatureBaseStructure {
-	
+
 	protected abstract SDF getSDF(BlockPos pos, Random random);
-	
+
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return SDFStructureStart::new;
 	}
-	
+
 	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
 		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos chunkPos, int references, long seed) {
 			super(feature, chunkPos, references, seed);
@@ -39,7 +38,9 @@ public abstract class SDFStructureFeature extends FeatureBaseStructure {
 			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 			if (y > 5) {
 				BlockPos start = new BlockPos(x, y, z);
-				VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
+				VoxelPiece piece = new VoxelPiece((world) -> {
+					((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start);
+				}, random.nextInt());
 				this.pieces.add(piece);
 			}
 

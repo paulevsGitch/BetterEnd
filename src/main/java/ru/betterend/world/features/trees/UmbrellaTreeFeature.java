@@ -13,7 +13,13 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
-import ru.bclib.sdf.operator.*;
+import ru.bclib.sdf.operator.SDFFlatWave;
+import ru.bclib.sdf.operator.SDFScale;
+import ru.bclib.sdf.operator.SDFScale3D;
+import ru.bclib.sdf.operator.SDFSmoothUnion;
+import ru.bclib.sdf.operator.SDFSubtraction;
+import ru.bclib.sdf.operator.SDFTranslate;
+import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
@@ -106,7 +112,8 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			if (EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateUp())
 					&& EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateDown())) {
 				return EndBlocks.UMBRELLA_TREE.log.defaultBlockState();
-			} else if (info.getState().equals(membrane)) {
+			}
+			else if (info.getState().equals(membrane)) {
 				Center min = centers.get(0);
 				double d = Double.MAX_VALUE;
 				BlockPos bpos = info.getPos();

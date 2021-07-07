@@ -1,8 +1,5 @@
 package ru.betterend.entity;
 
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -35,6 +32,9 @@ import ru.bclib.api.BiomeAPI;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
 
+import java.util.List;
+import java.util.Random;
+
 public class CubozoaEntity extends AbstractSchoolingFish {
 	public static final int VARIANTS = 2;
 	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(CubozoaEntity.class, EntityDataSerializers.BYTE);
@@ -47,11 +47,11 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		
+
 		if (BiomeAPI.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
 			this.entityData.set(VARIANT, (byte) 1);
 		}
-		
+
 		if (entityTag != null) {
 			if (entityTag.contains("Variant")) {
 				this.entityData.set(VARIANT, entityTag.getByte("Variant"));
@@ -60,7 +60,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 				this.entityData.set(SCALE, entityTag.getByte("Scale"));
 			}
 		}
-		
+
 		this.refreshDimensions();
 		return data;
 	}
@@ -89,7 +89,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 			this.entityData.set(SCALE, tag.getByte("Scale"));
 		}
 	}
-	
+
 	@Override
 	public ItemStack getBucketItemStack() {
 		ItemStack bucket = EndItems.BUCKET_CUBOZOA.getDefaultInstance();
@@ -109,7 +109,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	public int getVariant() {
 		return (int) this.entityData.get(VARIANT);
 	}
-	
+
 	public byte getByteScale() {
 		return this.entityData.get(SCALE);
 	}
@@ -129,7 +129,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return dimensions.height * 0.5F;
 	}
-	
+
 	@Override
 	protected void dropFromLootTable(DamageSource source, boolean causedByPlayer) {
 		int count = random.nextInt(3);
@@ -143,7 +143,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	protected SoundEvent getFlopSound() {
 		return SoundEvents.SALMON_FLOP;
 	}
-	
+
 	@Override
 	public void playerTouch(Player player) {
 		if (player instanceof ServerPlayer && player.hurt(DamageSource.mobAttack(this), 0.5F)) {

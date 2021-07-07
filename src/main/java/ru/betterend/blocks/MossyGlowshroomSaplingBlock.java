@@ -18,7 +18,7 @@ public class MossyGlowshroomSaplingBlock extends FeatureSaplingBlock {
 	protected Feature<?> getFeature() {
 		return EndFeatures.MOSSY_GLOWSHROOM.getFeature();
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.END_MOSS) || world.getBlockState(pos.below()).is(EndBlocks.END_MYCELIUM);

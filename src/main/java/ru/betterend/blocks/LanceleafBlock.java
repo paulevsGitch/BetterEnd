@@ -1,8 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -21,11 +18,14 @@ import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Collections;
+import java.util.List;
+
 public class LanceleafBlock extends EndPlantBlock {
 
 	public static final EnumProperty<PentaShape> SHAPE = BlockProperties.PENTA_SHAPE;
 	public static final IntegerProperty ROTATION = BlockProperties.ROTATION;
-	
+
 	public LanceleafBlock() {
 		super();
 	}
@@ -34,7 +34,7 @@ public class LanceleafBlock extends EndPlantBlock {
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE, ROTATION);
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		PentaShape shape = state.getValue(SHAPE);
@@ -48,7 +48,7 @@ public class LanceleafBlock extends EndPlantBlock {
 			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
-	
+
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!canSurvive(state, world, pos)) {
@@ -58,7 +58,7 @@ public class LanceleafBlock extends EndPlantBlock {
 			return state;
 		}
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(SHAPE) == PentaShape.BOTTOM) {

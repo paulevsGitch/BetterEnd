@@ -1,14 +1,5 @@
 package ru.betterend.mixin.client;
 
-import java.util.Random;
-
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -16,7 +7,15 @@ import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.betterend.client.ClientOptions;
+
+import java.util.Random;
 
 @Mixin(MusicManager.class)
 public abstract class MusicTrackerMixin {
@@ -27,17 +26,17 @@ public abstract class MusicTrackerMixin {
 	@Final
 	@Shadow
 	private Random random;
-	
+
 	@Shadow
 	private SoundInstance currentMusic;
-	
+
 	@Shadow
 	private int nextSongDelay;
-	
+
 	private static float volume = 1;
 	private static float srcVolume = 0;
 	private static long time;
-	
+
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	public void be_onTick(CallbackInfo info) {
 		if (ClientOptions.blendBiomeMusic()) {
@@ -80,19 +79,19 @@ public abstract class MusicTrackerMixin {
 			}
 		}
 	}
-	
+
 	private boolean be_isInEnd() {
 		return minecraft.level != null && minecraft.level.dimension().equals(Level.END);
 	}
-	
+
 	private boolean be_shouldChangeSound(Music musicSound) {
 		return currentMusic != null && !musicSound.getEvent().getLocation().equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
 	}
-	
+
 	private boolean be_checkNullSound(Music musicSound) {
 		return musicSound != null && musicSound.getEvent() != null;
 	}
-	
+
 	@Shadow
 	public abstract void startPlaying(Music type);
 }

@@ -1,8 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.util.List;
-import java.util.Objects;
-
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -17,13 +14,16 @@ import ru.bclib.blocks.BaseAnvilBlock;
 import ru.betterend.blocks.complex.MetalMaterial;
 import ru.betterend.item.EndAnvilItem;
 
+import java.util.List;
+import java.util.Objects;
+
 public class EndAnvilBlock extends BaseAnvilBlock {
 
 	protected final int level;
 	protected IntegerProperty durability;
 	protected MetalMaterial metalMaterial;
 	protected int maxDurability;
-	
+
 	public EndAnvilBlock(MaterialColor color, int level) {
 		super(color);
 		this.level = level;
@@ -81,7 +81,7 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 		super.createBlockStateDefinition(builder);
 		builder.add(getDurability());
 	}
-	
+
 	public int getCraftingLevel() {
 		return level;
 	}
@@ -109,7 +109,8 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 			if (destructionProperty.getPossibleValues().contains(destruction)) {
 				try {
 					return fallingState.setValue(destructionProperty, destruction);
-				} catch (Exception ex) {
+				}
+				catch (Exception ex) {
 					return null;
 				}
 			}

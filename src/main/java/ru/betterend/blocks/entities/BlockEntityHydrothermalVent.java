@@ -1,7 +1,5 @@
 package ru.betterend.blocks.entities;
 
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +19,8 @@ import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
 
+import java.util.List;
+
 public class BlockEntityHydrothermalVent extends BlockEntity {
 
 	private final static Vec3 POSITIVE_Y = new Vec3(0.0f, 1.0f, 0.0f);
@@ -39,7 +39,8 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
 					double z = worldPosition.getZ() + level.random.nextDouble();
 					if (state.getValue(HydrothermalVentBlock.WATERLOGGED)) {
 						level.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
-					} else {
+					}
+					else {
 						level.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
 					}
 				}

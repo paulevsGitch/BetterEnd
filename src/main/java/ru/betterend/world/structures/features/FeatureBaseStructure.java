@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.features;
 
-import java.util.Random;
-
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -15,13 +13,15 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
+import java.util.Random;
+
 public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureConfiguration> {
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
-	
+
 	public FeatureBaseStructure() {
 		super(NoneFeatureConfiguration.CODEC);
 	}
-	
+
 	@Override
 	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig, LevelHeightAccessor levelHeightAccessor) {
 		return getGenerationHeight(pos, chunkGenerator, levelHeightAccessor) >= 20;
@@ -34,10 +34,12 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 		int j = 5;
 		if (blockRotation == Rotation.CLOCKWISE_90) {
 			i = -5;
-		} else if (blockRotation == Rotation.CLOCKWISE_180) {
+		}
+		else if (blockRotation == Rotation.CLOCKWISE_180) {
 			i = -5;
 			j = -5;
-		} else if (blockRotation == Rotation.COUNTERCLOCKWISE_90) {
+		}
+		else if (blockRotation == Rotation.COUNTERCLOCKWISE_90) {
 			j = -5;
 		}
 

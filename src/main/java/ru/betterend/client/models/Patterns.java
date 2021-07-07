@@ -1,5 +1,11 @@
 package ru.betterend.client.models;
 
+import com.google.common.collect.Maps;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import ru.betterend.BetterEnd;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,13 +15,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Maps;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import ru.betterend.BetterEnd;
 
 public class Patterns {
 	//Block Models
@@ -75,7 +74,7 @@ public class Patterns {
 	public final static ResourceLocation BLOCK_FURNACE_LIT = BetterEnd.makeID("patterns/block/furnace_glow.json");
 	public final static ResourceLocation BLOCK_TOP_SIDE_BOTTOM = BetterEnd.makeID("patterns/block/top_side_bottom.json");
 	public final static ResourceLocation BLOCK_PATH = BetterEnd.makeID("patterns/block/path.json");
-	
+
 	//Item Models
 	public final static ResourceLocation ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");
 	public final static ResourceLocation ITEM_FENCE = BetterEnd.makeID("patterns/item/pattern_fence.json");
@@ -93,25 +92,28 @@ public class Patterns {
 	public static Optional<String> createBlockSimple(String name) {
 		return Patterns.createJson(Patterns.BLOCK_BASE, name, name);
 	}
+
 	public static Optional<String> createBlockPillar(String name) {
 		return Patterns.createJson(Patterns.BLOCK_PILLAR, name, name);
 	}
-	
+
 	public static String createJson(Reader data, String parent, String block) {
 		try (BufferedReader buffer = new BufferedReader(data)) {
 			return buffer.lines().collect(Collectors.joining())
 					.replace("%parent%", parent)
 					.replace("%block%", block);
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			return null;
 		}
 	}
-	
+
 	public static Optional<String> createJson(ResourceLocation patternId, String parent, String block) {
 		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
 			return Optional.ofNullable(createJson(new InputStreamReader(input, StandardCharsets.UTF_8), parent, block));
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			return Optional.empty();
 		}
 	}
@@ -131,7 +133,8 @@ public class Patterns {
 				json = json.replace(texture.getKey(), texture.getValue());
 			}
 			return Optional.of(json);
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			return Optional.empty();
 		}
 	}

@@ -1,8 +1,5 @@
 package ru.betterend.entity;
 
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
@@ -29,11 +26,14 @@ import net.minecraft.world.phys.AABB;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndSounds;
 
+import java.util.List;
+import java.util.Random;
+
 public class ShadowWalkerEntity extends Monster {
 	public ShadowWalkerEntity(EntityType<ShadowWalkerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new AttackGoal(this, 1.0D, false));
@@ -51,7 +51,7 @@ public class ShadowWalkerEntity extends Monster {
 				.add(Attributes.ARMOR, 2.0)
 				.add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -71,7 +71,7 @@ public class ShadowWalkerEntity extends Monster {
 				getZ() + random.nextGaussian() * 0.2,
 				0, 0, 0);
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return EndSounds.ENTITY_SHADOW_WALKER;
@@ -88,18 +88,19 @@ public class ShadowWalkerEntity extends Monster {
 	}
 
 	@Override
-	protected void playStepSound(BlockPos pos, BlockState state) {}
-	
+	protected void playStepSound(BlockPos pos, BlockState state) {
+	}
+
 	@Override
 	protected float getSoundVolume() {
 		return MHelper.randRange(0.25F, 0.5F, random);
 	}
-	
+
 	@Override
 	public float getVoicePitch() {
 		return MHelper.randRange(0.75F, 1.25F, random);
 	}
-	
+
 	@Override
 	public boolean doHurtTarget(Entity target) {
 		boolean attack = super.doHurtTarget(target);
@@ -111,24 +112,26 @@ public class ShadowWalkerEntity extends Monster {
 		}
 		return attack;
 	}
-	
+
 	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
 		if (Monster.checkMonsterSpawnRules(type, world, spawnReason, pos, random)) {
 			AABB box = new AABB(pos).inflate(16);
-			List<ShadowWalkerEntity> entities = world.getEntitiesOfClass(ShadowWalkerEntity.class, box, (entity) -> { return true; });
+			List<ShadowWalkerEntity> entities = world.getEntitiesOfClass(ShadowWalkerEntity.class, box, (entity) -> {
+				return true;
+			});
 			return entities.size() < 6;
 		}
 		return false;
 	}
-	
+
 	private final class AttackGoal extends MeleeAttackGoal {
 		private final ShadowWalkerEntity walker;
 		private int ticks;
 
 		public AttackGoal(ShadowWalkerEntity walker, double speed, boolean pauseWhenMobIdle) {
-		      super(walker, speed, pauseWhenMobIdle);
-		      this.walker = walker;
-		   }
+			super(walker, speed, pauseWhenMobIdle);
+			this.walker = walker;
+		}
 
 		public void start() {
 			super.start();

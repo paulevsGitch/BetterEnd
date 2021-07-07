@@ -1,9 +1,5 @@
 package ru.betterend.rituals;
 
-import java.awt.Point;
-import java.util.Arrays;
-import java.util.Objects;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -19,8 +15,12 @@ import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.recipe.builders.InfusionRecipe;
 
+import java.awt.Point;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class InfusionRitual implements Container {
-	private static final Point[] PEDESTALS_MAP = new Point[] {
+	private static final Point[] PEDESTALS_MAP = new Point[]{
 			new Point(0, 3),
 			new Point(2, 2),
 			new Point(3, 0),
@@ -41,14 +41,14 @@ public class InfusionRitual implements Container {
 
 	private final PedestalBlockEntity[] catalysts = new PedestalBlockEntity[8];
 	private final InfusionPedestalEntity input;
-	
+
 	public InfusionRitual(InfusionPedestalEntity pedestal, Level world, BlockPos pos) {
 		this.input = pedestal;
 		this.world = world;
 		this.worldPos = pos;
 		configure();
 	}
-	
+
 	public void configure() {
 		if (world == null || worldPos == null || world.isClientSide) return;
 		for (int i = 0; i < catalysts.length; i++) {
@@ -57,12 +57,13 @@ public class InfusionRitual implements Container {
 			BlockEntity catalystEntity = world.getBlockEntity(checkPos);
 			if (catalystEntity instanceof PedestalBlockEntity) {
 				catalysts[i] = (PedestalBlockEntity) catalystEntity;
-			} else {
+			}
+			else {
 				catalysts[i] = null;
 			}
 		}
 	}
-	
+
 	public boolean checkRecipe() {
 		if (!isValid()) return false;
 		InfusionRecipe recipe = world.getRecipeManager().getRecipeFor(InfusionRecipe.TYPE, this, world).orElse(null);
@@ -70,7 +71,8 @@ public class InfusionRitual implements Container {
 			if (recipe == null) {
 				reset();
 				return false;
-			} else if (activeRecipe == null || recipe.getInfusionTime() != time) {
+			}
+			else if (activeRecipe == null || recipe.getInfusionTime() != time) {
 				updateRecipe(recipe);
 			}
 			return true;
@@ -93,14 +95,14 @@ public class InfusionRitual implements Container {
 		time = activeRecipe != null ? activeRecipe.getInfusionTime() : 0;
 		progress = 0;
 	}
-	
+
 	public void reset() {
 		activeRecipe = null;
 		hasRecipe = false;
 		resetTimer();
 		setChanged();
 	}
-	
+
 	public void tick() {
 		if (isDirty) {
 			configure();
@@ -112,7 +114,8 @@ public class InfusionRitual implements Container {
 			clearContent();
 			input.setItem(0, activeRecipe.assemble(this));
 			reset();
-		} else {
+		}
+		else {
 			ServerLevel serverLevel = (ServerLevel) world;
 			BlockPos target = worldPos.above();
 			double tx = target.getX() + 0.5;
@@ -131,17 +134,17 @@ public class InfusionRitual implements Container {
 		}
 
 	}
-	
+
 	@Override
 	public boolean canPlaceItem(int slot, ItemStack stack) {
 		return isValid();
 	}
-	
+
 	public boolean isValid() {
 		if (world == null || world.isClientSide || worldPos == null || input == null) return false;
 		return Arrays.stream(catalysts).noneMatch(Objects::isNull);
 	}
-	
+
 	public boolean hasRecipe() {
 		return hasRecipe;
 	}
@@ -174,7 +177,8 @@ public class InfusionRitual implements Container {
 		if (slot > 8) return ItemStack.EMPTY;
 		if (slot == 0) {
 			return input.getItem(0);
-		} else {
+		}
+		else {
 			return catalysts[slot - 1].getItem(0);
 		}
 	}
@@ -189,7 +193,8 @@ public class InfusionRitual implements Container {
 		if (slot > 8) return ItemStack.EMPTY;
 		if (slot == 0) {
 			return input.removeItemNoUpdate(0);
-		} else {
+		}
+		else {
 			return catalysts[slot - 1].removeItemNoUpdate(0);
 		}
 	}
@@ -199,7 +204,8 @@ public class InfusionRitual implements Container {
 		if (slot > 8) return;
 		if (slot == 0) {
 			input.setItem(0, stack);
-		} else {
+		}
+		else {
 			catalysts[slot - 1].setItem(0, stack);
 		}
 	}
@@ -220,7 +226,7 @@ public class InfusionRitual implements Container {
 	public boolean stillValid(Player player) {
 		return true;
 	}
-	
+
 	public void fromTag(CompoundTag tag) {
 		if (tag.contains("recipe")) {
 			hasRecipe = tag.getBoolean("recipe");

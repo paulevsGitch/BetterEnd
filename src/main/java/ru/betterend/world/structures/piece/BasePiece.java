@@ -14,6 +14,6 @@ public abstract class BasePiece extends StructurePiece {
 		super(type, tag);
 		fromNbt(tag);
 	}
-	
+
 	protected abstract void fromNbt(CompoundTag tag);
 }

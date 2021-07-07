@@ -20,7 +20,7 @@ public class LootTableUtil {
 				builder.withCondition(LootItemRandomChanceCondition.randomChance(0.5f).build());
 				builder.withEntry(LootItem.lootTableItem(Items.GHAST_TEAR).build());
 				supplier.withPool(builder);
-				
+
 				builder = FabricLootPoolBuilder.builder();
 				builder.setRolls(UniformGenerator.between(0, 5));
 				builder.withCondition(LootItemRandomChanceCondition.randomChance(0.1f).build());

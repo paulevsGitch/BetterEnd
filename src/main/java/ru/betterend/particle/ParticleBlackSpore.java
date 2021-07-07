@@ -20,25 +20,25 @@ public class ParticleBlackSpore extends SimpleAnimatedParticle {
 	private double nextVX;
 	private double nextVY;
 	private double nextVZ;
-	
+
 	protected ParticleBlackSpore(ClientLevel world, double x, double y, double z, double r, double g, double b, SpriteSet sprites) {
 		super(world, x, y, z, sprites, 0);
 		setSprite(sprites.get(random));
-		
+
 		this.lifetime = MHelper.randRange(30, 60, random);
 		this.quadSize = MHelper.randRange(0.05F, 0.15F, random);
 		this.setColor(1, 1, 1);
 		this.setAlpha(0);
-		
+
 		preVX = random.nextGaussian() * 0.015;
 		preVY = 0;
 		preVZ = random.nextGaussian() * 0.015;
-		
+
 		nextVX = random.nextGaussian() * 0.015;
 		nextVY = random.nextFloat() * 0.02 + 0.01;
 		nextVZ = random.nextGaussian() * 0.015;
 	}
-	
+
 	@Override
 	public void tick() {
 		int ticks = this.age & 15;
@@ -51,25 +51,25 @@ public class ParticleBlackSpore extends SimpleAnimatedParticle {
 			nextVZ = random.nextGaussian() * 0.015;
 		}
 		double delta = (double) ticks / 15.0;
-		
+
 		if (this.age <= 15) {
 			this.setAlpha(this.age / 15F);
 		}
 		else if (this.age >= this.lifetime - 15) {
 			this.setAlpha((this.lifetime - this.age) / 15F);
 		}
-		
+
 		if (this.age >= this.lifetime) {
 			this.remove();
 		}
-		
+
 		this.xd = Mth.lerp(delta, preVX, nextVX);
 		this.yd = Mth.lerp(delta, preVY, nextVY);
 		this.zd = Mth.lerp(delta, preVZ, nextVZ);
-		
+
 		super.tick();
 	}
-	
+
 	@Override
 	public ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;

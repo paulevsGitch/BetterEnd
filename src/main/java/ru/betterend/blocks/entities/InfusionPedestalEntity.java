@@ -10,37 +10,39 @@ import ru.betterend.rituals.InfusionRitual;
 public class InfusionPedestalEntity extends PedestalBlockEntity {
 
 	private InfusionRitual linkedRitual;
-	
+
 	public InfusionPedestalEntity(BlockPos blockPos, BlockState blockState) {
 		super(EndBlockEntities.INFUSION_PEDESTAL, blockPos, blockState);
 	}
 
 	@Override
-	public void setLevel(Level world){
+	public void setLevel(Level world) {
 		super.setLevel(world);
 		if (hasRitual()) {
 			linkedRitual.setLocation(world, this.getBlockPos());
-		} else {
+		}
+		else {
 			linkRitual(new InfusionRitual(this, world, this.getBlockPos()));
 		}
 	}
-	
+
 	public void setLevelAndPosition(Level world, BlockPos pos) {
 		if (hasRitual()) {
 			linkedRitual.setLocation(world, pos);
-		} else {
+		}
+		else {
 			linkRitual(new InfusionRitual(this, world, pos));
 		}
 	}
-	
+
 	public void linkRitual(InfusionRitual ritual) {
 		linkedRitual = ritual;
 	}
-	
+
 	public InfusionRitual getRitual() {
 		return linkedRitual;
 	}
-	
+
 	public boolean hasRitual() {
 		return linkedRitual != null;
 	}

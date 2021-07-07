@@ -1,17 +1,7 @@
 package ru.betterend.rituals;
 
-import java.awt.Point;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Set;
-import java.util.function.Predicate;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -37,6 +27,7 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.blocks.BlockProperties;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndPortalBlock;
@@ -45,6 +36,13 @@ import ru.betterend.blocks.entities.EternalPedestalEntity;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndPortals;
+
+import java.awt.Point;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.Set;
+import java.util.function.Predicate;
 
 public class EternalRitual {
 	private final static Set<Point> STRUCTURE_MAP = Sets.newHashSet(
@@ -125,7 +123,8 @@ public class EternalRitual {
 					Item pItem = pedestal.getItem(0).getItem();
 					if (item == null) {
 						item = pItem;
-					} else if (!item.equals(pItem)) {
+					}
+					else if (!item.equals(pItem)) {
 						valid = false;
 					}
 				}
@@ -163,10 +162,12 @@ public class EternalRitual {
 		try {
 			if (exit == null) {
 				initPortal(worldId, portalId);
-			} else {
+			}
+			else {
 				if (!worldId.equals(targetWorldId)) {
 					initPortal(worldId, portalId);
-				} else if (!checkFrame(targetWorld, exit.below())) {
+				}
+				else if (!checkFrame(targetWorld, exit.below())) {
 					Direction.Axis portalAxis = (Direction.Axis.X == axis) ? Direction.Axis.Z : Direction.Axis.X;
 					generatePortal(targetWorld, exit, portalAxis, portalId);
 				}
@@ -175,7 +176,8 @@ public class EternalRitual {
 			activatePortal(world, center, portalId);
 			doEffects((ServerLevel) world, center);
 			active = true;
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			BetterEnd.LOGGER.error("Create End portals error.", ex);
 			removePortal(targetWorld, exit);
 			removePortal(world, center);
@@ -282,7 +284,7 @@ public class EternalRitual {
 	private BlockPos findFrame(Level world, BlockPos.MutableBlockPos startPos) {
 		List<BlockPos.MutableBlockPos> foundPos = findAllBlockPos(world, startPos, (SEARCH_RADIUS >> 4) + 1, FRAME,
 				blockState -> blockState.is(FRAME) && !blockState.getValue(ACTIVE));
-		for(BlockPos.MutableBlockPos testPos : foundPos) {
+		for (BlockPos.MutableBlockPos testPos : foundPos) {
 			if (checkFrame(world, testPos)) {
 				return testPos;
 			}
@@ -305,7 +307,8 @@ public class EternalRitual {
 		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) {
 			generatePortal(targetWorld, basePos, portalAxis, portalId);
 			return basePos.immutable();
-		} else {
+		}
+		else {
 			Direction direction = Direction.EAST;
 			BlockPos.MutableBlockPos checkPos = basePos.mutable();
 			int radius = (int) ((SEARCH_RADIUS / multiplier) + 1);
@@ -319,7 +322,7 @@ public class EternalRitual {
 						if (ceil < 5) continue;
 						checkPos.setY(ceil);
 						while (checkPos.getY() >= 5) {
-							if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
+							if (checkIsAreaValid(targetWorld, checkPos, portalAxis)) {
 								generatePortal(targetWorld, checkPos, portalAxis, portalId);
 								return checkPos.immutable();
 							}
@@ -333,7 +336,8 @@ public class EternalRitual {
 		}
 		if (targetWorld.dimension() == Level.END) {
 			Features.END_ISLAND.place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
-		} else if (targetWorld.dimension() == Level.OVERWORLD) {
+		}
+		else if (targetWorld.dimension() == Level.OVERWORLD) {
 			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
 		}
 		EndFeatures.BIOME_ISLAND.getFeatureConfigured().place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
@@ -410,7 +414,8 @@ public class EternalRitual {
 			checkPos = checkPos.east(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.north(5).east(4);
-			} else {
+			}
+			else {
 				this.center = initial.north(5).west(4);
 			}
 			return;
@@ -421,7 +426,8 @@ public class EternalRitual {
 			checkPos = checkPos.east(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.south(5).east(4);
-			} else {
+			}
+			else {
 				this.center = initial.south(5).west(4);
 			}
 			return;
@@ -432,7 +438,8 @@ public class EternalRitual {
 			checkPos = checkPos.south(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.east(5).south(4);
-			} else {
+			}
+			else {
 				this.center = initial.east(5).north(4);
 			}
 			return;
@@ -443,7 +450,8 @@ public class EternalRitual {
 			checkPos = checkPos.south(8);
 			if (this.hasPedestal(checkPos)) {
 				this.center = initial.west(5).south(4);
-			} else {
+			}
+			else {
 				this.center = initial.west(5).north(4);
 			}
 		}
@@ -460,7 +468,8 @@ public class EternalRitual {
 			if (pedestal != null) {
 				if (!pedestal.hasRitual()) {
 					pedestal.linkRitual(this);
-				} else {
+				}
+				else {
 					EternalRitual ritual = pedestal.getRitual();
 					if (!ritual.equals(this)) {
 						pedestal.linkRitual(this);
@@ -564,12 +573,11 @@ public class EternalRitual {
 	}
 
 	/**
-	 * @param world World for search
-	 * @param checkPos Start search position
-	 * @param radius Search radius
+	 * @param world       World for search
+	 * @param checkPos    Start search position
+	 * @param radius      Search radius
 	 * @param searchBlock Target block
-	 * @param condition Predicate for test block states in the chunk section
-	 *
+	 * @param condition   Predicate for test block states in the chunk section
 	 * @return Position of the first found block or null.
 	 */
 	@Nullable
@@ -583,7 +591,7 @@ public class EternalRitual {
 					if (section == null || !section.getStates().maybeHas(condition)) continue;
 					for (int x = 0; x < 16; x++) {
 						for (int y = 0; y < 16; y++) {
-							for(int z = 0; z < 16; z++) {
+							for (int z = 0; z < 16; z++) {
 								BlockState checkState = section.getBlockState(x, y, z);
 								if (checkState.is(searchBlock)) {
 									int worldX = (chunk.getPos().x << 4) + x;
@@ -604,12 +612,11 @@ public class EternalRitual {
 	}
 
 	/**
-	 * @param world World for search
-	 * @param checkPos Start search position
-	 * @param radius Search radius
+	 * @param world       World for search
+	 * @param checkPos    Start search position
+	 * @param radius      Search radius
 	 * @param searchBlock Target block
-	 * @param condition Predicate for test block states in the chunk section
-	 *
+	 * @param condition   Predicate for test block states in the chunk section
 	 * @return List of positions of the all found blocks or empty list.
 	 */
 	public static List<BlockPos.MutableBlockPos> findAllBlockPos(Level world, BlockPos.MutableBlockPos checkPos, int radius, Block searchBlock, Predicate<BlockState> condition) {
@@ -623,7 +630,7 @@ public class EternalRitual {
 					if (section == null || !section.getStates().maybeHas(condition)) continue;
 					for (int x = 0; x < 16; x++) {
 						for (int y = 0; y < 16; y++) {
-							for(int z = 0; z < 16; z++) {
+							for (int z = 0; z < 16; z++) {
 								BlockState checkState = section.getBlockState(x, y, z);
 								if (checkState.is(searchBlock)) {
 									int worldX = (chunk.getPos().x << 4) + x;

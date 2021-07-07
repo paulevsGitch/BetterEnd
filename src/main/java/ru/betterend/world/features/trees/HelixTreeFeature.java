@@ -1,18 +1,11 @@
 package ru.betterend.world.features.trees;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.AABB;
@@ -30,6 +23,11 @@ import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.HelixTreeLeavesBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class HelixTreeFeature extends DefaultFeature {
 	private static final Function<PosInfo, BlockState> POST;
@@ -126,7 +124,8 @@ public class HelixTreeFeature extends DefaultFeature {
 				if (ax > az) {
 					start.set(start.x(), start.y(), start.z() + az > 0 ? 1 : -1);
 					end.set(end.x(), end.y(), end.z() + az > 0 ? 1 : -1);
-				} else {
+				}
+				else {
 					start.set(start.x() + ax > 0 ? 1 : -1, start.y(), start.z());
 					end.set(end.x() + ax > 0 ? 1 : -1, end.y(), end.z());
 				}
@@ -153,7 +152,7 @@ public class HelixTreeFeature extends DefaultFeature {
 	}
 
 	private void fillLine(Vector3f start, Vector3f end, WorldGenLevel world, BlockState state, BlockPos pos,
-			int offset) {
+						  int offset) {
 		float dx = end.x() - start.x();
 		float dy = end.y() - start.y();
 		float dz = end.z() - start.z();

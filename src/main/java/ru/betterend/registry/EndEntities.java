@@ -8,7 +8,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityType.EntityFactory;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
@@ -30,7 +29,7 @@ public class EndEntities {
 	public static final EntityType<ShadowWalkerEntity> SHADOW_WALKER = register("shadow_walker", MobCategory.MONSTER, 0.6F, 1.95F, ShadowWalkerEntity::new, ShadowWalkerEntity.createMobAttributes(), true, ColorUtil.color(30, 30, 30), ColorUtil.color(5, 5, 5));
 	public static final EntityType<CubozoaEntity> CUBOZOA = register("cubozoa", MobCategory.WATER_AMBIENT, 0.6F, 1F, CubozoaEntity::new, CubozoaEntity.createMobAttributes(), true, ColorUtil.color(151, 77, 181), ColorUtil.color(93, 176, 238));
 	public static final EntityType<SilkMothEntity> SILK_MOTH = register("silk_moth", MobCategory.AMBIENT, 0.6F, 0.6F, SilkMothEntity::new, SilkMothEntity.createMobAttributes(), true, ColorUtil.color(198, 138, 204), ColorUtil.color(242, 220, 236));
-	
+
 	public static void register() {
 		SpawnHelper.restrictionAir(DRAGONFLY, DragonflyEntity::canSpawn);
 		SpawnHelper.restrictionLand(END_SLIME, EndSlimeEntity::canSpawn);
@@ -39,7 +38,7 @@ public class EndEntities {
 		SpawnHelper.restrictionWater(CUBOZOA, CubozoaEntity::canSpawn);
 		SpawnHelper.restrictionAir(SILK_MOTH, SilkMothEntity::canSpawn);
 	}
-	
+
 	protected static <T extends Entity> EntityType<T> register(String name, MobCategory group, float width, float height, EntityFactory<T> entity) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity).dimensions(EntityDimensions.fixed(width, height)).build();

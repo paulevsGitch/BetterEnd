@@ -1,11 +1,7 @@
 package ru.betterend.blocks.basis;
 
-import java.util.EnumMap;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -28,11 +24,14 @@ import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.MHelper;
 
+import java.util.EnumMap;
+import java.util.List;
+
 public class FurBlock extends BaseAttachedBlock implements IRenderTyped {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	private final ItemLike drop;
 	private final int dropChance;
-	
+
 	public FurBlock(ItemLike drop, int light, int dropChance, boolean wet) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
@@ -43,7 +42,7 @@ public class FurBlock extends BaseAttachedBlock implements IRenderTyped {
 		this.drop = drop;
 		this.dropChance = dropChance;
 	}
-	
+
 	public FurBlock(ItemLike drop, int dropChance) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
@@ -58,7 +57,7 @@ public class FurBlock extends BaseAttachedBlock implements IRenderTyped {
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -72,12 +71,12 @@ public class FurBlock extends BaseAttachedBlock implements IRenderTyped {
 			return Lists.newArrayList();
 		}
 	}
-	
+
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-	
+
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Shapes.box(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
 		BOUNDING_SHAPES.put(Direction.DOWN, Shapes.box(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));

@@ -1,7 +1,5 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelReader;
@@ -10,7 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -26,6 +23,8 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.bclib.world.features.NBTStructureFeature;
 import ru.betterend.util.BlockFixer;
+
+import java.util.Random;
 
 public class CrashedShipFeature extends NBTStructureFeature {
 	private static final StructureProcessor REPLACER;
@@ -117,8 +116,8 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		REPLACER = new StructureProcessor() {
 			@Override
 			public StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos,
-					StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2,
-					StructurePlaceSettings structurePlacementData) {
+												   StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2,
+												   StructurePlaceSettings structurePlacementData) {
 				BlockState state = structureBlockInfo2.state;
 				if (state.is(Blocks.SPAWNER) || state.getMaterial().equals(Material.WOOL)) {
 					return new StructureBlockInfo(structureBlockInfo2.pos, AIR, null);

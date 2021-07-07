@@ -30,7 +30,7 @@ public class EndPodiumFeatureMixin {
 	@Final
 	@Shadow
 	private boolean active;
-	
+
 	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
 	private void be_place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPortal()) {
@@ -49,14 +49,14 @@ public class EndPodiumFeatureMixin {
 			info.cancel();
 		}
 	}
-	
+
 	@ModifyVariable(method = "place", ordinal = 0, at = @At("HEAD"))
 	private FeaturePlaceContext<NoneFeatureConfiguration> be_setPosOnGround(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
 		WorldGenLevel world = featurePlaceContext.level();
-		BlockPos pos =  be_updatePos(featurePlaceContext.origin(), world);
-		return new FeaturePlaceContext<NoneFeatureConfiguration>(world,  featurePlaceContext.chunkGenerator(), featurePlaceContext.random(), pos, featurePlaceContext.config());
+		BlockPos pos = be_updatePos(featurePlaceContext.origin(), world);
+		return new FeaturePlaceContext<NoneFeatureConfiguration>(world, featurePlaceContext.chunkGenerator(), featurePlaceContext.random(), pos, featurePlaceContext.config());
 	}
-	
+
 	private BlockPos be_updatePos(BlockPos blockPos, WorldGenLevel world) {
 		if (GeneratorOptions.useNewGenerator()) {
 			BlockPos pos = GeneratorOptions.getPortalPos();

@@ -7,22 +7,14 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.entry.type.EntryType;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.impl.ClientInternals;
-import me.shedaniel.rei.impl.Internals;
 import me.shedaniel.rei.plugin.common.DefaultPlugin;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
-import org.jetbrains.annotations.ApiStatus;
 import ru.bclib.blocks.BaseFurnaceBlock;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndAnvilBlock;
@@ -30,18 +22,15 @@ import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.registry.EndItems;
-import ru.betterend.registry.EndPortals;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 //https://github.com/shedaniel/RoughlyEnoughItems/blob/6.x-1.17/default-plugin/src/main/java/me/shedaniel/rei/plugin/client/DefaultClientPlugin.java
 public class REIPlugin implements REIClientPlugin {
 	public final static ResourceLocation PLUGIN_ID = BetterEnd.makeID("rei_plugin");
-	public final static CategoryIdentifier ALLOYING_FUEL =  CategoryIdentifier.of(BetterEnd.MOD_ID, "alloying_fuel");
+	public final static CategoryIdentifier ALLOYING_FUEL = CategoryIdentifier.of(BetterEnd.MOD_ID, "alloying_fuel");
 	public final static CategoryIdentifier ALLOYING = AlloyingRecipe.ID;
 	public final static CategoryIdentifier SMITHING = CategoryIdentifier.of(BetterEnd.MOD_ID, AnvilRecipe.ID.getPath());
 	public final static CategoryIdentifier INFUSION = InfusionRecipe.ID;
@@ -51,10 +40,10 @@ public class REIPlugin implements REIClientPlugin {
 	private EntryStack[] ANVILS;
 	private EntryStack[] FURNACES;
 
-	void init(){
+	void init() {
 		//we need to initialize those variables after the static initialization
 		//otherwise the registry does not know the BlockItems
-		if (END_STONE_SMELTER!=null) {
+		if (END_STONE_SMELTER != null) {
 			return;
 		}
 
@@ -78,18 +67,18 @@ public class REIPlugin implements REIClientPlugin {
 		registry.registerRecipeFiller(AnvilRecipe.class, AnvilRecipe.TYPE, REIAnvilDisplay::new);
 		registry.registerRecipeFiller(InfusionRecipe.class, InfusionRecipe.TYPE, REIInfusionDisplay::new);
 
-		 FuelRegistryImpl.INSTANCE.getFuelTimes().forEach((item, time) -> {
+		FuelRegistryImpl.INSTANCE.getFuelTimes().forEach((item, time) -> {
 			if (time >= 2000) {
 				final List<EntryIngredient> list = Arrays.asList(EntryIngredients.of(item));
 				registry.add(new REIAlloyingFuelDisplay(list, time));
 			}
 		});
 	}
-	
+
 	@Override
 	public void registerCategories(CategoryRegistry registry) {
 		init();
-        
+
 		registry.add(
 				new REIAlloyingFuelCategory(),
 				new REIAlloyingCategory(END_STONE_SMELTER),

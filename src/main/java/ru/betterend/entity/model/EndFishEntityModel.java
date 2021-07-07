@@ -2,7 +2,6 @@ package ru.betterend.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -25,74 +24,55 @@ public class EndFishEntityModel extends BlockBenchModel<EndFishEntity> {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 
-		PartDefinition bodyPart = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create()
+		PartDefinition bodyPart = modelPartData.addOrReplaceChild(PartNames.BODY,
+				CubeListBuilder
+						.create()
 						.texOffs(0, 0)
 						.addBox(-1.0F, -2.0F, -4.0F, 2.0F, 4.0F, 8.0F),
-				PartPose.offset(0.0F, 20.0F, 0.0F));
-		/*model = new ModelPart(this);
-		model.setPos(0.0F, 20.0F, 0.0F);
-		model.texOffs(0, 0).addBox(-1.0F, -2.0F, -4.0F, 2.0F, 4.0F, 8.0F, 0.0F);*/
+				PartPose.offset(0.0F, 20.0F, 0.0F)
+		);
 
-		modelPartData.addOrReplaceChild(PartNames.TOP_FIN, CubeListBuilder.create()
+		bodyPart.addOrReplaceChild(PartNames.TOP_FIN,
+				CubeListBuilder
+						.create()
 						.texOffs(0, 6)
 						.addBox(0.0F, -8.0F, 0.0F, 0.0F, 8.0F, 6.0F),
-				PartPose.offsetAndRotation(0.0F, -2.0F, -4.0F,
-						-0.6981F, 0.0F, 0.0F));
-		/*fin_top.setPos(0.0F, -2.0F, -4.0F);
-		model.addChild(fin_top);
-		setRotationAngle(fin_top, -0.6981F, 0.0F, 0.0F);
-		fin_top.texOffs(0, 6).addBox(0.0F, -8.0F, 0.0F, 0.0F, 8.0F, 6.0F, 0.0F);*
-		 */
+				PartPose.offsetAndRotation(0.0F, -2.0F, -4.0F, -0.6981F, 0.0F, 0.0F)
+		);
 
-		modelPartData.addOrReplaceChild(PartNames.BOTTOM_FIN, CubeListBuilder.create()
+		bodyPart.addOrReplaceChild(PartNames.BOTTOM_FIN,
+				CubeListBuilder
+						.create()
 						.texOffs(0, 6)
 						.addBox(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 6.0F),
-				PartPose.offsetAndRotation(0.0F, 2.0F, -4.0F,
-						0.6981F, 0.0F, 0.0F));
-		/*fin_bottom = new ModelPart(this);
-		fin_bottom.setPos(0.0F, 2.0F, -4.0F);
-		model.addChild(fin_bottom);
-		setRotationAngle(fin_bottom, 0.6981F, 0.0F, 0.0F);
-		fin_bottom.texOffs(0, 6).addBox(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 6.0F, 0.0F);*/
+				PartPose.offsetAndRotation(0.0F, 2.0F, -4.0F, 0.6981F, 0.0F, 0.0F)
+		);
 
-		modelPartData.addOrReplaceChild(PartNames.TAIL_FIN, CubeListBuilder.create()
+		bodyPart.addOrReplaceChild(PartNames.TAIL_FIN,
+				CubeListBuilder
+						.create()
 						.texOffs(0, 15)
 						.addBox(0.0F, -5.0F, 0.0F, 0.0F, 5.0F, 5.0F),
-				PartPose.offsetAndRotation(0.0F, 0.0F, 2.0F,
-						-0.7854F, 0.0F, 0.0F));
-		/*flipper = new ModelPart(this);
-		flipper.setPos(0.0F, 0.0F, 2.0F);
-		model.addChild(flipper);
-		setRotationAngle(flipper, -0.7854F, 0.0F, 0.0F);
-		flipper.texOffs(0, 15).addBox(0.0F, -5.0F, 0.0F, 0.0F, 5.0F, 5.0F, 0.0F);*/
+				PartPose.offsetAndRotation(0.0F, 0.0F, 2.0F, -0.7854F, 0.0F, 0.0F)
+		);
 
-		modelPartData.addOrReplaceChild(PartNames.RIGHT_FIN, CubeListBuilder.create()
+		bodyPart.addOrReplaceChild(PartNames.RIGHT_FIN,
+				CubeListBuilder
+						.create()
 						.texOffs(0, 25)
 						.addBox(-3.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F),
-				PartPose.offsetAndRotation(-1.0F, 0.0F, -1.0F,
-						1.5708F, 0.7854F, 0.0F));
-		/*fin_right = new ModelPart(this);
-		fin_right.setPos(-1.0F, 0.0F, -1.0F);
-		model.addChild(fin_right);
-		setRotationAngle(fin_right, 1.5708F, 0.7854F, 0.0F);
-		fin_right.texOffs(0, 25).addBox(-3.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F, 0.0F);*/
+				PartPose.offsetAndRotation(-1.0F, 0.0F, -1.0F, 1.5708F, 0.7854F, 0.0F)
+		);
 
-		modelPartData.addOrReplaceChild(PartNames.LEFT_FIN, CubeListBuilder.create()
+		bodyPart.addOrReplaceChild(PartNames.LEFT_FIN,
+				CubeListBuilder
+						.create()
 						.mirror()
 						.texOffs(0, 25)
 						.addBox(0.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F),
-				PartPose.offsetAndRotation(-1.0F, 0.0F, -1.0F,
-						1.5708F, -0.7854F, 0.0F));
-		/*fin_left = new ModelPart(this);
-		fin_left.setPos(1.0F, 0.0F, -1.0F);
-		model.addChild(fin_left);
-		setRotationAngle(fin_left, 1.5708F, -0.7854F, 0.0F);
-		fin_left.texOffs(0, 25).addBox(0.7071F, 0.7071F, -1.5F, 3.0F, 0.0F, 3.0F, 0.0F, true);*/
+				PartPose.offsetAndRotation(-1.0F, 0.0F, -1.0F, 1.5708F, -0.7854F, 0.0F)
+		);
 
-		/*
-			texWidth = 32;
-			texHeight = 32;
-		 */
 		return LayerDefinition.create(modelData, 32, 32);
 	}
 
@@ -100,15 +80,15 @@ public class EndFishEntityModel extends BlockBenchModel<EndFishEntity> {
 		super(RenderType::entityCutout);
 
 		model = modelPart.getChild(PartNames.BODY);
-		fin_top = modelPart.getChild(PartNames.TOP_FIN);
-		fin_bottom = modelPart.getChild(PartNames.BOTTOM_FIN);
-		flipper = modelPart.getChild(PartNames.TAIL_FIN);
-		fin_right = modelPart.getChild(PartNames.RIGHT_FIN);
-		fin_left = modelPart.getChild(PartNames.LEFT_FIN);}
+		fin_top = model.getChild(PartNames.TOP_FIN);
+		fin_bottom = model.getChild(PartNames.BOTTOM_FIN);
+		flipper = model.getChild(PartNames.TAIL_FIN);
+		fin_right = model.getChild(PartNames.RIGHT_FIN);
+		fin_left = model.getChild(PartNames.LEFT_FIN);
+	}
 
 	@Override
-	public void setupAnim(EndFishEntity entity, float limbAngle, float limbDistance, float animationProgress,
-			float headYaw, float headPitch) {
+	public void setupAnim(EndFishEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		float s1 = (float) Math.sin(animationProgress * 0.1);
 		float s2 = (float) Math.sin(animationProgress * 0.05);
 		flipper.yRot = s1 * 0.3F;
@@ -119,8 +99,7 @@ public class EndFishEntityModel extends BlockBenchModel<EndFishEntity> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float red,
-			float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		model.render(matrices, vertices, light, overlay);
 	}
 }

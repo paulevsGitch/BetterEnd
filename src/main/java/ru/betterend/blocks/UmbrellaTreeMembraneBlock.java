@@ -1,10 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -29,14 +25,17 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Collections;
+import java.util.List;
+
 public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTyped, BlockModelProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
-	
+
 	public UmbrellaTreeMembraneBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK));
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		double px = ctx.getClickedPos().getX() * 0.1;
@@ -44,17 +43,17 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 		double pz = ctx.getClickedPos().getZ() * 0.1;
 		return this.defaultBlockState().setValue(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(COLOR);
 	}
-	
+
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(COLOR) > 0) {
@@ -69,7 +68,7 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.getValue(COLOR) > 0;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	public boolean skipRendering(BlockState state, BlockState stateFrom, Direction direction) {
 		if (state.getValue(COLOR) > 0) {

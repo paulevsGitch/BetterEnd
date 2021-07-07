@@ -1,19 +1,17 @@
 package ru.betterend.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.google.gson.JsonObject;
-
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.BetterEnd;
 
 public class ItemUtil {
-	
+
 	public static String toStackString(@NotNull ItemStack stack) {
 		try {
 			if (stack == null) {
@@ -21,12 +19,13 @@ public class ItemUtil {
 			}
 			Item item = stack.getItem();
 			return Registry.ITEM.getKey(item) + ":" + stack.getCount();
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			BetterEnd.LOGGER.error("ItemStack serialization error!", ex);
 		}
 		return "";
 	}
-	
+
 	@Nullable
 	public static ItemStack fromStackString(String stackString) {
 		if (stackString == null || stackString.equals("")) {
@@ -47,12 +46,13 @@ public class ItemUtil {
 				return new IllegalStateException("Output item " + itemId + " does not exists!");
 			});
 			return new ItemStack(item, Integer.valueOf(parts[2]));
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			BetterEnd.LOGGER.error("ItemStack deserialization error!", ex);
 		}
 		return null;
 	}
-	
+
 	@Nullable
 	public static ItemStack fromJsonRecipe(JsonObject recipe) {
 		try {
@@ -65,7 +65,8 @@ public class ItemUtil {
 			});
 			int count = GsonHelper.getAsInt(recipe, "count", 1);
 			return new ItemStack(item, count);
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			BetterEnd.LOGGER.error("ItemStack deserialization error!", ex);
 		}
 		return null;

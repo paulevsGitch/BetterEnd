@@ -16,22 +16,22 @@ import ru.betterend.registry.EndItems;
 
 public class PedestalBlockEntity extends BlockEntity implements Container, BlockEntityClientSerializable {
 	private ItemStack activeItem = ItemStack.EMPTY;
-	
+
 	private final int maxAge = 314;
 	private int age;
 
 	public PedestalBlockEntity(BlockPos blockPos, BlockState blockState) {
 		this(EndBlockEntities.PEDESTAL, blockPos, blockState);
 	}
-	
+
 	public PedestalBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
 		super(blockEntityType, blockPos, blockState);
 	}
-	
+
 	public int getAge() {
 		return age;
 	}
-	
+
 	public int getMaxAge() {
 		return maxAge;
 	}
@@ -55,7 +55,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 	public ItemStack removeItem(int slot, int amount) {
 		return removeItemNoUpdate(slot);
 	}
-	
+
 	@Override
 	public boolean canPlaceItem(int slot, ItemStack stack) {
 		return isEmpty();
@@ -79,7 +79,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 		activeItem = stack.split(1);
 		setChanged();
 	}
-	
+
 	@Override
 	public void setChanged() {
 		if (level != null && !level.isClientSide) {
@@ -88,7 +88,8 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 				BlockState trueState = state.setValue(PedestalBlock.HAS_ITEM, !isEmpty());
 				if (activeItem.getItem() == EndItems.ETERNAL_CRYSTAL) {
 					trueState = trueState.setValue(PedestalBlock.HAS_LIGHT, true);
-				} else {
+				}
+				else {
 					trueState = trueState.setValue(PedestalBlock.HAS_LIGHT, false);
 				}
 				level.setBlockAndUpdate(worldPosition, trueState);
@@ -97,12 +98,12 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 		super.setChanged();
 	}
 
-	
+
 	@Override
 	public boolean stillValid(Player player) {
 		return true;
 	}
-	
+
 	@Override
 	public void load(CompoundTag tag) {
 		super.load(tag);

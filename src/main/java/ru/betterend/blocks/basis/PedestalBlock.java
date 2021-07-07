@@ -1,17 +1,6 @@
 package ru.betterend.blocks.basis;
 
-import java.awt.Point;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -34,6 +23,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -44,6 +35,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
@@ -57,59 +49,63 @@ import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
+import java.awt.Point;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 @SuppressWarnings({"deprecation"})
 public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	public final static EnumProperty<PedestalState> STATE = EndBlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = EndBlockProperties.HAS_ITEM;
 	public static final BooleanProperty HAS_LIGHT = BlockProperties.HAS_LIGHT;
-	
+
 	private static final VoxelShape SHAPE_DEFAULT;
 	private static final VoxelShape SHAPE_COLUMN;
 	private static final VoxelShape SHAPE_PILLAR;
 	private static final VoxelShape SHAPE_PEDESTAL_TOP;
 	private static final VoxelShape SHAPE_COLUMN_TOP;
 	private static final VoxelShape SHAPE_BOTTOM;
-	
+
 	/**
-	 * 
 	 * Register new Pedestal block with Better End mod id.
-	 * 
-	 * @param name pedestal name
+	 *
+	 * @param name   pedestal name
 	 * @param source source block
 	 * @return new Pedestal block with Better End id.
 	 */
 	public static Block registerPedestal(String name, Block source) {
 		return EndBlocks.registerBlock(name, new PedestalBlock(source));
 	}
-	
+
 	/**
-	 * 
 	 * Register new Pedestal block with specified mod id.
-	 * 
-	 * @param id pedestal id
+	 *
+	 * @param id     pedestal id
 	 * @param source source block
 	 * @return new Pedestal block with specified id.
 	 */
 	public static Block registerPedestal(ResourceLocation id, Block source) {
 		return EndBlocks.registerBlock(id, new PedestalBlock(source));
 	}
-	
+
 	protected final Block parent;
 	protected float height = 1.0F;
-	
+
 	public PedestalBlock(Block parent) {
 		super(FabricBlockSettings.copyOf(parent).luminance(state -> state.getValue(HAS_LIGHT) ? 12 : 0));
 		this.registerDefaultState(stateDefinition.any().setValue(STATE, PedestalState.DEFAULT).setValue(HAS_ITEM, false).setValue(HAS_LIGHT, false));
 		this.parent = parent;
 	}
-	
+
 	public float getHeight(BlockState state) {
 		if (state.getBlock() instanceof PedestalBlock && state.getValue(STATE) == PedestalState.PEDESTAL_TOP) {
 			return this.height - 0.2F;
 		}
 		return this.height;
 	}
-	
+
 	@Override
 	@Deprecated
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -126,7 +122,8 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 				pedestal.setItem(0, itemStack);
 				checkRitual(world, pos);
 				return InteractionResult.SUCCESS;
-			} else {
+			}
+			else {
 				ItemStack itemStack = pedestal.getItem(0);
 				if (player.addItem(itemStack)) {
 					pedestal.removeItemNoUpdate(0);
@@ -142,7 +139,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	@Override
 	public void destroy(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
 		MutableBlockPos posMutable = new MutableBlockPos();
-		for (Point point: InfusionRitual.getMap()) {
+		for (Point point : InfusionRitual.getMap()) {
 			posMutable.set(blockPos).move(point.x, 0, point.y);
 			BlockState state = levelAccessor.getBlockState(posMutable);
 			if (state.getBlock() instanceof InfusionPedestal) {
@@ -160,7 +157,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 
 	public void checkRitual(Level world, BlockPos pos) {
 		MutableBlockPos posMutable = new MutableBlockPos();
-		for (Point point: InfusionRitual.getMap()) {
+		for (Point point : InfusionRitual.getMap()) {
 			posMutable.set(pos).move(point.x, 0, point.y);
 			BlockState state = world.getBlockState(posMutable);
 			if (state.getBlock() instanceof InfusionPedestal) {
@@ -169,7 +166,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 			}
 		}
 	}
-	
+
 	@Override
 	@Nullable
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -182,18 +179,22 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		boolean hasPedestalUnder = downState.getBlock() instanceof PedestalBlock;
 		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
 			return defaultBlockState().setValue(STATE, PedestalState.COLUMN_TOP);
-		} else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
+		}
+		else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
 			return defaultBlockState().setValue(STATE, PedestalState.COLUMN);
-		} else if (hasPedestalUnder && hasPedestalOver) {
+		}
+		else if (hasPedestalUnder && hasPedestalOver) {
 			return defaultBlockState().setValue(STATE, PedestalState.PILLAR);
-		} else if (hasPedestalUnder) {
+		}
+		else if (hasPedestalUnder) {
 			return defaultBlockState().setValue(STATE, PedestalState.PEDESTAL_TOP);
-		} else if (hasPedestalOver) {
+		}
+		else if (hasPedestalOver) {
 			return defaultBlockState().setValue(STATE, PedestalState.BOTTOM);
 		}
 		return defaultBlockState();
 	}
-	
+
 	@Override
 	@Deprecated
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
@@ -204,7 +205,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		}
 		return updated;
 	}
-	
+
 	private BlockState getUpdatedState(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		if (!state.is(this)) return state.updateShape(direction, newState, world, pos, posFrom);
 		if (direction != Direction.UP && direction != Direction.DOWN) return state;
@@ -216,21 +217,27 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		if (direction == Direction.UP) {
 			upSideSolid = newState.isFaceSturdy(world, posFrom, Direction.DOWN) || newState.is(BlockTags.WALLS);
 			hasPedestalOver = newState.getBlock() instanceof PedestalBlock;
-		} else {
+		}
+		else {
 			hasPedestalUnder = newState.getBlock() instanceof PedestalBlock;
 		}
 		BlockState updatedState;
 		if (!hasPedestalOver && hasPedestalUnder && upSideSolid) {
 			updatedState = state.setValue(STATE, PedestalState.COLUMN_TOP);
-		} else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
+		}
+		else if (!hasPedestalOver && !hasPedestalUnder && upSideSolid) {
 			updatedState = state.setValue(STATE, PedestalState.COLUMN);
-		} else if (hasPedestalUnder && hasPedestalOver) {
+		}
+		else if (hasPedestalUnder && hasPedestalOver) {
 			updatedState = state.setValue(STATE, PedestalState.PILLAR);
-		} else if (hasPedestalUnder) {
+		}
+		else if (hasPedestalUnder) {
 			updatedState = state.setValue(STATE, PedestalState.PEDESTAL_TOP);
-		} else if (hasPedestalOver) {
+		}
+		else if (hasPedestalOver) {
 			updatedState = state.setValue(STATE, PedestalState.BOTTOM);
-		} else {
+		}
+		else {
 			updatedState = state.setValue(STATE, PedestalState.DEFAULT);
 		}
 		if (!isPlaceable(updatedState)) {
@@ -238,7 +245,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		}
 		return updatedState;
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drop = Lists.newArrayList(super.getDrops(state, builder));
@@ -251,13 +258,14 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 						drop.add(pedestal.getItem(0));
 					}
 				}
-			} else {
+			}
+			else {
 				return drop;
 			}
 		}
 		return drop;
 	}
-	
+
 	private void moveStoredStack(LevelAccessor world, BlockState state, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof PedestalBlockEntity && state.is(this)) {
@@ -268,34 +276,39 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 			}
 		}
 	}
-	
+
 	private void moveStoredStack(BlockEntity blockEntity, LevelAccessor world, ItemStack stack, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		if (!state.is(this)) {
 			dropStoredStack(blockEntity, stack, pos);
-		} else if (state.getValue(STATE).equals(PedestalState.PILLAR)) {
+		}
+		else if (state.getValue(STATE).equals(PedestalState.PILLAR)) {
 			moveStoredStack(blockEntity, world, stack, pos.above());
-		} else if (!isPlaceable(state)) {
+		}
+		else if (!isPlaceable(state)) {
 			dropStoredStack(blockEntity, stack, pos);
-		} else if (blockEntity instanceof PedestalBlockEntity) {
+		}
+		else if (blockEntity instanceof PedestalBlockEntity) {
 			PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
 			if (pedestal.isEmpty()) {
 				pedestal.setItem(0, stack);
-			} else {
+			}
+			else {
 				dropStoredStack(blockEntity, stack, pos);
 			}
-		} else {
+		}
+		else {
 			dropStoredStack(blockEntity, stack, pos);
 		}
 	}
-	
+
 	private void dropStoredStack(BlockEntity blockEntity, ItemStack stack, BlockPos pos) {
 		if (blockEntity != null && blockEntity.getLevel() != null) {
 			Level world = blockEntity.getLevel();
 			Block.popResource(world, getDropPos(world, pos), stack);
 		}
 	}
-	
+
 	private BlockPos getDropPos(LevelAccessor world, BlockPos pos) {
 		BlockPos dropPos;
 		if (world.getBlockState(pos).isAir()) {
@@ -304,7 +317,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		if (world.getBlockState(pos.above()).isAir()) {
 			return pos.above();
 		}
-		for(int i = 2; i < Direction.values().length; i++) {
+		for (int i = 2; i < Direction.values().length; i++) {
 			dropPos = pos.relative(Direction.from3DDataValue(i));
 			if (world.getBlockState(dropPos).isAir()) {
 				return dropPos.immutable();
@@ -312,19 +325,19 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		}
 		return getDropPos(world, pos.above());
 	}
-	
+
 	public boolean isPlaceable(BlockState state) {
 		if (!state.is(this)) return false;
 		PedestalState currentState = state.getValue(STATE);
 		return currentState == PedestalState.DEFAULT ||
-			   currentState == PedestalState.PEDESTAL_TOP;
+				currentState == PedestalState.PEDESTAL_TOP;
 	}
-	
+
 	@Override
 	@Deprecated
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.is(this)) {
-			switch(state.getValue(STATE)) {
+			switch (state.getValue(STATE)) {
 				case BOTTOM: {
 					return SHAPE_BOTTOM;
 				}
@@ -347,7 +360,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		}
 		return super.getShape(state, world, pos, context);
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(STATE, HAS_ITEM, HAS_LIGHT);
@@ -361,13 +374,13 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	public boolean hasUniqueEntity() {
 		return false;
 	}
-	
+
 	@Override
 	@Deprecated
 	public boolean hasAnalogOutputSignal(BlockState state) {
 		return state.getBlock() instanceof PedestalBlock;
 	}
-	
+
 	@Override
 	@Deprecated
 	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
@@ -402,7 +415,8 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 			case PILLAR:
 				pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
 				break;
-			default: break;
+			default:
+				break;
 		}
 		return ModelsHelper.fromPattern(pattern);
 	}
@@ -422,8 +436,9 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		String name = blockId.getPath();
 		return new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
+
 			{
-				put("%mod%", blockId.getNamespace() );
+				put("%mod%", blockId.getNamespace());
 				put("%top%", name + "_top");
 				put("%base%", name + "_base");
 				put("%pillar%", name + "_pillar");
@@ -438,7 +453,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		if (level.isClientSide) return null;
 
 		BlockEntityTicker<T> ticker = createTickerHelper(blockEntityType, EndBlockEntities.PEDESTAL, PedestalBlockEntity::tick);
-		if (ticker!=null) return ticker;
+		if (ticker != null) return ticker;
 
 		return createTickerHelper(blockEntityType, EndBlockEntities.INFUSION_PEDESTAL, InfusionPedestalEntity::tick);
 	}
@@ -447,7 +462,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> blockEntityType, BlockEntityType<E> blockEntityType2, BlockEntityTicker<? super E> blockEntityTicker) {
 		return blockEntityType2 == blockEntityType ? (BlockEntityTicker<A>) blockEntityTicker : null;
 	}
-	
+
 	static {
 		VoxelShape basinUp = Block.box(2, 3, 2, 14, 4, 14);
 		VoxelShape basinDown = Block.box(0, 0, 0, 16, 3, 16);

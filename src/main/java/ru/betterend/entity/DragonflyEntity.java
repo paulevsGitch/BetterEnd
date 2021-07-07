@@ -1,13 +1,15 @@
 package ru.betterend.entity;
 
-import java.util.EnumSet;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -36,6 +38,9 @@ import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndSounds;
 
+import java.util.EnumSet;
+import java.util.Random;
+
 public class DragonflyEntity extends Animal implements FlyingAnimal {
 	public DragonflyEntity(EntityType<DragonflyEntity> entityType, Level world) {
 		super(entityType, world);
@@ -53,7 +58,7 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 				.add(Attributes.FLYING_SPEED, 1.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
-	
+
 	@Override
 	public boolean canBeLeashed(Player player) {
 		return false;
@@ -158,7 +163,8 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 						DragonflyEntity.this.navigation.moveTo(path, 1.0D);
 					}
 				}
-				catch (Exception e) {}
+				catch (Exception e) {
+				}
 			}
 			super.start();
 		}
@@ -195,7 +201,7 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		return EndEntities.DRAGONFLY.create(world);
 	}
-	
+
 	public static boolean canSpawn(EntityType<DragonflyEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
 		int y = world.getChunk(pos).getHeight(Types.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
 		return y > 0 && pos.getY() >= y;

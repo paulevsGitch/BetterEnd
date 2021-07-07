@@ -1,13 +1,12 @@
 package ru.betterend.mixin.client;
 
+import net.minecraft.client.ClientRecipeBook;
+import net.minecraft.client.RecipeBookCategories;
+import net.minecraft.world.item.crafting.Recipe;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import net.minecraft.client.ClientRecipeBook;
-import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.world.item.crafting.Recipe;
 import ru.betterend.interfaces.BetterEndRecipe;
 
 @Mixin(ClientRecipeBook.class)

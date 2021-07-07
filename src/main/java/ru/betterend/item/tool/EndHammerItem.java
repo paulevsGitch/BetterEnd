@@ -1,12 +1,8 @@
 package ru.betterend.item.tool;
 
-import java.util.UUID;
-
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
-
 import io.netty.util.internal.ThreadLocalRandom;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -34,11 +30,12 @@ import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
 import ru.bclib.client.models.ItemModelProvider;
 import ru.bclib.client.models.ModelsHelper;
-import ru.betterend.registry.EndTags;
+
+import java.util.UUID;
 
 public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ItemModelProvider {
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = Mth.createInsecureUUID(ThreadLocalRandom.current());
-	
+
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
 	public EndHammerItem(Tier material, float attackDamage, float attackSpeed, double knockback, Properties settings) {
@@ -55,17 +52,17 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	@Override
 	public boolean canAttackBlock(BlockState state, Level world, BlockPos pos, Player miner) {
 		return state.getMaterial().equals(Material.STONE) ||
-			   state.getMaterial().equals(Material.GLASS) ||
-			   state.is(Blocks.DIAMOND_BLOCK) ||
-			   state.is(Blocks.EMERALD_BLOCK) ||
-			   state.is(Blocks.LAPIS_BLOCK) ||
-			   state.is(Blocks.REDSTONE_BLOCK);
+				state.getMaterial().equals(Material.GLASS) ||
+				state.is(Blocks.DIAMOND_BLOCK) ||
+				state.is(Blocks.EMERALD_BLOCK) ||
+				state.is(Blocks.LAPIS_BLOCK) ||
+				state.is(Blocks.REDSTONE_BLOCK);
 	}
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		stack.hurtAndBreak(1, attacker, ((entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
-		
+
 		return true;
 	}
 
@@ -87,14 +84,15 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 			float mult;
 			if (state.is(Blocks.DIAMOND_BLOCK) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.LAPIS_BLOCK) || state.is(Blocks.REDSTONE_BLOCK)) {
 				mult = this.getTier().getSpeed();
-			} else {
+			}
+			else {
 				mult = this.getTier().getSpeed() / 2.0F;
 			}
 			return Math.max(mult, 1.0F);
 		}
 		return 1.0F;
 	}
-	
+
 	@Override
 	public float getMiningSpeedMultiplier(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
 		if (tag.equals(TagAPI.HAMMERS)) {
@@ -102,7 +100,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 		}
 		return 1.0F;
 	}
-	
+
 	@Override
 	public int getMiningLevel(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
 		if (tag.equals(TagAPI.HAMMERS)) {
@@ -136,7 +134,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
 		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(slot);
 	}
-	
+
 	@Override
 	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {

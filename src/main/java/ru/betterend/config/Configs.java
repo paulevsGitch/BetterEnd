@@ -18,7 +18,7 @@ public class Configs {
 
 	@Environment(value = EnvType.CLIENT)
 	public static final PathConfig CLENT_CONFIG = new PathConfig(BetterEnd.MOD_ID, "client");
-	
+
 	public static void saveConfigs() {
 		ENTITY_CONFIG.saveChanges();
 		BLOCK_CONFIG.saveChanges();
@@ -26,7 +26,7 @@ public class Configs {
 		ITEM_CONFIG.saveChanges();
 		GENERATOR_CONFIG.saveChanges();
 		RECIPE_CONFIG.saveChanges();
-		
+
 		if (BCLib.isClient()) {
 			CLENT_CONFIG.saveChanges();
 		}

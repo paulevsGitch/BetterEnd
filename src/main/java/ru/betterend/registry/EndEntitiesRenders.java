@@ -7,9 +7,22 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import ru.betterend.BetterEnd;
-import ru.betterend.entity.model.*;
-import ru.betterend.entity.render.*;
-import ru.betterend.item.model.*;
+import ru.betterend.entity.model.CubozoaEntityModel;
+import ru.betterend.entity.model.DragonflyEntityModel;
+import ru.betterend.entity.model.EndFishEntityModel;
+import ru.betterend.entity.model.EndSlimeEntityModel;
+import ru.betterend.entity.model.SilkMothEntityModel;
+import ru.betterend.entity.render.RendererEntityCubozoa;
+import ru.betterend.entity.render.RendererEntityDragonfly;
+import ru.betterend.entity.render.RendererEntityEndFish;
+import ru.betterend.entity.render.RendererEntityEndSlime;
+import ru.betterend.entity.render.RendererEntityShadowWalker;
+import ru.betterend.entity.render.SilkMothEntityRenderer;
+import ru.betterend.item.model.ArmoredElytraModel;
+import ru.betterend.item.model.CrystaliteBootsModel;
+import ru.betterend.item.model.CrystaliteChestplateModel;
+import ru.betterend.item.model.CrystaliteHelmetModel;
+import ru.betterend.item.model.CrystaliteLeggingsModel;
 
 public class EndEntitiesRenders {
 
@@ -64,7 +77,7 @@ public class EndEntitiesRenders {
 		});
 	}
 
-	private static ModelLayerLocation registerMain(String id){
+	private static ModelLayerLocation registerMain(String id) {
 		return new ModelLayerLocation(new ResourceLocation(BetterEnd.MOD_ID, id), "main");
 	}
 }

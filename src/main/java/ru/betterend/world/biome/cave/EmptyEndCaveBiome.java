@@ -10,12 +10,12 @@ public class EmptyEndCaveBiome extends EndCaveBiome {
 		this.addFloorFeature(EndFeatures.END_STONE_STALAGMITE, 1);
 		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE, 1);
 	}
-	
+
 	@Override
 	public float getFloorDensity() {
 		return 0.1F;
 	}
-	
+
 	@Override
 	public float getCeilDensity() {
 		return 0.1F;

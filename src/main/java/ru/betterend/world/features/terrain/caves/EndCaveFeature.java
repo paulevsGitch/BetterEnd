@@ -117,14 +117,14 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			}
 		});
 	}
-	
+
 	protected void placeWalls(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> positions, Random random) {
 		Set<BlockPos> placed = Sets.newHashSet();
 		positions.forEach(pos -> {
 			if (random.nextInt(4) == 0 && hasOpenSide(pos, positions)) {
 				BlockState wallBlock = biome.getWall(pos);
 				if (wallBlock != null) {
-					for (Vec3i offset: SPHERE) {
+					for (Vec3i offset : SPHERE) {
 						BlockPos wallPos = pos.offset(offset);
 						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos).is(TagAPI.GEN_TERRAIN)) {
 							wallBlock = biome.getWall(wallPos);
@@ -136,9 +136,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			}
 		});
 	}
-	
+
 	private boolean hasOpenSide(BlockPos pos, Set<BlockPos> positions) {
-		for (Direction dir: BlocksHelper.DIRECTIONS) {
+		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			if (!positions.contains(pos.relative(dir))) {
 				return true;
 			}
@@ -225,7 +225,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		}
 		return false;
 	}
-	
+
 	protected boolean biomeMissingCaves(WorldGenLevel world, BlockPos pos) {
 		for (int x = -2; x < 3; x++) {
 			for (int z = -2; z < 3; z++) {
@@ -239,7 +239,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		}
 		return false;
 	}
-	
+
 	static {
 		List<Vec3i> prePos = Lists.newArrayList();
 		int radius = 5;
@@ -256,6 +256,6 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				}
 			}
 		}
-		SPHERE = prePos.toArray(new Vec3i[] {});
+		SPHERE = prePos.toArray(new Vec3i[]{});
 	}
 }

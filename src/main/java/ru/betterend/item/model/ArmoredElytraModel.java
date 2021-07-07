@@ -1,7 +1,6 @@
 package ru.betterend.item.model;
 
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
@@ -22,18 +21,19 @@ public class ArmoredElytraModel<T extends LivingEntity> extends AgeableListModel
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 		modelPartData.addOrReplaceChild(PartNames.LEFT_WING, CubeListBuilder.create()
-                        .texOffs(22, 0)
+						.texOffs(22, 0)
 						.addBox(-10.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f),
 				PartPose.ZERO);
 
 		modelPartData.addOrReplaceChild(PartNames.RIGHT_WING, CubeListBuilder.create()
 						.mirror()
-                        .texOffs(22, 0)
+						.texOffs(22, 0)
 						.addBox(0.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f),
 				PartPose.ZERO);
 
-		return LayerDefinition.create(modelData, 48, 48);
+		return LayerDefinition.create(modelData, 64, 32);
 	}
+
 	public ArmoredElytraModel(ModelPart modelPart) {
 		leftWing = modelPart.getChild(PartNames.LEFT_WING);
 		rightWing = modelPart.getChild(PartNames.RIGHT_WING);
@@ -61,7 +61,8 @@ public class ArmoredElytraModel<T extends LivingEntity> extends AgeableListModel
 			}
 			rotX = coef * 0.34906584F + (1.0F - coef) * rotX;
 			rotZ = coef * -1.5707964F + (1.0F - coef) * rotZ;
-		} else if (livingEntity.isCrouching()) {
+		}
+		else if (livingEntity.isCrouching()) {
 			rotX = 0.6981317F;
 			rotZ = -0.7853982F;
 			rotY = 0.08726646F;
@@ -78,7 +79,8 @@ public class ArmoredElytraModel<T extends LivingEntity> extends AgeableListModel
 			leftWing.xRot = abstractClientPlayer.elytraRotX;
 			leftWing.yRot = abstractClientPlayer.elytraRotY;
 			leftWing.zRot = abstractClientPlayer.elytraRotZ;
-		} else {
+		}
+		else {
 			leftWing.xRot = rotX;
 			leftWing.zRot = rotZ;
 			leftWing.yRot = rotY;

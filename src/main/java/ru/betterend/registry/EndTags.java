@@ -1,8 +1,6 @@
 package ru.betterend.registry;
 
-import java.util.List;
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
 import net.minecraft.core.Registry;
@@ -29,10 +27,12 @@ import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.mixin.common.ComposterBlockAccessor;
 
+import java.util.List;
+
 public class EndTags {
 	// Table with common (c) tags:
 	// https://fabricmc.net/wiki/tutorial:tags
-	
+
 	// Block Tags
 	public static final Tag.Named<Block> PEDESTALS = TagAPI.makeBlockTag(BetterEnd.MOD_ID, "pedestal");
 	public static final Tag.Named<Block> END_STONES = TagAPI.makeCommonBlockTag("end_stones");
@@ -40,7 +40,7 @@ public class EndTags {
 	public static final Tag.Named<Item> ALLOYING_IRON = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_iron");
 	public static final Tag.Named<Item> ALLOYING_GOLD = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_gold");
 	public static final Tag.Named<Item> ALLOYING_COPPER = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_copper");
-	
+
 	public static void register() {
 		TagAPI.addEndGround(EndBlocks.THALLASIUM.ore);
 		TagAPI.addEndGround(EndBlocks.ENDSTONE_DUST);
@@ -62,7 +62,7 @@ public class EndTags {
 			else if (block instanceof PedestalBlock) {
 				TagHelper.addTag(PEDESTALS, block);
 			}
-			
+
 			Material mat = block.defaultBlockState().getMaterial();
 			if (mat.equals(Material.PLANT) || mat.equals(Material.REPLACEABLE_PLANT)) {
 				ComposterBlockAccessor.callAdd(0.1F, block);
@@ -71,7 +71,7 @@ public class EndTags {
 		TagAPI.addEndGround(EndBlocks.CAVE_MOSS);
 		TagHelper.addTag(BlockTags.NYLIUM, EndBlocks.CAVE_MOSS);
 		BonemealAPI.addSpreadableBlock(EndBlocks.CAVE_MOSS);
-		
+
 		List<Item> hammers = Lists.newArrayList();
 		EndItems.getModItems(BetterEnd.MOD_ID).forEach(item -> {
 			if (item.isEdible()) {
@@ -86,27 +86,27 @@ public class EndTags {
 			}
 		});
 		ToolManagerImpl.tag(TagAPI.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
-		
+
 		TagHelper.addTag(
-			TagAPI.GEN_TERRAIN,
-			EndBlocks.ENDER_ORE,
-			EndBlocks.FLAVOLITE.stone,
-			EndBlocks.VIOLECITE.stone,
-			EndBlocks.SULPHURIC_ROCK.stone,
-			EndBlocks.BRIMSTONE,
-			EndBlocks.VIRID_JADESTONE.stone,
-			EndBlocks.AZURE_JADESTONE.stone,
-			EndBlocks.SANDY_JADESTONE.stone
+				TagAPI.GEN_TERRAIN,
+				EndBlocks.ENDER_ORE,
+				EndBlocks.FLAVOLITE.stone,
+				EndBlocks.VIOLECITE.stone,
+				EndBlocks.SULPHURIC_ROCK.stone,
+				EndBlocks.BRIMSTONE,
+				EndBlocks.VIRID_JADESTONE.stone,
+				EndBlocks.AZURE_JADESTONE.stone,
+				EndBlocks.SANDY_JADESTONE.stone
 		);
 		TagHelper.addTag(TagAPI.END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
 		TagHelper.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
 		TagHelper.addTag(TagAPI.DRAGON_IMMUNE,
-			EndBlocks.ENDER_ORE,
-			EndBlocks.ETERNAL_PEDESTAL,
-			EndBlocks.FLAVOLITE_RUNED_ETERNAL,
-			EndBlocks.FLAVOLITE_RUNED
+				EndBlocks.ENDER_ORE,
+				EndBlocks.ETERNAL_PEDESTAL,
+				EndBlocks.FLAVOLITE_RUNED_ETERNAL,
+				EndBlocks.FLAVOLITE_RUNED
 		);
 		TagHelper.addTag(TagAPI.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
 
@@ -114,7 +114,7 @@ public class EndTags {
 		TagHelper.addTag(ALLOYING_GOLD, Items.GOLD_ORE, Items.DEEPSLATE_GOLD_ORE, Items.RAW_GOLD);
 		TagHelper.addTag(ALLOYING_COPPER, Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
 	}
-	
+
 	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {

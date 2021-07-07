@@ -11,11 +11,9 @@ import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import ru.betterend.registry.EndBlocks;
 
@@ -24,7 +22,8 @@ import java.util.List;
 
 public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingDisplay> {
 	private final EntryStack ICON;
-	REIAlloyingCategory(EntryStack icon){
+
+	REIAlloyingCategory(EntryStack icon) {
 		ICON = icon;
 	}
 
@@ -37,12 +36,12 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 	public @NotNull Component getTitle() {
 		return new TranslatableComponent(EndBlocks.END_STONE_SMELTER.getDescriptionId());
 	}
-	
+
 	@Override
 	public @NotNull EntryStack getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIAlloyingDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
@@ -59,7 +58,8 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 		widgets.add(Widgets.createSlot(new Point(startPoint.x - 20, startPoint.y + 1)).entries(inputEntries.get(0)).markInput());
 		if (inputEntries.size() > 1) {
 			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(inputEntries.get(1)).markInput());
-		} else {
+		}
+		else {
 			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(Lists.newArrayList()).markInput());
 		}
 		widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());
@@ -68,7 +68,7 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 
 	@Override
 	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAlloyingDisplay display,
-			IntList redSlots) {
+							   IntList redSlots) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 27);
 		matrices.pushPose();
 		matrices.translate(0, 0, 400);
@@ -78,7 +78,7 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 		}
 		matrices.popPose();
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 49;

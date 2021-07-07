@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -13,18 +11,19 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndStructures;
 
+import java.util.Random;
+
 public class CavePiece extends BasePiece {
 	private OpenSimplexNoise noise;
 	private BlockPos center;
 	private float radius;
-	
+
 	public CavePiece(BlockPos center, float radius, int id) {
 		super(EndStructures.CAVE_PIECE, id, null);
 		this.center = center;
@@ -37,7 +36,7 @@ public class CavePiece extends BasePiece {
 		super(EndStructures.CAVE_PIECE, tag);
 		makeBoundingBox();
 	}
-	
+
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int x1 = MHelper.max(this.boundingBox.minX(), blockBox.minX());
@@ -46,7 +45,7 @@ public class CavePiece extends BasePiece {
 		int z2 = MHelper.min(this.boundingBox.maxZ(), blockBox.maxZ());
 		int y1 = this.boundingBox.minY();
 		int y2 = this.boundingBox.maxY();
-		
+
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		MutableBlockPos pos = new MutableBlockPos();
@@ -79,7 +78,7 @@ public class CavePiece extends BasePiece {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -95,7 +94,7 @@ public class CavePiece extends BasePiece {
 		radius = tag.getFloat("radius");
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 	}
-	
+
 	private void makeBoundingBox() {
 		int minX = MHelper.floor(center.getX() - radius);
 		int minY = MHelper.floor(center.getY() - radius);

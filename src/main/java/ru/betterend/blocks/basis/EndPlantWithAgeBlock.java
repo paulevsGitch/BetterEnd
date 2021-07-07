@@ -6,7 +6,8 @@ import ru.bclib.blocks.BasePlantWithAgeBlock;
 
 public abstract class EndPlantWithAgeBlock extends BasePlantWithAgeBlock {
 
-	public EndPlantWithAgeBlock() {}
+	public EndPlantWithAgeBlock() {
+	}
 
 	public EndPlantWithAgeBlock(Properties settings) {
 		super(settings);

@@ -10,15 +10,18 @@ import java.util.List;
 
 @Mixin(ShufflingList.class)
 public abstract class ShuffelingListMixin<U> implements ShuffelingListExtended<U> {
-    @Shadow @Final protected List<ShufflingList.WeightedEntry<U>> entries;
+	@Shadow
+	@Final
+	protected List<ShufflingList.WeightedEntry<U>> entries;
 
-    public boolean isEmpty() {
-        return this.entries.isEmpty();
-    }
+	public boolean isEmpty() {
+		return this.entries.isEmpty();
+	}
 
-    @Shadow public abstract ShufflingList<U> shuffle();
+	@Shadow
+	public abstract ShufflingList<U> shuffle();
 
-    public U getOne() {
-        return this.shuffle().stream().findFirst().orElseThrow(RuntimeException::new);
-    }
+	public U getOne() {
+		return this.shuffle().stream().findFirst().orElseThrow(RuntimeException::new);
+	}
 }

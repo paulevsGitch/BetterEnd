@@ -65,7 +65,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	}
 
 	private void branch(float x, float y, float z, float size, float angle, Random random, int depth,
-			WorldGenLevel world, BlockPos pos) {
+						WorldGenLevel world, BlockPos pos) {
 		if (depth == 0)
 			return;
 

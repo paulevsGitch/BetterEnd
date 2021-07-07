@@ -1,12 +1,6 @@
 package ru.betterend.item.model;
 
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.world.item.ArmorMaterial;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HumanoidModel;
@@ -16,6 +10,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndItems;
 import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
@@ -33,7 +29,7 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 
 	//@Override
 	public @NotNull ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot,
-			boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
+													 boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
 		if (!isStackValid(stack)) return defaultTexture;
 		if (secondLayer) return SECOND_LAYER;
 		return FIRST_LAYER;
@@ -41,15 +37,15 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 
 	//@Override
 	public @NotNull HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack,
-			EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
+															  EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
 		if (!isStackValid(stack)) return defaultModel;
-		switch(slot) {
+		switch (slot) {
 			case HEAD: {
 				return HELMET_MODEL;
 			}
 			case CHEST: {
 				if (entity instanceof AbstractClientPlayer &&
-					((AbstractClientPlayer) entity).getModelName().equals("slim")) {
+						((AbstractClientPlayer) entity).getModelName().equals("slim")) {
 					CHEST_MODEL_SLIM.copyPropertiesTo(defaultModel);
 					return CHEST_MODEL_SLIM;
 				}
@@ -68,7 +64,7 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 			}
 		}
 	}
-	
+
 	public Iterable<Item> getRenderedItems() {
 		return Lists.newArrayList(
 				EndItems.CRYSTALITE_HELMET,
@@ -77,7 +73,7 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 				EndItems.CRYSTALITE_LEGGINGS,
 				EndItems.CRYSTALITE_BOOTS);
 	}
-	
+
 	private boolean isStackValid(ItemStack stack) {
 		return stack.getItem() instanceof CrystaliteArmor;
 	}

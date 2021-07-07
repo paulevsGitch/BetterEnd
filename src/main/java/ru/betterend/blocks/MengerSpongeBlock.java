@@ -1,9 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Queue;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,26 +14,27 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Queue;
+
 @SuppressWarnings("deprecation")
 public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped {
 	public MengerSpongeBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SPONGE).noOcclusion());
 	}
-	
+
 	@Override
 	public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (absorbWater(world, pos)) {
 			world.setBlockAndUpdate(pos, EndBlocks.MENGER_SPONGE_WET.defaultBlockState());
 		}
 	}
-	
+
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (absorbWater(world, pos)) {
@@ -66,13 +64,15 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 						if (j < 6) {
 							queue.add(new Tuple<>(blockPos2, j + 1));
 						}
-					} else if (blockState.getBlock() instanceof LiquidBlock) {
+					}
+					else if (blockState.getBlock() instanceof LiquidBlock) {
 						world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
 						++i;
 						if (j < 6) {
 							queue.add(new Tuple<>(blockPos2, j + 1));
 						}
-					} else if (material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) {
+					}
+					else if (material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) {
 						BlockEntity blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(blockPos2) : null;
 						dropResources(blockState, world, blockPos2, blockEntity);
 						world.setBlock(blockPos2, Blocks.AIR.defaultBlockState(), 3);
@@ -91,7 +91,7 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 
 		return i > 0;
 	}
-	
+
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;

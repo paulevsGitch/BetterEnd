@@ -1,19 +1,18 @@
 package ru.betterend.mixin.common;
 
-import net.minecraft.world.level.LevelHeightAccessor;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.EndCityFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(EndCityFeature.class)
@@ -26,7 +25,7 @@ public class EndCityFeatureMixin {
 				info.setReturnValue(getYPositionForFeature(pos, chunkGenerator, levelHeightAccessor) >= 60);
 				info.cancel();
 			}
-			else if (chunkRandom.nextInt(chance) == 0){
+			else if (chunkRandom.nextInt(chance) == 0) {
 				info.setReturnValue(getYPositionForFeature(pos, chunkGenerator, levelHeightAccessor) >= 60);
 				info.cancel();
 			}
@@ -36,7 +35,7 @@ public class EndCityFeatureMixin {
 			}
 		}
 	}
-	
+
 	@Shadow
 	private static int getYPositionForFeature(ChunkPos pos, ChunkGenerator chunkGenerator, LevelHeightAccessor levelHeightAccessor) {
 		return 0;

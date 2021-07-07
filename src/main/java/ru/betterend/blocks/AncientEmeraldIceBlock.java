@@ -1,9 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,15 +17,19 @@ import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class AncientEmeraldIceBlock extends BaseBlock {
 	public AncientEmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.BLUE_ICE).randomTicks());
 	}
-	
+
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		Direction dir = BlocksHelper.randomDirection(random);
-		
+
 		if (random.nextBoolean()) {
 			int x = MHelper.randRange(-2, 2, random);
 			int y = MHelper.randRange(-2, 2, random);
@@ -40,7 +40,7 @@ public class AncientEmeraldIceBlock extends BaseBlock {
 				makeParticles(world, p, random);
 			}
 		}
-		
+
 		pos = pos.relative(dir);
 		state = world.getBlockState(pos);
 		if (state.is(Blocks.WATER)) {
@@ -52,11 +52,11 @@ public class AncientEmeraldIceBlock extends BaseBlock {
 			makeParticles(world, pos, random);
 		}
 	}
-	
+
 	private void makeParticles(ServerLevel world, BlockPos pos, Random random) {
 		world.sendParticles(EndParticles.SNOWFLAKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0);
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);

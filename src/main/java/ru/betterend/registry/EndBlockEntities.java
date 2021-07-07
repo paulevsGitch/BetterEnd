@@ -31,9 +31,10 @@ public class EndBlockEntities {
 
 		//return Registry.register(Registry.BLOCK_ENTITY_TYPE, BetterEnd.makeID(id), builder.build(null));
 	}
-	
-	public static void register() {}
-	
+
+	public static void register() {
+	}
+
 	static Block[] getPedestals() {
 		return EndBlocks.getModBlocks().stream()
 				.filter(block -> block instanceof PedestalBlock && !((PedestalBlock) block).hasUniqueEntity())

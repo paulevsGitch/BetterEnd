@@ -1,11 +1,6 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -28,6 +23,10 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class SpireFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE;
@@ -63,7 +62,8 @@ public class SpireFeature extends DefaultFeature {
 					support.add(info.getPos().above());
 				}
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-			} else if (info.getState(Direction.UP, 3).isAir()) {
+			}
+			else if (info.getState(Direction.UP, 3).isAir()) {
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig()
 						.getUnderMaterial();
 			}

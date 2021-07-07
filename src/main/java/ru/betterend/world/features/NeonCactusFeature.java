@@ -1,16 +1,15 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.NeonCactusPlantBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class NeonCactusFeature extends DefaultFeature {
 	@Override
@@ -22,7 +21,7 @@ public class NeonCactusFeature extends DefaultFeature {
 		if (!ground.is(EndBlocks.ENDSTONE_DUST) && !ground.is(EndBlocks.END_MOSS)) {
 			return false;
 		}
-		
+
 		NeonCactusPlantBlock cactus = ((NeonCactusPlantBlock) EndBlocks.NEON_CACTUS);
 		cactus.growPlant(world, pos, random);
 

@@ -35,9 +35,9 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
 			if (level.isClientSide()) {
 				clientTick(level, worldPosition, state, blockEntity);
 			}
-			else {
+			//else {
 				serverTick(level, worldPosition, state, blockEntity);
-			}
+			//}
 		}
 	}
 

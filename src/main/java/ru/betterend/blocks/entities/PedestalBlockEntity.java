@@ -139,7 +139,6 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 			if (blockEntity.age > blockEntity.maxAge) {
 				blockEntity.age = 0;
 			}
-			System.out.println(blockEntity.age);
 		}
 	}
 }

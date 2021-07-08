@@ -17,12 +17,14 @@
 		"PotionBrewingAccessor",
 		"MinecraftServerMixin",
 		"EndDragonFightMixin",
+		"ShuffelingListMixin",
+		"WorldGenRegionMixin",
 		"BlockBehaviourMixin",
 		"DimensionTypeMixin",
 		"CraftingMenuMixin",
 		"LivingEntityMixin",
 		"ServerPlayerMixin",
-        "SpikeFeatureMixin",
+		"SpikeFeatureMixin",
 		"ServerLevelMixin",
 		"PlayerListMixin",
 		"AnvilMenuMixin",
@@ -31,8 +33,7 @@
 		"MonsterMixin",
 		"EntityMixin",
 		"PlayerMixin",
-		"SlimeMixin",
-        "ShuffelingListMixin"
+		"SlimeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

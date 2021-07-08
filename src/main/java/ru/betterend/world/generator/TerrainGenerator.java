@@ -1,6 +1,9 @@
 package ru.betterend.world.generator;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
@@ -9,11 +12,15 @@ import ru.betterend.noise.OpenSimplexNoise;
 
 import java.awt.Point;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.IntStream;
 
 public class TerrainGenerator {
+	private static final Map<Point, TerrainBoolCache> TERRAIN_BOOL_CACHE_MAP = Maps.newHashMap();
 	private static final ReentrantLock LOCKER = new ReentrantLock();
+	private static final Point POS = new Point();
 	private static final double SCALE_XZ = 8.0;
 	private static final double SCALE_Y = 4.0;
 	private static final float[] COEF;
@@ -24,10 +31,6 @@ public class TerrainGenerator {
 	private static IslandLayer smallIslands;
 	private static OpenSimplexNoise noise1;
 	private static OpenSimplexNoise noise2;
-	
-	/*public static boolean canGenerate(int x, int z) {
-		return GeneratorOptions.noRingVoid() || (long) x + (long) z > CENTER;
-	}*/
 
 	public static void initNoise(long seed) {
 		Random random = new Random(seed);
@@ -99,7 +102,25 @@ public class TerrainGenerator {
 	 * @param z - biome pos z
 	 */
 	public static boolean isLand(int x, int z) {
+		int sectionX = TerrainBoolCache.scaleCoordinate(x);
+		int sectionZ = TerrainBoolCache.scaleCoordinate(z);
+
 		LOCKER.lock();
+		POS.setLocation(sectionX, sectionZ);
+
+		TerrainBoolCache section = TERRAIN_BOOL_CACHE_MAP.get(POS);
+		if (section == null) {
+			if (TERRAIN_BOOL_CACHE_MAP.size() > 64) {
+				TERRAIN_BOOL_CACHE_MAP.clear();
+			}
+			section = new TerrainBoolCache();
+			TERRAIN_BOOL_CACHE_MAP.put(new Point(POS.x, POS.y), section);
+		}
+		byte value = section.getData(x, z);
+		if (value > 0) {
+			LOCKER.unlock();
+			return value > 1;
+		}
 
 		double px = (x >> 1) + 0.5;
 		double pz = (z >> 1) + 0.5;
@@ -113,6 +134,7 @@ public class TerrainGenerator {
 		mediumIslands.updatePositions(px, pz);
 		smallIslands.updatePositions(px, pz);
 
+		boolean result = false;
 		for (int y = 0; y < 32; y++) {
 			double py = (double) y * SCALE_Y;
 			float dist = largeIslands.getDensity(px, py, pz);
@@ -124,13 +146,15 @@ public class TerrainGenerator {
 				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
 			}
 			if (dist > -0.01) {
-				LOCKER.unlock();
-				return true;
+				result = true;
+				break;
 			}
 		}
 
+		section.setData(x, z, (byte) (result ? 2 : 1));
 		LOCKER.unlock();
-		return false;
+
+		return result;
 	}
 
 	/**

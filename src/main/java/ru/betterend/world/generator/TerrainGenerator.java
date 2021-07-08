@@ -39,6 +39,7 @@ public class TerrainGenerator {
 		smallIslands = new IslandLayer(random.nextInt(), GeneratorOptions.smallOptions);
 		noise1 = new OpenSimplexNoise(random.nextInt());
 		noise2 = new OpenSimplexNoise(random.nextInt());
+		TERRAIN_BOOL_CACHE_MAP.clear();
 	}
 
 	public static void fillTerrainDensity(double[] buffer, int x, int z, BiomeSource biomeSource) {

@@ -2,7 +2,6 @@ package ru.betterend.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -37,7 +36,8 @@ public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>
 				AbstractClientPlayer abstractClientPlayer = (AbstractClientPlayer) livingEntity;
 				if (abstractClientPlayer.isElytraLoaded() && abstractClientPlayer.getElytraTextureLocation() != null) {
 					wingsTexture = abstractClientPlayer.getElytraTextureLocation();
-				} else if (abstractClientPlayer.isCapeLoaded() && abstractClientPlayer.getCloakTextureLocation() != null && abstractClientPlayer.isModelPartShown(PlayerModelPart.CAPE)) {
+				}
+				else if (abstractClientPlayer.isCapeLoaded() && abstractClientPlayer.getCloakTextureLocation() != null && abstractClientPlayer.isModelPartShown(PlayerModelPart.CAPE)) {
 					wingsTexture = abstractClientPlayer.getCloakTextureLocation();
 				}
 			}

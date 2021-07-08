@@ -2,10 +2,12 @@ package ru.betterend.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -13,9 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.EndSlimeEntity;
-import ru.betterend.entity.model.CubozoaEntityModel;
 import ru.betterend.entity.model.EndSlimeEntityModel;
-import ru.betterend.registry.EndEntitiesRenders;
 
 public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlimeEntityModel<EndSlimeEntity>> {
 	private static final ResourceLocation TEXTURE[] = new ResourceLocation[4];
@@ -32,8 +32,8 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 
 			@Override
 			public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, EndSlimeEntity entity,
-					float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw,
-					float headPitch) {
+							   float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw,
+							   float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getSlimeType()]);
 				this.getParentModel().renderToBuffer(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY,
 						1.0F, 1.0F, 1.0F, 1.0F);
@@ -51,7 +51,7 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 
 	@Override
 	public void render(EndSlimeEntity slimeEntity, float f, float g, PoseStack matrixStack,
-			MultiBufferSource vertexConsumerProvider, int i) {
+					   MultiBufferSource vertexConsumerProvider, int i) {
 		this.shadowRadius = 0.25F * (float) slimeEntity.getSize();
 		super.render(slimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
 	}
@@ -78,14 +78,15 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 		}
 
 		public void render(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, T livingEntity,
-				float f, float g, float h, float j, float k, float l) {
+						   float f, float g, float h, float j, float k, float l) {
 			if (!livingEntity.isInvisible()) {
 				if (livingEntity.isLake()) {
 					VertexConsumer vertexConsumer = vertexConsumerProvider
 							.getBuffer(RenderType.entityCutout(this.getTextureLocation(livingEntity)));
 					this.getParentModel().renderFlower(matrixStack, vertexConsumer, i,
 							LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F));
-				} else if (livingEntity.isAmber() || livingEntity.isChorus()) {
+				}
+				else if (livingEntity.isAmber() || livingEntity.isChorus()) {
 					VertexConsumer vertexConsumer = vertexConsumerProvider
 							.getBuffer(RenderType.entityCutout(this.getTextureLocation(livingEntity)));
 					this.getParentModel().renderCrop(matrixStack, vertexConsumer, i,

@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -18,12 +16,14 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndStructures;
 
+import java.util.Random;
+
 public class PaintedMountainPiece extends MountainPiece {
 	private BlockState[] slises;
+
 	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome, BlockState[] slises) {
 		super(EndStructures.PAINTED_MOUNTAIN_PIECE, center, radius, height, random, biome);
 		this.slises = slises;
@@ -37,7 +37,7 @@ public class PaintedMountainPiece extends MountainPiece {
 	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		super.addAdditionalSaveData(serverLevel, tag);
 		ListTag slise = new ListTag();
-		for (BlockState state: slises) {
+		for (BlockState state : slises) {
 			slise.add(NbtUtils.writeBlockState(state));
 		}
 		tag.put("slises", slise);
@@ -77,7 +77,7 @@ public class PaintedMountainPiece extends MountainPiece {
 					int minY = map.getFirstAvailable(x, z);
 					pos.setY(minY - 1);
 					while (chunk.getBlockState(pos).isAir() && pos.getY() > 50) {
-						pos.setY(minY --);
+						pos.setY(minY--);
 					}
 					minY = pos.getY();
 					minY = Math.max(minY, map2.getFirstAvailable(x, z));
@@ -98,7 +98,7 @@ public class PaintedMountainPiece extends MountainPiece {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 }

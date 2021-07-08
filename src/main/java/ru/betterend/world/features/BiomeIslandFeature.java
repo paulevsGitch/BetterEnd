@@ -1,14 +1,11 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
@@ -38,7 +35,8 @@ public class BiomeIslandFeature extends DefaultFeature {
 		BlockState topMaterial = surfaceConfig.getTopMaterial();
 		if (BlocksHelper.isFluid(topMaterial)) {
 			topBlock = ((SurfaceBuilderBaseConfiguration) surfaceConfig).getUnderwaterMaterial();
-		} else {
+		}
+		else {
 			topBlock = topMaterial;
 		}
 		underBlock = surfaceConfig.getUnderMaterial();

@@ -1,12 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Map;
-import java.util.Optional;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Maps;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -22,6 +16,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.client.render.BCLRenderLayer;
@@ -29,10 +24,13 @@ import ru.bclib.interfaces.IRenderTyped;
 import ru.betterend.blocks.basis.EndLanternBlock;
 import ru.betterend.client.models.Patterns;
 
+import java.util.Map;
+import java.util.Optional;
+
 public class BulbVineLanternBlock extends EndLanternBlock implements IRenderTyped, BlockModelProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
-	
+
 	public BulbVineLanternBlock() {
 		this(FabricBlockSettings.of(Material.METAL)
 				.hardness(1)
@@ -43,11 +41,11 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 				.requiresCorrectToolForDrops()
 				.sound(SoundType.LANTERN));
 	}
-	
+
 	public BulbVineLanternBlock(Properties settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(IS_FLOOR) ? SHAPE_FLOOR : SHAPE_CEIL;
@@ -69,13 +67,13 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 				Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_CEIL, textures);
 		return ModelsHelper.fromPattern(pattern);
 	}
-	
+
 	protected String getMetalTexture(ResourceLocation blockId) {
 		String name = blockId.getPath();
 		name = name.substring(0, name.indexOf('_'));
 		return name + "_bulb_vine_lantern_metal";
 	}
-	
+
 	protected String getGlowTexture() {
 		return "bulb_vine_lantern_bulb";
 	}

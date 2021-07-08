@@ -1,14 +1,10 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
@@ -22,6 +18,8 @@ import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class FallenPillarFeature extends DefaultFeature {
 	@Override

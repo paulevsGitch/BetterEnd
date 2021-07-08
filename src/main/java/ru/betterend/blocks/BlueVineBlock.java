@@ -10,12 +10,12 @@ import ru.betterend.registry.EndBlocks;
 
 public class BlueVineBlock extends UpDownPlantBlock {
 	public static final EnumProperty<BlockProperties.TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
-	
+
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;

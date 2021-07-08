@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.betterend.client.render.ArmoredElytraLayer;
 
 @Mixin(ArmorStandRenderer.class)
-public abstract class ArmorStandRendererMixin  extends LivingEntityRenderer<ArmorStand, ArmorStandArmorModel> {
+public abstract class ArmorStandRendererMixin extends LivingEntityRenderer<ArmorStand, ArmorStandArmorModel> {
 
 	public ArmorStandRendererMixin(EntityRendererProvider.Context context, ArmorStandArmorModel entityModel, float f) {
 		super(context, entityModel, f);

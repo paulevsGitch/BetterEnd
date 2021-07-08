@@ -1,13 +1,13 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Random;
 
 public class WallPlantOnLogFeature extends WallPlantFeature {
 	public WallPlantOnLogFeature(Block block, int radius) {

@@ -1,13 +1,13 @@
 package ru.betterend.tab;
 
-import java.util.stream.Collectors;
-
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+
+import java.util.stream.Collectors;
 
 public class CreativeTabs {
 	public static final CreativeModeTab TAB_BLOCKS;

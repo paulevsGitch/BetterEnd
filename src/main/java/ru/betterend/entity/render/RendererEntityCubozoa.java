@@ -2,7 +2,6 @@ package ru.betterend.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -32,7 +31,7 @@ public class RendererEntityCubozoa extends MobRenderer<CubozoaEntity, CubozoaEnt
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getVariant()]);
 				this.getParentModel().renderToBuffer(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			}
-        });
+		});
 	}
 
 	@Override
@@ -45,11 +44,11 @@ public class RendererEntityCubozoa extends MobRenderer<CubozoaEntity, CubozoaEnt
 	public ResourceLocation getTextureLocation(CubozoaEntity entity) {
 		return TEXTURE[entity.getVariant()];
 	}
-	
+
 	static {
 		TEXTURE[0] = BetterEnd.makeID("textures/entity/cubozoa/cubozoa.png");
 		TEXTURE[1] = BetterEnd.makeID("textures/entity/cubozoa/cubozoa_sulphur.png");
-		
+
 		GLOW[0] = RenderType.eyes(BetterEnd.makeID("textures/entity/cubozoa/cubozoa_glow.png"));
 		GLOW[1] = RenderType.eyes(BetterEnd.makeID("textures/entity/cubozoa/cubozoa_sulphur_glow.png"));
 	}

@@ -1,11 +1,5 @@
 package ru.betterend.mixin.common;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -20,6 +14,11 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.api.TagAPI;
 import ru.betterend.blocks.VanillaBlockProperties;
 import ru.betterend.registry.EndBlocks;
@@ -37,7 +36,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			this.registerDefaultState(this.defaultBlockState().setValue(VanillaBlockProperties.ROOTS, false));
 		}
 	}
-	
+
 	@Inject(method = "createBlockStateDefinition", at = @At("TAIL"))
 	private void be_createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo info) {
 		GeneratorOptions.init();
@@ -61,7 +60,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			info.cancel();
 		}
 	}
-	
+
 	@Inject(method = "Lnet/minecraft/world/level/block/ChorusPlantBlock;getStateForPlacement" +
 			"(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)" +
 			"Lnet/minecraft/world/level/block/state/BlockState;",
@@ -86,7 +85,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			}
 		}
 	}
-	
+
 	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
 	private void be_canSurvive(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		BlockState down = world.getBlockState(pos.below());
@@ -95,7 +94,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			info.cancel();
 		}
 	}
-	
+
 	@Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
 	private void be_updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();

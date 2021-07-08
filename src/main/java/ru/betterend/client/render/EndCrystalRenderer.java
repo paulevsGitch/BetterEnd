@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -24,7 +23,7 @@ public class EndCrystalRenderer {
 	private static final ModelPart FRAME;
 	private static final int AGE_CYCLE = 240;
 	private static final float SINE_45_DEGREES;
-	
+
 	public static void render(int age, int maxAge, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumerProvider, int light) {
 		float k = (float) AGE_CYCLE / maxAge;
 		float rotation = (age * k + tickDelta) * 3.0F;
@@ -51,18 +50,18 @@ public class EndCrystalRenderer {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 		modelPartData.addOrReplaceChild("FRAME", CubeListBuilder.create()
-                        .texOffs(0, 0)
-						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),						
+						.texOffs(0, 0)
+						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),
 				PartPose.ZERO);
 
 		modelPartData.addOrReplaceChild("CORE", CubeListBuilder.create()
-                        .texOffs(32, 0)
+						.texOffs(32, 0)
 						.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),
 				PartPose.ZERO);
 
 		return LayerDefinition.create(modelData, 64, 32);
 	}
-	
+
 	static {
 		END_CRYSTAL = RenderType.entityCutoutNoCull(CRYSTAL_TEXTURE);
 		RenderType.entitySmoothCutout(CRYSTAL_BEAM_TEXTURE);

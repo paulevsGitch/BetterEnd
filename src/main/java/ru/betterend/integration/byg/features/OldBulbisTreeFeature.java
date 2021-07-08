@@ -1,18 +1,12 @@
 package ru.betterend.integration.byg.features;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
@@ -29,6 +23,10 @@ import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.integration.Integrations;
 import ru.betterend.noise.OpenSimplexNoise;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class OldBulbisTreeFeature extends DefaultFeature {
 	private static final List<Vector3f> SPLINE;
@@ -104,7 +102,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 	}
 
 	private void bigSphere(WorldGenLevel world, BlockPos pos, float radius, BlockState cap, BlockState glow,
-			BlockState wood, Function<BlockState, Boolean> replacement, Random random) {
+						   BlockState wood, Function<BlockState, Boolean> replacement, Random random) {
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(cap);
 
@@ -152,7 +150,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 	}
 
 	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random, BlockState wood,
-			Function<BlockState, Boolean> replacement) {
+						   Function<BlockState, Boolean> replacement) {
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * MHelper.PI2;

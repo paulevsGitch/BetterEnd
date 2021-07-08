@@ -1,8 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Optional;
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -36,6 +33,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Optional;
+import java.util.Random;
+
 public class VentBubbleColumnBlock extends Block implements BucketPickup, LiquidBlockContainer {
 	public VentBubbleColumnBlock() {
 		super(FabricBlockSettings.of(Material.BUBBLE_COLUMN).noOcclusion().noCollission().noDrops());
@@ -46,7 +46,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 		world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 		return new ItemStack(Items.WATER_BUCKET);
 	}
-	
+
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.INVISIBLE;
@@ -109,7 +109,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 			entity.onInsideBubbleColumn(false);
 		}
 	}
-	
+
 	@Override
 	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;
@@ -119,12 +119,11 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 	public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		return false;
 	}
-	
+
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return Fluids.WATER.getSource(false);
 	}
-
 
 
 	@Override

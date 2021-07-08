@@ -1,15 +1,6 @@
 package ru.betterend.mixin.common;
 
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.mojang.authlib.GameProfile;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
@@ -30,6 +21,13 @@ import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -81,7 +79,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 			LevelData worldProperties = destination.getLevelData();
 			ServerPlayer player = ServerPlayer.class.cast(this);
 			connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()),
-					gameMode.getGameModeForPlayer(),gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
+					gameMode.getGameModeForPlayer(), gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
 			connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
 			PlayerList playerManager = server.getPlayerList();
 			playerManager.sendPlayerPermissionLevel(player);

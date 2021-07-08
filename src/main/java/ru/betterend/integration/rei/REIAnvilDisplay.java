@@ -13,9 +13,9 @@ import java.util.Collections;
 import java.util.Optional;
 
 public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
-	
+
 	private final AnvilRecipe recipe;
-	
+
 	public REIAnvilDisplay(AnvilRecipe recipe) {
 		super(
 				EntryIngredients.ofIngredients(recipe.getIngredients()),
@@ -23,7 +23,7 @@ public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDispl
 		);
 		this.recipe = recipe;
 	}
-	
+
 	public int getDamage() {
 		return recipe.getDamage();
 	}
@@ -45,7 +45,7 @@ public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDispl
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return REIPlugin.SMITHING;
 	}
-	
+
 	// @Override
 	// public @NotNull List<List<EntryStack>> getRequiredEntries() {
 	// 	return input;

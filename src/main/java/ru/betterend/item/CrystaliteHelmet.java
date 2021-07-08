@@ -1,12 +1,12 @@
 package ru.betterend.item;
 
-import java.util.UUID;
-
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Rarity;
 import ru.betterend.registry.EndAttributes;
 import ru.betterend.registry.EndItems;
+
+import java.util.UUID;
 
 public class CrystaliteHelmet extends CrystaliteArmor {
 

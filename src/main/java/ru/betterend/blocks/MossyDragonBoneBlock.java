@@ -1,9 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,12 +17,16 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseRotatedPillarBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 @SuppressWarnings("deprecation")
 public class MossyDragonBoneBlock extends BaseRotatedPillarBlock {
 	public MossyDragonBoneBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).hardness(0.5F).randomTicks());
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -35,7 +35,7 @@ public class MossyDragonBoneBlock extends BaseRotatedPillarBlock {
 		}
 		return Collections.singletonList(new ItemStack(EndBlocks.DRAGON_BONE_BLOCK));
 	}
-	
+
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
@@ -45,15 +45,17 @@ public class MossyDragonBoneBlock extends BaseRotatedPillarBlock {
 
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader worldView, BlockPos pos) {
-	      BlockPos blockPos = pos.above();
-	      BlockState blockState = worldView.getBlockState(blockPos);
-	      if (blockState.is(Blocks.SNOW) && blockState.getValue(SnowLayerBlock.LAYERS) == 1) {
-	         return true;
-	      } else if (blockState.getFluidState().getAmount() == 8) {
-	         return false;
-	      } else {
-	         int i = LayerLightEngine.getLightBlockInto(worldView, state, pos, blockState, blockPos, Direction.UP, blockState.getLightBlock(worldView, blockPos));
-	         return i < 5;
-	      }
-	   }
+		BlockPos blockPos = pos.above();
+		BlockState blockState = worldView.getBlockState(blockPos);
+		if (blockState.is(Blocks.SNOW) && blockState.getValue(SnowLayerBlock.LAYERS) == 1) {
+			return true;
+		}
+		else if (blockState.getFluidState().getAmount() == 8) {
+			return false;
+		}
+		else {
+			int i = LayerLightEngine.getLightBlockInto(worldView, state, pos, blockState, blockPos, Direction.UP, blockState.getLightBlock(worldView, blockPos));
+			return i < 5;
+		}
+	}
 }

@@ -1,10 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.client.color.block.BlockColor;
@@ -30,10 +26,13 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Collections;
+import java.util.List;
+
 public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
-	
+
 	public HelixTreeLeavesBlock() {
 		super(FabricBlockSettings.of(Material.LEAVES)
 				.materialColor(MaterialColor.COLOR_ORANGE)
@@ -42,7 +41,7 @@ public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 				.sound(SoundType.GRASS)
 				.strength(0.2F));
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(COLOR);
@@ -61,7 +60,7 @@ public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 			return ColorUtil.color(237, getGreen(4), 20);
 		};
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		double px = ctx.getClickedPos().getX() * 0.1;
@@ -69,12 +68,12 @@ public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 		double pz = ctx.getClickedPos().getZ() * 0.1;
 		return this.defaultBlockState().setValue(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
-	
+
 	private int getGreen(int color) {
 		float delta = color / 7F;
 		return (int) Mth.lerp(delta, 80, 158);
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);

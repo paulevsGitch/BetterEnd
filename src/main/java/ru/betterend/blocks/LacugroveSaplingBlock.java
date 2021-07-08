@@ -17,7 +17,7 @@ public class LacugroveSaplingBlock extends FeatureSaplingBlock {
 	protected Feature<?> getFeature() {
 		return EndFeatures.LACUGROVE.getFeature();
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.END_MOSS) || world.getBlockState(pos.below()).is(EndBlocks.ENDSTONE_DUST);

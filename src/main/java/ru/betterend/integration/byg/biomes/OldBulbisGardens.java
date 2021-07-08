@@ -1,8 +1,5 @@
 package ru.betterend.integration.byg.biomes;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.data.BuiltinRegistries;
@@ -16,7 +13,6 @@ import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.ConfiguredDecorator;
 import ru.bclib.BCLib;
 import ru.bclib.world.biomes.BCLBiomeDef;
@@ -26,7 +22,10 @@ import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.EndBiome;
 
-class FeaturesAccesor extends Features{
+import java.util.List;
+import java.util.function.Supplier;
+
+class FeaturesAccesor extends Features {
 	static ConfiguredDecorator<?> shadowHEIGHTMAP_SQUARE;
 
 	static {
@@ -38,11 +37,11 @@ public class OldBulbisGardens extends EndBiome {
 	public OldBulbisGardens() {
 		super(makeDef());
 	}
-	
+
 	private static BCLBiomeDef makeDef() {
 		Biome biome = Integrations.BYG.getBiome("bulbis_gardens");
 		BiomeSpecialEffects effects = biome.getSpecialEffects();
-		
+
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
 		Block origin = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial().getBlock();
 		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("old_bulbis_gardens"))
@@ -54,7 +53,7 @@ public class OldBulbisGardens extends EndBiome {
 				.setSurface(ivis, origin)
 				.addFeature(EndFeatures.END_LAKE_RARE)
 				.addFeature(BYGFeatures.OLD_BULBIS_TREE);
-		
+
 		if (BCLib.isClient()) {
 			SoundEvent loop = effects.getAmbientLoopSoundEvent().get();
 			SoundEvent music = effects.getBackgroundMusic().get().getEvent();
@@ -62,14 +61,14 @@ public class OldBulbisGardens extends EndBiome {
 			SoundEvent mood = effects.getAmbientMoodSettings().get().getSoundEvent();
 			def.setLoop(loop).setMusic(music).setAdditions(additions).setMood(mood);
 		}
-		
-		for (MobCategory group: MobCategory.values()) {
+
+		for (MobCategory group : MobCategory.values()) {
 			List<SpawnerData> list = biome.getMobSettings().getMobs(group).unwrap();
 			list.forEach((entry) -> {
 				def.addMobSpawn(entry);
 			});
 		}
-		
+
 		List<List<Supplier<ConfiguredFeature<?, ?>>>> features = biome.getGenerationSettings().features();
 		List<Supplier<ConfiguredFeature<?, ?>>> vegetal = features.get(Decoration.VEGETAL_DECORATION.ordinal());
 		if (vegetal.size() > 2) {
@@ -90,13 +89,13 @@ public class OldBulbisGardens extends EndBiome {
 				def.addFeature(Decoration.VEGETAL_DECORATION, feature);
 			}
 		}
-		
+
 		def.addFeature(EndFeatures.PURPLE_POLYPORE)
-		.addFeature(BYGFeatures.IVIS_MOSS_WOOD)
-		.addFeature(BYGFeatures.IVIS_MOSS)
-		.addFeature(BYGFeatures.IVIS_VINE)
-		.addFeature(BYGFeatures.IVIS_SPROUT);
-		
+				.addFeature(BYGFeatures.IVIS_MOSS_WOOD)
+				.addFeature(BYGFeatures.IVIS_MOSS)
+				.addFeature(BYGFeatures.IVIS_VINE)
+				.addFeature(BYGFeatures.IVIS_SPROUT);
+
 		return def;
 	}
 }

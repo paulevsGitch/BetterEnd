@@ -1,12 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Optional;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,12 +13,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Optional;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity {
@@ -67,7 +66,7 @@ public abstract class PlayerMixin extends LivingEntity {
 			horizontal = BlocksHelper.makeHorizontal();
 		}
 		MHelper.shuffle(horizontal, world.getRandom());
-		for (Direction dir: horizontal) {
+		for (Direction dir : horizontal) {
 			BlockPos p = pos.relative(dir);
 			BlockState state2 = world.getBlockState(p);
 			if (!state2.getMaterial().blocksMotion() && state2.getCollisionShape(world, pos).isEmpty()) {

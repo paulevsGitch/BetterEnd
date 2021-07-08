@@ -7,7 +7,7 @@ public class ClientOptions {
 	private static boolean useFogDensity;
 	private static boolean blendBiomeMusic;
 	private static boolean sulfurWaterColor;
-	
+
 	public static void init() {
 		customSky = Configs.CLENT_CONFIG.getBooleanRoot("customSky", true);
 		useFogDensity = Configs.CLENT_CONFIG.getBooleanRoot("useFogDensity", true);
@@ -39,7 +39,7 @@ public class ClientOptions {
 	public static void setBlendBiomeMusic(boolean blendBiomeMusic) {
 		ClientOptions.blendBiomeMusic = blendBiomeMusic;
 	}
-	
+
 	public static boolean useSulfurWaterColor() {
 		return sulfurWaterColor;
 	}

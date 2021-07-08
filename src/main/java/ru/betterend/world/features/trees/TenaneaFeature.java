@@ -15,7 +15,11 @@ import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.sdf.SDF;
-import ru.bclib.sdf.operator.*;
+import ru.bclib.sdf.operator.SDFDisplacement;
+import ru.bclib.sdf.operator.SDFScale;
+import ru.bclib.sdf.operator.SDFScale3D;
+import ru.bclib.sdf.operator.SDFSubtraction;
+import ru.bclib.sdf.operator.SDFTranslate;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
@@ -156,7 +160,8 @@ public class TenaneaFeature extends DefaultFeature {
 						mut.setY(mut.getY() - 1);
 						if (world.isEmptyBlock(mut.below())) {
 							BlocksHelper.setWithoutUpdate(world, mut, middle);
-						} else {
+						}
+						else {
 							break;
 						}
 					}

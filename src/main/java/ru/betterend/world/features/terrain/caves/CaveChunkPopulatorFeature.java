@@ -1,18 +1,12 @@
 package ru.betterend.world.features.terrain.caves;
 
-import java.util.Random;
-import java.util.Set;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -21,6 +15,10 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+
+import java.util.Random;
+import java.util.Set;
+import java.util.function.Supplier;
 
 public class CaveChunkPopulatorFeature extends DefaultFeature {
 	private Supplier<EndCaveBiome> supplier;
@@ -50,7 +48,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 	}
 
 	protected void fillSets(int sx, int sz, ChunkAccess chunk, Set<BlockPos> floorPositions,
-			Set<BlockPos> ceilPositions, MutableBlockPos min, MutableBlockPos max) {
+							Set<BlockPos> ceilPositions, MutableBlockPos min, MutableBlockPos max) {
 		MutableBlockPos mut = new MutableBlockPos();
 		MutableBlockPos mut2 = new MutableBlockPos();
 		MutableBlockPos mut3 = new MutableBlockPos();
@@ -108,7 +106,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 	}
 
 	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random,
-			BlockState surfaceBlock) {
+							  BlockState surfaceBlock) {
 		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);

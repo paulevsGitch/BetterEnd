@@ -2,10 +2,8 @@ package ru.betterend.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
@@ -13,7 +11,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import ru.betterend.BetterEnd;
 import ru.betterend.entity.EndFishEntity;
-import ru.betterend.entity.model.DragonflyEntityModel;
 import ru.betterend.entity.model.EndFishEntityModel;
 import ru.betterend.registry.EndEntitiesRenders;
 
@@ -31,8 +28,8 @@ public class RendererEntityEndFish extends MobRenderer<EndFishEntity, EndFishEnt
 
 			@Override
 			public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, EndFishEntity entity,
-					float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw,
-					float headPitch) {
+							   float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw,
+							   float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getVariant()]);
 				this.getParentModel().renderToBuffer(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY,
 						1.0F, 1.0F, 1.0F, 1.0F);

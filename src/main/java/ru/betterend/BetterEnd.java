@@ -33,7 +33,7 @@ import ru.betterend.world.surface.SurfaceBuilders;
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
 	public static final Logger LOGGER = new Logger(MOD_ID);
-	
+
 	@Override
 	public void onInitialize() {
 		WorldDataAPI.registerModCache(MOD_ID);
@@ -62,11 +62,11 @@ public class BetterEnd implements ModInitializer {
 		Integrations.init();
 		Configs.saveConfigs();
 	}
-	
+
 	public static ResourceLocation makeID(String path) {
 		return new ResourceLocation(MOD_ID, path);
 	}
-	
+
 	public static String getStringId(String id) {
 		return String.format("%s:%s", MOD_ID, id);
 	}

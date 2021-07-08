@@ -1,10 +1,6 @@
 package ru.betterend.registry;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -19,7 +15,6 @@ import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.biomes.BCLBiomeDef;
-import ru.bclib.world.features.BCLDecorators;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.BetterEnd;
@@ -83,6 +78,9 @@ import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
 import ru.betterend.world.generator.GeneratorOptions;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 public class EndFeatures {
 	// Trees //
 	public static final BCLFeature MOSSY_GLOWSHROOM = redisterVegetation("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
@@ -95,7 +93,7 @@ public class EndFeatures {
 	public static final BCLFeature JELLYSHROOM = redisterVegetation("jellyshroom", new JellyshroomFeature(), 3);
 	public static final BCLFeature GIGANTIC_AMARANITA = redisterVegetation("gigantic_amaranita", new GiganticAmaranitaFeature(), 1);
 	public static final BCLFeature LUCERNIA = redisterVegetation("lucernia", new LucerniaFeature(), 3);
-	
+
 	// Bushes //
 	public static final BCLFeature PYTHADENDRON_BUSH = redisterVegetation("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark), 4);
 	public static final BCLFeature DRAGON_TREE_BUSH = redisterVegetation("dragon_tree_bush", new BushFeature(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.bark), 15);
@@ -105,7 +103,7 @@ public class EndFeatures {
 	public static final BCLFeature LUCERNIA_BUSH = redisterVegetation("lucernia_bush", new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.bark), 10);
 	public static final BCLFeature LUCERNIA_BUSH_RARE = redisterVegetation("lucernia_bush_rare", new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.bark), 1);
 	public static final BCLFeature NEON_CACTUS = redisterVegetation("neon_cactus", new NeonCactusFeature(), 2);
-	
+
 	// Plants //
 	public static final BCLFeature UMBRELLA_MOSS = redisterVegetation("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);
 	public static final BCLFeature CREEPING_MOSS = redisterVegetation("creeping_moss", new SinglePlantFeature(EndBlocks.CREEPING_MOSS, 5), 5);
@@ -143,16 +141,16 @@ public class EndFeatures {
 	public static final BCLFeature CHORUS_MUSHROOM = redisterVegetation("chorus_mushroom", new SinglePlantFeature(EndBlocks.CHORUS_MUSHROOM, 5, 5), 1);
 	public static final BCLFeature AMBER_ROOT = redisterVegetation("amber_root", new SinglePlantFeature(EndBlocks.AMBER_ROOT, 5, 5), 1);
 	//public static final BCLFeature PEARLBERRY = redisterVegetation("pearlberry", new SinglePlantFeature(EndBlocks.PEARLBERRY, 5, 5), 1);
-	
+
 	// Vines //
 	public static final BCLFeature DENSE_VINE = redisterVegetation("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);
 	public static final BCLFeature TWISTED_VINE = redisterVegetation("twisted_vine", new VineFeature(EndBlocks.TWISTED_VINE, 24), 3);
 	public static final BCLFeature BULB_VINE = redisterVegetation("bulb_vine", new VineFeature(EndBlocks.BULB_VINE, 24), 5);
 	public static final BCLFeature JUNGLE_VINE = redisterVegetation("jungle_vine", new VineFeature(EndBlocks.JUNGLE_VINE, 24), 5);
-	
+
 	// Ceil plants
 	public static final BCLFeature SMALL_JELLYSHROOM_CEIL = redisterVegetation("small_jellyshroom_ceil", new SingleInvertedScatterFeature(EndBlocks.SMALL_JELLYSHROOM, 8), 8);
-	
+
 	// Wall Plants //
 	public static final BCLFeature PURPLE_POLYPORE = redisterVegetation("purple_polypore", new WallPlantOnLogFeature(EndBlocks.PURPLE_POLYPORE, 3), 5);
 	public static final BCLFeature AURANT_POLYPORE = redisterVegetation("aurant_polypore", new WallPlantOnLogFeature(EndBlocks.AURANT_POLYPORE, 3), 5);
@@ -169,10 +167,10 @@ public class EndFeatures {
 	public static final BCLFeature JUNGLE_FERN_WOOD = redisterVegetation("jungle_fern_wood", new WallPlantOnLogFeature(EndBlocks.JUNGLE_FERN, 3), 12);
 	public static final BCLFeature RUSCUS = redisterVegetation("ruscus", new WallPlantFeature(EndBlocks.RUSCUS, 6), 10);
 	public static final BCLFeature RUSCUS_WOOD = redisterVegetation("ruscus_wood", new WallPlantOnLogFeature(EndBlocks.RUSCUS, 6), 10);
-	
+
 	// Sky plants
 	public static final BCLFeature FILALUX = redisterVegetation("filalux", new FilaluxFeature(), 1);
-	
+
 	// Water //
 	public static final BCLFeature BUBBLE_CORAL = redisterVegetation("bubble_coral", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 6), 10);
 	public static final BCLFeature BUBBLE_CORAL_RARE = redisterVegetation("bubble_coral_rare", new UnderwaterPlantFeature(EndBlocks.BUBBLE_CORAL, 3), 4);
@@ -182,7 +180,7 @@ public class EndFeatures {
 	public static final BCLFeature END_LOTUS_LEAF = redisterVegetation("end_lotus_leaf", new EndLotusLeafFeature(20), 25);
 	public static final BCLFeature HYDRALUX = redisterVegetation("hydralux", new HydraluxFeature(5), 5);
 	public static final BCLFeature POND_ANEMONE = redisterVegetation("pond_anemone", new UnderwaterPlantFeature(EndBlocks.POND_ANEMONE, 6), 10);
-	
+
 	public static final BCLFeature CHARNIA_RED = redisterVegetation("charnia_red", new CharniaFeature(EndBlocks.CHARNIA_RED), 10);
 	public static final BCLFeature CHARNIA_PURPLE = redisterVegetation("charnia_purple", new CharniaFeature(EndBlocks.CHARNIA_PURPLE), 10);
 	public static final BCLFeature CHARNIA_CYAN = redisterVegetation("charnia_cyan", new CharniaFeature(EndBlocks.CHARNIA_CYAN), 10);
@@ -193,17 +191,17 @@ public class EndFeatures {
 	public static final BCLFeature CHARNIA_RED_RARE = redisterVegetation("charnia_red_rare", new CharniaFeature(EndBlocks.CHARNIA_RED), 2);
 	public static final BCLFeature BIOME_ISLAND = BCLFeature.makeFeatureConfigured(BetterEnd.makeID("overworld_island"), new BiomeIslandFeature());
 	public static final BCLFeature FLAMAEA = redisterVegetation("flamaea", new SinglePlantFeature(EndBlocks.FLAMAEA, 12, false, 5), 20);
-	
+
 	// Terrain //
-	public static final BCLFeature END_LAKE= registerLake("end_lake", new EndLakeFeature(), 4);
-	public static final BCLFeature END_LAKE_NORMAL= registerLake("end_lake_normal", new EndLakeFeature(), 20);
-	public static final BCLFeature END_LAKE_RARE= registerLake("end_lake_rare", new EndLakeFeature(), 40);
-	public static final BCLFeature DESERT_LAKE= registerLake("desert_lake", new DesertLakeFeature(), 8);
+	public static final BCLFeature END_LAKE = registerLake("end_lake", new EndLakeFeature(), 4);
+	public static final BCLFeature END_LAKE_NORMAL = registerLake("end_lake_normal", new EndLakeFeature(), 20);
+	public static final BCLFeature END_LAKE_RARE = registerLake("end_lake_rare", new EndLakeFeature(), 40);
+	public static final BCLFeature DESERT_LAKE = registerLake("desert_lake", new DesertLakeFeature(), 8);
 	public static final BCLFeature ROUND_CAVE = registerRawGen("round_cave", new RoundCaveFeature(), 2);
 	public static final BCLFeature SPIRE = registerRawGen("spire", new SpireFeature(), 2);
 	public static final BCLFeature FLOATING_SPIRE = registerRawGen("floating_spire", new FloatingSpireFeature(), 8);
 	public static final BCLFeature GEYSER = registerRawGen("geyser", new GeyserFeature(), 8);
-	public static final BCLFeature SULPHURIC_LAKE= registerLake("sulphuric_lake", new SulphuricLakeFeature(), 8);
+	public static final BCLFeature SULPHURIC_LAKE = registerLake("sulphuric_lake", new SulphuricLakeFeature(), 8);
 	public static final BCLFeature SULPHURIC_CAVE = BCLFeature.makeCountRawFeature(BetterEnd.makeID("sulphuric_cave"), new SulphuricCaveFeature(), 2);
 	public static final BCLFeature ICE_STAR = registerRawGen("ice_star", new IceStarFeature(5, 15, 10, 25), 15);
 	public static final BCLFeature ICE_STAR_SMALL = registerRawGen("ice_star_small", new IceStarFeature(3, 5, 7, 12), 8);
@@ -213,20 +211,20 @@ public class EndFeatures {
 	public static final BCLFeature OBSIDIAN_BOULDER = registerChanced("obsidian_boulder", new ObsidianBoulderFeature(), 10);
 	public static final BCLFeature FALLEN_PILLAR = registerChanced("fallen_pillar", new FallenPillarFeature(), 20);
 	public static final BCLFeature TUNEL_CAVE = BCLFeature.makeChunkFeature(BetterEnd.makeID("tunel_cave"), new TunelCaveFeature());
-	
+
 	// Ores //
-	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 12, 6, 0, 16, 128);
-	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 8, 3, 0, 16, 128);
-	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 12, 6, 0, 16, 128);
+	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 24, 8, 0, 5, 128);
+	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 12, 4, 0, 5, 128);
+	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 24, 6, 0, 5, 128);
 	public static final BCLFeature VIOLECITE_LAYER = registerLayer("violecite_layer", EndBlocks.VIOLECITE, 15, 16, 128, 8);
 	public static final BCLFeature FLAVOLITE_LAYER = registerLayer("flavolite_layer", EndBlocks.FLAVOLITE, 12, 16, 128, 6);
-	
+
 	// Buildings
 	public static final BCLFeature CRASHED_SHIP = registerChanced("crashed_ship", new CrashedShipFeature(), 500);
-	
+
 	// Mobs
 	public static final BCLFeature SILK_MOTH_NEST = registerChanced("silk_moth_nest", new SilkMothNestFeature(), 2);
-	
+
 	// Caves
 	public static final DefaultFeature SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
 	public static final DefaultFeature SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(EndBlocks.SMARAGDANT_CRYSTAL_SHARD);
@@ -241,43 +239,42 @@ public class EndFeatures {
 	public static final DefaultFeature END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, EndBlocks.CAVE_MOSS);
 	public static final DefaultFeature CAVE_PUMPKIN = new CavePumpkinFeature();
 
-
-
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
 		return BCLFeature.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
 	}
-	
+
 	private static BCLFeature registerRawGen(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
 		return BCLFeature.makeRawGenFeature(BetterEnd.makeID(name), feature, chance);
 	}
-	
+
 	private static BCLFeature registerLake(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		return BCLFeature.makeLakeFeature(BetterEnd.makeID(name), feature, chance);
+		//return BCLFeature.makeLakeFeature(BetterEnd.makeID(name), feature, chance);
+		return BCLFeature.makeRawGenFeature(BetterEnd.makeID(name), feature, chance);
 	}
-	
+
 	private static BCLFeature registerChanced(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
 		return BCLFeature.makeChansedFeature(BetterEnd.makeID(name), feature, chance);
 	}
-	
+
 	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize, int offset, int minY, int maxY) {
 		return BCLFeature.makeOreFeature(BetterEnd.makeID(name), blockOre, veins, veinSize, offset, minY, maxY);
 	}
-	
+
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {
 		OreLayerFeature layer = new OreLayerFeature(block.defaultBlockState(), radius, minY, maxY);
 		ConfiguredFeature<?, ?> configured = layer.configured(FeatureConfiguration.NONE).decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(count)));
 		return new BCLFeature(BetterEnd.makeID(name), layer, GenerationStep.Decoration.UNDERGROUND_ORES, configured);
 	}
-	
+
 	private static BCLFeature registerLayer(String name, StoneMaterial material, float radius, int minY, int maxY, int count) {
 		return registerLayer(name, material.stone, radius, minY, maxY, count);
 	}
-	
+
 	public static void registerBiomeFeatures(ResourceLocation id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			return;
 		}
-		
+
 		if (GeneratorOptions.removeChorusFromVanillaBiomes()) {
 			if (id.getNamespace().equals("minecraft")) {
 				String path = id.getPath();
@@ -293,38 +290,38 @@ public class EndFeatures {
 				}
 			}
 		}
-		
+
 		addFeature(FLAVOLITE_LAYER, features);
 		addFeature(THALLASIUM_ORE, features);
 		addFeature(ENDER_ORE, features);
 		addFeature(CRASHED_SHIP, features);
-		
+
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
 		boolean hasCaves = bclbiome.getCustomData("has_caves", true);
 		if (hasCaves && !EndBiomes.VOID_BIOMES.containsImmutable(id)) {
 			addFeature(ROUND_CAVE, features);
 			addFeature(TUNEL_CAVE, features);
 		}
-		
+
 		BCLFeature feature = BiomeAPI.getBiome(id).getStructuresFeature();
 		if (feature != null) {
 			addFeature(feature, features);
 		}
 	}
-	
+
 	public static void addDefaultFeatures(BCLBiomeDef def) {
 		def.addFeature(FLAVOLITE_LAYER);
 		def.addFeature(THALLASIUM_ORE);
 		def.addFeature(ENDER_ORE);
 		def.addFeature(CRASHED_SHIP);
-		
+
 		boolean hasCaves = def.getCustomData("has_caves", true);
 		if (hasCaves) {
 			def.addFeature(ROUND_CAVE);
 			def.addFeature(TUNEL_CAVE);
 		}
 	}
-	
+
 	private static void addFeature(BCLFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		int index = feature.getFeatureStep().ordinal();
 		if (features.size() > index) {
@@ -340,6 +337,7 @@ public class EndFeatures {
 			features.add(newFeature);
 		}
 	}
-	
-	public static void register() {}
+
+	public static void register() {
+	}
 }

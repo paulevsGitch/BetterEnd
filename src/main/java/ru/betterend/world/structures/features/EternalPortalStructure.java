@@ -13,7 +13,6 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -25,7 +24,7 @@ import ru.betterend.world.structures.piece.NBTPiece;
 public class EternalPortalStructure extends FeatureBaseStructure {
 	private static final ResourceLocation STRUCTURE_ID = BetterEnd.makeID("portal/eternal_portal");
 	private static final StructureTemplate STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
-	
+
 	@Override
 	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig, LevelHeightAccessor levelHeightAccessor) {
 		long x = (long) chunkPos.x * (long) chunkPos.x;
@@ -38,12 +37,12 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 		}
 		return super.isFeatureChunk(chunkGenerator, biomeSource, worldSeed, chunkRandom, pos, biome, chunkPos, featureConfig, levelHeightAccessor);
 	}
-	
+
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return PortalStructureStart::new;
 	}
-	
+
 	public static class PortalStructureStart extends StructureStart<NoneFeatureConfiguration> {
 		public PortalStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos pos, int references, long seed) {
 			super(feature, pos, references, seed);
@@ -52,8 +51,8 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 
 		@Override
 		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
-			int x = chunkPos.getBlockX( MHelper.randRange(4, 12, random));
-			int z =chunkPos.getBlockZ( MHelper.randRange(4, 12, random));
+			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
+			int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
 			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 			if (y > 4) {
 				this.pieces.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), random.nextInt(5), true, random));

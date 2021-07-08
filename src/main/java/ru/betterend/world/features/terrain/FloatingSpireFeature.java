@@ -1,10 +1,6 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -20,6 +16,9 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
+
+import java.util.List;
+import java.util.Random;
 
 public class FloatingSpireFeature extends SpireFeature {
 	@Override
@@ -58,7 +57,8 @@ public class FloatingSpireFeature extends SpireFeature {
 					support.add(info.getPos().above());
 				}
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-			} else if (info.getState(Direction.UP, 3).isAir()) {
+			}
+			else if (info.getState(Direction.UP, 3).isAir()) {
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig()
 						.getUnderMaterial();
 			}

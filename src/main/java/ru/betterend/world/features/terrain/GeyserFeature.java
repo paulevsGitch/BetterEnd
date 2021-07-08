@@ -1,10 +1,6 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -40,6 +36,9 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.util.BlockFixer;
+
+import java.util.Random;
+import java.util.function.Function;
 
 public class GeyserFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE1;

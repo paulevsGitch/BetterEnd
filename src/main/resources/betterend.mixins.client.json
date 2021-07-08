@@ -11,7 +11,7 @@
 		"ClientRecipeBookMixin",
 		"MinecraftClientMixin",
         "PlayerRendererMixin",
-		"WorldRendererMixin",
+		"LevelRendererMixin",
 		"MusicTrackerMixin",
 		"AnvilScreenMixin",
 		"BiomeColorsMixin",

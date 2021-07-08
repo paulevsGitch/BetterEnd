@@ -15,18 +15,18 @@ public class LushSmaragdantCaveBiome extends EndCaveBiome {
 				.setWaterAndFogColor(31, 167, 212)
 				.setParticles(EndParticles.SMARAGDANT, 0.001F)
 				.setSurface(EndBlocks.CAVE_MOSS));
-		
+
 		this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL, 1);
 		this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL_SHARD, 20);
-		
+
 		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE, 1);
 	}
-	
+
 	@Override
 	public float getFloorDensity() {
 		return 0.1F;
 	}
-	
+
 	@Override
 	public float getCeilDensity() {
 		return 0.1F;

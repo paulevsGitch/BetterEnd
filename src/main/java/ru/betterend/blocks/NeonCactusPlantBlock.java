@@ -1,12 +1,7 @@
 package ru.betterend.blocks;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -48,13 +43,17 @@ import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.CactusBottom;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Random;
+
 @SuppressWarnings("deprecation")
 public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, IRenderTyped {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EndBlockProperties.CACTUS_BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
-	
+
 	private static final EnumMap<Direction, VoxelShape> BIG_SHAPES_OPEN = Maps.newEnumMap(Direction.class);
 	private static final EnumMap<Direction, VoxelShape> MEDIUM_SHAPES_OPEN = Maps.newEnumMap(Direction.class);
 	private static final EnumMap<Direction, VoxelShape> SMALL_SHAPES_OPEN = Maps.newEnumMap(Direction.class);
@@ -62,17 +61,17 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 	private static final EnumMap<Axis, VoxelShape> MEDIUM_SHAPES = Maps.newEnumMap(Axis.class);
 	private static final EnumMap<Axis, VoxelShape> SMALL_SHAPES = Maps.newEnumMap(Axis.class);
 	private static final int MAX_LENGTH = 12;
-	
+
 	public NeonCactusPlantBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15).randomTicks());
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP).setValue(SHAPE, TripleShape.TOP));
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE, CACTUS_BOTTOM, WATERLOGGED, FACING);
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		LevelAccessor world = ctx.getLevel();
@@ -91,7 +90,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		}
 		return state;
 	}
-	
+
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
@@ -101,12 +100,12 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return BlocksHelper.mirrorHorizontal(state, mirror, FACING);
 	}
-	
+
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
-	
+
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		world.getBlockTicks().scheduleTick(pos, this, 2);
@@ -126,19 +125,19 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		}
 		return state;
 	}
-	
+
 	@Override
 	public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
 		if (!blockState.canSurvive(serverLevel, blockPos)) {
 			serverLevel.destroyBlock(blockPos, true, null, 1);
 		}
 	}
-	
+
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		TripleShape shape = state.getValue(SHAPE);
@@ -158,7 +157,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			return shape == TripleShape.MIDDLE ? MEDIUM_SHAPES_OPEN.get(dir) : SMALL_SHAPES_OPEN.get(dir);
 		}
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		Direction dir = state.getValue(FACING);
@@ -166,12 +165,12 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		BlockState support = level.getBlockState(supportPos);
 		return support.is(this) || support.isFaceSturdy(level, supportPos, dir);
 	}
-	
+
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (!this.canSurvive(state, world, pos) || random.nextInt(8) > 0) {
 			return;
-		} 
+		}
 		Direction dir = state.getValue(FACING);
 		if (!world.isEmptyBlock(pos.relative(dir))) {
 			return;
@@ -201,11 +200,11 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		BlocksHelper.setWithoutUpdate(world, pos.relative(dir), placement);
 		mutateStem(placement, world, pos, MAX_LENGTH);
 	}
-	
+
 	public void growPlant(WorldGenLevel world, BlockPos pos, Random random) {
 		growPlant(world, pos, random, MHelper.randRange(MAX_LENGTH >> 1, MAX_LENGTH, random));
 	}
-	
+
 	public void growPlant(WorldGenLevel world, BlockPos pos, Random random, int iterations) {
 		BlockState state = defaultBlockState();
 		BlockState downState = world.getBlockState(pos.below());
@@ -231,7 +230,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			}
 		}
 	}
-	
+
 	private boolean growIteration(WorldGenLevel world, MutableBlockPos pos, Random random, List<MutableBlockPos> ends, int length) {
 		BlockState state = world.getBlockState(pos);
 		if (!state.is(this)) {
@@ -265,7 +264,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		pos.move(dir);
 		return true;
 	}
-	
+
 	private Direction getSideDirection(WorldGenLevel world, BlockPos pos, BlockState iterState, Direction dir, Random random) {
 		MutableBlockPos iterPos = pos.mutable();
 		Direction startDir = dir;
@@ -273,7 +272,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		while (iterState.is(this) && startDir.getAxis().isVertical()) {
 			startDir = iterState.getValue(FACING);
 			if (lastDir == null) {
-				for (Direction side: BlocksHelper.HORIZONTAL) {
+				for (Direction side : BlocksHelper.HORIZONTAL) {
 					BlockState sideState = world.getBlockState(iterPos.relative(side));
 					if (sideState.is(this)) {
 						Direction sideDir = sideState.getValue(FACING);
@@ -287,7 +286,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			iterPos.move(dir);
 			iterState = world.getBlockState(iterPos);
 		}
-		
+
 		Direction side = lastDir == null ? BlocksHelper.randomHorizontal(random) : lastDir.getClockWise();
 		if (side.getOpposite() == startDir) {
 			side = side.getOpposite();
@@ -299,12 +298,12 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 	public boolean isPathfindable(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, PathComputationType pathComputationType) {
 		return false;
 	}
-	
+
 	@Override
 	public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
 		entity.hurt(DamageSource.CACTUS, 1.0F);
 	}
-	
+
 	private int getLength(BlockState state, ServerLevel world, BlockPos pos, int max) {
 		int length = 0;
 		Direction dir = state.getValue(FACING).getOpposite();
@@ -319,11 +318,11 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 				break;
 			}
 			dir = state.getValue(FACING).getOpposite();
-			length ++;
+			length++;
 		}
 		return length;
 	}
-	
+
 	private int getHorizontal(BlockState state, WorldGenLevel world, BlockPos pos, int max) {
 		int count = 0;
 		Direction dir = state.getValue(FACING).getOpposite();
@@ -338,11 +337,11 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			if (dir.getStepY() != 0) {
 				break;
 			}
-			count ++;
+			count++;
 		}
 		return count;
 	}
-	
+
 	private void mutateStem(BlockState state, WorldGenLevel world, BlockPos pos, int max) {
 		Direction dir = state.getValue(FACING).getOpposite();
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
@@ -361,39 +360,39 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			}
 		}
 	}
-	
+
 	static {
 		BIG_SHAPES.put(Axis.X, Block.box(0, 2, 2, 16, 14, 14));
 		BIG_SHAPES.put(Axis.Y, Block.box(2, 0, 2, 14, 16, 14));
 		BIG_SHAPES.put(Axis.Z, Block.box(2, 2, 0, 14, 14, 16));
-		
+
 		MEDIUM_SHAPES.put(Axis.X, Block.box(0, 3, 3, 16, 13, 13));
 		MEDIUM_SHAPES.put(Axis.Y, Block.box(3, 0, 3, 13, 16, 13));
 		MEDIUM_SHAPES.put(Axis.Z, Block.box(3, 3, 0, 13, 13, 16));
-		
+
 		SMALL_SHAPES.put(Axis.X, Block.box(0, 4, 4, 16, 12, 12));
 		SMALL_SHAPES.put(Axis.Y, Block.box(4, 0, 4, 12, 16, 12));
 		SMALL_SHAPES.put(Axis.Z, Block.box(4, 4, 0, 12, 12, 16));
-		
-		BIG_SHAPES_OPEN.put(Direction.UP,    Block.box(2, 0, 2, 14, 14, 14));
-		BIG_SHAPES_OPEN.put(Direction.DOWN,  Block.box(2, 2, 2, 14, 16, 14));
+
+		BIG_SHAPES_OPEN.put(Direction.UP, Block.box(2, 0, 2, 14, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.DOWN, Block.box(2, 2, 2, 14, 16, 14));
 		BIG_SHAPES_OPEN.put(Direction.NORTH, Block.box(2, 2, 2, 14, 14, 16));
 		BIG_SHAPES_OPEN.put(Direction.SOUTH, Block.box(2, 2, 0, 14, 14, 14));
-		BIG_SHAPES_OPEN.put(Direction.WEST,  Block.box(2, 2, 2, 16, 14, 14));
-		BIG_SHAPES_OPEN.put(Direction.EAST,  Block.box(0, 2, 2, 14, 14, 14));
-		
-		MEDIUM_SHAPES_OPEN.put(Direction.UP,    Block.box(3, 0, 3, 13, 13, 13));
-		MEDIUM_SHAPES_OPEN.put(Direction.DOWN,  Block.box(3, 3, 3, 13, 16, 13));
+		BIG_SHAPES_OPEN.put(Direction.WEST, Block.box(2, 2, 2, 16, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.EAST, Block.box(0, 2, 2, 14, 14, 14));
+
+		MEDIUM_SHAPES_OPEN.put(Direction.UP, Block.box(3, 0, 3, 13, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.DOWN, Block.box(3, 3, 3, 13, 16, 13));
 		MEDIUM_SHAPES_OPEN.put(Direction.NORTH, Block.box(3, 3, 3, 13, 13, 16));
 		MEDIUM_SHAPES_OPEN.put(Direction.SOUTH, Block.box(3, 3, 0, 13, 13, 13));
-		MEDIUM_SHAPES_OPEN.put(Direction.WEST,  Block.box(3, 3, 3, 16, 13, 13));
-		MEDIUM_SHAPES_OPEN.put(Direction.EAST,  Block.box(0, 3, 3, 13, 13, 13));
-		
-		SMALL_SHAPES_OPEN.put(Direction.UP,    Block.box(4, 0, 4, 12, 12, 12));
-		SMALL_SHAPES_OPEN.put(Direction.DOWN,  Block.box(4, 4, 4, 12, 16, 12));
+		MEDIUM_SHAPES_OPEN.put(Direction.WEST, Block.box(3, 3, 3, 16, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.EAST, Block.box(0, 3, 3, 13, 13, 13));
+
+		SMALL_SHAPES_OPEN.put(Direction.UP, Block.box(4, 0, 4, 12, 12, 12));
+		SMALL_SHAPES_OPEN.put(Direction.DOWN, Block.box(4, 4, 4, 12, 16, 12));
 		SMALL_SHAPES_OPEN.put(Direction.NORTH, Block.box(4, 4, 4, 12, 12, 16));
 		SMALL_SHAPES_OPEN.put(Direction.SOUTH, Block.box(4, 4, 0, 12, 12, 12));
-		SMALL_SHAPES_OPEN.put(Direction.WEST,  Block.box(4, 4, 4, 16, 12, 12));
-		SMALL_SHAPES_OPEN.put(Direction.EAST,  Block.box(0, 4, 4, 12, 12, 12));
+		SMALL_SHAPES_OPEN.put(Direction.WEST, Block.box(4, 4, 4, 16, 12, 12));
+		SMALL_SHAPES_OPEN.put(Direction.EAST, Block.box(0, 4, 4, 12, 12, 12));
 	}
 }

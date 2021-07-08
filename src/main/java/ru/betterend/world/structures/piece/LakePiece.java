@@ -1,10 +1,6 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Map;
-import java.util.Random;
-
 import com.google.common.collect.Maps;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +20,6 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.material.FluidState;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
@@ -33,6 +28,9 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
+
+import java.util.Map;
+import java.util.Random;
 
 public class LakePiece extends BasePiece {
 	private static final BlockState ENDSTONE = Blocks.END_STONE.defaultBlockState();
@@ -44,9 +42,9 @@ public class LakePiece extends BasePiece {
 	private float aspect;
 	private float depth;
 	private int seed;
-	
+
 	private ResourceLocation biomeID;
-	
+
 	public LakePiece(BlockPos center, float radius, float depth, Random random, Biome biome) {
 		super(EndStructures.LAKE_PIECE, random.nextInt(), null);
 		this.center = center;
@@ -104,11 +102,11 @@ public class LakePiece extends BasePiece {
 				int z2 = wz - center.getZ();
 				float clamp = getHeightClamp(world, 8, wx, wz);
 				if (clamp < 0.01) continue;
-				
+
 				double n = noise.eval(nx, nz) * 1.5 + 1.5;
 				double x3 = MHelper.sqr(x2 + noise.eval(nx, nz, 100) * 10);
 				double z3 = MHelper.sqr(z2 + noise.eval(nx, nz, -100) * 10);
-				
+
 				for (int y = minY; y <= maxY; y++) {
 					mut.setY((int) (y + n));
 					double y2 = MHelper.sqr((y - center.getY()) * aspect);
@@ -144,7 +142,7 @@ public class LakePiece extends BasePiece {
 		fixWater(world, chunk, mut, random, sx, sz);
 		return true;
 	}
-	
+
 	private void fixWater(WorldGenLevel world, ChunkAccess chunk, MutableBlockPos mut, Random random, int sx, int sz) {
 		int minY = this.boundingBox.minY();
 		int maxY = this.boundingBox.maxY();
@@ -159,7 +157,7 @@ public class LakePiece extends BasePiece {
 						mut.setY(y - 1);
 						if (chunk.getBlockState(mut).isAir()) {
 							mut.setY(y + 1);
-							
+
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) {
 								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
@@ -167,14 +165,14 @@ public class LakePiece extends BasePiece {
 							else {
 								bState = bState.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
 							}
-							
+
 							mut.setY(y);
-							
+
 							makeEndstonePillar(chunk, mut, bState);
 						}
 						else if (x > 1 && x < 15 && z > 1 && z < 15) {
 							mut.setY(y);
-							for (Direction dir: BlocksHelper.HORIZONTAL) {
+							for (Direction dir : BlocksHelper.HORIZONTAL) {
 								BlockPos wPos = mut.offset(dir.getStepX(), 0, dir.getStepZ());
 								if (chunk.getBlockState(wPos).isAir()) {
 									mut.setY(y + 1);
@@ -199,7 +197,7 @@ public class LakePiece extends BasePiece {
 			}
 		}
 	}
-	
+
 	private void makeEndstonePillar(ChunkAccess chunk, MutableBlockPos mut, BlockState terrain) {
 		chunk.setBlockState(mut, terrain, false);
 		mut.setY(mut.getY() - 1);
@@ -208,27 +206,27 @@ public class LakePiece extends BasePiece {
 			mut.setY(mut.getY() - 1);
 		}
 	}
-	
+
 	private int getHeight(WorldGenLevel world, BlockPos pos) {
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
 		int h = heightmap.getOrDefault(p, Byte.MIN_VALUE);
 		if (h > Byte.MIN_VALUE) {
 			return h;
 		}
-		
+
 		if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, (byte) 0);
 			return 0;
 		}
-		
+
 		h = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		h = Mth.abs(h - center.getY());
 		h = h < 8 ? 1 : 0;
-		
+
 		heightmap.put(p, (byte) h);
 		return h;
 	}
-	
+
 	private float getHeightClamp(WorldGenLevel world, int radius, int posX, int posZ) {
 		MutableBlockPos mut = new MutableBlockPos();
 		int r2 = radius * radius;
@@ -250,7 +248,7 @@ public class LakePiece extends BasePiece {
 		height /= max;
 		return Mth.clamp(height, 0, 1);
 	}
-	
+
 	private void makeBoundingBox() {
 		int minX = MHelper.floor(center.getX() - radius - 8);
 		int minY = MHelper.floor(center.getY() - depth - 8);

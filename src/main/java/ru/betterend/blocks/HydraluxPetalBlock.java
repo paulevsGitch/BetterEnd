@@ -21,11 +21,12 @@ public class HydraluxPetalBlock extends BaseBlock {
 				.materialColor(MaterialColor.PODZOL)
 				.sound(SoundType.WART_BLOCK));
 	}
-	
+
 	public HydraluxPetalBlock(Properties settings) {
 		super(settings);
 	}
-	
+
 	@Override
-	public void fallOn(Level level, BlockState blockState, BlockPos blockPos, Entity entity, float f)  {}
+	public void fallOn(Level level, BlockState blockState, BlockPos blockPos, Entity entity, float f) {
+	}
 }

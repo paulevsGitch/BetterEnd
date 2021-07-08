@@ -10,7 +10,15 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
-import ru.bclib.sdf.operator.*;
+import ru.bclib.sdf.operator.SDFBinary;
+import ru.bclib.sdf.operator.SDFCoordModify;
+import ru.bclib.sdf.operator.SDFFlatWave;
+import ru.bclib.sdf.operator.SDFScale;
+import ru.bclib.sdf.operator.SDFScale3D;
+import ru.bclib.sdf.operator.SDFSmoothUnion;
+import ru.bclib.sdf.operator.SDFSubtraction;
+import ru.bclib.sdf.operator.SDFTranslate;
+import ru.bclib.sdf.operator.SDFUnion;
 import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.sdf.primitive.SDFPrimitive;
 import ru.bclib.sdf.primitive.SDFSphere;

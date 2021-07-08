@@ -17,7 +17,7 @@ public class TenaneaSaplingBlock extends FeatureSaplingBlock {
 	protected Feature<?> getFeature() {
 		return EndFeatures.TENANEA.getFeature();
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.PINK_MOSS);

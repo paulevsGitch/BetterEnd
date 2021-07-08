@@ -1,9 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -20,19 +16,22 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MaterialColor;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Random;
+
 public class BrimstoneBlock extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
-	
+
 	public BrimstoneBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(MaterialColor.COLOR_BROWN).randomTicks());
 		registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(ACTIVATED);
@@ -44,13 +43,13 @@ public class BrimstoneBlock extends BaseBlock {
 			updateChunks((ClientLevel) world, pos);
 		}
 	}
-	
+
 	public void destroy(LevelAccessor world, BlockPos pos, BlockState state) {
 		if (world.isClientSide()) {
 			updateChunks((ClientLevel) world, pos);
 		}
 	}
-	
+
 	private void updateChunks(ClientLevel world, BlockPos pos) {
 		int y = pos.getY() >> 4;
 		int x1 = (pos.getX() - 2) >> 4;
@@ -63,11 +62,11 @@ public class BrimstoneBlock extends BaseBlock {
 			}
 		}
 	}
-	
+
 	@Override
 	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		boolean deactivate = true;
-		for (Direction dir: BlocksHelper.DIRECTIONS) {
+		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			if (world.getFluidState(pos.relative(dir)).getType().equals(Fluids.WATER)) {
 				deactivate = false;
 				break;

@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -10,6 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.registry.EndParticles;
+
+import java.util.Random;
 
 public class ShadowGrassBlock extends EndTerrainBlock {
 	public ShadowGrassBlock() {

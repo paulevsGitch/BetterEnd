@@ -1,14 +1,5 @@
 package ru.betterend.entity;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
-import net.minecraft.world.entity.ai.util.HoverRandomPos;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +10,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -29,7 +26,8 @@ import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.util.RandomPos;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -44,6 +42,7 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
@@ -52,11 +51,15 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
 
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Random;
+
 public class SilkMothEntity extends Animal implements FlyingAnimal {
 	private BlockPos hivePos;
 	private BlockPos entrance;
 	private Level hiveWorld;
-	
+
 	public SilkMothEntity(EntityType<? extends SilkMothEntity> entityType, Level world) {
 		super(entityType, world);
 		this.moveControl = new FlyingMoveControl(this, 20, true);
@@ -65,7 +68,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
 		this.xpReward = 1;
 	}
-	
+
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return LivingEntity.createLivingAttributes()
 				.add(Attributes.MAX_HEALTH, 2.0D)
@@ -73,17 +76,17 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 				.add(Attributes.FLYING_SPEED, 0.4D)
 				.add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
-	
+
 	public void setHive(Level world, BlockPos hive) {
 		this.hivePos = hive;
 		this.hiveWorld = world;
 	}
-	
+
 	@Override
 	public boolean canBeLeashed(Player player) {
 		return false;
 	}
-	
+
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		if (hivePos != null) {
@@ -91,7 +94,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 			tag.putString("HiveWorld", hiveWorld.dimension().location().toString());
 		}
 	}
-	
+
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {
 		if (tag.contains("HivePos")) {
@@ -115,7 +118,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		this.goalSelector.addGoal(8, new WanderAroundGoal());
 		this.goalSelector.addGoal(9, new FloatGoal(this));
 	}
-	
+
 	@Override
 	protected PathNavigation createNavigation(Level world) {
 		FlyingPathNavigation birdNavigation = new FlyingPathNavigation(this, world) {
@@ -163,7 +166,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		return EndEntities.SILK_MOTH.create(world);
 	}
-	
+
 	@Override
 	protected void dropFromLootTable(DamageSource source, boolean causedByPlayer) {
 		int minCount = 0;
@@ -180,18 +183,18 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		ItemEntity drop = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(EndItems.SILK_FIBER, count));
 		this.level.addFreshEntity(drop);
 	}
-	
+
 	public static boolean canSpawn(EntityType<SilkMothEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
 		int y = world.getChunk(pos).getHeight(Types.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
 		return y > 0 && pos.getY() >= y && notManyEntities(world, pos, 32, 1);
 	}
-	
+
 	private static boolean notManyEntities(ServerLevelAccessor world, BlockPos pos, int radius, int maxCount) {
 		AABB box = new AABB(pos).inflate(radius);
 		List<SilkMothEntity> list = world.getEntitiesOfClass(SilkMothEntity.class, box, (entity) -> true);
 		return list.size() <= maxCount;
 	}
-	
+
 	class MothLookControl extends LookControl {
 		MothLookControl(Mob entity) {
 			super(entity);
@@ -230,7 +233,8 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 				try {
 					SilkMothEntity.this.navigation.moveTo(SilkMothEntity.this.navigation.createPath(new BlockPos(vec3d), 1), 1.0D);
 				}
-				catch (Exception e) {}
+				catch (Exception e) {
+				}
 			}
 		}
 
@@ -241,12 +245,12 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 			return vec3d4 != null ? vec3d4 : AirAndWaterRandomPos.getPos(SilkMothEntity.this, 8, 4, -2, vec3d3.x, vec3d3.z, 1.5707963705062866D);
 		}
 	}
-	
+
 	class ReturnToHiveGoal extends Goal {
 		ReturnToHiveGoal() {
 			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
-		
+
 		@Override
 		public boolean canUse() {
 			return SilkMothEntity.this.hivePos != null
@@ -255,12 +259,12 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 					&& SilkMothEntity.this.random.nextInt(16) == 0
 					&& SilkMothEntity.this.position().distanceToSqr(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) < 64;
 		}
-		
+
 		@Override
 		public boolean canContinueToUse() {
 			return SilkMothEntity.this.navigation.isInProgress() && level.getBlockState(entrance).isAir() && (level.getBlockState(hivePos).is(EndBlocks.SILK_MOTH_NEST) || level.getBlockState(hivePos).is(EndBlocks.SILK_MOTH_HIVE));
 		}
-		
+
 		@Override
 		public void start() {
 			BlockState state = SilkMothEntity.this.level.getBlockState(SilkMothEntity.this.hivePos);
@@ -272,9 +276,10 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 				SilkMothEntity.this.entrance = SilkMothEntity.this.hivePos.relative(state.getValue(BlockStateProperties.HORIZONTAL_FACING));
 				SilkMothEntity.this.navigation.moveTo(SilkMothEntity.this.navigation.createPath(entrance, 1), 1.0D);
 			}
-			catch (Exception e) {}
+			catch (Exception e) {
+			}
 		}
-		
+
 		@Override
 		public void tick() {
 			super.tick();

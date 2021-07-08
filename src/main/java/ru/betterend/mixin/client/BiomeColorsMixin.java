@@ -1,12 +1,5 @@
 package ru.betterend.mixin.client;
 
-import java.awt.Point;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
@@ -14,10 +7,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockAndTintGetter;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.ColorUtil;
 import ru.betterend.client.ClientOptions;
 import ru.betterend.registry.EndBlocks;
+
+import java.awt.Point;
 
 @Mixin(BiomeColors.class)
 public class BiomeColorsMixin {
@@ -25,7 +24,7 @@ public class BiomeColorsMixin {
 	private static final int STREAM_COLOR = ColorUtil.color(105, 213, 244);
 	private static final Point[] OFFSETS;
 	private static final boolean HAS_SODIUM;
-	
+
 	@Inject(method = "getAverageWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(BlockAndTintGetter world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
 		if (ClientOptions.useSulfurWaterColor()) {
@@ -43,10 +42,10 @@ public class BiomeColorsMixin {
 			}
 		}
 	}
-	
+
 	static {
 		HAS_SODIUM = FabricLoader.getInstance().isModLoaded("sodium");
-		
+
 		OFFSETS = new Point[20];
 		for (int i = 0; i < 3; i++) {
 			int p = i - 1;
@@ -55,7 +54,7 @@ public class BiomeColorsMixin {
 			OFFSETS[i + 6] = new Point(-2, p);
 			OFFSETS[i + 9] = new Point(2, p);
 		}
-		
+
 		for (int i = 0; i < 4; i++) {
 			int inner = i + 16;
 			Direction dir = BlocksHelper.HORIZONTAL[i];

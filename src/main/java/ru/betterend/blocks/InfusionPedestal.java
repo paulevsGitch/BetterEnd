@@ -23,7 +23,7 @@ public class InfusionPedestal extends PedestalBlock {
 		super(Blocks.OBSIDIAN);
 		this.height = 1.08F;
 	}
-	
+
 	@Override
 	public void checkRitual(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -35,14 +35,15 @@ public class InfusionPedestal extends PedestalBlock {
 					ritual.configure();
 				}
 				pedestal.getRitual().checkRecipe();
-			} else {
+			}
+			else {
 				InfusionRitual ritual = new InfusionRitual(pedestal, world, pos);
 				pedestal.linkRitual(ritual);
 				ritual.checkRecipe();
 			}
 		}
 	}
-	
+
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new InfusionPedestalEntity(blockPos, blockState);
@@ -57,7 +58,7 @@ public class InfusionPedestal extends PedestalBlock {
 	@Deprecated
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.is(this)) {
-			switch(state.getValue(STATE)) {
+			switch (state.getValue(STATE)) {
 				case PEDESTAL_TOP: {
 					return SHAPE_PEDESTAL_TOP;
 				}

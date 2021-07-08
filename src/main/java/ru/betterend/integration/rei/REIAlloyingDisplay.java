@@ -10,7 +10,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.NotNull;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
@@ -24,16 +23,16 @@ import java.util.stream.Collectors;
 public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
 
 	private static List<EntryStack> fuel;
-	
+
 	private Recipe<?> recipe;
 	private float xp;
 	private double smeltTime;
 
 
-	
 	public REIAlloyingDisplay(AlloyingRecipe recipe) {
 		this(recipe, recipe.getExperience(), recipe.getSmeltTime());
 	}
+
 	protected REIAlloyingDisplay(Recipe<?> recipe, float xp, double smeltTime) {
 		super(
 				EntryIngredients.ofIngredients(recipe.getIngredients()),
@@ -48,7 +47,7 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 	public static List<EntryStack> getFuel() {
 		return fuel;
 	}
-	
+
 	@Override
 	public @NotNull Optional<ResourceLocation> getDisplayLocation() {
 		return Optional.ofNullable(recipe).map(Recipe::getId);
@@ -58,20 +57,20 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return REIPlugin.ALLOYING;
 	}
-	
+
 	// @Override
 	// public @NotNull List<List<EntryStack>> getRequiredEntries() {
 	// 	return this.input;
 	// }
-	
+
 	public float getXp() {
 		return this.xp;
 	}
-	
+
 	public double getSmeltTime() {
 		return this.smeltTime;
 	}
-	
+
 	public Optional<Recipe<?>> getOptionalRecipe() {
 		return Optional.ofNullable(recipe);
 	}
@@ -90,7 +89,7 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 	// public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo, AbstractContainerMenu container) {
 	//	return this.input;
 	// }
-	
+
 	static {
 		fuel = EndStoneSmelterBlockEntity.availableFuels().keySet().stream()
 				.map(Item::getDefaultInstance).map(EntryStacks::of)

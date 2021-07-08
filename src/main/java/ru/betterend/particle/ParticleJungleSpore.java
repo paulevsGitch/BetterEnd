@@ -12,7 +12,7 @@ import ru.bclib.util.MHelper;
 
 @Environment(EnvType.CLIENT)
 public class ParticleJungleSpore extends SimpleAnimatedParticle {
-	
+
 	protected ParticleJungleSpore(ClientLevel world, double x, double y, double z, SpriteSet sprites, double r, double g, double b) {
 		super(world, x, y, z, sprites, 0);
 		setSprite(sprites.get(random));
@@ -22,11 +22,11 @@ public class ParticleJungleSpore extends SimpleAnimatedParticle {
 		this.setSpriteFromAge(sprites);
 		this.setAlpha(0);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
-		
+
 		int ticks = this.age % 30;
 		if (ticks == 0) {
 			this.xd = random.nextGaussian() * 0.02;
@@ -34,7 +34,7 @@ public class ParticleJungleSpore extends SimpleAnimatedParticle {
 			this.zd = random.nextGaussian() * 0.02;
 			ticks = 0;
 		}
-		
+
 		if (this.age <= 30) {
 			float delta = ticks / 30F;
 			this.setAlpha(delta);
@@ -48,7 +48,7 @@ public class ParticleJungleSpore extends SimpleAnimatedParticle {
 		else {
 			this.setAlpha(1);
 		}
-		
+
 		this.yd -= 0.001F;
 		this.xd *= 0.99F;
 		this.zd *= 0.99F;

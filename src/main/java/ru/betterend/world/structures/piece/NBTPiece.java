@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -15,12 +13,13 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndStructures;
+
+import java.util.Random;
 
 public class NBTPiece extends BasePiece {
 	private ResourceLocation structureID;
@@ -30,7 +29,7 @@ public class NBTPiece extends BasePiece {
 	private BlockPos pos;
 	private int erosion;
 	private boolean cover;
-	
+
 	public NBTPiece(ResourceLocation structureID, StructureTemplate structure, BlockPos pos, int erosion, boolean cover, Random random) {
 		super(EndStructures.NBT_PIECE, random.nextInt(), null);
 		this.structureID = structureID;
@@ -72,8 +71,8 @@ public class NBTPiece extends BasePiece {
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		BoundingBox bounds = BoundingBox.fromCorners(
-				new Vec3i(blockBox.minX(),  this.boundingBox.minY(), blockBox.minZ()),
-				new Vec3i(blockBox.maxX(),  this.boundingBox.maxX(), blockBox.maxZ())
+				new Vec3i(blockBox.minX(), this.boundingBox.minY(), blockBox.minZ()),
+				new Vec3i(blockBox.maxX(), this.boundingBox.maxX(), blockBox.maxZ())
 		);
 		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		structure.placeInWorld(world, pos, pos, placementData, random, 2);
@@ -90,7 +89,7 @@ public class NBTPiece extends BasePiece {
 		}
 		return true;
 	}
-	
+
 	private void makeBoundingBox() {
 		this.boundingBox = StructureHelper.getStructureBounds(pos, structure, rotation, mirror);
 	}

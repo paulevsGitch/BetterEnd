@@ -9,12 +9,12 @@ import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
 public class SmelterFuelSlot extends Slot {
 
 	private final EndStoneSmelterScreenHandler handler;
-	
+
 	public SmelterFuelSlot(EndStoneSmelterScreenHandler handler, Container inventory, int index, int x, int y) {
 		super(inventory, index, x, y);
 		this.handler = handler;
 	}
-	
+
 	public boolean mayPlace(ItemStack stack) {
 		return this.handler.isFuel(stack) || FurnaceFuelSlot.isBucket(stack);
 	}

@@ -13,17 +13,18 @@ public class SurfaceBuilders {
 	public static final SurfaceBuilderBaseConfiguration FLAVOLITE_CONFIG = makeSimpleConfig(EndBlocks.FLAVOLITE.stone);
 	public static final SurfaceBuilderBaseConfiguration BRIMSTONE_CONFIG = makeSimpleConfig(EndBlocks.BRIMSTONE);
 	public static final SurfaceBuilderBaseConfiguration SULFURIC_ROCK_CONFIG = makeSimpleConfig(EndBlocks.SULPHURIC_ROCK.stone);
-	
+
 	public static final SurfaceBuilder<SurfaceBuilderBaseConfiguration> SULPHURIC_SURFACE = register("sulphuric_surface", new SulphuricSurfaceBuilder());
-	
+
 	private static SurfaceBuilder<SurfaceBuilderBaseConfiguration> register(String name, SurfaceBuilder<SurfaceBuilderBaseConfiguration> builder) {
 		return Registry.register(Registry.SURFACE_BUILDER, name, builder);
 	}
-	
+
 	private static SurfaceBuilderBaseConfiguration makeSimpleConfig(Block block) {
 		BlockState state = block.defaultBlockState();
 		return new SurfaceBuilderBaseConfiguration(state, state, state);
 	}
-	
-	public static void register() {}
+
+	public static void register() {
+	}
 }

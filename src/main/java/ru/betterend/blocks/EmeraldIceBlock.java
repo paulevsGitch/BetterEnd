@@ -1,11 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -26,9 +20,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderTyped, BlockModelProvider {
 	public EmeraldIceBlock() {
@@ -74,7 +73,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 			world.neighborChanged(pos, Blocks.WATER, pos);
 		}
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);

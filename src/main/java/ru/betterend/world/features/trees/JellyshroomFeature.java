@@ -1,17 +1,11 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
@@ -28,6 +22,10 @@ import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class JellyshroomFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -67,7 +65,8 @@ public class JellyshroomFeature extends DefaultFeature {
 						&& EndBlocks.JELLYSHROOM.isTreeLog(info.getStateDown())) {
 					return EndBlocks.JELLYSHROOM.log.defaultBlockState();
 				}
-			} else if (info.getState().is(EndBlocks.JELLYSHROOM_CAP_PURPLE)) {
+			}
+			else if (info.getState().is(EndBlocks.JELLYSHROOM_CAP_PURPLE)) {
 				float dx = info.getPos().getX() - pos.getX() - last.x();
 				float dz = info.getPos().getZ() - pos.getZ() - last.z();
 				float distance = MHelper.length(dx, dz) / membraneRadius * 7F;

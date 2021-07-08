@@ -1,11 +1,6 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +9,6 @@ import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
@@ -27,6 +21,10 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.SplineHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class GiganticAmaranitaFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -130,7 +128,8 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 					}
 				}
 			}
-		} else if (radius < 4) {
+		}
+		else if (radius < 4) {
 			pos = pos.offset(-1, 0, -1);
 			for (int i = -2; i < 2; i++) {
 				mut.set(pos).move(Direction.NORTH, 2).move(Direction.WEST, i);
@@ -201,7 +200,8 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 					}
 				}
 			}
-		} else {
+		}
+		else {
 			for (int i = -2; i < 3; i++) {
 				mut.set(pos).move(Direction.NORTH, 3).move(Direction.EAST, i);
 				if (world.getBlockState(mut).getMaterial().isReplaceable()) {
@@ -316,7 +316,8 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 									&& world.getBlockState(mut).getMaterial().isReplaceable()) {
 								BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_CAP);
 							}
-						} else {
+						}
+						else {
 							if ((x == 0 || z == 0) && (Math.abs(x) < 2 && Math.abs(z) < 2)
 									&& world.getBlockState(mut).getMaterial().isReplaceable()) {
 								BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.AMARANITA_CAP);

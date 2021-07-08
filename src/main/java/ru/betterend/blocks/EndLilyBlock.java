@@ -1,11 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -37,11 +32,15 @@ import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class EndLilyBlock extends EndUnderwaterPlantBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(4, 0, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_TOP = Block.box(2, 0, 2, 14, 6, 14);
-	
+
 	public EndLilyBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
@@ -50,7 +49,7 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock {
 				.lightLevel((state) -> state.getValue(SHAPE) == TripleShape.TOP ? 13 : 0)
 				.noCollission());
 	}
-	
+
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!canSurvive(state, world, pos)) {
@@ -60,24 +59,24 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock {
 			return state;
 		}
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		Vec3 vec3d = state.getOffset(view, pos);
 		VoxelShape shape = state.getValue(SHAPE) == TripleShape.TOP ? SHAPE_TOP : SHAPE_BOTTOM;
 		return shape.move(vec3d.x, vec3d.y, vec3d.z);
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
-	
+
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(SHAPE) == TripleShape.TOP ? Fluids.EMPTY.defaultFluidState() : Fluids.WATER.getSource(false);
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		if (state.getValue(SHAPE) == TripleShape.TOP) {
@@ -92,7 +91,7 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock {
 			return up.getBlock() == this && down.getBlock() == this;
 		}
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(SHAPE) == TripleShape.TOP) {
@@ -100,13 +99,13 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock {
 		}
 		return Collections.emptyList();
 	}
-	
+
 	@Override
 	@Environment(EnvType.CLIENT)
 	public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
 		return new ItemStack(EndBlocks.END_LILY_SEED);
 	}
-	
+
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;

@@ -1,17 +1,6 @@
 package ru.betterend.mixin.common;
 
-import java.util.List;
-
-import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -21,8 +10,17 @@ import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.dimension.end.DragonRespawnAnimation;
 import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.phys.AABB;
+import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.world.generator.GeneratorOptions;
+
+import java.util.List;
 
 @Mixin(EndDragonFight.class)
 public class EndDragonFightMixin {
@@ -45,10 +43,12 @@ public class EndDragonFightMixin {
 	}
 
 	@Shadow
-	private void spawnExitPortal(boolean bl) {}
+	private void spawnExitPortal(boolean bl) {
+	}
 
 	@Shadow
-	private void respawnDragon(List<EndCrystal> list) {}
+	private void respawnDragon(List<EndCrystal> list) {
+	}
 
 	@Inject(method = "tryRespawn", at = @At("HEAD"), cancellable = true)
 	private void be_tryRespawnDragon(CallbackInfo info) {
@@ -73,7 +73,7 @@ public class EndDragonFightMixin {
 			for (Direction dir : BlocksHelper.HORIZONTAL) {
 				BlockPos central = center.relative(dir, 4);
 				List<EndCrystal> crystalList = level.getEntitiesOfClass(EndCrystal.class, new AABB(central.below(10).south().west(), central.above(10).north().east()));
-				
+
 				int count = crystalList.size();
 				for (int n = 0; n < count; n++) {
 					EndCrystal crystal = crystalList.get(n);
@@ -83,7 +83,7 @@ public class EndDragonFightMixin {
 						n--;
 					}
 				}
-				
+
 				if (crystalList.isEmpty()) {
 					info.cancel();
 					return;

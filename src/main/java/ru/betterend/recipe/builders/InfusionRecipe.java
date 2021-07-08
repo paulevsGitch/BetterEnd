@@ -1,11 +1,7 @@
 package ru.betterend.recipe.builders;
 
-import java.util.Arrays;
-
 import com.google.gson.JsonObject;
-
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.NonNullList;
@@ -28,24 +24,24 @@ import ru.betterend.interfaces.BetterEndRecipe;
 import ru.betterend.rituals.InfusionRitual;
 import ru.betterend.util.ItemUtil;
 
+import java.util.Arrays;
+
 public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
-	
 	public final static String GROUP = "infusion";
 	public final static RecipeType<InfusionRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
 	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
-	public final static CategoryIdentifier ID = CategoryIdentifier.of(BetterEnd.MOD_ID, GROUP);
-	
+
 	private final ResourceLocation id;
 	private final Ingredient[] catalysts;
 	private Ingredient input;
 	private ItemStack output;
 	private int time = 1;
 	private String group;
-	
+
 	private InfusionRecipe(ResourceLocation id) {
 		this(id, null, null);
 	}
-	
+
 	private InfusionRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
 		this.id = id;
 		this.input = input;
@@ -53,7 +49,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 		this.catalysts = new Ingredient[8];
 		Arrays.fill(catalysts, Ingredient.EMPTY);
 	}
-	
+
 	public int getInfusionTime() {
 		return this.time;
 	}
@@ -77,7 +73,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 	public boolean canCraftInDimensions(int width, int height) {
 		return true;
 	}
-	
+
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
@@ -95,7 +91,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 	public ResourceLocation getId() {
 		return this.id;
 	}
-	
+
 	@Override
 	@Environment(EnvType.CLIENT)
 	public String getGroup() {
@@ -111,24 +107,24 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 	public RecipeType<?> getType() {
 		return TYPE;
 	}
-	
+
 	public static class Builder {
 		private final static Builder INSTANCE = new Builder();
 		private static boolean exist;
-		
+
 		public static Builder create(String id) {
 			return create(BetterEnd.makeID(id));
 		}
-		
+
 		public static Builder create(ResourceLocation id) {
 			INSTANCE.id = id;
 			INSTANCE.input = null;
 			INSTANCE.output = null;
 			INSTANCE.time = 1;
 			exist = Configs.RECIPE_CONFIG.getBoolean("infusion", id.getPath(), true);
-			
+
 			Arrays.fill(INSTANCE.catalysts, Ingredient.EMPTY);
-			
+
 			return INSTANCE;
 		}
 
@@ -138,44 +134,44 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 		private ItemStack output;
 		private String group;
 		private int time = 1;
-		
+
 		private Builder() {
 			Arrays.fill(catalysts, Ingredient.EMPTY);
 		}
-		
+
 		public Builder setGroup(String group) {
 			this.group = group;
 			return this;
 		}
-		
+
 		public Builder setInput(ItemLike input) {
 			this.input = Ingredient.of(input);
 			return this;
 		}
-		
+
 		public Builder setOutput(ItemLike output) {
 			this.output = new ItemStack(output);
 			this.output.setCount(1);
 			return this;
 		}
-		
+
 		public Builder setOutput(ItemStack output) {
 			this.output = output;
 			this.output.setCount(1);
 			return this;
 		}
-		
+
 		public Builder setTime(int time) {
 			this.time = time;
 			return this;
 		}
-		
+
 		public Builder addCatalyst(int slot, ItemLike... items) {
 			if (slot > 7) return this;
 			this.catalysts[slot] = Ingredient.of(items);
 			return this;
 		}
-		
+
 		public void build() {
 			if (exist) {
 				if (input == null) {
@@ -202,7 +198,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			}
 		}
 	}
-	
+
 	public static class Serializer implements RecipeSerializer<InfusionRecipe> {
 		@Override
 		public InfusionRecipe fromJson(ResourceLocation id, JsonObject json) {
@@ -218,13 +214,14 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 					String nbtData = GsonHelper.getAsString(result, "nbt");
 					CompoundTag nbt = TagParser.parseTag(nbtData);
 					recipe.output.setTag(nbt);
-				} catch (CommandSyntaxException ex) {
+				}
+				catch (CommandSyntaxException ex) {
 					BetterEnd.LOGGER.warning("Error parse nbt data for output.", ex);
 				}
 			}
 			recipe.group = GsonHelper.getAsString(json, "group", GROUP);
 			recipe.time = GsonHelper.getAsInt(json, "time", 1);
-			
+
 			JsonObject catalysts = GsonHelper.getAsJsonObject(json, "catalysts");
 			ItemStack catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "north", ""));
 			recipe.catalysts[0] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
@@ -242,7 +239,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 			recipe.catalysts[6] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
 			catalyst = ItemUtil.fromStackString(GsonHelper.getAsString(catalysts, "north_west", ""));
 			recipe.catalysts[7] = (catalyst != null && !catalyst.isEmpty()) ? Ingredient.of(catalyst.getItem()) : Ingredient.EMPTY;
-			
+
 			return recipe;
 		}
 

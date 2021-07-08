@@ -10,7 +10,7 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 
 public class InfusionParticle extends TextureSheetParticle {
-	
+
 	private final SpriteSet spriteProvider;
 
 	public InfusionParticle(ClientLevel clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ, float[] palette, SpriteSet spriteProvider) {
@@ -30,7 +30,7 @@ public class InfusionParticle extends TextureSheetParticle {
 	public ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
-	
+
 	@Override
 	public void tick() {
 		this.xo = this.x;
@@ -38,7 +38,8 @@ public class InfusionParticle extends TextureSheetParticle {
 		this.zo = this.z;
 		if (this.age++ >= this.lifetime) {
 			this.remove();
-		} else {
+		}
+		else {
 			this.setSpriteFromAge(spriteProvider);
 			double velocityX = 2.0D * this.xd * this.random.nextDouble();
 			double velocityY = 3.0D * this.yd * this.random.nextDouble();
@@ -50,11 +51,11 @@ public class InfusionParticle extends TextureSheetParticle {
 	@Environment(EnvType.CLIENT)
 	public static class InfusionFactory implements ParticleProvider<InfusionParticleType> {
 		private final SpriteSet spriteProvider;
-	
+
 		public InfusionFactory(SpriteSet spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
-	
+
 		public Particle createParticle(InfusionParticleType particleType, ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
 			return new InfusionParticle(clientWorld, d, e, f, g, h, i, particleType.getPalette(), this.spriteProvider);
 		}

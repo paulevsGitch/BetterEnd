@@ -1,10 +1,6 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -12,7 +8,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -26,6 +21,9 @@ import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
+
+import java.util.Random;
+import java.util.Set;
 
 public class SulphuricCaveFeature extends DefaultFeature {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
@@ -104,14 +102,16 @@ public class SulphuricCaveFeature extends DefaultFeature {
 						if (isReplaceable(state)) {
 							BlocksHelper.setWithoutUpdate(world, mut, y < waterLevel ? WATER : CAVE_AIR);
 						}
-					} else if (dist < r2 * r2) {
+					}
+					else if (dist < r2 * r2) {
 						state = world.getBlockState(mut);
 						if (state.is(TagAPI.GEN_TERRAIN) || state.is(Blocks.AIR)) {
 							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1)
 									+ noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
 							if (v > 0.4) {
 								brimstone.add(mut.immutable());
-							} else {
+							}
+							else {
 								BlocksHelper.setWithoutUpdate(world, mut, rock);
 							}
 						}

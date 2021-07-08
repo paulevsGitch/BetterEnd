@@ -33,7 +33,7 @@ public class EndParticles {
 	public static final SimpleParticleType JUNGLE_SPORE = register("jungle_spore");
 	public static final SimpleParticleType FIREFLY = register("firefly");
 	public static final SimpleParticleType SMARAGDANT = register("smaragdant_particle");
-	
+
 	public static void register() {
 		ParticleFactoryRegistry.getInstance().register(GLOWING_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
 		ParticleFactoryRegistry.getInstance().register(PORTAL_SPHERE, PaticlePortalSphere.FactoryPortalSphere::new);
@@ -48,15 +48,15 @@ public class EndParticles {
 		ParticleFactoryRegistry.getInstance().register(FIREFLY, FireflyParticle.FireflyParticleFactory::new);
 		ParticleFactoryRegistry.getInstance().register(SMARAGDANT, SmaragdantParticle.SmaragdantParticleFactory::new);
 	}
-	
+
 	private static SimpleParticleType register(String name) {
 		return Registry.register(Registry.PARTICLE_TYPE, BetterEnd.makeID(name), FabricParticleTypes.simple());
 	}
-	
+
 	private static SimpleParticleType registerFar(String name) {
 		return Registry.register(Registry.PARTICLE_TYPE, BetterEnd.makeID(name), FabricParticleTypes.simple(true));
 	}
-	
+
 	private static <T extends ParticleOptions> ParticleType<T> register(String name, ParticleType<T> type) {
 		return Registry.register(Registry.PARTICLE_TYPE, BetterEnd.makeID(name), type);
 	}

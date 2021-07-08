@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -20,6 +18,8 @@ import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Random;
+
 public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 
 	public GlowingPillarSeedBlock() {
@@ -31,7 +31,7 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 				.randomTicks()
 				.noCollission());
 	}
-	
+
 	@Override
 	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(1, 2, random);
@@ -39,19 +39,20 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 		if (h < height) {
 			return;
 		}
-		
+
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		BlockState roots = EndBlocks.GLOWING_PILLAR_ROOTS.defaultBlockState();
 		if (height < 2) {
 			BlocksHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
-		} else {
+		}
+		else {
 			BlocksHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 			mut.move(Direction.UP);
 			BlocksHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 		}
 		mut.move(Direction.UP);
 		BlocksHelper.setWithUpdate(world, mut, EndBlocks.GLOWING_PILLAR_LUMINOPHOR.defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
-		for (Direction dir: BlocksHelper.DIRECTIONS) {
+		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			pos = mut.relative(dir);
 			if (world.isEmptyBlock(pos)) {
 				BlocksHelper.setWithUpdate(world, pos, EndBlocks.GLOWING_PILLAR_LEAVES.defaultBlockState().setValue(BlockStateProperties.FACING, dir));
@@ -62,12 +63,12 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 			BlocksHelper.setWithUpdate(world, mut, EndBlocks.GLOWING_PILLAR_LEAVES.defaultBlockState().setValue(BlockStateProperties.FACING, Direction.UP));
 		}
 	}
-	
+
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.AMBER_MOSS);
 	}
-	
+
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;

@@ -1,12 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
-
 import com.mojang.authlib.GameProfile;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
@@ -57,6 +50,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.betterend.world.generator.GeneratorOptions;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+
 @Mixin(PlayerList.class)
 public class PlayerListMixin {
 	@Final
@@ -97,7 +97,8 @@ public class PlayerListMixin {
 				Logger var10001 = LOGGER;
 				Objects.requireNonNull(var10001);
 				var23 = (ResourceKey<Level>) var10000.resultOrPartial(var10001::error).orElse(Level.END);
-			} else {
+			}
+			else {
 				var23 = Level.END;
 			}
 
@@ -107,7 +108,8 @@ public class PlayerListMixin {
 			if (serverLevel == null) {
 				LOGGER.warn("Unknown respawn dimension {}, defaulting to overworld", registryKey);
 				serverLevel3 = this.server.overworld();
-			} else {
+			}
+			else {
 				serverLevel3 = serverLevel;
 			}
 
@@ -151,10 +153,11 @@ public class PlayerListMixin {
 			TranslatableComponent mutableText2;
 			if (serverPlayer.getGameProfile().getName().equalsIgnoreCase(string)) {
 				mutableText2 = new TranslatableComponent("multiplayer.player.joined",
-						new Object[] { serverPlayer.getDisplayName() });
-			} else {
+						new Object[]{serverPlayer.getDisplayName()});
+			}
+			else {
 				mutableText2 = new TranslatableComponent("multiplayer.player.joined.renamed",
-						new Object[] { serverPlayer.getDisplayName(), string });
+						new Object[]{serverPlayer.getDisplayName(), string});
 			}
 
 			this.broadcastMessage(mutableText2.withStyle(ChatFormatting.YELLOW), ChatType.SYSTEM, Util.NIL_UUID);
@@ -163,7 +166,7 @@ public class PlayerListMixin {
 			this.players.add(serverPlayer);
 			this.playersByUUID.put(serverPlayer.getUUID(), serverPlayer);
 			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
-					new ServerPlayer[] { serverPlayer }));
+					new ServerPlayer[]{serverPlayer}));
 
 			for (ServerPlayer player : this.players) {
 				serverPlayer.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
@@ -193,7 +196,8 @@ public class PlayerListMixin {
 					UUID uUID2;
 					if (compoundTag2.hasUUID("Attach")) {
 						uUID2 = compoundTag2.getUUID("Attach");
-					} else {
+					}
+					else {
 						uUID2 = null;
 					}
 
@@ -201,7 +205,8 @@ public class PlayerListMixin {
 					Entity entity3;
 					if (entity.getUUID().equals(uUID2)) {
 						serverPlayer.startRiding(entity, true);
-					} else {
+					}
+					else {
 						var21 = entity.getIndirectPassengers().iterator();
 
 						while (var21.hasNext()) {
@@ -240,7 +245,8 @@ public class PlayerListMixin {
 	// private void updatePlayerGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
 
 	@Shadow
-	public void sendPlayerPermissionLevel(ServerPlayer player) {}
+	public void sendPlayerPermissionLevel(ServerPlayer player) {
+	}
 
 	@Shadow
 	public int getPlayerCount() {
@@ -248,7 +254,9 @@ public class PlayerListMixin {
 	}
 
 	@Shadow
-	public int getMaxPlayers() { return 0; }
+	public int getMaxPlayers() {
+		return 0;
+	}
 
 	@Shadow
 	public MinecraftServer getServer() {
@@ -256,14 +264,18 @@ public class PlayerListMixin {
 	}
 
 	@Shadow
-	protected void updateEntireScoreboard(ServerScoreboard scoreboard, ServerPlayer player) {}
+	protected void updateEntireScoreboard(ServerScoreboard scoreboard, ServerPlayer player) {
+	}
 
 	@Shadow
-	public void broadcastMessage(Component message, ChatType type, UUID senderUuid) {}
+	public void broadcastMessage(Component message, ChatType type, UUID senderUuid) {
+	}
 
 	@Shadow
-	public void broadcastAll(Packet<?> packet) {}
+	public void broadcastAll(Packet<?> packet) {
+	}
 
 	@Shadow
-	public void sendLevelInfo(ServerPlayer player, ServerLevel world) {}
+	public void sendLevelInfo(ServerPlayer player, ServerLevel world) {
+	}
 }

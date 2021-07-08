@@ -21,62 +21,62 @@
 
 package shadow.fabric.impl.client.rendering;
 
-import java.util.Objects;
-
-import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
-import org.jetbrains.annotations.Nullable;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
+
+import java.util.Objects;
 
 public final class ArmorRenderingRegistryImpl {
-    private ArmorRenderingRegistryImpl() {
-    }
+	private ArmorRenderingRegistryImpl() {
+	}
 
-    public static void registerModel(ArmorRenderingRegistry.ModelProvider provider, Iterable<Item> items) {
-        Objects.requireNonNull(items);
+	public static void registerModel(ArmorRenderingRegistry.ModelProvider provider, Iterable<Item> items) {
+		Objects.requireNonNull(items);
 
-        for (Item item : items) {
-            Objects.requireNonNull(item);
+		for (Item item : items) {
+			Objects.requireNonNull(item);
 
-            ((ArmorProviderExtensions) item).fabric_setArmorModelProvider(provider);
-        }
-    }
+			((ArmorProviderExtensions) item).fabric_setArmorModelProvider(provider);
+		}
+	}
 
-    public static void registerTexture(ArmorRenderingRegistry.TextureProvider provider, Iterable<Item> items) {
-        Objects.requireNonNull(items);
+	public static void registerTexture(ArmorRenderingRegistry.TextureProvider provider, Iterable<Item> items) {
+		Objects.requireNonNull(items);
 
-        for (Item item : items) {
-            Objects.requireNonNull(item);
+		for (Item item : items) {
+			Objects.requireNonNull(item);
 
-            ((ArmorProviderExtensions) item).fabric_setArmorTextureProvider(provider);
-        }
-    }
+			((ArmorProviderExtensions) item).fabric_setArmorTextureProvider(provider);
+		}
+	}
 
-    public static HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
-        if (!stack.isEmpty()) {
-            ArmorRenderingRegistry.ModelProvider provider = ((ArmorProviderExtensions) stack.getItem()).fabric_getArmorModelProvider();
+	public static HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
+		if (!stack.isEmpty()) {
+			ArmorRenderingRegistry.ModelProvider provider = ((ArmorProviderExtensions) stack.getItem()).fabric_getArmorModelProvider();
 
-            if (provider != null) {
-                return provider.getArmorModel(entity, stack, slot, defaultModel);
-            }
-        }
+			if (provider != null) {
+				return provider.getArmorModel(entity, stack, slot, defaultModel);
+			}
+		}
 
-        return defaultModel;
-    }
+		return defaultModel;
+	}
 
-    public static ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot, boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
-        if (!stack.isEmpty()) {
-            ArmorRenderingRegistry.TextureProvider provider = ((ArmorProviderExtensions) stack.getItem()).fabric_getArmorTextureProvider();
+	public static ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot, boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
+		if (!stack.isEmpty()) {
+			ArmorRenderingRegistry.TextureProvider provider = ((ArmorProviderExtensions) stack.getItem()).fabric_getArmorTextureProvider();
 
-            if (provider != null) {
-                return provider.getArmorTexture(entity, stack, slot, secondLayer, suffix, defaultTexture);
-            }
-        }
+			if (provider != null) {
+				return provider.getArmorTexture(entity, stack, slot, secondLayer, suffix, defaultTexture);
+			}
+		}
 
-        return defaultTexture;
-    }
+		return defaultTexture;
+	}
 }

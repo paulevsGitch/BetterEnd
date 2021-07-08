@@ -25,19 +25,19 @@ import ru.betterend.registry.EndItems;
 
 public class UmbrellaTreeClusterBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
-	
+
 	public UmbrellaTreeClusterBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK)
 				.materialColor(MaterialColor.COLOR_PURPLE)
 				.luminance(15));
 		registerDefaultState(stateDefinition.any().setValue(NATURAL, false));
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(NATURAL);
 	}
-	
+
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack stack = player.getMainHandItem();

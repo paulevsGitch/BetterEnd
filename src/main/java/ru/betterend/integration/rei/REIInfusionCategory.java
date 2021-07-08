@@ -11,11 +11,9 @@ import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
@@ -23,11 +21,11 @@ import ru.betterend.registry.EndBlocks;
 import java.util.List;
 
 public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionDisplay> {
-	
+
 	private final static ResourceLocation BACKGROUND = BetterEnd.makeID("textures/gui/rei_infusion.png");
 	private final EntryStack ICON;
 
-	REIInfusionCategory(EntryStack icon){
+	REIInfusionCategory(EntryStack icon) {
 		ICON = icon;
 	}
 
@@ -40,13 +38,13 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 	public @NotNull Component getTitle() {
 		return new TranslatableComponent(EndBlocks.INFUSION_PEDESTAL.getDescriptionId());
 	}
-	
+
 	@Override
 	public @NotNull EntryStack getIcon() {
 		return ICON;
 	}
 
-	
+
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIInfusionDisplay display, Rectangle bounds) {
 		Point centerPoint = new Point(bounds.getCenterX() - 34, bounds.getCenterY() - 2);
@@ -69,7 +67,7 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 				.noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		return widgets;
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 104;

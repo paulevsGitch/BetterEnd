@@ -42,6 +42,7 @@ import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.EndBlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
+import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.models.Patterns;
@@ -447,22 +448,6 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		};
 	}
 
-	@Override
-	@Nullable
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		if (level.isClientSide) return null;
-
-		BlockEntityTicker<T> ticker = createTickerHelper(blockEntityType, EndBlockEntities.PEDESTAL, PedestalBlockEntity::tick);
-		if (ticker != null) return ticker;
-
-		return createTickerHelper(blockEntityType, EndBlockEntities.INFUSION_PEDESTAL, InfusionPedestalEntity::tick);
-	}
-
-	@Nullable
-	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> blockEntityType, BlockEntityType<E> blockEntityType2, BlockEntityTicker<? super E> blockEntityTicker) {
-		return blockEntityType2 == blockEntityType ? (BlockEntityTicker<A>) blockEntityTicker : null;
-	}
-
 	static {
 		VoxelShape basinUp = Block.box(2, 3, 2, 14, 4, 14);
 		VoxelShape basinDown = Block.box(0, 0, 0, 16, 3, 16);
@@ -480,5 +465,11 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		SHAPE_COLUMN_TOP = Shapes.or(SHAPE_PILLAR, columnTop);
 		SHAPE_COLUMN = Shapes.or(basin, SHAPE_PILLAR, columnTop);
 		SHAPE_BOTTOM = Shapes.or(basin, SHAPE_PILLAR);
+	}
+
+	@Override
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide() ? PedestalBlockEntity::tick : null;
 	}
 }

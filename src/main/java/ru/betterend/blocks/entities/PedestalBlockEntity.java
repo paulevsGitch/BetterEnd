@@ -133,7 +133,11 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 		}
 	}
 
-	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
+	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T uncastedEntity) {
+		clientTick(level, blockPos, blockState, (PedestalBlockEntity) uncastedEntity);
+	}
+
+	private static void clientTick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
 		if (!blockEntity.isEmpty()) {
 			blockEntity.age++;
 			if (blockEntity.age > blockEntity.maxAge) {

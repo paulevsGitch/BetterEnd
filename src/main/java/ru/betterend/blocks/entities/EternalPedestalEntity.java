@@ -34,12 +34,6 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
 		}
 	}
 
-	public void setLevelAndPosition(Level world, BlockPos pos) {
-		if (hasRitual()) {
-			linkedRitual.setWorld(world);
-		}
-	}
-
 	@Override
 	public CompoundTag save(CompoundTag tag) {
 		if (hasRitual()) {

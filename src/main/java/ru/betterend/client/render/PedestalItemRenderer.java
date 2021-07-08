@@ -30,14 +30,14 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
 	}
 
 	@Override
-	public void render(T blockEntity, float tickDelta, PoseStack matrices,
-					   MultiBufferSource vertexConsumers, int light, int overlay) {
-
+	public void render(T blockEntity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
 		Level world = blockEntity.getLevel();
 		if (world == null || blockEntity.isEmpty()) return;
 
 		BlockState state = world.getBlockState(blockEntity.getBlockPos());
 		if (!(state.getBlock() instanceof PedestalBlock)) return;
+
+		System.out.println(state.getBlock());
 
 		ItemStack activeItem = blockEntity.getItem(0);
 
@@ -47,8 +47,7 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
 		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, world, null, 0);
 		Vector3f translate = model.getTransforms().ground.translation;
 		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
-		matrices.translate(translate.x(), translate.y(), translate.z());
-		matrices.translate(0.5, pedestal.getHeight(state), 0.5);
+		matrices.translate(translate.x() + 0.5, translate.y() + pedestal.getHeight(state), translate.z() + 0.5);
 		if (activeItem.getItem() instanceof BlockItem) {
 			matrices.scale(1.5F, 1.5F, 1.5F);
 		}

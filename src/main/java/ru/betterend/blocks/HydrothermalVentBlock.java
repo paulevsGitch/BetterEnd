@@ -22,6 +22,8 @@ import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -130,16 +132,17 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
 		super.animateTick(state, world, pos, random);
-		if (random.nextBoolean()) {
+		if (!state.getValue(ACTIVATED) && random.nextBoolean()) {
 			double x = pos.getX() + random.nextDouble();
 			double y = pos.getY() + 0.9 + random.nextDouble() * 0.3;
 			double z = pos.getZ() + random.nextDouble();
-			if (state.getValue(ACTIVATED)) {
-				world.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
-			}
-			else {
-				world.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0, 0, 0);
-			}
+			world.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0, 0, 0);
 		}
+	}
+
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return BlockEntityHydrothermalVent::tick;
 	}
 }

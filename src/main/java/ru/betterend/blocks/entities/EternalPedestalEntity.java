@@ -28,6 +28,7 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
 	
 	@Override
 	public void setLevel(Level world) {
+		super.setLevel(world);
 		if (hasRitual()) {
 			linkedRitual.setWorld(world);
 		}

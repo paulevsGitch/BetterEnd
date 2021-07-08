@@ -188,7 +188,7 @@
 	"block.betterend.granite_pedestal": "Granitsockel",
 	"block.betterend.purpur_pedestal": "Purpursockel",
 	"block.betterend.quartz_pedestal": "Quarzsockel",
-	"block.betterend.infusion_pedestal": "Infusionssockel",
+	"block.betterend.infusion_pedestal": "Elementarsockel",
 	
 	"block.betterend.end_lotus_seed": "Endlotussamen",
 	"block.betterend.end_lotus_stem": "Endlotusstamm",
@@ -227,7 +227,7 @@
 	
 	"block.betterend.flavolite_runed": "Flavolitrune",
 	"block.betterend.end_portal_block": "Endportal",
-	"block.betterend.eternal_pedestal": "Ewiges Sockel",
+	"block.betterend.eternal_pedestal": "Ewiger Sockel",
 	"block.betterend.flavolite_runed_eternal": "Ewige Flavolitrune",
 	"item.betterend.eternal_crystal": "Ewiger Kristall",
 	

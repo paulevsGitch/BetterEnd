@@ -225,5 +225,6 @@ public class MetalMaterial {
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
 		TagHelper.addTag(TagAPI.DRAGON_IMMUNE, ore, bars);
+		TagHelper.addTag(TagAPI.HAMMERS, hammer);
 	}
 }

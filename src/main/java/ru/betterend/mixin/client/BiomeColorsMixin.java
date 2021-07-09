@@ -13,10 +13,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.ColorUtil;
+import ru.bclib.util.MHelper;
 import ru.betterend.client.ClientOptions;
 import ru.betterend.registry.EndBlocks;
 
 import java.awt.Point;
+import java.util.Arrays;
+import java.util.Comparator;
 
 @Mixin(BiomeColors.class)
 public class BiomeColorsMixin {
@@ -35,8 +38,7 @@ public class BiomeColorsMixin {
 				mut.setX(pos.getX() + OFFSETS[i].x);
 				mut.setZ(pos.getZ() + OFFSETS[i].y);
 				if ((view.getBlockState(mut).is(EndBlocks.BRIMSTONE))) {
-					info.setReturnValue(i < 16 ? STREAM_COLOR : POISON_COLOR);
-					info.cancel();
+					info.setReturnValue(i < 4 ? POISON_COLOR : STREAM_COLOR);
 					return;
 				}
 			}
@@ -46,21 +48,15 @@ public class BiomeColorsMixin {
 	static {
 		HAS_SODIUM = FabricLoader.getInstance().isModLoaded("sodium");
 
+		int index = 0;
 		OFFSETS = new Point[20];
-		for (int i = 0; i < 3; i++) {
-			int p = i - 1;
-			OFFSETS[i] = new Point(p, -2);
-			OFFSETS[i + 3] = new Point(p, 2);
-			OFFSETS[i + 6] = new Point(-2, p);
-			OFFSETS[i + 9] = new Point(2, p);
+		for (int x = -2; x < 3; x++) {
+			for (int z = -2; z < 3; z++) {
+				if ((x != 0 || z != 0) && (Math.abs(x) != 2 || Math.abs(z) != 2)) {
+					OFFSETS[index++] = new Point(x, z);
+				}
+			}
 		}
-
-		for (int i = 0; i < 4; i++) {
-			int inner = i + 16;
-			Direction dir = BlocksHelper.HORIZONTAL[i];
-			OFFSETS[inner] = new Point(dir.getStepX(), dir.getStepZ());
-			dir = BlocksHelper.HORIZONTAL[(i + 1) & 3];
-			OFFSETS[i + 12] = new Point(OFFSETS[inner].x + dir.getStepX(), OFFSETS[inner].y + dir.getStepZ());
-		}
+		Arrays.sort(OFFSETS, Comparator.comparingInt(pos -> MHelper.sqr(pos.x) + MHelper.sqr(pos.y)));
 	}
 }

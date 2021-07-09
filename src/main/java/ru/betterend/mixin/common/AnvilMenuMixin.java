@@ -87,8 +87,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 					world.levelEvent(1030, blockPos, 0);
 				}
 			});
-			//TODO: no more return, does this still work?
-			//info.setReturnValue(stack);
+			info.cancel();
 		}
 	}
 

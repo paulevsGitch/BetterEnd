@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionDisplay> {
@@ -44,7 +45,6 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 		return ICON;
 	}
 
-
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIInfusionDisplay display, Rectangle bounds) {
 		Point centerPoint = new Point(bounds.getCenterX() - 34, bounds.getCenterY() - 2);
@@ -52,6 +52,14 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 		widgets.add(Widgets.createRecipeBase(bounds));
 		List<EntryIngredient> inputEntries = display.getInputEntries();
 		List<EntryIngredient> outputEntries = display.getOutputEntries();
+		if (inputEntries.size() < 9) {
+			List<EntryIngredient> newList = new ArrayList<EntryIngredient>(9);
+			newList.addAll(inputEntries);
+			for (int i = inputEntries.size(); i < 9; i++) {
+				newList.add(EntryIngredient.empty());
+			}
+			inputEntries = newList;
+		}
 		widgets.add(Widgets.createTexturedWidget(BACKGROUND, bounds.x, bounds.y, 0, 0, 150, 104, 150, 104));
 		widgets.add(Widgets.createSlot(centerPoint).entries(inputEntries.get(0)).disableBackground().markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x, centerPoint.y - 28)).entries(inputEntries.get(1)).disableBackground().markInput());
@@ -63,8 +71,15 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y + 24)).entries(inputEntries.get(6)).disableBackground().markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y - 24)).entries(inputEntries.get(8)).disableBackground().markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 80, centerPoint.y)).entries(outputEntries.get(0)).disableBackground().markOutput());
-		widgets.add(Widgets.createLabel(new Point(bounds.getMaxX() - 5, bounds.y + 6), new TranslatableComponent("category.rei.infusion.time&val", display.getInfusionTime()))
-				.noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(
+			Widgets.createLabel(
+				new Point(bounds.getMaxX() - 5, bounds.y + 6),
+				new TranslatableComponent("category.rei.infusion.time&val", display.getInfusionTime())
+			)
+			.noShadow()
+			.rightAligned()
+			.color(0xFF404040, 0xFFBBBBBB)
+		);
 		return widgets;
 	}
 
@@ -74,7 +89,5 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 	}
 
 	@Override
-	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIInfusionDisplay display, IntList redSlots) {
-
-	}
+	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIInfusionDisplay display, IntList redSlots) {}
 }

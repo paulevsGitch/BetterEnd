@@ -3,6 +3,7 @@ package ru.betterend.blocks.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.rituals.InfusionRitual;
@@ -26,15 +27,6 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 		}
 	}
 
-	public void setLevelAndPosition(Level world, BlockPos pos) {
-		if (hasRitual()) {
-			linkedRitual.setLocation(world, pos);
-		}
-		else {
-			linkRitual(new InfusionRitual(this, world, pos));
-		}
-	}
-
 	public void linkRitual(InfusionRitual ritual) {
 		linkedRitual = ritual;
 	}
@@ -45,13 +37,6 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 
 	public boolean hasRitual() {
 		return linkedRitual != null;
-	}
-
-	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, InfusionPedestalEntity blockEntity) {
-		if (blockEntity.hasRitual()) {
-			blockEntity.linkedRitual.tick();
-		}
-		PedestalBlockEntity.tick(tickLevel, tickPos, tickState, blockEntity);
 	}
 
 	@Override
@@ -68,6 +53,16 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 		if (tag.contains("ritual")) {
 			linkedRitual = new InfusionRitual(this, level, worldPosition);
 			linkedRitual.fromTag(tag.getCompound("ritual"));
+		}
+	}
+
+	public static <T extends BlockEntity> void tickEnity(Level level, BlockPos blockPos, BlockState blockState, T uncastedEntity) {
+		if (uncastedEntity instanceof InfusionPedestalEntity) {
+			InfusionPedestalEntity blockEntity = (InfusionPedestalEntity) uncastedEntity;
+			if (blockEntity.hasRitual()) {
+				blockEntity.linkedRitual.tick();
+			}
+			PedestalBlockEntity.tick(level, blockPos, blockState, blockEntity);
 		}
 	}
 }

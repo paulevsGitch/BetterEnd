@@ -6,12 +6,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
+import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.rituals.InfusionRitual;
 
 @SuppressWarnings("deprecation")
@@ -71,6 +75,12 @@ public class InfusionPedestal extends PedestalBlock {
 			}
 		}
 		return super.getShape(state, world, pos, context);
+	}
+
+	@Override
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return InfusionPedestalEntity::tickEnity;
 	}
 
 	static {

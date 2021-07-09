@@ -58,7 +58,7 @@ public class CavePumpkinBlock extends BaseBlockNotFull implements IRenderTyped {
 		VoxelShape top = Block.box(5, 15, 5, 11, 16, 11);
 		SHAPE_BIG = Shapes.or(lantern, cap, top);
 
-		lantern = Block.box(1, 7, 1, 15, 13, 15);
+		lantern = Block.box(5, 7, 5, 11, 13, 11);
 		cap = Block.box(4, 12, 4, 12, 15, 12);
 		top = Block.box(6, 15, 6, 10, 16, 10);
 		SHAPE_SMALL = Shapes.or(lantern, cap, top);

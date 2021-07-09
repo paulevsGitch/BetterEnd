@@ -219,6 +219,15 @@
 			}
 		]
 	},
+	"betterend.ambient.amber_land": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/amber_land",
+				"stream": true
+			}
+		]
+	},
 	
 	"betterend.entity.dragonfly": {
 		"category": "entity",

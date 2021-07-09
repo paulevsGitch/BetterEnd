@@ -42,11 +42,9 @@ import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.EndBlockProperties.PedestalState;
 import ru.betterend.blocks.InfusionPedestal;
-import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.models.Patterns;
-import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
@@ -55,6 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.ToIntFunction;
 
 @SuppressWarnings({"deprecation"})
 public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
@@ -95,9 +94,17 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	protected float height = 1.0F;
 
 	public PedestalBlock(Block parent) {
-		super(FabricBlockSettings.copyOf(parent).luminance(state -> state.getValue(HAS_LIGHT) ? 12 : 0));
+		super(FabricBlockSettings.copyOf(parent).luminance(getLuminance(parent.defaultBlockState())));
 		this.registerDefaultState(stateDefinition.any().setValue(STATE, PedestalState.DEFAULT).setValue(HAS_ITEM, false).setValue(HAS_LIGHT, false));
 		this.parent = parent;
+	}
+
+	private static ToIntFunction<BlockState> getLuminance(BlockState parent) {
+		final int light = parent.getLightEmission();
+		if (light > 0) {
+			return state -> light;
+		}
+		return state -> state.getValue(HAS_LIGHT) ? 12 : 0;
 	}
 
 	public float getHeight(BlockState state) {

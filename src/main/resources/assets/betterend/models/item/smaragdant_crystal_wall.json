@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/wall_inventory",
+	"textures": {
+		"wall": "betterend:block/smaragdant_crystal_side"
+	}
+}

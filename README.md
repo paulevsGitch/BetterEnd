@@ -13,5 +13,3 @@ Building:
 * Run command line in folder: gradlew build
 * Mod .jar will be in ./build/libs
 
-Mappings:
-* https://modmuss50.me/fabric.html?&version=1.16.4

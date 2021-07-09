@@ -81,8 +81,7 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 		if (!player.isCreative()) {
 			if (!checkHammerDurability(craftingInventory, player)) return ItemStack.EMPTY;
 			ItemStack hammer = craftingInventory.getItem(1);
-			hammer.hurtAndBreak(this.damage, player, entity ->
-					entity.broadcastBreakEvent((InteractionHand) null));
+			hammer.hurtAndBreak(this.damage, player, entity -> entity.broadcastBreakEvent((InteractionHand) null));
 		}
 		return this.assemble(craftingInventory);
 	}

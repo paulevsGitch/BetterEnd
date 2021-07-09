@@ -394,9 +394,9 @@ public class EndBlocks extends BlocksRegistry {
 	public static final Block ENDER_BLOCK = registerBlock("ender_block", new EnderBlock());
 	public static final Block AURORA_CRYSTAL = registerBlock("aurora_crystal", new AuroraCrystalBlock());
 	public static final Block AMBER_BLOCK = registerBlock("amber_block", new AmberBlock());
+	public static final Block SMARAGDANT_CRYSTAL_SHARD = registerBlock("smaragdant_crystal_shard", new SmaragdantCrystalShardBlock());
 	public static final Block SMARAGDANT_CRYSTAL = registerBlock("smaragdant_crystal", new SmaragdantCrystalBlock());
 	public static final CrystalSubblocksMaterial SMARAGDANT_SUBBLOCKS = new CrystalSubblocksMaterial("smaragdant_crystal", SMARAGDANT_CRYSTAL);
-	public static final Block SMARAGDANT_CRYSTAL_SHARD = registerBlock("smaragdant_crystal_shard", new SmaragdantCrystalShardBlock());
 
 	public static final Block RESPAWN_OBELISK = registerBlock("respawn_obelisk", new RespawnObeliskBlock());
 

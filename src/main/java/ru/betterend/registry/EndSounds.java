@@ -23,6 +23,7 @@ public class EndSounds {
 	public static final SoundEvent AMBIENT_UMBRELLA_JUNGLE = register("ambient", "umbrella_jungle");
 	public static final SoundEvent AMBIENT_GLOWING_GRASSLANDS = register("ambient", "glowing_grasslands");
 	public static final SoundEvent AMBIENT_CAVES = register("ambient", "caves");
+	public static final SoundEvent AMBIENT_AMBER_LAND = register("ambient", "amber_land");
 
 	// Entity
 	public static final SoundEvent ENTITY_DRAGONFLY = register("entity", "dragonfly");

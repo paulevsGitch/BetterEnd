@@ -1,0 +1,23 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"side": "betterend:block/smaragdant_crystal_side",
+		"top": "betterend:block/smaragdant_crystal_top",
+		"particle": "#side"
+	},
+	"elements": [ 	 
+		{
+			"from": [ 4, -0.01, 4 ],
+			"to": [ 12, 16, 12 ],
+			"shade": false,
+			"faces": {
+				"down": { "uv": [ 4, 4, 12, 12 ], "texture": "#top", "cullface": "down" },
+				"up": { "uv": [ 4, 4, 12, 12 ], "texture": "#top", "cullface": "up" },
+				"north": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
+				"south": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
+				"west": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
+				"east": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" }
+			}
+		}
+	]
+}

@@ -19,6 +19,7 @@ public class AmberLandBiome extends EndBiome {
 				.setPlantsColor(219, 115, 38)
 				.setWaterAndFogColor(145, 108, 72)
 				.setMusic(EndSounds.MUSIC_FOREST)
+				.setLoop(EndSounds.AMBIENT_AMBER_LAND)
 				.setParticles(EndParticles.AMBER_SPHERE, 0.001F)
 				.setSurface(EndBlocks.AMBER_MOSS)
 				.addFeature(EndFeatures.AMBER_ORE)

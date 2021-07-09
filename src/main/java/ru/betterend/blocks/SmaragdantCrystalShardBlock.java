@@ -41,7 +41,7 @@ public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements IR
 				.materialColor(MaterialColor.COLOR_GREEN)
 				.breakByTool(FabricToolTags.PICKAXES)
 				.luminance(15)
-				.sound(SoundType.GLASS)
+				.sound(SoundType.AMETHYST_CLUSTER)
 				.requiresCorrectToolForDrops()
 				.noCollission());
 	}

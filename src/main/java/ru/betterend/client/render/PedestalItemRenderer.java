@@ -37,8 +37,6 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
 		BlockState state = world.getBlockState(blockEntity.getBlockPos());
 		if (!(state.getBlock() instanceof PedestalBlock)) return;
 
-		System.out.println(state.getBlock());
-
 		ItemStack activeItem = blockEntity.getItem(0);
 
 		matrices.pushPose();

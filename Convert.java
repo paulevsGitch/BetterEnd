@@ -149,32 +149,12 @@ public class Convert {
     }
     public void c (){
         float scale = 1;
-        ModelPart partC = new ModelPart(64, 64, 0, 19, "partC");
-		partC.addBox(1.0F, 0.0F, 1.0F, 14.0F, 9.0F, 14.0F, 0.0F);
-		ModelPart partA = new ModelPart(64, 64, 0, 0,"partA");
-		partA.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
-		partA.y = 9.0F;
-		partA.z = 1.0F;
-		ModelPart partB = new ModelPart(64, 64, 0, 0, "partB");
-		partB.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
-		partB.y = 8.0F;
-		ModelPart partRightC = new ModelPart(64, 64, 0, 19, "partRightC");
-		partRightC.addBox(1.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
-		ModelPart partRightA = new ModelPart(64, 64, 0, 0, "partRightA");
-		partRightA.addBox(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		partRightA.y = 9.0F;
-		partRightA.z = 1.0F;
-		ModelPart partRightB = new ModelPart(64, 64, 0, 0, "partRightB");
-		partRightB.addBox(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		partRightB.y = 8.0F;
-		ModelPart partLeftC = new ModelPart(64, 64, 0, 19, "partLeftC");
-		partLeftC.addBox(0.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
-		ModelPart partLeftA = new ModelPart(64, 64, 0, 0, "partLeftA");
-		partLeftA.addBox(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		partLeftA.y = 9.0F;
-		partLeftA.z = 1.0F;
-		ModelPart partLeftB = new ModelPart(64, 64, 0, 0, "partLeftB");
-		partLeftB.addBox(0.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		partLeftB.y = 8.0F;
+        ModelPart[] SHARDS = new ModelPart[4];
+        SHARDS[0] = new ModelPart(16, 16, 2, 4, "SHARDS[0]").addBox(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[1] = new ModelPart(16, 16, 2, 4, "SHARDS[1]").addBox(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[2] = new ModelPart(16, 16, 2, 4, "SHARDS[2]").addBox(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
+		SHARDS[3] = new ModelPart(16, 16, 2, 4, "SHARDS[3]").addBox(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
+		ModelPart CORE = new ModelPart(16, 16, 0, 0, "CORE");
+		CORE.addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
     }
 }

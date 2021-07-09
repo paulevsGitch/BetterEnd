@@ -1,0 +1,21 @@
+{
+    "textures": {
+        "wall": "betterend:block/smaragdant_crystal_side",
+        "top": "betterend:block/smaragdant_crystal_top",
+		"particle": "#wall"
+    },
+    "elements": [
+        {
+			"from": [ 5, 0, 0 ],
+            "to": [ 11, 14, 8 ],
+			"shade": false,
+            "faces": {
+                "down":  { "texture": "#top", "cullface": "down" },
+                "up":    { "texture": "#top" },
+                "north": { "texture": "#wall", "cullface": "north" },
+                "west":  { "texture": "#wall" },
+                "east":  { "texture": "#wall" }
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#pillar"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "pillar",
+			"from": [ 3, 0, 3 ],
+			"to": [ 13, 16, 13 ],
+			"shade": false,
+			"faces": {
+				"north": { "uv": [ 3, 0, 13, 16 ], "texture": "#pillar" },
+				"south": { "uv": [ 3, 0, 13, 16 ], "texture": "#pillar" },
+				"west": { "uv": [ 3, 0, 13, 16 ], "texture": "#pillar" },
+				"east": { "uv": [ 3, 0, 13, 16 ], "texture": "#pillar" }
+			}
+		}
+	]
+}

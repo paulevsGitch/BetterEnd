@@ -1,7 +1,5 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -12,9 +10,11 @@ import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.blocks.BaseWallPlantBlock;
 import ru.bclib.util.BlocksHelper;
 
+import java.util.Random;
+
 public class WallPlantFeature extends WallScatterFeature {
 	private final Block block;
-	
+
 	public WallPlantFeature(Block block, int radius) {
 		super(radius);
 		this.block = block;

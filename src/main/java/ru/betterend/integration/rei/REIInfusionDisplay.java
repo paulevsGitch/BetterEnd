@@ -1,68 +1,49 @@
 package ru.betterend.integration.rei;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.google.common.collect.Lists;
-
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.TransferRecipeDisplay;
-import me.shedaniel.rei.server.ContainerInfo;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
+import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.Recipe;
-import ru.betterend.recipe.builders.AlloyingRecipe;
+import org.jetbrains.annotations.NotNull;
 import ru.betterend.recipe.builders.InfusionRecipe;
 
-public class REIInfusionDisplay implements TransferRecipeDisplay {
-	
+import java.util.Collections;
+import java.util.Optional;
+
+public class REIInfusionDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
+
 	private final InfusionRecipe recipe;
-	private final List<List<EntryStack>> input;
-	private final List<EntryStack> output;
 	private final int time;
-	
+
 	public REIInfusionDisplay(InfusionRecipe recipe) {
+		super(
+				EntryIngredients.ofIngredients(recipe.getIngredients()),
+				Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
+		);
 		this.recipe = recipe;
-		this.input = Lists.newArrayList();
-		this.output = Collections.singletonList(EntryStack.create(recipe.getResultItem()));
 		this.time = recipe.getInfusionTime();
-		
-		recipe.getIngredients().forEach(ingredient -> {
-			input.add(EntryStack.ofIngredient(ingredient));
-		});
 	}
-	
+
 	public int getInfusionTime() {
 		return this.time;
 	}
-	
+
 	@Override
-	public @NotNull Optional<ResourceLocation> getRecipeLocation() {
+	public @NotNull Optional<ResourceLocation> getDisplayLocation() {
 		return Optional.ofNullable(recipe).map(Recipe::getId);
 	}
 
 	@Override
-	public @NotNull List<List<EntryStack>> getInputEntries() {
-		return this.input;
-	}
-	
-	@Override
-	public @NotNull List<List<EntryStack>> getResultingEntries() {
-		return Collections.singletonList(output);
+	public CategoryIdentifier<?> getCategoryIdentifier() {
+		return REIPlugin.INFUSION;
 	}
 
-	@Override
-	public @NotNull ResourceLocation getRecipeCategory() {
-		return AlloyingRecipe.ID;
-	}
-	
-	@Override
-	public @NotNull List<List<EntryStack>> getRequiredEntries() {
-		return this.input;
-	}
+	// @Override
+	// public @NotNull List<List<EntryStack>> getRequiredEntries() {
+	// 	return this.input;
+	// }
 
 	@Override
 	public int getWidth() {
@@ -74,8 +55,8 @@ public class REIInfusionDisplay implements TransferRecipeDisplay {
 		return 0;
 	}
 
-	@Override
-	public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo, AbstractContainerMenu container) {
-		return this.input;
-	}
+	// @Override
+	// public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo, AbstractContainerMenu container) {
+	//	return this.input;
+	//}
 }

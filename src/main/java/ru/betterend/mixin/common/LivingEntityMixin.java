@@ -1,16 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Collection;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.At.Shift;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -32,11 +21,21 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndAttributes;
+
+import java.util.Collection;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -94,7 +93,8 @@ public abstract class LivingEntityMixin extends Entity {
 			if (mobEffectInstance.getEffect() == MobEffects.BLINDNESS && getAttributes().getValue(EndAttributes.BLINDNESS_RESISTANCE) > 0.0) {
 				info.setReturnValue(false);
 			}
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			BetterEnd.LOGGER.warning("Blindness resistance attribute haven't been registered.");
 		}
 	}
@@ -103,9 +103,9 @@ public abstract class LivingEntityMixin extends Entity {
 	public void be_hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
 		this.lastAttacker = source.getEntity();
 	}
-	
-	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(FDD)V"))
-	private float be_increaseKnockback(float value, double x, double z) {
+
+	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V"), index = 0)
+	private double be_increaseKnockback(double value, double x, double z) {
 		if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) lastAttacker;
 			value += this.be_getKnockback(attacker.getMainHandItem().getItem());
@@ -125,10 +125,12 @@ public abstract class LivingEntityMixin extends Entity {
 								livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
 					}
 					isFlying = true;
-				} else {
+				}
+				else {
 					isFlying = false;
 				}
-			} else {
+			}
+			else {
 				isFlying = false;
 			}
 			setSharedFlag(7, isFlying);
@@ -149,9 +151,9 @@ public abstract class LivingEntityMixin extends Entity {
 
 			Vec3 lookAngle = getLookAngle();
 			double d = 0.08D;
-			float rotX = xRot * 0.017453292F;
+			float rotX = getXRot() * 0.017453292F;
 			double k = Math.sqrt(lookAngle.x * lookAngle.x + lookAngle.z * lookAngle.z);
-			double l = Math.sqrt(getHorizontalDistanceSqr(moveDelta));
+			double l = moveDelta.horizontalDistance();
 			double lookLen = lookAngle.length();
 			float n = Mth.cos(rotX);
 			n = (float) (n * n * Math.min(1.0D, lookLen / 0.4D));
@@ -177,7 +179,7 @@ public abstract class LivingEntityMixin extends Entity {
 			move(MoverType.SELF, moveDelta);
 			if (!level.isClientSide) {
 				if (horizontalCollision) {
-					coef = Math.sqrt(getHorizontalDistanceSqr(moveDelta));
+					coef = moveDelta.horizontalDistance();
 					double r = l - coef;
 					float dmg = (float) (r * 10.0D - 3.0D);
 					if (dmg > 0.0F) {

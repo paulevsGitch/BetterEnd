@@ -1,16 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.function.Supplier;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -27,26 +16,36 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.level.storage.WritableLevelData;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.api.BiomeAPI;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.generator.GeneratorOptions;
 
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.function.Supplier;
+
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin extends Level {
 	private static String be_lastWorld = null;
-	
+
 	protected ServerLevelMixin(WritableLevelData writableLevelData, ResourceKey<Level> resourceKey, DimensionType dimensionType, Supplier<ProfilerFiller> supplier, boolean bl, boolean bl2, long l) {
 		super(writableLevelData, resourceKey, dimensionType, supplier, bl, bl2, l);
 	}
-	
+
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, LevelStorageSource.LevelStorageAccess session, ServerLevelData properties, ResourceKey<Level> registryKey, DimensionType dimensionType, ChunkProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long l, List<CustomSpawner> list, boolean bl, CallbackInfo info) {
 		if (be_lastWorld != null && be_lastWorld.equals(session.getLevelId())) {
 			return;
 		}
-		
+
 		be_lastWorld = session.getLevelId();
 		ServerLevel world = ServerLevel.class.cast(this);
 		EndBiomes.onWorldLoad(world.getSeed());
@@ -61,13 +60,13 @@ public abstract class ServerLevelMixin extends Level {
 			}
 		}
 	}
-	
+
 	@ModifyArg(
-		method = "tickChunk",
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"
-		)
+			method = "tickChunk",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"
+			)
 	)
 	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
 		if (state.is(Blocks.ICE)) {

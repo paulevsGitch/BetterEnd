@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -24,6 +22,8 @@ import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyped {
@@ -94,12 +94,12 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 			world.addFreshEntity(drop);
 		}
 	}
-	
+
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-	
+
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return Fluids.WATER.getSource(false);

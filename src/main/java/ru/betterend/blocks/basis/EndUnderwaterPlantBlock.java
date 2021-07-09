@@ -6,7 +6,8 @@ import ru.bclib.blocks.UnderwaterPlantBlock;
 
 public class EndUnderwaterPlantBlock extends UnderwaterPlantBlock {
 
-	public EndUnderwaterPlantBlock() {}
+	public EndUnderwaterPlantBlock() {
+	}
 
 	public EndUnderwaterPlantBlock(int light) {
 		super(light);

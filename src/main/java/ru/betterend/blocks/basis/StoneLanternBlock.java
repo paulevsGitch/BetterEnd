@@ -1,9 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.util.Optional;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -17,19 +13,22 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.interfaces.IColorProvider;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Optional;
+
 public class StoneLanternBlock extends EndLanternBlock implements IColorProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(3, 1, 3, 13, 16, 13);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(3, 0, 3, 13, 15, 13);
-	
+
 	public StoneLanternBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).luminance(15));
 	}
-	
+
 	@Override
 	public BlockColor getProvider() {
 		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
@@ -39,7 +38,7 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	public ItemColor getItemProvider() {
 		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getItemProvider();
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(IS_FLOOR) ? SHAPE_FLOOR : SHAPE_CEIL;

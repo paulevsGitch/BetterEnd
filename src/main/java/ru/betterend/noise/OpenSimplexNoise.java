@@ -3,7 +3,7 @@ package ru.betterend.noise;
 /*
  * OpenSimplex Noise in Java.
  * by Kurt Spencer
- * 
+ *
  * v1.1 (October 5, 2014)
  * - Added 2D and 4D implementations.
  * - Proper gradient sets for all dimensions, from a
@@ -16,7 +16,7 @@ package ru.betterend.noise;
  *   will be the same when ported to other languages.
  */
 
-public class OpenSimplexNoise {
+public final class OpenSimplexNoise {
 	private static final double STRETCH_CONSTANT_2D = -0.211324865405187; // (1/Math.sqrt(2+1)-1)/2;
 	private static final double SQUISH_CONSTANT_2D = 0.366025403784439; // (Math.sqrt(2+1)-1)/2;
 	private static final double STRETCH_CONSTANT_3D = -1.0 / 6; // (1/Math.sqrt(3+1)-1)/3;
@@ -132,40 +132,45 @@ public class OpenSimplexNoise {
 		if (inSum <= 1) { // We're inside the triangle (2-Simplex) at (0,0)
 			double zins = 1 - inSum;
 			if (zins > xins || zins > yins) { // (0,0) is one of the closest two
-												// triangular vertices
+				// triangular vertices
 				if (xins > yins) {
 					xsv_ext = xsb + 1;
 					ysv_ext = ysb - 1;
 					dx_ext = dx0 - 1;
 					dy_ext = dy0 + 1;
-				} else {
+				}
+				else {
 					xsv_ext = xsb - 1;
 					ysv_ext = ysb + 1;
 					dx_ext = dx0 + 1;
 					dy_ext = dy0 - 1;
 				}
-			} else { // (1,0) and (0,1) are the closest two vertices.
+			}
+			else { // (1,0) and (0,1) are the closest two vertices.
 				xsv_ext = xsb + 1;
 				ysv_ext = ysb + 1;
 				dx_ext = dx0 - 1 - 2 * SQUISH_CONSTANT_2D;
 				dy_ext = dy0 - 1 - 2 * SQUISH_CONSTANT_2D;
 			}
-		} else { // We're inside the triangle (2-Simplex) at (1,1)
+		}
+		else { // We're inside the triangle (2-Simplex) at (1,1)
 			double zins = 2 - inSum;
 			if (zins < xins || zins < yins) { // (0,0) is one of the closest two
-												// triangular vertices
+				// triangular vertices
 				if (xins > yins) {
 					xsv_ext = xsb + 2;
 					ysv_ext = ysb + 0;
 					dx_ext = dx0 - 2 - 2 * SQUISH_CONSTANT_2D;
 					dy_ext = dy0 + 0 - 2 * SQUISH_CONSTANT_2D;
-				} else {
+				}
+				else {
 					xsv_ext = xsb + 0;
 					ysv_ext = ysb + 2;
 					dx_ext = dx0 + 0 - 2 * SQUISH_CONSTANT_2D;
 					dy_ext = dy0 - 2 - 2 * SQUISH_CONSTANT_2D;
 				}
-			} else { // (1,0) and (0,1) are the closest two vertices.
+			}
+			else { // (1,0) and (0,1) are the closest two vertices.
 				dx_ext = dx0;
 				dy_ext = dy0;
 				xsv_ext = xsb;
@@ -249,7 +254,8 @@ public class OpenSimplexNoise {
 			if (aScore >= bScore && zins > bScore) {
 				bScore = zins;
 				bPoint = 0x04;
-			} else if (aScore < bScore && zins > aScore) {
+			}
+			else if (aScore < bScore && zins > aScore) {
 				aScore = zins;
 				aPoint = 0x04;
 			}
@@ -260,20 +266,21 @@ public class OpenSimplexNoise {
 			// (0,0,0)
 			double wins = 1 - inSum;
 			if (wins > aScore || wins > bScore) { // (0,0,0) is one of the
-													// closest two tetrahedral
-													// vertices.
+				// closest two tetrahedral
+				// vertices.
 				byte c = (bScore > aScore ? bPoint : aPoint); // Our other
-																// closest
-																// vertex is the
-																// closest out
-																// of a and b.
+				// closest
+				// vertex is the
+				// closest out
+				// of a and b.
 
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsb - 1;
 					xsv_ext1 = xsb;
 					dx_ext0 = dx0 + 1;
 					dx_ext1 = dx0;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsb + 1;
 					dx_ext0 = dx_ext1 = dx0 - 1;
 				}
@@ -284,11 +291,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x01) == 0) {
 						ysv_ext1 -= 1;
 						dy_ext1 += 1;
-					} else {
+					}
+					else {
 						ysv_ext0 -= 1;
 						dy_ext0 += 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysb + 1;
 					dy_ext0 = dy_ext1 = dy0 - 1;
 				}
@@ -298,22 +307,25 @@ public class OpenSimplexNoise {
 					zsv_ext1 = zsb - 1;
 					dz_ext0 = dz0;
 					dz_ext1 = dz0 + 1;
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsb + 1;
 					dz_ext0 = dz_ext1 = dz0 - 1;
 				}
-			} else { // (0,0,0) is not one of the closest two tetrahedral
-						// vertices.
+			}
+			else { // (0,0,0) is not one of the closest two tetrahedral
+				// vertices.
 				byte c = (byte) (aPoint | bPoint); // Our two extra vertices are
-													// determined by the closest
-													// two.
+				// determined by the closest
+				// two.
 
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsb;
 					xsv_ext1 = xsb - 1;
 					dx_ext0 = dx0 - 2 * SQUISH_CONSTANT_3D;
 					dx_ext1 = dx0 + 1 - SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsb + 1;
 					dx_ext0 = dx0 - 1 - 2 * SQUISH_CONSTANT_3D;
 					dx_ext1 = dx0 - 1 - SQUISH_CONSTANT_3D;
@@ -324,7 +336,8 @@ public class OpenSimplexNoise {
 					ysv_ext1 = ysb - 1;
 					dy_ext0 = dy0 - 2 * SQUISH_CONSTANT_3D;
 					dy_ext1 = dy0 + 1 - SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysb + 1;
 					dy_ext0 = dy0 - 1 - 2 * SQUISH_CONSTANT_3D;
 					dy_ext1 = dy0 - 1 - SQUISH_CONSTANT_3D;
@@ -335,7 +348,8 @@ public class OpenSimplexNoise {
 					zsv_ext1 = zsb - 1;
 					dz_ext0 = dz0 - 2 * SQUISH_CONSTANT_3D;
 					dz_ext1 = dz0 + 1 - SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsb + 1;
 					dz_ext0 = dz0 - 1 - 2 * SQUISH_CONSTANT_3D;
 					dz_ext1 = dz0 - 1 - SQUISH_CONSTANT_3D;
@@ -378,8 +392,9 @@ public class OpenSimplexNoise {
 				attn3 *= attn3;
 				value += attn3 * attn3 * extrapolate(xsb + 0, ysb + 0, zsb + 1, dx3, dy3, dz3);
 			}
-		} else if (inSum >= 2) { // We're inside the tetrahedron (3-Simplex) at
-									// (1,1,1)
+		}
+		else if (inSum >= 2) { // We're inside the tetrahedron (3-Simplex) at
+			// (1,1,1)
 
 			// Determine which two tetrahedral vertices are the closest, out of
 			// (1,1,0), (1,0,1), (0,1,1) but not (1,1,1).
@@ -390,7 +405,8 @@ public class OpenSimplexNoise {
 			if (aScore <= bScore && zins < bScore) {
 				bScore = zins;
 				bPoint = 0x03;
-			} else if (aScore > bScore && zins < aScore) {
+			}
+			else if (aScore > bScore && zins < aScore) {
 				aScore = zins;
 				aPoint = 0x03;
 			}
@@ -401,20 +417,21 @@ public class OpenSimplexNoise {
 			// (1,1,1)
 			double wins = 3 - inSum;
 			if (wins < aScore || wins < bScore) { // (1,1,1) is one of the
-													// closest two tetrahedral
-													// vertices.
+				// closest two tetrahedral
+				// vertices.
 				byte c = (bScore < aScore ? bPoint : aPoint); // Our other
-																// closest
-																// vertex is the
-																// closest out
-																// of a and b.
+				// closest
+				// vertex is the
+				// closest out
+				// of a and b.
 
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsb + 2;
 					xsv_ext1 = xsb + 1;
 					dx_ext0 = dx0 - 2 - 3 * SQUISH_CONSTANT_3D;
 					dx_ext1 = dx0 - 1 - 3 * SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsb;
 					dx_ext0 = dx_ext1 = dx0 - 3 * SQUISH_CONSTANT_3D;
 				}
@@ -425,11 +442,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x01) != 0) {
 						ysv_ext1 += 1;
 						dy_ext1 -= 1;
-					} else {
+					}
+					else {
 						ysv_ext0 += 1;
 						dy_ext0 -= 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysb;
 					dy_ext0 = dy_ext1 = dy0 - 3 * SQUISH_CONSTANT_3D;
 				}
@@ -439,22 +458,25 @@ public class OpenSimplexNoise {
 					zsv_ext1 = zsb + 2;
 					dz_ext0 = dz0 - 1 - 3 * SQUISH_CONSTANT_3D;
 					dz_ext1 = dz0 - 2 - 3 * SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsb;
 					dz_ext0 = dz_ext1 = dz0 - 3 * SQUISH_CONSTANT_3D;
 				}
-			} else { // (1,1,1) is not one of the closest two tetrahedral
-						// vertices.
+			}
+			else { // (1,1,1) is not one of the closest two tetrahedral
+				// vertices.
 				byte c = (byte) (aPoint & bPoint); // Our two extra vertices are
-													// determined by the closest
-													// two.
+				// determined by the closest
+				// two.
 
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsb + 1;
 					xsv_ext1 = xsb + 2;
 					dx_ext0 = dx0 - 1 - SQUISH_CONSTANT_3D;
 					dx_ext1 = dx0 - 2 - 2 * SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsb;
 					dx_ext0 = dx0 - SQUISH_CONSTANT_3D;
 					dx_ext1 = dx0 - 2 * SQUISH_CONSTANT_3D;
@@ -465,7 +487,8 @@ public class OpenSimplexNoise {
 					ysv_ext1 = ysb + 2;
 					dy_ext0 = dy0 - 1 - SQUISH_CONSTANT_3D;
 					dy_ext1 = dy0 - 2 - 2 * SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysb;
 					dy_ext0 = dy0 - SQUISH_CONSTANT_3D;
 					dy_ext1 = dy0 - 2 * SQUISH_CONSTANT_3D;
@@ -476,7 +499,8 @@ public class OpenSimplexNoise {
 					zsv_ext1 = zsb + 2;
 					dz_ext0 = dz0 - 1 - SQUISH_CONSTANT_3D;
 					dz_ext1 = dz0 - 2 - 2 * SQUISH_CONSTANT_3D;
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsb;
 					dz_ext0 = dz0 - SQUISH_CONSTANT_3D;
 					dz_ext1 = dz0 - 2 * SQUISH_CONSTANT_3D;
@@ -522,8 +546,9 @@ public class OpenSimplexNoise {
 				attn0 *= attn0;
 				value += attn0 * attn0 * extrapolate(xsb + 1, ysb + 1, zsb + 1, dx0, dy0, dz0);
 			}
-		} else { // We're inside the octahedron (Rectified 3-Simplex) in
-					// between.
+		}
+		else { // We're inside the octahedron (Rectified 3-Simplex) in
+			// between.
 			double aScore;
 			byte aPoint;
 			boolean aIsFurtherSide;
@@ -537,7 +562,8 @@ public class OpenSimplexNoise {
 				aScore = p1 - 1;
 				aPoint = 0x03;
 				aIsFurtherSide = true;
-			} else {
+			}
+			else {
 				aScore = 1 - p1;
 				aPoint = 0x04;
 				aIsFurtherSide = false;
@@ -549,7 +575,8 @@ public class OpenSimplexNoise {
 				bScore = p2 - 1;
 				bPoint = 0x05;
 				bIsFurtherSide = true;
-			} else {
+			}
+			else {
 				bScore = 1 - p2;
 				bPoint = 0x02;
 				bIsFurtherSide = false;
@@ -564,18 +591,21 @@ public class OpenSimplexNoise {
 					aScore = score;
 					aPoint = 0x06;
 					aIsFurtherSide = true;
-				} else if (aScore > bScore && bScore < score) {
+				}
+				else if (aScore > bScore && bScore < score) {
 					bScore = score;
 					bPoint = 0x06;
 					bIsFurtherSide = true;
 				}
-			} else {
+			}
+			else {
 				double score = 1 - p3;
 				if (aScore <= bScore && aScore < score) {
 					aScore = score;
 					aPoint = 0x01;
 					aIsFurtherSide = false;
-				} else if (aScore > bScore && bScore < score) {
+				}
+				else if (aScore > bScore && bScore < score) {
 					bScore = score;
 					bPoint = 0x01;
 					bIsFurtherSide = false;
@@ -604,14 +634,16 @@ public class OpenSimplexNoise {
 						xsv_ext1 = xsb + 2;
 						ysv_ext1 = ysb;
 						zsv_ext1 = zsb;
-					} else if ((c & 0x02) != 0) {
+					}
+					else if ((c & 0x02) != 0) {
 						dx_ext1 = dx0 - 2 * SQUISH_CONSTANT_3D;
 						dy_ext1 = dy0 - 2 - 2 * SQUISH_CONSTANT_3D;
 						dz_ext1 = dz0 - 2 * SQUISH_CONSTANT_3D;
 						xsv_ext1 = xsb;
 						ysv_ext1 = ysb + 2;
 						zsv_ext1 = zsb;
-					} else {
+					}
+					else {
 						dx_ext1 = dx0 - 2 * SQUISH_CONSTANT_3D;
 						dy_ext1 = dy0 - 2 * SQUISH_CONSTANT_3D;
 						dz_ext1 = dz0 - 2 - 2 * SQUISH_CONSTANT_3D;
@@ -619,7 +651,8 @@ public class OpenSimplexNoise {
 						ysv_ext1 = ysb;
 						zsv_ext1 = zsb + 2;
 					}
-				} else {// Both closest points on (0,0,0) side
+				}
+				else {// Both closest points on (0,0,0) side
 
 					// One of the two extra points is (0,0,0)
 					dx_ext0 = dx0;
@@ -638,14 +671,16 @@ public class OpenSimplexNoise {
 						xsv_ext1 = xsb - 1;
 						ysv_ext1 = ysb + 1;
 						zsv_ext1 = zsb + 1;
-					} else if ((c & 0x02) == 0) {
+					}
+					else if ((c & 0x02) == 0) {
 						dx_ext1 = dx0 - 1 - SQUISH_CONSTANT_3D;
 						dy_ext1 = dy0 + 1 - SQUISH_CONSTANT_3D;
 						dz_ext1 = dz0 - 1 - SQUISH_CONSTANT_3D;
 						xsv_ext1 = xsb + 1;
 						ysv_ext1 = ysb - 1;
 						zsv_ext1 = zsb + 1;
-					} else {
+					}
+					else {
 						dx_ext1 = dx0 - 1 - SQUISH_CONSTANT_3D;
 						dy_ext1 = dy0 - 1 - SQUISH_CONSTANT_3D;
 						dz_ext1 = dz0 + 1 - SQUISH_CONSTANT_3D;
@@ -654,12 +689,14 @@ public class OpenSimplexNoise {
 						zsv_ext1 = zsb - 1;
 					}
 				}
-			} else { // One point on (0,0,0) side, one point on (1,1,1) side
+			}
+			else { // One point on (0,0,0) side, one point on (1,1,1) side
 				byte c1, c2;
 				if (aIsFurtherSide) {
 					c1 = aPoint;
 					c2 = bPoint;
-				} else {
+				}
+				else {
 					c1 = bPoint;
 					c2 = aPoint;
 				}
@@ -672,14 +709,16 @@ public class OpenSimplexNoise {
 					xsv_ext0 = xsb - 1;
 					ysv_ext0 = ysb + 1;
 					zsv_ext0 = zsb + 1;
-				} else if ((c1 & 0x02) == 0) {
+				}
+				else if ((c1 & 0x02) == 0) {
 					dx_ext0 = dx0 - 1 - SQUISH_CONSTANT_3D;
 					dy_ext0 = dy0 + 1 - SQUISH_CONSTANT_3D;
 					dz_ext0 = dz0 - 1 - SQUISH_CONSTANT_3D;
 					xsv_ext0 = xsb + 1;
 					ysv_ext0 = ysb - 1;
 					zsv_ext0 = zsb + 1;
-				} else {
+				}
+				else {
 					dx_ext0 = dx0 - 1 - SQUISH_CONSTANT_3D;
 					dy_ext0 = dy0 - 1 - SQUISH_CONSTANT_3D;
 					dz_ext0 = dz0 + 1 - SQUISH_CONSTANT_3D;
@@ -698,10 +737,12 @@ public class OpenSimplexNoise {
 				if ((c2 & 0x01) != 0) {
 					dx_ext1 -= 2;
 					xsv_ext1 += 2;
-				} else if ((c2 & 0x02) != 0) {
+				}
+				else if ((c2 & 0x02) != 0) {
 					dy_ext1 -= 2;
 					ysv_ext1 += 2;
-				} else {
+				}
+				else {
 					dz_ext1 -= 2;
 					zsv_ext1 += 2;
 				}
@@ -838,7 +879,7 @@ public class OpenSimplexNoise {
 
 		double value = 0;
 		if (inSum <= 1) { // We're inside the pentachoron (4-Simplex) at
-							// (0,0,0,0)
+			// (0,0,0,0)
 
 			// Determine which two of (0,0,0,1), (0,0,1,0), (0,1,0,0), (1,0,0,0)
 			// are closest.
@@ -849,14 +890,16 @@ public class OpenSimplexNoise {
 			if (aScore >= bScore && zins > bScore) {
 				bScore = zins;
 				bPoint = 0x04;
-			} else if (aScore < bScore && zins > aScore) {
+			}
+			else if (aScore < bScore && zins > aScore) {
 				aScore = zins;
 				aPoint = 0x04;
 			}
 			if (aScore >= bScore && wins > bScore) {
 				bScore = wins;
 				bPoint = 0x08;
-			} else if (aScore < bScore && wins > aScore) {
+			}
+			else if (aScore < bScore && wins > aScore) {
 				aScore = wins;
 				aPoint = 0x08;
 			}
@@ -867,19 +910,20 @@ public class OpenSimplexNoise {
 			// (0,0,0,0)
 			double uins = 1 - inSum;
 			if (uins > aScore || uins > bScore) { // (0,0,0,0) is one of the
-													// closest two pentachoron
-													// vertices.
+				// closest two pentachoron
+				// vertices.
 				byte c = (bScore > aScore ? bPoint : aPoint); // Our other
-																// closest
-																// vertex is the
-																// closest out
-																// of a and b.
+				// closest
+				// vertex is the
+				// closest out
+				// of a and b.
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsb - 1;
 					xsv_ext1 = xsv_ext2 = xsb;
 					dx_ext0 = dx0 + 1;
 					dx_ext1 = dx_ext2 = dx0;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsv_ext2 = xsb + 1;
 					dx_ext0 = dx_ext1 = dx_ext2 = dx0 - 1;
 				}
@@ -890,11 +934,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x01) == 0x01) {
 						ysv_ext0 -= 1;
 						dy_ext0 += 1;
-					} else {
+					}
+					else {
 						ysv_ext1 -= 1;
 						dy_ext1 += 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysv_ext2 = ysb + 1;
 					dy_ext0 = dy_ext1 = dy_ext2 = dy0 - 1;
 				}
@@ -906,15 +952,18 @@ public class OpenSimplexNoise {
 						if ((c & 0x03) == 0x03) {
 							zsv_ext0 -= 1;
 							dz_ext0 += 1;
-						} else {
+						}
+						else {
 							zsv_ext1 -= 1;
 							dz_ext1 += 1;
 						}
-					} else {
+					}
+					else {
 						zsv_ext2 -= 1;
 						dz_ext2 += 1;
 					}
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsv_ext2 = zsb + 1;
 					dz_ext0 = dz_ext1 = dz_ext2 = dz0 - 1;
 				}
@@ -924,15 +973,17 @@ public class OpenSimplexNoise {
 					wsv_ext2 = wsb - 1;
 					dw_ext0 = dw_ext1 = dw0;
 					dw_ext2 = dw0 + 1;
-				} else {
+				}
+				else {
 					wsv_ext0 = wsv_ext1 = wsv_ext2 = wsb + 1;
 					dw_ext0 = dw_ext1 = dw_ext2 = dw0 - 1;
 				}
-			} else { // (0,0,0,0) is not one of the closest two pentachoron
-						// vertices.
+			}
+			else { // (0,0,0,0) is not one of the closest two pentachoron
+				// vertices.
 				byte c = (byte) (aPoint | bPoint); // Our three extra vertices
-													// are determined by the
-													// closest two.
+				// are determined by the
+				// closest two.
 
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsv_ext2 = xsb;
@@ -940,7 +991,8 @@ public class OpenSimplexNoise {
 					dx_ext0 = dx0 - 2 * SQUISH_CONSTANT_4D;
 					dx_ext1 = dx0 + 1 - SQUISH_CONSTANT_4D;
 					dx_ext2 = dx0 - SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsv_ext2 = xsb + 1;
 					dx_ext0 = dx0 - 1 - 2 * SQUISH_CONSTANT_4D;
 					dx_ext1 = dx_ext2 = dx0 - 1 - SQUISH_CONSTANT_4D;
@@ -953,11 +1005,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x01) == 0x01) {
 						ysv_ext1 -= 1;
 						dy_ext1 += 1;
-					} else {
+					}
+					else {
 						ysv_ext2 -= 1;
 						dy_ext2 += 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysv_ext2 = ysb + 1;
 					dy_ext0 = dy0 - 1 - 2 * SQUISH_CONSTANT_4D;
 					dy_ext1 = dy_ext2 = dy0 - 1 - SQUISH_CONSTANT_4D;
@@ -970,11 +1024,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x03) == 0x03) {
 						zsv_ext1 -= 1;
 						dz_ext1 += 1;
-					} else {
+					}
+					else {
 						zsv_ext2 -= 1;
 						dz_ext2 += 1;
 					}
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsv_ext2 = zsb + 1;
 					dz_ext0 = dz0 - 1 - 2 * SQUISH_CONSTANT_4D;
 					dz_ext1 = dz_ext2 = dz0 - 1 - SQUISH_CONSTANT_4D;
@@ -986,7 +1042,8 @@ public class OpenSimplexNoise {
 					dw_ext0 = dw0 - 2 * SQUISH_CONSTANT_4D;
 					dw_ext1 = dw0 - SQUISH_CONSTANT_4D;
 					dw_ext2 = dw0 + 1 - SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					wsv_ext0 = wsv_ext1 = wsv_ext2 = wsb + 1;
 					dw_ext0 = dw0 - 1 - 2 * SQUISH_CONSTANT_4D;
 					dw_ext1 = dw_ext2 = dw0 - 1 - SQUISH_CONSTANT_4D;
@@ -1043,11 +1100,12 @@ public class OpenSimplexNoise {
 				attn4 *= attn4;
 				value += attn4 * attn4 * extrapolate(xsb + 0, ysb + 0, zsb + 0, wsb + 1, dx4, dy4, dz4, dw4);
 			}
-		} else if (inSum >= 3) { // We're inside the pentachoron (4-Simplex) at
-									// (1,1,1,1)
-									// Determine which two of (1,1,1,0),
-									// (1,1,0,1), (1,0,1,1), (0,1,1,1)
-									// are closest.
+		}
+		else if (inSum >= 3) { // We're inside the pentachoron (4-Simplex) at
+			// (1,1,1,1)
+			// Determine which two of (1,1,1,0),
+			// (1,1,0,1), (1,0,1,1), (0,1,1,1)
+			// are closest.
 			byte aPoint = 0x0E;
 			double aScore = xins;
 			byte bPoint = 0x0D;
@@ -1055,14 +1113,16 @@ public class OpenSimplexNoise {
 			if (aScore <= bScore && zins < bScore) {
 				bScore = zins;
 				bPoint = 0x0B;
-			} else if (aScore > bScore && zins < aScore) {
+			}
+			else if (aScore > bScore && zins < aScore) {
 				aScore = zins;
 				aPoint = 0x0B;
 			}
 			if (aScore <= bScore && wins < bScore) {
 				bScore = wins;
 				bPoint = 0x07;
-			} else if (aScore > bScore && wins < aScore) {
+			}
+			else if (aScore > bScore && wins < aScore) {
 				aScore = wins;
 				aPoint = 0x07;
 			}
@@ -1073,20 +1133,21 @@ public class OpenSimplexNoise {
 			// (0,0,0,0)
 			double uins = 4 - inSum;
 			if (uins < aScore || uins < bScore) { // (1,1,1,1) is one of the
-													// closest two pentachoron
-													// vertices.
+				// closest two pentachoron
+				// vertices.
 				byte c = (bScore < aScore ? bPoint : aPoint); // Our other
-																// closest
-																// vertex is the
-																// closest out
-																// of a and b.
+				// closest
+				// vertex is the
+				// closest out
+				// of a and b.
 
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsb + 2;
 					xsv_ext1 = xsv_ext2 = xsb + 1;
 					dx_ext0 = dx0 - 2 - 4 * SQUISH_CONSTANT_4D;
 					dx_ext1 = dx_ext2 = dx0 - 1 - 4 * SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsv_ext2 = xsb;
 					dx_ext0 = dx_ext1 = dx_ext2 = dx0 - 4 * SQUISH_CONSTANT_4D;
 				}
@@ -1097,11 +1158,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x01) != 0) {
 						ysv_ext1 += 1;
 						dy_ext1 -= 1;
-					} else {
+					}
+					else {
 						ysv_ext0 += 1;
 						dy_ext0 -= 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysv_ext2 = ysb;
 					dy_ext0 = dy_ext1 = dy_ext2 = dy0 - 4 * SQUISH_CONSTANT_4D;
 				}
@@ -1113,15 +1176,18 @@ public class OpenSimplexNoise {
 						if ((c & 0x03) == 0) {
 							zsv_ext0 += 1;
 							dz_ext0 -= 1;
-						} else {
+						}
+						else {
 							zsv_ext1 += 1;
 							dz_ext1 -= 1;
 						}
-					} else {
+					}
+					else {
 						zsv_ext2 += 1;
 						dz_ext2 -= 1;
 					}
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsv_ext2 = zsb;
 					dz_ext0 = dz_ext1 = dz_ext2 = dz0 - 4 * SQUISH_CONSTANT_4D;
 				}
@@ -1131,15 +1197,17 @@ public class OpenSimplexNoise {
 					wsv_ext2 = wsb + 2;
 					dw_ext0 = dw_ext1 = dw0 - 1 - 4 * SQUISH_CONSTANT_4D;
 					dw_ext2 = dw0 - 2 - 4 * SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					wsv_ext0 = wsv_ext1 = wsv_ext2 = wsb;
 					dw_ext0 = dw_ext1 = dw_ext2 = dw0 - 4 * SQUISH_CONSTANT_4D;
 				}
-			} else { // (1,1,1,1) is not one of the closest two pentachoron
-						// vertices.
+			}
+			else { // (1,1,1,1) is not one of the closest two pentachoron
+				// vertices.
 				byte c = (byte) (aPoint & bPoint); // Our three extra vertices
-													// are determined by the
-													// closest two.
+				// are determined by the
+				// closest two.
 
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsv_ext2 = xsb + 1;
@@ -1147,7 +1215,8 @@ public class OpenSimplexNoise {
 					dx_ext0 = dx0 - 1 - 2 * SQUISH_CONSTANT_4D;
 					dx_ext1 = dx0 - 2 - 3 * SQUISH_CONSTANT_4D;
 					dx_ext2 = dx0 - 1 - 3 * SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsv_ext2 = xsb;
 					dx_ext0 = dx0 - 2 * SQUISH_CONSTANT_4D;
 					dx_ext1 = dx_ext2 = dx0 - 3 * SQUISH_CONSTANT_4D;
@@ -1160,11 +1229,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x01) != 0) {
 						ysv_ext2 += 1;
 						dy_ext2 -= 1;
-					} else {
+					}
+					else {
 						ysv_ext1 += 1;
 						dy_ext1 -= 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysv_ext2 = ysb;
 					dy_ext0 = dy0 - 2 * SQUISH_CONSTANT_4D;
 					dy_ext1 = dy_ext2 = dy0 - 3 * SQUISH_CONSTANT_4D;
@@ -1177,11 +1248,13 @@ public class OpenSimplexNoise {
 					if ((c & 0x03) != 0) {
 						zsv_ext2 += 1;
 						dz_ext2 -= 1;
-					} else {
+					}
+					else {
 						zsv_ext1 += 1;
 						dz_ext1 -= 1;
 					}
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsv_ext2 = zsb;
 					dz_ext0 = dz0 - 2 * SQUISH_CONSTANT_4D;
 					dz_ext1 = dz_ext2 = dz0 - 3 * SQUISH_CONSTANT_4D;
@@ -1193,7 +1266,8 @@ public class OpenSimplexNoise {
 					dw_ext0 = dw0 - 1 - 2 * SQUISH_CONSTANT_4D;
 					dw_ext1 = dw0 - 1 - 3 * SQUISH_CONSTANT_4D;
 					dw_ext2 = dw0 - 2 - 3 * SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					wsv_ext0 = wsv_ext1 = wsv_ext2 = wsb;
 					dw_ext0 = dw0 - 2 * SQUISH_CONSTANT_4D;
 					dw_ext1 = dw_ext2 = dw0 - 3 * SQUISH_CONSTANT_4D;
@@ -1254,8 +1328,9 @@ public class OpenSimplexNoise {
 				attn0 *= attn0;
 				value += attn0 * attn0 * extrapolate(xsb + 1, ysb + 1, zsb + 1, wsb + 1, dx0, dy0, dz0, dw0);
 			}
-		} else if (inSum <= 2) { // We're inside the first dispentachoron
-									// (Rectified 4-Simplex)
+		}
+		else if (inSum <= 2) { // We're inside the first dispentachoron
+			// (Rectified 4-Simplex)
 			double aScore;
 			byte aPoint;
 			boolean aIsBiggerSide = true;
@@ -1267,7 +1342,8 @@ public class OpenSimplexNoise {
 			if (xins + yins > zins + wins) {
 				aScore = xins + yins;
 				aPoint = 0x03;
-			} else {
+			}
+			else {
 				aScore = zins + wins;
 				aPoint = 0x0C;
 			}
@@ -1276,7 +1352,8 @@ public class OpenSimplexNoise {
 			if (xins + zins > yins + wins) {
 				bScore = xins + zins;
 				bPoint = 0x05;
-			} else {
+			}
+			else {
 				bScore = yins + wins;
 				bPoint = 0x0A;
 			}
@@ -1288,16 +1365,19 @@ public class OpenSimplexNoise {
 				if (aScore >= bScore && score > bScore) {
 					bScore = score;
 					bPoint = 0x09;
-				} else if (aScore < bScore && score > aScore) {
+				}
+				else if (aScore < bScore && score > aScore) {
 					aScore = score;
 					aPoint = 0x09;
 				}
-			} else {
+			}
+			else {
 				double score = yins + zins;
 				if (aScore >= bScore && score > bScore) {
 					bScore = score;
 					bPoint = 0x06;
-				} else if (aScore < bScore && score > aScore) {
+				}
+				else if (aScore < bScore && score > aScore) {
 					aScore = score;
 					aPoint = 0x06;
 				}
@@ -1309,7 +1389,8 @@ public class OpenSimplexNoise {
 				bScore = p1;
 				bPoint = 0x01;
 				bIsBiggerSide = false;
-			} else if (aScore < bScore && p1 > aScore) {
+			}
+			else if (aScore < bScore && p1 > aScore) {
 				aScore = p1;
 				aPoint = 0x01;
 				aIsBiggerSide = false;
@@ -1321,7 +1402,8 @@ public class OpenSimplexNoise {
 				bScore = p2;
 				bPoint = 0x02;
 				bIsBiggerSide = false;
-			} else if (aScore < bScore && p2 > aScore) {
+			}
+			else if (aScore < bScore && p2 > aScore) {
 				aScore = p2;
 				aPoint = 0x02;
 				aIsBiggerSide = false;
@@ -1333,7 +1415,8 @@ public class OpenSimplexNoise {
 				bScore = p3;
 				bPoint = 0x04;
 				bIsBiggerSide = false;
-			} else if (aScore < bScore && p3 > aScore) {
+			}
+			else if (aScore < bScore && p3 > aScore) {
 				aScore = p3;
 				aPoint = 0x04;
 				aIsBiggerSide = false;
@@ -1345,7 +1428,8 @@ public class OpenSimplexNoise {
 				bScore = p4;
 				bPoint = 0x08;
 				bIsBiggerSide = false;
-			} else if (aScore < bScore && p4 > aScore) {
+			}
+			else if (aScore < bScore && p4 > aScore) {
 				aScore = p4;
 				aPoint = 0x08;
 				aIsBiggerSide = false;
@@ -1362,7 +1446,8 @@ public class OpenSimplexNoise {
 						xsv_ext1 = xsb - 1;
 						dx_ext0 = dx0 - 3 * SQUISH_CONSTANT_4D;
 						dx_ext1 = dx0 + 1 - 2 * SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						xsv_ext0 = xsv_ext1 = xsb + 1;
 						dx_ext0 = dx0 - 1 - 3 * SQUISH_CONSTANT_4D;
 						dx_ext1 = dx0 - 1 - 2 * SQUISH_CONSTANT_4D;
@@ -1373,7 +1458,8 @@ public class OpenSimplexNoise {
 						ysv_ext1 = ysb - 1;
 						dy_ext0 = dy0 - 3 * SQUISH_CONSTANT_4D;
 						dy_ext1 = dy0 + 1 - 2 * SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						ysv_ext0 = ysv_ext1 = ysb + 1;
 						dy_ext0 = dy0 - 1 - 3 * SQUISH_CONSTANT_4D;
 						dy_ext1 = dy0 - 1 - 2 * SQUISH_CONSTANT_4D;
@@ -1384,7 +1470,8 @@ public class OpenSimplexNoise {
 						zsv_ext1 = zsb - 1;
 						dz_ext0 = dz0 - 3 * SQUISH_CONSTANT_4D;
 						dz_ext1 = dz0 + 1 - 2 * SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						zsv_ext0 = zsv_ext1 = zsb + 1;
 						dz_ext0 = dz0 - 1 - 3 * SQUISH_CONSTANT_4D;
 						dz_ext1 = dz0 - 1 - 2 * SQUISH_CONSTANT_4D;
@@ -1395,7 +1482,8 @@ public class OpenSimplexNoise {
 						wsv_ext1 = wsb - 1;
 						dw_ext0 = dw0 - 3 * SQUISH_CONSTANT_4D;
 						dw_ext1 = dw0 + 1 - 2 * SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						wsv_ext0 = wsv_ext1 = wsb + 1;
 						dw_ext0 = dw0 - 1 - 3 * SQUISH_CONSTANT_4D;
 						dw_ext1 = dw0 - 1 - 2 * SQUISH_CONSTANT_4D;
@@ -1413,19 +1501,23 @@ public class OpenSimplexNoise {
 					if ((c2 & 0x01) != 0) {
 						xsv_ext2 += 2;
 						dx_ext2 -= 2;
-					} else if ((c2 & 0x02) != 0) {
+					}
+					else if ((c2 & 0x02) != 0) {
 						ysv_ext2 += 2;
 						dy_ext2 -= 2;
-					} else if ((c2 & 0x04) != 0) {
+					}
+					else if ((c2 & 0x04) != 0) {
 						zsv_ext2 += 2;
 						dz_ext2 -= 2;
-					} else {
+					}
+					else {
 						wsv_ext2 += 2;
 						dw_ext2 -= 2;
 					}
 
-				} else { // Both closest points on the smaller side
-							// One of the two extra points is (0,0,0,0)
+				}
+				else { // Both closest points on the smaller side
+					// One of the two extra points is (0,0,0,0)
 					xsv_ext2 = xsb;
 					ysv_ext2 = ysb;
 					zsv_ext2 = zsb;
@@ -1443,7 +1535,8 @@ public class OpenSimplexNoise {
 						xsv_ext1 = xsb;
 						dx_ext0 = dx0 + 1 - SQUISH_CONSTANT_4D;
 						dx_ext1 = dx0 - SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						xsv_ext0 = xsv_ext1 = xsb + 1;
 						dx_ext0 = dx_ext1 = dx0 - 1 - SQUISH_CONSTANT_4D;
 					}
@@ -1454,11 +1547,13 @@ public class OpenSimplexNoise {
 						if ((c & 0x01) == 0x01) {
 							ysv_ext0 -= 1;
 							dy_ext0 += 1;
-						} else {
+						}
+						else {
 							ysv_ext1 -= 1;
 							dy_ext1 += 1;
 						}
-					} else {
+					}
+					else {
 						ysv_ext0 = ysv_ext1 = ysb + 1;
 						dy_ext0 = dy_ext1 = dy0 - 1 - SQUISH_CONSTANT_4D;
 					}
@@ -1469,11 +1564,13 @@ public class OpenSimplexNoise {
 						if ((c & 0x03) == 0x03) {
 							zsv_ext0 -= 1;
 							dz_ext0 += 1;
-						} else {
+						}
+						else {
 							zsv_ext1 -= 1;
 							dz_ext1 += 1;
 						}
-					} else {
+					}
+					else {
 						zsv_ext0 = zsv_ext1 = zsb + 1;
 						dz_ext0 = dz_ext1 = dz0 - 1 - SQUISH_CONSTANT_4D;
 					}
@@ -1483,18 +1580,21 @@ public class OpenSimplexNoise {
 						wsv_ext1 = wsb - 1;
 						dw_ext0 = dw0 - SQUISH_CONSTANT_4D;
 						dw_ext1 = dw0 + 1 - SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						wsv_ext0 = wsv_ext1 = wsb + 1;
 						dw_ext0 = dw_ext1 = dw0 - 1 - SQUISH_CONSTANT_4D;
 					}
 
 				}
-			} else { // One point on each "side"
+			}
+			else { // One point on each "side"
 				byte c1, c2;
 				if (aIsBiggerSide) {
 					c1 = aPoint;
 					c2 = bPoint;
-				} else {
+				}
+				else {
 					c1 = bPoint;
 					c2 = aPoint;
 				}
@@ -1506,7 +1606,8 @@ public class OpenSimplexNoise {
 					xsv_ext1 = xsb;
 					dx_ext0 = dx0 + 1 - SQUISH_CONSTANT_4D;
 					dx_ext1 = dx0 - SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsb + 1;
 					dx_ext0 = dx_ext1 = dx0 - 1 - SQUISH_CONSTANT_4D;
 				}
@@ -1517,11 +1618,13 @@ public class OpenSimplexNoise {
 					if ((c1 & 0x01) == 0x01) {
 						ysv_ext0 -= 1;
 						dy_ext0 += 1;
-					} else {
+					}
+					else {
 						ysv_ext1 -= 1;
 						dy_ext1 += 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysb + 1;
 					dy_ext0 = dy_ext1 = dy0 - 1 - SQUISH_CONSTANT_4D;
 				}
@@ -1532,11 +1635,13 @@ public class OpenSimplexNoise {
 					if ((c1 & 0x03) == 0x03) {
 						zsv_ext0 -= 1;
 						dz_ext0 += 1;
-					} else {
+					}
+					else {
 						zsv_ext1 -= 1;
 						dz_ext1 += 1;
 					}
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsb + 1;
 					dz_ext0 = dz_ext1 = dz0 - 1 - SQUISH_CONSTANT_4D;
 				}
@@ -1546,7 +1651,8 @@ public class OpenSimplexNoise {
 					wsv_ext1 = wsb - 1;
 					dw_ext0 = dw0 - SQUISH_CONSTANT_4D;
 					dw_ext1 = dw0 + 1 - SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					wsv_ext0 = wsv_ext1 = wsb + 1;
 					dw_ext0 = dw_ext1 = dw0 - 1 - SQUISH_CONSTANT_4D;
 				}
@@ -1564,13 +1670,16 @@ public class OpenSimplexNoise {
 				if ((c2 & 0x01) != 0) {
 					xsv_ext2 += 2;
 					dx_ext2 -= 2;
-				} else if ((c2 & 0x02) != 0) {
+				}
+				else if ((c2 & 0x02) != 0) {
 					ysv_ext2 += 2;
 					dy_ext2 -= 2;
-				} else if ((c2 & 0x04) != 0) {
+				}
+				else if ((c2 & 0x04) != 0) {
 					zsv_ext2 += 2;
 					dz_ext2 -= 2;
-				} else {
+				}
+				else {
 					wsv_ext2 += 2;
 					dw_ext2 -= 2;
 				}
@@ -1685,7 +1794,8 @@ public class OpenSimplexNoise {
 				attn10 *= attn10;
 				value += attn10 * attn10 * extrapolate(xsb + 0, ysb + 0, zsb + 1, wsb + 1, dx10, dy10, dz10, dw10);
 			}
-		} else { // We're inside the second dispentachoron (Rectified 4-Simplex)
+		}
+		else { // We're inside the second dispentachoron (Rectified 4-Simplex)
 			double aScore;
 			byte aPoint;
 			boolean aIsBiggerSide = true;
@@ -1697,7 +1807,8 @@ public class OpenSimplexNoise {
 			if (xins + yins < zins + wins) {
 				aScore = xins + yins;
 				aPoint = 0x0C;
-			} else {
+			}
+			else {
 				aScore = zins + wins;
 				aPoint = 0x03;
 			}
@@ -1706,7 +1817,8 @@ public class OpenSimplexNoise {
 			if (xins + zins < yins + wins) {
 				bScore = xins + zins;
 				bPoint = 0x0A;
-			} else {
+			}
+			else {
 				bScore = yins + wins;
 				bPoint = 0x05;
 			}
@@ -1718,16 +1830,19 @@ public class OpenSimplexNoise {
 				if (aScore <= bScore && score < bScore) {
 					bScore = score;
 					bPoint = 0x06;
-				} else if (aScore > bScore && score < aScore) {
+				}
+				else if (aScore > bScore && score < aScore) {
 					aScore = score;
 					aPoint = 0x06;
 				}
-			} else {
+			}
+			else {
 				double score = yins + zins;
 				if (aScore <= bScore && score < bScore) {
 					bScore = score;
 					bPoint = 0x09;
-				} else if (aScore > bScore && score < aScore) {
+				}
+				else if (aScore > bScore && score < aScore) {
 					aScore = score;
 					aPoint = 0x09;
 				}
@@ -1739,7 +1854,8 @@ public class OpenSimplexNoise {
 				bScore = p1;
 				bPoint = 0x0E;
 				bIsBiggerSide = false;
-			} else if (aScore > bScore && p1 < aScore) {
+			}
+			else if (aScore > bScore && p1 < aScore) {
 				aScore = p1;
 				aPoint = 0x0E;
 				aIsBiggerSide = false;
@@ -1751,7 +1867,8 @@ public class OpenSimplexNoise {
 				bScore = p2;
 				bPoint = 0x0D;
 				bIsBiggerSide = false;
-			} else if (aScore > bScore && p2 < aScore) {
+			}
+			else if (aScore > bScore && p2 < aScore) {
 				aScore = p2;
 				aPoint = 0x0D;
 				aIsBiggerSide = false;
@@ -1763,7 +1880,8 @@ public class OpenSimplexNoise {
 				bScore = p3;
 				bPoint = 0x0B;
 				bIsBiggerSide = false;
-			} else if (aScore > bScore && p3 < aScore) {
+			}
+			else if (aScore > bScore && p3 < aScore) {
 				aScore = p3;
 				aPoint = 0x0B;
 				aIsBiggerSide = false;
@@ -1775,7 +1893,8 @@ public class OpenSimplexNoise {
 				bScore = p4;
 				bPoint = 0x07;
 				bIsBiggerSide = false;
-			} else if (aScore > bScore && p4 < aScore) {
+			}
+			else if (aScore > bScore && p4 < aScore) {
 				aScore = p4;
 				aPoint = 0x07;
 				aIsBiggerSide = false;
@@ -1807,17 +1926,20 @@ public class OpenSimplexNoise {
 						dx_ext0 -= 1;
 						xsv_ext1 += 2;
 						dx_ext1 -= 2;
-					} else if ((c1 & 0x02) != 0) {
+					}
+					else if ((c1 & 0x02) != 0) {
 						ysv_ext0 += 1;
 						dy_ext0 -= 1;
 						ysv_ext1 += 2;
 						dy_ext1 -= 2;
-					} else if ((c1 & 0x04) != 0) {
+					}
+					else if ((c1 & 0x04) != 0) {
 						zsv_ext0 += 1;
 						dz_ext0 -= 1;
 						zsv_ext1 += 2;
 						dz_ext1 -= 2;
-					} else {
+					}
+					else {
 						wsv_ext0 += 1;
 						dw_ext0 -= 1;
 						wsv_ext1 += 2;
@@ -1837,18 +1959,22 @@ public class OpenSimplexNoise {
 					if ((c2 & 0x01) == 0) {
 						xsv_ext2 -= 2;
 						dx_ext2 += 2;
-					} else if ((c2 & 0x02) == 0) {
+					}
+					else if ((c2 & 0x02) == 0) {
 						ysv_ext2 -= 2;
 						dy_ext2 += 2;
-					} else if ((c2 & 0x04) == 0) {
+					}
+					else if ((c2 & 0x04) == 0) {
 						zsv_ext2 -= 2;
 						dz_ext2 += 2;
-					} else {
+					}
+					else {
 						wsv_ext2 -= 2;
 						dw_ext2 += 2;
 					}
-				} else { // Both closest points on the smaller side
-							// One of the two extra points is (1,1,1,1)
+				}
+				else { // Both closest points on the smaller side
+					// One of the two extra points is (1,1,1,1)
 					xsv_ext2 = xsb + 1;
 					ysv_ext2 = ysb + 1;
 					zsv_ext2 = zsb + 1;
@@ -1866,7 +1992,8 @@ public class OpenSimplexNoise {
 						xsv_ext1 = xsb + 1;
 						dx_ext0 = dx0 - 2 - 3 * SQUISH_CONSTANT_4D;
 						dx_ext1 = dx0 - 1 - 3 * SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						xsv_ext0 = xsv_ext1 = xsb;
 						dx_ext0 = dx_ext1 = dx0 - 3 * SQUISH_CONSTANT_4D;
 					}
@@ -1877,11 +2004,13 @@ public class OpenSimplexNoise {
 						if ((c & 0x01) == 0) {
 							ysv_ext0 += 1;
 							dy_ext0 -= 1;
-						} else {
+						}
+						else {
 							ysv_ext1 += 1;
 							dy_ext1 -= 1;
 						}
-					} else {
+					}
+					else {
 						ysv_ext0 = ysv_ext1 = ysb;
 						dy_ext0 = dy_ext1 = dy0 - 3 * SQUISH_CONSTANT_4D;
 					}
@@ -1892,11 +2021,13 @@ public class OpenSimplexNoise {
 						if ((c & 0x03) == 0) {
 							zsv_ext0 += 1;
 							dz_ext0 -= 1;
-						} else {
+						}
+						else {
 							zsv_ext1 += 1;
 							dz_ext1 -= 1;
 						}
-					} else {
+					}
+					else {
 						zsv_ext0 = zsv_ext1 = zsb;
 						dz_ext0 = dz_ext1 = dz0 - 3 * SQUISH_CONSTANT_4D;
 					}
@@ -1906,17 +2037,20 @@ public class OpenSimplexNoise {
 						wsv_ext1 = wsb + 2;
 						dw_ext0 = dw0 - 1 - 3 * SQUISH_CONSTANT_4D;
 						dw_ext1 = dw0 - 2 - 3 * SQUISH_CONSTANT_4D;
-					} else {
+					}
+					else {
 						wsv_ext0 = wsv_ext1 = wsb;
 						dw_ext0 = dw_ext1 = dw0 - 3 * SQUISH_CONSTANT_4D;
 					}
 				}
-			} else { // One point on each "side"
+			}
+			else { // One point on each "side"
 				byte c1, c2;
 				if (aIsBiggerSide) {
 					c1 = aPoint;
 					c2 = bPoint;
-				} else {
+				}
+				else {
 					c1 = bPoint;
 					c2 = aPoint;
 				}
@@ -1928,7 +2062,8 @@ public class OpenSimplexNoise {
 					xsv_ext1 = xsb + 1;
 					dx_ext0 = dx0 - 2 - 3 * SQUISH_CONSTANT_4D;
 					dx_ext1 = dx0 - 1 - 3 * SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					xsv_ext0 = xsv_ext1 = xsb;
 					dx_ext0 = dx_ext1 = dx0 - 3 * SQUISH_CONSTANT_4D;
 				}
@@ -1939,11 +2074,13 @@ public class OpenSimplexNoise {
 					if ((c1 & 0x01) == 0) {
 						ysv_ext0 += 1;
 						dy_ext0 -= 1;
-					} else {
+					}
+					else {
 						ysv_ext1 += 1;
 						dy_ext1 -= 1;
 					}
-				} else {
+				}
+				else {
 					ysv_ext0 = ysv_ext1 = ysb;
 					dy_ext0 = dy_ext1 = dy0 - 3 * SQUISH_CONSTANT_4D;
 				}
@@ -1954,11 +2091,13 @@ public class OpenSimplexNoise {
 					if ((c1 & 0x03) == 0) {
 						zsv_ext0 += 1;
 						dz_ext0 -= 1;
-					} else {
+					}
+					else {
 						zsv_ext1 += 1;
 						dz_ext1 -= 1;
 					}
-				} else {
+				}
+				else {
 					zsv_ext0 = zsv_ext1 = zsb;
 					dz_ext0 = dz_ext1 = dz0 - 3 * SQUISH_CONSTANT_4D;
 				}
@@ -1968,7 +2107,8 @@ public class OpenSimplexNoise {
 					wsv_ext1 = wsb + 2;
 					dw_ext0 = dw0 - 1 - 3 * SQUISH_CONSTANT_4D;
 					dw_ext1 = dw0 - 2 - 3 * SQUISH_CONSTANT_4D;
-				} else {
+				}
+				else {
 					wsv_ext0 = wsv_ext1 = wsb;
 					dw_ext0 = dw_ext1 = dw0 - 3 * SQUISH_CONSTANT_4D;
 				}
@@ -1986,13 +2126,16 @@ public class OpenSimplexNoise {
 				if ((c2 & 0x01) == 0) {
 					xsv_ext2 -= 2;
 					dx_ext2 += 2;
-				} else if ((c2 & 0x02) == 0) {
+				}
+				else if ((c2 & 0x02) == 0) {
 					ysv_ext2 -= 2;
 					dy_ext2 += 2;
-				} else if ((c2 & 0x04) == 0) {
+				}
+				else if ((c2 & 0x04) == 0) {
 					zsv_ext2 -= 2;
 					dz_ext2 += 2;
-				} else {
+				}
+				else {
 					wsv_ext2 -= 2;
 					dw_ext2 += 2;
 				}
@@ -2159,21 +2302,21 @@ public class OpenSimplexNoise {
 
 	// Gradients for 2D. They approximate the directions to the
 	// vertices of an octagon from the center.
-	private static byte[] gradients2D = new byte[] { 5, 2, 2, 5, -5, 2, -2, 5, 5, -2, 2, -5, -5, -2, -2, -5, };
+	private static byte[] gradients2D = new byte[]{5, 2, 2, 5, -5, 2, -2, 5, 5, -2, 2, -5, -5, -2, -2, -5,};
 
 	// Gradients for 3D. They approximate the directions to the
 	// vertices of a rhombicuboctahedron from the center, skewed so
 	// that the triangular and square facets can be inscribed inside
 	// circles of the same radius.
-	private static byte[] gradients3D = new byte[] { -11, 4, 4, -4, 11, 4, -4, 4, 11, 11, 4, 4, 4, 11, 4, 4, 4, 11, -11,
+	private static byte[] gradients3D = new byte[]{-11, 4, 4, -4, 11, 4, -4, 4, 11, 11, 4, 4, 4, 11, 4, 4, 4, 11, -11,
 			-4, 4, -4, -11, 4, -4, -4, 11, 11, -4, 4, 4, -11, 4, 4, -4, 11, -11, 4, -4, -4, 11, -4, -4, 4, -11, 11, 4,
-			-4, 4, 11, -4, 4, 4, -11, -11, -4, -4, -4, -11, -4, -4, -4, -11, 11, -4, -4, 4, -11, -4, 4, -4, -11, };
+			-4, 4, 11, -4, 4, 4, -11, -11, -4, -4, -4, -11, -4, -4, -4, -11, 11, -4, -4, 4, -11, -4, 4, -4, -11,};
 
 	// Gradients for 4D. They approximate the directions to the
 	// vertices of a disprismatotesseractihexadecachoron from the center,
 	// skewed so that the tetrahedral and cubic facets can be inscribed inside
 	// spheres of the same radius.
-	private static byte[] gradients4D = new byte[] { 3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, -3, 1, 1, 1, -1, 3,
+	private static byte[] gradients4D = new byte[]{3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, -3, 1, 1, 1, -1, 3,
 			1, 1, -1, 1, 3, 1, -1, 1, 1, 3, 3, -1, 1, 1, 1, -3, 1, 1, 1, -1, 3, 1, 1, -1, 1, 3, -3, -1, 1, 1, -1, -3, 1,
 			1, -1, -1, 3, 1, -1, -1, 1, 3, 3, 1, -1, 1, 1, 3, -1, 1, 1, 1, -3, 1, 1, 1, -1, 3, -3, 1, -1, 1, -1, 3, -1,
 			1, -1, 1, -3, 1, -1, 1, -1, 3, 3, -1, -1, 1, 1, -3, -1, 1, 1, -1, -3, 1, 1, -1, -1, 3, -3, -1, -1, 1, -1,
@@ -2181,5 +2324,5 @@ public class OpenSimplexNoise {
 			-1, 3, 1, -1, -1, 1, 3, -1, -1, 1, 1, -3, 3, -1, 1, -1, 1, -3, 1, -1, 1, -1, 3, -1, 1, -1, 1, -3, -3, -1, 1,
 			-1, -1, -3, 1, -1, -1, -1, 3, -1, -1, -1, 1, -3, 3, 1, -1, -1, 1, 3, -1, -1, 1, 1, -3, -1, 1, 1, -1, -3, -3,
 			1, -1, -1, -1, 3, -1, -1, -1, 1, -3, -1, -1, 1, -1, -3, 3, -1, -1, -1, 1, -3, -1, -1, 1, -1, -3, -1, 1, -1,
-			-1, -3, -3, -1, -1, -1, -1, -3, -1, -1, -1, -1, -3, -1, -1, -1, -1, -3, };
+			-1, -3, -3, -1, -1, -1, -1, -3, -1, -1, -1, -1, -3, -1, -1, -1, -1, -3,};
 }

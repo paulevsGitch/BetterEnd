@@ -28,10 +28,9 @@ public class SmelterOutputSlot extends Slot {
 		return super.remove(amount);
 	}
 
-	public ItemStack onTake(Player player, ItemStack stack) {
+	public void onTake(Player player, ItemStack stack) {
 		this.checkTakeAchievements(stack);
 		super.onTake(player, stack);
-		return stack;
 	}
 
 	protected void onQuickCraft(ItemStack stack, int amount) {

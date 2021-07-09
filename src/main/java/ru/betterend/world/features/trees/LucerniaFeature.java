@@ -1,19 +1,14 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -34,6 +29,10 @@ import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 public class LucerniaFeature extends DefaultFeature {
 	private static final Direction[] DIRECTIONS = Direction.values();
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -42,9 +41,12 @@ public class LucerniaFeature extends DefaultFeature {
 	private static final List<Vector3f> ROOT;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		final NoneFeatureConfiguration config = featureConfig.config();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
 		float size = MHelper.randRange(12, 20, random);
@@ -70,7 +72,7 @@ public class LucerniaFeature extends DefaultFeature {
 	}
 
 	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise,
-			boolean natural) {
+							boolean natural) {
 		SDF sphere = new SDFSphere().setRadius(radius)
 				.setBlock(EndBlocks.LUCERNIA_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
@@ -162,7 +164,8 @@ public class LucerniaFeature extends DefaultFeature {
 						mut.setY(mut.getY() - 1);
 						if (world.isEmptyBlock(mut.below())) {
 							BlocksHelper.setWithoutUpdate(world, mut, middle);
-						} else {
+						}
+						else {
 							break;
 						}
 					}

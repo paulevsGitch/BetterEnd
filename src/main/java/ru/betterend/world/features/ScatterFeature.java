@@ -1,16 +1,16 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
+
+import java.util.Random;
 
 public abstract class ScatterFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();
@@ -21,7 +21,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 	}
 
 	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos,
-			float radius);
+										float radius);
 
 	public abstract void generate(WorldGenLevel world, Random random, BlockPos blockPos);
 
@@ -32,7 +32,8 @@ public abstract class ScatterFeature extends DefaultFeature {
 	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) {
 		if (pos.getY() < 5) {
 			return false;
-		} else if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
+		}
+		else if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 			return false;
 		}
 		return true;
@@ -56,8 +57,10 @@ public abstract class ScatterFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos center,
-			NoneFeatureConfiguration featureConfig) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		BlockPos center = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		center = getCenterGround(world, center);
 
 		if (!canSpawn(world, center)) {

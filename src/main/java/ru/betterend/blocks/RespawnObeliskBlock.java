@@ -1,11 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
@@ -35,6 +30,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
@@ -47,28 +43,30 @@ import ru.betterend.particle.InfusionParticleType;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
+import java.util.List;
+
 public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IRenderTyped {
 	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
 	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.box(2, 0, 2, 14, 16, 14);
-	
+
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
-	
+
 	public RespawnObeliskBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.END_STONE).luminance((state) -> {
 			return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
 		}));
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		for (int i = 0; i < 3; i++) {
@@ -78,7 +76,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		state = this.defaultBlockState();
@@ -86,7 +84,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 		BlocksHelper.setWithUpdate(world, pos.above(), state.setValue(SHAPE, TripleShape.MIDDLE));
 		BlocksHelper.setWithUpdate(world, pos.above(2), state.setValue(SHAPE, TripleShape.TOP));
 	}
-	
+
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		TripleShape shape = state.getValue(SHAPE);
@@ -115,7 +113,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 			}
 		}
 	}
-	
+
 	@Override
 	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (player.isCreative()) {
@@ -129,7 +127,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 		}
 		super.playerWillDestroy(world, pos, state, player);
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(SHAPE) == TripleShape.BOTTOM) {
@@ -144,12 +142,12 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;
 	}
-	
+
 	@Override
 	public BlockColor getProvider() {
 		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
 	}
-	
+
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
@@ -193,10 +191,10 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 				((ServerLevel) world).sendParticles(particle, px, py1, pz, 20, 0.14, 0.5, 0.14, 0.1);
 				((ServerLevel) world).sendParticles(particle, px, py2, pz, 20, 0.14, 0.3, 0.14, 0.1);
 			}
-            world.playSound(null, px, py, py, SoundEvents.RESPAWN_ANCHOR_SET_SPAWN, SoundSource.BLOCKS, 1F, 1F);
-            if (!player.isCreative()) {
-            	itemStack.shrink(6);
-            }
+			world.playSound(null, px, py, py, SoundEvents.RESPAWN_ANCHOR_SET_SPAWN, SoundSource.BLOCKS, 1F, 1F);
+			if (!player.isCreative()) {
+				itemStack.shrink(6);
+			}
 		}
 		return player.isCreative() ? InteractionResult.PASS : InteractionResult.sidedSuccess(world.isClientSide);
 	}

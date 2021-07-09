@@ -2,7 +2,6 @@ package ru.betterend.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.components.ImageButton;
@@ -21,32 +20,33 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 
 	private final static ResourceLocation RECIPE_BUTTON_TEXTURE = new ResourceLocation("textures/gui/recipe_button.png");
 	private final static ResourceLocation BACKGROUND_TEXTURE = BetterEnd.makeID("textures/gui/smelter_gui.png");
-	
+
 	public final EndStoneSmelterRecipeBookScreen recipeBook;
 	private boolean narrow;
-	
+
 	public EndStoneSmelterScreen(EndStoneSmelterScreenHandler handler, Inventory inventory, Component title) {
 		super(handler, inventory, title);
 		recipeBook = new EndStoneSmelterRecipeBookScreen();
 	}
-	
+
 	public void init() {
 		super.init();
+		//TODO: test in 1.17
 		narrow = width < 379;
 		recipeBook.init(width, height, minecraft, narrow, menu);
-		leftPos = recipeBook.updateScreenPosition(narrow, width, imageWidth);
-		addButton(new ImageButton(leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
-			recipeBook.initVisuals(narrow);
+		leftPos = recipeBook.updateScreenPosition(width, imageWidth);
+		addRenderableWidget(new ImageButton(leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
+			recipeBook.initVisuals();
 			recipeBook.toggleVisibility();
-			leftPos = recipeBook.updateScreenPosition(narrow, width, imageWidth);
+			leftPos = recipeBook.updateScreenPosition(width, imageWidth);
 			((ImageButton) buttonWidget).setPosition(leftPos + 20, height / 2 - 49);
 		}));
 		titleLabelX = (imageWidth - font.width(title)) / 2;
 	}
 
 	@Override
-	public void tick() {
-		super.tick();
+	public void containerTick() {
+		super.containerTick();
 		recipeBook.tick();
 	}
 
@@ -56,7 +56,8 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 		if (recipeBook.isVisible() && narrow) {
 			renderBg(matrices, delta, mouseX, mouseY);
 			recipeBook.render(matrices, mouseX, mouseY, delta);
-		} else {
+		}
+		else {
 			recipeBook.render(matrices, mouseX, mouseY, delta);
 			super.render(matrices, mouseX, mouseY, delta);
 			recipeBook.renderGhostRecipe(matrices, leftPos, topPos, true, delta);
@@ -69,7 +70,8 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		if (this.recipeBook.mouseClicked(mouseX, mouseY, button)) {
 			return true;
-		} else {
+		}
+		else {
 			return narrow && recipeBook.isVisible() || super.mouseClicked(mouseX, mouseY, button);
 		}
 	}
@@ -109,8 +111,10 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 	@Override
 	protected void renderBg(PoseStack matrices, float delta, int mouseX, int mouseY) {
 		if (minecraft == null) return;
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
+		//TODO: verify
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
+		//minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
 		blit(matrices, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 		int progress;
 		if (menu.isBurning()) {

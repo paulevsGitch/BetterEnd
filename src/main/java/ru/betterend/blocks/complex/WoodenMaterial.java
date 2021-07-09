@@ -55,28 +55,28 @@ public class WoodenMaterial {
 	public final Block pressurePlate;
 	public final Block trapdoor;
 	public final Block door;
-	
+
 	public final Block craftingTable;
 	public final Block ladder;
 	public final Block sign;
-	
+
 	public final Block chest;
 	public final Block barrel;
 	public final Block shelf;
 	public final Block composter;
-	
+
 	public final Tag.Named<Block> logBlockTag;
 	public final Tag.Named<Item> logItemTag;
-	
+
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
 		FabricBlockSettings materialPlanks = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(planksColor);
-		
+
 		log_stripped = EndBlocks.registerBlock(name + "_stripped_log", new BaseRotatedPillarBlock(materialPlanks));
 		bark_stripped = EndBlocks.registerBlock(name + "_stripped_bark", new BaseBarkBlock(materialPlanks));
-		
+
 		log = EndBlocks.registerBlock(name + "_log", new BaseStripableLogBlock(woodColor, log_stripped));
 		bark = EndBlocks.registerBlock(name + "_bark", new StripableBarkBlock(woodColor, bark_stripped));
-		
+
 		planks = EndBlocks.registerBlock(name + "_planks", new BaseBlock(materialPlanks));
 		stairs = EndBlocks.registerBlock(name + "_stairs", new BaseStairsBlock(planks));
 		slab = EndBlocks.registerBlock(name + "_slab", new BaseSlabBlock(planks));
@@ -86,16 +86,16 @@ public class WoodenMaterial {
 		pressurePlate = EndBlocks.registerBlock(name + "_plate", new WoodenPressurePlateBlock(planks));
 		trapdoor = EndBlocks.registerBlock(name + "_trapdoor", new BaseTrapdoorBlock(planks));
 		door = EndBlocks.registerBlock(name + "_door", new BaseDoorBlock(planks));
-		
+
 		craftingTable = EndBlocks.registerBlock(name + "_crafting_table", new BaseCraftingTableBlock(planks));
 		ladder = EndBlocks.registerBlock(name + "_ladder", new BaseLadderBlock(planks));
 		sign = EndBlocks.registerBlock(name + "_sign", new BaseSignBlock(planks));
-		
+
 		chest = EndBlocks.registerBlock(name + "_chest", new BaseChestBlock(planks));
 		barrel = EndBlocks.registerBlock(name + "_barrel", new BaseBarrelBlock(planks));
 		shelf = EndBlocks.registerBlock(name + "_bookshelf", new BaseBookshelfBlock(planks));
 		composter = EndBlocks.registerBlock(name + "_composter", new BaseComposterBlock(planks));
-		
+
 		// Recipes //
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_planks", planks).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setList("#").addMaterial('#', log, bark, log_stripped, bark_stripped).setGroup("end_planks").build();
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_stairs", stairs).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', planks).setGroup("end_planks_stairs").build();
@@ -116,13 +116,13 @@ public class WoodenMaterial {
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_log", log).checkConfig(Configs.RECIPE_CONFIG).setShape("##", "##").addMaterial('#', bark).setOutputCount(3).build();
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_composter", composter).checkConfig(Configs.RECIPE_CONFIG).setShape("# #", "# #", "###").addMaterial('#', slab).build();
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_shulker", Items.SHULKER_BOX).checkConfig(Configs.RECIPE_CONFIG).setShape("S", "#", "S").addMaterial('S', Items.SHULKER_SHELL).addMaterial('#', chest).build();
-		
+
 		// Item Tags //
 		TagHelper.addTag(ItemTags.PLANKS, planks);
 		TagHelper.addTag(ItemTags.WOODEN_PRESSURE_PLATES, pressurePlate);
 		TagHelper.addTag(ItemTags.LOGS, log, bark, log_stripped, bark_stripped);
 		TagHelper.addTag(ItemTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
-		
+
 		TagHelper.addTags(button, ItemTags.WOODEN_BUTTONS, ItemTags.BUTTONS);
 		TagHelper.addTags(door, ItemTags.WOODEN_DOORS, ItemTags.DOORS);
 		TagHelper.addTags(fence, ItemTags.WOODEN_FENCES, ItemTags.FENCES);
@@ -130,13 +130,13 @@ public class WoodenMaterial {
 		TagHelper.addTags(stairs, ItemTags.WOODEN_STAIRS, ItemTags.STAIRS);
 		TagHelper.addTags(trapdoor, ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS);
 		TagHelper.addTag(TagAPI.ITEM_CHEST, chest);
-		
+
 		// Block Tags //
 		TagHelper.addTag(BlockTags.PLANKS, planks);
 		TagHelper.addTag(BlockTags.CLIMBABLE, ladder);
 		TagHelper.addTag(BlockTags.LOGS, log, bark, log_stripped, bark_stripped);
 		TagHelper.addTag(BlockTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
-		
+
 		TagHelper.addTags(button, BlockTags.WOODEN_BUTTONS, BlockTags.BUTTONS);
 		TagHelper.addTags(door, BlockTags.WOODEN_DOORS, BlockTags.DOORS);
 		TagHelper.addTags(fence, BlockTags.WOODEN_FENCES, BlockTags.FENCES);
@@ -145,42 +145,42 @@ public class WoodenMaterial {
 		TagHelper.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
 		TagHelper.addTag(TagAPI.BOOKSHELVES, shelf);
 		TagHelper.addTag(TagAPI.BLOCK_CHEST, chest);
-		
+
 		logBlockTag = TagAPI.makeBlockTag(BetterEnd.MOD_ID, name + "_logs");
 		logItemTag = TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_logs");
 		TagHelper.addTag(logBlockTag, log_stripped, bark_stripped, log, bark);
 		TagHelper.addTag(logItemTag, log_stripped, bark_stripped, log, bark);
-		
+
 		FlammableBlockRegistry.getDefaultInstance().add(log, 5, 5);
 		FlammableBlockRegistry.getDefaultInstance().add(bark, 5, 5);
 		FlammableBlockRegistry.getDefaultInstance().add(log_stripped, 5, 5);
 		FlammableBlockRegistry.getDefaultInstance().add(bark_stripped, 5, 5);
-		
+
 		FlammableBlockRegistry.getDefaultInstance().add(planks, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(stairs, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(slab, 5, 20);
-		
+
 		FlammableBlockRegistry.getDefaultInstance().add(fence, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(gate, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(button, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(pressurePlate, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(trapdoor, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(door, 5, 20);
-		
+
 		FlammableBlockRegistry.getDefaultInstance().add(craftingTable, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ladder, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(sign, 5, 20);
-		
+
 		FlammableBlockRegistry.getDefaultInstance().add(chest, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(barrel, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(shelf, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(composter, 5, 20);
 	}
-	
+
 	public boolean isTreeLog(Block block) {
 		return block == log || block == bark;
 	}
-	
+
 	public boolean isTreeLog(BlockState state) {
 		return isTreeLog(state.getBlock());
 	}

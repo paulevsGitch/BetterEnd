@@ -29,37 +29,37 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 
 	public final static MenuType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(
 			BetterEnd.makeID(EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
-	
+
 	private final Container inventory;
 	private final ContainerData propertyDelegate;
 	protected final Level world;
-	
+
 	public EndStoneSmelterScreenHandler(int syncId, Inventory playerInventory) {
 		this(syncId, playerInventory, new SimpleContainer(4), new SimpleContainerData(4));
 	}
-	
+
 	public EndStoneSmelterScreenHandler(int syncId, Inventory playerInventory, Container inventory, ContainerData propertyDelegate) {
 		super(HANDLER_TYPE, syncId);
 		this.inventory = inventory;
 		this.propertyDelegate = propertyDelegate;
 		this.world = playerInventory.player.level;
-		
+
 		addDataSlots(propertyDelegate);
 		addSlot(new Slot(inventory, 0, 45, 17));
 		addSlot(new Slot(inventory, 1, 67, 17));
 		addSlot(new SmelterFuelSlot(this, inventory, 2, 56, 53));
 		addSlot(new SmelterOutputSlot(playerInventory.player, inventory, 3, 129, 35));
 
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 9; ++j) {
 				addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-		for(int i = 0; i < 9; ++i) {
+		for (int i = 0; i < 9; ++i) {
 			addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
 		}
 	}
-	
+
 	@Override
 	public MenuType<?> getType() {
 		return HANDLER_TYPE;
@@ -108,6 +108,11 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 	}
 
 	@Override
+	public boolean shouldMoveToInventory(int i) {
+		return i != this.getResultSlotIndex();
+	}
+
+	@Override
 	public boolean stillValid(Player player) {
 		return inventory.stillValid(player);
 	}
@@ -119,7 +124,7 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 	public boolean isFuel(ItemStack itemStack) {
 		return EndStoneSmelterBlockEntity.canUseAsFuel(itemStack);
 	}
-	
+
 	@Override
 	public ItemStack quickMoveStack(Player player, int index) {
 		Slot slot = slots.get(index);
@@ -132,29 +137,35 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 				return ItemStack.EMPTY;
 			}
 			slot.onQuickCraft(slotStack, itemStack);
-		} else if (index != 2 && index != 1 && index != 0) {
+		}
+		else if (index != 2 && index != 1 && index != 0) {
 			if (isSmeltable(slotStack)) {
 				if (!moveItemStackTo(slotStack, 0, 2, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (isFuel(slotStack)) {
+			}
+			else if (isFuel(slotStack)) {
 				if (!moveItemStackTo(slotStack, 2, 3, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (index < 31) {
+			}
+			else if (index < 31) {
 				if (!moveItemStackTo(slotStack, 31, 40, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (index < 40 && !moveItemStackTo(slotStack, 4, 31, false)) {
+			}
+			else if (index < 40 && !moveItemStackTo(slotStack, 4, 31, false)) {
 				return ItemStack.EMPTY;
 			}
-		} else if (!moveItemStackTo(slotStack, 4, 40, false)) {
+		}
+		else if (!moveItemStackTo(slotStack, 4, 40, false)) {
 			return ItemStack.EMPTY;
 		}
 
 		if (slotStack.isEmpty()) {
 			slot.set(ItemStack.EMPTY);
-		} else {
+		}
+		else {
 			slot.setChanged();
 		}
 
@@ -166,7 +177,7 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 
 		return itemStack;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	public int getSmeltProgress() {
 		int time = propertyDelegate.get(2);

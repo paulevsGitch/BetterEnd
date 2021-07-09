@@ -1,13 +1,11 @@
 package ru.betterend.world.features.bushes;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
@@ -17,11 +15,15 @@ import ru.betterend.blocks.EndBlockProperties.LumecornShape;
 import ru.betterend.blocks.LumecornBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Random;
+
 public class Lumecorn extends DefaultFeature {
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
 		int height = MHelper.randRange(4, 7, random);
@@ -51,7 +53,8 @@ public class Lumecorn extends DefaultFeature {
 		if (random.nextBoolean()) {
 			BlocksHelper.setWithoutUpdate(world, mut,
 					EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
-		} else {
+		}
+		else {
 			BlocksHelper.setWithoutUpdate(world, mut,
 					EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_BIG));
 			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP),

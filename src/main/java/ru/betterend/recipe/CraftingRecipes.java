@@ -198,24 +198,24 @@ public class CraftingRecipes {
 		GridRecipe.make(BetterEnd.MOD_ID, "filalux_lantern", EndBlocks.FILALUX_LANTERN).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "###", "###").addMaterial('#', EndBlocks.FILALUX).build();
 
 		GridRecipe.make(BetterEnd.MOD_ID, "silk_moth_hive", EndBlocks.SILK_MOTH_HIVE)
-		.checkConfig(Configs.RECIPE_CONFIG).setShape("#L#", "LML", "#L#")
-		.addMaterial('#', EndBlocks.TENANEA.planks)
-		.addMaterial('L', EndBlocks.TENANEA_LEAVES)
-		.addMaterial('M', EndItems.SILK_MOTH_MATRIX)
-		.build();
-		
+				.checkConfig(Configs.RECIPE_CONFIG).setShape("#L#", "LML", "#L#")
+				.addMaterial('#', EndBlocks.TENANEA.planks)
+				.addMaterial('L', EndBlocks.TENANEA_LEAVES)
+				.addMaterial('M', EndItems.SILK_MOTH_MATRIX)
+				.build();
+
 		GridRecipe.make(BetterEnd.MOD_ID, "cave_pumpkin_pie", EndItems.CAVE_PUMPKIN_PIE)
-		.checkConfig(Configs.RECIPE_CONFIG)
-		.setShape("SBS", "BPB", "SBS")
-		.addMaterial('P', EndBlocks.CAVE_PUMPKIN)
-		.addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).addMaterial('S', Items.SUGAR).build();
-		
+				.checkConfig(Configs.RECIPE_CONFIG)
+				.setShape("SBS", "BPB", "SBS")
+				.addMaterial('P', EndBlocks.CAVE_PUMPKIN)
+				.addMaterial('B', EndItems.BLOSSOM_BERRY, EndItems.SHADOW_BERRY_RAW).addMaterial('S', Items.SUGAR).build();
+
 		GridRecipe.make(BetterEnd.MOD_ID, "cave_pumpkin_seeds", EndBlocks.CAVE_PUMPKIN_SEED)
-		.checkConfig(Configs.RECIPE_CONFIG)
-		.setOutputCount(4)
-		.setList("#")
-		.addMaterial('#', EndBlocks.CAVE_PUMPKIN)
-		.build();
+				.checkConfig(Configs.RECIPE_CONFIG)
+				.setOutputCount(4)
+				.setList("#")
+				.addMaterial('#', EndBlocks.CAVE_PUMPKIN)
+				.build();
 
 		GridRecipe.make(BetterEnd.MOD_ID, "neon_cactus_block", EndBlocks.NEON_CACTUS_BLOCK).checkConfig(Configs.RECIPE_CONFIG).setShape("##", "##").addMaterial('#', EndBlocks.NEON_CACTUS).build();
 		GridRecipe.make(BetterEnd.MOD_ID, "neon_cactus_block_slab", EndBlocks.NEON_CACTUS_BLOCK_SLAB).checkConfig(Configs.RECIPE_CONFIG).setShape("###").setOutputCount(6).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();

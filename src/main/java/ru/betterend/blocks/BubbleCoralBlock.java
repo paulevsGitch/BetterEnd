@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -19,10 +17,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 
+import java.util.Random;
+
 public class BubbleCoralBlock extends EndUnderwaterPlantBlock {
 
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
-	
+
 	public BubbleCoralBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
@@ -30,7 +30,7 @@ public class BubbleCoralBlock extends EndUnderwaterPlantBlock {
 				.sound(SoundType.CORAL_BLOCK)
 				.noCollission());
 	}
-	
+
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;
@@ -43,12 +43,12 @@ public class BubbleCoralBlock extends EndUnderwaterPlantBlock {
 		double z = pos.getZ() + random.nextDouble();
 		world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE;
 	}
-	
+
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;

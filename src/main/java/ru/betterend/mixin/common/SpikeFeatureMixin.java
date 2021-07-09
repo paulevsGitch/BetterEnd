@@ -1,40 +1,39 @@
 package ru.betterend.mixin.common;
 
-import java.util.Random;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.SpikeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.SpikeConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.generator.GeneratorOptions;
 
+import java.util.Random;
+
 @Mixin(SpikeFeature.class)
 public class SpikeFeatureMixin {
 	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
-	private void be_place(WorldGenLevel structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, SpikeConfiguration endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info) {
+	private void be_place(FeaturePlaceContext<SpikeConfiguration> featurePlaceContext, CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasPillars()) {
 			info.setReturnValue(false);
 		}
@@ -46,7 +45,7 @@ public class SpikeFeatureMixin {
 		int z = spike.getCenterZ();
 		int radius = spike.getRadius();
 		int minY = 0;
-		
+
 		long lx = (long) x;
 		long lz = (long) z;
 		if (lx * lx + lz * lz < 10000) {
@@ -62,25 +61,25 @@ public class SpikeFeatureMixin {
 		else {
 			minY = world.getChunk(x >> 4, z >> 4).getHeight(Types.WORLD_SURFACE, x & 15, z);
 		}
-		
+
 		GeneratorOptions.setDirectSpikeHeight();
 		int maxY = minY + spike.getHeight() - 64;
-		
+
 		if (GeneratorOptions.replacePillars() && be_radiusInRange(radius)) {
 			radius--;
 			StructureTemplate base = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_base_" + radius));
 			StructureTemplate top = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_top_" + radius + (spike.isGuarded() ? "_cage" : "")));
-			BlockPos side = base.getSize();
+			Vec3i side = base.getSize();
 			BlockPos pos1 = new BlockPos(x - (side.getX() >> 1), minY - 3, z - (side.getZ() >> 1));
 			minY = pos1.getY() + side.getY();
 			side = top.getSize();
 			BlockPos pos2 = new BlockPos(x - (side.getX() >> 1), maxY, z - (side.getZ() >> 1));
 			maxY = pos2.getY();
-			
+
 			StructurePlaceSettings data = new StructurePlaceSettings();
-			base.placeInWorldChunk(world, pos1, data, random);
-			top.placeInWorldChunk(world, pos2, data, random);
-			
+			base.placeInWorld(world, pos1, pos1, data, random, 2);
+			top.placeInWorld(world, pos2, pos2, data, random, 2);
+
 			int r2 = radius * radius + 1;
 			MutableBlockPos mut = new MutableBlockPos();
 			for (int px = -radius; px <= radius; px++) {
@@ -129,13 +128,13 @@ public class SpikeFeatureMixin {
 			mut.setZ(z);
 			mut.setY(maxY);
 			BlocksHelper.setWithoutUpdate(world, mut, Blocks.BEDROCK);
-			
+
 			EndCrystal crystal = EntityType.END_CRYSTAL.create(world.getLevel());
 			crystal.setBeamTarget(config.getCrystalBeamTarget());
 			crystal.setInvulnerable(config.isCrystalInvulnerable());
 			crystal.moveTo(x + 0.5D, maxY + 1, z + 0.5D, random.nextFloat() * 360.0F, 0.0F);
 			world.addFreshEntity(crystal);
-			
+
 			if (spike.isGuarded()) {
 				for (int px = -2; px <= 2; ++px) {
 					boolean bl = Mth.abs(px) == 2;
@@ -157,7 +156,7 @@ public class SpikeFeatureMixin {
 
 		info.cancel();
 	}
-	
+
 	private boolean be_radiusInRange(int radius) {
 		return radius > 1 && radius < 6;
 	}

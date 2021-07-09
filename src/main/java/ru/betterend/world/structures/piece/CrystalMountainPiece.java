@@ -1,10 +1,9 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -17,23 +16,24 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
 
+import java.util.Random;
+
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;
-	
+
 	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
 		top = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 
-	public CrystalMountainPiece(StructureManager manager, CompoundTag tag) {
-		super(EndStructures.MOUNTAIN_PIECE, manager, tag);
+	public CrystalMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
+		super(EndStructures.MOUNTAIN_PIECE, serverLevel, tag);
 	}
 
 	@Override
@@ -91,9 +91,9 @@ public class CrystalMountainPiece extends MountainPiece {
 				}
 			}
 		}
-		
+
 		map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
-		
+
 		// Big crystals
 		int count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 7;
 		count = Mth.clamp(count, 0, 8);
@@ -111,7 +111,7 @@ public class CrystalMountainPiece extends MountainPiece {
 				}
 			}
 		}
-		
+
 		// Small crystals
 		count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 2;
 		count = Mth.clamp(count, 4, 8);
@@ -129,10 +129,10 @@ public class CrystalMountainPiece extends MountainPiece {
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	private void crystal(ChunkAccess chunk, BlockPos pos, int radius, int height, float fill, Random random) {
 		MutableBlockPos mut = new MutableBlockPos();
 		int max = MHelper.floor(fill * radius + radius + 0.5F);

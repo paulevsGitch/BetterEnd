@@ -17,7 +17,7 @@ public class PythadendronSaplingBlock extends FeatureSaplingBlock {
 	protected Feature<?> getFeature() {
 		return EndFeatures.PYTHADENDRON_TREE.getFeature();
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.CHORUS_NYLIUM);

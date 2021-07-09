@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -22,11 +20,13 @@ import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Random;
+
 public class LargeAmaranitaBlock extends EndPlantBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(4, 0, 4, 12, 14, 12);
 	private static final VoxelShape SHAPE_TOP = Shapes.or(Block.box(1, 3, 1, 15, 16, 15), SHAPE_BOTTOM);
-	
+
 	public LargeAmaranitaBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
 				.breakByTool(FabricToolTags.SHEARS)
@@ -34,22 +34,22 @@ public class LargeAmaranitaBlock extends EndPlantBlock {
 				.sound(SoundType.GRASS)
 				.lightLevel((state) -> (state.getValue(SHAPE) == TripleShape.TOP) ? 15 : 0));
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(SHAPE) == TripleShape.TOP ? SHAPE_TOP : SHAPE_BOTTOM;
 	}
-	
+
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.SANGNUM) || state.is(EndBlocks.MOSSY_OBSIDIAN) || state.is(EndBlocks.MOSSY_DRAGON_BONE);
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		TripleShape shape = state.getValue(SHAPE);
@@ -63,12 +63,12 @@ public class LargeAmaranitaBlock extends EndPlantBlock {
 			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
-	
+
 	@Override
 	public OffsetType getOffsetType() {
 		return OffsetType.NONE;
 	}
-	
+
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;

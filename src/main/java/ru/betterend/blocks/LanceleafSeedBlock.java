@@ -1,7 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -14,6 +12,8 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class LanceleafSeedBlock extends EndPlantWithAgeBlock {
 	@Override
@@ -34,12 +34,12 @@ public class LanceleafSeedBlock extends EndPlantWithAgeBlock {
 		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP));
 		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.TOP));
 	}
-	
+
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.AMBER_MOSS);
 	}
-	
+
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;

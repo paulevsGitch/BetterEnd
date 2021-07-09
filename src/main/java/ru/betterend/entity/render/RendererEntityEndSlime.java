@@ -2,10 +2,9 @@ package ru.betterend.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -22,9 +21,9 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 	private static final ResourceLocation TEXTURE[] = new ResourceLocation[4];
 	private static final RenderType GLOW[] = new RenderType[4];
 
-	public RendererEntityEndSlime(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new EndSlimeEntityModel<EndSlimeEntity>(false), 0.25F);
-		this.addLayer(new OverlayFeatureRenderer<EndSlimeEntity>(this));
+	public RendererEntityEndSlime(EntityRendererProvider.Context ctx) {
+		super(ctx, new EndSlimeEntityModel<>(ctx.getModelSet(), false), 0.25f);
+		this.addLayer(new OverlayFeatureRenderer<EndSlimeEntity>(this, ctx));
 		this.addLayer(new EyesLayer<EndSlimeEntity, EndSlimeEntityModel<EndSlimeEntity>>(this) {
 			@Override
 			public RenderType renderType() {
@@ -33,8 +32,8 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 
 			@Override
 			public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, EndSlimeEntity entity,
-					float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw,
-					float headPitch) {
+							   float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw,
+							   float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getSlimeType()]);
 				this.getParentModel().renderToBuffer(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY,
 						1.0F, 1.0F, 1.0F, 1.0F);
@@ -52,7 +51,7 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 
 	@Override
 	public void render(EndSlimeEntity slimeEntity, float f, float g, PoseStack matrixStack,
-			MultiBufferSource vertexConsumerProvider, int i) {
+					   MultiBufferSource vertexConsumerProvider, int i) {
 		this.shadowRadius = 0.25F * (float) slimeEntity.getSize();
 		super.render(slimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
 	}
@@ -69,22 +68,25 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 
 	private final class OverlayFeatureRenderer<T extends EndSlimeEntity>
 			extends RenderLayer<T, EndSlimeEntityModel<T>> {
-		private final EndSlimeEntityModel<T> modelOrdinal = new EndSlimeEntityModel<T>(true);
-		private final EndSlimeEntityModel<T> modelLake = new EndSlimeEntityModel<T>(true);
+		private final EndSlimeEntityModel<T> modelOrdinal;
+		private final EndSlimeEntityModel<T> modelLake;
 
-		public OverlayFeatureRenderer(RenderLayerParent<T, EndSlimeEntityModel<T>> featureRendererContext) {
+		public OverlayFeatureRenderer(RenderLayerParent<T, EndSlimeEntityModel<T>> featureRendererContext, EntityRendererProvider.Context ctx) {
 			super(featureRendererContext);
+			modelOrdinal = new EndSlimeEntityModel<>(ctx.getModelSet(), true);
+			modelLake = new EndSlimeEntityModel<>(ctx.getModelSet(), true);
 		}
 
 		public void render(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, T livingEntity,
-				float f, float g, float h, float j, float k, float l) {
+						   float f, float g, float h, float j, float k, float l) {
 			if (!livingEntity.isInvisible()) {
 				if (livingEntity.isLake()) {
 					VertexConsumer vertexConsumer = vertexConsumerProvider
 							.getBuffer(RenderType.entityCutout(this.getTextureLocation(livingEntity)));
 					this.getParentModel().renderFlower(matrixStack, vertexConsumer, i,
 							LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F));
-				} else if (livingEntity.isAmber() || livingEntity.isChorus()) {
+				}
+				else if (livingEntity.isAmber() || livingEntity.isChorus()) {
 					VertexConsumer vertexConsumer = vertexConsumerProvider
 							.getBuffer(RenderType.entityCutout(this.getTextureLocation(livingEntity)));
 					this.getParentModel().renderCrop(matrixStack, vertexConsumer, i,

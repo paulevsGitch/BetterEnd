@@ -1,8 +1,5 @@
 package ru.betterend.world.features.bushes;
 
-import java.util.Random;
-import java.util.function.Function;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -10,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -24,6 +21,9 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
+
+import java.util.Random;
+import java.util.function.Function;
 
 public class BushWithOuterFeature extends DefaultFeature {
 	private static final Direction[] DIRECTIONS = Direction.values();
@@ -39,10 +39,12 @@ public class BushWithOuterFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND)
-				&& !world.getBlockState(pos.above()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)
+				&& !world.getBlockState(pos.above()).is(TagAPI.END_GROUND))
 			return false;
 
 		float radius = MHelper.randRange(1.8F, 3.5F, random);
@@ -63,7 +65,8 @@ public class BushWithOuterFeature extends DefaultFeature {
 				int distance = info.getPos().distManhattan(pos);
 				if (distance < 7) {
 					return info.getState().setValue(LeavesBlock.DISTANCE, distance);
-				} else {
+				}
+				else {
 					return AIR;
 				}
 			}
@@ -88,7 +91,8 @@ public class BushWithOuterFeature extends DefaultFeature {
 				if (leaves instanceof LeavesBlock) {
 					BlocksHelper.setWithoutUpdate(world, p,
 							leaves.defaultBlockState().setValue(LeavesBlock.DISTANCE, 1));
-				} else {
+				}
+				else {
 					BlocksHelper.setWithoutUpdate(world, p, leaves.defaultBlockState());
 				}
 			}

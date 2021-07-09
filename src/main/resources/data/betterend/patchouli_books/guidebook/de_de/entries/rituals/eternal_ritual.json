@@ -1,0 +1,44 @@
+{
+    "name": "Rituale der Ewigkeit",
+    "icon": "betterend:eternal_pedestal",
+    "read_by_default": true,
+    "category": "betterend:rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "\"Ein steiniger Weg zurück in die Oberwelt.\"$(br2)Auf Deinen Reisen durch das End wirst du gelegentlich alte Ruinen finden.$(br2)Alte Mythen erzählen von einem (vielleicht schon) zerstörten Rahme aus $(bold)Flavolitrune$(), der von sechs Sockeln umringt ist."
+        },
+        {
+            "type": "image",
+            "text": "",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/portal_structure.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Es sind die letzte überbleibsel eines majestätischen Protals, dass einst eine Pforte zwischen der Oberwelt und dem End bildete.$(br2)Um das Protal wieder zum leben zu erwecken, musst Du zuerst die Teile des Rahmens finden und vervollständigen."
+        },
+        {
+            "type": "image",
+            "text": "Platziere dann 6 $(bold)Ewige Kristalle$() auf den Sockeln.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/portal_frame_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Sobald der letzte Kirstall paltziert wurde,",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/ritual_finished.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "wird das Portal aus seinem Schlummer erwachen und die Welten verbinden. Die $(bold)Flavolitrune$() (um den Rahmen zu reparieren) und die $(bold)Ewige Kristalle$() können durch ein $(l:rituals/infusion_ritual)Infusionsritual$(/l) erschaffen werden."
+        }
+    ]
+}

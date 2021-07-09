@@ -1,19 +1,14 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -34,15 +29,22 @@ import ru.betterend.blocks.UmbrellaTreeClusterBlock;
 import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 public class UmbrellaTreeFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final List<Vector3f> SPLINE;
 	private static final List<Vector3f> ROOT;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		final NoneFeatureConfiguration config = featureConfig.config();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.defaultBlockState();
@@ -110,7 +112,8 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			if (EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateUp())
 					&& EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateDown())) {
 				return EndBlocks.UMBRELLA_TREE.log.defaultBlockState();
-			} else if (info.getState().equals(membrane)) {
+			}
+			else if (info.getState().equals(membrane)) {
 				Center min = centers.get(0);
 				double d = Double.MAX_VALUE;
 				BlockPos bpos = info.getPos();

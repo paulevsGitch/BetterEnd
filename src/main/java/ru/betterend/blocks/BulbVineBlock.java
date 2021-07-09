@@ -1,9 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -16,11 +13,13 @@ import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
+import java.util.List;
+
 public class BulbVineBlock extends BaseVineBlock {
 	public BulbVineBlock() {
 		super(15, true);
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(SHAPE) == TripleShape.BOTTOM) {
@@ -33,12 +32,12 @@ public class BulbVineBlock extends BaseVineBlock {
 			return Lists.newArrayList();
 		}
 	}
-	
+
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		boolean canPlace = super.canSurvive(state, world, pos);

@@ -1,9 +1,5 @@
 package ru.betterend.entity;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -45,15 +41,19 @@ import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
 
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Random;
+
 public class EndSlimeEntity extends Slime {
 	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(EndSlimeEntity.class, EntityDataSerializers.BYTE);
 	private static final MutableBlockPos POS = new MutableBlockPos();
-	
+
 	public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, Level world) {
 		super(entityType, world);
 		this.moveControl = new EndSlimeMoveControl(this);
 	}
-	
+
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new SwimmingGoal());
 		this.goalSelector.addGoal(2, new FaceTowardTargetGoal());
@@ -64,7 +64,7 @@ public class EndSlimeEntity extends Slime {
 		}));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<IronGolem>(this, IronGolem.class, true));
 	}
-	
+
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return LivingEntity.createLivingAttributes()
 				.add(Attributes.MAX_HEALTH, 1.0D)
@@ -72,7 +72,7 @@ public class EndSlimeEntity extends Slime {
 				.add(Attributes.FOLLOW_RANGE, 16.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.15D);
 	}
-	
+
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
@@ -95,7 +95,7 @@ public class EndSlimeEntity extends Slime {
 		super.defineSynchedData();
 		this.entityData.define(VARIANT, (byte) 0);
 	}
-	
+
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
@@ -114,9 +114,9 @@ public class EndSlimeEntity extends Slime {
 	protected ParticleOptions getParticleType() {
 		return ParticleTypes.PORTAL;
 	}
-	
+
 	@Override
-	public void remove() {
+	public void remove(RemovalReason reason) {
 		int i = this.getSize();
 		if (!this.level.isClientSide && i > 1 && this.isDeadOrDying()) {
 			Component text = this.getCustomName();
@@ -125,7 +125,7 @@ public class EndSlimeEntity extends Slime {
 			int j = i / 2;
 			int k = 2 + this.random.nextInt(3);
 			int type = this.getSlimeType();
-			
+
 			for (int l = 0; l < k; ++l) {
 				float g = ((float) (l % 2) - 0.5F) * f;
 				float h = ((float) (l / 2) - 0.5F) * f;
@@ -144,9 +144,10 @@ public class EndSlimeEntity extends Slime {
 				this.level.addFreshEntity(slimeEntity);
 			}
 		}
-		this.removed = true;
+
+		((ISlime) this).entityRemove(reason);
 	}
-	
+
 	@Override
 	protected void dropFromLootTable(DamageSource source, boolean causedByPlayer) {
 		int maxCount = this.getSize();
@@ -162,15 +163,15 @@ public class EndSlimeEntity extends Slime {
 		ItemEntity drop = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(Items.SLIME_BALL, count));
 		this.level.addFreshEntity(drop);
 	}
-	
+
 	public int getSlimeType() {
 		return this.entityData.get(VARIANT).intValue();
 	}
-	
+
 	public void setSlimeType(int value) {
 		this.entityData.set(VARIANT, (byte) value);
 	}
-	
+
 	protected void setMossy() {
 		setSlimeType(1);
 	}
@@ -178,7 +179,7 @@ public class EndSlimeEntity extends Slime {
 	public boolean isMossy() {
 		return getSlimeType() == 1;
 	}
-	
+
 	protected void setLake() {
 		setSlimeType(2);
 	}
@@ -186,7 +187,7 @@ public class EndSlimeEntity extends Slime {
 	public boolean isLake() {
 		return getSlimeType() == 2;
 	}
-	
+
 	protected void setAmber(boolean mossy) {
 		this.entityData.set(VARIANT, (byte) 3);
 	}
@@ -194,26 +195,28 @@ public class EndSlimeEntity extends Slime {
 	public boolean isAmber() {
 		return this.entityData.get(VARIANT) == 3;
 	}
-	
+
 	public boolean isChorus() {
 		return this.entityData.get(VARIANT) == 0;
 	}
-	
+
 	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
 		return random.nextInt(16) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
 	}
-	
+
 	private static boolean isPermanentBiome(ServerLevelAccessor world, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
 		return BiomeAPI.getFromBiome(biome) == EndBiomes.CHORUS_FOREST;
 	}
-	
+
 	private static boolean notManyEntities(ServerLevelAccessor world, BlockPos pos, int radius, int maxCount) {
 		AABB box = new AABB(pos).inflate(radius);
-		List<EndSlimeEntity> list = world.getEntitiesOfClass(EndSlimeEntity.class, box, (entity) -> { return true; });
+		List<EndSlimeEntity> list = world.getEntitiesOfClass(EndSlimeEntity.class, box, (entity) -> {
+			return true;
+		});
 		return list.size() <= maxCount;
 	}
-	
+
 	private static boolean isWaterNear(ServerLevelAccessor world, BlockPos pos, int radius, int radius2) {
 		for (int x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
 			POS.setX(x);
@@ -229,7 +232,7 @@ public class EndSlimeEntity extends Slime {
 		}
 		return false;
 	}
-	
+
 	class MoveGoal extends Goal {
 		public MoveGoal() {
 			this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
@@ -239,7 +242,7 @@ public class EndSlimeEntity extends Slime {
 			if (EndSlimeEntity.this.isPassenger()) {
 				return false;
 			}
-			
+
 			float yaw = EndSlimeEntity.this.getYHeadRot();
 			float speed = EndSlimeEntity.this.getSpeed();
 			if (speed > 0.1) {
@@ -249,7 +252,7 @@ public class EndSlimeEntity extends Slime {
 				int down = BlocksHelper.downRay(EndSlimeEntity.this.level, pos, 16);
 				return down < 5;
 			}
-			
+
 			return true;
 		}
 
@@ -290,9 +293,9 @@ public class EndSlimeEntity extends Slime {
 		public boolean canUse() {
 			return EndSlimeEntity.this.getTarget() == null
 					&& (EndSlimeEntity.this.onGround
-							|| EndSlimeEntity.this.isInWater()
-							|| EndSlimeEntity.this.isInLava()
-							|| EndSlimeEntity.this.hasEffect(MobEffects.LEVITATION))
+					|| EndSlimeEntity.this.isInWater()
+					|| EndSlimeEntity.this.isInLava()
+					|| EndSlimeEntity.this.hasEffect(MobEffects.LEVITATION))
 					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 
@@ -322,7 +325,7 @@ public class EndSlimeEntity extends Slime {
 				return false;
 			}
 			else {
-				return livingEntity instanceof Player && ((Player) livingEntity).abilities.invulnerable ? false : EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
+				return livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable ? false : EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 			}
 		}
 
@@ -339,7 +342,7 @@ public class EndSlimeEntity extends Slime {
 			else if (!livingEntity.isAlive()) {
 				return false;
 			}
-			else if (livingEntity instanceof Player && ((Player) livingEntity).abilities.invulnerable) {
+			else if (livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable) {
 				return false;
 			}
 			else {
@@ -349,7 +352,7 @@ public class EndSlimeEntity extends Slime {
 
 		public void tick() {
 			EndSlimeEntity.this.lookAt(EndSlimeEntity.this.getTarget(), 10.0F, 10.0F);
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.yRot, EndSlimeEntity.this.isDealsDamage());
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.getYRot(), EndSlimeEntity.this.isDealsDamage());
 		}
 	}
 
@@ -360,7 +363,7 @@ public class EndSlimeEntity extends Slime {
 
 		public EndSlimeMoveControl(EndSlimeEntity slime) {
 			super(slime);
-			this.targetYaw = 180.0F * slime.yRot / 3.1415927F;
+			this.targetYaw = 180.0F * slime.getYRot() / 3.1415927F;
 		}
 
 		public void look(float targetYaw, boolean jumpOften) {
@@ -374,9 +377,9 @@ public class EndSlimeEntity extends Slime {
 		}
 
 		public void tick() {
-			this.mob.yRot = this.rotlerp(this.mob.yRot, this.targetYaw, 90.0F);
-			this.mob.yHeadRot = this.mob.yRot;
-			this.mob.yBodyRot = this.mob.yRot;
+			this.mob.setYRot(this.rotlerp(this.mob.getYRot(), this.targetYaw, 90.0F));
+			this.mob.yHeadRot = this.mob.getYRot();
+			this.mob.yBodyRot = this.mob.getYRot();
 			if (this.operation != MoveControl.Operation.MOVE_TO) {
 				this.mob.setZza(0.0F);
 			}

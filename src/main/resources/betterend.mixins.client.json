@@ -2,23 +2,23 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "ru.betterend.mixin.client",
-	"compatibilityLevel": "JAVA_8",
+	"compatibilityLevel": "JAVA_16",
 	"client": [
 		"AbstractSoundInstanceAccessor",
 		"ClientPlayNetworkHandlerMixin",
-	  	"HumanoidMobRendererMixin",
-	  	"ArmorStandRendererMixin",
+        "HumanoidMobRendererMixin",
+        "ArmorStandRendererMixin",
 		"ClientRecipeBookMixin",
 		"MinecraftClientMixin",
-	  	"PlayerRendererMixin",
-		"WorldRendererMixin",
+        "PlayerRendererMixin",
+		"LevelRendererMixin",
 		"MusicTrackerMixin",
 		"AnvilScreenMixin",
 		"BiomeColorsMixin",
 		"ModelLoaderMixin",
-	  	"LocalPlayerMixin",
-	  	"CapeLayerMixin",
-	  	"ItemStackMixin"
+        "LocalPlayerMixin",
+        "CapeLayerMixin",
+        "ItemStackMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

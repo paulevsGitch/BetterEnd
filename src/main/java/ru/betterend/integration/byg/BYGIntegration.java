@@ -1,11 +1,8 @@
 package ru.betterend.integration.byg;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.behavior.WeightedList;
+import net.minecraft.world.entity.ai.behavior.ShufflingList;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import ru.bclib.api.BiomeAPI;
@@ -18,6 +15,9 @@ import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.biomes.BYGBiomes;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndBiomes;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BYGIntegration extends ModIntegration implements EndBiomeIntegration {
 	public BYGIntegration() {
@@ -38,10 +38,10 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 	@Override
 	public void addBiomes() {
 		BYGBiomes.addBiomes();
-		
+
 		Class<?> biomeClass = this.getClass("corgiaoc.byg.common.world.biome.BYGEndBiome");
 		List<Object> biomes = this.getStaticFieldValue(biomeClass, "BYG_END_BIOMES");
-		
+
 		if (biomes != null && biomeClass != null) {
 			biomes.forEach((obj) -> {
 				Biome biome = this.getAndExecuteRuntime(biomeClass, obj, "getBiome");
@@ -62,7 +62,7 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 							EndBiomes.LAND_BIOMES.removeMutableBiome(biomeID);
 							EndBiomes.VOID_BIOMES.addBiomeMutable(endBiome);
 						}
-						WeightedList<ResourceLocation> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
+						ShufflingList<ResourceLocation> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
 						if (subBiomes != null) {
 							subBiomes.stream().collect(Collectors.toList()).forEach((id) -> {
 								BCLBiome subBiome = BiomeAPI.getBiome(id);

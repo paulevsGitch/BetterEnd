@@ -1,18 +1,13 @@
 package ru.betterend.world.features.bushes;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -31,6 +26,10 @@ import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 public class TenaneaBushFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Direction[] DIRECTIONS = Direction.values();
@@ -39,9 +38,11 @@ public class TenaneaBushFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
 		float radius = MHelper.randRange(1.8F, 3.5F, random);
@@ -75,7 +76,8 @@ public class TenaneaBushFeature extends DefaultFeature {
 					}
 
 					return info.getState().setValue(LeavesBlock.DISTANCE, distance);
-				} else {
+				}
+				else {
 					return AIR;
 				}
 			}
@@ -109,7 +111,8 @@ public class TenaneaBushFeature extends DefaultFeature {
 						mut.setY(mut.getY() - 1);
 						if (world.isEmptyBlock(mut.below())) {
 							BlocksHelper.setWithoutUpdate(world, mut, middle);
-						} else {
+						}
+						else {
 							break;
 						}
 					}

@@ -1,12 +1,12 @@
 package ru.betterend.item.material;
 
-import java.util.function.Supplier;
-
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
+
+import java.util.function.Supplier;
 
 public enum EndToolMaterial implements Tier {
 	THALLASIUM(2, 320, 7.0F, 1.5F, 12, () -> {
@@ -25,9 +25,9 @@ public enum EndToolMaterial implements Tier {
 	private final int miningLevel;
 	private final int enchantability;
 	private final LazyLoadedValue<Ingredient> repairIngredient;
-	
+
 	private EndToolMaterial(int miningLevel, int durability, float miningSpeed, float attackDamage, int enchantability,
-			Supplier<Ingredient> repairIngredient) {
+							Supplier<Ingredient> repairIngredient) {
 
 		this.durability = durability;
 		this.miningSpeed = miningSpeed;

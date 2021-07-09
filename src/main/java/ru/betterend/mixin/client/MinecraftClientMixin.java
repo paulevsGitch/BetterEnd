@@ -1,13 +1,5 @@
 package ru.betterend.mixin.client;
 
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
@@ -21,6 +13,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.interfaces.IColorProvider;
 import ru.bclib.util.MHelper;
 
@@ -28,14 +27,14 @@ import ru.bclib.util.MHelper;
 public class MinecraftClientMixin {
 	@Shadow
 	public LocalPlayer player;
-	
+
 	@Shadow
 	public Screen screen;
 
 	@Final
 	@Shadow
 	public Gui gui;
-	
+
 	@Shadow
 	public ClientLevel level;
 
@@ -46,7 +45,7 @@ public class MinecraftClientMixin {
 	@Final
 	@Shadow
 	private ItemColors itemColors;
-	
+
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onInit(GameConfig args, CallbackInfo info) {
 		Registry.BLOCK.forEach(block -> {
@@ -57,7 +56,7 @@ public class MinecraftClientMixin {
 			}
 		});
 	}
-	
+
 	@Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
 	private void be_getEndMusic(CallbackInfoReturnable<Music> info) {
 		if (!(this.screen instanceof WinScreen) && this.player != null) {

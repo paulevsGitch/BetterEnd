@@ -1,17 +1,12 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -28,14 +23,20 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.JellyshroomCapBlock;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 public class JellyshroomFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final List<Vector3f> ROOT;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
-		if (!world.getBlockState(pos.below()).getBlock().is(TagAPI.END_GROUND))
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
 		BlockState bark = EndBlocks.JELLYSHROOM.bark.defaultBlockState();
@@ -64,7 +65,8 @@ public class JellyshroomFeature extends DefaultFeature {
 						&& EndBlocks.JELLYSHROOM.isTreeLog(info.getStateDown())) {
 					return EndBlocks.JELLYSHROOM.log.defaultBlockState();
 				}
-			} else if (info.getState().is(EndBlocks.JELLYSHROOM_CAP_PURPLE)) {
+			}
+			else if (info.getState().is(EndBlocks.JELLYSHROOM_CAP_PURPLE)) {
 				float dx = info.getPos().getX() - pos.getX() - last.x();
 				float dz = info.getPos().getZ() - pos.getZ() - last.z();
 				float distance = MHelper.length(dx, dz) / membraneRadius * 7F;

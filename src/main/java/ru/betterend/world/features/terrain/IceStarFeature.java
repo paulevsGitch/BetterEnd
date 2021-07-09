@@ -1,15 +1,10 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFRotation;
@@ -19,6 +14,10 @@ import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class IceStarFeature extends DefaultFeature {
 	private final float minSize;
@@ -34,8 +33,10 @@ public class IceStarFeature extends DefaultFeature {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		float size = MHelper.randRange(minSize, maxSize, random);
 		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);
@@ -50,7 +51,8 @@ public class IceStarFeature extends DefaultFeature {
 			if (angle > 0.01F && angle < 3.14F) {
 				Vector3f axis = MHelper.normalize(MHelper.cross(Vector3f.YP, point));
 				rotated = new SDFRotation().setRotation(axis, angle).setSource(spike);
-			} else if (angle > 1) {
+			}
+			else if (angle > 1) {
 				rotated = new SDFRotation().setRotation(Vector3f.YP, (float) Math.PI).setSource(spike);
 			}
 			sdf = (sdf == null) ? rotated : new SDFUnion().setSourceA(sdf).setSourceB(rotated);
@@ -80,9 +82,11 @@ public class IceStarFeature extends DefaultFeature {
 					+ random.nextFloat() * randScale;
 			if (distance < ancientRadius) {
 				return ancient;
-			} else if (distance < denseRadius) {
+			}
+			else if (distance < denseRadius) {
 				return dense;
-			} else if (distance < iceRadius) {
+			}
+			else if (distance < iceRadius) {
 				return ice;
 			}
 			return info.getState();

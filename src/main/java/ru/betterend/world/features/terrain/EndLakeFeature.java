@@ -1,13 +1,11 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
@@ -19,13 +17,18 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
 
+import java.util.Random;
+
 public class EndLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 	private static final MutableBlockPos POS = new MutableBlockPos();
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, NoneFeatureConfiguration featureConfig) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		BlockPos blockPos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		double radius = MHelper.randRange(10.0, 20.0, random);
 		double depth = radius * 0.5 * MHelper.randRange(0.8, 1.2, random);
 		int dist = MHelper.floor(radius);
@@ -163,7 +166,7 @@ public class EndLakeFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(world, POS, state);
 							}
 							pos = POS.below();
-							if (world.getBlockState(pos).getBlock().is(TagAPI.GEN_TERRAIN)) {
+							if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
 								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
 							}
 							pos = POS.above();
@@ -199,7 +202,6 @@ public class EndLakeFeature extends DefaultFeature {
 				|| state.is(TagAPI.GEN_TERRAIN)
 				|| state.is(EndBlocks.ENDSTONE_DUST)
 				|| state.getMaterial().equals(Material.PLANT)
-				|| state.getMaterial().equals(Material.WATER_PLANT)
-				|| state.getMaterial().equals(Material.CORAL);
+				|| state.getMaterial().equals(Material.WATER_PLANT);
 	}
 }

@@ -1,15 +1,11 @@
 package ru.betterend.blocks.entities;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -37,7 +33,6 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import ru.betterend.BetterEnd;
@@ -46,13 +41,17 @@ import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.EndBlockEntities;
 
-public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible, TickableBlockEntity {
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
-	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
-	private static final int[] SIDE_SLOTS = new int[] { 1, 2 };
+public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
+
+	private static final int[] TOP_SLOTS = new int[]{0, 1};
+	private static final int[] BOTTOM_SLOTS = new int[]{2, 3};
+	private static final int[] SIDE_SLOTS = new int[]{1, 2};
 	private static final Map<Item, Integer> AVAILABLE_FUELS = Maps.newHashMap();
-	
+
 	private final Object2IntOpenHashMap<ResourceLocation> recipesUsed;
 	protected NonNullList<ItemStack> inventory;
 	protected final ContainerData propertyDelegate;
@@ -61,47 +60,47 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 	private int smeltTime;
 	private int burnTime;
 	private int fuelTime;
-	
-	public EndStoneSmelterBlockEntity() {
-		super(EndBlockEntities.END_STONE_SMELTER);
+
+	public EndStoneSmelterBlockEntity(BlockPos blockPos, BlockState blockState) {
+		super(EndBlockEntities.END_STONE_SMELTER, blockPos, blockState);
 		this.inventory = NonNullList.withSize(4, ItemStack.EMPTY);
 		this.recipesUsed = new Object2IntOpenHashMap<>();
-		 this.propertyDelegate = new ContainerData() {
-		 	public int get(int index) {
-		 		switch(index) {
-			 		case 0:
-			 			return EndStoneSmelterBlockEntity.this.burnTime;
-			 		case 1:
-			 			return EndStoneSmelterBlockEntity.this.fuelTime;
-			 		case 2:
-			 			return EndStoneSmelterBlockEntity.this.smeltTime;
-			 		case 3:
-			 			return EndStoneSmelterBlockEntity.this.smeltTimeTotal;
-			 		default:
-			 			return 0;
-		 		}
-		 	}
+		this.propertyDelegate = new ContainerData() {
+			public int get(int index) {
+				switch (index) {
+					case 0:
+						return EndStoneSmelterBlockEntity.this.burnTime;
+					case 1:
+						return EndStoneSmelterBlockEntity.this.fuelTime;
+					case 2:
+						return EndStoneSmelterBlockEntity.this.smeltTime;
+					case 3:
+						return EndStoneSmelterBlockEntity.this.smeltTimeTotal;
+					default:
+						return 0;
+				}
+			}
 
-		 	public void set(int index, int value) {
-		 		switch(index) {
-			 		case 0:
-			 			EndStoneSmelterBlockEntity.this.burnTime = value;
-			 			break;
-			 		case 1:
-			 			EndStoneSmelterBlockEntity.this.fuelTime = value;
-			 			break;
-			 		case 2:
-			 			EndStoneSmelterBlockEntity.this.smeltTime = value;
-			 			break;
-			 		case 3:
-			 			EndStoneSmelterBlockEntity.this.smeltTimeTotal = value;
-		 		}
-		 	}
+			public void set(int index, int value) {
+				switch (index) {
+					case 0:
+						EndStoneSmelterBlockEntity.this.burnTime = value;
+						break;
+					case 1:
+						EndStoneSmelterBlockEntity.this.fuelTime = value;
+						break;
+					case 2:
+						EndStoneSmelterBlockEntity.this.smeltTime = value;
+						break;
+					case 3:
+						EndStoneSmelterBlockEntity.this.smeltTimeTotal = value;
+				}
+			}
 
-		 	public int getCount() {
-		 		return 4;
-		 	}
-		 };
+			public int getCount() {
+				return 4;
+			}
+		};
 	}
 
 	private boolean isBurning() {
@@ -122,7 +121,8 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 				return true;
 			}
 			itemStack = iterator.next();
-		} while (itemStack.isEmpty());
+		}
+		while (itemStack.isEmpty());
 
 		return false;
 	}
@@ -156,19 +156,19 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 			setChanged();
 		}
 	}
-	
+
 	protected int getSmeltTime() {
 		if (level == null) return 200;
 		int smeltTime = level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level)
 				.map(AlloyingRecipe::getSmeltTime).orElse(0);
 		if (smeltTime == 0) {
 			smeltTime = level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, this, level)
-				.map(BlastingRecipe::getCookingTime).orElse(200);
+					.map(BlastingRecipe::getCookingTime).orElse(200);
 			smeltTime /= 1.5;
 		}
 		return smeltTime;
 	}
-	
+
 	public void dropExperience(Player player) {
 		if (level == null) return;
 		List<Recipe<?>> list = Lists.newArrayList();
@@ -178,7 +178,8 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 				if (recipe instanceof AlloyingRecipe) {
 					AlloyingRecipe alloying = (AlloyingRecipe) recipe;
 					dropExperience(player.level, player.position(), entry.getIntValue(), alloying.getExperience());
-				} else {
+				}
+				else {
 					BlastingRecipe blasting = (BlastingRecipe) recipe;
 					dropExperience(player.level, player.position(), entry.getIntValue(), blasting.getExperience());
 				}
@@ -187,7 +188,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 		player.awardRecipes(list);
 		recipesUsed.clear();
 	}
-	
+
 	private void dropExperience(Level world, Vec3 vec3d, int count, float amount) {
 		int expTotal = Mth.floor(count * amount);
 		float g = Mth.frac(count * amount);
@@ -195,7 +196,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 			expTotal++;
 		}
 
-		while(expTotal > 0) {
+		while (expTotal > 0) {
 			int expVal = ExperienceOrb.getExperienceValue(expTotal);
 			expTotal -= expVal;
 			world.addFreshEntity(new ExperienceOrb(world, vec3d.x, vec3d.y, vec3d.z, expVal));
@@ -225,72 +226,74 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 		return new EndStoneSmelterScreenHandler(syncId, playerInventory, this, propertyDelegate);
 	}
 
-	@Override
-	public void tick() {
-		if (level == null) return;
+	public static void tick(Level tickLevel, BlockPos tickPos, BlockState tickState, EndStoneSmelterBlockEntity blockEntity) {
+		if (tickLevel == null) return;
 
-		boolean initialBurning = isBurning();
+		boolean initialBurning = blockEntity.isBurning();
 		if (initialBurning) {
-			burnTime--;
+			blockEntity.burnTime--;
 		}
 
 		boolean burning = initialBurning;
-		if (!level.isClientSide) {
-			ItemStack fuel = inventory.get(2);
-			if (!burning && (fuel.isEmpty() || inventory.get(0).isEmpty() && inventory.get(1).isEmpty())) {
-				if (smeltTime > 0) {
-					smeltTime = Mth.clamp(smeltTime - 2, 0, smeltTimeTotal);
+		if (!tickLevel.isClientSide) {
+			ItemStack fuel = blockEntity.inventory.get(2);
+			if (!burning && (fuel.isEmpty() || blockEntity.inventory.get(0).isEmpty() && blockEntity.inventory.get(1).isEmpty())) {
+				if (blockEntity.smeltTime > 0) {
+					blockEntity.smeltTime = Mth.clamp(blockEntity.smeltTime - 2, 0, blockEntity.smeltTimeTotal);
 				}
-			} else {
-				Recipe<?> recipe = level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level).orElse(null);
+			}
+			else {
+				Recipe<?> recipe = tickLevel.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, blockEntity, tickLevel).orElse(null);
 				if (recipe == null) {
-					recipe = level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, this, level).orElse(null);
+					recipe = tickLevel.getRecipeManager().getRecipeFor(RecipeType.BLASTING, blockEntity, tickLevel).orElse(null);
 				}
-				boolean accepted = canAcceptRecipeOutput(recipe);
+				boolean accepted = blockEntity.canAcceptRecipeOutput(recipe);
 				if (!burning && accepted) {
-					burnTime = getFuelTime(fuel);
-					fuelTime = burnTime;
-					burning = isBurning();
+					blockEntity.burnTime = blockEntity.getFuelTime(fuel);
+					blockEntity.fuelTime = blockEntity.burnTime;
+					burning = blockEntity.isBurning();
 					if (burning) {
 						if (!fuel.isEmpty()) {
 							Item item = fuel.getItem();
 							fuel.shrink(1);
 							if (fuel.isEmpty()) {
 								Item remainFuel = item.getCraftingRemainingItem();
-								inventory.set(2, remainFuel == null ? ItemStack.EMPTY : new ItemStack(remainFuel));
+								blockEntity.inventory.set(2, remainFuel == null ? ItemStack.EMPTY : new ItemStack(remainFuel));
 							}
 						}
-						setChanged();
+						blockEntity.setChanged();
 					}
 				}
 
 				if (burning && accepted) {
-					smeltTime++;
-					if (smeltTime == smeltTimeTotal) {
-						smeltTime = 0;
-						smeltTimeTotal = getSmeltTime();
-						craftRecipe(recipe);
-						setChanged();
+					blockEntity.smeltTime++;
+					if (blockEntity.smeltTime == blockEntity.smeltTimeTotal) {
+						blockEntity.smeltTime = 0;
+						blockEntity.smeltTimeTotal = blockEntity.getSmeltTime();
+						blockEntity.craftRecipe(recipe);
+						blockEntity.setChanged();
 					}
-				} else {
-					smeltTime = 0;
+				}
+				else {
+					blockEntity.smeltTime = 0;
 				}
 			}
-			burning = isBurning();
+			burning = blockEntity.isBurning();
 			if (initialBurning != burning) {
-				level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(EndStoneSmelter.LIT, burning), 3);
-				setChanged();
+				tickLevel.setBlock(tickPos, tickState.setValue(EndStoneSmelter.LIT, burning), 3);
+				blockEntity.setChanged();
 			}
 		}
 	}
-	
+
 	protected boolean canAcceptRecipeOutput(Recipe<?> recipe) {
 		if (recipe == null) return false;
 		boolean validInput;
 		if (recipe instanceof AlloyingRecipe) {
 			validInput = !inventory.get(0).isEmpty() &&
 					!inventory.get(1).isEmpty();
-		} else {
+		}
+		else {
 			validInput = !inventory.get(0).isEmpty() ||
 					!inventory.get(1).isEmpty();
 		}
@@ -318,12 +321,13 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 
 	private void craftRecipe(Recipe<?> recipe) {
 		if (recipe == null || !canAcceptRecipeOutput(recipe)) return;
-		
+
 		ItemStack result = recipe.getResultItem();
 		ItemStack output = inventory.get(3);
 		if (output.isEmpty()) {
 			inventory.set(3, result.copy());
-		} else if (output.getItem() == result.getItem()) {
+		}
+		else if (output.getItem() == result.getItem()) {
 			output.grow(result.getCount());
 		}
 
@@ -331,14 +335,16 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 		if (!this.level.isClientSide) {
 			setRecipeUsed(recipe);
 		}
-		
+
 		if (recipe instanceof AlloyingRecipe) {
 			inventory.get(0).shrink(1);
 			inventory.get(1).shrink(1);
-		} else {
+		}
+		else {
 			if (!inventory.get(0).isEmpty()) {
 				inventory.get(0).shrink(1);
-			} else {
+			}
+			else {
 				inventory.get(1).shrink(1);
 			}
 		}
@@ -393,10 +399,10 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 		Item item = fuel.getItem();
 		return AVAILABLE_FUELS.getOrDefault(item, getFabricFuel(fuel));
 	}
-	
+
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
+	public void load(CompoundTag tag) {
+		super.load(tag);
 		inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 		ContainerHelper.loadAllItems(tag, inventory);
 		burnTime = tag.getShort("BurnTime");
@@ -408,7 +414,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 			recipesUsed.put(new ResourceLocation(id), compoundTag.getInt(id));
 		}
 	}
-	
+
 	@Override
 	public CompoundTag save(CompoundTag tag) {
 		super.save(tag);
@@ -420,14 +426,15 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 		CompoundTag usedRecipes = new CompoundTag();
 		recipesUsed.forEach((identifier, integer) -> usedRecipes.putInt(identifier.toString(), integer));
 		tag.put("RecipesUsed", usedRecipes);
-		
+
 		return tag;
 	}
-	
+
 	public boolean canPlaceItem(int slot, ItemStack stack) {
 		if (slot == 3) {
 			return false;
-		} else if (slot != 2) {
+		}
+		else if (slot != 2) {
 			return true;
 		}
 		ItemStack itemStack = this.inventory.get(2);
@@ -445,7 +452,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 	public static Map<Item, Integer> availableFuels() {
 		return AVAILABLE_FUELS;
 	}
-	
+
 	private static int getFabricFuel(ItemStack stack) {
 		Integer ticks = FuelRegistry.INSTANCE.get(stack.getItem());
 		return ticks == null ? 0 : ticks;

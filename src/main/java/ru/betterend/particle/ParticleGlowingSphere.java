@@ -20,7 +20,7 @@ public class ParticleGlowingSphere extends SimpleAnimatedParticle {
 	private double nextVX;
 	private double nextVY;
 	private double nextVZ;
-	
+
 	protected ParticleGlowingSphere(ClientLevel world, double x, double y, double z, SpriteSet sprites, double r, double g, double b) {
 		super(world, x, y, z, sprites, 0);
 		setSprite(sprites.get(random));
@@ -28,19 +28,19 @@ public class ParticleGlowingSphere extends SimpleAnimatedParticle {
 		this.quadSize = MHelper.randRange(0.05F, 0.15F, random);
 		this.setFadeColor(15916745);
 		this.setSpriteFromAge(sprites);
-		
+
 		preVX = random.nextGaussian() * 0.02;
 		preVY = random.nextGaussian() * 0.02;
 		preVZ = random.nextGaussian() * 0.02;
-		
+
 		nextVX = random.nextGaussian() * 0.02;
 		nextVY = random.nextGaussian() * 0.02;
 		nextVZ = random.nextGaussian() * 0.02;
 	}
-	
+
 	@Override
 	public void tick() {
-		ticks ++;
+		ticks++;
 		if (ticks > 30) {
 			preVX = nextVX;
 			preVY = nextVY;
@@ -51,11 +51,11 @@ public class ParticleGlowingSphere extends SimpleAnimatedParticle {
 			ticks = 0;
 		}
 		double delta = (double) ticks / 30.0;
-		
+
 		this.xd = Mth.lerp(delta, preVX, nextVX);
 		this.yd = Mth.lerp(delta, preVY, nextVY);
 		this.zd = Mth.lerp(delta, preVZ, nextVZ);
-		
+
 		super.tick();
 	}
 

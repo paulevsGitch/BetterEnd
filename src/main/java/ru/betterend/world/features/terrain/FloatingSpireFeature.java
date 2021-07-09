@@ -1,15 +1,12 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.sdf.SDF;
@@ -20,10 +17,16 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
 
+import java.util.List;
+import java.util.Random;
+
 public class FloatingSpireFeature extends SpireFeature {
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		int minY = getYOnSurface(world, pos.getX(), pos.getZ());
 		int y = minY > 57 ? MHelper.floor(MHelper.randRange(minY, minY * 2, random) * 0.5F + 32)
 				: MHelper.randRange(64, 192, random);
@@ -54,7 +57,8 @@ public class FloatingSpireFeature extends SpireFeature {
 					support.add(info.getPos().above());
 				}
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-			} else if (info.getState(Direction.UP, 3).isAir()) {
+			}
+			else if (info.getState(Direction.UP, 3).isAir()) {
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig()
 						.getUnderMaterial();
 			}
@@ -64,7 +68,7 @@ public class FloatingSpireFeature extends SpireFeature {
 
 		support.forEach((bpos) -> {
 			if (BiomeAPI.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
-				EndFeatures.TENANEA_BUSH.getFeature().place(world, chunkGenerator, random, bpos, null);
+				EndFeatures.TENANEA_BUSH.getFeature().place(new FeaturePlaceContext<>(world, chunkGenerator, random, bpos, null));
 			}
 		});
 

@@ -1,7 +1,5 @@
 package ru.betterend.client;
 
-import java.util.List;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.ChatFormatting;
@@ -30,6 +28,8 @@ import ru.betterend.registry.EndModelProviders;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndScreens;
 
+import java.util.List;
+
 public class BetterEndClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
@@ -43,7 +43,7 @@ public class BetterEndClient implements ClientModInitializer {
 		ClientOptions.init();
 		registerRenderers();
 		registerTooltips();
-		
+
 		if (BCLib.isDevEnvironment()) {
 			TranslationHelper.printMissingNames(BetterEnd.MOD_ID);
 		}

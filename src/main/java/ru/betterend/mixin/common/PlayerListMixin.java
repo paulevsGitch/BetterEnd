@@ -1,23 +1,8 @@
 package ru.betterend.mixin.common;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.mojang.authlib.GameProfile;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
-
 import io.netty.buffer.Unpooled;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -56,7 +41,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelData;
+import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.betterend.world.generator.GeneratorOptions;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 @Mixin(PlayerList.class)
 public class PlayerListMixin {
@@ -84,19 +83,19 @@ public class PlayerListMixin {
 	private Map<UUID, ServerPlayer> playersByUUID;
 
 	@Inject(method = "placeNewPlayer", at = @At(value = "HEAD"), cancellable = true)
-	public void be_placeNewPlayer(Connection connection, ServerPlayer player, CallbackInfo info) {
+	public void be_placeNewPlayer(Connection connection, ServerPlayer serverPlayer, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
-			GameProfile gameProfile = player.getGameProfile();
+			GameProfile gameProfile = serverPlayer.getGameProfile();
 			GameProfileCache userCache = this.server.getProfileCache();
-			GameProfile gameProfile2 = userCache.get(gameProfile.getId());
-			String string = gameProfile2 == null ? gameProfile.getName() : gameProfile2.getName();
+			Optional<GameProfile> gameProfile2 = userCache.get(gameProfile.getId());
+			String string = gameProfile2.isPresent() ? gameProfile2.get().getName() : gameProfile.getName();
 			userCache.add(gameProfile);
-			CompoundTag compoundTag = this.load(player);
+			CompoundTag compoundTag = this.load(serverPlayer);
 			ResourceKey<Level> var23;
 			if (compoundTag != null) {
 				DataResult<ResourceKey<Level>> var10000 = DimensionType.parseLegacy(new Dynamic<Tag>(NbtOps.INSTANCE, compoundTag.get("Dimension")));
 				Logger var10001 = LOGGER;
-				var10001.getClass();
+				Objects.requireNonNull(var10001);
 				var23 = (ResourceKey<Level>) var10000.resultOrPartial(var10001::error).orElse(Level.END);
 			}
 			else {
@@ -104,81 +103,95 @@ public class PlayerListMixin {
 			}
 
 			ResourceKey<Level> registryKey = var23;
-			ServerLevel serverWorld = this.server.getLevel(registryKey);
-			ServerLevel serverWorld3;
-			if (serverWorld == null) {
+			ServerLevel serverLevel = this.server.getLevel(registryKey);
+			ServerLevel serverLevel3;
+			if (serverLevel == null) {
 				LOGGER.warn("Unknown respawn dimension {}, defaulting to overworld", registryKey);
-				serverWorld3 = this.server.overworld();
+				serverLevel3 = this.server.overworld();
 			}
 			else {
-				serverWorld3 = serverWorld;
+				serverLevel3 = serverLevel;
 			}
 
-			player.setLevel(serverWorld3);
-			player.gameMode.setLevel((ServerLevel) player.level);
+			serverPlayer.setLevel(serverLevel3);
+			//serverPlayer.gameMode.setLevel((ServerLevel) serverPlayer.level);
 			String string2 = "local";
 			if (connection.getRemoteAddress() != null) {
 				string2 = connection.getRemoteAddress().toString();
 			}
 
-			LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", player.getName().getString(), string2, player.getId(), player.getX(), player.getY(), player.getZ());
-			LevelData worldProperties = serverWorld3.getLevelData();
-			this.updatePlayerGameMode(player, (ServerPlayer) null, serverWorld3);
-			ServerGamePacketListenerImpl serverPlayNetworkHandler = new ServerGamePacketListenerImpl(this.server, connection, player);
-			GameRules gameRules = serverWorld3.getGameRules();
+			LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", serverPlayer.getName().getString(), string2,
+					serverPlayer.getId(), serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ());
+			LevelData worldProperties = serverLevel3.getLevelData();
+			serverPlayer.loadGameTypes(compoundTag);
+			//this.updatePlayerGameMode(serverPlayer, (ServerPlayer) null, serverLevel3);
+			ServerGamePacketListenerImpl serverPlayNetworkHandler = new ServerGamePacketListenerImpl(this.server,
+					connection, serverPlayer);
+			GameRules gameRules = serverLevel3.getGameRules();
 			boolean bl = gameRules.getBoolean(GameRules.RULE_DO_IMMEDIATE_RESPAWN);
 			boolean bl2 = gameRules.getBoolean(GameRules.RULE_REDUCEDDEBUGINFO);
-			serverPlayNetworkHandler.send(new ClientboundLoginPacket(player.getId(), player.gameMode.getGameModeForPlayer(), player.gameMode.getPreviousGameModeForPlayer(), BiomeManager.obfuscateSeed(serverWorld3.getSeed()),
-					worldProperties.isHardcore(), this.server.levelKeys(), this.registryHolder, serverWorld3.dimensionType(), serverWorld3.dimension(), this.getPlayerCount(), this.viewDistance, bl2, !bl,
-					serverWorld3.isDebug(), serverWorld3.isFlat()));
-			serverPlayNetworkHandler.send(new ClientboundCustomPayloadPacket(ClientboundCustomPayloadPacket.BRAND, (new FriendlyByteBuf(Unpooled.buffer())).writeUtf(this.getServer().getServerModName())));
-			serverPlayNetworkHandler.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
-			serverPlayNetworkHandler.send(new ClientboundPlayerAbilitiesPacket(player.abilities));
-			serverPlayNetworkHandler.send(new ClientboundSetCarriedItemPacket(player.inventory.selected));
-			serverPlayNetworkHandler.send(new ClientboundUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
-			serverPlayNetworkHandler.send(new ClientboundUpdateTagsPacket(this.server.getTags()));
-			this.sendPlayerPermissionLevel(player);
-			player.getStats().markAllDirty();
-			player.getRecipeBook().sendInitialRecipeBook(player);
-			this.updateEntireScoreboard(serverWorld3.getScoreboard(), player);
+			serverPlayNetworkHandler.send(new ClientboundLoginPacket(serverPlayer.getId(),
+					serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(),
+					BiomeManager.obfuscateSeed(serverLevel3.getSeed()), worldProperties.isHardcore(),
+					this.server.levelKeys(), this.registryHolder, serverLevel3.dimensionType(), serverLevel3.dimension(),
+					this.getMaxPlayers(), this.viewDistance, bl2, !bl, serverLevel3.isDebug(), serverLevel3.isFlat()));
+			serverPlayNetworkHandler.send(new ClientboundCustomPayloadPacket(ClientboundCustomPayloadPacket.BRAND,
+					(new FriendlyByteBuf(Unpooled.buffer())).writeUtf(this.getServer().getServerModName())));
+			serverPlayNetworkHandler
+					.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
+			serverPlayNetworkHandler.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
+			serverPlayNetworkHandler.send(new ClientboundSetCarriedItemPacket(serverPlayer.getInventory().selected));
+			serverPlayNetworkHandler
+					.send(new ClientboundUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
+			serverPlayNetworkHandler
+					.send(new ClientboundUpdateTagsPacket(this.server.getTags().serializeToNetwork(this.registryHolder)));
+			this.sendPlayerPermissionLevel(serverPlayer);
+			serverPlayer.getStats().markAllDirty();
+			serverPlayer.getRecipeBook().sendInitialRecipeBook(serverPlayer);
+			this.updateEntireScoreboard(serverLevel3.getScoreboard(), serverPlayer);
 			this.server.invalidateStatus();
 			TranslatableComponent mutableText2;
-			if (player.getGameProfile().getName().equalsIgnoreCase(string)) {
-				mutableText2 = new TranslatableComponent("multiplayer.player.joined", new Object[] { player.getDisplayName() });
+			if (serverPlayer.getGameProfile().getName().equalsIgnoreCase(string)) {
+				mutableText2 = new TranslatableComponent("multiplayer.player.joined",
+						new Object[]{serverPlayer.getDisplayName()});
 			}
 			else {
-				mutableText2 = new TranslatableComponent("multiplayer.player.joined.renamed", new Object[] { player.getDisplayName(), string });
+				mutableText2 = new TranslatableComponent("multiplayer.player.joined.renamed",
+						new Object[]{serverPlayer.getDisplayName(), string});
 			}
 
 			this.broadcastMessage(mutableText2.withStyle(ChatFormatting.YELLOW), ChatType.SYSTEM, Util.NIL_UUID);
-			serverPlayNetworkHandler.teleport(player.getX(), player.getY(), player.getZ(), player.yRot, player.xRot);
-			this.players.add(player);
-			this.playersByUUID.put(player.getUUID(), player);
-			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[] { player }));
+			serverPlayNetworkHandler.teleport(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(),
+					serverPlayer.getYRot(), serverPlayer.getXRot());
+			this.players.add(serverPlayer);
+			this.playersByUUID.put(serverPlayer.getUUID(), serverPlayer);
+			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
+					new ServerPlayer[]{serverPlayer}));
 
-			for (int i = 0; i < this.players.size(); ++i) {
-				player.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[] { (ServerPlayer) this.players.get(i) }));
+			for (ServerPlayer player : this.players) {
+				serverPlayer.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
+						new ServerPlayer[]{(ServerPlayer) player}));
 			}
 
-			serverWorld3.addNewPlayer(player);
-			this.server.getCustomBossEvents().onPlayerConnect(player);
-			this.sendLevelInfo(player, serverWorld3);
+			serverLevel3.addNewPlayer(serverPlayer);
+			this.server.getCustomBossEvents().onPlayerConnect(serverPlayer);
+			this.sendLevelInfo(serverPlayer, serverLevel3);
 			if (!this.server.getResourcePack().isEmpty()) {
-				player.sendTexturePack(this.server.getResourcePack(), this.server.getResourcePackHash());
+				serverPlayer.sendTexturePack(this.server.getResourcePack(), this.server.getResourcePackHash(),
+						this.server.isResourcePackRequired(), this.server.getResourcePackPrompt());
 			}
 
-			Iterator<?> var24 = player.getActiveEffects().iterator();
-
-			while (var24.hasNext()) {
-				MobEffectInstance statusEffectInstance = (MobEffectInstance) var24.next();
-				serverPlayNetworkHandler.send(new ClientboundUpdateMobEffectPacket(player.getId(), statusEffectInstance));
+			for (MobEffectInstance statusEffectInstance : serverPlayer.getActiveEffects()) {
+				serverPlayNetworkHandler
+						.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), statusEffectInstance));
 			}
 
 			if (compoundTag != null && compoundTag.contains("RootVehicle", 10)) {
 				CompoundTag compoundTag2 = compoundTag.getCompound("RootVehicle");
-				Entity entity = EntityType.loadEntityRecursive(compoundTag2.getCompound("Entity"), serverWorld3, (vehicle) -> {
-					return !serverWorld3.addWithUUID(vehicle) ? null : vehicle;
-				});
+				Entity entity = EntityType.loadEntityRecursive(compoundTag2.getCompound("Entity"), serverLevel3,
+						(vehicle) -> {
+							return !serverLevel3.addWithUUID(vehicle) ? null : vehicle;
+						});
 				if (entity != null) {
 					UUID uUID2;
 					if (compoundTag2.hasUUID("Attach")) {
@@ -191,7 +204,7 @@ public class PlayerListMixin {
 					Iterator<?> var21;
 					Entity entity3;
 					if (entity.getUUID().equals(uUID2)) {
-						player.startRiding(entity, true);
+						serverPlayer.startRiding(entity, true);
 					}
 					else {
 						var21 = entity.getIndirectPassengers().iterator();
@@ -199,26 +212,26 @@ public class PlayerListMixin {
 						while (var21.hasNext()) {
 							entity3 = (Entity) var21.next();
 							if (entity3.getUUID().equals(uUID2)) {
-								player.startRiding(entity3, true);
+								serverPlayer.startRiding(entity3, true);
 								break;
 							}
 						}
 					}
 
-					if (!player.isPassenger()) {
+					if (!serverPlayer.isPassenger()) {
 						LOGGER.warn("Couldn't reattach entity to player");
-						serverWorld3.despawn(entity);
+						entity.discard();
 						var21 = entity.getIndirectPassengers().iterator();
 
 						while (var21.hasNext()) {
 							entity3 = (Entity) var21.next();
-							serverWorld3.despawn(entity3);
+							entity3.discard();
 						}
 					}
 				}
 			}
 
-			player.initMenu();
+			serverPlayer.initInventoryMenu();
 			info.cancel();
 		}
 	}
@@ -228,14 +241,20 @@ public class PlayerListMixin {
 		return null;
 	}
 
-	@Shadow
-	private void updatePlayerGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
+	// @Shadow
+	// private void updatePlayerGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
 
 	@Shadow
-	public void sendPlayerPermissionLevel(ServerPlayer player) {}
+	public void sendPlayerPermissionLevel(ServerPlayer player) {
+	}
 
 	@Shadow
 	public int getPlayerCount() {
+		return 0;
+	}
+
+	@Shadow
+	public int getMaxPlayers() {
 		return 0;
 	}
 
@@ -245,14 +264,18 @@ public class PlayerListMixin {
 	}
 
 	@Shadow
-	protected void updateEntireScoreboard(ServerScoreboard scoreboard, ServerPlayer player) {}
+	protected void updateEntireScoreboard(ServerScoreboard scoreboard, ServerPlayer player) {
+	}
 
 	@Shadow
-	public void broadcastMessage(Component message, ChatType type, UUID senderUuid) {}
+	public void broadcastMessage(Component message, ChatType type, UUID senderUuid) {
+	}
 
 	@Shadow
-	public void broadcastAll(Packet<?> packet) {}
+	public void broadcastAll(Packet<?> packet) {
+	}
 
 	@Shadow
-	public void sendLevelInfo(ServerPlayer player, ServerLevel world) {}
+	public void sendLevelInfo(ServerPlayer player, ServerLevel world) {
+	}
 }

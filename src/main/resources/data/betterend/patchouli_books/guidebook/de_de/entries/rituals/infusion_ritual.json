@@ -1,0 +1,64 @@
+{
+    "name": "Elementarritual",
+    "icon": "betterend:infusion_pedestal",
+    "read_by_default": true,
+    "category": "betterend:rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Hauche deinen Gegenständen die Macht der Elemente ein."
+        },
+        {
+            "type": "crafting",
+            "title": "Der Ritualplatz",
+            "text": "Zuerst musst Du einen $(bold)Elementarsockel$() sowie 8 weitere Sockel eines $(bold)beliebigen$() Typs herstellen.",
+            "recipe": "betterend:infusion_pedestal"
+        },
+        {
+            "type": "image",
+            "text": "Stelle den Elementarsockel umringt von den restlichen Sockeln (Abb. 2) auf.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/infusion_ritual_start.png",
+                "betterend:textures/images/infusion_ritual/infusion_ritual_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "title": "Verschmelzen",
+            "text": "Damit ist der Ritualplatz fertig, und kann verwendet werden.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_structure.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Setzte den Hauptwirkstoff umringt von den Katalysatoren",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_ready.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "auf den $(bold)Elementarsockel$().$(br2)Alle möglichen Rezepte findest du zum Beispiel mit $(l:https://www.curseforge.com/minecraft/mc-mods/roughly-enough-items)REI$(/l).$(br2)Um den Prozess zu starten, plaziere den Hauptwirkstoff zuletzt oder klicke den $(bold)Elementarsockel$() mit der rechten Moustaste an."
+        },
+        {
+            "type": "image",
+            "text": "Die Sockel verschmelzen nun die Zutaten. ",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_started.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Nach einer kurzen Zeit sind die Katalysatoren verbraucht und das Ritual ist beendet.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_finished.png"
+            ]
+        }
+    ]
+}

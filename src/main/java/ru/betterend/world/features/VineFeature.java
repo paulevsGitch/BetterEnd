@@ -1,7 +1,5 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -11,11 +9,13 @@ import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
 
+import java.util.Random;
+
 public class VineFeature extends InvertedScatterFeature {
 	private final Block vineBlock;
 	private final int maxLength;
 	private final boolean vine;
-	
+
 	public VineFeature(Block vineBlock, int maxLength) {
 		super(6);
 		this.vineBlock = vineBlock;
@@ -43,7 +43,7 @@ public class VineFeature extends InvertedScatterFeature {
 			BlocksHelper.setWithoutUpdate(world, blockPos.below(h), bottom);
 		}
 	}
-	
+
 	private boolean canPlaceBlock(BlockState state, WorldGenLevel world, BlockPos blockPos) {
 		if (vine) {
 			return ((BaseVineBlock) vineBlock).canGenerate(state, world, blockPos);
@@ -52,17 +52,17 @@ public class VineFeature extends InvertedScatterFeature {
 			return vineBlock.canSurvive(state, world, blockPos);
 		}
 	}
-	
+
 	private BlockState getTopState() {
 		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP) : state;
 	}
-	
+
 	private BlockState getMiggleState() {
 		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE) : state;
 	}
-	
+
 	private BlockState getBottomState() {
 		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM) : state;

@@ -1,12 +1,7 @@
 package ru.betterend.world.features.terrain.caves;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -15,9 +10,9 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
@@ -30,6 +25,10 @@ import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 public abstract class EndCaveFeature extends DefaultFeature {
 	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 	protected static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
@@ -37,7 +36,10 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	private static final Vec3i[] SPHERE;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 2500) {
 			return false;
 		}
@@ -92,9 +94,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getFloorFeature(random);
+				Feature<?> feature = biome.getFloorFeature();
 				if (feature != null) {
-					feature.place(world, null, random, pos.above(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
 				}
 			}
 		});
@@ -108,21 +110,21 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, pos, ceilBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getCeilFeature(random);
+				Feature<?> feature = biome.getCeilFeature();
 				if (feature != null) {
-					feature.place(world, null, random, pos.below(), null);
+					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
 				}
 			}
 		});
 	}
-	
+
 	protected void placeWalls(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> positions, Random random) {
 		Set<BlockPos> placed = Sets.newHashSet();
 		positions.forEach(pos -> {
 			if (random.nextInt(4) == 0 && hasOpenSide(pos, positions)) {
 				BlockState wallBlock = biome.getWall(pos);
 				if (wallBlock != null) {
-					for (Vec3i offset: SPHERE) {
+					for (Vec3i offset : SPHERE) {
 						BlockPos wallPos = pos.offset(offset);
 						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos).is(TagAPI.GEN_TERRAIN)) {
 							wallBlock = biome.getWall(wallPos);
@@ -134,9 +136,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			}
 		});
 	}
-	
+
 	private boolean hasOpenSide(BlockPos pos, Set<BlockPos> positions) {
-		for (Direction dir: BlocksHelper.DIRECTIONS) {
+		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			if (!positions.contains(pos.relative(dir))) {
 				return true;
 			}
@@ -223,7 +225,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		}
 		return false;
 	}
-	
+
 	protected boolean biomeMissingCaves(WorldGenLevel world, BlockPos pos) {
 		for (int x = -2; x < 3; x++) {
 			for (int z = -2; z < 3; z++) {
@@ -237,7 +239,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 		}
 		return false;
 	}
-	
+
 	static {
 		List<Vec3i> prePos = Lists.newArrayList();
 		int radius = 5;
@@ -254,6 +256,6 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				}
 			}
 		}
-		SPHERE = prePos.toArray(new Vec3i[] {});
+		SPHERE = prePos.toArray(new Vec3i[]{});
 	}
 }

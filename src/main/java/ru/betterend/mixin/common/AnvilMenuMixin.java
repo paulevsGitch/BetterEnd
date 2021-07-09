@@ -1,16 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,9 +12,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.interfaces.AnvilScreenHandlerExtended;
 import ru.betterend.recipe.builders.AnvilRecipe;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilScreenHandlerExtended {
@@ -49,46 +48,50 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 				return 1;
 			}, 1);
 			anvilLevel.set(level);
-		} else {
+		}
+		else {
 			anvilLevel.set(1);
 		}
 	}
-	
+
 	@Shadow
 	public abstract void createResult();
-	
+
 	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
 	protected void be_canTakeOutput(Player player, boolean present, CallbackInfoReturnable<Boolean> info) {
 		if (be_currentRecipe != null) {
 			info.setReturnValue(be_currentRecipe.checkHammerDurability(inputSlots, player));
 		}
 	}
-	
+
 	@Inject(method = "onTake", at = @At("HEAD"), cancellable = true)
-	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) {
+	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfo info) {
 		if (be_currentRecipe != null) {
 			inputSlots.getItem(0).shrink(be_currentRecipe.getInputCount());
 			stack = be_currentRecipe.craft(inputSlots, player);
 			slotsChanged(inputSlots);
 			access.execute((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
-				if (!player.abilities.instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
+				if (!player.getAbilities().instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
 					BlockState landingState = EndAnvilBlock.applyDamage(anvilState);
 					if (landingState == null) {
 						world.removeBlock(blockPos, false);
 						world.levelEvent(1029, blockPos, 0);
-					} else {
+					}
+					else {
 						world.setBlock(blockPos, landingState, 2);
 						world.levelEvent(1030, blockPos, 0);
 					}
-				} else {
+				}
+				else {
 					world.levelEvent(1030, blockPos, 0);
 				}
 			});
-			info.setReturnValue(stack);
+			//TODO: no more return, does this still work?
+			//info.setReturnValue(stack);
 		}
 	}
-	
+
 	@Inject(method = "createResult", at = @At("HEAD"), cancellable = true)
 	public void be_updateOutput(CallbackInfo info) {
 		RecipeManager recipeManager = this.player.level.getRecipeManager();
@@ -103,48 +106,50 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 				}
 				be_updateResult();
 				info.cancel();
-			} else {
+			}
+			else {
 				be_currentRecipe = null;
 			}
 		}
 	}
-	
+
 	@Inject(method = "setItemName", at = @At("HEAD"), cancellable = true)
 	public void be_setNewItemName(String string, CallbackInfo info) {
 		if (be_currentRecipe != null) {
 			info.cancel();
 		}
 	}
-	
+
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0) {
 			be_previousRecipe();
 			return true;
-		} else if (id == 1) {
+		}
+		else if (id == 1) {
 			be_nextRecipe();
 			return true;
 		}
 		return super.clickMenuButton(player, id);
 	}
-	
+
 	private void be_updateResult() {
 		if (be_currentRecipe == null) return;
 		resultSlots.setItem(0, be_currentRecipe.assemble(inputSlots));
 		broadcastChanges();
 	}
-	
+
 	@Override
 	public void be_updateCurrentRecipe(AnvilRecipe recipe) {
 		this.be_currentRecipe = recipe;
 		be_updateResult();
 	}
-	
+
 	@Override
 	public AnvilRecipe be_getCurrentRecipe() {
 		return be_currentRecipe;
 	}
-	
+
 	@Override
 	public List<AnvilRecipe> be_getRecipes() {
 		return be_recipes;

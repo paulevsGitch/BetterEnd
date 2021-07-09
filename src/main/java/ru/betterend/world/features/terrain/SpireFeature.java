@@ -1,11 +1,6 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -13,6 +8,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.BiomeAPI;
@@ -28,12 +24,19 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 public class SpireFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
+		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 10 || !world.getBlockState(pos.below(3)).is(TagAPI.GEN_TERRAIN)
 				|| !world.getBlockState(pos.below(6)).is(TagAPI.GEN_TERRAIN)) {
@@ -59,7 +62,8 @@ public class SpireFeature extends DefaultFeature {
 					support.add(info.getPos().above());
 				}
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-			} else if (info.getState(Direction.UP, 3).isAir()) {
+			}
+			else if (info.getState(Direction.UP, 3).isAir()) {
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig()
 						.getUnderMaterial();
 			}
@@ -68,7 +72,7 @@ public class SpireFeature extends DefaultFeature {
 
 		support.forEach((bpos) -> {
 			if (BiomeAPI.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
-				EndFeatures.TENANEA_BUSH.getFeature().place(world, chunkGenerator, random, bpos, null);
+				EndFeatures.TENANEA_BUSH.getFeature().place(new FeaturePlaceContext<>(world, chunkGenerator, random, bpos, null));
 			}
 		});
 

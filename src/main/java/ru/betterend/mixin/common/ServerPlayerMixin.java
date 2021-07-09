@@ -1,15 +1,6 @@
 package ru.betterend.mixin.common;
 
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.mojang.authlib.GameProfile;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
@@ -30,6 +21,13 @@ import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -69,7 +67,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
-			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), yRot, xRot));
+			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), getYRot(), getXRot()));
 		}
 	}
 
@@ -81,25 +79,25 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 			LevelData worldProperties = destination.getLevelData();
 			ServerPlayer player = ServerPlayer.class.cast(this);
 			connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()),
-					gameMode.getGameModeForPlayer(),gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
+					gameMode.getGameModeForPlayer(), gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
 			connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
 			PlayerList playerManager = server.getPlayerList();
 			playerManager.sendPlayerPermissionLevel(player);
-			serverWorld.removePlayerImmediately(player);
-			removed = false;
+			serverWorld.removePlayerImmediately(player, RemovalReason.CHANGED_DIMENSION);
+			unsetRemoved();
 			PortalInfo teleportTarget = findDimensionEntryPoint(destination);
 			if (teleportTarget != null) {
 				serverWorld.getProfiler().push("moving");
 				serverWorld.getProfiler().pop();
 				serverWorld.getProfiler().push("placing");
-				setLevel(destination);
+				this.level = destination;
 				destination.addDuringPortalTeleport(player);
 				setRot(teleportTarget.yRot, teleportTarget.xRot);
 				moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z);
 				serverWorld.getProfiler().pop();
 				triggerDimensionChangeTriggers(serverWorld);
 				gameMode.setLevel(destination);
-				connection.send(new ClientboundPlayerAbilitiesPacket(abilities));
+				connection.send(new ClientboundPlayerAbilitiesPacket(getAbilities()));
 				playerManager.sendLevelInfo(player, destination);
 				playerManager.sendAllPlayerInfo(player);
 
@@ -132,7 +130,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	}
 
 	@Shadow
-	abstract ServerLevel getLevel();
+	public abstract ServerLevel getLevel();
 
 	@Shadow
 	abstract void triggerDimensionChangeTriggers(ServerLevel origin);

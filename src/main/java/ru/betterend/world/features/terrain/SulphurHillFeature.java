@@ -1,14 +1,12 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
@@ -17,10 +15,14 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Random;
+
 public class SulphurHillFeature extends DefaultFeature {
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 57 || pos.getY() > 70) {
 			return false;
@@ -77,7 +79,8 @@ public class SulphurHillFeature extends DefaultFeature {
 							BlocksHelper.setWithoutUpdate(world, mut, rock);
 							mut.move(Direction.DOWN);
 						}
-					} else if (d < r1 * r1) {
+					}
+					else if (d < r1 * r1) {
 						BlocksHelper.setWithoutUpdate(world, mut, brimstone);
 						mut.move(Direction.DOWN);
 						state = world.getBlockState(mut);

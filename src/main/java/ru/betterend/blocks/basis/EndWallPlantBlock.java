@@ -5,7 +5,8 @@ import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseWallPlantBlock;
 
 public class EndWallPlantBlock extends BaseWallPlantBlock {
-	public EndWallPlantBlock() {}
+	public EndWallPlantBlock() {
+	}
 
 	public EndWallPlantBlock(int light) {
 		super(light);

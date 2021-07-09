@@ -1,11 +1,11 @@
 package ru.betterend.world.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
 
 public class LanceleafFeature extends ScatterFeature {
 	public LanceleafFeature() {
@@ -22,7 +22,7 @@ public class LanceleafFeature extends ScatterFeature {
 		EndPlantWithAgeBlock seed = ((EndPlantWithAgeBlock) EndBlocks.LANCELEAF_SEED);
 		seed.growAdult(world, random, blockPos);
 	}
-	
+
 	@Override
 	protected int getChance() {
 		return 5;

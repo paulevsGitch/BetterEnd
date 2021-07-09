@@ -1,12 +1,7 @@
 package ru.betterend.client.gui;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiComponent;
@@ -20,6 +15,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 @Environment(EnvType.CLIENT)
 public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent {
 	private Iterator<Item> fuelIterator;
@@ -27,12 +26,12 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 	private Slot fuelSlot;
 	private Item currentItem;
 	private float frameTime;
-	
+
 	@Override
 	protected Set<Item> getFuelItems() {
 		return EndStoneSmelterBlockEntity.availableFuels().keySet();
 	}
-	
+
 	@Override
 	public void slotClicked(Slot slot) {
 		super.slotClicked(slot);
@@ -40,7 +39,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 			this.fuelSlot = null;
 		}
 	}
-	
+
 	@Override
 	public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
 		this.ghostRecipe.clear();
@@ -49,7 +48,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 		this.ghostRecipe.addIngredient(Ingredient.of(result), (slots.get(3)).x, (slots.get(3)).y);
 		NonNullList<Ingredient> inputs = recipe.getIngredients();
 		Iterator<Ingredient> iterator = inputs.iterator();
-		for(int i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) {
 			if (!iterator.hasNext()) {
 				return;
 			}
@@ -67,7 +66,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 		this.fuelIterator = this.fuels.iterator();
 		this.currentItem = null;
 	}
-	
+
 	@Override
 	public void renderGhostRecipe(PoseStack matrices, int x, int y, boolean bl, float f) {
 		this.ghostRecipe.render(matrices, minecraft, x, y, bl, f);
@@ -79,7 +78,8 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 			int slotX = this.fuelSlot.x + x;
 			int slotY = this.fuelSlot.y + y;
 			GuiComponent.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822018048);
-			this.minecraft.getItemRenderer().renderAndDecorateItem(minecraft.player, this.getFuel().getDefaultInstance(), slotX, slotY);
+			//TODO: test k=0
+			this.minecraft.getItemRenderer().renderAndDecorateItem(minecraft.player, this.getFuel().getDefaultInstance(), slotX, slotY, 0);
 			RenderSystem.depthFunc(516);
 			GuiComponent.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822083583);
 			RenderSystem.depthFunc(515);

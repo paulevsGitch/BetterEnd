@@ -2,7 +2,7 @@
     "name": "Eternal Ritual",
     "icon": "betterend:eternal_pedestal",
     "read_by_default": true,
-    "category": "rituals",
+    "category": "betterend:rituals",
     "pages": [
         {
             "type": "text",

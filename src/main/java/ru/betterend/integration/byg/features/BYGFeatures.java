@@ -19,12 +19,13 @@ public class BYGFeatures {
 	public static final BCLFeature IVIS_MOSS_WOOD = redisterVegetation("ivis_moss_wood", new WallPlantOnLogFeature(BYGBlocks.IVIS_MOSS, 6), 15);
 	public static final BCLFeature NIGHTSHADE_MOSS = redisterVegetation("nightshade_moss", new WallPlantFeature(BYGBlocks.NIGHTSHADE_MOSS, 5), 2);
 	public static final BCLFeature NIGHTSHADE_MOSS_WOOD = redisterVegetation("nightshade_moss_wood", new WallPlantOnLogFeature(BYGBlocks.NIGHTSHADE_MOSS, 5), 8);
-	
+
 	public static final BCLFeature NIGHTSHADE_REDWOOD_TREE = redisterVegetation("nightshade_redwood_tree", new NightshadeRedwoodTreeFeature(), 1);
 	public static final BCLFeature BIG_ETHER_TREE = redisterVegetation("big_ether_tree", new BigEtherTreeFeature(), 1);
-	
-	public static void register() {}
-	
+
+	public static void register() {
+	}
+
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
 		return BCLFeature.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
 	}

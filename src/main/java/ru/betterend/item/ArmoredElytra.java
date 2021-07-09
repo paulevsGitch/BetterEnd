@@ -71,6 +71,6 @@ public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, Fall
 	@Environment(EnvType.CLIENT)
 	public void registerModelPredicate() {
 		FabricModelPredicateProviderRegistry.register(this, new ResourceLocation("broken"),
-				(itemStack, clientLevel, livingEntity) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F);
+				(itemStack, clientLevel, livingEntity, id) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F);
 	}
 }

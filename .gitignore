@@ -29,3 +29,5 @@ bin/
 run/
 output/
 *.log
+Convert.class
+ModelPart.class

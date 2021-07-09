@@ -1,40 +1,39 @@
 package ru.betterend.integration.rei;
 
-import java.text.DecimalFormat;
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.vertex.PoseStack;
+import me.shedaniel.math.Point;
+import me.shedaniel.math.Rectangle;
+import me.shedaniel.rei.api.client.gui.DisplayRenderer;
+import me.shedaniel.rei.api.client.gui.widgets.Slot;
+import me.shedaniel.rei.api.client.gui.widgets.Tooltip;
+import me.shedaniel.rei.api.client.gui.widgets.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widgets;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryStack;
+import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.google.common.collect.Lists;
-import com.mojang.blaze3d.vertex.PoseStack;
+import java.text.DecimalFormat;
+import java.util.List;
 
-import me.shedaniel.math.Point;
-import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.RecipeCategory;
-import me.shedaniel.rei.api.widgets.Slot;
-import me.shedaniel.rei.api.widgets.Tooltip;
-import me.shedaniel.rei.api.widgets.Widgets;
-import me.shedaniel.rei.gui.entries.RecipeEntry;
-import me.shedaniel.rei.gui.widget.Widget;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
-
-public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDisplay> {
+public class REIAlloyingFuelCategory implements DisplayCategory<REIAlloyingFuelDisplay> {
 	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
 	@Override
-	public @NotNull ResourceLocation getIdentifier() {
+	public @NotNull CategoryIdentifier getCategoryIdentifier() {
 		return REIPlugin.ALLOYING_FUEL;
 	}
 
 	@Override
-	public @NotNull String getCategoryName() {
-		return I18n.get("category.rei.fuel");
+	public @NotNull Component getTitle() {
+		return new TranslatableComponent("category.rei.fuel");
 	}
 
 	@Override
@@ -43,12 +42,12 @@ public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDi
 	}
 
 	@Override
-	public @NotNull EntryStack getLogo() {
-		return EntryStack.create(Items.COAL);
+	public @NotNull EntryStack getIcon() {
+		return EntryStacks.of(Items.COAL);
 	}
 
 	@Override
-	public @NotNull List<Widget> setupDisplay(REIAlloyingFuelDisplay recipeDisplay, Rectangle bounds) {
+	public List<Widget> setupDisplay(REIAlloyingFuelDisplay recipeDisplay, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 17);
 		String burnTime = DECIMAL_FORMAT.format(recipeDisplay.getFuelTime());
 		List<Widget> widgets = Lists.newArrayList();
@@ -61,10 +60,10 @@ public class REIAlloyingFuelCategory implements RecipeCategory<REIAlloyingFuelDi
 	}
 
 	@Override
-	public @NotNull RecipeEntry getSimpleRenderer(REIAlloyingFuelDisplay recipe) {
+	public DisplayRenderer getDisplayRenderer(REIAlloyingFuelDisplay recipe) {
 		Slot slot = Widgets.createSlot(new Point(0, 0)).entries(recipe.getInputEntries().get(0)).disableBackground().disableHighlight();
 		String burnItems = DECIMAL_FORMAT.format(recipe.getFuelTime() / 200d);
-		return new RecipeEntry() {
+		return new DisplayRenderer() {
 			private TranslatableComponent text = new TranslatableComponent("category.rei.fuel.time_short.items", burnItems);
 
 			@Override

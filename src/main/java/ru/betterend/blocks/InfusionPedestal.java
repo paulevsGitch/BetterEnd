@@ -6,12 +6,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
+import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.rituals.InfusionRitual;
 
 @SuppressWarnings("deprecation")
@@ -23,7 +27,7 @@ public class InfusionPedestal extends PedestalBlock {
 		super(Blocks.OBSIDIAN);
 		this.height = 1.08F;
 	}
-	
+
 	@Override
 	public void checkRitual(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -35,17 +39,18 @@ public class InfusionPedestal extends PedestalBlock {
 					ritual.configure();
 				}
 				pedestal.getRitual().checkRecipe();
-			} else {
+			}
+			else {
 				InfusionRitual ritual = new InfusionRitual(pedestal, world, pos);
 				pedestal.linkRitual(ritual);
 				ritual.checkRecipe();
 			}
 		}
 	}
-	
+
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter world) {
-		return new InfusionPedestalEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new InfusionPedestalEntity(blockPos, blockState);
 	}
 
 	@Override
@@ -57,7 +62,7 @@ public class InfusionPedestal extends PedestalBlock {
 	@Deprecated
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.is(this)) {
-			switch(state.getValue(STATE)) {
+			switch (state.getValue(STATE)) {
 				case PEDESTAL_TOP: {
 					return SHAPE_PEDESTAL_TOP;
 				}
@@ -70,6 +75,12 @@ public class InfusionPedestal extends PedestalBlock {
 			}
 		}
 		return super.getShape(state, world, pos, context);
+	}
+
+	@Override
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return InfusionPedestalEntity::tickEnity;
 	}
 
 	static {

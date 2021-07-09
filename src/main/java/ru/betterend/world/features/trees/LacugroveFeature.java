@@ -1,18 +1,13 @@
 package ru.betterend.world.features.trees;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.math.Vector3f;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
@@ -29,14 +24,20 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 public class LacugroveFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
 	private static final Function<PosInfo, BlockState> POST;
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoneFeatureConfiguration config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final Random random = featureConfig.random();
+		final BlockPos pos = featureConfig.origin();
+		final WorldGenLevel world = featureConfig.level();
 		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
 			return false;
 
@@ -96,7 +97,8 @@ public class LacugroveFeature extends DefaultFeature {
 									|| state.is(TagAPI.END_GROUND)) {
 								BlocksHelper.setWithoutUpdate(world, mut,
 										y == top ? EndBlocks.LACUGROVE.bark : EndBlocks.LACUGROVE.log);
-							} else {
+							}
+							else {
 								break;
 							}
 						}

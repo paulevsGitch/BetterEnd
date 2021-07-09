@@ -1,9 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -28,14 +25,16 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndPortals;
 import ru.betterend.rituals.EternalRitual;
 
+import java.util.List;
+
 public class EternalPedestal extends PedestalBlock {
 	public static final BooleanProperty ACTIVATED = EndBlockProperties.ACTIVE;
-	
+
 	public EternalPedestal() {
 		super(EndBlocks.FLAVOLITE_RUNED_ETERNAL);
 		this.registerDefaultState(defaultBlockState().setValue(ACTIVATED, false));
 	}
-	
+
 	@Override
 	public void checkRitual(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -50,21 +49,24 @@ public class EternalPedestal extends PedestalBlock {
 						int portalId;
 						if (targetWorld != null) {
 							portalId = EndPortals.getPortalIdByWorld(targetWorld);
-						} else {
+						}
+						else {
 							portalId = EndPortals.getPortalIdByWorld(EndPortals.OVERWORLD_ID);
 						}
 						ritual.disablePortal(portalId);
 					}
 				}
 				world.setBlockAndUpdate(pos, updatedState.setValue(ACTIVATED, false).setValue(HAS_LIGHT, false));
-			} else {
+			}
+			else {
 				ItemStack itemStack = pedestal.getItem(0);
 				ResourceLocation id = Registry.ITEM.getKey(itemStack.getItem());
 				if (EndPortals.isAvailableItem(id)) {
 					world.setBlockAndUpdate(pos, updatedState.setValue(ACTIVATED, true).setValue(HAS_LIGHT, true));
 					if (pedestal.hasRitual()) {
 						pedestal.getRitual().checkStructure();
-					} else {
+					}
+					else {
 						EternalRitual ritual = new EternalRitual(world, pos);
 						ritual.checkStructure();
 					}
@@ -72,7 +74,7 @@ public class EternalPedestal extends PedestalBlock {
 			}
 		}
 	}
-	
+
 	@Override
 	@Deprecated
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
@@ -83,23 +85,23 @@ public class EternalPedestal extends PedestalBlock {
 		}
 		return updated;
 	}
-	
+
 	@Override
 	@Deprecated
 	public float getDestroyProgress(BlockState state, Player player, BlockGetter world, BlockPos pos) {
 		return 0.0F;
 	}
-	
+
 	@Override
 	public float getExplosionResistance() {
 		return Blocks.BEDROCK.getExplosionResistance();
 	}
-	
+
 	@Override
 	public boolean dropFromExplosion(Explosion explosion) {
 		return false;
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.is(this)) {
@@ -118,7 +120,7 @@ public class EternalPedestal extends PedestalBlock {
 		}
 		return drop;
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		super.createBlockStateDefinition(stateManager);
@@ -126,8 +128,8 @@ public class EternalPedestal extends PedestalBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter world) {
-		return new EternalPedestalEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new EternalPedestalEntity(blockPos, blockState);
 	}
 
 	@Override

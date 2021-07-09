@@ -1,0 +1,6 @@
+{
+    "name": "Endschleier",
+    "description": "Schaue den Enderman ohne Furcht tief in die Augen.",
+    "icon": "betterend:textures/mob_effect/end_veil.png",
+    "sortnum": 3
+}

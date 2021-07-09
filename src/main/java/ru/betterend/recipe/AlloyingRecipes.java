@@ -19,7 +19,7 @@ public class AlloyingRecipes {
 				.setOutput(Items.GOLD_INGOT, 3)
 				.setExpiriense(3F)
 				.build();
-		AlloyingRecipe.Builder.create("additional_gold")
+		AlloyingRecipe.Builder.create("additional_copper")
 				.setInput(EndTags.ALLOYING_COPPER, EndTags.ALLOYING_COPPER)
 				.setOutput(Items.COPPER_INGOT, 3)
 				.setExpiriense(3F)

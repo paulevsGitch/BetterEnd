@@ -9,16 +9,16 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
 public class MossyGlowshroomSaplingBlock extends FeatureSaplingBlock {
-
+	
 	public MossyGlowshroomSaplingBlock() {
 		super(7);
 	}
-
+	
 	@Override
 	protected Feature<?> getFeature() {
 		return EndFeatures.MOSSY_GLOWSHROOM.getFeature();
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.END_MOSS) || world.getBlockState(pos.below()).is(EndBlocks.END_MYCELIUM);

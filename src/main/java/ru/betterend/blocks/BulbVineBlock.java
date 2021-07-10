@@ -19,7 +19,7 @@ public class BulbVineBlock extends BaseVineBlock {
 	public BulbVineBlock() {
 		super(15, true);
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(SHAPE) == TripleShape.BOTTOM) {
@@ -32,12 +32,12 @@ public class BulbVineBlock extends BaseVineBlock {
 			return Lists.newArrayList();
 		}
 	}
-
+	
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		boolean canPlace = super.canSurvive(state, world, pos);

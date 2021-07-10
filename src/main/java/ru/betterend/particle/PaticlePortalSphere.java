@@ -19,7 +19,7 @@ public class PaticlePortalSphere extends SimpleAnimatedParticle {
 	private double nextVX;
 	private double nextVY;
 	private double nextVZ;
-
+	
 	public PaticlePortalSphere(ClientLevel world, double x, double y, double z, SpriteSet spriteProvider) {
 		super(world, x, y, z, spriteProvider, 0);
 		setSprite(spriteProvider.get(random));
@@ -28,16 +28,16 @@ public class PaticlePortalSphere extends SimpleAnimatedParticle {
 		this.setColor(0xFEBBD5);
 		this.setFadeColor(0xBBFEE4);
 		this.setSpriteFromAge(spriteProvider);
-
+		
 		preVX = random.nextGaussian() * 0.02;
 		preVY = random.nextGaussian() * 0.02;
 		preVZ = random.nextGaussian() * 0.02;
-
+		
 		nextVX = random.nextGaussian() * 0.02;
 		nextVY = random.nextGaussian() * 0.02;
 		nextVZ = random.nextGaussian() * 0.02;
 	}
-
+	
 	@Override
 	public void tick() {
 		ticks++;
@@ -51,23 +51,23 @@ public class PaticlePortalSphere extends SimpleAnimatedParticle {
 			ticks = 0;
 		}
 		double delta = (double) ticks / 30.0;
-
+		
 		this.xd = Mth.lerp(delta, preVX, nextVX);
 		this.yd = Mth.lerp(delta, preVY, nextVY);
 		this.zd = Mth.lerp(delta, preVZ, nextVZ);
-
+		
 		super.tick();
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public static class FactoryPortalSphere implements ParticleProvider<SimpleParticleType> {
-
+		
 		private final SpriteSet sprites;
-
+		
 		public FactoryPortalSphere(SpriteSet sprites) {
 			this.sprites = sprites;
 		}
-
+		
 		@Override
 		public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double vX, double vY, double vZ) {
 			return new PaticlePortalSphere(world, x, y, z, sprites);

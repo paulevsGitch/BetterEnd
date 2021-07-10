@@ -32,20 +32,20 @@ import java.util.Map;
 public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-
+	
 	public EndLanternBlock(Block source) {
 		this(FabricBlockSettings.copyOf(source).luminance(15).noOcclusion());
 	}
-
+	
 	public EndLanternBlock(Properties settings) {
 		super(settings.noOcclusion());
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(IS_FLOOR, WATERLOGGED);
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		LevelReader worldView = ctx.getLevel();
@@ -86,7 +86,7 @@ public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterlogg
 			}
 		}
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		if (state.getValue(IS_FLOOR)) {
@@ -96,7 +96,7 @@ public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterlogg
 			return canSupportCenter(world, pos.above(), Direction.DOWN);
 		}
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		Boolean water = state.getValue(WATERLOGGED);
@@ -110,28 +110,27 @@ public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterlogg
 			return state;
 		}
 	}
-
+	
 	@Override
 	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		return false;
 	}
-
+	
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		String floor = blockState.getValue(IS_FLOOR) ? "_floor" : "";
-		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(),
-				"block/" + stateId.getPath() + floor);
+		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + floor);
 		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createBlockSimple(modelId);
 	}

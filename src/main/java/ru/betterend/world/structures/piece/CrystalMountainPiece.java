@@ -26,22 +26,22 @@ import java.util.Random;
 
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;
-
+	
 	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
 		top = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
-
+	
 	public CrystalMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.MOUNTAIN_PIECE, serverLevel, tag);
 	}
-
+	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		super.fromNbt(tag);
 		top = BiomeAPI.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
-
+	
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getMinBlockX();
@@ -91,9 +91,9 @@ public class CrystalMountainPiece extends MountainPiece {
 				}
 			}
 		}
-
+		
 		map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
-
+		
 		// Big crystals
 		int count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 7;
 		count = Mth.clamp(count, 0, 8);
@@ -111,7 +111,7 @@ public class CrystalMountainPiece extends MountainPiece {
 				}
 			}
 		}
-
+		
 		// Small crystals
 		count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 2;
 		count = Mth.clamp(count, 4, 8);
@@ -129,10 +129,10 @@ public class CrystalMountainPiece extends MountainPiece {
 				}
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 	private void crystal(ChunkAccess chunk, BlockPos pos, int radius, int height, float fill, Random random) {
 		MutableBlockPos mut = new MutableBlockPos();
 		int max = MHelper.floor(fill * radius + radius + 0.5F);

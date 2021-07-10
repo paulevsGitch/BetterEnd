@@ -35,15 +35,15 @@ import java.util.Random;
 public abstract class ChorusFlowerBlockMixin extends Block {
 	private static final VoxelShape SHAPE_FULL = Block.box(0, 0, 0, 16, 16, 16);
 	private static final VoxelShape SHAPE_HALF = Block.box(0, 0, 0, 16, 4, 16);
-
+	
 	public ChorusFlowerBlockMixin(Properties settings) {
 		super(settings);
 	}
-
+	
 	@Final
 	@Shadow
 	private ChorusPlantBlock plant;
-
+	
 	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
 	private void be_canSurvive(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		if (world.getBlockState(pos.below()).is(EndBlocks.CHORUS_NYLIUM)) {
@@ -51,7 +51,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 			info.cancel();
 		}
 	}
-
+	
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
 	private void be_randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random, CallbackInfo info) {
 		if (world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
@@ -71,7 +71,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 			}
 		}
 	}
-
+	
 	@Inject(method = "generatePlant", at = @At("RETURN"), cancellable = true)
 	private static void be_generatePlant(LevelAccessor world, BlockPos pos, Random random, int size, CallbackInfo info) {
 		BlockState state = world.getBlockState(pos);
@@ -79,20 +79,20 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 			BlocksHelper.setWithoutUpdate(world, pos, state.setValue(VanillaBlockProperties.ROOTS, true));
 		}
 	}
-
+	
 	@Shadow
 	private static boolean allNeighborsEmpty(LevelReader world, BlockPos pos, @Nullable Direction exceptDirection) {
 		return false;
 	}
-
+	
 	@Shadow
 	private void placeGrownFlower(Level world, BlockPos pos, int age) {
 	}
-
+	
 	@Shadow
 	private void placeDeadFlower(Level world, BlockPos pos) {
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (GeneratorOptions.changeChorusPlant()) {
@@ -102,7 +102,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 			return super.getShape(state, world, pos, context);
 		}
 	}
-
+	
 	@Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
 	private void be_placeDeadFlower(Level world, BlockPos pos, CallbackInfo info) {
 		BlockState down = world.getBlockState(pos.below());

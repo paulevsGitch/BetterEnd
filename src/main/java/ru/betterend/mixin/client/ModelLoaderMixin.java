@@ -9,12 +9,10 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(ModelBakery.class)
 public abstract class ModelLoaderMixin {
-
+	
 	@ModifyVariable(method = "loadModel", ordinal = 2, at = @At(value = "INVOKE"))
 	public ResourceLocation be_switchModel(ResourceLocation id) {
-		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") &&
-				id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus") &&
-				!id.getPath().contains("custom_")) {
+		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") && id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus") && !id.getPath().contains("custom_")) {
 			id = new ResourceLocation(id.getPath().replace("chorus", "custom_chorus"));
 		}
 		return id;

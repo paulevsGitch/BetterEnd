@@ -36,19 +36,19 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
 	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(EndFishEntity.class, EntityDataSerializers.BYTE);
 	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(EndFishEntity.class, EntityDataSerializers.BYTE);
-
+	
 	public EndFishEntity(EntityType<EndFishEntity> entityType, Level world) {
 		super(entityType, world);
 	}
-
+	
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-
+		
 		if (BiomeAPI.getFromBiome(world.getBiome(blockPosition())) == EndBiomes.SULPHUR_SPRINGS) {
 			this.entityData.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
 		}
-
+		
 		if (entityTag != null) {
 			if (entityTag.contains("Variant")) {
 				this.entityData.set(VARIANT, entityTag.getByte("variant"));
@@ -57,25 +57,25 @@ public class EndFishEntity extends AbstractSchoolingFish {
 				this.entityData.set(SCALE, entityTag.getByte("scale"));
 			}
 		}
-
+		
 		this.refreshDimensions();
 		return data;
 	}
-
+	
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(VARIANT, (byte) this.getRandom().nextInt(VARIANTS_NORMAL));
 		this.entityData.define(SCALE, (byte) this.getRandom().nextInt(16));
 	}
-
+	
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putByte("Variant", (byte) getVariant());
 		tag.putByte("Scale", getByteScale());
 	}
-
+	
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
@@ -86,7 +86,7 @@ public class EndFishEntity extends AbstractSchoolingFish {
 			this.entityData.set(SCALE, tag.getByte("Scale"));
 		}
 	}
-
+	
 	@Override
 	public ItemStack getBucketItemStack() {
 		ItemStack bucket = EndItems.BUCKET_END_FISH.getDefaultInstance();
@@ -95,27 +95,27 @@ public class EndFishEntity extends AbstractSchoolingFish {
 		tag.putByte("scale", entityData.get(SCALE));
 		return bucket;
 	}
-
+	
 	@Override
 	protected SoundEvent getFlopSound() {
 		return SoundEvents.TROPICAL_FISH_FLOP;
 	}
-
+	
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return SoundEvents.SALMON_AMBIENT;
 	}
-
+	
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEvents.SALMON_DEATH;
 	}
-
+	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return SoundEvents.SALMON_HURT;
 	}
-
+	
 	@Override
 	public void tick() {
 		super.tick();
@@ -126,26 +126,23 @@ public class EndFishEntity extends AbstractSchoolingFish {
 			level.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
 		}
 	}
-
+	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes()
-				.add(Attributes.MAX_HEALTH, 2.0)
-				.add(Attributes.FOLLOW_RANGE, 16.0)
-				.add(Attributes.MOVEMENT_SPEED, 0.75);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0).add(Attributes.FOLLOW_RANGE, 16.0).add(Attributes.MOVEMENT_SPEED, 0.75);
 	}
-
+	
 	public int getVariant() {
 		return (int) this.entityData.get(VARIANT);
 	}
-
+	
 	public byte getByteScale() {
 		return this.entityData.get(SCALE);
 	}
-
+	
 	public float getScale() {
 		return getByteScale() / 32F + 0.75F;
 	}
-
+	
 	public static boolean canSpawn(EntityType<EndFishEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
 		AABB box = new AABB(pos).inflate(16);
 		List<EndFishEntity> list = world.getEntitiesOfClass(EndFishEntity.class, box, (entity) -> {
@@ -153,7 +150,7 @@ public class EndFishEntity extends AbstractSchoolingFish {
 		});
 		return list.size() < 9;
 	}
-
+	
 	@Override
 	protected void dropFromLootTable(DamageSource source, boolean causedByPlayer) {
 		ItemEntity drop = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(EndItems.END_FISH_RAW));

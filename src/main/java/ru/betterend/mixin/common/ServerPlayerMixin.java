@@ -49,28 +49,28 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	private int lastSentFood;
 	@Shadow
 	private int lastSentExp;
-
+	
 	private BlockPos exitPos;
 	private int be_teleportDelay = 0;
-
+	
 	public ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile profile) {
 		super(world, pos, yaw, profile);
 	}
-
+	
 	@Inject(method = "createEndPlatform", at = @At("HEAD"), cancellable = true)
 	private void be_createEndSpawnPlatform(ServerLevel world, BlockPos centerPos, CallbackInfo info) {
 		if (!GeneratorOptions.generateObsidianPlatform()) {
 			info.cancel();
 		}
 	}
-
+	
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
 			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), getYRot(), getXRot()));
 		}
 	}
-
+	
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
 	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
 		if (be_canTeleport() && level instanceof ServerLevel) {
@@ -78,8 +78,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 			ServerLevel serverWorld = getLevel();
 			LevelData worldProperties = destination.getLevelData();
 			ServerPlayer player = ServerPlayer.class.cast(this);
-			connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()),
-					gameMode.getGameModeForPlayer(), gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
+			connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), gameMode.getGameModeForPlayer(), gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
 			connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
 			PlayerList playerManager = server.getPlayerList();
 			playerManager.sendPlayerPermissionLevel(player);
@@ -100,11 +99,11 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 				connection.send(new ClientboundPlayerAbilitiesPacket(getAbilities()));
 				playerManager.sendLevelInfo(player, destination);
 				playerManager.sendAllPlayerInfo(player);
-
+				
 				for (MobEffectInstance statusEffectInstance : getActiveEffects()) {
 					connection.send(new ClientboundUpdateMobEffectPacket(getId(), statusEffectInstance));
 				}
-
+				
 				connection.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));
 				lastSentExp = -1;
 				lastSentHealth = -1.0F;
@@ -115,12 +114,12 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 			info.setReturnValue(player);
 		}
 	}
-
+	
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void be_decreaseCooldawn(CallbackInfo info) {
 		if (be_teleportDelay > 0) be_teleportDelay--;
 	}
-
+	
 	@Override
 	public int getDimensionChangingDelay() {
 		if (be_teleportDelay > 0) {
@@ -128,27 +127,27 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 		}
 		return super.getDimensionChangingDelay();
 	}
-
+	
 	@Shadow
 	public abstract ServerLevel getLevel();
-
+	
 	@Shadow
 	abstract void triggerDimensionChangeTriggers(ServerLevel origin);
-
+	
 	@Shadow
 	@Override
 	protected abstract PortalInfo findDimensionEntryPoint(ServerLevel destination);
-
+	
 	@Override
 	public void be_setExitPos(BlockPos pos) {
 		this.exitPos = pos.immutable();
 	}
-
+	
 	@Override
 	public void be_resetExitPos() {
 		this.exitPos = null;
 	}
-
+	
 	@Override
 	public boolean be_canTeleport() {
 		return this.exitPos != null;

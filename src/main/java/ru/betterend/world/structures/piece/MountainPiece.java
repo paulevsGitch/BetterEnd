@@ -31,7 +31,7 @@ public abstract class MountainPiece extends BasePiece {
 	protected ResourceLocation biomeID;
 	protected int seed1;
 	protected int seed2;
-
+	
 	public MountainPiece(StructurePieceType type, BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(type, random.nextInt(), null);
 		this.center = center;
@@ -45,12 +45,12 @@ public abstract class MountainPiece extends BasePiece {
 		this.biomeID = BiomeAPI.getBiomeID(biome);
 		makeBoundingBox();
 	}
-
+	
 	public MountainPiece(StructurePieceType type, ServerLevel serverLevel, CompoundTag tag) {
 		super(type, tag);
 		makeBoundingBox();
 	}
-
+	
 	@Override
 	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
@@ -60,7 +60,7 @@ public abstract class MountainPiece extends BasePiece {
 		tag.putInt("seed1", seed1);
 		tag.putInt("seed2", seed2);
 	}
-
+	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		center = NbtUtils.readBlockPos(tag.getCompound("center"));
@@ -73,14 +73,14 @@ public abstract class MountainPiece extends BasePiece {
 		noise1 = new OpenSimplexNoise(seed1);
 		noise2 = new OpenSimplexNoise(seed2);
 	}
-
+	
 	private int getHeight(WorldGenLevel world, BlockPos pos) {
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
 		int h = heightmap.getOrDefault(p, Integer.MIN_VALUE);
 		if (h > Integer.MIN_VALUE) {
 			return h;
 		}
-
+		
 		if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, -10);
 			return -10;
@@ -92,19 +92,19 @@ public abstract class MountainPiece extends BasePiece {
 			heightmap.put(p, h);
 			return h;
 		}
-
+		
 		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
-
+		
 		if (h < 0) {
 			heightmap.put(p, 0);
 			return 0;
 		}
-
+		
 		heightmap.put(p, h);
-
+		
 		return h;
 	}
-
+	
 	protected float getHeightClamp(WorldGenLevel world, int radius, int posX, int posZ) {
 		MutableBlockPos mut = new MutableBlockPos();
 		float height = 0;
@@ -125,7 +125,7 @@ public abstract class MountainPiece extends BasePiece {
 		height /= max;
 		return Mth.clamp(height / radius, 0, 1);
 	}
-
+	
 	private void makeBoundingBox() {
 		int minX = MHelper.floor(center.getX() - radius);
 		int minY = MHelper.floor(center.getY() - radius);

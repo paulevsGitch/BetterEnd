@@ -34,39 +34,36 @@ public class REIPlugin implements REIClientPlugin {
 	public final static CategoryIdentifier ALLOYING = CategoryIdentifier.of(BetterEnd.MOD_ID, AlloyingRecipe.GROUP);
 	public final static CategoryIdentifier SMITHING = CategoryIdentifier.of(BetterEnd.MOD_ID, AnvilRecipe.ID.getPath());
 	public final static CategoryIdentifier INFUSION = CategoryIdentifier.of(BetterEnd.MOD_ID, InfusionRecipe.GROUP);
-
+	
 	private EntryStack END_STONE_SMELTER;
 	private EntryStack INFUSION_RITUAL;
 	private EntryStack[] ANVILS;
 	private EntryStack[] FURNACES;
-
+	
 	void init() {
 		//we need to initialize those variables after the static initialization
 		//otherwise the registry does not know the BlockItems
 		if (END_STONE_SMELTER != null) {
 			return;
 		}
-
+		
 		END_STONE_SMELTER = EntryStacks.of(EndBlocks.END_STONE_SMELTER);
 		INFUSION_RITUAL = EntryStacks.of(EndBlocks.INFUSION_PEDESTAL);
-
-		List<EntryStack> anvils = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks().stream()
-				.filter(EndAnvilBlock.class::isInstance).collect(Collectors.toList())));
+		
+		List<EntryStack> anvils = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks().stream().filter(EndAnvilBlock.class::isInstance).collect(Collectors.toList())));
 		anvils.add(0, EntryStacks.of(Blocks.ANVIL));
 		ANVILS = anvils.toArray(new EntryStack[0]);
-
-		FURNACES = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks().stream()
-				.filter(BaseFurnaceBlock.class::isInstance).collect(Collectors.toList())))
-				.toArray(new EntryStack[0]);
+		
+		FURNACES = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks().stream().filter(BaseFurnaceBlock.class::isInstance).collect(Collectors.toList()))).toArray(new EntryStack[0]);
 	}
-
+	
 	@Override
 	public void registerDisplays(DisplayRegistry registry) {
 		registry.registerRecipeFiller(AlloyingRecipe.class, AlloyingRecipe.TYPE, REIAlloyingDisplay::new);
 		registry.registerRecipeFiller(BlastingRecipe.class, RecipeType.BLASTING, REIBlastingDisplay::new);
 		registry.registerRecipeFiller(AnvilRecipe.class, AnvilRecipe.TYPE, REIAnvilDisplay::new);
 		registry.registerRecipeFiller(InfusionRecipe.class, InfusionRecipe.TYPE, REIInfusionDisplay::new);
-
+		
 		FuelRegistryImpl.INSTANCE.getFuelTimes().forEach((item, time) -> {
 			if (time >= 2000) {
 				final List<EntryIngredient> list = Arrays.asList(EntryIngredients.of(item));
@@ -74,25 +71,20 @@ public class REIPlugin implements REIClientPlugin {
 			}
 		});
 	}
-
+	
 	@Override
 	public void registerCategories(CategoryRegistry registry) {
 		init();
-
-		registry.add(
-				new REIAlloyingFuelCategory(),
-				new REIAlloyingCategory(END_STONE_SMELTER),
-				new REIInfusionCategory(INFUSION_RITUAL),
-				new REIAnvilCategory(ANVILS)
-		);
-
+		
+		registry.add(new REIAlloyingFuelCategory(), new REIAlloyingCategory(END_STONE_SMELTER), new REIInfusionCategory(INFUSION_RITUAL), new REIAnvilCategory(ANVILS));
+		
 		registry.addWorkstations(ALLOYING_FUEL, END_STONE_SMELTER);
 		registry.addWorkstations(ALLOYING, END_STONE_SMELTER);
 		registry.addWorkstations(INFUSION, INFUSION_RITUAL);
 		registry.addWorkstations(SMITHING, ANVILS);
 		registry.removePlusButton(ALLOYING_FUEL);
 		registry.removePlusButton(SMITHING);
-
+		
 		registry.addWorkstations(DefaultPlugin.SMELTING, FURNACES);
 		registry.addWorkstations(DefaultPlugin.FUEL, FURNACES);
 	}

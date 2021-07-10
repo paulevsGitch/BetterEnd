@@ -25,27 +25,25 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		pos = getPosOnSurface(world,
-				new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 			return false;
 		}
-
+		
 		int count = MHelper.randRange(1, 5, random);
 		for (int i = 0; i < count; i++) {
-			BlockPos p = getPosOnSurface(world,
-					new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8));
+			BlockPos p = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8));
 			makeBoulder(world, p, random);
 		}
-
+		
 		return true;
 	}
-
+	
 	private void makeBoulder(WorldGenLevel world, BlockPos pos, Random random) {
 		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 			return;
 		}
-
+		
 		float radius = MHelper.randRange(1F, 5F, random);
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(Blocks.OBSIDIAN);
 		float sx = MHelper.randRange(0.7F, 1.3F, random);
@@ -56,7 +54,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return (float) (noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 1.5F);
 		}).setSource(sphere);
-
+		
 		BlockState mossy = EndBlocks.MOSSY_OBSIDIAN.defaultBlockState();
 		sphere.addPostProcess((info) -> {
 			if (info.getStateUp().isAir() && random.nextFloat() > 0.1F) {
@@ -64,8 +62,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN)
-					|| state.getMaterial().equals(Material.PLANT);
+			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 	}
 }

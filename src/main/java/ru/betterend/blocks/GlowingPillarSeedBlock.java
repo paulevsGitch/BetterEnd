@@ -21,17 +21,11 @@ import ru.betterend.registry.EndBlocks;
 import java.util.Random;
 
 public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
-
+	
 	public GlowingPillarSeedBlock() {
-		super(FabricBlockSettings.of(Material.PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.breakByHand(true)
-				.sound(SoundType.GRASS)
-				.lightLevel(state -> state.getValue(AGE) * 3 + 3)
-				.randomTicks()
-				.noCollission());
+		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.GRASS).lightLevel(state -> state.getValue(AGE) * 3 + 3).randomTicks().noCollission());
 	}
-
+	
 	@Override
 	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int height = MHelper.randRange(1, 2, random);
@@ -39,7 +33,7 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 		if (h < height) {
 			return;
 		}
-
+		
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		BlockState roots = EndBlocks.GLOWING_PILLAR_ROOTS.defaultBlockState();
 		if (height < 2) {
@@ -63,12 +57,12 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 			BlocksHelper.setWithUpdate(world, mut, EndBlocks.GLOWING_PILLAR_LEAVES.defaultBlockState().setValue(BlockStateProperties.FACING, Direction.UP));
 		}
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.AMBER_MOSS);
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;

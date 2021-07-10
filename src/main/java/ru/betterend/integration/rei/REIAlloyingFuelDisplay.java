@@ -10,11 +10,11 @@ import java.util.List;
 
 public class REIAlloyingFuelDisplay extends BasicDisplay {
 	private final int fuelTime;
-
+	
 	public REIAlloyingFuelDisplay(List<EntryIngredient> fuel, CompoundTag tag) {
 		this(fuel, tag.getInt("fuelTime"));
 	}
-
+	
 	public REIAlloyingFuelDisplay(List<EntryIngredient> fuel, int fuelTime) {
 		super(fuel, Collections.emptyList());
 		this.fuelTime = fuelTime;
@@ -23,14 +23,14 @@ public class REIAlloyingFuelDisplay extends BasicDisplay {
 		this.fuel = fuel;
 		this.fuelTime = fuelTime;
 	}*/
-
+	
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return REIPlugin.ALLOYING_FUEL;
 	}
-
+	
 	public int getFuelTime() {
 		return fuelTime;
 	}
-
+	
 }

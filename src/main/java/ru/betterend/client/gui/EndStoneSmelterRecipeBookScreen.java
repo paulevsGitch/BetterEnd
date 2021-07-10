@@ -26,12 +26,12 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 	private Slot fuelSlot;
 	private Item currentItem;
 	private float frameTime;
-
+	
 	@Override
 	protected Set<Item> getFuelItems() {
 		return EndStoneSmelterBlockEntity.availableFuels().keySet();
 	}
-
+	
 	@Override
 	public void slotClicked(Slot slot) {
 		super.slotClicked(slot);
@@ -39,7 +39,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 			this.fuelSlot = null;
 		}
 	}
-
+	
 	@Override
 	public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
 		this.ghostRecipe.clear();
@@ -62,11 +62,11 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 		if (this.fuels == null) {
 			this.fuels = this.getFuelItems();
 		}
-
+		
 		this.fuelIterator = this.fuels.iterator();
 		this.currentItem = null;
 	}
-
+	
 	@Override
 	public void renderGhostRecipe(PoseStack matrices, int x, int y, boolean bl, float f) {
 		this.ghostRecipe.render(matrices, minecraft, x, y, bl, f);
@@ -74,7 +74,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 			if (!Screen.hasControlDown()) {
 				this.frameTime += f;
 			}
-
+			
 			int slotX = this.fuelSlot.x + x;
 			int slotY = this.fuelSlot.y + y;
 			GuiComponent.fill(matrices, slotX, slotY, slotX + 16, slotY + 16, 822018048);
@@ -85,7 +85,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
 			RenderSystem.depthFunc(515);
 		}
 	}
-
+	
 	private Item getFuel() {
 		if (this.currentItem == null || this.frameTime > 30.0F) {
 			this.frameTime = 0.0F;

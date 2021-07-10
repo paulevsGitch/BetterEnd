@@ -35,7 +35,7 @@ public class EndCityFeatureMixin {
 			}
 		}
 	}
-
+	
 	@Shadow
 	private static int getYPositionForFeature(ChunkPos pos, ChunkGenerator chunkGenerator, LevelHeightAccessor levelHeightAccessor) {
 		return 0;

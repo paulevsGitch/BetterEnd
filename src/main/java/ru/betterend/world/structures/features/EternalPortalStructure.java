@@ -24,7 +24,7 @@ import ru.betterend.world.structures.piece.NBTPiece;
 public class EternalPortalStructure extends FeatureBaseStructure {
 	private static final ResourceLocation STRUCTURE_ID = BetterEnd.makeID("portal/eternal_portal");
 	private static final StructureTemplate STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
-
+	
 	@Override
 	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig, LevelHeightAccessor levelHeightAccessor) {
 		long x = (long) chunkPos.x * (long) chunkPos.x;
@@ -37,18 +37,18 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 		}
 		return super.isFeatureChunk(chunkGenerator, biomeSource, worldSeed, chunkRandom, pos, biome, chunkPos, featureConfig, levelHeightAccessor);
 	}
-
+	
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return PortalStructureStart::new;
 	}
-
+	
 	public static class PortalStructureStart extends StructureStart<NoneFeatureConfiguration> {
 		public PortalStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos pos, int references, long seed) {
 			super(feature, pos, references, seed);
 		}
-
-
+		
+		
 		@Override
 		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
 			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));

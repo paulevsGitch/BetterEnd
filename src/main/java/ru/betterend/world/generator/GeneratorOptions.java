@@ -30,7 +30,7 @@ public class GeneratorOptions {
 	private static long islandDistBlock;
 	private static int islandDistChunk;
 	private static boolean directSpikeHeight;
-
+	
 	public static void init() {
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
 		biomeSizeVoid = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeVoid", 256);
@@ -50,110 +50,106 @@ public class GeneratorOptions {
 		mediumOptions = new LayerOptions("customGenerator.layers.mediumIslands", Configs.GENERATOR_CONFIG, 150, 100, 70, 20, true);
 		smallOptions = new LayerOptions("customGenerator.layers.smallIslands", Configs.GENERATOR_CONFIG, 60, 50, 70, 30, false);
 		changeSpawn = Configs.GENERATOR_CONFIG.getBoolean("spawn", "changeSpawn", false);
-		spawn = new BlockPos(
-				Configs.GENERATOR_CONFIG.getInt("spawn.point", "x", 20),
-				Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65),
-				Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0)
-		);
+		spawn = new BlockPos(Configs.GENERATOR_CONFIG.getInt("spawn.point", "x", 20), Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65), Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0));
 		replacePortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "customEndPortal", true);
 		replacePillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "customObsidianSpikes", true);
 		int circleRadius = Configs.GENERATOR_CONFIG.getInt("customGenerator", "voidRingSize", 1000);
 		islandDistBlock = (long) circleRadius * (long) circleRadius;
 		islandDistChunk = (circleRadius >> 3); // Twice bigger than normal
 	}
-
+	
 	public static int getBiomeSizeLand() {
 		return Mth.clamp(biomeSizeLand, 1, 8192);
 	}
-
+	
 	public static int getBiomeSizeVoid() {
 		return Mth.clamp(biomeSizeVoid, 1, 8192);
 	}
-
+	
 	public static int getBiomeSizeCaves() {
 		return Mth.clamp(biomeSizeCaves, 1, 8192);
 	}
-
+	
 	public static boolean hasPortal() {
 		return hasPortal;
 	}
-
+	
 	public static boolean hasPillars() {
 		return hasPillars;
 	}
-
+	
 	public static boolean hasDragonFights() {
 		return hasDragonFights;
 	}
-
+	
 	public static boolean swapOverworldToEnd() {
 		return swapOverworldToEnd;
 	}
-
+	
 	public static boolean changeChorusPlant() {
 		return changeChorusPlant;
 	}
-
+	
 	public static boolean removeChorusFromVanillaBiomes() {
 		return removeChorusFromVanillaBiomes;
 	}
-
+	
 	public static boolean noRingVoid() {
 		return noRingVoid;
 	}
-
+	
 	public static boolean useNewGenerator() {
 		return newGenerator;
 	}
-
+	
 	public static boolean hasCentralIsland() {
 		return generateCentralIsland;
 	}
-
+	
 	public static boolean generateObsidianPlatform() {
 		return generateObsidianPlatform;
 	}
-
+	
 	public static int getEndCityFailChance() {
 		return endCityFailChance;
 	}
-
+	
 	public static boolean changeSpawn() {
 		return changeSpawn;
 	}
-
+	
 	public static BlockPos getSpawn() {
 		return spawn;
 	}
-
+	
 	public static BlockPos getPortalPos() {
 		return portal;
 	}
-
+	
 	public static void setPortalPos(BlockPos portal) {
 		GeneratorOptions.portal = portal;
 	}
-
+	
 	public static boolean replacePortal() {
 		return replacePortal;
 	}
-
+	
 	public static boolean replacePillars() {
 		return replacePillars;
 	}
-
+	
 	public static long getIslandDistBlock() {
 		return islandDistBlock;
 	}
-
+	
 	public static int getIslandDistChunk() {
 		return islandDistChunk;
 	}
-
+	
 	public static void setDirectSpikeHeight() {
 		directSpikeHeight = true;
 	}
-
+	
 	public static boolean isDirectSpikeHeight() {
 		boolean height = directSpikeHeight;
 		directSpikeHeight = false;

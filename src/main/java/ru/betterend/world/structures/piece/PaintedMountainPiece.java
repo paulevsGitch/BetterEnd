@@ -23,16 +23,16 @@ import java.util.Random;
 
 public class PaintedMountainPiece extends MountainPiece {
 	private BlockState[] slises;
-
+	
 	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome, BlockState[] slises) {
 		super(EndStructures.PAINTED_MOUNTAIN_PIECE, center, radius, height, random, biome);
 		this.slises = slises;
 	}
-
+	
 	public PaintedMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.PAINTED_MOUNTAIN_PIECE, serverLevel, tag);
 	}
-
+	
 	@Override
 	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		super.addAdditionalSaveData(serverLevel, tag);
@@ -42,7 +42,7 @@ public class PaintedMountainPiece extends MountainPiece {
 		}
 		tag.put("slises", slise);
 	}
-
+	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		super.fromNbt(tag);
@@ -52,7 +52,7 @@ public class PaintedMountainPiece extends MountainPiece {
 			slises[i] = NbtUtils.readBlockState(slise.getCompound(i));
 		}
 	}
-
+	
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getMinBlockX();
@@ -98,7 +98,7 @@ public class PaintedMountainPiece extends MountainPiece {
 				}
 			}
 		}
-
+		
 		return true;
 	}
 }

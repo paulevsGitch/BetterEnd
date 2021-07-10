@@ -45,61 +45,48 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class EternalRitual {
-	private final static Set<Point> STRUCTURE_MAP = Sets.newHashSet(
-			new Point(-4, -5), new Point(-4, 5), new Point(-6, 0),
-			new Point(4, -5), new Point(4, 5), new Point(6, 0));
-	private final static Set<Point> FRAME_MAP = Sets.newHashSet(
-			new Point(0, 0), new Point(0, 6), new Point(1, 0),
-			new Point(1, 6), new Point(2, 1), new Point(2, 5),
-			new Point(3, 2), new Point(3, 3), new Point(3, 4));
-	private final static Set<Point> PORTAL_MAP = Sets.newHashSet(
-			new Point(0, 0), new Point(0, 1), new Point(0, 2),
-			new Point(0, 3), new Point(0, 4), new Point(1, 0),
-			new Point(1, 1), new Point(1, 2), new Point(1, 3),
-			new Point(1, 4), new Point(2, 1), new Point(2, 2),
-			new Point(2, 3));
-	private final static Set<Point> BASE_MAP = Sets.newHashSet(
-			new Point(3, 0), new Point(2, 0), new Point(2, 1), new Point(1, 1),
-			new Point(1, 2), new Point(0, 1), new Point(0, 2));
-
+	private final static Set<Point> STRUCTURE_MAP = Sets.newHashSet(new Point(-4, -5), new Point(-4, 5), new Point(-6, 0), new Point(4, -5), new Point(4, 5), new Point(6, 0));
+	private final static Set<Point> FRAME_MAP = Sets.newHashSet(new Point(0, 0), new Point(0, 6), new Point(1, 0), new Point(1, 6), new Point(2, 1), new Point(2, 5), new Point(3, 2), new Point(3, 3), new Point(3, 4));
+	private final static Set<Point> PORTAL_MAP = Sets.newHashSet(new Point(0, 0), new Point(0, 1), new Point(0, 2), new Point(0, 3), new Point(0, 4), new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3), new Point(1, 4), new Point(2, 1), new Point(2, 2), new Point(2, 3));
+	private final static Set<Point> BASE_MAP = Sets.newHashSet(new Point(3, 0), new Point(2, 0), new Point(2, 1), new Point(1, 1), new Point(1, 2), new Point(0, 1), new Point(0, 2));
+	
 	private final static Block BASE = EndBlocks.FLAVOLITE.tiles;
 	private final static Block PEDESTAL = EndBlocks.ETERNAL_PEDESTAL;
 	private final static Block FRAME = EndBlocks.FLAVOLITE_RUNED_ETERNAL;
 	private final static Block PORTAL = EndBlocks.END_PORTAL_BLOCK;
 	private final static BooleanProperty ACTIVE = BlockProperties.ACTIVE;
-
+	
 	public final static int SEARCH_RADIUS = calculateSearchSteps(48);
-
+	
 	private Level world;
 	private Direction.Axis axis;
 	private ResourceLocation targetWorldId;
 	private BlockPos center;
 	private BlockPos exit;
 	private boolean active = false;
-
+	
 	public EternalRitual(Level world) {
 		this.world = world;
 	}
-
+	
 	public EternalRitual(Level world, BlockPos initial) {
 		this(world);
 		this.configure(initial);
 	}
-
+	
 	public void setWorld(Level world) {
 		this.world = world;
 	}
-
+	
 	@Nullable
 	public ResourceLocation getTargetWorldId() {
 		return targetWorldId;
 	}
-
+	
 	private boolean isInvalid() {
-		return world == null || world.isClientSide() ||
-				center == null || axis == null;
+		return world == null || world.isClientSide() || center == null || axis == null;
 	}
-
+	
 	public void checkStructure() {
 		if (isInvalid()) return;
 		Direction moveX, moveY;
@@ -134,7 +121,7 @@ public class EternalRitual {
 			activatePortal(item);
 		}
 	}
-
+	
 	private boolean checkFrame(Level world, BlockPos framePos) {
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
 		boolean valid = true;
@@ -148,11 +135,11 @@ public class EternalRitual {
 		}
 		return valid;
 	}
-
+	
 	public boolean isActive() {
 		return active;
 	}
-
+	
 	private void activatePortal(Item keyItem) {
 		if (active) return;
 		ResourceLocation itemId = Registry.ITEM.getKey(keyItem);
@@ -184,12 +171,12 @@ public class EternalRitual {
 			active = false;
 		}
 	}
-
+	
 	private void initPortal(ResourceLocation worldId, int portalId) {
 		targetWorldId = worldId;
 		exit = findPortalPos(portalId);
 	}
-
+	
 	private void doEffects(ServerLevel serverWorld, BlockPos center) {
 		Direction moveX, moveY;
 		if (Direction.Axis.X == axis) {
@@ -208,7 +195,7 @@ public class EternalRitual {
 		}
 		serverWorld.playSound(null, center, SoundEvents.END_PORTAL_SPAWN, SoundSource.NEUTRAL, 16, 1);
 	}
-
+	
 	private void activatePortal(Level world, BlockPos center, int portalId) {
 		BlockPos framePos = center.below();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
@@ -229,7 +216,7 @@ public class EternalRitual {
 		BlockState portal = PORTAL.defaultBlockState().setValue(EndPortalBlock.AXIS, portalAxis).setValue(EndPortalBlock.PORTAL, portalId);
 		ParticleOptions effect = new BlockParticleOption(ParticleTypes.BLOCK, portal);
 		ServerLevel serverWorld = (ServerLevel) world;
-
+		
 		PORTAL_MAP.forEach(point -> {
 			BlockPos pos = center.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
 			if (!world.getBlockState(pos).is(PORTAL)) {
@@ -245,13 +232,13 @@ public class EternalRitual {
 			}
 		});
 	}
-
+	
 	public void disablePortal(int state) {
 		if (!active || isInvalid()) return;
 		removePortal(getTargetWorld(state), exit);
 		removePortal(world, center);
 	}
-
+	
 	private void removePortal(Level world, BlockPos center) {
 		BlockPos framePos = center.below();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
@@ -279,11 +266,10 @@ public class EternalRitual {
 		});
 		this.active = false;
 	}
-
+	
 	@Nullable
 	private BlockPos findFrame(Level world, BlockPos.MutableBlockPos startPos) {
-		List<BlockPos.MutableBlockPos> foundPos = findAllBlockPos(world, startPos, (SEARCH_RADIUS >> 4) + 1, FRAME,
-				blockState -> blockState.is(FRAME) && !blockState.getValue(ACTIVE));
+		List<BlockPos.MutableBlockPos> foundPos = findAllBlockPos(world, startPos, (SEARCH_RADIUS >> 4) + 1, FRAME, blockState -> blockState.is(FRAME) && !blockState.getValue(ACTIVE));
 		for (BlockPos.MutableBlockPos testPos : foundPos) {
 			if (checkFrame(world, testPos)) {
 				return testPos;
@@ -291,7 +277,7 @@ public class EternalRitual {
 		}
 		return null;
 	}
-
+	
 	private BlockPos findPortalPos(int portalId) {
 		MinecraftServer server = world.getServer();
 		ServerLevel targetWorld = (ServerLevel) getTargetWorld(portalId);
@@ -344,20 +330,20 @@ public class EternalRitual {
 		generatePortal(targetWorld, basePos, portalAxis, portalId);
 		return basePos.immutable();
 	}
-
+	
 	private Level getTargetWorld(int state) {
 		if (world.dimension() == Level.END) {
 			return EndPortals.getWorld(world.getServer(), state);
 		}
 		return Objects.requireNonNull(world.getServer()).getLevel(Level.END);
 	}
-
+	
 	private boolean checkIsAreaValid(Level world, BlockPos pos, Direction.Axis axis) {
 		if (pos.getY() >= world.getHeight() - 1) return false;
 		if (!isBaseValid(world, pos, axis)) return false;
 		return EternalRitual.checkArea(world, pos, axis);
 	}
-
+	
 	private boolean isBaseValid(Level world, BlockPos pos, Direction.Axis axis) {
 		boolean solid = true;
 		if (axis.equals(Direction.Axis.X)) {
@@ -378,11 +364,11 @@ public class EternalRitual {
 		}
 		return solid;
 	}
-
+	
 	private boolean validBlock(Level world, BlockPos pos, BlockState state) {
 		return state.isRedstoneConductor(world, pos) && state.isCollisionShapeFullBlock(world, pos);
 	}
-
+	
 	public void configure(BlockPos initial) {
 		BlockPos checkPos = initial.east(12);
 		if (this.hasPedestal(checkPos)) {
@@ -456,11 +442,11 @@ public class EternalRitual {
 			}
 		}
 	}
-
+	
 	private boolean hasPedestal(BlockPos pos) {
 		return world.getBlockState(pos).is(PEDESTAL);
 	}
-
+	
 	private boolean isActive(BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		if (state.is(PEDESTAL)) {
@@ -480,7 +466,7 @@ public class EternalRitual {
 		}
 		return false;
 	}
-
+	
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putString("axis", axis.getName());
@@ -493,7 +479,7 @@ public class EternalRitual {
 		}
 		return tag;
 	}
-
+	
 	public void fromTag(CompoundTag tag) {
 		axis = Direction.Axis.byName(tag.getString("axis"));
 		center = NbtUtils.readBlockPos(tag.getCompound("center"));
@@ -505,17 +491,15 @@ public class EternalRitual {
 			targetWorldId = new ResourceLocation(tag.getString("key_item"));
 		}
 	}
-
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		EternalRitual ritual = (EternalRitual) o;
-		return world.equals(ritual.world) &&
-				Objects.equals(center, ritual.center) &&
-				Objects.equals(exit, ritual.exit);
+		return world.equals(ritual.world) && Objects.equals(center, ritual.center) && Objects.equals(exit, ritual.exit);
 	}
-
+	
 	public static void generatePortal(Level world, BlockPos center, Direction.Axis axis, int portalId) {
 		BlockPos framePos = center.below();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.EAST : Direction.NORTH;
@@ -535,7 +519,7 @@ public class EternalRitual {
 		});
 		generateBase(world, framePos, moveDir);
 	}
-
+	
 	private static void generateBase(Level world, BlockPos center, Direction moveX) {
 		BlockState base = BASE.defaultBlockState();
 		Direction moveY = moveX.getClockWise();
@@ -550,7 +534,7 @@ public class EternalRitual {
 			world.setBlockAndUpdate(pos, base);
 		});
 	}
-
+	
 	public static boolean checkArea(Level world, BlockPos center, Direction.Axis axis) {
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH : Direction.EAST;
 		for (BlockPos checkPos : BlockPos.betweenClosed(center.relative(moveDir.getClockWise()), center.relative(moveDir.getCounterClockWise()))) {
@@ -565,13 +549,13 @@ public class EternalRitual {
 		}
 		return true;
 	}
-
+	
 	private static boolean isStateInvalid(BlockState state) {
 		if (!state.getFluidState().isEmpty()) return true;
 		Material material = state.getMaterial();
 		return !material.isReplaceable() && !material.equals(Material.PLANT);
 	}
-
+	
 	/**
 	 * @param world       World for search
 	 * @param checkPos    Start search position
@@ -610,7 +594,7 @@ public class EternalRitual {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * @param world       World for search
 	 * @param checkPos    Start search position
@@ -649,7 +633,7 @@ public class EternalRitual {
 		}
 		return posFound;
 	}
-
+	
 	public static int calculateSearchSteps(int radius) {
 		return radius * 4 - 1;
 	}

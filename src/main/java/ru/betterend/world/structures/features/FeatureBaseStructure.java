@@ -17,16 +17,16 @@ import java.util.Random;
 
 public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureConfiguration> {
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
-
+	
 	public FeatureBaseStructure() {
 		super(NoneFeatureConfiguration.CODEC);
 	}
-
+	
 	@Override
 	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig, LevelHeightAccessor levelHeightAccessor) {
 		return getGenerationHeight(pos, chunkGenerator, levelHeightAccessor) >= 20;
 	}
-
+	
 	private static int getGenerationHeight(ChunkPos chunkPos, ChunkGenerator chunkGenerator, LevelHeightAccessor levelHeightAccessor) {
 		Random random = new Random((long) (chunkPos.x + chunkPos.z * 10387313));
 		Rotation blockRotation = Rotation.getRandom(random);
@@ -42,7 +42,7 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 		else if (blockRotation == Rotation.COUNTERCLOCKWISE_90) {
 			j = -5;
 		}
-
+		
 		int k = chunkPos.getBlockX(7);
 		int l = chunkPos.getBlockZ(7);
 		int m = chunkGenerator.getFirstOccupiedHeight(k, l, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);

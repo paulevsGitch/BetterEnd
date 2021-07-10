@@ -29,7 +29,7 @@ public class NBTPiece extends BasePiece {
 	private BlockPos pos;
 	private int erosion;
 	private boolean cover;
-
+	
 	public NBTPiece(ResourceLocation structureID, StructureTemplate structure, BlockPos pos, int erosion, boolean cover, Random random) {
 		super(EndStructures.NBT_PIECE, random.nextInt(), null);
 		this.structureID = structureID;
@@ -41,12 +41,12 @@ public class NBTPiece extends BasePiece {
 		this.cover = cover;
 		makeBoundingBox();
 	}
-
+	
 	public NBTPiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.NBT_PIECE, tag);
 		makeBoundingBox();
 	}
-
+	
 	@Override
 	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.putString("structureID", structureID.toString());
@@ -56,7 +56,7 @@ public class NBTPiece extends BasePiece {
 		tag.put("pos", NbtUtils.writeBlockPos(pos));
 		tag.putBoolean("cover", cover);
 	}
-
+	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		structureID = new ResourceLocation(tag.getString("structureID"));
@@ -67,13 +67,10 @@ public class NBTPiece extends BasePiece {
 		cover = tag.getBoolean("cover");
 		structure = StructureHelper.readStructure(structureID);
 	}
-
+	
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		BoundingBox bounds = BoundingBox.fromCorners(
-				new Vec3i(blockBox.minX(), this.boundingBox.minY(), blockBox.minZ()),
-				new Vec3i(blockBox.maxX(), this.boundingBox.maxX(), blockBox.maxZ())
-		);
+		BoundingBox bounds = BoundingBox.fromCorners(new Vec3i(blockBox.minX(), this.boundingBox.minY(), blockBox.minZ()), new Vec3i(blockBox.maxX(), this.boundingBox.maxX(), blockBox.maxZ()));
 		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		structure.placeInWorld(world, pos, pos, placementData, random, 2);
 		if (erosion > 0) {
@@ -89,7 +86,7 @@ public class NBTPiece extends BasePiece {
 		}
 		return true;
 	}
-
+	
 	private void makeBoundingBox() {
 		this.boundingBox = StructureHelper.getStructureBounds(pos, structure, rotation, mirror);
 	}

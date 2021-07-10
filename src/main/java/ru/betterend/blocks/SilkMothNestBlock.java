@@ -54,33 +54,33 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
 	public static final IntegerProperty FULLNESS = EndBlockProperties.FULLNESS;
 	private static final VoxelShape TOP = box(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape BOTTOM = box(0, 0, 0, 16, 16, 16);
-
+	
 	public SilkMothNestBlock() {
 		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sound(SoundType.WOOL).noOcclusion().randomTicks());
 		this.registerDefaultState(defaultBlockState().setValue(ACTIVE, true).setValue(FULLNESS, 0));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(ACTIVE, FACING, FULLNESS);
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(ACTIVE) ? BOTTOM : TOP;
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		Direction dir = ctx.getHorizontalDirection().getOpposite();
 		return this.defaultBlockState().setValue(FACING, dir);
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!state.getValue(ACTIVE)) {
@@ -93,22 +93,22 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
 		}
 		return state;
 	}
-
+	
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
 	}
-
+	
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return BlocksHelper.mirrorHorizontal(state, mirror, FACING);
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return state.getValue(ACTIVE) ? Collections.singletonList(new ItemStack(this)) : Collections.emptyList();
 	}
-
+	
 	@Override
 	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (!state.getValue(ACTIVE) && player.isCreative()) {
@@ -120,7 +120,7 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
 		}
 		super.playerWillDestroy(world, pos, state, player);
 	}
-
+	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (!state.getValue(ACTIVE)) {
@@ -147,7 +147,7 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
 		world.addFreshEntity(moth);
 		world.playSound(null, pos, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1, 1);
 	}
-
+	
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (hand == InteractionHand.MAIN_HAND) {

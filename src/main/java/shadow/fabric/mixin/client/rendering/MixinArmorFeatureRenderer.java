@@ -54,52 +54,52 @@ public abstract class MixinArmorFeatureRenderer extends RenderLayer {
 	@Shadow
 	@Final
 	private static Map<String, ResourceLocation> ARMOR_LOCATION_CACHE;
-
+	
 	public MixinArmorFeatureRenderer(RenderLayerParent context) {
 		super(context);
-
+		
 	}
-
+	
 	@Unique
 	private LivingEntity storedEntity;
 	@Unique
 	private EquipmentSlot storedSlot;
-
+	
 	@Inject(method = "render", at = @At("HEAD"))
 	private void storeEntity(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, LivingEntity livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
 		// We store the living entity wearing the armor before we render
 		this.storedEntity = livingEntity;
 	}
-
+	
 	@Inject(method = "renderArmorPiece", at = @At("HEAD"))
 	private void storeSlot(PoseStack matrices, MultiBufferSource vertexConsumers, LivingEntity livingEntity, EquipmentSlot slot, int i, HumanoidModel bipedEntityModel, CallbackInfo ci) {
 		// We store the current armor slot that is rendering before we render each armor piece
 		this.storedSlot = slot;
 	}
-
+	
 	@Inject(method = "render", at = @At("RETURN"))
 	private void removeStored(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, LivingEntity livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
 		// We remove the stored data after we render
 		this.storedEntity = null;
 		this.storedSlot = null;
 	}
-
+	
 	@Inject(method = "getArmorModel", at = @At("RETURN"), cancellable = true)
 	private void selectArmorModel(EquipmentSlot slot, CallbackInfoReturnable<HumanoidModel<LivingEntity>> cir) {
 		ItemStack stack = storedEntity.getItemBySlot(slot);
-
+		
 		HumanoidModel<LivingEntity> defaultModel = cir.getReturnValue();
 		HumanoidModel<LivingEntity> model = ArmorRenderingRegistry.getArmorModel(storedEntity, stack, slot, defaultModel);
-
+		
 		if (model != defaultModel) {
 			cir.setReturnValue(model);
 		}
 	}
-
+	
 	@Inject(method = "getArmorLocation", at = @At(value = "INVOKE", target = "Ljava/util/Map;computeIfAbsent(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 	private void getArmorTexture(ArmorItem armorItem, boolean secondLayer, /* @Nullable */ String suffix, CallbackInfoReturnable<ResourceLocation> cir, String vanillaIdentifier) {
 		String texture = ArmorRenderingRegistry.getArmorTexture(storedEntity, storedEntity.getItemBySlot(storedSlot), storedSlot, secondLayer, suffix, new ResourceLocation(vanillaIdentifier)).toString();
-
+		
 		if (!Objects.equals(texture, vanillaIdentifier)) {
 			cir.setReturnValue(ARMOR_LOCATION_CACHE.computeIfAbsent(texture, ResourceLocation::new));
 		}

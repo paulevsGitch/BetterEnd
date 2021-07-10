@@ -19,12 +19,12 @@ public class MountainStructure extends FeatureBaseStructure {
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return SDFStructureStart::new;
 	}
-
+	
 	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
 		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos chunkPos, int references, long seed) {
 			super(feature, chunkPos, references, seed);
 		}
-
+		
 		@Override
 		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
 			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
@@ -36,7 +36,7 @@ public class MountainStructure extends FeatureBaseStructure {
 				CrystalMountainPiece piece = new CrystalMountainPiece(new BlockPos(x, y, z), radius, height, random, biome);
 				this.pieces.add(piece);
 			}
-
+			
 			//this.calculateBoundingBox();
 		}
 	}

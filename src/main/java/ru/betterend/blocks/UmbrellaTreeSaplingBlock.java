@@ -13,17 +13,17 @@ public class UmbrellaTreeSaplingBlock extends FeatureSaplingBlock {
 	public UmbrellaTreeSaplingBlock() {
 		super();
 	}
-
+	
 	@Override
 	protected Feature<?> getFeature() {
 		return EndFeatures.UMBRELLA_TREE.getFeature();
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.JUNGLE_MOSS);
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;

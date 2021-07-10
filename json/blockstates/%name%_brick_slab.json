@@ -1,15 +1,15 @@
 {
-    "variants": {
-        "type=bottom": {
-            "model": "betterend:block/%name%_brick_half_slab"
-        }, 
-        "type=double": {
-            "model": "betterend:block/%name%_bricks"
-        }, 
-        "type=top": {
-            "model": "betterend:block/%name%_brick_half_slab", 
-            "uvlock": true, 
-            "x": 180
-        }
-    }
+	"variants": {
+		"type=bottom": {
+			"model": "betterend:block/%name%_brick_half_slab"
+		},
+		"type=double": {
+			"model": "betterend:block/%name%_bricks"
+		},
+		"type=top": {
+			"model": "betterend:block/%name%_brick_half_slab",
+			"uvlock": true,
+			"x": 180
+		}
+	}
 }

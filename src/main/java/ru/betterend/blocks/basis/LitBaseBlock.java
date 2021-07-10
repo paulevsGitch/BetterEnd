@@ -10,11 +10,11 @@ import ru.bclib.blocks.BaseBlock;
 
 public class LitBaseBlock extends BaseBlock {
 	private static final String PATTERN = "{\"parent\":\"betterend:block/cube_noshade\",\"textures\":{\"texture\":\"betterend:block/name\"}}";
-
+	
 	public LitBaseBlock(Properties settings) {
 		super(settings);
 	}
-
+	
 	@Nullable
 	@Override
 	@Environment(EnvType.CLIENT)

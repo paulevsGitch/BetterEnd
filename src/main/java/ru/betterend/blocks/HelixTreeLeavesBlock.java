@@ -32,35 +32,30 @@ import java.util.List;
 public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
-
+	
 	public HelixTreeLeavesBlock() {
-		super(FabricBlockSettings.of(Material.LEAVES)
-				.materialColor(MaterialColor.COLOR_ORANGE)
-				.breakByTool(FabricToolTags.SHEARS)
-				.sound(SoundType.WART_BLOCK)
-				.sound(SoundType.GRASS)
-				.strength(0.2F));
+		super(FabricBlockSettings.of(Material.LEAVES).materialColor(MaterialColor.COLOR_ORANGE).breakByTool(FabricToolTags.SHEARS).sound(SoundType.WART_BLOCK).sound(SoundType.GRASS).strength(0.2F));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(COLOR);
 	}
-
+	
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
 			return ColorUtil.color(237, getGreen(state.getValue(COLOR)), 20);
 		};
 	}
-
+	
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
 			return ColorUtil.color(237, getGreen(4), 20);
 		};
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		double px = ctx.getClickedPos().getX() * 0.1;
@@ -68,12 +63,12 @@ public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 		double pz = ctx.getClickedPos().getZ() * 0.1;
 		return this.defaultBlockState().setValue(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
-
+	
 	private int getGreen(int color) {
 		float delta = color / 7F;
 		return (int) Mth.lerp(delta, 80, 158);
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);

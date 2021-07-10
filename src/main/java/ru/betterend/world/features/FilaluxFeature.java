@@ -17,7 +17,7 @@ public class FilaluxFeature extends SkyScatterFeature {
 	public FilaluxFeature() {
 		super(10);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlockState vine = EndBlocks.FILALUX.defaultBlockState();

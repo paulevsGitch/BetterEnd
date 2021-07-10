@@ -38,21 +38,17 @@ import java.util.Random;
 
 public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderTyped, BonemealableBlock {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
-
+	
 	public SmallJellyshroomBlock() {
-		super(FabricBlockSettings.of(Material.PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.breakByHand(true)
-				.sound(SoundType.NETHER_WART)
-				.noCollission());
+		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.NETHER_WART).noCollission());
 	}
-
+	
 	@Override
 	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -63,7 +59,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 			return Lists.newArrayList();
 		}
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		Direction direction = state.getValue(FACING);
@@ -71,12 +67,12 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 		BlockState support = world.getBlockState(blockPos);
 		return canSupportCenter(world, blockPos, direction) && support.canOcclude() && support.getLightEmission() == 0;
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Block.box(3, 0, 3, 13, 16, 13));
 		BOUNDING_SHAPES.put(Direction.DOWN, Block.box(3, 0, 3, 13, 16, 13));
@@ -85,17 +81,17 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 		BOUNDING_SHAPES.put(Direction.WEST, Shapes.box(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
 		BOUNDING_SHAPES.put(Direction.EAST, Shapes.box(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
 	}
-
+	
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return state.getValue(FACING) == Direction.UP && world.getBlockState(pos.below()).is(TagAPI.END_GROUND);
 	}
-
+	
 	@Override
 	public boolean isBonemealSuccess(Level world, Random random, BlockPos pos, BlockState state) {
 		return random.nextInt(16) == 0;
 	}
-
+	
 	@Override
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);

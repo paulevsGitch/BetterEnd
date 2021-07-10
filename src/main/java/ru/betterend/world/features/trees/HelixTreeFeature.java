@@ -31,20 +31,19 @@ import java.util.function.Function;
 
 public class HelixTreeFeature extends DefaultFeature {
 	private static final Function<PosInfo, BlockState> POST;
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
-			return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
 		BlocksHelper.setWithoutUpdate(world, pos, AIR);
-
+		
 		float angle = random.nextFloat() * MHelper.PI2;
 		float radiusRange = MHelper.randRange(4.5F, 6F, random);
 		float scale = MHelper.randRange(0.5F, 1F, random);
-
+		
 		float dx;
 		float dz;
 		List<Vector3f> spline = new ArrayList<Vector3f>(10);
@@ -59,7 +58,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		});
 		SDF rotated = new SDFRotation().setRotation(Vector3f.YP, (float) Math.PI).setSource(sdf);
 		sdf = new SDFUnion().setSourceA(rotated).setSourceB(sdf);
-
+		
 		Vector3f lastPoint = spline.get(spline.size() - 1);
 		List<Vector3f> spline2 = SplineHelper.makeSpline(0, 0, 0, 0, 20, 0, 5);
 		SDF stem = SplineHelper.buildSDF(spline2, 1.0F, 0.5F, (p) -> {
@@ -67,7 +66,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		});
 		stem = new SDFTranslate().setTranslate(lastPoint.x(), lastPoint.y(), lastPoint.z()).setSource(stem);
 		sdf = new SDFSmoothUnion().setRadius(3).setSourceA(sdf).setSourceB(stem);
-
+		
 		sdf = new SDFScale().setScale(scale).setSource(sdf);
 		dx = 30 * scale;
 		float dy1 = -20 * scale;
@@ -83,11 +82,10 @@ public class HelixTreeFeature extends DefaultFeature {
 		});
 		SplineHelper.scale(spline2, scale);
 		BlockPos leafStart = pos.offset(lastPoint.x() + 0.5, lastPoint.y() + 0.5, lastPoint.z() + 0.5);
-		SplineHelper.fillSplineForce(spline2, world, EndBlocks.HELIX_TREE.log.defaultBlockState(), leafStart,
-				(state) -> {
-					return state.getMaterial().isReplaceable();
-				});
-
+		SplineHelper.fillSplineForce(spline2, world, EndBlocks.HELIX_TREE.log.defaultBlockState(), leafStart, (state) -> {
+			return state.getMaterial().isReplaceable();
+		});
+		
 		spline.clear();
 		float rad = MHelper.randRange(8F, 11F, random);
 		int count = MHelper.randRange(20, 30, random);
@@ -102,7 +100,7 @@ public class HelixTreeFeature extends DefaultFeature {
 			dz = (float) Math.cos(i * 0.45F + angle) * radius;
 			spline.add(new Vector3f(dx, i * scaleM, dz));
 		}
-
+		
 		Vector3f start = new Vector3f();
 		Vector3f end = new Vector3f();
 		lastPoint = spline.get(0);
@@ -133,7 +131,7 @@ public class HelixTreeFeature extends DefaultFeature {
 			}
 			lastPoint = point;
 		}
-
+		
 		leaf = leaf.setValue(HelixTreeLeavesBlock.COLOR, 7);
 		leafStart = leafStart.offset(0, lastPoint.y(), 0);
 		if (world.getBlockState(leafStart).isAir()) {
@@ -147,12 +145,11 @@ public class HelixTreeFeature extends DefaultFeature {
 				}
 			}
 		}
-
+		
 		return true;
 	}
-
-	private void fillLine(Vector3f start, Vector3f end, WorldGenLevel world, BlockState state, BlockPos pos,
-						  int offset) {
+	
+	private void fillLine(Vector3f start, Vector3f end, WorldGenLevel world, BlockState state, BlockPos pos, int offset) {
 		float dx = end.x() - start.x();
 		float dy = end.y() - start.y();
 		float dz = end.z() - start.z();
@@ -164,7 +161,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		float x = start.x();
 		float y = start.y();
 		float z = start.z();
-
+		
 		MutableBlockPos bPos = new MutableBlockPos();
 		for (int i = 0; i < count; i++) {
 			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
@@ -182,11 +179,10 @@ public class HelixTreeFeature extends DefaultFeature {
 			BlocksHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, 7));
 		}
 	}
-
+	
 	static {
 		POST = (info) -> {
-			if (EndBlocks.HELIX_TREE.isTreeLog(info.getStateUp())
-					&& EndBlocks.HELIX_TREE.isTreeLog(info.getStateDown())) {
+			if (EndBlocks.HELIX_TREE.isTreeLog(info.getStateUp()) && EndBlocks.HELIX_TREE.isTreeLog(info.getStateDown())) {
 				return EndBlocks.HELIX_TREE.log.defaultBlockState();
 			}
 			return info.getState();

@@ -39,26 +39,26 @@ public class BetterEndBiomeSource extends BiomeSource {
 	private BiomeMap mapLand;
 	private BiomeMap mapVoid;
 	private final long seed;
-
+	
 	public BetterEndBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 		super(getBiomes(biomeRegistry));
-
+		
 		this.mapLand = new BiomeMap(seed, GeneratorOptions.getBiomeSizeLand(), EndBiomes.LAND_BIOMES);
 		this.mapVoid = new BiomeMap(seed, GeneratorOptions.getBiomeSizeVoid(), EndBiomes.VOID_BIOMES);
 		this.centerBiome = biomeRegistry.getOrThrow(Biomes.THE_END);
 		this.barrens = biomeRegistry.getOrThrow(Biomes.END_BARRENS);
 		this.biomeRegistry = biomeRegistry;
 		this.seed = seed;
-
+		
 		WorldgenRandom chunkRandom = new WorldgenRandom(seed);
 		chunkRandom.consumeCount(17292);
 		this.noise = new SimplexNoise(chunkRandom);
-
+		
 		EndBiomes.mutateRegistry(biomeRegistry);
 		EndTags.addTerrainTags(biomeRegistry);
 		FeaturesHelper.addFeatures(biomeRegistry);
 	}
-
+	
 	private static List<Biome> getBiomes(Registry<Biome> biomeRegistry) {
 		List<Biome> list = Lists.newArrayList();
 		biomeRegistry.forEach((biome) -> {
@@ -69,13 +69,13 @@ public class BetterEndBiomeSource extends BiomeSource {
 		});
 		return list;
 	}
-
+	
 	@Override
 	public Biome getNoiseBiome(int biomeX, int biomeY, int biomeZ) {
 		boolean hasVoid = !GeneratorOptions.useNewGenerator() || !GeneratorOptions.noRingVoid();
 		long i = (long) biomeX * (long) biomeX;
 		long j = (long) biomeZ * (long) biomeZ;
-
+		
 		long dist = i + j;
 		if (hasVoid) {
 			if (dist <= 65536L) return this.centerBiome;
@@ -86,12 +86,12 @@ public class BetterEndBiomeSource extends BiomeSource {
 				return this.centerBiome;
 			}
 		}
-
+		
 		if (biomeX == 0 && biomeZ == 0) {
 			mapLand.clearCache();
 			mapVoid.clearCache();
 		}
-
+		
 		BCLBiome endBiome = null;
 		if (GeneratorOptions.useNewGenerator()) {
 			if (TerrainGenerator.isLand(biomeX, biomeZ)) {
@@ -106,22 +106,22 @@ public class BetterEndBiomeSource extends BiomeSource {
 		}
 		else {
 			float height = TheEndBiomeSource.getHeightValue(noise, (biomeX >> 1) + 1, (biomeZ >> 1) + 1) + (float) SMALL_NOISE.eval(biomeX, biomeZ) * 5;
-
+			
 			if (height > -20F && height < -5F) {
 				return barrens;
 			}
-
+			
 			endBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
 		}
-
+		
 		return BiomeAPI.getActualBiome(endBiome);
 	}
-
+	
 	public Biome getLandBiome(int biomeX, int biomeY, int biomeZ) {
 		boolean hasVoid = !GeneratorOptions.useNewGenerator() || !GeneratorOptions.noRingVoid();
 		long i = (long) biomeX * (long) biomeX;
 		long j = (long) biomeZ * (long) biomeZ;
-
+		
 		long dist = i + j;
 		if (hasVoid) {
 			if (dist <= 65536L) return this.centerBiome;
@@ -134,17 +134,17 @@ public class BetterEndBiomeSource extends BiomeSource {
 		}
 		return BiomeAPI.getActualBiome(mapLand.getBiome(biomeX << 2, biomeZ << 2));
 	}
-
+	
 	@Override
 	public BiomeSource withSeed(long seed) {
 		return new BetterEndBiomeSource(biomeRegistry, seed);
 	}
-
+	
 	@Override
 	protected Codec<? extends BiomeSource> codec() {
 		return CODEC;
 	}
-
+	
 	public static void register() {
 		Registry.register(Registry.BIOME_SOURCE, BetterEnd.makeID("better_end_biome_source"), CODEC);
 	}

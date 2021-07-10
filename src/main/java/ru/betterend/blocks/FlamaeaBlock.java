@@ -22,39 +22,36 @@ import java.util.List;
 
 public class FlamaeaBlock extends EndPlantBlock implements ISpetialItem {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
-
+	
 	public FlamaeaBlock() {
-		super(FabricBlockSettings.of(Material.PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.breakByHand(true)
-				.sound(SoundType.WET_GRASS));
+		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.WET_GRASS));
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(Blocks.WATER);
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE;
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Lists.newArrayList(new ItemStack(this));
 	}
-
+	
 	@Override
 	public int getStackSize() {
 		return 64;
 	}
-
+	
 	@Override
 	public boolean canPlaceOnWater() {
 		return true;

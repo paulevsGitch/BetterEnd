@@ -24,21 +24,21 @@ import ru.betterend.registry.EndItems;
 
 @Environment(EnvType.CLIENT)
 public class PedestalItemRenderer<T extends PedestalBlockEntity> implements BlockEntityRenderer<T> {
-
+	
 	public PedestalItemRenderer(BlockEntityRendererProvider.Context ctx) {
 		super();
 	}
-
+	
 	@Override
 	public void render(T blockEntity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
 		Level world = blockEntity.getLevel();
 		if (world == null || blockEntity.isEmpty()) return;
-
+		
 		BlockState state = world.getBlockState(blockEntity.getBlockPos());
 		if (!(state.getBlock() instanceof PedestalBlock)) return;
-
+		
 		ItemStack activeItem = blockEntity.getItem(0);
-
+		
 		matrices.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
 		//TODO: check i=0
@@ -56,7 +56,7 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
 		if (state.is(EndBlocks.ETERNAL_PEDESTAL) && state.getValue(EternalPedestal.ACTIVATED)) {
 			float[] colors = EternalCrystalRenderer.colors(age);
 			int y = blockEntity.getBlockPos().getY();
-
+			
 			BeamRenderer.renderLightBeam(matrices, vertexConsumers, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.13F, 0.16F);
 			float altitude = Mth.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
 			matrices.translate(0.0D, altitude, 0.0D);

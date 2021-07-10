@@ -19,17 +19,17 @@ public class RoundCaveFeature extends EndCaveFeature {
 	@Override
 	protected Set<BlockPos> generate(WorldGenLevel world, BlockPos center, int radius, Random random) {
 		OpenSimplexNoise noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
-
+		
 		int x1 = center.getX() - radius - 5;
 		int z1 = center.getZ() - radius - 5;
 		int x2 = center.getX() + radius + 5;
 		int z2 = center.getZ() + radius + 5;
 		int y1 = MHelper.floor(center.getY() - (radius + 5) / 1.6);
 		int y2 = MHelper.floor(center.getY() + (radius + 5) / 1.6);
-
+		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
-
+		
 		int dx = x2 - x1 + 1;
 		int dz = z2 - z1 + 1;
 		int count = dx * dz;
@@ -53,12 +53,12 @@ public class RoundCaveFeature extends EndCaveFeature {
 					state = world.getBlockState(bpos);
 					if (isReplaceable(state) && !isWaterNear(world, bpos)) {
 						blocks.add(bpos.immutable());
-
+						
 						while (state.getMaterial().equals(Material.LEAVES)) {
 							bpos.setY(bpos.getY() + 1);
 							state = world.getBlockState(bpos);
 						}
-
+						
 						bpos.setY(y - 1);
 						while (state.getMaterial().equals(Material.LEAVES)) {
 							bpos.setY(bpos.getY() - 1);
@@ -69,14 +69,11 @@ public class RoundCaveFeature extends EndCaveFeature {
 			}
 		});
 		blocks.forEach(bpos -> BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR));
-
+		
 		return blocks;
 	}
-
+	
 	private boolean isReplaceable(BlockState state) {
-		return state.is(TagAPI.GEN_TERRAIN)
-				|| state.getMaterial().isReplaceable()
-				|| state.getMaterial().equals(Material.PLANT)
-				|| state.getMaterial().equals(Material.LEAVES);
+		return state.is(TagAPI.GEN_TERRAIN) || state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT) || state.getMaterial().equals(Material.LEAVES);
 	}
 }

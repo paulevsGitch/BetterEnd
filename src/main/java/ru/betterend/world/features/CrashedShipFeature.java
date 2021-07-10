@@ -30,7 +30,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 	private static final StructureProcessor REPLACER;
 	private static final String STRUCTURE_PATH = "/data/minecraft/structures/end_city/ship.nbt";
 	private StructureTemplate structure;
-
+	
 	@Override
 	protected StructureTemplate getStructure(WorldGenLevel world, BlockPos pos, Random random) {
 		if (structure == null) {
@@ -41,7 +41,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		}
 		return structure;
 	}
-
+	
 	@Override
 	protected boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random) {
 		long x = pos.getX() >> 4;
@@ -51,29 +51,29 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		}
 		return pos.getY() > 5 && world.getBlockState(pos.below()).is(TagAPI.GEN_TERRAIN);
 	}
-
+	
 	@Override
 	protected Rotation getRotation(WorldGenLevel world, BlockPos pos, Random random) {
 		return Rotation.getRandom(random);
 	}
-
+	
 	@Override
 	protected Mirror getMirror(WorldGenLevel world, BlockPos pos, Random random) {
 		return Mirror.values()[random.nextInt(3)];
 	}
-
+	
 	@Override
 	protected int getYOffset(StructureTemplate structure, WorldGenLevel world, BlockPos pos, Random random) {
 		int min = structure.getSize().getY() >> 3;
 		int max = structure.getSize().getY() >> 2;
 		return -MHelper.randRange(min, max, random);
 	}
-
+	
 	@Override
 	protected TerrainMerge getTerrainMerge(WorldGenLevel world, BlockPos pos, Random random) {
 		return TerrainMerge.NONE;
 	}
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
@@ -82,11 +82,11 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
 		center = getGround(world, center);
 		BoundingBox bounds = makeBox(center);
-
+		
 		if (!canSpawn(world, center, random)) {
 			return false;
 		}
-
+		
 		StructureTemplate structure = getStructure(world, center, random);
 		Rotation rotation = getRotation(world, center, random);
 		Mirror mirror = getMirror(world, center, random);
@@ -94,37 +94,35 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		center = center.offset(0, getYOffset(structure, world, center, random) + 0.5, 0);
 		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror);
 		center = center.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
-
+		
 		BoundingBox structB = structure.getBoundingBox(placementData, center);
 		bounds = StructureHelper.intersectBoxes(bounds, structB);
-
+		
 		addStructureData(placementData);
 		structure.placeInWorld(world, center, center, placementData.setBoundingBox(bounds), random, 2);
-
+		
 		StructureHelper.erodeIntense(world, bounds, random);
 		BlockFixer.fixBlocks(world, new BlockPos(bounds.minX(), bounds.minY(), bounds.minZ()), new BlockPos(bounds.maxX(), bounds.maxY(), bounds.maxZ()));
-
+		
 		return true;
 	}
-
+	
 	@Override
 	protected void addStructureData(StructurePlaceSettings data) {
 		data.addProcessor(BlockIgnoreProcessor.STRUCTURE_AND_AIR).addProcessor(REPLACER).setIgnoreEntities(true);
 	}
-
+	
 	static {
 		REPLACER = new StructureProcessor() {
 			@Override
-			public StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos,
-												   StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2,
-												   StructurePlaceSettings structurePlacementData) {
+			public StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlaceSettings structurePlacementData) {
 				BlockState state = structureBlockInfo2.state;
 				if (state.is(Blocks.SPAWNER) || state.getMaterial().equals(Material.WOOL)) {
 					return new StructureBlockInfo(structureBlockInfo2.pos, AIR, null);
 				}
 				return structureBlockInfo2;
 			}
-
+			
 			@Override
 			protected StructureProcessorType<?> getType() {
 				return StructureProcessorType.NOP;

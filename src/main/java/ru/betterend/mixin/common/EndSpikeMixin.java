@@ -17,7 +17,7 @@ public class EndSpikeMixin {
 	@Final
 	@Shadow
 	private int height;
-
+	
 	@Inject(method = "getHeight", at = @At("HEAD"), cancellable = true)
 	private void be_getSpikeHeight(CallbackInfoReturnable<Integer> info) {
 		if (!GeneratorOptions.isDirectSpikeHeight()) {
@@ -30,12 +30,12 @@ public class EndSpikeMixin {
 			info.setReturnValue(maxY);
 		}
 	}
-
+	
 	@Shadow
 	public int getCenterX() {
 		return 0;
 	}
-
+	
 	@Shadow
 	public int getCenterZ() {
 		return 0;

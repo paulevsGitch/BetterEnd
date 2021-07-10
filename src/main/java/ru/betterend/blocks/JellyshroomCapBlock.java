@@ -39,14 +39,14 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTyped, Blo
 	private final Vec3i colorStart;
 	private final Vec3i colorEnd;
 	private final int coloritem;
-
+	
 	public JellyshroomCapBlock(int r1, int g1, int b1, int r2, int g2, int b2) {
 		super(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK));
 		colorStart = new Vec3i(r1, g1, b1);
 		colorEnd = new Vec3i(r2, g2, b2);
 		coloritem = ColorUtil.color((r1 + r2) >> 1, (g1 + g2) >> 1, (b1 + b2) >> 1);
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		double px = ctx.getClickedPos().getX() * 0.1;
@@ -54,35 +54,35 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTyped, Blo
 		double pz = ctx.getClickedPos().getZ() * 0.1;
 		return this.defaultBlockState().setValue(COLOR, MHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(COLOR);
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Lists.newArrayList(new ItemStack(this));
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return getBlockModel(resourceLocation, defaultBlockState());
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_COLORED, "jellyshroom_cap");
 		return ModelsHelper.fromPattern(pattern);
 	}
-
+	
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
@@ -93,7 +93,7 @@ public class JellyshroomCapBlock extends SlimeBlock implements IRenderTyped, Blo
 			return ColorUtil.color(r, g, b);
 		};
 	}
-
+	
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {

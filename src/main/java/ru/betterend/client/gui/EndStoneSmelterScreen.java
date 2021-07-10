@@ -17,18 +17,18 @@ import ru.betterend.BetterEnd;
 
 @Environment(EnvType.CLIENT)
 public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelterScreenHandler> implements RecipeUpdateListener {
-
+	
 	private final static ResourceLocation RECIPE_BUTTON_TEXTURE = new ResourceLocation("textures/gui/recipe_button.png");
 	private final static ResourceLocation BACKGROUND_TEXTURE = BetterEnd.makeID("textures/gui/smelter_gui.png");
-
+	
 	public final EndStoneSmelterRecipeBookScreen recipeBook;
 	private boolean narrow;
-
+	
 	public EndStoneSmelterScreen(EndStoneSmelterScreenHandler handler, Inventory inventory, Component title) {
 		super(handler, inventory, title);
 		recipeBook = new EndStoneSmelterRecipeBookScreen();
 	}
-
+	
 	public void init() {
 		super.init();
 		//TODO: test in 1.17
@@ -43,13 +43,13 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 		}));
 		titleLabelX = (imageWidth - font.width(title)) / 2;
 	}
-
+	
 	@Override
 	public void containerTick() {
 		super.containerTick();
 		recipeBook.tick();
 	}
-
+	
 	@Override
 	public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
 		renderBackground(matrices);
@@ -65,7 +65,7 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 		renderTooltip(matrices, mouseX, mouseY);
 		recipeBook.renderTooltip(matrices, leftPos, topPos, mouseX, mouseY);
 	}
-
+	
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		if (this.recipeBook.mouseClicked(mouseX, mouseY, button)) {
@@ -75,39 +75,39 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 			return narrow && recipeBook.isVisible() || super.mouseClicked(mouseX, mouseY, button);
 		}
 	}
-
+	
 	@Override
 	protected void slotClicked(Slot slot, int invSlot, int clickData, ClickType actionType) {
 		super.slotClicked(slot, invSlot, clickData, actionType);
 		this.recipeBook.slotClicked(slot);
 	}
-
+	
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		return !recipeBook.keyPressed(keyCode, scanCode, modifiers) && super.keyPressed(keyCode, scanCode, modifiers);
 	}
-
+	
 	@Override
 	protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
 		boolean isMouseOut = mouseX < left || mouseY < top || mouseX >= (left + imageWidth) || mouseY >= (top + imageHeight);
 		return this.recipeBook.hasClickedOutside(mouseX, mouseY, leftPos, topPos, imageWidth, imageHeight, button) && isMouseOut;
 	}
-
+	
 	@Override
 	public boolean charTyped(char chr, int keyCode) {
 		return recipeBook.charTyped(chr, keyCode) || super.charTyped(chr, keyCode);
 	}
-
+	
 	@Override
 	public void recipesUpdated() {
 		recipeBook.recipesUpdated();
 	}
-
+	
 	@Override
 	public RecipeBookComponent getRecipeBookComponent() {
 		return recipeBook;
 	}
-
+	
 	@Override
 	protected void renderBg(PoseStack matrices, float delta, int mouseX, int mouseY) {
 		if (minecraft == null) return;
@@ -124,7 +124,7 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 		progress = menu.getSmeltProgress();
 		blit(matrices, leftPos + 92, topPos + 34, 176, 14, progress + 1, 16);
 	}
-
+	
 	@Override
 	public void removed() {
 		recipeBook.removed();

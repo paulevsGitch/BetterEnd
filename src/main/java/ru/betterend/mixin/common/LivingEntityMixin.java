@@ -39,39 +39,39 @@ import java.util.Collection;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
-
+	
 	public LivingEntityMixin(EntityType<?> entityType, Level level) {
 		super(entityType, level);
 	}
-
+	
 	@Shadow
 	protected int fallFlyTicks;
-
+	
 	@Shadow
 	public abstract boolean hasEffect(MobEffect mobEffect);
-
+	
 	@Shadow
 	public abstract ItemStack getItemBySlot(EquipmentSlot equipmentSlot);
-
+	
 	@Shadow
 	public abstract void calculateEntityAnimation(LivingEntity livingEntity, boolean b);
-
+	
 	@Shadow
 	protected abstract SoundEvent getFallDamageSound(int i);
-
+	
 	@Shadow
 	public abstract boolean isFallFlying();
-
+	
 	@Shadow
 	public abstract AttributeMap getAttributes();
-
+	
 	private Entity lastAttacker;
-
+	
 	@Inject(method = "createLivingAttributes", at = @At("RETURN"), cancellable = true)
 	private static void be_addLivingAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> info) {
 		EndAttributes.addLivingEntityAttributes(info.getReturnValue());
 	}
-
+	
 	@Inject(method = "tickEffects", at = @At("HEAD"))
 	protected void be_applyEffects(CallbackInfo info) {
 		if (!level.isClientSide()) {
@@ -86,7 +86,7 @@ public abstract class LivingEntityMixin extends Entity {
 			});
 		}
 	}
-
+	
 	@Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
 	public void be_canBeAffected(MobEffectInstance mobEffectInstance, CallbackInfoReturnable<Boolean> info) {
 		try {
@@ -98,12 +98,12 @@ public abstract class LivingEntityMixin extends Entity {
 			BetterEnd.LOGGER.warning("Blindness resistance attribute haven't been registered.");
 		}
 	}
-
+	
 	@Inject(method = "hurt", at = @At("HEAD"))
 	public void be_hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
 		this.lastAttacker = source.getEntity();
 	}
-
+	
 	@ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V"), index = 0)
 	private double be_increaseKnockback(double value, double x, double z) {
 		if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
@@ -112,7 +112,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return value;
 	}
-
+	
 	@Inject(method = "updateFallFlying", at = @At("HEAD"), cancellable = true)
 	private void be_updateFallFlying(CallbackInfo info) {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
@@ -121,8 +121,7 @@ public abstract class LivingEntityMixin extends Entity {
 			if (isFlying && !onGround && !isPassenger() && !hasEffect(MobEffects.LEVITATION)) {
 				if (ElytraItem.isFlyEnabled(itemStack)) {
 					if ((fallFlyTicks + 1) % 20 == 0) {
-						itemStack.hurtAndBreak(1, LivingEntity.class.cast(this),
-								livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
+						itemStack.hurtAndBreak(1, LivingEntity.class.cast(this), livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
 					}
 					isFlying = true;
 				}
@@ -137,10 +136,8 @@ public abstract class LivingEntityMixin extends Entity {
 			info.cancel();
 		}
 	}
-
-	@Inject(method = "travel", at = @At(value = "INVOKE",
-			target = "Lnet/minecraft/world/entity/LivingEntity;isFallFlying()Z",
-			shift = Shift.AFTER), cancellable = true)
+	
+	@Inject(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isFallFlying()Z", shift = Shift.AFTER), cancellable = true)
 	public void be_travel(Vec3 vec3, CallbackInfo info) {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
 		if (isFallFlying() && itemStack.getItem() instanceof FallFlyingItem) {
@@ -148,7 +145,7 @@ public abstract class LivingEntityMixin extends Entity {
 			if (moveDelta.y > -0.5D) {
 				fallDistance = 1.0F;
 			}
-
+			
 			Vec3 lookAngle = getLookAngle();
 			double d = 0.08D;
 			float rotX = getXRot() * 0.017453292F;
@@ -163,12 +160,12 @@ public abstract class LivingEntityMixin extends Entity {
 				coef = moveDelta.y * -0.1D * (double) n;
 				moveDelta = moveDelta.add(lookAngle.x * coef / k, coef, lookAngle.z * coef / k);
 			}
-
+			
 			if (rotX < 0.0F && k > 0.0D) {
 				coef = l * (double) (-Mth.sin(rotX)) * 0.04D;
 				moveDelta = moveDelta.add(-lookAngle.x * coef / k, coef * 3.2D, -lookAngle.z * coef / k);
 			}
-
+			
 			if (k > 0.0D) {
 				moveDelta = moveDelta.add((lookAngle.x / k * l - moveDelta.x) * 0.1D, 0.0D, (lookAngle.z / k * l - moveDelta.z) * 0.1D);
 			}
@@ -191,12 +188,12 @@ public abstract class LivingEntityMixin extends Entity {
 					setSharedFlag(7, false);
 				}
 			}
-
+			
 			calculateEntityAnimation(LivingEntity.class.cast(this), this instanceof FlyingAnimal);
 			info.cancel();
 		}
 	}
-
+	
 	private double be_getKnockback(Item tool) {
 		if (tool == null) return 0.0D;
 		Collection<AttributeModifier> modifiers = tool.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_KNOCKBACK);

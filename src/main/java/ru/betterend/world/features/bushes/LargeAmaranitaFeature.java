@@ -23,9 +23,8 @@ public class LargeAmaranitaFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
-			return false;
-
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		int height = MHelper.randRange(2, 3, random);
 		for (int i = 1; i < height; i++) {
@@ -35,16 +34,14 @@ public class LargeAmaranitaFeature extends DefaultFeature {
 			}
 		}
 		mut.set(pos);
-
+		
 		BlockState state = EndBlocks.LARGE_AMARANITA_MUSHROOM.defaultBlockState();
 		BlocksHelper.setWithUpdate(world, mut, state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		if (height > 2) {
-			BlocksHelper.setWithUpdate(world, mut.move(Direction.UP),
-					state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlocksHelper.setWithUpdate(world, mut.move(Direction.UP), state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 		}
-		BlocksHelper.setWithUpdate(world, mut.move(Direction.UP),
-				state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
-
+		BlocksHelper.setWithUpdate(world, mut.move(Direction.UP), state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+		
 		return true;
 	}
 }

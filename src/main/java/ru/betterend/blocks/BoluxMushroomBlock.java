@@ -19,36 +19,36 @@ import java.util.Random;
 
 public class BoluxMushroomBlock extends EndPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 9, 15);
-
+	
 	public BoluxMushroomBlock() {
 		super(10);
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.RUTISCUS);
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE;
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;
 	}
-
+	
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isBonemealSuccess(Level world, Random random, BlockPos pos, BlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Lists.newArrayList(new ItemStack(this));

@@ -30,7 +30,7 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 	private final float maxSize = 35;
 	private final int minCount = 25;
 	private final int maxCount = 40;
-
+	
 	@Override
 	protected SDF getSDF(BlockPos pos, Random random) {
 		float size = MHelper.randRange(minSize, maxSize, random);
@@ -52,18 +52,18 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 			}
 			sdf = (sdf == null) ? rotated : new SDFUnion().setSourceA(sdf).setSourceB(rotated);
 		}
-
+		
 		final float ancientRadius = size * 0.7F;
 		final float denseRadius = size * 0.9F;
 		final float iceRadius = size < 7 ? size * 5 : size * 1.3F;
 		final float randScale = size * 0.3F;
-
+		
 		final BlockPos center = pos;
 		final BlockState ice = EndBlocks.EMERALD_ICE.defaultBlockState();
 		final BlockState dense = EndBlocks.DENSE_EMERALD_ICE.defaultBlockState();
 		final BlockState ancient = EndBlocks.ANCIENT_EMERALD_ICE.defaultBlockState();
 		final SDF sdfCopy = sdf;
-
+		
 		return sdf.addPostProcess((info) -> {
 			BlockPos bpos = info.getPos();
 			float px = bpos.getX() - center.getX();
@@ -82,7 +82,7 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 			return info.getState();
 		});
 	}
-
+	
 	private List<Vector3f> getFibonacciPoints(int count) {
 		float max = count - 1;
 		List<Vector3f> result = new ArrayList<Vector3f>(count);
@@ -96,17 +96,17 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 		}
 		return result;
 	}
-
+	
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return StarStructureStart::new;
 	}
-
+	
 	public static class StarStructureStart extends StructureStart<NoneFeatureConfiguration> {
 		public StarStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos pos, int references, long seed) {
 			super(feature, pos, references, seed);
 		}
-
+		
 		@Override
 		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
 			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
@@ -116,7 +116,7 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 				((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start);
 			}, random.nextInt());
 			this.pieces.add(piece);
-
+			
 			//this.calculateBoundingBox();
 		}
 	}

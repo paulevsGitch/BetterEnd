@@ -22,21 +22,21 @@ public abstract class MusicTrackerMixin {
 	@Final
 	@Shadow
 	private Minecraft minecraft;
-
+	
 	@Final
 	@Shadow
 	private Random random;
-
+	
 	@Shadow
 	private SoundInstance currentMusic;
-
+	
 	@Shadow
 	private int nextSongDelay;
-
+	
 	private static float volume = 1;
 	private static float srcVolume = 0;
 	private static long time;
-
+	
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	public void be_onTick(CallbackInfo info) {
 		if (ClientOptions.blendBiomeMusic()) {
@@ -79,19 +79,19 @@ public abstract class MusicTrackerMixin {
 			}
 		}
 	}
-
+	
 	private boolean be_isInEnd() {
 		return minecraft.level != null && minecraft.level.dimension().equals(Level.END);
 	}
-
+	
 	private boolean be_shouldChangeSound(Music musicSound) {
 		return currentMusic != null && !musicSound.getEvent().getLocation().equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
 	}
-
+	
 	private boolean be_checkNullSound(Music musicSound) {
 		return musicSound != null && musicSound.getEvent() != null;
 	}
-
+	
 	@Shadow
 	public abstract void startPlaying(Music type);
 }

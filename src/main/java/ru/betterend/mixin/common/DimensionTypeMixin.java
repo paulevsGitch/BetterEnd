@@ -17,10 +17,9 @@ import ru.betterend.world.generator.GeneratorOptions;
 public class DimensionTypeMixin {
 	@Inject(method = "defaultEndGenerator", at = @At("HEAD"), cancellable = true)
 	private static void be_replaceGenerator(Registry<Biome> biomeRegistry, Registry<NoiseGeneratorSettings> chunkGeneratorSettingsRegistry, long seed, CallbackInfoReturnable<ChunkGenerator> info) {
-		info.setReturnValue(new NoiseBasedChunkGenerator(new BetterEndBiomeSource(biomeRegistry, seed), seed,
-				() -> chunkGeneratorSettingsRegistry.getOrThrow(NoiseGeneratorSettings.END)));
+		info.setReturnValue(new NoiseBasedChunkGenerator(new BetterEndBiomeSource(biomeRegistry, seed), seed, () -> chunkGeneratorSettingsRegistry.getOrThrow(NoiseGeneratorSettings.END)));
 	}
-
+	
 	@Inject(method = "createDragonFight", at = @At("HEAD"), cancellable = true)
 	private void be_hasEnderDragonFight(CallbackInfoReturnable<Boolean> info) {
 		if (!GeneratorOptions.hasDragonFights()) {

@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/template_wall_post",
-  "textures": {
-    "wall": "betterend:block/%name%"
-  }
+	"parent": "minecraft:block/template_wall_post",
+	"textures": {
+		"wall": "betterend:block/%name%"
+	}
 }

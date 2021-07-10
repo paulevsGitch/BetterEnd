@@ -13,16 +13,16 @@ public abstract class SlimeMixin extends Entity implements ISlime {
 	public SlimeMixin(EntityType<? extends Slime> entityType, Level level) {
 		super(entityType, level);
 	}
-
+	
 	@Shadow
 	protected void setSize(int size, boolean heal) {
 	}
-
+	
 	@Override
 	public void be_setSlimeSize(int size, boolean heal) {
 		setSize(size, heal);
 	}
-
+	
 	@Override
 	public void entityRemove(Entity.RemovalReason removalReason) {
 		super.remove(removalReason);

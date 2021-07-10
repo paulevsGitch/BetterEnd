@@ -8,7 +8,7 @@ import net.minecraft.world.level.material.Fluids;
 import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 
 public class CharniaBlock extends EndUnderwaterPlantBlock {
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return canSupportCenter(world, pos.below(), Direction.UP) && world.getFluidState(pos).getType() == Fluids.WATER;

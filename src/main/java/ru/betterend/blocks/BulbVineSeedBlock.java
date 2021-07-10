@@ -15,13 +15,13 @@ import ru.betterend.registry.EndBlocks;
 import java.util.Random;
 
 public class BulbVineSeedBlock extends EndPlantWithAgeBlock {
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState up = world.getBlockState(pos.above());
 		return up.is(TagAPI.GEN_TERRAIN) || up.is(BlockTags.LOGS) || up.is(BlockTags.LEAVES);
 	}
-
+	
 	@Override
 	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int h = BlocksHelper.downRay(world, pos, random.nextInt(24)) - 1;

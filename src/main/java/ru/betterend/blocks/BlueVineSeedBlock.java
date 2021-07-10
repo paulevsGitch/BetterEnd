@@ -29,7 +29,7 @@ public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 		BlocksHelper.setWithoutUpdate(world, pos.above(height), EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.TOP));
 		placeLantern(world, pos.above(height + 1));
 	}
-
+	
 	private void placeLantern(WorldGenLevel world, BlockPos pos) {
 		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.BLUE_VINE_LANTERN.defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir : BlocksHelper.HORIZONTAL) {
@@ -42,12 +42,12 @@ public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 			BlocksHelper.setWithoutUpdate(world, pos.above(), EndBlocks.BLUE_VINE_FUR.defaultBlockState().setValue(FurBlock.FACING, Direction.UP));
 		}
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.END_MOSS) || state.is(EndBlocks.END_MYCELIUM);
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;

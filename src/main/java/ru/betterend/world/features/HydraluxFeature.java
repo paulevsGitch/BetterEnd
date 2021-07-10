@@ -11,13 +11,13 @@ public class HydraluxFeature extends UnderwaterPlantScatter {
 	public HydraluxFeature(int radius) {
 		super(radius);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		HydraluxSaplingBlock seed = (HydraluxSaplingBlock) EndBlocks.HYDRALUX_SAPLING;
 		seed.grow(world, random, blockPos);
 	}
-
+	
 	@Override
 	protected int getChance() {
 		return 15;

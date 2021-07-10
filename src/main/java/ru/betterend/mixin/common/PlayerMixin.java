@@ -28,13 +28,13 @@ import java.util.Optional;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity {
-
+	
 	protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
 		super(entityType, level);
 	}
-
+	
 	private static Direction[] horizontal;
-
+	
 	@Inject(method = "findRespawnPositionAndUseSpawnBlock", at = @At(value = "HEAD"), cancellable = true)
 	private static void be_findRespawnPositionAndUseSpawnBlock(ServerLevel world, BlockPos pos, float f, boolean bl, boolean bl2, CallbackInfoReturnable<Optional<Vec3>> info) {
 		BlockState blockState = world.getBlockState(pos);
@@ -43,7 +43,7 @@ public abstract class PlayerMixin extends LivingEntity {
 			info.cancel();
 		}
 	}
-
+	
 	@Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
 	public void be_tryToStartFlying(CallbackInfoReturnable<Boolean> info) {
 		if (!onGround && !isFallFlying() && !isInWater() && !hasEffect(MobEffects.LEVITATION)) {
@@ -54,7 +54,7 @@ public abstract class PlayerMixin extends LivingEntity {
 			}
 		}
 	}
-
+	
 	private static Optional<Vec3> be_obeliskRespawnPosition(ServerLevel world, BlockPos pos, BlockState state) {
 		if (state.getValue(BlockProperties.TRIPLE_SHAPE) == TripleShape.TOP) {
 			pos = pos.below(2);

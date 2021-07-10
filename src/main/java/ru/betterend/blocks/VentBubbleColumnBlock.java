@@ -40,29 +40,29 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 	public VentBubbleColumnBlock() {
 		super(FabricBlockSettings.of(Material.BUBBLE_COLUMN).noOcclusion().noCollission().noDrops());
 	}
-
+	
 	@Override
 	public ItemStack pickupBlock(LevelAccessor world, BlockPos pos, BlockState state) {
 		world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 		return new ItemStack(Items.WATER_BUCKET);
 	}
-
+	
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.INVISIBLE;
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState blockState = world.getBlockState(pos.below());
 		return blockState.is(this) || blockState.is(EndBlocks.HYDROTHERMAL_VENT);
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return Shapes.empty();
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		if (!state.canSurvive(world, pos)) {
@@ -77,7 +77,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 		}
 		return state;
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
 		if (random.nextInt(4) == 0) {
@@ -90,7 +90,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 			world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
 		}
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		BlockState blockState = world.getBlockState(pos.above());
@@ -98,7 +98,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 			entity.onAboveBubbleCol(false);
 			if (!world.isClientSide) {
 				ServerLevel serverWorld = (ServerLevel) world;
-
+				
 				for (int i = 0; i < 2; ++i) {
 					serverWorld.sendParticles(ParticleTypes.SPLASH, (double) pos.getX() + world.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + world.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
 					serverWorld.sendParticles(ParticleTypes.BUBBLE, (double) pos.getX() + world.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + world.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
@@ -109,23 +109,23 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 			entity.onInsideBubbleColumn(false);
 		}
 	}
-
+	
 	@Override
 	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		return false;
 	}
-
+	
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return Fluids.WATER.getSource(false);
 	}
-
-
+	
+	
 	@Override
 	public Optional<SoundEvent> getPickupSound() {
 		return Fluids.WATER.getPickupSound();

@@ -12,11 +12,11 @@ import ru.betterend.registry.EndItems;
 
 public class ShadowBerryBlock extends BaseCropBlock {
 	private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 8, 15);
-
+	
 	public ShadowBerryBlock() {
 		super(EndItems.SHADOW_BERRY_RAW, EndBlocks.SHADOW_GRASS);
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE;

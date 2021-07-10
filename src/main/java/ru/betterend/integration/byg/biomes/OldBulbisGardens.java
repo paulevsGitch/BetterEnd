@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 
 class FeaturesAccesor extends Features {
 	static ConfiguredDecorator<?> shadowHEIGHTMAP_SQUARE;
-
+	
 	static {
 		shadowHEIGHTMAP_SQUARE = Decorators.HEIGHTMAP_SQUARE;
 	}
@@ -37,23 +37,15 @@ public class OldBulbisGardens extends EndBiome {
 	public OldBulbisGardens() {
 		super(makeDef());
 	}
-
+	
 	private static BCLBiomeDef makeDef() {
 		Biome biome = Integrations.BYG.getBiome("bulbis_gardens");
 		BiomeSpecialEffects effects = biome.getSpecialEffects();
-
+		
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
 		Block origin = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial().getBlock();
-		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("old_bulbis_gardens"))
-				.setFogColor(215, 132, 207)
-				.setFogDensity(1.8F)
-				.setWaterAndFogColor(40, 0, 56)
-				.setFoliageColor(122, 17, 155)
-				.setParticles(ParticleTypes.REVERSE_PORTAL, 0.002F)
-				.setSurface(ivis, origin)
-				.addFeature(EndFeatures.END_LAKE_RARE)
-				.addFeature(BYGFeatures.OLD_BULBIS_TREE);
-
+		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("old_bulbis_gardens")).setFogColor(215, 132, 207).setFogDensity(1.8F).setWaterAndFogColor(40, 0, 56).setFoliageColor(122, 17, 155).setParticles(ParticleTypes.REVERSE_PORTAL, 0.002F).setSurface(ivis, origin).addFeature(EndFeatures.END_LAKE_RARE).addFeature(BYGFeatures.OLD_BULBIS_TREE);
+		
 		if (BCLib.isClient()) {
 			SoundEvent loop = effects.getAmbientLoopSoundEvent().get();
 			SoundEvent music = effects.getBackgroundMusic().get().getEvent();
@@ -61,14 +53,14 @@ public class OldBulbisGardens extends EndBiome {
 			SoundEvent mood = effects.getAmbientMoodSettings().get().getSoundEvent();
 			def.setLoop(loop).setMusic(music).setAdditions(additions).setMood(mood);
 		}
-
+		
 		for (MobCategory group : MobCategory.values()) {
 			List<SpawnerData> list = biome.getMobSettings().getMobs(group).unwrap();
 			list.forEach((entry) -> {
 				def.addMobSpawn(entry);
 			});
 		}
-
+		
 		List<List<Supplier<ConfiguredFeature<?, ?>>>> features = biome.getGenerationSettings().features();
 		List<Supplier<ConfiguredFeature<?, ?>>> vegetal = features.get(Decoration.VEGETAL_DECORATION.ordinal());
 		if (vegetal.size() > 2) {
@@ -89,13 +81,9 @@ public class OldBulbisGardens extends EndBiome {
 				def.addFeature(Decoration.VEGETAL_DECORATION, feature);
 			}
 		}
-
-		def.addFeature(EndFeatures.PURPLE_POLYPORE)
-				.addFeature(BYGFeatures.IVIS_MOSS_WOOD)
-				.addFeature(BYGFeatures.IVIS_MOSS)
-				.addFeature(BYGFeatures.IVIS_VINE)
-				.addFeature(BYGFeatures.IVIS_SPROUT);
-
+		
+		def.addFeature(EndFeatures.PURPLE_POLYPORE).addFeature(BYGFeatures.IVIS_MOSS_WOOD).addFeature(BYGFeatures.IVIS_MOSS).addFeature(BYGFeatures.IVIS_VINE).addFeature(BYGFeatures.IVIS_SPROUT);
+		
 		return def;
 	}
 }

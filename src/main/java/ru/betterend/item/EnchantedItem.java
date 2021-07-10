@@ -13,19 +13,19 @@ import ru.bclib.items.ModelProviderItem;
 import ru.betterend.registry.EndItems;
 
 public class EnchantedItem extends ModelProviderItem {
-
+	
 	private final Item source;
-
+	
 	public EnchantedItem(Item source) {
 		super(EndItems.makeEndItemSettings().rarity(Rarity.RARE).stacksTo(16));
 		this.source = source;
 	}
-
+	
 	@Override
 	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {

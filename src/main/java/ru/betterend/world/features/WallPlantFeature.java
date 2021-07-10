@@ -14,12 +14,12 @@ import java.util.Random;
 
 public class WallPlantFeature extends WallScatterFeature {
 	private final Block block;
-
+	
 	public WallPlantFeature(Block block, int radius) {
 		super(radius);
 		this.block = block;
 	}
-
+	
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
 		if (block instanceof BaseWallPlantBlock) {
@@ -32,7 +32,7 @@ public class WallPlantFeature extends WallScatterFeature {
 		}
 		return block.canSurvive(block.defaultBlockState(), world, pos);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos pos, Direction dir) {
 		BlockState state = block.defaultBlockState();

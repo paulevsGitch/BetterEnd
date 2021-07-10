@@ -34,12 +34,12 @@ public class LanceleafSeedBlock extends EndPlantWithAgeBlock {
 		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP));
 		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.TOP));
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.AMBER_MOSS);
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;

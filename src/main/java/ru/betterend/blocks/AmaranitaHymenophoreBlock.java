@@ -12,7 +12,7 @@ public class AmaranitaHymenophoreBlock extends BaseBlock implements IRenderTyped
 	public AmaranitaHymenophoreBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sound(SoundType.WOOD));
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;

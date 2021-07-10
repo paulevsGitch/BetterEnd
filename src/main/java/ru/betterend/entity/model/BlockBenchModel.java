@@ -12,11 +12,11 @@ public abstract class BlockBenchModel<T extends Entity> extends EntityModel<T> {
 	public BlockBenchModel() {
 		super();
 	}
-
+	
 	public BlockBenchModel(Function<ResourceLocation, RenderType> function) {
 		super(function);
 	}
-
+	
 	protected void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
 		modelRenderer.xRot = x;
 		modelRenderer.yRot = y;

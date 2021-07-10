@@ -13,48 +13,45 @@ import java.util.Collections;
 import java.util.Optional;
 
 public class REIInfusionDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
-
+	
 	private final InfusionRecipe recipe;
 	private final int time;
-
+	
 	public REIInfusionDisplay(InfusionRecipe recipe) {
-		super(
-				EntryIngredients.ofIngredients(recipe.getIngredients()),
-				Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
-		);
+		super(EntryIngredients.ofIngredients(recipe.getIngredients()), Collections.singletonList(EntryIngredients.of(recipe.getResultItem())));
 		this.recipe = recipe;
 		this.time = recipe.getInfusionTime();
 	}
-
+	
 	public int getInfusionTime() {
 		return this.time;
 	}
-
+	
 	@Override
 	public @NotNull Optional<ResourceLocation> getDisplayLocation() {
 		return Optional.ofNullable(recipe).map(Recipe::getId);
 	}
-
+	
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return REIPlugin.INFUSION;
 	}
-
+	
 	// @Override
 	// public @NotNull List<List<EntryStack>> getRequiredEntries() {
 	// 	return this.input;
 	// }
-
+	
 	@Override
 	public int getWidth() {
 		return 0;
 	}
-
+	
 	@Override
 	public int getHeight() {
 		return 0;
 	}
-
+	
 	// @Override
 	// public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo, AbstractContainerMenu container) {
 	//	return this.input;

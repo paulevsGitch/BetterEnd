@@ -269,7 +269,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 			
 			else if (plants[i] instanceof SaplingBlock) {
 				ResourceLocation loc = Registry.BLOCK.getKey(plants[i]);
-				modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath());
+				modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
 				Map<String, String> textures = Maps.newHashMap();
 				textures.put("%modid%", loc.getNamespace());
 				textures.put("%texture%", loc.getPath());
@@ -281,7 +281,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 			}
 			else if (plants[i] instanceof PottableLeavesBlock) {
 				ResourceLocation loc = Registry.BLOCK.getKey(plants[i]);
-				modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath());
+				modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
 				Map<String, String> textures = Maps.newHashMap();
 				textures.put("%leaves%", loc.getPath().contains("lucernia") ? loc.getPath() + "_1" : loc.getPath());
 				textures.put("%stem%", loc.getPath().replace("_leaves", "_log_side"));

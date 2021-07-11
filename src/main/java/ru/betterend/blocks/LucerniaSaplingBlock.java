@@ -27,6 +27,6 @@ public class LucerniaSaplingBlock extends PottableFeatureSapling {
 	
 	@Override
 	public boolean canPlantOn(Block block) {
-		return false;
+		return block == EndBlocks.RUTISCUS;
 	}
 }

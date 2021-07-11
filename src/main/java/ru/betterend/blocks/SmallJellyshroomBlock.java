@@ -30,13 +30,14 @@ import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
+import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndFeatures;
 
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Random;
 
-public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderTyped, BonemealableBlock {
+public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderTyped, BonemealableBlock, PottablePlant {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public SmallJellyshroomBlock() {
@@ -96,5 +97,10 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
 		EndFeatures.JELLYSHROOM.getFeature().place(new FeaturePlaceContext<>(world, null, random, pos, null));
+	}
+	
+	@Override
+	public boolean canPlantOn(Block block) {
+		return true;
 	}
 }

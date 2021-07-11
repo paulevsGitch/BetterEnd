@@ -14,7 +14,7 @@ public class EndBlockProperties extends BlockProperties {
 	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EnumProperty.create("bottom", CactusBottom.class);
 	
 	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
-	public static final IntegerProperty PLANT_ID = IntegerProperty.create("plant_id", 0, 31);
+	public static final IntegerProperty PLANT_ID = IntegerProperty.create("plant_id", 0, 127);
 	public static final IntegerProperty SOIL_ID = IntegerProperty.create("soil_id", 0, 10);
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	

@@ -12,7 +12,6 @@ import ru.bclib.blocks.BaseBarrelBlock;
 import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseCropBlock;
 import ru.bclib.blocks.BaseFurnaceBlock;
-import ru.bclib.blocks.BaseLeavesBlock;
 import ru.bclib.blocks.BaseOreBlock;
 import ru.bclib.blocks.BasePathBlock;
 import ru.bclib.blocks.BaseRotatedPillarBlock;
@@ -133,6 +132,7 @@ import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
 import ru.betterend.blocks.basis.EndWallMushroom;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
 import ru.betterend.blocks.basis.FurBlock;
+import ru.betterend.blocks.basis.PottableLeavesBlock;
 import ru.betterend.blocks.basis.StoneLanternBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
 import ru.betterend.blocks.complex.CrystalSubblocksMaterial;
@@ -221,7 +221,7 @@ public class EndBlocks extends BlocksRegistry {
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.COLOR_GRAY, MaterialColor.WOOD);
 	
 	public static final Block PYTHADENDRON_SAPLING = registerBlock("pythadendron_sapling", new PythadendronSaplingBlock());
-	public static final Block PYTHADENDRON_LEAVES = registerBlock("pythadendron_leaves", new BaseLeavesBlock(PYTHADENDRON_SAPLING, MaterialColor.COLOR_MAGENTA));
+	public static final Block PYTHADENDRON_LEAVES = registerBlock("pythadendron_leaves", new PottableLeavesBlock(PYTHADENDRON_SAPLING, MaterialColor.COLOR_MAGENTA));
 	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.COLOR_MAGENTA, MaterialColor.COLOR_PURPLE);
 	
 	public static final Block END_LOTUS_SEED = registerBlock("end_lotus_seed", new EndLotusSeedBlock());
@@ -231,15 +231,15 @@ public class EndBlocks extends BlocksRegistry {
 	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.COLOR_LIGHT_BLUE, MaterialColor.COLOR_CYAN);
 	
 	public static final Block LACUGROVE_SAPLING = registerBlock("lacugrove_sapling", new LacugroveSaplingBlock());
-	public static final Block LACUGROVE_LEAVES = registerBlock("lacugrove_leaves", new BaseLeavesBlock(LACUGROVE_SAPLING, MaterialColor.COLOR_CYAN));
+	public static final Block LACUGROVE_LEAVES = registerBlock("lacugrove_leaves", new PottableLeavesBlock(LACUGROVE_SAPLING, MaterialColor.COLOR_CYAN));
 	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.COLOR_BROWN, MaterialColor.COLOR_YELLOW);
 	
 	public static final Block DRAGON_TREE_SAPLING = registerBlock("dragon_tree_sapling", new DragonTreeSaplingBlock());
-	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new BaseLeavesBlock(DRAGON_TREE_SAPLING, MaterialColor.COLOR_MAGENTA));
+	public static final Block DRAGON_TREE_LEAVES = registerBlock("dragon_tree_leaves", new PottableLeavesBlock(DRAGON_TREE_SAPLING, MaterialColor.COLOR_MAGENTA));
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.COLOR_BLACK, MaterialColor.COLOR_MAGENTA);
 	
 	public static final Block TENANEA_SAPLING = registerBlock("tenanea_sapling", new TenaneaSaplingBlock());
-	public static final Block TENANEA_LEAVES = registerBlock("tenanea_leaves", new BaseLeavesBlock(TENANEA_SAPLING, MaterialColor.COLOR_PINK));
+	public static final Block TENANEA_LEAVES = registerBlock("tenanea_leaves", new PottableLeavesBlock(TENANEA_SAPLING, MaterialColor.COLOR_PINK));
 	public static final Block TENANEA_FLOWERS = registerBlock("tenanea_flowers", new TenaneaFlowersBlock());
 	public static final Block TENANEA_OUTER_LEAVES = registerBlock("tenanea_outer_leaves", new FurBlock(TENANEA_SAPLING, 32));
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.COLOR_BROWN, MaterialColor.COLOR_PINK);
@@ -258,7 +258,7 @@ public class EndBlocks extends BlocksRegistry {
 	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.COLOR_PURPLE, MaterialColor.COLOR_LIGHT_BLUE);
 	
 	public static final Block LUCERNIA_SAPLING = registerBlock("lucernia_sapling", new LucerniaSaplingBlock());
-	public static final Block LUCERNIA_LEAVES = registerBlock("lucernia_leaves", new BaseLeavesBlock(LUCERNIA_SAPLING, MaterialColor.COLOR_ORANGE));
+	public static final Block LUCERNIA_LEAVES = registerBlock("lucernia_leaves", new PottableLeavesBlock(LUCERNIA_SAPLING, MaterialColor.COLOR_ORANGE));
 	public static final Block LUCERNIA_OUTER_LEAVES = registerBlock("lucernia_outer_leaves", new FurBlock(LUCERNIA_SAPLING, 32));
 	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.COLOR_ORANGE, MaterialColor.COLOR_ORANGE);
 	

@@ -41,6 +41,7 @@ import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.CactusBottom;
+import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.EnumMap;
@@ -48,7 +49,7 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, IRenderTyped {
+public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, IRenderTyped, PottablePlant {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EndBlockProperties.CACTUS_BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -394,5 +395,10 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		SMALL_SHAPES_OPEN.put(Direction.SOUTH, Block.box(4, 4, 0, 12, 12, 12));
 		SMALL_SHAPES_OPEN.put(Direction.WEST, Block.box(4, 4, 4, 16, 12, 12));
 		SMALL_SHAPES_OPEN.put(Direction.EAST, Block.box(0, 4, 4, 12, 12, 12));
+	}
+	
+	@Override
+	public boolean canPlantOn(Block block) {
+		return true;
 	}
 }

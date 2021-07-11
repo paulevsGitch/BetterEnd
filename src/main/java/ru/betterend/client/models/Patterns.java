@@ -76,6 +76,7 @@ public class Patterns {
 	public final static ResourceLocation BLOCK_PATH = BetterEnd.makeID("patterns/block/path.json");
 	public final static ResourceLocation BLOCK_FLOWER_POT = BetterEnd.makeID("patterns/block/flower_pot.json");
 	public final static ResourceLocation BLOCK_FLOWER_POT_SOIL = BetterEnd.makeID("patterns/block/flower_pot_soil.json");
+	public final static ResourceLocation BLOCK_POTTED_LEAVES = BetterEnd.makeID("patterns/block/potted_leaves.json");
 	
 	//Item Models
 	public final static ResourceLocation ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");

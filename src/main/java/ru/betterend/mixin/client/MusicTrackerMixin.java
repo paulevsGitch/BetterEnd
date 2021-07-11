@@ -1,6 +1,7 @@
 package ru.betterend.mixin.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.MusicManager;
@@ -13,7 +14,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.bclib.api.BiomeAPI;
 import ru.betterend.client.ClientOptions;
+import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -41,7 +44,7 @@ public abstract class MusicTrackerMixin {
 	public void be_onTick(CallbackInfo info) {
 		if (ClientOptions.blendBiomeMusic()) {
 			Music musicSound = minecraft.getSituationalMusic();
-			if (be_checkNullSound(musicSound) && volume > 0 && be_isInEnd() && be_shouldChangeSound(musicSound)) {
+			if (be_checkNullSound(musicSound) && volume > 0 && be_shouldChangeSound(musicSound) && be_isCorrectBiome()) {
 				if (volume > 0) {
 					if (srcVolume < 0) {
 						srcVolume = currentMusic.getVolume();
@@ -80,8 +83,11 @@ public abstract class MusicTrackerMixin {
 		}
 	}
 	
-	private boolean be_isInEnd() {
-		return minecraft.level != null && minecraft.level.dimension().equals(Level.END);
+	private boolean be_isCorrectBiome() {
+		if (minecraft.level == null) {
+			return false;
+		}
+		return BiomeAPI.getRenderBiome(minecraft.level.getBiome(minecraft.player.blockPosition())) instanceof EndBiome;
 	}
 	
 	private boolean be_shouldChangeSound(Music musicSound) {

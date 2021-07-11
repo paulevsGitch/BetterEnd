@@ -191,6 +191,7 @@ public class EndBlocks extends BlocksRegistry {
 	public static final Block BRIMSTONE = registerBlock("brimstone", new BrimstoneBlock());
 	public static final Block SULPHUR_CRYSTAL = registerBlock("sulphur_crystal", new SulphurCrystalBlock());
 	public static final Block MISSING_TILE = registerBlock("missing_tile", new MissingTileBlock());
+	public static final Block ENDSTONE_FLOWER_POT = registerBlock("endstone_flower_pot", new FlowerPotBlock(Blocks.END_STONE));
 	
 	public static final Block FLAVOLITE_RUNED = registerBlock("flavolite_runed", new RunedFlavolite(false));
 	public static final Block FLAVOLITE_RUNED_ETERNAL = registerBlock("flavolite_runed_eternal", new RunedFlavolite(true));
@@ -424,7 +425,6 @@ public class EndBlocks extends BlocksRegistry {
 	public static final Block AETERNIUM_ANVIL = registerBlock("aeternium_anvil", new AeterniumAnvil());
 	
 	// Technical
-	public static final Block ENDSTONE_FLOWER_POT = registerBlock("endstone_flower_pot", new FlowerPotBlock(Blocks.END_STONE));
 	public static final Block END_PORTAL_BLOCK = registerEndBlockOnly("end_portal_block", new EndPortalBlock());
 	
 	private static BlocksRegistry BLOCKS_REGISTRY;

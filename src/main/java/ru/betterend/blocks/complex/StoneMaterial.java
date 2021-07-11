@@ -19,6 +19,7 @@ import ru.bclib.recipes.GridRecipe;
 import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndPedestal;
+import ru.betterend.blocks.FlowerPotBlock;
 import ru.betterend.blocks.basis.StoneLanternBlock;
 import ru.betterend.config.Configs;
 import ru.betterend.recipe.CraftingRecipes;
@@ -44,6 +45,7 @@ public class StoneMaterial {
 	public final Block brick_slab;
 	public final Block brick_wall;
 	public final Block furnace;
+	public final Block flowerPot;
 	
 	public StoneMaterial(String name, MaterialColor color) {
 		FabricBlockSettings material = FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(color);
@@ -65,6 +67,7 @@ public class StoneMaterial {
 		brick_slab = EndBlocks.registerBlock(name + "_bricks_slab", new BaseSlabBlock(bricks));
 		brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new BaseWallBlock(bricks));
 		furnace = EndBlocks.registerBlock(name + "_furnace", new BaseFurnaceBlock(bricks));
+		flowerPot = EndBlocks.registerBlock(name + "_flower_pot", new FlowerPotBlock(bricks));
 		
 		// Recipes //
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks", bricks).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', stone).setGroup("end_bricks").build();

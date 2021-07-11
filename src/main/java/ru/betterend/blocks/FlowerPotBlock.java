@@ -15,6 +15,8 @@ import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -40,6 +42,8 @@ import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.interfaces.ISpetialItem;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.JsonFactory;
+import ru.betterend.BetterEnd;
+import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndBlocks;
@@ -49,13 +53,12 @@ import java.util.Map;
 import java.util.Optional;
 
 public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IPostInit {
-	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 8, 12);
 	private static final IntegerProperty PLANT_ID = EndBlockProperties.PLANT_ID;
-	private static VoxelShape[] plantBoxes;
-	private static Block[] blocks;
-	
-	@Environment(EnvType.CLIENT)
-	private UnbakedModel source;
+	private static final IntegerProperty SOIL_ID = EndBlockProperties.SOIL_ID;
+	private static final VoxelShape SHAPE_EMPTY;
+	private static final VoxelShape SHAPE_FULL;
+	private static Block[] plants;
+	private static Block[] soils;
 	
 	public FlowerPotBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source));
@@ -65,28 +68,33 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(PLANT_ID);
+		builder.add(PLANT_ID, SOIL_ID);
 	}
 	
 	@Override
 	public void postInit() {
-		if (this.blocks != null) {
+		if (FlowerPotBlock.plants != null) {
 			return;
 		}
-		List<Block> blocks = Lists.newArrayList();
+		List<Block> soils = Lists.newArrayList();
+		List<Block> plants = Lists.newArrayList();
 		EndBlocks.getModBlocks().forEach(block -> {
 			if (block instanceof PottablePlant && block.getStateDefinition().getProperties().isEmpty()) {
 				if (!(block instanceof ISpetialItem) || !((ISpetialItem) block).canPlaceOnWater()) {
-					blocks.add(block);
+					plants.add(block);
 				}
 			}
+			else if (block instanceof EndTerrainBlock) {
+				soils.add(block);
+			}
 		});
-		FlowerPotBlock.blocks = blocks.toArray(new Block[] {});
-		FlowerPotBlock.plantBoxes = new VoxelShape[FlowerPotBlock.blocks.length];
-		for (int i = 0; i < FlowerPotBlock.blocks.length; i++) {
-			Block block = FlowerPotBlock.blocks[i];
-			VoxelShape shape = block.getShape(block.defaultBlockState(), null, BlockPos.ZERO, CollisionContext.empty());
-			plantBoxes[i] = Shapes.or(SHAPE, shape.move(0.25, 0.5, 0.25));
+		FlowerPotBlock.plants = plants.toArray(new Block[] {});
+		FlowerPotBlock.soils = soils.toArray(new Block[] {});
+		if (PLANT_ID.getValue(Integer.toString(FlowerPotBlock.plants.length)).isEmpty()) {
+			throw new RuntimeException("There are too much plant ID values!");
+		}
+		if (SOIL_ID.getValue(Integer.toString(FlowerPotBlock.soils.length)).isEmpty()) {
+			throw new RuntimeException("There are too much soil ID values!");
 		}
 	}
 	
@@ -96,13 +104,45 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 			return InteractionResult.CONSUME;
 		}
 		ItemStack itemStack = player.getItemInHand(hand);
+		int soilID = state.getValue(SOIL_ID);
+		if (soilID == 0) {
+			if (!(itemStack.getItem() instanceof BlockItem)) {
+				return InteractionResult.PASS;
+			}
+			Block block = ((BlockItem) itemStack.getItem()).getBlock();
+			for (int i = 0; i < soils.length; i++) {
+				if (block == soils[i]) {
+					BlocksHelper.setWithUpdate(level, pos, state.setValue(SOIL_ID, i + 1));
+					return InteractionResult.SUCCESS;
+				}
+			}
+			return InteractionResult.PASS;
+		}
+		
+		int plantID = state.getValue(PLANT_ID);
+		if (itemStack.isEmpty()) {
+			if (plantID > 0 && plantID <= plants.length) {
+				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, 0));
+				player.addItem(new ItemStack(plants[plantID - 1]));
+				return InteractionResult.SUCCESS;
+			}
+			if (soilID > 0 && soilID <= soils.length) {
+				BlocksHelper.setWithUpdate(level, pos, state.setValue(SOIL_ID, 0));
+				player.addItem(new ItemStack(soils[soilID - 1]));
+			}
+			return InteractionResult.PASS;
+		}
 		if (!(itemStack.getItem() instanceof BlockItem)) {
 			return InteractionResult.PASS;
 		}
 		BlockItem item = (BlockItem) itemStack.getItem();
-		for (int i = 0; i < blocks.length; i++) {
-			if (item.getBlock() == blocks[i]) {
+		for (int i = 0; i < plants.length; i++) {
+			if (item.getBlock() == plants[i]) {
+				if (!((PottablePlant) plants[i]).canPlantOn(soils[soilID - 1])) {
+					return InteractionResult.PASS;
+				}
 				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, i + 1));
+				level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1, 1, false);
 				return InteractionResult.SUCCESS;
 			}
 		}
@@ -127,10 +167,11 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 		
 		MultiPartBuilder model = MultiPartBuilder.create(stateDefinition);
 		model.part(new ModelResourceLocation(stateId.getNamespace(), stateId.getPath(), "inventory")).add();
-		Transformation offset = new Transformation(new Vector3f(0, 0.5F, 0), null, null, null);
-		for (int i = 0; i < blocks.length; i++) {
+		Transformation offset = new Transformation(new Vector3f(0, 7.5F / 16F, 0), null, null, null);
+		
+		for (int i = 0; i < plants.length; i++) {
 			final int compareID = i + 1;
-			ResourceLocation modelPath = Registry.BLOCK.getKey(blocks[i]);
+			ResourceLocation modelPath = Registry.BLOCK.getKey(plants[i]);
 			ResourceLocation objSource = new ResourceLocation(modelPath.getNamespace(), "block/potted_" + modelPath.getPath() + ".json");
 			if (Minecraft.getInstance().getResourceManager().hasResource(objSource)) {
 				objSource = new ResourceLocation(modelPath.getNamespace(), "block/potted_" + modelPath.getPath());
@@ -152,6 +193,21 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 			}
 		}
 		
+		for (int i = 0; i < soils.length; i++) {
+			ResourceLocation soilLoc = BetterEnd.makeID("flower_pot_soil_" + i);
+			if (!modelCache.containsKey(soilLoc)) {
+				String texture = Registry.BLOCK.getKey(soils[i]).getPath() + "_top";
+				if (texture.contains("rutiscus")) {
+					texture += "_1";
+				}
+				Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_FLOWER_POT_SOIL, texture);
+				UnbakedModel soil = ModelsHelper.fromPattern(pattern);
+				modelCache.put(soilLoc, soil);
+			}
+			final int compareID = i + 1;
+			model.part(soilLoc).setCondition(state -> state.getValue(SOIL_ID) == compareID).add();
+		}
+		
 		UnbakedModel result = model.build();
 		modelCache.put(key, result);
 		return result;
@@ -160,16 +216,21 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		int id = state.getValue(PLANT_ID);
-		return id > 0 && id <= blocks.length ? plantBoxes[id - 1] : SHAPE;
+		return id > 0 && id <= plants.length ? SHAPE_FULL : SHAPE_EMPTY;
 	}
 	
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
-		return SHAPE;
+		return SHAPE_EMPTY;
 	}
 	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
+	}
+	
+	static {
+		SHAPE_EMPTY = Shapes.or(Block.box(4, 1, 4, 12, 8, 12), Block.box(5, 0, 5, 11, 1, 11));
+		SHAPE_FULL = Shapes.or(SHAPE_EMPTY, Block.box(3, 8, 3, 13, 16, 13));
 	}
 }

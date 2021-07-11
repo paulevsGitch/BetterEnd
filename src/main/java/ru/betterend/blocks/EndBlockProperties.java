@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import ru.bclib.blocks.BlockProperties;
+import ru.bclib.blocks.properties.StringProperty;
 import ru.betterend.registry.EndPortals;
 
 public class EndBlockProperties extends BlockProperties {
@@ -12,9 +13,10 @@ public class EndBlockProperties extends BlockProperties {
 	public static final EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
 	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EnumProperty.create("bottom", CactusBottom.class);
 	
-	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
-	public static final IntegerProperty PLANT_ID = IntegerProperty.create("plant_id", 0, 127);
+	public static final IntegerProperty PLANT_ID = IntegerProperty.create("plant_id", 0, 31);
+	public static final IntegerProperty SOIL_ID = IntegerProperty.create("soil_id", 0, 10);
+	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	
 	public enum PedestalState implements StringRepresentable {
 		PEDESTAL_TOP("pedestal_top"), COLUMN_TOP("column_top"), BOTTOM("bottom"), PILLAR("pillar"), COLUMN("column"), DEFAULT("default");

@@ -1,12 +1,12 @@
 package ru.betterend.blocks.basis;
 
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BasePlantBlock;
 import ru.betterend.interfaces.PottablePlant;
 
 public class EndPlantBlock extends BasePlantBlock implements PottablePlant {
-	
 	public EndPlantBlock() {
 		this(false);
 	}
@@ -30,5 +30,10 @@ public class EndPlantBlock extends BasePlantBlock implements PottablePlant {
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(TagAPI.END_GROUND);
+	}
+	
+	@Override
+	public boolean canPlantOn(Block block) {
+		return isTerrain(block.defaultBlockState());
 	}
 }

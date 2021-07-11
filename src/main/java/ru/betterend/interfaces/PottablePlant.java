@@ -1,3 +1,7 @@
 package ru.betterend.interfaces;
 
-public interface PottablePlant {}
+import net.minecraft.world.level.block.Block;
+
+public interface PottablePlant {
+	boolean canPlantOn(Block block);
+}

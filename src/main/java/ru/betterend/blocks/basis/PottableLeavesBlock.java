@@ -20,8 +20,8 @@ public class PottableLeavesBlock extends BaseLeavesBlock implements PottablePlan
 	
 	@Override
 	public boolean canPlantOn(Block block) {
-		if (sapling instanceof  PottablePlant) {
-			((PottablePlant) sapling).canPlantOn(block);
+		if (sapling instanceof PottablePlant) {
+			return ((PottablePlant) sapling).canPlantOn(block);
 		}
 		return true;
 	}

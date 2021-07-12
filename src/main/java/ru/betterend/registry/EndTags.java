@@ -3,6 +3,8 @@ package ru.betterend.registry;
 import com.google.common.collect.Lists;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
+import net.fabricmc.fabric.mixin.object.builder.AbstractBlockAccessor;
+import net.fabricmc.fabric.mixin.object.builder.AbstractBlockSettingsAccessor;
 import net.minecraft.core.Registry;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.BonemealAPI;
@@ -47,6 +50,23 @@ public class EndTags {
 		TagAPI.addEndGround(EndBlocks.AMBER_ORE);
 		
 		EndBlocks.getModBlocks().forEach(block -> {
+			Properties properties = ((AbstractBlockAccessor) block).getSettings();
+			Material material = ((AbstractBlockSettingsAccessor) properties).getMaterial();
+			
+			if (material.equals(Material.STONE)) {
+				TagHelper.addTag(TagAPI.MINEABLE_PICKAXE, block);
+			}
+			else if (material.equals(Material.WOOD)) {
+				TagHelper.addTag(TagAPI.MINEABLE_AXE, block);
+			}
+			else if (material.equals(Material.LEAVES) || material.equals(Material.PLANT) || material.equals(Material.WATER_PLANT)) {
+				TagHelper.addTag(TagAPI.MINEABLE_HOE, block);
+			}
+			else if (material.equals(Material.SAND)) {
+				TagHelper.addTag(TagAPI.MINEABLE_HOE, block);
+			}
+			
+			System.out.println(block + " " + material);
 			if (block instanceof EndTerrainBlock) {
 				TagAPI.addEndGround(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);

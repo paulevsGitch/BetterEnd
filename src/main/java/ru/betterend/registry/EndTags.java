@@ -66,7 +66,6 @@ public class EndTags {
 				TagHelper.addTag(TagAPI.MINEABLE_HOE, block);
 			}
 			
-			System.out.println(block + " " + material);
 			if (block instanceof EndTerrainBlock) {
 				TagAPI.addEndGround(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);
@@ -106,6 +105,7 @@ public class EndTags {
 			}
 		});
 		ToolManagerImpl.tag(TagAPI.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
+		TagHelper.addTag(TagAPI.HAMMERS, EndItems.AETERNIUM_HAMMER);
 		
 		TagHelper.addTag(TagAPI.GEN_TERRAIN, EndBlocks.ENDER_ORE, EndBlocks.FLAVOLITE.stone, EndBlocks.VIOLECITE.stone, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE, EndBlocks.VIRID_JADESTONE.stone, EndBlocks.AZURE_JADESTONE.stone, EndBlocks.SANDY_JADESTONE.stone);
 		TagHelper.addTag(TagAPI.END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);

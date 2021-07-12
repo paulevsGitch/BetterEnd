@@ -8,12 +8,14 @@ import com.mojang.math.Vector3f;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.mixin.object.builder.AbstractBlockAccessor;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -25,6 +27,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,20 +62,34 @@ import java.util.Optional;
 public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IPostInit {
 	private static final IntegerProperty PLANT_ID = EndBlockProperties.PLANT_ID;
 	private static final IntegerProperty SOIL_ID = EndBlockProperties.SOIL_ID;
+	private static final IntegerProperty POT_LIGHT = EndBlockProperties.POT_LIGHT;
 	private static final VoxelShape SHAPE_EMPTY;
 	private static final VoxelShape SHAPE_FULL;
 	private static Block[] plants;
 	private static Block[] soils;
 	
 	public FlowerPotBlock(Block source) {
-		super(FabricBlockSettings.copyOf(source));
-		this.registerDefaultState(this.defaultBlockState().setValue(PLANT_ID, 0));
+		super(FabricBlockSettings.copyOf(source).luminance(state -> state.getValue(POT_LIGHT) * 5));
+		this.registerDefaultState(this.defaultBlockState().setValue(PLANT_ID, 0).setValue(SOIL_ID, 0).setValue(POT_LIGHT, 0));
 	}
 	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(PLANT_ID, SOIL_ID);
+		builder.add(PLANT_ID, SOIL_ID, POT_LIGHT);
+	}
+	
+	@Override
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+		int plantID = state.getValue(PLANT_ID);
+		if (plantID < 1 || plantID > plants.length || plants[plantID - 1] == null) {
+			return state.getValue(POT_LIGHT) > 0 ? state.setValue(POT_LIGHT, 0) : state;
+		}
+		int light = plants[plantID - 1].defaultBlockState().getLightEmission() / 5;
+		if (state.getValue(POT_LIGHT) != light) {
+			state = state.setValue(POT_LIGHT, light);
+		}
+		return state;
 	}
 	
 	@Override
@@ -180,7 +197,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 		int plantID = state.getValue(PLANT_ID);
 		if (itemStack.isEmpty()) {
 			if (plantID > 0 && plantID <= plants.length && plants[plantID - 1] != null) {
-				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, 0));
+				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, 0).setValue(POT_LIGHT, 0));
 				player.addItem(new ItemStack(plants[plantID - 1]));
 				return InteractionResult.SUCCESS;
 			}
@@ -199,7 +216,8 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 				if (!((PottablePlant) plants[i]).canPlantOn(soils[soilID - 1])) {
 					return InteractionResult.PASS;
 				}
-				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, i + 1));
+				int light = plants[i].defaultBlockState().getLightEmission() / 5;
+				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, i + 1).setValue(POT_LIGHT, light));
 				level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1, 1, false);
 				return InteractionResult.SUCCESS;
 			}

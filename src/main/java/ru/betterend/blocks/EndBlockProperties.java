@@ -15,6 +15,7 @@ public class EndBlockProperties extends BlockProperties {
 	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
 	public static final IntegerProperty PLANT_ID = IntegerProperty.create("plant_id", 0, 63);
 	public static final IntegerProperty SOIL_ID = IntegerProperty.create("soil_id", 0, 15);
+	public static final IntegerProperty POT_LIGHT = IntegerProperty.create("pot_light", 0, 3);
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	
 	public enum PedestalState implements StringRepresentable {

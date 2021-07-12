@@ -18,6 +18,8 @@ import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackResources;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -58,6 +60,8 @@ import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndBlocks;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +69,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SplittableRandom;
+import java.util.stream.Stream;
 
 public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IPostInit {
 	private static final IntegerProperty PLANT_ID = EndBlockProperties.PLANT_ID;
@@ -243,12 +248,6 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 	@Override
 	@Environment(EnvType.CLIENT)
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
-		ModelResourceLocation key = new ModelResourceLocation(stateId.getNamespace(), stateId.getPath(), "plant_age=0");
-		
-		if (modelCache.containsKey(key)) {
-			return modelCache.get(key);
-		}
-		
 		MultiPartBuilder model = MultiPartBuilder.create(stateDefinition);
 		model.part(new ModelResourceLocation(stateId.getNamespace(), stateId.getPath(), "inventory")).add();
 		Transformation offset = new Transformation(new Vector3f(0, 7.5F / 16F, 0), null, null, null);
@@ -260,9 +259,10 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 			
 			final int compareID = i + 1;
 			ResourceLocation modelPath = Registry.BLOCK.getKey(plants[i]);
-			ResourceLocation objSource = new ResourceLocation(modelPath.getNamespace(), "block/potted_" + modelPath.getPath() + ".json");
+			ResourceLocation objSource = new ResourceLocation(modelPath.getNamespace(), "models/block/" + modelPath.getPath() + "_potted.json");
+			
 			if (Minecraft.getInstance().getResourceManager().hasResource(objSource)) {
-				objSource = new ResourceLocation(modelPath.getNamespace(), "block/potted_" + modelPath.getPath());
+				objSource = new ResourceLocation(modelPath.getNamespace(), "block/" + modelPath.getPath() + "_potted");
 				model.part(objSource).setTransformation(offset).setCondition(state -> state.getValue(PLANT_ID) == compareID).add();
 				continue;
 			}
@@ -335,7 +335,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 		}
 		
 		UnbakedModel result = model.build();
-		modelCache.put(key, result);
+		modelCache.put(stateId, result);
 		return result;
 	}
 	

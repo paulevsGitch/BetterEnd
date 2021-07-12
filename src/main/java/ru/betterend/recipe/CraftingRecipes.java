@@ -122,6 +122,7 @@ public class CraftingRecipes {
 		GridRecipe.make(BetterEnd.MOD_ID, "neon_cactus_block_stairs", EndBlocks.NEON_CACTUS_BLOCK_STAIRS).checkConfig(Configs.RECIPE_CONFIG).setShape("#  ", "## ", "###").setOutputCount(4).addMaterial('#', EndBlocks.NEON_CACTUS_BLOCK).build();
 		
 		GridRecipe.make(BetterEnd.MOD_ID, "sugar_from_root", Items.SUGAR).checkConfig(Configs.RECIPE_CONFIG).setList("###").addMaterial('#', EndItems.AMBER_ROOT_RAW).build();
+		GridRecipe.make(BetterEnd.MOD_ID, "endstone_flower_pot", EndBlocks.ENDSTONE_FLOWER_POT).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(3).setShape("# #", " # ").addMaterial('#', Blocks.END_STONE_BRICKS).setGroup("end_pots").build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

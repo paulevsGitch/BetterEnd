@@ -890,5 +890,13 @@
 
 	"tooltip.armor.crystalite_set": "Бонус сета: Регенерация I",
 	"tooltip.armor.crystalite_chest": "Эффект: Ускорение I",
-	"tooltip.armor.crystalite_boots": "Эффект: Стремительность I"
+	"tooltip.armor.crystalite_boots": "Эффект: Стремительность I",
+	
+	"block.betterend.azure_jadestone_flower_pot": "Цветочный горшок из лазурного нефрита",
+	"block.betterend.endstone_flower_pot": "Цветочный горшок из эндерняка",
+	"block.betterend.flavolite_flower_pot": "Цветочный горшок из флаволита",
+	"block.betterend.sandy_jadestone_flower_pot": "Цветочный горшок из песчаного нефрита",
+	"block.betterend.sulphuric_rock_flower_pot": "Цветочный горшок из серного камня",
+	"block.betterend.violecite_flower_pot": "Цветочный горшок из виолецита",
+	"block.betterend.virid_jadestone_flower_pot": "Цветочный горшок из зелёного нефрита"
 }

@@ -35,7 +35,7 @@ public class ChunkBiomeContainerMixin implements IBiomeArray {
 		int biomeZ = pos.getZ() >> 2;
 		int index = be_getArrayIndex(biomeX, biomeY, biomeZ);
 		
-		if (Integrations.hasHydrogen()) {
+		if (Integrations.hasHydrogen() && be_shouldWriteToHydrogen()) {
 			try {
 				ChunkBiomeContainer self = (ChunkBiomeContainer) (Object) this;
 				BitStorage storage = be_getHydrogenStorage(self);
@@ -79,6 +79,16 @@ public class ChunkBiomeContainerMixin implements IBiomeArray {
 	@Shadow
 	@Final
 	private int quartHeight;
+	
+	private boolean be_shouldWriteToHydrogen() {
+		try {
+			Field field = ChunkBiomeContainer.class.getDeclaredField("intArray");
+			return field != null;
+		}
+		catch (NoSuchFieldException e) {
+			return false;
+		}
+	}
 	
 	private int be_getArrayIndex(int biomeX, int biomeY, int biomeZ) {
 		int i = biomeX & HORIZONTAL_MASK;

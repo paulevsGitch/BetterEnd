@@ -1,5 +1,6 @@
 package ru.betterend.blocks;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -56,6 +58,8 @@ import ru.betterend.interfaces.PottableTerrain;
 import ru.betterend.registry.EndBlocks;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -77,6 +81,20 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(PLANT_ID, SOIL_ID, POT_LIGHT);
+	}
+	
+	@Override
+	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+		List<ItemStack> drop = Lists.newArrayList(new ItemStack(this));
+		int id = state.getValue(SOIL_ID) - 1;
+		if (id >= 0 && id < soils.length && soils[id] != null) {
+			drop.add(new ItemStack(soils[id]));
+		}
+		id = state.getValue(PLANT_ID) - 1;
+		if (id >= 0 && id < plants.length && plants[id] != null) {
+			drop.add(new ItemStack(plants[id]));
+		}
+		return drop;
 	}
 	
 	@Override

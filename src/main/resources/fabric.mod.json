@@ -50,6 +50,7 @@
 	"suggests": {
 		"byg": ">=1.1.3",
 		"blockus": ">=2.0.2",
-		"nourish": ">=1.2.0"
+		"nourish": ">=1.2.0",
+		"colored_lights": ">=1.0.3"
 	}
 }

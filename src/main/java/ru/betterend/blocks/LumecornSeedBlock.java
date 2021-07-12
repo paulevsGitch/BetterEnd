@@ -12,17 +12,17 @@ import ru.betterend.registry.EndFeatures;
 import java.util.Random;
 
 public class LumecornSeedBlock extends EndPlantWithAgeBlock {
-
+	
 	@Override
 	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		EndFeatures.LUMECORN.getFeature().place(new FeaturePlaceContext<>(world, null, random, pos, null));
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.END_MOSS);
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;

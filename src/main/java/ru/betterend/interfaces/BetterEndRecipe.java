@@ -1,4 +1,3 @@
 package ru.betterend.interfaces;
 
-public interface BetterEndRecipe {
-}
+public interface BetterEndRecipe {}

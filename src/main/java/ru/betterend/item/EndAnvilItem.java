@@ -15,13 +15,13 @@ import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.registry.EndBlocks;
 
 public class EndAnvilItem extends BaseAnvilItem {
-
+	
 	public final static String DURABILITY = "durability";
-
+	
 	public EndAnvilItem(Block anvilBlock) {
 		super(anvilBlock, EndBlocks.makeBlockItemSettings());
 	}
-
+	
 	@Override
 	protected BlockState getPlacementState(BlockPlaceContext blockPlaceContext) {
 		BlockState blockState = super.getPlacementState(blockPlaceContext);
@@ -32,7 +32,7 @@ public class EndAnvilItem extends BaseAnvilItem {
 		}
 		return blockState;
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {

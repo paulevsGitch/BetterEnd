@@ -19,12 +19,12 @@ public class DenseEmeraldIceBlock extends BaseBlock implements IRenderTyped {
 	public DenseEmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.PACKED_ICE));
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);

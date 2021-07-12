@@ -16,29 +16,29 @@ import java.util.function.Consumer;
 
 public class VoxelPiece extends BasePiece {
 	private StructureWorld world;
-
+	
 	public VoxelPiece(Consumer<StructureWorld> function, int id) {
 		super(EndStructures.VOXEL_PIECE, id, null);
 		world = new StructureWorld();
 		function.accept(world);
 		this.boundingBox = world.getBounds();
 	}
-
+	
 	public VoxelPiece(ServerLevel level, CompoundTag tag) {
 		super(EndStructures.VOXEL_PIECE, tag);
 		this.boundingBox = world.getBounds();
 	}
-
+	
 	@Override
 	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.put("world", world.toBNT());
 	}
-
+	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		world = new StructureWorld(tag.getCompound("world"));
 	}
-
+	
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		this.world.placeChunk(world, chunkPos);

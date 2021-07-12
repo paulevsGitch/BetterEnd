@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.betterend.BetterEnd;
 
 public class ItemUtil {
-
+	
 	public static String toStackString(@NotNull ItemStack stack) {
 		try {
 			if (stack == null) {
@@ -25,7 +25,7 @@ public class ItemUtil {
 		}
 		return "";
 	}
-
+	
 	@Nullable
 	public static ItemStack fromStackString(String stackString) {
 		if (stackString == null || stackString.equals("")) {
@@ -52,7 +52,7 @@ public class ItemUtil {
 		}
 		return null;
 	}
-
+	
 	@Nullable
 	public static ItemStack fromJsonRecipe(JsonObject recipe) {
 		try {

@@ -43,12 +43,12 @@ public class BetterEndClient implements ClientModInitializer {
 		ClientOptions.init();
 		registerRenderers();
 		registerTooltips();
-
+		
 		if (BCLib.isDevEnvironment()) {
 			TranslationHelper.printMissingNames(BetterEnd.MOD_ID);
 		}
 	}
-
+	
 	public static void registerTooltips() {
 		ItemTooltipCallback.EVENT.register((player, stack, context, lines) -> {
 			if (stack.getItem() instanceof CrystaliteArmor) {
@@ -63,21 +63,19 @@ public class BetterEndClient implements ClientModInitializer {
 			}
 		});
 	}
-
+	
 	private void registerRenderLayers() {
 		RenderType cutout = RenderType.cutout();
 		RenderType translucent = RenderType.translucent();
 		Registry.BLOCK.forEach(block -> {
 			if (block instanceof IRenderTyped) {
 				BCLRenderLayer layer = ((IRenderTyped) block).getRenderLayer();
-				if (layer == BCLRenderLayer.CUTOUT)
-					BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
-				else if (layer == BCLRenderLayer.TRANSLUCENT)
-					BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
+				if (layer == BCLRenderLayer.CUTOUT) BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
+				else if (layer == BCLRenderLayer.TRANSLUCENT) BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
 			}
 		});
 	}
-
+	
 	private static void registerRenderers() {
 		List<Block> modBlocks = EndBlocks.getModBlocks();
 		modBlocks.stream().filter(BaseChestBlock.class::isInstance).forEach(BaseChestBlockEntityRenderer::registerRenderLayer);

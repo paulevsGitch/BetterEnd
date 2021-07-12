@@ -10,7 +10,7 @@ public class EndPickaxe extends BasePickaxeItem {
 	public EndPickaxe(Tier material, int attackDamage, float attackSpeed, Properties settings) {
 		super(material, attackDamage, attackSpeed, settings);
 	}
-
+	
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		if (state.is(Blocks.END_STONE) && this.getTier().getLevel() > 2) {

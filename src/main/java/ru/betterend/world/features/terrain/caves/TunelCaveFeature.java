@@ -35,24 +35,24 @@ public class TunelCaveFeature extends EndCaveFeature {
 		if ((long) cx * (long) cx + (long) cz + (long) cz < 256) {
 			return Sets.newHashSet();
 		}
-
+		
 		int x1 = cx << 4;
 		int z1 = cz << 4;
 		int x2 = x1 + 16;
 		int z2 = z1 + 16;
-
+		
 		Random rand = new Random(world.getSeed());
 		OpenSimplexNoise noiseH = new OpenSimplexNoise(rand.nextInt());
 		OpenSimplexNoise noiseV = new OpenSimplexNoise(rand.nextInt());
 		OpenSimplexNoise noiseD = new OpenSimplexNoise(rand.nextInt());
-
+		
 		Set<BlockPos> positions = Sets.newConcurrentHashSet();
-
+		
 		float a = hasCaves(world, new BlockPos(x1, 0, z1)) ? 1F : 0F;
 		float b = hasCaves(world, new BlockPos(x2, 0, z1)) ? 1F : 0F;
 		float c = hasCaves(world, new BlockPos(x1, 0, z2)) ? 1F : 0F;
 		float d = hasCaves(world, new BlockPos(x2, 0, z2)) ? 1F : 0F;
-
+		
 		ChunkAccess chunk = world.getChunk(cx, cz);
 		IntStream.range(0, 256).parallel().forEach(index -> {
 			MutableBlockPos pos = new MutableBlockPos();
@@ -84,10 +84,10 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 		});
 		positions.forEach(bpos -> BlocksHelper.setWithoutUpdate(world, bpos, CAVE_AIR));
-
+		
 		return positions;
 	}
-
+	
 	private boolean noWaterNear(WorldGenLevel world, BlockPos pos) {
 		BlockPos above1 = pos.above();
 		BlockPos above2 = pos.above(2);
@@ -104,7 +104,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
@@ -113,16 +113,16 @@ public class TunelCaveFeature extends EndCaveFeature {
 		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 2500) {
 			return false;
 		}
-
+		
 		if (biomeMissingCaves(world, pos)) {
 			return false;
 		}
-
+		
 		Set<BlockPos> caveBlocks = generate(world, pos, random);
 		if (caveBlocks.isEmpty()) {
 			return false;
 		}
-
+		
 		Map<EndCaveBiome, Set<BlockPos>> floorSets = Maps.newHashMap();
 		Map<EndCaveBiome, Set<BlockPos>> ceilSets = Maps.newHashMap();
 		MutableBlockPos mut = new MutableBlockPos();
@@ -157,11 +157,11 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 		});
 		caveBlocks.removeAll(remove);
-
+		
 		if (caveBlocks.isEmpty()) {
 			return true;
 		}
-
+		
 		floorSets.forEach((biome, floorPositions) -> {
 			BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			placeFloor(world, biome, floorPositions, random, surfaceBlock);
@@ -172,15 +172,15 @@ public class TunelCaveFeature extends EndCaveFeature {
 		EndCaveBiome biome = EndBiomes.getCaveBiome(pos.getX(), pos.getZ());
 		placeWalls(world, biome, caveBlocks, random);
 		fixBlocks(world, caveBlocks);
-
+		
 		return true;
 	}
-
+	
 	@Override
 	protected Set<BlockPos> generate(WorldGenLevel world, BlockPos center, int radius, Random random) {
 		return null;
 	}
-
+	
 	@Override
 	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
 		float density = biome.getFloorDensity() * 0.2F;
@@ -196,7 +196,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 		});
 	}
-
+	
 	@Override
 	protected void placeCeil(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
 		float density = biome.getCeilDensity() * 0.2F;
@@ -213,14 +213,11 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 		});
 	}
-
+	
 	protected boolean hasCaves(WorldGenLevel world, BlockPos pos) {
-		return hasCavesInBiome(world, pos.offset(-8, 0, -8)) &&
-				hasCavesInBiome(world, pos.offset(8, 0, -8)) &&
-				hasCavesInBiome(world, pos.offset(-8, 0, 8)) &&
-				hasCavesInBiome(world, pos.offset(8, 0, 8));
+		return hasCavesInBiome(world, pos.offset(-8, 0, -8)) && hasCavesInBiome(world, pos.offset(8, 0, -8)) && hasCavesInBiome(world, pos.offset(-8, 0, 8)) && hasCavesInBiome(world, pos.offset(8, 0, 8));
 	}
-
+	
 	protected boolean hasCavesInBiome(WorldGenLevel world, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
 		BCLBiome endBiome = BiomeAPI.getFromBiome(biome);

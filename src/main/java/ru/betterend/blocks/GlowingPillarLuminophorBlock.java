@@ -19,22 +19,17 @@ import ru.betterend.registry.EndBlocks;
 
 public class GlowingPillarLuminophorBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;
-
+	
 	public GlowingPillarLuminophorBlock() {
-		super(FabricBlockSettings.of(Material.LEAVES)
-				.materialColor(MaterialColor.COLOR_ORANGE)
-				.breakByTool(FabricToolTags.SHEARS)
-				.strength(0.2F)
-				.luminance(15)
-				.sound(SoundType.GRASS));
+		super(FabricBlockSettings.of(Material.LEAVES).materialColor(MaterialColor.COLOR_ORANGE).breakByTool(FabricToolTags.SHEARS).strength(0.2F).luminance(15).sound(SoundType.GRASS));
 		this.registerDefaultState(this.stateDefinition.any().setValue(NATURAL, false));
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return !state.getValue(NATURAL) || world.getBlockState(pos.below()).is(EndBlocks.GLOWING_PILLAR_ROOTS);
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!canSurvive(state, world, pos)) {
@@ -44,7 +39,7 @@ public class GlowingPillarLuminophorBlock extends BaseBlock {
 			return state;
 		}
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(NATURAL);

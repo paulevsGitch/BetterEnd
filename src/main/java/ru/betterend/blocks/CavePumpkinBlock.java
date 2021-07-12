@@ -26,38 +26,38 @@ public class CavePumpkinBlock extends BaseBlockNotFull implements IRenderTyped {
 	public static final BooleanProperty SMALL = BlockProperties.SMALL;
 	private static final VoxelShape SHAPE_SMALL;
 	private static final VoxelShape SHAPE_BIG;
-
+	
 	public CavePumpkinBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.PUMPKIN).luminance((state) -> state.getValue(SMALL) ? 10 : 15));
 		registerDefaultState(defaultBlockState().setValue(SMALL, false));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SMALL);
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return state.getValue(SMALL) ? SHAPE_SMALL : SHAPE_BIG;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return state.getValue(SMALL) ? Collections.singletonList(new ItemStack(EndBlocks.CAVE_PUMPKIN_SEED)) : Collections.singletonList(new ItemStack(this));
 	}
-
+	
 	static {
 		VoxelShape lantern = Block.box(1, 0, 1, 15, 13, 15);
 		VoxelShape cap = Block.box(0, 12, 0, 16, 15, 16);
 		VoxelShape top = Block.box(5, 15, 5, 11, 16, 11);
 		SHAPE_BIG = Shapes.or(lantern, cap, top);
-
+		
 		lantern = Block.box(5, 7, 5, 11, 13, 11);
 		cap = Block.box(4, 12, 4, 12, 15, 12);
 		top = Block.box(6, 15, 6, 10, 16, 10);

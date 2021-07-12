@@ -11,18 +11,18 @@ import java.util.Random;
 
 public class BlueVineFeature extends ScatterFeature {
 	private boolean small;
-
+	
 	public BlueVineFeature() {
 		super(5);
 	}
-
+	
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		float d = MHelper.length(center.getX() - blockPos.getX(), center.getZ() - blockPos.getZ()) / radius * 0.6F + random.nextFloat() * 0.4F;
 		small = d > 0.5F;
 		return EndBlocks.BLUE_VINE_SEED.canSurvive(AIR, world, blockPos);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		if (small) {

@@ -23,9 +23,8 @@ public class Lumecorn extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
-			return false;
-
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		
 		int height = MHelper.randRange(4, 7, random);
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		for (int i = 1; i < height; i++) {
@@ -35,30 +34,23 @@ public class Lumecorn extends DefaultFeature {
 			}
 		}
 		mut.set(pos);
-		BlockState topMiddle = EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE,
-				LumecornShape.LIGHT_TOP_MIDDLE);
-		BlockState middle = EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE,
-				LumecornShape.LIGHT_MIDDLE);
-		BlockState bottom = EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE,
-				LumecornShape.LIGHT_BOTTOM);
+		BlockState topMiddle = EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_TOP_MIDDLE);
+		BlockState middle = EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_MIDDLE);
+		BlockState bottom = EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_BOTTOM);
 		BlockState top = EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_TOP);
 		if (height == 4) {
-			BlocksHelper.setWithoutUpdate(world, mut,
-					EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
+			BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
 			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), bottom);
 			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), topMiddle);
 			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), top);
 			return true;
 		}
 		if (random.nextBoolean()) {
-			BlocksHelper.setWithoutUpdate(world, mut,
-					EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
+			BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
 		}
 		else {
-			BlocksHelper.setWithoutUpdate(world, mut,
-					EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_BIG));
-			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP),
-					EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_BIG));
+			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), EndBlocks.LUMECORN.defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.MIDDLE));
 			height--;
 		}
 		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), bottom);

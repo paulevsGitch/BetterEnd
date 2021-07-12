@@ -11,7 +11,7 @@ import ru.betterend.registry.EndItems;
 
 public class LootTableUtil {
 	private static final ResourceLocation END_CITY_TREASURE_ID = new ResourceLocation("chests/end_city_treasure");
-
+	
 	public static void init() {
 		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
 			if (END_CITY_TREASURE_ID.equals(id)) {
@@ -20,7 +20,7 @@ public class LootTableUtil {
 				builder.withCondition(LootItemRandomChanceCondition.randomChance(0.5f).build());
 				builder.withEntry(LootItem.lootTableItem(Items.GHAST_TEAR).build());
 				supplier.withPool(builder);
-
+				
 				builder = FabricLootPoolBuilder.builder();
 				builder.setRolls(UniformGenerator.between(0, 5));
 				builder.withCondition(LootItemRandomChanceCondition.randomChance(0.1f).build());

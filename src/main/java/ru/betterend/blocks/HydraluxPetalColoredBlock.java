@@ -20,17 +20,17 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements ICo
 	public HydraluxPetalColoredBlock(FabricBlockSettings settings) {
 		super(settings);
 	}
-
+	
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> BlocksHelper.getBlockColor(this);
 	}
-
+	
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> BlocksHelper.getBlockColor(this);
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {

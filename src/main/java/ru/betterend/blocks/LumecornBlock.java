@@ -36,29 +36,26 @@ public class LumecornBlock extends BaseBlockNotFull implements IRenderTyped {
 	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create("shape", LumecornShape.class);
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape SHAPE_TOP = Block.box(6, 0, 6, 10, 8, 10);
-
+	
 	public LumecornBlock() {
-		super(FabricBlockSettings.of(Material.WOOD)
-				.breakByTool(FabricToolTags.AXES)
-				.hardness(0.5F)
-				.luminance(state -> state.getValue(SHAPE).getLight()));
+		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).hardness(0.5F).luminance(state -> state.getValue(SHAPE).getLight()));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(SHAPE) == LumecornShape.LIGHT_TOP ? SHAPE_TOP : SHAPE_BOTTOM;
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		LumecornShape shape = state.getValue(SHAPE);
@@ -72,7 +69,7 @@ public class LumecornBlock extends BaseBlockNotFull implements IRenderTyped {
 			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!canSurvive(state, world, pos)) {
@@ -82,7 +79,7 @@ public class LumecornBlock extends BaseBlockNotFull implements IRenderTyped {
 			return state;
 		}
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		LumecornShape shape = state.getValue(SHAPE);
@@ -91,7 +88,7 @@ public class LumecornBlock extends BaseBlockNotFull implements IRenderTyped {
 		}
 		return MHelper.RANDOM.nextBoolean() ? Collections.singletonList(new ItemStack(EndItems.LUMECORN_ROD)) : Collections.emptyList();
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {

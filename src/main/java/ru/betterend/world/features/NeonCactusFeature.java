@@ -21,10 +21,10 @@ public class NeonCactusFeature extends DefaultFeature {
 		if (!ground.is(EndBlocks.ENDSTONE_DUST) && !ground.is(EndBlocks.END_MOSS)) {
 			return false;
 		}
-
+		
 		NeonCactusPlantBlock cactus = ((NeonCactusPlantBlock) EndBlocks.NEON_CACTUS);
 		cactus.growPlant(world, pos, random);
-
+		
 		return true;
 	}
 }

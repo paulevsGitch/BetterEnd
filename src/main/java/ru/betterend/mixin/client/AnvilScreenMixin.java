@@ -25,17 +25,16 @@ import java.util.List;
 
 @Mixin(AnvilScreen.class)
 public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
-
+	
 	@Shadow
 	private EditBox name;
-
+	
 	private final List<AbstractWidget> be_buttons = Lists.newArrayList();
-
-	public AnvilScreenMixin(AnvilMenu handler, Inventory playerInventory, Component title,
-							ResourceLocation texture) {
+	
+	public AnvilScreenMixin(AnvilMenu handler, Inventory playerInventory, Component title, ResourceLocation texture) {
 		super(handler, playerInventory, title, texture);
 	}
-
+	
 	@Inject(method = "subInit", at = @At("TAIL"))
 	protected void be_subInit(CallbackInfo info) {
 		int x = (width - imageWidth) / 2;
@@ -44,14 +43,14 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 		be_buttons.add(new Button(x + 8, y + 45, 15, 20, new TextComponent("<"), b -> be_previousRecipe()));
 		be_buttons.add(new Button(x + 154, y + 45, 15, 20, new TextComponent(">"), b -> be_nextRecipe()));
 	}
-
+	
 	@Inject(method = "renderFg", at = @At("TAIL"))
 	protected void be_renderForeground(PoseStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
 		be_buttons.forEach(button -> {
 			button.render(matrices, mouseX, mouseY, delta);
 		});
 	}
-
+	
 	@Inject(method = "slotChanged", at = @At("HEAD"), cancellable = true)
 	public void be_onSlotUpdate(AbstractContainerMenu handler, int slotId, ItemStack stack, CallbackInfo info) {
 		AnvilScreenHandlerExtended anvilHandler = (AnvilScreenHandlerExtended) handler;
@@ -69,15 +68,15 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 			be_buttons.forEach(button -> button.visible = false);
 		}
 	}
-
+	
 	private void be_nextRecipe() {
 		((AnvilScreenHandlerExtended) menu).be_nextRecipe();
 	}
-
+	
 	private void be_previousRecipe() {
 		((AnvilScreenHandlerExtended) menu).be_previousRecipe();
 	}
-
+	
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		if (minecraft != null) {

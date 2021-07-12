@@ -22,12 +22,12 @@ import ru.betterend.registry.EndEntitiesRenders;
 
 public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>> extends ElytraLayer<T, M> {
 	private final ArmoredElytraModel<T> elytraModel;
-
+	
 	public ArmoredElytraLayer(RenderLayerParent<T, M> renderLayerParent, EntityModelSet entityModelSet) {
 		super(renderLayerParent, entityModelSet);
 		elytraModel = new ArmoredElytraModel<>(entityModelSet.bakeLayer(EndEntitiesRenders.ARMORED_ELYTRA));
 	}
-
+	
 	public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f, float g, float h, float j, float k, float l) {
 		ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
 		if (itemStack.getItem() instanceof FallFlyingItem) {
@@ -41,7 +41,7 @@ public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>
 					wingsTexture = abstractClientPlayer.getCloakTextureLocation();
 				}
 			}
-
+			
 			poseStack.pushPose();
 			poseStack.translate(0.0D, 0.0D, 0.125D);
 			getParentModel().copyPropertiesTo(elytraModel);

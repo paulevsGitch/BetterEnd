@@ -27,14 +27,14 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 	public MengerSpongeBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SPONGE).noOcclusion());
 	}
-
+	
 	@Override
 	public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (absorbWater(world, pos)) {
 			world.setBlockAndUpdate(pos, EndBlocks.MENGER_SPONGE_WET.defaultBlockState());
 		}
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (absorbWater(world, pos)) {
@@ -42,17 +42,17 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 		}
 		return state;
 	}
-
+	
 	private boolean absorbWater(LevelAccessor world, BlockPos pos) {
 		Queue<Tuple<BlockPos, Integer>> queue = Lists.newLinkedList();
 		queue.add(new Tuple<>(pos, 0));
 		int i = 0;
-
+		
 		while (!queue.isEmpty()) {
 			Tuple<BlockPos, Integer> pair = queue.poll();
 			BlockPos blockPos = pair.getA();
 			int j = pair.getB();
-
+			
 			for (Direction direction : Direction.values()) {
 				BlockPos blockPos2 = blockPos.relative(direction);
 				BlockState blockState = world.getBlockState(blockPos2);
@@ -83,15 +83,15 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 					}
 				}
 			}
-
+			
 			if (i > 64) {
 				break;
 			}
 		}
-
+		
 		return i > 0;
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;

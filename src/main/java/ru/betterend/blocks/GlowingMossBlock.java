@@ -12,17 +12,17 @@ public class GlowingMossBlock extends EndPlantBlock {
 	public GlowingMossBlock(int light) {
 		super(light);
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.getBlock() == EndBlocks.END_MOSS || state.getBlock() == EndBlocks.END_MYCELIUM;
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public boolean hasEmissiveLighting(BlockGetter world, BlockPos pos) {
 		return true;
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public float getAmbientOcclusionLightLevel(BlockGetter world, BlockPos pos) {
 		return 1F;

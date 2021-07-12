@@ -18,22 +18,22 @@ import java.util.List;
 import java.util.Objects;
 
 public class EndAnvilBlock extends BaseAnvilBlock {
-
+	
 	protected final int level;
 	protected IntegerProperty durability;
 	protected MetalMaterial metalMaterial;
 	protected int maxDurability;
-
+	
 	public EndAnvilBlock(MaterialColor color, int level) {
 		super(color);
 		this.level = level;
 	}
-
+	
 	public EndAnvilBlock(MetalMaterial metalMaterial, MaterialColor color, int level) {
 		this(color, level);
 		this.metalMaterial = metalMaterial;
 	}
-
+	
 	public int getDurability(BlockState blockState) {
 		Block anvilBlock = blockState.getBlock();
 		if (anvilBlock instanceof EndAnvilBlock) {
@@ -41,7 +41,7 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 		}
 		return 0;
 	}
-
+	
 	public IntegerProperty getDurability() {
 		if (durability == null) {
 			this.maxDurability = 5;
@@ -49,11 +49,11 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 		}
 		return durability;
 	}
-
+	
 	public int getMaxDurability() {
 		return maxDurability;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drops = super.getDrops(state, builder);
@@ -61,7 +61,7 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 		itemStack.getOrCreateTag().putInt(EndAnvilItem.DURABILITY, state.getValue(durability));
 		return drops;
 	}
-
+	
 	@Override
 	@SuppressWarnings("deprecation")
 	public Item asItem() {
@@ -70,22 +70,22 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 		}
 		return Item.byBlock(this);
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
 		return Objects.requireNonNull(super.getStateForPlacement(blockPlaceContext)).setValue(durability, maxDurability);
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(getDurability());
 	}
-
+	
 	public int getCraftingLevel() {
 		return level;
 	}
-
+	
 	public static BlockState applyDamage(BlockState blockState) {
 		Block anvilBlock = blockState.getBlock();
 		if (anvilBlock instanceof EndAnvilBlock) {
@@ -100,7 +100,7 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 		}
 		return getDamagedState(blockState);
 	}
-
+	
 	private static BlockState getDamagedState(BlockState fallingState) {
 		Block anvilBlock = fallingState.getBlock();
 		if (anvilBlock instanceof EndAnvilBlock) {

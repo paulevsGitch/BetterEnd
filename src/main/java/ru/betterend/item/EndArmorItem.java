@@ -13,16 +13,11 @@ import ru.bclib.client.models.ItemModelProvider;
 import java.util.UUID;
 
 public class EndArmorItem extends ArmorItem implements ItemModelProvider {
-
-	protected static final UUID[] ARMOR_MODIFIER_UUID_PER_SLOT = new UUID[]{
-			UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"),
-			UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"),
-			UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"),
-			UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")
-	};
-
+	
+	protected static final UUID[] ARMOR_MODIFIER_UUID_PER_SLOT = new UUID[]{UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
+	
 	protected final Multimap<Attribute, AttributeModifier> defaultModifiers;
-
+	
 	public EndArmorItem(ArmorMaterial material, EquipmentSlot equipmentSlot, Properties settings) {
 		super(material, equipmentSlot, settings);
 		this.defaultModifiers = HashMultimap.create();
@@ -33,12 +28,12 @@ public class EndArmorItem extends ArmorItem implements ItemModelProvider {
 			addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", knockbackResistance, AttributeModifier.Operation.ADDITION));
 		}
 	}
-
+	
 	@Override
 	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
 		return equipmentSlot == slot ? defaultModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
 	}
-
+	
 	protected void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
 		if (defaultModifiers.containsKey(attribute)) {
 			defaultModifiers.removeAll(attribute);

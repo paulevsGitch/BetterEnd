@@ -20,21 +20,21 @@ import java.util.EnumMap;
 
 public class FilaluxWingsBlock extends BaseAttachedBlock implements IRenderTyped {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
-
+	
 	public FilaluxWingsBlock() {
 		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).sound(SoundType.WET_GRASS).noCollission());
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-
+	
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Shapes.box(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
 		BOUNDING_SHAPES.put(Direction.DOWN, Shapes.box(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));

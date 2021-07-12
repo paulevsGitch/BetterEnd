@@ -21,24 +21,24 @@ public class ParticleSnowflake extends TextureSheetParticle {
 	private double nextVX;
 	private double nextVY;
 	private double nextVZ;
-
+	
 	protected ParticleSnowflake(ClientLevel world, double x, double y, double z, double r, double g, double b, SpriteSet sprites) {
 		super(world, x, y, z, r, g, b);
 		pickSprite(sprites);
-
+		
 		this.lifetime = MHelper.randRange(150, 300, random);
 		this.quadSize = MHelper.randRange(0.05F, 0.2F, random);
 		this.setAlpha(0F);
-
+		
 		preVX = random.nextGaussian() * 0.015;
 		preVY = random.nextGaussian() * 0.015;
 		preVZ = random.nextGaussian() * 0.015;
-
+		
 		nextVX = random.nextGaussian() * 0.015;
 		nextVY = random.nextGaussian() * 0.015;
 		nextVZ = random.nextGaussian() * 0.015;
 	}
-
+	
 	@Override
 	public void tick() {
 		ticks++;
@@ -55,39 +55,39 @@ public class ParticleSnowflake extends TextureSheetParticle {
 			ticks = 0;
 		}
 		double delta = (double) ticks / 200.0;
-
+		
 		if (this.age <= 40) {
 			this.setAlpha(this.age / 40F);
 		}
 		else if (this.age >= this.lifetime - 40) {
 			this.setAlpha((this.lifetime - this.age) / 40F);
 		}
-
+		
 		if (this.age >= this.lifetime) {
 			this.remove();
 		}
-
+		
 		this.xd = Mth.lerp(delta, preVX, nextVX);
 		this.yd = Mth.lerp(delta, preVY, nextVY);
 		this.zd = Mth.lerp(delta, preVZ, nextVZ);
-
+		
 		super.tick();
 	}
-
+	
 	@Override
 	public ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public static class FactorySnowflake implements ParticleProvider<SimpleParticleType> {
-
+		
 		private final SpriteSet sprites;
-
+		
 		public FactorySnowflake(SpriteSet sprites) {
 			this.sprites = sprites;
 		}
-
+		
 		@Override
 		public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double vX, double vY, double vZ) {
 			return new ParticleSnowflake(world, x, y, z, 1, 1, 1, sprites);

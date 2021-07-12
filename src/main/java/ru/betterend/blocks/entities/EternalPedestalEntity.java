@@ -9,23 +9,23 @@ import ru.betterend.rituals.EternalRitual;
 
 public class EternalPedestalEntity extends PedestalBlockEntity {
 	private EternalRitual linkedRitual;
-
+	
 	public EternalPedestalEntity(BlockPos blockPos, BlockState blockState) {
 		super(EndBlockEntities.ETERNAL_PEDESTAL, blockPos, blockState);
 	}
-
+	
 	public boolean hasRitual() {
 		return linkedRitual != null;
 	}
-
+	
 	public void linkRitual(EternalRitual ritual) {
 		this.linkedRitual = ritual;
 	}
-
+	
 	public EternalRitual getRitual() {
 		return linkedRitual;
 	}
-
+	
 	@Override
 	public void setLevel(Level level) {
 		super.setLevel(level);
@@ -33,7 +33,7 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
 			linkedRitual.setWorld(level);
 		}
 	}
-
+	
 	@Override
 	public CompoundTag save(CompoundTag tag) {
 		if (hasRitual()) {
@@ -41,7 +41,7 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
 		}
 		return super.save(tag);
 	}
-
+	
 	@Override
 	protected void fromTag(CompoundTag tag) {
 		super.fromTag(tag);

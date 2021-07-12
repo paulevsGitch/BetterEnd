@@ -13,7 +13,7 @@ public class RecipeHelper {
 			return Registry.ITEM.getKey(item.asItem()) != Registry.ITEM.getDefaultKey();
 		}
 	}
-
+	
 	public static boolean exists(ItemLike... items) {
 		for (ItemLike item : items) {
 			if (!exists(item)) {

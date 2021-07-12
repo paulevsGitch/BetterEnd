@@ -21,31 +21,31 @@ public abstract class EntityMixin implements TeleportingEntity {
 	private float yRot;
 	@Shadow
 	private float xRot;
-
+	
 	@Shadow
 	public Level level;
-
+	
 	@Final
 	@Shadow
 	public abstract void unRide();
-
+	
 	@Shadow
 	public abstract Vec3 getDeltaMovement();
-
+	
 	@Shadow
 	public abstract EntityType<?> getType();
-
+	
 	@Shadow
 	protected abstract PortalInfo findDimensionEntryPoint(ServerLevel destination);
-
+	
 	@Shadow
 	protected abstract void removeAfterChangingDimensions();
-
+	
 	@Shadow
 	public abstract boolean isRemoved();
-
+	
 	private BlockPos exitPos;
-
+	
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
 	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info) {
 		if (!isRemoved() && be_canTeleport() && level instanceof ServerLevel) {
@@ -61,10 +61,10 @@ public abstract class EntityMixin implements TeleportingEntity {
 					entity.moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z, teleportTarget.yRot, entity.getXRot());
 					entity.setDeltaMovement(teleportTarget.speed);
 					//TODO: check if this works as intended in 1.17
-
+					
 					destination.addDuringTeleport(entity);
 				}
-
+				
 				this.removeAfterChangingDimensions();
 				level.getProfiler().pop();
 				((ServerLevel) level).resetEmptyTime();
@@ -75,24 +75,24 @@ public abstract class EntityMixin implements TeleportingEntity {
 			}
 		}
 	}
-
+	
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_findDimensionEntryPoint(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
 			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), yRot, xRot));
 		}
 	}
-
+	
 	@Override
 	public void be_setExitPos(BlockPos pos) {
 		this.exitPos = pos.immutable();
 	}
-
+	
 	@Override
 	public void be_resetExitPos() {
 		this.exitPos = null;
 	}
-
+	
 	@Override
 	public boolean be_canTeleport() {
 		return this.exitPos != null;

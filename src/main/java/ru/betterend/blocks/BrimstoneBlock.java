@@ -26,30 +26,30 @@ import java.util.Random;
 
 public class BrimstoneBlock extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
-
+	
 	public BrimstoneBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(MaterialColor.COLOR_BROWN).randomTicks());
 		registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(ACTIVATED);
 	}
-
+	
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		if (world.isClientSide()) {
 			updateChunks((ClientLevel) world, pos);
 		}
 	}
-
+	
 	public void destroy(LevelAccessor world, BlockPos pos, BlockState state) {
 		if (world.isClientSide()) {
 			updateChunks((ClientLevel) world, pos);
 		}
 	}
-
+	
 	private void updateChunks(ClientLevel world, BlockPos pos) {
 		int y = pos.getY() >> 4;
 		int x1 = (pos.getX() - 2) >> 4;
@@ -62,7 +62,7 @@ public class BrimstoneBlock extends BaseBlock {
 			}
 		}
 	}
-
+	
 	@Override
 	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		boolean deactivate = true;
@@ -87,10 +87,7 @@ public class BrimstoneBlock extends BaseBlock {
 					}
 				}
 				else if (sideState.getFluidState().getType() == Fluids.WATER) {
-					BlockState crystal = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState()
-							.setValue(SulphurCrystalBlock.FACING, dir)
-							.setValue(SulphurCrystalBlock.WATERLOGGED, true)
-							.setValue(SulphurCrystalBlock.AGE, 0);
+					BlockState crystal = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState().setValue(SulphurCrystalBlock.FACING, dir).setValue(SulphurCrystalBlock.WATERLOGGED, true).setValue(SulphurCrystalBlock.AGE, 0);
 					world.setBlockAndUpdate(side, crystal);
 				}
 			}

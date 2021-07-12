@@ -15,16 +15,15 @@ import java.util.Random;
 public abstract class FullHeightScatterFeature extends DefaultFeature {
 	private static final MutableBlockPos POS = new MutableBlockPos();
 	private final int radius;
-
+	
 	public FullHeightScatterFeature(int radius) {
 		this.radius = radius;
 	}
-
-	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos,
-										float radius);
-
+	
+	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius);
+	
 	public abstract void generate(WorldGenLevel world, Random random, BlockPos blockPos);
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
@@ -42,13 +41,12 @@ public abstract class FullHeightScatterFeature extends DefaultFeature {
 					float theta = random.nextFloat() * MHelper.PI2;
 					float x = pr * (float) Math.cos(theta);
 					float z = pr * (float) Math.sin(theta);
-
+					
 					POS.set(center.getX() + x, y + 5, center.getZ() + z);
 					int down = BlocksHelper.downRay(world, POS, 16);
-					if (down > 10)
-						continue;
+					if (down > 10) continue;
 					POS.setY(POS.getY() - down);
-
+					
 					if (canGenerate(world, random, center, POS, r)) {
 						generate(world, random, POS);
 					}

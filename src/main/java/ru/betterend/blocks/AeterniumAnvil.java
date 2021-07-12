@@ -9,14 +9,14 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
 public class AeterniumAnvil extends EndAnvilBlock {
-
+	
 	protected final Item anvilItem;
-
+	
 	public AeterniumAnvil() {
 		super(EndBlocks.AETERNIUM_BLOCK.defaultMaterialColor(), EndToolMaterial.AETERNIUM.getLevel());
 		this.anvilItem = EndItems.registerEndItem("aeternuim_anvil_item", new EndAnvilItem(this));
 	}
-
+	
 	@Override
 	public IntegerProperty getDurability() {
 		if (durability == null) {
@@ -25,7 +25,7 @@ public class AeterniumAnvil extends EndAnvilBlock {
 		}
 		return durability;
 	}
-
+	
 	@Override
 	public Item asItem() {
 		return anvilItem;

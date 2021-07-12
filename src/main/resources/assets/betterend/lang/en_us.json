@@ -874,5 +874,14 @@
 
   	"tooltip.armor.crystalite_set": "Set bonus: Regeneration I",
   	"tooltip.armor.crystalite_chest": "Effect: Dig Speed I",
-  	"tooltip.armor.crystalite_boots": "Effect: Swiftness I"
+  	"tooltip.armor.crystalite_boots": "Effect: Swiftness I",
+	
+	"block.betterend.azure_jadestone_flower_pot": "Azure Jadestone Flower Pot",
+	"block.betterend.endstone_flower_pot": "Endstone Flower Pot",
+	"block.betterend.flavolite_flower_pot": "Flavolite Flower Pot",
+	"block.betterend.sandy_jadestone_flower_pot": "Sandy Jadestone Flower Pot",
+	"block.betterend.sulphuric_rock_flower_pot": "Sulphuric Rock Flower Pot",
+	"block.betterend.violecite_flower_pot": "Violecite Flower Pot",
+	"block.betterend.virid_jadestone_flower_pot": "Virid Jadestone Flower Pot",
+	"block.betterend.virid_jadestone_flower_pot": "Virid Jadestone Flower Pot"
 }

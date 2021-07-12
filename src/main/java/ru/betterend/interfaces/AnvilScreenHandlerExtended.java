@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface AnvilScreenHandlerExtended {
 	void be_updateCurrentRecipe(AnvilRecipe recipe);
-
+	
 	AnvilRecipe be_getCurrentRecipe();
-
+	
 	List<AnvilRecipe> be_getRecipes();
-
+	
 	default void be_nextRecipe() {
 		List<AnvilRecipe> recipes = be_getRecipes();
 		if (recipes.size() < 2) return;
@@ -21,7 +21,7 @@ public interface AnvilScreenHandlerExtended {
 		}
 		be_updateCurrentRecipe(recipes.get(i));
 	}
-
+	
 	default void be_previousRecipe() {
 		List<AnvilRecipe> recipes = be_getRecipes();
 		if (recipes.size() < 2) return;

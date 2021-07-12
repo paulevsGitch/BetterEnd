@@ -33,12 +33,12 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 	public EmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.ICE));
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;
 	}
-
+	
 	@Override
 	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
 		super.playerDestroy(world, player, pos, state, blockEntity, stack);
@@ -47,23 +47,23 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 				world.removeBlock(pos, false);
 				return;
 			}
-
+			
 			Material material = world.getBlockState(pos.below()).getMaterial();
 			if (material.blocksMotion() || material.isLiquid()) {
 				world.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
 			}
 		}
-
+		
 	}
-
+	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (world.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(world, pos)) {
 			this.melt(state, world, pos);
 		}
-
+		
 	}
-
+	
 	protected void melt(BlockState state, Level world, BlockPos pos) {
 		if (world.dimensionType().ultraWarm()) {
 			world.removeBlock(pos, false);
@@ -73,7 +73,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 			world.neighborChanged(pos, Blocks.WATER, pos);
 		}
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
@@ -84,7 +84,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderType
 			return Collections.emptyList();
 		}
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {

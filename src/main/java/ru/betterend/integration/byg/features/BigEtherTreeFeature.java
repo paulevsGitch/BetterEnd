@@ -24,24 +24,22 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
-			return false;
-
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		
 		BlockState log = Integrations.BYG.getDefaultState("ether_log");
 		BlockState wood = Integrations.BYG.getDefaultState("ether_wood");
 		Function<BlockPos, BlockState> splinePlacer = (bpos) -> {
 			return log;
 		};
 		Function<BlockState, Boolean> replace = (state) -> {
-			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT)
-					|| state.getMaterial().isReplaceable();
+			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
 		};
-
+		
 		int height = MHelper.randRange(40, 60, random);
 		List<Vector3f> trunk = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, height / 4);
 		SplineHelper.offsetParts(trunk, random, 2F, 0, 2F);
 		SDF sdf = SplineHelper.buildSDF(trunk, 2.3F, 0.8F, splinePlacer);
-
+		
 		int count = height / 15;
 		for (int i = 1; i < count; i++) {
 			float splinePos = (float) i / (float) count;
@@ -57,22 +55,21 @@ public class BigEtherTreeFeature extends DefaultFeature {
 				List<Vector3f> br = SplineHelper.copySpline(branch);
 				SplineHelper.offsetParts(br, random, 0, 1, 1);
 				SplineHelper.rotateSpline(br, angle);
-
+				
 				SplineHelper.offset(br, start);
 				SplineHelper.fillSpline(br, world, wood, pos, replace);
 			}
 		}
-
+		
 		sdf.setReplaceFunction((state) -> {
-			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT)
-					|| state.getMaterial().isReplaceable();
+			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
 		}).addPostProcess((info) -> {
 			if (info.getState().equals(log) && (!info.getStateUp().equals(log) || !info.getStateDown().equals(log))) {
 				return wood;
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);
-
+		
 		return true;
 	}
 }

@@ -45,42 +45,37 @@ public class SulphurCrystalBlock extends BaseAttachedBlock implements IRenderTyp
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-
+	
 	public SulphurCrystalBlock() {
-		super(FabricBlockSettings.of(Material.STONE)
-				.materialColor(MaterialColor.COLOR_YELLOW)
-				.breakByTool(FabricToolTags.PICKAXES)
-				.sound(SoundType.GLASS)
-				.requiresCorrectToolForDrops()
-				.noCollission());
+		super(FabricBlockSettings.of(Material.STONE).materialColor(MaterialColor.COLOR_YELLOW).breakByTool(FabricToolTags.PICKAXES).sound(SoundType.GLASS).requiresCorrectToolForDrops().noCollission());
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		super.createBlockStateDefinition(stateManager);
 		stateManager.add(AGE, WATERLOGGED);
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return state.getValue(AGE) < 2 ? Collections.emptyList() : Lists.newArrayList(new ItemStack(EndItems.CRYSTALLINE_SULPHUR, MHelper.randRange(1, 3, MHelper.RANDOM)));
 	}
-
+	
 	@Override
 	public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
 		return !state.getValue(WATERLOGGED);
 	}
-
+	
 	@Override
 	public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
 		return !state.getValue(WATERLOGGED);
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		BlockState state = super.getStateForPlacement(ctx);
@@ -92,24 +87,24 @@ public class SulphurCrystalBlock extends BaseAttachedBlock implements IRenderTyp
 		}
 		return null;
 	}
-
+	
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		Direction direction = state.getValue(FACING);
 		BlockPos blockPos = pos.relative(direction.getOpposite());
 		return world.getBlockState(blockPos).is(EndBlocks.BRIMSTONE);
 	}
-
+	
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Shapes.box(0.125, 0.0, 0.125, 0.875F, 0.5, 0.875F));
 		BOUNDING_SHAPES.put(Direction.DOWN, Shapes.box(0.125, 0.5, 0.125, 0.875F, 1.0, 0.875F));

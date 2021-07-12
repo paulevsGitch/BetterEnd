@@ -26,26 +26,23 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = CrystaliteChestplateModel.createThinModel(null);
 	private final static CrystaliteLeggingsModel LEGGINGS_MODEL = CrystaliteLeggingsModel.createModel(null);
 	private final static CrystaliteBootsModel BOOTS_MODEL = CrystaliteBootsModel.createModel(null);
-
+	
 	//@Override
-	public @NotNull ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot,
-													 boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
+	public @NotNull ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot, boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
 		if (!isStackValid(stack)) return defaultTexture;
 		if (secondLayer) return SECOND_LAYER;
 		return FIRST_LAYER;
 	}
-
+	
 	//@Override
-	public @NotNull HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack,
-															  EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
+	public @NotNull HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
 		if (!isStackValid(stack)) return defaultModel;
 		switch (slot) {
 			case HEAD: {
 				return HELMET_MODEL;
 			}
 			case CHEST: {
-				if (entity instanceof AbstractClientPlayer &&
-						((AbstractClientPlayer) entity).getModelName().equals("slim")) {
+				if (entity instanceof AbstractClientPlayer && ((AbstractClientPlayer) entity).getModelName().equals("slim")) {
 					CHEST_MODEL_SLIM.copyPropertiesTo(defaultModel);
 					return CHEST_MODEL_SLIM;
 				}
@@ -64,16 +61,11 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 			}
 		}
 	}
-
+	
 	public Iterable<Item> getRenderedItems() {
-		return Lists.newArrayList(
-				EndItems.CRYSTALITE_HELMET,
-				EndItems.CRYSTALITE_CHESTPLATE,
-				EndItems.CRYSTALITE_ELYTRA,
-				EndItems.CRYSTALITE_LEGGINGS,
-				EndItems.CRYSTALITE_BOOTS);
+		return Lists.newArrayList(EndItems.CRYSTALITE_HELMET, EndItems.CRYSTALITE_CHESTPLATE, EndItems.CRYSTALITE_ELYTRA, EndItems.CRYSTALITE_LEGGINGS, EndItems.CRYSTALITE_BOOTS);
 	}
-
+	
 	private boolean isStackValid(ItemStack stack) {
 		return stack.getItem() instanceof CrystaliteArmor;
 	}

@@ -12,11 +12,11 @@ import java.util.function.Function;
 
 public class MengerSpongeFeature extends UnderwaterPlantScatter {
 	private static final Function<BlockState, Boolean> REPLACE;
-
+	
 	public MengerSpongeFeature(int radius) {
 		super(radius);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlocksHelper.setWithoutUpdate(world, blockPos, EndBlocks.MENGER_SPONGE_WET);
@@ -29,7 +29,7 @@ public class MengerSpongeFeature extends UnderwaterPlantScatter {
 			}
 		}
 	}
-
+	
 	static {
 		REPLACE = (state) -> {
 			if (state.is(EndBlocks.END_LOTUS_STEM)) {

@@ -62,23 +62,23 @@ import java.util.Set;
 public class EndBiomes {
 	public static final Set<ResourceLocation> FABRIC_VOID = Sets.newHashSet();
 	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
-
+	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
 	public static final BiomePicker CAVE_BIOMES = new BiomePicker();
 	public static final List<BCLBiome> SUBBIOMES = Lists.newArrayList();
 	private static final JsonObject EMPTY_JSON = new JsonObject();
 	private static BiomeMap caveBiomeMap;
-
+	
 	// Vanilla Land
 	public static final EndBiome END = registerBiome(Biomes.THE_END, BiomeType.LAND, 1F);
 	public static final EndBiome END_MIDLANDS = registerSubBiome(Biomes.END_MIDLANDS, END, 0.5F);
 	public static final EndBiome END_HIGHLANDS = registerSubBiome(Biomes.END_HIGHLANDS, END, 0.5F);
-
+	
 	// Vanilla Void
 	public static final EndBiome END_BARRENS = registerBiome(Biomes.END_BARRENS, BiomeType.VOID, 1F);
 	public static final EndBiome SMALL_END_ISLANDS = registerBiome(Biomes.SMALL_END_ISLANDS, BiomeType.VOID, 1);
-
+	
 	// Better End Land
 	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new FoggyMushroomlandBiome(), BiomeType.LAND);
 	public static final EndBiome CHORUS_FOREST = registerBiome(new ChorusForestBiome(), BiomeType.LAND);
@@ -97,10 +97,10 @@ public class EndBiomes {
 	public static final EndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), BiomeType.LAND);
 	public static final EndBiome LANTERN_WOODS = registerBiome(new LanternWoodsBiome(), BiomeType.LAND);
 	public static final EndBiome NEON_OASIS = registerSubBiome(new NeonOasisBiome(), DUST_WASTELANDS);
-
+	
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);
-
+	
 	// Better End Caves
 	public static final EndCaveBiome EMPTY_END_CAVE = registerCaveBiome(new EmptyEndCaveBiome());
 	public static final EndCaveBiome EMPTY_SMARAGDANT_CAVE = registerCaveBiome(new EmptySmaragdantCaveBiome());
@@ -108,28 +108,28 @@ public class EndBiomes {
 	public static final EndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
 	public static final EndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
 	public static final EndCaveBiome JADE_CAVE = registerCaveBiome(new JadeCaveBiome());
-
+	
 	public static void register() {
 		CAVE_BIOMES.rebuild();
 	}
-
+	
 	public static void onWorldLoad(long seed) {
 		if (caveBiomeMap == null || caveBiomeMap.getSeed() != seed) {
 			caveBiomeMap = new BiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
 		}
 	}
-
+	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) {
 		LAND_BIOMES.clearMutables();
 		VOID_BIOMES.clearMutables();
 		CAVE_BIOMES.clearMutables();
-
+		
 		if (FABRIC_VOID.isEmpty()) {
 			loadFabricAPIBiomes();
 		}
-
+		
 		Map<String, JsonObject> configs = Maps.newHashMap();
-
+		
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {
 				ResourceLocation id = biomeRegistry.getKey(biome);
@@ -152,7 +152,7 @@ public class EndBiomes {
 							hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
 						}
 						EndBiome endBiome = new EndBiome(id, biome, fog, chance, hasCaves);
-
+						
 						if (isVoid) {
 							VOID_BIOMES.addBiomeMutable(endBiome);
 						}
@@ -170,30 +170,30 @@ public class EndBiomes {
 			}
 		});
 		Configs.BIOME_CONFIG.saveChanges();
-
+		
 		rebuildPicker(LAND_BIOMES, biomeRegistry);
 		rebuildPicker(VOID_BIOMES, biomeRegistry);
 		rebuildPicker(CAVE_BIOMES, biomeRegistry);
-
+		
 		SUBBIOMES.forEach((endBiome) -> {
 			endBiome.updateActualBiomes(biomeRegistry);
 		});
 	}
-
+	
 	private static void rebuildPicker(BiomePicker picker, Registry<Biome> biomeRegistry) {
 		picker.rebuild();
 		picker.getBiomes().forEach((endBiome) -> {
 			endBiome.updateActualBiomes(biomeRegistry);
 		});
 	}
-
+	
 	private static void loadFabricAPIBiomes() {
 		List<ResourceKey<Biome>> biomes = Lists.newArrayList();
 		biomes.addAll(getBiomes(InternalBiomeData.getEndBiomesMap().get(Biomes.SMALL_END_ISLANDS)));
 		biomes.addAll(getBiomes(InternalBiomeData.getEndBarrensMap().get(Biomes.END_BARRENS)));
 		biomes.forEach((key) -> FABRIC_VOID.add(key.location()));
 		FABRIC_VOID.removeIf(id -> id.getNamespace().equals("endplus"));
-
+		
 		if (BCLib.isDevEnvironment()) {
 			System.out.println("==================================");
 			System.out.println("Added void biomes from Fabric API:");
@@ -203,12 +203,12 @@ public class EndBiomes {
 			System.out.println("==================================");
 		}
 	}
-
+	
 	private static List<ResourceKey<Biome>> getBiomes(WeightedBiomePicker picker) {
 		IBiomeList biomeList = (IBiomeList) (Object) picker;
 		return biomeList == null ? Collections.emptyList() : biomeList.getBiomes();
 	}
-
+	
 	private static JsonObject loadJsonConfig(String namespace) {
 		InputStream inputstream = EndBiomes.class.getResourceAsStream("/data/" + namespace + "/end_biome_properties.json");
 		if (inputstream != null) {
@@ -218,7 +218,7 @@ public class EndBiomes {
 			return EMPTY_JSON;
 		}
 	}
-
+	
 	/**
 	 * Registers new {@link EndBiome} and adds it to picker, can be used to add existing mod biomes into the End.
 	 *
@@ -230,7 +230,7 @@ public class EndBiomes {
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float genChance) {
 		return registerBiome(biome, type, 1, genChance);
 	}
-
+	
 	/**
 	 * Registers new {@link EndBiome} and adds it to picker, can be used to add existing mod biomes into the End.
 	 *
@@ -247,7 +247,7 @@ public class EndBiomes {
 		}
 		return endBiome;
 	}
-
+	
 	/**
 	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
 	 *
@@ -259,7 +259,7 @@ public class EndBiomes {
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float genChance, boolean hasCaves) {
 		return registerSubBiome(biome, parent, 1, genChance, hasCaves);
 	}
-
+	
 	/**
 	 * Registers new {@link EndBiome} from existed {@link Biome} and put as a sub-biome into selected parent.
 	 *
@@ -280,7 +280,7 @@ public class EndBiomes {
 		}
 		return endBiome;
 	}
-
+	
 	/**
 	 * Put existing {@link EndBiome} as a sub-biome into selected parent.
 	 *
@@ -298,7 +298,7 @@ public class EndBiomes {
 		}
 		return biome;
 	}
-
+	
 	/**
 	 * Registers {@link EndBiome} and adds it into worldgen.
 	 *
@@ -319,7 +319,7 @@ public class EndBiomes {
 		}
 		return biome;
 	}
-
+	
 	/**
 	 * Put integration sub-biome {@link EndBiome} into subbiomes list and registers it.
 	 *
@@ -335,7 +335,7 @@ public class EndBiomes {
 		}
 		return biome;
 	}
-
+	
 	/**
 	 * Link integration sub-biome with parent.
 	 *
@@ -350,15 +350,15 @@ public class EndBiomes {
 			}
 		}
 	}
-
+	
 	public static EndBiome registerBiome(ResourceKey<Biome> key, BiomeType type, float genChance) {
 		return registerBiome(BuiltinRegistries.BIOME.get(key), type, genChance);
 	}
-
+	
 	public static EndBiome registerSubBiome(ResourceKey<Biome> key, EndBiome parent, float genChance) {
 		return registerSubBiome(BuiltinRegistries.BIOME.get(key), parent, genChance, true);
 	}
-
+	
 	private static void addToPicker(EndBiome biome, BiomeType type) {
 		if (type == BiomeType.LAND) {
 			LAND_BIOMES.addBiome(biome);
@@ -367,7 +367,7 @@ public class EndBiomes {
 			VOID_BIOMES.addBiome(biome);
 		}
 	}
-
+	
 	public static EndCaveBiome registerCaveBiome(EndCaveBiome biome) {
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(biome);
@@ -375,7 +375,7 @@ public class EndBiomes {
 		}
 		return biome;
 	}
-
+	
 	public static EndCaveBiome getCaveBiome(int x, int z) {
 		return (EndCaveBiome) caveBiomeMap.getBiome(x, z);
 	}

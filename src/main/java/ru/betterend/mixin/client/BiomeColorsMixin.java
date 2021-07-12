@@ -5,13 +5,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockAndTintGetter;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.client.ClientOptions;
@@ -27,7 +25,7 @@ public class BiomeColorsMixin {
 	private static final int STREAM_COLOR = ColorUtil.color(105, 213, 244);
 	private static final Point[] OFFSETS;
 	private static final boolean HAS_SODIUM;
-
+	
 	@Inject(method = "getAverageWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(BlockAndTintGetter world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
 		if (ClientOptions.useSulfurWaterColor()) {
@@ -44,10 +42,10 @@ public class BiomeColorsMixin {
 			}
 		}
 	}
-
+	
 	static {
 		HAS_SODIUM = FabricLoader.getInstance().isModLoaded("sodium");
-
+		
 		int index = 0;
 		OFFSETS = new Point[20];
 		for (int x = -2; x < 3; x++) {

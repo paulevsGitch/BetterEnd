@@ -29,14 +29,14 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	public ChorusPlantBlockMixin(Properties settings) {
 		super(settings);
 	}
-
+	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void beOnInit(BlockBehaviour.Properties settings, CallbackInfo info) {
 		if (GeneratorOptions.changeChorusPlant()) {
 			this.registerDefaultState(this.defaultBlockState().setValue(VanillaBlockProperties.ROOTS, false));
 		}
 	}
-
+	
 	@Inject(method = "createBlockStateDefinition", at = @At("TAIL"))
 	private void be_createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo info) {
 		GeneratorOptions.init();
@@ -44,7 +44,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			builder.add(VanillaBlockProperties.ROOTS);
 		}
 	}
-
+	
 	@Inject(method = "getStateForPlacement(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
 	private void be_getStateForPlacement(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
 		BlockPos pos = ctx.getClickedPos();
@@ -60,11 +60,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			info.cancel();
 		}
 	}
-
-	@Inject(method = "Lnet/minecraft/world/level/block/ChorusPlantBlock;getStateForPlacement" +
-			"(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)" +
-			"Lnet/minecraft/world/level/block/state/BlockState;",
-			at = @At("RETURN"), cancellable = true)
+	
+	@Inject(method = "Lnet/minecraft/world/level/block/ChorusPlantBlock;getStateForPlacement" + "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)" + "Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
 	private void be_getStateForPlacement(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT)) {
@@ -85,7 +82,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			}
 		}
 	}
-
+	
 	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
 	private void be_canSurvive(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
 		BlockState down = world.getBlockState(pos.below());
@@ -94,7 +91,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 			info.cancel();
 		}
 	}
-
+	
 	@Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
 	private void be_updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();

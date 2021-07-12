@@ -33,29 +33,25 @@ import java.util.function.Function;
 public class TenaneaBushFeature extends DefaultFeature {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Direction[] DIRECTIONS = Direction.values();
-
+	
 	public TenaneaBushFeature() {
 	}
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND))
-			return false;
-
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		
 		float radius = MHelper.randRange(1.8F, 3.5F, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
 		BlockState leaves = EndBlocks.TENANEA_LEAVES.defaultBlockState();
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(leaves);
 		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) ->
-				(float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) ->
-				MHelper.randRange(-2F, 2F, random)).setSource(sphere);
-		sphere = new SDFSubtraction().setSourceA(sphere)
-				.setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
+		sphere = new SDFDisplacement().setFunction((vec) -> (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> MHelper.randRange(-2F, 2F, random)).setSource(sphere);
+		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		sphere.setReplaceFunction(REPLACE);
 		List<BlockPos> support = Lists.newArrayList();
 		sphere.addPostProcess((info) -> {
@@ -66,15 +62,14 @@ public class TenaneaBushFeature extends DefaultFeature {
 						BlockPos d = info.getPos().below();
 						support.add(d);
 					}
-
+					
 					MHelper.shuffle(DIRECTIONS, random);
 					for (Direction d : DIRECTIONS) {
 						if (info.getState(d).isAir()) {
-							info.setBlockPos(info.getPos().relative(d),
-									EndBlocks.TENANEA_OUTER_LEAVES.defaultBlockState().setValue(FurBlock.FACING, d));
+							info.setBlockPos(info.getPos().relative(d), EndBlocks.TENANEA_OUTER_LEAVES.defaultBlockState().setValue(FurBlock.FACING, d));
 						}
 					}
-
+					
 					return info.getState().setValue(LeavesBlock.DISTANCE, distance);
 				}
 				else {
@@ -92,14 +87,11 @@ public class TenaneaBushFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, p, leaves.setValue(LeavesBlock.DISTANCE, 1));
 			}
 		}
-
+		
 		MutableBlockPos mut = new MutableBlockPos();
-		BlockState top = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE,
-				TripleShape.TOP);
-		BlockState middle = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE,
-				TripleShape.MIDDLE);
-		BlockState bottom = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE,
-				TripleShape.BOTTOM);
+		BlockState top = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		BlockState middle = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
+		BlockState bottom = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
 		support.forEach((bpos) -> {
 			BlockState state = world.getBlockState(bpos);
 			if (state.isAir() || state.is(EndBlocks.TENANEA_OUTER_LEAVES)) {
@@ -120,10 +112,10 @@ public class TenaneaBushFeature extends DefaultFeature {
 				}
 			}
 		});
-
+		
 		return true;
 	}
-
+	
 	static {
 		REPLACE = (state) -> {
 			if (state.getMaterial().equals(Material.PLANT)) {

@@ -3,7 +3,6 @@ package ru.betterend.blocks.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ElytraItem;
@@ -24,11 +23,11 @@ import java.util.List;
 public class BlockEntityHydrothermalVent extends BlockEntity {
 	private final static Vec3 POSITIVE_Y = new Vec3(0.0f, 1.0f, 0.0f);
 	private static final MutableBlockPos POS = new MutableBlockPos();
-
+	
 	public BlockEntityHydrothermalVent(BlockPos blockPos, BlockState blockState) {
 		super(EndBlockEntities.HYDROTHERMAL_VENT, blockPos, blockState);
 	}
-
+	
 	public static <T extends BlockEntity> void tick(Level level, BlockPos worldPosition, BlockState state, T uncastedEntity) {
 		if (level != null && uncastedEntity instanceof BlockEntityHydrothermalVent && state.is(EndBlocks.HYDROTHERMAL_VENT)) {
 			BlockEntityHydrothermalVent blockEntity = (BlockEntityHydrothermalVent) uncastedEntity;
@@ -36,11 +35,11 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
 				clientTick(level, worldPosition, state, blockEntity);
 			}
 			//else {
-				serverTick(level, worldPosition, state, blockEntity);
+			serverTick(level, worldPosition, state, blockEntity);
 			//}
 		}
 	}
-
+	
 	private static void clientTick(Level level, BlockPos worldPosition, BlockState state, BlockEntityHydrothermalVent blockEntity) {
 		boolean active = state.getValue(HydrothermalVentBlock.ACTIVATED);
 		if (active && level.random.nextInt(20) == 0 && state.getValue(HydrothermalVentBlock.WATERLOGGED)) {
@@ -50,7 +49,7 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
 			level.addParticle(EndParticles.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
 		}
 	}
-
+	
 	private static void serverTick(Level level, BlockPos worldPosition, BlockState state, BlockEntityHydrothermalVent blockEntity) {
 		boolean active = state.getValue(HydrothermalVentBlock.ACTIVATED);
 		POS.set(worldPosition).move(Direction.UP);
@@ -70,7 +69,7 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
 			}
 		}
 	}
-
+	
 	private boolean hasElytra(LivingEntity entity) {
 		Item item = entity.getItemBySlot(EquipmentSlot.CHEST).getItem();
 		return item instanceof ElytraItem || item instanceof FallFlyingItem;

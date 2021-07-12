@@ -25,26 +25,24 @@ public class BigAuroraCrystalFeature extends DefaultFeature {
 		final WorldGenLevel world = featureConfig.level();
 		int maxY = pos.getY() + BlocksHelper.upRay(world, pos, 16);
 		int minY = pos.getY() - BlocksHelper.downRay(world, pos, 16);
-
+		
 		if (maxY - minY < 10) {
 			return false;
 		}
-
+		
 		int y = MHelper.randRange(minY, maxY, random);
 		pos = new BlockPos(pos.getX(), y, pos.getZ());
-
+		
 		int height = MHelper.randRange(5, 25, random);
-		SDF prism = new SDFHexPrism().setHeight(height).setRadius(MHelper.randRange(1.7F, 3F, random))
-				.setBlock(EndBlocks.AURORA_CRYSTAL);
+		SDF prism = new SDFHexPrism().setHeight(height).setRadius(MHelper.randRange(1.7F, 3F, random)).setBlock(EndBlocks.AURORA_CRYSTAL);
 		Vector3f vec = MHelper.randomHorizontal(random);
 		prism = new SDFRotation().setRotation(vec, random.nextFloat()).setSource(prism);
 		prism.setReplaceFunction((bState) -> {
-			return bState.getMaterial().isReplaceable() || bState.is(TagAPI.GEN_TERRAIN)
-					|| bState.getMaterial().equals(Material.PLANT) || bState.getMaterial().equals(Material.LEAVES);
+			return bState.getMaterial().isReplaceable() || bState.is(TagAPI.GEN_TERRAIN) || bState.getMaterial().equals(Material.PLANT) || bState.getMaterial().equals(Material.LEAVES);
 		});
 		prism.fillRecursive(world, pos);
 		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.AURORA_CRYSTAL);
-
+		
 		return true;
 	}
 }

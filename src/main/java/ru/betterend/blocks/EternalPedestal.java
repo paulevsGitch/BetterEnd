@@ -29,12 +29,12 @@ import java.util.List;
 
 public class EternalPedestal extends PedestalBlock {
 	public static final BooleanProperty ACTIVATED = EndBlockProperties.ACTIVE;
-
+	
 	public EternalPedestal() {
 		super(EndBlocks.FLAVOLITE_RUNED_ETERNAL);
 		this.registerDefaultState(defaultBlockState().setValue(ACTIVATED, false));
 	}
-
+	
 	@Override
 	public void checkRitual(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -74,7 +74,7 @@ public class EternalPedestal extends PedestalBlock {
 			}
 		}
 	}
-
+	
 	@Override
 	@Deprecated
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
@@ -85,23 +85,23 @@ public class EternalPedestal extends PedestalBlock {
 		}
 		return updated;
 	}
-
+	
 	@Override
 	@Deprecated
 	public float getDestroyProgress(BlockState state, Player player, BlockGetter world, BlockPos pos) {
 		return 0.0F;
 	}
-
+	
 	@Override
 	public float getExplosionResistance() {
 		return Blocks.BEDROCK.getExplosionResistance();
 	}
-
+	
 	@Override
 	public boolean dropFromExplosion(Explosion explosion) {
 		return false;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.is(this)) {
@@ -120,18 +120,18 @@ public class EternalPedestal extends PedestalBlock {
 		}
 		return drop;
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		super.createBlockStateDefinition(stateManager);
 		stateManager.add(ACTIVATED);
 	}
-
+	
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new EternalPedestalEntity(blockPos, blockState);
 	}
-
+	
 	@Override
 	public boolean hasUniqueEntity() {
 		return true;

@@ -18,19 +18,16 @@ public class CavePumpkinFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.above()).is(TagAPI.GEN_TERRAIN) || !world.isEmptyBlock(pos)
-				|| !world.isEmptyBlock(pos.below())) {
+		if (!world.getBlockState(pos.above()).is(TagAPI.GEN_TERRAIN) || !world.isEmptyBlock(pos) || !world.isEmptyBlock(pos.below())) {
 			return false;
 		}
-
+		
 		int age = random.nextInt(4);
-		BlocksHelper.setWithoutUpdate(world, pos,
-				EndBlocks.CAVE_PUMPKIN_SEED.defaultBlockState().setValue(EndBlockProperties.AGE, age));
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.CAVE_PUMPKIN_SEED.defaultBlockState().setValue(EndBlockProperties.AGE, age));
 		if (age > 1) {
-			BlocksHelper.setWithoutUpdate(world, pos.below(),
-					EndBlocks.CAVE_PUMPKIN.defaultBlockState().setValue(EndBlockProperties.SMALL, age < 3));
+			BlocksHelper.setWithoutUpdate(world, pos.below(), EndBlocks.CAVE_PUMPKIN.defaultBlockState().setValue(EndBlockProperties.SMALL, age < 3));
 		}
-
+		
 		return true;
 	}
 }

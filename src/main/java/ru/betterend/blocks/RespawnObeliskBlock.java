@@ -48,25 +48,25 @@ import java.util.List;
 public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IRenderTyped {
 	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
 	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.box(2, 0, 2, 14, 16, 14);
-
+	
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
-
+	
 	public RespawnObeliskBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.END_STONE).luminance((state) -> {
 			return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
 		}));
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		for (int i = 0; i < 3; i++) {
@@ -76,7 +76,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 		}
 		return true;
 	}
-
+	
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		state = this.defaultBlockState();
@@ -84,7 +84,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 		BlocksHelper.setWithUpdate(world, pos.above(), state.setValue(SHAPE, TripleShape.MIDDLE));
 		BlocksHelper.setWithUpdate(world, pos.above(2), state.setValue(SHAPE, TripleShape.TOP));
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		TripleShape shape = state.getValue(SHAPE);
@@ -113,7 +113,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 			}
 		}
 	}
-
+	
 	@Override
 	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (player.isCreative()) {
@@ -127,7 +127,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 		}
 		super.playerWillDestroy(world, pos, state, player);
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(SHAPE) == TripleShape.BOTTOM) {
@@ -137,24 +137,24 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 			return Lists.newArrayList();
 		}
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;
 	}
-
+	
 	@Override
 	public BlockColor getProvider() {
 		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
 	}
-
+	
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
 			return ColorUtil.color(255, 255, 255);
 		};
 	}
-
+	
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);

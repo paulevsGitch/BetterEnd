@@ -74,7 +74,10 @@ public class Patterns {
 	public final static ResourceLocation BLOCK_FURNACE_LIT = BetterEnd.makeID("patterns/block/furnace_glow.json");
 	public final static ResourceLocation BLOCK_TOP_SIDE_BOTTOM = BetterEnd.makeID("patterns/block/top_side_bottom.json");
 	public final static ResourceLocation BLOCK_PATH = BetterEnd.makeID("patterns/block/path.json");
-
+	public final static ResourceLocation BLOCK_FLOWER_POT = BetterEnd.makeID("patterns/block/flower_pot.json");
+	public final static ResourceLocation BLOCK_FLOWER_POT_SOIL = BetterEnd.makeID("patterns/block/flower_pot_soil.json");
+	public final static ResourceLocation BLOCK_POTTED_LEAVES = BetterEnd.makeID("patterns/block/potted_leaves.json");
+	
 	//Item Models
 	public final static ResourceLocation ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");
 	public final static ResourceLocation ITEM_FENCE = BetterEnd.makeID("patterns/item/pattern_fence.json");
@@ -84,30 +87,28 @@ public class Patterns {
 	public final static ResourceLocation ITEM_GENERATED = BetterEnd.makeID("patterns/item/pattern_item_generated.json");
 	public final static ResourceLocation ITEM_HANDHELD = BetterEnd.makeID("patterns/item/pattern_item_handheld.json");
 	public final static ResourceLocation ITEM_SPAWN_EGG = BetterEnd.makeID("patterns/item/pattern_item_spawn_egg.json");
-
+	
 	public static Optional<String> createItemGenerated(String name) {
 		return createJson(ITEM_GENERATED, name);
 	}
-
+	
 	public static Optional<String> createBlockSimple(String name) {
 		return Patterns.createJson(Patterns.BLOCK_BASE, name, name);
 	}
-
+	
 	public static Optional<String> createBlockPillar(String name) {
 		return Patterns.createJson(Patterns.BLOCK_PILLAR, name, name);
 	}
-
+	
 	public static String createJson(Reader data, String parent, String block) {
 		try (BufferedReader buffer = new BufferedReader(data)) {
-			return buffer.lines().collect(Collectors.joining())
-					.replace("%parent%", parent)
-					.replace("%block%", block);
+			return buffer.lines().collect(Collectors.joining()).replace("%parent%", parent).replace("%block%", block);
 		}
 		catch (Exception ex) {
 			return null;
 		}
 	}
-
+	
 	public static Optional<String> createJson(ResourceLocation patternId, String parent, String block) {
 		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
@@ -117,18 +118,17 @@ public class Patterns {
 			return Optional.empty();
 		}
 	}
-
+	
 	public static Optional<String> createJson(ResourceLocation patternId, String texture) {
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%texture%", texture);
 		return createJson(patternId, textures);
 	}
-
+	
 	public static Optional<String> createJson(ResourceLocation patternId, Map<String, String> textures) {
 		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
-			String json = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))
-					.lines().collect(Collectors.joining());
+			String json = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8)).lines().collect(Collectors.joining());
 			for (Entry<String, String> texture : textures.entrySet()) {
 				json = json.replace(texture.getKey(), texture.getValue());
 			}
@@ -138,5 +138,5 @@ public class Patterns {
 			return Optional.empty();
 		}
 	}
-
+	
 }

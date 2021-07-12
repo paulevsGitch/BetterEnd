@@ -15,11 +15,8 @@ import ru.betterend.events.PlayerAdvancementsCallback;
 public abstract class PlayerAdvancementsMixin {
 	@Shadow
 	private ServerPlayer player;
-
-	@Inject(method = "award", at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/advancements/AdvancementRewards;grant(Lnet/minecraft/server/level/ServerPlayer;)V",
-			shift = Shift.AFTER))
+	
+	@Inject(method = "award", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/AdvancementRewards;grant(Lnet/minecraft/server/level/ServerPlayer;)V", shift = Shift.AFTER))
 	public void be_award(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> info) {
 		PlayerAdvancementsCallback.PLAYER_ADVANCEMENT_COMPLETE.invoker().onAdvancementComplete(player, advancement, criterionName);
 	}

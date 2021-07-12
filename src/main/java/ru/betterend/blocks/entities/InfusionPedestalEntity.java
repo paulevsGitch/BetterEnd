@@ -9,13 +9,13 @@ import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.rituals.InfusionRitual;
 
 public class InfusionPedestalEntity extends PedestalBlockEntity {
-
+	
 	private InfusionRitual linkedRitual;
-
+	
 	public InfusionPedestalEntity(BlockPos blockPos, BlockState blockState) {
 		super(EndBlockEntities.INFUSION_PEDESTAL, blockPos, blockState);
 	}
-
+	
 	@Override
 	public void setLevel(Level world) {
 		super.setLevel(world);
@@ -26,19 +26,19 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 			linkRitual(new InfusionRitual(this, world, this.getBlockPos()));
 		}
 	}
-
+	
 	public void linkRitual(InfusionRitual ritual) {
 		linkedRitual = ritual;
 	}
-
+	
 	public InfusionRitual getRitual() {
 		return linkedRitual;
 	}
-
+	
 	public boolean hasRitual() {
 		return linkedRitual != null;
 	}
-
+	
 	@Override
 	public CompoundTag save(CompoundTag tag) {
 		if (hasRitual()) {
@@ -46,7 +46,7 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 		}
 		return super.save(tag);
 	}
-
+	
 	@Override
 	protected void fromTag(CompoundTag tag) {
 		super.fromTag(tag);
@@ -55,7 +55,7 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 			linkedRitual.fromTag(tag.getCompound("ritual"));
 		}
 	}
-
+	
 	public static <T extends BlockEntity> void tickEnity(Level level, BlockPos blockPos, BlockState blockState, T uncastedEntity) {
 		if (uncastedEntity instanceof InfusionPedestalEntity) {
 			InfusionPedestalEntity blockEntity = (InfusionPedestalEntity) uncastedEntity;

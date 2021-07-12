@@ -30,7 +30,7 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 	public MengerSpongeWetBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).noOcclusion());
 	}
-
+	
 	@Override
 	public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (world.dimensionType().ultraWarm()) {
@@ -39,7 +39,7 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 			world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
 		}
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
@@ -77,12 +77,12 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 						}
 					}
 				}
-
+				
 				world.addParticle(ParticleTypes.DRIPPING_WATER, x, y, z, 0, 0, 0);
 			}
 		}
 	}
-
+	
 	@Override
 	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
@@ -94,12 +94,12 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 			world.addFreshEntity(drop);
 		}
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return Fluids.WATER.getSource(false);

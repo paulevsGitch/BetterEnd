@@ -23,7 +23,7 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 	public BYGIntegration() {
 		super("byg");
 	}
-
+	
 	@Override
 	public void init() {
 		Block block = Integrations.BYG.getBlock("ivis_phylium");
@@ -34,14 +34,14 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 		BYGFeatures.register();
 		BYGBiomes.register();
 	}
-
+	
 	@Override
 	public void addBiomes() {
 		BYGBiomes.addBiomes();
-
+		
 		Class<?> biomeClass = this.getClass("corgiaoc.byg.common.world.biome.BYGEndBiome");
 		List<Object> biomes = this.getStaticFieldValue(biomeClass, "BYG_END_BIOMES");
-
+		
 		if (biomes != null && biomeClass != null) {
 			biomes.forEach((obj) -> {
 				Biome biome = this.getAndExecuteRuntime(biomeClass, obj, "getBiome");

@@ -56,4 +56,9 @@ public class FlamaeaBlock extends EndPlantBlock implements ISpetialItem {
 	public boolean canPlaceOnWater() {
 		return true;
 	}
+	
+	@Override
+	public boolean addToPot() {
+		return false;
+	}
 }

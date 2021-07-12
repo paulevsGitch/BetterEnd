@@ -2,6 +2,8 @@ package ru.betterend.blocks;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
@@ -102,5 +104,11 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 	@Override
 	public boolean canPlantOn(Block block) {
 		return true;
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public String getPottedState() {
+		return "facing=up";
 	}
 }

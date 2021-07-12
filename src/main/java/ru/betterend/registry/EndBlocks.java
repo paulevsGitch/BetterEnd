@@ -10,7 +10,6 @@ import net.minecraft.world.level.material.MaterialColor;
 import org.jetbrains.annotations.NotNull;
 import ru.bclib.blocks.BaseBarrelBlock;
 import ru.bclib.blocks.BaseChestBlock;
-import ru.bclib.blocks.BaseCropBlock;
 import ru.bclib.blocks.BaseFurnaceBlock;
 import ru.bclib.blocks.BaseOreBlock;
 import ru.bclib.blocks.BasePathBlock;
@@ -132,6 +131,7 @@ import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
 import ru.betterend.blocks.basis.EndWallMushroom;
 import ru.betterend.blocks.basis.EndWallPlantBlock;
 import ru.betterend.blocks.basis.FurBlock;
+import ru.betterend.blocks.basis.PottableCropBlock;
 import ru.betterend.blocks.basis.PottableLeavesBlock;
 import ru.betterend.blocks.basis.StoneLanternBlock;
 import ru.betterend.blocks.complex.ColoredMaterial;
@@ -321,10 +321,10 @@ public class EndBlocks extends BlocksRegistry {
 	
 	// Crops
 	public static final Block SHADOW_BERRY = registerBlock("shadow_berry", new ShadowBerryBlock());
-	public static final Block BLOSSOM_BERRY = registerBlock("blossom_berry_seed", new BaseCropBlock(EndItems.BLOSSOM_BERRY, PINK_MOSS));
-	public static final Block AMBER_ROOT = registerBlock("amber_root_seed", new BaseCropBlock(EndItems.AMBER_ROOT_RAW, AMBER_MOSS));
-	public static final Block CHORUS_MUSHROOM = registerBlock("chorus_mushroom_seed", new BaseCropBlock(EndItems.CHORUS_MUSHROOM_RAW, CHORUS_NYLIUM));
-	//public static final Block PEARLBERRY = registerBlock("pearlberry_seed", new EndCropBlock(EndItems.BLOSSOM_BERRY, END_MOSS, END_MYCELIUM));
+	public static final Block BLOSSOM_BERRY = registerBlock("blossom_berry_seed", new PottableCropBlock(EndItems.BLOSSOM_BERRY, PINK_MOSS));
+	public static final Block AMBER_ROOT = registerBlock("amber_root_seed", new PottableCropBlock(EndItems.AMBER_ROOT_RAW, AMBER_MOSS));
+	public static final Block CHORUS_MUSHROOM = registerBlock("chorus_mushroom_seed", new PottableCropBlock(EndItems.CHORUS_MUSHROOM_RAW, CHORUS_NYLIUM));
+	//public static final Block PEARLBERRY = registerBlock("pearlberry_seed", new PottableCropBlock(EndItems.BLOSSOM_BERRY, END_MOSS, END_MYCELIUM));
 	public static final Block CAVE_PUMPKIN_SEED = registerBlock("cave_pumpkin_seed", new CavePumpkinVineBlock());
 	public static final Block CAVE_PUMPKIN = registerBlock("cave_pumpkin", new CavePumpkinBlock());
 	

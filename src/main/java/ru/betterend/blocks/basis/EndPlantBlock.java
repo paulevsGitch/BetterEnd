@@ -36,4 +36,9 @@ public class EndPlantBlock extends BasePlantBlock implements PottablePlant {
 	public boolean canPlantOn(Block block) {
 		return isTerrain(block.defaultBlockState());
 	}
+	
+	@Override
+	public boolean addToPot() {
+		return getStateDefinition().getProperties().isEmpty();
+	}
 }

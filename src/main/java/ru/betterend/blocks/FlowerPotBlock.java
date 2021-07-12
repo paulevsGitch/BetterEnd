@@ -1,8 +1,6 @@
 package ru.betterend.blocks;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.math.Transformation;
@@ -18,8 +16,6 @@ import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackResources;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -30,7 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -41,35 +36,25 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.models.BasePatterns;
-import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.client.models.ModelsHelper.MultiPartBuilder;
 import ru.bclib.client.models.PatternsHelper;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.IPostInit;
 import ru.bclib.interfaces.IRenderTyped;
-import ru.bclib.interfaces.ISpetialItem;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.JsonFactory;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PottableLeavesBlock;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.config.Configs;
 import ru.betterend.interfaces.PottablePlant;
+import ru.betterend.interfaces.PottableTerrain;
 import ru.betterend.registry.EndBlocks;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.SplittableRandom;
-import java.util.stream.Stream;
 
 public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IPostInit {
 	private static final IntegerProperty PLANT_ID = EndBlockProperties.PLANT_ID;
@@ -121,10 +106,10 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 		}
 		
 		EndBlocks.getModBlocks().forEach(block -> {
-			if (block instanceof PottablePlant && canBeAdded(block)) {
+			if (block instanceof PottablePlant && ((PottablePlant) block).addToPot()) {//&& canBeAdded(block)) {
 				processBlock(plants, block, "flower_pots.plants", reservedPlantsIDs);
 			}
-			else if (block instanceof EndTerrainBlock) {
+			else if (block instanceof PottableTerrain) {
 				processBlock(soils, block, "flower_pots.soils", reservedSoilIDs);
 			}
 		});
@@ -154,22 +139,6 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 		return max;
 	}
 	
-	private boolean canBeAdded(Block block) {
-		if (block instanceof SaplingBlock) {
-			return true;
-		}
-		else if (block instanceof PottableLeavesBlock) {
-			return true;
-		}
-		else if (block instanceof ISpetialItem) {
-			return !((ISpetialItem) block).canPlaceOnWater();
-		}
-		else if (block.getStateDefinition().getProperties().isEmpty()) {
-			return true;
-		}
-		return false;
-	}
-	
 	private void processBlock(Block[] target, Block block, String path, Map<String, Integer> idMap) {
 		ResourceLocation location = Registry.BLOCK.getKey(block);
 		if (idMap.containsKey(location.getPath())) {
@@ -194,7 +163,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 		}
 		ItemStack itemStack = player.getItemInHand(hand);
 		int soilID = state.getValue(SOIL_ID);
-		if (soilID == 0 || soils[soilID - 1] == null) {
+		if (soilID == 0 || soilID > soils.length || soils[soilID - 1] == null) {
 			if (!(itemStack.getItem() instanceof BlockItem)) {
 				return InteractionResult.PASS;
 			}
@@ -210,12 +179,12 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 		
 		int plantID = state.getValue(PLANT_ID);
 		if (itemStack.isEmpty()) {
-			if (plantID > 0 && plantID <= plants.length) {
+			if (plantID > 0 && plantID <= plants.length && plants[plantID - 1] != null) {
 				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, 0));
 				player.addItem(new ItemStack(plants[plantID - 1]));
 				return InteractionResult.SUCCESS;
 			}
-			if (soilID > 0 && soilID <= soils.length) {
+			if (soilID > 0 && soilID <= soils.length && soils[soilID - 1] != null) {
 				BlocksHelper.setWithUpdate(level, pos, state.setValue(SOIL_ID, 0));
 				player.addItem(new ItemStack(soils[soilID - 1]));
 			}
@@ -295,14 +264,38 @@ public class FlowerPotBlock extends BaseBlockNotFull implements IRenderTyped, IP
 			objSource = new ResourceLocation(modelPath.getNamespace(), "blockstates/" + modelPath.getPath() + ".json");
 			JsonObject obj = JsonFactory.getJsonObject(objSource);
 			if (obj != null) {
-				JsonElement variants = obj.get("variants").getAsJsonObject().get("");
+				JsonElement variants = obj.get("variants");
+				JsonElement list = null;
 				String path = null;
+				
+				if (variants == null) {
+					continue;
+				}
+				
 				if (variants.isJsonArray()) {
-					path = variants.getAsJsonArray().get(0).getAsJsonObject().get("model").getAsString();
+					list = variants.getAsJsonArray().get(0);
+				}
+				else if (variants.isJsonObject()) {
+					list = variants.getAsJsonObject().get(((PottablePlant) plants[i]).getPottedState());
+				}
+				
+				if (list == null) {
+					BetterEnd.LOGGER.warning("Incorrect json for pot plant " + objSource + ", no matching variants");
+					continue;
+				}
+				
+				if (list.isJsonArray()) {
+					path = list.getAsJsonArray().get(0).getAsJsonObject().get("model").getAsString();
 				}
 				else {
-					path = variants.getAsJsonObject().get("model").getAsString();
+					path = list.getAsJsonObject().get("model").getAsString();
 				}
+				
+				if (path == null) {
+					BetterEnd.LOGGER.warning("Incorrect json for pot plant " + objSource + ", no matching variants");
+					continue;
+				}
+				
 				model.part(new ResourceLocation(path)).setTransformation(offset).setCondition(state -> state.getValue(PLANT_ID) == compareID).add();
 			}
 			else {

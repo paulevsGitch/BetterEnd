@@ -25,11 +25,11 @@ public class AncientEmeraldIceBlock extends BaseBlock {
 	public AncientEmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.BLUE_ICE).randomTicks());
 	}
-
+	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		Direction dir = BlocksHelper.randomDirection(random);
-
+		
 		if (random.nextBoolean()) {
 			int x = MHelper.randRange(-2, 2, random);
 			int y = MHelper.randRange(-2, 2, random);
@@ -40,7 +40,7 @@ public class AncientEmeraldIceBlock extends BaseBlock {
 				makeParticles(world, p, random);
 			}
 		}
-
+		
 		pos = pos.relative(dir);
 		state = world.getBlockState(pos);
 		if (state.is(Blocks.WATER)) {
@@ -52,11 +52,11 @@ public class AncientEmeraldIceBlock extends BaseBlock {
 			makeParticles(world, pos, random);
 		}
 	}
-
+	
 	private void makeParticles(ServerLevel world, BlockPos pos, Random random) {
 		world.sendParticles(EndParticles.SNOWFLAKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0);
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);

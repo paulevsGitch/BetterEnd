@@ -39,33 +39,33 @@ import java.util.Random;
 public class SilkMothHiveBlock extends BaseBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final IntegerProperty FULLNESS = EndBlockProperties.FULLNESS;
-
+	
 	public SilkMothHiveBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByHand(true).hardness(0.5F).resistance(0.1F).sound(SoundType.WOOL).noOcclusion().randomTicks());
 		this.registerDefaultState(defaultBlockState().setValue(FULLNESS, 0));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(FACING, FULLNESS);
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		Direction dir = ctx.getHorizontalDirection().getOpposite();
 		return this.defaultBlockState().setValue(FACING, dir);
 	}
-
+	
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
 	}
-
+	
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return BlocksHelper.mirrorHorizontal(state, mirror, FACING);
 	}
-
+	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		Direction dir = state.getValue(FACING);
@@ -86,7 +86,7 @@ public class SilkMothHiveBlock extends BaseBlock {
 		world.addFreshEntity(moth);
 		world.playSound(null, pos, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1, 1);
 	}
-
+	
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (hand == InteractionHand.MAIN_HAND) {

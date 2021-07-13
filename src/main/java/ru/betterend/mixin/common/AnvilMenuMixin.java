@@ -31,11 +31,11 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 	private List<AnvilRecipe> be_recipes = Collections.emptyList();
 	private AnvilRecipe be_currentRecipe;
 	private DataSlot anvilLevel;
-
+	
 	public AnvilMenuMixin(int syncId, Inventory playerInventory) {
 		super(MenuType.ANVIL, syncId, playerInventory, ContainerLevelAccess.NULL);
 	}
-
+	
 	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V", at = @At("TAIL"))
 	public void be_initAnvilLevel(int syncId, Inventory inventory, ContainerLevelAccess context, CallbackInfo info) {
 		this.anvilLevel = addDataSlot(DataSlot.standalone());
@@ -53,17 +53,17 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 			anvilLevel.set(1);
 		}
 	}
-
+	
 	@Shadow
 	public abstract void createResult();
-
+	
 	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
 	protected void be_canTakeOutput(Player player, boolean present, CallbackInfoReturnable<Boolean> info) {
 		if (be_currentRecipe != null) {
 			info.setReturnValue(be_currentRecipe.checkHammerDurability(inputSlots, player));
 		}
 	}
-
+	
 	@Inject(method = "onTake", at = @At("HEAD"), cancellable = true)
 	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfo info) {
 		if (be_currentRecipe != null) {
@@ -87,19 +87,17 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 					world.levelEvent(1030, blockPos, 0);
 				}
 			});
-			//TODO: no more return, does this still work?
-			//info.setReturnValue(stack);
+			info.cancel();
 		}
 	}
-
+	
 	@Inject(method = "createResult", at = @At("HEAD"), cancellable = true)
 	public void be_updateOutput(CallbackInfo info) {
 		RecipeManager recipeManager = this.player.level.getRecipeManager();
 		be_recipes = recipeManager.getRecipesFor(AnvilRecipe.TYPE, inputSlots, player.level);
 		if (be_recipes.size() > 0) {
 			int anvilLevel = this.anvilLevel.get();
-			be_recipes = be_recipes.stream().filter(recipe ->
-					anvilLevel >= recipe.getAnvilLevel()).collect(Collectors.toList());
+			be_recipes = be_recipes.stream().filter(recipe -> anvilLevel >= recipe.getAnvilLevel()).collect(Collectors.toList());
 			if (be_recipes.size() > 0) {
 				if (be_currentRecipe == null || !be_recipes.contains(be_currentRecipe)) {
 					be_currentRecipe = be_recipes.get(0);
@@ -112,14 +110,14 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 			}
 		}
 	}
-
+	
 	@Inject(method = "setItemName", at = @At("HEAD"), cancellable = true)
 	public void be_setNewItemName(String string, CallbackInfo info) {
 		if (be_currentRecipe != null) {
 			info.cancel();
 		}
 	}
-
+	
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0) {
@@ -132,24 +130,24 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 		}
 		return super.clickMenuButton(player, id);
 	}
-
+	
 	private void be_updateResult() {
 		if (be_currentRecipe == null) return;
 		resultSlots.setItem(0, be_currentRecipe.assemble(inputSlots));
 		broadcastChanges();
 	}
-
+	
 	@Override
 	public void be_updateCurrentRecipe(AnvilRecipe recipe) {
 		this.be_currentRecipe = recipe;
 		be_updateResult();
 	}
-
+	
 	@Override
 	public AnvilRecipe be_getCurrentRecipe() {
 		return be_currentRecipe;
 	}
-
+	
 	@Override
 	public List<AnvilRecipe> be_getRecipes() {
 		return be_recipes;

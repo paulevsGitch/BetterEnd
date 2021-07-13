@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 
 public class FeaturesHelper {
 	private static final Set<Biome> INJECTED = Sets.newHashSet();
-
+	
 	public static void addFeatures(Registry<Biome> biomeRegistry) {
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getBiomeCategory() == Biome.BiomeCategory.THEEND && !INJECTED.contains(biome)) {
@@ -28,10 +28,10 @@ public class FeaturesHelper {
 				preFeatures.forEach((list) -> {
 					features.add(Lists.newArrayList(list));
 				});
-
+				
 				EndFeatures.registerBiomeFeatures(biomeRegistry.getKey(biome), biome, features);
 				EndStructures.registerBiomeStructures(biomeRegistry.getKey(biome), biome, structures);
-
+				
 				accessor.be_setFeatures(features);
 				accessor.be_setStructures(structures);
 				INJECTED.add(biome);

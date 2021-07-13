@@ -47,17 +47,12 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	public static final String ID = "end_stone_smelter";
-
+	
 	public EndStoneSmelter() {
-		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY)
-				.luminance(state -> state.getValue(LIT) ? 15 : 0)
-				.hardness(4F)
-				.resistance(100F)
-				.requiresCorrectToolForDrops()
-				.sound(SoundType.STONE));
+		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY).luminance(state -> state.getValue(LIT) ? 15 : 0).hardness(4F).resistance(100F).requiresCorrectToolForDrops().sound(SoundType.STONE));
 		registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
 	}
-
+	
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (world.isClientSide) {
 			return InteractionResult.SUCCESS;
@@ -67,24 +62,24 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 			return InteractionResult.CONSUME;
 		}
 	}
-
+	
 	private void openScreen(Level world, BlockPos pos, Player player) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EndStoneSmelterBlockEntity) {
 			player.openMenu((EndStoneSmelterBlockEntity) blockEntity);
 		}
 	}
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
 	}
-
+	
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new EndStoneSmelterBlockEntity(blockPos, blockState);
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drop = Lists.newArrayList(new ItemStack(this));
@@ -100,38 +95,38 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 		}
 		return drop;
 	}
-
+	
 	@Override
 	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
-
+	
 	@Override
 	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
 		//TODO
 		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
 	}
-
+	
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.MODEL;
 	}
-
+	
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
-
+	
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return state.rotate(mirror.getRotation(state.getValue(FACING)));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, LIT);
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
 		if (state.getValue(LIT)) {
@@ -141,7 +136,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 			if (random.nextDouble() < 0.1D) {
 				world.playLocalSound(x, y, z, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
-
+			
 			Direction direction = state.getValue(FACING);
 			Direction.Axis axis = direction.getAxis();
 			double defOffset = random.nextDouble() * 0.6D - 0.3D;
@@ -151,8 +146,8 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 			world.addParticle(ParticleTypes.SMOKE, x + offX, y + offY, z + offZ, 0.0D, 0.0D, 0.0D);
 		}
 	}
-
-
+	
+	
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {

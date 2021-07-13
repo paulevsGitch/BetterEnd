@@ -1,7 +1,7 @@
 {
-    "variants": {
-        "": {
-            "model": "betterend:block/%name%_small_tiles"
-        }
-    }
+	"variants": {
+		"": {
+			"model": "betterend:block/%name%_small_tiles"
+		}
+	}
 }

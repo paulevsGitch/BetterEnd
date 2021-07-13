@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:block/stairs",
+	"parent": "betterend:block/lit_stairs",
 	"textures": {
 		"bottom": "betterend:block/neon_cactus_block_top",
 		"top": "betterend:block/neon_cactus_block_top",

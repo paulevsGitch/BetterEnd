@@ -11,13 +11,13 @@ public class EndLilyFeature extends UnderwaterPlantScatter {
 	public EndLilyFeature(int radius) {
 		super(radius);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		EndLilySeedBlock seed = (EndLilySeedBlock) EndBlocks.END_LILY_SEED;
 		seed.grow(world, random, blockPos);
 	}
-
+	
 	@Override
 	protected int getChance() {
 		return 15;

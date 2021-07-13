@@ -19,17 +19,17 @@ import ru.betterend.world.structures.piece.PaintedMountainPiece;
 
 public class PaintedMountainStructure extends FeatureBaseStructure {
 	private static final BlockState[] VARIANTS;
-
+	
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return SDFStructureStart::new;
 	}
-
+	
 	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
 		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos chunkPos, int references, long seed) {
 			super(feature, chunkPos, references, seed);
 		}
-
+		
 		@Override
 		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
 			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
@@ -45,16 +45,12 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 				}
 				this.pieces.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises));
 			}
-
+			
 			//this.calculateBoundingBox();
 		}
 	}
-
+	
 	static {
-		VARIANTS = new BlockState[]{
-				Blocks.END_STONE.defaultBlockState(),
-				EndBlocks.FLAVOLITE.stone.defaultBlockState(),
-				EndBlocks.VIOLECITE.stone.defaultBlockState(),
-		};
+		VARIANTS = new BlockState[]{Blocks.END_STONE.defaultBlockState(), EndBlocks.FLAVOLITE.stone.defaultBlockState(), EndBlocks.VIOLECITE.stone.defaultBlockState(),};
 	}
 }

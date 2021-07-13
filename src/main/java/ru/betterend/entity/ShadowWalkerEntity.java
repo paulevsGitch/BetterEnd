@@ -33,7 +33,7 @@ public class ShadowWalkerEntity extends Monster {
 	public ShadowWalkerEntity(EntityType<ShadowWalkerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
-
+	
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new AttackGoal(this, 1.0D, false));
@@ -42,65 +42,48 @@ public class ShadowWalkerEntity extends Monster {
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
 	}
-
+	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return Monster.createMonsterAttributes()
-				.add(Attributes.FOLLOW_RANGE, 35.0)
-				.add(Attributes.MOVEMENT_SPEED, 0.15)
-				.add(Attributes.ATTACK_DAMAGE, 4.5)
-				.add(Attributes.ARMOR, 2.0)
-				.add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0).add(Attributes.MOVEMENT_SPEED, 0.15).add(Attributes.ATTACK_DAMAGE, 4.5).add(Attributes.ARMOR, 2.0).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
-
+	
 	@Override
 	public void tick() {
 		super.tick();
-		level.addParticle(ParticleTypes.ASH,
-				getX() + random.nextGaussian() * 0.2,
-				getY() + random.nextGaussian() * 0.5 + 1,
-				getZ() + random.nextGaussian() * 0.2,
-				0, 0, 0);
-		level.addParticle(ParticleTypes.SMOKE,
-				getX() + random.nextGaussian() * 0.2,
-				getY() + random.nextGaussian() * 0.5 + 1,
-				getZ() + random.nextGaussian() * 0.2,
-				0, 0, 0);
-		level.addParticle(ParticleTypes.ENTITY_EFFECT,
-				getX() + random.nextGaussian() * 0.2,
-				getY() + random.nextGaussian() * 0.5 + 1,
-				getZ() + random.nextGaussian() * 0.2,
-				0, 0, 0);
+		level.addParticle(ParticleTypes.ASH, getX() + random.nextGaussian() * 0.2, getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
+		level.addParticle(ParticleTypes.SMOKE, getX() + random.nextGaussian() * 0.2, getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
+		level.addParticle(ParticleTypes.ENTITY_EFFECT, getX() + random.nextGaussian() * 0.2, getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
 	}
-
+	
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return EndSounds.ENTITY_SHADOW_WALKER;
 	}
-
+	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return EndSounds.ENTITY_SHADOW_WALKER_DAMAGE;
 	}
-
+	
 	@Override
 	protected SoundEvent getDeathSound() {
 		return EndSounds.ENTITY_SHADOW_WALKER_DEATH;
 	}
-
+	
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {
 	}
-
+	
 	@Override
 	protected float getSoundVolume() {
 		return MHelper.randRange(0.25F, 0.5F, random);
 	}
-
+	
 	@Override
 	public float getVoicePitch() {
 		return MHelper.randRange(0.75F, 1.25F, random);
 	}
-
+	
 	@Override
 	public boolean doHurtTarget(Entity target) {
 		boolean attack = super.doHurtTarget(target);
@@ -112,7 +95,7 @@ public class ShadowWalkerEntity extends Monster {
 		}
 		return attack;
 	}
-
+	
 	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
 		if (Monster.checkMonsterSpawnRules(type, world, spawnReason, pos, random)) {
 			AABB box = new AABB(pos).inflate(16);
@@ -123,26 +106,26 @@ public class ShadowWalkerEntity extends Monster {
 		}
 		return false;
 	}
-
+	
 	private final class AttackGoal extends MeleeAttackGoal {
 		private final ShadowWalkerEntity walker;
 		private int ticks;
-
+		
 		public AttackGoal(ShadowWalkerEntity walker, double speed, boolean pauseWhenMobIdle) {
 			super(walker, speed, pauseWhenMobIdle);
 			this.walker = walker;
 		}
-
+		
 		public void start() {
 			super.start();
 			this.ticks = 0;
 		}
-
+		
 		public void stop() {
 			super.stop();
 			this.walker.setAggressive(false);
 		}
-
+		
 		public void tick() {
 			super.tick();
 			++this.ticks;

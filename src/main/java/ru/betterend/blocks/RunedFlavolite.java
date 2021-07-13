@@ -19,28 +19,24 @@ import java.util.List;
 
 public class RunedFlavolite extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
-
+	
 	public RunedFlavolite(boolean unbreakable) {
-		super(FabricBlockSettings.copyOf(EndBlocks.FLAVOLITE.polished)
-				.strength(
-						unbreakable ? -1 : 1,
-						unbreakable ? Blocks.BEDROCK.getExplosionResistance() : Blocks.OBSIDIAN.getExplosionResistance()
-				).luminance(state -> {
-					return state.getValue(ACTIVATED) ? 8 : 0;
-				}));
+		super(FabricBlockSettings.copyOf(EndBlocks.FLAVOLITE.polished).strength(unbreakable ? -1 : 1, unbreakable ? Blocks.BEDROCK.getExplosionResistance() : Blocks.OBSIDIAN.getExplosionResistance()).luminance(state -> {
+			return state.getValue(ACTIVATED) ? 8 : 0;
+		}));
 		this.registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(ACTIVATED);
 	}
-
+	
 	@Override
 	public boolean dropFromExplosion(Explosion explosion) {
 		return !BlocksHelper.isInvulnerableUnsafe(this.defaultBlockState());
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (BlocksHelper.isInvulnerableUnsafe(this.defaultBlockState())) {

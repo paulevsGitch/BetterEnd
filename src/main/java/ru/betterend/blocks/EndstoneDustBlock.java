@@ -19,18 +19,16 @@ import java.util.List;
 public class EndstoneDustBlock extends FallingBlock {
 	@Environment(EnvType.CLIENT)
 	private static final int COLOR = ColorUtil.color(226, 239, 168);
-
+	
 	public EndstoneDustBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.SAND)
-				.breakByTool(FabricToolTags.SHOVELS)
-				.materialColor(Blocks.END_STONE.defaultMaterialColor()));
+		super(FabricBlockSettings.copyOf(Blocks.SAND).breakByTool(FabricToolTags.SHOVELS).materialColor(Blocks.END_STONE.defaultMaterialColor()));
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Collections.singletonList(new ItemStack(this));
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public int getDustColor(BlockState state, BlockGetter world, BlockPos pos) {
 		return COLOR;

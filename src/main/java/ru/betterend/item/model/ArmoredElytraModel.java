@@ -16,37 +16,30 @@ import net.minecraft.world.phys.Vec3;
 public class ArmoredElytraModel<T extends LivingEntity> extends AgeableListModel<T> {
 	private final ModelPart rightWing;
 	private final ModelPart leftWing;
-
+	
 	public static LayerDefinition getTexturedModelData() {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
-		modelPartData.addOrReplaceChild(PartNames.LEFT_WING, CubeListBuilder.create()
-						.texOffs(22, 0)
-						.addBox(-10.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f),
-				PartPose.ZERO);
-
-		modelPartData.addOrReplaceChild(PartNames.RIGHT_WING, CubeListBuilder.create()
-						.mirror()
-						.texOffs(22, 0)
-						.addBox(0.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f),
-				PartPose.ZERO);
-
+		modelPartData.addOrReplaceChild(PartNames.LEFT_WING, CubeListBuilder.create().texOffs(22, 0).addBox(-10.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f), PartPose.ZERO);
+		
+		modelPartData.addOrReplaceChild(PartNames.RIGHT_WING, CubeListBuilder.create().mirror().texOffs(22, 0).addBox(0.0f, 0.0f, 0.0f, 10.0f, 20.0f, 2.0f), PartPose.ZERO);
+		
 		return LayerDefinition.create(modelData, 64, 32);
 	}
-
+	
 	public ArmoredElytraModel(ModelPart modelPart) {
 		leftWing = modelPart.getChild(PartNames.LEFT_WING);
 		rightWing = modelPart.getChild(PartNames.RIGHT_WING);
 	}
-
+	
 	protected Iterable<ModelPart> headParts() {
 		return ImmutableList.of();
 	}
-
+	
 	protected Iterable<ModelPart> bodyParts() {
 		return ImmutableList.of(leftWing, rightWing);
 	}
-
+	
 	public void setupAnim(T livingEntity, float f, float g, float h, float i, float j) {
 		float rotX = 0.2617994F;
 		float rotZ = -0.2617994F;
@@ -68,7 +61,7 @@ public class ArmoredElytraModel<T extends LivingEntity> extends AgeableListModel
 			rotY = 0.08726646F;
 			wingY = 3.0F;
 		}
-
+		
 		leftWing.x = 5.0F;
 		leftWing.y = wingY;
 		if (livingEntity instanceof AbstractClientPlayer) {
@@ -85,7 +78,7 @@ public class ArmoredElytraModel<T extends LivingEntity> extends AgeableListModel
 			leftWing.zRot = rotZ;
 			leftWing.yRot = rotY;
 		}
-
+		
 		rightWing.x = -leftWing.x;
 		rightWing.yRot = -leftWing.yRot;
 		rightWing.y = leftWing.y;

@@ -25,7 +25,7 @@ public class EndLilySeedBlock extends UnderwaterPlantWithAgeBlock {
 			BlocksHelper.setWithoutUpdate(world, up, EndBlocks.END_LILY.defaultBlockState().setValue(EndLilyBlock.SHAPE, TripleShape.TOP));
 		}
 	}
-
+	
 	private boolean canGrow(WorldGenLevel world, BlockPos pos) {
 		BlockPos up = pos.above();
 		while (world.getBlockState(up).getFluidState().getType().equals(Fluids.WATER.getSource())) {
@@ -33,7 +33,7 @@ public class EndLilySeedBlock extends UnderwaterPlantWithAgeBlock {
 		}
 		return world.isEmptyBlock(up);
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(TagAPI.END_GROUND);

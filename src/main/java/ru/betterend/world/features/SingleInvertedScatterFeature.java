@@ -13,12 +13,12 @@ import java.util.Random;
 
 public class SingleInvertedScatterFeature extends InvertedScatterFeature {
 	private final Block block;
-
+	
 	public SingleInvertedScatterFeature(Block block, int radius) {
 		super(radius);
 		this.block = block;
 	}
-
+	
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		if (!world.isEmptyBlock(blockPos)) {
@@ -30,7 +30,7 @@ public class SingleInvertedScatterFeature extends InvertedScatterFeature {
 		}
 		return state.canSurvive(world, blockPos);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlockState state = block.defaultBlockState();

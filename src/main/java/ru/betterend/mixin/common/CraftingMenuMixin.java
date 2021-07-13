@@ -16,7 +16,7 @@ public abstract class CraftingMenuMixin {
 	@Final
 	@Shadow
 	private ContainerLevelAccess access;
-
+	
 	@Inject(method = "stillValid", at = @At("HEAD"), cancellable = true)
 	private void be_stillValid(Player player, CallbackInfoReturnable<Boolean> info) {
 		if (access.evaluate((world, pos) -> {

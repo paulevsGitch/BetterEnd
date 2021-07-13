@@ -51,7 +51,7 @@ import java.util.Arrays;
 public final class ArmorRenderingRegistry {
 	private ArmorRenderingRegistry() {
 	}
-
+	
 	/**
 	 * Registers a provider for custom armor models for an item.
 	 *
@@ -61,7 +61,7 @@ public final class ArmorRenderingRegistry {
 	public static void registerModel(@Nullable ModelProvider provider, Item... items) {
 		registerModel(provider, Arrays.asList(items));
 	}
-
+	
 	/**
 	 * Registers a provider for custom armor models for an item.
 	 *
@@ -71,7 +71,7 @@ public final class ArmorRenderingRegistry {
 	public static void registerModel(@Nullable ModelProvider provider, Iterable<Item> items) {
 		ArmorRenderingRegistryImpl.registerModel(provider, items);
 	}
-
+	
 	/**
 	 * Registers a provider for custom texture models for an item.
 	 *
@@ -81,7 +81,7 @@ public final class ArmorRenderingRegistry {
 	public static void registerTexture(@Nullable TextureProvider provider, Item... items) {
 		registerTexture(provider, Arrays.asList(items));
 	}
-
+	
 	/**
 	 * Registers a provider for custom texture models for an item.
 	 *
@@ -91,7 +91,7 @@ public final class ArmorRenderingRegistry {
 	public static void registerTexture(@Nullable TextureProvider provider, Iterable<Item> items) {
 		ArmorRenderingRegistryImpl.registerTexture(provider, items);
 	}
-
+	
 	/**
 	 * Register simple armor items to use the vanilla armor file name under the mods namespace.
 	 *
@@ -103,7 +103,7 @@ public final class ArmorRenderingRegistry {
 			return new ResourceLocation(identifier.getNamespace(), "textures/models/armor/" + identifier.getPath() + "_layer_" + (secondLayer ? 2 : 1) + (suffix == null ? "" : "_" + suffix) + ".png");
 		}, items);
 	}
-
+	
 	/**
 	 * Gets the model of the armor piece.
 	 *
@@ -117,7 +117,7 @@ public final class ArmorRenderingRegistry {
 	public static HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
 		return ArmorRenderingRegistryImpl.getArmorModel(entity, stack, slot, defaultModel);
 	}
-
+	
 	/**
 	 * Gets the armor texture {@link net.minecraft.resources.ResourceLocation}.
 	 *
@@ -133,7 +133,7 @@ public final class ArmorRenderingRegistry {
 	public static ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot, boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
 		return ArmorRenderingRegistryImpl.getArmorTexture(entity, stack, slot, secondLayer, suffix, defaultTexture);
 	}
-
+	
 	@FunctionalInterface
 	@Environment(EnvType.CLIENT)
 	public interface ModelProvider {
@@ -146,10 +146,9 @@ public final class ArmorRenderingRegistry {
 		 * @param defaultModel The default vanilla armor model
 		 * @return The model of the armor piece. Should never be null.
 		 */
-		@NotNull
-		HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel);
+		@NotNull HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel);
 	}
-
+	
 	@FunctionalInterface
 	@Environment(EnvType.CLIENT)
 	public interface TextureProvider {
@@ -162,7 +161,6 @@ public final class ArmorRenderingRegistry {
 		 * @param defaultTexture The default vanilla texture identifier
 		 * @return the custom armor texture identifier. Should never be null.
 		 */
-		@NotNull
-		ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot, boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture);
+		@NotNull ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot, boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture);
 	}
 }

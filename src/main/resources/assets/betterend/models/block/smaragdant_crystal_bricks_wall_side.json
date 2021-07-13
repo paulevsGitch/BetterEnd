@@ -1,0 +1,6 @@
+{
+    "parent": "betterend:block/lit_wall_side",
+	"textures": {
+        "wall": "betterend:block/smaragdant_crystal_bricks"
+    }
+}

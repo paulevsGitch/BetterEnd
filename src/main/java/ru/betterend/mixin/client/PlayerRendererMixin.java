@@ -13,11 +13,11 @@ import ru.betterend.client.render.ArmoredElytraLayer;
 
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-
+	
 	public PlayerRendererMixin(EntityRendererProvider.Context context, PlayerModel<AbstractClientPlayer> entityModel, float f) {
 		super(context, entityModel, f);
 	}
-
+	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	public void be_addCustomLayer(EntityRendererProvider.Context context, boolean bl, CallbackInfo ci) {
 		addLayer(new ArmoredElytraLayer<>(this, context.getModelSet()));

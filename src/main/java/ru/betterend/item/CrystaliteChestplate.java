@@ -19,16 +19,16 @@ import ru.betterend.registry.EndItems;
 import java.util.List;
 
 public class CrystaliteChestplate extends CrystaliteArmor implements MobEffectApplier {
-
+	
 	public CrystaliteChestplate() {
 		super(EquipmentSlot.CHEST, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
 	}
-
+	
 	@Override
 	public void applyEffect(LivingEntity owner) {
 		owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_DIG_SPEED));
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> lines, TooltipFlag tooltip) {

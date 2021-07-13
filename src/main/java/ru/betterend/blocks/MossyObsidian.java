@@ -24,7 +24,7 @@ public class MossyObsidian extends BaseBlock {
 	public MossyObsidian() {
 		super(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).hardness(3).randomTicks());
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -33,14 +33,14 @@ public class MossyObsidian extends BaseBlock {
 		}
 		return Collections.singletonList(new ItemStack(Blocks.OBSIDIAN));
 	}
-
+	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
 			world.setBlockAndUpdate(pos, Blocks.OBSIDIAN.defaultBlockState());
 		}
 	}
-
+	
 	public boolean canSurvive(BlockState state, LevelReader worldView, BlockPos pos) {
 		BlockPos blockPos = pos.above();
 		BlockState blockState = worldView.getBlockState(blockPos);

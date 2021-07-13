@@ -10,18 +10,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EndPedestal extends PedestalBlock {
-
+	
 	public EndPedestal(Block parent) {
 		super(parent);
 	}
-
+	
 	@Override
 	protected Map<String, String> createTexturesMap() {
 		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
 		String name = blockId.getPath();
 		return new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
-
+			
 			{
 				put("%mod%", BetterEnd.MOD_ID);
 				put("%top%", name + "_polished");

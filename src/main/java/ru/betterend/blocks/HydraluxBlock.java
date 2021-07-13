@@ -29,23 +29,18 @@ import java.util.List;
 import java.util.Random;
 
 public class HydraluxBlock extends UnderwaterPlantBlock {
-
+	
 	public static final EnumProperty<HydraluxShape> SHAPE = EndBlockProperties.HYDRALUX_SHAPE;
-
+	
 	public HydraluxBlock() {
-		super(FabricBlockSettings.of(Material.WATER_PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.breakByHand(true)
-				.sound(SoundType.WET_GRASS)
-				.lightLevel((state) -> state.getValue(SHAPE).hasGlow() ? 15 : 0)
-				.noCollission());
+		super(FabricBlockSettings.of(Material.WATER_PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.WET_GRASS).lightLevel((state) -> state.getValue(SHAPE).hasGlow() ? 15 : 0).noCollission());
 	}
-
+	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState down = world.getBlockState(pos.below());
@@ -60,28 +55,28 @@ public class HydraluxBlock extends UnderwaterPlantBlock {
 			return down.is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(TagAPI.END_GROUND);
 	}
-
+	
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isBonemealSuccess(Level world, Random random, BlockPos pos, BlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
 		return new ItemStack(EndBlocks.HYDRALUX_SAPLING);
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		HydraluxShape shape = state.getValue(SHAPE);

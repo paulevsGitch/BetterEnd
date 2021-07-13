@@ -27,19 +27,19 @@ public class MurkweedBlock extends EndPlantBlock {
 		double v = random.nextDouble() * 0.1;
 		world.addParticle(ParticleTypes.ENTITY_EFFECT, x, y, z, v, v, v);
 	}
-
+	
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity && !((LivingEntity) entity).hasEffect(MobEffects.BLINDNESS)) {
 			((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 50));
 		}
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.SHADOW_GRASS);
 	}
-
+	
 	@Override
 	public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
 		return false;

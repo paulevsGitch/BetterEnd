@@ -27,7 +27,7 @@ public class SulphurHillFeature extends DefaultFeature {
 		if (pos.getY() < 57 || pos.getY() > 70) {
 			return false;
 		}
-
+		
 		int count = MHelper.randRange(5, 13, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		for (int i = 0; i < count; i++) {
@@ -41,7 +41,7 @@ public class SulphurHillFeature extends DefaultFeature {
 		}
 		return true;
 	}
-
+	
 	private void makeCircle(WorldGenLevel world, BlockPos pos, OpenSimplexNoise noise, Random random) {
 		int radius = MHelper.randRange(5, 9, random);
 		int min = -radius - 3;

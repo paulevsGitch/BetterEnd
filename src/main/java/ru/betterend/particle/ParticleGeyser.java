@@ -17,7 +17,7 @@ public class ParticleGeyser extends TextureSheetParticle {
 	private MutableBlockPos mut = new MutableBlockPos();
 	private boolean changeDir = false;
 	private boolean check = true;
-
+	
 	protected ParticleGeyser(ClientLevel world, double x, double y, double z, double vx, double vy, double vz, SpriteSet sprites) {
 		super(world, x, y, z, vx, vy, vz);
 		pickSprite(sprites);
@@ -27,10 +27,10 @@ public class ParticleGeyser extends TextureSheetParticle {
 		this.zd = vz;
 		this.yo = y - 0.125;
 	}
-
+	
 	@Override
 	public void tick() {
-
+		
 		if (this.yo == this.y || this.age > this.lifetime) {
 			this.remove();
 		}
@@ -38,10 +38,10 @@ public class ParticleGeyser extends TextureSheetParticle {
 			if (this.age >= this.lifetime - 200) {
 				this.setAlpha((this.lifetime - this.age) / 200F);
 			}
-
+			
 			this.quadSize += 0.005F;
 			this.yd = 0.125;
-
+			
 			if (changeDir) {
 				changeDir = false;
 				check = false;
@@ -56,21 +56,21 @@ public class ParticleGeyser extends TextureSheetParticle {
 		}
 		super.tick();
 	}
-
+	
 	@Override
 	public ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public static class FactoryGeyser implements ParticleProvider<SimpleParticleType> {
-
+		
 		private final SpriteSet sprites;
-
+		
 		public FactoryGeyser(SpriteSet sprites) {
 			this.sprites = sprites;
 		}
-
+		
 		@Override
 		public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double vX, double vY, double vZ) {
 			return new ParticleGeyser(world, x, y, z, 0, 0.125, 0, sprites);

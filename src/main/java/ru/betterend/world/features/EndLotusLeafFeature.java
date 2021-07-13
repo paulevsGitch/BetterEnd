@@ -17,24 +17,24 @@ public class EndLotusLeafFeature extends ScatterFeature {
 	public EndLotusLeafFeature(int radius) {
 		super(radius);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		if (canGenerate(world, blockPos)) {
 			generateLeaf(world, blockPos);
 		}
 	}
-
+	
 	@Override
 	protected int getChance() {
 		return 15;
 	}
-
+	
 	@Override
 	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		return getPosOnSurface(world, pos);
 	}
-
+	
 	private void generateLeaf(WorldGenLevel world, BlockPos pos) {
 		MutableBlockPos p = new MutableBlockPos();
 		BlockState leaf = EndBlocks.END_LOTUS_LEAF.defaultBlockState();
@@ -48,7 +48,7 @@ public class EndLotusLeafFeature extends ScatterFeature {
 			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(d1).move(d2), leaf.setValue(EndLotusLeafBlock.HORIZONTAL_FACING, d1).setValue(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
 		}
 	}
-
+	
 	private boolean canGenerate(WorldGenLevel world, BlockPos pos) {
 		MutableBlockPos p = new MutableBlockPos();
 		p.setY(pos.getY());
@@ -57,13 +57,12 @@ public class EndLotusLeafFeature extends ScatterFeature {
 			p.setX(pos.getX() + x);
 			for (int z = -1; z < 2; z++) {
 				p.setZ(pos.getZ() + z);
-				if (world.isEmptyBlock(p) && world.getBlockState(p.below()).is(Blocks.WATER))
-					count++;
+				if (world.isEmptyBlock(p) && world.getBlockState(p.below()).is(Blocks.WATER)) count++;
 			}
 		}
 		return count == 9;
 	}
-
+	
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		return world.isEmptyBlock(blockPos) && world.getBlockState(blockPos.below()).is(Blocks.WATER);

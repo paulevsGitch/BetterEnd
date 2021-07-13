@@ -23,7 +23,7 @@ public class DesertLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 	private static final MutableBlockPos POS = new MutableBlockPos();
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
@@ -35,35 +35,35 @@ public class DesertLakeFeature extends DefaultFeature {
 		int dist2 = MHelper.floor(radius * 1.5);
 		int bott = MHelper.floor(depth);
 		blockPos = getPosOnSurfaceWG(world, blockPos);
-
+		
 		if (blockPos.getY() < 10) return false;
-
+		
 		int waterLevel = blockPos.getY();
-
+		
 		BlockPos pos = getPosOnSurfaceRaycast(world, blockPos.north(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
-
+		
 		pos = getPosOnSurfaceRaycast(world, blockPos.south(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
-
+		
 		pos = getPosOnSurfaceRaycast(world, blockPos.east(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
-
+		
 		pos = getPosOnSurfaceRaycast(world, blockPos.west(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5) return false;
 		waterLevel = MHelper.min(pos.getY(), waterLevel);
 		BlockState state;
-
+		
 		int minX = blockPos.getX() - dist2;
 		int maxX = blockPos.getX() + dist2;
 		int minZ = blockPos.getZ() - dist2;
 		int maxZ = blockPos.getZ() + dist2;
 		int maskMinX = minX - 1;
 		int maskMinZ = minZ - 1;
-
+		
 		boolean[][] mask = new boolean[maxX - minX + 3][maxZ - minZ + 3];
 		for (int x = minX; x <= maxX; x++) {
 			POS.setX(x);
@@ -89,7 +89,7 @@ public class DesertLakeFeature extends DefaultFeature {
 				}
 			}
 		}
-
+		
 		for (int x = minX; x <= maxX; x++) {
 			POS.setX(x);
 			int x2 = x - blockPos.getX();
@@ -120,8 +120,7 @@ public class DesertLakeFeature extends DefaultFeature {
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
 									state = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-									if (y > waterLevel + 1)
-										BlocksHelper.setWithoutUpdate(world, pos, state);
+									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
 										BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState());
 									else
@@ -136,9 +135,9 @@ public class DesertLakeFeature extends DefaultFeature {
 				}
 			}
 		}
-
+		
 		double aspect = ((double) radius / (double) depth);
-
+		
 		for (int x = blockPos.getX() - dist; x <= blockPos.getX() + dist; x++) {
 			POS.setX(x);
 			int x2 = x - blockPos.getX();
@@ -197,17 +196,13 @@ public class DesertLakeFeature extends DefaultFeature {
 				}
 			}
 		}
-
+		
 		BlockFixer.fixBlocks(world, new BlockPos(minX - 2, waterLevel - 2, minZ - 2), new BlockPos(maxX + 2, blockPos.getY() + 20, maxZ + 2));
-
+		
 		return true;
 	}
-
+	
 	private boolean canReplace(BlockState state) {
-		return state.getMaterial().isReplaceable()
-				|| state.is(TagAPI.GEN_TERRAIN)
-				|| state.is(EndBlocks.ENDSTONE_DUST)
-				|| state.getMaterial().equals(Material.PLANT)
-				|| state.getMaterial().equals(Material.WATER_PLANT);
+		return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().equals(Material.WATER_PLANT);
 	}
 }

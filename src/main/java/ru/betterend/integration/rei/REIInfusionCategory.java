@@ -22,29 +22,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionDisplay> {
-
+	
 	private final static ResourceLocation BACKGROUND = BetterEnd.makeID("textures/gui/rei_infusion.png");
 	private final EntryStack ICON;
-
+	
 	REIInfusionCategory(EntryStack icon) {
 		ICON = icon;
 	}
-
+	
 	@Override
 	public @NotNull CategoryIdentifier getCategoryIdentifier() {
 		return REIPlugin.INFUSION;
 	}
-
+	
 	@Override
 	public @NotNull Component getTitle() {
 		return new TranslatableComponent(EndBlocks.INFUSION_PEDESTAL.getDescriptionId());
 	}
-
+	
 	@Override
 	public @NotNull EntryStack getIcon() {
 		return ICON;
 	}
-
+	
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIInfusionDisplay display, Rectangle bounds) {
 		Point centerPoint = new Point(bounds.getCenterX() - 34, bounds.getCenterY() - 2);
@@ -71,23 +71,15 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y + 24)).entries(inputEntries.get(6)).disableBackground().markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y - 24)).entries(inputEntries.get(8)).disableBackground().markInput());
 		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 80, centerPoint.y)).entries(outputEntries.get(0)).disableBackground().markOutput());
-		widgets.add(
-			Widgets.createLabel(
-				new Point(bounds.getMaxX() - 5, bounds.y + 6),
-				new TranslatableComponent("category.rei.infusion.time&val", display.getInfusionTime())
-			)
-			.noShadow()
-			.rightAligned()
-			.color(0xFF404040, 0xFFBBBBBB)
-		);
+		widgets.add(Widgets.createLabel(new Point(bounds.getMaxX() - 5, bounds.y + 6), new TranslatableComponent("category.rei.infusion.time&val", display.getInfusionTime())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		return widgets;
 	}
-
+	
 	@Override
 	public int getDisplayHeight() {
 		return 104;
 	}
-
+	
 	@Override
 	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIInfusionDisplay display, IntList redSlots) {}
 }

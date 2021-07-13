@@ -33,7 +33,7 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 		if (!world.getBlockState(pos.below(5)).is(TagAPI.GEN_TERRAIN)) {
 			return false;
 		}
-
+		
 		float height = MHelper.randRange(10F, 35F, random);
 		float radius = MHelper.randRange(2F, 5F, random);
 		SDF pillar = new SDFCappedCone().setRadius1(radius).setRadius2(radius).setHeight(height * 0.5F).setBlock(Blocks.OBSIDIAN);
@@ -60,7 +60,7 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 		}).setReplaceFunction((state) -> {
 			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
 		}).fillRecursive(world, pos);
-
+		
 		return true;
 	}
 }

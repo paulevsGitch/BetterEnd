@@ -13,7 +13,7 @@ public class LayerOptions {
 	public final int maxY;
 	public final long centerDist;
 	public final boolean hasCentralIsland;
-
+	
 	public LayerOptions(String name, PathConfig config, float distance, float scale, int center, int heightVariation, boolean hasCentral) {
 		this.distance = clampDistance(config.getFloat(name, "distance[1-8192]", distance));
 		this.scale = clampScale(config.getFloat(name, "scale[0.1-1024]", scale));
@@ -25,23 +25,23 @@ public class LayerOptions {
 		this.centerDist = Mth.floor(1000 / this.distance);
 		this.hasCentralIsland = config.getBoolean(name, "hasCentralIsland", hasCentral);
 	}
-
+	
 	private float clampDistance(float value) {
 		return Mth.clamp(value, 1, 8192);
 	}
-
+	
 	private float clampScale(float value) {
 		return Mth.clamp(value, 0.1F, 1024);
 	}
-
+	
 	private float clampCoverage(float value) {
 		return 0.9999F - Mth.clamp(value, 0, 1) * 2;
 	}
-
+	
 	private int clampCenter(int value) {
 		return Mth.clamp(value, 0, 255);
 	}
-
+	
 	private int clampVariation(int value) {
 		return Mth.clamp(value, 0, 255);
 	}

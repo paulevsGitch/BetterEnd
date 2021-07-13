@@ -12,15 +12,11 @@ import net.minecraft.world.level.material.MaterialColor;
 import ru.bclib.blocks.BaseBlock;
 
 public class AeterniumBlock extends BaseBlock {
-
+	
 	public AeterniumBlock() {
-		super(FabricBlockSettings.of(Material.METAL, MaterialColor.COLOR_GRAY)
-				.hardness(65F)
-				.resistance(1200F)
-				.requiresCorrectToolForDrops()
-				.sound(SoundType.NETHERITE_BLOCK));
+		super(FabricBlockSettings.of(Material.METAL, MaterialColor.COLOR_GRAY).hardness(65F).resistance(1200F).requiresCorrectToolForDrops().sound(SoundType.NETHERITE_BLOCK));
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public int getColor(BlockState state, BlockGetter world, BlockPos pos) {
 		return 0xFF657A7A;

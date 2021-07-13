@@ -20,20 +20,20 @@ public class OreLayerFeature extends DefaultFeature {
 	private static final SDFSphere SPHERE;
 	private static final SDFCoordModify NOISE;
 	private static final SDF FUNCTION;
-
+	
 	private final BlockState state;
 	private final float radius;
 	private final int minY;
 	private final int maxY;
 	private OpenSimplexNoise noise;
-
+	
 	public OreLayerFeature(BlockState state, float radius, int minY, int maxY) {
 		this.state = state;
 		this.radius = radius;
 		this.minY = minY;
 		this.maxY = maxY;
 	}
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
@@ -44,11 +44,11 @@ public class OreLayerFeature extends DefaultFeature {
 		int posX = MHelper.randRange(Math.max(r - 16, 0), Math.min(31 - r, 15), random) + pos.getX();
 		int posZ = MHelper.randRange(Math.max(r - 16, 0), Math.min(31 - r, 15), random) + pos.getZ();
 		int posY = MHelper.randRange(minY, maxY, random);
-
+		
 		if (noise == null) {
 			noise = new OpenSimplexNoise(world.getSeed());
 		}
-
+		
 		SPHERE.setRadius(radius).setBlock(state);
 		NOISE.setFunction((vec) -> {
 			double x = (vec.x() + pos.getX()) * 0.1;
@@ -59,18 +59,18 @@ public class OreLayerFeature extends DefaultFeature {
 		FUNCTION.fillRecursive(world, new BlockPos(posX, posY, posZ));
 		return true;
 	}
-
+	
 	static {
 		SPHERE = new SDFSphere();
 		NOISE = new SDFCoordModify();
-
+		
 		SDF body = SPHERE;
 		body = new SDFScale3D().setScale(1, 0.2F, 1).setSource(body);
 		body = NOISE.setSource(body);
 		body.setReplaceFunction((state) -> {
 			return state.is(Blocks.END_STONE);
 		});
-
+		
 		FUNCTION = body;
 	}
 }

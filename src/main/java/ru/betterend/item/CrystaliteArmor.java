@@ -12,14 +12,14 @@ import ru.betterend.effects.EndStatusEffects;
 import ru.betterend.item.material.EndArmorMaterial;
 
 public class CrystaliteArmor extends BaseArmorItem {
-
+	
 	public final static TranslatableComponent CHEST_DESC;
 	public final static TranslatableComponent BOOTS_DESC;
-
+	
 	public CrystaliteArmor(EquipmentSlot equipmentSlot, Properties settings) {
 		super(EndArmorMaterial.CRYSTALITE, equipmentSlot, settings);
 	}
-
+	
 	public static boolean hasFullSet(LivingEntity owner) {
 		for (ItemStack armorStack : owner.getArmorSlots()) {
 			if (!(armorStack.getItem() instanceof CrystaliteArmor)) {
@@ -28,11 +28,11 @@ public class CrystaliteArmor extends BaseArmorItem {
 		}
 		return true;
 	}
-
+	
 	public static void applySetEffect(LivingEntity owner) {
 		owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_HEALTH_REGEN));
 	}
-
+	
 	static {
 		Style descStyle = Style.EMPTY.applyFormats(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC);
 		CHEST_DESC = new TranslatableComponent("tooltip.armor.crystalite_chest");

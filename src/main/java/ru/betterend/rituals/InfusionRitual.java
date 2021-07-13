@@ -20,17 +20,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class InfusionRitual implements Container {
-	private static final Point[] PEDESTALS_MAP = new Point[]{
-			new Point(0, 3),
-			new Point(2, 2),
-			new Point(3, 0),
-			new Point(2, -2),
-			new Point(0, -3),
-			new Point(-2, -2),
-			new Point(-3, 0),
-			new Point(-2, 2)
-	};
-
+	private static final Point[] PEDESTALS_MAP = new Point[]{new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2), new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)};
+	
 	private Level world;
 	private BlockPos worldPos;
 	private InfusionRecipe activeRecipe;
@@ -38,17 +29,17 @@ public class InfusionRitual implements Container {
 	private boolean hasRecipe = false;
 	private int progress = 0;
 	private int time = 0;
-
+	
 	private final PedestalBlockEntity[] catalysts = new PedestalBlockEntity[8];
 	private final InfusionPedestalEntity input;
-
+	
 	public InfusionRitual(InfusionPedestalEntity pedestal, Level world, BlockPos pos) {
 		this.input = pedestal;
 		this.world = world;
 		this.worldPos = pos;
 		configure();
 	}
-
+	
 	public void configure() {
 		if (world == null || worldPos == null || world.isClientSide) return;
 		for (int i = 0; i < catalysts.length; i++) {
@@ -63,7 +54,7 @@ public class InfusionRitual implements Container {
 			}
 		}
 	}
-
+	
 	public boolean checkRecipe() {
 		if (!isValid()) return false;
 		InfusionRecipe recipe = world.getRecipeManager().getRecipeFor(InfusionRecipe.TYPE, this, world).orElse(null);
@@ -83,26 +74,26 @@ public class InfusionRitual implements Container {
 		}
 		return false;
 	}
-
+	
 	private void updateRecipe(InfusionRecipe recipe) {
 		activeRecipe = recipe;
 		hasRecipe = true;
 		resetTimer();
 		setChanged();
 	}
-
+	
 	private void resetTimer() {
 		time = activeRecipe != null ? activeRecipe.getInfusionTime() : 0;
 		progress = 0;
 	}
-
+	
 	public void reset() {
 		activeRecipe = null;
 		hasRecipe = false;
 		resetTimer();
 		setChanged();
 	}
-
+	
 	public void tick() {
 		if (isDirty) {
 			configure();
@@ -132,46 +123,46 @@ public class InfusionRitual implements Container {
 				}
 			}
 		}
-
+		
 	}
-
+	
 	@Override
 	public boolean canPlaceItem(int slot, ItemStack stack) {
 		return isValid();
 	}
-
+	
 	public boolean isValid() {
 		if (world == null || world.isClientSide || worldPos == null || input == null) return false;
 		return Arrays.stream(catalysts).noneMatch(Objects::isNull);
 	}
-
+	
 	public boolean hasRecipe() {
 		return hasRecipe;
 	}
-
+	
 	public void setLocation(Level world, BlockPos pos) {
 		this.world = world;
 		this.worldPos = pos;
 		this.isDirty = true;
 	}
-
+	
 	@Override
 	public void clearContent() {
 		if (!isValid()) return;
 		input.clearContent();
 		Arrays.stream(catalysts).forEach(PedestalBlockEntity::clearContent);
 	}
-
+	
 	@Override
 	public int getContainerSize() {
 		return 9;
 	}
-
+	
 	@Override
 	public boolean isEmpty() {
 		return false;
 	}
-
+	
 	@Override
 	public ItemStack getItem(int slot) {
 		if (slot > 8) return ItemStack.EMPTY;
@@ -182,12 +173,12 @@ public class InfusionRitual implements Container {
 			return catalysts[slot - 1].getItem(0);
 		}
 	}
-
+	
 	@Override
 	public ItemStack removeItem(int slot, int amount) {
 		return removeItemNoUpdate(slot);
 	}
-
+	
 	@Override
 	public ItemStack removeItemNoUpdate(int slot) {
 		if (slot > 8) return ItemStack.EMPTY;
@@ -198,7 +189,7 @@ public class InfusionRitual implements Container {
 			return catalysts[slot - 1].removeItemNoUpdate(0);
 		}
 	}
-
+	
 	@Override
 	public void setItem(int slot, ItemStack stack) {
 		if (slot > 8) return;
@@ -209,7 +200,7 @@ public class InfusionRitual implements Container {
 			catalysts[slot - 1].setItem(0, stack);
 		}
 	}
-
+	
 	@Override
 	public void setChanged() {
 		if (isValid()) {
@@ -217,16 +208,16 @@ public class InfusionRitual implements Container {
 			Arrays.stream(catalysts).forEach(PedestalBlockEntity::setChanged);
 		}
 	}
-
+	
 	public void markDirty() {
 		this.isDirty = true;
 	}
-
+	
 	@Override
 	public boolean stillValid(Player player) {
 		return true;
 	}
-
+	
 	public void fromTag(CompoundTag tag) {
 		if (tag.contains("recipe")) {
 			hasRecipe = tag.getBoolean("recipe");
@@ -234,7 +225,7 @@ public class InfusionRitual implements Container {
 			time = tag.getInt("time");
 		}
 	}
-
+	
 	public CompoundTag toTag(CompoundTag tag) {
 		if (hasRecipe()) {
 			tag.putBoolean("recipe", hasRecipe);
@@ -243,7 +234,7 @@ public class InfusionRitual implements Container {
 		}
 		return tag;
 	}
-
+	
 	public static Point[] getMap() {
 		return PEDESTALS_MAP;
 	}

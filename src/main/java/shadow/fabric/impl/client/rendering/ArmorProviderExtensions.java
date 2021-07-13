@@ -25,13 +25,11 @@ import org.jetbrains.annotations.Nullable;
 import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 
 public interface ArmorProviderExtensions {
-	@Nullable
-	ArmorRenderingRegistry.ModelProvider fabric_getArmorModelProvider();
-
-	@Nullable
-	ArmorRenderingRegistry.TextureProvider fabric_getArmorTextureProvider();
-
+	@Nullable ArmorRenderingRegistry.ModelProvider fabric_getArmorModelProvider();
+	
+	@Nullable ArmorRenderingRegistry.TextureProvider fabric_getArmorTextureProvider();
+	
 	void fabric_setArmorModelProvider(@Nullable ArmorRenderingRegistry.ModelProvider provider);
-
+	
 	void fabric_setArmorTextureProvider(@Nullable ArmorRenderingRegistry.TextureProvider provider);
 }

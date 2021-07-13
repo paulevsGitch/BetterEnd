@@ -27,27 +27,27 @@ import java.util.stream.Collectors;
 
 public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay> {
 	private final EntryStack[] ANVILS;
-
+	
 	REIAnvilCategory(EntryStack[] anvils) {
 		ANVILS = anvils;
 	}
-
+	
 	@Override
 	public @NotNull CategoryIdentifier getCategoryIdentifier() {
 		return REIPlugin.SMITHING;
 	}
-
+	
 	@Override
 	public @NotNull Component getTitle() {
 		return new TranslatableComponent(Blocks.ANVIL.getDescriptionId());
 	}
-
+	
 	@Override
 	public @NotNull EntryStack getIcon() {
 		return ANVILS[0];
 	}
-
-
+	
+	
 	@Override
 	public @NotNull List<Widget> setupDisplay(REIAnvilDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
@@ -72,19 +72,17 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		}).collect(Collectors.toList());
 		//materials.forEach(entryStack -> entryStack.setAmount(display.getInputCount()));
 		widgets.add(Widgets.createArrow(new Point(x + 24, y + 4)));
-		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 7, bounds.y + bounds.height - 15),
-				new TranslatableComponent("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 7, bounds.y + bounds.height - 15), new TranslatableComponent("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		widgets.add(Widgets.createSlot(new Point(x - 20, y + 4)).entries(materials).markInput());
 		widgets.add(Widgets.createSlot(new Point(x + 1, y + 4)).entries(inputEntries.get(0)).markInput());
 		widgets.add(Widgets.createSlot(new Point(x + 61, y + 5)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());
 		widgets.add(Widgets.createSlot(new Point(x - 9, y + 25)).entries(anvils));
-
+		
 		return widgets;
 	}
-
+	
 	@Override
-	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAnvilDisplay display,
-							   IntList redSlots) {
+	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAnvilDisplay display, IntList redSlots) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 27);
 		matrices.pushPose();
 		matrices.translate(0, 0, 400);
@@ -94,10 +92,10 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		}
 		matrices.popPose();
 	}
-
+	
 	@Override
 	public int getDisplayHeight() {
 		return 60;
 	}
-
+	
 }

@@ -13,13 +13,13 @@ import java.util.function.Supplier;
 public interface BiomeGenerationSettingsAccessor {
 	@Accessor("features")
 	List<List<Supplier<ConfiguredFeature<?, ?>>>> be_getFeatures();
-
+	
 	@Accessor("features")
 	void be_setFeatures(List<List<Supplier<ConfiguredFeature<?, ?>>>> features);
-
+	
 	@Accessor("structureStarts")
 	List<Supplier<ConfiguredStructureFeature<?, ?>>> be_getStructures();
-
+	
 	@Accessor("structureStarts")
 	void be_setStructures(List<Supplier<ConfiguredStructureFeature<?, ?>>> structures);
 }

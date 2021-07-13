@@ -26,7 +26,7 @@ public class MossyDragonBoneBlock extends BaseRotatedPillarBlock {
 	public MossyDragonBoneBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).hardness(0.5F).randomTicks());
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -35,14 +35,14 @@ public class MossyDragonBoneBlock extends BaseRotatedPillarBlock {
 		}
 		return Collections.singletonList(new ItemStack(EndBlocks.DRAGON_BONE_BLOCK));
 	}
-
+	
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
 			world.setBlockAndUpdate(pos, Blocks.BONE_BLOCK.defaultBlockState().setValue(AXIS, state.getValue(AXIS)));
 		}
 	}
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader worldView, BlockPos pos) {
 		BlockPos blockPos = pos.above();

@@ -22,11 +22,11 @@ import java.util.function.Supplier;
 
 public class CaveChunkPopulatorFeature extends DefaultFeature {
 	private Supplier<EndCaveBiome> supplier;
-
+	
 	public CaveChunkPopulatorFeature(Supplier<EndCaveBiome> biome) {
 		this.supplier = biome;
 	}
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
@@ -46,9 +46,8 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		BlockFixer.fixBlocks(world, min, max);
 		return true;
 	}
-
-	protected void fillSets(int sx, int sz, ChunkAccess chunk, Set<BlockPos> floorPositions,
-							Set<BlockPos> ceilPositions, MutableBlockPos min, MutableBlockPos max) {
+	
+	protected void fillSets(int sx, int sz, ChunkAccess chunk, Set<BlockPos> floorPositions, Set<BlockPos> ceilPositions, MutableBlockPos min, MutableBlockPos max) {
 		MutableBlockPos mut = new MutableBlockPos();
 		MutableBlockPos mut2 = new MutableBlockPos();
 		MutableBlockPos mut3 = new MutableBlockPos();
@@ -80,7 +79,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			}
 		}
 	}
-
+	
 	private void updateMin(BlockPos pos, MutableBlockPos min) {
 		if (pos.getX() < min.getX()) {
 			min.setX(pos.getX());
@@ -92,7 +91,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			min.setZ(pos.getZ());
 		}
 	}
-
+	
 	private void updateMax(BlockPos pos, MutableBlockPos max) {
 		if (pos.getX() > max.getX()) {
 			max.setX(pos.getX());
@@ -104,9 +103,8 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			max.setZ(pos.getZ());
 		}
 	}
-
-	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random,
-							  BlockState surfaceBlock) {
+	
+	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
 		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
@@ -118,7 +116,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			}
 		});
 	}
-
+	
 	protected void placeCeil(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
 		float density = biome.getCeilDensity();
 		ceilPositions.forEach((pos) -> {

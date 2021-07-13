@@ -31,19 +31,11 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 	public static final Vec3i[] COLORS;
 	private static final int MIN_DROP = 1;
 	private static final int MAX_DROP = 4;
-
+	
 	public AuroraCrystalBlock() {
-		super(FabricBlockSettings.of(Material.GLASS)
-				.breakByTool(FabricToolTags.PICKAXES)
-				.breakByTool(TagAPI.HAMMERS)
-				.hardness(1F)
-				.resistance(1F)
-				.luminance(15)
-				.noOcclusion()
-				.isSuffocating((state, world, pos) -> false)
-				.sound(SoundType.GLASS));
+		super(FabricBlockSettings.of(Material.GLASS).breakByTool(FabricToolTags.PICKAXES).breakByTool(TagAPI.HAMMERS).hardness(1F).resistance(1F).luminance(15).noOcclusion().isSuffocating((state, world, pos) -> false).sound(SoundType.GLASS));
 	}
-
+	
 	@Override
 	public BlockColor getProvider() {
 		return (state, world, pos, tintIndex) -> {
@@ -51,37 +43,37 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 				pos = BlockPos.ZERO;
 			}
 			;
-
+			
 			long i = (long) pos.getX() + (long) pos.getY() + (long) pos.getZ();
 			double delta = i * 0.1;
 			int index = MHelper.floor(delta);
 			int index2 = (index + 1) & 3;
 			delta -= index;
 			index &= 3;
-
+			
 			Vec3i color1 = COLORS[index];
 			Vec3i color2 = COLORS[index2];
-
+			
 			int r = MHelper.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
 			int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
 			int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
-
+			
 			return ColorUtil.color(r, g, b);
 		};
 	}
-
+	
 	@Override
 	public ItemColor getItemProvider() {
 		return (stack, tintIndex) -> {
 			return ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
 		};
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.TRANSLUCENT;
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -107,13 +99,8 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 		}
 		return Lists.newArrayList();
 	}
-
+	
 	static {
-		COLORS = new Vec3i[]{
-				new Vec3i(247, 77, 161),
-				new Vec3i(120, 184, 255),
-				new Vec3i(120, 255, 168),
-				new Vec3i(243, 58, 255)
-		};
+		COLORS = new Vec3i[]{new Vec3i(247, 77, 161), new Vec3i(120, 184, 255), new Vec3i(120, 255, 168), new Vec3i(243, 58, 255)};
 	}
 }

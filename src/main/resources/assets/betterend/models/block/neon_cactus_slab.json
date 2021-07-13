@@ -1,5 +1,5 @@
 {
-	"parent": "block/slab",
+	"parent": "betterend:block/slab_noshade",
 	"textures": {
 		"bottom": "betterend:block/neon_cactus_block_top",
 		"top": "betterend:block/neon_cactus_block_top",

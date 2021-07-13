@@ -14,13 +14,13 @@ public class TwistedUmbrellaMossTallBlock extends BaseDoublePlantBlock {
 	public TwistedUmbrellaMossTallBlock() {
 		super(12);
 	}
-
+	
 	@Override
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(EndBlocks.TWISTED_UMBRELLA_MOSS));
 		world.addFreshEntity(item);
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.END_MOSS) || state.is(EndBlocks.END_MYCELIUM) || state.is(EndBlocks.JUNGLE_MOSS);

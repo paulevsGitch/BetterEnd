@@ -21,21 +21,16 @@ import java.util.Random;
 
 public class PondAnemoneBlock extends EndUnderwaterPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
-
+	
 	public PondAnemoneBlock() {
-		super(FabricBlockSettings.of(Material.WATER_PLANT)
-				.breakByTool(FabricToolTags.SHEARS)
-				.breakByHand(true)
-				.luminance(13)
-				.sound(SoundType.CORAL_BLOCK)
-				.noCollission());
+		super(FabricBlockSettings.of(Material.WATER_PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).luminance(13).sound(SoundType.CORAL_BLOCK).noCollission());
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
 		double x = pos.getX() + random.nextDouble();
@@ -43,17 +38,17 @@ public class PondAnemoneBlock extends EndUnderwaterPlantBlock {
 		double z = pos.getZ() + random.nextDouble();
 		world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE;
 	}
-
+	
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isBonemealSuccess(Level world, Random random, BlockPos pos, BlockState state) {
 		return false;

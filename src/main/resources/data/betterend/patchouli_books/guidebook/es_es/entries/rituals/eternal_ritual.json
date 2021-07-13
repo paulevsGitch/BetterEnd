@@ -1,0 +1,44 @@
+{
+    "name": "Ritual Eterno",
+    "icon": "betterend:eternal_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "\"Una manera no tan simple de volver al Overworld.\"$(br2)Mientras viajas por el mundo del End, puedes encontrar ruinas antiguas."
+        },
+        {
+            "type": "image",
+            "text": "Hay un marco destruido (o no) de  $(bold)Flavolita de Runa$() y 6 pedestales alrededor suya.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/portal_structure.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Estos son los restos de portales majestuosos que en algún momento enlazaban los mundos del End y del Overworld.$(br2)Para activar el portal necesitas reconstruir el marco (si está roto)."
+        },
+        {
+            "type": "image",
+            "text": "Y colocar 6 $(bold)Cristales Eternos$() en los pedestales.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/portal_frame_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Después de que hayas colocado el último cristal, el portal será activado.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/eternal_ritual/ritual_finished.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "$(bold)Flavolita de Runa$() (para reconstruir el marco) y $(bold)Cristales Eternos$() pueden ser obtenidos por $(l:rituals/infusion_ritual)Ritual de Infusión$(/l)."
+        }
+    ]
+}

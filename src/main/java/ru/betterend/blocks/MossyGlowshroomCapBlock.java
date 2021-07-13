@@ -14,16 +14,16 @@ import ru.betterend.registry.EndBlocks;
 
 public class MossyGlowshroomCapBlock extends BaseBlock {
 	public static final BooleanProperty TRANSITION = EndBlockProperties.TRANSITION;
-
+	
 	public MossyGlowshroomCapBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sound(SoundType.WOOD));
 		this.registerDefaultState(this.stateDefinition.any().setValue(TRANSITION, false));
 	}
-
+	
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		return this.defaultBlockState().setValue(TRANSITION, EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(ctx.getLevel().getBlockState(ctx.getClickedPos().below())));
 	}
-
+	
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(TRANSITION);
 	}

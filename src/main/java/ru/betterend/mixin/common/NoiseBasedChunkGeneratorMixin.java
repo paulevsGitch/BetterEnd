@@ -21,16 +21,16 @@ public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
 	@Final
 	@Shadow
 	protected Supplier<NoiseGeneratorSettings> settings;
-
+	
 	public NoiseBasedChunkGeneratorMixin(BiomeSource populationSource, BiomeSource biomeSource, StructureSettings structuresConfig, long worldSeed) {
 		super(populationSource, biomeSource, structuresConfig, worldSeed);
 	}
-
+	
 	@Inject(method = "<init>(Lnet/minecraft/world/level/biome/BiomeSource;Lnet/minecraft/world/level/biome/BiomeSource;JLjava/util/function/Supplier;)V", at = @At("TAIL"))
 	private void beOnInit(BiomeSource populationSource, BiomeSource biomeSource, long seed, Supplier<NoiseGeneratorSettings> settings, CallbackInfo info) {
 		TerrainGenerator.initNoise(seed);
 	}
-
+	
 	@Inject(method = "fillNoiseColumn([DIIII)V", at = @At("HEAD"), cancellable = true, allow = 2)
 	private void be_fillNoiseColumn(double[] buffer, int x, int z, int k, int l, CallbackInfo info) {
 		if (GeneratorOptions.useNewGenerator() && settings.get().stable(NoiseGeneratorSettings.END)) {

@@ -36,20 +36,20 @@ public class EndDragonFightMixin {
 	@Final
 	@Shadow
 	private ServerLevel level;
-
+	
 	@Shadow
 	private BlockPattern.BlockPatternMatch findExitPortal() {
 		return null;
 	}
-
+	
 	@Shadow
 	private void spawnExitPortal(boolean bl) {
 	}
-
+	
 	@Shadow
 	private void respawnDragon(List<EndCrystal> list) {
 	}
-
+	
 	@Inject(method = "tryRespawn", at = @At("HEAD"), cancellable = true)
 	private void be_tryRespawnDragon(CallbackInfo info) {
 		if (GeneratorOptions.replacePortal() && GeneratorOptions.hasDragonFights() && this.dragonKilled && this.respawnStage == null) {
@@ -64,16 +64,16 @@ public class EndDragonFightMixin {
 				else {
 					LOGGER.debug("Found the exit portal & temporarily using it.");
 				}
-
+				
 				blockPos = portalLocation;
 			}
-
+			
 			List<EndCrystal> crystals = Lists.newArrayList();
 			BlockPos center = GeneratorOptions.getPortalPos().above(5);
 			for (Direction dir : BlocksHelper.HORIZONTAL) {
 				BlockPos central = center.relative(dir, 4);
 				List<EndCrystal> crystalList = level.getEntitiesOfClass(EndCrystal.class, new AABB(central.below(255).south().west(), central.above(255).north().east()));
-
+				
 				int count = crystalList.size();
 				for (int n = 0; n < count; n++) {
 					EndCrystal crystal = crystalList.get(n);
@@ -83,15 +83,15 @@ public class EndDragonFightMixin {
 						n--;
 					}
 				}
-
+				
 				if (crystalList.isEmpty()) {
 					info.cancel();
 					return;
 				}
-
+				
 				crystals.addAll(crystalList);
 			}
-
+			
 			LOGGER.debug("Found all crystals, respawning dragon.");
 			respawnDragon(crystals);
 			info.cancel();

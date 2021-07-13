@@ -30,27 +30,27 @@ import java.util.Optional;
 
 public class ChandelierBlock extends BaseAttachedBlock implements IRenderTyped, BlockModelProvider {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
-
+	
 	public ChandelierBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).luminance(15).noCollission().noOcclusion().requiresCorrectToolForDrops());
 	}
-
+	
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation blockId) {
 		return ModelsHelper.createItemModel(blockId);
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
@@ -67,7 +67,7 @@ public class ChandelierBlock extends BaseAttachedBlock implements IRenderTyped, 
 		}
 		return ModelsHelper.fromPattern(pattern);
 	}
-
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
@@ -96,7 +96,7 @@ public class ChandelierBlock extends BaseAttachedBlock implements IRenderTyped, 
 		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
 	}
-
+	
 	static {
 		BOUNDING_SHAPES.put(Direction.UP, Block.box(5, 0, 5, 11, 13, 11));
 		BOUNDING_SHAPES.put(Direction.DOWN, Block.box(5, 3, 5, 11, 16, 11));

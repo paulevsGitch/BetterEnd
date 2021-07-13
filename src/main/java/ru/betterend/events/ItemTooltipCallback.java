@@ -21,7 +21,7 @@ public interface ItemTooltipCallback {
 			callback.getTooltip(player, stack, context, lines);
 		}
 	});
-
+	
 	/**
 	 * Called when an item stack's tooltip is rendered. Text added to {@code lines} will be
 	 * rendered with the tooltip.

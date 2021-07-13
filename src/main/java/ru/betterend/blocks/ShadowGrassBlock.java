@@ -15,7 +15,7 @@ public class ShadowGrassBlock extends EndTerrainBlock {
 	public ShadowGrassBlock() {
 		super(MaterialColor.COLOR_BLACK);
 	}
-
+	
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
 		super.animateTick(state, world, pos, random);

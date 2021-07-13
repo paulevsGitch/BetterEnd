@@ -1,10 +1,10 @@
 {
-    "variants": {
-        "powered=false": {
-            "model": "betterend:block/%name%_pressure_plate_up"
-        }, 
-        "powered=true": {
-            "model": "betterend:block/%name%_pressure_plate_down"
-        }
-    }
+	"variants": {
+		"powered=false": {
+			"model": "betterend:block/%name%_pressure_plate_up"
+		},
+		"powered=true": {
+			"model": "betterend:block/%name%_pressure_plate_down"
+		}
+	}
 }

@@ -7,7 +7,7 @@
 		"AbstractSoundInstanceAccessor",
 		"ClientPlayNetworkHandlerMixin",
         "HumanoidMobRendererMixin",
-        "ArmorStandRendererMixin",
+		"ArmorStandRendererMixin",
 		"ClientRecipeBookMixin",
 		"MinecraftClientMixin",
         "PlayerRendererMixin",

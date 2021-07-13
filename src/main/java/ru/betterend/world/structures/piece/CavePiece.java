@@ -23,7 +23,7 @@ public class CavePiece extends BasePiece {
 	private OpenSimplexNoise noise;
 	private BlockPos center;
 	private float radius;
-
+	
 	public CavePiece(BlockPos center, float radius, int id) {
 		super(EndStructures.CAVE_PIECE, id, null);
 		this.center = center;
@@ -31,12 +31,12 @@ public class CavePiece extends BasePiece {
 		this.noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 		makeBoundingBox();
 	}
-
+	
 	public CavePiece(ServerLevel serverLevel, CompoundTag tag) {
 		super(EndStructures.CAVE_PIECE, tag);
 		makeBoundingBox();
 	}
-
+	
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int x1 = MHelper.max(this.boundingBox.minX(), blockBox.minX());
@@ -45,7 +45,7 @@ public class CavePiece extends BasePiece {
 		int z2 = MHelper.min(this.boundingBox.maxZ(), blockBox.maxZ());
 		int y1 = this.boundingBox.minY();
 		int y2 = this.boundingBox.maxY();
-
+		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		MutableBlockPos pos = new MutableBlockPos();
@@ -78,23 +78,23 @@ public class CavePiece extends BasePiece {
 				}
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 	@Override
 	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 	}
-
+	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		center = NbtUtils.readBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
 		noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
 	}
-
+	
 	private void makeBoundingBox() {
 		int minX = MHelper.floor(center.getX() - radius);
 		int minY = MHelper.floor(center.getY() - radius);

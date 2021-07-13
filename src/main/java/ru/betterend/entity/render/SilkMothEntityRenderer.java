@@ -10,11 +10,11 @@ import ru.betterend.registry.EndEntitiesRenders;
 
 public class SilkMothEntityRenderer extends MobRenderer<SilkMothEntity, SilkMothEntityModel> {
 	private static final ResourceLocation TEXTURE = BetterEnd.makeID("textures/entity/silk_moth.png");
-
+	
 	public SilkMothEntityRenderer(EntityRendererProvider.Context ctx) {
 		super(ctx, new SilkMothEntityModel(ctx.bakeLayer(EndEntitiesRenders.SILK_MOTH_MODEL)), 0.5f);
 	}
-
+	
 	@Override
 	public ResourceLocation getTextureLocation(SilkMothEntity entity) {
 		return TEXTURE;

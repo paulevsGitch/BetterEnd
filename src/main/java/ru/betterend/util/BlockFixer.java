@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 public class BlockFixer {
 	private static final BlockState AIR = Blocks.AIR.defaultBlockState();
 	private static final BlockState WATER = Blocks.WATER.defaultBlockState();
-
+	
 	public static void fixBlocks(LevelAccessor world, BlockPos start, BlockPos end) {
 		Set<BlockPos> doubleCheck = Sets.newConcurrentHashSet();
 		int dx = end.getX() - start.getX() + 1;
@@ -36,7 +36,7 @@ public class BlockFixer {
 			for (int y = start.getY(); y <= end.getY(); y++) {
 				POS.setY(y);
 				state = world.getBlockState(POS);
-
+				
 				if (state.getBlock() instanceof FurBlock) {
 					doubleCheck.add(POS.immutable());
 				}
@@ -109,7 +109,7 @@ public class BlockFixer {
 						Set<BlockPos> ends = Sets.newHashSet();
 						Set<BlockPos> add = Sets.newHashSet();
 						ends.add(POS.immutable());
-
+						
 						for (int i = 0; i < 64 && !ends.isEmpty(); i++) {
 							ends.forEach((pos) -> {
 								setWithoutUpdate(world, pos, AIR);
@@ -141,10 +141,10 @@ public class BlockFixer {
 					// Falling blocks
 					else if (state.getBlock() instanceof FallingBlock) {
 						BlockState falling = state;
-
+						
 						POS.setY(POS.getY() - 1);
 						state = world.getBlockState(POS);
-
+						
 						int ray = BlocksHelper.downRayRep(world, POS.immutable(), 64);
 						if (ray > 32) {
 							setWithoutUpdate(world, POS, Blocks.END_STONE.defaultBlockState());
@@ -193,18 +193,18 @@ public class BlockFixer {
 				}
 			}
 		});
-
+		
 		doubleCheck.forEach((pos) -> {
 			if (!world.getBlockState(pos).canSurvive(world, pos)) {
 				setWithoutUpdate(world, pos, AIR);
 			}
 		});
 	}
-
+	
 	private static BlockState getAirOrFluid(BlockState state) {
 		return state.getFluidState().isEmpty() ? AIR : state.getFluidState().createLegacyBlock();
 	}
-
+	
 	private static void setWithoutUpdate(LevelAccessor world, BlockPos pos, BlockState state) {
 		synchronized (world) {
 			BlocksHelper.setWithoutUpdate(world, pos, state);

@@ -20,10 +20,10 @@ public class ClientPlayNetworkHandlerMixin {
 	@Final
 	@Shadow
 	private Minecraft minecraft;
-
+	
 	@Shadow
 	private ClientLevel level;
-
+	
 	@Inject(method = "handleOpenSignEditor", at = @At(value = "HEAD"), cancellable = true)
 	public void be_openSignEditor(ClientboundOpenSignEditorPacket packet, CallbackInfo info) {
 		PacketUtils.ensureRunningOnSameThread(packet, ClientPacketListener.class.cast(this), minecraft);

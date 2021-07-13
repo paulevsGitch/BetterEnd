@@ -15,19 +15,18 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
-import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.rituals.InfusionRitual;
 
 @SuppressWarnings("deprecation")
 public class InfusionPedestal extends PedestalBlock {
 	private static final VoxelShape SHAPE_DEFAULT;
 	private static final VoxelShape SHAPE_PEDESTAL_TOP;
-
+	
 	public InfusionPedestal() {
 		super(Blocks.OBSIDIAN);
 		this.height = 1.08F;
 	}
-
+	
 	@Override
 	public void checkRitual(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -47,17 +46,17 @@ public class InfusionPedestal extends PedestalBlock {
 			}
 		}
 	}
-
+	
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new InfusionPedestalEntity(blockPos, blockState);
 	}
-
+	
 	@Override
 	public boolean hasUniqueEntity() {
 		return true;
 	}
-
+	
 	@Override
 	@Deprecated
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
@@ -76,13 +75,13 @@ public class InfusionPedestal extends PedestalBlock {
 		}
 		return super.getShape(state, world, pos, context);
 	}
-
+	
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
 		return InfusionPedestalEntity::tickEnity;
 	}
-
+	
 	static {
 		VoxelShape basinUp = Block.box(2, 3, 2, 14, 4, 14);
 		VoxelShape basinDown = Block.box(0, 0, 0, 16, 3, 16);

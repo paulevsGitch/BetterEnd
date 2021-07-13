@@ -18,19 +18,19 @@ import ru.betterend.world.structures.piece.VoxelPiece;
 import java.util.Random;
 
 public abstract class SDFStructureFeature extends FeatureBaseStructure {
-
+	
 	protected abstract SDF getSDF(BlockPos pos, Random random);
-
+	
 	@Override
 	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return SDFStructureStart::new;
 	}
-
+	
 	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
 		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos chunkPos, int references, long seed) {
 			super(feature, chunkPos, references, seed);
 		}
-
+		
 		@Override
 		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
 			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
@@ -43,7 +43,7 @@ public abstract class SDFStructureFeature extends FeatureBaseStructure {
 				}, random.nextInt());
 				this.pieces.add(piece);
 			}
-
+			
 			//this.calculateBoundingBox();
 		}
 	}

@@ -62,26 +62,26 @@ public class PlayerListMixin {
 	@Final
 	@Shadow
 	private static Logger LOGGER;
-
+	
 	@Final
 	@Shadow
 	private MinecraftServer server;
-
+	
 	@Final
 	@Shadow
 	private RegistryAccess.RegistryHolder registryHolder;
-
+	
 	@Shadow
 	private int viewDistance;
-
+	
 	@Final
 	@Shadow
 	private List<ServerPlayer> players;
-
+	
 	@Final
 	@Shadow
 	private Map<UUID, ServerPlayer> playersByUUID;
-
+	
 	@Inject(method = "placeNewPlayer", at = @At(value = "HEAD"), cancellable = true)
 	public void be_placeNewPlayer(Connection connection, ServerPlayer serverPlayer, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
@@ -101,7 +101,7 @@ public class PlayerListMixin {
 			else {
 				var23 = Level.END;
 			}
-
+			
 			ResourceKey<Level> registryKey = var23;
 			ServerLevel serverLevel = this.server.getLevel(registryKey);
 			ServerLevel serverLevel3;
@@ -112,39 +112,29 @@ public class PlayerListMixin {
 			else {
 				serverLevel3 = serverLevel;
 			}
-
+			
 			serverPlayer.setLevel(serverLevel3);
 			//serverPlayer.gameMode.setLevel((ServerLevel) serverPlayer.level);
 			String string2 = "local";
 			if (connection.getRemoteAddress() != null) {
 				string2 = connection.getRemoteAddress().toString();
 			}
-
-			LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", serverPlayer.getName().getString(), string2,
-					serverPlayer.getId(), serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ());
+			
+			LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", serverPlayer.getName().getString(), string2, serverPlayer.getId(), serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ());
 			LevelData worldProperties = serverLevel3.getLevelData();
 			serverPlayer.loadGameTypes(compoundTag);
 			//this.updatePlayerGameMode(serverPlayer, (ServerPlayer) null, serverLevel3);
-			ServerGamePacketListenerImpl serverPlayNetworkHandler = new ServerGamePacketListenerImpl(this.server,
-					connection, serverPlayer);
+			ServerGamePacketListenerImpl serverPlayNetworkHandler = new ServerGamePacketListenerImpl(this.server, connection, serverPlayer);
 			GameRules gameRules = serverLevel3.getGameRules();
 			boolean bl = gameRules.getBoolean(GameRules.RULE_DO_IMMEDIATE_RESPAWN);
 			boolean bl2 = gameRules.getBoolean(GameRules.RULE_REDUCEDDEBUGINFO);
-			serverPlayNetworkHandler.send(new ClientboundLoginPacket(serverPlayer.getId(),
-					serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(),
-					BiomeManager.obfuscateSeed(serverLevel3.getSeed()), worldProperties.isHardcore(),
-					this.server.levelKeys(), this.registryHolder, serverLevel3.dimensionType(), serverLevel3.dimension(),
-					this.getMaxPlayers(), this.viewDistance, bl2, !bl, serverLevel3.isDebug(), serverLevel3.isFlat()));
-			serverPlayNetworkHandler.send(new ClientboundCustomPayloadPacket(ClientboundCustomPayloadPacket.BRAND,
-					(new FriendlyByteBuf(Unpooled.buffer())).writeUtf(this.getServer().getServerModName())));
-			serverPlayNetworkHandler
-					.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
+			serverPlayNetworkHandler.send(new ClientboundLoginPacket(serverPlayer.getId(), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), BiomeManager.obfuscateSeed(serverLevel3.getSeed()), worldProperties.isHardcore(), this.server.levelKeys(), this.registryHolder, serverLevel3.dimensionType(), serverLevel3.dimension(), this.getMaxPlayers(), this.viewDistance, bl2, !bl, serverLevel3.isDebug(), serverLevel3.isFlat()));
+			serverPlayNetworkHandler.send(new ClientboundCustomPayloadPacket(ClientboundCustomPayloadPacket.BRAND, (new FriendlyByteBuf(Unpooled.buffer())).writeUtf(this.getServer().getServerModName())));
+			serverPlayNetworkHandler.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
 			serverPlayNetworkHandler.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
 			serverPlayNetworkHandler.send(new ClientboundSetCarriedItemPacket(serverPlayer.getInventory().selected));
-			serverPlayNetworkHandler
-					.send(new ClientboundUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
-			serverPlayNetworkHandler
-					.send(new ClientboundUpdateTagsPacket(this.server.getTags().serializeToNetwork(this.registryHolder)));
+			serverPlayNetworkHandler.send(new ClientboundUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
+			serverPlayNetworkHandler.send(new ClientboundUpdateTagsPacket(this.server.getTags().serializeToNetwork(this.registryHolder)));
 			this.sendPlayerPermissionLevel(serverPlayer);
 			serverPlayer.getStats().markAllDirty();
 			serverPlayer.getRecipeBook().sendInitialRecipeBook(serverPlayer);
@@ -152,46 +142,38 @@ public class PlayerListMixin {
 			this.server.invalidateStatus();
 			TranslatableComponent mutableText2;
 			if (serverPlayer.getGameProfile().getName().equalsIgnoreCase(string)) {
-				mutableText2 = new TranslatableComponent("multiplayer.player.joined",
-						new Object[]{serverPlayer.getDisplayName()});
+				mutableText2 = new TranslatableComponent("multiplayer.player.joined", new Object[]{serverPlayer.getDisplayName()});
 			}
 			else {
-				mutableText2 = new TranslatableComponent("multiplayer.player.joined.renamed",
-						new Object[]{serverPlayer.getDisplayName(), string});
+				mutableText2 = new TranslatableComponent("multiplayer.player.joined.renamed", new Object[]{serverPlayer.getDisplayName(), string});
 			}
-
+			
 			this.broadcastMessage(mutableText2.withStyle(ChatFormatting.YELLOW), ChatType.SYSTEM, Util.NIL_UUID);
-			serverPlayNetworkHandler.teleport(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(),
-					serverPlayer.getYRot(), serverPlayer.getXRot());
+			serverPlayNetworkHandler.teleport(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), serverPlayer.getYRot(), serverPlayer.getXRot());
 			this.players.add(serverPlayer);
 			this.playersByUUID.put(serverPlayer.getUUID(), serverPlayer);
-			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
-					new ServerPlayer[]{serverPlayer}));
-
+			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[]{serverPlayer}));
+			
 			for (ServerPlayer player : this.players) {
-				serverPlayer.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
-						new ServerPlayer[]{(ServerPlayer) player}));
+				serverPlayer.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[]{(ServerPlayer) player}));
 			}
-
+			
 			serverLevel3.addNewPlayer(serverPlayer);
 			this.server.getCustomBossEvents().onPlayerConnect(serverPlayer);
 			this.sendLevelInfo(serverPlayer, serverLevel3);
 			if (!this.server.getResourcePack().isEmpty()) {
-				serverPlayer.sendTexturePack(this.server.getResourcePack(), this.server.getResourcePackHash(),
-						this.server.isResourcePackRequired(), this.server.getResourcePackPrompt());
+				serverPlayer.sendTexturePack(this.server.getResourcePack(), this.server.getResourcePackHash(), this.server.isResourcePackRequired(), this.server.getResourcePackPrompt());
 			}
-
+			
 			for (MobEffectInstance statusEffectInstance : serverPlayer.getActiveEffects()) {
-				serverPlayNetworkHandler
-						.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), statusEffectInstance));
+				serverPlayNetworkHandler.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), statusEffectInstance));
 			}
-
+			
 			if (compoundTag != null && compoundTag.contains("RootVehicle", 10)) {
 				CompoundTag compoundTag2 = compoundTag.getCompound("RootVehicle");
-				Entity entity = EntityType.loadEntityRecursive(compoundTag2.getCompound("Entity"), serverLevel3,
-						(vehicle) -> {
-							return !serverLevel3.addWithUUID(vehicle) ? null : vehicle;
-						});
+				Entity entity = EntityType.loadEntityRecursive(compoundTag2.getCompound("Entity"), serverLevel3, (vehicle) -> {
+					return !serverLevel3.addWithUUID(vehicle) ? null : vehicle;
+				});
 				if (entity != null) {
 					UUID uUID2;
 					if (compoundTag2.hasUUID("Attach")) {
@@ -200,7 +182,7 @@ public class PlayerListMixin {
 					else {
 						uUID2 = null;
 					}
-
+					
 					Iterator<?> var21;
 					Entity entity3;
 					if (entity.getUUID().equals(uUID2)) {
@@ -208,7 +190,7 @@ public class PlayerListMixin {
 					}
 					else {
 						var21 = entity.getIndirectPassengers().iterator();
-
+						
 						while (var21.hasNext()) {
 							entity3 = (Entity) var21.next();
 							if (entity3.getUUID().equals(uUID2)) {
@@ -217,12 +199,12 @@ public class PlayerListMixin {
 							}
 						}
 					}
-
+					
 					if (!serverPlayer.isPassenger()) {
 						LOGGER.warn("Couldn't reattach entity to player");
 						entity.discard();
 						var21 = entity.getIndirectPassengers().iterator();
-
+						
 						while (var21.hasNext()) {
 							entity3 = (Entity) var21.next();
 							entity3.discard();
@@ -230,51 +212,51 @@ public class PlayerListMixin {
 					}
 				}
 			}
-
+			
 			serverPlayer.initInventoryMenu();
 			info.cancel();
 		}
 	}
-
+	
 	@Shadow
 	public CompoundTag load(ServerPlayer player) {
 		return null;
 	}
-
+	
 	// @Shadow
 	// private void updatePlayerGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
-
+	
 	@Shadow
 	public void sendPlayerPermissionLevel(ServerPlayer player) {
 	}
-
+	
 	@Shadow
 	public int getPlayerCount() {
 		return 0;
 	}
-
+	
 	@Shadow
 	public int getMaxPlayers() {
 		return 0;
 	}
-
+	
 	@Shadow
 	public MinecraftServer getServer() {
 		return null;
 	}
-
+	
 	@Shadow
 	protected void updateEntireScoreboard(ServerScoreboard scoreboard, ServerPlayer player) {
 	}
-
+	
 	@Shadow
 	public void broadcastMessage(Component message, ChatType type, UUID senderUuid) {
 	}
-
+	
 	@Shadow
 	public void broadcastAll(Packet<?> packet) {
 	}
-
+	
 	@Shadow
 	public void sendLevelInfo(ServerPlayer player, ServerLevel world) {
 	}

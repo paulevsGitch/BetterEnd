@@ -35,48 +35,48 @@ import java.util.Objects;
 public final class ArmorRenderingRegistryImpl {
 	private ArmorRenderingRegistryImpl() {
 	}
-
+	
 	public static void registerModel(ArmorRenderingRegistry.ModelProvider provider, Iterable<Item> items) {
 		Objects.requireNonNull(items);
-
+		
 		for (Item item : items) {
 			Objects.requireNonNull(item);
-
+			
 			((ArmorProviderExtensions) item).fabric_setArmorModelProvider(provider);
 		}
 	}
-
+	
 	public static void registerTexture(ArmorRenderingRegistry.TextureProvider provider, Iterable<Item> items) {
 		Objects.requireNonNull(items);
-
+		
 		for (Item item : items) {
 			Objects.requireNonNull(item);
-
+			
 			((ArmorProviderExtensions) item).fabric_setArmorTextureProvider(provider);
 		}
 	}
-
+	
 	public static HumanoidModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<LivingEntity> defaultModel) {
 		if (!stack.isEmpty()) {
 			ArmorRenderingRegistry.ModelProvider provider = ((ArmorProviderExtensions) stack.getItem()).fabric_getArmorModelProvider();
-
+			
 			if (provider != null) {
 				return provider.getArmorModel(entity, stack, slot, defaultModel);
 			}
 		}
-
+		
 		return defaultModel;
 	}
-
+	
 	public static ResourceLocation getArmorTexture(LivingEntity entity, ItemStack stack, EquipmentSlot slot, boolean secondLayer, @Nullable String suffix, ResourceLocation defaultTexture) {
 		if (!stack.isEmpty()) {
 			ArmorRenderingRegistry.TextureProvider provider = ((ArmorProviderExtensions) stack.getItem()).fabric_getArmorTextureProvider();
-
+			
 			if (provider != null) {
 				return provider.getArmorTexture(entity, stack, slot, secondLayer, suffix, defaultTexture);
 			}
 		}
-
+		
 		return defaultTexture;
 	}
 }

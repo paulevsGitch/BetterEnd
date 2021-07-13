@@ -21,11 +21,11 @@ import ru.betterend.noise.OpenSimplexNoise;
 public class BiomeIslandFeature extends DefaultFeature {
 	private static final MutableBlockPos CENTER = new MutableBlockPos();
 	private static final SDF ISLAND;
-
+	
 	private static OpenSimplexNoise simplexNoise = new OpenSimplexNoise(412L);
 	private static BlockState topBlock = Blocks.GRASS_BLOCK.defaultBlockState();
 	private static BlockState underBlock = Blocks.DIRT.defaultBlockState();
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final BlockPos pos = featureConfig.origin();
@@ -45,13 +45,11 @@ public class BiomeIslandFeature extends DefaultFeature {
 		ISLAND.fillRecursive(world, pos.below());
 		return true;
 	}
-
+	
 	private static SDF createSDFIsland() {
 		SDF sdfCone = new SDFCappedCone().setRadius1(0).setRadius2(6).setHeight(4).setBlock(pos -> {
-			if (pos.getY() > CENTER.getY())
-				return AIR;
-			if (pos.getY() == CENTER.getY())
-				return topBlock;
+			if (pos.getY() > CENTER.getY()) return AIR;
+			if (pos.getY() == CENTER.getY()) return topBlock;
 			return underBlock;
 		});
 		sdfCone = new SDFTranslate().setTranslate(0, -2, 0).setSource(sdfCone);
@@ -59,14 +57,12 @@ public class BiomeIslandFeature extends DefaultFeature {
 			float deltaX = Math.abs(pos.x());
 			float deltaY = Math.abs(pos.y());
 			float deltaZ = Math.abs(pos.z());
-			if (deltaY < 2.0f && (deltaX < 3.0f || deltaZ < 3.0F))
-				return 0.0f;
+			if (deltaY < 2.0f && (deltaX < 3.0f || deltaZ < 3.0F)) return 0.0f;
 			return (float) simplexNoise.eval(CENTER.getX() + pos.x(), CENTER.getY() + pos.y(), CENTER.getZ() + pos.z());
-		}).setSource(sdfCone)
-				.setReplaceFunction(state -> BlocksHelper.isFluid(state) || state.getMaterial().isReplaceable());
+		}).setSource(sdfCone).setReplaceFunction(state -> BlocksHelper.isFluid(state) || state.getMaterial().isReplaceable());
 		return sdfCone;
 	}
-
+	
 	static {
 		ISLAND = createSDFIsland();
 	}

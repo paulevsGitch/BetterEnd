@@ -20,13 +20,13 @@ import java.util.Random;
 
 public class CavePumpkinVineBlock extends EndPlantWithAgeBlock {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 16, 12);
-
+	
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState down = world.getBlockState(pos.above());
 		return isTerrain(down);
 	}
-
+	
 	@Override
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		int age = state.getValue(AGE);
@@ -43,11 +43,11 @@ public class CavePumpkinVineBlock extends EndPlantWithAgeBlock {
 			}
 		}
 	}
-
+	
 	@Override
 	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 	}
-
+	
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		state = super.updateShape(state, facing, neighborState, world, pos, neighborPos);
@@ -59,12 +59,12 @@ public class CavePumpkinVineBlock extends EndPlantWithAgeBlock {
 		}
 		return state;
 	}
-
+	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE;
 	}
-
+	
 	@Override
 	public BlockBehaviour.OffsetType getOffsetType() {
 		return BlockBehaviour.OffsetType.NONE;

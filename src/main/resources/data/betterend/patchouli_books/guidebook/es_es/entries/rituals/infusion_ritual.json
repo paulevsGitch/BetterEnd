@@ -1,0 +1,64 @@
+{
+    "name": "Ritual de Infusión",
+    "icon": "betterend:infusion_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Infunde objetos con el poder de los elementos."
+        },
+        {
+            "type": "crafting",
+            "title": "Preparar la estructura",
+            "text": "Primero, deberás craftear $(bold)Pedestal de Infusión$() y 8 pedestales de $(bold)cualquier$() otro tipo.",
+            "recipe": "betterend:infusion_pedestal"
+        },
+        {
+            "type": "image",
+            "text": "Luego debes de colocar el Pedestal de Infusión en el centro y los otros pedestales alrededor.",
+            "border": true,
+            "images": [
+                "betterend:textures/images/infusion_ritual/infusion_ritual_start.png",
+                "betterend:textures/images/infusion_ritual/infusion_ritual_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "title": "Infusión",
+            "text": "Cuando la estructura para el ritual esté lista puedes empezar la infusión.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_structure.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Coloca el ingrediente principal en el $(bold)Pedestal de Infusión$() y cataliza los otros.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_ready.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Puedes mirar recetas en el $(l:https://www.curseforge.com/minecraft/mc-mods/roughly-enough-items)REI$(/l).$(br2)Para empezar la Infusión coloca el ingrediente principal al final o dale clic derecho al $(bold)Pedestal de Infusión$()."
+        },
+        {
+            "type": "image",
+            "text": "Entonces debes de esperar hasta que el ritual termine.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_started.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Y obtén el resultado.",
+            "border": false,
+            "images": [
+                "betterend:textures/images/infusion_ritual/ritual_finished.png"
+            ]
+        }
+    ]
+}

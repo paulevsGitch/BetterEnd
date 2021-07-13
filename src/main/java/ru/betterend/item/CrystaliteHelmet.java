@@ -9,7 +9,7 @@ import ru.betterend.registry.EndItems;
 import java.util.UUID;
 
 public class CrystaliteHelmet extends CrystaliteArmor {
-
+	
 	public CrystaliteHelmet() {
 		super(EquipmentSlot.HEAD, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
 		UUID uuid = ARMOR_MODIFIER_UUID_PER_SLOT[EquipmentSlot.HEAD.getIndex()];

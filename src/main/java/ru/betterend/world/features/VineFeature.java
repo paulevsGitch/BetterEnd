@@ -15,20 +15,20 @@ public class VineFeature extends InvertedScatterFeature {
 	private final Block vineBlock;
 	private final int maxLength;
 	private final boolean vine;
-
+	
 	public VineFeature(Block vineBlock, int maxLength) {
 		super(6);
 		this.vineBlock = vineBlock;
 		this.maxLength = maxLength;
 		this.vine = vineBlock instanceof BaseVineBlock;
 	}
-
+	
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		BlockState state = world.getBlockState(blockPos);
 		return state.getMaterial().isReplaceable() && canPlaceBlock(state, world, blockPos);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		int h = BlocksHelper.downRay(world, blockPos, random.nextInt(maxLength)) - 1;
@@ -43,7 +43,7 @@ public class VineFeature extends InvertedScatterFeature {
 			BlocksHelper.setWithoutUpdate(world, blockPos.below(h), bottom);
 		}
 	}
-
+	
 	private boolean canPlaceBlock(BlockState state, WorldGenLevel world, BlockPos blockPos) {
 		if (vine) {
 			return ((BaseVineBlock) vineBlock).canGenerate(state, world, blockPos);
@@ -52,17 +52,17 @@ public class VineFeature extends InvertedScatterFeature {
 			return vineBlock.canSurvive(state, world, blockPos);
 		}
 	}
-
+	
 	private BlockState getTopState() {
 		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP) : state;
 	}
-
+	
 	private BlockState getMiggleState() {
 		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE) : state;
 	}
-
+	
 	private BlockState getBottomState() {
 		BlockState state = vineBlock.defaultBlockState();
 		return vine ? state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM) : state;

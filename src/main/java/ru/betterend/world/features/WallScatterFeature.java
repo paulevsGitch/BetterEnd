@@ -16,15 +16,15 @@ import java.util.Random;
 public abstract class WallScatterFeature extends DefaultFeature {
 	private static final Direction[] DIR = BlocksHelper.makeHorizontal();
 	private final int radius;
-
+	
 	public WallScatterFeature(int radius) {
 		this.radius = radius;
 	}
-
+	
 	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
-
+	
 	public abstract void generate(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
-
+	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final Random random = featureConfig.random();
@@ -36,7 +36,7 @@ public abstract class WallScatterFeature extends DefaultFeature {
 			return false;
 		}
 		int py = MHelper.randRange(minY, maxY, random);
-
+		
 		MutableBlockPos mut = new MutableBlockPos();
 		for (int x = -radius; x <= radius; x++) {
 			mut.setX(center.getX() + x);
@@ -56,10 +56,10 @@ public abstract class WallScatterFeature extends DefaultFeature {
 				}
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 	private void shuffle(Random random) {
 		for (int i = 0; i < 4; i++) {
 			int j = random.nextInt(4);

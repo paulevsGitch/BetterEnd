@@ -14,20 +14,20 @@ public class DoublePlantFeature extends ScatterFeature {
 	private final Block smallPlant;
 	private final Block largePlant;
 	private Block plant;
-
+	
 	public DoublePlantFeature(Block smallPlant, Block largePlant, int radius) {
 		super(radius);
 		this.smallPlant = smallPlant;
 		this.largePlant = largePlant;
 	}
-
+	
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		float d = MHelper.length(center.getX() - blockPos.getX(), center.getZ() - blockPos.getZ()) / radius * 0.6F + random.nextFloat() * 0.4F;
 		plant = d < 0.5F ? largePlant : smallPlant;
 		return plant.canSurvive(plant.defaultBlockState(), world, blockPos);
 	}
-
+	
 	@Override
 	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		if (plant instanceof BaseDoublePlantBlock) {

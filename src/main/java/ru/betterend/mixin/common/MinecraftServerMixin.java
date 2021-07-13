@@ -24,15 +24,15 @@ import java.util.Map;
 public abstract class MinecraftServerMixin {
 	@Shadow
 	private ServerResources resources;
-
+	
 	@Final
 	@Shadow
 	private Map<ResourceKey<Level>, ServerLevel> levels;
-
+	
 	@Final
 	@Shadow
 	protected WorldData worldData;
-
+	
 	@Inject(method = "overworld", at = @At(value = "HEAD"), cancellable = true)
 	private void be_overworld(CallbackInfoReturnable<ServerLevel> info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
@@ -44,7 +44,7 @@ public abstract class MinecraftServerMixin {
 			info.cancel();
 		}
 	}
-
+	
 	@Inject(method = "createLevels", at = @At(value = "TAIL"))
 	private void be_createLevels(ChunkProgressListener worldGenerationProgressListener, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd()) {
@@ -59,21 +59,21 @@ public abstract class MinecraftServerMixin {
 			setInitialSpawn(world, serverWorldProperties, generatorOptions.generateBonusChest(), bl);
 		}
 	}
-
+	
 	@Shadow
 	private static void setInitialSpawn(ServerLevel serverLevel, ServerLevelData serverLevelData, boolean bl, boolean bl2) {
 	}
-
+	
 	;
-
+	
 	@Inject(method = "setInitialSpawn", at = @At(value = "HEAD"), cancellable = true)
 	private static void be_setInitialSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd() && world.dimension() == Level.OVERWORLD) {
 			info.cancel();
 		}
 	}
-
-
+	
+	
 	@Shadow
 	public PlayerList getPlayerList() {
 		return null;

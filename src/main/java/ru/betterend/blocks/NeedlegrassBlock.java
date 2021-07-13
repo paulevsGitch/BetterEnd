@@ -29,7 +29,7 @@ public class NeedlegrassBlock extends EndPlantBlock {
 			entity.hurt(DamageSource.CACTUS, 0.1F);
 		}
 	}
-
+	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
@@ -40,12 +40,12 @@ public class NeedlegrassBlock extends EndPlantBlock {
 			return Lists.newArrayList(new ItemStack(Items.STICK, MHelper.randRange(0, 2, MHelper.RANDOM)));
 		}
 	}
-
+	
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		return state.is(EndBlocks.SHADOW_GRASS);
 	}
-
+	
 	@Override
 	public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
 		return false;

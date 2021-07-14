@@ -63,7 +63,7 @@ public class EndTags {
 				TagHelper.addTag(TagAPI.MINEABLE_HOE, block);
 			}
 			else if (material.equals(Material.SAND)) {
-				TagHelper.addTag(TagAPI.MINEABLE_HOE, block);
+				TagHelper.addTag(TagAPI.MINEABLE_SHOVEL, block);
 			}
 			
 			if (block instanceof EndTerrainBlock) {

@@ -60,7 +60,6 @@ public class LevelRendererMixin {
 	private static float time3;
 	private static float blind02;
 	private static float blind06;
-	private static boolean directOpenGL = false;
 	
 	@Shadow
 	@Final
@@ -88,8 +87,6 @@ public class LevelRendererMixin {
 		axis2.normalize();
 		axis3.normalize();
 		axis4.normalize();
-		
-		directOpenGL = FabricLoader.getInstance().isModLoaded("optifabric") || FabricLoader.getInstance().isModLoaded("immersive_portals");
 	}
 	
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
@@ -103,17 +100,8 @@ public class LevelRendererMixin {
 			
 			FogRenderer.levelFogColor();
 			RenderSystem.enableTexture();
-			
-			if (directOpenGL) {
-				GL11.glEnable(GL11.GL_ALPHA_TEST);
-				GL11.glAlphaFunc(516, 0.0F);
-				GL11.glEnable(GL11.GL_BLEND);
-				RenderSystem.depthMask(false);
-			}
-			else {
-				RenderSystem.enableBlend();
-				RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			}
+			RenderSystem.enableBlend();
+			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			
 			float blindA = 1F - BackgroundInfo.blindness;
 			blind02 = blindA * 0.2F;

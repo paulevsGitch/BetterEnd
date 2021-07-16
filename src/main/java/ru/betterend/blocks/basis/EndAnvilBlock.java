@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.NotNull;
 import ru.bclib.blocks.BaseAnvilBlock;
 import ru.betterend.blocks.complex.MetalMaterial;
 import ru.betterend.item.EndAnvilItem;
@@ -20,12 +21,14 @@ import java.util.Objects;
 public class EndAnvilBlock extends BaseAnvilBlock {
 	
 	protected final int level;
+	protected final Item anvilItem;
 	protected IntegerProperty durability;
 	protected MetalMaterial metalMaterial;
 	protected int maxDurability;
 	
 	public EndAnvilBlock(MaterialColor color, int level) {
 		super(color);
+		this.anvilItem = new EndAnvilItem(this);
 		this.level = level;
 	}
 	
@@ -63,16 +66,12 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public Item asItem() {
-		if (metalMaterial != null) {
-			return metalMaterial.anvilItem;
-		}
-		return Item.byBlock(this);
+		return anvilItem;
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
+	public BlockState getStateForPlacement(@NotNull BlockPlaceContext blockPlaceContext) {
 		return Objects.requireNonNull(super.getStateForPlacement(blockPlaceContext)).setValue(durability, maxDurability);
 	}
 	
@@ -88,8 +87,7 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 	
 	public static BlockState applyDamage(BlockState blockState) {
 		Block anvilBlock = blockState.getBlock();
-		if (anvilBlock instanceof EndAnvilBlock) {
-			EndAnvilBlock endAnvilBlock = (EndAnvilBlock) anvilBlock;
+		if (anvilBlock instanceof EndAnvilBlock endAnvilBlock) {
 			IntegerProperty durability = endAnvilBlock.getDurability();
 			int damage = blockState.getValue(durability) - 1;
 			if (damage > 0) {

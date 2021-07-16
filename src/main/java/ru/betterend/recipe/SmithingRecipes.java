@@ -26,8 +26,8 @@ public class SmithingRecipes {
 		SmithingTableRecipe.create(BetterEnd.MOD_ID, "aeternium_leggings").checkConfig(Configs.RECIPE_CONFIG).setResult(EndItems.AETERNIUM_LEGGINGS).setBase(EndBlocks.TERMINITE.leggings).setAddition(EndItems.AETERNIUM_FORGED_PLATE).build();
 		SmithingTableRecipe.create(BetterEnd.MOD_ID, "aeternium_boots").checkConfig(Configs.RECIPE_CONFIG).setResult(EndItems.AETERNIUM_BOOTS).setBase(EndBlocks.TERMINITE.boots).setAddition(EndItems.AETERNIUM_FORGED_PLATE).build();
 		
-		SmithingTableRecipe.create(BetterEnd.MOD_ID, "thallasium_anvil_updrade").checkConfig(Configs.RECIPE_CONFIG).setResult(EndBlocks.TERMINITE.anvilBlock).setBase(EndBlocks.THALLASIUM.anvilBlock).setAddition(EndBlocks.TERMINITE.block).build();
-		SmithingTableRecipe.create(BetterEnd.MOD_ID, "terminite_anvil_updrade").checkConfig(Configs.RECIPE_CONFIG).setResult(EndBlocks.AETERNIUM_ANVIL).setBase(EndBlocks.TERMINITE.anvilBlock).setAddition(EndItems.AETERNIUM_INGOT).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, "thallasium_anvil_updrade").checkConfig(Configs.RECIPE_CONFIG).setResult(EndBlocks.TERMINITE.anvilBlock.asItem()).setBase(EndBlocks.THALLASIUM.anvilBlock.asItem()).setAddition(EndBlocks.TERMINITE.block).build();
+		SmithingTableRecipe.create(BetterEnd.MOD_ID, "terminite_anvil_updrade").checkConfig(Configs.RECIPE_CONFIG).setResult(EndBlocks.AETERNIUM_ANVIL.asItem()).setBase(EndBlocks.TERMINITE.anvilBlock.asItem()).setAddition(EndItems.AETERNIUM_INGOT).build();
 		
 		SmithingTableRecipe.create(BetterEnd.MOD_ID, "armored_elytra").checkConfig(Configs.RECIPE_CONFIG).setResult(EndItems.ARMORED_ELYTRA).setBase(Items.ELYTRA).setAddition(EndItems.AETERNIUM_INGOT).build();
 	}

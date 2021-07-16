@@ -66,7 +66,6 @@ public class MetalMaterial {
 	public final ColoredMaterial bulb_lantern_colored;
 	
 	public final Block anvilBlock;
-	public final Item anvilItem;
 	
 	public final Item rawOre;
 	public final Item nugget;
@@ -158,8 +157,7 @@ public class MetalMaterial {
 		leggings = EndItems.registerEndItem(name + "_leggings", new EndArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
 		boots = EndItems.registerEndItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));
 		
-		anvilBlock = EndBlocks.registerBlock(name + "_anvil", new EndAnvilBlock(this, block.defaultMaterialColor(), level));
-		anvilItem = EndItems.registerEndItem(name + "_anvil_item", new EndAnvilItem(anvilBlock));
+		anvilBlock = EndBlocks.registerAnvil(name + "_anvil", new EndAnvilBlock(this, block.defaultMaterialColor(), level));
 		
 		if (hasOre) {
 			FurnaceRecipe.make(BetterEnd.MOD_ID, name + "_ingot_furnace_ore", ore, ingot).checkConfig(Configs.RECIPE_CONFIG).setGroup("end_ingot").buildWithBlasting();

@@ -5,6 +5,7 @@ import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.NotNull;
 import ru.betterend.recipe.builders.AnvilRecipe;
@@ -19,14 +20,16 @@ public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDispl
 	public REIAnvilDisplay(AnvilRecipe recipe) {
 		super(EntryIngredients.ofIngredients(recipe.getIngredients()), Collections.singletonList(EntryIngredients.of(recipe.getResultItem())));
 		this.recipe = recipe;
+
+		inputs.get(1).forEach(entryStack -> {
+			if (entryStack.getValue() instanceof ItemStack itemStack) {
+				itemStack.setCount(recipe.getInputCount());
+			}
+		});
 	}
 	
 	public int getDamage() {
 		return recipe.getDamage();
-	}
-	
-	public int getInputCount() {
-		return recipe.getInputCount();
 	}
 	
 	public int getAnvilLevel() {
@@ -43,11 +46,6 @@ public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDispl
 		return REIPlugin.SMITHING;
 	}
 	
-	// @Override
-	// public @NotNull List<List<EntryStack>> getRequiredEntries() {
-	// 	return input;
-	// }
-	
 	@Override
 	public int getWidth() {
 		return 2;
@@ -57,10 +55,4 @@ public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDispl
 	public int getHeight() {
 		return 1;
 	}
-	
-	// @Override
-	// public List<List<EntryStack>> getOrganisedInputEntries(ContainerInfo<AbstractContainerMenu> containerInfo,
-	//		AbstractContainerMenu container) {
-	//	return input;
-	// }
 }

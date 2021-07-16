@@ -26,14 +26,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay> {
-	private final EntryStack[] ANVILS;
+	private final EntryStack<?>[] ANVILS;
 	
-	REIAnvilCategory(EntryStack[] anvils) {
+	REIAnvilCategory(EntryStack<?>[] anvils) {
 		ANVILS = anvils;
 	}
 	
 	@Override
-	public @NotNull CategoryIdentifier getCategoryIdentifier() {
+	public CategoryIdentifier<REIAnvilDisplay> getCategoryIdentifier() {
 		return REIPlugin.SMITHING;
 	}
 	
@@ -43,7 +43,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 	}
 	
 	@Override
-	public @NotNull EntryStack getIcon() {
+	public @NotNull EntryStack<?> getIcon() {
 		return ANVILS[0];
 	}
 	
@@ -59,7 +59,7 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		List<EntryIngredient> inputEntries = display.getInputEntries();
 		EntryIngredient materials = inputEntries.get(1);
 		int anvilLevel = display.getAnvilLevel();
-		List anvils = Arrays.stream(ANVILS).filter(anvil -> {
+		List<EntryStack<?>> anvils = Arrays.stream(ANVILS).filter(anvil -> {
 			Object value = anvil.getValue();
 			if (value instanceof ItemStack) {
 				value = ((ItemStack) value).getItem();
@@ -70,7 +70,6 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 			}
 			return anvilLevel == 1;
 		}).collect(Collectors.toList());
-		//materials.forEach(entryStack -> entryStack.setAmount(display.getInputCount()));
 		widgets.add(Widgets.createArrow(new Point(x + 24, y + 4)));
 		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 7, bounds.y + bounds.height - 15), new TranslatableComponent("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		widgets.add(Widgets.createSlot(new Point(x - 20, y + 4)).entries(materials).markInput());

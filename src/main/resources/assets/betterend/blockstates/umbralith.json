@@ -1,0 +1,11 @@
+{
+	"variants": {
+		"":  [
+			{ "model": "betterend:block/umbralith_1", "weight": 50 },
+			{ "model": "betterend:block/umbralith_2", "weight": 40 },
+			{ "model": "betterend:block/umbralith_3", "weight": 3 },
+			{ "model": "betterend:block/umbralith_4", "weight": 2 },
+			{ "model": "betterend:block/umbralith_5", "weight": 1 }
+		]
+	}
+}

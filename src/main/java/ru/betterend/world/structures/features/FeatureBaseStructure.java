@@ -48,7 +48,12 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 		int m = chunkGenerator.getFirstOccupiedHeight(k, l, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
 		int n = chunkGenerator.getFirstOccupiedHeight(k, l + j, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
 		int o = chunkGenerator.getFirstOccupiedHeight(k + i, l, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
-		int p = chunkGenerator.getFirstOccupiedHeight(k + i, l + j, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor);
+		int p = chunkGenerator.getFirstOccupiedHeight(
+			k + i,
+			l + j,
+			Heightmap.Types.WORLD_SURFACE_WG,
+			levelHeightAccessor
+		);
 		return Math.min(Math.min(m, n), Math.min(o, p));
 	}
 }

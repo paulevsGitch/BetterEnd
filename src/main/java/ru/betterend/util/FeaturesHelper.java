@@ -24,7 +24,8 @@ public class FeaturesHelper {
 				BiomeGenerationSettingsAccessor accessor = (BiomeGenerationSettingsAccessor) biome.getGenerationSettings();
 				List<Supplier<ConfiguredStructureFeature<?, ?>>> structures = Lists.newArrayList(accessor.be_getStructures());
 				List<List<Supplier<ConfiguredFeature<?, ?>>>> preFeatures = accessor.be_getFeatures();
-				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = new ArrayList<List<Supplier<ConfiguredFeature<?, ?>>>>(preFeatures.size());
+				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = new ArrayList<List<Supplier<ConfiguredFeature<?, ?>>>>(
+					preFeatures.size());
 				preFeatures.forEach((list) -> {
 					features.add(Lists.newArrayList(list));
 				});

@@ -34,35 +34,95 @@ public class SilkMothEntityModel extends BlockBenchModel<SilkMothEntity> {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 		
-		PartDefinition legsL = modelPartData.addOrReplaceChild(PartNames.LEFT_LEG, CubeListBuilder.create().texOffs(0, 0), PartPose.offsetAndRotation(1.5f, 19.9f, -0.45f, 0.0f, 0.0f, 0.6981f));
+		PartDefinition legsL = modelPartData.addOrReplaceChild(
+			PartNames.LEFT_LEG,
+			CubeListBuilder.create().texOffs(0, 0),
+			PartPose.offsetAndRotation(1.5f, 19.9f, -0.45f, 0.0f, 0.0f, 0.6981f)
+		);
 		
-		legsL.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 13).addBox(0.0216f, 0.0f, -0.5976f, 3.0f, 0.0f, 1.0f), PartPose.offsetAndRotation(0.0f, 0.0f, -1.0f, 0.0f, 0.2182f, 0.3927f));
+		legsL.addOrReplaceChild(
+			"cube_r1",
+			CubeListBuilder.create().texOffs(0, 13).addBox(0.0216f, 0.0f, -0.5976f, 3.0f, 0.0f, 1.0f),
+			PartPose.offsetAndRotation(0.0f, 0.0f, -1.0f, 0.0f, 0.2182f, 0.3927f)
+		);
 		
-		legsL.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(0, 15).addBox(0.0f, 0.0f, -0.6f, 3.0f, 0.0f, 1.0f), PartPose.offsetAndRotation(0.5f, 0.1f, -0.05f, 0.0f, 0.0f, 0.3927f));
+		legsL.addOrReplaceChild(
+			"cube_r2",
+			CubeListBuilder.create().texOffs(0, 15).addBox(0.0f, 0.0f, -0.6f, 3.0f, 0.0f, 1.0f),
+			PartPose.offsetAndRotation(0.5f, 0.1f, -0.05f, 0.0f, 0.0f, 0.3927f)
+		);
 		
-		legsL.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(0, 14).addBox(0.0f, 0.0f, -0.5f, 3.0f, 0.0f, 1.0f), PartPose.offsetAndRotation(0.0f, 0.0f, 0.9f, 0.0f, -0.2182f, 0.3927f));
+		legsL.addOrReplaceChild(
+			"cube_r3",
+			CubeListBuilder.create().texOffs(0, 14).addBox(0.0f, 0.0f, -0.5f, 3.0f, 0.0f, 1.0f),
+			PartPose.offsetAndRotation(0.0f, 0.0f, 0.9f, 0.0f, -0.2182f, 0.3927f)
+		);
 		
-		PartDefinition legsR = modelPartData.addOrReplaceChild(PartNames.RIGHT_LEG, CubeListBuilder.create().texOffs(0, 0), PartPose.offsetAndRotation(-1.5f, 19.9f, -0.55f, 0.0f, 3.1416f, -0.6545f));
+		PartDefinition legsR = modelPartData.addOrReplaceChild(
+			PartNames.RIGHT_LEG,
+			CubeListBuilder.create().texOffs(0, 0),
+			PartPose.offsetAndRotation(-1.5f, 19.9f, -0.55f, 0.0f, 3.1416f, -0.6545f)
+		);
 		
-		legsR.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(0, 10).addBox(0.0f, 0.0f, -0.5f, 3.0f, 0.0f, 1.0f), PartPose.offsetAndRotation(0.0f, 0.0f, -1.0f, 0.0f, 0.2182f, 0.3927f));
+		legsR.addOrReplaceChild(
+			"cube_r4",
+			CubeListBuilder.create().texOffs(0, 10).addBox(0.0f, 0.0f, -0.5f, 3.0f, 0.0f, 1.0f),
+			PartPose.offsetAndRotation(0.0f, 0.0f, -1.0f, 0.0f, 0.2182f, 0.3927f)
+		);
 		
-		legsR.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(0, 11).addBox(0.0f, 0.0f, -0.4f, 3.0f, 0.0f, 1.0f), PartPose.offsetAndRotation(0.5f, 0.1f, -0.05f, 0.0f, 0.0f, 0.3927f));
+		legsR.addOrReplaceChild(
+			"cube_r5",
+			CubeListBuilder.create().texOffs(0, 11).addBox(0.0f, 0.0f, -0.4f, 3.0f, 0.0f, 1.0f),
+			PartPose.offsetAndRotation(0.5f, 0.1f, -0.05f, 0.0f, 0.0f, 0.3927f)
+		);
 		
-		legsR.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 12).addBox(0.0216f, 0.0f, -0.4024f, 3.0f, 0.0f, 1.0f), PartPose.offsetAndRotation(0.0f, 0.0f, 0.9f, 0.0f, -0.2182f, 0.3927f));
+		legsR.addOrReplaceChild(
+			"cube_r6",
+			CubeListBuilder.create().texOffs(0, 12).addBox(0.0216f, 0.0f, -0.4024f, 3.0f, 0.0f, 1.0f),
+			PartPose.offsetAndRotation(0.0f, 0.0f, 0.9f, 0.0f, -0.2182f, 0.3927f)
+		);
 		
-		PartDefinition head_pivot = modelPartData.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create().texOffs(15, 10).addBox(-1.5f, -1.5f, -2.0f, 3.0f, 3.0f, 3.0f), PartPose.offset(0.0f, 18.0f, -3.0f));
+		PartDefinition head_pivot = modelPartData.addOrReplaceChild(
+			PartNames.HEAD,
+			CubeListBuilder.create().texOffs(15, 10).addBox(-1.5f, -1.5f, -2.0f, 3.0f, 3.0f, 3.0f),
+			PartPose.offset(0.0f, 18.0f, -3.0f)
+		);
 		
-		head_pivot.addOrReplaceChild("tendril_r_r1", CubeListBuilder.create().mirror().texOffs(23, 0).addBox(-1.5f, -5.0f, 0.0f, 3.0f, 5.0f, 0.0f), PartPose.offsetAndRotation(1.0f, -1.15f, -1.0f, 0.0f, 0.0f, 0.3927f));
+		head_pivot.addOrReplaceChild(
+			"tendril_r_r1",
+			CubeListBuilder.create().mirror().texOffs(23, 0).addBox(-1.5f, -5.0f, 0.0f, 3.0f, 5.0f, 0.0f),
+			PartPose.offsetAndRotation(1.0f, -1.15f, -1.0f, 0.0f, 0.0f, 0.3927f)
+		);
 		
-		head_pivot.addOrReplaceChild("tendril_r_r2", CubeListBuilder.create().texOffs(23, 0).addBox(-1.5f, -5.0f, 0.0f, 3.0f, 5.0f, 0.0f), PartPose.offsetAndRotation(-1.0f, -1.15f, -1.0f, 0.0f, 0.0f, -0.3927f));
+		head_pivot.addOrReplaceChild(
+			"tendril_r_r2",
+			CubeListBuilder.create().texOffs(23, 0).addBox(-1.5f, -5.0f, 0.0f, 3.0f, 5.0f, 0.0f),
+			PartPose.offsetAndRotation(-1.0f, -1.15f, -1.0f, 0.0f, 0.0f, -0.3927f)
+		);
 		
-		PartDefinition bb_main = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create().texOffs(19, 19).addBox(-2.5f, -8.5f, -3.0f, 5.0f, 5.0f, 3.0f), PartPose.offset(0.0f, 24.0f, 0.0f));
+		PartDefinition bb_main = modelPartData.addOrReplaceChild(
+			PartNames.BODY,
+			CubeListBuilder.create().texOffs(19, 19).addBox(-2.5f, -8.5f, -3.0f, 5.0f, 5.0f, 3.0f),
+			PartPose.offset(0.0f, 24.0f, 0.0f)
+		);
 		
-		bb_main.addOrReplaceChild(PartNames.RIGHT_WING, CubeListBuilder.create().mirror().texOffs(0, 5).addBox(-7.0f, 0.0f, -3.0f, 9.0f, 0.0f, 5.0f), PartPose.offsetAndRotation(-1.5f, -6.5f, 0.5f, 0.0f, 0.0f, 0.3927f));
+		bb_main.addOrReplaceChild(
+			PartNames.RIGHT_WING,
+			CubeListBuilder.create().mirror().texOffs(0, 5).addBox(-7.0f, 0.0f, -3.0f, 9.0f, 0.0f, 5.0f),
+			PartPose.offsetAndRotation(-1.5f, -6.5f, 0.5f, 0.0f, 0.0f, 0.3927f)
+		);
 		
-		bb_main.addOrReplaceChild(PartNames.LEFT_WING, CubeListBuilder.create().texOffs(0, 5).addBox(-2.0f, 0.0f, -3.0f, 9.0f, 0.0f, 5.0f), PartPose.offsetAndRotation(1.5f, -6.5f, 0.5f, 0.0f, 0.0f, -0.3927f));
+		bb_main.addOrReplaceChild(
+			PartNames.LEFT_WING,
+			CubeListBuilder.create().texOffs(0, 5).addBox(-2.0f, 0.0f, -3.0f, 9.0f, 0.0f, 5.0f),
+			PartPose.offsetAndRotation(1.5f, -6.5f, 0.5f, 0.0f, 0.0f, -0.3927f)
+		);
 		
-		bb_main.addOrReplaceChild("abdomen_r1", CubeListBuilder.create().texOffs(0, 10).addBox(-3.0f, -4.0f, -1.0f, 4.0f, 4.0f, 7.0f), PartPose.offsetAndRotation(1.0f, -3.9f, 0.0f, -0.3927f, 0.0f, 0.0f));
+		bb_main.addOrReplaceChild(
+			"abdomen_r1",
+			CubeListBuilder.create().texOffs(0, 10).addBox(-3.0f, -4.0f, -1.0f, 4.0f, 4.0f, 7.0f),
+			PartPose.offsetAndRotation(1.0f, -3.9f, 0.0f, -0.3927f, 0.0f, 0.0f)
+		);
 		
 		return LayerDefinition.create(modelData, 64, 64);
 	}

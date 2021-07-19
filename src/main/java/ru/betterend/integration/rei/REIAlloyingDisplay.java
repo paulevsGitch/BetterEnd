@@ -34,7 +34,10 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 	}
 	
 	protected REIAlloyingDisplay(Recipe<?> recipe, float xp, double smeltTime) {
-		super(EntryIngredients.ofIngredients(recipe.getIngredients()), Collections.singletonList(EntryIngredients.of(recipe.getResultItem())));
+		super(
+			EntryIngredients.ofIngredients(recipe.getIngredients()),
+			Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
+		);
 		this.recipe = recipe;
 		this.xp = xp;
 		this.smeltTime = smeltTime;
@@ -88,6 +91,16 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 	// }
 	
 	static {
-		fuel = EndStoneSmelterBlockEntity.availableFuels().keySet().stream().map(Item::getDefaultInstance).map(EntryStacks::of).map(e -> e.setting(EntryStack.Settings.TOOLTIP_APPEND_EXTRA, stack -> Collections.singletonList(new TranslatableComponent("category.rei.smelting.fuel").withStyle(ChatFormatting.YELLOW)))).collect(Collectors.toList());
+		fuel = EndStoneSmelterBlockEntity.availableFuels()
+										 .keySet()
+										 .stream()
+										 .map(Item::getDefaultInstance)
+										 .map(EntryStacks::of)
+										 .map(e -> e.setting(
+											 EntryStack.Settings.TOOLTIP_APPEND_EXTRA,
+											 stack -> Collections.singletonList(new TranslatableComponent(
+												 "category.rei.smelting.fuel").withStyle(ChatFormatting.YELLOW))
+										 ))
+										 .collect(Collectors.toList());
 	}
 }

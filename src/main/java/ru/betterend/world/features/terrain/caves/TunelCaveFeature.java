@@ -74,7 +74,10 @@ public class TunelCaveFeature extends EndCaveFeature {
 						break;
 					}
 					float val = Mth.abs((float) noiseH.eval(pos.getX() * 0.02, y * 0.01, pos.getZ() * 0.02));
-					float vert = Mth.sin((y + (float) noiseV.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * 20) * 0.1F) * 0.9F;
+					float vert = Mth.sin((y + (float) noiseV.eval(
+						pos.getX() * 0.01,
+						pos.getZ() * 0.01
+					) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(pos.getX() * 0.1, y * 0.1, pos.getZ() * 0.1) * 0.12F;
 					val = (val + vert * vert + dist) + density + gradient;
 					if (val < 0.15 && world.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && noWaterNear(world, pos)) {
@@ -163,7 +166,10 @@ public class TunelCaveFeature extends EndCaveFeature {
 		}
 		
 		floorSets.forEach((biome, floorPositions) -> {
-			BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+			BlockState surfaceBlock = biome.getBiome()
+										   .getGenerationSettings()
+										   .getSurfaceBuilderConfig()
+										   .getTopMaterial();
 			placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		});
 		ceilSets.forEach((biome, ceilPositions) -> {
@@ -215,7 +221,10 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 	
 	protected boolean hasCaves(WorldGenLevel world, BlockPos pos) {
-		return hasCavesInBiome(world, pos.offset(-8, 0, -8)) && hasCavesInBiome(world, pos.offset(8, 0, -8)) && hasCavesInBiome(world, pos.offset(-8, 0, 8)) && hasCavesInBiome(world, pos.offset(8, 0, 8));
+		return hasCavesInBiome(world, pos.offset(-8, 0, -8)) && hasCavesInBiome(
+			world,
+			pos.offset(8, 0, -8)
+		) && hasCavesInBiome(world, pos.offset(-8, 0, 8)) && hasCavesInBiome(world, pos.offset(8, 0, 8));
 	}
 	
 	protected boolean hasCavesInBiome(WorldGenLevel world, BlockPos pos) {

@@ -5,7 +5,6 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
@@ -25,7 +24,6 @@ import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,10 +31,22 @@ import java.util.stream.Collectors;
 //https://github.com/shedaniel/RoughlyEnoughItems/blob/6.x-1.17/default-plugin/src/main/java/me/shedaniel/rei/plugin/client/DefaultClientPlugin.java
 public class REIPlugin implements REIClientPlugin {
 	public final static ResourceLocation PLUGIN_ID = BetterEnd.makeID("rei_plugin");
-	public final static CategoryIdentifier<REIAlloyingFuelDisplay> ALLOYING_FUEL = CategoryIdentifier.of(BetterEnd.MOD_ID, "alloying_fuel");
-	public final static CategoryIdentifier<REIAlloyingDisplay> ALLOYING = CategoryIdentifier.of(BetterEnd.MOD_ID, AlloyingRecipe.GROUP);
-	public final static CategoryIdentifier<REIAnvilDisplay> SMITHING = CategoryIdentifier.of(BetterEnd.MOD_ID, AnvilRecipe.ID.getPath());
-	public final static CategoryIdentifier<REIInfusionDisplay> INFUSION = CategoryIdentifier.of(BetterEnd.MOD_ID, InfusionRecipe.GROUP);
+	public final static CategoryIdentifier<REIAlloyingFuelDisplay> ALLOYING_FUEL = CategoryIdentifier.of(
+		BetterEnd.MOD_ID,
+		"alloying_fuel"
+	);
+	public final static CategoryIdentifier<REIAlloyingDisplay> ALLOYING = CategoryIdentifier.of(
+		BetterEnd.MOD_ID,
+		AlloyingRecipe.GROUP
+	);
+	public final static CategoryIdentifier<REIAnvilDisplay> SMITHING = CategoryIdentifier.of(
+		BetterEnd.MOD_ID,
+		AnvilRecipe.ID.getPath()
+	);
+	public final static CategoryIdentifier<REIInfusionDisplay> INFUSION = CategoryIdentifier.of(
+		BetterEnd.MOD_ID,
+		InfusionRecipe.GROUP
+	);
 	
 	@Override
 	public void registerDisplays(DisplayRegistry registry) {
@@ -57,13 +67,24 @@ public class REIPlugin implements REIClientPlugin {
 	public void registerCategories(CategoryRegistry registry) {
 		EntryStack<ItemStack> endStoneSmelter = EntryStacks.of(EndBlocks.END_STONE_SMELTER);
 		EntryStack<ItemStack> infusionRitual = EntryStacks.of(EndBlocks.INFUSION_PEDESTAL);
-		List<EntryStack<?>> anvils = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks().stream().filter(EndAnvilBlock.class::isInstance).collect(Collectors.toList())));
+		List<EntryStack<?>> anvils = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks()
+																						  .stream()
+																						  .filter(EndAnvilBlock.class::isInstance)
+																						  .collect(Collectors.toList())));
 		anvils.add(0, EntryStacks.of(Blocks.ANVIL));
-		List<EntryStack<?>> furnaces = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks().stream().filter(BaseFurnaceBlock.class::isInstance).collect(Collectors.toList())));
+		List<EntryStack<?>> furnaces = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks()
+																							.stream()
+																							.filter(BaseFurnaceBlock.class::isInstance)
+																							.collect(Collectors.toList())));
 		EntryStack<?>[] anvilsArray = anvils.toArray(new EntryStack[0]);
 		EntryStack<?>[] furnacesArray = furnaces.toArray(new EntryStack[0]);
-
-		registry.add(new REIAlloyingFuelCategory(), new REIAlloyingCategory(endStoneSmelter), new REIInfusionCategory(infusionRitual), new REIAnvilCategory(anvilsArray));
+		
+		registry.add(
+			new REIAlloyingFuelCategory(),
+			new REIAlloyingCategory(endStoneSmelter),
+			new REIInfusionCategory(infusionRitual),
+			new REIAnvilCategory(anvilsArray)
+		);
 		
 		registry.addWorkstations(ALLOYING_FUEL, endStoneSmelter);
 		registry.addWorkstations(ALLOYING, endStoneSmelter);

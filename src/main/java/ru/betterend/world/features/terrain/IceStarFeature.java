@@ -41,7 +41,10 @@ public class IceStarFeature extends DefaultFeature {
 		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);
 		SDF sdf = null;
-		SDF spike = new SDFCappedCone().setRadius1(3 + (size - 5) * 0.2F).setRadius2(0).setHeight(size).setBlock(EndBlocks.DENSE_SNOW);
+		SDF spike = new SDFCappedCone().setRadius1(3 + (size - 5) * 0.2F)
+									   .setRadius2(0)
+									   .setHeight(size)
+									   .setBlock(EndBlocks.DENSE_SNOW);
 		spike = new SDFTranslate().setTranslate(0, size - 0.5F, 0).setSource(spike);
 		for (Vector3f point : points) {
 			SDF rotated = spike;
@@ -77,7 +80,11 @@ public class IceStarFeature extends DefaultFeature {
 			float px = bpos.getX() - center.getX();
 			float py = bpos.getY() - center.getY();
 			float pz = bpos.getZ() - center.getZ();
-			float distance = MHelper.length(px, py, pz) + sdfCopy.getDistance(px, py, pz) * 0.4F + random.nextFloat() * randScale;
+			float distance = MHelper.length(px, py, pz) + sdfCopy.getDistance(
+				px,
+				py,
+				pz
+			) * 0.4F + random.nextFloat() * randScale;
 			if (distance < ancientRadius) {
 				return ancient;
 			}

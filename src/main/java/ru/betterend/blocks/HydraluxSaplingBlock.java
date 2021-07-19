@@ -29,18 +29,40 @@ public class HydraluxSaplingBlock extends UnderwaterPlantWithAgeBlock {
 		
 		mut.setY(pos.getY());
 		BlockState state = EndBlocks.HYDRALUX.defaultBlockState();
-		BlocksHelper.setWithoutUpdate(world, pos, state.setValue(EndBlockProperties.HYDRALUX_SHAPE, HydraluxShape.ROOTS));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			pos,
+			state.setValue(EndBlockProperties.HYDRALUX_SHAPE, HydraluxShape.ROOTS)
+		);
 		for (int i = 1; i < h - 2; i++) {
 			mut.setY(pos.getY() + i);
-			BlocksHelper.setWithoutUpdate(world, mut, state.setValue(EndBlockProperties.HYDRALUX_SHAPE, HydraluxShape.VINE));
+			BlocksHelper.setWithoutUpdate(
+				world,
+				mut,
+				state.setValue(EndBlockProperties.HYDRALUX_SHAPE, HydraluxShape.VINE)
+			);
 		}
 		
 		mut.setY(mut.getY() + 1);
 		boolean big = random.nextBoolean();
-		BlocksHelper.setWithoutUpdate(world, mut, state.setValue(EndBlockProperties.HYDRALUX_SHAPE, big ? HydraluxShape.FLOWER_BIG_BOTTOM : HydraluxShape.FLOWER_SMALL_BOTTOM));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			mut,
+			state.setValue(
+				EndBlockProperties.HYDRALUX_SHAPE,
+				big ? HydraluxShape.FLOWER_BIG_BOTTOM : HydraluxShape.FLOWER_SMALL_BOTTOM
+			)
+		);
 		
 		mut.setY(mut.getY() + 1);
-		BlocksHelper.setWithoutUpdate(world, mut, state.setValue(EndBlockProperties.HYDRALUX_SHAPE, big ? HydraluxShape.FLOWER_BIG_TOP : HydraluxShape.FLOWER_SMALL_TOP));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			mut,
+			state.setValue(
+				EndBlockProperties.HYDRALUX_SHAPE,
+				big ? HydraluxShape.FLOWER_BIG_TOP : HydraluxShape.FLOWER_SMALL_TOP
+			)
+		);
 	}
 	
 	@Override

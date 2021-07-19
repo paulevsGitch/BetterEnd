@@ -52,7 +52,11 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.FLYING_SPEED, 1.0D).add(Attributes.MOVEMENT_SPEED, 0.1D);
+		return LivingEntity.createLivingAttributes()
+						   .add(Attributes.MAX_HEALTH, 8.0D)
+						   .add(Attributes.FOLLOW_RANGE, 16.0D)
+						   .add(Attributes.FLYING_SPEED, 1.0D)
+						   .add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
 	
 	@Override
@@ -172,7 +176,16 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 			if (airPos != null) {
 				if (isInVoid(airPos)) {
 					for (int i = 0; i < 8; i++) {
-						airPos = HoverRandomPos.getPos(DragonflyEntity.this, 16, 7, rotation.x, rotation.z, MHelper.PI2, 3, 1);
+						airPos = HoverRandomPos.getPos(
+							DragonflyEntity.this,
+							16,
+							7,
+							rotation.x,
+							rotation.z,
+							MHelper.PI2,
+							3,
+							1
+						);
 						if (airPos != null && !isInVoid(airPos)) {
 							return airPos;
 						}
@@ -184,7 +197,15 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 				}
 				return airPos;
 			}
-			return AirAndWaterRandomPos.getPos(DragonflyEntity.this, 8, 4, -2, rotation.x, rotation.z, 1.5707963705062866D);
+			return AirAndWaterRandomPos.getPos(
+				DragonflyEntity.this,
+				8,
+				4,
+				-2,
+				rotation.x,
+				rotation.z,
+				1.5707963705062866D
+			);
 		}
 		
 		private boolean isInVoid(Vec3 pos) {

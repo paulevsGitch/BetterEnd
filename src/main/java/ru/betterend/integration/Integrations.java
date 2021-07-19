@@ -32,7 +32,13 @@ public class Integrations {
 				}
 			});
 			
-			GridRecipe.make(BetterEnd.MOD_ID, "guide_book", GuideBookItem.GUIDE_BOOK).checkConfig(Configs.RECIPE_CONFIG).setShape("D", "B", "C").addMaterial('D', EndItems.ENDER_DUST).addMaterial('B', Items.BOOK).addMaterial('C', EndItems.CRYSTAL_SHARDS).build();
+			GridRecipe.make(BetterEnd.MOD_ID, "guide_book", GuideBookItem.GUIDE_BOOK)
+					  .checkConfig(Configs.RECIPE_CONFIG)
+					  .setShape("D", "B", "C")
+					  .addMaterial('D', EndItems.ENDER_DUST)
+					  .addMaterial('B', Items.BOOK)
+					  .addMaterial('C', EndItems.CRYSTAL_SHARDS)
+					  .build();
 		}
 		hasHydrogen = FabricLoader.getInstance().isModLoaded("hydrogen");
 	}

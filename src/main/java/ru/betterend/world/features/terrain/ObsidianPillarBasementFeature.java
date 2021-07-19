@@ -29,14 +29,20 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+		pos = getPosOnSurface(
+			world,
+			new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
+		);
 		if (!world.getBlockState(pos.below(5)).is(TagAPI.GEN_TERRAIN)) {
 			return false;
 		}
 		
 		float height = MHelper.randRange(10F, 35F, random);
 		float radius = MHelper.randRange(2F, 5F, random);
-		SDF pillar = new SDFCappedCone().setRadius1(radius).setRadius2(radius).setHeight(height * 0.5F).setBlock(Blocks.OBSIDIAN);
+		SDF pillar = new SDFCappedCone().setRadius1(radius)
+										.setRadius2(radius)
+										.setHeight(height * 0.5F)
+										.setBlock(Blocks.OBSIDIAN);
 		pillar = new SDFTranslate().setTranslate(0, height * 0.5F - 3, 0).setSource(pillar);
 		SDF cut = new SDFFlatland().setBlock(Blocks.OBSIDIAN);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
@@ -58,7 +64,8 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
+			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial()
+																							   .equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 		
 		return true;

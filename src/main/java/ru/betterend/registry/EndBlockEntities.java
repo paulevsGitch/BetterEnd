@@ -15,11 +15,26 @@ import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 
 public class EndBlockEntities {
-	public final static BlockEntityType<EndStoneSmelterBlockEntity> END_STONE_SMELTER = registerBlockEntity(EndStoneSmelter.ID, FabricBlockEntityTypeBuilder.create(EndStoneSmelterBlockEntity::new, EndBlocks.END_STONE_SMELTER));
-	public final static BlockEntityType<PedestalBlockEntity> PEDESTAL = registerBlockEntity("pedestal", FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, getPedestals()));
-	public final static BlockEntityType<EternalPedestalEntity> ETERNAL_PEDESTAL = registerBlockEntity("eternal_pedestal", FabricBlockEntityTypeBuilder.create(EternalPedestalEntity::new, EndBlocks.ETERNAL_PEDESTAL));
-	public final static BlockEntityType<InfusionPedestalEntity> INFUSION_PEDESTAL = registerBlockEntity("infusion_pedestal", FabricBlockEntityTypeBuilder.create(InfusionPedestalEntity::new, EndBlocks.INFUSION_PEDESTAL));
-	public final static BlockEntityType<BlockEntityHydrothermalVent> HYDROTHERMAL_VENT = registerBlockEntity("hydrother_malvent", FabricBlockEntityTypeBuilder.create(BlockEntityHydrothermalVent::new, EndBlocks.HYDROTHERMAL_VENT));
+	public final static BlockEntityType<EndStoneSmelterBlockEntity> END_STONE_SMELTER = registerBlockEntity(
+		EndStoneSmelter.ID,
+		FabricBlockEntityTypeBuilder.create(EndStoneSmelterBlockEntity::new, EndBlocks.END_STONE_SMELTER)
+	);
+	public final static BlockEntityType<PedestalBlockEntity> PEDESTAL = registerBlockEntity(
+		"pedestal",
+		FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, getPedestals())
+	);
+	public final static BlockEntityType<EternalPedestalEntity> ETERNAL_PEDESTAL = registerBlockEntity(
+		"eternal_pedestal",
+		FabricBlockEntityTypeBuilder.create(EternalPedestalEntity::new, EndBlocks.ETERNAL_PEDESTAL)
+	);
+	public final static BlockEntityType<InfusionPedestalEntity> INFUSION_PEDESTAL = registerBlockEntity(
+		"infusion_pedestal",
+		FabricBlockEntityTypeBuilder.create(InfusionPedestalEntity::new, EndBlocks.INFUSION_PEDESTAL)
+	);
+	public final static BlockEntityType<BlockEntityHydrothermalVent> HYDROTHERMAL_VENT = registerBlockEntity(
+		"hydrother_malvent",
+		FabricBlockEntityTypeBuilder.create(BlockEntityHydrothermalVent::new, EndBlocks.HYDROTHERMAL_VENT)
+	);
 	
 	public static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, FabricBlockEntityTypeBuilder<T> builder) {
 		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BetterEnd.makeID(id), builder.build(null));
@@ -31,6 +46,9 @@ public class EndBlockEntities {
 	}
 	
 	static Block[] getPedestals() {
-		return EndBlocks.getModBlocks().stream().filter(block -> block instanceof PedestalBlock && !((PedestalBlock) block).hasUniqueEntity()).toArray(Block[]::new);
+		return EndBlocks.getModBlocks()
+						.stream()
+						.filter(block -> block instanceof PedestalBlock && !((PedestalBlock) block).hasUniqueEntity())
+						.toArray(Block[]::new);
 	}
 }

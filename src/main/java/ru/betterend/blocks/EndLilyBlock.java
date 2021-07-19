@@ -42,7 +42,12 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock {
 	private static final VoxelShape SHAPE_TOP = Block.box(2, 0, 2, 14, 6, 14);
 	
 	public EndLilyBlock() {
-		super(FabricBlockSettings.of(Material.WATER_PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.WET_GRASS).lightLevel((state) -> state.getValue(SHAPE) == TripleShape.TOP ? 13 : 0).noCollission());
+		super(FabricBlockSettings.of(Material.WATER_PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .sound(SoundType.WET_GRASS)
+								 .lightLevel((state) -> state.getValue(SHAPE) == TripleShape.TOP ? 13 : 0)
+								 .noCollission());
 	}
 	
 	@Override
@@ -69,7 +74,8 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock {
 	
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.getValue(SHAPE) == TripleShape.TOP ? Fluids.EMPTY.defaultFluidState() : Fluids.WATER.getSource(false);
+		return state.getValue(SHAPE) == TripleShape.TOP ? Fluids.EMPTY.defaultFluidState() : Fluids.WATER.getSource(
+			false);
 	}
 	
 	@Override
@@ -90,7 +96,10 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock {
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(SHAPE) == TripleShape.TOP) {
-			return Lists.newArrayList(new ItemStack(EndItems.END_LILY_LEAF, MHelper.randRange(1, 2, MHelper.RANDOM)), new ItemStack(EndBlocks.END_LILY_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
+			return Lists.newArrayList(
+				new ItemStack(EndItems.END_LILY_LEAF, MHelper.randRange(1, 2, MHelper.RANDOM)),
+				new ItemStack(EndBlocks.END_LILY_SEED, MHelper.randRange(1, 2, MHelper.RANDOM))
+			);
 		}
 		return Collections.emptyList();
 	}

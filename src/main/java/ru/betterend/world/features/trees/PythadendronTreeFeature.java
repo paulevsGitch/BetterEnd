@@ -51,7 +51,17 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		
 		int depth = MHelper.floor((size - 10F) * 3F / 10F + 1F);
 		float bsize = (10F - (size - 10F)) / 10F + 1.5F;
-		branch(last.x(), last.y(), last.z(), size * bsize, MHelper.randRange(0, MHelper.PI2, random), random, depth, world, pos);
+		branch(
+			last.x(),
+			last.y(),
+			last.z(),
+			size * bsize,
+			MHelper.randRange(0, MHelper.PI2, random),
+			random,
+			depth,
+			world,
+			pos
+		);
 		
 		SDF function = SplineHelper.buildSDF(spline, 1.7F, 1.1F, (bpos) -> {
 			return EndBlocks.PYTHADENDRON.bark.defaultBlockState();
@@ -79,14 +89,26 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		SplineHelper.offsetParts(spline, random, 0.3F, 0, 0.3F);
 		Vector3f pos1 = spline.get(spline.size() - 1);
 		
-		boolean s1 = SplineHelper.fillSpline(spline, world, EndBlocks.PYTHADENDRON.bark.defaultBlockState(), pos, REPLACE);
+		boolean s1 = SplineHelper.fillSpline(
+			spline,
+			world,
+			EndBlocks.PYTHADENDRON.bark.defaultBlockState(),
+			pos,
+			REPLACE
+		);
 		
 		spline = SplineHelper.makeSpline(x, y, z, x2, y, z2, 5);
 		SplineHelper.powerOffset(spline, size * MHelper.randRange(1.0F, 2.0F, random), 4);
 		SplineHelper.offsetParts(spline, random, 0.3F, 0, 0.3F);
 		Vector3f pos2 = spline.get(spline.size() - 1);
 		
-		boolean s2 = SplineHelper.fillSpline(spline, world, EndBlocks.PYTHADENDRON.bark.defaultBlockState(), pos, REPLACE);
+		boolean s2 = SplineHelper.fillSpline(
+			spline,
+			world,
+			EndBlocks.PYTHADENDRON.bark.defaultBlockState(),
+			pos,
+			REPLACE
+		);
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
 		if (depth < 3) {
@@ -114,7 +136,9 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	private void leavesBall(WorldGenLevel world, BlockPos pos, Random random, OpenSimplexNoise noise) {
 		float radius = MHelper.randRange(4.5F, 6.5F, random);
 		
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.PYTHADENDRON_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
+		SDF sphere = new SDFSphere().setRadius(radius)
+									.setBlock(EndBlocks.PYTHADENDRON_LEAVES.defaultBlockState()
+																		   .setValue(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
@@ -122,7 +146,8 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return random.nextFloat() * 3F - 1.5F;
 		}).setSource(sphere);
-		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
+		sphere = new SDFSubtraction().setSourceA(sphere)
+									 .setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		MutableBlockPos mut = new MutableBlockPos();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) {

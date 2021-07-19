@@ -28,8 +28,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.TagAPI;
-import ru.bclib.client.models.ItemModelProvider;
 import ru.bclib.client.models.ModelsHelper;
+import ru.bclib.interfaces.ItemModelProvider;
 
 import java.util.UUID;
 
@@ -43,15 +43,37 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 		super(attackDamage, attackSpeed, material, BlockTags.MINEABLE_WITH_PICKAXE, settings);
 		
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", attackDamage + material.getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(ATTACK_KNOCKBACK_MODIFIER_ID, "Weapon modifier", knockback, AttributeModifier.Operation.ADDITION));
+		builder.put(
+			Attributes.ATTACK_DAMAGE,
+			new AttributeModifier(BASE_ATTACK_DAMAGE_UUID,
+				"Weapon modifier",
+				attackDamage + material.getAttackDamageBonus(),
+				AttributeModifier.Operation.ADDITION
+			)
+		);
+		builder.put(
+			Attributes.ATTACK_SPEED,
+			new AttributeModifier(BASE_ATTACK_SPEED_UUID,
+				"Weapon modifier",
+				attackSpeed,
+				AttributeModifier.Operation.ADDITION
+			)
+		);
+		builder.put(
+			Attributes.ATTACK_KNOCKBACK,
+			new AttributeModifier(ATTACK_KNOCKBACK_MODIFIER_ID,
+				"Weapon modifier",
+				knockback,
+				AttributeModifier.Operation.ADDITION
+			)
+		);
 		this.attributeModifiers = builder.build();
 	}
 	
 	@Override
 	public boolean canAttackBlock(BlockState state, Level world, BlockPos pos, Player miner) {
-		return state.getMaterial().equals(Material.STONE) || state.getMaterial().equals(Material.GLASS) || state.is(Blocks.DIAMOND_BLOCK) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.LAPIS_BLOCK) || state.is(Blocks.REDSTONE_BLOCK);
+		return state.getMaterial().equals(Material.STONE) || state.getMaterial().equals(Material.GLASS) || state.is(
+			Blocks.DIAMOND_BLOCK) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.LAPIS_BLOCK) || state.is(Blocks.REDSTONE_BLOCK);
 	}
 	
 	@Override
@@ -77,7 +99,8 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 		}
 		if (isCorrectToolForDrops(state)) {
 			float mult;
-			if (state.is(Blocks.DIAMOND_BLOCK) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.LAPIS_BLOCK) || state.is(Blocks.REDSTONE_BLOCK)) {
+			if (state.is(Blocks.DIAMOND_BLOCK) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.LAPIS_BLOCK) || state
+				.is(Blocks.REDSTONE_BLOCK)) {
 				mult = this.getTier().getSpeed();
 			}
 			else {
@@ -109,17 +132,20 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 		if (state.getMaterial().equals(Material.GLASS)) {
 			return true;
 		}
-		if (!state.is(Blocks.REDSTONE_BLOCK) && !state.is(Blocks.DIAMOND_BLOCK) && !state.is(Blocks.EMERALD_BLOCK) && !state.is(Blocks.LAPIS_BLOCK) && !state.getMaterial().equals(Material.STONE)) {
+		if (!state.is(Blocks.REDSTONE_BLOCK) && !state.is(Blocks.DIAMOND_BLOCK) && !state.is(Blocks.EMERALD_BLOCK) && !state
+			.is(Blocks.LAPIS_BLOCK) && !state.getMaterial().equals(Material.STONE)) {
 			return false;
 		}
 		int level = this.getTier().getLevel();
 		if (state.is(Blocks.IRON_ORE) || state.is(Blocks.LAPIS_BLOCK) || state.is(Blocks.LAPIS_ORE)) {
 			return level >= 1;
 		}
-		if (state.is(Blocks.DIAMOND_BLOCK) && !state.is(Blocks.DIAMOND_ORE) || state.is(Blocks.EMERALD_ORE) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.GOLD_ORE) || state.is(Blocks.REDSTONE_ORE)) {
+		if (state.is(Blocks.DIAMOND_BLOCK) && !state.is(Blocks.DIAMOND_ORE) || state.is(Blocks.EMERALD_ORE) || state.is(
+			Blocks.EMERALD_BLOCK) || state.is(Blocks.GOLD_ORE) || state.is(Blocks.REDSTONE_ORE)) {
 			return level >= 2;
 		}
-		if (state.is(Blocks.OBSIDIAN) || state.is(Blocks.CRYING_OBSIDIAN) || state.is(Blocks.RESPAWN_ANCHOR) || state.is(Blocks.ANCIENT_DEBRIS)) {
+		if (state.is(Blocks.OBSIDIAN) || state.is(Blocks.CRYING_OBSIDIAN) || state.is(Blocks.RESPAWN_ANCHOR) || state.is(
+			Blocks.ANCIENT_DEBRIS)) {
 			return level >= 3;
 		}
 		return true;

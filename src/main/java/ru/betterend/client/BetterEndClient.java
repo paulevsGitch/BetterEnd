@@ -1,10 +1,7 @@
 package ru.betterend.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -12,10 +9,8 @@ import net.minecraft.world.level.block.Block;
 import ru.bclib.BCLib;
 import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseSignBlock;
-import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.client.render.BaseChestBlockEntityRenderer;
 import ru.bclib.client.render.BaseSignBlockEntityRenderer;
-import ru.bclib.interfaces.IRenderTyped;
 import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.events.ItemTooltipCallback;
@@ -33,7 +28,7 @@ import java.util.List;
 public class BetterEndClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		registerRenderLayers();
+		//registerRenderLayers();
 		EndBlockEntityRenders.register();
 		EndScreens.register();
 		EndParticles.register();
@@ -57,28 +52,35 @@ public class BetterEndClient implements ClientModInitializer {
 					hasSet = CrystaliteArmor.hasFullSet(player);
 				}
 				TranslatableComponent setDesc = new TranslatableComponent("tooltip.armor.crystalite_set");
-				setDesc.setStyle(Style.EMPTY.applyFormats(hasSet ? ChatFormatting.BLUE : ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				setDesc.setStyle(Style.EMPTY.applyFormats(
+					hasSet ? ChatFormatting.BLUE : ChatFormatting.DARK_GRAY,
+					ChatFormatting.ITALIC
+				));
 				lines.add(TextComponent.EMPTY);
 				lines.add(setDesc);
 			}
 		});
 	}
 	
-	private void registerRenderLayers() {
+	/*private void registerRenderLayers() {
 		RenderType cutout = RenderType.cutout();
 		RenderType translucent = RenderType.translucent();
 		Registry.BLOCK.forEach(block -> {
-			if (block instanceof IRenderTyped) {
-				BCLRenderLayer layer = ((IRenderTyped) block).getRenderLayer();
+			if (block instanceof RenderLayerProvider) {
+				BCLRenderLayer layer = ((RenderLayerProvider) block).getRenderLayer();
 				if (layer == BCLRenderLayer.CUTOUT) BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
 				else if (layer == BCLRenderLayer.TRANSLUCENT) BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
 			}
 		});
-	}
+	}*/
 	
 	private static void registerRenderers() {
 		List<Block> modBlocks = EndBlocks.getModBlocks();
-		modBlocks.stream().filter(BaseChestBlock.class::isInstance).forEach(BaseChestBlockEntityRenderer::registerRenderLayer);
-		modBlocks.stream().filter(BaseSignBlock.class::isInstance).forEach(BaseSignBlockEntityRenderer::registerRenderLayer);
+		modBlocks.stream()
+				 .filter(BaseChestBlock.class::isInstance)
+				 .forEach(BaseChestBlockEntityRenderer::registerRenderLayer);
+		modBlocks.stream()
+				 .filter(BaseSignBlock.class::isInstance)
+				 .forEach(BaseSignBlockEntityRenderer::registerRenderLayer);
 	}
 }

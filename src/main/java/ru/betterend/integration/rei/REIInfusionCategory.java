@@ -62,16 +62,46 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 		}
 		widgets.add(Widgets.createTexturedWidget(BACKGROUND, bounds.x, bounds.y, 0, 0, 150, 104, 150, 104));
 		widgets.add(Widgets.createSlot(centerPoint).entries(inputEntries.get(0)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x, centerPoint.y - 28)).entries(inputEntries.get(1)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 28, centerPoint.y)).entries(inputEntries.get(3)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x, centerPoint.y + 28)).entries(inputEntries.get(5)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 28, centerPoint.y)).entries(inputEntries.get(7)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 24, centerPoint.y - 24)).entries(inputEntries.get(2)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 24, centerPoint.y + 24)).entries(inputEntries.get(4)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y + 24)).entries(inputEntries.get(6)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y - 24)).entries(inputEntries.get(8)).disableBackground().markInput());
-		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 80, centerPoint.y)).entries(outputEntries.get(0)).disableBackground().markOutput());
-		widgets.add(Widgets.createLabel(new Point(bounds.getMaxX() - 5, bounds.y + 6), new TranslatableComponent("category.rei.infusion.time&val", display.getInfusionTime())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x, centerPoint.y - 28))
+						   .entries(inputEntries.get(1))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 28, centerPoint.y))
+						   .entries(inputEntries.get(3))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x, centerPoint.y + 28))
+						   .entries(inputEntries.get(5))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 28, centerPoint.y))
+						   .entries(inputEntries.get(7))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 24, centerPoint.y - 24))
+						   .entries(inputEntries.get(2))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 24, centerPoint.y + 24))
+						   .entries(inputEntries.get(4))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y + 24))
+						   .entries(inputEntries.get(6))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x - 24, centerPoint.y - 24))
+						   .entries(inputEntries.get(8))
+						   .disableBackground()
+						   .markInput());
+		widgets.add(Widgets.createSlot(new Point(centerPoint.x + 80, centerPoint.y))
+						   .entries(outputEntries.get(0))
+						   .disableBackground()
+						   .markOutput());
+		widgets.add(Widgets.createLabel(
+			new Point(bounds.getMaxX() - 5, bounds.y + 6),
+			new TranslatableComponent("category.rei.infusion.time&val", display.getInfusionTime())
+		).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		return widgets;
 	}
 	

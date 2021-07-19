@@ -44,7 +44,17 @@ public class OldBulbisGardens extends EndBiome {
 		
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
 		Block origin = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial().getBlock();
-		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("old_bulbis_gardens")).setFogColor(215, 132, 207).setFogDensity(1.8F).setWaterAndFogColor(40, 0, 56).setFoliageColor(122, 17, 155).setParticles(ParticleTypes.REVERSE_PORTAL, 0.002F).setSurface(ivis, origin).addFeature(EndFeatures.END_LAKE_RARE).addFeature(BYGFeatures.OLD_BULBIS_TREE);
+		BCLBiomeDef def = new BCLBiomeDef(BetterEnd.makeID("old_bulbis_gardens")).setFogColor(215, 132, 207)
+																				 .setFogDensity(1.8F)
+																				 .setWaterAndFogColor(40, 0, 56)
+																				 .setFoliageColor(122, 17, 155)
+																				 .setParticles(
+																					 ParticleTypes.REVERSE_PORTAL,
+																					 0.002F
+																				 )
+																				 .setSurface(ivis, origin)
+																				 .addFeature(EndFeatures.END_LAKE_RARE)
+																				 .addFeature(BYGFeatures.OLD_BULBIS_TREE);
 		
 		if (BCLib.isClient()) {
 			SoundEvent loop = effects.getAmbientLoopSoundEvent().get();
@@ -71,7 +81,11 @@ public class OldBulbisGardens extends EndBiome {
 				getter = vegetal.get(i);
 				ConfiguredFeature<?, ?> feature = getter.get();
 				ResourceLocation id = BetterEnd.makeID("obg_feature_" + i);
-				feature = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature.decorated(FeaturesAccesor.shadowHEIGHTMAP_SQUARE).countRandom(1));
+				feature = Registry.register(
+					BuiltinRegistries.CONFIGURED_FEATURE,
+					id,
+					feature.decorated(FeaturesAccesor.shadowHEIGHTMAP_SQUARE).countRandom(1)
+				);
 				def.addFeature(Decoration.VEGETAL_DECORATION, feature);
 			}
 			// Grasses and other features
@@ -82,7 +96,11 @@ public class OldBulbisGardens extends EndBiome {
 			}
 		}
 		
-		def.addFeature(EndFeatures.PURPLE_POLYPORE).addFeature(BYGFeatures.IVIS_MOSS_WOOD).addFeature(BYGFeatures.IVIS_MOSS).addFeature(BYGFeatures.IVIS_VINE).addFeature(BYGFeatures.IVIS_SPROUT);
+		def.addFeature(EndFeatures.PURPLE_POLYPORE)
+		   .addFeature(BYGFeatures.IVIS_MOSS_WOOD)
+		   .addFeature(BYGFeatures.IVIS_MOSS)
+		   .addFeature(BYGFeatures.IVIS_VINE)
+		   .addFeature(BYGFeatures.IVIS_SPROUT);
 		
 		return def;
 	}

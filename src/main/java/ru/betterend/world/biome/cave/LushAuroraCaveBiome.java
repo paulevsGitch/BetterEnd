@@ -11,7 +11,12 @@ import ru.betterend.registry.EndParticles;
 
 public class LushAuroraCaveBiome extends EndCaveBiome {
 	public LushAuroraCaveBiome() {
-		super(new BCLBiomeDef(BetterEnd.makeID("lush_aurora_cave")).setFogColor(150, 30, 68).setFogDensity(2.0F).setPlantsColor(108, 25, 46).setWaterAndFogColor(186, 77, 237).setParticles(EndParticles.GLOWING_SPHERE, 0.001F).setSurface(EndBlocks.CAVE_MOSS));
+		super(new BCLBiomeDef(BetterEnd.makeID("lush_aurora_cave")).setFogColor(150, 30, 68)
+																   .setFogDensity(2.0F)
+																   .setPlantsColor(108, 25, 46)
+																   .setWaterAndFogColor(186, 77, 237)
+																   .setParticles(EndParticles.GLOWING_SPHERE, 0.001F)
+																   .setSurface(EndBlocks.CAVE_MOSS));
 		
 		this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL, 1);
 		this.addFloorFeature(EndFeatures.CAVE_BUSH, 5);
@@ -37,6 +42,7 @@ public class LushAuroraCaveBiome extends EndCaveBiome {
 	
 	@Override
 	public BlockState getCeil(BlockPos pos) {
-		return EndBlocks.CAVE_MOSS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.TOP);
+		return EndBlocks.CAVE_MOSS.defaultBlockState()
+								  .setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.TOP);
 	}
 }

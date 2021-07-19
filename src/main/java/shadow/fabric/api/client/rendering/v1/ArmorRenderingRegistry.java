@@ -100,7 +100,10 @@ public final class ArmorRenderingRegistry {
 	 */
 	public static void registerSimpleTexture(ResourceLocation identifier, Item... items) {
 		registerTexture((entity, stack, slot, secondLayer, suffix, defaultTexture) -> {
-			return new ResourceLocation(identifier.getNamespace(), "textures/models/armor/" + identifier.getPath() + "_layer_" + (secondLayer ? 2 : 1) + (suffix == null ? "" : "_" + suffix) + ".png");
+			return new ResourceLocation(
+				identifier.getNamespace(),
+				"textures/models/armor/" + identifier.getPath() + "_layer_" + (secondLayer ? 2 : 1) + (suffix == null ? "" : "_" + suffix) + ".png"
+			);
 		}, items);
 	}
 	

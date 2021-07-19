@@ -63,7 +63,10 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
 				if (blockState.isAir()) {
 					double mult = active ? 3.0 : 5.0;
 					float force = (float) ((1.0 - (POS.getY() / box.maxY)) / mult);
-					entities.stream().filter(entity -> (int) entity.getY() == POS.getY() && blockEntity.hasElytra(entity) && entity.isFallFlying()).forEach(entity -> entity.moveRelative(force, POSITIVE_Y));
+					entities.stream()
+							.filter(entity -> (int) entity.getY() == POS.getY() && blockEntity.hasElytra(entity) && entity
+								.isFallFlying())
+							.forEach(entity -> entity.moveRelative(force, POSITIVE_Y));
 				}
 				POS.move(Direction.UP);
 			}

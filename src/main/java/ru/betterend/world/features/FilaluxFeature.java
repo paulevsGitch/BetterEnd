@@ -23,9 +23,17 @@ public class FilaluxFeature extends SkyScatterFeature {
 		BlockState vine = EndBlocks.FILALUX.defaultBlockState();
 		BlockState wings = EndBlocks.FILALUX_WINGS.defaultBlockState();
 		BlocksHelper.setWithoutUpdate(world, blockPos, EndBlocks.FILALUX_LANTERN);
-		BlocksHelper.setWithoutUpdate(world, blockPos.above(), wings.setValue(BlockStateProperties.FACING, Direction.UP));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			blockPos.above(),
+			wings.setValue(BlockStateProperties.FACING, Direction.UP)
+		);
 		for (Direction dir : BlocksHelper.HORIZONTAL) {
-			BlocksHelper.setWithoutUpdate(world, blockPos.relative(dir), wings.setValue(BlockStateProperties.FACING, dir));
+			BlocksHelper.setWithoutUpdate(
+				world,
+				blockPos.relative(dir),
+				wings.setValue(BlockStateProperties.FACING, dir)
+			);
 		}
 		int length = MHelper.randRange(1, 3, random);
 		for (int i = 1; i <= length; i++) {

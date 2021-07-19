@@ -35,8 +35,8 @@ import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IColorProvider;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.CustomColorProvider;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.ColorUtil;
 import ru.betterend.particle.InfusionParticleType;
@@ -45,7 +45,7 @@ import ru.betterend.registry.EndItems;
 
 import java.util.List;
 
-public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IRenderTyped {
+public class RespawnObeliskBlock extends BaseBlock implements CustomColorProvider, RenderLayerProvider {
 	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
 	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.box(2, 0, 2, 14, 16, 14);
 	
@@ -145,7 +145,7 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 	
 	@Override
 	public BlockColor getProvider() {
-		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
+		return ((CustomColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
 	}
 	
 	@Override
@@ -162,7 +162,10 @@ public class RespawnObeliskBlock extends BaseBlock implements IColorProvider, IR
 		if (hand != InteractionHand.MAIN_HAND || !canActivate) {
 			if (!world.isClientSide && !(itemStack.getItem() instanceof BlockItem) && !player.isCreative()) {
 				ServerPlayer serverPlayerEntity = (ServerPlayer) player;
-				serverPlayerEntity.displayClientMessage(new TranslatableComponent("message.betterend.fail_spawn"), true);
+				serverPlayerEntity.displayClientMessage(
+					new TranslatableComponent("message.betterend.fail_spawn"),
+					true
+				);
 			}
 			return InteractionResult.FAIL;
 		}

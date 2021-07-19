@@ -37,7 +37,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.entity.SilkMothEntity;
@@ -48,7 +48,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
+public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider {
 	public static final BooleanProperty ACTIVE = EndBlockProperties.ACTIVE;
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final IntegerProperty FULLNESS = EndBlockProperties.FULLNESS;
@@ -56,7 +56,12 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
 	private static final VoxelShape BOTTOM = box(0, 0, 0, 16, 16, 16);
 	
 	public SilkMothNestBlock() {
-		super(FabricBlockSettings.of(Material.WOOL).hardness(0.5F).resistance(0.1F).sound(SoundType.WOOL).noOcclusion().randomTicks());
+		super(FabricBlockSettings.of(Material.WOOL)
+								 .hardness(0.5F)
+								 .resistance(0.1F)
+								 .sound(SoundType.WOOL)
+								 .noOcclusion()
+								 .randomTicks());
 		this.registerDefaultState(defaultBlockState().setValue(ACTIVE, true).setValue(FULLNESS, 0));
 	}
 	
@@ -84,7 +89,8 @@ public class SilkMothNestBlock extends BaseBlock implements IRenderTyped {
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!state.getValue(ACTIVE)) {
-			if (canSupportCenter(world, pos.above(), Direction.DOWN) || world.getBlockState(pos.above()).is(BlockTags.LEAVES)) {
+			if (canSupportCenter(world, pos.above(), Direction.DOWN) || world.getBlockState(pos.above())
+																			 .is(BlockTags.LEAVES)) {
 				return state;
 			}
 			else {

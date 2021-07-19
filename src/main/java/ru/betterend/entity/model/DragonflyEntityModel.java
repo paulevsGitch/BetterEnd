@@ -28,25 +28,65 @@ public class DragonflyEntityModel extends BlockBenchModel<DragonflyEntity> {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 		
-		PartDefinition bodyPart = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, 0.0F, 4.0F, 4.0F, 9.0F), PartPose.offset(2.0F, 21.5F, -4.0F));
+		PartDefinition bodyPart = modelPartData.addOrReplaceChild(
+			PartNames.BODY,
+			CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, 0.0F, 4.0F, 4.0F, 9.0F),
+			PartPose.offset(2.0F, 21.5F, -4.0F)
+		);
 		
-		bodyPart.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create().texOffs(17, 0).addBox(-1.5F, -1.5F, -2.5F, 3.0F, 3.0F, 3.0F), PartPose.offsetAndRotation(-2.0F, -2.0F, 0.0F, 0.3491F, 0.0F, 0.0F));
+		bodyPart.addOrReplaceChild(
+			PartNames.HEAD,
+			CubeListBuilder.create().texOffs(17, 0).addBox(-1.5F, -1.5F, -2.5F, 3.0F, 3.0F, 3.0F),
+			PartPose.offsetAndRotation(-2.0F, -2.0F, 0.0F, 0.3491F, 0.0F, 0.0F)
+		);
 		
-		PartDefinition tailPart = bodyPart.addOrReplaceChild(PartNames.TAIL, CubeListBuilder.create().texOffs(26, 0).addBox(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 7.0F), PartPose.offset(-2.0F, -2.0F, 9.0F));
+		PartDefinition tailPart = bodyPart.addOrReplaceChild(
+			PartNames.TAIL,
+			CubeListBuilder.create().texOffs(26, 0).addBox(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 7.0F),
+			PartPose.offset(-2.0F, -2.0F, 9.0F)
+		);
 		
-		tailPart.addOrReplaceChild(PartNames.TAIL_FIN, CubeListBuilder.create().texOffs(36, 0).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 10.0F), PartPose.offset(0.0F, 0.0F, 7.0F));
+		tailPart.addOrReplaceChild(
+			PartNames.TAIL_FIN,
+			CubeListBuilder.create().texOffs(36, 0).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 10.0F),
+			PartPose.offset(0.0F, 0.0F, 7.0F)
+		);
 		
-		bodyPart.addOrReplaceChild(PartNames.LEFT_WING, CubeListBuilder.create().texOffs(0, 13).addBox(-15.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F), PartPose.offset(-2.0F, -4.0F, 4.0F));
+		bodyPart.addOrReplaceChild(
+			PartNames.LEFT_WING,
+			CubeListBuilder.create().texOffs(0, 13).addBox(-15.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F),
+			PartPose.offset(-2.0F, -4.0F, 4.0F)
+		);
 		
-		bodyPart.addOrReplaceChild(PartNames.RIGHT_WING, CubeListBuilder.create().mirror().texOffs(0, 13).addBox(0.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F), PartPose.offset(-2.0F, -4.0F, 4.0F));
+		bodyPart.addOrReplaceChild(
+			PartNames.RIGHT_WING,
+			CubeListBuilder.create().mirror().texOffs(0, 13).addBox(0.0F, 0.0F, -3.0F, 15.0F, 0.0F, 4.0F),
+			PartPose.offset(-2.0F, -4.0F, 4.0F)
+		);
 		
-		bodyPart.addOrReplaceChild(PartNames.LEFT_WING_BASE, CubeListBuilder.create().texOffs(4, 17).addBox(-12.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F), PartPose.offset(-2.0F, -4.0F, 8.0F));
+		bodyPart.addOrReplaceChild(
+			PartNames.LEFT_WING_BASE,
+			CubeListBuilder.create().texOffs(4, 17).addBox(-12.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F),
+			PartPose.offset(-2.0F, -4.0F, 8.0F)
+		);
 		
-		bodyPart.addOrReplaceChild(PartNames.RIGHT_WING_BASE, CubeListBuilder.create().mirror().texOffs(4, 17).addBox(0.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F), PartPose.offset(-2.0F, -4.0F, 8.0F));
+		bodyPart.addOrReplaceChild(
+			PartNames.RIGHT_WING_BASE,
+			CubeListBuilder.create().mirror().texOffs(4, 17).addBox(0.0F, 0.0F, -2.5F, 12.0F, 0.0F, 3.0F),
+			PartPose.offset(-2.0F, -4.0F, 8.0F)
+		);
 		
-		bodyPart.addOrReplaceChild(PartNames.LEFT_LEG, CubeListBuilder.create().texOffs(50, 1).addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(-1.0F, 0.0F, 1.0F, 0.0F, 0.0F, -0.5236F));
+		bodyPart.addOrReplaceChild(
+			PartNames.LEFT_LEG,
+			CubeListBuilder.create().texOffs(50, 1).addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F),
+			PartPose.offsetAndRotation(-1.0F, 0.0F, 1.0F, 0.0F, 0.0F, -0.5236F)
+		);
 		
-		bodyPart.addOrReplaceChild(PartNames.RIGHT_LEG, CubeListBuilder.create().texOffs(50, 1).addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(-3.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.5236F));
+		bodyPart.addOrReplaceChild(
+			PartNames.RIGHT_LEG,
+			CubeListBuilder.create().texOffs(50, 1).addBox(0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 6.0F),
+			PartPose.offsetAndRotation(-3.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.5236F)
+		);
 		
 		return LayerDefinition.create(modelData, 64, 64);
 	}

@@ -36,11 +36,17 @@ public class MinecraftClientMixin {
 	private void be_getEndMusic(CallbackInfoReturnable<Music> info) {
 		if (!(this.screen instanceof WinScreen) && this.player != null) {
 			if (this.player.level.dimension() == Level.END) {
-				if (this.gui.getBossOverlay().shouldPlayMusic() && MHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000) {
+				if (this.gui.getBossOverlay().shouldPlayMusic() && MHelper.lengthSqr(
+					this.player.getX(),
+					this.player.getZ()
+				) < 250000) {
 					info.setReturnValue(Musics.END_BOSS);
 				}
 				else {
-					Music sound = this.level.getBiomeManager().getNoiseBiomeAtPosition(this.player.blockPosition()).getBackgroundMusic().orElse(Musics.END);
+					Music sound = this.level.getBiomeManager()
+											.getNoiseBiomeAtPosition(this.player.blockPosition())
+											.getBackgroundMusic()
+											.orElse(Musics.END);
 					info.setReturnValue(sound);
 				}
 				info.cancel();

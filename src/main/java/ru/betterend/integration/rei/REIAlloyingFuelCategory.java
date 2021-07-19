@@ -52,18 +52,30 @@ public class REIAlloyingFuelCategory implements DisplayCategory<REIAlloyingFuelD
 		String burnTime = DECIMAL_FORMAT.format(recipeDisplay.getFuelTime());
 		List<Widget> widgets = Lists.newArrayList();
 		widgets.add(Widgets.createRecipeBase(bounds));
-		widgets.add(Widgets.createLabel(new Point(bounds.x + 26, bounds.getMaxY() - 15), new TranslatableComponent("category.rei.fuel.time", burnTime)).color(0xFF404040, 0xFFBBBBBB).noShadow().leftAligned());
-		widgets.add(Widgets.createBurningFire(new Point(bounds.x + 6, startPoint.y + 1)).animationDurationTicks(recipeDisplay.getFuelTime()));
-		widgets.add(Widgets.createSlot(new Point(bounds.x + 6, startPoint.y + 18)).entries(recipeDisplay.getInputEntries().get(0)).markInput());
+		widgets.add(Widgets.createLabel(
+			new Point(bounds.x + 26, bounds.getMaxY() - 15),
+			new TranslatableComponent("category.rei.fuel.time", burnTime)
+		).color(0xFF404040, 0xFFBBBBBB).noShadow().leftAligned());
+		widgets.add(Widgets.createBurningFire(new Point(bounds.x + 6, startPoint.y + 1))
+						   .animationDurationTicks(recipeDisplay.getFuelTime()));
+		widgets.add(Widgets.createSlot(new Point(bounds.x + 6, startPoint.y + 18))
+						   .entries(recipeDisplay.getInputEntries().get(0))
+						   .markInput());
 		return widgets;
 	}
 	
 	@Override
 	public DisplayRenderer getDisplayRenderer(REIAlloyingFuelDisplay recipe) {
-		Slot slot = Widgets.createSlot(new Point(0, 0)).entries(recipe.getInputEntries().get(0)).disableBackground().disableHighlight();
+		Slot slot = Widgets.createSlot(new Point(0, 0))
+						   .entries(recipe.getInputEntries().get(0))
+						   .disableBackground()
+						   .disableHighlight();
 		String burnItems = DECIMAL_FORMAT.format(recipe.getFuelTime() / 200d);
 		return new DisplayRenderer() {
-			private TranslatableComponent text = new TranslatableComponent("category.rei.fuel.time_short.items", burnItems);
+			private TranslatableComponent text = new TranslatableComponent(
+				"category.rei.fuel.time_short.items",
+				burnItems
+			);
 			
 			@Override
 			public int getHeight() {
@@ -82,7 +94,13 @@ public class REIAlloyingFuelCategory implements DisplayCategory<REIAlloyingFuelD
 				slot.setZ(getZ() + 50);
 				slot.getBounds().setLocation(bounds.x + 4, bounds.y + 2);
 				slot.render(matrices, mouseX, mouseY, delta);
-				Minecraft.getInstance().font.drawShadow(matrices, text.getVisualOrderText(), bounds.x + 25, bounds.y + 8, -1);
+				Minecraft.getInstance().font.drawShadow(
+					matrices,
+					text.getVisualOrderText(),
+					bounds.x + 25,
+					bounds.y + 8,
+					-1
+				);
 			}
 		};
 	}

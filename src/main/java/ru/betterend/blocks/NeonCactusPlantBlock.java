@@ -39,7 +39,7 @@ import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.CactusBottom;
@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, IRenderTyped, PottablePlant {
+public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, RenderLayerProvider, PottablePlant {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EndBlockProperties.CACTUS_BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -67,7 +67,9 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 	
 	public NeonCactusPlantBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.CACTUS).luminance(15).randomTicks());
-		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP).setValue(SHAPE, TripleShape.TOP));
+		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false)
+												.setValue(FACING, Direction.UP)
+												.setValue(SHAPE, TripleShape.TOP));
 	}
 	
 	@Override
@@ -81,7 +83,9 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 		BlockPos pos = ctx.getClickedPos();
 		Direction dir = ctx.getClickedFace();
 		BlockState down = world.getBlockState(pos.relative(dir.getOpposite()));
-		BlockState state = this.defaultBlockState().setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER).setValue(FACING, ctx.getClickedFace());
+		BlockState state = this.defaultBlockState()
+							   .setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER)
+							   .setValue(FACING, ctx.getClickedFace());
 		if (down.is(Blocks.END_STONE) || down.is(EndBlocks.ENDSTONE_DUST)) {
 			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
 		}
@@ -195,11 +199,17 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			Direction side = getSideDirection(world, pos, state, dir, random);
 			BlockPos sidePos = pos.relative(side);
 			if (world.isEmptyBlock(sidePos)) {
-				BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, side);
+				BlockState placement = state.setValue(SHAPE, TripleShape.TOP)
+											.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+											.setValue(WATERLOGGED, false)
+											.setValue(FACING, side);
 				BlocksHelper.setWithoutUpdate(world, sidePos, placement);
 			}
 		}
-		BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, dir);
+		BlockState placement = state.setValue(SHAPE, TripleShape.TOP)
+									.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+									.setValue(WATERLOGGED, false)
+									.setValue(FACING, dir);
 		BlocksHelper.setWithoutUpdate(world, pos.relative(dir), placement);
 		mutateStem(placement, world, pos, MAX_LENGTH);
 	}
@@ -256,12 +266,18 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			Direction side = getSideDirection(world, pos, state, dir, random);
 			BlockPos sidePos = pos.relative(side);
 			if (world.isEmptyBlock(sidePos)) {
-				BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, side);
+				BlockState placement = state.setValue(SHAPE, TripleShape.TOP)
+											.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+											.setValue(WATERLOGGED, false)
+											.setValue(FACING, side);
 				BlocksHelper.setWithoutUpdate(world, sidePos, placement);
 				ends.add(sidePos.mutable());
 			}
 		}
-		BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY).setValue(WATERLOGGED, false).setValue(FACING, dir);
+		BlockState placement = state.setValue(SHAPE, TripleShape.TOP)
+									.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+									.setValue(WATERLOGGED, false)
+									.setValue(FACING, dir);
 		BlocksHelper.setWithoutUpdate(world, pos.relative(dir), placement);
 		mutateStem(placement, world, pos, MAX_LENGTH);
 		pos.move(dir);

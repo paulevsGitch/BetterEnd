@@ -22,7 +22,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.LumecornShape;
 import ru.betterend.registry.EndBlocks;
@@ -32,13 +32,16 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class LumecornBlock extends BaseBlockNotFull implements IRenderTyped {
+public class LumecornBlock extends BaseBlockNotFull implements RenderLayerProvider {
 	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create("shape", LumecornShape.class);
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape SHAPE_TOP = Block.box(6, 0, 6, 10, 8, 10);
 	
 	public LumecornBlock() {
-		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).hardness(0.5F).luminance(state -> state.getValue(SHAPE).getLight()));
+		super(FabricBlockSettings.of(Material.WOOD)
+								 .breakByTool(FabricToolTags.AXES)
+								 .hardness(0.5F)
+								 .luminance(state -> state.getValue(SHAPE).getLight()));
 	}
 	
 	@Override
@@ -84,9 +87,13 @@ public class LumecornBlock extends BaseBlockNotFull implements IRenderTyped {
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL || shape == LumecornShape.MIDDLE) {
-			return Collections.singletonList(new ItemStack(EndBlocks.LUMECORN_SEED, MHelper.randRange(1, 2, MHelper.RANDOM)));
+			return Collections.singletonList(new ItemStack(
+				EndBlocks.LUMECORN_SEED,
+				MHelper.randRange(1, 2, MHelper.RANDOM)
+			));
 		}
-		return MHelper.RANDOM.nextBoolean() ? Collections.singletonList(new ItemStack(EndItems.LUMECORN_ROD)) : Collections.emptyList();
+		return MHelper.RANDOM.nextBoolean() ? Collections.singletonList(new ItemStack(EndItems.LUMECORN_ROD)) : Collections
+			.emptyList();
 	}
 	
 	@Override

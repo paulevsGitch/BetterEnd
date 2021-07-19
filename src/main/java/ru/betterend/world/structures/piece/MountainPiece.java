@@ -93,7 +93,10 @@ public abstract class MountainPiece extends BasePiece {
 			return h;
 		}
 		
-		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
+		h = MHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(
+			pos.getX() * 0.002,
+			pos.getZ() * 0.002
+		) * 8 + 8);
 		
 		if (h < 0) {
 			heightmap.put(p, 0);

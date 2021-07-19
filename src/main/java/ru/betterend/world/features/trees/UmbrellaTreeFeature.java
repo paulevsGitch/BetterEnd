@@ -47,9 +47,12 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
 		
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.defaultBlockState();
-		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState().setValue(UmbrellaTreeMembraneBlock.COLOR, 1);
-		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState().setValue(UmbrellaTreeMembraneBlock.COLOR, 0);
-		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState().setValue(UmbrellaTreeClusterBlock.NATURAL, true);
+		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
+															  .setValue(UmbrellaTreeMembraneBlock.COLOR, 1);
+		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
+															.setValue(UmbrellaTreeMembraneBlock.COLOR, 0);
+		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState()
+														  .setValue(UmbrellaTreeClusterBlock.NATURAL, true);
 		
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
@@ -89,7 +92,12 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 				float pz = MHelper.floor(vec.z()) + 0.5F;
 				mem = new SDFTranslate().setTranslate(px, py, pz).setSource(mem);
 				sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(mem);
-				centers.add(new Center(pos.getX() + (double) (px * scale), pos.getY() + (double) (py * scale), pos.getZ() + (double) (pz * scale), radius * scale));
+				centers.add(new Center(
+					pos.getX() + (double) (px * scale),
+					pos.getY() + (double) (py * scale),
+					pos.getZ() + (double) (pz * scale),
+					radius * scale
+				));
 				
 				vec = spline.get(0);
 			}
@@ -194,13 +202,26 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 	}
 	
 	static {
-		SPLINE = Lists.newArrayList(new Vector3f(0.00F, 0.00F, 0.00F), new Vector3f(0.10F, 0.35F, 0.00F), new Vector3f(0.20F, 0.50F, 0.00F), new Vector3f(0.30F, 0.55F, 0.00F), new Vector3f(0.42F, 0.70F, 0.00F), new Vector3f(0.50F, 1.00F, 0.00F));
+		SPLINE = Lists.newArrayList(
+			new Vector3f(0.00F, 0.00F, 0.00F),
+			new Vector3f(0.10F, 0.35F, 0.00F),
+			new Vector3f(0.20F, 0.50F, 0.00F),
+			new Vector3f(0.30F, 0.55F, 0.00F),
+			new Vector3f(0.42F, 0.70F, 0.00F),
+			new Vector3f(0.50F, 1.00F, 0.00F)
+		);
 		
-		ROOT = Lists.newArrayList(new Vector3f(0.1F, 0.70F, 0), new Vector3f(0.3F, 0.30F, 0), new Vector3f(0.7F, 0.05F, 0), new Vector3f(0.8F, -0.20F, 0));
+		ROOT = Lists.newArrayList(
+			new Vector3f(0.1F, 0.70F, 0),
+			new Vector3f(0.3F, 0.30F, 0),
+			new Vector3f(0.7F, 0.05F, 0),
+			new Vector3f(0.8F, -0.20F, 0)
+		);
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
+			if (state.is(TagAPI.END_GROUND) || state.getMaterial()
+													.equals(Material.PLANT) || state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

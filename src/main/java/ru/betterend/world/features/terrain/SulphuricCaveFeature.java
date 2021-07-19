@@ -106,7 +106,11 @@ public class SulphuricCaveFeature extends DefaultFeature {
 					else if (dist < r2 * r2) {
 						state = world.getBlockState(mut);
 						if (state.is(TagAPI.GEN_TERRAIN) || state.is(Blocks.AIR)) {
-							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1) + noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
+							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1) + noise.eval(
+								x * 0.03,
+								y * 0.03,
+								z * 0.03
+							) * 0.5;
 							if (v > 0.4) {
 								brimstone.add(mut.immutable());
 							}
@@ -125,22 +129,35 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		if (random.nextInt(4) == 0) {
 			int count = MHelper.randRange(5, 20, random);
 			for (int i = 0; i < count; i++) {
-				mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 0, MHelper.floor(random.nextGaussian() * 2 + 0.5));
-				int dist = MHelper.floor(3 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
+				mut.set(pos)
+				   .move(MHelper.floor(random.nextGaussian() * 2 + 0.5),
+					   0,
+					   MHelper.floor(random.nextGaussian() * 2 + 0.5)
+				   );
+				int dist = MHelper.floor(3 - MHelper.length(
+					mut.getX() - pos.getX(),
+					mut.getZ() - pos.getZ()
+				)) + random.nextInt(2);
 				if (dist > 0) {
 					state = world.getBlockState(mut);
 					while (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.WATER_PLANT)) {
 						mut.setY(mut.getY() - 1);
 						state = world.getBlockState(mut);
 					}
-					if (state.is(TagAPI.GEN_TERRAIN) && !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
+					if (state.is(TagAPI.GEN_TERRAIN) && !world.getBlockState(mut.above())
+															  .is(EndBlocks.HYDROTHERMAL_VENT)) {
 						for (int j = 0; j <= dist; j++) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 							MHelper.shuffle(HORIZONTAL, random);
 							for (Direction dir : HORIZONTAL) {
 								BlockPos p = mut.relative(dir);
 								if (random.nextBoolean() && world.getBlockState(p).is(Blocks.WATER)) {
-									BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TUBE_WORM.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, dir));
+									BlocksHelper.setWithoutUpdate(
+										world,
+										p,
+										EndBlocks.TUBE_WORM.defaultBlockState()
+														   .setValue(HorizontalDirectionalBlock.FACING, dir)
+									);
 								}
 							}
 							mut.setY(mut.getY() + 1);
@@ -150,7 +167,8 @@ public class SulphuricCaveFeature extends DefaultFeature {
 						state = world.getBlockState(mut);
 						while (state.is(Blocks.WATER)) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.VENT_BUBBLE_COLUMN.defaultBlockState());
-							world.getBlockTicks().scheduleTick(mut, EndBlocks.VENT_BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							world.getBlockTicks()
+								 .scheduleTick(mut, EndBlocks.VENT_BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
 							mut.setY(mut.getY() + 1);
 							state = world.getBlockState(mut);
 						}
@@ -165,7 +183,11 @@ public class SulphuricCaveFeature extends DefaultFeature {
 	}
 	
 	private boolean isReplaceable(BlockState state) {
-		return state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT) || state.is(EndBlocks.VENT_BUBBLE_COLUMN) || state.is(EndBlocks.SULPHUR_CRYSTAL) || state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT) || state.getMaterial().equals(Material.WATER_PLANT) || state.getMaterial().equals(Material.LEAVES);
+		return state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT) || state.is(EndBlocks.VENT_BUBBLE_COLUMN) || state
+			.is(EndBlocks.SULPHUR_CRYSTAL) || state.getMaterial().isReplaceable() || state.getMaterial()
+																						  .equals(Material.PLANT) || state
+			.getMaterial()
+			.equals(Material.WATER_PLANT) || state.getMaterial().equals(Material.LEAVES);
 	}
 	
 	private void placeBrimstone(WorldGenLevel world, BlockPos pos, Random random) {
@@ -189,7 +211,10 @@ public class SulphuricCaveFeature extends DefaultFeature {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			BlockPos side;
 			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.relative(dir))).is(Blocks.WATER)) {
-				BlockState state = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState().setValue(SulphurCrystalBlock.WATERLOGGED, true).setValue(SulphurCrystalBlock.FACING, dir).setValue(SulphurCrystalBlock.AGE, random.nextInt(3));
+				BlockState state = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState()
+															.setValue(SulphurCrystalBlock.WATERLOGGED, true)
+															.setValue(SulphurCrystalBlock.FACING, dir)
+															.setValue(SulphurCrystalBlock.AGE, random.nextInt(3));
 				BlocksHelper.setWithoutUpdate(world, side, state);
 			}
 		}

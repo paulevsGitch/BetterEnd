@@ -14,15 +14,18 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 
 import java.util.EnumMap;
 
-public class FilaluxWingsBlock extends BaseAttachedBlock implements IRenderTyped {
+public class FilaluxWingsBlock extends BaseAttachedBlock implements RenderLayerProvider {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public FilaluxWingsBlock() {
-		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).sound(SoundType.WET_GRASS).noCollission());
+		super(FabricBlockSettings.of(Material.PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .sound(SoundType.WET_GRASS)
+								 .noCollission());
 	}
 	
 	@Override

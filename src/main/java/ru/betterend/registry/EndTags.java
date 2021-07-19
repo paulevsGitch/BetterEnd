@@ -110,12 +110,28 @@ public class EndTags {
 		ToolManagerImpl.tag(TagAPI.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
 		TagHelper.addTag(TagAPI.HAMMERS, EndItems.AETERNIUM_HAMMER);
 		
-		TagHelper.addTag(TagAPI.GEN_TERRAIN, EndBlocks.ENDER_ORE, EndBlocks.FLAVOLITE.stone, EndBlocks.VIOLECITE.stone, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE, EndBlocks.VIRID_JADESTONE.stone, EndBlocks.AZURE_JADESTONE.stone, EndBlocks.SANDY_JADESTONE.stone);
+		TagHelper.addTag(
+			TagAPI.GEN_TERRAIN,
+			EndBlocks.ENDER_ORE,
+			EndBlocks.FLAVOLITE.stone,
+			EndBlocks.VIOLECITE.stone,
+			EndBlocks.SULPHURIC_ROCK.stone,
+			EndBlocks.BRIMSTONE,
+			EndBlocks.VIRID_JADESTONE.stone,
+			EndBlocks.AZURE_JADESTONE.stone,
+			EndBlocks.SANDY_JADESTONE.stone
+		);
 		TagHelper.addTag(TagAPI.END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
 		TagHelper.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
 		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
 		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
-		TagHelper.addTag(TagAPI.DRAGON_IMMUNE, EndBlocks.ENDER_ORE, EndBlocks.ETERNAL_PEDESTAL, EndBlocks.FLAVOLITE_RUNED_ETERNAL, EndBlocks.FLAVOLITE_RUNED);
+		TagHelper.addTag(
+			TagAPI.DRAGON_IMMUNE,
+			EndBlocks.ENDER_ORE,
+			EndBlocks.ETERNAL_PEDESTAL,
+			EndBlocks.FLAVOLITE_RUNED_ETERNAL,
+			EndBlocks.FLAVOLITE_RUNED
+		);
 		TagHelper.addTag(TagAPI.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
 		
 		TagHelper.addTag(ALLOYING_IRON, Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE, Items.RAW_IRON);

@@ -33,7 +33,13 @@ public class MountainStructure extends FeatureBaseStructure {
 			if (y > 5) {
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.8F, 1.2F, random);
-				CrystalMountainPiece piece = new CrystalMountainPiece(new BlockPos(x, y, z), radius, height, random, biome);
+				CrystalMountainPiece piece = new CrystalMountainPiece(
+					new BlockPos(x, y, z),
+					radius,
+					height,
+					random,
+					biome
+				);
 				this.pieces.add(piece);
 			}
 			

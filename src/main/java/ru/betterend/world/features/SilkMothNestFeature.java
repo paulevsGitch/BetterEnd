@@ -45,9 +45,19 @@ public class SilkMothNestFeature extends DefaultFeature {
 			POS.setY(y);
 			if (canGenerate(world, POS)) {
 				Direction dir = BlocksHelper.randomHorizontal(random);
-				BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.SILK_MOTH_NEST.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, dir).setValue(BlockProperties.ACTIVE, false));
+				BlocksHelper.setWithoutUpdate(
+					world,
+					POS,
+					EndBlocks.SILK_MOTH_NEST.defaultBlockState()
+											.setValue(BlockStateProperties.HORIZONTAL_FACING, dir)
+											.setValue(BlockProperties.ACTIVE, false)
+				);
 				POS.setY(y - 1);
-				BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.SILK_MOTH_NEST.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, dir));
+				BlocksHelper.setWithoutUpdate(
+					world,
+					POS,
+					EndBlocks.SILK_MOTH_NEST.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, dir)
+				);
 				return true;
 			}
 		}

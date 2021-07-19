@@ -50,18 +50,35 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 		List<Widget> widgets = Lists.newArrayList();
 		widgets.add(Widgets.createRecipeBase(bounds));
 		widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 9)));
-		widgets.add(Widgets.createBurningFire(new Point(startPoint.x - 9, startPoint.y + 20)).animationDurationMS(10000));
-		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 5, bounds.y + 5), new TranslatableComponent("category.rei.cooking.time&xp", df.format(display.getXp()), df.format(smeltTime / 20D))).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
-		widgets.add(Widgets.createArrow(new Point(startPoint.x + 24, startPoint.y + 8)).animationDurationTicks(smeltTime));
+		widgets.add(Widgets.createBurningFire(new Point(startPoint.x - 9, startPoint.y + 20))
+						   .animationDurationMS(10000));
+		widgets.add(Widgets.createLabel(
+			new Point(bounds.x + bounds.width - 5, bounds.y + 5),
+			new TranslatableComponent("category.rei.cooking.time&xp",
+				df.format(display.getXp()),
+				df.format(smeltTime / 20D)
+			)
+		).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createArrow(new Point(startPoint.x + 24, startPoint.y + 8))
+						   .animationDurationTicks(smeltTime));
 		List<EntryIngredient> inputEntries = display.getInputEntries();
-		widgets.add(Widgets.createSlot(new Point(startPoint.x - 20, startPoint.y + 1)).entries(inputEntries.get(0)).markInput());
+		widgets.add(Widgets.createSlot(new Point(startPoint.x - 20, startPoint.y + 1))
+						   .entries(inputEntries.get(0))
+						   .markInput());
 		if (inputEntries.size() > 1) {
-			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(inputEntries.get(1)).markInput());
+			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1))
+							   .entries(inputEntries.get(1))
+							   .markInput());
 		}
 		else {
-			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(Lists.newArrayList()).markInput());
+			widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1))
+							   .entries(Lists.newArrayList())
+							   .markInput());
 		}
-		widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9))
+						   .entries(display.getOutputEntries().get(0))
+						   .disableBackground()
+						   .markOutput());
 		return widgets;
 	}
 	
@@ -71,8 +88,22 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 		matrices.pushPose();
 		matrices.translate(0, 0, 400);
 		if (redSlots.contains(0)) {
-			GuiComponent.fill(matrices, startPoint.x - 20, startPoint.y + 1, startPoint.x - 20 + 16, startPoint.y + 1 + 16, 1090453504);
-			GuiComponent.fill(matrices, startPoint.x + 1, startPoint.y + 1, startPoint.x + 1 + 16, startPoint.y + 1 + 16, 1090453504);
+			GuiComponent.fill(
+				matrices,
+				startPoint.x - 20,
+				startPoint.y + 1,
+				startPoint.x - 20 + 16,
+				startPoint.y + 1 + 16,
+				1090453504
+			);
+			GuiComponent.fill(
+				matrices,
+				startPoint.x + 1,
+				startPoint.y + 1,
+				startPoint.x + 1 + 16,
+				startPoint.y + 1 + 16,
+				1090453504
+			);
 		}
 		matrices.popPose();
 	}

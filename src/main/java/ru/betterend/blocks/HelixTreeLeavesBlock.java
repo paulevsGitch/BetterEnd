@@ -20,7 +20,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseBlock;
-import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -29,12 +29,17 @@ import ru.betterend.registry.EndBlocks;
 import java.util.Collections;
 import java.util.List;
 
-public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
+public class HelixTreeLeavesBlock extends BaseBlock implements CustomColorProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public HelixTreeLeavesBlock() {
-		super(FabricBlockSettings.of(Material.LEAVES).materialColor(MaterialColor.COLOR_ORANGE).breakByTool(FabricToolTags.SHEARS).sound(SoundType.WART_BLOCK).sound(SoundType.GRASS).strength(0.2F));
+		super(FabricBlockSettings.of(Material.LEAVES)
+								 .materialColor(MaterialColor.COLOR_ORANGE)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .sound(SoundType.WART_BLOCK)
+								 .sound(SoundType.GRASS)
+								 .strength(0.2F));
 	}
 	
 	@Override
@@ -73,7 +78,10 @@ public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
 		if (tool != null) {
-			if (tool.is(FabricToolTags.SHEARS) || tool.isCorrectToolForDrops(state) || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+			if (tool.is(FabricToolTags.SHEARS) || tool.isCorrectToolForDrops(state) || EnchantmentHelper.getItemEnchantmentLevel(
+				Enchantments.SILK_TOUCH,
+				tool
+			) > 0) {
 				return Collections.singletonList(new ItemStack(this));
 			}
 			int fortune = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
@@ -82,6 +90,7 @@ public class HelixTreeLeavesBlock extends BaseBlock implements IColorProvider {
 			}
 			return Lists.newArrayList();
 		}
-		return MHelper.RANDOM.nextInt(32) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.HELIX_TREE_SAPLING)) : Lists.newArrayList();
+		return MHelper.RANDOM.nextInt(32) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.HELIX_TREE_SAPLING)) : Lists
+			.newArrayList();
 	}
 }

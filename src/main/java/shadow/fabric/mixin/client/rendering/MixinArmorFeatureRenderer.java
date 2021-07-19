@@ -89,7 +89,12 @@ public abstract class MixinArmorFeatureRenderer extends RenderLayer {
 		ItemStack stack = storedEntity.getItemBySlot(slot);
 		
 		HumanoidModel<LivingEntity> defaultModel = cir.getReturnValue();
-		HumanoidModel<LivingEntity> model = ArmorRenderingRegistry.getArmorModel(storedEntity, stack, slot, defaultModel);
+		HumanoidModel<LivingEntity> model = ArmorRenderingRegistry.getArmorModel(
+			storedEntity,
+			stack,
+			slot,
+			defaultModel
+		);
 		
 		if (model != defaultModel) {
 			cir.setReturnValue(model);
@@ -98,7 +103,14 @@ public abstract class MixinArmorFeatureRenderer extends RenderLayer {
 	
 	@Inject(method = "getArmorLocation", at = @At(value = "INVOKE", target = "Ljava/util/Map;computeIfAbsent(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 	private void getArmorTexture(ArmorItem armorItem, boolean secondLayer, /* @Nullable */ String suffix, CallbackInfoReturnable<ResourceLocation> cir, String vanillaIdentifier) {
-		String texture = ArmorRenderingRegistry.getArmorTexture(storedEntity, storedEntity.getItemBySlot(storedSlot), storedSlot, secondLayer, suffix, new ResourceLocation(vanillaIdentifier)).toString();
+		String texture = ArmorRenderingRegistry.getArmorTexture(
+			storedEntity,
+			storedEntity.getItemBySlot(storedSlot),
+			storedSlot,
+			secondLayer,
+			suffix,
+			new ResourceLocation(vanillaIdentifier)
+		).toString();
 		
 		if (!Objects.equals(texture, vanillaIdentifier)) {
 			cir.setReturnValue(ARMOR_LOCATION_CACHE.computeIfAbsent(texture, ResourceLocation::new));

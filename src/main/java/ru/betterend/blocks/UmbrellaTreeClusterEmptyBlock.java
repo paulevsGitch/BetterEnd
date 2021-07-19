@@ -19,7 +19,9 @@ public class UmbrellaTreeClusterEmptyBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;
 	
 	public UmbrellaTreeClusterEmptyBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK).materialColor(MaterialColor.COLOR_PURPLE).randomTicks());
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK)
+								 .materialColor(MaterialColor.COLOR_PURPLE)
+								 .randomTicks());
 		registerDefaultState(stateDefinition.any().setValue(NATURAL, false));
 	}
 	
@@ -31,7 +33,11 @@ public class UmbrellaTreeClusterEmptyBlock extends BaseBlock {
 	@Override
 	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (state.getValue(NATURAL) && random.nextInt(16) == 0) {
-			BlocksHelper.setWithUpdate(world, pos, EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState().setValue(UmbrellaTreeClusterBlock.NATURAL, true));
+			BlocksHelper.setWithUpdate(
+				world,
+				pos,
+				EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState().setValue(UmbrellaTreeClusterBlock.NATURAL, true)
+			);
 		}
 	}
 }

@@ -28,8 +28,22 @@ public class CrystaliteElytra extends CrystaliteArmor implements MultiModelItem,
 		this.movementFactor = movementFactor;
 		this.defense = (int) ((double) material.getDefenseForSlot(EquipmentSlot.CHEST) / 1.75);
 		this.toughness = material.getToughness() / 1.75F;
-		addAttributeModifier(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2], "Armor modifier", defense, AttributeModifier.Operation.ADDITION));
-		addAttributeModifier(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2], "Armor toughness", toughness, AttributeModifier.Operation.ADDITION));
+		addAttributeModifier(
+			Attributes.ARMOR,
+			new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2],
+				"Armor modifier",
+				defense,
+				AttributeModifier.Operation.ADDITION
+			)
+		);
+		addAttributeModifier(
+			Attributes.ARMOR_TOUGHNESS,
+			new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2],
+				"Armor toughness",
+				toughness,
+				AttributeModifier.Operation.ADDITION
+			)
+		);
 	}
 	
 	@Override
@@ -60,6 +74,10 @@ public class CrystaliteElytra extends CrystaliteArmor implements MultiModelItem,
 	
 	@Override
 	public void registerModelPredicate() {
-		FabricModelPredicateProviderRegistry.register(this, new ResourceLocation("broken"), (itemStack, clientLevel, livingEntity, i) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F);
+		FabricModelPredicateProviderRegistry.register(
+			this,
+			new ResourceLocation("broken"),
+			(itemStack, clientLevel, livingEntity, i) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F
+		);
 	}
 }

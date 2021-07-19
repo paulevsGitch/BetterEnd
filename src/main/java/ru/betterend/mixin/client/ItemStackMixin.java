@@ -16,6 +16,7 @@ import java.util.List;
 public class ItemStackMixin {
 	@Inject(method = "getTooltipLines", at = @At("RETURN"))
 	private void be_getTooltip(Player entity, TooltipFlag tooltipContext, CallbackInfoReturnable<List<Component>> info) {
-		ItemTooltipCallback.EVENT.invoker().getTooltip(entity, ItemStack.class.cast(this), tooltipContext, info.getReturnValue());
+		ItemTooltipCallback.EVENT.invoker()
+								 .getTooltip(entity, ItemStack.class.cast(this), tooltipContext, info.getReturnValue());
 	}
 }

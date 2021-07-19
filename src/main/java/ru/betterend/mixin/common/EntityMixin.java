@@ -58,7 +58,13 @@ public abstract class EntityMixin implements TeleportingEntity {
 				Entity entity = getType().create(destination);
 				if (entity != null) {
 					entity.restoreFrom(Entity.class.cast(this));
-					entity.moveTo(teleportTarget.pos.x, teleportTarget.pos.y, teleportTarget.pos.z, teleportTarget.yRot, entity.getXRot());
+					entity.moveTo(
+						teleportTarget.pos.x,
+						teleportTarget.pos.y,
+						teleportTarget.pos.z,
+						teleportTarget.yRot,
+						entity.getXRot()
+					);
 					entity.setDeltaMovement(teleportTarget.speed);
 					//TODO: check if this works as intended in 1.17
 					
@@ -79,7 +85,12 @@ public abstract class EntityMixin implements TeleportingEntity {
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_findDimensionEntryPoint(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
-			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), yRot, xRot));
+			info.setReturnValue(new PortalInfo(
+				new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5),
+				getDeltaMovement(),
+				yRot,
+				xRot
+			));
 		}
 	}
 	

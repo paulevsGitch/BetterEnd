@@ -67,7 +67,12 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
 	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info) {
 		if (be_canTeleport()) {
-			info.setReturnValue(new PortalInfo(new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5), getDeltaMovement(), getYRot(), getXRot()));
+			info.setReturnValue(new PortalInfo(
+				new Vec3(exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5),
+				getDeltaMovement(),
+				getYRot(),
+				getXRot()
+			));
 		}
 	}
 	
@@ -78,8 +83,20 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 			ServerLevel serverWorld = getLevel();
 			LevelData worldProperties = destination.getLevelData();
 			ServerPlayer player = ServerPlayer.class.cast(this);
-			connection.send(new ClientboundRespawnPacket(destination.dimensionType(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), gameMode.getGameModeForPlayer(), gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true));
-			connection.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
+			connection.send(new ClientboundRespawnPacket(
+				destination.dimensionType(),
+				destination.dimension(),
+				BiomeManager.obfuscateSeed(destination.getSeed()),
+				gameMode.getGameModeForPlayer(),
+				gameMode.getPreviousGameModeForPlayer(),
+				destination.isDebug(),
+				destination.isFlat(),
+				true
+			));
+			connection.send(new ClientboundChangeDifficultyPacket(
+				worldProperties.getDifficulty(),
+				worldProperties.isDifficultyLocked()
+			));
 			PlayerList playerManager = server.getPlayerList();
 			playerManager.sendPlayerPermissionLevel(player);
 			serverWorld.removePlayerImmediately(player, RemovalReason.CHANGED_DIMENSION);

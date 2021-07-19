@@ -29,7 +29,11 @@ import java.util.Arrays;
 public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 	public final static String GROUP = "infusion";
 	public final static RecipeType<InfusionRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
-	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
+	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(
+		BetterEnd.MOD_ID,
+		GROUP,
+		new Serializer()
+	);
 	
 	private final ResourceLocation id;
 	private final Ingredient[] catalysts;
@@ -175,11 +179,17 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
 		public void build() {
 			if (exist) {
 				if (input == null) {
-					BetterEnd.LOGGER.warning("Input for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
+					BetterEnd.LOGGER.warning(
+						"Input for Infusion recipe can't be 'null', recipe {} will be ignored!",
+						id
+					);
 					return;
 				}
 				if (output == null) {
-					BetterEnd.LOGGER.warning("Output for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
+					BetterEnd.LOGGER.warning(
+						"Output for Infusion recipe can't be 'null', recipe {} will be ignored!",
+						id
+					);
 					return;
 				}
 				InfusionRecipe recipe = new InfusionRecipe(id, input, output);

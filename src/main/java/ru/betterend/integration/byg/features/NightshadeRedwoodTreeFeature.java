@@ -49,7 +49,8 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 			return log;
 		};
 		Function<BlockState, Boolean> replace = (state) -> {
-			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
+			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
+																									 .isReplaceable();
 		};
 		Function<PosInfo, BlockState> post = (info) -> {
 			if (info.getState().equals(log) && (!info.getStateUp().equals(log) || !info.getStateDown().equals(log))) {
@@ -90,7 +91,10 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 		
 		SDF sdf = SplineHelper.buildSDF(trunk, 2.3F, 0.8F, splinePlacer);
 		SDF roots = new SDFSphere().setRadius(2F).setBlock(log);
-		roots = new SDFFlatWave().setIntensity(2F).setRaysCount(MHelper.randRange(5, 7, random)).setAngle(random.nextFloat() * MHelper.PI2).setSource(roots);
+		roots = new SDFFlatWave().setIntensity(2F)
+								 .setRaysCount(MHelper.randRange(5, 7, random))
+								 .setAngle(random.nextFloat() * MHelper.PI2)
+								 .setSource(roots);
 		sdf = new SDFSmoothUnion().setRadius(2F).setSourceA(sdf).setSourceB(roots);
 		sdf.setReplaceFunction(replace).addPostProcess(post).fillRecursive(world, pos);
 		Vector3f last = SplineHelper.getPos(trunk, trunk.size() - 1.35F);
@@ -175,12 +179,20 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 		canopy = new SDFDisplacement().setFunction((vec) -> {
 			return MHelper.randRange(-3F, 3F, random);
 		}).setSource(canopy);
-		canopy.addPostProcess(leavesPost1).addPostProcess(leavesPost2).fillRecursiveIgnore(world, pos.offset(0, height * 0.75, 0), ignore);
+		canopy.addPostProcess(leavesPost1)
+			  .addPostProcess(leavesPost2)
+			  .fillRecursiveIgnore(world, pos.offset(0, height * 0.75, 0), ignore);
 		
 		return true;
 	}
 	
 	static {
-		BRANCH = Lists.newArrayList(new Vector3f(0, 0, 0), new Vector3f(0.25F, 0.1F, 0), new Vector3f(0.40F, 0.2F, 0), new Vector3f(0.50F, 0.4F, 0), new Vector3f(0.55F, 0.6F, 0));
+		BRANCH = Lists.newArrayList(
+			new Vector3f(0, 0, 0),
+			new Vector3f(0.25F, 0.1F, 0),
+			new Vector3f(0.40F, 0.2F, 0),
+			new Vector3f(0.50F, 0.4F, 0),
+			new Vector3f(0.55F, 0.6F, 0)
+		);
 	}
 }

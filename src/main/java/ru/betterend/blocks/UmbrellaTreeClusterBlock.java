@@ -27,7 +27,9 @@ public class UmbrellaTreeClusterBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public UmbrellaTreeClusterBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK).materialColor(MaterialColor.COLOR_PURPLE).luminance(15));
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK)
+								 .materialColor(MaterialColor.COLOR_PURPLE)
+								 .luminance(15));
 		registerDefaultState(stateDefinition.any().setValue(NATURAL, false));
 	}
 	
@@ -45,8 +47,21 @@ public class UmbrellaTreeClusterBlock extends BaseBlock {
 			}
 			stack = new ItemStack(EndItems.UMBRELLA_CLUSTER_JUICE);
 			player.addItem(stack);
-			world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1, 1, false);
-			BlocksHelper.setWithUpdate(world, pos, EndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.defaultBlockState().setValue(NATURAL, state.getValue(NATURAL)));
+			world.playLocalSound(
+				pos.getX() + 0.5,
+				pos.getY() + 0.5,
+				pos.getZ() + 0.5,
+				SoundEvents.BOTTLE_FILL,
+				SoundSource.BLOCKS,
+				1,
+				1,
+				false
+			);
+			BlocksHelper.setWithUpdate(
+				world,
+				pos,
+				EndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.defaultBlockState().setValue(NATURAL, state.getValue(NATURAL))
+			);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;

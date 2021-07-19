@@ -33,7 +33,10 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
 	public void be_aiStep(CallbackInfo info) {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
 		if (itemStack.getItem() instanceof FallFlyingItem && ElytraItem.isFlyEnabled(itemStack) && tryToStartFallFlying()) {
-			connection.send(new ServerboundPlayerCommandPacket(LocalPlayer.class.cast(this), ServerboundPlayerCommandPacket.Action.START_FALL_FLYING));
+			connection.send(new ServerboundPlayerCommandPacket(
+				LocalPlayer.class.cast(this),
+				ServerboundPlayerCommandPacket.Action.START_FALL_FLYING
+			));
 		}
 	}
 }

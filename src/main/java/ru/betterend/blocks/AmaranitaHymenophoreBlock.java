@@ -6,9 +6,9 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 
-public class AmaranitaHymenophoreBlock extends BaseBlock implements IRenderTyped {
+public class AmaranitaHymenophoreBlock extends BaseBlock implements RenderLayerProvider {
 	public AmaranitaHymenophoreBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).sound(SoundType.WOOD));
 	}

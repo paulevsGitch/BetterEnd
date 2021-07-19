@@ -121,7 +121,11 @@ public abstract class LivingEntityMixin extends Entity {
 			if (isFlying && !onGround && !isPassenger() && !hasEffect(MobEffects.LEVITATION)) {
 				if (ElytraItem.isFlyEnabled(itemStack)) {
 					if ((fallFlyTicks + 1) % 20 == 0) {
-						itemStack.hurtAndBreak(1, LivingEntity.class.cast(this), livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
+						itemStack.hurtAndBreak(
+							1,
+							LivingEntity.class.cast(this),
+							livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST)
+						);
 					}
 					isFlying = true;
 				}
@@ -167,7 +171,11 @@ public abstract class LivingEntityMixin extends Entity {
 			}
 			
 			if (k > 0.0D) {
-				moveDelta = moveDelta.add((lookAngle.x / k * l - moveDelta.x) * 0.1D, 0.0D, (lookAngle.z / k * l - moveDelta.z) * 0.1D);
+				moveDelta = moveDelta.add(
+					(lookAngle.x / k * l - moveDelta.x) * 0.1D,
+					0.0D,
+					(lookAngle.z / k * l - moveDelta.z) * 0.1D
+				);
 			}
 			moveDelta = moveDelta.multiply(0.9900000095367432D, 0.9800000190734863D, 0.9900000095367432D);
 			double movementFactor = ((FallFlyingItem) itemStack.getItem()).getMovementFactor();
@@ -196,7 +204,8 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	private double be_getKnockback(Item tool) {
 		if (tool == null) return 0.0D;
-		Collection<AttributeModifier> modifiers = tool.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_KNOCKBACK);
+		Collection<AttributeModifier> modifiers = tool.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND)
+													  .get(Attributes.ATTACK_KNOCKBACK);
 		if (modifiers.size() > 0) {
 			return modifiers.iterator().next().getAmount();
 		}

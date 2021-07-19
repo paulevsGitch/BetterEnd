@@ -92,8 +92,13 @@ public class LacugroveFeature extends DefaultFeature {
 						for (int y = top; y >= minY; y--) {
 							mut.setY(y);
 							BlockState state = world.getBlockState(mut);
-							if (state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT) || state.is(TagAPI.END_GROUND)) {
-								BlocksHelper.setWithoutUpdate(world, mut, y == top ? EndBlocks.LACUGROVE.bark : EndBlocks.LACUGROVE.log);
+							if (state.getMaterial().isReplaceable() || state.getMaterial()
+																			.equals(Material.PLANT) || state.is(TagAPI.END_GROUND)) {
+								BlocksHelper.setWithoutUpdate(
+									world,
+									mut,
+									y == top ? EndBlocks.LACUGROVE.bark : EndBlocks.LACUGROVE.log
+								);
 							}
 							else {
 								break;
@@ -108,14 +113,17 @@ public class LacugroveFeature extends DefaultFeature {
 	}
 	
 	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.LACUGROVE_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
+		SDF sphere = new SDFSphere().setRadius(radius)
+									.setBlock(EndBlocks.LACUGROVE_LEAVES.defaultBlockState()
+																		.setValue(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return random.nextFloat() * 3F - 1.5F;
 		}).setSource(sphere);
-		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius - 2, 0).setSource(sphere));
+		sphere = new SDFSubtraction().setSourceA(sphere)
+									 .setSourceB(new SDFTranslate().setTranslate(0, -radius - 2, 0).setSource(sphere));
 		MutableBlockPos mut = new MutableBlockPos();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) {
@@ -156,7 +164,11 @@ public class LacugroveFeature extends DefaultFeature {
 		if (radius > 5) {
 			int count = (int) (radius * 2.5F);
 			for (int i = 0; i < count; i++) {
-				BlockPos p = pos.offset(random.nextGaussian() * 1, random.nextGaussian() * 1, random.nextGaussian() * 1);
+				BlockPos p = pos.offset(
+					random.nextGaussian() * 1,
+					random.nextGaussian() * 1,
+					random.nextGaussian() * 1
+				);
 				boolean place = true;
 				for (Direction d : Direction.values()) {
 					BlockState state = world.getBlockState(p.relative(d));

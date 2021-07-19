@@ -19,7 +19,9 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 	public void grow(WorldGenLevel world, Random random, BlockPos pos) {
 		if (canGrow(world, pos)) {
 			BlockState startLeaf = EndBlocks.END_LOTUS_STEM.defaultBlockState().setValue(EndLotusStemBlock.LEAF, true);
-			BlockState roots = EndBlocks.END_LOTUS_STEM.defaultBlockState().setValue(EndLotusStemBlock.SHAPE, TripleShape.BOTTOM).setValue(EndLotusStemBlock.WATERLOGGED, true);
+			BlockState roots = EndBlocks.END_LOTUS_STEM.defaultBlockState()
+													   .setValue(EndLotusStemBlock.SHAPE, TripleShape.BOTTOM)
+													   .setValue(EndLotusStemBlock.WATERLOGGED, true);
 			BlockState stem = EndBlocks.END_LOTUS_STEM.defaultBlockState();
 			BlockState flower = EndBlocks.END_LOTUS_FLOWER.defaultBlockState();
 			
@@ -37,7 +39,11 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 			BlockPos leafCenter = bpos.immutable().relative(dir);
 			if (hasLeaf(world, leafCenter)) {
 				generateLeaf(world, leafCenter);
-				BlocksHelper.setWithoutUpdate(world, bpos, startLeaf.setValue(EndLotusStemBlock.SHAPE, shape).setValue(EndLotusStemBlock.FACING, dir));
+				BlocksHelper.setWithoutUpdate(
+					world,
+					bpos,
+					startLeaf.setValue(EndLotusStemBlock.SHAPE, shape).setValue(EndLotusStemBlock.FACING, dir)
+				);
 			}
 			else {
 				BlocksHelper.setWithoutUpdate(world, bpos, stem.setValue(EndLotusStemBlock.SHAPE, shape));
@@ -93,12 +99,22 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 		BlockState leaf = EndBlocks.END_LOTUS_LEAF.defaultBlockState();
 		BlocksHelper.setWithoutUpdate(world, pos, leaf.setValue(EndLotusLeafBlock.SHAPE, TripleShape.BOTTOM));
 		for (Direction move : BlocksHelper.HORIZONTAL) {
-			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(move), leaf.setValue(EndLotusLeafBlock.HORIZONTAL_FACING, move).setValue(EndLotusLeafBlock.SHAPE, TripleShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(
+				world,
+				p.set(pos).move(move),
+				leaf.setValue(EndLotusLeafBlock.HORIZONTAL_FACING, move)
+					.setValue(EndLotusLeafBlock.SHAPE, TripleShape.MIDDLE)
+			);
 		}
 		for (int i = 0; i < 4; i++) {
 			Direction d1 = BlocksHelper.HORIZONTAL[i];
 			Direction d2 = BlocksHelper.HORIZONTAL[(i + 1) & 3];
-			BlocksHelper.setWithoutUpdate(world, p.set(pos).move(d1).move(d2), leaf.setValue(EndLotusLeafBlock.HORIZONTAL_FACING, d1).setValue(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
+			BlocksHelper.setWithoutUpdate(
+				world,
+				p.set(pos).move(d1).move(d2),
+				leaf.setValue(EndLotusLeafBlock.HORIZONTAL_FACING, d1)
+					.setValue(EndLotusLeafBlock.SHAPE, TripleShape.TOP)
+			);
 		}
 	}
 	

@@ -166,7 +166,11 @@ public class SulphuricLakeFeature extends DefaultFeature {
 	private boolean isDeepWater(WorldGenLevel world, BlockPos pos) {
 		int y = pos.getY() + 1;
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
-			if (getYOnSurface(world, pos.getX() + dir.getStepX(), pos.getZ() + dir.getStepZ()) < y || getYOnSurface(world, pos.getX() + dir.getStepX() * 2, pos.getZ() + dir.getStepZ() * 2) < y || getYOnSurface(world, pos.getX() + dir.getStepX() * 3, pos.getZ() + dir.getStepZ() * 3) < y) {
+			if (getYOnSurface(world, pos.getX() + dir.getStepX(), pos.getZ() + dir.getStepZ()) < y || getYOnSurface(
+				world,
+				pos.getX() + dir.getStepX() * 2,
+				pos.getZ() + dir.getStepZ() * 2
+			) < y || getYOnSurface(world, pos.getX() + dir.getStepX() * 3, pos.getZ() + dir.getStepZ() * 3) < y) {
 				return false;
 			}
 		}
@@ -194,7 +198,10 @@ public class SulphuricLakeFeature extends DefaultFeature {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			BlockPos side;
 			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.relative(dir))).is(Blocks.WATER)) {
-				BlockState state = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState().setValue(SulphurCrystalBlock.WATERLOGGED, true).setValue(SulphurCrystalBlock.FACING, dir).setValue(SulphurCrystalBlock.AGE, random.nextInt(3));
+				BlockState state = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState()
+															.setValue(SulphurCrystalBlock.WATERLOGGED, true)
+															.setValue(SulphurCrystalBlock.FACING, dir)
+															.setValue(SulphurCrystalBlock.AGE, random.nextInt(3));
 				BlocksHelper.setWithoutUpdate(world, side, state);
 			}
 		}

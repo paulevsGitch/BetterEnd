@@ -30,13 +30,25 @@ public class ColoredMaterial {
 		String id = Registry.BLOCK.getKey(source).getPath();
 		colors.forEach((color, name) -> {
 			String blockName = id + "_" + name;
-			Block block = constructor.apply(FabricBlockSettings.copyOf(source).materialColor(MaterialColor.COLOR_BLACK));
+			Block block = constructor.apply(FabricBlockSettings.copyOf(source)
+															   .materialColor(MaterialColor.COLOR_BLACK));
 			EndBlocks.registerBlock(blockName, block);
 			if (craftEight) {
-				GridRecipe.make(BetterEnd.MOD_ID, blockName, block).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(8).setShape("###", "#D#", "###").addMaterial('#', source).addMaterial('D', dyes.get(color)).build();
+				GridRecipe.make(BetterEnd.MOD_ID, blockName, block)
+						  .checkConfig(Configs.RECIPE_CONFIG)
+						  .setOutputCount(8)
+						  .setShape("###", "#D#", "###")
+						  .addMaterial('#', source)
+						  .addMaterial('D', dyes.get(color))
+						  .build();
 			}
 			else {
-				GridRecipe.make(BetterEnd.MOD_ID, blockName, block).checkConfig(Configs.RECIPE_CONFIG).setList("#D").addMaterial('#', source).addMaterial('D', dyes.get(color)).build();
+				GridRecipe.make(BetterEnd.MOD_ID, blockName, block)
+						  .checkConfig(Configs.RECIPE_CONFIG)
+						  .setList("#D")
+						  .addMaterial('#', source)
+						  .addMaterial('D', dyes.get(color))
+						  .build();
 			}
 			this.colors.put(color, block);
 			BlocksHelper.addBlockColor(block, color);

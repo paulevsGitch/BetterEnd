@@ -62,7 +62,11 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 							EndBiomes.LAND_BIOMES.removeMutableBiome(biomeID);
 							EndBiomes.VOID_BIOMES.addBiomeMutable(endBiome);
 						}
-						ShufflingList<ResourceLocation> subBiomes = this.getAndExecuteRuntime(biomeClass, obj, "getHills");
+						ShufflingList<ResourceLocation> subBiomes = this.getAndExecuteRuntime(
+							biomeClass,
+							obj,
+							"getHills"
+						);
 						if (subBiomes != null) {
 							subBiomes.stream().collect(Collectors.toList()).forEach((id) -> {
 								BCLBiome subBiome = BiomeAPI.getBiome(id);

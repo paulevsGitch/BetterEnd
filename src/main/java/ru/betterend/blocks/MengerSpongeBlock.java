@@ -17,13 +17,13 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.Queue;
 
 @SuppressWarnings("deprecation")
-public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped {
+public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerProvider {
 	public MengerSpongeBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SPONGE).noOcclusion());
 	}
@@ -59,7 +59,11 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements IRenderTyped 
 				FluidState fluidState = world.getFluidState(blockPos2);
 				Material material = blockState.getMaterial();
 				if (fluidState.is(FluidTags.WATER)) {
-					if (blockState.getBlock() instanceof BucketPickup && !((BucketPickup) blockState.getBlock()).pickupBlock(world, blockPos2, blockState).isEmpty()) {
+					if (blockState.getBlock() instanceof BucketPickup && !((BucketPickup) blockState.getBlock()).pickupBlock(
+						world,
+						blockPos2,
+						blockState
+					).isEmpty()) {
 						++i;
 						if (j < 6) {
 							queue.add(new Tuple<>(blockPos2, j + 1));

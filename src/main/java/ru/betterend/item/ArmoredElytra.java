@@ -27,14 +27,37 @@ public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, Fall
 	private final int defense;
 	
 	public ArmoredElytra(String name, ArmorMaterial material, Item repairItem, int durability, double movementFactor, boolean fireproof) {
-		super(material, EquipmentSlot.CHEST, fireproof ? EndItems.makeEndItemSettings().durability(durability).rarity(Rarity.EPIC).fireResistant() : EndItems.makeEndItemSettings().durability(durability).rarity(Rarity.EPIC));
+		super(
+			material,
+			EquipmentSlot.CHEST,
+			fireproof ? EndItems.makeEndItemSettings()
+								.durability(durability)
+								.rarity(Rarity.EPIC)
+								.fireResistant() : EndItems.makeEndItemSettings()
+														   .durability(durability)
+														   .rarity(Rarity.EPIC)
+		);
 		this.wingTexture = BetterEnd.makeID("textures/entity/" + name + ".png");
 		this.repairItem = repairItem;
 		this.movementFactor = movementFactor;
 		this.defense = (int) ((double) material.getDefenseForSlot(EquipmentSlot.CHEST) / 1.75);
 		this.toughness = material.getToughness() / 1.75F;
-		addAttributeModifier(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2], "Armor modifier", defense, AttributeModifier.Operation.ADDITION));
-		addAttributeModifier(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2], "Armor toughness", toughness, AttributeModifier.Operation.ADDITION));
+		addAttributeModifier(
+			Attributes.ARMOR,
+			new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2],
+				"Armor modifier",
+				defense,
+				AttributeModifier.Operation.ADDITION
+			)
+		);
+		addAttributeModifier(
+			Attributes.ARMOR_TOUGHNESS,
+			new AttributeModifier(ARMOR_MODIFIER_UUID_PER_SLOT[2],
+				"Armor toughness",
+				toughness,
+				AttributeModifier.Operation.ADDITION
+			)
+		);
 	}
 	
 	@Override
@@ -66,6 +89,10 @@ public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, Fall
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerModelPredicate() {
-		FabricModelPredicateProviderRegistry.register(this, new ResourceLocation("broken"), (itemStack, clientLevel, livingEntity, id) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F);
+		FabricModelPredicateProviderRegistry.register(
+			this,
+			new ResourceLocation("broken"),
+			(itemStack, clientLevel, livingEntity, id) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F
+		);
 	}
 }

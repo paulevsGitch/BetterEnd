@@ -46,7 +46,10 @@ import java.util.List;
 import java.util.Random;
 
 public class EndSlimeEntity extends Slime {
-	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(EndSlimeEntity.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
+		EndSlimeEntity.class,
+		EntityDataSerializers.BYTE
+	);
 	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, Level world) {
@@ -59,14 +62,21 @@ public class EndSlimeEntity extends Slime {
 		this.goalSelector.addGoal(2, new FaceTowardTargetGoal());
 		this.goalSelector.addGoal(3, new RandomLookGoal());
 		this.goalSelector.addGoal(5, new MoveGoal());
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, false, (livingEntity) -> {
-			return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
-		}));
+		this.targetSelector.addGoal(
+			1,
+			new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, false, (livingEntity) -> {
+				return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
+			})
+		);
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<IronGolem>(this, IronGolem.class, true));
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 1.0D).add(Attributes.ATTACK_DAMAGE, 1.0D).add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MOVEMENT_SPEED, 0.15D);
+		return LivingEntity.createLivingAttributes()
+						   .add(Attributes.MAX_HEALTH, 1.0D)
+						   .add(Attributes.ATTACK_DAMAGE, 1.0D)
+						   .add(Attributes.FOLLOW_RANGE, 16.0D)
+						   .add(Attributes.MOVEMENT_SPEED, 0.15D);
 	}
 	
 	@Override
@@ -136,7 +146,13 @@ public class EndSlimeEntity extends Slime {
 				slimeEntity.setInvulnerable(this.isInvulnerable());
 				((ISlime) slimeEntity).be_setSlimeSize(j, true);
 				slimeEntity.refreshDimensions();
-				slimeEntity.moveTo(this.getX() + (double) g, this.getY() + 0.5D, this.getZ() + (double) h, this.random.nextFloat() * 360.0F, 0.0F);
+				slimeEntity.moveTo(
+					this.getX() + (double) g,
+					this.getY() + 0.5D,
+					this.getZ() + (double) h,
+					this.random.nextFloat() * 360.0F,
+					0.0F
+				);
 				this.level.addFreshEntity(slimeEntity);
 			}
 		}
@@ -197,7 +213,12 @@ public class EndSlimeEntity extends Slime {
 	}
 	
 	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
-		return random.nextInt(16) == 0 || isPermanentBiome(world, pos) || (notManyEntities(world, pos, 32, 3) && isWaterNear(world, pos, 32, 8));
+		return random.nextInt(16) == 0 || isPermanentBiome(world, pos) || (notManyEntities(
+			world,
+			pos,
+			32,
+			3
+		) && isWaterNear(world, pos, 32, 8));
 	}
 	
 	private static boolean isPermanentBiome(ServerLevelAccessor world, BlockPos pos) {
@@ -285,7 +306,8 @@ public class EndSlimeEntity extends Slime {
 		}
 		
 		public boolean canUse() {
-			return EndSlimeEntity.this.getTarget() == null && (EndSlimeEntity.this.onGround || EndSlimeEntity.this.isInWater() || EndSlimeEntity.this.isInLava() || EndSlimeEntity.this.hasEffect(MobEffects.LEVITATION)) && EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
+			return EndSlimeEntity.this.getTarget() == null && (EndSlimeEntity.this.onGround || EndSlimeEntity.this.isInWater() || EndSlimeEntity.this
+				.isInLava() || EndSlimeEntity.this.hasEffect(MobEffects.LEVITATION)) && EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 		
 		public void tick() {
@@ -314,7 +336,8 @@ public class EndSlimeEntity extends Slime {
 				return false;
 			}
 			else {
-				return livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable ? false : EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
+				return livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable ? false : EndSlimeEntity.this
+					.getMoveControl() instanceof EndSlimeMoveControl;
 			}
 		}
 		
@@ -341,7 +364,10 @@ public class EndSlimeEntity extends Slime {
 		
 		public void tick() {
 			EndSlimeEntity.this.lookAt(EndSlimeEntity.this.getTarget(), 10.0F, 10.0F);
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.getYRot(), EndSlimeEntity.this.isDealsDamage());
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(
+				EndSlimeEntity.this.getYRot(),
+				EndSlimeEntity.this.isDealsDamage()
+			);
 		}
 	}
 	
@@ -384,7 +410,11 @@ public class EndSlimeEntity extends Slime {
 						
 						EndSlimeEntity.this.getJumpControl().jump();
 						if (EndSlimeEntity.this.doPlayJumpSound()) {
-							EndSlimeEntity.this.playSound(EndSlimeEntity.this.getJumpSound(), EndSlimeEntity.this.getSoundVolume(), getJumpSoundPitch());
+							EndSlimeEntity.this.playSound(
+								EndSlimeEntity.this.getJumpSound(),
+								EndSlimeEntity.this.getSoundVolume(),
+								getJumpSoundPitch()
+							);
 						}
 					}
 					else {

@@ -58,7 +58,9 @@ public class BetterEnd implements ModInitializer {
 		BonemealPlants.init();
 		GeneratorOptions.init();
 		LootTableUtil.init();
-		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
+		FabricLoader.getInstance()
+					.getEntrypoints("betterend", BetterEndPlugin.class)
+					.forEach(BetterEndPlugin::register);
 		Integrations.init();
 		Configs.saveConfigs();
 	}

@@ -70,7 +70,11 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0D).add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.FLYING_SPEED, 0.4D).add(Attributes.MOVEMENT_SPEED, 0.1D);
+		return LivingEntity.createLivingAttributes()
+						   .add(Attributes.MAX_HEALTH, 2.0D)
+						   .add(Attributes.FOLLOW_RANGE, 16.0D)
+						   .add(Attributes.FLYING_SPEED, 0.4D)
+						   .add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
 	
 	public void setHive(Level world, BlockPos hive) {
@@ -220,14 +224,21 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		public void start() {
 			Vec3 vec3d = null;
 			if (SilkMothEntity.this.hivePos != null && SilkMothEntity.this.hiveWorld == SilkMothEntity.this.level) {
-				if (SilkMothEntity.this.position().distanceToSqr(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) > 16) {
+				if (SilkMothEntity.this.position()
+									   .distanceToSqr(SilkMothEntity.this.hivePos.getX(),
+										   SilkMothEntity.this.hivePos.getY(),
+										   SilkMothEntity.this.hivePos.getZ()
+									   ) > 16) {
 					vec3d = SilkMothEntity.this.position().add(random.nextGaussian() * 2, 0, random.nextGaussian() * 2);
 				}
 			}
 			vec3d = vec3d == null ? this.getRandomLocation() : vec3d;
 			if (vec3d != null) {
 				try {
-					SilkMothEntity.this.navigation.moveTo(SilkMothEntity.this.navigation.createPath(new BlockPos(vec3d), 1), 1.0D);
+					SilkMothEntity.this.navigation.moveTo(SilkMothEntity.this.navigation.createPath(
+						new BlockPos(vec3d),
+						1
+					), 1.0D);
 				}
 				catch (Exception e) {
 				}
@@ -238,7 +249,15 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		private Vec3 getRandomLocation() {
 			Vec3 vec3d3 = SilkMothEntity.this.getViewVector(0.0F);
 			Vec3 vec3d4 = HoverRandomPos.getPos(SilkMothEntity.this, 8, 7, vec3d3.x, vec3d3.z, 1.5707964F, 3, 1);
-			return vec3d4 != null ? vec3d4 : AirAndWaterRandomPos.getPos(SilkMothEntity.this, 8, 4, -2, vec3d3.x, vec3d3.z, 1.5707963705062866D);
+			return vec3d4 != null ? vec3d4 : AirAndWaterRandomPos.getPos(
+				SilkMothEntity.this,
+				8,
+				4,
+				-2,
+				vec3d3.x,
+				vec3d3.z,
+				1.5707963705062866D
+			);
 		}
 	}
 	
@@ -249,12 +268,25 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 		
 		@Override
 		public boolean canUse() {
-			return SilkMothEntity.this.hivePos != null && SilkMothEntity.this.hiveWorld == SilkMothEntity.this.level && SilkMothEntity.this.navigation.isDone() && SilkMothEntity.this.random.nextInt(16) == 0 && SilkMothEntity.this.position().distanceToSqr(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) < 64;
+			return SilkMothEntity.this.hivePos != null && SilkMothEntity.this.hiveWorld == SilkMothEntity.this.level && SilkMothEntity.this.navigation
+				.isDone() && SilkMothEntity.this.random.nextInt(16) == 0 && SilkMothEntity.this.position()
+																							   .distanceToSqr(
+																								   SilkMothEntity.this.hivePos
+																									   .getX(),
+																								   SilkMothEntity.this.hivePos
+																									   .getY(),
+																								   SilkMothEntity.this.hivePos
+																									   .getZ()
+																							   ) < 64;
 		}
 		
 		@Override
 		public boolean canContinueToUse() {
-			return SilkMothEntity.this.navigation.isInProgress() && level.getBlockState(entrance).isAir() && (level.getBlockState(hivePos).is(EndBlocks.SILK_MOTH_NEST) || level.getBlockState(hivePos).is(EndBlocks.SILK_MOTH_HIVE));
+			return SilkMothEntity.this.navigation.isInProgress() && level.getBlockState(entrance)
+																		 .isAir() && (level.getBlockState(hivePos)
+																						   .is(EndBlocks.SILK_MOTH_NEST) || level
+				.getBlockState(hivePos)
+				.is(EndBlocks.SILK_MOTH_HIVE));
 		}
 		
 		@Override
@@ -291,9 +323,20 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
 						if (fullness > 3) {
 							fullness = 3;
 						}
-						BlocksHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state.setValue(EndBlockProperties.FULLNESS, fullness));
+						BlocksHelper.setWithUpdate(
+							SilkMothEntity.this.hiveWorld,
+							SilkMothEntity.this.hivePos,
+							state.setValue(EndBlockProperties.FULLNESS, fullness)
+						);
 					}
-					SilkMothEntity.this.level.playSound(null, SilkMothEntity.this.entrance, SoundEvents.BEEHIVE_ENTER, SoundSource.BLOCKS, 1, 1);
+					SilkMothEntity.this.level.playSound(
+						null,
+						SilkMothEntity.this.entrance,
+						SoundEvents.BEEHIVE_ENTER,
+						SoundSource.BLOCKS,
+						1,
+						1
+					);
 					SilkMothEntity.this.discard();
 				}
 				else {

@@ -90,7 +90,12 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		StructureTemplate structure = getStructure(world, center, random);
 		Rotation rotation = getRotation(world, center, random);
 		Mirror mirror = getMirror(world, center, random);
-		BlockPos offset = StructureTemplate.transform(new BlockPos(structure.getSize()), mirror, rotation, BlockPos.ZERO);
+		BlockPos offset = StructureTemplate.transform(
+			new BlockPos(structure.getSize()),
+			mirror,
+			rotation,
+			BlockPos.ZERO
+		);
 		center = center.offset(0, getYOffset(structure, world, center, random) + 0.5, 0);
 		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror);
 		center = center.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
@@ -102,7 +107,11 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		structure.placeInWorld(world, center, center, placementData.setBoundingBox(bounds), random, 2);
 		
 		StructureHelper.erodeIntense(world, bounds, random);
-		BlockFixer.fixBlocks(world, new BlockPos(bounds.minX(), bounds.minY(), bounds.minZ()), new BlockPos(bounds.maxX(), bounds.maxY(), bounds.maxZ()));
+		BlockFixer.fixBlocks(
+			world,
+			new BlockPos(bounds.minX(), bounds.minY(), bounds.minZ()),
+			new BlockPos(bounds.maxX(), bounds.maxY(), bounds.maxZ())
+		);
 		
 		return true;
 	}

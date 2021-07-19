@@ -26,12 +26,12 @@ import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 
 import java.util.Map;
 
-public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlock, IRenderTyped {
+public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlock, RenderLayerProvider {
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty LEAF = BooleanProperty.create("leaf");
@@ -40,7 +40,10 @@ public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlo
 	
 	public EndLotusStemBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS));
-		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(SHAPE, TripleShape.MIDDLE).setValue(LEAF, false).setValue(FACING, Direction.UP));
+		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false)
+													 .setValue(SHAPE, TripleShape.MIDDLE)
+													 .setValue(LEAF, false)
+													 .setValue(FACING, Direction.UP));
 	}
 	
 	@Override
@@ -62,7 +65,9 @@ public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlo
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		LevelAccessor worldAccess = ctx.getLevel();
 		BlockPos blockPos = ctx.getClickedPos();
-		return this.defaultBlockState().setValue(WATERLOGGED, worldAccess.getFluidState(blockPos).getType() == Fluids.WATER).setValue(FACING, ctx.getClickedFace());
+		return this.defaultBlockState()
+				   .setValue(WATERLOGGED, worldAccess.getFluidState(blockPos).getType() == Fluids.WATER)
+				   .setValue(FACING, ctx.getClickedFace());
 	}
 	
 	@Override

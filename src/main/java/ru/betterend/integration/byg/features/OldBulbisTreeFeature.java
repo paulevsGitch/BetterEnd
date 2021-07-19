@@ -48,7 +48,8 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		BlockState glow = Integrations.BYG.getDefaultState("purple_shroomlight");
 		
 		Function<BlockState, Boolean> replacement = (state) -> {
-			if (state.equals(stem) || state.equals(wood) || state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
+			if (state.equals(stem) || state.equals(wood) || state.is(TagAPI.END_GROUND) || state.getMaterial()
+																								.equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();
@@ -87,7 +88,8 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		}
 		
 		sdf.setReplaceFunction(replacement).addPostProcess((info) -> {
-			if (info.getState().equals(stem) && (!info.getStateUp().equals(stem) || !info.getStateDown().equals(stem))) {
+			if (info.getState().equals(stem) && (!info.getStateUp().equals(stem) || !info.getStateDown()
+																						 .equals(stem))) {
 				return wood;
 			}
 			return info.getState();
@@ -160,13 +162,38 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 	}
 	
 	static {
-		SPLINE = Lists.newArrayList(new Vector3f(0.00F, 0.00F, 0.00F), new Vector3f(0.10F, 0.35F, 0.00F), new Vector3f(0.20F, 0.50F, 0.00F), new Vector3f(0.30F, 0.55F, 0.00F), new Vector3f(0.42F, 0.70F, 0.00F), new Vector3f(0.50F, 1.00F, 0.00F));
+		SPLINE = Lists.newArrayList(
+			new Vector3f(0.00F, 0.00F, 0.00F),
+			new Vector3f(0.10F, 0.35F, 0.00F),
+			new Vector3f(0.20F, 0.50F, 0.00F),
+			new Vector3f(0.30F, 0.55F, 0.00F),
+			new Vector3f(0.42F, 0.70F, 0.00F),
+			new Vector3f(0.50F, 1.00F, 0.00F)
+		);
 		
-		ROOT = Lists.newArrayList(new Vector3f(0F, 1F, 0), new Vector3f(0.1F, 0.70F, 0), new Vector3f(0.3F, 0.30F, 0), new Vector3f(0.7F, 0.05F, 0), new Vector3f(0.8F, -0.20F, 0));
+		ROOT = Lists.newArrayList(
+			new Vector3f(0F, 1F, 0),
+			new Vector3f(0.1F, 0.70F, 0),
+			new Vector3f(0.3F, 0.30F, 0),
+			new Vector3f(0.7F, 0.05F, 0),
+			new Vector3f(0.8F, -0.20F, 0)
+		);
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
-		LEAF = Lists.newArrayList(new Vector3f(0.00F, 0.0F, 0), new Vector3f(0.10F, 0.4F, 0), new Vector3f(0.40F, 0.8F, 0), new Vector3f(0.75F, 0.9F, 0), new Vector3f(1.00F, 0.8F, 0));
+		LEAF = Lists.newArrayList(
+			new Vector3f(0.00F, 0.0F, 0),
+			new Vector3f(0.10F, 0.4F, 0),
+			new Vector3f(0.40F, 0.8F, 0),
+			new Vector3f(0.75F, 0.9F, 0),
+			new Vector3f(1.00F, 0.8F, 0)
+		);
 		
-		SIDE = Lists.newArrayList(new Vector3f(0, -0.3F, -0.5F), new Vector3f(0, -0.1F, -0.3F), new Vector3f(0, 0.0F, 0.0F), new Vector3f(0, -0.1F, 0.3F), new Vector3f(0, -0.3F, 0.5F));
+		SIDE = Lists.newArrayList(
+			new Vector3f(0, -0.3F, -0.5F),
+			new Vector3f(0, -0.1F, -0.3F),
+			new Vector3f(0, 0.0F, 0.0F),
+			new Vector3f(0, -0.1F, 0.3F),
+			new Vector3f(0, -0.3F, 0.5F)
+		);
 	}
 }

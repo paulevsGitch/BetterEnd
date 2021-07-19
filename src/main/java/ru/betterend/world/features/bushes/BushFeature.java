@@ -39,7 +39,8 @@ public class BushFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND) && !world.getBlockState(pos.above()).is(TagAPI.END_GROUND))
+		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND) && !world.getBlockState(pos.above())
+																			 .is(TagAPI.END_GROUND))
 			return false;
 		
 		float radius = MHelper.randRange(1.8F, 3.5F, random);
@@ -52,7 +53,8 @@ public class BushFeature extends DefaultFeature {
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return MHelper.randRange(-2F, 2F, random);
 		}).setSource(sphere);
-		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
+		sphere = new SDFSubtraction().setSourceA(sphere)
+									 .setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		sphere.setReplaceFunction(REPLACE);
 		sphere.addPostProcess((info) -> {
 			if (info.getState().getBlock() instanceof LeavesBlock) {
@@ -72,7 +74,11 @@ public class BushFeature extends DefaultFeature {
 			BlockPos p = pos.relative(d);
 			if (world.isEmptyBlock(p)) {
 				if (leaves instanceof LeavesBlock) {
-					BlocksHelper.setWithoutUpdate(world, p, leaves.defaultBlockState().setValue(LeavesBlock.DISTANCE, 1));
+					BlocksHelper.setWithoutUpdate(
+						world,
+						p,
+						leaves.defaultBlockState().setValue(LeavesBlock.DISTANCE, 1)
+					);
 				}
 				else {
 					BlocksHelper.setWithoutUpdate(world, p, leaves.defaultBlockState());

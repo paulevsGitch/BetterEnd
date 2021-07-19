@@ -57,7 +57,18 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
 			float[] colors = EternalCrystalRenderer.colors(age);
 			int y = blockEntity.getBlockPos().getY();
 			
-			BeamRenderer.renderLightBeam(matrices, vertexConsumers, age, tickDelta, -y, 1024 - y, colors, 0.25F, 0.13F, 0.16F);
+			BeamRenderer.renderLightBeam(
+				matrices,
+				vertexConsumers,
+				age,
+				tickDelta,
+				-y,
+				1024 - y,
+				colors,
+				0.25F,
+				0.13F,
+				0.16F
+			);
 			float altitude = Mth.sin((blockEntity.getAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
 			matrices.translate(0.0D, altitude, 0.0D);
 		}
@@ -70,7 +81,16 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
 		else {
 			float rotation = (age + tickDelta) / 25.0F + 6.0F;
 			matrices.mulPose(Vector3f.YP.rotation(rotation));
-			minecraft.getItemRenderer().render(activeItem, ItemTransforms.TransformType.GROUND, false, matrices, vertexConsumers, light, overlay, model);
+			minecraft.getItemRenderer()
+					 .render(activeItem,
+						 ItemTransforms.TransformType.GROUND,
+						 false,
+						 matrices,
+						 vertexConsumers,
+						 light,
+						 overlay,
+						 model
+					 );
 		}
 		matrices.popPose();
 	}

@@ -105,13 +105,20 @@ public class BetterEndBiomeSource extends BiomeSource {
 			}
 		}
 		else {
-			float height = TheEndBiomeSource.getHeightValue(noise, (biomeX >> 1) + 1, (biomeZ >> 1) + 1) + (float) SMALL_NOISE.eval(biomeX, biomeZ) * 5;
+			float height = TheEndBiomeSource.getHeightValue(
+				noise,
+				(biomeX >> 1) + 1,
+				(biomeZ >> 1) + 1
+			) + (float) SMALL_NOISE.eval(biomeX, biomeZ) * 5;
 			
 			if (height > -20F && height < -5F) {
 				return barrens;
 			}
 			
-			endBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(biomeX << 2, biomeZ << 2);
+			endBiome = height < -10F ? mapVoid.getBiome(biomeX << 2, biomeZ << 2) : mapLand.getBiome(
+				biomeX << 2,
+				biomeZ << 2
+			);
 		}
 		
 		return BiomeAPI.getActualBiome(endBiome);

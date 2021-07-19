@@ -24,11 +24,11 @@ import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 
-public class EndLotusLeafBlock extends BaseBlockNotFull implements IRenderTyped {
+public class EndLotusLeafBlock extends BaseBlockNotFull implements RenderLayerProvider {
 	public static final EnumProperty<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape VSHAPE = Block.box(0, 0, 0, 16, 1, 16);

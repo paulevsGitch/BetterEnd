@@ -20,11 +20,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.Nullable;
-import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IColorProvider;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.BlockModelProvider;
+import ru.bclib.interfaces.CustomColorProvider;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.client.models.Patterns;
@@ -33,7 +33,7 @@ import ru.betterend.noise.OpenSimplexNoise;
 import java.util.List;
 import java.util.Optional;
 
-public class JellyshroomCapBlock extends SlimeBlock implements IRenderTyped, BlockModelProvider, IColorProvider {
+public class JellyshroomCapBlock extends SlimeBlock implements RenderLayerProvider, BlockModelProvider, CustomColorProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	private final Vec3i colorStart;

@@ -14,7 +14,11 @@ import ru.bclib.blocks.BaseBlock;
 public class EnderBlock extends BaseBlock {
 	
 	public EnderBlock() {
-		super(FabricBlockSettings.of(Material.STONE, MaterialColor.WARPED_WART_BLOCK).hardness(5F).resistance(6F).requiresCorrectToolForDrops().sound(SoundType.STONE));
+		super(FabricBlockSettings.of(Material.STONE, MaterialColor.WARPED_WART_BLOCK)
+								 .hardness(5F)
+								 .resistance(6F)
+								 .requiresCorrectToolForDrops()
+								 .sound(SoundType.STONE));
 	}
 	
 	@Environment(EnvType.CLIENT)

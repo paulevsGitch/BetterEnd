@@ -21,17 +21,25 @@ public class SurfaceVentFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+		pos = getPosOnSurface(
+			world,
+			new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
+		);
 		if (!world.getBlockState(pos.below(3)).is(TagAPI.GEN_TERRAIN)) {
 			return false;
 		}
 		
 		MutableBlockPos mut = new MutableBlockPos();
 		int count = MHelper.randRange(15, 30, random);
-		BlockState vent = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState().setValue(HydrothermalVentBlock.WATERLOGGED, false);
+		BlockState vent = EndBlocks.HYDROTHERMAL_VENT.defaultBlockState()
+													 .setValue(HydrothermalVentBlock.WATERLOGGED, false);
 		for (int i = 0; i < count; i++) {
-			mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 5, MHelper.floor(random.nextGaussian() * 2 + 0.5));
-			int dist = MHelper.floor(2 - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(2);
+			mut.set(pos)
+			   .move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 5, MHelper.floor(random.nextGaussian() * 2 + 0.5));
+			int dist = MHelper.floor(2 - MHelper.length(
+				mut.getX() - pos.getX(),
+				mut.getZ() - pos.getZ()
+			)) + random.nextInt(2);
 			if (dist > 0) {
 				BlockState state = world.getBlockState(mut);
 				for (int n = 0; n < 10 && state.isAir(); n++) {

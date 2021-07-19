@@ -66,7 +66,11 @@ public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 					int j;
 					for (j = -1; j <= 1; ++j) {
 						for (int k = -1; k <= 1; ++k) {
-							if ((j != 0 || k != 0) && world.isEmptyBlock(blockPos.offset(k, 0, j)) && world.isEmptyBlock(blockPos.offset(k, 1, j))) {
+							if ((j != 0 || k != 0) && world.isEmptyBlock(blockPos.offset(
+								k,
+								0,
+								j
+							)) && world.isEmptyBlock(blockPos.offset(k, 1, j))) {
 								if (world.getBlockState(blockPos.offset(k * 2, 0, j * 2)).is(TagAPI.BOOKSHELVES)) {
 									++i;
 								}
@@ -111,7 +115,8 @@ public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 						if (this.costs[j] > 0) {
 							List<EnchantmentInstance> list = this.getEnchantmentList(itemStack, j, this.costs[j]);
 							if (list != null && !list.isEmpty()) {
-								EnchantmentInstance enchantmentLevelEntry = (EnchantmentInstance) list.get(this.random.nextInt(list.size()));
+								EnchantmentInstance enchantmentLevelEntry = (EnchantmentInstance) list.get(this.random.nextInt(
+									list.size()));
 								enchantClue[j] = Registry.ENCHANTMENT.getId(enchantmentLevelEntry.enchantment);
 								levelClue[j] = enchantmentLevelEntry.level;
 							}

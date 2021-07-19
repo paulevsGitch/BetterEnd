@@ -1,10 +1,14 @@
 package ru.betterend.blocks;
 
 import com.google.common.collect.Lists;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.WaterLilyBlockItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -15,16 +19,19 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.bclib.interfaces.ISpetialItem;
+import ru.bclib.interfaces.CustomItemProvider;
 import ru.betterend.blocks.basis.EndPlantBlock;
 
 import java.util.List;
 
-public class FlamaeaBlock extends EndPlantBlock implements ISpetialItem {
+public class FlamaeaBlock extends EndPlantBlock implements CustomItemProvider {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 	
 	public FlamaeaBlock() {
-		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.WET_GRASS));
+		super(FabricBlockSettings.of(Material.PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .sound(SoundType.WET_GRASS));
 	}
 	
 	@Override
@@ -48,17 +55,12 @@ public class FlamaeaBlock extends EndPlantBlock implements ISpetialItem {
 	}
 	
 	@Override
-	public int getStackSize() {
-		return 64;
-	}
-	
-	@Override
-	public boolean canPlaceOnWater() {
-		return true;
-	}
-	
-	@Override
 	public boolean addToPot() {
 		return false;
+	}
+	
+	@Override
+	public BlockItem getCustomItem(ResourceLocation resourceLocation, FabricItemSettings fabricItemSettings) {
+		return new WaterLilyBlockItem(this, fabricItemSettings);
 	}
 }

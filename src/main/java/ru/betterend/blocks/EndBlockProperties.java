@@ -19,7 +19,8 @@ public class EndBlockProperties extends BlockProperties {
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	
 	public enum PedestalState implements StringRepresentable {
-		PEDESTAL_TOP("pedestal_top"), COLUMN_TOP("column_top"), BOTTOM("bottom"), PILLAR("pillar"), COLUMN("column"), DEFAULT("default");
+		PEDESTAL_TOP("pedestal_top"), COLUMN_TOP("column_top"), BOTTOM("bottom"), PILLAR("pillar"), COLUMN("column"), DEFAULT(
+			"default");
 		
 		private final String name;
 		
@@ -39,7 +40,10 @@ public class EndBlockProperties extends BlockProperties {
 	}
 	
 	public enum HydraluxShape implements StringRepresentable {
-		FLOWER_BIG_BOTTOM("flower_big_bottom", true), FLOWER_BIG_TOP("flower_big_top", true), FLOWER_SMALL_BOTTOM("flower_small_bottom", true), FLOWER_SMALL_TOP("flower_small_top", true), VINE("vine", false), ROOTS("roots", false);
+		FLOWER_BIG_BOTTOM("flower_big_bottom", true), FLOWER_BIG_TOP("flower_big_top", true), FLOWER_SMALL_BOTTOM(
+			"flower_small_bottom",
+			true
+		), FLOWER_SMALL_TOP("flower_small_top", true), VINE("vine", false), ROOTS("roots", false);
 		
 		private final String name;
 		private final boolean glow;
@@ -65,7 +69,13 @@ public class EndBlockProperties extends BlockProperties {
 	}
 	
 	public enum LumecornShape implements StringRepresentable {
-		LIGHT_TOP("light_top", 15), LIGHT_TOP_MIDDLE("light_top_middle", 15), LIGHT_MIDDLE("light_middle", 15), LIGHT_BOTTOM("light_bottom", 15), MIDDLE("middle", 0), BOTTOM_BIG("bottom_big", 0), BOTTOM_SMALL("bottom_small", 0);
+		LIGHT_TOP("light_top", 15), LIGHT_TOP_MIDDLE("light_top_middle", 15), LIGHT_MIDDLE(
+			"light_middle",
+			15
+		), LIGHT_BOTTOM("light_bottom", 15), MIDDLE("middle", 0), BOTTOM_BIG("bottom_big", 0), BOTTOM_SMALL(
+			"bottom_small",
+			0
+		);
 		
 		private final String name;
 		private final int light;

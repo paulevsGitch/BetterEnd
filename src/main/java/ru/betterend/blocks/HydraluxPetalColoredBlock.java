@@ -10,13 +10,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import ru.bclib.client.models.ModelsHelper;
-import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.client.models.Patterns;
 
 import java.util.Optional;
 
-public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements IColorProvider {
+public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements CustomColorProvider {
 	public HydraluxPetalColoredBlock(FabricBlockSettings settings) {
 		super(settings);
 	}

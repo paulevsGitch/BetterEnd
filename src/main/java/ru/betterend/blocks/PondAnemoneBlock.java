@@ -23,7 +23,12 @@ public class PondAnemoneBlock extends EndUnderwaterPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
 	
 	public PondAnemoneBlock() {
-		super(FabricBlockSettings.of(Material.WATER_PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).luminance(13).sound(SoundType.CORAL_BLOCK).noCollission());
+		super(FabricBlockSettings.of(Material.WATER_PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .luminance(13)
+								 .sound(SoundType.CORAL_BLOCK)
+								 .noCollission());
 	}
 	
 	@Override

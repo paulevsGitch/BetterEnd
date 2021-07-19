@@ -87,7 +87,16 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 			world.addAlwaysVisibleParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
 		}
 		if (random.nextInt(200) == 0) {
-			world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
+			world.playLocalSound(
+				pos.getX(),
+				pos.getY(),
+				pos.getZ(),
+				SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT,
+				SoundSource.BLOCKS,
+				0.2F + random.nextFloat() * 0.2F,
+				0.9F + random.nextFloat() * 0.15F,
+				false
+			);
 		}
 	}
 	
@@ -100,8 +109,28 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 				ServerLevel serverWorld = (ServerLevel) world;
 				
 				for (int i = 0; i < 2; ++i) {
-					serverWorld.sendParticles(ParticleTypes.SPLASH, (double) pos.getX() + world.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + world.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-					serverWorld.sendParticles(ParticleTypes.BUBBLE, (double) pos.getX() + world.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + world.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
+					serverWorld.sendParticles(
+						ParticleTypes.SPLASH,
+						(double) pos.getX() + world.random.nextDouble(),
+						(double) (pos.getY() + 1),
+						(double) pos.getZ() + world.random.nextDouble(),
+						1,
+						0.0D,
+						0.0D,
+						0.0D,
+						1.0D
+					);
+					serverWorld.sendParticles(
+						ParticleTypes.BUBBLE,
+						(double) pos.getX() + world.random.nextDouble(),
+						(double) (pos.getY() + 1),
+						(double) pos.getZ() + world.random.nextDouble(),
+						1,
+						0.0D,
+						0.01D,
+						0.0D,
+						0.2D
+					);
 				}
 			}
 		}

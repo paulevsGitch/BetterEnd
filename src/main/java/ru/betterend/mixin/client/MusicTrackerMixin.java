@@ -1,13 +1,11 @@
 package ru.betterend.mixin.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -52,7 +50,8 @@ public abstract class MusicTrackerMixin {
 					if (currentMusic instanceof AbstractSoundInstance) {
 						((AbstractSoundInstanceAccessor) currentMusic).setVolume(volume);
 					}
-					minecraft.getSoundManager().updateSourceVolume(currentMusic.getSource(), currentMusic.getVolume() * volume);
+					minecraft.getSoundManager()
+							 .updateSourceVolume(currentMusic.getSource(), currentMusic.getVolume() * volume);
 					long t = System.currentTimeMillis();
 					if (volume == 1 && time == 0) {
 						time = t;
@@ -91,7 +90,9 @@ public abstract class MusicTrackerMixin {
 	}
 	
 	private boolean be_shouldChangeSound(Music musicSound) {
-		return currentMusic != null && !musicSound.getEvent().getLocation().equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
+		return currentMusic != null && !musicSound.getEvent()
+												  .getLocation()
+												  .equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
 	}
 	
 	private boolean be_checkNullSound(Music musicSound) {

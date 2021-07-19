@@ -30,7 +30,8 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlockPos bigPos = growBig(world, pos);
 		if (bigPos != null) {
-			if (EndFeatures.GIGANTIC_AMARANITA.getFeature().place(new FeaturePlaceContext<>(world, null, random, bigPos, null))) {
+			if (EndFeatures.GIGANTIC_AMARANITA.getFeature()
+											  .place(new FeaturePlaceContext<>(world, null, random, bigPos, null))) {
 				replaceMushroom(world, bigPos);
 				replaceMushroom(world, bigPos.south());
 				replaceMushroom(world, bigPos.east());
@@ -60,7 +61,8 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 	}
 	
 	private boolean checkFrame(ServerLevel world, BlockPos pos) {
-		return world.getBlockState(pos).is(this) && world.getBlockState(pos.south()).is(this) && world.getBlockState(pos.east()).is(this) && world.getBlockState(pos.south().east()).is(this);
+		return world.getBlockState(pos).is(this) && world.getBlockState(pos.south()).is(this) && world.getBlockState(pos
+			.east()).is(this) && world.getBlockState(pos.south().east()).is(this);
 	}
 	
 	private void replaceMushroom(ServerLevel world, BlockPos pos) {

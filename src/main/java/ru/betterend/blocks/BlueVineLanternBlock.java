@@ -21,7 +21,10 @@ public class BlueVineLanternBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public BlueVineLanternBlock() {
-		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).luminance(15).sound(SoundType.WART_BLOCK));
+		super(FabricBlockSettings.of(Material.WOOD)
+								 .breakByTool(FabricToolTags.AXES)
+								 .luminance(15)
+								 .sound(SoundType.WART_BLOCK));
 		this.registerDefaultState(this.stateDefinition.any().setValue(NATURAL, false));
 	}
 	

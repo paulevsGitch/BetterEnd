@@ -36,7 +36,11 @@ import java.util.Objects;
 public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 	public final static String GROUP = "smithing";
 	public final static RecipeType<AnvilRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
-	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
+	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(
+		BetterEnd.MOD_ID,
+		GROUP,
+		new Serializer()
+	);
 	public final static ResourceLocation ID = BetterEnd.makeID(GROUP);
 	
 	private final ResourceLocation id;
@@ -119,7 +123,11 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
-		defaultedList.add(Ingredient.of(TagAPI.HAMMERS.getValues().stream().filter(hammer -> ((TieredItem) hammer).getTier().getLevel() >= toolLevel).map(ItemStack::new)));
+		defaultedList.add(Ingredient.of(TagAPI.HAMMERS.getValues()
+													  .stream()
+													  .filter(hammer -> ((TieredItem) hammer).getTier()
+																							 .getLevel() >= toolLevel)
+													  .map(ItemStack::new)));
 		defaultedList.add(input);
 		
 		return defaultedList;
@@ -151,7 +159,8 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		AnvilRecipe that = (AnvilRecipe) o;
-		return damage == that.damage && toolLevel == that.toolLevel && id.equals(that.id) && input.equals(that.input) && output.equals(that.output);
+		return damage == that.damage && toolLevel == that.toolLevel && id.equals(that.id) && input.equals(that.input) && output
+			.equals(that.output);
 	}
 	
 	@Override
@@ -260,7 +269,10 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 					BetterEnd.LOGGER.debug("Can't add Anvil recipe {}! Ingeredient or output not exists.", id);
 					return;
 				}
-				BCLRecipeManager.addRecipe(TYPE, new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage));
+				BCLRecipeManager.addRecipe(
+					TYPE,
+					new AnvilRecipe(id, input, output, inputCount, toolLevel, anvilLevel, damage)
+				);
 			}
 		}
 	}

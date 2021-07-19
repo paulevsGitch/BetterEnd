@@ -41,6 +41,7 @@ public class GuideBookItem extends ModelProviderItem {
 	
 	@Override
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag context) {
-		tooltip.add(LangUtil.getText("book.betterend", "subtitle").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+		tooltip.add(LangUtil.getText("book.betterend", "subtitle")
+							.withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 	}
 }

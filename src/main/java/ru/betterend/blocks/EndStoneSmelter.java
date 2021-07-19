@@ -49,7 +49,12 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	public static final String ID = "end_stone_smelter";
 	
 	public EndStoneSmelter() {
-		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY).luminance(state -> state.getValue(LIT) ? 15 : 0).hardness(4F).resistance(100F).requiresCorrectToolForDrops().sound(SoundType.STONE));
+		super(FabricBlockSettings.of(Material.STONE, MaterialColor.COLOR_GRAY)
+								 .luminance(state -> state.getValue(LIT) ? 15 : 0)
+								 .hardness(4F)
+								 .resistance(100F)
+								 .requiresCorrectToolForDrops()
+								 .sound(SoundType.STONE));
 		registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
 	}
 	
@@ -134,7 +139,16 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 			double y = pos.getY();
 			double z = pos.getZ() + 0.5D;
 			if (random.nextDouble() < 0.1D) {
-				world.playLocalSound(x, y, z, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+				world.playLocalSound(
+					x,
+					y,
+					z,
+					SoundEvents.BLASTFURNACE_FIRE_CRACKLE,
+					SoundSource.BLOCKS,
+					1.0F,
+					1.0F,
+					false
+				);
 			}
 			
 			Direction direction = state.getValue(FACING);
@@ -151,6 +165,10 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide() ? null : createTickerHelper(blockEntityType, EndBlockEntities.END_STONE_SMELTER, EndStoneSmelterBlockEntity::tick);
+		return level.isClientSide() ? null : createTickerHelper(
+			blockEntityType,
+			EndBlockEntities.END_STONE_SMELTER,
+			EndStoneSmelterBlockEntity::tick
+		);
 	}
 }

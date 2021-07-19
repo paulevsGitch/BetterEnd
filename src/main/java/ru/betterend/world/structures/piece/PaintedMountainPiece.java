@@ -87,7 +87,10 @@ public class PaintedMountainPiece extends MountainPiece {
 							maxY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
 							maxY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.9F;
 							maxY += center.getY();
-							float offset = (float) (noise1.eval(px * 0.07, pz * 0.07) * 5 + noise1.eval(px * 0.2, pz * 0.2) * 2 + 7);
+							float offset = (float) (noise1.eval(px * 0.07, pz * 0.07) * 5 + noise1.eval(
+								px * 0.2,
+								pz * 0.2
+							) * 2 + 7);
 							for (int y = minY - 1; y < maxY; y++) {
 								pos.setY(y);
 								int index = MHelper.floor((y + offset) * 0.65F) % slises.length;

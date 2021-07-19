@@ -19,8 +19,10 @@ import shadow.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 @Environment(EnvType.CLIENT)
 public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProvider, ArmorRenderingRegistry.TextureProvider {
 	//TODO: find new registry
-	private final static ResourceLocation FIRST_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_1.png");
-	private final static ResourceLocation SECOND_LAYER = new ResourceLocation("textures/models/armor/crystalite_layer_2.png");
+	private final static ResourceLocation FIRST_LAYER = new ResourceLocation(
+		"textures/models/armor/crystalite_layer_1.png");
+	private final static ResourceLocation SECOND_LAYER = new ResourceLocation(
+		"textures/models/armor/crystalite_layer_2.png");
 	private final static CrystaliteHelmetModel HELMET_MODEL = CrystaliteHelmetModel.createModel(null);
 	private final static CrystaliteChestplateModel CHEST_MODEL = CrystaliteChestplateModel.createRegularModel(null);
 	private final static CrystaliteChestplateModel CHEST_MODEL_SLIM = CrystaliteChestplateModel.createThinModel(null);
@@ -42,7 +44,8 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 				return HELMET_MODEL;
 			}
 			case CHEST: {
-				if (entity instanceof AbstractClientPlayer && ((AbstractClientPlayer) entity).getModelName().equals("slim")) {
+				if (entity instanceof AbstractClientPlayer && ((AbstractClientPlayer) entity).getModelName()
+																							 .equals("slim")) {
 					CHEST_MODEL_SLIM.copyPropertiesTo(defaultModel);
 					return CHEST_MODEL_SLIM;
 				}
@@ -63,7 +66,13 @@ public class CrystaliteArmorProvider implements ArmorRenderingRegistry.ModelProv
 	}
 	
 	public Iterable<Item> getRenderedItems() {
-		return Lists.newArrayList(EndItems.CRYSTALITE_HELMET, EndItems.CRYSTALITE_CHESTPLATE, EndItems.CRYSTALITE_ELYTRA, EndItems.CRYSTALITE_LEGGINGS, EndItems.CRYSTALITE_BOOTS);
+		return Lists.newArrayList(
+			EndItems.CRYSTALITE_HELMET,
+			EndItems.CRYSTALITE_CHESTPLATE,
+			EndItems.CRYSTALITE_ELYTRA,
+			EndItems.CRYSTALITE_LEGGINGS,
+			EndItems.CRYSTALITE_BOOTS
+		);
 	}
 	
 	private boolean isStackValid(ItemStack stack) {

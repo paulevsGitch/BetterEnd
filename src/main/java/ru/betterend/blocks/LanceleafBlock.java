@@ -42,7 +42,8 @@ public class LanceleafBlock extends EndPlantBlock {
 			return world.getBlockState(pos.below()).is(this);
 		}
 		else if (shape == PentaShape.BOTTOM) {
-			return world.getBlockState(pos.below()).is(EndBlocks.AMBER_MOSS) && world.getBlockState(pos.above()).is(this);
+			return world.getBlockState(pos.below()).is(EndBlocks.AMBER_MOSS) && world.getBlockState(pos.above())
+																					 .is(this);
 		}
 		else {
 			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
@@ -64,6 +65,7 @@ public class LanceleafBlock extends EndPlantBlock {
 		if (state.getValue(SHAPE) == PentaShape.BOTTOM) {
 			return Collections.singletonList(new ItemStack(EndBlocks.LANCELEAF_SEED));
 		}
-		return MHelper.RANDOM.nextBoolean() ? Collections.emptyList() : Collections.singletonList(new ItemStack(EndBlocks.LANCELEAF_SEED));
+		return MHelper.RANDOM.nextBoolean() ? Collections.emptyList() : Collections.singletonList(new ItemStack(
+			EndBlocks.LANCELEAF_SEED));
 	}
 }

@@ -38,7 +38,9 @@ public class SpireFeature extends DefaultFeature {
 		final WorldGenLevel world = featureConfig.level();
 		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		pos = getPosOnSurfaceWG(world, pos);
-		if (pos.getY() < 10 || !world.getBlockState(pos.below(3)).is(TagAPI.GEN_TERRAIN) || !world.getBlockState(pos.below(6)).is(TagAPI.GEN_TERRAIN)) {
+		if (pos.getY() < 10 || !world.getBlockState(pos.below(3))
+									 .is(TagAPI.GEN_TERRAIN) || !world.getBlockState(pos.below(6))
+																	  .is(TagAPI.GEN_TERRAIN)) {
 			return false;
 		}
 		
@@ -50,7 +52,11 @@ public class SpireFeature extends DefaultFeature {
 		}
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1)) * 3F + Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
+			return (float) (Math.abs(noise.eval(
+				vec.x() * 0.1,
+				vec.y() * 0.1,
+				vec.z() * 0.1
+			)) * 3F + Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
 		}).setSource(sdf);
 		final BlockPos center = pos;
 		List<BlockPos> support = Lists.newArrayList();
@@ -62,14 +68,18 @@ public class SpireFeature extends DefaultFeature {
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir()) {
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getUnderMaterial();
+				return world.getBiome(info.getPos())
+							.getGenerationSettings()
+							.getSurfaceBuilderConfig()
+							.getUnderMaterial();
 			}
 			return info.getState();
 		}).fillRecursive(world, center);
 		
 		support.forEach((bpos) -> {
 			if (BiomeAPI.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
-				EndFeatures.TENANEA_BUSH.getFeature().place(new FeaturePlaceContext<>(world, chunkGenerator, random, bpos, null));
+				EndFeatures.TENANEA_BUSH.getFeature()
+										.place(new FeaturePlaceContext<>(world, chunkGenerator, random, bpos, null));
 			}
 		});
 		
@@ -78,7 +88,8 @@ public class SpireFeature extends DefaultFeature {
 	
 	protected SDF addSegment(SDF sdf, float radius, Random random) {
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(Blocks.END_STONE);
-		SDF offseted = new SDFTranslate().setTranslate(0, radius + random.nextFloat() * 0.25F * radius, 0).setSource(sdf);
+		SDF offseted = new SDFTranslate().setTranslate(0, radius + random.nextFloat() * 0.25F * radius, 0)
+										 .setSource(sdf);
 		return new SDFSmoothUnion().setRadius(radius * 0.5F).setSourceA(sphere).setSourceB(offseted);
 	}
 	

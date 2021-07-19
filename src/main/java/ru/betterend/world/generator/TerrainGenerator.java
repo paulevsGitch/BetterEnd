@@ -46,8 +46,14 @@ public class TerrainGenerator {
 		mediumIslands.clearCache();
 		smallIslands.clearCache();
 		
-		double distortion1 = noise1.eval(x * 0.1, z * 0.1) * 20 + noise2.eval(x * 0.2, z * 0.2) * 10 + noise1.eval(x * 0.4, z * 0.4) * 5;
-		double distortion2 = noise2.eval(x * 0.1, z * 0.1) * 20 + noise1.eval(x * 0.2, z * 0.2) * 10 + noise2.eval(x * 0.4, z * 0.4) * 5;
+		double distortion1 = noise1.eval(x * 0.1, z * 0.1) * 20 + noise2.eval(
+			x * 0.2,
+			z * 0.2
+		) * 10 + noise1.eval(x * 0.4, z * 0.4) * 5;
+		double distortion2 = noise2.eval(x * 0.1, z * 0.1) * 20 + noise1.eval(
+			x * 0.2,
+			z * 0.2
+		) * 10 + noise2.eval(x * 0.4, z * 0.4) * 5;
 		double px = (double) x * SCALE_XZ + distortion1;
 		double pz = (double) z * SCALE_XZ + distortion2;
 		
@@ -123,8 +129,14 @@ public class TerrainGenerator {
 		double px = (x >> 1) + 0.5;
 		double pz = (z >> 1) + 0.5;
 		
-		double distortion1 = noise1.eval(px * 0.1, pz * 0.1) * 20 + noise2.eval(px * 0.2, pz * 0.2) * 10 + noise1.eval(px * 0.4, pz * 0.4) * 5;
-		double distortion2 = noise2.eval(px * 0.1, pz * 0.1) * 20 + noise1.eval(px * 0.2, pz * 0.2) * 10 + noise2.eval(px * 0.4, pz * 0.4) * 5;
+		double distortion1 = noise1.eval(px * 0.1, pz * 0.1) * 20 + noise2.eval(px * 0.2, pz * 0.2) * 10 + noise1.eval(
+			px * 0.4,
+			pz * 0.4
+		) * 5;
+		double distortion2 = noise2.eval(px * 0.1, pz * 0.1) * 20 + noise1.eval(px * 0.2, pz * 0.2) * 10 + noise2.eval(
+			px * 0.4,
+			pz * 0.4
+		) * 5;
 		px = px * SCALE_XZ + distortion1;
 		pz = pz * SCALE_XZ + distortion2;
 		
@@ -167,8 +179,14 @@ public class TerrainGenerator {
 		double px = (double) x / 8.0;
 		double pz = (double) z / 8.0;
 		
-		double distortion1 = noise1.eval(px * 0.1, pz * 0.1) * 20 + noise2.eval(px * 0.2, pz * 0.2) * 10 + noise1.eval(px * 0.4, pz * 0.4) * 5;
-		double distortion2 = noise2.eval(px * 0.1, pz * 0.1) * 20 + noise1.eval(px * 0.2, pz * 0.2) * 10 + noise2.eval(px * 0.4, pz * 0.4) * 5;
+		double distortion1 = noise1.eval(px * 0.1, pz * 0.1) * 20 + noise2.eval(px * 0.2, pz * 0.2) * 10 + noise1.eval(
+			px * 0.4,
+			pz * 0.4
+		) * 5;
+		double distortion2 = noise2.eval(px * 0.1, pz * 0.1) * 20 + noise1.eval(px * 0.2, pz * 0.2) * 10 + noise2.eval(
+			px * 0.4,
+			pz * 0.4
+		) * 5;
 		px = (double) x * SCALE_XZ + distortion1;
 		pz = (double) z * SCALE_XZ + distortion2;
 		
@@ -210,7 +228,7 @@ public class TerrainGenerator {
 				}
 			}
 		}
-		OFFS = pos.toArray(new Point[]{});
+		OFFS = pos.toArray(new Point[] {});
 		COEF = new float[coef.size()];
 		for (int i = 0; i < COEF.length; i++) {
 			COEF[i] = coef.get(i) / sum;

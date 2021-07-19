@@ -52,7 +52,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockState plant = info.getReturnValue();
 		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 			if (GeneratorOptions.changeChorusPlant()) {
-				info.setReturnValue(plant.setValue(VanillaBlockProperties.ROOTS, true).setValue(BlockStateProperties.DOWN, true));
+				info.setReturnValue(plant.setValue(VanillaBlockProperties.ROOTS, true)
+										 .setValue(BlockStateProperties.DOWN, true));
 			}
 			else {
 				info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
@@ -67,7 +68,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		if (plant.is(Blocks.CHORUS_PLANT)) {
 			if (blockGetter.getBlockState(blockPos.below()).is(TagAPI.END_GROUND)) {
 				if (GeneratorOptions.changeChorusPlant()) {
-					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true).setValue(VanillaBlockProperties.ROOTS, true));
+					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true)
+											 .setValue(VanillaBlockProperties.ROOTS, true));
 				}
 				else {
 					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
@@ -98,7 +100,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		if (plant.is(Blocks.CHORUS_PLANT)) {
 			if (world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 				if (GeneratorOptions.changeChorusPlant()) {
-					plant = plant.setValue(BlockStateProperties.DOWN, true).setValue(VanillaBlockProperties.ROOTS, true);
+					plant = plant.setValue(BlockStateProperties.DOWN, true)
+								 .setValue(VanillaBlockProperties.ROOTS, true);
 				}
 				else {
 					plant = plant.setValue(BlockStateProperties.DOWN, true);

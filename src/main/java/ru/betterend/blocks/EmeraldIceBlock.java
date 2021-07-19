@@ -21,15 +21,15 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.Nullable;
-import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.BlockModelProvider;
+import ru.bclib.interfaces.RenderLayerProvider;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class EmeraldIceBlock extends HalfTransparentBlock implements IRenderTyped, BlockModelProvider {
+public class EmeraldIceBlock extends HalfTransparentBlock implements RenderLayerProvider, BlockModelProvider {
 	public EmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.ICE));
 	}

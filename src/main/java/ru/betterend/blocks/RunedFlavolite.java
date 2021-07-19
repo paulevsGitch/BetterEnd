@@ -21,9 +21,14 @@ public class RunedFlavolite extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	
 	public RunedFlavolite(boolean unbreakable) {
-		super(FabricBlockSettings.copyOf(EndBlocks.FLAVOLITE.polished).strength(unbreakable ? -1 : 1, unbreakable ? Blocks.BEDROCK.getExplosionResistance() : Blocks.OBSIDIAN.getExplosionResistance()).luminance(state -> {
-			return state.getValue(ACTIVATED) ? 8 : 0;
-		}));
+		super(FabricBlockSettings.copyOf(EndBlocks.FLAVOLITE.polished)
+								 .strength(
+									 unbreakable ? -1 : 1,
+									 unbreakable ? Blocks.BEDROCK.getExplosionResistance() : Blocks.OBSIDIAN.getExplosionResistance()
+								 )
+								 .luminance(state -> {
+									 return state.getValue(ACTIVATED) ? 8 : 0;
+								 }));
 		this.registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));
 	}
 	

@@ -41,6 +41,7 @@ public class BulbVineBlock extends BaseVineBlock {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		boolean canPlace = super.canSurvive(state, world, pos);
-		return (state.is(this) && state.getValue(SHAPE) == TripleShape.BOTTOM) ? canPlace : canPlace && world.getBlockState(pos.below()).is(this);
+		return (state.is(this) && state.getValue(SHAPE) == TripleShape.BOTTOM) ? canPlace : canPlace && world.getBlockState(
+			pos.below()).is(this);
 	}
 }

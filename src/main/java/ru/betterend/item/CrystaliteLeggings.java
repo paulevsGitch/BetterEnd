@@ -13,6 +13,9 @@ public class CrystaliteLeggings extends CrystaliteArmor {
 	public CrystaliteLeggings() {
 		super(EquipmentSlot.LEGS, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
 		UUID uuid = ARMOR_MODIFIER_UUID_PER_SLOT[EquipmentSlot.LEGS.getIndex()];
-		addAttributeModifier(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Armor health boost", 4.0, AttributeModifier.Operation.ADDITION));
+		addAttributeModifier(
+			Attributes.MAX_HEALTH,
+			new AttributeModifier(uuid, "Armor health boost", 4.0, AttributeModifier.Operation.ADDITION)
+		);
 	}
 }

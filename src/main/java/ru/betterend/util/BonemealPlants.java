@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import ru.bclib.api.BonemealAPI;
-import ru.bclib.api.TagAPI;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
@@ -29,14 +28,33 @@ public class BonemealPlants {
 		BonemealAPI.addLandGrass(EndBlocks.TWISTED_UMBRELLA_MOSS, EndBlocks.JUNGLE_MOSS);
 		BonemealAPI.addLandGrass(EndBlocks.SMALL_JELLYSHROOM, EndBlocks.JUNGLE_MOSS, 0.1F);
 		
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.BLOOMING_COOKSONIA, EndBlocks.END_MOSS);
+		BonemealAPI.addLandGrass(
+			EndBiomes.GLOWING_GRASSLANDS.getID(),
+			EndBlocks.BLOOMING_COOKSONIA,
+			EndBlocks.END_MOSS
+		);
 		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.VAIOLUSH_FERN, EndBlocks.END_MOSS);
 		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.FRACTURN, EndBlocks.END_MOSS);
 		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.SALTEAGO, EndBlocks.END_MOSS);
 		
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.CREEPING_MOSS, EndBlocks.END_MOSS, 0.1F);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.UMBRELLA_MOSS, EndBlocks.END_MOSS, 0.1F);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.TWISTED_UMBRELLA_MOSS, EndBlocks.END_MOSS, 0.1F);
+		BonemealAPI.addLandGrass(
+			EndBiomes.GLOWING_GRASSLANDS.getID(),
+			EndBlocks.CREEPING_MOSS,
+			EndBlocks.END_MOSS,
+			0.1F
+		);
+		BonemealAPI.addLandGrass(
+			EndBiomes.GLOWING_GRASSLANDS.getID(),
+			EndBlocks.UMBRELLA_MOSS,
+			EndBlocks.END_MOSS,
+			0.1F
+		);
+		BonemealAPI.addLandGrass(
+			EndBiomes.GLOWING_GRASSLANDS.getID(),
+			EndBlocks.TWISTED_UMBRELLA_MOSS,
+			EndBlocks.END_MOSS,
+			0.1F
+		);
 		
 		BonemealAPI.addLandGrass(EndBlocks.ORANGO, EndBlocks.RUTISCUS);
 		BonemealAPI.addLandGrass(EndBlocks.AERIDIUM, EndBlocks.RUTISCUS, 0.2F);
@@ -47,8 +65,18 @@ public class BonemealPlants {
 		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.LAMELLARIUM, EndBlocks.RUTISCUS);
 		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.BOLUX_MUSHROOM, EndBlocks.RUTISCUS, 0.05F);
 		
-		BonemealAPI.addLandGrass(EndBlocks.GLOBULAGUS, EndBlocks.SANGNUM, EndBlocks.MOSSY_OBSIDIAN, EndBlocks.MOSSY_DRAGON_BONE);
-		BonemealAPI.addLandGrass(EndBlocks.CLAWFERN, EndBlocks.SANGNUM, EndBlocks.MOSSY_OBSIDIAN, EndBlocks.MOSSY_DRAGON_BONE);
+		BonemealAPI.addLandGrass(
+			EndBlocks.GLOBULAGUS,
+			EndBlocks.SANGNUM,
+			EndBlocks.MOSSY_OBSIDIAN,
+			EndBlocks.MOSSY_DRAGON_BONE
+		);
+		BonemealAPI.addLandGrass(
+			EndBlocks.CLAWFERN,
+			EndBlocks.SANGNUM,
+			EndBlocks.MOSSY_OBSIDIAN,
+			EndBlocks.MOSSY_DRAGON_BONE
+		);
 		BonemealAPI.addLandGrass(EndBlocks.SANGNUM, EndBlocks.SMALL_AMARANITA_MUSHROOM, 0.1F);
 		BonemealAPI.addLandGrass(EndBlocks.SMALL_AMARANITA_MUSHROOM, EndBlocks.MOSSY_OBSIDIAN, 0.1F);
 		BonemealAPI.addLandGrass(EndBlocks.SMALL_AMARANITA_MUSHROOM, EndBlocks.MOSSY_DRAGON_BONE, 0.1F);
@@ -86,7 +114,7 @@ public class BonemealPlants {
 		terrain.add(EndBlocks.SANDY_JADESTONE.stone);
 		terrain.add(EndBlocks.BRIMSTONE);
 		Block[] terrainBlocks = terrain.toArray(new Block[terrain.size()]);
-		for (Block charnia: charnias) {
+		for (Block charnia : charnias) {
 			BonemealAPI.addWaterGrass(charnia, terrainBlocks);
 		}
 	}

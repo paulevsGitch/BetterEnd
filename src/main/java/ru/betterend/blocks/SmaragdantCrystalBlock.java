@@ -8,6 +8,12 @@ import ru.betterend.blocks.basis.LitPillarBlock;
 
 public class SmaragdantCrystalBlock extends LitPillarBlock {
 	public SmaragdantCrystalBlock() {
-		super(FabricBlockSettings.of(Material.GLASS).breakByTool(FabricToolTags.PICKAXES).luminance(15).hardness(1F).resistance(1F).noOcclusion().sound(SoundType.AMETHYST));
+		super(FabricBlockSettings.of(Material.GLASS)
+								 .breakByTool(FabricToolTags.PICKAXES)
+								 .luminance(15)
+								 .hardness(1F)
+								 .resistance(1F)
+								 .noOcclusion()
+								 .sound(SoundType.AMETHYST));
 	}
 }

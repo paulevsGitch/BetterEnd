@@ -93,7 +93,10 @@ public class PlayerListMixin {
 			CompoundTag compoundTag = this.load(serverPlayer);
 			ResourceKey<Level> var23;
 			if (compoundTag != null) {
-				DataResult<ResourceKey<Level>> var10000 = DimensionType.parseLegacy(new Dynamic<Tag>(NbtOps.INSTANCE, compoundTag.get("Dimension")));
+				DataResult<ResourceKey<Level>> var10000 = DimensionType.parseLegacy(new Dynamic<Tag>(
+					NbtOps.INSTANCE,
+					compoundTag.get("Dimension")
+				));
 				Logger var10001 = LOGGER;
 				Objects.requireNonNull(var10001);
 				var23 = (ResourceKey<Level>) var10000.resultOrPartial(var10001::error).orElse(Level.END);
@@ -120,21 +123,57 @@ public class PlayerListMixin {
 				string2 = connection.getRemoteAddress().toString();
 			}
 			
-			LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", serverPlayer.getName().getString(), string2, serverPlayer.getId(), serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ());
+			LOGGER.info(
+				"{}[{}] logged in with entity id {} at ({}, {}, {})",
+				serverPlayer.getName().getString(),
+				string2,
+				serverPlayer.getId(),
+				serverPlayer.getX(),
+				serverPlayer.getY(),
+				serverPlayer.getZ()
+			);
 			LevelData worldProperties = serverLevel3.getLevelData();
 			serverPlayer.loadGameTypes(compoundTag);
 			//this.updatePlayerGameMode(serverPlayer, (ServerPlayer) null, serverLevel3);
-			ServerGamePacketListenerImpl serverPlayNetworkHandler = new ServerGamePacketListenerImpl(this.server, connection, serverPlayer);
+			ServerGamePacketListenerImpl serverPlayNetworkHandler = new ServerGamePacketListenerImpl(
+				this.server,
+				connection,
+				serverPlayer
+			);
 			GameRules gameRules = serverLevel3.getGameRules();
 			boolean bl = gameRules.getBoolean(GameRules.RULE_DO_IMMEDIATE_RESPAWN);
 			boolean bl2 = gameRules.getBoolean(GameRules.RULE_REDUCEDDEBUGINFO);
-			serverPlayNetworkHandler.send(new ClientboundLoginPacket(serverPlayer.getId(), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), BiomeManager.obfuscateSeed(serverLevel3.getSeed()), worldProperties.isHardcore(), this.server.levelKeys(), this.registryHolder, serverLevel3.dimensionType(), serverLevel3.dimension(), this.getMaxPlayers(), this.viewDistance, bl2, !bl, serverLevel3.isDebug(), serverLevel3.isFlat()));
-			serverPlayNetworkHandler.send(new ClientboundCustomPayloadPacket(ClientboundCustomPayloadPacket.BRAND, (new FriendlyByteBuf(Unpooled.buffer())).writeUtf(this.getServer().getServerModName())));
-			serverPlayNetworkHandler.send(new ClientboundChangeDifficultyPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
+			serverPlayNetworkHandler.send(new ClientboundLoginPacket(
+				serverPlayer.getId(),
+				serverPlayer.gameMode.getGameModeForPlayer(),
+				serverPlayer.gameMode.getPreviousGameModeForPlayer(),
+				BiomeManager.obfuscateSeed(serverLevel3.getSeed()),
+				worldProperties.isHardcore(),
+				this.server.levelKeys(),
+				this.registryHolder,
+				serverLevel3.dimensionType(),
+				serverLevel3.dimension(),
+				this.getMaxPlayers(),
+				this.viewDistance,
+				bl2,
+				!bl,
+				serverLevel3.isDebug(),
+				serverLevel3.isFlat()
+			));
+			serverPlayNetworkHandler.send(new ClientboundCustomPayloadPacket(
+				ClientboundCustomPayloadPacket.BRAND,
+				(new FriendlyByteBuf(Unpooled.buffer())).writeUtf(this.getServer().getServerModName())
+			));
+			serverPlayNetworkHandler.send(new ClientboundChangeDifficultyPacket(
+				worldProperties.getDifficulty(),
+				worldProperties.isDifficultyLocked()
+			));
 			serverPlayNetworkHandler.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
 			serverPlayNetworkHandler.send(new ClientboundSetCarriedItemPacket(serverPlayer.getInventory().selected));
-			serverPlayNetworkHandler.send(new ClientboundUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
-			serverPlayNetworkHandler.send(new ClientboundUpdateTagsPacket(this.server.getTags().serializeToNetwork(this.registryHolder)));
+			serverPlayNetworkHandler.send(new ClientboundUpdateRecipesPacket(this.server.getRecipeManager()
+																						.getRecipes()));
+			serverPlayNetworkHandler.send(new ClientboundUpdateTagsPacket(this.server.getTags()
+																					 .serializeToNetwork(this.registryHolder)));
 			this.sendPlayerPermissionLevel(serverPlayer);
 			serverPlayer.getStats().markAllDirty();
 			serverPlayer.getRecipeBook().sendInitialRecipeBook(serverPlayer);
@@ -142,38 +181,68 @@ public class PlayerListMixin {
 			this.server.invalidateStatus();
 			TranslatableComponent mutableText2;
 			if (serverPlayer.getGameProfile().getName().equalsIgnoreCase(string)) {
-				mutableText2 = new TranslatableComponent("multiplayer.player.joined", new Object[]{serverPlayer.getDisplayName()});
+				mutableText2 = new TranslatableComponent(
+					"multiplayer.player.joined",
+					new Object[] {serverPlayer.getDisplayName()}
+				);
 			}
 			else {
-				mutableText2 = new TranslatableComponent("multiplayer.player.joined.renamed", new Object[]{serverPlayer.getDisplayName(), string});
+				mutableText2 = new TranslatableComponent(
+					"multiplayer.player.joined.renamed",
+					new Object[] {serverPlayer.getDisplayName(), string}
+				);
 			}
 			
 			this.broadcastMessage(mutableText2.withStyle(ChatFormatting.YELLOW), ChatType.SYSTEM, Util.NIL_UUID);
-			serverPlayNetworkHandler.teleport(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), serverPlayer.getYRot(), serverPlayer.getXRot());
+			serverPlayNetworkHandler.teleport(
+				serverPlayer.getX(),
+				serverPlayer.getY(),
+				serverPlayer.getZ(),
+				serverPlayer.getYRot(),
+				serverPlayer.getXRot()
+			);
 			this.players.add(serverPlayer);
 			this.playersByUUID.put(serverPlayer.getUUID(), serverPlayer);
-			this.broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[]{serverPlayer}));
+			this.broadcastAll(new ClientboundPlayerInfoPacket(
+				ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
+				new ServerPlayer[] {serverPlayer}
+			));
 			
 			for (ServerPlayer player : this.players) {
-				serverPlayer.connection.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, new ServerPlayer[]{(ServerPlayer) player}));
+				serverPlayer.connection.send(new ClientboundPlayerInfoPacket(
+					ClientboundPlayerInfoPacket.Action.ADD_PLAYER,
+					new ServerPlayer[] {(ServerPlayer) player}
+				));
 			}
 			
 			serverLevel3.addNewPlayer(serverPlayer);
 			this.server.getCustomBossEvents().onPlayerConnect(serverPlayer);
 			this.sendLevelInfo(serverPlayer, serverLevel3);
 			if (!this.server.getResourcePack().isEmpty()) {
-				serverPlayer.sendTexturePack(this.server.getResourcePack(), this.server.getResourcePackHash(), this.server.isResourcePackRequired(), this.server.getResourcePackPrompt());
+				serverPlayer.sendTexturePack(
+					this.server.getResourcePack(),
+					this.server.getResourcePackHash(),
+					this.server.isResourcePackRequired(),
+					this.server.getResourcePackPrompt()
+				);
 			}
 			
 			for (MobEffectInstance statusEffectInstance : serverPlayer.getActiveEffects()) {
-				serverPlayNetworkHandler.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), statusEffectInstance));
+				serverPlayNetworkHandler.send(new ClientboundUpdateMobEffectPacket(
+					serverPlayer.getId(),
+					statusEffectInstance
+				));
 			}
 			
 			if (compoundTag != null && compoundTag.contains("RootVehicle", 10)) {
 				CompoundTag compoundTag2 = compoundTag.getCompound("RootVehicle");
-				Entity entity = EntityType.loadEntityRecursive(compoundTag2.getCompound("Entity"), serverLevel3, (vehicle) -> {
-					return !serverLevel3.addWithUUID(vehicle) ? null : vehicle;
-				});
+				Entity entity = EntityType.loadEntityRecursive(
+					compoundTag2.getCompound("Entity"),
+					serverLevel3,
+					(vehicle) -> {
+						return !serverLevel3.addWithUUID(vehicle) ? null : vehicle;
+					}
+				);
 				if (entity != null) {
 					UUID uUID2;
 					if (compoundTag2.hasUUID("Attach")) {

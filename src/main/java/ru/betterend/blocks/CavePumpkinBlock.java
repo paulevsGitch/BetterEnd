@@ -16,13 +16,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.Collections;
 import java.util.List;
 
-public class CavePumpkinBlock extends BaseBlockNotFull implements IRenderTyped {
+public class CavePumpkinBlock extends BaseBlockNotFull implements RenderLayerProvider {
 	public static final BooleanProperty SMALL = BlockProperties.SMALL;
 	private static final VoxelShape SHAPE_SMALL;
 	private static final VoxelShape SHAPE_BIG;
@@ -49,7 +49,8 @@ public class CavePumpkinBlock extends BaseBlockNotFull implements IRenderTyped {
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		return state.getValue(SMALL) ? Collections.singletonList(new ItemStack(EndBlocks.CAVE_PUMPKIN_SEED)) : Collections.singletonList(new ItemStack(this));
+		return state.getValue(SMALL) ? Collections.singletonList(new ItemStack(EndBlocks.CAVE_PUMPKIN_SEED)) : Collections
+			.singletonList(new ItemStack(this));
 	}
 	
 	static {

@@ -29,8 +29,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.dimension.DimensionType;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IColorProvider;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.CustomColorProvider;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.betterend.interfaces.TeleportingEntity;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndPortals;
@@ -40,11 +40,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
-public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, IColorProvider {
+public class EndPortalBlock extends NetherPortalBlock implements RenderLayerProvider, CustomColorProvider {
 	public static final IntegerProperty PORTAL = EndBlockProperties.PORTAL;
 	
 	public EndPortalBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL).resistance(Blocks.BEDROCK.getExplosionResistance()).luminance(15));
+		super(FabricBlockSettings.copyOf(Blocks.NETHER_PORTAL)
+								 .resistance(Blocks.BEDROCK.getExplosionResistance())
+								 .luminance(15));
 	}
 	
 	@Override
@@ -57,7 +59,16 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, I
 	@Environment(EnvType.CLIENT)
 	public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
 		if (random.nextInt(100) == 0) {
-			world.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
+			world.playLocalSound(
+				pos.getX() + 0.5D,
+				pos.getY() + 0.5D,
+				pos.getZ() + 0.5D,
+				SoundEvents.PORTAL_AMBIENT,
+				SoundSource.BLOCKS,
+				0.5F,
+				random.nextFloat() * 0.4F + 0.8F,
+				false
+			);
 		}
 		
 		double x = pos.getX() + random.nextDouble();
@@ -95,7 +106,14 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, I
 		BlockPos exitPos = findExitPos(currentWorld, destination, pos, entity);
 		if (exitPos == null) return;
 		if (entity instanceof ServerPlayer && ((ServerPlayer) entity).isCreative()) {
-			((ServerPlayer) entity).teleportTo(destination, exitPos.getX() + 0.5, exitPos.getY(), exitPos.getZ() + 0.5, entity.getYRot(), entity.getXRot());
+			((ServerPlayer) entity).teleportTo(
+				destination,
+				exitPos.getX() + 0.5,
+				exitPos.getY(),
+				exitPos.getZ() + 0.5,
+				entity.getYRot(),
+				entity.getXRot()
+			);
 		}
 		else {
 			((TeleportingEntity) entity).be_setExitPos(exitPos);
@@ -115,17 +133,28 @@ public class EndPortalBlock extends NetherPortalBlock implements IRenderTyped, I
 	
 	private BlockPos findExitPos(ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos, Entity entity) {
 		if (targetWorld == null) return null;
-		Registry<DimensionType> registry = targetWorld.registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
+		Registry<DimensionType> registry = targetWorld.registryAccess()
+													  .registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
 		ResourceLocation targetWorldId = targetWorld.dimension().location();
 		ResourceLocation currentWorldId = currentWorld.dimension().location();
 		double targetMultiplier = Objects.requireNonNull(registry.get(targetWorldId)).coordinateScale();
 		double currentMultiplier = Objects.requireNonNull(registry.get(currentWorldId)).coordinateScale();
 		double multiplier = targetMultiplier > currentMultiplier ? 1.0 / targetMultiplier : currentMultiplier;
-		MutableBlockPos basePos = currentPos.mutable().set(currentPos.getX() * multiplier, currentPos.getY(), currentPos.getZ() * multiplier);
+		MutableBlockPos basePos = currentPos.mutable()
+											.set(currentPos.getX() * multiplier,
+												currentPos.getY(),
+												currentPos.getZ() * multiplier
+											);
 		MutableBlockPos checkPos = basePos.mutable();
 		BlockState currentState = currentWorld.getBlockState(currentPos);
 		int radius = (EternalRitual.SEARCH_RADIUS >> 4) + 1;
-		checkPos = EternalRitual.findBlockPos(targetWorld, checkPos, radius, this, state -> state.is(this) && state.getValue(PORTAL).equals(currentState.getValue(PORTAL)));
+		checkPos = EternalRitual.findBlockPos(
+			targetWorld,
+			checkPos,
+			radius,
+			this,
+			state -> state.is(this) && state.getValue(PORTAL).equals(currentState.getValue(PORTAL))
+		);
 		if (checkPos != null) {
 			BlockState checkState = targetWorld.getBlockState(checkPos);
 			Axis axis = checkState.getValue(AXIS);

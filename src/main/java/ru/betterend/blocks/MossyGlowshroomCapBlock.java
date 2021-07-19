@@ -21,7 +21,11 @@ public class MossyGlowshroomCapBlock extends BaseBlock {
 	}
 	
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-		return this.defaultBlockState().setValue(TRANSITION, EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(ctx.getLevel().getBlockState(ctx.getClickedPos().below())));
+		return this.defaultBlockState()
+				   .setValue(
+					   TRANSITION,
+					   EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(ctx.getLevel().getBlockState(ctx.getClickedPos().below()))
+				   );
 	}
 	
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

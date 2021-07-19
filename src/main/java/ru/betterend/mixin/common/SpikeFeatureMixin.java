@@ -52,7 +52,8 @@ public class SpikeFeatureMixin {
 			String pillarID = String.format("%d_%d", x, z);
 			CompoundTag pillar = WorldDataAPI.getCompoundTag(BetterEnd.MOD_ID, "pillars");
 			boolean haveValue = pillar.contains(pillarID);
-			minY = haveValue ? pillar.getInt(pillarID) : world.getChunk(x >> 4, z >> 4).getHeight(Types.WORLD_SURFACE, x & 15, z);
+			minY = haveValue ? pillar.getInt(pillarID) : world.getChunk(x >> 4, z >> 4)
+															  .getHeight(Types.WORLD_SURFACE, x & 15, z);
 			if (!haveValue) {
 				pillar.putInt(pillarID, minY);
 				WorldDataAPI.saveFile(BetterEnd.MOD_ID);
@@ -68,7 +69,8 @@ public class SpikeFeatureMixin {
 		if (GeneratorOptions.replacePillars() && be_radiusInRange(radius)) {
 			radius--;
 			StructureTemplate base = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_base_" + radius));
-			StructureTemplate top = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_top_" + radius + (spike.isGuarded() ? "_cage" : "")));
+			StructureTemplate top = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_top_" + radius + (spike
+				.isGuarded() ? "_cage" : "")));
 			Vec3i side = base.getSize();
 			BlockPos pos1 = new BlockPos(x - (side.getX() >> 1), minY - 3, z - (side.getZ() >> 1));
 			minY = pos1.getY() + side.getY();
@@ -92,7 +94,8 @@ public class SpikeFeatureMixin {
 						for (int py = minY; py < maxY; py++) {
 							mut.setY(py);
 							if (world.getBlockState(mut).getMaterial().isReplaceable()) {
-								if ((px == radius || px == -radius || pz == radius || pz == -radius) && random.nextInt(24) == 0) {
+								if ((px == radius || px == -radius || pz == radius || pz == -radius) && random.nextInt(
+									24) == 0) {
 									BlocksHelper.setWithoutUpdate(world, mut, Blocks.CRYING_OBSIDIAN);
 								}
 								else {
@@ -145,8 +148,20 @@ public class SpikeFeatureMixin {
 							if (bl || bl2 || bl3) {
 								boolean bl4 = px == -2 || px == 2 || bl3;
 								boolean bl5 = pz == -2 || pz == 2 || bl3;
-								BlockState blockState = (BlockState) ((BlockState) ((BlockState) ((BlockState) Blocks.IRON_BARS.defaultBlockState().setValue(IronBarsBlock.NORTH, bl4 && pz != -2)).setValue(IronBarsBlock.SOUTH, bl4 && pz != 2)).setValue(IronBarsBlock.WEST, bl5 && px != -2)).setValue(IronBarsBlock.EAST, bl5 && px != 2);
-								BlocksHelper.setWithoutUpdate(world, mut.set(spike.getCenterX() + px, maxY + py, spike.getCenterZ() + pz), blockState);
+								BlockState blockState = (BlockState) ((BlockState) ((BlockState) ((BlockState) Blocks.IRON_BARS
+									.defaultBlockState()
+									.setValue(IronBarsBlock.NORTH, bl4 && pz != -2)).setValue(
+									IronBarsBlock.SOUTH,
+									bl4 && pz != 2
+								)).setValue(IronBarsBlock.WEST, bl5 && px != -2)).setValue(
+									IronBarsBlock.EAST,
+									bl5 && px != 2
+								);
+								BlocksHelper.setWithoutUpdate(
+									world,
+									mut.set(spike.getCenterX() + px, maxY + py, spike.getCenterZ() + pz),
+									blockState
+								);
 							}
 						}
 					}

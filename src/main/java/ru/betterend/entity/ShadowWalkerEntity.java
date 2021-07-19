@@ -44,15 +44,44 @@ public class ShadowWalkerEntity extends Monster {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0).add(Attributes.MOVEMENT_SPEED, 0.15).add(Attributes.ATTACK_DAMAGE, 4.5).add(Attributes.ARMOR, 2.0).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+		return Monster.createMonsterAttributes()
+					  .add(Attributes.FOLLOW_RANGE, 35.0)
+					  .add(Attributes.MOVEMENT_SPEED, 0.15)
+					  .add(Attributes.ATTACK_DAMAGE, 4.5)
+					  .add(Attributes.ARMOR, 2.0)
+					  .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		level.addParticle(ParticleTypes.ASH, getX() + random.nextGaussian() * 0.2, getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
-		level.addParticle(ParticleTypes.SMOKE, getX() + random.nextGaussian() * 0.2, getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
-		level.addParticle(ParticleTypes.ENTITY_EFFECT, getX() + random.nextGaussian() * 0.2, getY() + random.nextGaussian() * 0.5 + 1, getZ() + random.nextGaussian() * 0.2, 0, 0, 0);
+		level.addParticle(
+			ParticleTypes.ASH,
+			getX() + random.nextGaussian() * 0.2,
+			getY() + random.nextGaussian() * 0.5 + 1,
+			getZ() + random.nextGaussian() * 0.2,
+			0,
+			0,
+			0
+		);
+		level.addParticle(
+			ParticleTypes.SMOKE,
+			getX() + random.nextGaussian() * 0.2,
+			getY() + random.nextGaussian() * 0.5 + 1,
+			getZ() + random.nextGaussian() * 0.2,
+			0,
+			0,
+			0
+		);
+		level.addParticle(
+			ParticleTypes.ENTITY_EFFECT,
+			getX() + random.nextGaussian() * 0.2,
+			getY() + random.nextGaussian() * 0.5 + 1,
+			getZ() + random.nextGaussian() * 0.2,
+			0,
+			0,
+			0
+		);
 	}
 	
 	@Override

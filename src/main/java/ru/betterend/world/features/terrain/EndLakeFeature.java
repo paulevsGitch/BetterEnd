@@ -109,7 +109,11 @@ public class EndLakeFeature extends DefaultFeature {
 							size *= 0.8;
 							add = 5;
 						}
-						double r = (add * 1.8 + radius * (NOISE.eval(x * 0.2, y * 0.2, z * 0.2) * 0.25 + 0.75)) - 1.0 / size;
+						double r = (add * 1.8 + radius * (NOISE.eval(
+							x * 0.2,
+							y * 0.2,
+							z * 0.2
+						) * 0.25 + 0.75)) - 1.0 / size;
 						if (r > 0) {
 							r *= r;
 							if (x2 + z2 <= r) {
@@ -119,12 +123,23 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
-									state = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+									state = world.getBiome(pos)
+												 .getGenerationSettings()
+												 .getSurfaceBuilderConfig()
+												 .getTopMaterial();
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
-										BlocksHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState());
+										BlocksHelper.setWithoutUpdate(
+											world,
+											pos,
+											random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState()
+										);
 									else
-										BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
+										BlocksHelper.setWithoutUpdate(
+											world,
+											pos,
+											EndBlocks.ENDSTONE_DUST.defaultBlockState()
+										);
 								}
 							}
 						}
@@ -169,7 +184,8 @@ public class EndLakeFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
 							}
 							pos = POS.above();
-							while (canReplace(state = world.getBlockState(pos)) && !state.isAir() && state.getFluidState().isEmpty()) {
+							while (canReplace(state = world.getBlockState(pos)) && !state.isAir() && state.getFluidState()
+																										  .isEmpty()) {
 								BlocksHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? WATER : AIR);
 								pos = pos.above();
 							}
@@ -177,8 +193,15 @@ public class EndLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.isEmptyBlock(POS.above())) {
-								state = world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-								BlocksHelper.setWithoutUpdate(world, POS, random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState());
+								state = world.getBiome(POS)
+											 .getGenerationSettings()
+											 .getSurfaceBuilderConfig()
+											 .getTopMaterial();
+								BlocksHelper.setWithoutUpdate(
+									world,
+									POS,
+									random.nextBoolean() ? state : EndBlocks.ENDSTONE_DUST.defaultBlockState()
+								);
 								BlocksHelper.setWithoutUpdate(world, POS.below(), END_STONE);
 							}
 							else {
@@ -191,12 +214,21 @@ public class EndLakeFeature extends DefaultFeature {
 			}
 		}
 		
-		BlockFixer.fixBlocks(world, new BlockPos(minX - 2, waterLevel - 2, minZ - 2), new BlockPos(maxX + 2, blockPos.getY() + 20, maxZ + 2));
+		BlockFixer.fixBlocks(
+			world,
+			new BlockPos(minX - 2, waterLevel - 2, minZ - 2),
+			new BlockPos(maxX + 2, blockPos.getY() + 20, maxZ + 2)
+		);
 		
 		return true;
 	}
 	
 	private boolean canReplace(BlockState state) {
-		return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().equals(Material.WATER_PLANT);
+		return state.getMaterial()
+					.isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial()
+																												  .equals(
+																													  Material.PLANT) || state
+			.getMaterial()
+			.equals(Material.WATER_PLANT);
 	}
 }

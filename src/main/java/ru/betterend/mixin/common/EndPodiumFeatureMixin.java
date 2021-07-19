@@ -54,14 +54,21 @@ public class EndPodiumFeatureMixin {
 	private FeaturePlaceContext<NoneFeatureConfiguration> be_setPosOnGround(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
 		WorldGenLevel world = featurePlaceContext.level();
 		BlockPos pos = be_updatePos(featurePlaceContext.origin(), world);
-		return new FeaturePlaceContext<NoneFeatureConfiguration>(world, featurePlaceContext.chunkGenerator(), featurePlaceContext.random(), pos, featurePlaceContext.config());
+		return new FeaturePlaceContext<NoneFeatureConfiguration>(
+			world,
+			featurePlaceContext.chunkGenerator(),
+			featurePlaceContext.random(),
+			pos,
+			featurePlaceContext.config()
+		);
 	}
 	
 	private BlockPos be_updatePos(BlockPos blockPos, WorldGenLevel world) {
 		if (GeneratorOptions.useNewGenerator()) {
 			BlockPos pos = GeneratorOptions.getPortalPos();
 			if (pos.equals(BlockPos.ZERO)) {
-				int y = world.getChunk(0, 0, ChunkStatus.FULL).getHeight(Types.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
+				int y = world.getChunk(0, 0, ChunkStatus.FULL)
+							 .getHeight(Types.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
 				if (y < 1) {
 					y = 65;
 				}

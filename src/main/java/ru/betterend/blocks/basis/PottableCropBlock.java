@@ -15,7 +15,7 @@ public class PottableCropBlock extends BaseCropBlock implements PottablePlant {
 	
 	@Override
 	public boolean canPlantOn(Block block) {
-		for (Block ter: terrain) {
+		for (Block ter : terrain) {
 			if (block == ter) {
 				return true;
 			}

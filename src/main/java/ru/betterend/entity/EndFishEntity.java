@@ -34,8 +34,14 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	public static final int VARIANTS_NORMAL = 5;
 	public static final int VARIANTS_SULPHUR = 3;
 	public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
-	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(EndFishEntity.class, EntityDataSerializers.BYTE);
-	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(EndFishEntity.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
+		EndFishEntity.class,
+		EntityDataSerializers.BYTE
+	);
+	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(
+		EndFishEntity.class,
+		EntityDataSerializers.BYTE
+	);
 	
 	public EndFishEntity(EntityType<EndFishEntity> entityType, Level world) {
 		super(entityType, world);
@@ -128,7 +134,10 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0).add(Attributes.FOLLOW_RANGE, 16.0).add(Attributes.MOVEMENT_SPEED, 0.75);
+		return LivingEntity.createLivingAttributes()
+						   .add(Attributes.MAX_HEALTH, 2.0)
+						   .add(Attributes.FOLLOW_RANGE, 16.0)
+						   .add(Attributes.MOVEMENT_SPEED, 0.75);
 	}
 	
 	public int getVariant() {

@@ -18,9 +18,12 @@ public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDispl
 	private final AnvilRecipe recipe;
 	
 	public REIAnvilDisplay(AnvilRecipe recipe) {
-		super(EntryIngredients.ofIngredients(recipe.getIngredients()), Collections.singletonList(EntryIngredients.of(recipe.getResultItem())));
+		super(
+			EntryIngredients.ofIngredients(recipe.getIngredients()),
+			Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
+		);
 		this.recipe = recipe;
-
+		
 		inputs.get(1).forEach(entryStack -> {
 			if (entryStack.getValue() instanceof ItemStack itemStack) {
 				itemStack.setCount(recipe.getInputCount());

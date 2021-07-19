@@ -68,7 +68,8 @@ public class CrystalMountainPiece extends MountainPiece {
 						continue;
 					}
 					pos.setY(minY);
-					while (!chunk.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(pos.below()).is(Blocks.CAVE_AIR)) {
+					while (!chunk.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(
+						pos.below()).is(Blocks.CAVE_AIR)) {
 						pos.setY(pos.getY() - 1);
 					}
 					minY = pos.getY();
@@ -81,10 +82,18 @@ public class CrystalMountainPiece extends MountainPiece {
 							maxY += center.getY();
 							int maxYI = (int) (maxY);
 							int cover = maxYI - 1;
-							boolean needCover = (noise1.eval(px * 0.1, pz * 0.1) + MHelper.randRange(-0.4, 0.4, random) - (center.getY() + 14) * 0.1) > 0;
+							boolean needCover = (noise1.eval(px * 0.1, pz * 0.1) + MHelper.randRange(
+								-0.4,
+								0.4,
+								random
+							) - (center.getY() + 14) * 0.1) > 0;
 							for (int y = minY - 1; y < maxYI; y++) {
 								pos.setY(y);
-								chunk.setBlockState(pos, needCover && y == cover ? top : Blocks.END_STONE.defaultBlockState(), false);
+								chunk.setBlockState(
+									pos,
+									needCover && y == cover ? top : Blocks.END_STONE.defaultBlockState(),
+									false
+								);
 							}
 						}
 					}

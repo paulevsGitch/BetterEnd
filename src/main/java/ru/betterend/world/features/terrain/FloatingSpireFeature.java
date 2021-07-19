@@ -28,7 +28,11 @@ public class FloatingSpireFeature extends SpireFeature {
 		final WorldGenLevel world = featureConfig.level();
 		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		int minY = getYOnSurface(world, pos.getX(), pos.getZ());
-		int y = minY > 57 ? MHelper.floor(MHelper.randRange(minY, minY * 2, random) * 0.5F + 32) : MHelper.randRange(64, 192, random);
+		int y = minY > 57 ? MHelper.floor(MHelper.randRange(minY, minY * 2, random) * 0.5F + 32) : MHelper.randRange(
+			64,
+			192,
+			random
+		);
 		pos = new BlockPos(pos.getX(), y, pos.getZ());
 		
 		SDF sdf = new SDFSphere().setRadius(MHelper.randRange(2, 3, random)).setBlock(Blocks.END_STONE);
@@ -45,7 +49,11 @@ public class FloatingSpireFeature extends SpireFeature {
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1)) * 3F + Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
+			return (float) (Math.abs(noise.eval(
+				vec.x() * 0.1,
+				vec.y() * 0.1,
+				vec.z() * 0.1
+			)) * 3F + Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
 		}).setSource(sdf);
 		final BlockPos center = pos;
 		List<BlockPos> support = Lists.newArrayList();
@@ -57,7 +65,10 @@ public class FloatingSpireFeature extends SpireFeature {
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir()) {
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getUnderMaterial();
+				return world.getBiome(info.getPos())
+							.getGenerationSettings()
+							.getSurfaceBuilderConfig()
+							.getUnderMaterial();
 			}
 			return info.getState();
 		});
@@ -65,7 +76,8 @@ public class FloatingSpireFeature extends SpireFeature {
 		
 		support.forEach((bpos) -> {
 			if (BiomeAPI.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
-				EndFeatures.TENANEA_BUSH.getFeature().place(new FeaturePlaceContext<>(world, chunkGenerator, random, bpos, null));
+				EndFeatures.TENANEA_BUSH.getFeature()
+										.place(new FeaturePlaceContext<>(world, chunkGenerator, random, bpos, null));
 			}
 		});
 		

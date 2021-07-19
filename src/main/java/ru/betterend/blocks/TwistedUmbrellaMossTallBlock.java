@@ -17,7 +17,13 @@ public class TwistedUmbrellaMossTallBlock extends BaseDoublePlantBlock {
 	
 	@Override
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
-		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(EndBlocks.TWISTED_UMBRELLA_MOSS));
+		ItemEntity item = new ItemEntity(
+			world,
+			pos.getX() + 0.5,
+			pos.getY() + 0.5,
+			pos.getZ() + 0.5,
+			new ItemStack(EndBlocks.TWISTED_UMBRELLA_MOSS)
+		);
 		world.addFreshEntity(item);
 	}
 	

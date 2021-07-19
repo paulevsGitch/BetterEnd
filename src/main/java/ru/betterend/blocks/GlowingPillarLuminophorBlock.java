@@ -21,7 +21,12 @@ public class GlowingPillarLuminophorBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;
 	
 	public GlowingPillarLuminophorBlock() {
-		super(FabricBlockSettings.of(Material.LEAVES).materialColor(MaterialColor.COLOR_ORANGE).breakByTool(FabricToolTags.SHEARS).strength(0.2F).luminance(15).sound(SoundType.GRASS));
+		super(FabricBlockSettings.of(Material.LEAVES)
+								 .materialColor(MaterialColor.COLOR_ORANGE)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .strength(0.2F)
+								 .luminance(15)
+								 .sound(SoundType.GRASS));
 		this.registerDefaultState(this.stateDefinition.any().setValue(NATURAL, false));
 	}
 	

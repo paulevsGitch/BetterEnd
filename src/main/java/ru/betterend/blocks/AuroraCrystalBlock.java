@@ -19,21 +19,29 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.api.TagAPI;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IColorProvider;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.CustomColorProvider;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndItems;
 
 import java.util.List;
 
-public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyped, IColorProvider {
+public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider {
 	public static final Vec3i[] COLORS;
 	private static final int MIN_DROP = 1;
 	private static final int MAX_DROP = 4;
 	
 	public AuroraCrystalBlock() {
-		super(FabricBlockSettings.of(Material.GLASS).breakByTool(FabricToolTags.PICKAXES).breakByTool(TagAPI.HAMMERS).hardness(1F).resistance(1F).luminance(15).noOcclusion().isSuffocating((state, world, pos) -> false).sound(SoundType.GLASS));
+		super(FabricBlockSettings.of(Material.GLASS)
+								 .breakByTool(FabricToolTags.PICKAXES)
+								 .breakByTool(TagAPI.HAMMERS)
+								 .hardness(1F)
+								 .resistance(1F)
+								 .luminance(15)
+								 .noOcclusion()
+								 .isSuffocating((state, world, pos) -> false)
+								 .sound(SoundType.GLASS));
 	}
 	
 	@Override
@@ -101,6 +109,11 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements IRenderTyp
 	}
 	
 	static {
-		COLORS = new Vec3i[]{new Vec3i(247, 77, 161), new Vec3i(120, 184, 255), new Vec3i(120, 255, 168), new Vec3i(243, 58, 255)};
+		COLORS = new Vec3i[] {
+			new Vec3i(247, 77, 161),
+			new Vec3i(120, 184, 255),
+			new Vec3i(120, 255, 168),
+			new Vec3i(243, 58, 255)
+		};
 	}
 }

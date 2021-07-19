@@ -31,7 +31,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
@@ -41,13 +41,18 @@ import java.util.EnumMap;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class SulphurCrystalBlock extends BaseAttachedBlock implements IRenderTyped, SimpleWaterloggedBlock, LiquidBlockContainer {
+public class SulphurCrystalBlock extends BaseAttachedBlock implements RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
 	public SulphurCrystalBlock() {
-		super(FabricBlockSettings.of(Material.STONE).materialColor(MaterialColor.COLOR_YELLOW).breakByTool(FabricToolTags.PICKAXES).sound(SoundType.GLASS).requiresCorrectToolForDrops().noCollission());
+		super(FabricBlockSettings.of(Material.STONE)
+								 .materialColor(MaterialColor.COLOR_YELLOW)
+								 .breakByTool(FabricToolTags.PICKAXES)
+								 .sound(SoundType.GLASS)
+								 .requiresCorrectToolForDrops()
+								 .noCollission());
 	}
 	
 	@Override
@@ -63,7 +68,10 @@ public class SulphurCrystalBlock extends BaseAttachedBlock implements IRenderTyp
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		return state.getValue(AGE) < 2 ? Collections.emptyList() : Lists.newArrayList(new ItemStack(EndItems.CRYSTALLINE_SULPHUR, MHelper.randRange(1, 3, MHelper.RANDOM)));
+		return state.getValue(AGE) < 2 ? Collections.emptyList() : Lists.newArrayList(new ItemStack(
+			EndItems.CRYSTALLINE_SULPHUR,
+			MHelper.randRange(1, 3, MHelper.RANDOM)
+		));
 	}
 	
 	@Override

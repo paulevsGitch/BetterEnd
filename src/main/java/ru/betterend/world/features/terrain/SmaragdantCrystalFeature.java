@@ -30,8 +30,12 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
 		BlockState crystal = EndBlocks.SMARAGDANT_CRYSTAL.defaultBlockState();
 		BlockState shard = EndBlocks.SMARAGDANT_CRYSTAL_SHARD.defaultBlockState();
 		for (int i = 0; i < count; i++) {
-			mut.set(pos).move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 5, MHelper.floor(random.nextGaussian() * 2 + 0.5));
-			int dist = MHelper.floor(1.5F - MHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + random.nextInt(3);
+			mut.set(pos)
+			   .move(MHelper.floor(random.nextGaussian() * 2 + 0.5), 5, MHelper.floor(random.nextGaussian() * 2 + 0.5));
+			int dist = MHelper.floor(1.5F - MHelper.length(
+				mut.getX() - pos.getX(),
+				mut.getZ() - pos.getZ()
+			)) + random.nextInt(3);
 			if (dist > 0) {
 				BlockState state = world.getBlockState(mut);
 				for (int n = 0; n < 10 && state.isAir(); n++) {
@@ -44,7 +48,11 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
 						mut.setY(mut.getY() + 1);
 					}
 					boolean waterlogged = !world.getFluidState(mut).isEmpty();
-					BlocksHelper.setWithoutUpdate(world, mut, shard.setValue(BlockStateProperties.WATERLOGGED, waterlogged));
+					BlocksHelper.setWithoutUpdate(
+						world,
+						mut,
+						shard.setValue(BlockStateProperties.WATERLOGGED, waterlogged)
+					);
 				}
 			}
 		}

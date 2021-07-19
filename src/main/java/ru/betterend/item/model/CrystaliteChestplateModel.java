@@ -49,19 +49,45 @@ public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 		modelPartData.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
 		
 		CubeDeformation deformation = new CubeDeformation(scale + 0.25F);
-		PartDefinition body = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create().texOffs(16, 16).addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, deformation), PartPose.ZERO);
+		PartDefinition body = modelPartData.addOrReplaceChild(
+			PartNames.BODY,
+			CubeListBuilder.create().texOffs(16, 16).addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, deformation),
+			PartPose.ZERO
+		);
 		
 		if (thinArms) {
 			deformation = new CubeDeformation(scale + 0.45F);
-			PartDefinition leftShoulder = modelPartData.addOrReplaceChild("leftShoulder", CubeListBuilder.create().mirror().texOffs(40, 32).addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation), PartPose.offset(5.0f, 2.0f, 0.0f));
+			PartDefinition leftShoulder = modelPartData.addOrReplaceChild(
+				"leftShoulder",
+				CubeListBuilder.create()
+							   .mirror()
+							   .texOffs(40, 32)
+							   .addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
+				PartPose.offset(5.0f, 2.0f, 0.0f)
+			);
 			
-			PartDefinition rightShoulder = modelPartData.addOrReplaceChild("rightShoulder", CubeListBuilder.create().texOffs(40, 16).addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation), PartPose.offset(-5.0f, 2.0f, 10.0f));
+			PartDefinition rightShoulder = modelPartData.addOrReplaceChild(
+				"rightShoulder",
+				CubeListBuilder.create().texOffs(40, 16).addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
+				PartPose.offset(-5.0f, 2.0f, 10.0f)
+			);
 		}
 		else {
 			deformation = new CubeDeformation(scale + 0.45F);
-			PartDefinition leftShoulder = modelPartData.addOrReplaceChild("leftShoulder", CubeListBuilder.create().mirror().texOffs(40, 32).addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation), PartPose.offset(5.0f, 2.0f, 0.0f));
+			PartDefinition leftShoulder = modelPartData.addOrReplaceChild(
+				"leftShoulder",
+				CubeListBuilder.create()
+							   .mirror()
+							   .texOffs(40, 32)
+							   .addBox(-1.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
+				PartPose.offset(5.0f, 2.0f, 0.0f)
+			);
 			
-			PartDefinition rightShoulder = modelPartData.addOrReplaceChild("rightShoulder", CubeListBuilder.create().texOffs(40, 16).addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation), PartPose.offset(-5.0f, 2.0f, 10.0f));
+			PartDefinition rightShoulder = modelPartData.addOrReplaceChild(
+				"rightShoulder",
+				CubeListBuilder.create().texOffs(40, 16).addBox(-3.0f, -2.5f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
+				PartPose.offset(-5.0f, 2.0f, 10.0f)
+			);
 		}
 		return LayerDefinition.create(modelData, 64, 48);
 	}
@@ -69,11 +95,13 @@ public class CrystaliteChestplateModel extends HumanoidModel<LivingEntity> {
 	final ModelPart localBody;
 	
 	public static CrystaliteChestplateModel createRegularModel(EntityModelSet entityModelSet) {
-		return new CrystaliteChestplateModel(entityModelSet == null ? getRegularTexturedModelData().bakeRoot() : entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE), false);
+		return new CrystaliteChestplateModel(entityModelSet == null ? getRegularTexturedModelData().bakeRoot() : entityModelSet
+			.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE), false);
 	}
 	
 	public static CrystaliteChestplateModel createThinModel(EntityModelSet entityModelSet) {
-		return new CrystaliteChestplateModel(entityModelSet == null ? getThinTexturedModelData().bakeRoot() : entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE_THIN), true);
+		return new CrystaliteChestplateModel(entityModelSet == null ? getThinTexturedModelData().bakeRoot() : entityModelSet
+			.bakeLayer(EndEntitiesRenders.CRYSTALITE_CHESTPLATE_THIN), true);
 	}
 	
 	protected CrystaliteChestplateModel(ModelPart modelPart, boolean thinArms) {

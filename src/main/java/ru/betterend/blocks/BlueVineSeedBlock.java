@@ -22,24 +22,51 @@ public class BlueVineSeedBlock extends EndPlantWithAgeBlock {
 		if (h < height + 1) {
 			return;
 		}
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.BOTTOM));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			pos,
+			EndBlocks.BLUE_VINE.defaultBlockState()
+							   .setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.BOTTOM)
+		);
 		for (int i = 1; i < height; i++) {
-			BlocksHelper.setWithoutUpdate(world, pos.above(i), EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(
+				world,
+				pos.above(i),
+				EndBlocks.BLUE_VINE.defaultBlockState()
+								   .setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.MIDDLE)
+			);
 		}
-		BlocksHelper.setWithoutUpdate(world, pos.above(height), EndBlocks.BLUE_VINE.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.TOP));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			pos.above(height),
+			EndBlocks.BLUE_VINE.defaultBlockState()
+							   .setValue(BlockProperties.TRIPLE_SHAPE, BlockProperties.TripleShape.TOP)
+		);
 		placeLantern(world, pos.above(height + 1));
 	}
 	
 	private void placeLantern(WorldGenLevel world, BlockPos pos) {
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.BLUE_VINE_LANTERN.defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			pos,
+			EndBlocks.BLUE_VINE_LANTERN.defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true)
+		);
 		for (Direction dir : BlocksHelper.HORIZONTAL) {
 			BlockPos p = pos.relative(dir);
 			if (world.isEmptyBlock(p)) {
-				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.BLUE_VINE_FUR.defaultBlockState().setValue(FurBlock.FACING, dir));
+				BlocksHelper.setWithoutUpdate(
+					world,
+					p,
+					EndBlocks.BLUE_VINE_FUR.defaultBlockState().setValue(FurBlock.FACING, dir)
+				);
 			}
 		}
 		if (world.isEmptyBlock(pos.above())) {
-			BlocksHelper.setWithoutUpdate(world, pos.above(), EndBlocks.BLUE_VINE_FUR.defaultBlockState().setValue(FurBlock.FACING, Direction.UP));
+			BlocksHelper.setWithoutUpdate(
+				world,
+				pos.above(),
+				EndBlocks.BLUE_VINE_FUR.defaultBlockState().setValue(FurBlock.FACING, Direction.UP)
+			);
 		}
 	}
 	

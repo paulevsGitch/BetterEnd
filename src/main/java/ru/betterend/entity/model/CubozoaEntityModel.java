@@ -26,14 +26,30 @@ public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
 		
-		PartDefinition bodyPart = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create().texOffs(0, 17).addBox(-2.0F, -12.5F, -2.0F, 4.0F, 4.0F, 4.0F), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition bodyPart = modelPartData.addOrReplaceChild(
+			PartNames.BODY,
+			CubeListBuilder.create().texOffs(0, 17).addBox(-2.0F, -12.5F, -2.0F, 4.0F, 4.0F, 4.0F),
+			PartPose.offset(0.0F, 24.0F, 0.0F)
+		);
 		
-		bodyPart.addOrReplaceChild("main_cube_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -7.0F, -5.0F, 10.0F, 7.0F, 10.0F), PartPose.offsetAndRotation(0.0F, -14.0F, 0.0F, 0.0F, 0.0F, -3.1416F));
+		bodyPart.addOrReplaceChild(
+			"main_cube_r1",
+			CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -7.0F, -5.0F, 10.0F, 7.0F, 10.0F),
+			PartPose.offsetAndRotation(0.0F, -14.0F, 0.0F, 0.0F, 0.0F, -3.1416F)
+		);
 		
 		for (int i = 1; i <= TENTACLE_COUNT; i++) {
-			PartDefinition tentaclePart = bodyPart.addOrReplaceChild("tentacle_center_" + i, CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, i * 1.5708F, 0.0F));
+			PartDefinition tentaclePart = bodyPart.addOrReplaceChild(
+				"tentacle_center_" + i,
+				CubeListBuilder.create(),
+				PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, i * 1.5708F, 0.0F)
+			);
 			
-			tentaclePart.addOrReplaceChild("tentacle_" + i, CubeListBuilder.create().texOffs(16, 17).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 7.0F, 0.0F), PartPose.offset(0.0F, -7.0F, 4.5F));
+			tentaclePart.addOrReplaceChild(
+				"tentacle_" + i,
+				CubeListBuilder.create().texOffs(16, 17).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 7.0F, 0.0F),
+				PartPose.offset(0.0F, -7.0F, 4.5F)
+			);
 		}
 		
 		return LayerDefinition.create(modelData, 48, 48);

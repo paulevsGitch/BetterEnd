@@ -23,7 +23,13 @@ import java.util.Random;
 public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 	
 	public GlowingPillarSeedBlock() {
-		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.GRASS).lightLevel(state -> state.getValue(AGE) * 3 + 3).randomTicks().noCollission());
+		super(FabricBlockSettings.of(Material.PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .sound(SoundType.GRASS)
+								 .lightLevel(state -> state.getValue(AGE) * 3 + 3)
+								 .randomTicks()
+								 .noCollission());
 	}
 	
 	@Override
@@ -45,16 +51,28 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
 			BlocksHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 		}
 		mut.move(Direction.UP);
-		BlocksHelper.setWithUpdate(world, mut, EndBlocks.GLOWING_PILLAR_LUMINOPHOR.defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
+		BlocksHelper.setWithUpdate(
+			world,
+			mut,
+			EndBlocks.GLOWING_PILLAR_LUMINOPHOR.defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true)
+		);
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
 			pos = mut.relative(dir);
 			if (world.isEmptyBlock(pos)) {
-				BlocksHelper.setWithUpdate(world, pos, EndBlocks.GLOWING_PILLAR_LEAVES.defaultBlockState().setValue(BlockStateProperties.FACING, dir));
+				BlocksHelper.setWithUpdate(
+					world,
+					pos,
+					EndBlocks.GLOWING_PILLAR_LEAVES.defaultBlockState().setValue(BlockStateProperties.FACING, dir)
+				);
 			}
 		}
 		mut.move(Direction.UP);
 		if (world.isEmptyBlock(mut)) {
-			BlocksHelper.setWithUpdate(world, mut, EndBlocks.GLOWING_PILLAR_LEAVES.defaultBlockState().setValue(BlockStateProperties.FACING, Direction.UP));
+			BlocksHelper.setWithUpdate(
+				world,
+				mut,
+				EndBlocks.GLOWING_PILLAR_LEAVES.defaultBlockState().setValue(BlockStateProperties.FACING, Direction.UP)
+			);
 		}
 	}
 	

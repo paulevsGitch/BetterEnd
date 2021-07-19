@@ -95,7 +95,10 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	
 	public PedestalBlock(Block parent) {
 		super(FabricBlockSettings.copyOf(parent).luminance(getLuminance(parent.defaultBlockState())));
-		this.registerDefaultState(stateDefinition.any().setValue(STATE, PedestalState.DEFAULT).setValue(HAS_ITEM, false).setValue(HAS_LIGHT, false));
+		this.registerDefaultState(stateDefinition.any()
+												 .setValue(STATE, PedestalState.DEFAULT)
+												 .setValue(HAS_ITEM, false)
+												 .setValue(HAS_LIGHT, false));
 		this.parent = parent;
 	}
 	
@@ -432,7 +435,10 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	@Environment(EnvType.CLIENT)
 	public UnbakedModel getModelVariant(ResourceLocation stateId, BlockState blockState, Map<ResourceLocation, UnbakedModel> modelCache) {
 		PedestalState state = blockState.getValue(STATE);
-		ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + "_" + state);
+		ResourceLocation modelId = new ResourceLocation(
+			stateId.getNamespace(),
+			"block/" + stateId.getPath() + "_" + state
+		);
 		registerBlockModel(stateId, modelId, blockState, modelCache);
 		return ModelsHelper.createBlockSimple(modelId);
 	}

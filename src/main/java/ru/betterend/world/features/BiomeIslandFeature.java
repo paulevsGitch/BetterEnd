@@ -59,7 +59,10 @@ public class BiomeIslandFeature extends DefaultFeature {
 			float deltaZ = Math.abs(pos.z());
 			if (deltaY < 2.0f && (deltaX < 3.0f || deltaZ < 3.0F)) return 0.0f;
 			return (float) simplexNoise.eval(CENTER.getX() + pos.x(), CENTER.getY() + pos.y(), CENTER.getZ() + pos.z());
-		}).setSource(sdfCone).setReplaceFunction(state -> BlocksHelper.isFluid(state) || state.getMaterial().isReplaceable());
+		})
+									   .setSource(sdfCone)
+									   .setReplaceFunction(state -> BlocksHelper.isFluid(state) || state.getMaterial()
+																										.isReplaceable());
 		return sdfCone;
 	}
 	

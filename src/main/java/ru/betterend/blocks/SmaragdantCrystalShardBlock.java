@@ -27,17 +27,23 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 
 import java.util.EnumMap;
 
 @SuppressWarnings("deprecation")
-public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements IRenderTyped, SimpleWaterloggedBlock, LiquidBlockContainer {
+public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
 	public SmaragdantCrystalShardBlock() {
-		super(FabricBlockSettings.of(Material.STONE).materialColor(MaterialColor.COLOR_GREEN).breakByTool(FabricToolTags.PICKAXES).luminance(15).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().noCollission());
+		super(FabricBlockSettings.of(Material.STONE)
+								 .materialColor(MaterialColor.COLOR_GREEN)
+								 .breakByTool(FabricToolTags.PICKAXES)
+								 .luminance(15)
+								 .sound(SoundType.AMETHYST_CLUSTER)
+								 .requiresCorrectToolForDrops()
+								 .noCollission());
 	}
 	
 	@Override

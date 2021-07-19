@@ -20,7 +20,16 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class InfusionRitual implements Container {
-	private static final Point[] PEDESTALS_MAP = new Point[]{new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2), new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)};
+	private static final Point[] PEDESTALS_MAP = new Point[] {
+		new Point(0, 3),
+		new Point(2, 2),
+		new Point(3, 0),
+		new Point(2, -2),
+		new Point(0, -3),
+		new Point(-2, -2),
+		new Point(-3, 0),
+		new Point(-2, 2)
+	};
 	
 	private Level world;
 	private BlockPos worldPos;
@@ -119,7 +128,17 @@ public class InfusionRitual implements Container {
 					double sx = start.getX() + 0.5;
 					double sy = start.getY() + 1.25;
 					double sz = start.getZ() + 0.5;
-					serverLevel.sendParticles(new InfusionParticleType(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
+					serverLevel.sendParticles(
+						new InfusionParticleType(stack),
+						sx,
+						sy,
+						sz,
+						0,
+						tx - sx,
+						ty - sy,
+						tz - sz,
+						0.5
+					);
 				}
 			}
 		}

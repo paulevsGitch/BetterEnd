@@ -70,8 +70,14 @@ public class NBTPiece extends BasePiece {
 	
 	@Override
 	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		BoundingBox bounds = BoundingBox.fromCorners(new Vec3i(blockBox.minX(), this.boundingBox.minY(), blockBox.minZ()), new Vec3i(blockBox.maxX(), this.boundingBox.maxX(), blockBox.maxZ()));
-		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
+		BoundingBox bounds = BoundingBox.fromCorners(new Vec3i(
+			blockBox.minX(),
+			this.boundingBox.minY(),
+			blockBox.minZ()
+		), new Vec3i(blockBox.maxX(), this.boundingBox.maxX(), blockBox.maxZ()));
+		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation)
+																		   .setMirror(mirror)
+																		   .setBoundingBox(bounds);
 		structure.placeInWorld(world, pos, pos, placementData, random, 2);
 		if (erosion > 0) {
 			int x1 = MHelper.min(bounds.maxX(), boundingBox.maxX());

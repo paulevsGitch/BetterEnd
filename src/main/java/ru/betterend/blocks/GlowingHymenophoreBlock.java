@@ -8,6 +8,9 @@ import ru.bclib.blocks.BaseBlock;
 
 public class GlowingHymenophoreBlock extends BaseBlock {
 	public GlowingHymenophoreBlock() {
-		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).luminance(15).sound(SoundType.WART_BLOCK));
+		super(FabricBlockSettings.of(Material.WOOD)
+								 .breakByTool(FabricToolTags.AXES)
+								 .luminance(15)
+								 .sound(SoundType.WART_BLOCK));
 	}
 }

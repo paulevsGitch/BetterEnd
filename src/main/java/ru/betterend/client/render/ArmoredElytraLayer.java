@@ -37,7 +37,8 @@ public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>
 				if (abstractClientPlayer.isElytraLoaded() && abstractClientPlayer.getElytraTextureLocation() != null) {
 					wingsTexture = abstractClientPlayer.getElytraTextureLocation();
 				}
-				else if (abstractClientPlayer.isCapeLoaded() && abstractClientPlayer.getCloakTextureLocation() != null && abstractClientPlayer.isModelPartShown(PlayerModelPart.CAPE)) {
+				else if (abstractClientPlayer.isCapeLoaded() && abstractClientPlayer.getCloakTextureLocation() != null && abstractClientPlayer
+					.isModelPartShown(PlayerModelPart.CAPE)) {
 					wingsTexture = abstractClientPlayer.getCloakTextureLocation();
 				}
 			}
@@ -46,7 +47,12 @@ public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>
 			poseStack.translate(0.0D, 0.0D, 0.125D);
 			getParentModel().copyPropertiesTo(elytraModel);
 			elytraModel.setupAnim(livingEntity, f, g, j, k, l);
-			VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(multiBufferSource, RenderType.armorCutoutNoCull(wingsTexture), false, itemStack.hasFoil());
+			VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(
+				multiBufferSource,
+				RenderType.armorCutoutNoCull(wingsTexture),
+				false,
+				itemStack.hasFoil()
+			);
 			elytraModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			poseStack.popPose();
 		}

@@ -82,9 +82,15 @@ public class HelixTreeFeature extends DefaultFeature {
 		});
 		SplineHelper.scale(spline2, scale);
 		BlockPos leafStart = pos.offset(lastPoint.x() + 0.5, lastPoint.y() + 0.5, lastPoint.z() + 0.5);
-		SplineHelper.fillSplineForce(spline2, world, EndBlocks.HELIX_TREE.log.defaultBlockState(), leafStart, (state) -> {
-			return state.getMaterial().isReplaceable();
-		});
+		SplineHelper.fillSplineForce(
+			spline2,
+			world,
+			EndBlocks.HELIX_TREE.log.defaultBlockState(),
+			leafStart,
+			(state) -> {
+				return state.getMaterial().isReplaceable();
+			}
+		);
 		
 		spline.clear();
 		float rad = MHelper.randRange(8F, 11F, random);

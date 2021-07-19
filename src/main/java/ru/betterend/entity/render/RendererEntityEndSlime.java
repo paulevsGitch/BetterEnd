@@ -33,7 +33,16 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 			@Override
 			public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, EndSlimeEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getSlimeType()]);
-				this.getParentModel().renderToBuffer(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+				this.getParentModel()
+					.renderToBuffer(matrices,
+						vertexConsumer,
+						15728640,
+						OverlayTexture.NO_OVERLAY,
+						1.0F,
+						1.0F,
+						1.0F,
+						1.0F
+					);
 				if (entity.isLake()) {
 					this.getParentModel().renderFlower(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY);
 				}
@@ -75,20 +84,42 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
 		public void render(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l) {
 			if (!livingEntity.isInvisible()) {
 				if (livingEntity.isLake()) {
-					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutout(this.getTextureLocation(livingEntity)));
-					this.getParentModel().renderFlower(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F));
+					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutout(this.getTextureLocation(
+						livingEntity)));
+					this.getParentModel()
+						.renderFlower(matrixStack,
+							vertexConsumer,
+							i,
+							LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F)
+						);
 				}
 				else if (livingEntity.isAmber() || livingEntity.isChorus()) {
-					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutout(this.getTextureLocation(livingEntity)));
-					this.getParentModel().renderCrop(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F));
+					VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutout(this.getTextureLocation(
+						livingEntity)));
+					this.getParentModel()
+						.renderCrop(matrixStack,
+							vertexConsumer,
+							i,
+							LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F)
+						);
 				}
 				
 				EndSlimeEntityModel<T> model = livingEntity.getSlimeType() == 1 ? modelLake : modelOrdinal;
 				this.getParentModel().copyPropertiesTo(model);
 				model.prepareMobModel(livingEntity, f, g, h);
 				model.setupAnim(livingEntity, f, g, j, k, l);
-				VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(livingEntity)));
-				model.renderToBuffer(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+				VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(
+					livingEntity)));
+				model.renderToBuffer(
+					matrixStack,
+					vertexConsumer,
+					i,
+					LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F),
+					1.0F,
+					1.0F,
+					1.0F,
+					1.0F
+				);
 			}
 		}
 	}

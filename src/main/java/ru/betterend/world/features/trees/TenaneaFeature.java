@@ -67,12 +67,18 @@ public class TenaneaFeature extends DefaultFeature {
 	}
 	
 	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.TENANEA_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
+		SDF sphere = new SDFSphere().setRadius(radius)
+									.setBlock(EndBlocks.TENANEA_LEAVES.defaultBlockState()
+																	  .setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
 		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 2F).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> (float) noise.eval(
+			vec.x() * 0.2,
+			vec.y() * 0.2,
+			vec.z() * 0.2
+		) * 2F).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> MHelper.randRange(-1.5F, 1.5F, random)).setSource(sphere);
 		
 		MutableBlockPos mut = new MutableBlockPos();
@@ -85,9 +91,12 @@ public class TenaneaFeature extends DefaultFeature {
 			}
 		}
 		
-		BlockState top = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
-		BlockState middle = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
-		BlockState bottom = EndBlocks.TENANEA_FLOWERS.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
+		BlockState top = EndBlocks.TENANEA_FLOWERS.defaultBlockState()
+												  .setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		BlockState middle = EndBlocks.TENANEA_FLOWERS.defaultBlockState()
+													 .setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
+		BlockState bottom = EndBlocks.TENANEA_FLOWERS.defaultBlockState()
+													 .setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
 		BlockState outer = EndBlocks.TENANEA_OUTER_LEAVES.defaultBlockState();
 		
 		List<BlockPos> support = Lists.newArrayList();
@@ -180,6 +189,13 @@ public class TenaneaFeature extends DefaultFeature {
 		
 		IGNORE = EndBlocks.TENANEA::isTreeLog;
 		
-		SPLINE = Lists.newArrayList(new Vector3f(0.00F, 0.00F, 0.00F), new Vector3f(0.10F, 0.35F, 0.00F), new Vector3f(0.20F, 0.50F, 0.00F), new Vector3f(0.30F, 0.55F, 0.00F), new Vector3f(0.42F, 0.70F, 0.00F), new Vector3f(0.50F, 1.00F, 0.00F));
+		SPLINE = Lists.newArrayList(
+			new Vector3f(0.00F, 0.00F, 0.00F),
+			new Vector3f(0.10F, 0.35F, 0.00F),
+			new Vector3f(0.20F, 0.50F, 0.00F),
+			new Vector3f(0.30F, 0.55F, 0.00F),
+			new Vector3f(0.42F, 0.70F, 0.00F),
+			new Vector3f(0.50F, 1.00F, 0.00F)
+		);
 	}
 }

@@ -116,13 +116,19 @@ public class BlockFixer {
 								for (Direction dir : BlocksHelper.HORIZONTAL) {
 									BlockPos p = pos.relative(dir);
 									BlockState st = world.getBlockState(p);
-									if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(world, p)) {
+									if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(
+										world,
+										p
+									)) {
 										add.add(p);
 									}
 								}
 								BlockPos p = pos.above();
 								BlockState st = world.getBlockState(p);
-								if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(world, p)) {
+								if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(
+									world,
+									p
+								)) {
 									add.add(p);
 								}
 							});
@@ -173,7 +179,8 @@ public class BlockFixer {
 					else {
 						// Blue Vine
 						if (state.getBlock() instanceof BlueVineBlock) {
-							while (state.is(EndBlocks.BLUE_VINE) || state.is(EndBlocks.BLUE_VINE_LANTERN) || state.is(EndBlocks.BLUE_VINE_FUR)) {
+							while (state.is(EndBlocks.BLUE_VINE) || state.is(EndBlocks.BLUE_VINE_LANTERN) || state.is(
+								EndBlocks.BLUE_VINE_FUR)) {
 								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 								state = world.getBlockState(POS);

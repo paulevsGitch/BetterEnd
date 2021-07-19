@@ -113,7 +113,12 @@ public class JellyshroomFeature extends DefaultFeature {
 	}
 	
 	static {
-		ROOT = Lists.newArrayList(new Vector3f(0.1F, 0.70F, 0), new Vector3f(0.3F, 0.30F, 0), new Vector3f(0.7F, 0.05F, 0), new Vector3f(0.8F, -0.20F, 0));
+		ROOT = Lists.newArrayList(
+			new Vector3f(0.1F, 0.70F, 0),
+			new Vector3f(0.3F, 0.30F, 0),
+			new Vector3f(0.7F, 0.05F, 0),
+			new Vector3f(0.8F, -0.20F, 0)
+		);
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {

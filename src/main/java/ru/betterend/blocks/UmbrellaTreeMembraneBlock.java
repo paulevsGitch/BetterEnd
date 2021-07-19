@@ -18,9 +18,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.BlockModelProvider;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
@@ -28,7 +28,7 @@ import ru.betterend.registry.EndBlocks;
 import java.util.Collections;
 import java.util.List;
 
-public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderTyped, BlockModelProvider {
+public class UmbrellaTreeMembraneBlock extends SlimeBlock implements RenderLayerProvider, BlockModelProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
@@ -60,7 +60,8 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements IRenderType
 			return Lists.newArrayList(new ItemStack(this));
 		}
 		else {
-			return MHelper.RANDOM.nextInt(4) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.UMBRELLA_TREE_SAPLING)) : Collections.emptyList();
+			return MHelper.RANDOM.nextInt(4) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.UMBRELLA_TREE_SAPLING)) : Collections
+				.emptyList();
 		}
 	}
 	

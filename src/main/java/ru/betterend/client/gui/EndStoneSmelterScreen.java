@@ -35,12 +35,22 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 		narrow = width < 379;
 		recipeBook.init(width, height, minecraft, narrow, menu);
 		leftPos = recipeBook.updateScreenPosition(width, imageWidth);
-		addRenderableWidget(new ImageButton(leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
-			recipeBook.initVisuals();
-			recipeBook.toggleVisibility();
-			leftPos = recipeBook.updateScreenPosition(width, imageWidth);
-			((ImageButton) buttonWidget).setPosition(leftPos + 20, height / 2 - 49);
-		}));
+		addRenderableWidget(new ImageButton(
+			leftPos + 20,
+			height / 2 - 49,
+			20,
+			18,
+			0,
+			0,
+			19,
+			RECIPE_BUTTON_TEXTURE,
+			(buttonWidget) -> {
+				recipeBook.initVisuals();
+				recipeBook.toggleVisibility();
+				leftPos = recipeBook.updateScreenPosition(width, imageWidth);
+				((ImageButton) buttonWidget).setPosition(leftPos + 20, height / 2 - 49);
+			}
+		));
 		titleLabelX = (imageWidth - font.width(title)) / 2;
 	}
 	
@@ -90,7 +100,15 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 	@Override
 	protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
 		boolean isMouseOut = mouseX < left || mouseY < top || mouseX >= (left + imageWidth) || mouseY >= (top + imageHeight);
-		return this.recipeBook.hasClickedOutside(mouseX, mouseY, leftPos, topPos, imageWidth, imageHeight, button) && isMouseOut;
+		return this.recipeBook.hasClickedOutside(
+			mouseX,
+			mouseY,
+			leftPos,
+			topPos,
+			imageWidth,
+			imageHeight,
+			button
+		) && isMouseOut;
 	}
 	
 	@Override

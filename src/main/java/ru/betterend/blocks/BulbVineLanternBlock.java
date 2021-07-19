@@ -17,22 +17,29 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-import ru.bclib.client.models.BlockModelProvider;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.BlockModelProvider;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.betterend.blocks.basis.EndLanternBlock;
 import ru.betterend.client.models.Patterns;
 
 import java.util.Map;
 import java.util.Optional;
 
-public class BulbVineLanternBlock extends EndLanternBlock implements IRenderTyped, BlockModelProvider {
+public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayerProvider, BlockModelProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
 	
 	public BulbVineLanternBlock() {
-		this(FabricBlockSettings.of(Material.METAL).hardness(1).resistance(1).breakByTool(FabricToolTags.PICKAXES).materialColor(MaterialColor.COLOR_LIGHT_GRAY).luminance(15).requiresCorrectToolForDrops().sound(SoundType.LANTERN));
+		this(FabricBlockSettings.of(Material.METAL)
+								.hardness(1)
+								.resistance(1)
+								.breakByTool(FabricToolTags.PICKAXES)
+								.materialColor(MaterialColor.COLOR_LIGHT_GRAY)
+								.luminance(15)
+								.requiresCorrectToolForDrops()
+								.sound(SoundType.LANTERN));
 	}
 	
 	public BulbVineLanternBlock(Properties settings) {
@@ -55,7 +62,10 @@ public class BulbVineLanternBlock extends EndLanternBlock implements IRenderType
 		Map<String, String> textures = Maps.newHashMap();
 		textures.put("%glow%", getGlowTexture());
 		textures.put("%metal%", getMetalTexture(resourceLocation));
-		Optional<String> pattern = blockState.getValue(IS_FLOOR) ? Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_FLOOR, textures) : Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_CEIL, textures);
+		Optional<String> pattern = blockState.getValue(IS_FLOOR) ? Patterns.createJson(
+			Patterns.BLOCK_BULB_LANTERN_FLOOR,
+			textures
+		) : Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_CEIL, textures);
 		return ModelsHelper.fromPattern(pattern);
 	}
 	

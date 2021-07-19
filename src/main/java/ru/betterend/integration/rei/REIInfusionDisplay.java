@@ -18,7 +18,10 @@ public class REIInfusionDisplay extends BasicDisplay implements SimpleGridMenuDi
 	private final int time;
 	
 	public REIInfusionDisplay(InfusionRecipe recipe) {
-		super(EntryIngredients.ofIngredients(recipe.getIngredients()), Collections.singletonList(EntryIngredients.of(recipe.getResultItem())));
+		super(
+			EntryIngredients.ofIngredients(recipe.getIngredients()),
+			Collections.singletonList(EntryIngredients.of(recipe.getResultItem()))
+		);
 		this.recipe = recipe;
 		this.time = recipe.getInfusionTime();
 	}

@@ -13,6 +13,9 @@ public class CrystaliteHelmet extends CrystaliteArmor {
 	public CrystaliteHelmet() {
 		super(EquipmentSlot.HEAD, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
 		UUID uuid = ARMOR_MODIFIER_UUID_PER_SLOT[EquipmentSlot.HEAD.getIndex()];
-		addAttributeModifier(EndAttributes.BLINDNESS_RESISTANCE, new AttributeModifier(uuid, "Helmet blindness resistance", 1.0, AttributeModifier.Operation.ADDITION));
+		addAttributeModifier(
+			EndAttributes.BLINDNESS_RESISTANCE,
+			new AttributeModifier(uuid, "Helmet blindness resistance", 1.0, AttributeModifier.Operation.ADDITION)
+		);
 	}
 }

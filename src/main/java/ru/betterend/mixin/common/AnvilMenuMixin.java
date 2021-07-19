@@ -72,7 +72,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 			slotsChanged(inputSlots);
 			access.execute((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
-				if (!player.getAbilities().instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
+				if (!player.getAbilities().instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom()
+																								 .nextDouble() < 0.1) {
 					BlockState landingState = EndAnvilBlock.applyDamage(anvilState);
 					if (landingState == null) {
 						world.removeBlock(blockPos, false);
@@ -97,7 +98,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 		be_recipes = recipeManager.getRecipesFor(AnvilRecipe.TYPE, inputSlots, player.level);
 		if (be_recipes.size() > 0) {
 			int anvilLevel = this.anvilLevel.get();
-			be_recipes = be_recipes.stream().filter(recipe -> anvilLevel >= recipe.getAnvilLevel()).collect(Collectors.toList());
+			be_recipes = be_recipes.stream()
+								   .filter(recipe -> anvilLevel >= recipe.getAnvilLevel())
+								   .collect(Collectors.toList());
 			if (be_recipes.size() > 0) {
 				if (be_currentRecipe == null || !be_recipes.contains(be_currentRecipe)) {
 					be_currentRecipe = be_recipes.get(0);

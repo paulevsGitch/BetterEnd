@@ -70,24 +70,110 @@ public class StoneMaterial {
 		flowerPot = EndBlocks.registerBlock(name + "_flower_pot", new FlowerPotBlock(bricks));
 		
 		// Recipes //
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks", bricks).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', stone).setGroup("end_bricks").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_polished", polished).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', bricks).setGroup("end_tile").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_tiles", tiles).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("##", "##").addMaterial('#', polished).setGroup("end_small_tile").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_pillar", pillar).checkConfig(Configs.RECIPE_CONFIG).setShape("#", "#").addMaterial('#', slab).setGroup("end_pillar").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks", bricks)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(4)
+				  .setShape("##", "##")
+				  .addMaterial('#', stone)
+				  .setGroup("end_bricks")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_polished", polished)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(4)
+				  .setShape("##", "##")
+				  .addMaterial('#', bricks)
+				  .setGroup("end_tile")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_tiles", tiles)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(4)
+				  .setShape("##", "##")
+				  .addMaterial('#', polished)
+				  .setGroup("end_small_tile")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_pillar", pillar)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setShape("#", "#")
+				  .addMaterial('#', slab)
+				  .setGroup("end_pillar")
+				  .build();
 		
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_stairs", stairs).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', stone).setGroup("end_stone_stairs").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_slab", slab).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###").addMaterial('#', stone).setGroup("end_stone_slabs").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_stairs", brickStairs).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', bricks).setGroup("end_stone_stairs").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_slab", brickSlab).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###").addMaterial('#', bricks).setGroup("end_stone_slabs").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_stairs", stairs)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(4)
+				  .setShape("#  ", "## ", "###")
+				  .addMaterial('#', stone)
+				  .setGroup("end_stone_stairs")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_slab", slab)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(6)
+				  .setShape("###")
+				  .addMaterial('#', stone)
+				  .setGroup("end_stone_slabs")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_stairs", brickStairs)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(4)
+				  .setShape("#  ", "## ", "###")
+				  .addMaterial('#', bricks)
+				  .setGroup("end_stone_stairs")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_slab", brickSlab)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(6)
+				  .setShape("###")
+				  .addMaterial('#', bricks)
+				  .setGroup("end_stone_slabs")
+				  .build();
 		
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_wall", wall).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###", "###").addMaterial('#', stone).setGroup("end_wall").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_wall", brickWall).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(6).setShape("###", "###").addMaterial('#', bricks).setGroup("end_wall").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_wall", wall)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(6)
+				  .setShape("###", "###")
+				  .addMaterial('#', stone)
+				  .setGroup("end_wall")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_bricks_wall", brickWall)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(6)
+				  .setShape("###", "###")
+				  .addMaterial('#', bricks)
+				  .setGroup("end_wall")
+				  .build();
 		
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_button", button).checkConfig(Configs.RECIPE_CONFIG).setList("#").addMaterial('#', stone).setGroup("end_stone_buttons").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_pressure_plate", pressurePlate).checkConfig(Configs.RECIPE_CONFIG).setShape("##").addMaterial('#', stone).setGroup("end_stone_plates").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_lantern", lantern).checkConfig(Configs.RECIPE_CONFIG).setShape("S", "#", "S").addMaterial('#', EndItems.CRYSTAL_SHARDS).addMaterial('S', slab, brickSlab).setGroup("end_stone_lanterns").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_furnace", furnace).checkConfig(Configs.RECIPE_CONFIG).setShape("###", "# #", "###").addMaterial('#', stone).setGroup("end_stone_furnaces").build();
-		GridRecipe.make(BetterEnd.MOD_ID, name + "_flower_pot", flowerPot).checkConfig(Configs.RECIPE_CONFIG).setOutputCount(3).setShape("# #", " # ").addMaterial('#', bricks).setGroup("end_pots").build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_button", button)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setList("#")
+				  .addMaterial('#', stone)
+				  .setGroup("end_stone_buttons")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_pressure_plate", pressurePlate)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setShape("##")
+				  .addMaterial('#', stone)
+				  .setGroup("end_stone_plates")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_lantern", lantern)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setShape("S", "#", "S")
+				  .addMaterial('#', EndItems.CRYSTAL_SHARDS)
+				  .addMaterial('S', slab, brickSlab)
+				  .setGroup("end_stone_lanterns")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_furnace", furnace)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setShape("###", "# #", "###")
+				  .addMaterial('#', stone)
+				  .setGroup("end_stone_furnaces")
+				  .build();
+		GridRecipe.make(BetterEnd.MOD_ID, name + "_flower_pot", flowerPot)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(3)
+				  .setShape("# #", " # ")
+				  .addMaterial('#', bricks)
+				  .setGroup("end_pots")
+				  .build();
 		
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		

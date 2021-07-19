@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.bclib.client.models.ItemModelProvider;
+import ru.bclib.interfaces.ItemModelProvider;
 import ru.bclib.items.BaseAnvilItem;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.registry.EndBlocks;

@@ -72,7 +72,8 @@ public class EndAnvilBlock extends BaseAnvilBlock {
 	
 	@Override
 	public BlockState getStateForPlacement(@NotNull BlockPlaceContext blockPlaceContext) {
-		return Objects.requireNonNull(super.getStateForPlacement(blockPlaceContext)).setValue(durability, maxDurability);
+		return Objects.requireNonNull(super.getStateForPlacement(blockPlaceContext))
+					  .setValue(durability, maxDurability);
 	}
 	
 	@Override

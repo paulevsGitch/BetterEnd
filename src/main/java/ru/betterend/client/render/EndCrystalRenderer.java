@@ -16,8 +16,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class EndCrystalRenderer {
-	private static final ResourceLocation CRYSTAL_TEXTURE = new ResourceLocation("textures/entity/end_crystal/end_crystal.png");
-	private static final ResourceLocation CRYSTAL_BEAM_TEXTURE = new ResourceLocation("textures/entity/end_crystal/end_crystal_beam.png");
+	private static final ResourceLocation CRYSTAL_TEXTURE = new ResourceLocation(
+		"textures/entity/end_crystal/end_crystal.png");
+	private static final ResourceLocation CRYSTAL_BEAM_TEXTURE = new ResourceLocation(
+		"textures/entity/end_crystal/end_crystal_beam.png");
 	private static final RenderType END_CRYSTAL;
 	private static final ModelPart CORE;
 	private static final ModelPart FRAME;
@@ -49,9 +51,17 @@ public class EndCrystalRenderer {
 	public static LayerDefinition getTexturedModelData() {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
-		modelPartData.addOrReplaceChild("FRAME", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f), PartPose.ZERO);
+		modelPartData.addOrReplaceChild(
+			"FRAME",
+			CubeListBuilder.create().texOffs(0, 0).addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),
+			PartPose.ZERO
+		);
 		
-		modelPartData.addOrReplaceChild("CORE", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f), PartPose.ZERO);
+		modelPartData.addOrReplaceChild(
+			"CORE",
+			CubeListBuilder.create().texOffs(32, 0).addBox(-4.0f, -4.0f, -4.0f, 8.0f, 8.0f, 8.0f),
+			PartPose.ZERO
+		);
 		
 		return LayerDefinition.create(modelData, 64, 32);
 	}

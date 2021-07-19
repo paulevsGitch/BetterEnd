@@ -31,6 +31,8 @@ public class WeightedBiomePickerMixin implements IBiomeList {
 	}
 	
 	private boolean be_isCorrectPicker(WeightedBiomePicker picker) {
-		return picker == InternalBiomeData.getEndBiomesMap().get(Biomes.SMALL_END_ISLANDS) || picker == InternalBiomeData.getEndBarrensMap().get(Biomes.END_BARRENS);
+		return picker == InternalBiomeData.getEndBiomesMap()
+										  .get(Biomes.SMALL_END_ISLANDS) || picker == InternalBiomeData.getEndBarrensMap()
+																									   .get(Biomes.END_BARRENS);
 	}
 }

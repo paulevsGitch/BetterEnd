@@ -19,14 +19,14 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyped {
+public class MengerSpongeWetBlock extends BaseBlockNotFull implements RenderLayerProvider {
 	public MengerSpongeWetBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).noOcclusion());
 	}
@@ -36,7 +36,14 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 		if (world.dimensionType().ultraWarm()) {
 			world.setBlock(pos, EndBlocks.MENGER_SPONGE.defaultBlockState(), 3);
 			world.levelEvent(2009, pos, 0);
-			world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
+			world.playSound(
+				null,
+				pos,
+				SoundEvents.FIRE_EXTINGUISH,
+				SoundSource.BLOCKS,
+				1.0F,
+				(1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F
+			);
 		}
 	}
 	
@@ -90,7 +97,13 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements IRenderTyp
 			world.levelEvent(2001, pos, getId(state));
 		}
 		if (world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && (player == null || !player.isCreative())) {
-			ItemEntity drop = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(this));
+			ItemEntity drop = new ItemEntity(
+				world,
+				pos.getX() + 0.5,
+				pos.getY() + 0.5,
+				pos.getZ() + 0.5,
+				new ItemStack(this)
+			);
 			world.addFreshEntity(drop);
 		}
 	}

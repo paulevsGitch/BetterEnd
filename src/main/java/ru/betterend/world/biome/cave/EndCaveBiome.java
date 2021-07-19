@@ -9,8 +9,8 @@ import ru.bclib.api.BiomeAPI;
 import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
-import ru.betterend.registry.EndSounds;
 import ru.betterend.interfaces.ShuffelingListExtended;
+import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
@@ -23,7 +23,11 @@ public class EndCaveBiome extends EndBiome {
 	}
 	
 	private static BCLBiomeDef makeDef(BCLBiomeDef definition) {
-		BCLFeature feature = BCLFeature.makeChunkFeature(BetterEnd.makeID(definition.getID().getPath() + "_cave_populator"), new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(definition.getID())));
+		BCLFeature feature = BCLFeature.makeChunkFeature(
+			BetterEnd.makeID(definition.getID()
+									   .getPath() + "_cave_populator"),
+			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(definition.getID()))
+		);
 		definition.setCategory(BiomeCategory.NONE).addFeature(feature);
 		definition.setMusic(EndSounds.MUSIC_CAVES);
 		definition.setLoop(EndSounds.AMBIENT_CAVES);
@@ -39,11 +43,13 @@ public class EndCaveBiome extends EndBiome {
 	}
 	
 	public Feature<?> getFloorFeature() {
-		return ((ShuffelingListExtended<Feature<?>>) floorFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>) floorFeatures).getOne();
+		return ((ShuffelingListExtended<Feature<?>>) floorFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>) floorFeatures)
+			.getOne();
 	}
 	
 	public Feature<?> getCeilFeature() {
-		return ((ShuffelingListExtended<Feature<?>>) ceilFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>) ceilFeatures).getOne();
+		return ((ShuffelingListExtended<Feature<?>>) ceilFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>) ceilFeatures)
+			.getOne();
 	}
 	
 	public float getFloorDensity() {

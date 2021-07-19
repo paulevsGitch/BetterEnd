@@ -37,8 +37,14 @@ import java.util.Random;
 
 public class CubozoaEntity extends AbstractSchoolingFish {
 	public static final int VARIANTS = 2;
-	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(CubozoaEntity.class, EntityDataSerializers.BYTE);
-	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(CubozoaEntity.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
+		CubozoaEntity.class,
+		EntityDataSerializers.BYTE
+	);
+	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(
+		CubozoaEntity.class,
+		EntityDataSerializers.BYTE
+	);
 	
 	public CubozoaEntity(EntityType<CubozoaEntity> entityType, Level world) {
 		super(entityType, world);
@@ -100,7 +106,10 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0).add(Attributes.FOLLOW_RANGE, 16.0).add(Attributes.MOVEMENT_SPEED, 0.5);
+		return LivingEntity.createLivingAttributes()
+						   .add(Attributes.MAX_HEALTH, 2.0)
+						   .add(Attributes.FOLLOW_RANGE, 16.0)
+						   .add(Attributes.MOVEMENT_SPEED, 0.5);
 	}
 	
 	public int getVariant() {
@@ -145,7 +154,10 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	public void playerTouch(Player player) {
 		if (player instanceof ServerPlayer && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
 			if (!this.isSilent()) {
-				((ServerPlayer) player).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
+				((ServerPlayer) player).connection.send(new ClientboundGameEventPacket(
+					ClientboundGameEventPacket.PUFFER_FISH_STING,
+					0.0F
+				));
 			}
 			if (random.nextBoolean()) {
 				player.addEffect(new MobEffectInstance(MobEffects.POISON, 20, 0));

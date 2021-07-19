@@ -10,12 +10,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 
 import java.util.Collections;
 import java.util.List;
 
-public class DenseEmeraldIceBlock extends BaseBlock implements IRenderTyped {
+public class DenseEmeraldIceBlock extends BaseBlock implements RenderLayerProvider {
 	public DenseEmeraldIceBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.PACKED_ICE));
 	}

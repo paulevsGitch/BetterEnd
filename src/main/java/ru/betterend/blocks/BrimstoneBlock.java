@@ -87,7 +87,10 @@ public class BrimstoneBlock extends BaseBlock {
 					}
 				}
 				else if (sideState.getFluidState().getType() == Fluids.WATER) {
-					BlockState crystal = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState().setValue(SulphurCrystalBlock.FACING, dir).setValue(SulphurCrystalBlock.WATERLOGGED, true).setValue(SulphurCrystalBlock.AGE, 0);
+					BlockState crystal = EndBlocks.SULPHUR_CRYSTAL.defaultBlockState()
+																  .setValue(SulphurCrystalBlock.FACING, dir)
+																  .setValue(SulphurCrystalBlock.WATERLOGGED, true)
+																  .setValue(SulphurCrystalBlock.AGE, 0);
 					world.setBlockAndUpdate(side, crystal);
 				}
 			}

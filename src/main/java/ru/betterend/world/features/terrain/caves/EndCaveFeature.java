@@ -74,7 +74,10 @@ public abstract class EndCaveFeature extends DefaultFeature {
 						}
 					}
 				});
-				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+				BlockState surfaceBlock = biome.getBiome()
+											   .getGenerationSettings()
+											   .getSurfaceBuilderConfig()
+											   .getTopMaterial();
 				placeFloor(world, biome, floorPositions, random, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, random);
 				placeWalls(world, biome, caveBlocks, random);
@@ -126,7 +129,8 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				if (wallBlock != null) {
 					for (Vec3i offset : SPHERE) {
 						BlockPos wallPos = pos.offset(offset);
-						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos).is(TagAPI.GEN_TERRAIN)) {
+						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos)
+																							  .is(TagAPI.GEN_TERRAIN)) {
 							wallBlock = biome.getWall(wallPos);
 							BlocksHelper.setWithoutUpdate(world, wallPos, wallBlock);
 							placed.add(wallPos);
@@ -256,6 +260,6 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				}
 			}
 		}
-		SPHERE = prePos.toArray(new Vec3i[]{});
+		SPHERE = prePos.toArray(new Vec3i[] {});
 	}
 }

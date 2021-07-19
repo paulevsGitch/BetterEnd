@@ -51,7 +51,15 @@ public class MossyObsidian extends BaseBlock {
 			return false;
 		}
 		else {
-			int i = LayerLightEngine.getLightBlockInto(worldView, state, pos, blockState, blockPos, Direction.UP, blockState.getLightBlock(worldView, blockPos));
+			int i = LayerLightEngine.getLightBlockInto(
+				worldView,
+				state,
+				pos,
+				blockState,
+				blockPos,
+				Direction.UP,
+				blockState.getLightBlock(worldView, blockPos)
+			);
 			return i < 5;
 		}
 	}

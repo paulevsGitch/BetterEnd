@@ -24,7 +24,11 @@ public class BubbleCoralBlock extends EndUnderwaterPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
 	
 	public BubbleCoralBlock() {
-		super(FabricBlockSettings.of(Material.WATER_PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.CORAL_BLOCK).noCollission());
+		super(FabricBlockSettings.of(Material.WATER_PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .sound(SoundType.CORAL_BLOCK)
+								 .noCollission());
 	}
 	
 	@Override

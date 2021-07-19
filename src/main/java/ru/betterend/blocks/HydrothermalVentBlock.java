@@ -50,7 +50,11 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 	private static final VoxelShape SHAPE = Block.box(1, 1, 1, 15, 16, 15);
 	
 	public HydrothermalVentBlock() {
-		super(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).sound(SoundType.STONE).noCollission().requiresCorrectToolForDrops());
+		super(FabricBlockSettings.of(Material.STONE)
+								 .breakByTool(FabricToolTags.PICKAXES)
+								 .sound(SoundType.STONE)
+								 .noCollission()
+								 .requiresCorrectToolForDrops());
 		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, true).setValue(ACTIVATED, false));
 	}
 	
@@ -95,7 +99,8 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		LevelAccessor worldAccess = ctx.getLevel();
 		BlockPos blockPos = ctx.getClickedPos();
-		return this.defaultBlockState().setValue(WATERLOGGED, worldAccess.getFluidState(blockPos).getType() == Fluids.WATER);
+		return this.defaultBlockState()
+				   .setValue(WATERLOGGED, worldAccess.getFluidState(blockPos).getType() == Fluids.WATER);
 	}
 	
 	@Override
@@ -119,7 +124,8 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 	
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-		if (world instanceof ServerLevel && state.getValue(WATERLOGGED) && world.getBlockState(pos.above()).is(Blocks.WATER)) {
+		if (world instanceof ServerLevel && state.getValue(WATERLOGGED) && world.getBlockState(pos.above())
+																				.is(Blocks.WATER)) {
 			tick(state, (ServerLevel) world, pos, world.random);
 		}
 	}

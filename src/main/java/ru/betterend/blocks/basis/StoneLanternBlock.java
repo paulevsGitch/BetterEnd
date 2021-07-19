@@ -15,13 +15,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import ru.bclib.client.models.ModelsHelper;
-import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.CustomColorProvider;
 import ru.betterend.client.models.Patterns;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.Optional;
 
-public class StoneLanternBlock extends EndLanternBlock implements IColorProvider {
+public class StoneLanternBlock extends EndLanternBlock implements CustomColorProvider {
 	private static final VoxelShape SHAPE_CEIL = Block.box(3, 1, 3, 13, 16, 13);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(3, 0, 3, 13, 15, 13);
 	
@@ -31,12 +31,12 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	
 	@Override
 	public BlockColor getProvider() {
-		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
+		return ((CustomColorProvider) EndBlocks.AURORA_CRYSTAL).getProvider();
 	}
 	
 	@Override
 	public ItemColor getItemProvider() {
-		return ((IColorProvider) EndBlocks.AURORA_CRYSTAL).getItemProvider();
+		return ((CustomColorProvider) EndBlocks.AURORA_CRYSTAL).getItemProvider();
 	}
 	
 	@Override
@@ -48,7 +48,11 @@ public class StoneLanternBlock extends EndLanternBlock implements IColorProvider
 	@Environment(EnvType.CLIENT)
 	public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
 		String blockName = resourceLocation.getPath();
-		Optional<String> pattern = blockState.getValue(IS_FLOOR) ? Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_FLOOR, blockName, blockName) : Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_CEIL, blockName, blockName);
+		Optional<String> pattern = blockState.getValue(IS_FLOOR) ? Patterns.createJson(
+			Patterns.BLOCK_STONE_LANTERN_FLOOR,
+			blockName,
+			blockName
+		) : Patterns.createJson(Patterns.BLOCK_STONE_LANTERN_CEIL, blockName, blockName);
 		return ModelsHelper.fromPattern(pattern);
 	}
 }

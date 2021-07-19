@@ -27,7 +27,10 @@ import ru.betterend.recipe.builders.AlloyingRecipe;
 
 public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 	
-	public final static MenuType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(BetterEnd.makeID(EndStoneSmelter.ID), EndStoneSmelterScreenHandler::new);
+	public final static MenuType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(
+		BetterEnd.makeID(EndStoneSmelter.ID),
+		EndStoneSmelterScreenHandler::new
+	);
 	
 	private final Container inventory;
 	private final ContainerData propertyDelegate;
@@ -117,7 +120,9 @@ public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 	}
 	
 	protected boolean isSmeltable(ItemStack itemStack) {
-		return world.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, new SimpleContainer(itemStack), world).isPresent();
+		return world.getRecipeManager()
+					.getRecipeFor(AlloyingRecipe.TYPE, new SimpleContainer(itemStack), world)
+					.isPresent();
 	}
 	
 	public boolean isFuel(ItemStack itemStack) {

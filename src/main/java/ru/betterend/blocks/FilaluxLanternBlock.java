@@ -8,6 +8,9 @@ import ru.bclib.blocks.BaseBlock;
 
 public class FilaluxLanternBlock extends BaseBlock {
 	public FilaluxLanternBlock() {
-		super(FabricBlockSettings.of(Material.WOOD).breakByTool(FabricToolTags.AXES).luminance(15).sound(SoundType.WOOD));
+		super(FabricBlockSettings.of(Material.WOOD)
+								 .breakByTool(FabricToolTags.AXES)
+								 .luminance(15)
+								 .sound(SoundType.WOOD));
 	}
 }

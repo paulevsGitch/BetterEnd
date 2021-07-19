@@ -118,7 +118,9 @@ public class DragonTreeFeature extends DefaultFeature {
 	}
 	
 	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) {
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(EndBlocks.DRAGON_TREE_LEAVES.defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
+		SDF sphere = new SDFSphere().setRadius(radius)
+									.setBlock(EndBlocks.DRAGON_TREE_LEAVES.defaultBlockState()
+																		  .setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
@@ -169,7 +171,11 @@ public class DragonTreeFeature extends DefaultFeature {
 		if (radius > 5) {
 			int count = (int) (radius * 2.5F);
 			for (int i = 0; i < count; i++) {
-				BlockPos p = pos.offset(random.nextGaussian() * 1, random.nextGaussian() * 1, random.nextGaussian() * 1);
+				BlockPos p = pos.offset(
+					random.nextGaussian() * 1,
+					random.nextGaussian() * 1,
+					random.nextGaussian() * 1
+				);
 				boolean place = true;
 				for (Direction d : Direction.values()) {
 					BlockState state = world.getBlockState(p.relative(d));
@@ -212,7 +218,13 @@ public class DragonTreeFeature extends DefaultFeature {
 			return info.getState();
 		};
 		
-		BRANCH = Lists.newArrayList(new Vector3f(0, 0, 0), new Vector3f(0.1F, 0.3F, 0), new Vector3f(0.4F, 0.6F, 0), new Vector3f(0.8F, 0.8F, 0), new Vector3f(1, 1, 0));
+		BRANCH = Lists.newArrayList(
+			new Vector3f(0, 0, 0),
+			new Vector3f(0.1F, 0.3F, 0),
+			new Vector3f(0.4F, 0.6F, 0),
+			new Vector3f(0.8F, 0.8F, 0),
+			new Vector3f(1, 1, 0)
+		);
 		SIDE1 = Lists.newArrayList(new Vector3f(0.4F, 0.6F, 0), new Vector3f(0.8F, 0.8F, 0), new Vector3f(1, 1, 0));
 		SIDE2 = SplineHelper.copySpline(SIDE1);
 		
@@ -226,7 +238,13 @@ public class DragonTreeFeature extends DefaultFeature {
 		SplineHelper.offset(SIDE1, offset2);
 		SplineHelper.offset(SIDE2, offset2);
 		
-		ROOT = Lists.newArrayList(new Vector3f(0F, 1F, 0), new Vector3f(0.1F, 0.7F, 0), new Vector3f(0.3F, 0.3F, 0), new Vector3f(0.7F, 0.05F, 0), new Vector3f(0.8F, -0.2F, 0));
+		ROOT = Lists.newArrayList(
+			new Vector3f(0F, 1F, 0),
+			new Vector3f(0.1F, 0.7F, 0),
+			new Vector3f(0.3F, 0.3F, 0),
+			new Vector3f(0.7F, 0.05F, 0),
+			new Vector3f(0.8F, -0.2F, 0)
+		);
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 	}
 }

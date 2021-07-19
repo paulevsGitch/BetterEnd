@@ -33,7 +33,12 @@ public class HydraluxBlock extends UnderwaterPlantBlock {
 	public static final EnumProperty<HydraluxShape> SHAPE = EndBlockProperties.HYDRALUX_SHAPE;
 	
 	public HydraluxBlock() {
-		super(FabricBlockSettings.of(Material.WATER_PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.WET_GRASS).lightLevel((state) -> state.getValue(SHAPE).hasGlow() ? 15 : 0).noCollission());
+		super(FabricBlockSettings.of(Material.WATER_PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .sound(SoundType.WET_GRASS)
+								 .lightLevel((state) -> state.getValue(SHAPE).hasGlow() ? 15 : 0)
+								 .noCollission());
 	}
 	
 	@Override
@@ -84,7 +89,10 @@ public class HydraluxBlock extends UnderwaterPlantBlock {
 			return Lists.newArrayList(new ItemStack(EndItems.HYDRALUX_PETAL, MHelper.randRange(1, 4, MHelper.RANDOM)));
 		}
 		else if (shape == HydraluxShape.ROOTS) {
-			return Lists.newArrayList(new ItemStack(EndBlocks.HYDRALUX_SAPLING, MHelper.randRange(1, 2, MHelper.RANDOM)));
+			return Lists.newArrayList(new ItemStack(
+				EndBlocks.HYDRALUX_SAPLING,
+				MHelper.randRange(1, 2, MHelper.RANDOM)
+			));
 		}
 		return Collections.emptyList();
 	}

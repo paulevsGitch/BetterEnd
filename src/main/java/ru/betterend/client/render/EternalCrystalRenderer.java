@@ -31,13 +31,31 @@ public class EternalCrystalRenderer {
 		matrices.pushPose();
 		matrices.scale(0.6F, 0.6F, 0.6F);
 		matrices.mulPose(Vector3f.YP.rotation(rotation));
-		CORE.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, colors[0], colors[1], colors[2], colors[3]);
+		CORE.render(
+			matrices,
+			vertexConsumer,
+			light,
+			OverlayTexture.NO_OVERLAY,
+			colors[0],
+			colors[1],
+			colors[2],
+			colors[3]
+		);
 		
 		for (int i = 0; i < 4; i++) {
 			matrices.pushPose();
 			float offset = Mth.sin(rotation * 2 + i) * 0.15F;
 			matrices.translate(0, offset, 0);
-			SHARDS[i].render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, colors[0], colors[1], colors[2], colors[3]);
+			SHARDS[i].render(
+				matrices,
+				vertexConsumer,
+				light,
+				OverlayTexture.NO_OVERLAY,
+				colors[0],
+				colors[1],
+				colors[2],
+				colors[3]
+			);
 			matrices.popPose();
 		}
 		
@@ -64,15 +82,35 @@ public class EternalCrystalRenderer {
 	public static LayerDefinition getTexturedModelData() {
 		MeshDefinition modelData = new MeshDefinition();
 		PartDefinition modelPartData = modelData.getRoot();
-		modelPartData.addOrReplaceChild("SHARDS_0", CubeListBuilder.create().texOffs(2, 4).addBox(-5.0f, 1.0f, -3.0f, 2.0f, 8.0f, 2.0f), PartPose.ZERO);
+		modelPartData.addOrReplaceChild(
+			"SHARDS_0",
+			CubeListBuilder.create().texOffs(2, 4).addBox(-5.0f, 1.0f, -3.0f, 2.0f, 8.0f, 2.0f),
+			PartPose.ZERO
+		);
 		
-		modelPartData.addOrReplaceChild("SHARDS_1", CubeListBuilder.create().texOffs(2, 4).addBox(3.0f, -1.0f, -1.0f, 2.0f, 8.0f, 2.0f), PartPose.ZERO);
+		modelPartData.addOrReplaceChild(
+			"SHARDS_1",
+			CubeListBuilder.create().texOffs(2, 4).addBox(3.0f, -1.0f, -1.0f, 2.0f, 8.0f, 2.0f),
+			PartPose.ZERO
+		);
 		
-		modelPartData.addOrReplaceChild("SHARDS_2", CubeListBuilder.create().texOffs(2, 4).addBox(-1.0f, 0.0f, -5.0f, 2.0f, 4.0f, 2.0f), PartPose.ZERO);
+		modelPartData.addOrReplaceChild(
+			"SHARDS_2",
+			CubeListBuilder.create().texOffs(2, 4).addBox(-1.0f, 0.0f, -5.0f, 2.0f, 4.0f, 2.0f),
+			PartPose.ZERO
+		);
 		
-		modelPartData.addOrReplaceChild("SHARDS_3", CubeListBuilder.create().texOffs(2, 4).addBox(0.0f, 3.0f, 4.0f, 2.0f, 6.0f, 2.0f), PartPose.ZERO);
+		modelPartData.addOrReplaceChild(
+			"SHARDS_3",
+			CubeListBuilder.create().texOffs(2, 4).addBox(0.0f, 3.0f, 4.0f, 2.0f, 6.0f, 2.0f),
+			PartPose.ZERO
+		);
 		
-		modelPartData.addOrReplaceChild("CORE", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f), PartPose.ZERO);
+		modelPartData.addOrReplaceChild(
+			"CORE",
+			CubeListBuilder.create().texOffs(0, 0).addBox(-2.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f),
+			PartPose.ZERO
+		);
 		
 		return LayerDefinition.create(modelData, 16, 16);
 	}

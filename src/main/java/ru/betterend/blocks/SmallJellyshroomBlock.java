@@ -30,7 +30,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
-import ru.bclib.interfaces.IRenderTyped;
+import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndFeatures;
@@ -39,11 +39,15 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Random;
 
-public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderTyped, BonemealableBlock, PottablePlant {
+public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLayerProvider, BonemealableBlock, PottablePlant {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public SmallJellyshroomBlock() {
-		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.NETHER_WART).noCollission());
+		super(FabricBlockSettings.of(Material.PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .sound(SoundType.NETHER_WART)
+								 .noCollission());
 	}
 	
 	@Override
@@ -55,7 +59,10 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements IRenderT
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-		if (tool != null && tool.is(FabricToolTags.SHEARS) || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0) {
+		if (tool != null && tool.is(FabricToolTags.SHEARS) || EnchantmentHelper.getItemEnchantmentLevel(
+			Enchantments.SILK_TOUCH,
+			tool
+		) > 0) {
 			return Lists.newArrayList(new ItemStack(this));
 		}
 		else {

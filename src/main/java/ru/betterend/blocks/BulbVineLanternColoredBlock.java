@@ -3,11 +3,11 @@ package ru.betterend.blocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
-import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.ColorUtil;
 
-public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements IColorProvider {
+public class BulbVineLanternColoredBlock extends BulbVineLanternBlock implements CustomColorProvider {
 	public BulbVineLanternColoredBlock(FabricBlockSettings settings) {
 		super(settings);
 	}

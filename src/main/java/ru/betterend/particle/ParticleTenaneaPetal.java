@@ -12,7 +12,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
-import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 
@@ -32,7 +32,7 @@ public class ParticleTenaneaPetal extends TextureSheetParticle {
 		pickSprite(sprites);
 		
 		if (provider == null) {
-			IColorProvider block = (IColorProvider) EndBlocks.TENANEA_FLOWERS;
+			CustomColorProvider block = (CustomColorProvider) EndBlocks.TENANEA_FLOWERS;
 			provider = block.getProvider();
 		}
 		int color = provider.getColor(null, null, new BlockPos(x, y, z), 0);

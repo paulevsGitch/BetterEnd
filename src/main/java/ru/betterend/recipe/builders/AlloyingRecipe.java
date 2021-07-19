@@ -29,7 +29,11 @@ import ru.betterend.util.RecipeHelper;
 public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
-	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(BetterEnd.MOD_ID, GROUP, new Serializer());
+	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(
+		BetterEnd.MOD_ID,
+		GROUP,
+		new Serializer()
+	);
 	
 	protected final RecipeType<?> type;
 	protected final ResourceLocation id;
@@ -70,7 +74,8 @@ public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 	
 	@Override
 	public boolean matches(Container inv, Level world) {
-		return this.primaryInput.test(inv.getItem(0)) && this.secondaryInput.test(inv.getItem(1)) || this.primaryInput.test(inv.getItem(1)) && this.secondaryInput.test(inv.getItem(0));
+		return this.primaryInput.test(inv.getItem(0)) && this.secondaryInput.test(inv.getItem(1)) || this.primaryInput.test(
+			inv.getItem(1)) && this.secondaryInput.test(inv.getItem(0));
 	}
 	
 	@Override
@@ -209,11 +214,17 @@ public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 		public void build() {
 			if (exist) {
 				if (primaryInput == null) {
-					BetterEnd.LOGGER.warning("Primary input for Alloying recipe can't be 'null', recipe {} will be ignored!", id);
+					BetterEnd.LOGGER.warning(
+						"Primary input for Alloying recipe can't be 'null', recipe {} will be ignored!",
+						id
+					);
 					return;
 				}
 				if (secondaryInput == null) {
-					BetterEnd.LOGGER.warning("Secondary input for Alloying can't be 'null', recipe {} will be ignored!", id);
+					BetterEnd.LOGGER.warning(
+						"Secondary input for Alloying can't be 'null', recipe {} will be ignored!",
+						id
+					);
 					return;
 				}
 				if (output == null) {
@@ -228,7 +239,10 @@ public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
 					BetterEnd.LOGGER.debug("Can't add Alloying recipe {}! Ingeredient or output not exists.", id);
 					return;
 				}
-				BCLRecipeManager.addRecipe(TYPE, new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime));
+				BCLRecipeManager.addRecipe(
+					TYPE,
+					new AlloyingRecipe(id, group, primaryInput, secondaryInput, output, experience, smeltTime)
+				);
 			}
 		}
 	}

@@ -72,7 +72,10 @@ public class EndDragonFightMixin {
 			BlockPos center = GeneratorOptions.getPortalPos().above(5);
 			for (Direction dir : BlocksHelper.HORIZONTAL) {
 				BlockPos central = center.relative(dir, 4);
-				List<EndCrystal> crystalList = level.getEntitiesOfClass(EndCrystal.class, new AABB(central.below(255).south().west(), central.above(255).north().east()));
+				List<EndCrystal> crystalList = level.getEntitiesOfClass(
+					EndCrystal.class,
+					new AABB(central.below(255).south().west(), central.above(255).north().east())
+				);
 				
 				int count = crystalList.size();
 				for (int n = 0; n < count; n++) {

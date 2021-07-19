@@ -25,14 +25,20 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		pos = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+		pos = getPosOnSurface(
+			world,
+			new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
+		);
 		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
 			return false;
 		}
 		
 		int count = MHelper.randRange(1, 5, random);
 		for (int i = 0; i < count; i++) {
-			BlockPos p = getPosOnSurface(world, new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8));
+			BlockPos p = getPosOnSurface(
+				world,
+				new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8)
+			);
 			makeBoulder(world, p, random);
 		}
 		
@@ -62,7 +68,8 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
+			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial()
+																							   .equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 	}
 }

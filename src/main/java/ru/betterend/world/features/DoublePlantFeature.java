@@ -23,7 +23,10 @@ public class DoublePlantFeature extends ScatterFeature {
 	
 	@Override
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		float d = MHelper.length(center.getX() - blockPos.getX(), center.getZ() - blockPos.getZ()) / radius * 0.6F + random.nextFloat() * 0.4F;
+		float d = MHelper.length(
+			center.getX() - blockPos.getX(),
+			center.getZ() - blockPos.getZ()
+		) / radius * 0.6F + random.nextFloat() * 0.4F;
 		plant = d < 0.5F ? largePlant : smallPlant;
 		return plant.canSurvive(plant.defaultBlockState(), world, blockPos);
 	}

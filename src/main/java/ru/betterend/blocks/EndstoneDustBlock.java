@@ -21,7 +21,9 @@ public class EndstoneDustBlock extends FallingBlock {
 	private static final int COLOR = ColorUtil.color(226, 239, 168);
 	
 	public EndstoneDustBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.SAND).breakByTool(FabricToolTags.SHOVELS).materialColor(Blocks.END_STONE.defaultMaterialColor()));
+		super(FabricBlockSettings.copyOf(Blocks.SAND)
+								 .breakByTool(FabricToolTags.SHOVELS)
+								 .materialColor(Blocks.END_STONE.defaultMaterialColor()));
 	}
 	
 	@Override

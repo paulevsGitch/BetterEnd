@@ -39,27 +39,35 @@ public class Patterns {
 	public final static ResourceLocation BLOCK_DOOR_TOP = BetterEnd.makeID("patterns/block/door_top.json");
 	public final static ResourceLocation BLOCK_DOOR_TOP_HINGE = BetterEnd.makeID("patterns/block/door_top_hinge.json");
 	public final static ResourceLocation BLOCK_DOOR_BOTTOM = BetterEnd.makeID("patterns/block/door_bottom.json");
-	public final static ResourceLocation BLOCK_DOOR_BOTTOM_HINGE = BetterEnd.makeID("patterns/block/door_bottom_hinge.json");
+	public final static ResourceLocation BLOCK_DOOR_BOTTOM_HINGE = BetterEnd.makeID(
+		"patterns/block/door_bottom_hinge.json");
 	public final static ResourceLocation BLOCK_CROSS = BetterEnd.makeID("patterns/block/cross.json");
 	public final static ResourceLocation BLOCK_CROSS_SHADED = BetterEnd.makeID("patterns/block/cross_shaded.json");
 	public final static ResourceLocation BLOCK_GATE_CLOSED = BetterEnd.makeID("patterns/block/fence_gate_closed.json");
-	public final static ResourceLocation BLOCK_GATE_CLOSED_WALL = BetterEnd.makeID("patterns/block/wall_gate_closed.json");
+	public final static ResourceLocation BLOCK_GATE_CLOSED_WALL = BetterEnd.makeID(
+		"patterns/block/wall_gate_closed.json");
 	public final static ResourceLocation BLOCK_GATE_OPEN = BetterEnd.makeID("patterns/block/fence_gate_open.json");
 	public final static ResourceLocation BLOCK_GATE_OPEN_WALL = BetterEnd.makeID("patterns/block/wall_gate_open.json");
 	public final static ResourceLocation BLOCK_TRAPDOOR = BetterEnd.makeID("patterns/block/trapdoor.json");
 	public final static ResourceLocation BLOCK_LADDER = BetterEnd.makeID("patterns/block/ladder.json");
 	public final static ResourceLocation BLOCK_BARREL_OPEN = BetterEnd.makeID("patterns/block/barrel_open.json");
-	public final static ResourceLocation BLOCK_PEDESTAL_DEFAULT = BetterEnd.makeID("patterns/block/pedestal_default.json");
+	public final static ResourceLocation BLOCK_PEDESTAL_DEFAULT = BetterEnd.makeID(
+		"patterns/block/pedestal_default.json");
 	public final static ResourceLocation BLOKC_PEDESTAL_COLUMN = BetterEnd.makeID("patterns/block/pedestal_column.json");
-	public final static ResourceLocation BLOCK_PEDESTAL_COLUMN_TOP = BetterEnd.makeID("patterns/block/pedestal_column_top.json");
+	public final static ResourceLocation BLOCK_PEDESTAL_COLUMN_TOP = BetterEnd.makeID(
+		"patterns/block/pedestal_column_top.json");
 	public final static ResourceLocation BLOCK_PEDESTAL_TOP = BetterEnd.makeID("patterns/block/pedestal_top.json");
 	public final static ResourceLocation BLOCK_PEDESTAL_BOTTOM = BetterEnd.makeID("patterns/block/pedestal_bottom.json");
 	public final static ResourceLocation BLOCK_PEDESTAL_PILLAR = BetterEnd.makeID("patterns/block/pedestal_pillar.json");
 	public final static ResourceLocation BLOCK_BOOKSHELF = BetterEnd.makeID("patterns/block/bookshelf.json");
-	public final static ResourceLocation BLOCK_STONE_LANTERN_CEIL = BetterEnd.makeID("patterns/block/stone_lantern_ceil.json");
-	public final static ResourceLocation BLOCK_STONE_LANTERN_FLOOR = BetterEnd.makeID("patterns/block/stone_lantern_floor.json");
-	public final static ResourceLocation BLOCK_BULB_LANTERN_FLOOR = BetterEnd.makeID("patterns/block/bulb_lantern_floor.json");
-	public final static ResourceLocation BLOCK_BULB_LANTERN_CEIL = BetterEnd.makeID("patterns/block/bulb_lantern_ceil.json");
+	public final static ResourceLocation BLOCK_STONE_LANTERN_CEIL = BetterEnd.makeID(
+		"patterns/block/stone_lantern_ceil.json");
+	public final static ResourceLocation BLOCK_STONE_LANTERN_FLOOR = BetterEnd.makeID(
+		"patterns/block/stone_lantern_floor.json");
+	public final static ResourceLocation BLOCK_BULB_LANTERN_FLOOR = BetterEnd.makeID(
+		"patterns/block/bulb_lantern_floor.json");
+	public final static ResourceLocation BLOCK_BULB_LANTERN_CEIL = BetterEnd.makeID(
+		"patterns/block/bulb_lantern_ceil.json");
 	public final static ResourceLocation BLOCK_PETAL_COLORED = BetterEnd.makeID("models/block/block_petal_colored.json");
 	public final static ResourceLocation BLOCK_COMPOSTER = BetterEnd.makeID("patterns/block/composter.json");
 	public final static ResourceLocation BLOCK_COLORED = BetterEnd.makeID("patterns/block/block_colored.json");
@@ -67,7 +75,8 @@ public class Patterns {
 	public final static ResourceLocation BLOCK_BARS_SIDE = BetterEnd.makeID("patterns/block/bars_side.json");
 	public final static ResourceLocation BLOCK_ANVIL = BetterEnd.makeID("patterns/block/anvil.json");
 	public final static ResourceLocation BLOCK_CHAIN = BetterEnd.makeID("patterns/block/chain.json");
-	public final static ResourceLocation BLOCK_CHANDELIER_FLOOR = BetterEnd.makeID("patterns/block/chandelier_floor.json");
+	public final static ResourceLocation BLOCK_CHANDELIER_FLOOR = BetterEnd.makeID(
+		"patterns/block/chandelier_floor.json");
 	public final static ResourceLocation BLOCK_CHANDELIER_WALL = BetterEnd.makeID("patterns/block/chandelier_wall.json");
 	public final static ResourceLocation BLOCK_CHANDELIER_CEIL = BetterEnd.makeID("patterns/block/chandelier_ceil.json");
 	public final static ResourceLocation BLOCK_FURNACE = BetterEnd.makeID("patterns/block/furnace.json");
@@ -128,7 +137,8 @@ public class Patterns {
 	public static Optional<String> createJson(ResourceLocation patternId, Map<String, String> textures) {
 		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		try (InputStream input = resourceManager.getResource(patternId).getInputStream()) {
-			String json = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8)).lines().collect(Collectors.joining());
+			String json = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8)).lines()
+																								  .collect(Collectors.joining());
 			for (Entry<String, String> texture : textures.entrySet()) {
 				json = json.replace(texture.getKey(), texture.getValue());
 			}

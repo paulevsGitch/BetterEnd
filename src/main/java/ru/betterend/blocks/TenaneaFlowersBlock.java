@@ -11,14 +11,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.blocks.BaseVineBlock;
-import ru.bclib.interfaces.IColorProvider;
+import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndParticles;
 
 import java.util.Random;
 
-public class TenaneaFlowersBlock extends BaseVineBlock implements IColorProvider {
+public class TenaneaFlowersBlock extends BaseVineBlock implements CustomColorProvider {
 	public static final Vec3i[] COLORS;
 	
 	public TenaneaFlowersBlock() {
@@ -73,6 +73,11 @@ public class TenaneaFlowersBlock extends BaseVineBlock implements IColorProvider
 	}
 	
 	static {
-		COLORS = new Vec3i[]{new Vec3i(250, 111, 222), new Vec3i(167, 89, 255), new Vec3i(120, 207, 239), new Vec3i(255, 87, 182)};
+		COLORS = new Vec3i[] {
+			new Vec3i(250, 111, 222),
+			new Vec3i(167, 89, 255),
+			new Vec3i(120, 207, 239),
+			new Vec3i(255, 87, 182)
+		};
 	}
 }

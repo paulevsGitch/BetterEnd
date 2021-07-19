@@ -32,7 +32,8 @@ public class BigEtherTreeFeature extends DefaultFeature {
 			return log;
 		};
 		Function<BlockState, Boolean> replace = (state) -> {
-			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
+			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
+																									 .isReplaceable();
 		};
 		
 		int height = MHelper.randRange(40, 60, random);
@@ -62,7 +63,8 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		}
 		
 		sdf.setReplaceFunction((state) -> {
-			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial().isReplaceable();
+			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
+																									 .isReplaceable();
 		}).addPostProcess((info) -> {
 			if (info.getState().equals(log) && (!info.getStateUp().equals(log) || !info.getStateDown().equals(log))) {
 				return wood;

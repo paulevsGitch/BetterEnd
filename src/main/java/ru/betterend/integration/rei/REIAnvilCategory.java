@@ -71,10 +71,16 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 			return anvilLevel == 1;
 		}).collect(Collectors.toList());
 		widgets.add(Widgets.createArrow(new Point(x + 24, y + 4)));
-		widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 7, bounds.y + bounds.height - 15), new TranslatableComponent("category.rei.damage.amount&dmg", display.getDamage())).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createLabel(
+			new Point(bounds.x + bounds.width - 7, bounds.y + bounds.height - 15),
+			new TranslatableComponent("category.rei.damage.amount&dmg", display.getDamage())
+		).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 		widgets.add(Widgets.createSlot(new Point(x - 20, y + 4)).entries(materials).markInput());
 		widgets.add(Widgets.createSlot(new Point(x + 1, y + 4)).entries(inputEntries.get(0)).markInput());
-		widgets.add(Widgets.createSlot(new Point(x + 61, y + 5)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(new Point(x + 61, y + 5))
+						   .entries(display.getOutputEntries().get(0))
+						   .disableBackground()
+						   .markOutput());
 		widgets.add(Widgets.createSlot(new Point(x - 9, y + 25)).entries(anvils));
 		
 		return widgets;
@@ -86,8 +92,22 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		matrices.pushPose();
 		matrices.translate(0, 0, 400);
 		if (redSlots.contains(0)) {
-			GuiComponent.fill(matrices, startPoint.x - 20, startPoint.y + 3, startPoint.x - 20 + 16, startPoint.y + 3 + 16, 1090453504);
-			GuiComponent.fill(matrices, startPoint.x + 1, startPoint.y + 3, startPoint.x + 1 + 16, startPoint.y + 3 + 16, 1090453504);
+			GuiComponent.fill(
+				matrices,
+				startPoint.x - 20,
+				startPoint.y + 3,
+				startPoint.x - 20 + 16,
+				startPoint.y + 3 + 16,
+				1090453504
+			);
+			GuiComponent.fill(
+				matrices,
+				startPoint.x + 1,
+				startPoint.y + 3,
+				startPoint.x + 1 + 16,
+				startPoint.y + 3 + 16,
+				1090453504
+			);
 		}
 		matrices.popPose();
 	}

@@ -29,7 +29,16 @@ public class RendererEntityEndFish extends MobRenderer<EndFishEntity, EndFishEnt
 			@Override
 			public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, EndFishEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(GLOW[entity.getVariant()]);
-				this.getParentModel().renderToBuffer(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+				this.getParentModel()
+					.renderToBuffer(matrices,
+						vertexConsumer,
+						15728640,
+						OverlayTexture.NO_OVERLAY,
+						1.0F,
+						1.0F,
+						1.0F,
+						1.0F
+					);
 			}
 		});
 	}

@@ -28,7 +28,11 @@ public class LargeAmaranitaBlock extends EndPlantBlock {
 	private static final VoxelShape SHAPE_TOP = Shapes.or(Block.box(1, 3, 1, 15, 16, 15), SHAPE_BOTTOM);
 	
 	public LargeAmaranitaBlock() {
-		super(FabricBlockSettings.of(Material.PLANT).breakByTool(FabricToolTags.SHEARS).breakByHand(true).sound(SoundType.GRASS).lightLevel((state) -> (state.getValue(SHAPE) == TripleShape.TOP) ? 15 : 0));
+		super(FabricBlockSettings.of(Material.PLANT)
+								 .breakByTool(FabricToolTags.SHEARS)
+								 .breakByHand(true)
+								 .sound(SoundType.GRASS)
+								 .lightLevel((state) -> (state.getValue(SHAPE) == TripleShape.TOP) ? 15 : 0));
 	}
 	
 	@Override

@@ -27,12 +27,28 @@ public class LanceleafSeedBlock extends EndPlantWithAgeBlock {
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		BlockState plant = EndBlocks.LANCELEAF.defaultBlockState().setValue(BlockProperties.ROTATION, rotation);
 		BlocksHelper.setWithoutUpdate(world, mut, plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.BOTTOM));
-		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_BOTTOM));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			mut.move(Direction.UP),
+			plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_BOTTOM)
+		);
 		for (int i = 2; i < height - 2; i++) {
-			BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.MIDDLE));
+			BlocksHelper.setWithoutUpdate(
+				world,
+				mut.move(Direction.UP),
+				plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.MIDDLE)
+			);
 		}
-		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP));
-		BlocksHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.TOP));
+		BlocksHelper.setWithoutUpdate(
+			world,
+			mut.move(Direction.UP),
+			plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP)
+		);
+		BlocksHelper.setWithoutUpdate(
+			world,
+			mut.move(Direction.UP),
+			plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.TOP)
+		);
 	}
 	
 	@Override

@@ -41,7 +41,13 @@ public class SilkMothHiveBlock extends BaseBlock {
 	public static final IntegerProperty FULLNESS = EndBlockProperties.FULLNESS;
 	
 	public SilkMothHiveBlock() {
-		super(FabricBlockSettings.of(Material.WOOD).breakByHand(true).hardness(0.5F).resistance(0.1F).sound(SoundType.WOOL).noOcclusion().randomTicks());
+		super(FabricBlockSettings.of(Material.WOOD)
+								 .breakByHand(true)
+								 .hardness(0.5F)
+								 .resistance(0.1F)
+								 .sound(SoundType.WOOL)
+								 .noOcclusion()
+								 .randomTicks());
 		this.registerDefaultState(defaultBlockState().setValue(FULLNESS, 0));
 	}
 	

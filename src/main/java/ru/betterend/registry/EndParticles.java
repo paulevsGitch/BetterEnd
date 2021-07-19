@@ -23,7 +23,10 @@ import ru.betterend.particle.SmaragdantParticle;
 public class EndParticles {
 	public static final SimpleParticleType GLOWING_SPHERE = register("glowing_sphere");
 	public static final SimpleParticleType PORTAL_SPHERE = register("portal_sphere");
-	public static final ParticleType<InfusionParticleType> INFUSION = register("infusion", FabricParticleTypes.complex(InfusionParticleType.PARAMETERS_FACTORY));
+	public static final ParticleType<InfusionParticleType> INFUSION = register(
+		"infusion",
+		FabricParticleTypes.complex(InfusionParticleType.PARAMETERS_FACTORY)
+	);
 	public static final SimpleParticleType SULPHUR_PARTICLE = register("sulphur_particle");
 	public static final SimpleParticleType GEYSER_PARTICLE = registerFar("geyser_particle");
 	public static final SimpleParticleType SNOWFLAKE = register("snowflake");

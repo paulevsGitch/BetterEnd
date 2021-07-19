@@ -16,11 +16,14 @@ public interface ItemTooltipCallback {
 	/**
 	 * Fired after the game has appended all base tooltip lines to the list.
 	 */
-	Event<ItemTooltipCallback> EVENT = EventFactory.createArrayBacked(ItemTooltipCallback.class, callbacks -> (player, stack, context, lines) -> {
-		for (ItemTooltipCallback callback : callbacks) {
-			callback.getTooltip(player, stack, context, lines);
+	Event<ItemTooltipCallback> EVENT = EventFactory.createArrayBacked(
+		ItemTooltipCallback.class,
+		callbacks -> (player, stack, context, lines) -> {
+			for (ItemTooltipCallback callback : callbacks) {
+				callback.getTooltip(player, stack, context, lines);
+			}
 		}
-	});
+	);
 	
 	/**
 	 * Called when an item stack's tooltip is rendered. Text added to {@code lines} will be

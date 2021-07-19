@@ -38,15 +38,24 @@ public class CrystaliteBootsModel extends HumanoidModel<LivingEntity> {
 		modelPartData.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
 		
 		CubeDeformation deformation = new CubeDeformation(scale + 0.25f);
-		modelPartData.addOrReplaceChild("leftBoot", CubeListBuilder.create().texOffs(0, 32).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation), PartPose.offset(1.9f, 12.0f, 0.0f));
+		modelPartData.addOrReplaceChild(
+			"leftBoot",
+			CubeListBuilder.create().texOffs(0, 32).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
+			PartPose.offset(1.9f, 12.0f, 0.0f)
+		);
 		
-		modelPartData.addOrReplaceChild("rightBoot", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation), PartPose.offset(-1.9f, 12.0f, 0.0f));
+		modelPartData.addOrReplaceChild(
+			"rightBoot",
+			CubeListBuilder.create().texOffs(0, 16).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, deformation),
+			PartPose.offset(-1.9f, 12.0f, 0.0f)
+		);
 		
 		return LayerDefinition.create(modelData, 64, 48);
 	}
 	
 	public static CrystaliteBootsModel createModel(EntityModelSet entityModelSet) {
-		return new CrystaliteBootsModel(entityModelSet == null ? getTexturedModelData().bakeRoot() : entityModelSet.bakeLayer(EndEntitiesRenders.CRYSTALITE_BOOTS));
+		return new CrystaliteBootsModel(entityModelSet == null ? getTexturedModelData().bakeRoot() : entityModelSet.bakeLayer(
+			EndEntitiesRenders.CRYSTALITE_BOOTS));
 	}
 	
 	public CrystaliteBootsModel(ModelPart modelPart) {

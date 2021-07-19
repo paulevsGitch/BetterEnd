@@ -125,13 +125,20 @@ public class LakePiece extends BasePiece {
 					else if (dist <= r3 && mut.getY() < center.getY()) {
 						BlockState state = chunk.getBlockState(mut);
 						BlockPos worldPos = mut.offset(sx, 0, sz);
-						if (!state.isCollisionShapeFullBlock(world, worldPos) && !state.isRedstoneConductor(world, worldPos)) {
+						if (!state.isCollisionShapeFullBlock(world, worldPos) && !state.isRedstoneConductor(
+							world,
+							worldPos
+						)) {
 							state = chunk.getBlockState(mut.above());
 							if (state.isAir()) {
-								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos)
+																			   .getGenerationSettings()
+																			   .getSurfaceBuilderConfig()
+																			   .getTopMaterial();
 							}
 							else {
-								state = state.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
+								state = state.getFluidState()
+											 .isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
 							}
 							chunk.setBlockState(mut, state, false);
 						}
@@ -160,10 +167,14 @@ public class LakePiece extends BasePiece {
 							
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) {
-								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
+																				.getGenerationSettings()
+																				.getSurfaceBuilderConfig()
+																				.getTopMaterial();
 							}
 							else {
-								bState = bState.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
+								bState = bState.getFluidState()
+											   .isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
 							}
 							
 							mut.setY(y);
@@ -178,10 +189,14 @@ public class LakePiece extends BasePiece {
 									mut.setY(y + 1);
 									BlockState bState = chunk.getBlockState(mut);
 									if (bState.isAir()) {
-										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
+																						.getGenerationSettings()
+																						.getSurfaceBuilderConfig()
+																						.getTopMaterial();
 									}
 									else {
-										bState = bState.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
+										bState = bState.getFluidState()
+													   .isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
 									}
 									mut.setY(y);
 									makeEndstonePillar(chunk, mut, bState);

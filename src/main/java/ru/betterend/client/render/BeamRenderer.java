@@ -31,11 +31,53 @@ public class BeamRenderer {
 		
 		matrices.pushPose();
 		matrices.mulPose(Vector3f.YP.rotation(-rotation));
-		renderBeam(matrices, vertexConsumer, red, green, blue, alpha, minY, maxBY, beamIn, 0.0F, 0.0F, beamIn, 0.0F, xIn, xIn, 0.0F, 0.0F, 1.0F, minV, maxV);
+		renderBeam(
+			matrices,
+			vertexConsumer,
+			red,
+			green,
+			blue,
+			alpha,
+			minY,
+			maxBY,
+			beamIn,
+			0.0F,
+			0.0F,
+			beamIn,
+			0.0F,
+			xIn,
+			xIn,
+			0.0F,
+			0.0F,
+			1.0F,
+			minV,
+			maxV
+		);
 		
 		float xOut = -beamOut;
 		maxV = (float) maxY + minV;
-		renderBeam(matrices, vertexConsumer, red, green, blue, alpha, minY, maxBY, xOut, xOut, beamOut, xOut, xOut, beamOut, beamOut, beamOut, 0.0F, 1.0F, minV, maxV);
+		renderBeam(
+			matrices,
+			vertexConsumer,
+			red,
+			green,
+			blue,
+			alpha,
+			minY,
+			maxBY,
+			xOut,
+			xOut,
+			beamOut,
+			xOut,
+			xOut,
+			beamOut,
+			beamOut,
+			beamOut,
+			0.0F,
+			1.0F,
+			minV,
+			maxV
+		);
 		matrices.popPose();
 	}
 	
@@ -43,10 +85,82 @@ public class BeamRenderer {
 		PoseStack.Pose entry = matrices.last();
 		Matrix4f matrix4f = entry.pose();
 		Matrix3f matrix3f = entry.normal();
-		renderBeam(matrix4f, matrix3f, vertexConsumer, red, green, blue, alpha, maxY, minY, x1, d1, x2, d2, minU, maxU, minV, maxV);
-		renderBeam(matrix4f, matrix3f, vertexConsumer, red, green, blue, alpha, maxY, minY, x4, d4, x3, d3, minU, maxU, minV, maxV);
-		renderBeam(matrix4f, matrix3f, vertexConsumer, red, green, blue, alpha, maxY, minY, x2, d2, x4, d4, minU, maxU, minV, maxV);
-		renderBeam(matrix4f, matrix3f, vertexConsumer, red, green, blue, alpha, maxY, minY, x3, d3, x1, d1, minU, maxU, minV, maxV);
+		renderBeam(
+			matrix4f,
+			matrix3f,
+			vertexConsumer,
+			red,
+			green,
+			blue,
+			alpha,
+			maxY,
+			minY,
+			x1,
+			d1,
+			x2,
+			d2,
+			minU,
+			maxU,
+			minV,
+			maxV
+		);
+		renderBeam(
+			matrix4f,
+			matrix3f,
+			vertexConsumer,
+			red,
+			green,
+			blue,
+			alpha,
+			maxY,
+			minY,
+			x4,
+			d4,
+			x3,
+			d3,
+			minU,
+			maxU,
+			minV,
+			maxV
+		);
+		renderBeam(
+			matrix4f,
+			matrix3f,
+			vertexConsumer,
+			red,
+			green,
+			blue,
+			alpha,
+			maxY,
+			minY,
+			x2,
+			d2,
+			x4,
+			d4,
+			minU,
+			maxU,
+			minV,
+			maxV
+		);
+		renderBeam(
+			matrix4f,
+			matrix3f,
+			vertexConsumer,
+			red,
+			green,
+			blue,
+			alpha,
+			maxY,
+			minY,
+			x3,
+			d3,
+			x1,
+			d1,
+			minU,
+			maxU,
+			minV,
+			maxV
+		);
 	}
 	
 	private static void renderBeam(Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, float red, float green, float blue, float alpha, int minY, int maxY, float minX, float minD, float maxX, float maxD, float minU, float maxU, float minV, float maxV) {
@@ -57,6 +171,12 @@ public class BeamRenderer {
 	}
 	
 	private static void addVertex(Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, float red, float green, float blue, float alpha, float x, float y, float d, float u, float v) {
-		vertexConsumer.vertex(matrix4f, x, y, d).color(red, green, blue, alpha).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+		vertexConsumer.vertex(matrix4f, x, y, d)
+					  .color(red, green, blue, alpha)
+					  .uv(u, v)
+					  .overlayCoords(OverlayTexture.NO_OVERLAY)
+					  .uv2(15728880)
+					  .normal(matrix3f, 0.0F, 1.0F, 0.0F)
+					  .endVertex();
 	}
 }

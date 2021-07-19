@@ -32,7 +32,7 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 		if (x + z < 1024L) {
 			return false;
 		}
-		if (chunkGenerator.getBaseHeight(pos.getBlockX(8), pos.getBlockX(8), Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor) < 10) {
+		if (chunkGenerator.getBaseHeight(pos.getBlockX(8), pos.getBlockX(8), Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor) < 5) {
 			return false;
 		}
 		return super.isFeatureChunk(chunkGenerator, biomeSource, worldSeed, chunkRandom, pos, biome, chunkPos, featureConfig, levelHeightAccessor);
@@ -48,17 +48,12 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 			super(feature, pos, references, seed);
 		}
 		
-		
 		@Override
 		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
-			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
-			int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
+			int x = chunkPos.getBlockX(8);
+			int z = chunkPos.getBlockZ(8);
 			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
-			if (y > 4) {
-				this.pieces.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), random.nextInt(5), true, random));
-			}
-			//bbox is calculated lazy on get
-			//this.calculateBoundingBox();
+			this.pieces.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), random.nextInt(5), true, random));
 		}
 	}
 }

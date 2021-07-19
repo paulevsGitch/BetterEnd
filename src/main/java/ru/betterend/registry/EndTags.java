@@ -15,6 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
@@ -53,7 +54,7 @@ public class EndTags {
 			Properties properties = ((AbstractBlockAccessor) block).getSettings();
 			Material material = ((AbstractBlockSettingsAccessor) properties).getMaterial();
 			
-			if (material.equals(Material.STONE)) {
+			if (material.equals(Material.STONE) || material.equals(Material.METAL)) {
 				TagHelper.addTag(TagAPI.MINEABLE_PICKAXE, block);
 			}
 			else if (material.equals(Material.WOOD)) {
@@ -69,7 +70,7 @@ public class EndTags {
 			if (block instanceof EndTerrainBlock) {
 				TagAPI.addEndGround(block);
 				TagHelper.addTag(BlockTags.NYLIUM, block);
-				BonemealAPI.addSpreadableBlock(block);
+				BonemealAPI.addSpreadableBlock(block, Blocks.END_STONE);
 			}
 			else if (block instanceof LeavesBlock || block instanceof SimpleLeavesBlock) {
 				TagHelper.addTag(BlockTags.LEAVES, block);
@@ -89,7 +90,9 @@ public class EndTags {
 		});
 		TagAPI.addEndGround(EndBlocks.CAVE_MOSS);
 		TagHelper.addTag(BlockTags.NYLIUM, EndBlocks.CAVE_MOSS);
-		BonemealAPI.addSpreadableBlock(EndBlocks.CAVE_MOSS);
+		BonemealAPI.addSpreadableBlock(EndBlocks.CAVE_MOSS, Blocks.END_STONE);
+		BonemealAPI.addSpreadableBlock(EndBlocks.MOSSY_OBSIDIAN, Blocks.OBSIDIAN);
+		BonemealAPI.addSpreadableBlock(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.DRAGON_BONE_BLOCK);
 		
 		List<Item> hammers = Lists.newArrayList();
 		EndItems.getModItems(BetterEnd.MOD_ID).forEach(item -> {

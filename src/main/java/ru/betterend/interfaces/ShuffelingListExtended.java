@@ -1,4 +1,4 @@
-package ru.betterend.util;
+package ru.betterend.interfaces;
 
 public interface ShuffelingListExtended<U> {
 	public boolean isEmpty();

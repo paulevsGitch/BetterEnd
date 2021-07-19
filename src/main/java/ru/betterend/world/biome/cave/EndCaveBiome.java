@@ -10,7 +10,7 @@ import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.util.ShuffelingListExtended;
+import ru.betterend.interfaces.ShuffelingListExtended;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 

@@ -4,7 +4,7 @@ import net.minecraft.world.entity.ai.behavior.ShufflingList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import ru.betterend.util.ShuffelingListExtended;
+import ru.betterend.interfaces.ShuffelingListExtended;
 
 import java.util.List;
 

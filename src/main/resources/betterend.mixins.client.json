@@ -6,7 +6,7 @@
 	"client": [
 		"AbstractSoundInstanceAccessor",
 		"ClientPlayNetworkHandlerMixin",
-        "HumanoidMobRendererMixin",
+		"HumanoidMobRendererMixin",
 		"ArmorStandRendererMixin",
 		"ClientRecipeBookMixin",
 		"MinecraftClientMixin",

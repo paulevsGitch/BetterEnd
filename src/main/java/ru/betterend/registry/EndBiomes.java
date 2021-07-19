@@ -242,6 +242,7 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerBiome(Biome biome, BiomeType type, float fogDensity, float genChance) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, true);
+		BiomeAPI.registerBiome(endBiome);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
 			addToPicker(endBiome, type);
 		}
@@ -271,12 +272,12 @@ public class EndBiomes {
 	 */
 	public static EndBiome registerSubBiome(Biome biome, EndBiome parent, float fogDensity, float genChance, boolean hasCaves) {
 		EndBiome endBiome = new EndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
+		BiomeAPI.registerBiome(endBiome);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(endBiome);
 			parent.addSubBiome(endBiome);
 			SUBBIOMES.add(endBiome);
 			SUBBIOMES_UNMUTABLES.add(endBiome.getID());
-			BiomeAPI.registerBiome(endBiome);
 		}
 		return endBiome;
 	}

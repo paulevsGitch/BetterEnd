@@ -883,5 +883,23 @@
 	"block.betterend.sulphuric_rock_flower_pot": "Sulphuric Rock Flower Pot",
 	"block.betterend.violecite_flower_pot": "Violecite Flower Pot",
 	"block.betterend.virid_jadestone_flower_pot": "Virid Jadestone Flower Pot",
-	"block.betterend.virid_jadestone_flower_pot": "Virid Jadestone Flower Pot"
-}
+	"block.betterend.virid_jadestone_flower_pot": "Virid Jadestone Flower Pot",
+	
+	"block.betterend.umbralith": "Umbralith",
+	"block.betterend.umbralith_bricks": "Umbralith Bricks",
+	"block.betterend.umbralith_bricks_slab": "Umbralith Bricks Slab",
+	"block.betterend.umbralith_bricks_stairs": "Umbralith Bricks Stairs",
+	"block.betterend.umbralith_bricks_wall": "Umbralith Bricks Wall",
+	"block.betterend.umbralith_button": "Umbralith Button",
+	"block.betterend.umbralith_flower_pot": "Umbralith Flower Pot",
+	"block.betterend.umbralith_furnace": "Umbralith Furnace",
+	"block.betterend.umbralith_lantern": "Umbralith Lantern",
+	"block.betterend.umbralith_pedestal": "Umbralith Pedestal",
+	"block.betterend.umbralith_pillar": "Umbralith Pillar",
+	"block.betterend.umbralith_plate": "Umbralith Pressure Plate",
+	"block.betterend.umbralith_polished": "Umbralith Polished",
+	"block.betterend.umbralith_slab": "Umbralith Slab",
+	"block.betterend.umbralith_stairs": "Umbralith Stairs",
+	"block.betterend.umbralith_tiles": "Umbralith Tiles",
+	"block.betterend.umbralith_wall": "Umbralith Wall"
+	}

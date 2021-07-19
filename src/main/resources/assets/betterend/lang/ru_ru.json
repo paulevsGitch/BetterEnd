@@ -898,5 +898,23 @@
 	"block.betterend.sandy_jadestone_flower_pot": "Цветочный горшок из песчаного нефрита",
 	"block.betterend.sulphuric_rock_flower_pot": "Цветочный горшок из серного камня",
 	"block.betterend.violecite_flower_pot": "Цветочный горшок из виолецита",
-	"block.betterend.virid_jadestone_flower_pot": "Цветочный горшок из зелёного нефрита"
+	"block.betterend.virid_jadestone_flower_pot": "Цветочный горшок из зелёного нефрита",
+	
+	"block.betterend.umbralith": "Умбралит",
+	"block.betterend.umbralith_bricks": "Умбралитовые кирпичи",
+	"block.betterend.umbralith_bricks_slab": "Плита из умбралитовых кирпичей",
+	"block.betterend.umbralith_bricks_stairs": "Ступени из умбралитовых кирпичей",
+	"block.betterend.umbralith_bricks_wall": "Стена из умбралитовых кирпичей",
+	"block.betterend.umbralith_button": "Умбралитовая кнопка",
+	"block.betterend.umbralith_flower_pot": "Умбралитовый горшок",
+	"block.betterend.umbralith_furnace": "Умбралитовая печь",
+	"block.betterend.umbralith_lantern": "Умбралитовый фонарь",
+	"block.betterend.umbralith_pedestal": "Умбралитовый пьедестал",
+	"block.betterend.umbralith_pillar": "Умбралитовая колонна",
+	"block.betterend.umbralith_plate": "Умбралитовая нажимная плита",
+	"block.betterend.umbralith_polished": "Полированный умбралит",
+	"block.betterend.umbralith_slab": "Умбралитовая плита",
+	"block.betterend.umbralith_stairs": "Умбралитовые ступени",
+	"block.betterend.umbralith_tiles": "Умбралитовая плитка",
+	"block.betterend.umbralith_wall": "Умбралитовая стена"
 }

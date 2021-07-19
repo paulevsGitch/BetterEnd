@@ -49,6 +49,7 @@ import ru.betterend.world.biome.land.NeonOasisBiome;
 import ru.betterend.world.biome.land.PaintedMountainsBiome;
 import ru.betterend.world.biome.land.ShadowForestBiome;
 import ru.betterend.world.biome.land.SulphurSpringsBiome;
+import ru.betterend.world.biome.land.UmbraValleyBiome;
 import ru.betterend.world.biome.land.UmbrellaJungleBiome;
 import ru.betterend.world.generator.BiomeType;
 import ru.betterend.world.generator.GeneratorOptions;
@@ -97,6 +98,7 @@ public class EndBiomes {
 	public static final EndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), BiomeType.LAND);
 	public static final EndBiome LANTERN_WOODS = registerBiome(new LanternWoodsBiome(), BiomeType.LAND);
 	public static final EndBiome NEON_OASIS = registerSubBiome(new NeonOasisBiome(), DUST_WASTELANDS);
+	public static final EndBiome UMBRA_VALLEY = registerBiome(new UmbraValleyBiome(), BiomeType.LAND);
 	
 	// Better End Void
 	public static final EndBiome ICE_STARFIELD = registerBiome(new BiomeIceStarfield(), BiomeType.VOID);

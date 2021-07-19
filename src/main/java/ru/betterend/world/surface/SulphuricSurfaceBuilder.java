@@ -35,7 +35,7 @@ public class SulphuricSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderBaseCo
 		}
 	}
 	
-	public static SulphuricSurfaceBuilder register(String name) {
+	/*public static SulphuricSurfaceBuilder register(String name) {
 		return Registry.register(Registry.SURFACE_BUILDER, name, new SulphuricSurfaceBuilder());
-	}
+	}*/
 }

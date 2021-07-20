@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import ru.bclib.blocks.BaseAnvilBlock;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.interfaces.AnvilScreenHandlerExtended;
 import ru.betterend.recipe.builders.AnvilRecipe;
@@ -72,15 +73,15 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements AnvilSc
 			slotsChanged(inputSlots);
 			access.execute((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
-				if (!player.getAbilities().instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom()
-																								 .nextDouble() < 0.1) {
-					BlockState landingState = EndAnvilBlock.applyDamage(anvilState);
-					if (landingState == null) {
+				BaseAnvilBlock anvil = (BaseAnvilBlock) anvilState.getBlock();
+				if (!player.getAbilities().instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextDouble() < 0.1) {
+					BlockState damagedState = anvil.damageAnvilUse(anvilState, player.getRandom());
+					if (damagedState == null) {
 						world.removeBlock(blockPos, false);
 						world.levelEvent(1029, blockPos, 0);
 					}
 					else {
-						world.setBlock(blockPos, landingState, 2);
+						world.setBlock(blockPos, damagedState, 2);
 						world.levelEvent(1030, blockPos, 0);
 					}
 				}

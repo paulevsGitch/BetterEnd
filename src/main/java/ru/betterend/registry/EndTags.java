@@ -54,7 +54,7 @@ public class EndTags {
 			Properties properties = ((AbstractBlockAccessor) block).getSettings();
 			Material material = ((AbstractBlockSettingsAccessor) properties).getMaterial();
 			
-			if (material.equals(Material.STONE) || material.equals(Material.METAL)) {
+			if (material.equals(Material.STONE) || material.equals(Material.METAL) || material.equals(Material.HEAVY_METAL)) {
 				TagHelper.addTag(TagAPI.MINEABLE_PICKAXE, block);
 			}
 			else if (material.equals(Material.WOOD)) {

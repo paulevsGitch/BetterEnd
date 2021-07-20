@@ -673,7 +673,7 @@ public class EndBlocks extends BlocksRegistry {
 	public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
 	public static final Block ETERNAL_PEDESTAL = registerBlock("eternal_pedestal", new EternalPedestal());
 	public static final Block INFUSION_PEDESTAL = registerBlock("infusion_pedestal", new InfusionPedestal());
-	public static final Block AETERNIUM_ANVIL = registerAnvil("aeternium_anvil", new AeterniumAnvil());
+	public static final Block AETERNIUM_ANVIL = registerBlock("aeternium_anvil", new AeterniumAnvil());
 	
 	// Technical
 	public static final Block END_PORTAL_BLOCK = registerEndBlockOnly("end_portal_block", new EndPortalBlock());
@@ -689,16 +689,6 @@ public class EndBlocks extends BlocksRegistry {
 											 .filter(BlockItem.class::isInstance)
 											 .map(item -> ((BlockItem) item).getBlock())
 											 .collect(Collectors.toList());
-	}
-	
-	public static Block registerAnvil(String name, EndAnvilBlock anvilBlock) {
-		if (!Configs.BLOCK_CONFIG.getBooleanRoot(name, true)) {
-			return anvilBlock;
-		}
-		BlocksRegistry registry = getBlockRegistry();
-		registry.registerBlockOnly(name, anvilBlock);
-		registry.registerBlockItem(BetterEnd.makeID(name + "_item"), anvilBlock.asItem());
-		return anvilBlock;
 	}
 	
 	public static Block registerBlock(ResourceLocation id, Block block) {

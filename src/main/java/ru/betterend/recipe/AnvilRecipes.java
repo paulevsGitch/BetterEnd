@@ -53,7 +53,7 @@ public class AnvilRecipes {
 						   .setInput(EndItems.AETERNIUM_INGOT)
 						   .setOutput(EndItems.AETERNIUM_HAMMER_HEAD)
 						   .setAnvilLevel(anvilLevel)
-						   .setToolLevel(anvilLevel)
+						   .setToolLevel(EndToolMaterial.THALLASIUM.getLevel())
 						   .setDamage(6)
 						   .build();
 		AnvilRecipe.Builder.create("aeternium_sword_blade")

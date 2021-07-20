@@ -203,7 +203,7 @@ public class MetalMaterial {
 		);
 		boots = EndItems.registerEndItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));
 		
-		anvilBlock = EndBlocks.registerAnvil(
+		anvilBlock = EndBlocks.registerBlock(
 			name + "_anvil",
 			new EndAnvilBlock(this, block.defaultMaterialColor(), level)
 		);

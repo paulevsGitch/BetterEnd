@@ -33,7 +33,6 @@ import ru.bclib.items.tool.BaseSwordItem;
 import ru.bclib.recipes.FurnaceRecipe;
 import ru.bclib.recipes.GridRecipe;
 import ru.bclib.recipes.SmithingTableRecipe;
-import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.BulbVineLanternBlock;
 import ru.betterend.blocks.BulbVineLanternColoredBlock;
@@ -154,7 +153,7 @@ public class MetalMaterial {
 		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseOreBlock(rawOre, 1, 3, 1)) : null;
 		alloyingOre = hasOre ? TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_alloying") : null;
 		if (hasOre) {
-			TagHelper.addTag(alloyingOre, ore, rawOre);
+			TagAPI.addTag(alloyingOre, ore, rawOre);
 		}
 		
 		block = EndBlocks.registerBlock(name + "_block", new BaseBlock(settings));
@@ -485,10 +484,10 @@ public class MetalMaterial {
 				  .setGroup("end_metal_boots")
 				  .build();
 		
-		TagHelper.addTag(BlockTags.ANVIL, anvilBlock);
-		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
-		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
-		TagHelper.addTag(TagAPI.DRAGON_IMMUNE, ore, bars);
-		TagHelper.addTag(TagAPI.HAMMERS, hammer);
+		TagAPI.addTag(BlockTags.ANVIL, anvilBlock);
+		TagAPI.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
+		TagAPI.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
+		TagAPI.addTag(TagAPI.DRAGON_IMMUNE, ore, bars);
+		TagAPI.addTag(TagAPI.HAMMERS, hammer);
 	}
 }

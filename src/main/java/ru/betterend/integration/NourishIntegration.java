@@ -2,8 +2,8 @@ package ru.betterend.integration;
 
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import ru.bclib.api.TagAPI;
 import ru.bclib.integration.ModIntegration;
-import ru.bclib.util.TagHelper;
 import ru.betterend.registry.EndItems;
 
 public class NourishIntegration extends ModIntegration {
@@ -18,8 +18,8 @@ public class NourishIntegration extends ModIntegration {
 		Tag.Named<Item> protein = getItemTag("protein");
 		Tag.Named<Item> sweets = getItemTag("sweets");
 		
-		TagHelper.addTag(fats, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
-		TagHelper.addTag(
+		TagAPI.addTag(fats, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
+		TagAPI.addTag(
 			fruit,
 			EndItems.SHADOW_BERRY_RAW,
 			EndItems.SHADOW_BERRY_COOKED,
@@ -32,7 +32,7 @@ public class NourishIntegration extends ModIntegration {
 			EndItems.CHORUS_MUSHROOM_COOKED,
 			EndItems.BOLUX_MUSHROOM_COOKED
 		);
-		TagHelper.addTag(
+		TagAPI.addTag(
 			protein,
 			EndItems.END_FISH_RAW,
 			EndItems.END_FISH_COOKED,
@@ -40,7 +40,7 @@ public class NourishIntegration extends ModIntegration {
 			EndItems.BOLUX_MUSHROOM_COOKED,
 			EndItems.CAVE_PUMPKIN_PIE
 		);
-		TagHelper.addTag(
+		TagAPI.addTag(
 			sweets,
 			EndItems.SHADOW_BERRY_JELLY,
 			EndItems.SWEET_BERRY_JELLY,

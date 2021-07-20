@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.Block;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.integration.ModIntegration;
-import ru.bclib.util.TagHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.integration.EndBiomeIntegration;
 import ru.betterend.integration.Integrations;
@@ -28,7 +27,7 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 	public void init() {
 		Block block = Integrations.BYG.getBlock("ivis_phylium");
 		if (block != null) {
-			TagHelper.addTags(block, TagAPI.END_GROUND, TagAPI.GEN_TERRAIN);
+			TagAPI.addTags(block, TagAPI.END_GROUND, TagAPI.GEN_TERRAIN);
 		}
 		BYGBlocks.register();
 		BYGFeatures.register();

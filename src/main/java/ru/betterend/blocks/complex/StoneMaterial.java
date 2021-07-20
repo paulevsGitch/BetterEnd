@@ -16,7 +16,6 @@ import ru.bclib.blocks.BaseStoneButtonBlock;
 import ru.bclib.blocks.BaseWallBlock;
 import ru.bclib.blocks.StonePressurePlateBlock;
 import ru.bclib.recipes.GridRecipe;
-import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndPedestal;
 import ru.betterend.blocks.FlowerPotBlock;
@@ -178,19 +177,19 @@ public class StoneMaterial {
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		
 		// Item Tags //
-		TagHelper.addTag(ItemTags.SLABS, slab, brickSlab);
-		TagHelper.addTag(ItemTags.STONE_BRICKS, bricks);
-		TagHelper.addTag(ItemTags.STONE_CRAFTING_MATERIALS, stone);
-		TagHelper.addTag(ItemTags.STONE_TOOL_MATERIALS, stone);
-		TagHelper.addTag(TagAPI.FURNACES, furnace);
+		TagAPI.addTag(ItemTags.SLABS, slab, brickSlab);
+		TagAPI.addTag(ItemTags.STONE_BRICKS, bricks);
+		TagAPI.addTag(ItemTags.STONE_CRAFTING_MATERIALS, stone);
+		TagAPI.addTag(ItemTags.STONE_TOOL_MATERIALS, stone);
+		TagAPI.addTag(TagAPI.FURNACES, furnace);
 		
 		// Block Tags //
-		TagHelper.addTag(BlockTags.STONE_BRICKS, bricks);
-		TagHelper.addTag(BlockTags.WALLS, wall, brickWall);
-		TagHelper.addTag(BlockTags.SLABS, slab, brickSlab);
-		TagHelper.addTags(pressurePlate, BlockTags.PRESSURE_PLATES, BlockTags.STONE_PRESSURE_PLATES);
-		TagHelper.addTag(TagAPI.END_STONES, stone);
+		TagAPI.addTag(BlockTags.STONE_BRICKS, bricks);
+		TagAPI.addTag(BlockTags.WALLS, wall, brickWall);
+		TagAPI.addTag(BlockTags.SLABS, slab, brickSlab);
+		TagAPI.addTags(pressurePlate, BlockTags.PRESSURE_PLATES, BlockTags.STONE_PRESSURE_PLATES);
+		TagAPI.addTag(TagAPI.END_STONES, stone);
 		
-		TagHelper.addTag(TagAPI.DRAGON_IMMUNE, stone, stairs, slab, wall);
+		TagAPI.addTag(TagAPI.DRAGON_IMMUNE, stone, stairs, slab, wall);
 	}
 }

@@ -24,7 +24,6 @@ import ru.bclib.api.BonemealAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseVineBlock;
 import ru.bclib.blocks.SimpleLeavesBlock;
-import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
@@ -55,32 +54,32 @@ public class EndTags {
 			Material material = ((AbstractBlockSettingsAccessor) properties).getMaterial();
 			
 			if (material.equals(Material.STONE) || material.equals(Material.METAL) || material.equals(Material.HEAVY_METAL)) {
-				TagHelper.addTag(TagAPI.MINEABLE_PICKAXE, block);
+				TagAPI.addTag(TagAPI.MINEABLE_PICKAXE, block);
 			}
 			else if (material.equals(Material.WOOD)) {
-				TagHelper.addTag(TagAPI.MINEABLE_AXE, block);
+				TagAPI.addTag(TagAPI.MINEABLE_AXE, block);
 			}
 			else if (material.equals(Material.LEAVES) || material.equals(Material.PLANT) || material.equals(Material.WATER_PLANT)) {
-				TagHelper.addTag(TagAPI.MINEABLE_HOE, block);
+				TagAPI.addTag(TagAPI.MINEABLE_HOE, block);
 			}
 			else if (material.equals(Material.SAND)) {
-				TagHelper.addTag(TagAPI.MINEABLE_SHOVEL, block);
+				TagAPI.addTag(TagAPI.MINEABLE_SHOVEL, block);
 			}
 			
 			if (block instanceof EndTerrainBlock) {
 				TagAPI.addEndGround(block);
-				TagHelper.addTag(BlockTags.NYLIUM, block);
+				TagAPI.addTag(BlockTags.NYLIUM, block);
 				BonemealAPI.addSpreadableBlock(block, Blocks.END_STONE);
 			}
 			else if (block instanceof LeavesBlock || block instanceof SimpleLeavesBlock) {
-				TagHelper.addTag(BlockTags.LEAVES, block);
+				TagAPI.addTag(BlockTags.LEAVES, block);
 				ComposterBlockAccessor.callAdd(0.3F, block);
 			}
 			else if (block instanceof BaseVineBlock) {
-				TagHelper.addTag(BlockTags.CLIMBABLE, block);
+				TagAPI.addTag(BlockTags.CLIMBABLE, block);
 			}
 			else if (block instanceof PedestalBlock) {
-				TagHelper.addTag(PEDESTALS, block);
+				TagAPI.addTag(PEDESTALS, block);
 			}
 			
 			Material mat = block.defaultBlockState().getMaterial();
@@ -89,7 +88,7 @@ public class EndTags {
 			}
 		});
 		TagAPI.addEndGround(EndBlocks.CAVE_MOSS);
-		TagHelper.addTag(BlockTags.NYLIUM, EndBlocks.CAVE_MOSS);
+		TagAPI.addTag(BlockTags.NYLIUM, EndBlocks.CAVE_MOSS);
 		BonemealAPI.addSpreadableBlock(EndBlocks.CAVE_MOSS, Blocks.END_STONE);
 		BonemealAPI.addSpreadableBlock(EndBlocks.MOSSY_OBSIDIAN, Blocks.OBSIDIAN);
 		BonemealAPI.addSpreadableBlock(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.DRAGON_BONE_BLOCK);
@@ -108,9 +107,9 @@ public class EndTags {
 			}
 		});
 		ToolManagerImpl.tag(TagAPI.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
-		TagHelper.addTag(TagAPI.HAMMERS, EndItems.AETERNIUM_HAMMER);
+		TagAPI.addTag(TagAPI.HAMMERS, EndItems.AETERNIUM_HAMMER);
 		
-		TagHelper.addTag(
+		TagAPI.addTag(
 			TagAPI.GEN_TERRAIN,
 			EndBlocks.ENDER_ORE,
 			EndBlocks.FLAVOLITE.stone,
@@ -121,22 +120,22 @@ public class EndTags {
 			EndBlocks.AZURE_JADESTONE.stone,
 			EndBlocks.SANDY_JADESTONE.stone
 		);
-		TagHelper.addTag(TagAPI.END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
-		TagHelper.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
-		TagHelper.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
-		TagHelper.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
-		TagHelper.addTag(
+		TagAPI.addTag(TagAPI.END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
+		TagAPI.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
+		TagAPI.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
+		TagAPI.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
+		TagAPI.addTag(
 			TagAPI.DRAGON_IMMUNE,
 			EndBlocks.ENDER_ORE,
 			EndBlocks.ETERNAL_PEDESTAL,
 			EndBlocks.FLAVOLITE_RUNED_ETERNAL,
 			EndBlocks.FLAVOLITE_RUNED
 		);
-		TagHelper.addTag(TagAPI.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
+		TagAPI.addTag(TagAPI.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
 		
-		TagHelper.addTag(ALLOYING_IRON, Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE, Items.RAW_IRON);
-		TagHelper.addTag(ALLOYING_GOLD, Items.GOLD_ORE, Items.DEEPSLATE_GOLD_ORE, Items.RAW_GOLD);
-		TagHelper.addTag(ALLOYING_COPPER, Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
+		TagAPI.addTag(ALLOYING_IRON, Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE, Items.RAW_IRON);
+		TagAPI.addTag(ALLOYING_GOLD, Items.GOLD_ORE, Items.DEEPSLATE_GOLD_ORE, Items.RAW_GOLD);
+		TagAPI.addTag(ALLOYING_COPPER, Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
 	}
 	
 	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
@@ -145,8 +144,8 @@ public class EndTags {
 				SurfaceBuilderConfiguration config = biome.getGenerationSettings().getSurfaceBuilderConfig();
 				Block under = config.getUnderMaterial().getBlock();
 				Block surface = config.getTopMaterial().getBlock();
-				TagHelper.addTag(TagAPI.GEN_TERRAIN, under, surface);
-				TagHelper.addTag(TagAPI.END_GROUND, surface);
+				TagAPI.addTag(TagAPI.GEN_TERRAIN, under, surface);
+				TagAPI.addTag(TagAPI.END_GROUND, surface);
 			}
 		});
 		END_STONES.getValues().forEach(TagAPI::addEndGround);

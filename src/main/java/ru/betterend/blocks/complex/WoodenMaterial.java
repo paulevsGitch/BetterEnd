@@ -33,7 +33,6 @@ import ru.bclib.blocks.BaseWoodenButtonBlock;
 import ru.bclib.blocks.StripableBarkBlock;
 import ru.bclib.blocks.WoodenPressurePlateBlock;
 import ru.bclib.recipes.GridRecipe;
-import ru.bclib.util.TagHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.registry.EndBlocks;
@@ -226,38 +225,38 @@ public class WoodenMaterial {
 				  .build();
 		
 		// Item Tags //
-		TagHelper.addTag(ItemTags.PLANKS, planks);
-		TagHelper.addTag(ItemTags.WOODEN_PRESSURE_PLATES, pressurePlate);
-		TagHelper.addTag(ItemTags.LOGS, log, bark, log_stripped, bark_stripped);
-		TagHelper.addTag(ItemTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
+		TagAPI.addTag(ItemTags.PLANKS, planks);
+		TagAPI.addTag(ItemTags.WOODEN_PRESSURE_PLATES, pressurePlate);
+		TagAPI.addTag(ItemTags.LOGS, log, bark, log_stripped, bark_stripped);
+		TagAPI.addTag(ItemTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
 		
-		TagHelper.addTags(button, ItemTags.WOODEN_BUTTONS, ItemTags.BUTTONS);
-		TagHelper.addTags(door, ItemTags.WOODEN_DOORS, ItemTags.DOORS);
-		TagHelper.addTags(fence, ItemTags.WOODEN_FENCES, ItemTags.FENCES);
-		TagHelper.addTags(slab, ItemTags.WOODEN_SLABS, ItemTags.SLABS);
-		TagHelper.addTags(stairs, ItemTags.WOODEN_STAIRS, ItemTags.STAIRS);
-		TagHelper.addTags(trapdoor, ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS);
-		TagHelper.addTag(TagAPI.ITEM_CHEST, chest);
+		TagAPI.addTags(button, ItemTags.WOODEN_BUTTONS, ItemTags.BUTTONS);
+		TagAPI.addTags(door, ItemTags.WOODEN_DOORS, ItemTags.DOORS);
+		TagAPI.addTags(fence, ItemTags.WOODEN_FENCES, ItemTags.FENCES);
+		TagAPI.addTags(slab, ItemTags.WOODEN_SLABS, ItemTags.SLABS);
+		TagAPI.addTags(stairs, ItemTags.WOODEN_STAIRS, ItemTags.STAIRS);
+		TagAPI.addTags(trapdoor, ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS);
+		TagAPI.addTag(TagAPI.ITEM_CHEST, chest);
 		
 		// Block Tags //
-		TagHelper.addTag(BlockTags.PLANKS, planks);
-		TagHelper.addTag(BlockTags.CLIMBABLE, ladder);
-		TagHelper.addTag(BlockTags.LOGS, log, bark, log_stripped, bark_stripped);
-		TagHelper.addTag(BlockTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
+		TagAPI.addTag(BlockTags.PLANKS, planks);
+		TagAPI.addTag(BlockTags.CLIMBABLE, ladder);
+		TagAPI.addTag(BlockTags.LOGS, log, bark, log_stripped, bark_stripped);
+		TagAPI.addTag(BlockTags.LOGS_THAT_BURN, log, bark, log_stripped, bark_stripped);
 		
-		TagHelper.addTags(button, BlockTags.WOODEN_BUTTONS, BlockTags.BUTTONS);
-		TagHelper.addTags(door, BlockTags.WOODEN_DOORS, BlockTags.DOORS);
-		TagHelper.addTags(fence, BlockTags.WOODEN_FENCES, BlockTags.FENCES);
-		TagHelper.addTags(slab, BlockTags.WOODEN_SLABS, BlockTags.SLABS);
-		TagHelper.addTags(stairs, BlockTags.WOODEN_STAIRS, BlockTags.STAIRS);
-		TagHelper.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
-		TagHelper.addTag(TagAPI.BOOKSHELVES, shelf);
-		TagHelper.addTag(TagAPI.BLOCK_CHEST, chest);
+		TagAPI.addTags(button, BlockTags.WOODEN_BUTTONS, BlockTags.BUTTONS);
+		TagAPI.addTags(door, BlockTags.WOODEN_DOORS, BlockTags.DOORS);
+		TagAPI.addTags(fence, BlockTags.WOODEN_FENCES, BlockTags.FENCES);
+		TagAPI.addTags(slab, BlockTags.WOODEN_SLABS, BlockTags.SLABS);
+		TagAPI.addTags(stairs, BlockTags.WOODEN_STAIRS, BlockTags.STAIRS);
+		TagAPI.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
+		TagAPI.addTag(TagAPI.BOOKSHELVES, shelf);
+		TagAPI.addTag(TagAPI.BLOCK_CHEST, chest);
 		
 		logBlockTag = TagAPI.makeBlockTag(BetterEnd.MOD_ID, name + "_logs");
 		logItemTag = TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_logs");
-		TagHelper.addTag(logBlockTag, log_stripped, bark_stripped, log, bark);
-		TagHelper.addTag(logItemTag, log_stripped, bark_stripped, log, bark);
+		TagAPI.addTag(logBlockTag, log_stripped, bark_stripped, log, bark);
+		TagAPI.addTag(logItemTag, log_stripped, bark_stripped, log, bark);
 		
 		FlammableBlockRegistry.getDefaultInstance().add(log, 5, 5);
 		FlammableBlockRegistry.getDefaultInstance().add(bark, 5, 5);

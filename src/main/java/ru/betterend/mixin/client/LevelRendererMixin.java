@@ -97,6 +97,7 @@ public class LevelRendererMixin {
 			time3 = time * 3;
 			
 			FogRenderer.levelFogColor();
+			RenderSystem.depthMask(false);
 			RenderSystem.enableTexture();
 			RenderSystem.enableBlend();
 			RenderSystem.blendFunc(

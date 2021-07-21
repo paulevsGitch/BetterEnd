@@ -15,6 +15,7 @@ public class UmbraValleyBiome extends EndBiome {
 				.setWaterAndFogColor(69, 104, 134)
 				.setSurface(SurfaceBuilders.UMBRA_SURFACE.configured(SurfaceBuilders.DEFAULT_END_CONFIG))
 				.addFeature(EndFeatures.UMBRALITH_ARCH)
+				.addFeature(EndFeatures.THIN_UMBRALITH_ARCH)
 		);
 	}
 }

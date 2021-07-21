@@ -2,6 +2,7 @@ package ru.betterend.world.features.terrain;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -19,6 +20,12 @@ import ru.betterend.noise.OpenSimplexNoise;
 import java.util.Random;
 
 public class ArchFeature extends DefaultFeature {
+    private Block block;
+    
+    public ArchFeature(Block block) {
+        this.block = block;
+    }
+    
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
         final WorldGenLevel world = featurePlaceContext.level();
@@ -35,7 +42,7 @@ public class ArchFeature extends DefaultFeature {
         if (smallRadius + bigRadius > 23) {
             smallRadius = 23 - bigRadius;
         }
-        SDF arch = new SDFTorus().setBigRadius(bigRadius).setSmallRadius(smallRadius).setBlock(Blocks.DIAMOND_BLOCK);
+        SDF arch = new SDFTorus().setBigRadius(bigRadius).setSmallRadius(smallRadius).setBlock(block);
         arch = new SDFRotation().setRotation(MHelper.randomHorizontal(random), (float) Math.PI * 0.5F).setSource(arch);
 
         final float smallRadiusF = smallRadius;
@@ -48,7 +55,11 @@ public class ArchFeature extends DefaultFeature {
             )) * 3F + Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F) - smallRadiusF * Math.abs(1 - vec.y() / bigRadius);
         }).setSource(arch);
 
-        arch.fillArea(world, pos, AABB.ofSize(Vec3.atCenterOf(pos), 46, 46, 46));
+        float side = (bigRadius + smallRadius + 3F) * 2;
+        if (side > 47) {
+            side = 47;
+        }
+        arch.fillArea(world, pos, AABB.ofSize(Vec3.atCenterOf(pos), side, side, side));
         return true;
     }
 }

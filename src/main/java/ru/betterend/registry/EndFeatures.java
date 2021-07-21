@@ -65,6 +65,7 @@ import ru.betterend.world.features.terrain.SulphurHillFeature;
 import ru.betterend.world.features.terrain.SulphuricCaveFeature;
 import ru.betterend.world.features.terrain.SulphuricLakeFeature;
 import ru.betterend.world.features.terrain.SurfaceVentFeature;
+import ru.betterend.world.features.terrain.ThinArchFeature;
 import ru.betterend.world.features.terrain.caves.RoundCaveFeature;
 import ru.betterend.world.features.terrain.caves.TunelCaveFeature;
 import ru.betterend.world.features.trees.DragonTreeFeature;
@@ -518,7 +519,8 @@ public class EndFeatures {
 		BetterEnd.makeID("tunel_cave"),
 		new TunelCaveFeature()
 	);
-	public static final BCLFeature UMBRALITH_ARCH = registerChanced("umbralith_arch", new ArchFeature(), 10);
+	public static final BCLFeature UMBRALITH_ARCH = registerChanced("umbralith_arch", new ArchFeature(EndBlocks.UMBRALITH.stone), 10);
+	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
 	
 	// Ores //
 	public static final BCLFeature THALLASIUM_ORE = registerOre(

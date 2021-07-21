@@ -33,7 +33,7 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 			world,
 			new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
 		);
-		if (!world.getBlockState(pos.below(5)).is(TagAPI.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(5)).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 			return false;
 		}
 		
@@ -64,7 +64,7 @@ public class ObsidianPillarBasementFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial()
+			return state.getMaterial().isReplaceable() || state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.getMaterial()
 																							   .equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 		

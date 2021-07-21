@@ -80,7 +80,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 					) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(pos.getX() * 0.1, y * 0.1, pos.getZ() * 0.1) * 0.12F;
 					val = (val + vert * vert + dist) + density + gradient;
-					if (val < 0.15 && world.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && noWaterNear(world, pos)) {
+					if (val < 0.15 && world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN) && noWaterNear(world, pos)) {
 						positions.add(pos.immutable());
 					}
 				}
@@ -139,7 +139,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 			else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 				mut.setY(bpos.getY() - 1);
-				if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 					Set<BlockPos> floorPositions = floorSets.get(bio);
 					if (floorPositions == null) {
 						floorPositions = Sets.newHashSet();
@@ -148,7 +148,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 					floorPositions.add(mut.immutable());
 				}
 				mut.setY(bpos.getY() + 1);
-				if (world.getBlockState(mut).is(TagAPI.GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 					Set<BlockPos> ceilPositions = ceilSets.get(bio);
 					if (ceilPositions == null) {
 						ceilPositions = Sets.newHashSet();

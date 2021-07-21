@@ -74,7 +74,7 @@ public class RoundCaveFeature extends EndCaveFeature {
 	}
 	
 	private boolean isReplaceable(BlockState state) {
-		return state.is(TagAPI.GEN_TERRAIN) || state.getMaterial().isReplaceable() || state.getMaterial()
+		return state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.getMaterial().isReplaceable() || state.getMaterial()
 																						   .equals(Material.PLANT) || state
 			.getMaterial()
 			.equals(Material.LEAVES);

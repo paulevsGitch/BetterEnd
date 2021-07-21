@@ -29,7 +29,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 			world,
 			new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
 		);
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
 			return false;
 		}
 		
@@ -46,7 +46,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 	}
 	
 	private void makeBoulder(WorldGenLevel world, BlockPos pos, Random random) {
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
 			return;
 		}
 		
@@ -68,7 +68,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.getMaterial()
+			return state.getMaterial().isReplaceable() || state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.getMaterial()
 																							   .equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 	}

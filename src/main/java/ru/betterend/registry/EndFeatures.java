@@ -46,6 +46,7 @@ import ru.betterend.world.features.bushes.BushWithOuterFeature;
 import ru.betterend.world.features.bushes.LargeAmaranitaFeature;
 import ru.betterend.world.features.bushes.Lumecorn;
 import ru.betterend.world.features.bushes.TenaneaBushFeature;
+import ru.betterend.world.features.terrain.ArchFeature;
 import ru.betterend.world.features.terrain.BigAuroraCrystalFeature;
 import ru.betterend.world.features.terrain.DesertLakeFeature;
 import ru.betterend.world.features.terrain.EndLakeFeature;
@@ -517,6 +518,7 @@ public class EndFeatures {
 		BetterEnd.makeID("tunel_cave"),
 		new TunelCaveFeature()
 	);
+	public static final BCLFeature UMBRALITH_ARCH = registerChanced("umbralith_arch", new ArchFeature(), 10);
 	
 	// Ores //
 	public static final BCLFeature THALLASIUM_ORE = registerOre(

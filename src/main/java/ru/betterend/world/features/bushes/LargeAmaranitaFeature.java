@@ -23,7 +23,7 @@ public class LargeAmaranitaFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		int height = MHelper.randRange(2, 3, random);

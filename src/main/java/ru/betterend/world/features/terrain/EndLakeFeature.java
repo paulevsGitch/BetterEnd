@@ -118,11 +118,11 @@ public class EndLakeFeature extends DefaultFeature {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.is(TagAPI.GEN_TERRAIN)) {
+								if (state.is(TagAPI.BLOCK_GEN_TERRAIN)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								}
 								pos = POS.below();
-								if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
+								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 									state = world.getBiome(pos)
 												 .getGenerationSettings()
 												 .getSurfaceBuilderConfig()
@@ -180,7 +180,7 @@ public class EndLakeFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(world, POS, state);
 							}
 							pos = POS.below();
-							if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
+							if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
 							}
 							pos = POS.above();
@@ -225,7 +225,7 @@ public class EndLakeFeature extends DefaultFeature {
 	
 	private boolean canReplace(BlockState state) {
 		return state.getMaterial()
-					.isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial()
+					.isReplaceable() || state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial()
 																												  .equals(
 																													  Material.PLANT) || state
 			.getMaterial()

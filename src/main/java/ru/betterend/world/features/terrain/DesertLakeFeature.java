@@ -118,11 +118,11 @@ public class DesertLakeFeature extends DefaultFeature {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.is(TagAPI.GEN_TERRAIN)) {
+								if (state.is(TagAPI.BLOCK_GEN_TERRAIN)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								}
 								pos = POS.below();
-								if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
+								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 									state = world.getBiome(pos)
 												 .getGenerationSettings()
 												 .getSurfaceBuilderConfig()
@@ -180,7 +180,7 @@ public class DesertLakeFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(world, POS, state);
 							}
 							pos = POS.below();
-							if (world.getBlockState(pos).is(TagAPI.GEN_TERRAIN)) {
+							if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
 							}
 							pos = POS.above();
@@ -193,7 +193,7 @@ public class DesertLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y2 + x2 + z2 <= rb) {
 							state = world.getBlockState(POS);
-							if (state.is(TagAPI.GEN_TERRAIN) && world.isEmptyBlock(POS.above())) {
+							if (state.is(TagAPI.BLOCK_GEN_TERRAIN) && world.isEmptyBlock(POS.above())) {
 								BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.END_MOSS);
 							}
 							else if (y < waterLevel) {
@@ -235,7 +235,7 @@ public class DesertLakeFeature extends DefaultFeature {
 	
 	private boolean canReplace(BlockState state) {
 		return state.getMaterial()
-					.isReplaceable() || state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial()
+					.isReplaceable() || state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial()
 																												  .equals(
 																													  Material.PLANT) || state
 			.getMaterial()

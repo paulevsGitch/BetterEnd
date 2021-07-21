@@ -156,7 +156,7 @@ public class EndItems extends ItemsRegistry {
 	public final static Item AETERNIUM_SWORD_BLADE = registerEndItem("aeternium_sword_blade");
 	public final static Item AETERNIUM_SWORD_HANDLE = registerEndItem("aeternium_sword_handle");
 	
-	// Hammers //
+	// ITEM_HAMMERS //
 	public static final TieredItem IRON_HAMMER = registerEndTool(
 		"iron_hammer",
 		new EndHammerItem(Tiers.IRON, 5.0F, -3.2F, 0.2D, makeEndItemSettings())

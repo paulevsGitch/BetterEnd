@@ -164,7 +164,7 @@ public class StoneMaterial {
 				  .checkConfig(Configs.RECIPE_CONFIG)
 				  .setShape("###", "# #", "###")
 				  .addMaterial('#', stone)
-				  .setGroup("end_stone_furnaces")
+				  .setGroup("end_stone_ITEM_FURNACES")
 				  .build();
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_flower_pot", flowerPot)
 				  .checkConfig(Configs.RECIPE_CONFIG)
@@ -181,15 +181,18 @@ public class StoneMaterial {
 		TagAPI.addTag(ItemTags.STONE_BRICKS, bricks);
 		TagAPI.addTag(ItemTags.STONE_CRAFTING_MATERIALS, stone);
 		TagAPI.addTag(ItemTags.STONE_TOOL_MATERIALS, stone);
-		TagAPI.addTag(TagAPI.FURNACES, furnace);
+		TagAPI.addTag(TagAPI.ITEM_FURNACES, furnace);
 		
 		// Block Tags //
 		TagAPI.addTag(BlockTags.STONE_BRICKS, bricks);
 		TagAPI.addTag(BlockTags.WALLS, wall, brickWall);
 		TagAPI.addTag(BlockTags.SLABS, slab, brickSlab);
 		TagAPI.addTags(pressurePlate, BlockTags.PRESSURE_PLATES, BlockTags.STONE_PRESSURE_PLATES);
-		TagAPI.addTag(TagAPI.END_STONES, stone);
+		TagAPI.addTag(TagAPI.BLOCK_END_STONES, stone);
 		
-		TagAPI.addTag(TagAPI.DRAGON_IMMUNE, stone, stairs, slab, wall);
+		TagAPI.addTag(TagAPI.BLOCK_DRAGON_IMMUNE, stone, stairs, slab, wall);
+
+		TagAPI.addTag(TagAPI.BLOCK_GEN_TERRAIN, stone);
+		TagAPI.addTag(TagAPI.BLOCK_END_GROUND, stone);
 	}
 }

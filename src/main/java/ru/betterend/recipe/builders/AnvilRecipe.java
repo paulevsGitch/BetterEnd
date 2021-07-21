@@ -99,7 +99,7 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 	
 	public boolean matches(Container craftingInventory) {
 		ItemStack hammer = craftingInventory.getItem(1);
-		if (hammer.isEmpty() || !TagAPI.HAMMERS.contains(hammer.getItem())) {
+		if (hammer.isEmpty() || !TagAPI.ITEM_HAMMERS.contains(hammer.getItem())) {
 			return false;
 		}
 		ItemStack material = craftingInventory.getItem(0);
@@ -123,7 +123,7 @@ public class AnvilRecipe implements Recipe<Container>, BetterEndRecipe {
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
-		defaultedList.add(Ingredient.of(TagAPI.HAMMERS.getValues()
+		defaultedList.add(Ingredient.of(TagAPI.ITEM_HAMMERS.getValues()
 													  .stream()
 													  .filter(hammer -> ((TieredItem) hammer).getTier()
 																							 .getLevel() >= toolLevel)

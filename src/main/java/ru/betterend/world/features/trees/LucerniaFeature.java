@@ -46,7 +46,7 @@ public class LucerniaFeature extends DefaultFeature {
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		final NoneFeatureConfiguration config = featureConfig.config();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		float size = MHelper.randRange(12, 20, random);
 		int count = (int) (size * 0.3F);
@@ -186,7 +186,7 @@ public class LucerniaFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 				SplineHelper.fillSplineForce(branch, world, EndBlocks.LUCERNIA.bark.defaultBlockState(), pos, REPLACE);
 			}
 		}
@@ -194,7 +194,7 @@ public class LucerniaFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND)) {
+			if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == EndBlocks.LUCERNIA_LEAVES) {

@@ -39,8 +39,8 @@ public class BushFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND) && !world.getBlockState(pos.above())
-																			 .is(TagAPI.END_GROUND))
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND) && !world.getBlockState(pos.above())
+																			 .is(TagAPI.BLOCK_END_GROUND))
 			return false;
 		
 		float radius = MHelper.randRange(1.8F, 3.5F, random);

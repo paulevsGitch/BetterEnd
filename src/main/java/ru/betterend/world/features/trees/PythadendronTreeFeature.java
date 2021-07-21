@@ -188,7 +188,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND)) {
+			if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == EndBlocks.PYTHADENDRON_LEAVES) {

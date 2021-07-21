@@ -117,7 +117,7 @@ public class LakePiece extends BasePiece {
 					double dist = x3 + y2 + z3;
 					if (dist < r2) {
 						BlockState state = chunk.getBlockState(mut);
-						if (state.is(TagAPI.GEN_TERRAIN) || state.isAir()) {
+						if (state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.isAir()) {
 							state = mut.getY() < center.getY() ? WATER : CAVE_AIR;
 							chunk.setBlockState(mut, state, false);
 						}

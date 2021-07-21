@@ -901,5 +901,7 @@
 	"block.betterend.umbralith_slab": "Umbralith Slab",
 	"block.betterend.umbralith_stairs": "Umbralith Stairs",
 	"block.betterend.umbralith_tiles": "Umbralith Tiles",
-	"block.betterend.umbralith_wall": "Umbralith Wall"
-	}
+	"block.betterend.umbralith_wall": "Umbralith Wall",
+	
+	"biome.betterend.umbra_valley": "Umbra Valley"
+}

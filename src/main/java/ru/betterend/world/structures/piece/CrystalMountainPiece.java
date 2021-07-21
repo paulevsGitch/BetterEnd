@@ -68,7 +68,7 @@ public class CrystalMountainPiece extends MountainPiece {
 						continue;
 					}
 					pos.setY(minY);
-					while (!chunk.getBlockState(pos).is(TagAPI.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(
+					while (!chunk.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(
 						pos.below()).is(Blocks.CAVE_AIR)) {
 						pos.setY(pos.getY() - 1);
 					}

@@ -35,7 +35,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 	public AuroraCrystalBlock() {
 		super(FabricBlockSettings.of(Material.GLASS)
 								 .breakByTool(FabricToolTags.PICKAXES)
-								 .breakByTool(TagAPI.HAMMERS)
+								 .breakByTool(TagAPI.ITEM_HAMMERS)
 								 .hardness(1F)
 								 .resistance(1F)
 								 .luminance(15)

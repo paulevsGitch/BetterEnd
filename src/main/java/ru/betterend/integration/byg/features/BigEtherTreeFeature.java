@@ -24,7 +24,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		BlockState log = Integrations.BYG.getDefaultState("ether_log");
 		BlockState wood = Integrations.BYG.getDefaultState("ether_wood");
@@ -32,7 +32,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 			return log;
 		};
 		Function<BlockState, Boolean> replace = (state) -> {
-			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
+			return state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
 																									 .isReplaceable();
 		};
 		
@@ -63,7 +63,7 @@ public class BigEtherTreeFeature extends DefaultFeature {
 		}
 		
 		sdf.setReplaceFunction((state) -> {
-			return state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
+			return state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
 																									 .isReplaceable();
 		}).addPostProcess((info) -> {
 			if (info.getState().equals(log) && (!info.getStateUp().equals(log) || !info.getStateDown().equals(log))) {

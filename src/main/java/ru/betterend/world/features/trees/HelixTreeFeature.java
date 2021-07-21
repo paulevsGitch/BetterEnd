@@ -37,7 +37,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		BlocksHelper.setWithoutUpdate(world, pos, AIR);
 		
 		float angle = random.nextFloat() * MHelper.PI2;

@@ -34,7 +34,7 @@ public class CraftingRecipes {
 				  .setShape("T#T", "V V", "T#T")
 				  .addMaterial('#', Blocks.END_STONE_BRICKS)
 				  .addMaterial('T', EndBlocks.THALLASIUM.ingot)
-				  .addMaterial('V', TagAPI.FURNACES)
+				  .addMaterial('V', TagAPI.ITEM_FURNACES)
 				  .build();
 		
 		registerPedestal(

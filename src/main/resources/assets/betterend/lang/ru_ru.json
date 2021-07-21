@@ -916,5 +916,7 @@
 	"block.betterend.umbralith_slab": "Умбралитовая плита",
 	"block.betterend.umbralith_stairs": "Умбралитовые ступени",
 	"block.betterend.umbralith_tiles": "Умбралитовая плитка",
-	"block.betterend.umbralith_wall": "Умбралитовая стена"
+	"block.betterend.umbralith_wall": "Умбралитовая стена",
+	
+	"biome.betterend.umbra_valley": "Долина Умбра"
 }

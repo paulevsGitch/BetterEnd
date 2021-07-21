@@ -36,7 +36,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		BlockState bark = EndBlocks.JELLYSHROOM.bark.defaultBlockState();
 		BlockState membrane = EndBlocks.JELLYSHROOM_CAP_PURPLE.defaultBlockState();
@@ -89,7 +89,7 @@ public class JellyshroomFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 				SplineHelper.fillSpline(branch, world, wood, pos, REPLACE);
 			}
 		}
@@ -122,7 +122,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
+			if (state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

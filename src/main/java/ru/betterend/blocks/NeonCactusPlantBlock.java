@@ -331,7 +331,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			mut.move(dir);
 			state = world.getBlockState(mut);
 			if (!state.is(this)) {
-				if (!state.is(TagAPI.END_GROUND)) {
+				if (!state.is(TagAPI.BLOCK_END_GROUND)) {
 					length = -1;
 				}
 				break;

@@ -100,6 +100,7 @@ public class LevelRendererMixin {
 			RenderSystem.depthMask(false);
 			RenderSystem.enableTexture();
 			RenderSystem.enableBlend();
+			RenderSystem.setShaderColor(1,1,1,1);
 			RenderSystem.blendFunc(
 				GlStateManager.SourceFactor.SRC_ALPHA,
 				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA

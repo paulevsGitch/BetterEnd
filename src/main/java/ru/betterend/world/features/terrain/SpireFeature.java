@@ -39,8 +39,8 @@ public class SpireFeature extends DefaultFeature {
 		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 10 || !world.getBlockState(pos.below(3))
-									 .is(TagAPI.GEN_TERRAIN) || !world.getBlockState(pos.below(6))
-																	  .is(TagAPI.GEN_TERRAIN)) {
+									 .is(TagAPI.BLOCK_GEN_TERRAIN) || !world.getBlockState(pos.below(6))
+																	  .is(TagAPI.BLOCK_GEN_TERRAIN)) {
 			return false;
 		}
 		
@@ -95,7 +95,7 @@ public class SpireFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND)) {
+			if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() instanceof LeavesBlock) {

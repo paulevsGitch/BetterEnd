@@ -72,12 +72,12 @@ public class REIPlugin implements REIClientPlugin {
 																						  .filter(EndAnvilBlock.class::isInstance)
 																						  .collect(Collectors.toList())));
 		anvils.add(0, EntryStacks.of(Blocks.ANVIL));
-		List<EntryStack<?>> furnaces = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks()
+		List<EntryStack<?>> ITEM_FURNACES = Lists.newArrayList(EntryIngredients.ofItems(EndBlocks.getModBlocks()
 																							.stream()
 																							.filter(BaseFurnaceBlock.class::isInstance)
 																							.collect(Collectors.toList())));
 		EntryStack<?>[] anvilsArray = anvils.toArray(new EntryStack[0]);
-		EntryStack<?>[] furnacesArray = furnaces.toArray(new EntryStack[0]);
+		EntryStack<?>[] ITEM_FURNACESArray = ITEM_FURNACES.toArray(new EntryStack[0]);
 		
 		registry.add(
 			new REIAlloyingFuelCategory(),
@@ -93,7 +93,7 @@ public class REIPlugin implements REIClientPlugin {
 		registry.removePlusButton(ALLOYING_FUEL);
 		registry.removePlusButton(SMITHING);
 		
-		registry.addWorkstations(DefaultPlugin.SMELTING, furnacesArray);
-		registry.addWorkstations(DefaultPlugin.FUEL, furnacesArray);
+		registry.addWorkstations(DefaultPlugin.SMELTING, ITEM_FURNACESArray);
+		registry.addWorkstations(DefaultPlugin.FUEL, ITEM_FURNACESArray);
 	}
 }

@@ -113,7 +113,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	
 	@Override
 	public float getMiningSpeedMultiplier(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(TagAPI.HAMMERS)) {
+		if (tag.equals(TagAPI.ITEM_HAMMERS)) {
 			return this.getDestroySpeed(stack, state);
 		}
 		return 1.0F;
@@ -121,7 +121,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	
 	@Override
 	public int getMiningLevel(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(TagAPI.HAMMERS)) {
+		if (tag.equals(TagAPI.ITEM_HAMMERS)) {
 			return this.getTier().getLevel();
 		}
 		return 0;

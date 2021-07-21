@@ -44,7 +44,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		final NoneFeatureConfiguration config = featureConfig.config();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.defaultBlockState();
 		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
@@ -161,7 +161,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 				SplineHelper.fillSplineForce(branch, world, wood, pos, REPLACE);
 			}
 		}
@@ -220,7 +220,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND) || state.getMaterial()
+			if (state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial()
 													.equals(Material.PLANT) || state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
 				return true;
 			}

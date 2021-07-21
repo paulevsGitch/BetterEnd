@@ -15,6 +15,6 @@ public abstract class EndPlantWithAgeBlock extends BasePlantWithAgeBlock {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.is(TagAPI.END_GROUND);
+		return state.is(TagAPI.BLOCK_END_GROUND);
 	}
 }

@@ -38,7 +38,7 @@ public class LacugroveFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		float size = MHelper.randRange(15, 25, random);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, size, 0, 6);
@@ -82,7 +82,7 @@ public class LacugroveFeature extends DefaultFeature {
 					boolean generate = false;
 					for (int y = minY; y < maxY; y++) {
 						mut.setY(y);
-						if (world.getBlockState(mut).is(TagAPI.END_GROUND)) {
+						if (world.getBlockState(mut).is(TagAPI.BLOCK_END_GROUND)) {
 							generate = true;
 							break;
 						}
@@ -93,7 +93,7 @@ public class LacugroveFeature extends DefaultFeature {
 							mut.setY(y);
 							BlockState state = world.getBlockState(mut);
 							if (state.getMaterial().isReplaceable() || state.getMaterial()
-																			.equals(Material.PLANT) || state.is(TagAPI.END_GROUND)) {
+																			.equals(Material.PLANT) || state.is(TagAPI.BLOCK_END_GROUND)) {
 								BlocksHelper.setWithoutUpdate(
 									world,
 									mut,
@@ -188,7 +188,7 @@ public class LacugroveFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND)) {
+			if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
 			}
 			if (EndBlocks.LACUGROVE.isTreeLog(state)) {

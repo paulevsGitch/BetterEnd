@@ -25,7 +25,7 @@ public class SingleBlockFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 			return false;
 		}
 		

@@ -49,7 +49,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		if (x * x + z * z < 3600) {
 			return false;
 		}
-		return pos.getY() > 5 && world.getBlockState(pos.below()).is(TagAPI.GEN_TERRAIN);
+		return pos.getY() > 5 && world.getBlockState(pos.below()).is(TagAPI.BLOCK_GEN_TERRAIN);
 	}
 	
 	@Override

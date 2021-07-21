@@ -44,7 +44,7 @@ public class TenaneaFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		float size = MHelper.randRange(7, 10, random);
 		int count = (int) (size * 0.45F);
@@ -175,7 +175,7 @@ public class TenaneaFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.END_GROUND)) {
+			if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == EndBlocks.TENANEA_LEAVES) {

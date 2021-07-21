@@ -25,7 +25,7 @@ public class SurfaceVentFeature extends DefaultFeature {
 			world,
 			new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
 		);
-		if (!world.getBlockState(pos.below(3)).is(TagAPI.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(3)).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 			return false;
 		}
 		
@@ -46,7 +46,7 @@ public class SurfaceVentFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.is(TagAPI.GEN_TERRAIN) && !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
+				if (state.is(TagAPI.BLOCK_GEN_TERRAIN) && !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 						mut.setY(mut.getY() + 1);

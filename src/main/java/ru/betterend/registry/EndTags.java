@@ -38,8 +38,8 @@ public class EndTags {
 	
 	// Block Tags
 	public static final Tag.Named<Block> PEDESTALS = TagAPI.makeBlockTag(BetterEnd.MOD_ID, "pedestal");
-	public static final Tag.Named<Block> END_STONES = TagAPI.makeCommonBlockTag("end_stones");
-	
+
+	// Item Tags
 	public static final Tag.Named<Item> ALLOYING_IRON = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_iron");
 	public static final Tag.Named<Item> ALLOYING_GOLD = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_gold");
 	public static final Tag.Named<Item> ALLOYING_COPPER = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_copper");
@@ -93,7 +93,7 @@ public class EndTags {
 		BonemealAPI.addSpreadableBlock(EndBlocks.MOSSY_OBSIDIAN, Blocks.OBSIDIAN);
 		BonemealAPI.addSpreadableBlock(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.DRAGON_BONE_BLOCK);
 		
-		List<Item> hammers = Lists.newArrayList();
+		List<Item> ITEM_HAMMERS = Lists.newArrayList();
 		EndItems.getModItems(BetterEnd.MOD_ID).forEach(item -> {
 			if (item.isEdible()) {
 				FoodProperties food = item.getFoodProperties();
@@ -103,35 +103,29 @@ public class EndTags {
 				}
 			}
 			if (item instanceof EndHammerItem) {
-				hammers.add(item);
+				ITEM_HAMMERS.add(item);
 			}
 		});
-		ToolManagerImpl.tag(TagAPI.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(hammers));
-		TagAPI.addTag(TagAPI.HAMMERS, EndItems.AETERNIUM_HAMMER);
+		ToolManagerImpl.tag(TagAPI.ITEM_HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(ITEM_HAMMERS));
+		TagAPI.addTag(TagAPI.ITEM_HAMMERS, EndItems.AETERNIUM_HAMMER);
 		
 		TagAPI.addTag(
-			TagAPI.GEN_TERRAIN,
+			TagAPI.BLOCK_GEN_TERRAIN,
 			EndBlocks.ENDER_ORE,
-			EndBlocks.FLAVOLITE.stone,
-			EndBlocks.VIOLECITE.stone,
-			EndBlocks.SULPHURIC_ROCK.stone,
-			EndBlocks.BRIMSTONE,
-			EndBlocks.VIRID_JADESTONE.stone,
-			EndBlocks.AZURE_JADESTONE.stone,
-			EndBlocks.SANDY_JADESTONE.stone
+			EndBlocks.BRIMSTONE
 		);
-		TagAPI.addTag(TagAPI.END_GROUND, EndBlocks.SULPHURIC_ROCK.stone, EndBlocks.BRIMSTONE);
+		TagAPI.addTag(TagAPI.BLOCK_END_GROUND, EndBlocks.BRIMSTONE);
 		TagAPI.addTag(BlockTags.ANVIL, EndBlocks.AETERNIUM_ANVIL);
 		TagAPI.addTag(BlockTags.BEACON_BASE_BLOCKS, EndBlocks.AETERNIUM_BLOCK);
 		TagAPI.addTag(ItemTags.BEACON_PAYMENT_ITEMS, EndItems.AETERNIUM_INGOT);
 		TagAPI.addTag(
-			TagAPI.DRAGON_IMMUNE,
+			TagAPI.BLOCK_DRAGON_IMMUNE,
 			EndBlocks.ENDER_ORE,
 			EndBlocks.ETERNAL_PEDESTAL,
 			EndBlocks.FLAVOLITE_RUNED_ETERNAL,
 			EndBlocks.FLAVOLITE_RUNED
 		);
-		TagAPI.addTag(TagAPI.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
+		TagAPI.addTag(TagAPI.ITEM_IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
 		
 		TagAPI.addTag(ALLOYING_IRON, Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE, Items.RAW_IRON);
 		TagAPI.addTag(ALLOYING_GOLD, Items.GOLD_ORE, Items.DEEPSLATE_GOLD_ORE, Items.RAW_GOLD);
@@ -144,10 +138,10 @@ public class EndTags {
 				SurfaceBuilderConfiguration config = biome.getGenerationSettings().getSurfaceBuilderConfig();
 				Block under = config.getUnderMaterial().getBlock();
 				Block surface = config.getTopMaterial().getBlock();
-				TagAPI.addTag(TagAPI.GEN_TERRAIN, under, surface);
-				TagAPI.addTag(TagAPI.END_GROUND, surface);
+				TagAPI.addTag(TagAPI.BLOCK_GEN_TERRAIN, under, surface);
+				TagAPI.addTag(TagAPI.BLOCK_END_GROUND, surface);
 			}
 		});
-		END_STONES.getValues().forEach(TagAPI::addEndGround);
+		TagAPI.BLOCK_END_STONES.getValues().forEach(TagAPI::addEndGround);
 	}
 }

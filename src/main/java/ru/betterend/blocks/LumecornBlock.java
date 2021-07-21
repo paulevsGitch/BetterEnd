@@ -63,7 +63,7 @@ public class LumecornBlock extends BaseBlockNotFull implements RenderLayerProvid
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
-			return world.getBlockState(pos.below()).is(TagAPI.END_GROUND);
+			return world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND);
 		}
 		else if (shape == LumecornShape.LIGHT_TOP) {
 			return world.getBlockState(pos.below()).is(this);

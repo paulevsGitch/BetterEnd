@@ -50,7 +50,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockPos pos = ctx.getClickedPos();
 		Level world = ctx.getLevel();
 		BlockState plant = info.getReturnValue();
-		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
+		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
 			if (GeneratorOptions.changeChorusPlant()) {
 				info.setReturnValue(plant.setValue(VanillaBlockProperties.ROOTS, true)
 										 .setValue(BlockStateProperties.DOWN, true));
@@ -66,7 +66,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	private void be_getStateForPlacement(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT)) {
-			if (blockGetter.getBlockState(blockPos.below()).is(TagAPI.END_GROUND)) {
+			if (blockGetter.getBlockState(blockPos.below()).is(TagAPI.BLOCK_END_GROUND)) {
 				if (GeneratorOptions.changeChorusPlant()) {
 					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true)
 											 .setValue(VanillaBlockProperties.ROOTS, true));
@@ -98,7 +98,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	private void be_updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT)) {
-			if (world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
+			if (world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
 				if (GeneratorOptions.changeChorusPlant()) {
 					plant = plant.setValue(BlockStateProperties.DOWN, true)
 								 .setValue(VanillaBlockProperties.ROOTS, true);

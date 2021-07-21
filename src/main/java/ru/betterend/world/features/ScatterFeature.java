@@ -32,7 +32,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 		if (pos.getY() < 5) {
 			return false;
 		}
-		else if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) {
+		else if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
 			return false;
 		}
 		return true;

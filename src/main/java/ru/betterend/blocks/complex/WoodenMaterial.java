@@ -198,7 +198,7 @@ public class WoodenMaterial {
 				  .setShape("###", "PPP", "###")
 				  .addMaterial('#', planks)
 				  .addMaterial('P', Items.BOOK)
-				  .setGroup("end_bookshelves")
+				  .setGroup("end_BLOCK_BOOKSHELVES")
 				  .build();
 		GridRecipe.make(BetterEnd.MOD_ID, name + "_bark", bark)
 				  .checkConfig(Configs.RECIPE_CONFIG)
@@ -250,7 +250,7 @@ public class WoodenMaterial {
 		TagAPI.addTags(slab, BlockTags.WOODEN_SLABS, BlockTags.SLABS);
 		TagAPI.addTags(stairs, BlockTags.WOODEN_STAIRS, BlockTags.STAIRS);
 		TagAPI.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
-		TagAPI.addTag(TagAPI.BOOKSHELVES, shelf);
+		TagAPI.addTag(TagAPI.BLOCK_BOOKSHELVES, shelf);
 		TagAPI.addTag(TagAPI.BLOCK_CHEST, chest);
 		
 		logBlockTag = TagAPI.makeBlockTag(BetterEnd.MOD_ID, name + "_logs");

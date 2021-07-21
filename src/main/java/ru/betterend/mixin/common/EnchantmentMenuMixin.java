@@ -71,28 +71,28 @@ public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 								0,
 								j
 							)) && world.isEmptyBlock(blockPos.offset(k, 1, j))) {
-								if (world.getBlockState(blockPos.offset(k * 2, 0, j * 2)).is(TagAPI.BOOKSHELVES)) {
+								if (world.getBlockState(blockPos.offset(k * 2, 0, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
 									++i;
 								}
 								
-								if (world.getBlockState(blockPos.offset(k * 2, 1, j * 2)).is(TagAPI.BOOKSHELVES)) {
+								if (world.getBlockState(blockPos.offset(k * 2, 1, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
 									++i;
 								}
 								
 								if (k != 0 && j != 0) {
-									if (world.getBlockState(blockPos.offset(k * 2, 0, j)).is(TagAPI.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k * 2, 0, j)).is(TagAPI.BLOCK_BOOKSHELVES)) {
 										++i;
 									}
 									
-									if (world.getBlockState(blockPos.offset(k * 2, 1, j)).is(TagAPI.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k * 2, 1, j)).is(TagAPI.BLOCK_BOOKSHELVES)) {
 										++i;
 									}
 									
-									if (world.getBlockState(blockPos.offset(k, 0, j * 2)).is(TagAPI.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k, 0, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
 										++i;
 									}
 									
-									if (world.getBlockState(blockPos.offset(k, 1, j * 2)).is(TagAPI.BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k, 1, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
 										++i;
 									}
 								}

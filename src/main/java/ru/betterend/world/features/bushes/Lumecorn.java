@@ -23,7 +23,7 @@ public class Lumecorn extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
 		int height = MHelper.randRange(4, 7, random);
 		MutableBlockPos mut = new MutableBlockPos().set(pos);

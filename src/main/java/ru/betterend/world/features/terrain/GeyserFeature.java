@@ -60,7 +60,7 @@ public class GeyserFeature extends DefaultFeature {
 		MutableBlockPos bpos = new MutableBlockPos().set(pos);
 		bpos.setY(bpos.getY() - 1);
 		BlockState state = world.getBlockState(bpos);
-		while (state.is(TagAPI.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+		while (state.is(TagAPI.BLOCK_GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
 		}
@@ -194,7 +194,7 @@ public class GeyserFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.is(TagAPI.GEN_TERRAIN) && !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
+				if (state.is(TagAPI.BLOCK_GEN_TERRAIN) && !world.getBlockState(mut.above()).is(EndBlocks.HYDROTHERMAL_VENT)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 						MHelper.shuffle(HORIZONTAL, random);
@@ -239,7 +239,7 @@ public class GeyserFeature extends DefaultFeature {
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.is(TagAPI.GEN_TERRAIN)) {
+				if (state.is(TagAPI.BLOCK_GEN_TERRAIN)) {
 					for (int j = 0; j <= dist; j++) {
 						BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
 						mut.setY(mut.getY() + 1);
@@ -271,11 +271,11 @@ public class GeyserFeature extends DefaultFeature {
 	
 	static {
 		REPLACE1 = (state) -> {
-			return state.isAir() || (state.is(TagAPI.GEN_TERRAIN));
+			return state.isAir() || (state.is(TagAPI.BLOCK_GEN_TERRAIN));
 		};
 		
 		REPLACE2 = (state) -> {
-			if (state.is(TagAPI.GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT) || state.is(EndBlocks.SULPHUR_CRYSTAL)) {
+			if (state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.is(EndBlocks.HYDROTHERMAL_VENT) || state.is(EndBlocks.SULPHUR_CRYSTAL)) {
 				return true;
 			}
 			if (state.getMaterial().equals(Material.PLANT)) {

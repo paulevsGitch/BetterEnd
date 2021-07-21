@@ -487,7 +487,7 @@ public class MetalMaterial {
 		TagAPI.addTag(BlockTags.ANVIL, anvilBlock);
 		TagAPI.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
 		TagAPI.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
-		TagAPI.addTag(TagAPI.DRAGON_IMMUNE, ore, bars);
-		TagAPI.addTag(TagAPI.HAMMERS, hammer);
+		TagAPI.addTag(TagAPI.BLOCK_DRAGON_IMMUNE, ore, bars);
+		TagAPI.addTag(TagAPI.ITEM_HAMMERS, hammer);
 	}
 }

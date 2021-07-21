@@ -40,7 +40,7 @@ public class BigAuroraCrystalFeature extends DefaultFeature {
 		Vector3f vec = MHelper.randomHorizontal(random);
 		prism = new SDFRotation().setRotation(vec, random.nextFloat()).setSource(prism);
 		prism.setReplaceFunction((bState) -> {
-			return bState.getMaterial().isReplaceable() || bState.is(TagAPI.GEN_TERRAIN) || bState.getMaterial()
+			return bState.getMaterial().isReplaceable() || bState.is(TagAPI.BLOCK_GEN_TERRAIN) || bState.getMaterial()
 																								  .equals(Material.PLANT) || bState
 				.getMaterial()
 				.equals(Material.LEAVES);

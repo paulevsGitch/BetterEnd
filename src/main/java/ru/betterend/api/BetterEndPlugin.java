@@ -23,7 +23,7 @@ public interface BetterEndPlugin {
 	}
 	
 	/**
-	 * Register other mod stuff, for example, EndHammers.
+	 * Register other mod stuff, for example, EndITEM_HAMMERS.
 	 */
 	default void registerOthers() {
 	}

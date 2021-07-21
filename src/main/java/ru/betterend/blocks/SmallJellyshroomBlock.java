@@ -94,7 +94,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLa
 	
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
-		return state.getValue(FACING) == Direction.UP && world.getBlockState(pos.below()).is(TagAPI.END_GROUND);
+		return state.getValue(FACING) == Direction.UP && world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND);
 	}
 	
 	@Override

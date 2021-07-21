@@ -18,7 +18,7 @@ public class CavePumpkinFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.above()).is(TagAPI.GEN_TERRAIN) || !world.isEmptyBlock(pos) || !world.isEmptyBlock(
+		if (!world.getBlockState(pos.above()).is(TagAPI.BLOCK_GEN_TERRAIN) || !world.isEmptyBlock(pos) || !world.isEmptyBlock(
 			pos.below())) {
 			return false;
 		}

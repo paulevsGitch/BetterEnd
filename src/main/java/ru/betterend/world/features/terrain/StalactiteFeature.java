@@ -45,7 +45,7 @@ public class StalactiteFeature extends DefaultFeature {
 			mut.setY(pos.getY() + i * dir);
 			BlockState state = world.getBlockState(mut);
 			if (!state.getMaterial().isReplaceable()) {
-				stalagnate = state.is(TagAPI.GEN_TERRAIN);
+				stalagnate = state.is(TagAPI.BLOCK_GEN_TERRAIN);
 				height = i;
 				break;
 			}

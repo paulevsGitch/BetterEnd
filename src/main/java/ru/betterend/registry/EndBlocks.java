@@ -173,6 +173,10 @@ public class EndBlocks extends BlocksRegistry {
 	);
 	public static final Block SANGNUM = registerBlock("sangnum", new EndTerrainBlock(MaterialColor.COLOR_RED));
 	public static final Block RUTISCUS = registerBlock("rutiscus", new EndTerrainBlock(MaterialColor.COLOR_ORANGE));
+	public static final Block PALLIDIUM = registerBlock("pallidium", new EndTerrainBlock(MaterialColor.COLOR_LIGHT_GRAY));
+	public static final Block PALLIDIUM_TRANSITION_1 = registerBlock("pallidium_transition_1", new EndTerrainBlock(MaterialColor.COLOR_LIGHT_GRAY));
+	public static final Block PALLIDIUM_TRANSITION_2 = registerBlock("pallidium_transition_2", new EndTerrainBlock(MaterialColor.COLOR_LIGHT_GRAY));
+	public static final Block PALLIDIUM_TRANSITION_3 = registerBlock("pallidium_transition_3", new EndTerrainBlock(MaterialColor.COLOR_LIGHT_GRAY));
 	
 	// Roads //
 	public static final Block END_MYCELIUM_PATH = registerBlock("end_mycelium_path", new BasePathBlock(END_MYCELIUM));

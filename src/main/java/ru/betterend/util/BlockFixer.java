@@ -1,13 +1,17 @@
 package ru.betterend.util;
 
 import com.google.common.collect.Sets;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionType;
 import ru.bclib.blocks.BaseDoublePlantBlock;
 import ru.bclib.blocks.BaseVineBlock;
 import ru.bclib.blocks.StalactiteBlock;
@@ -24,16 +28,23 @@ public class BlockFixer {
 	private static final BlockState WATER = Blocks.WATER.defaultBlockState();
 	
 	public static void fixBlocks(LevelAccessor world, BlockPos start, BlockPos end) {
-		Set<BlockPos> doubleCheck = Sets.newConcurrentHashSet();
-		int dx = end.getX() - start.getX() + 1;
-		int dz = end.getZ() - start.getZ() + 1;
-		int count = dx * dz;
+		Registry<DimensionType> registry = world.registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
+		ResourceLocation dimKey = registry.getKey(world.dimensionType());
+		if (dimKey.getNamespace().equals("world_blender")) {
+			return;
+		}
+		final Set<BlockPos> doubleCheck = Sets.newConcurrentHashSet();
+		final int dx = end.getX() - start.getX() + 1;
+		final int dz = end.getZ() - start.getZ() + 1;
+		final int count = dx * dz;
+		final int minY = Math.max(start.getY(), world.getMinBuildHeight());
+		final int maxY = Math.min(end.getY(), world.getMaxBuildHeight());
 		IntStream.range(0, count).parallel().forEach(index -> {
 			MutableBlockPos POS = new MutableBlockPos();
 			POS.setX((index % dx) + start.getX());
 			POS.setZ((index / dx) + start.getZ());
 			BlockState state;
-			for (int y = start.getY(); y <= end.getY(); y++) {
+			for (int y = minY; y <= maxY; y++) {
 				POS.setY(y);
 				state = world.getBlockState(POS);
 				

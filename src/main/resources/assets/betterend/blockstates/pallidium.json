@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterend:block/pallidium" },
+			{ "model": "betterend:block/pallidium", "y": 90 },
+			{ "model": "betterend:block/pallidium", "y": 180 },
+			{ "model": "betterend:block/pallidium", "y": 270 }
+		]
+	}
+}

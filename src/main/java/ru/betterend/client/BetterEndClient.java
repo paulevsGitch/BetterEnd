@@ -36,11 +36,11 @@ public class BetterEndClient implements ClientModInitializer {
 		EndModelProviders.register();
 		MultiModelItem.register();
 		ClientOptions.init();
-		registerRenderers();
 		registerTooltips();
 		
 		if (BCLib.isDevEnvironment()) {
-			TranslationHelper.printMissingNames(BetterEnd.MOD_ID);
+			TranslationHelper.printMissingEnNames(BetterEnd.MOD_ID);
+			TranslationHelper.printMissingNames(BetterEnd.MOD_ID, "ru_ru");
 		}
 	}
 	
@@ -60,27 +60,5 @@ public class BetterEndClient implements ClientModInitializer {
 				lines.add(setDesc);
 			}
 		});
-	}
-	
-	/*private void registerRenderLayers() {
-		RenderType cutout = RenderType.cutout();
-		RenderType translucent = RenderType.translucent();
-		Registry.BLOCK.forEach(block -> {
-			if (block instanceof RenderLayerProvider) {
-				BCLRenderLayer layer = ((RenderLayerProvider) block).getRenderLayer();
-				if (layer == BCLRenderLayer.CUTOUT) BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
-				else if (layer == BCLRenderLayer.TRANSLUCENT) BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
-			}
-		});
-	}*/
-	
-	private static void registerRenderers() {
-		List<Block> modBlocks = EndBlocks.getModBlocks();
-		modBlocks.stream()
-				 .filter(BaseChestBlock.class::isInstance)
-				 .forEach(BaseChestBlockEntityRenderer::registerRenderLayer);
-		modBlocks.stream()
-				 .filter(BaseSignBlock.class::isInstance)
-				 .forEach(BaseSignBlockEntityRenderer::registerRenderLayer);
 	}
 }

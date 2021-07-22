@@ -237,6 +237,7 @@ public class WoodenMaterial {
 		TagAPI.addTags(stairs, ItemTags.WOODEN_STAIRS, ItemTags.STAIRS);
 		TagAPI.addTags(trapdoor, ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS);
 		TagAPI.addTag(TagAPI.ITEM_CHEST, chest);
+		TagAPI.addTag(TagAPI.ITEM_WORKBENCHES, craftingTable);
 		
 		// Block Tags //
 		TagAPI.addTag(BlockTags.PLANKS, planks);
@@ -252,6 +253,7 @@ public class WoodenMaterial {
 		TagAPI.addTags(trapdoor, BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS);
 		TagAPI.addTag(TagAPI.BLOCK_BOOKSHELVES, shelf);
 		TagAPI.addTag(TagAPI.BLOCK_CHEST, chest);
+		TagAPI.addTag(TagAPI.BLOCK_WORKBENCHES, craftingTable);
 		
 		logBlockTag = TagAPI.makeBlockTag(BetterEnd.MOD_ID, name + "_logs");
 		logItemTag = TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_logs");

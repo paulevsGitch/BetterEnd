@@ -79,6 +79,7 @@ import ru.betterend.world.features.trees.PythadendronTreeFeature;
 import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
 import ru.betterend.world.generator.GeneratorOptions;
+import ru.betterend.world.surface.UmbraSurfaceBuilder;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -303,6 +304,7 @@ public class EndFeatures {
 		1
 	);
 	//public static final BCLFeature PEARLBERRY = redisterVegetation("pearlberry", new SinglePlantFeature(EndBlocks.PEARLBERRY, 5, 5), 1);
+	public static final BCLFeature INFLEXIA = redisterVegetation("inflexia", new SinglePlantFeature(EndBlocks.INFLEXIA, 5, 3), 8);
 	
 	// Vines //
 	public static final BCLFeature DENSE_VINE = redisterVegetation(
@@ -519,7 +521,13 @@ public class EndFeatures {
 		BetterEnd.makeID("tunel_cave"),
 		new TunelCaveFeature()
 	);
-	public static final BCLFeature UMBRALITH_ARCH = registerChanced("umbralith_arch", new ArchFeature(EndBlocks.UMBRALITH.stone), 10);
+	public static final BCLFeature UMBRALITH_ARCH = registerChanced(
+		"umbralith_arch",
+		new ArchFeature(
+			EndBlocks.UMBRALITH.stone,
+			UmbraSurfaceBuilder::getSurfaceState
+		),
+		10);
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
 	
 	// Ores //

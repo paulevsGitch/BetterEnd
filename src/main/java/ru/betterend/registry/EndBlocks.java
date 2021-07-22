@@ -447,6 +447,15 @@ public class EndBlocks extends BlocksRegistry {
 	public static final Block AERIDIUM = registerBlock("aeridium", new TerrainPlantBlock(RUTISCUS));
 	public static final Block LUTEBUS = registerBlock("lutebus", new TerrainPlantBlock(RUTISCUS));
 	public static final Block LAMELLARIUM = registerBlock("lamellarium", new TerrainPlantBlock(RUTISCUS));
+	public static final Block INFLEXIA = registerBlock(
+		"inflexia",
+		new TerrainPlantBlock(
+			PALLIDIUM,
+			PALLIDIUM_TRANSITION_1,
+			PALLIDIUM_TRANSITION_2,
+			PALLIDIUM_TRANSITION_3
+		)
+	);
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlueVineSeedBlock());
 	public static final Block BLUE_VINE = registerEndBlockOnly("blue_vine", new BlueVineBlock());

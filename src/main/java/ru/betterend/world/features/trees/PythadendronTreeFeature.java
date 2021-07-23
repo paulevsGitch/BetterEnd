@@ -64,7 +64,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		);
 		
 		SDF function = SplineHelper.buildSDF(spline, 1.7F, 1.1F, (bpos) -> {
-			return EndBlocks.PYTHADENDRON.bark.defaultBlockState();
+			return EndBlocks.PYTHADENDRON.getBark().defaultBlockState();
 		});
 		function.setReplaceFunction(REPLACE);
 		function.addPostProcess(POST);
@@ -92,7 +92,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		boolean s1 = SplineHelper.fillSpline(
 			spline,
 			world,
-			EndBlocks.PYTHADENDRON.bark.defaultBlockState(),
+			EndBlocks.PYTHADENDRON.getBark().defaultBlockState(),
 			pos,
 			REPLACE
 		);
@@ -105,7 +105,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		boolean s2 = SplineHelper.fillSpline(
 			spline,
 			world,
-			EndBlocks.PYTHADENDRON.bark.defaultBlockState(),
+			EndBlocks.PYTHADENDRON.getBark().defaultBlockState(),
 			pos,
 			REPLACE
 		);
@@ -157,7 +157,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 						return info.getState();
 					}
 				}
-				info.setState(EndBlocks.PYTHADENDRON.bark.defaultBlockState());
+				info.setState(EndBlocks.PYTHADENDRON.getBark().defaultBlockState());
 				for (int x = -6; x < 7; x++) {
 					int ax = Math.abs(x);
 					mut.setX(x + info.getPos().getX());
@@ -206,7 +206,7 @@ public class PythadendronTreeFeature extends DefaultFeature {
 		
 		POST = (info) -> {
 			if (EndBlocks.PYTHADENDRON.isTreeLog(info.getStateUp()) && EndBlocks.PYTHADENDRON.isTreeLog(info.getStateDown())) {
-				return EndBlocks.PYTHADENDRON.log.defaultBlockState();
+				return EndBlocks.PYTHADENDRON.getLog().defaultBlockState();
 			}
 			return info.getState();
 		};

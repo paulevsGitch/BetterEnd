@@ -22,7 +22,7 @@ import ru.bclib.items.tool.BaseAxeItem;
 import ru.bclib.items.tool.BaseHoeItem;
 import ru.bclib.items.tool.BaseShovelItem;
 import ru.bclib.items.tool.BaseSwordItem;
-import ru.bclib.registry.ItemsRegistry;
+import ru.bclib.registry.ItemRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.item.ArmoredElytra;
@@ -42,7 +42,7 @@ import ru.betterend.tab.CreativeTabs;
 
 import java.util.List;
 
-public class EndItems extends ItemsRegistry {
+public class EndItems extends ItemRegistry {
 	// Materials //
 	public final static Item ENDER_DUST = registerEndItem("ender_dust");
 	public final static Item ENDER_SHARD = registerEndItem("ender_shard");
@@ -202,7 +202,7 @@ public class EndItems extends ItemsRegistry {
 	// Drinks //
 	public final static Item UMBRELLA_CLUSTER_JUICE = registerEndDrink("umbrella_cluster_juice", 5, 0.7F);
 	
-	private static ItemsRegistry itemRegistry;
+	private static ItemRegistry itemRegistry;
 	
 	protected EndItems(CreativeModeTab creativeTab) {
 		super(creativeTab);
@@ -284,7 +284,7 @@ public class EndItems extends ItemsRegistry {
 	}
 	
 	@NotNull
-	private static ItemsRegistry getItemRegistry() {
+	public static ItemRegistry getItemRegistry() {
 		if (itemRegistry == null) {
 			itemRegistry = new EndItems(CreativeTabs.TAB_ITEMS);
 		}

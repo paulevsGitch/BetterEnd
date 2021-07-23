@@ -28,6 +28,6 @@ bin/
 
 run/
 output/
-*.log
+*.getBlock("log")
 Convert.class
 ModelPart.class

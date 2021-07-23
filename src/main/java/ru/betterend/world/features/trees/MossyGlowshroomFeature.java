@@ -58,14 +58,14 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 		CONE1.setBlock(EndBlocks.MOSSY_GLOWSHROOM_CAP);
 		CONE2.setBlock(EndBlocks.MOSSY_GLOWSHROOM_CAP);
 		CONE_GLOW.setBlock(EndBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE);
-		ROOTS.setBlock(EndBlocks.MOSSY_GLOWSHROOM.bark);
+		ROOTS.setBlock(EndBlocks.MOSSY_GLOWSHROOM.getBark());
 		
 		float height = MHelper.randRange(10F, 25F, random);
 		int count = MHelper.floor(height / 4);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, count);
 		SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
 		SDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
-			return EndBlocks.MOSSY_GLOWSHROOM.log.defaultBlockState();
+			return EndBlocks.MOSSY_GLOWSHROOM.getLog().defaultBlockState();
 		});
 		Vector3f pos = spline.get(spline.size() - 1);
 		float scale = MHelper.randRange(0.75F, 1.1F, random);
@@ -89,7 +89,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 				}
 				else if (!EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp()) || !EndBlocks.MOSSY_GLOWSHROOM.isTreeLog(
 					info.getStateDown())) {
-					info.setState(EndBlocks.MOSSY_GLOWSHROOM.bark.defaultBlockState());
+					info.setState(EndBlocks.MOSSY_GLOWSHROOM.getBark().defaultBlockState());
 					return info.getState();
 				}
 			}

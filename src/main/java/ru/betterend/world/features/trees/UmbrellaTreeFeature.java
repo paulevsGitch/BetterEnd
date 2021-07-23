@@ -46,7 +46,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		final NoneFeatureConfiguration config = featureConfig.config();
 		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
-		BlockState wood = EndBlocks.UMBRELLA_TREE.bark.defaultBlockState();
+		BlockState wood = EndBlocks.UMBRELLA_TREE.getBark().defaultBlockState();
 		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
 															  .setValue(UmbrellaTreeMembraneBlock.COLOR, 1);
 		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
@@ -113,7 +113,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		
 		sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 			if (EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateUp()) && EndBlocks.UMBRELLA_TREE.isTreeLog(info.getStateDown())) {
-				return EndBlocks.UMBRELLA_TREE.log.defaultBlockState();
+				return EndBlocks.UMBRELLA_TREE.getLog().defaultBlockState();
 			}
 			else if (info.getState().equals(membrane)) {
 				Center min = centers.get(0);

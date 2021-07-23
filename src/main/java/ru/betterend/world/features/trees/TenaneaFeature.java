@@ -56,7 +56,7 @@ public class TenaneaFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(spline, angle);
 			SplineHelper.scale(spline, size + MHelper.randRange(0, size * 0.5F, random));
 			SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
-			SplineHelper.fillSpline(spline, world, EndBlocks.TENANEA.bark.defaultBlockState(), pos, REPLACE);
+			SplineHelper.fillSpline(spline, world, EndBlocks.TENANEA.getBark().defaultBlockState(), pos, REPLACE);
 			Vector3f last = spline.get(spline.size() - 1);
 			float leavesRadius = (size * 0.3F + MHelper.randRange(0.8F, 1.5F, random)) * 1.4F;
 			OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
@@ -84,10 +84,10 @@ public class TenaneaFeature extends DefaultFeature {
 		MutableBlockPos mut = new MutableBlockPos();
 		for (Direction d1 : BlocksHelper.HORIZONTAL) {
 			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).immutable();
-			BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TENANEA.bark.defaultBlockState());
+			BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TENANEA.getBark().defaultBlockState());
 			for (Direction d2 : BlocksHelper.HORIZONTAL) {
 				mut.set(p).move(Direction.UP).move(d2);
-				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TENANEA.bark.defaultBlockState());
+				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.TENANEA.getBark().defaultBlockState());
 			}
 		}
 		
@@ -112,7 +112,7 @@ public class TenaneaFeature extends DefaultFeature {
 						return info.getState();
 					}
 				}
-				info.setState(EndBlocks.TENANEA.bark.defaultBlockState());
+				info.setState(EndBlocks.TENANEA.getBark().defaultBlockState());
 			}
 			
 			MHelper.shuffle(DIRECTIONS, random);
@@ -149,7 +149,7 @@ public class TenaneaFeature extends DefaultFeature {
 			return info.getState();
 		});
 		sphere.fillRecursiveIgnore(world, pos, IGNORE);
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.TENANEA.bark);
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.TENANEA.getBark());
 		
 		support.forEach((bpos) -> {
 			BlockState state = world.getBlockState(bpos);

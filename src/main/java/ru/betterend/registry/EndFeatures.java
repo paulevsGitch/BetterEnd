@@ -112,12 +112,12 @@ public class EndFeatures {
 	// Bushes //
 	public static final BCLFeature PYTHADENDRON_BUSH = redisterVegetation(
 		"pythadendron_bush",
-		new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.bark),
+		new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.getBark()),
 		4
 	);
 	public static final BCLFeature DRAGON_TREE_BUSH = redisterVegetation(
 		"dragon_tree_bush",
-		new BushFeature(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.bark),
+		new BushFeature(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.getBark()),
 		15
 	);
 	public static final BCLFeature TENANEA_BUSH = redisterVegetation("tenanea_bush", new TenaneaBushFeature(), 10);
@@ -129,12 +129,12 @@ public class EndFeatures {
 	);
 	public static final BCLFeature LUCERNIA_BUSH = redisterVegetation(
 		"lucernia_bush",
-		new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.bark),
+		new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.getBark()),
 		10
 	);
 	public static final BCLFeature LUCERNIA_BUSH_RARE = redisterVegetation(
 		"lucernia_bush_rare",
-		new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.bark),
+		new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.getBark()),
 		1
 	);
 	public static final BCLFeature NEON_CACTUS = redisterVegetation("neon_cactus", new NeonCactusFeature(), 2);

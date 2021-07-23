@@ -118,7 +118,7 @@ public class CraftingRecipes {
 				  .setShape("##", "##")
 				  .addMaterial('#', EndItems.CRYSTAL_SHARDS)
 				  .build();
-		GridRecipe.make(BetterEnd.MOD_ID, "lotus_block", EndBlocks.END_LOTUS.log)
+		GridRecipe.make(BetterEnd.MOD_ID, "lotus_block", EndBlocks.END_LOTUS.getLog())
 				  .checkConfig(Configs.RECIPE_CONFIG)
 				  .setShape("##", "##")
 				  .addMaterial('#', EndBlocks.END_LOTUS_STEM)
@@ -380,7 +380,7 @@ public class CraftingRecipes {
 		GridRecipe.make(BetterEnd.MOD_ID, "silk_moth_hive", EndBlocks.SILK_MOTH_HIVE)
 				  .checkConfig(Configs.RECIPE_CONFIG)
 				  .setShape("#L#", "LML", "#L#")
-				  .addMaterial('#', EndBlocks.TENANEA.planks)
+				  .addMaterial('#', EndBlocks.TENANEA.getBlock("planks"))
 				  .addMaterial('L', EndBlocks.TENANEA_LEAVES)
 				  .addMaterial('M', EndItems.SILK_MOTH_MATRIX)
 				  .build();

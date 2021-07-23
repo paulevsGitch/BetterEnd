@@ -66,7 +66,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		
 		radius = MHelper.randRange(1.2F, 2.3F, random);
 		SDF function = SplineHelper.buildSDF(spline, radius, 1.2F, (bpos) -> {
-			return EndBlocks.DRAGON_TREE.bark.defaultBlockState();
+			return EndBlocks.DRAGON_TREE.getBark().defaultBlockState();
 		});
 		
 		function.setReplaceFunction(REPLACE);
@@ -86,17 +86,17 @@ public class DragonTreeFeature extends DefaultFeature {
 			List<Vector3f> branch = SplineHelper.copySpline(BRANCH);
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
-			SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.bark.defaultBlockState(), pos, REPLACE);
+			SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.getBark().defaultBlockState(), pos, REPLACE);
 			
 			branch = SplineHelper.copySpline(SIDE1);
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
-			SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.bark.defaultBlockState(), pos, REPLACE);
+			SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.getBark().defaultBlockState(), pos, REPLACE);
 			
 			branch = SplineHelper.copySpline(SIDE2);
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
-			SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.bark.defaultBlockState(), pos, REPLACE);
+			SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.getBark().defaultBlockState(), pos, REPLACE);
 		}
 		leavesBall(world, pos.above(offset), radius * 1.15F + 2, random, noise);
 	}
@@ -112,7 +112,7 @@ public class DragonTreeFeature extends DefaultFeature {
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
 			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
-				SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.bark.defaultBlockState(), pos, REPLACE);
+				SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.getBark().defaultBlockState(), pos, REPLACE);
 			}
 		}
 	}
@@ -140,7 +140,7 @@ public class DragonTreeFeature extends DefaultFeature {
 						return info.getState();
 					}
 				}
-				info.setState(EndBlocks.DRAGON_TREE.bark.defaultBlockState());
+				info.setState(EndBlocks.DRAGON_TREE.getBark().defaultBlockState());
 				for (int x = -6; x < 7; x++) {
 					int ax = Math.abs(x);
 					mut.setX(x + info.getPos().getX());
@@ -185,12 +185,12 @@ public class DragonTreeFeature extends DefaultFeature {
 					}
 				}
 				if (place) {
-					BlocksHelper.setWithoutUpdate(world, p, EndBlocks.DRAGON_TREE.bark);
+					BlocksHelper.setWithoutUpdate(world, p, EndBlocks.DRAGON_TREE.getBark());
 				}
 			}
 		}
 		
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.DRAGON_TREE.bark);
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.DRAGON_TREE.getBark());
 	}
 	
 	static {
@@ -213,7 +213,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		
 		POST = (info) -> {
 			if (EndBlocks.DRAGON_TREE.isTreeLog(info.getStateUp()) && EndBlocks.DRAGON_TREE.isTreeLog(info.getStateDown())) {
-				return EndBlocks.DRAGON_TREE.log.defaultBlockState();
+				return EndBlocks.DRAGON_TREE.getLog().defaultBlockState();
 			}
 			return info.getState();
 		};

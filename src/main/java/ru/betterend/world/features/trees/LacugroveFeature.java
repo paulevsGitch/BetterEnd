@@ -57,7 +57,7 @@ public class LacugroveFeature extends DefaultFeature {
 		
 		radius = MHelper.randRange(1.2F, 1.8F, random);
 		SDF function = SplineHelper.buildSDF(spline, radius, 0.7F, (bpos) -> {
-			return EndBlocks.LACUGROVE.bark.defaultBlockState();
+			return EndBlocks.LACUGROVE.getBark().defaultBlockState();
 		});
 		
 		function.setReplaceFunction(REPLACE);
@@ -65,7 +65,7 @@ public class LacugroveFeature extends DefaultFeature {
 		function.fillRecursive(world, pos);
 		
 		spline = spline.subList(4, 6);
-		SplineHelper.fillSpline(spline, world, EndBlocks.LACUGROVE.bark.defaultBlockState(), pos, REPLACE);
+		SplineHelper.fillSpline(spline, world, EndBlocks.LACUGROVE.getBark().defaultBlockState(), pos, REPLACE);
 		
 		MutableBlockPos mut = new MutableBlockPos();
 		int offset = random.nextInt(2);
@@ -97,7 +97,7 @@ public class LacugroveFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(
 									world,
 									mut,
-									y == top ? EndBlocks.LACUGROVE.bark : EndBlocks.LACUGROVE.log
+									y == top ? EndBlocks.LACUGROVE.getBark() : EndBlocks.LACUGROVE.getLog()
 								);
 							}
 							else {
@@ -133,7 +133,7 @@ public class LacugroveFeature extends DefaultFeature {
 						return info.getState();
 					}
 				}
-				info.setState(EndBlocks.LACUGROVE.bark.defaultBlockState());
+				info.setState(EndBlocks.LACUGROVE.getBark().defaultBlockState());
 				for (int x = -6; x < 7; x++) {
 					int ax = Math.abs(x);
 					mut.setX(x + info.getPos().getX());
@@ -178,12 +178,12 @@ public class LacugroveFeature extends DefaultFeature {
 					}
 				}
 				if (place) {
-					BlocksHelper.setWithoutUpdate(world, p, EndBlocks.LACUGROVE.bark);
+					BlocksHelper.setWithoutUpdate(world, p, EndBlocks.LACUGROVE.getBark());
 				}
 			}
 		}
 		
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.LACUGROVE.bark);
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.LACUGROVE.getBark());
 	}
 	
 	static {
@@ -209,7 +209,7 @@ public class LacugroveFeature extends DefaultFeature {
 		
 		POST = (info) -> {
 			if (EndBlocks.LACUGROVE.isTreeLog(info.getStateUp()) && EndBlocks.LACUGROVE.isTreeLog(info.getStateDown())) {
-				return EndBlocks.LACUGROVE.log.defaultBlockState();
+				return EndBlocks.LACUGROVE.getLog().defaultBlockState();
 			}
 			return info.getState();
 		};

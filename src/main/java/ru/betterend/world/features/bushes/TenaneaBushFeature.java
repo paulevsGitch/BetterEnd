@@ -87,7 +87,7 @@ public class TenaneaBushFeature extends DefaultFeature {
 			return info.getState();
 		});
 		sphere.fillRecursive(world, pos);
-		BlockState stem = EndBlocks.TENANEA.bark.defaultBlockState();
+		BlockState stem = EndBlocks.TENANEA.getBark().defaultBlockState();
 		BlocksHelper.setWithoutUpdate(world, pos, stem);
 		for (Direction d : Direction.values()) {
 			BlockPos p = pos.relative(d);

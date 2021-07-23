@@ -54,7 +54,7 @@ public class HelixTreeFeature extends DefaultFeature {
 			spline.add(new Vector3f(dx, i * 2, dz));
 		}
 		SDF sdf = SplineHelper.buildSDF(spline, 1.7F, 0.5F, (p) -> {
-			return EndBlocks.HELIX_TREE.bark.defaultBlockState();
+			return EndBlocks.HELIX_TREE.getBark().defaultBlockState();
 		});
 		SDF rotated = new SDFRotation().setRotation(Vector3f.YP, (float) Math.PI).setSource(sdf);
 		sdf = new SDFUnion().setSourceA(rotated).setSourceB(sdf);
@@ -62,7 +62,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		Vector3f lastPoint = spline.get(spline.size() - 1);
 		List<Vector3f> spline2 = SplineHelper.makeSpline(0, 0, 0, 0, 20, 0, 5);
 		SDF stem = SplineHelper.buildSDF(spline2, 1.0F, 0.5F, (p) -> {
-			return EndBlocks.HELIX_TREE.bark.defaultBlockState();
+			return EndBlocks.HELIX_TREE.getBark().defaultBlockState();
 		});
 		stem = new SDFTranslate().setTranslate(lastPoint.x(), lastPoint.y(), lastPoint.z()).setSource(stem);
 		sdf = new SDFSmoothUnion().setRadius(3).setSourceA(sdf).setSourceB(stem);
@@ -73,11 +73,11 @@ public class HelixTreeFeature extends DefaultFeature {
 		float dy2 = 100 * scale;
 		sdf.addPostProcess(POST).fillArea(world, pos, new AABB(pos.offset(-dx, dy1, -dx), pos.offset(dx, dy2, dx)));
 		SplineHelper.scale(spline, scale);
-		SplineHelper.fillSplineForce(spline, world, EndBlocks.HELIX_TREE.bark.defaultBlockState(), pos, (state) -> {
+		SplineHelper.fillSplineForce(spline, world, EndBlocks.HELIX_TREE.getBark().defaultBlockState(), pos, (state) -> {
 			return state.getMaterial().isReplaceable();
 		});
 		SplineHelper.rotateSpline(spline, (float) Math.PI);
-		SplineHelper.fillSplineForce(spline, world, EndBlocks.HELIX_TREE.bark.defaultBlockState(), pos, (state) -> {
+		SplineHelper.fillSplineForce(spline, world, EndBlocks.HELIX_TREE.getBark().defaultBlockState(), pos, (state) -> {
 			return state.getMaterial().isReplaceable();
 		});
 		SplineHelper.scale(spline2, scale);
@@ -85,7 +85,7 @@ public class HelixTreeFeature extends DefaultFeature {
 		SplineHelper.fillSplineForce(
 			spline2,
 			world,
-			EndBlocks.HELIX_TREE.log.defaultBlockState(),
+			EndBlocks.HELIX_TREE.getLog().defaultBlockState(),
 			leafStart,
 			(state) -> {
 				return state.getMaterial().isReplaceable();
@@ -189,7 +189,7 @@ public class HelixTreeFeature extends DefaultFeature {
 	static {
 		POST = (info) -> {
 			if (EndBlocks.HELIX_TREE.isTreeLog(info.getStateUp()) && EndBlocks.HELIX_TREE.isTreeLog(info.getStateDown())) {
-				return EndBlocks.HELIX_TREE.log.defaultBlockState();
+				return EndBlocks.HELIX_TREE.getLog().defaultBlockState();
 			}
 			return info.getState();
 		};

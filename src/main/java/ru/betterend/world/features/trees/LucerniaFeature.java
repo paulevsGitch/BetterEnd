@@ -58,7 +58,7 @@ public class LucerniaFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(spline, angle);
 			SplineHelper.scale(spline, size * MHelper.randRange(0.5F, 1F, random));
 			SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
-			SplineHelper.fillSpline(spline, world, EndBlocks.LUCERNIA.bark.defaultBlockState(), pos, REPLACE);
+			SplineHelper.fillSpline(spline, world, EndBlocks.LUCERNIA.getBark().defaultBlockState(), pos, REPLACE);
 			Vector3f last = spline.get(spline.size() - 1);
 			float leavesRadius = (size * 0.13F + MHelper.randRange(0.8F, 1.5F, random)) * 1.4F;
 			OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
@@ -88,10 +88,10 @@ public class LucerniaFeature extends DefaultFeature {
 		MutableBlockPos mut = new MutableBlockPos();
 		for (Direction d1 : BlocksHelper.HORIZONTAL) {
 			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).immutable();
-			BlocksHelper.setWithoutUpdate(world, p, EndBlocks.LUCERNIA.bark.defaultBlockState());
+			BlocksHelper.setWithoutUpdate(world, p, EndBlocks.LUCERNIA.getBark().defaultBlockState());
 			for (Direction d2 : BlocksHelper.HORIZONTAL) {
 				mut.set(p).move(Direction.UP).move(d2);
-				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.LUCERNIA.bark.defaultBlockState());
+				BlocksHelper.setWithoutUpdate(world, p, EndBlocks.LUCERNIA.getBark().defaultBlockState());
 			}
 		}
 		
@@ -115,7 +115,7 @@ public class LucerniaFeature extends DefaultFeature {
 						return info.getState();
 					}
 				}
-				info.setState(EndBlocks.LUCERNIA.bark.defaultBlockState());
+				info.setState(EndBlocks.LUCERNIA.getBark().defaultBlockState());
 			}
 			
 			MHelper.shuffle(DIRECTIONS, random);
@@ -152,7 +152,7 @@ public class LucerniaFeature extends DefaultFeature {
 			return info.getState();
 		});
 		sphere.fillRecursiveIgnore(world, pos, IGNORE);
-		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.LUCERNIA.bark);
+		BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.LUCERNIA.getBark());
 		
 		support.forEach((bpos) -> {
 			BlockState state = world.getBlockState(bpos);
@@ -187,7 +187,7 @@ public class LucerniaFeature extends DefaultFeature {
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
 			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
-				SplineHelper.fillSplineForce(branch, world, EndBlocks.LUCERNIA.bark.defaultBlockState(), pos, REPLACE);
+				SplineHelper.fillSplineForce(branch, world, EndBlocks.LUCERNIA.getBark().defaultBlockState(), pos, REPLACE);
 			}
 		}
 	}

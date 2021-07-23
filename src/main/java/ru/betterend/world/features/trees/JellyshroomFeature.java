@@ -38,7 +38,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		final WorldGenLevel world = featureConfig.level();
 		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
 		
-		BlockState bark = EndBlocks.JELLYSHROOM.bark.defaultBlockState();
+		BlockState bark = EndBlocks.JELLYSHROOM.getBark().defaultBlockState();
 		BlockState membrane = EndBlocks.JELLYSHROOM_CAP_PURPLE.defaultBlockState();
 		
 		int height = MHelper.randRange(5, 8, random);
@@ -61,7 +61,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 			if (EndBlocks.JELLYSHROOM.isTreeLog(info.getState())) {
 				if (EndBlocks.JELLYSHROOM.isTreeLog(info.getStateUp()) && EndBlocks.JELLYSHROOM.isTreeLog(info.getStateDown())) {
-					return EndBlocks.JELLYSHROOM.log.defaultBlockState();
+					return EndBlocks.JELLYSHROOM.getLog().defaultBlockState();
 				}
 			}
 			else if (info.getState().is(EndBlocks.JELLYSHROOM_CAP_PURPLE)) {

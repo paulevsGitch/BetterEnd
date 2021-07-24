@@ -18,7 +18,7 @@ import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.BetterEnd;
-import ru.betterend.blocks.complex.StoneMaterial;
+import ru.betterend.complexmaterials.StoneMaterial;
 import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePumpkinFeature;

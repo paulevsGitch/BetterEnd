@@ -5,7 +5,7 @@ import net.minecraft.world.level.ItemLike;
 import ru.bclib.integration.ModIntegration;
 import ru.bclib.util.ColorUtil;
 import ru.betterend.blocks.HydraluxPetalColoredBlock;
-import ru.betterend.blocks.complex.ColoredMaterial;
+import ru.betterend.complexmaterials.ColoredMaterial;
 import ru.betterend.registry.EndBlocks;
 
 import java.awt.Color;

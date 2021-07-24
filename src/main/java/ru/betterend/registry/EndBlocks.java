@@ -134,11 +134,11 @@ import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.blocks.basis.PottableCropBlock;
 import ru.betterend.blocks.basis.PottableLeavesBlock;
 import ru.betterend.blocks.basis.StoneLanternBlock;
-import ru.betterend.blocks.complex.ColoredMaterial;
-import ru.betterend.blocks.complex.CrystalSubblocksMaterial;
-import ru.betterend.blocks.complex.MetalMaterial;
-import ru.betterend.blocks.complex.StoneMaterial;
-import ru.betterend.blocks.complex.EndWoodenMaterial;
+import ru.betterend.complexmaterials.ColoredMaterial;
+import ru.betterend.complexmaterials.CrystalSubblocksMaterial;
+import ru.betterend.complexmaterials.EndWoodenComplexMaterial;
+import ru.betterend.complexmaterials.MetalMaterial;
+import ru.betterend.complexmaterials.StoneMaterial;
 import ru.betterend.config.Configs;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
@@ -289,7 +289,7 @@ public class EndBlocks extends BlockRegistry {
 		"mossy_glowshroom_fur",
 		new FurBlock(MOSSY_GLOWSHROOM_SAPLING, 15, 16, true)
 	);
-	public static final EndWoodenMaterial MOSSY_GLOWSHROOM = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial MOSSY_GLOWSHROOM = new EndWoodenComplexMaterial(
 		"mossy_glowshroom",
 		MaterialColor.COLOR_GRAY,
 		MaterialColor.WOOD
@@ -303,7 +303,7 @@ public class EndBlocks extends BlockRegistry {
 		"pythadendron_leaves",
 		new PottableLeavesBlock(PYTHADENDRON_SAPLING, MaterialColor.COLOR_MAGENTA)
 	);
-	public static final EndWoodenMaterial PYTHADENDRON = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial PYTHADENDRON = new EndWoodenComplexMaterial(
 		"pythadendron",
 		MaterialColor.COLOR_MAGENTA,
 		MaterialColor.COLOR_PURPLE
@@ -313,7 +313,7 @@ public class EndBlocks extends BlockRegistry {
 	public static final Block END_LOTUS_STEM = registerBlock("end_lotus_stem", new EndLotusStemBlock());
 	public static final Block END_LOTUS_LEAF = registerEndBlockOnly("end_lotus_leaf", new EndLotusLeafBlock());
 	public static final Block END_LOTUS_FLOWER = registerEndBlockOnly("end_lotus_flower", new EndLotusFlowerBlock());
-	public static final EndWoodenMaterial END_LOTUS = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial END_LOTUS = new EndWoodenComplexMaterial(
 		"end_lotus",
 		MaterialColor.COLOR_LIGHT_BLUE,
 		MaterialColor.COLOR_CYAN
@@ -324,7 +324,7 @@ public class EndBlocks extends BlockRegistry {
 		"lacugrove_leaves",
 		new PottableLeavesBlock(LACUGROVE_SAPLING, MaterialColor.COLOR_CYAN)
 	);
-	public static final EndWoodenMaterial LACUGROVE = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial LACUGROVE = new EndWoodenComplexMaterial(
 		"lacugrove",
 		MaterialColor.COLOR_BROWN,
 		MaterialColor.COLOR_YELLOW
@@ -335,7 +335,7 @@ public class EndBlocks extends BlockRegistry {
 		"dragon_tree_leaves",
 		new PottableLeavesBlock(DRAGON_TREE_SAPLING, MaterialColor.COLOR_MAGENTA)
 	);
-	public static final EndWoodenMaterial DRAGON_TREE = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial DRAGON_TREE = new EndWoodenComplexMaterial(
 		"dragon_tree",
 		MaterialColor.COLOR_BLACK,
 		MaterialColor.COLOR_MAGENTA
@@ -351,7 +351,7 @@ public class EndBlocks extends BlockRegistry {
 		"tenanea_outer_leaves",
 		new FurBlock(TENANEA_SAPLING, 32)
 	);
-	public static final EndWoodenMaterial TENANEA = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial TENANEA = new EndWoodenComplexMaterial(
 		"tenanea",
 		MaterialColor.COLOR_BROWN,
 		MaterialColor.COLOR_PINK
@@ -359,7 +359,7 @@ public class EndBlocks extends BlockRegistry {
 	
 	public static final Block HELIX_TREE_SAPLING = registerBlock("helix_tree_sapling", new HelixTreeSaplingBlock());
 	public static final Block HELIX_TREE_LEAVES = registerBlock("helix_tree_leaves", new HelixTreeLeavesBlock());
-	public static final EndWoodenMaterial HELIX_TREE = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial HELIX_TREE = new EndWoodenComplexMaterial(
 		"helix_tree",
 		MaterialColor.COLOR_GRAY,
 		MaterialColor.COLOR_ORANGE
@@ -381,7 +381,7 @@ public class EndBlocks extends BlockRegistry {
 		"umbrella_tree_cluster_empty",
 		new UmbrellaTreeClusterEmptyBlock()
 	);
-	public static final EndWoodenMaterial UMBRELLA_TREE = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial UMBRELLA_TREE = new EndWoodenComplexMaterial(
 		"umbrella_tree",
 		MaterialColor.COLOR_BLUE,
 		MaterialColor.COLOR_GREEN
@@ -391,7 +391,7 @@ public class EndBlocks extends BlockRegistry {
 		"jellyshroom_cap_purple",
 		new JellyshroomCapBlock(217, 142, 255, 164, 0, 255)
 	);
-	public static final EndWoodenMaterial JELLYSHROOM = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial JELLYSHROOM = new EndWoodenComplexMaterial(
 		"jellyshroom",
 		MaterialColor.COLOR_PURPLE,
 		MaterialColor.COLOR_LIGHT_BLUE
@@ -406,7 +406,7 @@ public class EndBlocks extends BlockRegistry {
 		"lucernia_outer_leaves",
 		new FurBlock(LUCERNIA_SAPLING, 32)
 	);
-	public static final EndWoodenMaterial LUCERNIA = new EndWoodenMaterial(
+	public static final EndWoodenComplexMaterial LUCERNIA = new EndWoodenComplexMaterial(
 		"lucernia",
 		MaterialColor.COLOR_ORANGE,
 		MaterialColor.COLOR_ORANGE

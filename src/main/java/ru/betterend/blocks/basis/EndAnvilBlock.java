@@ -2,7 +2,7 @@ package ru.betterend.blocks.basis;
 
 import net.minecraft.world.level.material.MaterialColor;
 import ru.bclib.blocks.BaseAnvilBlock;
-import ru.betterend.blocks.complex.MetalMaterial;
+import ru.betterend.complexmaterials.MetalMaterial;
 
 public class EndAnvilBlock extends BaseAnvilBlock {
 	protected MetalMaterial metalMaterial;

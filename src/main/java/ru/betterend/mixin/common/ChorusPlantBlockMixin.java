@@ -10,39 +10,19 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChorusPlantBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.api.TagAPI;
-import ru.betterend.blocks.VanillaBlockProperties;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.generator.GeneratorOptions;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
 public abstract class ChorusPlantBlockMixin extends Block {
 	public ChorusPlantBlockMixin(Properties settings) {
 		super(settings);
-	}
-	
-	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void beOnInit(BlockBehaviour.Properties settings, CallbackInfo info) {
-		if (GeneratorOptions.changeChorusPlant()) {
-			this.registerDefaultState(this.defaultBlockState().setValue(VanillaBlockProperties.ROOTS, false));
-		}
-	}
-	
-	@Inject(method = "createBlockStateDefinition", at = @At("TAIL"))
-	private void be_createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo info) {
-		GeneratorOptions.init();
-		if (GeneratorOptions.changeChorusPlant()) {
-			builder.add(VanillaBlockProperties.ROOTS);
-		}
 	}
 	
 	@Inject(method = "getStateForPlacement(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
@@ -51,37 +31,15 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		Level world = ctx.getLevel();
 		BlockState plant = info.getReturnValue();
 		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
-			if (GeneratorOptions.changeChorusPlant()) {
-				info.setReturnValue(plant.setValue(VanillaBlockProperties.ROOTS, true)
-										 .setValue(BlockStateProperties.DOWN, true));
-			}
-			else {
-				info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
-			}
-			info.cancel();
+			info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
 		}
 	}
 	
 	@Inject(method = "Lnet/minecraft/world/level/block/ChorusPlantBlock;getStateForPlacement" + "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)" + "Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
 	private void be_getStateForPlacement(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
-		if (plant.is(Blocks.CHORUS_PLANT)) {
-			if (blockGetter.getBlockState(blockPos.below()).is(TagAPI.BLOCK_END_GROUND)) {
-				if (GeneratorOptions.changeChorusPlant()) {
-					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true)
-											 .setValue(VanillaBlockProperties.ROOTS, true));
-				}
-				else {
-					info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
-				}
-				info.cancel();
-			}
-			else {
-				if (GeneratorOptions.changeChorusPlant()) {
-					info.setReturnValue(plant.setValue(VanillaBlockProperties.ROOTS, false));
-				}
-				info.cancel();
-			}
+		if (plant.is(Blocks.CHORUS_PLANT) && blockGetter.getBlockState(blockPos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+			info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
 		}
 	}
 	
@@ -90,32 +48,15 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockState down = world.getBlockState(pos.below());
 		if (down.is(EndBlocks.CHORUS_NYLIUM) || down.is(Blocks.END_STONE)) {
 			info.setReturnValue(true);
-			info.cancel();
 		}
 	}
 	
 	@Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
 	private void be_updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
-		if (plant.is(Blocks.CHORUS_PLANT)) {
-			if (world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
-				if (GeneratorOptions.changeChorusPlant()) {
-					plant = plant.setValue(BlockStateProperties.DOWN, true)
-								 .setValue(VanillaBlockProperties.ROOTS, true);
-				}
-				else {
-					plant = plant.setValue(BlockStateProperties.DOWN, true);
-				}
-				info.cancel();
-			}
-			else {
-				if (GeneratorOptions.changeChorusPlant()) {
-					plant = plant.setValue(VanillaBlockProperties.ROOTS, false);
-				}
-				info.cancel();
-			}
+		if (plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+			plant = plant.setValue(BlockStateProperties.DOWN, true);
 			info.setReturnValue(plant);
-			info.cancel();
 		}
 	}
 }

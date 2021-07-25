@@ -1,0 +1,65 @@
+{
+  "multipart": [
+    {
+      "when": { "OR": [
+		{"up": "false"},
+		{"down": "false"}
+      ]},
+	  "apply": { "model": "betterend:block/chorus_plant_center" }
+    },
+	{
+      "when": {"north": "true"},
+      "apply": [
+		{ "model": "betterend:block/chorus_plant_stem", "x": 90, "y": 180 },
+		{ "model": "betterend:block/chorus_plant_stem_2", "x": 90, "y": 180 },
+		{ "model": "betterend:block/chorus_plant_stem_3", "x": 90, "y": 180 },
+		{ "model": "betterend:block/chorus_plant_stem_4", "x": 90, "y": 180 }
+	  ]
+    },
+    {
+      "when": { "east": "true" },
+      "apply": [
+		{ "model": "betterend:block/chorus_plant_stem", "x": 90, "y": 270 },
+		{ "model": "betterend:block/chorus_plant_stem_2", "x": 90, "y": 270 },
+		{ "model": "betterend:block/chorus_plant_stem_3", "x": 90, "y": 270 },
+		{ "model": "betterend:block/chorus_plant_stem_4", "x": 90, "y": 270 }
+	  ]
+    },
+    {
+      "when": { "south": "true" },
+      "apply": [
+		{ "model": "betterend:block/chorus_plant_stem", "x": 90 },
+		{ "model": "betterend:block/chorus_plant_stem_2", "x": 90 },
+		{ "model": "betterend:block/chorus_plant_stem_3", "x": 90 },
+		{ "model": "betterend:block/chorus_plant_stem_4", "x": 90 }
+	  ]
+    },
+    {
+      "when": { "west": "true" },
+      "apply": [
+		{ "model": "betterend:block/chorus_plant_stem", "x": 90, "y": 90 },
+		{ "model": "betterend:block/chorus_plant_stem_2", "x": 90, "y": 90 },
+		{ "model": "betterend:block/chorus_plant_stem_3", "x": 90, "y": 90 },
+		{ "model": "betterend:block/chorus_plant_stem_4", "x": 90, "y": 90 }
+	  ]
+    },
+    {
+      "when": { "up": "true" },
+      "apply": [
+		{ "model": "betterend:block/chorus_plant_stem", "x": 180 },
+		{ "model": "betterend:block/chorus_plant_stem_2", "x": 180 },
+		{ "model": "betterend:block/chorus_plant_stem_3", "x": 180 },
+		{ "model": "betterend:block/chorus_plant_stem_4", "x": 180 }
+	  ]
+    },
+    {
+      "when": { "down": "true" },
+      "apply": [
+		{ "model": "betterend:block/chorus_plant_stem" },
+		{ "model": "betterend:block/chorus_plant_stem_2" },
+		{ "model": "betterend:block/chorus_plant_stem_3" },
+		{ "model": "betterend:block/chorus_plant_stem_4" }
+	]
+    }
+  ]
+}

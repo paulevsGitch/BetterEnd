@@ -15,9 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.betterend.blocks.VanillaBlockProperties;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.world.generator.GeneratorOptions;
 
 import java.util.Random;
 
@@ -28,25 +26,15 @@ public class ChorusPlantFeatureMixin {
 		final Random random = featureConfig.random();
 		final BlockPos blockPos = featureConfig.origin();
 		final WorldGenLevel structureWorldAccess = featureConfig.level();
-		if (structureWorldAccess.isEmptyBlock(blockPos) && structureWorldAccess.getBlockState(blockPos.below())
-																			   .is(EndBlocks.CHORUS_NYLIUM)) {
+		if (structureWorldAccess.isEmptyBlock(blockPos) && structureWorldAccess.getBlockState(blockPos.below()).is(EndBlocks.CHORUS_NYLIUM)) {
 			ChorusFlowerBlock.generatePlant(structureWorldAccess, blockPos, random, MHelper.randRange(8, 16, random));
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
 			if (bottom.is(Blocks.CHORUS_PLANT)) {
-				if ((GeneratorOptions.changeChorusPlant())) {
-					BlocksHelper.setWithoutUpdate(
-						structureWorldAccess,
-						blockPos,
-						bottom.setValue(VanillaBlockProperties.ROOTS, true).setValue(PipeBlock.DOWN, true)
-					);
-				}
-				else {
-					BlocksHelper.setWithoutUpdate(
-						structureWorldAccess,
-						blockPos,
-						bottom.setValue(PipeBlock.DOWN, true)
-					);
-				}
+				BlocksHelper.setWithoutUpdate(
+					structureWorldAccess,
+					blockPos,
+					bottom.setValue(PipeBlock.DOWN, true)
+				);
 			}
 			info.setReturnValue(true);
 		}

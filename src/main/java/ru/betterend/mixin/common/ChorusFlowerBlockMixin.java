@@ -25,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
-import ru.betterend.blocks.VanillaBlockProperties;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.generator.GeneratorOptions;
 
@@ -64,19 +63,14 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 						BlocksHelper.setWithoutUpdate(
 							world,
 							pos,
-							plant.defaultBlockState()
-								 .setValue(ChorusPlantBlock.UP, true)
-								 .setValue(ChorusPlantBlock.DOWN, true)
-								 .setValue(VanillaBlockProperties.ROOTS, true)
+							plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true)
 						);
 					}
 					else {
 						BlocksHelper.setWithoutUpdate(
 							world,
 							pos,
-							plant.defaultBlockState()
-								 .setValue(ChorusPlantBlock.UP, true)
-								 .setValue(ChorusPlantBlock.DOWN, true)
+							plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true)
 						);
 					}
 					info.cancel();
@@ -85,26 +79,8 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 		}
 	}
 	
-	@Inject(method = "generatePlant", at = @At("RETURN"), cancellable = true)
-	private static void be_generatePlant(LevelAccessor world, BlockPos pos, Random random, int size, CallbackInfo info) {
-		BlockState state = world.getBlockState(pos);
-		if (GeneratorOptions.changeChorusPlant() && state.is(Blocks.CHORUS_PLANT)) {
-			BlocksHelper.setWithoutUpdate(world, pos, state.setValue(VanillaBlockProperties.ROOTS, true));
-		}
-	}
-	
 	@Shadow
-	private static boolean allNeighborsEmpty(LevelReader world, BlockPos pos, @Nullable Direction exceptDirection) {
-		return false;
-	}
-	
-	@Shadow
-	private void placeGrownFlower(Level world, BlockPos pos, int age) {
-	}
-	
-	@Shadow
-	private void placeDeadFlower(Level world, BlockPos pos) {
-	}
+	private void placeGrownFlower(Level world, BlockPos pos, int age) {}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {

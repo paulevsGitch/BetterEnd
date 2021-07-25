@@ -1,10 +1,12 @@
 package ru.betterend.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import ru.bclib.BCLib;
 import ru.bclib.blocks.BaseChestBlock;
@@ -22,13 +24,13 @@ import ru.betterend.registry.EndEntitiesRenders;
 import ru.betterend.registry.EndModelProviders;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndScreens;
+import ru.betterend.world.generator.GeneratorOptions;
 
 import java.util.List;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		//registerRenderLayers();
 		EndBlockEntityRenders.register();
 		EndScreens.register();
 		EndParticles.register();
@@ -42,6 +44,22 @@ public class BetterEndClient implements ClientModInitializer {
 			TranslationHelper.printMissingEnNames(BetterEnd.MOD_ID);
 			TranslationHelper.printMissingNames(BetterEnd.MOD_ID, "ru_ru");
 		}
+		
+		ResourceLocation checkFlowerId = new ResourceLocation("item/chorus_flower");
+		ResourceLocation checkPlantId = new ResourceLocation("item/chorus_plant");
+		ResourceLocation toLoadFlowerId = new ResourceLocation("betterend", "item/custom_chorus_flower");
+		ResourceLocation toLoadPlantId = new ResourceLocation("betterend", "item/custom_chorus_plant");
+		ModelLoadingRegistry.INSTANCE.registerResourceProvider(manager -> (resourceId, context) -> {
+			if (GeneratorOptions.changeChorusPlant()) {
+				if (resourceId.equals(checkFlowerId)) {
+					return context.loadModel(toLoadFlowerId);
+				}
+				else if (resourceId.equals(checkPlantId)) {
+					return context.loadModel(toLoadPlantId);
+				}
+			}
+			return null;
+		});
 	}
 	
 	public static void registerTooltips() {

@@ -210,6 +210,19 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 			for (int i = 0; i < soils.length; i++) {
 				if (block == soils[i]) {
 					BlocksHelper.setWithUpdate(level, pos, state.setValue(SOIL_ID, i + 1));
+					if (!player.isCreative()) {
+						itemStack.shrink(1);
+					}
+					level.playSound(
+						player,
+						pos.getX() + 0.5,
+						pos.getY() + 0.5,
+						pos.getZ() + 0.5,
+						SoundEvents.SOUL_SOIL_PLACE,
+						SoundSource.BLOCKS,
+						1,
+						1
+					);
 					return InteractionResult.SUCCESS;
 				}
 			}
@@ -240,16 +253,19 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 				}
 				int light = plants[i].defaultBlockState().getLightEmission() / 5;
 				BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, i + 1).setValue(POT_LIGHT, light));
-				level.playLocalSound(
+				level.playSound(
+					player,
 					pos.getX() + 0.5,
 					pos.getY() + 0.5,
 					pos.getZ() + 0.5,
 					SoundEvents.HOE_TILL,
 					SoundSource.BLOCKS,
 					1,
-					1,
-					false
+					1
 				);
+				if (!player.isCreative()) {
+					itemStack.shrink(1);
+				}
 				return InteractionResult.SUCCESS;
 			}
 		}

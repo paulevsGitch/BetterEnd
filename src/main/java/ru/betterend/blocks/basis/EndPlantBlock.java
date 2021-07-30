@@ -38,7 +38,7 @@ public class EndPlantBlock extends BasePlantBlock implements PottablePlant {
 	}
 	
 	@Override
-	public boolean addToPot() {
+	public boolean canBePotted() {
 		return getStateDefinition().getProperties().isEmpty();
 	}
 }

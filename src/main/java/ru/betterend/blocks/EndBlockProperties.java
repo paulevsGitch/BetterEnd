@@ -14,13 +14,17 @@ public class EndBlockProperties extends BlockProperties {
 	
 	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
 	public static final IntegerProperty PLANT_ID = IntegerProperty.create("plant_id", 0, 63);
-	public static final IntegerProperty SOIL_ID = IntegerProperty.create("soil_id", 0, 15);
+	public static final IntegerProperty SOIL_ID = IntegerProperty.create("soil_id", 0, 16);
 	public static final IntegerProperty POT_LIGHT = IntegerProperty.create("pot_light", 0, 3);
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	
 	public enum PedestalState implements StringRepresentable {
-		PEDESTAL_TOP("pedestal_top"), COLUMN_TOP("column_top"), BOTTOM("bottom"), PILLAR("pillar"), COLUMN("column"), DEFAULT(
-			"default");
+		PEDESTAL_TOP("pedestal_top"),
+		COLUMN_TOP("column_top"),
+		BOTTOM("bottom"),
+		PILLAR("pillar"),
+		COLUMN("column"),
+		DEFAULT("default");
 		
 		private final String name;
 		
@@ -40,10 +44,12 @@ public class EndBlockProperties extends BlockProperties {
 	}
 	
 	public enum HydraluxShape implements StringRepresentable {
-		FLOWER_BIG_BOTTOM("flower_big_bottom", true), FLOWER_BIG_TOP("flower_big_top", true), FLOWER_SMALL_BOTTOM(
-			"flower_small_bottom",
-			true
-		), FLOWER_SMALL_TOP("flower_small_top", true), VINE("vine", false), ROOTS("roots", false);
+		FLOWER_BIG_BOTTOM("flower_big_bottom", true),
+		FLOWER_BIG_TOP("flower_big_top", true),
+		FLOWER_SMALL_BOTTOM("flower_small_bottom", true),
+		FLOWER_SMALL_TOP("flower_small_top", true),
+		VINE("vine", false),
+		ROOTS("roots", false);
 		
 		private final String name;
 		private final boolean glow;
@@ -69,13 +75,13 @@ public class EndBlockProperties extends BlockProperties {
 	}
 	
 	public enum LumecornShape implements StringRepresentable {
-		LIGHT_TOP("light_top", 15), LIGHT_TOP_MIDDLE("light_top_middle", 15), LIGHT_MIDDLE(
-			"light_middle",
-			15
-		), LIGHT_BOTTOM("light_bottom", 15), MIDDLE("middle", 0), BOTTOM_BIG("bottom_big", 0), BOTTOM_SMALL(
-			"bottom_small",
-			0
-		);
+		LIGHT_TOP("light_top", 15),
+		LIGHT_TOP_MIDDLE("light_top_middle", 15),
+		LIGHT_MIDDLE("light_middle", 15),
+		LIGHT_BOTTOM("light_bottom", 15),
+		MIDDLE("middle", 0),
+		BOTTOM_BIG("bottom_big", 0),
+		BOTTOM_SMALL("bottom_small", 0);
 		
 		private final String name;
 		private final int light;
@@ -101,7 +107,9 @@ public class EndBlockProperties extends BlockProperties {
 	}
 	
 	public enum CactusBottom implements StringRepresentable {
-		EMPTY("empty"), SAND("sand"), MOSS("moss");
+		EMPTY("empty"),
+		SAND("sand"),
+		MOSS("moss");
 		
 		private final String name;
 		

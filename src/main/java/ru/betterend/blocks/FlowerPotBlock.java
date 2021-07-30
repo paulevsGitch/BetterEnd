@@ -72,10 +72,12 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 	
 	public FlowerPotBlock(Block source) {
 		super(FabricBlockSettings.copyOf(source).luminance(state -> state.getValue(POT_LIGHT) * 5));
-		this.registerDefaultState(this.defaultBlockState()
-									  .setValue(PLANT_ID, 0)
-									  .setValue(SOIL_ID, 0)
-									  .setValue(POT_LIGHT, 0));
+		this.registerDefaultState(
+			this.defaultBlockState()
+			.setValue(PLANT_ID, 0)
+			.setValue(SOIL_ID, 0)
+			.setValue(POT_LIGHT, 0)
+		);
 	}
 	
 	@Override
@@ -145,10 +147,10 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 		}
 		
 		EndBlocks.getModBlocks().forEach(block -> {
-			if (block instanceof PottablePlant && ((PottablePlant) block).addToPot()) {//&& canBeAdded(block)) {
+			if (block instanceof PottablePlant && ((PottablePlant) block).canBePotted()) {
 				processBlock(plants, block, "flower_pots.plants", reservedPlantsIDs);
 			}
-			else if (block instanceof PottableTerrain) {
+			else if (block instanceof PottableTerrain && ((PottableTerrain) block).canBePotted()) {
 				processBlock(soils, block, "flower_pots.soils", reservedSoilIDs);
 			}
 		});

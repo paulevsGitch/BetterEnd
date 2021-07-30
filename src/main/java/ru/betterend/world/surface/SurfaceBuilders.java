@@ -14,10 +14,10 @@ public class SurfaceBuilders {
 	public static final SurfaceBuilderBaseConfiguration BRIMSTONE_CONFIG = makeSimpleConfig(EndBlocks.BRIMSTONE);
 	public static final SurfaceBuilderBaseConfiguration SULFURIC_ROCK_CONFIG = makeSimpleConfig(EndBlocks.SULPHURIC_ROCK.stone);
 	public static final SurfaceBuilderBaseConfiguration UMBRA_SURFACE_CONFIG = makeSimpleConfig(EndBlocks.UMBRALITH.stone);
-	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM, EndBlocks.UMBRALITH.stone);
-	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_T1_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM_TRANSITION_1, EndBlocks.UMBRALITH.stone);
-	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_T2_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM_TRANSITION_2, EndBlocks.UMBRALITH.stone);
-	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_T3_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM_TRANSITION_3, EndBlocks.UMBRALITH.stone);
+	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_FULL_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM_FULL, EndBlocks.UMBRALITH.stone);
+	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_HEAVY_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM_HEAVY, EndBlocks.UMBRALITH.stone);
+	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_THIN_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM_THIN, EndBlocks.UMBRALITH.stone);
+	public static final SurfaceBuilderBaseConfiguration PALLIDIUM_TINY_SURFACE_CONFIG = makeSurfaceConfig(EndBlocks.PALLIDIUM_TINY, EndBlocks.UMBRALITH.stone);
 	
 	public static final SurfaceBuilder<SurfaceBuilderBaseConfiguration> SULPHURIC_SURFACE = register(
 		"sulphuric_surface",

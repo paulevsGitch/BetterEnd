@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 public interface PottablePlant {
 	boolean canPlantOn(Block block);
 	
-	default boolean addToPot() {
+	default boolean canBePotted() {
 		return true;
 	}
 	

@@ -55,7 +55,7 @@ public class FlamaeaBlock extends EndPlantBlock implements CustomItemProvider {
 	}
 	
 	@Override
-	public boolean addToPot() {
+	public boolean canBePotted() {
 		return false;
 	}
 	

@@ -14,7 +14,7 @@ public class EndWoodenComplexMaterial extends WoodenComplexMaterial {
 	private Block log;
 	
 	public EndWoodenComplexMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
-		super(BetterEnd.MOD_ID, name, woodColor, planksColor);
+		super(BetterEnd.MOD_ID, name, name, woodColor, planksColor);
 	}
 	
 	public EndWoodenComplexMaterial init() {

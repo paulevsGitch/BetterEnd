@@ -903,5 +903,10 @@
 	"block.betterend.umbralith_tiles": "Umbralith Tiles",
 	"block.betterend.umbralith_wall": "Umbralith Wall",
 	
-	"biome.betterend.umbra_valley": "Umbra Valley"
+	"biome.betterend.umbra_valley": "Umbra Valley",
+	"block.betterend.inflexia": "Inflexia",
+	"block.betterend.pallidium_full": "Pallidium (Full Cover)",
+	"block.betterend.pallidium_heavy": "Pallidium (Heavy Cover)",
+	"block.betterend.pallidium_thin": "Pallidium (Thin Cover)",
+	"block.betterend.pallidium_tiny": "Pallidium (Tiny Cover)"
 }

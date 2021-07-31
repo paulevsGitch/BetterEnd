@@ -381,15 +381,18 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 					 .add();
 			}
 			else {
-				for (ResourceLocation location : modelCache.keySet()) {
-					if (location.getPath().equals(modelPath.getPath())) {
-						model.part(location)
-							 .setTransformation(offset)
-							 .setCondition(state -> state.getValue(PLANT_ID) == compareID)
-							 .add();
-						break;
-					}
-				}
+				ResourceLocation loc = Registry.BLOCK.getKey(plants[i]);
+				modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
+				Map<String, String> textures = Maps.newHashMap();
+				textures.put("%modid%", loc.getNamespace());
+				textures.put("%texture%", loc.getPath());
+				Optional<String> pattern = Patterns.createJson(BasePatterns.BLOCK_CROSS, textures);
+				UnbakedModel unbakedModel = ModelsHelper.fromPattern(pattern);
+				modelCache.put(modelPath, unbakedModel);
+				model.part(modelPath)
+					 .setTransformation(offset)
+					 .setCondition(state -> state.getValue(PLANT_ID) == compareID)
+					 .add();
 			}
 		}
 		

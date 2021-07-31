@@ -1,0 +1,13 @@
+{
+	"structures": [
+		{ "nbt": "jellyshroom_cluster", "offsetY": -1, "terrainMerge": "surface" },
+		{ "nbt": "house_1", "offsetY": -1, "terrainMerge": "surface" },
+		{ "nbt": "house_2", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "ruins_1", "offsetY": -1, "terrainMerge": "none" },
+		{ "nbt": "ruins_2", "offsetY": -1, "terrainMerge": "none" },
+		{ "nbt": "ruins_3", "offsetY": -1, "terrainMerge": "none" },
+		{ "nbt": "ruins_4", "offsetY": -1, "terrainMerge": "none" },
+		{ "nbt": "ruins_5", "offsetY": -1, "terrainMerge": "none" },
+		{ "nbt": "ruins_6", "offsetY": -1, "terrainMerge": "none" }
+	]
+}

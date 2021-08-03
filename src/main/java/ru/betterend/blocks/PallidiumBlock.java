@@ -44,7 +44,7 @@ public class PallidiumBlock extends EndTerrainBlock {
 			return InteractionResult.PASS;
 		}
 		else if (level.isClientSide) {
-			return InteractionResult.CONSUME;
+			return InteractionResult.PASS;
 		}
 		
 		ItemStack itemStack = player.getItemInHand(hand);

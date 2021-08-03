@@ -66,6 +66,7 @@ import ru.betterend.blocks.FilaluxBlock;
 import ru.betterend.blocks.FilaluxLanternBlock;
 import ru.betterend.blocks.FilaluxWingsBlock;
 import ru.betterend.blocks.FlamaeaBlock;
+import ru.betterend.blocks.FlammalixBlock;
 import ru.betterend.blocks.FlowerPotBlock;
 import ru.betterend.blocks.GlowingHymenophoreBlock;
 import ru.betterend.blocks.GlowingMossBlock;
@@ -126,6 +127,7 @@ import ru.betterend.blocks.UmbrellaTreeClusterEmptyBlock;
 import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.blocks.UmbrellaTreeSaplingBlock;
 import ru.betterend.blocks.VentBubbleColumnBlock;
+import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.EndTripleTerrain;
 import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;
@@ -332,6 +334,7 @@ public class EndBlocks extends BlockRegistry {
 	public static final Block LUTEBUS = registerBlock("lutebus", new TerrainPlantBlock(RUTISCUS));
 	public static final Block LAMELLARIUM = registerBlock("lamellarium", new TerrainPlantBlock(RUTISCUS));
 	public static final Block INFLEXIA = registerBlock("inflexia", new TerrainPlantBlock(PALLIDIUM_FULL, PALLIDIUM_HEAVY, PALLIDIUM_THIN, PALLIDIUM_TINY));
+	public static final Block FLAMMALIX = registerBlock("flammalix", new FlammalixBlock());
 	
 	public static final Block BLUE_VINE_SEED = registerBlock("blue_vine_seed", new BlueVineSeedBlock());
 	public static final Block BLUE_VINE = registerEndBlockOnly("blue_vine", new BlueVineBlock());

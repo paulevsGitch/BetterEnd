@@ -1,11 +1,16 @@
 package ru.betterend.blocks;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.client.models.ModelsHelper;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 
@@ -32,5 +37,11 @@ public class FlammalixBlock extends EndPlantBlock {
 	@Override
 	public OffsetType getOffsetType() {
 		return OffsetType.NONE;
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public BlockModel getItemModel(ResourceLocation resourceLocation) {
+		return ModelsHelper.createItemModel(resourceLocation);
 	}
 }

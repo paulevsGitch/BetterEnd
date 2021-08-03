@@ -228,6 +228,15 @@
 			}
 		]
 	},
+	"betterend.ambient.umbra_valley": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/umbra_valley",
+				"stream": true
+			}
+		]
+	},
 	
 	"betterend.entity.dragonfly": {
 		"category": "entity",

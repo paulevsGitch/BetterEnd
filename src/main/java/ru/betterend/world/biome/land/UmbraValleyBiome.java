@@ -12,7 +12,7 @@ public class UmbraValleyBiome extends EndBiome {
 	public UmbraValleyBiome() {
 		super(new BCLBiomeDef(BetterEnd.makeID("umbra_valley"))
 			.setFogColor(100, 100, 100)
-			.setPlantsColor(200, 200, 200)
+			.setPlantsColor(172, 189, 190)
 			.setWaterAndFogColor(69, 104, 134)
 			.setSurface(SurfaceBuilders.UMBRA_SURFACE.configured(SurfaceBuilders.DEFAULT_END_CONFIG))
 			.setParticles(EndParticles.AMBER_SPHERE, 0.0001F)

@@ -31,16 +31,16 @@ public class UmbraSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderBaseConfig
 	
 	private static SurfaceBuilderBaseConfiguration getConfig(int x, int z, Random random) {
 		float grass = ((float) NOISE.eval(x * 0.03, z * 0.03) + (float) NOISE.eval(x * 0.1, z * 0.1) * 0.6F + random.nextFloat() * 0.2F) - 0.05F;
-		if (grass > 0.3F) {
+		if (grass > 0.4F) {
 			return SurfaceBuilders.PALLIDIUM_FULL_SURFACE_CONFIG;
 		}
-		else if (grass > 0.1F) {
+		else if (grass > 0.15F) {
 			return SurfaceBuilders.PALLIDIUM_HEAVY_SURFACE_CONFIG;
 		}
-		else if (grass > -0.1) {
+		else if (grass > -0.15) {
 			return SurfaceBuilders.PALLIDIUM_THIN_SURFACE_CONFIG;
 		}
-		else if (grass > -0.3F) {
+		else if (grass > -0.4F) {
 			return SurfaceBuilders.PALLIDIUM_TINY_SURFACE_CONFIG;
 		}
 		else {

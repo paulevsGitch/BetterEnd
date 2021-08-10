@@ -67,8 +67,7 @@ public class EndPodiumFeatureMixin {
 		if (GeneratorOptions.useNewGenerator()) {
 			BlockPos pos = GeneratorOptions.getPortalPos();
 			if (pos.equals(BlockPos.ZERO)) {
-				int y = world.getChunk(0, 0, ChunkStatus.FULL)
-							 .getHeight(Types.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
+				int y = world.getChunk(0, 0, ChunkStatus.FULL).getHeight(Types.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
 				if (y < 1) {
 					y = 65;
 				}

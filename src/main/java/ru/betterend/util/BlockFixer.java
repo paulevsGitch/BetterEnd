@@ -1,7 +1,6 @@
 package ru.betterend.util;
 
 import com.google.common.collect.Sets;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;

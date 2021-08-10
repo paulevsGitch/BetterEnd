@@ -127,7 +127,6 @@ import ru.betterend.blocks.UmbrellaTreeClusterEmptyBlock;
 import ru.betterend.blocks.UmbrellaTreeMembraneBlock;
 import ru.betterend.blocks.UmbrellaTreeSaplingBlock;
 import ru.betterend.blocks.VentBubbleColumnBlock;
-import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.EndTripleTerrain;
 import ru.betterend.blocks.basis.EndUnderwaterWallPlantBlock;

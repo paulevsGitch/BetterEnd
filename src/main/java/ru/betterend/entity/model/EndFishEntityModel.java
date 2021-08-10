@@ -2,6 +2,7 @@ package ru.betterend.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,7 +13,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import ru.betterend.entity.EndFishEntity;
 
-public class EndFishEntityModel extends BlockBenchModel<EndFishEntity> {
+public class EndFishEntityModel extends EntityModel<EndFishEntity> {
 	private final ModelPart model;
 	private final ModelPart fin_top;
 	private final ModelPart fin_bottom;

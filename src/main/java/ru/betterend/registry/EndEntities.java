@@ -101,9 +101,10 @@ public class EndEntities {
 	
 	protected static <T extends Entity> EntityType<T> register(String name, MobCategory group, float width, float height, EntityFactory<T> entity) {
 		ResourceLocation id = BetterEnd.makeID(name);
-		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity)
-													.dimensions(EntityDimensions.fixed(width, height))
-													.build();
+		EntityType<T> type = FabricEntityTypeBuilder
+			.<T>create(group, entity)
+			.dimensions(EntityDimensions.fixed(width, height))
+			.build();
 		if (Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			return Registry.register(Registry.ENTITY_TYPE, id, type);
 		}
@@ -112,12 +113,10 @@ public class EndEntities {
 	
 	private static <T extends Mob> EntityType<T> register(String name, MobCategory group, float width, float height, EntityFactory<T> entity, Builder attributes, boolean fixedSize, int eggColor, int dotsColor) {
 		ResourceLocation id = BetterEnd.makeID(name);
-		EntityType<T> type = FabricEntityTypeBuilder.<T>create(group, entity)
-													.dimensions(fixedSize ? EntityDimensions.fixed(
-														width,
-														height
-													) : EntityDimensions.scalable(width, height))
-													.build();
+		EntityType<T> type = FabricEntityTypeBuilder
+			.<T>create(group, entity)
+			.dimensions(fixedSize ? EntityDimensions.fixed(width, height) : EntityDimensions.scalable(width, height))
+			.build();
 		if (Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			FabricDefaultAttributeRegistry.register(type, attributes);
 			EndItems.registerEndEgg("spawn_egg_" + name, type, eggColor, dotsColor);

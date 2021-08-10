@@ -2,6 +2,7 @@ package ru.betterend.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -13,7 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import ru.betterend.entity.CubozoaEntity;
 
-public class CubozoaEntityModel extends BlockBenchModel<CubozoaEntity> {
+public class CubozoaEntityModel extends EntityModel<CubozoaEntity> {
 	private final static int TENTACLE_COUNT = 4;
 	
 	private final ModelPart model;

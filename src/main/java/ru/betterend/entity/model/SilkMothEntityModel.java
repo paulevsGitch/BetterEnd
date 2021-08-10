@@ -2,6 +2,7 @@ package ru.betterend.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -13,7 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import ru.betterend.entity.SilkMothEntity;
 
-public class SilkMothEntityModel extends BlockBenchModel<SilkMothEntity> {
+public class SilkMothEntityModel extends EntityModel<SilkMothEntity> {
 	private final ModelPart legsL;
 	private final ModelPart cube_r1;
 	private final ModelPart cube_r2;

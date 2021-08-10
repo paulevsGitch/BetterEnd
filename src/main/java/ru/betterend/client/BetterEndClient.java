@@ -7,26 +7,18 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import ru.bclib.BCLib;
-import ru.bclib.blocks.BaseChestBlock;
-import ru.bclib.blocks.BaseSignBlock;
-import ru.bclib.client.render.BaseChestBlockEntityRenderer;
-import ru.bclib.client.render.BaseSignBlockEntityRenderer;
 import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.events.ItemTooltipCallback;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndBlockEntityRenders;
-import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntitiesRenders;
 import ru.betterend.registry.EndModelProviders;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndScreens;
 import ru.betterend.world.generator.GeneratorOptions;
-
-import java.util.List;
 
 public class BetterEndClient implements ClientModInitializer {
 	@Override

@@ -26,7 +26,9 @@ public class CrystaliteBoots extends CrystaliteArmor implements MobEffectApplier
 	
 	@Override
 	public void applyEffect(LivingEntity owner) {
-		owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_MOVE_SPEED));
+		if ((owner.tickCount & 63) == 0) {
+			owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_MOVE_SPEED));
+		}
 	}
 	
 	@Override

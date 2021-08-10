@@ -30,7 +30,9 @@ public class CrystaliteArmor extends BaseArmorItem {
 	}
 	
 	public static void applySetEffect(LivingEntity owner) {
-		owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_HEALTH_REGEN));
+		if ((owner.tickCount & 63) == 0) {
+			owner.addEffect(new MobEffectInstance(EndStatusEffects.CRYSTALITE_HEALTH_REGEN));
+		}
 	}
 	
 	static {

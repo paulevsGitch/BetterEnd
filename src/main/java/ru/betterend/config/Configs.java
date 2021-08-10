@@ -13,11 +13,11 @@ public class Configs {
 	public static final PathConfig BLOCK_CONFIG = new PathConfig(BetterEnd.MOD_ID, "blocks");
 	public static final PathConfig ITEM_CONFIG = new PathConfig(BetterEnd.MOD_ID, "items");
 	public static final IdConfig BIOME_CONFIG = new EntryConfig(BetterEnd.MOD_ID, "biomes");
-	public static final PathConfig GENERATOR_CONFIG = new PathConfig(BetterEnd.MOD_ID, "generator");
+	public static final PathConfig GENERATOR_CONFIG = new PathConfig(BetterEnd.MOD_ID, "generator", false);
 	public static final PathConfig RECIPE_CONFIG = new PathConfig(BetterEnd.MOD_ID, "recipes");
 	
 	@Environment(value = EnvType.CLIENT)
-	public static final PathConfig CLENT_CONFIG = new PathConfig(BetterEnd.MOD_ID, "client");
+	public static final PathConfig CLENT_CONFIG = new PathConfig(BetterEnd.MOD_ID, "client", false);
 	
 	public static void saveConfigs() {
 		ENTITY_CONFIG.saveChanges();

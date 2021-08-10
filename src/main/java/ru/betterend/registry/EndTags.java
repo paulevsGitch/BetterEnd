@@ -59,7 +59,7 @@ public class EndTags {
 			else if (material.equals(Material.WOOD)) {
 				TagAPI.addTag(TagAPI.MINEABLE_AXE, block);
 			}
-			else if (material.equals(Material.LEAVES) || material.equals(Material.PLANT) || material.equals(Material.WATER_PLANT)) {
+			else if (material.equals(Material.LEAVES) || material.equals(Material.PLANT) || material.equals(Material.WATER_PLANT) || material.equals(Material.SPONGE)) {
 				TagAPI.addTag(TagAPI.MINEABLE_HOE, block);
 			}
 			else if (material.equals(Material.SAND)) {

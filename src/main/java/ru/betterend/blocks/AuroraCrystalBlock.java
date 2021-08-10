@@ -11,12 +11,15 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.AbstractGlassBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.api.TagAPI;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.CustomColorProvider;
@@ -33,15 +36,22 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 	private static final int MAX_DROP = 4;
 	
 	public AuroraCrystalBlock() {
-		super(FabricBlockSettings.of(Material.GLASS)
-								 .breakByTool(FabricToolTags.PICKAXES)
-								 .breakByTool(TagAPI.ITEM_HAMMERS)
-								 .hardness(1F)
-								 .resistance(1F)
-								 .luminance(15)
-								 .noOcclusion()
-								 .isSuffocating((state, world, pos) -> false)
-								 .sound(SoundType.GLASS));
+		super(FabricBlockSettings
+			.of(Material.GLASS)
+			 .breakByTool(FabricToolTags.PICKAXES)
+			 .breakByTool(TagAPI.ITEM_HAMMERS)
+			 .hardness(1F)
+			 .resistance(1F)
+			 .luminance(15)
+			 .noOcclusion()
+			 .isSuffocating((state, world, pos) -> false)
+			 .sound(SoundType.GLASS));
+	}
+	
+	@Override
+	@Deprecated
+	public VoxelShape getVisualShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+		return this.getCollisionShape(blockState, blockGetter, blockPos, collisionContext);
 	}
 	
 	@Override

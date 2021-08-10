@@ -56,20 +56,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 				int i = state.getValue(ChorusFlowerBlock.AGE);
 				if (i < 5) {
 					this.placeGrownFlower(world, up, i + 1);
-					if (GeneratorOptions.changeChorusPlant()) {
-						BlocksHelper.setWithoutUpdate(
-							world,
-							pos,
-							plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true)
-						);
-					}
-					else {
-						BlocksHelper.setWithoutUpdate(
-							world,
-							pos,
-							plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true)
-						);
-					}
+					BlocksHelper.setWithoutUpdate(world, pos, plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true));
 					info.cancel();
 				}
 			}

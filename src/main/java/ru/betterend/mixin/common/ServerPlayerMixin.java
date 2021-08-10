@@ -74,6 +74,11 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 				getXRot()
 			));
 		}
+		else if (GeneratorOptions.changeSpawn() && destination.dimension() == Level.END) {
+			BlockPos spawn = GeneratorOptions.getSpawn();
+			Vec3 pos = new Vec3(spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5);
+			info.setReturnValue(new PortalInfo(pos, Vec3.ZERO, 90.0F, 0.0F));
+		}
 	}
 	
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)

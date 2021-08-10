@@ -55,9 +55,29 @@ public abstract class ServerLevelMixin extends Level {
 	private void be_getSharedSpawnPos(CallbackInfoReturnable<BlockPos> info) {
 		if (GeneratorOptions.changeSpawn()) {
 			if (ServerLevel.class.cast(this).dimension() == Level.END) {
-				info.setReturnValue(GeneratorOptions.getSpawn());
-				info.cancel();
+				BlockPos pos = GeneratorOptions.getSpawn();
+				info.setReturnValue(pos);
 			}
+		}
+	}
+	
+	@Inject(method = "makeObsidianPlatform", at = @At("HEAD"), cancellable = true)
+	private static void be_createObsidianPlatform(ServerLevel serverLevel, CallbackInfo info) {
+		if (!GeneratorOptions.generateObsidianPlatform()) {
+			info.cancel();
+		}
+		else if (GeneratorOptions.changeSpawn()) {
+			BlockPos blockPos = GeneratorOptions.getSpawn();
+			int i = blockPos.getX();
+			int j = blockPos.getY() - 2;
+			int k = blockPos.getZ();
+			BlockPos.betweenClosed(i - 2, j + 1, k - 2, i + 2, j + 3, k + 2).forEach((blockPosx) -> {
+				serverLevel.setBlockAndUpdate(blockPosx, Blocks.AIR.defaultBlockState());
+			});
+			BlockPos.betweenClosed(i - 2, j, k - 2, i + 2, j, k + 2).forEach((blockPosx) -> {
+				serverLevel.setBlockAndUpdate(blockPosx, Blocks.OBSIDIAN.defaultBlockState());
+			});
+			info.cancel();
 		}
 	}
 	

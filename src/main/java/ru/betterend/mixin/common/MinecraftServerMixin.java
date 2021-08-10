@@ -61,14 +61,15 @@ public abstract class MinecraftServerMixin {
 	}
 	
 	@Shadow
-	private static void setInitialSpawn(ServerLevel serverLevel, ServerLevelData serverLevelData, boolean bl, boolean bl2) {
-	}
-	
-	;
+	private static void setInitialSpawn(ServerLevel serverLevel, ServerLevelData serverLevelData, boolean bl, boolean bl2) {}
 	
 	@Inject(method = "setInitialSpawn", at = @At(value = "HEAD"), cancellable = true)
 	private static void be_setInitialSpawn(ServerLevel world, ServerLevelData serverWorldProperties, boolean bonusChest, boolean debugWorld, CallbackInfo info) {
 		if (GeneratorOptions.swapOverworldToEnd() && world.dimension() == Level.OVERWORLD) {
+			info.cancel();
+		}
+		if (GeneratorOptions.changeSpawn() && world.dimension() == Level.END) {
+			world.setDefaultSpawnPos(GeneratorOptions.getSpawn(), 0F);
 			info.cancel();
 		}
 	}

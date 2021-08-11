@@ -17,6 +17,7 @@ targetCompatibility = JavaVersion.VERSION_16
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+def local_bclib = findProject(':BCLib') != null
 
 repositories {
     maven { url "https://maven.dblsaiko.net/" }
@@ -33,7 +34,13 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     useApi "vazkii.patchouli:Patchouli:1.17-${project.patchouli_version}"
-    useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
+    println "Using local BCLib: ${local_bclib}"
+    if (local_bclib){
+		compileOnly(project(":BCLib"))
+        modRuntimeMapped(project(":BCLib"))
+    } else {
+        useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
+    }
 
     useOptional "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     useOptional "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"

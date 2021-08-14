@@ -1,6 +1,7 @@
 package ru.betterend.mixin.common;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -48,7 +49,7 @@ public abstract class ServerLevelMixin extends Level {
 		
 		be_lastWorld = session.getLevelId();
 		ServerLevel world = ServerLevel.class.cast(this);
-		EndBiomes.onWorldLoad(world.getSeed());
+		EndBiomes.onWorldLoad(world.getSeed(), world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY));
 	}
 	
 	@Inject(method = "getSharedSpawnPos", at = @At("HEAD"), cancellable = true)

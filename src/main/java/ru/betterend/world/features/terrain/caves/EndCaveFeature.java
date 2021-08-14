@@ -157,8 +157,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	protected void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
 		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomes();
 		if (array != null) {
-			Biome bio = BiomeAPI.getActualBiome(biome);
-			array.be_setBiome(bio, pos);
+			array.be_setBiome(biome.getActualBiome(), pos);
 		}
 	}
 	
@@ -236,7 +235,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				Biome biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
 				BCLBiome endBiome = BiomeAPI.getFromBiome(biome);
 				boolean hasCaves = endBiome.getCustomData("has_caves", true);
-				if (!hasCaves && EndBiomes.LAND_BIOMES.containsImmutable(endBiome.getID())) {
+				if (!hasCaves && BiomeAPI.END_LAND_BIOME_PICKER.containsImmutable(endBiome.getID())) {
 					return true;
 				}
 			}

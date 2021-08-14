@@ -93,9 +93,6 @@ public class TerrainGenerator {
 	}
 	
 	private static Biome getBiome(BiomeSource biomeSource, int x, int z) {
-		if (biomeSource instanceof BetterEndBiomeSource) {
-			return ((BetterEndBiomeSource) biomeSource).getLandBiome(x, 0, z);
-		}
 		return biomeSource.getNoiseBiome(x, 0, z);
 	}
 	

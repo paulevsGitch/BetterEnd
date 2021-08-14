@@ -1,12 +1,7 @@
 package ru.betterend;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtIo;
 import ru.bclib.api.datafixer.DataFixerAPI;
 import ru.bclib.api.datafixer.Patch;
-import ru.bclib.api.datafixer.PatchFunction;
-
-import java.io.File;
 
 public class DataFixer {
 	public static void register() {

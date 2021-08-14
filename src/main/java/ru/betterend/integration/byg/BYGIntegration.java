@@ -1,22 +1,12 @@
 package ru.betterend.integration.byg;
 
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.behavior.ShufflingList;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.integration.ModIntegration;
-import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.integration.EndBiomeIntegration;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.biomes.BYGBiomes;
 import ru.betterend.integration.byg.features.BYGFeatures;
-import ru.betterend.registry.EndBiomes;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BYGIntegration extends ModIntegration implements EndBiomeIntegration {
 	public BYGIntegration() {
@@ -38,10 +28,10 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 	public void addBiomes() {
 		BYGBiomes.addBiomes();
 		
-		Class<?> biomeClass = this.getClass("corgiaoc.byg.common.world.biome.BYGEndBiome");
-		List<Object> biomes = this.getStaticFieldValue(biomeClass, "BYG_END_BIOMES");
+		//Class<?> biomeClass = this.getClass("corgiaoc.byg.common.world.biome.BYGEndBiome");
+		//List<Object> biomes = this.getStaticFieldValue(biomeClass, "BYG_END_BIOMES");
 		
-		if (biomes != null && biomeClass != null) {
+		/*if (biomes != null && biomeClass != null) {
 			biomes.forEach((obj) -> {
 				Biome biome = this.getAndExecuteRuntime(biomeClass, obj, "getBiome");
 				if (biome != null) {
@@ -80,6 +70,6 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 					}
 				}
 			});
-		}
+		}*/
 	}
 }

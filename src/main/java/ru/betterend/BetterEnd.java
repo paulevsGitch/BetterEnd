@@ -3,6 +3,7 @@ package ru.betterend;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
+import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;
@@ -26,8 +27,8 @@ import ru.betterend.registry.EndStructures;
 import ru.betterend.registry.EndTags;
 import ru.betterend.util.BonemealPlants;
 import ru.betterend.util.LootTableUtil;
-import ru.betterend.world.generator.BetterEndBiomeSource;
 import ru.betterend.world.generator.GeneratorOptions;
+import ru.betterend.world.generator.TerrainGenerator;
 import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BetterEnd implements ModInitializer {
@@ -44,7 +45,6 @@ public class BetterEnd implements ModInitializer {
 		EndEntities.register();
 		SurfaceBuilders.register();
 		EndBiomes.register();
-		BetterEndBiomeSource.register();
 		EndTags.register();
 		EndEnchantments.register();
 		EndPotions.register();
@@ -62,6 +62,11 @@ public class BetterEnd implements ModInitializer {
 		Integrations.init();
 		DataFixer.register();
 		Configs.saveConfigs();
+		
+		if (GeneratorOptions.useNewGenerator()) {
+			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes(GeneratorOptions.getIslandDistBlock() > 250000L);
+			ru.bclib.world.generator.GeneratorOptions.setEndLandFunction((pos) -> TerrainGenerator.isLand(pos.x, pos.y));
+		}
 	}
 	
 	public static ResourceLocation makeID(String path) {

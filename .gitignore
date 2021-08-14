@@ -27,6 +27,7 @@ bin/
 # fabric
 
 run/
+run-client/
 output/
 *.getBlock("log")
 Convert.class

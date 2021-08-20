@@ -3,7 +3,6 @@ package ru.betterend;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
-import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;

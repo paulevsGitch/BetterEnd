@@ -8,6 +8,7 @@ import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.generator.BiomeMap;
 import ru.bclib.world.generator.BiomePicker;
 import ru.betterend.config.Configs;
+import ru.betterend.util.FeaturesHelper;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.air.BiomeIceStarfield;
 import ru.betterend.world.biome.cave.EmptyAuroraCaveBiome;
@@ -81,6 +82,7 @@ public class EndBiomes {
 		if (caveBiomeMap == null || caveBiomeMap.getSeed() != seed) {
 			caveBiomeMap = new BiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
 		}
+		FeaturesHelper.addFeatures(registry);
 	}
 	
 	/**

@@ -392,6 +392,5 @@ public class EndFeatures {
 		}
 	}
 	
-	public static void register() {
-	}
+	public static void register() {}
 }

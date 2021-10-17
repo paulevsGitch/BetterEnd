@@ -41,6 +41,7 @@ dependencies {
     } else {
         useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
     }
+    useApi "org.anti-ad.mc:inventory-profiles-next:fabric-1.17.1-${project.ipn_version}"
 
     useOptional "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     useOptional "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
@@ -70,6 +71,7 @@ def useApi(String dep) {
     dependencies.modApi(dep) {
         exclude group: 'net.fabricmc.fabric-api'
         exclude group: 'net.fabricmc'
+        exclude group: 'com.terraformersmc'
         if (!dep.contains("me.shedaniel")) {
             exclude group: 'me.shedaniel.cloth'
             exclude group: 'me.shedaniel'

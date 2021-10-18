@@ -35,9 +35,8 @@ dependencies {
 
     useApi "vazkii.patchouli:Patchouli:1.17-${project.patchouli_version}"
     println "Using local BCLib: ${local_bclib}"
-    if (local_bclib){
-		compileOnly(project(":BCLib"))
-        modRuntimeMapped(project(":BCLib"))
+    if (local_bclib){		
+        implementation(project(path:":BCLib", configuration: 'dev'))
     } else {
         useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
     }

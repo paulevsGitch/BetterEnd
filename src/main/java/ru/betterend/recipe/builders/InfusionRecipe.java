@@ -1,6 +1,9 @@
 package ru.betterend.recipe.builders;
 
+import java.util.Arrays;
+
 import com.google.gson.JsonObject;
+
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -17,16 +20,14 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import ru.bclib.interfaces.UnknownReceipBookCategory;
 import ru.bclib.recipes.BCLRecipeManager;
+import ru.bclib.util.ItemUtil;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.interfaces.BetterEndRecipe;
 import ru.betterend.rituals.InfusionRitual;
-import ru.betterend.util.ItemUtil;
 
-import java.util.Arrays;
-
-public class InfusionRecipe implements Recipe<InfusionRitual>, BetterEndRecipe {
+public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBookCategory {
 	public final static String GROUP = "infusion";
 	public final static RecipeType<InfusionRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
 	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(

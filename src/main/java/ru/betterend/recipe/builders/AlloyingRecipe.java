@@ -18,15 +18,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import ru.bclib.interfaces.UnknownReceipBookCategory;
 import ru.bclib.recipes.BCLRecipeManager;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
-import ru.betterend.interfaces.BetterEndRecipe;
 import ru.betterend.registry.EndBlocks;
-import ru.betterend.util.ItemUtil;
-import ru.betterend.util.RecipeHelper;
+import ru.bclib.util.ItemUtil;
+import ru.bclib.util.RecipeHelper;
 
-public class AlloyingRecipe implements Recipe<Container>, BetterEndRecipe {
+public class AlloyingRecipe implements Recipe<Container>, UnknownReceipBookCategory {
 	public final static String GROUP = "alloying";
 	public final static RecipeType<AlloyingRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
 	public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(

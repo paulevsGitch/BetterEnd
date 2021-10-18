@@ -26,7 +26,6 @@
 		"ServerPlayerMixin",
 		"SpikeFeatureMixin",
 		"ServerLevelMixin",
-		"AnvilMenuMixin",
 		"EnderManMixin",
 		"EndSpikeMixin",
 		"MonsterMixin",

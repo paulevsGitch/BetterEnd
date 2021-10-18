@@ -1,6 +1,11 @@
 package ru.betterend.integration.rei;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.google.common.collect.Lists;
+
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
@@ -17,16 +22,12 @@ import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
 import ru.bclib.blocks.BaseFurnaceBlock;
+import ru.bclib.recipes.AnvilRecipe;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndAnvilBlock;
 import ru.betterend.recipe.builders.AlloyingRecipe;
-import ru.betterend.recipe.builders.AnvilRecipe;
 import ru.betterend.recipe.builders.InfusionRecipe;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 //https://github.com/shedaniel/RoughlyEnoughItems/blob/6.x-1.17/default-plugin/src/main/java/me/shedaniel/rei/plugin/client/DefaultClientPlugin.java
 public class REIPlugin implements REIClientPlugin {

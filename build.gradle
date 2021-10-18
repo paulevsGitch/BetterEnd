@@ -38,7 +38,7 @@ dependencies {
     if (local_bclib){		
         implementation( project(path:":BCLib", configuration: 'dev') )
     } else {
-        useApi "com.github.paulevsGitch:BCLib:${project.bclib_version}"
+        modImplementation "com.github.paulevsGitch:BCLib:${project.bclib_version}"
     }
 
     useOptional "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"

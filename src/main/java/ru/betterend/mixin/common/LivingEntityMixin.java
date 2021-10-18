@@ -1,5 +1,7 @@
 package ru.betterend.mixin.common;
 
+import java.util.Collection;
+
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -35,9 +37,7 @@ import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndAttributes;
 
-import java.util.Collection;
-
-@Mixin(LivingEntity.class)
+@Mixin(value=LivingEntity.class, priority=2000)
 public abstract class LivingEntityMixin extends Entity {
 	
 	public LivingEntityMixin(EntityType<?> entityType, Level level) {

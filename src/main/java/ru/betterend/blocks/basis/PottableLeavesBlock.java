@@ -6,16 +6,13 @@ import ru.bclib.blocks.BaseLeavesBlock;
 import ru.betterend.interfaces.PottablePlant;
 
 public class PottableLeavesBlock extends BaseLeavesBlock implements PottablePlant {
-	private Block sapling;
 	
 	public PottableLeavesBlock(Block sapling, MaterialColor color) {
 		super(sapling, color);
-		this.sapling = sapling;
 	}
 	
 	public PottableLeavesBlock(Block sapling, MaterialColor color, int light) {
 		super(sapling, color, light);
-		this.sapling = sapling;
 	}
 	
 	@Override

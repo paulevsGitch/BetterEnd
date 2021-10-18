@@ -70,6 +70,7 @@ def useApi(String dep) {
     dependencies.modApi(dep) {
         exclude group: 'net.fabricmc.fabric-api'
         exclude group: 'net.fabricmc'
+        exclude group: 'com.terraformersmc'
         if (!dep.contains("me.shedaniel")) {
             exclude group: 'me.shedaniel.cloth'
             exclude group: 'me.shedaniel'

@@ -18,6 +18,7 @@ import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import org.anti_ad.mc.ipn.api.IPNIgnore;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.blocks.entities.EndStoneSmelterBlockEntity;
@@ -25,6 +26,7 @@ import ru.betterend.client.gui.slot.SmelterFuelSlot;
 import ru.betterend.client.gui.slot.SmelterOutputSlot;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 
+@IPNIgnore
 public class EndStoneSmelterScreenHandler extends RecipeBookMenu<Container> {
 	
 	public final static MenuType<EndStoneSmelterScreenHandler> HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(

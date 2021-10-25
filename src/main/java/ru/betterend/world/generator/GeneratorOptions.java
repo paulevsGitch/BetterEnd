@@ -15,7 +15,6 @@ public class GeneratorOptions {
 	private static boolean changeChorusPlant;
 	private static boolean removeChorusFromVanillaBiomes;
 	private static boolean newGenerator;
-	private static boolean noRingVoid;
 	private static boolean generateCentralIsland;
 	private static boolean generateObsidianPlatform;
 	private static int endCityFailChance;
@@ -46,7 +45,6 @@ public class GeneratorOptions {
 			true
 		);
 		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", true);
-		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
 		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", true);
 		endCityFailChance = Configs.GENERATOR_CONFIG.getInt("customGenerator", "endCityFailChance", 5);
 		generateObsidianPlatform = Configs.GENERATOR_CONFIG.getBooleanRoot("generateObsidianPlatform", true);
@@ -124,10 +122,6 @@ public class GeneratorOptions {
 	
 	public static boolean removeChorusFromVanillaBiomes() {
 		return removeChorusFromVanillaBiomes;
-	}
-	
-	public static boolean noRingVoid() {
-		return noRingVoid;
 	}
 	
 	public static boolean useNewGenerator() {

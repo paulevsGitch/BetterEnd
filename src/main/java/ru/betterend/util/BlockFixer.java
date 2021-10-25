@@ -30,7 +30,7 @@ public class BlockFixer {
 	public static void fixBlocks(LevelAccessor level, BlockPos start, BlockPos end) {
 		final Registry<DimensionType> registry = level.registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
 		final ResourceLocation dimKey = registry.getKey(level.dimensionType());
-		if (dimKey!=null && "world_blender".equals(dimKey.getNamespace())) {
+		if (dimKey != null && "world_blender".equals(dimKey.getNamespace())) {
 			return;
 		}
 		final Set<BlockPos> doubleCheck = Sets.newConcurrentHashSet();
@@ -75,7 +75,10 @@ public class BlockFixer {
 					}
 					for (Direction dir : BlocksHelper.HORIZONTAL) {
 						if (level.isEmptyBlock(POS.relative(dir))) {
-							level.getLiquidTicks().scheduleTick(POS, state.getFluidState().getType(), 0);
+							try {
+								level.getLiquidTicks().scheduleTick(POS, state.getFluidState().getType(), 0);
+							}
+							catch (Exception e) {}
 							break;
 						}
 					}

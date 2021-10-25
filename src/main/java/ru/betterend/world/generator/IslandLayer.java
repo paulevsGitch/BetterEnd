@@ -68,7 +68,7 @@ public class IslandLayer {
 				for (int poz = -1; poz < 2; poz++) {
 					int pz = poz + iz;
 					long pz2 = pz;
-					if (GeneratorOptions.noRingVoid() || px2 * px2 + pz2 * pz2 > options.centerDist) {
+					if (px2 * px2 + pz2 * pz2 > options.centerDist) {
 						RANDOM.setSeed(getSeed(px, pz));
 						double posX = (px + RANDOM.nextFloat()) * options.distance;
 						double posY = MHelper.randRange(options.minY, options.maxY, RANDOM);

@@ -1,5 +1,9 @@
 package ru.betterend.registry;
 
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -16,7 +20,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
-import org.jetbrains.annotations.NotNull;
 import ru.bclib.items.BaseArmorItem;
 import ru.bclib.items.tool.BaseAxeItem;
 import ru.bclib.items.tool.BaseHoeItem;
@@ -39,8 +42,6 @@ import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.item.tool.EndHammerItem;
 import ru.betterend.item.tool.EndPickaxe;
 import ru.betterend.tab.CreativeTabs;
-
-import java.util.List;
 
 public class EndItems extends ItemRegistry {
 	// Materials //
@@ -247,7 +248,7 @@ public class EndItems extends ItemRegistry {
 		if (!Configs.ITEM_CONFIG.getBoolean("tools", name, true)) {
 			return item;
 		}
-		return getItemRegistry().registerTool(name, item);
+		return (TieredItem)getItemRegistry().registerTool(name, item);
 	}
 	
 	public static Item registerEndEgg(String name, EntityType<? extends Mob> type, int background, int dots) {

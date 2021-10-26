@@ -97,7 +97,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getFloorFeature();
+				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
 					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
 				}
@@ -113,7 +113,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				BlocksHelper.setWithoutUpdate(world, pos, ceilBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getCeilFeature();
+				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
 					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
 				}

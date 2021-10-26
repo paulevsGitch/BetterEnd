@@ -5,8 +5,6 @@ import net.minecraft.util.Mth;
 import ru.betterend.config.Configs;
 
 public class GeneratorOptions {
-	private static int biomeSizeLand;
-	private static int biomeSizeVoid;
 	private static int biomeSizeCaves;
 	private static boolean hasPortal;
 	private static boolean hasPillars;
@@ -31,8 +29,6 @@ public class GeneratorOptions {
 	private static boolean directSpikeHeight;
 	
 	public static void init() {
-		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
-		biomeSizeVoid = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeVoid", 256);
 		biomeSizeCaves = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeCaves", 32);
 		hasPortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "hasPortal", true);
 		hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
@@ -86,14 +82,6 @@ public class GeneratorOptions {
 		int circleRadius = Configs.GENERATOR_CONFIG.getInt("customGenerator", "voidRingSize", 1000);
 		islandDistBlock = (long) circleRadius * (long) circleRadius;
 		islandDistChunk = (circleRadius >> 3); // Twice bigger than normal
-	}
-	
-	public static int getBiomeSizeLand() {
-		return Mth.clamp(biomeSizeLand, 1, 8192);
-	}
-	
-	public static int getBiomeSizeVoid() {
-		return Mth.clamp(biomeSizeVoid, 1, 8192);
 	}
 	
 	public static int getBiomeSizeCaves() {

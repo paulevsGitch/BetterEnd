@@ -6,17 +6,19 @@ import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.bclib.api.BiomeAPI;
+import ru.bclib.util.WeightedList;
 import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.ShuffelingListExtended;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
+import java.util.Random;
+
 public class EndCaveBiome extends EndBiome {
-	final private ShufflingList<Feature<?>> floorFeatures = new ShufflingList<>();
-	final private ShufflingList<Feature<?>> ceilFeatures = new ShufflingList<>();
+	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
+	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
 	
 	public EndCaveBiome(BCLBiomeDef definition) {
 		super(makeDef(definition));
@@ -24,8 +26,7 @@ public class EndCaveBiome extends EndBiome {
 	
 	private static BCLBiomeDef makeDef(BCLBiomeDef definition) {
 		BCLFeature feature = BCLFeature.makeChunkFeature(
-			BetterEnd.makeID(definition.getID()
-									   .getPath() + "_cave_populator"),
+			BetterEnd.makeID(definition.getID().getPath() + "_cave_populator"),
 			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(definition.getID()))
 		);
 		definition.setCategory(BiomeCategory.NONE).addFeature(feature);
@@ -34,22 +35,20 @@ public class EndCaveBiome extends EndBiome {
 		return definition;
 	}
 	
-	public void addFloorFeature(Feature<?> feature, int weight) {
+	public void addFloorFeature(Feature<?> feature, float weight) {
 		floorFeatures.add(feature, weight);
 	}
 	
-	public void addCeilFeature(Feature<?> feature, int weight) {
+	public void addCeilFeature(Feature<?> feature, float weight) {
 		ceilFeatures.add(feature, weight);
 	}
 	
-	public Feature<?> getFloorFeature() {
-		return ((ShuffelingListExtended<Feature<?>>) floorFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>) floorFeatures)
-			.getOne();
+	public Feature<?> getFloorFeature(Random random) {
+		return floorFeatures.isEmpty() ? null : floorFeatures.get(random);
 	}
 	
-	public Feature<?> getCeilFeature() {
-		return ((ShuffelingListExtended<Feature<?>>) ceilFeatures).isEmpty() ? null : ((ShuffelingListExtended<Feature<?>>) ceilFeatures)
-			.getOne();
+	public Feature<?> getCeilFeature(Random random) {
+		return ceilFeatures.isEmpty() ? null : ceilFeatures.get(random);
 	}
 	
 	public float getFloorDensity() {

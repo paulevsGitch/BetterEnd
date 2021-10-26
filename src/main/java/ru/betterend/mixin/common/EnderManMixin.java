@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.betterend.effects.EndEnchantments;
 import ru.betterend.effects.EndStatusEffects;
+import ru.betterend.registry.EndEnchantments;
 
 @Mixin(EnderMan.class)
 public abstract class EnderManMixin {

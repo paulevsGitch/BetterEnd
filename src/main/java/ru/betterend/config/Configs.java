@@ -15,6 +15,7 @@ public class Configs {
 	public static final IdConfig BIOME_CONFIG = new EntryConfig(BetterEnd.MOD_ID, "biomes");
 	public static final PathConfig GENERATOR_CONFIG = new PathConfig(BetterEnd.MOD_ID, "generator", false);
 	public static final PathConfig RECIPE_CONFIG = new PathConfig(BetterEnd.MOD_ID, "recipes");
+	public static final PathConfig ENCHANTMENT_CONFIG = new PathConfig(BetterEnd.MOD_ID, "enchantments");
 	
 	@Environment(value = EnvType.CLIENT)
 	public static final PathConfig CLENT_CONFIG = new PathConfig(BetterEnd.MOD_ID, "client", false);
@@ -26,6 +27,7 @@ public class Configs {
 		ITEM_CONFIG.saveChanges();
 		GENERATOR_CONFIG.saveChanges();
 		RECIPE_CONFIG.saveChanges();
+		ENCHANTMENT_CONFIG.saveChanges();
 		
 		if (BCLib.isClient()) {
 			CLENT_CONFIG.saveChanges();

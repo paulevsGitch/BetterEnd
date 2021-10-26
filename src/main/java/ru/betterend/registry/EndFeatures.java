@@ -19,6 +19,8 @@ import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.complexmaterials.StoneMaterial;
+import ru.betterend.config.Configs;
+import ru.betterend.world.biome.cave.EndCaveBiome;
 import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePumpkinFeature;
@@ -351,10 +353,12 @@ public class EndFeatures {
 		addFeature(CRASHED_SHIP, features);
 		
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
-		boolean hasCaves = bclbiome.getCustomData("has_caves", true);
+		boolean hasCaves = bclbiome.getCustomData("has_caves", true) && !(bclbiome instanceof EndCaveBiome);
 		if (hasCaves && !BiomeAPI.END_VOID_BIOME_PICKER.containsImmutable(id)) {
-			addFeature(ROUND_CAVE, features);
-			addFeature(TUNEL_CAVE, features);
+			if (Configs.BIOME_CONFIG.getBoolean(id, "hasCaves", true)) {
+				addFeature(ROUND_CAVE, features);
+				addFeature(TUNEL_CAVE, features);
+			}
 		}
 		
 		BCLFeature feature = BiomeAPI.getBiome(id).getStructuresFeature();
@@ -369,7 +373,12 @@ public class EndFeatures {
 		def.addFeature(ENDER_ORE);
 		def.addFeature(CRASHED_SHIP);
 		
+		if (def.getID().getPath().endsWith("_cave")) {
+			return;
+		}
+		
 		boolean hasCaves = def.getCustomData("has_caves", true);
+		hasCaves = Configs.BIOME_CONFIG.getBoolean(def.getID(), "hasCaves", hasCaves);
 		if (hasCaves) {
 			def.addFeature(ROUND_CAVE);
 			def.addFeature(TUNEL_CAVE);
@@ -379,9 +388,7 @@ public class EndFeatures {
 	private static void addFeature(BCLFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
 		int index = feature.getFeatureStep().ordinal();
 		if (features.size() > index) {
-			features.get(index).add(() -> {
-				return feature.getFeatureConfigured();
-			});
+			features.get(index).add(() -> feature.getFeatureConfigured());
 		}
 		else {
 			List<Supplier<ConfiguredFeature<?, ?>>> newFeature = Lists.newArrayList();

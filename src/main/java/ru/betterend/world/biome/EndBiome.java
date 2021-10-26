@@ -10,7 +10,6 @@ import ru.betterend.registry.EndFeatures;
 public class EndBiome extends BCLBiome {
 	public EndBiome(BCLBiomeDef def) {
 		super(updateDef(def));
-		
 	}
 	
 	public EndBiome(ResourceLocation id, Biome biome, float fogDensity, float genChance, boolean hasCaves) {

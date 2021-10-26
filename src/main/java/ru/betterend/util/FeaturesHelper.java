@@ -7,6 +7,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import ru.bclib.api.BiomeAPI;
+import ru.betterend.config.Configs;
 import ru.betterend.mixin.common.BiomeGenerationSettingsAccessor;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndStructures;
@@ -23,11 +24,8 @@ public class FeaturesHelper {
 				BiomeGenerationSettingsAccessor accessor = (BiomeGenerationSettingsAccessor) biome.getGenerationSettings();
 				List<Supplier<ConfiguredStructureFeature<?, ?>>> structures = Lists.newArrayList(accessor.be_getStructures());
 				List<List<Supplier<ConfiguredFeature<?, ?>>>> preFeatures = accessor.be_getFeatures();
-				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = new ArrayList<List<Supplier<ConfiguredFeature<?, ?>>>>(
-					preFeatures.size());
-				preFeatures.forEach((list) -> {
-					features.add(Lists.newArrayList(list));
-				});
+				List<List<Supplier<ConfiguredFeature<?, ?>>>> features = new ArrayList<>(preFeatures.size());
+				preFeatures.forEach((list) -> features.add(Lists.newArrayList(list)));
 				
 				EndFeatures.registerBiomeFeatures(key, biome, features);
 				EndStructures.registerBiomeStructures(key, biome, structures);
@@ -36,5 +34,6 @@ public class FeaturesHelper {
 				accessor.be_setStructures(structures);
 			}
 		});
+		Configs.BIOME_CONFIG.saveChanges();
 	}
 }

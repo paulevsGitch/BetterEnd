@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GuideBookItem extends ModelProviderItem {
 	public final static ResourceLocation BOOK_ID = BetterEnd.makeID("guidebook");
-	public static final Item GUIDE_BOOK = EndItems.registerEndItem(BOOK_ID, new GuideBookItem());
+	public static final Item GUIDE_BOOK = EndItems.getItemRegistry().register(BOOK_ID, new GuideBookItem());
 	
 	public static void register() {
 	}

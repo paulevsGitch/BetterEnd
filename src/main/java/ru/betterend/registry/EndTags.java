@@ -94,7 +94,7 @@ public class EndTags {
 		BonemealAPI.addSpreadableBlock(EndBlocks.MOSSY_DRAGON_BONE, EndBlocks.DRAGON_BONE_BLOCK);
 		
 		List<Item> ITEM_HAMMERS = Lists.newArrayList();
-		EndItems.getModItems(BetterEnd.MOD_ID).forEach(item -> {
+		EndItems.getModItems().forEach(item -> {
 			if (item.isEdible()) {
 				FoodProperties food = item.getFoodProperties();
 				if (food != null) {

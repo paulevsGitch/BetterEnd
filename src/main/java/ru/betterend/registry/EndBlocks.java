@@ -150,7 +150,9 @@ import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
 
-public class EndBlocks extends BlockRegistry {
+public class EndBlocks {
+	private static final BlockRegistry REGISTRY = new BlockRegistry(CreativeTabs.TAB_BLOCKS, Configs.BLOCK_CONFIG);
+	
 	// Terrain //
 	public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new EndstoneDustBlock());
 	public static final Block END_MYCELIUM = registerBlock("end_mycelium", new EndTerrainBlock(MaterialColor.COLOR_LIGHT_BLUE));
@@ -523,17 +525,13 @@ public class EndBlocks extends BlockRegistry {
 	// Technical
 	public static final Block END_PORTAL_BLOCK = registerEndBlockOnly("end_portal_block", new EndPortalBlock());
 	
-	private static BlockRegistry BlockRegistry;
-	
-	private EndBlocks(CreativeModeTab creativeTab) {
-		super(creativeTab);
-	}
-	
 	public static List<Block> getModBlocks() {
-		return getModBlocks(BetterEnd.MOD_ID).stream()
-											 .filter(BlockItem.class::isInstance)
-											 .map(item -> ((BlockItem) item).getBlock())
-											 .collect(Collectors.toList());
+		return BlockRegistry
+			.getModBlocks(BetterEnd.MOD_ID)
+			.stream()
+			.filter(BlockItem.class::isInstance)
+			.map(item -> ((BlockItem) item).getBlock())
+			.collect(Collectors.toList());
 	}
 	
 	public static Block registerBlock(ResourceLocation id, Block block) {
@@ -568,16 +566,8 @@ public class EndBlocks extends BlockRegistry {
 		return getBlockRegistry().makeItemSettings();
 	}
 	
-	@Override
-	public ResourceLocation createModId(String name) {
-		return BetterEnd.makeID(name);
-	}
-	
 	@NotNull
 	public static BlockRegistry getBlockRegistry() {
-		if (BlockRegistry == null) {
-			BlockRegistry = new EndBlocks(CreativeTabs.TAB_BLOCKS);
-		}
-		return BlockRegistry;
+		return REGISTRY;
 	}
 }

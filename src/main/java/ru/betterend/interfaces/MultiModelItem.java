@@ -10,7 +10,7 @@ public interface MultiModelItem {
 	void registerModelPredicate();
 	
 	static void register() {
-		EndItems.getModItems(BetterEnd.MOD_ID).forEach(item -> {
+		EndItems.getModItems().forEach(item -> {
 			if (item instanceof MultiModelItem) {
 				((MultiModelItem) item).registerModelPredicate();
 			}

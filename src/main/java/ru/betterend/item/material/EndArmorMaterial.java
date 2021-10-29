@@ -72,7 +72,6 @@ public enum EndArmorMaterial implements ArmorMaterial {
 	}
 	
 	@Override
-	@Environment(EnvType.CLIENT)
 	public String getName() {
 		return this.name;
 	}

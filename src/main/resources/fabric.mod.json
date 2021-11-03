@@ -43,9 +43,9 @@
 
 	"depends": {
 		"fabricloader": ">=0.11.6",
-		"fabric": ">=0.36.0",
+		"fabric": ">=0.41.0",
 		"minecraft": ">=1.17",
-        "bclib": ">=0.4.2"
+        "bclib": ">=0.4.3"
 	},
 	"suggests": {
 		"byg": ">=1.1.3",

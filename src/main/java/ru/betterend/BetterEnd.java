@@ -33,6 +33,7 @@ import ru.betterend.world.surface.SurfaceBuilders;
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
 	public static final Logger LOGGER = new Logger(MOD_ID);
+	public static final boolean RUNS_FALL_FLYING_LIB = FabricLoader.getInstance().getModContainer("fallflyinglib").isPresent();
 	
 	@Override
 	public void onInitialize() {

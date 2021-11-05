@@ -1,5 +1,7 @@
 package ru.betterend.mixin.common;
 
+import java.util.Optional;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,9 +26,7 @@ import ru.bclib.util.MHelper;
 import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.registry.EndBlocks;
 
-import java.util.Optional;
-
-@Mixin(Player.class)
+@Mixin(value=Player.class, priority=200)
 public abstract class PlayerMixin extends LivingEntity {
 	protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
 		super(entityType, level);
@@ -45,11 +45,13 @@ public abstract class PlayerMixin extends LivingEntity {
 	
 	@Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
 	public void be_tryToStartFlying(CallbackInfoReturnable<Boolean> info) {
-		if (!onGround && !isFallFlying() && !isInWater() && !hasEffect(MobEffects.LEVITATION)) {
+ 		if (!onGround && !isFallFlying() && !isInWater() && !hasEffect(MobEffects.LEVITATION)) {
 			ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
 			if (itemStack.getItem() instanceof FallFlyingItem && ElytraItem.isFlyEnabled(itemStack)) {
 				setSharedFlag(7, true);
 				info.setReturnValue(true);
+				System.out.println("Started");
+				info.cancel();
 			}
 		}
 	}

@@ -3,6 +3,7 @@ package ru.betterend.mixin.common;
 import java.util.Collection;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,7 +39,7 @@ import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndAttributes;
 
-@Mixin(value=LivingEntity.class, priority=2000)
+@Mixin(value=LivingEntity.class, priority=200)
 public abstract class LivingEntityMixin extends Entity {
 	
 	public LivingEntityMixin(EntityType<?> entityType, Level level) {
@@ -112,9 +114,95 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return value;
 	}
-	
+
+	// FlyFallingLib (part of Origin) redirected the call to updateFallFlying,
+	// so we inject our code before the actual call and cancel the execution if the player is still
+	// flying. That means we have to replicate all vanilla code that happens after the call to
+	// updateFallFlying. We do this in vanillaAfterUpdateFallFlying
+	@Inject(method="aiStep", cancellable = true, at=@At(value="INVOKE", target="Lnet/minecraft/world/entity/LivingEntity;updateFallFlying()V"))
+	private void be_updateFallFlying_originFix(CallbackInfo info) {
+		//run be_updateFallFlying instead
+		if (!BetterEnd.RUNS_FALL_FLYING_LIB) return;
+
+		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
+		if (!level.isClientSide && itemStack.getItem() instanceof FallFlyingItem) {
+			boolean isFlying = getSharedFlag(7);
+			if (isFlying && !onGround && !isPassenger() && !hasEffect(MobEffects.LEVITATION)) {
+				if (ElytraItem.isFlyEnabled(itemStack)) {
+					if ((fallFlyTicks + 1) % 20 == 0) {
+						itemStack.hurtAndBreak(
+								1,
+								LivingEntity.class.cast(this),
+								livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST)
+						);
+					}
+					isFlying = true;
+				}
+				else {
+					isFlying = false;
+				}
+			}
+			else {
+				isFlying = false;
+			}
+			setSharedFlag(7, isFlying);
+			if (isFlying) {
+				vanillaAfterUpdateFallFlying();
+				info.cancel();
+			}
+		}
+
+	}
+
+	@Shadow protected abstract void removeFrost();
+	@Shadow protected abstract void tryAddFrost();
+	@Shadow protected abstract void pushEntities();
+	@Shadow protected abstract void checkAutoSpinAttack(AABB aABB, AABB aABB2);
+	@Shadow protected int autoSpinAttackTicks;
+
+	private void vanillaAfterUpdateFallFlying(){
+		LivingEntity self = (LivingEntity)(Object)this;
+		AABB aABB = this.getBoundingBox();
+		self.travel(new Vec3(self.xxa, self.yya, self.zza));
+		this.level.getProfiler().pop();
+		this.level.getProfiler().push("freezing");
+		boolean bl2 = this.getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES);
+		int o;
+		if (!this.level.isClientSide && !self.isDeadOrDying()) {
+			o = this.getTicksFrozen();
+			if (this.isInPowderSnow && this.canFreeze()) {
+				this.setTicksFrozen(Math.min(this.getTicksRequiredToFreeze(), o + 1));
+			} else {
+				this.setTicksFrozen(Math.max(0, o - 2));
+			}
+		}
+
+		this.removeFrost();
+		this.tryAddFrost();
+		if (!this.level.isClientSide && this.tickCount % 40 == 0 && this.isFullyFrozen() && this.canFreeze()) {
+			o = bl2 ? 5 : 1;
+			this.hurt(DamageSource.FREEZE, (float)o);
+		}
+
+		this.level.getProfiler().pop();
+		this.level.getProfiler().push("push");
+		if (this.autoSpinAttackTicks > 0) {
+			--this.autoSpinAttackTicks;
+			this.checkAutoSpinAttack(aABB, this.getBoundingBox());
+		}
+
+		this.pushEntities();
+		this.level.getProfiler().pop();
+		if (!this.level.isClientSide && self.isSensitiveToWater() && this.isInWaterRainOrBubble()) {
+			this.hurt(DamageSource.DROWN, 1.0F);
+		}
+	}
+
 	@Inject(method = "updateFallFlying", at = @At("HEAD"), cancellable = true)
 	private void be_updateFallFlying(CallbackInfo info) {
+		//run be_updateFallFlying_originFix instead?
+		if (BetterEnd.RUNS_FALL_FLYING_LIB) return;
+
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
 		if (!level.isClientSide && itemStack.getItem() instanceof FallFlyingItem) {
 			boolean isFlying = getSharedFlag(7);

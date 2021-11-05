@@ -124,6 +124,20 @@ public abstract class LivingEntityMixin extends Entity {
 		//run be_updateFallFlying instead
 		if (!BetterEnd.RUNS_FALL_FLYING_LIB) return;
 
+		if (be_updateFallFlyingCommon()) {
+			vanillaAfterUpdateFallFlying();
+			info.cancel();
+		}
+	}
+
+	@Inject(method = "updateFallFlying", at = @At("HEAD"), cancellable = true)
+	private void be_updateFallFlying(CallbackInfo info) {
+		//run be_updateFallFlying_originFix instead?
+		if (BetterEnd.RUNS_FALL_FLYING_LIB) return;
+		be_updateFallFlyingCommon();
+	}
+
+	private boolean be_updateFallFlyingCommon() {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
 		if (!level.isClientSide && itemStack.getItem() instanceof FallFlyingItem) {
 			boolean isFlying = getSharedFlag(7);
@@ -146,12 +160,9 @@ public abstract class LivingEntityMixin extends Entity {
 				isFlying = false;
 			}
 			setSharedFlag(7, isFlying);
-			if (isFlying) {
-				vanillaAfterUpdateFallFlying();
-				info.cancel();
-			}
+			return isFlying;
 		}
-
+		return false;
 	}
 
 	@Shadow protected abstract void removeFrost();
@@ -198,37 +209,8 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 	}
 
-	@Inject(method = "updateFallFlying", at = @At("HEAD"), cancellable = true)
-	private void be_updateFallFlying(CallbackInfo info) {
-		//run be_updateFallFlying_originFix instead?
-		if (BetterEnd.RUNS_FALL_FLYING_LIB) return;
 
-		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);
-		if (!level.isClientSide && itemStack.getItem() instanceof FallFlyingItem) {
-			boolean isFlying = getSharedFlag(7);
-			if (isFlying && !onGround && !isPassenger() && !hasEffect(MobEffects.LEVITATION)) {
-				if (ElytraItem.isFlyEnabled(itemStack)) {
-					if ((fallFlyTicks + 1) % 20 == 0) {
-						itemStack.hurtAndBreak(
-							1,
-							LivingEntity.class.cast(this),
-							livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.CHEST)
-						);
-					}
-					isFlying = true;
-				}
-				else {
-					isFlying = false;
-				}
-			}
-			else {
-				isFlying = false;
-			}
-			setSharedFlag(7, isFlying);
-			info.cancel();
-		}
-	}
-	
+
 	@Inject(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isFallFlying()Z", shift = Shift.AFTER), cancellable = true)
 	public void be_travel(Vec3 vec3, CallbackInfo info) {
 		ItemStack itemStack = getItemBySlot(EquipmentSlot.CHEST);

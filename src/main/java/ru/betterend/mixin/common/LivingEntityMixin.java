@@ -134,7 +134,9 @@ public abstract class LivingEntityMixin extends Entity {
 	private void be_updateFallFlying(CallbackInfo info) {
 		//run be_updateFallFlying_originFix instead?
 		if (BetterEnd.RUNS_FALL_FLYING_LIB) return;
-		be_updateFallFlyingCommon();
+		if (be_updateFallFlyingCommon()) {
+			info.cancel();
+		}
 	}
 
 	private boolean be_updateFallFlyingCommon() {

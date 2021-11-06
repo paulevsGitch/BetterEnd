@@ -16,11 +16,11 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
+import ru.bclib.interfaces.BiomeSetter;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.DefaultFeature;
-import ru.betterend.interfaces.IBiomeArray;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
@@ -155,9 +155,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	}
 	
 	protected void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
-		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomes();
+		BiomeSetter array = (BiomeSetter) world.getChunk(pos).getBiomes();
 		if (array != null) {
-			array.be_setBiome(biome.getActualBiome(), pos);
+			array.bclib_setBiome(biome.getActualBiome(), pos);
 		}
 	}
 	

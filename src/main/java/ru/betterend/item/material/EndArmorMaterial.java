@@ -1,7 +1,5 @@
 package ru.betterend.item.material;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.LazyLoadedValue;
@@ -32,10 +30,11 @@ public enum EndArmorMaterial implements ArmorMaterial {
 	private final SoundEvent equipSound;
 	private final float toughness;
 	private final float knockbackResistance;
+	@SuppressWarnings("deprecation")
 	private final LazyLoadedValue<Ingredient> repairIngredient;
 	
+	@SuppressWarnings("deprecation")
 	private EndArmorMaterial(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
-		
 		this.name = name;
 		this.durabilityMultiplier = durabilityMultiplier;
 		this.protectionAmounts = protectionAmounts;

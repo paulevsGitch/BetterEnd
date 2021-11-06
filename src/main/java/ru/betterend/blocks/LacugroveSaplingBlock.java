@@ -15,6 +15,7 @@ public class LacugroveSaplingBlock extends PottableFeatureSapling {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	protected Feature<?> getFeature() {
 		return EndFeatures.LACUGROVE.getFeature();
 	}

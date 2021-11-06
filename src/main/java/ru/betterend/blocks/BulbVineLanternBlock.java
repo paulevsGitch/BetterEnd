@@ -36,7 +36,7 @@ public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayer
 								.hardness(1)
 								.resistance(1)
 								.breakByTool(FabricToolTags.PICKAXES)
-								.materialColor(MaterialColor.COLOR_LIGHT_GRAY)
+								.mapColor(MaterialColor.COLOR_LIGHT_GRAY)
 								.luminance(15)
 								.requiresCorrectToolForDrops()
 								.sound(SoundType.LANTERN));
@@ -47,6 +47,7 @@ public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayer
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(IS_FLOOR) ? SHAPE_FLOOR : SHAPE_CEIL;
 	}

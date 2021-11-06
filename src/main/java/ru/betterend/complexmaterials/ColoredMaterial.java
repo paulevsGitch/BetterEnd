@@ -30,8 +30,7 @@ public class ColoredMaterial {
 		String id = Registry.BLOCK.getKey(source).getPath();
 		colors.forEach((color, name) -> {
 			String blockName = id + "_" + name;
-			Block block = constructor.apply(FabricBlockSettings.copyOf(source)
-															   .materialColor(MaterialColor.COLOR_BLACK));
+			Block block = constructor.apply(FabricBlockSettings.copyOf(source).mapColor(MaterialColor.COLOR_BLACK));
 			EndBlocks.registerBlock(blockName, block);
 			if (craftEight) {
 				GridRecipe.make(BetterEnd.MOD_ID, blockName, block)

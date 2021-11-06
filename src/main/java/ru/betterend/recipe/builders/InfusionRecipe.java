@@ -1,9 +1,6 @@
 package ru.betterend.recipe.builders;
 
-import java.util.Arrays;
-
 import com.google.gson.JsonObject;
-
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,6 +23,8 @@ import ru.bclib.util.ItemUtil;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.rituals.InfusionRitual;
+
+import java.util.Arrays;
 
 public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBookCategory {
 	public final static String GROUP = "infusion";

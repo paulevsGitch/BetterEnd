@@ -21,6 +21,7 @@ public class InfusionParticleType extends ParticleType<InfusionParticleType> imp
 		itemStack
 	), infusionParticleType -> infusionParticleType.itemStack);
 	
+	@SuppressWarnings("deprecation")
 	public static final ParticleOptions.Deserializer<InfusionParticleType> PARAMETERS_FACTORY = new ParticleOptions.Deserializer<InfusionParticleType>() {
 		public InfusionParticleType fromCommand(ParticleType<InfusionParticleType> particleType, StringReader stringReader) throws CommandSyntaxException {
 			stringReader.expect(' ');

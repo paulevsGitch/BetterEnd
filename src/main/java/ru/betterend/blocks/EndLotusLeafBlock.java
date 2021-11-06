@@ -38,6 +38,7 @@ public class EndLotusLeafBlock extends BaseBlockNotFull implements RenderLayerPr
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState down = world.getBlockState(pos.below());
 		return !down.getFluidState().isEmpty() && down.getFluidState().getType() instanceof WaterFluid;
@@ -49,16 +50,19 @@ public class EndLotusLeafBlock extends BaseBlockNotFull implements RenderLayerPr
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return VSHAPE;
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, HORIZONTAL_FACING);
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return BlocksHelper.mirrorHorizontal(state, mirror, HORIZONTAL_FACING);
 	}

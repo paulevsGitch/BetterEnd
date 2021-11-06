@@ -67,6 +67,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	private void placeGrownFlower(Level world, BlockPos pos, int age) {}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (GeneratorOptions.changeChorusPlant()) {
 			return state.getValue(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;

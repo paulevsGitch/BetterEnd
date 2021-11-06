@@ -29,6 +29,7 @@ public class AncientEmeraldIceBlock extends BaseBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		Direction dir = BlocksHelper.randomDirection(random);
 		

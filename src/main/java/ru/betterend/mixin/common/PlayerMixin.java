@@ -1,7 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Optional;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -25,6 +23,8 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Optional;
 
 @Mixin(value=Player.class, priority=200)
 public abstract class PlayerMixin extends LivingEntity {

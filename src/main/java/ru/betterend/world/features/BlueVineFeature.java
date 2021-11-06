@@ -17,6 +17,7 @@ public class BlueVineFeature extends ScatterFeature {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		float d = MHelper.length(
 			center.getX() - blockPos.getX(),

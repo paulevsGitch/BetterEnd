@@ -2,7 +2,6 @@ package ru.betterend.interfaces;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndItems;
 
 public interface MultiModelItem {

@@ -13,13 +13,16 @@ import ru.bclib.blocks.BaseBlock;
 
 public class HydraluxPetalBlock extends BaseBlock {
 	public HydraluxPetalBlock() {
-		this(FabricBlockSettings.of(Material.PLANT)
-								.breakByTool(FabricToolTags.AXES)
-								.breakByHand(true)
-								.hardness(1)
-								.resistance(1)
-								.materialColor(MaterialColor.PODZOL)
-								.sound(SoundType.WART_BLOCK));
+		this(
+			FabricBlockSettings
+				.of(Material.PLANT)
+				.breakByTool(FabricToolTags.AXES)
+				.breakByHand(true)
+				.hardness(1)
+				.resistance(1)
+				.mapColor(MaterialColor.PODZOL)
+				.sound(SoundType.WART_BLOCK)
+		);
 	}
 	
 	public HydraluxPetalBlock(Properties settings) {

@@ -34,6 +34,7 @@ public class FilaluxWingsBlock extends BaseAttachedBlock implements RenderLayerP
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}

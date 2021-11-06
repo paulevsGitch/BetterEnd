@@ -22,7 +22,7 @@ public class GlowingPillarLuminophorBlock extends BaseBlock {
 	
 	public GlowingPillarLuminophorBlock() {
 		super(FabricBlockSettings.of(Material.LEAVES)
-								 .materialColor(MaterialColor.COLOR_ORANGE)
+								 .mapColor(MaterialColor.COLOR_ORANGE)
 								 .breakByTool(FabricToolTags.SHEARS)
 								 .strength(0.2F)
 								 .luminance(15)
@@ -31,11 +31,13 @@ public class GlowingPillarLuminophorBlock extends BaseBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return !state.getValue(NATURAL) || world.getBlockState(pos.below()).is(EndBlocks.GLOWING_PILLAR_ROOTS);
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!canSurvive(state, world, pos)) {
 			return Blocks.AIR.defaultBlockState();

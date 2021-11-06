@@ -15,6 +15,7 @@ public class MossyGlowshroomSaplingBlock extends PottableFeatureSapling {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	protected Feature<?> getFeature() {
 		return EndFeatures.MOSSY_GLOWSHROOM.getFeature();
 	}

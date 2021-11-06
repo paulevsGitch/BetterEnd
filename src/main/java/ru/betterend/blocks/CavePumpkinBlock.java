@@ -43,6 +43,7 @@ public class CavePumpkinBlock extends BaseBlockNotFull implements RenderLayerPro
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return state.getValue(SMALL) ? SHAPE_SMALL : SHAPE_BIG;
 	}

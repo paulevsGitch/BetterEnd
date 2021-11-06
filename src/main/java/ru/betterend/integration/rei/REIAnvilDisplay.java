@@ -1,10 +1,5 @@
 package ru.betterend.integration.rei;
 
-import java.util.Collections;
-import java.util.Optional;
-
-import org.jetbrains.annotations.NotNull;
-
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
@@ -12,7 +7,11 @@ import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import org.jetbrains.annotations.NotNull;
 import ru.bclib.recipes.AnvilRecipe;
+
+import java.util.Collections;
+import java.util.Optional;
 
 public class REIAnvilDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
 	

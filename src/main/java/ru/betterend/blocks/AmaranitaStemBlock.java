@@ -7,6 +7,6 @@ import ru.bclib.blocks.BaseRotatedPillarBlock;
 
 public class AmaranitaStemBlock extends BaseRotatedPillarBlock {
 	public AmaranitaStemBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).materialColor(MaterialColor.COLOR_LIGHT_GREEN));
+		super(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).mapColor(MaterialColor.COLOR_LIGHT_GREEN));
 	}
 }

@@ -20,11 +20,11 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import ru.bclib.interfaces.UnknownReceipBookCategory;
 import ru.bclib.recipes.BCLRecipeManager;
+import ru.bclib.util.ItemUtil;
+import ru.bclib.util.RecipeHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
 import ru.betterend.registry.EndBlocks;
-import ru.bclib.util.ItemUtil;
-import ru.bclib.util.RecipeHelper;
 
 public class AlloyingRecipe implements Recipe<Container>, UnknownReceipBookCategory {
 	public final static String GROUP = "alloying";

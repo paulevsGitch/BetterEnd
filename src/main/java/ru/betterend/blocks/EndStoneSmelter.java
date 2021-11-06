@@ -58,6 +58,7 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 		registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
 	}
 	
+	@SuppressWarnings("deprecation")
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (world.isClientSide) {
 			return InteractionResult.SUCCESS;
@@ -102,11 +103,13 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
 		//TODO
 		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
@@ -118,11 +121,13 @@ public class EndStoneSmelter extends BaseBlockWithEntity {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return state.rotate(mirror.getRotation(state.getValue(FACING)));
 	}

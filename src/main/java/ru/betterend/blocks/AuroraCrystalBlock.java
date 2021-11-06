@@ -93,6 +93,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
 		if (tool != null && tool.isCorrectToolForDrops(state)) {

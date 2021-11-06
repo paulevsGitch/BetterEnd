@@ -16,6 +16,7 @@ public class UmbrellaTreeSaplingBlock extends PottableFeatureSapling {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	protected Feature<?> getFeature() {
 		return EndFeatures.UMBRELLA_TREE.getFeature();
 	}

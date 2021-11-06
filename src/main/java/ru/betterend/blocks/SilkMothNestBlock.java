@@ -71,6 +71,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider 
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(ACTIVE) ? BOTTOM : TOP;
 	}
@@ -87,6 +88,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider 
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if (!state.getValue(ACTIVE)) {
 			if (canSupportCenter(world, pos.above(), Direction.DOWN) || world.getBlockState(pos.above())
@@ -101,11 +103,13 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider 
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		return BlocksHelper.rotateHorizontal(state, rotation, FACING);
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		return BlocksHelper.mirrorHorizontal(state, mirror, FACING);
 	}
@@ -128,6 +132,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider 
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (!state.getValue(ACTIVE)) {
 			return;
@@ -155,6 +160,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider 
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (hand == InteractionHand.MAIN_HAND) {
 			ItemStack stack = player.getMainHandItem();

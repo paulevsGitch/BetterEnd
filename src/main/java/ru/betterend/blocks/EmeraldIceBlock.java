@@ -57,6 +57,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements RenderLayer
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (world.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(world, pos)) {
 			this.melt(state, world, pos);
@@ -75,6 +76,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements RenderLayer
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
 		if (tool != null && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) != 0) {

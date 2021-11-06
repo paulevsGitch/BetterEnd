@@ -40,6 +40,7 @@ public class StoneLanternBlock extends EndLanternBlock implements CustomColorPro
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return state.getValue(IS_FLOOR) ? SHAPE_FLOOR : SHAPE_CEIL;
 	}

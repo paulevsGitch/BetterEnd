@@ -101,6 +101,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		int plantID = state.getValue(PLANT_ID);
 		if (plantID < 1 || plantID > plants.length || plants[plantID - 1] == null) {
@@ -198,6 +199,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (level.isClientSide) {
 			return InteractionResult.CONSUME;
@@ -421,12 +423,14 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		int id = state.getValue(PLANT_ID);
 		return id > 0 && id <= plants.length ? SHAPE_FULL : SHAPE_EMPTY;
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE_EMPTY;
 	}

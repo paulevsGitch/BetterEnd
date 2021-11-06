@@ -1,10 +1,6 @@
 package ru.betterend.blocks;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.client.color.block.BlockColor;
@@ -31,17 +27,22 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
+import java.util.Collections;
+import java.util.List;
+
 public class HelixTreeLeavesBlock extends BaseBlock implements CustomColorProvider {
 	public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
 	
 	public HelixTreeLeavesBlock() {
-		super(FabricBlockSettings.of(Material.LEAVES)
-								 .materialColor(MaterialColor.COLOR_ORANGE)
-								 .breakByTool(FabricToolTags.SHEARS)
-								 .sound(SoundType.WART_BLOCK)
-								 .sound(SoundType.GRASS)
-								 .strength(0.2F));
+		super(FabricBlockSettings
+			.of(Material.LEAVES)
+			.mapColor(MaterialColor.COLOR_ORANGE)
+			.breakByTool(FabricToolTags.SHEARS)
+			.sound(SoundType.WART_BLOCK)
+			.sound(SoundType.GRASS)
+			.strength(0.2F)
+		);
 
 		TagAPI.addTags(this, TagAPI.BLOCK_LEAVES);
 	}

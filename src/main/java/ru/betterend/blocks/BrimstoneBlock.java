@@ -28,7 +28,7 @@ public class BrimstoneBlock extends BaseBlock {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVE;
 	
 	public BrimstoneBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.END_STONE).materialColor(MaterialColor.COLOR_BROWN).randomTicks());
+		super(FabricBlockSettings.copyOf(Blocks.END_STONE).mapColor(MaterialColor.COLOR_BROWN).randomTicks());
 		registerDefaultState(stateDefinition.any().setValue(ACTIVATED, false));
 	}
 	
@@ -64,6 +64,7 @@ public class BrimstoneBlock extends BaseBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		boolean deactivate = true;
 		for (Direction dir : BlocksHelper.DIRECTIONS) {

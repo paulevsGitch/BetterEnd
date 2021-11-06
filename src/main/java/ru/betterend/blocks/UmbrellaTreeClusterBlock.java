@@ -27,9 +27,11 @@ public class UmbrellaTreeClusterBlock extends BaseBlock {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public UmbrellaTreeClusterBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.NETHER_WART_BLOCK)
-								 .materialColor(MaterialColor.COLOR_PURPLE)
-								 .luminance(15));
+		super(FabricBlockSettings
+			.copyOf(Blocks.NETHER_WART_BLOCK)
+			.mapColor(MaterialColor.COLOR_PURPLE)
+			.luminance(15)
+		);
 		registerDefaultState(stateDefinition.any().setValue(NATURAL, false));
 	}
 	
@@ -39,6 +41,7 @@ public class UmbrellaTreeClusterBlock extends BaseBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack stack = player.getMainHandItem();
 		if (stack.getItem() == Items.GLASS_BOTTLE) {

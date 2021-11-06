@@ -29,6 +29,7 @@ public class MurkweedBlock extends EndPlantBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity && !((LivingEntity) entity).hasEffect(MobEffects.BLINDNESS)) {
 			((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 50));
@@ -41,6 +42,7 @@ public class MurkweedBlock extends EndPlantBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
 		return false;
 	}

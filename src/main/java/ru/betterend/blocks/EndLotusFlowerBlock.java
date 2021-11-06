@@ -44,6 +44,7 @@ public class EndLotusFlowerBlock extends EndPlantBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE_COLLISION;
 	}

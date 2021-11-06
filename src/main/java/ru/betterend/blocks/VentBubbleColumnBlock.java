@@ -48,22 +48,26 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.INVISIBLE;
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState blockState = world.getBlockState(pos.below());
 		return blockState.is(this) || blockState.is(EndBlocks.HYDROTHERMAL_VENT);
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return Shapes.empty();
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		if (!state.canSurvive(world, pos)) {
 			return Blocks.WATER.defaultBlockState();
@@ -101,6 +105,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 	}
 	
 	@Environment(EnvType.CLIENT)
+	@SuppressWarnings("deprecation")
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		BlockState blockState = world.getBlockState(pos.above());
 		if (blockState.isAir()) {
@@ -150,6 +155,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public FluidState getFluidState(BlockState state) {
 		return Fluids.WATER.getSource(false);
 	}

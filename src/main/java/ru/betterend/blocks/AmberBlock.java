@@ -7,6 +7,6 @@ import ru.bclib.blocks.BaseBlock;
 
 public class AmberBlock extends BaseBlock {
 	public AmberBlock() {
-		super(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).materialColor(MaterialColor.COLOR_YELLOW));
+		super(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).mapColor(MaterialColor.COLOR_YELLOW));
 	}
 }

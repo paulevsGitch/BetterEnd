@@ -1,17 +1,11 @@
 package ru.betterend.registry;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
+import org.jetbrains.annotations.NotNull;
 import ru.bclib.blocks.BaseBarrelBlock;
 import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseFurnaceBlock;
@@ -149,6 +143,8 @@ import ru.betterend.config.Configs;
 import ru.betterend.item.material.EndArmorMaterial;
 import ru.betterend.item.material.EndToolMaterial;
 import ru.betterend.tab.CreativeTabs;
+
+import java.util.List;
 
 public class EndBlocks {
 	private static final BlockRegistry REGISTRY = new BlockRegistry(CreativeTabs.TAB_BLOCKS, Configs.BLOCK_CONFIG);
@@ -526,12 +522,7 @@ public class EndBlocks {
 	public static final Block END_PORTAL_BLOCK = registerEndBlockOnly("end_portal_block", new EndPortalBlock());
 	
 	public static List<Block> getModBlocks() {
-		return BlockRegistry
-			.getModBlocks(BetterEnd.MOD_ID)
-			.stream()
-			.filter(BlockItem.class::isInstance)
-			.map(item -> ((BlockItem) item).getBlock())
-			.collect(Collectors.toList());
+		return BlockRegistry.getModBlocks(BetterEnd.MOD_ID);
 	}
 	
 	public static Block registerBlock(ResourceLocation id, Block block) {

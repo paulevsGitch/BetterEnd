@@ -24,6 +24,7 @@ import java.util.List;
 
 public class NeedlegrassBlock extends EndPlantBlock {
 	@Override
+	@SuppressWarnings("deprecation")
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {
 			entity.hurt(DamageSource.CACTUS, 0.1F);
@@ -50,6 +51,7 @@ public class NeedlegrassBlock extends EndPlantBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
 		return false;
 	}

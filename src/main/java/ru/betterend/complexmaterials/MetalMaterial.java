@@ -95,8 +95,7 @@ public class MetalMaterial {
         return new MetalMaterial(
                 name,
                 true,
-                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)
-                                   .materialColor(color),
+                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).mapColor(color),
                 EndItems.makeEndItemSettings(),
                 material,
                 armor
@@ -108,7 +107,7 @@ public class MetalMaterial {
                 name,
                 true,
                 FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)
-                                   .materialColor(color)
+                                   .mapColor(color)
                                    .hardness(hardness)
                                    .resistance(resistance),
                 EndItems.makeEndItemSettings(),
@@ -121,8 +120,7 @@ public class MetalMaterial {
         return new MetalMaterial(
                 name,
                 false,
-                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)
-                                   .materialColor(color),
+                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).mapColor(color),
                 EndItems.makeEndItemSettings(),
                 material,
                 armor
@@ -134,7 +132,7 @@ public class MetalMaterial {
                 name,
                 false,
                 FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)
-                                   .materialColor(color)
+                                   .mapColor(color)
                                    .hardness(hardness)
                                    .resistance(resistance),
                 EndItems.makeEndItemSettings(),

@@ -35,12 +35,14 @@ public class MossyObsidian extends BaseBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
 			world.setBlockAndUpdate(pos, Blocks.OBSIDIAN.defaultBlockState());
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader worldView, BlockPos pos) {
 		BlockPos blockPos = pos.above();
 		BlockState blockState = worldView.getBlockState(blockPos);

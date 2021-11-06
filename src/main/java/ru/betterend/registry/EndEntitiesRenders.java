@@ -1,7 +1,7 @@
 package ru.betterend.registry;
 
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -66,7 +66,7 @@ public class EndEntitiesRenders {
 	}
 	
 	private static void register(EntityType<?> type, Function<Context, MobRenderer> renderer) {
-		EntityRendererRegistry.INSTANCE.register(type, (context) -> renderer.apply(context));
+		EntityRendererRegistry.register(type, (context) -> renderer.apply(context));
 	}
 	
 	private static ModelLayerLocation registerMain(String id) {

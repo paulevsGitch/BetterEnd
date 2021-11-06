@@ -24,11 +24,11 @@ import ru.bclib.api.BonemealAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseVineBlock;
 import ru.bclib.blocks.SimpleLeavesBlock;
+import ru.bclib.mixin.common.ComposterBlockAccessor;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.item.tool.EndHammerItem;
-import ru.betterend.mixin.common.ComposterBlockAccessor;
 
 import java.util.List;
 

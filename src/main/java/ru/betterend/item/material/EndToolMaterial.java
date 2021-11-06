@@ -22,10 +22,11 @@ public enum EndToolMaterial implements Tier {
 	private final float attackDamage;
 	private final int miningLevel;
 	private final int enchantability;
+	@SuppressWarnings("deprecation")
 	private final LazyLoadedValue<Ingredient> repairIngredient;
 	
+	@SuppressWarnings("deprecation")
 	private EndToolMaterial(int miningLevel, int durability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
-		
 		this.durability = durability;
 		this.miningSpeed = miningSpeed;
 		this.attackDamage = attackDamage;

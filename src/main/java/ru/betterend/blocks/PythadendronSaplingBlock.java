@@ -15,6 +15,7 @@ public class PythadendronSaplingBlock extends PottableFeatureSapling {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	protected Feature<?> getFeature() {
 		return EndFeatures.PYTHADENDRON_TREE.getFeature();
 	}

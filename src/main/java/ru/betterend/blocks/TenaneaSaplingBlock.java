@@ -15,6 +15,7 @@ public class TenaneaSaplingBlock extends PottableFeatureSapling {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	protected Feature<?> getFeature() {
 		return EndFeatures.TENANEA.getFeature();
 	}

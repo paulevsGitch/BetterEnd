@@ -66,6 +66,7 @@ public class JellyshroomCapBlock extends SlimeBlock implements RenderLayerProvid
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		return Lists.newArrayList(new ItemStack(this));
 	}

@@ -58,6 +58,7 @@ public class RespawnObeliskBlock extends BaseBlock implements CustomColorProvide
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
 	}
@@ -68,6 +69,7 @@ public class RespawnObeliskBlock extends BaseBlock implements CustomColorProvide
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		for (int i = 0; i < 3; i++) {
 			if (!world.getBlockState(pos.above(i)).getMaterial().isReplaceable()) {
@@ -86,6 +88,7 @@ public class RespawnObeliskBlock extends BaseBlock implements CustomColorProvide
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
@@ -156,6 +159,7 @@ public class RespawnObeliskBlock extends BaseBlock implements CustomColorProvide
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
 		boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 5;

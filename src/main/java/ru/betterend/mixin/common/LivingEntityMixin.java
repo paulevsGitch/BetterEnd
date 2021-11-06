@@ -1,7 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Collection;
-
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
@@ -38,6 +36,8 @@ import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.interfaces.MobEffectApplier;
 import ru.betterend.item.CrystaliteArmor;
 import ru.betterend.registry.EndAttributes;
+
+import java.util.Collection;
 
 @Mixin(value=LivingEntity.class, priority=200)
 public abstract class LivingEntityMixin extends Entity {

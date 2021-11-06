@@ -55,6 +55,7 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock implements RenderLayer
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.getValue(COLOR) > 0) {
 			return Lists.newArrayList(new ItemStack(this));

@@ -71,12 +71,4 @@ public class BetterEnd implements ModInitializer {
 	public static ResourceLocation makeID(String path) {
 		return new ResourceLocation(MOD_ID, path);
 	}
-	
-	public static String getStringId(String id) {
-		return String.format("%s:%s", MOD_ID, id);
-	}
-	
-	public static boolean isModId(ResourceLocation id) {
-		return id.getNamespace().equals(MOD_ID);
-	}
 }

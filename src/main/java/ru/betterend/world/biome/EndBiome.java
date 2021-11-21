@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.biomes.BCLBiomeDef;
-import ru.betterend.config.Configs;
 import ru.betterend.registry.EndFeatures;
 
 public class EndBiome extends BCLBiome {
@@ -18,7 +17,6 @@ public class EndBiome extends BCLBiome {
 	}
 	
 	private static BCLBiomeDef updateDef(BCLBiomeDef def) {
-		def.loadConfigValues(Configs.BIOME_CONFIG);
 		EndFeatures.addDefaultFeatures(def);
 		return def;
 	}

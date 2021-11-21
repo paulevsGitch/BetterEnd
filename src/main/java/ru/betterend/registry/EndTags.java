@@ -1,9 +1,6 @@
 package ru.betterend.registry;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
 import net.fabricmc.fabric.mixin.object.builder.AbstractBlockAccessor;
@@ -24,14 +21,16 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.BonemealAPI;
+import ru.bclib.api.ComposterAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseVineBlock;
 import ru.bclib.blocks.SimpleLeavesBlock;
-import ru.bclib.mixin.common.ComposterBlockAccessor;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.item.tool.EndHammerItem;
+
+import java.util.List;
 
 public class EndTags {
 	// Table with common (c) tags:
@@ -44,12 +43,6 @@ public class EndTags {
 	public static final Tag.Named<Item> ALLOYING_IRON = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_iron");
 	public static final Tag.Named<Item> ALLOYING_GOLD = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_gold");
 	public static final Tag.Named<Item> ALLOYING_COPPER = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_copper");
-
-	private static void allowCompost(float chance, Item item){
-		if (item!=null && item != Items.AIR) {
-			ComposterBlockAccessor.callAdd(chance, item);
-		}
-	}
 	
 	public static void register() {
 		TagAPI.addEndGround(EndBlocks.THALLASIUM.ore);
@@ -81,10 +74,7 @@ public class EndTags {
 			}
 			else if (block instanceof LeavesBlock || block instanceof SimpleLeavesBlock) {
 				TagAPI.addTag(BlockTags.LEAVES, block);
-
-				//TODO: for BCLib 0.5.3
-				//ComposterAPI.allowCompost(0.3f, item);
-				allowCompost(0.3F, item);
+				ComposterAPI.allowCompost(0.3f, item);
 			}
 			else if (block instanceof BaseVineBlock) {
 				TagAPI.addTag(BlockTags.CLIMBABLE, block);
@@ -95,9 +85,7 @@ public class EndTags {
 			
 			Material mat = block.defaultBlockState().getMaterial();
 			if (mat.equals(Material.PLANT) || mat.equals(Material.REPLACEABLE_PLANT)) {
-				//TODO: for BCLib 0.5.3
-				//ComposterAPI.allowCompost(0.3f, item);
-				allowCompost(0.1F, item);
+				ComposterAPI.allowCompost(0.1F, item);
 			}
 		});
 		TagAPI.addEndGround(EndBlocks.CAVE_MOSS);
@@ -112,9 +100,7 @@ public class EndTags {
 				FoodProperties food = item.getFoodProperties();
 				if (food != null) {
 					float compost = food.getNutrition() * food.getSaturationModifier() * 0.18F;
-					//TODO: for BCLib 0.5.3
-					//ComposterAPI.allowCompost(0.3f, item);
-					allowCompost(compost, item);
+					ComposterAPI.allowCompost(compost, item);
 				}
 			}
 			if (item instanceof EndHammerItem) {

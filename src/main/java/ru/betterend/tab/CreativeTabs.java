@@ -17,7 +17,7 @@ public class CreativeTabs {
 		TAB_BLOCKS = FabricItemGroupBuilder
 			.create(BetterEnd.makeID("end_blocks"))
 			.icon(() -> new ItemStack(EndBlocks.END_MYCELIUM))
-			.appendItems(stacks -> stacks.addAll(EndBlocks.getModBlocks()
+			.appendItems(stacks -> stacks.addAll(EndBlocks.getModBlockItems()
 			.stream()
 			.map(ItemStack::new)
 			.collect(Collectors.toList())))

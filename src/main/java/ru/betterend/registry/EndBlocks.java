@@ -2,23 +2,20 @@ package ru.betterend.registry;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
 import org.jetbrains.annotations.NotNull;
-import ru.bclib.blocks.BaseBarrelBlock;
-import ru.bclib.blocks.BaseChestBlock;
 import ru.bclib.blocks.BaseFurnaceBlock;
 import ru.bclib.blocks.BaseOreBlock;
 import ru.bclib.blocks.BasePathBlock;
 import ru.bclib.blocks.BaseRotatedPillarBlock;
-import ru.bclib.blocks.BaseSignBlock;
 import ru.bclib.blocks.BaseSlabBlock;
 import ru.bclib.blocks.BaseStairsBlock;
 import ru.bclib.blocks.BaseVineBlock;
 import ru.bclib.blocks.SimpleLeavesBlock;
 import ru.bclib.blocks.StalactiteBlock;
-import ru.bclib.registry.BaseBlockEntities;
 import ru.bclib.registry.BlockRegistry;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AeterniumAnvil;
@@ -525,21 +522,13 @@ public class EndBlocks {
 		return BlockRegistry.getModBlocks(BetterEnd.MOD_ID);
 	}
 	
+	public static List<Item> getModBlockItems() {
+		return BlockRegistry.getModBlockItems(BetterEnd.MOD_ID);
+	}
+	
 	public static Block registerBlock(ResourceLocation id, Block block) {
 		if (!Configs.BLOCK_CONFIG.getBooleanRoot(id.getPath(), true)) {
 			return block;
-		}
-		if (block instanceof BaseChestBlock) {
-			BaseBlockEntities.CHEST.registerBlock(block);
-		}
-		if (block instanceof BaseSignBlock) {
-			BaseBlockEntities.SIGN.registerBlock(block);
-		}
-		if (block instanceof BaseBarrelBlock) {
-			BaseBlockEntities.BARREL.registerBlock(block);
-		}
-		if (block instanceof BaseFurnaceBlock) {
-			BaseBlockEntities.FURNACE.registerBlock(block);
 		}
 		getBlockRegistry().register(id, block);
 		return block;

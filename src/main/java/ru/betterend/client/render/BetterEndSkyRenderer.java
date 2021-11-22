@@ -1,4 +1,4 @@
-package ru.betterend.mixin.client;
+package ru.betterend.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -30,11 +30,14 @@ import ru.bclib.util.BackgroundInfo;
 import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.client.ClientOptions;
+import ru.betterend.mixin.client.LevelRendererAccessor;
 
 import java.util.Random;
 
-@Mixin(LevelRenderer.class)
-public class LevelRendererMixin {
+import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+
+public class BetterEndSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 	private static final ResourceLocation NEBULA_1 = BetterEnd.makeID("textures/sky/nebula_2.png");
 	private static final ResourceLocation NEBULA_2 = BetterEnd.makeID("textures/sky/nebula_3.png");
 	private static final ResourceLocation HORIZON = BetterEnd.makeID("textures/sky/nebula_1.png");
@@ -58,41 +61,37 @@ public class LevelRendererMixin {
 	private static float time3;
 	private static float blind02;
 	private static float blind06;
-	
-	@Shadow
-	@Final
-	private Minecraft minecraft;
-	
-	@Shadow
-	@Final
-	private TextureManager textureManager;
-	
-	@Shadow
-	private ClientLevel level;
-	
-	@Shadow
-	private int ticks;
-	
-	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void be_onInit(Minecraft client, RenderBuffers bufferBuilders, CallbackInfo info) {
-		be_initStars();
-		Random random = new Random(131);
-		axis1 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
-		axis2 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
-		axis3 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
-		axis4 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
-		axis1.normalize();
-		axis2.normalize();
-		axis3.normalize();
-		axis4.normalize();
+
+	private boolean initalized = false;
+
+	public void initalize() {
+
+		if(!initalized) {
+			be_initStars();
+			Random random = new Random(131);
+			axis1 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
+			axis2 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
+			axis3 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
+			axis4 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
+			axis1.normalize();
+			axis2.normalize();
+			axis3.normalize();
+			axis4.normalize();
+
+			this.initalized = true;
+		}
 	}
-	
-	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
-	private void be_renderBetterEndSky(PoseStack matrices, Matrix4f matrix4f, float tickDelta, Runnable runnable, CallbackInfo info) {
-		if (ClientOptions.isCustomSky() && minecraft.level.effects().skyType() == DimensionSpecialEffects.SkyType.END) {
-			runnable.run();
-			
-			time = (ticks % 360000) * 0.000017453292F;
+
+	@Override
+	public void render(WorldRenderContext context) {
+		initalize();
+
+		PoseStack matrices = context.matrixStack();
+
+		Matrix4f matrix4f = context.projectionMatrix();
+		float tickDelta = context.tickDelta();
+
+		time = (((LevelRendererAccessor) context.gameRenderer().getMinecraft().levelRenderer).getTick() + context.tickDelta() % 360000) * 0.000017453292F;
 			time2 = time * 2;
 			time3 = time * 3;
 			
@@ -212,9 +211,7 @@ public class LevelRendererMixin {
 			RenderSystem.depthMask(true);
 			RenderSystem.defaultBlendFunc();
 			RenderSystem.disableBlend();
-			
-			info.cancel();
-		}
+
 	}
 	
 	private void be_renderBuffer(PoseStack matrices, Matrix4f matrix4f, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) {

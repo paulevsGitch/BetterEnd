@@ -430,6 +430,14 @@ public class CraftingRecipes {
 				  .addMaterial('#', Blocks.END_STONE_BRICKS)
 				  .setGroup("end_pots")
 				  .build();
+		
+		GridRecipe.make(BetterEnd.MOD_ID, "dragon_bone_block", EndBlocks.DRAGON_BONE_BLOCK)
+				  .checkConfig(Configs.RECIPE_CONFIG)
+				  .setOutputCount(8)
+				  .setShape("###", "#D#", "###")
+				  .addMaterial('#', Blocks.BONE_BLOCK)
+				  .addMaterial('D', Items.DRAGON_BREATH)
+				  .build();
 	}
 	
 	private static void registerLantern(String name, Block lantern, Block slab) {

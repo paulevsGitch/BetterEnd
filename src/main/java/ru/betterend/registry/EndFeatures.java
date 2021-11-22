@@ -228,33 +228,12 @@ public class EndFeatures {
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
 	
 	// Ores //
-	public static final BCLFeature THALLASIUM_ORE = registerOre(
-		"thallasium_ore",
-		EndBlocks.THALLASIUM.ore,
-		24,
-		8,
-		0,
-		5,
-		128
-	);
+	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 24, 8, 0, 5, 128);
 	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 12, 4, 0, 5, 128);
 	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 24, 6, 0, 5, 128);
-	public static final BCLFeature VIOLECITE_LAYER = registerLayer(
-		"violecite_layer",
-		EndBlocks.VIOLECITE,
-		15,
-		16,
-		128,
-		8
-	);
-	public static final BCLFeature FLAVOLITE_LAYER = registerLayer(
-		"flavolite_layer",
-		EndBlocks.FLAVOLITE,
-		12,
-		16,
-		128,
-		6
-	);
+	public static final BCLFeature DRAGON_BONE_BLOCK_ORE = registerOre("dragon_bone_ore", EndBlocks.DRAGON_BONE_BLOCK, 24, 8, 0, 5, 128);
+	public static final BCLFeature VIOLECITE_LAYER = registerLayer("violecite_layer", EndBlocks.VIOLECITE, 15, 16, 128, 8);
+	public static final BCLFeature FLAVOLITE_LAYER = registerLayer("flavolite_layer", EndBlocks.FLAVOLITE, 12, 16, 128, 6);
 	
 	// Buildings
 	public static final BCLFeature CRASHED_SHIP = registerChanced("crashed_ship", new CrashedShipFeature(), 500);

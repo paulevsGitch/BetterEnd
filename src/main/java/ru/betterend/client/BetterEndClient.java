@@ -2,14 +2,19 @@ package ru.betterend.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+
 import ru.bclib.BCLib;
 import ru.bclib.util.TranslationHelper;
 import ru.betterend.BetterEnd;
+import ru.betterend.client.render.BetterEndSkyRenderer;
 import ru.betterend.events.ItemTooltipCallback;
 import ru.betterend.interfaces.MultiModelItem;
 import ru.betterend.item.CrystaliteArmor;
@@ -52,6 +57,12 @@ public class BetterEndClient implements ClientModInitializer {
 			}
 			return null;
 		});
+
+		BetterEndSkyRenderer skyRenderer = new BetterEndSkyRenderer();
+
+		if(ClientOptions.isCustomSky()) {
+			DimensionRenderingRegistry.registerSkyRenderer(Level.END, skyRenderer);
+		}
 	}
 	
 	public static void registerTooltips() {

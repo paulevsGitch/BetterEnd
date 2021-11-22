@@ -5,19 +5,21 @@
 	"compatibilityLevel": "JAVA_16",
 	"client": [
 		"AbstractSoundInstanceAccessor",
-		"HumanoidMobRendererMixin",
 		"ArmorStandRendererMixin",
-		"MinecraftClientMixin",
-        "PlayerRendererMixin",
-		"LevelRendererMixin",
-		"MusicTrackerMixin",
 		"BiomeColorsMixin",
+		"CapeLayerMixin",
+		"HumanoidMobRendererMixin",
+		"ItemStackMixin",
+		"LocalPlayerMixin",
+		"MinecraftClientMixin",
 		"ModelLoaderMixin",
-        "LocalPlayerMixin",
-        "CapeLayerMixin",
-        "ItemStackMixin"
+		"MusicTrackerMixin",
+		"PlayerRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	}
+	},
+	"mixins": [
+		"LevelRendererAccessor"
+	]
 }

@@ -57,11 +57,9 @@ public class BetterEndClient implements ClientModInitializer {
 			}
 			return null;
 		});
-
-		BetterEndSkyRenderer skyRenderer = new BetterEndSkyRenderer();
-
+		
 		if(ClientOptions.isCustomSky()) {
-			DimensionRenderingRegistry.registerSkyRenderer(Level.END, skyRenderer);
+			DimensionRenderingRegistry.registerSkyRenderer(Level.END, new BetterEndSkyRenderer());
 		}
 	}
 	

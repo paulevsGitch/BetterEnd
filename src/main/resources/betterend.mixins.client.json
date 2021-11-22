@@ -13,6 +13,7 @@
 		"BiomeColorsMixin",
 		"LocalPlayerMixin",
 		"ModelLoaderMixin",
+		"EndEffectsMixin",
 		"CapeLayerMixin",
 		"ItemStackMixin"
 	],

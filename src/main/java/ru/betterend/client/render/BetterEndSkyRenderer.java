@@ -11,6 +11,8 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -19,9 +21,6 @@ import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
 
 import java.util.Random;
-
-import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 
 public class BetterEndSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 	private static final ResourceLocation NEBULA_1 = BetterEnd.makeID("textures/sky/nebula_2.png");
@@ -42,11 +41,11 @@ public class BetterEndSkyRenderer implements DimensionRenderingRegistry.SkyRende
 	private Vector3f axis2;
 	private Vector3f axis3;
 	private Vector3f axis4;
-
-	private boolean initalized = false;
+	
+	private boolean initialised;
 
 	private void initialise() {
-		if(!initalized) {
+		if (!initialised) {
 			initStars();
 			Random random = new Random(131);
 			axis1 = new Vector3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
@@ -57,7 +56,7 @@ public class BetterEndSkyRenderer implements DimensionRenderingRegistry.SkyRende
 			axis2.normalize();
 			axis3.normalize();
 			axis4.normalize();
-			this.initalized = true;
+			initialised = true;
 		}
 	}
 

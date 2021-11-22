@@ -18,6 +18,7 @@ public class Integrations {
 	public static final ModIntegration BYG = ModIntegrationAPI.register(new BYGIntegration());
 	public static final ModIntegration NOURISH = ModIntegrationAPI.register(new NourishIntegration());
 	public static final ModIntegration FLAMBOYANT_REFABRICATED = ModIntegrationAPI.register(new FlamboyantRefabricatedIntegration());
+	public static final ModIntegration ENDERSCAPE = ModIntegrationAPI.register(new EnderscapeIntegration());
 	
 	private static boolean hasHydrogen;
 	

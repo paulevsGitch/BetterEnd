@@ -14,12 +14,10 @@
 		"MinecraftClientMixin",
 		"ModelLoaderMixin",
 		"MusicTrackerMixin",
-		"PlayerRendererMixin"
+		"PlayerRendererMixin",
+		"LevelRendererAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	},
-	"mixins": [
-		"LevelRendererAccessor"
-	]
+	}
 }

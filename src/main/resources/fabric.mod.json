@@ -8,11 +8,11 @@
 	"authors": [
 		"paulevs (code & art)",
 		"Bulldog83 (code & art)",
+		"Frank (code)",
 		"Edos (building)",
 		"Yuki (art)",
 		"Seaward (art)",
-		"Firel (music)",
-		"Frank (code porting & bugfixes)"
+		"Firel (music)"
 	],
 	"contact": {
 		"homepage": "https://www.curseforge.com/minecraft/mc-mods/betterend",
@@ -42,8 +42,8 @@
 	],
 
 	"depends": {
-		"fabricloader": ">=0.11.6",
-		"fabric": ">=0.41.0",
+		"fabricloader": ">=0.12.4",
+		"fabric": ">=0.42.1",
 		"minecraft": ">=1.17",
         "bclib": ">=0.5.3"
 	},

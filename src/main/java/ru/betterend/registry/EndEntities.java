@@ -105,7 +105,7 @@ public class EndEntities {
 			.customRule(EndSlimeEntity::canSpawn)
 			.buildNoRestrictions(Types.MOTION_BLOCKING);
 		
-		SpawnRuleBulder.start(SHADOW_WALKER).notPeaceful().onlyOnValidBlocks().maxNearby(8, 64).buildNoRestrictions(Types.MOTION_BLOCKING);
+		SpawnRuleBulder.start(SHADOW_WALKER).vanillaHostile().onlyOnValidBlocks().maxNearby(8, 64).buildNoRestrictions(Types.MOTION_BLOCKING);
 		
 		// Water //
 		SpawnRuleBulder.start(END_FISH).maxNearby(8, 64).buildInWater(Types.MOTION_BLOCKING);

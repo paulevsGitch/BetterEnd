@@ -8,7 +8,6 @@ import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.integration.ModIntegration;
 import ru.bclib.world.features.BCLFeature;
-import ru.betterend.registry.EndTags;
 
 public class EnderscapeIntegration extends ModIntegration {
 	public EnderscapeIntegration() {

@@ -30,11 +30,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.AABB;
 import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.biomes.BCLBiome;
@@ -42,7 +42,6 @@ import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Random;
 
 public class EndSlimeEntity extends Slime {
@@ -212,34 +211,26 @@ public class EndSlimeEntity extends Slime {
 		return this.entityData.get(VARIANT) == 0;
 	}
 	
-	public static boolean canSpawn(EntityType<EndSlimeEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
-		return random.nextInt(16) == 0 || isPermanentBiome(world, pos) || (notManyEntities(
-			world,
-			pos,
-			32,
-			3
-		) && isWaterNear(world, pos, 32, 8));
-	}
-	
-	private static boolean isPermanentBiome(ServerLevelAccessor world, BlockPos pos) {
-		Biome biome = world.getBiome(pos);
-		return BiomeAPI.getFromBiome(biome) == EndBiomes.CHORUS_FOREST;
-	}
-	
-	private static boolean notManyEntities(ServerLevelAccessor world, BlockPos pos, int radius, int maxCount) {
-		AABB box = new AABB(pos).inflate(radius);
-		List<EndSlimeEntity> list = world.getEntitiesOfClass(EndSlimeEntity.class, box, (entity) -> {
+	public static boolean canSpawn(EntityType entityType, LevelAccessor world, MobSpawnType spawnType, BlockPos pos, Random random) {
+		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+			return false;
+		}
+		BCLBiome biome = BiomeAPI.getFromBiome(world.getBiome(pos));
+		if (biome == EndBiomes.CHORUS_FOREST || biome == EndBiomes.MEGALAKE) {
 			return true;
-		});
-		return list.size() <= maxCount;
+		}
+		if (biome == EndBiomes.MEGALAKE_GROVE && random.nextBoolean()) {
+			return true;
+		}
+		return random.nextInt(4) == 0 && isWaterNear(world, pos);
 	}
 	
-	private static boolean isWaterNear(ServerLevelAccessor world, BlockPos pos, int radius, int radius2) {
-		for (int x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
+	private static boolean isWaterNear(LevelAccessor world, BlockPos pos) {
+		for (int x = pos.getX() - 32; x <= pos.getX() + 32; x++) {
 			POS.setX(x);
-			for (int z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
+			for (int z = pos.getZ() - 32; z <= pos.getZ() + 32; z++) {
 				POS.setZ(z);
-				for (int y = pos.getY() - radius2; y <= pos.getY() + radius2; y++) {
+				for (int y = pos.getY() - 8; y <= pos.getY() + 8; y++) {
 					POS.setY(y);
 					if (world.getBlockState(POS).getBlock() == Blocks.WATER) {
 						return true;

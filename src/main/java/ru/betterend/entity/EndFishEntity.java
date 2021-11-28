@@ -1,6 +1,5 @@
 package ru.betterend.entity;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -22,13 +21,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.AABB;
 import ru.bclib.api.BiomeAPI;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndItems;
-
-import java.util.List;
-import java.util.Random;
 
 public class EndFishEntity extends AbstractSchoolingFish {
 	public static final int VARIANTS_NORMAL = 5;
@@ -150,14 +145,6 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	
 	public float getScale() {
 		return getByteScale() / 32F + 0.75F;
-	}
-	
-	public static boolean canSpawn(EntityType<EndFishEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
-		AABB box = new AABB(pos).inflate(16);
-		List<EndFishEntity> list = world.getEntitiesOfClass(EndFishEntity.class, box, (entity) -> {
-			return true;
-		});
-		return list.size() < 9;
 	}
 	
 	@Override

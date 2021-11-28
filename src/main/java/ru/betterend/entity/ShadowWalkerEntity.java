@@ -9,7 +9,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -20,14 +19,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndSounds;
-
-import java.util.List;
-import java.util.Random;
 
 public class ShadowWalkerEntity extends Monster {
 	public ShadowWalkerEntity(EntityType<ShadowWalkerEntity> entityType, Level world) {
@@ -123,17 +117,6 @@ public class ShadowWalkerEntity extends Monster {
 			}
 		}
 		return attack;
-	}
-	
-	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
-		if (Monster.checkMonsterSpawnRules(type, world, spawnReason, pos, random)) {
-			AABB box = new AABB(pos).inflate(16);
-			List<ShadowWalkerEntity> entities = world.getEntitiesOfClass(ShadowWalkerEntity.class, box, (entity) -> {
-				return true;
-			});
-			return entities.size() < 6;
-		}
-		return false;
 	}
 	
 	private final class AttackGoal extends MeleeAttackGoal {

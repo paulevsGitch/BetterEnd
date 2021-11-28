@@ -11,6 +11,8 @@ import net.minecraft.world.entity.EntityType.EntityFactory;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import ru.bclib.api.spawning.SpawnRuleBulder;
 import ru.bclib.util.ColorUtil;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -20,7 +22,6 @@ import ru.betterend.entity.EndFishEntity;
 import ru.betterend.entity.EndSlimeEntity;
 import ru.betterend.entity.ShadowWalkerEntity;
 import ru.betterend.entity.SilkMothEntity;
-import ru.betterend.util.SpawnHelper;
 
 public class EndEntities {
 	public static final EntityType<DragonflyEntity> DRAGONFLY = register(
@@ -91,12 +92,24 @@ public class EndEntities {
 	);
 	
 	public static void register() {
-		SpawnHelper.restrictionAir(DRAGONFLY, DragonflyEntity::canSpawn);
-		SpawnHelper.restrictionLand(END_SLIME, EndSlimeEntity::canSpawn);
-		SpawnHelper.restrictionWater(END_FISH, EndFishEntity::canSpawn);
-		SpawnHelper.restrictionLand(SHADOW_WALKER, ShadowWalkerEntity::canSpawn);
-		SpawnHelper.restrictionWater(CUBOZOA, CubozoaEntity::canSpawn);
-		SpawnHelper.restrictionAir(SILK_MOTH, SilkMothEntity::canSpawn);
+		// Air //
+		SpawnRuleBulder.start(DRAGONFLY).aboveGround(2).maxNearby(8).buildNoRestrictions(Types.MOTION_BLOCKING);
+		SpawnRuleBulder.start(SILK_MOTH).aboveGround(2).maxNearby(4).buildNoRestrictions(Types.MOTION_BLOCKING);
+		
+		// Land //
+		SpawnRuleBulder
+			.start(END_SLIME)
+			.notPeaceful()
+			.maxNearby(4, 64)
+			.onlyOnValidBlocks()
+			.customRule(EndSlimeEntity::canSpawn)
+			.buildNoRestrictions(Types.MOTION_BLOCKING);
+		
+		SpawnRuleBulder.start(SHADOW_WALKER).notPeaceful().onlyOnValidBlocks().maxNearby(8, 64).buildNoRestrictions(Types.MOTION_BLOCKING);
+		
+		// Water //
+		SpawnRuleBulder.start(END_FISH).maxNearby(8, 64).buildInWater(Types.MOTION_BLOCKING);
+		SpawnRuleBulder.start(CUBOZOA).maxNearby(8, 64).buildInWater(Types.MOTION_BLOCKING);
 	}
 	
 	protected static <T extends Entity> EntityType<T> register(String name, MobCategory group, float width, float height, EntityFactory<T> entity) {

@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -27,9 +26,7 @@ import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
@@ -39,7 +36,6 @@ import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndSounds;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 public class DragonflyEntity extends Animal implements FlyingAnimal {
 	public DragonflyEntity(EntityType<DragonflyEntity> entityType, Level world) {
@@ -217,10 +213,5 @@ public class DragonflyEntity extends Animal implements FlyingAnimal {
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		return EndEntities.DRAGONFLY.create(world);
-	}
-	
-	public static boolean canSpawn(EntityType<DragonflyEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
-		int y = world.getChunk(pos).getHeight(Types.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
-		return y > 0 && pos.getY() >= y;
 	}
 }

@@ -2,10 +2,8 @@ package ru.betterend.registry;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
 import ru.bclib.api.BiomeAPI;
-import ru.bclib.api.LifeCycleAPI;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.generator.BiomeMap;
 import ru.bclib.world.generator.BiomePicker;
@@ -76,11 +74,9 @@ public class EndBiomes {
 	public static final EndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
 	public static final EndCaveBiome JADE_CAVE = registerCaveBiome(new JadeCaveBiome());
 	
-	public static void register() {
-		LifeCycleAPI.onLevelLoad(EndBiomes::onWorldLoad);
-	}
+	public static void register() {}
 	
-	private static void onWorldLoad(ServerLevel level, long seed, Registry<Biome> registry) {
+	public static void onWorldLoad(long seed, Registry<Biome> registry) {
 		CAVE_BIOMES.getBiomes().forEach(biome -> biome.updateActualBiomes(registry));
 		CAVE_BIOMES.rebuild();
 		if (caveBiomeMap == null || caveBiomeMap.getSeed() != seed) {

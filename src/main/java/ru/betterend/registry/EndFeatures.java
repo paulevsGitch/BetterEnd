@@ -1,6 +1,10 @@
 package ru.betterend.registry;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 import com.google.common.collect.Lists;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -82,9 +86,6 @@ import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
 import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.surface.UmbraSurfaceBuilder;
-
-import java.util.List;
-import java.util.function.Supplier;
 
 public class EndFeatures {
 	// Trees //
@@ -290,7 +291,7 @@ public class EndFeatures {
 	}
 	
 	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize, int offset, int minY, int maxY) {
-		return BCLFeature.makeOreFeature(BetterEnd.makeID(name), blockOre, veins, veinSize, offset, minY, maxY);
+		return BCLFeature.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, offset, minY, maxY);
 	}
 	
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {

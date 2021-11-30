@@ -12,7 +12,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
-import ru.bclib.api.spawning.SpawnRuleBulder;
+import ru.bclib.api.spawning.SpawnRuleBuilder;
 import ru.bclib.util.ColorUtil;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -93,23 +93,23 @@ public class EndEntities {
 	
 	public static void register() {
 		// Air //
-		SpawnRuleBulder.start(DRAGONFLY).aboveGround(2).maxNearby(8).buildNoRestrictions(Types.MOTION_BLOCKING);
-		SpawnRuleBulder.start(SILK_MOTH).aboveGround(2).maxNearby(4).buildNoRestrictions(Types.MOTION_BLOCKING);
+		SpawnRuleBuilder.start(DRAGONFLY).aboveGround(2).maxNearby(8).buildNoRestrictions(Types.MOTION_BLOCKING);
+		SpawnRuleBuilder.start(SILK_MOTH).aboveGround(2).maxNearby(4).buildNoRestrictions(Types.MOTION_BLOCKING);
 		
 		// Land //
-		SpawnRuleBulder
+		SpawnRuleBuilder
 			.start(END_SLIME)
 			.notPeaceful()
 			.maxNearby(4, 64)
 			.onlyOnValidBlocks()
 			.customRule(EndSlimeEntity::canSpawn)
 			.buildNoRestrictions(Types.MOTION_BLOCKING);
-		
-		SpawnRuleBulder.start(SHADOW_WALKER).vanillaHostile().onlyOnValidBlocks().maxNearby(8, 64).buildNoRestrictions(Types.MOTION_BLOCKING);
+
+		SpawnRuleBuilder.start(SHADOW_WALKER).vanillaHostile().onlyOnValidBlocks().maxNearby(8, 64).buildNoRestrictions(Types.MOTION_BLOCKING);
 		
 		// Water //
-		SpawnRuleBulder.start(END_FISH).maxNearby(8, 64).buildInWater(Types.MOTION_BLOCKING);
-		SpawnRuleBulder.start(CUBOZOA).maxNearby(8, 64).buildInWater(Types.MOTION_BLOCKING);
+		SpawnRuleBuilder.start(END_FISH).maxNearby(8, 64).buildInWater(Types.MOTION_BLOCKING);
+		SpawnRuleBuilder.start(CUBOZOA).maxNearby(8, 64).buildInWater(Types.MOTION_BLOCKING);
 	}
 	
 	protected static <T extends Entity> EntityType<T> register(String name, MobCategory group, float width, float height, EntityFactory<T> entity) {

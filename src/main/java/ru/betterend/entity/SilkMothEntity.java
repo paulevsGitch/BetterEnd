@@ -208,24 +208,16 @@ public class SilkMothEntity extends DespawnableAnimal implements FlyingAnimal {
 		public void start() {
 			Vec3 vec3d = null;
 			if (SilkMothEntity.this.hivePos != null && SilkMothEntity.this.hiveWorld == SilkMothEntity.this.level) {
-				if (SilkMothEntity.this.position()
-									   .distanceToSqr(SilkMothEntity.this.hivePos.getX(),
-										   SilkMothEntity.this.hivePos.getY(),
-										   SilkMothEntity.this.hivePos.getZ()
-									   ) > 16) {
+				if (SilkMothEntity.this.position().distanceToSqr(SilkMothEntity.this.hivePos.getX(), SilkMothEntity.this.hivePos.getY(), SilkMothEntity.this.hivePos.getZ()) > 16) {
 					vec3d = SilkMothEntity.this.position().add(random.nextGaussian() * 2, 0, random.nextGaussian() * 2);
 				}
 			}
 			vec3d = vec3d == null ? this.getRandomLocation() : vec3d;
 			if (vec3d != null) {
 				try {
-					SilkMothEntity.this.navigation.moveTo(SilkMothEntity.this.navigation.createPath(
-						new BlockPos(vec3d),
-						1
-					), 1.0D);
+					SilkMothEntity.this.navigation.moveTo(SilkMothEntity.this.navigation.createPath(new BlockPos(vec3d), 1), 1.0D);
 				}
-				catch (Exception e) {
-				}
+				catch (Exception e) {}
 			}
 		}
 		
@@ -252,16 +244,15 @@ public class SilkMothEntity extends DespawnableAnimal implements FlyingAnimal {
 		
 		@Override
 		public boolean canUse() {
-			return SilkMothEntity.this.hivePos != null && SilkMothEntity.this.hiveWorld == SilkMothEntity.this.level && SilkMothEntity.this.navigation
-				.isDone() && SilkMothEntity.this.random.nextInt(16) == 0 && SilkMothEntity.this.position()
-																							   .distanceToSqr(
-																								   SilkMothEntity.this.hivePos
-																									   .getX(),
-																								   SilkMothEntity.this.hivePos
-																									   .getY(),
-																								   SilkMothEntity.this.hivePos
-																									   .getZ()
-																							   ) < 64;
+			return SilkMothEntity.this.hivePos != null &&
+				SilkMothEntity.this.hiveWorld == SilkMothEntity.this.level &&
+				SilkMothEntity.this.navigation.isDone() &&
+				SilkMothEntity.this.random.nextInt(8) == 0 &&
+				SilkMothEntity.this.position().distanceToSqr(
+					SilkMothEntity.this.hivePos.getX(),
+					SilkMothEntity.this.hivePos.getY(),
+					SilkMothEntity.this.hivePos.getZ()
+				) < 256;
 		}
 		
 		@Override

@@ -11,7 +11,6 @@
 		"ChorusFlowerBlockMixin",
 		"ChorusPlantBlockMixin",
 		"EndPodiumFeatureMixin",
-		"MinecraftServerMixin",
 		"EndDragonFightMixin",
 		"WorldGenRegionMixin",
 		"BlockBehaviourMixin",

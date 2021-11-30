@@ -9,7 +9,6 @@ public class GeneratorOptions {
 	private static boolean hasPortal;
 	private static boolean hasPillars;
 	private static boolean hasDragonFights;
-	private static boolean swapOverworldToEnd;
 	private static boolean changeChorusPlant;
 	private static boolean removeChorusFromVanillaBiomes;
 	private static boolean newGenerator;
@@ -33,7 +32,6 @@ public class GeneratorOptions {
 		hasPortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "hasPortal", true);
 		hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
-		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false);
 		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
 		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean(
 			"chorusPlant",
@@ -98,10 +96,6 @@ public class GeneratorOptions {
 	
 	public static boolean hasDragonFights() {
 		return hasDragonFights;
-	}
-	
-	public static boolean swapOverworldToEnd() {
-		return swapOverworldToEnd;
 	}
 	
 	public static boolean changeChorusPlant() {

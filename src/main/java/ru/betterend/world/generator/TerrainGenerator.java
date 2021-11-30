@@ -173,45 +173,56 @@ public class TerrainGenerator {
 	 * @param x - block pos x
 	 * @param z - block pos z
 	 */
-	public static int getHeight(int x, int z) {
+	public static int getHeight(int x, int z, BiomeSource biomeSource) {
+		int posX = (x >> 3) << 3;
+		int posZ = (z >> 3) << 3;
+		float dx = (x - posX) / 8.0F;
+		float dz = (z - posZ) / 8.0F;
+		double[][][] buffer = new double[2][2][32];
+		
 		LOCKER.lock();
+		for (int i = 0; i < 4; i++) {
+			int ix = i & 1;
+			int iz = i >> 1;
+			int px = ((ix << 3) + posX) >> 3;
+			int pz = ((iz << 3) + posZ) >> 3;
+			fillTerrainDensity(buffer[ix][iz], px, pz, biomeSource);
+		}
+		LOCKER.unlock();
 		
-		double px = (double) x / 8.0;
-		double pz = (double) z / 8.0;
-		
-		double distortion1 = noise1.eval(px * 0.1, pz * 0.1) * 20 + noise2.eval(px * 0.2, pz * 0.2) * 10 + noise1.eval(
-			px * 0.4,
-			pz * 0.4
-		) * 5;
-		double distortion2 = noise2.eval(px * 0.1, pz * 0.1) * 20 + noise1.eval(px * 0.2, pz * 0.2) * 10 + noise2.eval(
-			px * 0.4,
-			pz * 0.4
-		) * 5;
-		px = (double) x * SCALE_XZ + distortion1;
-		pz = (double) z * SCALE_XZ + distortion2;
-		
-		largeIslands.updatePositions(px, pz);
-		mediumIslands.updatePositions(px, pz);
-		smallIslands.updatePositions(px, pz);
-		
-		for (int y = 32; y >= 0; y--) {
-			double py = (double) y * SCALE_Y;
-			float dist = largeIslands.getDensity(px, py, pz);
-			dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz));
-			dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz));
-			if (dist > -0.5F) {
-				dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
-				dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
-				dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
+		for (int j = 30; j >= 0; j--) {
+			float a = (float) buffer[0][0][j];
+			float b = (float) buffer[1][0][j];
+			float c = (float) buffer[0][1][j];
+			float d = (float) buffer[1][1][j];
+			
+			float e = (float) buffer[0][0][j + 1];
+			float f = (float) buffer[1][0][j + 1];
+			float g = (float) buffer[0][1][j + 1];
+			float h = (float) buffer[1][1][j + 1];
+			
+			if (a < 0 && b < 0 && c < 0 && d < 0 && e < 0 && f < 0 && g < 0 && h < 0) {
+				continue;
 			}
-			if (dist > 0) {
-				LOCKER.unlock();
-				return Mth.floor(Mth.clamp(y + dist, y, y + 1) * SCALE_Y);
+			
+			a = Mth.lerp(dx, a, b);
+			b = Mth.lerp(dx, c, d);
+			c = Mth.lerp(dx, e, f);
+			d = Mth.lerp(dx, g, h);
+			
+			a = Mth.lerp(dz, a, b);
+			b = Mth.lerp(dz, c, d);
+			
+			for (int n = 7; n >= 0; n--) {
+				float dy = n / 8.0F;
+				float dens = Mth.lerp(dy, a, b);
+				if (dens > 0) {
+					return (j << 3 | n) + 1;
+				}
 			}
 		}
 		
-		LOCKER.unlock();
-		return 0;
+		return -256;
 	}
 	
 	static {

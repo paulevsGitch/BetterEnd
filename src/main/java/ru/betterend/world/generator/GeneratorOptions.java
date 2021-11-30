@@ -20,7 +20,6 @@ public class GeneratorOptions {
 	public static LayerOptions smallOptions;
 	private static boolean changeSpawn;
 	private static BlockPos spawn;
-	private static BlockPos portal = BlockPos.ZERO;
 	private static boolean replacePortal;
 	private static boolean replacePillars;
 	private static long islandDistBlock;
@@ -128,14 +127,6 @@ public class GeneratorOptions {
 	
 	public static BlockPos getSpawn() {
 		return spawn;
-	}
-	
-	public static BlockPos getPortalPos() {
-		return portal;
-	}
-	
-	public static void setPortalPos(BlockPos portal) {
-		GeneratorOptions.portal = portal;
 	}
 	
 	public static boolean replacePortal() {

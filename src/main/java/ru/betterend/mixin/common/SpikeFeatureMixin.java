@@ -52,8 +52,7 @@ public class SpikeFeatureMixin {
 			String pillarID = String.format("%d_%d", x, z);
 			CompoundTag pillar = WorldDataAPI.getCompoundTag(BetterEnd.MOD_ID, "pillars");
 			boolean haveValue = pillar.contains(pillarID);
-			minY = haveValue ? pillar.getInt(pillarID) : world.getChunk(x >> 4, z >> 4)
-															  .getHeight(Types.WORLD_SURFACE, x & 15, z);
+			minY = haveValue ? pillar.getInt(pillarID) : world.getChunk(x >> 4, z >> 4).getHeight(Types.WORLD_SURFACE, x & 15, z);
 			if (!haveValue) {
 				pillar.putInt(pillarID, minY);
 				WorldDataAPI.saveFile(BetterEnd.MOD_ID);

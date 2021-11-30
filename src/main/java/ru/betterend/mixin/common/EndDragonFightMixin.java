@@ -64,14 +64,11 @@ public class EndDragonFightMixin {
 				else {
 					LOGGER.debug("Found the exit portal & temporarily using it.");
 				}
-				
-				blockPos = portalLocation;
 			}
 			
 			List<EndCrystal> crystals = Lists.newArrayList();
-			BlockPos center = GeneratorOptions.getPortalPos().above(5);
 			for (Direction dir : BlocksHelper.HORIZONTAL) {
-				BlockPos central = center.relative(dir, 4);
+				BlockPos central = BlockPos.ZERO.relative(dir, 4);
 				List<EndCrystal> crystalList = level.getEntitiesOfClass(
 					EndCrystal.class,
 					new AABB(central.below(255).south().west(), central.above(255).north().east())

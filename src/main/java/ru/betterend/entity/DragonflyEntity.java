@@ -1,7 +1,5 @@
 package ru.betterend.entity;
 
-import java.util.EnumSet;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -37,6 +35,8 @@ import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndSounds;
 
+import java.util.EnumSet;
+
 public class DragonflyEntity extends DespawnableAnimal implements FlyingAnimal {
 	public DragonflyEntity(EntityType<DragonflyEntity> entityType, Level world) {
 		super(entityType, world);
@@ -48,11 +48,12 @@ public class DragonflyEntity extends DespawnableAnimal implements FlyingAnimal {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes()
-						   .add(Attributes.MAX_HEALTH, 8.0D)
-						   .add(Attributes.FOLLOW_RANGE, 16.0D)
-						   .add(Attributes.FLYING_SPEED, 1.0D)
-						   .add(Attributes.MOVEMENT_SPEED, 0.1D);
+		return LivingEntity
+			.createLivingAttributes()
+			.add(Attributes.MAX_HEALTH, 8.0D)
+			.add(Attributes.FOLLOW_RANGE, 16.0D)
+			.add(Attributes.FLYING_SPEED, 1.0D)
+			.add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
 	
 	@Override

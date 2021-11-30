@@ -1,9 +1,5 @@
 package ru.betterend.entity;
 
-import java.util.EnumSet;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -41,6 +37,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import ru.bclib.entity.DespawnableAnimal;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
@@ -49,6 +46,8 @@ import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndItems;
+
+import java.util.EnumSet;
 
 public class SilkMothEntity extends DespawnableAnimal implements FlyingAnimal {
 	private BlockPos hivePos;
@@ -65,11 +64,12 @@ public class SilkMothEntity extends DespawnableAnimal implements FlyingAnimal {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes()
-						   .add(Attributes.MAX_HEALTH, 2.0D)
-						   .add(Attributes.FOLLOW_RANGE, 16.0D)
-						   .add(Attributes.FLYING_SPEED, 0.4D)
-						   .add(Attributes.MOVEMENT_SPEED, 0.1D);
+		return LivingEntity
+			.createLivingAttributes()
+			.add(Attributes.MAX_HEALTH, 2.0D)
+			.add(Attributes.FOLLOW_RANGE, 16.0D)
+			.add(Attributes.FLYING_SPEED, 0.4D)
+			.add(Attributes.MOVEMENT_SPEED, 0.1D);
 	}
 	
 	public void setHive(Level world, BlockPos hive) {

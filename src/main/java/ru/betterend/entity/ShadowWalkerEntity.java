@@ -38,12 +38,13 @@ public class ShadowWalkerEntity extends Monster {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return Monster.createMonsterAttributes()
-					  .add(Attributes.FOLLOW_RANGE, 35.0)
-					  .add(Attributes.MOVEMENT_SPEED, 0.15)
-					  .add(Attributes.ATTACK_DAMAGE, 4.5)
-					  .add(Attributes.ARMOR, 2.0)
-					  .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+		return Monster
+			.createMonsterAttributes()
+			.add(Attributes.FOLLOW_RANGE, 35.0)
+			.add(Attributes.MOVEMENT_SPEED, 0.15)
+			.add(Attributes.ATTACK_DAMAGE, 4.5)
+			.add(Attributes.ARMOR, 2.0)
+			.add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 	
 	@Override

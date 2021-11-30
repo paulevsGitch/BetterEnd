@@ -1,15 +1,12 @@
 package ru.betterend.registry;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.CountConfiguration;
@@ -86,6 +83,9 @@ import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
 import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.surface.UmbraSurfaceBuilder;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 public class EndFeatures {
 	// Trees //
@@ -197,7 +197,7 @@ public class EndFeatures {
 	public static final BCLFeature CHARNIA_GREEN = redisterVegetation("charnia_green", new CharniaFeature(EndBlocks.CHARNIA_GREEN), 10);
 	public static final BCLFeature MENGER_SPONGE = redisterVegetation("menger_sponge", new MengerSpongeFeature(5), 1);
 	public static final BCLFeature CHARNIA_RED_RARE = redisterVegetation("charnia_red_rare", new CharniaFeature(EndBlocks.CHARNIA_RED),2);
-	public static final BCLFeature BIOME_ISLAND = BCLFeature.makeFeatureConfigured(BetterEnd.makeID("overworld_island"), new BiomeIslandFeature());
+	public static final BCLFeature BIOME_ISLAND = BCLFeature.makeFeatureConfigured(BetterEnd.makeID("overworld_island"), Decoration.RAW_GENERATION, new BiomeIslandFeature());
 	public static final BCLFeature FLAMAEA = redisterVegetation("flamaea", new SinglePlantFeature(EndBlocks.FLAMAEA, 12, false, 5), 20);
 	
 	// Terrain //
@@ -210,7 +210,7 @@ public class EndFeatures {
 	public static final BCLFeature FLOATING_SPIRE = registerRawGen("floating_spire", new FloatingSpireFeature(), 8);
 	public static final BCLFeature GEYSER = registerRawGen("geyser", new GeyserFeature(), 8);
 	public static final BCLFeature SULPHURIC_LAKE = registerLake("sulphuric_lake", new SulphuricLakeFeature(), 8);
-	public static final BCLFeature SULPHURIC_CAVE = BCLFeature.makeCountRawFeature(BetterEnd.makeID("sulphuric_cave"), new SulphuricCaveFeature(), 2);
+	public static final BCLFeature SULPHURIC_CAVE = BCLFeature.makeCountFeature(BetterEnd.makeID("sulphuric_cave"), Decoration.RAW_GENERATION, new SulphuricCaveFeature(), 2);
 	public static final BCLFeature ICE_STAR = registerRawGen("ice_star", new IceStarFeature(5, 15, 10, 25), 15);
 	public static final BCLFeature ICE_STAR_SMALL = registerRawGen("ice_star_small", new IceStarFeature(3, 5, 7, 12), 8);
 	public static final BCLFeature SURFACE_VENT = registerChanced("surface_vent", new SurfaceVentFeature(), 4);
@@ -218,7 +218,7 @@ public class EndFeatures {
 	public static final BCLFeature OBSIDIAN_PILLAR_BASEMENT = registerChanced("obsidian_pillar_basement", new ObsidianPillarBasementFeature(), 8);
 	public static final BCLFeature OBSIDIAN_BOULDER = registerChanced("obsidian_boulder", new ObsidianBoulderFeature(), 10);
 	public static final BCLFeature FALLEN_PILLAR = registerChanced("fallen_pillar", new FallenPillarFeature(), 20);
-	public static final BCLFeature TUNEL_CAVE = BCLFeature.makeChunkFeature(BetterEnd.makeID("tunel_cave"), new TunelCaveFeature());
+	public static final BCLFeature TUNEL_CAVE = BCLFeature.makeChunkFeature(BetterEnd.makeID("tunel_cave"), Decoration.RAW_GENERATION, new TunelCaveFeature());
 	public static final BCLFeature UMBRALITH_ARCH = registerChanced(
 		"umbralith_arch",
 		new ArchFeature(
@@ -229,10 +229,10 @@ public class EndFeatures {
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
 	
 	// Ores //
-	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 24, 8, 0, 5, 128);
-	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 12, 4, 0, 5, 128);
-	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 24, 6, 0, 5, 128);
-	public static final BCLFeature DRAGON_BONE_BLOCK_ORE = registerOre("dragon_bone_ore", EndBlocks.DRAGON_BONE_BLOCK, 24, 8, 0, 5, 128);
+	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 24, 8, 5, 128);
+	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 12, 4, 5, 128);
+	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 24, 6, 5, 128);
+	public static final BCLFeature DRAGON_BONE_BLOCK_ORE = registerOre("dragon_bone_ore", EndBlocks.DRAGON_BONE_BLOCK, 24, 8, 5, 128);
 	public static final BCLFeature VIOLECITE_LAYER = registerLayer("violecite_layer", EndBlocks.VIOLECITE, 15, 16, 128, 8);
 	public static final BCLFeature FLAVOLITE_LAYER = registerLayer("flavolite_layer", EndBlocks.FLAVOLITE, 12, 16, 128, 6);
 	
@@ -278,27 +278,26 @@ public class EndFeatures {
 	}
 	
 	private static BCLFeature registerRawGen(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		return BCLFeature.makeRawGenFeature(BetterEnd.makeID(name), feature, chance);
+		return BCLFeature.makeChancedFeature(BetterEnd.makeID(name), Decoration.RAW_GENERATION, feature, chance);
 	}
 	
 	private static BCLFeature registerLake(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		//return BCLFeature.makeLakeFeature(BetterEnd.makeID(name), feature, chance);
-		return BCLFeature.makeRawGenFeature(BetterEnd.makeID(name), feature, chance);
+		return BCLFeature.makeChancedFeature(BetterEnd.makeID(name), Decoration.RAW_GENERATION, feature, chance);
 	}
 	
 	private static BCLFeature registerChanced(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		return BCLFeature.makeChansedFeature(BetterEnd.makeID(name), feature, chance);
+		return BCLFeature.makeChancedFeature(BetterEnd.makeID(name), Decoration.SURFACE_STRUCTURES, feature, chance);
 	}
 	
-	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize, int offset, int minY, int maxY) {
-		return BCLFeature.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, offset, minY, maxY);
+	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize, int minY, int maxY) {
+		return BCLFeature.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, minY, maxY);
 	}
 	
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {
 		OreLayerFeature layer = new OreLayerFeature(block.defaultBlockState(), radius, minY, maxY);
-		ConfiguredFeature<?, ?> configured = layer.configured(FeatureConfiguration.NONE)
-												  .decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(
-													  count)));
+		ConfiguredFeature<?, ?> configured = layer
+			.configured(FeatureConfiguration.NONE)
+			.decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(count)));
 		return new BCLFeature(BetterEnd.makeID(name), layer, GenerationStep.Decoration.UNDERGROUND_ORES, configured);
 	}
 	
@@ -372,9 +371,7 @@ public class EndFeatures {
 		}
 		else {
 			List<Supplier<ConfiguredFeature<?, ?>>> newFeature = Lists.newArrayList();
-			newFeature.add(() -> {
-				return feature.getFeatureConfigured();
-			});
+			newFeature.add(() -> feature.getFeatureConfigured());
 			features.add(newFeature);
 		}
 	}

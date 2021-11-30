@@ -129,10 +129,11 @@ public class EndFishEntity extends AbstractSchoolingFish {
 	}
 	
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return LivingEntity.createLivingAttributes()
-						   .add(Attributes.MAX_HEALTH, 2.0)
-						   .add(Attributes.FOLLOW_RANGE, 16.0)
-						   .add(Attributes.MOVEMENT_SPEED, 0.75);
+		return LivingEntity
+			.createLivingAttributes()
+			.add(Attributes.MAX_HEALTH, 2.0)
+			.add(Attributes.FOLLOW_RANGE, 16.0)
+			.add(Attributes.MOVEMENT_SPEED, 0.75);
 	}
 	
 	public int getVariant() {

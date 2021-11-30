@@ -43,11 +43,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLa
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public SmallJellyshroomBlock() {
-		super(FabricBlockSettings.of(Material.PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
-								 .breakByHand(true)
-								 .sound(SoundType.NETHER_WART)
-								 .noCollission());
+		super(FabricBlockSettings.of(Material.PLANT).breakByHand(true).sound(SoundType.NETHER_WART).noCollission());
 	}
 	
 	@Override

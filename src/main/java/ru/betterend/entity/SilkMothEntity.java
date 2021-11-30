@@ -252,7 +252,7 @@ public class SilkMothEntity extends DespawnableAnimal implements FlyingAnimal {
 					SilkMothEntity.this.hivePos.getX(),
 					SilkMothEntity.this.hivePos.getY(),
 					SilkMothEntity.this.hivePos.getZ()
-				) < 256;
+				) < 16384;
 		}
 		
 		@Override

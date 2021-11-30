@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -15,6 +16,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
@@ -24,6 +28,8 @@ import java.util.Queue;
 
 @SuppressWarnings("deprecation")
 public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerProvider {
+	private static final VoxelShape SHAPE;
+	
 	public MengerSpongeBlock() {
 		super(FabricBlockSettings.copyOf(Blocks.SPONGE).noOcclusion());
 	}
@@ -99,5 +105,23 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerPr
 	@Override
 	public BCLRenderLayer getRenderLayer() {
 		return BCLRenderLayer.CUTOUT;
+	}
+	
+	@Override
+	public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+		return SHAPE;
+	}
+	
+	static {
+		SHAPE = Shapes.or(
+			Shapes.or(box(0, 0, 0, 16, 6, 6), box(0, 0, 10, 16, 6, 16),
+			Shapes.or(box(0, 10, 0, 16, 16, 6), box(0, 10, 10, 16, 16, 16)),
+			
+			Shapes.or(box(0, 0, 0, 6, 6, 16), box(10, 0, 0, 16, 6, 16)),
+			Shapes.or(box(0, 10, 0, 6, 16, 16), box(10, 10, 0, 16, 16, 16)),
+			
+			Shapes.or(box(0, 0, 0, 6, 16, 6), box(10, 0, 0, 16, 16, 6)),
+			Shapes.or(box(0, 0, 10, 6, 16, 16), box(10, 0, 10, 16, 16, 16))
+		));
 	}
 }

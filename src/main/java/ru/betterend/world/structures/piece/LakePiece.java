@@ -21,7 +21,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.material.FluidState;
-import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
@@ -63,7 +63,7 @@ public class LakePiece extends BasePiece {
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("depth", depth);
@@ -83,7 +83,7 @@ public class LakePiece extends BasePiece {
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int minY = this.boundingBox.minY();
 		int maxY = this.boundingBox.maxY();
 		int sx = SectionPos.sectionToBlockCoord(chunkPos.x);

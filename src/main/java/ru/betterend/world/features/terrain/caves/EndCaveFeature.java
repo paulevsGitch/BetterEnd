@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.TagAPI;
 import ru.bclib.interfaces.BiomeSetter;
 import ru.bclib.util.BlocksHelper;

@@ -13,7 +13,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 
@@ -52,7 +52,7 @@ public abstract class MountainPiece extends BasePiece {
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("height", height);

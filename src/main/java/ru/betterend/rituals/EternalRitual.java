@@ -8,7 +8,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.data.worldgen.Features;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -441,7 +440,8 @@ public class EternalRitual {
 				direction = direction.getClockWise();
 			}
 		}
-		if (targetWorld.dimension() == Level.END) {
+		// TODO find island feature
+		/*if (targetWorld.dimension() == Level.END) {
 			Features.END_ISLAND.place(
 				targetWorld,
 				targetWorld.getChunkSource().getGenerator(),
@@ -449,16 +449,16 @@ public class EternalRitual {
 				basePos.below()
 			);
 		}
-		else if (targetWorld.dimension() == Level.OVERWORLD) {
-			basePos.setY(targetWorld.getChunk(basePos)
-									.getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
+		else */if (targetWorld.dimension() == Level.OVERWORLD) {
+			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
 		}
-		EndFeatures.BIOME_ISLAND.getFeatureConfigured()
-								.place(targetWorld,
-									targetWorld.getChunkSource().getGenerator(),
-									new Random(basePos.asLong()),
-									basePos.below()
-								);
+		EndFeatures.BIOME_ISLAND
+			.getPlacedFeature()
+			.place(targetWorld,
+				targetWorld.getChunkSource().getGenerator(),
+				new Random(basePos.asLong()),
+				basePos.below()
+			);
 		generatePortal(targetWorld, basePos, portalAxis, portalId);
 		return basePos.immutable();
 	}

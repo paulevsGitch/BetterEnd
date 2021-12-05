@@ -38,7 +38,7 @@ public class CavePiece extends BasePiece {
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int x1 = MHelper.max(this.boundingBox.minX(), blockBox.minX());
 		int z1 = MHelper.max(this.boundingBox.minZ(), blockBox.minZ());
 		int x2 = MHelper.min(this.boundingBox.maxX(), blockBox.maxX());
@@ -79,11 +79,11 @@ public class CavePiece extends BasePiece {
 			}
 		}
 		
-		return true;
+		return;
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 	}

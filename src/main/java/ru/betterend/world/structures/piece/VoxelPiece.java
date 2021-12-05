@@ -30,7 +30,7 @@ public class VoxelPiece extends BasePiece {
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
 		tag.put("world", world.toBNT());
 	}
 	
@@ -40,8 +40,7 @@ public class VoxelPiece extends BasePiece {
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		this.world.placeChunk(world, chunkPos);
-		return true;
 	}
 }

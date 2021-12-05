@@ -4,8 +4,8 @@ import net.minecraft.core.MappedRegistry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.integration.ModIntegration;
 import ru.bclib.world.features.BCLFeature;
 

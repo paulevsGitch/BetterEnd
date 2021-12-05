@@ -2,13 +2,13 @@
 
 # Better End
 
-Better End Mod for Fabric, MC 1.17.1
+Better End Mod for Fabric, MC 1.18
 
 Importing:
 
 * Clone repo
 * Edit gradle.properties if necessary
-* Run command line in folder: gradlew genSources eclipse (or Another-IDE-Name)
+* Run command line in folder: gradlew genSources idea (or eclipse)
 * Import project to IDE
 
 Building:

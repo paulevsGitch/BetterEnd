@@ -1,6 +1,6 @@
 package ru.betterend.blocks.entities;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+//import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
@@ -14,7 +14,8 @@ import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndItems;
 
-public class PedestalBlockEntity extends BlockEntity implements Container, BlockEntityClientSerializable {
+// TODO Fix client serialisation
+public class PedestalBlockEntity extends BlockEntity implements Container/*, BlockEntityClientSerializable*/ {
 	private ItemStack activeItem = ItemStack.EMPTY;
 	
 	private final int maxAge = 314;
@@ -110,7 +111,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 		fromTag(tag);
 	}
 	
-	@Override
+	/*@Override
 	public CompoundTag save(CompoundTag tag) {
 		tag.put("active_item", activeItem.save(new CompoundTag()));
 		return super.save(tag);
@@ -124,7 +125,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container, Block
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return save(tag);
-	}
+	}*/
 	
 	protected void fromTag(CompoundTag tag) {
 		if (tag.contains("active_item")) {

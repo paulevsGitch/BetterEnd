@@ -11,10 +11,10 @@ pluginManagement {
 // #### Custom Settings ####
 
 //Change the next line to disable local BCLib loading
-def allowLocalLibUse = false
+def allowLocalLibUse = true
 
 //When true, the local BCLib is also used in commandline builds
-def allowLocalLibInConsoleMode = false
+def allowLocalLibInConsoleMode = true
 
 //The path were to look for the local BCLib
 def BCLibPath = '../BCLib'

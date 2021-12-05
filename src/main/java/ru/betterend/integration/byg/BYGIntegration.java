@@ -1,12 +1,7 @@
 package ru.betterend.integration.byg;
 
-import net.minecraft.world.level.block.Block;
-import ru.bclib.api.TagAPI;
 import ru.bclib.integration.ModIntegration;
 import ru.betterend.integration.EndBiomeIntegration;
-import ru.betterend.integration.Integrations;
-import ru.betterend.integration.byg.biomes.BYGBiomes;
-import ru.betterend.integration.byg.features.BYGFeatures;
 
 public class BYGIntegration extends ModIntegration implements EndBiomeIntegration {
 	public BYGIntegration() {

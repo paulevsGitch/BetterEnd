@@ -3,12 +3,11 @@ package ru.betterend.registry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.world.biomes.BCLBiome;
-import ru.bclib.world.generator.BiomeMap;
 import ru.bclib.world.generator.BiomePicker;
+import ru.bclib.world.generator.map.hex.HexBiomeMap;
 import ru.betterend.config.Configs;
-import ru.betterend.util.FeaturesHelper;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.air.BiomeIceStarfield;
 import ru.betterend.world.biome.cave.EmptyAuroraCaveBiome;
@@ -41,7 +40,8 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 public class EndBiomes {
 	public static final BiomePicker CAVE_BIOMES = new BiomePicker();
-	private static BiomeMap caveBiomeMap;
+	private static HexBiomeMap caveBiomeMap;
+	private static long lastSeed;
 	
 	// Better End Land
 	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new FoggyMushroomlandBiome(), BiomeType.LAND);
@@ -79,10 +79,10 @@ public class EndBiomes {
 	public static void onWorldLoad(long seed, Registry<Biome> registry) {
 		CAVE_BIOMES.getBiomes().forEach(biome -> biome.updateActualBiomes(registry));
 		CAVE_BIOMES.rebuild();
-		if (caveBiomeMap == null || caveBiomeMap.getSeed() != seed) {
-			caveBiomeMap = new BiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+		if (caveBiomeMap == null || lastSeed != seed) {
+			caveBiomeMap = new HexBiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+			lastSeed = seed;
 		}
-		FeaturesHelper.addFeatures(registry);
 	}
 	
 	/**

@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 import ru.bclib.api.WorldDataAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
@@ -66,6 +67,11 @@ public class BetterEnd implements ModInitializer {
 			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes(GeneratorOptions.getIslandDistBlock() > 250000L);
 			ru.bclib.world.generator.GeneratorOptions.setEndLandFunction((pos) -> TerrainGenerator.isLand(pos.x, pos.y));
 		}
+		
+		BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
+			EndStructures.addBiomeStructures(biomeID, biome);
+			EndFeatures.addBiomeFeatures(biomeID, biome);
+		});
 	}
 	
 	public static ResourceLocation makeID(String path) {

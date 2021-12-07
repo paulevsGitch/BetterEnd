@@ -1,6 +1,10 @@
 package ru.betterend.world.features.terrain;
 
+import java.util.Random;
+import java.util.Set;
+
 import com.google.common.collect.Sets;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -21,9 +25,6 @@ import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
-
-import java.util.Random;
-import java.util.Set;
 
 public class SulphuricCaveFeature extends DefaultFeature {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
@@ -167,7 +168,8 @@ public class SulphuricCaveFeature extends DefaultFeature {
 						state = world.getBlockState(mut);
 						while (state.is(Blocks.WATER)) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.VENT_BUBBLE_COLUMN.defaultBlockState());
-							world.getBlockTicks()
+							//TODO: 1.18 test ticks
+							world/*.getBlockTicks()*/
 								 .scheduleTick(mut, EndBlocks.VENT_BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
 							mut.setY(mut.getY() + 1);
 							state = world.getBlockState(mut);

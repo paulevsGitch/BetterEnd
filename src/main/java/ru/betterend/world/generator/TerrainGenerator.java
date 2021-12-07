@@ -1,18 +1,18 @@
 package ru.betterend.world.generator;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import net.minecraft.util.Mth;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSource;
-import ru.bclib.util.MHelper;
-import ru.betterend.noise.OpenSimplexNoise;
-
 import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.biome.BiomeSource;
+import ru.bclib.util.MHelper;
+import ru.betterend.noise.OpenSimplexNoise;
 
 public class TerrainGenerator {
 	private static final Map<Point, TerrainBoolCache> TERRAIN_BOOL_CACHE_MAP = Maps.newHashMap();
@@ -83,21 +83,23 @@ public class TerrainGenerator {
 	}
 	
 	private static float getAverageDepth(BiomeSource biomeSource, int x, int z) {
-		if (getBiome(biomeSource, x, z).getDepth() < 0.1F) {
-			return 0F;
-		}
-		float depth = 0F;
-		for (int i = 0; i < OFFS.length; i++) {
-			int px = x + OFFS[i].x;
-			int pz = z + OFFS[i].y;
-			depth += getBiome(biomeSource, px, pz).getDepth() * COEF[i];
-		}
-		return depth;
+		//TODO: 1.18 find alternative
+//		if (getBiome(biomeSource, x, z).getDepth() < 0.1F) {
+//			return 0F;
+//		}
+//		float depth = 0F;
+//		for (int i = 0; i < OFFS.length; i++) {
+//			int px = x + OFFS[i].x;
+//			int pz = z + OFFS[i].y;
+//			depth += getBiome(biomeSource, px, pz).getDepth() * COEF[i];
+//		}
+//		return depth;
+		return 0;
 	}
 	
-	private static Biome getBiome(BiomeSource biomeSource, int x, int z) {
-		return biomeSource.getNoiseBiome(x, 0, z);
-	}
+//	private static Biome getBiome(BiomeSource biomeSource, int x, int z) {
+//		return biomeSource.getNoiseBiome(x, 0, z);
+//	}
 	
 	/**
 	 * Check if this is land

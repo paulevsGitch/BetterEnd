@@ -1,6 +1,10 @@
 package ru.betterend.world.features.terrain;
 
+import java.util.Random;
+import java.util.Set;
+
 import com.google.common.collect.Sets;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -18,9 +22,6 @@ import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
-import java.util.Set;
 
 public class SulphuricLakeFeature extends DefaultFeature {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
@@ -75,7 +76,8 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							else {
 								if (!isAbsoluteBorder(world, POS)) {
 									BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
-									world.getLiquidTicks().scheduleTick(POS, Fluids.WATER, 0);
+									//TODO: 1.18 check if this ticks
+									world./*getLiquidTicks().*/scheduleTick(POS, Fluids.WATER, 0);
 									brimstone.add(POS.below());
 									if (random.nextBoolean()) {
 										brimstone.add(POS.below(2));

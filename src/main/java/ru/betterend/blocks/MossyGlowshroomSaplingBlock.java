@@ -4,21 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.blocks.basis.PottableFeatureSapling;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
 public class MossyGlowshroomSaplingBlock extends PottableFeatureSapling {
 	public MossyGlowshroomSaplingBlock() {
-		super(7);
+		super(7, (state)->EndFeatures.MOSSY_GLOWSHROOM.getFeature());
 	}
-	
-	@Override
-	protected Feature<?> getFeature(BlockState state) {
-		return EndFeatures.MOSSY_GLOWSHROOM.getFeature();
-	}
-	
+
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.below()).is(EndBlocks.END_MOSS) || world.getBlockState(pos.below())

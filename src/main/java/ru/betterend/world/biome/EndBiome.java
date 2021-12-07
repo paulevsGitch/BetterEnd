@@ -6,16 +6,23 @@ import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.interfaces.StructureFeaturesAccessor;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.BetterEnd;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
 public class EndBiome extends BCLBiome {
 	public abstract static class Config {
 		protected static final StructureFeaturesAccessor VANILLA_FEATURES = (StructureFeaturesAccessor)new StructureFeatures();
+		protected static final SurfaceRules.RuleSource END_STONE = SurfaceRules.state(Blocks.END_STONE.defaultBlockState());
+		protected static final SurfaceRules.RuleSource END_MOSS = SurfaceRules.state(EndBlocks.END_MOSS.defaultBlockState());
+		protected static final SurfaceRules.RuleSource ENDSTONE_DUST = SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState());
+		protected static final SurfaceRules.RuleSource END_MYCELIUM = SurfaceRules.state(EndBlocks.END_MYCELIUM.defaultBlockState());
 
 		public final ResourceLocation ID;
 

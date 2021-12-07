@@ -29,7 +29,6 @@ import ru.betterend.util.BonemealPlants;
 import ru.betterend.util.LootTableUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.generator.TerrainGenerator;
-import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
@@ -44,7 +43,6 @@ public class BetterEnd implements ModInitializer {
 		EndBlockEntities.register();
 		EndFeatures.register();
 		EndEntities.register();
-		SurfaceBuilders.register();
 		EndBiomes.register();
 		EndTags.register();
 		EndEnchantments.register();

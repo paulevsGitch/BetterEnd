@@ -1,11 +1,12 @@
 package ru.betterend.world.structures.piece;
 
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -13,13 +14,12 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndStructures;
-
-import java.util.Random;
 
 public class NBTPiece extends BasePiece {
 	private ResourceLocation structureID;
@@ -42,13 +42,14 @@ public class NBTPiece extends BasePiece {
 		makeBoundingBox();
 	}
 	
-	public NBTPiece(ServerLevel serverLevel, CompoundTag tag) {
+	public NBTPiece(StructurePieceSerializationContext type, CompoundTag tag) {
 		super(EndStructures.NBT_PIECE, tag);
 		makeBoundingBox();
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
 		tag.putString("structureID", structureID.toString());
 		tag.putInt("rotation", rotation.ordinal());
 		tag.putInt("mirror", mirror.ordinal());
@@ -69,7 +70,7 @@ public class NBTPiece extends BasePiece {
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		BoundingBox bounds = BoundingBox.fromCorners(new Vec3i(
 			blockBox.minX(),
 			this.boundingBox.minY(),
@@ -90,7 +91,6 @@ public class NBTPiece extends BasePiece {
 		if (cover) {
 			StructureHelper.cover(world, bounds, random);
 		}
-		return true;
 	}
 	
 	private void makeBoundingBox() {

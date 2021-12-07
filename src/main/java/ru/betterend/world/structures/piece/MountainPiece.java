@@ -1,12 +1,15 @@
 package ru.betterend.world.structures.piece;
 
+import java.util.Map;
+import java.util.Random;
+
 import com.google.common.collect.Maps;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
@@ -16,9 +19,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-
-import java.util.Map;
-import java.util.Random;
 
 public abstract class MountainPiece extends BasePiece {
 	protected Map<Integer, Integer> heightmap = Maps.newHashMap();
@@ -46,7 +46,7 @@ public abstract class MountainPiece extends BasePiece {
 		makeBoundingBox();
 	}
 	
-	public MountainPiece(StructurePieceType type, ServerLevel serverLevel, CompoundTag tag) {
+	public MountainPiece(StructurePieceType type, CompoundTag tag) {
 		super(type, tag);
 		makeBoundingBox();
 	}

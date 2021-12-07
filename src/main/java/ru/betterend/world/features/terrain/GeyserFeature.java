@@ -1,5 +1,9 @@
 package ru.betterend.world.features.terrain;
 
+import java.util.Optional;
+import java.util.Random;
+import java.util.function.Function;
+
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -36,9 +40,6 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.util.BlockFixer;
-
-import java.util.Random;
-import java.util.function.Function;
 
 public class GeyserFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE1;
@@ -259,7 +260,7 @@ public class GeyserFeature extends DefaultFeature {
 		}
 		
 		EndFeatures.SULPHURIC_LAKE.getFeature()
-								  .place(new FeaturePlaceContext<>(world, chunkGenerator, random, pos, null));
+								  .place(new FeaturePlaceContext<>(Optional.empty(), world, chunkGenerator, random, pos, null));
 		
 		double distance = radius1 * 1.7;
 		BlockPos start = pos.offset(-distance, -halfHeight - 15 - distance, -distance);

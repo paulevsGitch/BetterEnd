@@ -1,11 +1,12 @@
 package ru.betterend.world.structures.piece;
 
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -16,10 +17,9 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndStructures;
-
-import java.util.Random;
 
 public class PaintedMountainPiece extends MountainPiece {
 	private BlockState[] slises;
@@ -29,13 +29,13 @@ public class PaintedMountainPiece extends MountainPiece {
 		this.slises = slises;
 	}
 	
-	public PaintedMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
-		super(EndStructures.PAINTED_MOUNTAIN_PIECE, serverLevel, tag);
+	public PaintedMountainPiece(StructurePieceSerializationContext type, CompoundTag tag) {
+		super(EndStructures.PAINTED_MOUNTAIN_PIECE, tag);
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
-		super.addAdditionalSaveData(serverLevel, tag);
+	protected void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
 		ListTag slise = new ListTag();
 		for (BlockState state : slises) {
 			slise.add(NbtUtils.writeBlockState(state));
@@ -54,7 +54,7 @@ public class PaintedMountainPiece extends MountainPiece {
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getMinBlockX();
 		int sz = chunkPos.getMinBlockZ();
 		MutableBlockPos pos = new MutableBlockPos();
@@ -101,7 +101,5 @@ public class PaintedMountainPiece extends MountainPiece {
 				}
 			}
 		}
-		
-		return true;
 	}
 }

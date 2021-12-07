@@ -80,7 +80,6 @@ import ru.betterend.world.features.trees.MossyGlowshroomFeature;
 import ru.betterend.world.features.trees.PythadendronTreeFeature;
 import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
-import ru.betterend.world.surface.UmbraSurfaceBuilder;
 
 public class EndFeatures {
 	// Trees //
@@ -218,7 +217,8 @@ public class EndFeatures {
 		"umbralith_arch",
 		new ArchFeature(
 			EndBlocks.UMBRALITH.stone,
-			UmbraSurfaceBuilder::getSurfaceState
+				//TODO: 1.18 this needs to change to a dynamic block
+				(pos)->Blocks.END_STONE.defaultBlockState() //UmbraSurfaceBuilder::getSurfaceState
 		),
 		10);
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);

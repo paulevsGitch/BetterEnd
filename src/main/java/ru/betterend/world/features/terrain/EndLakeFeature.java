@@ -1,5 +1,7 @@
 package ru.betterend.world.features.terrain;
 
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -16,8 +18,6 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
-
-import java.util.Random;
 
 public class EndLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
@@ -123,10 +123,12 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
-									state = world.getBiome(pos)
-												 .getGenerationSettings()
-												 .getSurfaceBuilderConfig()
-												 .getTopMaterial();
+									//TODO: 1.18 this needs to change to a dynamic block
+									state = Blocks.END_STONE.defaultBlockState();
+//									state = world.getBiome(pos)
+//												 .getGenerationSettings()
+//												 .getSurfaceBuilderConfig()
+//												 .getTopMaterial();
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
 										BlocksHelper.setWithoutUpdate(
@@ -193,10 +195,12 @@ public class EndLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.isEmptyBlock(POS.above())) {
-								state = world.getBiome(POS)
-											 .getGenerationSettings()
-											 .getSurfaceBuilderConfig()
-											 .getTopMaterial();
+								//TODO: 1.18 this needs to change to a dynamic block
+								state = Blocks.END_STONE.defaultBlockState();
+//								state = world.getBiome(POS)
+//											 .getGenerationSettings()
+//											 .getSurfaceBuilderConfig()
+//											 .getTopMaterial();
 								BlocksHelper.setWithoutUpdate(
 									world,
 									POS,

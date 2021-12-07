@@ -1,23 +1,26 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
-import ru.bclib.world.biomes.BCLBiomeDef;
-import ru.betterend.BetterEnd;
+import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.world.biome.EndBiome;
 
-public class CrystalMountainsBiome extends EndBiome {
+public class CrystalMountainsBiome extends EndBiome.Config {
 	public CrystalMountainsBiome() {
-		super(new BCLBiomeDef(BetterEnd.makeID("crystal_mountains"))
-			.addStructureFeature(EndStructures.MOUNTAIN.getFeatureConfigured())
-			.setPlantsColor(255, 133, 211)
-			.setSurface(EndBlocks.CRYSTAL_MOSS)
-			.setMusic(EndSounds.MUSIC_OPENSPACE)
-			.addFeature(EndFeatures.ROUND_CAVE)
-			.addFeature(EndFeatures.CRYSTAL_GRASS)
-			.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
+		super("crystal_mountains");
+	}
+
+	@Override
+	protected void addCustomBuildData(BCLBiomeBuilder builder) {
+		builder.structure(EndStructures.MOUNTAIN.getFeatureConfigured())
+			 .plantsColor(255, 133, 211)
+			 .surface(EndBlocks.CRYSTAL_MOSS)
+			 .music(EndSounds.MUSIC_OPENSPACE)
+			 .feature(EndFeatures.ROUND_CAVE)
+			 .feature(EndFeatures.CRYSTAL_GRASS)
+			 .spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 }

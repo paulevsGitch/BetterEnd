@@ -88,11 +88,13 @@ public class EndBiomes {
 	/**
 	 * Put existing {@link EndBiome} as a sub-biome into selected parent.
 	 *
-	 * @param biome  - {@link EndBiome} instance
+	 * @param biomeConfig  - {@link EndBiome.Config} instance
 	 * @param parent - {@link EndBiome} to be linked with
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
+	public static EndBiome registerSubBiome(EndBiome.Config biomeConfig, EndBiome parent) {
+		final EndBiome biome = EndBiome.create(biomeConfig);
+
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerSubBiome(parent, biome);
 		}
@@ -102,11 +104,12 @@ public class EndBiomes {
 	/**
 	 * Registers {@link EndBiome} and adds it into worldgen.
 	 *
-	 * @param biome - {@link EndBiome} instance
+	 * @param biomeConfig - {@link EndBiome.Config} instance
 	 * @param type  - {@link BiomeType}
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
+	public static EndBiome registerBiome(EndBiome.Config biomeConfig, BiomeType type) {
+		final EndBiome biome = EndBiome.create(biomeConfig);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			if (type == BiomeType.LAND) {
 				BiomeAPI.registerEndLandBiome(biome);
@@ -146,7 +149,8 @@ public class EndBiomes {
 		}
 	}
 	
-	public static EndCaveBiome registerCaveBiome(EndCaveBiome biome) {
+	public static EndCaveBiome registerCaveBiome(EndCaveBiome.Config biomeConfig) {
+		final EndCaveBiome biome = EndCaveBiome.create(biomeConfig);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(biome);
 			CAVE_BIOMES.addBiome(biome);

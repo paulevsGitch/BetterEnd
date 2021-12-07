@@ -321,16 +321,12 @@ public class EndFeatures {
 		}*/
 	}
 	
-	public static BCLBiomeBuilder addDefaultFeatures(ResourceLocation biomeID, BCLBiomeBuilder builder, boolean hasCaves) {
+	public static BCLBiomeBuilder addDefaultFeatures(BCLBiomeBuilder builder, boolean hasCaves) {
 		builder.feature(FLAVOLITE_LAYER);
 		builder.feature(THALLASIUM_ORE);
 		builder.feature(ENDER_ORE);
 		builder.feature(CRASHED_SHIP);
-		
-		if (biomeID.getPath().endsWith("_cave")) {
-			return builder;
-		}
-		
+
 		// TODO replace cave features with carvers
 		if (hasCaves) {
 			builder.feature(ROUND_CAVE);

@@ -1,10 +1,7 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
-import ru.bclib.world.biomes.BCLBiomeDef;
-import ru.betterend.BetterEnd;
-import ru.betterend.registry.EndBlocks;
+import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -12,38 +9,42 @@ import ru.betterend.registry.EndSounds;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.world.biome.EndBiome;
 
-public class FoggyMushroomlandBiome extends EndBiome {
+public class FoggyMushroomlandBiome extends EndBiome.Config {
 	public FoggyMushroomlandBiome() {
-		super(new BCLBiomeDef(BetterEnd.makeID("foggy_mushroomland"))
-			.addStructureFeature(EndStructures.GIANT_MOSSY_GLOWSHROOM
-			.getFeatureConfigured())
-			.setPlantsColor(73, 210, 209)
-			.setFogColor(41, 122, 173)
-			.setFogDensity(3)
-			.setWaterAndFogColor(119, 227, 250)
-			.setSurface(EndBlocks.END_MOSS, EndBlocks.END_MYCELIUM)
-			.setParticles(EndParticles.GLOWING_SPHERE, 0.001F)
-			.setLoop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
-			.setMusic(EndSounds.MUSIC_FOREST)
-			.addFeature(EndFeatures.END_LAKE)
-			.addFeature(EndFeatures.MOSSY_GLOWSHROOM)
-			.addFeature(EndFeatures.BLUE_VINE)
-			.addFeature(EndFeatures.UMBRELLA_MOSS)
-			.addFeature(EndFeatures.CREEPING_MOSS)
-			.addFeature(EndFeatures.DENSE_VINE)
-			//.addFeature(EndFeatures.PEARLBERRY)
-			.addFeature(EndFeatures.CYAN_MOSS)
-			.addFeature(EndFeatures.CYAN_MOSS_WOOD)
-			.addFeature(EndFeatures.END_LILY)
-			.addFeature(EndFeatures.BUBBLE_CORAL)
-			.addFeature(EndFeatures.CHARNIA_CYAN)
-			.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
-			.addFeature(EndFeatures.CHARNIA_RED_RARE)
-			.addStructureFeature(StructureFeatures.END_CITY)
-			.addMobSpawn(EndEntities.DRAGONFLY, 80, 2, 5)
-			.addMobSpawn(EndEntities.END_FISH, 20, 2, 5)
-			.addMobSpawn(EndEntities.CUBOZOA, 10, 3, 8)
-			.addMobSpawn(EndEntities.END_SLIME, 10, 1, 2)
-			.addMobSpawn(EntityType.ENDERMAN, 10, 1, 2));
+		super("foggy_mushroomland");
+	}
+
+	@Override
+	protected void addCustomBuildData(BCLBiomeBuilder builder) {
+		builder.structure(EndStructures.GIANT_MOSSY_GLOWSHROOM.getFeatureConfigured())
+			   .plantsColor(73, 210, 209)
+			   .fogColor(41, 122, 173)
+			   .fogDensity(3)
+			   .waterAndFogColor(119, 227, 250)
+			   //TODO: 1.18 surface Rules
+			   //.surface(EndBlocks.END_MOSS, EndBlocks.END_MYCELIUM)
+			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
+			   .loop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
+			   .music(EndSounds.MUSIC_FOREST)
+			   .feature(EndFeatures.END_LAKE)
+			   .feature(EndFeatures.MOSSY_GLOWSHROOM)
+			   .feature(EndFeatures.BLUE_VINE)
+			   .feature(EndFeatures.UMBRELLA_MOSS)
+			   .feature(EndFeatures.CREEPING_MOSS)
+			   .feature(EndFeatures.DENSE_VINE)
+			   //.feature(EndFeatures.PEARLBERRY)
+			   .feature(EndFeatures.CYAN_MOSS)
+			   .feature(EndFeatures.CYAN_MOSS_WOOD)
+			   .feature(EndFeatures.END_LILY)
+			   .feature(EndFeatures.BUBBLE_CORAL)
+			   .feature(EndFeatures.CHARNIA_CYAN)
+			   .feature(EndFeatures.CHARNIA_LIGHT_BLUE)
+			   .feature(EndFeatures.CHARNIA_RED_RARE)
+			   .structure(VANILLA_FEATURES.getEND_CITY())
+			   .spawn(EndEntities.DRAGONFLY, 80, 2, 5)
+			   .spawn(EndEntities.END_FISH, 20, 2, 5)
+			   .spawn(EndEntities.CUBOZOA, 10, 3, 8)
+			   .spawn(EndEntities.END_SLIME, 10, 1, 2)
+			   .spawn(EntityType.ENDERMAN, 10, 1, 2);
 	}
 }

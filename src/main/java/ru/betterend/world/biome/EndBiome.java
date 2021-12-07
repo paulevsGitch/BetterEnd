@@ -9,9 +9,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
-import ru.bclib.interfaces.StructureFeaturesAccessor;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.BetterEnd;
+import ru.betterend.interfaces.StructureFeaturesAccessor;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
@@ -61,6 +61,7 @@ public class EndBiome extends BCLBiome {
 
 		biomeConfig.addCustomBuildData(builder);
 		EndFeatures.addDefaultFeatures(builder, biomeConfig.hasCaves());
+
 
 		EndBiome biome = builder.build(biomeConfig.getSupplier());
 		biome.addCustomData("has_caves", biomeConfig.hasCaves());

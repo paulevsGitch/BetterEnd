@@ -4,7 +4,6 @@
 	"package": "ru.betterend.mixin.common",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
-		"BiomeGenerationSettingsAccessor",
 		"NoiseBasedChunkGeneratorMixin",
 		"ChorusPlantFeatureMixin",
 		"PlayerAdvancementsMixin",
@@ -25,7 +24,8 @@
 		"MonsterMixin",
 		"EntityMixin",
 		"PlayerMixin",
-		"SlimeMixin"
+		"SlimeMixin",
+		"StructureFeaturesMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

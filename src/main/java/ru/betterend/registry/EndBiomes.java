@@ -124,10 +124,11 @@ public class EndBiomes {
 	/**
 	 * Put integration sub-biome {@link EndBiome} into subbiomes list and registers it.
 	 *
-	 * @param biome - {@link EndBiome} instance
+	 * @param biomeConfig - {@link EndBiome.Config} instance
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiomeIntegration(EndBiome biome) {
+	public static EndBiome registerSubBiomeIntegration(EndBiome.Config biomeConfig) {
+		EndBiome biome = EndBiome.create(biomeConfig);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(biome);
 		}

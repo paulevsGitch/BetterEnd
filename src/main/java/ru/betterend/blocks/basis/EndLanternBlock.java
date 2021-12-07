@@ -1,5 +1,7 @@
 package ru.betterend.blocks.basis;
 
+import java.util.Map;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -25,8 +27,6 @@ import net.minecraft.world.level.material.Fluids;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
-
-import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {
@@ -101,7 +101,7 @@ public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterlogg
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		Boolean water = state.getValue(WATERLOGGED);
 		if (water) {
-			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 		if (!canSurvive(state, world, pos)) {
 			return water ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();

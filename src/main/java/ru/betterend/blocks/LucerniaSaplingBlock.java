@@ -15,8 +15,7 @@ public class LucerniaSaplingBlock extends PottableFeatureSapling {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
-	protected Feature<?> getFeature() {
+	protected Feature<?> getFeature(BlockState state) {
 		return EndFeatures.LUCERNIA.getFeature();
 	}
 	

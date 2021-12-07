@@ -1,5 +1,8 @@
 package ru.betterend.blocks;
 
+import java.util.Optional;
+import java.util.Random;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -32,9 +35,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Optional;
-import java.util.Random;
 
 public class VentBubbleColumnBlock extends Block implements BucketPickup, LiquidBlockContainer {
 	public VentBubbleColumnBlock() {
@@ -76,7 +76,8 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 			BlockPos up = pos.above();
 			if (world.getBlockState(up).is(Blocks.WATER)) {
 				BlocksHelper.setWithoutUpdate(world, up, this);
-				world.getBlockTicks().scheduleTick(up, this, 5);
+				//TODO: 1.18 check if this ticks
+				world./*getBlockTicks().*/scheduleTick(up, this, 5);
 			}
 		}
 		return state;

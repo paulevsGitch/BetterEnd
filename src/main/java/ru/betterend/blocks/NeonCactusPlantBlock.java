@@ -1,7 +1,12 @@
 package ru.betterend.blocks;
 
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Random;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -45,10 +50,6 @@ import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.CactusBottom;
 import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, RenderLayerProvider, PottablePlant {
@@ -115,9 +116,10 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 	
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
-		world.getBlockTicks().scheduleTick(pos, this, 2);
+		//TODO: 1.18 Check if this still workd
+		world./*getBlockTicks().*/scheduleTick(pos, this, 2);
 		if (state.getValue(WATERLOGGED)) {
-			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 		Direction dir = state.getValue(FACING);
 		BlockState downState = world.getBlockState(pos.relative(dir.getOpposite()));

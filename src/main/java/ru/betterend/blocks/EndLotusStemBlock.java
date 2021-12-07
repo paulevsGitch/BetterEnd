@@ -1,6 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.Map;
+
 import com.google.common.collect.Maps;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,8 +31,6 @@ import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
-
-import java.util.Map;
 
 public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlock, RenderLayerProvider {
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
@@ -88,7 +89,7 @@ public class EndLotusStemBlock extends BaseBlock implements SimpleWaterloggedBlo
 	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		if (state.getValue(WATERLOGGED)) {
-			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 		return state;
 	}

@@ -11,8 +11,7 @@ import ru.betterend.registry.EndFeatures;
 
 public class HelixTreeSaplingBlock extends PottableFeatureSapling {
 	@Override
-	@SuppressWarnings("deprecation")
-	protected Feature<?> getFeature() {
+	protected Feature<?> getFeature(BlockState state) {
 		return EndFeatures.HELIX_TREE.getFeature();
 	}
 	

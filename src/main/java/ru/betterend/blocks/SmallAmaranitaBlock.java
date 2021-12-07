@@ -1,5 +1,8 @@
 package ru.betterend.blocks;
 
+import java.util.Optional;
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
@@ -7,7 +10,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -15,8 +20,6 @@ import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
-
-import java.util.Random;
 
 public class SmallAmaranitaBlock extends EndPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 10, 12);
@@ -30,8 +33,8 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlockPos bigPos = growBig(world, pos);
 		if (bigPos != null) {
-			if (EndFeatures.GIGANTIC_AMARANITA.getFeature()
-											  .place(new FeaturePlaceContext<>(world, null, random, bigPos, null))) {
+			if (((Feature<NoneFeatureConfiguration>)EndFeatures.GIGANTIC_AMARANITA.getFeature())
+																				  .place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, bigPos, null))) {
 				replaceMushroom(world, bigPos);
 				replaceMushroom(world, bigPos.south());
 				replaceMushroom(world, bigPos.east());
@@ -39,7 +42,7 @@ public class SmallAmaranitaBlock extends EndPlantBlock {
 			}
 			return;
 		}
-		EndFeatures.LARGE_AMARANITA.getFeature().place(new FeaturePlaceContext<>(world, null, random, pos, null));
+		((Feature<NoneFeatureConfiguration>)EndFeatures.LARGE_AMARANITA.getFeature()).place( new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos, null));
 	}
 	
 	@Override

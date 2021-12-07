@@ -13,10 +13,9 @@ public class DragonTreeSaplingBlock extends PottableFeatureSapling {
 	public DragonTreeSaplingBlock() {
 		super();
 	}
-	
+
 	@Override
-	@SuppressWarnings("deprecation")
-	protected Feature<?> getFeature() {
+	protected Feature<?> getFeature(BlockState state) {
 		return EndFeatures.DRAGON_TREE.getFeature();
 	}
 	

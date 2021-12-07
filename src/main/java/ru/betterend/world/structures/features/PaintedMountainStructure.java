@@ -40,7 +40,7 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 			if (y > 50) {
 				//TODO: 1.18 right way to get biome?
 				Biome biome = chunkGenerator.getNoiseBiome(x, y, z);
-				
+
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.4F, 0.6F, random);
 				int count = MHelper.floor(height * MHelper.randRange(0.1F, 0.35F, random) + 1);

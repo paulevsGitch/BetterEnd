@@ -1,5 +1,8 @@
 package ru.betterend.mixin.common;
 
+import java.util.Optional;
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -22,8 +25,6 @@ import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.generator.GeneratorOptions;
-
-import java.util.Random;
 
 @Mixin(EndPodiumFeature.class)
 public class EndPodiumFeatureMixin {
@@ -56,7 +57,8 @@ public class EndPodiumFeatureMixin {
 	private FeaturePlaceContext<NoneFeatureConfiguration> be_setPosOnGround(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
 		WorldGenLevel world = featurePlaceContext.level();
 		BlockPos pos = be_updatePortalPos(world);
-		return new FeaturePlaceContext<>(
+		return new FeaturePlaceContext<NoneFeatureConfiguration>(
+            Optional.empty(),
 			world,
 			featurePlaceContext.chunkGenerator(),
 			featurePlaceContext.random(),

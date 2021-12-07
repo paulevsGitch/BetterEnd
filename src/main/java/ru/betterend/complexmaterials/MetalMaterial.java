@@ -150,7 +150,7 @@ public class MetalMaterial {
         final int level = material.getLevel();
 
         rawOre = hasOre ? EndItems.registerEndItem(name + "_raw", new ModelProviderItem(itemSettings)) : null;
-        ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseOreBlock(rawOre, 1, 3, 1)) : null;
+        ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseOreBlock(()->rawOre, 1, 3, 1)) : null;
         alloyingOre = hasOre ? TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_alloying") : null;
         if (hasOre) {
             TagAPI.addTag(alloyingOre, ore, rawOre);

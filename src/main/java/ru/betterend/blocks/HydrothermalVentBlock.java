@@ -1,5 +1,9 @@
 package ru.betterend.blocks;
 
+import java.util.Random;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -34,14 +38,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.entities.BlockEntityHydrothermalVent;
 import ru.betterend.registry.EndBlocks;
-
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlock, LiquidBlockContainer, SimpleWaterloggedBlock {
@@ -90,7 +91,8 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 			return Blocks.WATER.defaultBlockState();
 		}
 		else if (state.getValue(WATERLOGGED) && facing == Direction.UP && neighborState.is(Blocks.WATER)) {
-			world.getBlockTicks().scheduleTick(pos, this, 20);
+			//TODO: 1.18 see if it still ticks
+			world./*getBlockTicks().*/scheduleTick(pos, this, 20);
 		}
 		return state;
 	}
@@ -118,7 +120,8 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 		BlockPos up = pos.above();
 		if (world.getBlockState(up).is(Blocks.WATER)) {
 			BlocksHelper.setWithoutUpdate(world, up, EndBlocks.VENT_BUBBLE_COLUMN);
-			world.getBlockTicks().scheduleTick(up, EndBlocks.VENT_BUBBLE_COLUMN, 5);
+			//TODO: 1.18 see if it still ticks
+			world./*getBlockTicks().*/scheduleTick(up, EndBlocks.VENT_BUBBLE_COLUMN, 5);
 		}
 	}
 	

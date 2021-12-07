@@ -1,7 +1,12 @@
 package ru.betterend.blocks.entities;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -40,10 +45,6 @@ import ru.betterend.blocks.EndStoneSmelter;
 import ru.betterend.client.gui.EndStoneSmelterScreenHandler;
 import ru.betterend.recipe.builders.AlloyingRecipe;
 import ru.betterend.registry.EndBlockEntities;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
 	
@@ -429,8 +430,9 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 	}
 	
 	@Override
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
+	public void saveAdditional(CompoundTag tag) {
+		super.saveAdditional(tag);
+		
 		tag.putShort("BurnTime", (short) burnTime);
 		tag.putShort("FuelTime", (short) fuelTime);
 		tag.putShort("SmeltTime", (short) smeltTime);
@@ -439,8 +441,6 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 		CompoundTag usedRecipes = new CompoundTag();
 		recipesUsed.forEach((identifier, integer) -> usedRecipes.putInt(identifier.toString(), integer));
 		tag.put("RecipesUsed", usedRecipes);
-		
-		return tag;
 	}
 	
 	public boolean canPlaceItem(int slot, ItemStack stack) {

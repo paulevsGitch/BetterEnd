@@ -23,7 +23,7 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder
-			   //TODO: 1.18 surface Rules
+			   //TODO: 1.18 check surface Rules
 			   //.surface(SurfaceBuilders.SULPHURIC_SURFACE.configured(SurfaceBuilders.DEFAULT_END_CONFIG))
 				.surface(
 					SurfaceRules.sequence(

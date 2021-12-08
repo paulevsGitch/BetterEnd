@@ -1,7 +1,10 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
@@ -17,9 +20,19 @@ public class CrystalMountainsBiome extends EndBiome.Config {
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder.structure(EndStructures.MOUNTAIN.getFeatureConfigured())
 			 .plantsColor(255, 133, 211)
-			 .surface(EndBlocks.CRYSTAL_MOSS)
+			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
 			 .music(EndSounds.MUSIC_OPENSPACE)
 			 .feature(EndFeatures.CRYSTAL_GRASS)
 			 .spawn(EntityType.ENDERMAN, 50, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.CRYSTAL_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

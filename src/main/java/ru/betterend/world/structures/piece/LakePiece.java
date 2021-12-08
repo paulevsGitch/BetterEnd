@@ -32,6 +32,7 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.EndBiome;
 
 public class LakePiece extends BasePiece {
 	private static final BlockState ENDSTONE = Blocks.END_STONE.defaultBlockState();
@@ -133,7 +134,7 @@ public class LakePiece extends BasePiece {
 							state = chunk.getBlockState(mut.above());
 							if (state.isAir()) {
 								//TODO: 1.18 this needs to change to a dynamic block
-								state = ENDSTONE;
+								state = EndBiome.findTopMaterial(world, worldPos);
 //								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos)
 //																			   .getGenerationSettings()
 //																			   .getSurfaceBuilderConfig()
@@ -170,7 +171,7 @@ public class LakePiece extends BasePiece {
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) {
 								//TODO: 1.18 this needs to change to a dynamic block
-								bState = ENDSTONE;
+								bState = EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
 //								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
 //																				.getGenerationSettings()
 //																				.getSurfaceBuilderConfig()
@@ -194,7 +195,7 @@ public class LakePiece extends BasePiece {
 									BlockState bState = chunk.getBlockState(mut);
 									if (bState.isAir()) {
 										//TODO: 1.18 this needs to change to a dynamic block
-										bState = ENDSTONE;
+										bState =EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
 //										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
 //																						.getGenerationSettings()
 //																						.getSurfaceBuilderConfig()

@@ -29,6 +29,7 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.world.biome.EndBiome;
 
 public class SpireFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE;
@@ -68,12 +69,12 @@ public class SpireFeature extends DefaultFeature {
 					support.add(info.getPos().above());
 				}
 				//TODO: 1.18 this needs to change to a dynamic block
-				return Blocks.END_STONE.defaultBlockState();
+				return EndBiome.findTopMaterial(world, info.getPos());
 				//return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir()) {
 				//TODO: 1.18 this needs to change to a dynamic block
-				return Blocks.END_STONE.defaultBlockState();
+				return EndBiome.findUnderMaterial(world, info.getPos());
 //				return world.getBiome(info.getPos())
 //							.getGenerationSettings()
 //							.getSurfaceBuilderConfig()

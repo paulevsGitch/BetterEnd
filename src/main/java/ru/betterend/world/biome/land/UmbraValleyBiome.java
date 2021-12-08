@@ -1,7 +1,10 @@
 package ru.betterend.world.biome.land;
 
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
@@ -23,11 +26,11 @@ public class UmbraValleyBiome extends EndBiome.Config {
                .surface(
                        SurfaceRules.sequence(
                                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.sequence(
-                                       SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(0.4), PALLIDIUM_FULL),
+                                       SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(0.4), SurfaceRules.state(surfaceMaterial().getAltTopMaterial())),
                                        SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(0.15), PALLIDIUM_HEAVY),
                                        SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(-0.15), PALLIDIUM_THIN),
                                        SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(-0.4), PALLIDIUM_TINY)
-                               )), UMBRALITH
+                               )), SurfaceRules.state(surfaceMaterial().getTopMaterial())
                        )
                )
                .particles(EndParticles.AMBER_SPHERE, 0.0001F)
@@ -37,5 +40,20 @@ public class UmbraValleyBiome extends EndBiome.Config {
                .feature(EndFeatures.THIN_UMBRALITH_ARCH)
                .feature(EndFeatures.INFLEXIA)
                .feature(EndFeatures.FLAMMALIX);
+    }
+
+    @Override
+    protected SurfaceMaterialProvider surfaceMaterial() {
+        return new EndBiome.DefaultSurfaceMaterialProvider() {
+            @Override
+            public BlockState getTopMaterial() {
+                return EndBlocks.UMBRALITH.stone.defaultBlockState();
+            }
+
+            @Override
+            public BlockState getAltTopMaterial() {
+                return EndBlocks.PALLIDIUM_FULL.defaultBlockState();
+            }
+        };
     }
 }

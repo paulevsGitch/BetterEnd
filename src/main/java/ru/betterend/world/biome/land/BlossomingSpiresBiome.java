@@ -1,7 +1,10 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
@@ -23,7 +26,7 @@ public class BlossomingSpiresBiome extends EndBiome.Config {
 		builder.fogColor(241, 146, 229)
 			   .fogDensity(1.7F)
 			   .plantsColor(122, 45, 122)
-			   .surface(EndBlocks.PINK_MOSS)
+			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
 			   .music(EndSounds.MUSIC_FOREST)
 			   .loop(EndSounds.AMBIENT_BLOSSOMING_SPIRES)
 			   .feature(EndFeatures.SPIRE)
@@ -39,5 +42,15 @@ public class BlossomingSpiresBiome extends EndBiome.Config {
 			   .feature(EndFeatures.SILK_MOTH_NEST)
 			   .spawn(EntityType.ENDERMAN, 50, 1, 4)
 			   .spawn(EndEntities.SILK_MOTH, 5, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.PINK_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

@@ -21,6 +21,7 @@ import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
+import ru.betterend.world.biome.EndBiome;
 
 public class FloatingSpireFeature extends SpireFeature {
 	@Override
@@ -65,11 +66,11 @@ public class FloatingSpireFeature extends SpireFeature {
 					support.add(info.getPos().above());
 				}
 				//TODO: 1.18 this needs to change to a dynamic block
-				return Blocks.END_STONE.defaultBlockState();//world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+				return EndBiome.findTopMaterial(world, info.getPos());//world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir()) {
 				//TODO: 1.18 this needs to change to a dynamic block
-				return Blocks.END_STONE.defaultBlockState();
+				return EndBiome.findUnderMaterial(world, info.getPos());
 //				return world.getBiome(info.getPos())
 //							.getGenerationSettings()
 //							.getSurfaceBuilderConfig()

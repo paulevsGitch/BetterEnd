@@ -1,7 +1,10 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -22,7 +25,7 @@ public class UmbrellaJungleBiome extends EndBiome.Config {
 				.particles(EndParticles.JUNGLE_SPORE, 0.001F)
 				.music(EndSounds.MUSIC_FOREST)
 				.loop(EndSounds.AMBIENT_UMBRELLA_JUNGLE)
-				.surface(EndBlocks.JUNGLE_MOSS)
+			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
 				.feature(EndFeatures.END_LAKE)
 				.feature(EndFeatures.UMBRELLA_TREE)
 				.feature(EndFeatures.JELLYSHROOM)
@@ -42,5 +45,15 @@ public class UmbrellaJungleBiome extends EndBiome.Config {
 				.feature(EndFeatures.CHARNIA_RED_RARE)
 				.structure(VANILLA_FEATURES.getEND_CITY())
 				.spawn(EntityType.ENDERMAN, 50, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.JUNGLE_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

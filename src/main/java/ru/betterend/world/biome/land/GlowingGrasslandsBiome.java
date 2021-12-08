@@ -1,7 +1,10 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -20,7 +23,7 @@ public class GlowingGrasslandsBiome extends EndBiome.Config {
 			   .particles(EndParticles.FIREFLY, 0.001F)
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
-			   .surface(EndBlocks.END_MOSS)
+			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
 			   .waterAndFogColor(92, 250, 230)
 			   .plantsColor(73, 210, 209)
 			   .feature(EndFeatures.END_LAKE_RARE)
@@ -38,5 +41,15 @@ public class GlowingGrasslandsBiome extends EndBiome.Config {
 			   .feature(EndFeatures.CHARNIA_RED_RARE)
 			   .structure(VANILLA_FEATURES.getEND_CITY())
 			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.END_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

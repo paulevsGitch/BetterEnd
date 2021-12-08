@@ -1,7 +1,10 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -19,7 +22,7 @@ public class LanternWoodsBiome extends EndBiome.Config {
 			   .fogDensity(1.1F)
 			   .waterAndFogColor(171, 234, 226)
 			   .plantsColor(254, 85, 57)
-			   .surface(EndBlocks.RUTISCUS)
+			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
 			   .music(EndSounds.MUSIC_FOREST)
 			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
 			   .feature(EndFeatures.END_LAKE_NORMAL)
@@ -38,5 +41,15 @@ public class LanternWoodsBiome extends EndBiome.Config {
 			   .feature(EndFeatures.RUSCUS_WOOD)
 			   .structure(VANILLA_FEATURES.getEND_CITY())
 			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.RUTISCUS.defaultBlockState();
+			}
+		};
 	}
 }

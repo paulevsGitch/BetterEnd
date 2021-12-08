@@ -2,13 +2,18 @@ package ru.betterend.world.biome;
 
 import java.util.function.BiFunction;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.StructureFeaturesAccessor;
@@ -16,10 +21,30 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
-public class EndBiome extends BCLBiome {
+public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
+	public static class DefaultSurfaceMaterialProvider implements SurfaceMaterialProvider{
+		public static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
+		@Override
+		public BlockState getTopMaterial() {
+			return END_STONE;
+		}
+
+		@Override
+		public BlockState getAltTopMaterial() {
+			return getTopMaterial();
+		}
+
+		@Override
+		public BlockState getUnderMaterial() {
+			return END_STONE;
+		}
+	}
+
 	public abstract static class Config {
+		public static final SurfaceMaterialProvider DEFAULT_MATERIAL = new DefaultSurfaceMaterialProvider();
+
 		protected static final StructureFeaturesAccessor VANILLA_FEATURES = (StructureFeaturesAccessor)new StructureFeatures();
-		protected static final SurfaceRules.RuleSource END_STONE = SurfaceRules.state(Blocks.END_STONE.defaultBlockState());
+		protected static final SurfaceRules.RuleSource END_STONE = SurfaceRules.state(DefaultSurfaceMaterialProvider.END_STONE);
 		protected static final SurfaceRules.RuleSource END_MOSS = SurfaceRules.state(EndBlocks.END_MOSS.defaultBlockState());
 		protected static final SurfaceRules.RuleSource ENDSTONE_DUST = SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState());
 		protected static final SurfaceRules.RuleSource END_MYCELIUM = SurfaceRules.state(EndBlocks.END_MYCELIUM.defaultBlockState());
@@ -47,6 +72,10 @@ public class EndBiome extends BCLBiome {
 		protected boolean hasCaves(){
 			return true;
 		}
+
+		protected SurfaceMaterialProvider surfaceMaterial() {
+			return DEFAULT_MATERIAL;
+		}
 	}
 
 	public EndBiome(ResourceLocation biomeID, Biome biome) {
@@ -73,7 +102,54 @@ public class EndBiome extends BCLBiome {
 
 		EndBiome biome = builder.build(biomeConfig.getSupplier());
 		biome.addCustomData("has_caves", biomeConfig.hasCaves());
+		biome.setSurfaceMaterial(biomeConfig.surfaceMaterial());
 
 		return biome;
+	}
+
+
+	private SurfaceMaterialProvider surfMatProv = Config.DEFAULT_MATERIAL;
+	private void setSurfaceMaterial(SurfaceMaterialProvider prov) {
+		surfMatProv = prov;
+	}
+
+	@Override
+	public BlockState getTopMaterial() {
+		return surfMatProv.getTopMaterial();
+	}
+
+	public BlockState getUnderMaterial() {
+		return surfMatProv.getUnderMaterial();
+	}
+
+	@Override
+	public BlockState getAltTopMaterial() {
+		return surfMatProv.getAltTopMaterial();
+	}
+
+	public static BlockState findTopMaterial(BCLBiome biome){
+		if (biome instanceof SurfaceMaterialProvider smp){
+			return smp.getTopMaterial();
+		}
+		return EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial();
+	}
+
+	public static BlockState findTopMaterial(Biome biome){
+		return findTopMaterial(BiomeAPI.getBiome(biome));
+	}
+
+	public static BlockState findTopMaterial(WorldGenLevel world, BlockPos pos){
+		return findTopMaterial(BiomeAPI.getBiome(world.getBiome(pos)));
+	}
+
+	public static BlockState findUnderMaterial(BCLBiome biome){
+		if (biome instanceof SurfaceMaterialProvider smp){
+			return smp.getTopMaterial();
+		}
+		return EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial();
+	}
+
+	public static BlockState findUnderMaterial(WorldGenLevel world, BlockPos pos){
+		return findUnderMaterial(BiomeAPI.getBiome(world.getBiome(pos)));
 	}
 }

@@ -5,7 +5,6 @@ import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -20,9 +19,11 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import ru.bclib.api.TagAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.EndBiome;
 
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;
@@ -30,7 +31,7 @@ public class CrystalMountainPiece extends MountainPiece {
 	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
 		//TODO: 1.18 this needs to change to a dynamic block
-		top = Blocks.END_STONE.defaultBlockState(); //biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+		top = EndBiome.findTopMaterial(biome); //biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
 	public CrystalMountainPiece(StructurePieceSerializationContext type, CompoundTag tag) {
@@ -40,7 +41,7 @@ public class CrystalMountainPiece extends MountainPiece {
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		super.fromNbt(tag);//TODO: 1.18 this needs to change to a dynamic block
-		top = Blocks.END_STONE.defaultBlockState(); //BiomeAPI.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+		top = EndBiome.findTopMaterial(BiomeAPI.getBiome(biomeID)); //BiomeAPI.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
 	@Override

@@ -2,7 +2,11 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
@@ -19,7 +23,11 @@ public class NeonOasisBiome extends EndBiome.Config {
 			   .fogDensity(2)
 			   .waterAndFogColor(106, 238, 215)
 			   //TODO: 1.18 check surface Rules
-				.chancedSurface(ENDSTONE_DUST, END_MOSS, END_STONE)
+			   .chancedSurface(
+						SurfaceRules.state(surfaceMaterial().getTopMaterial()),
+						SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+						END_STONE
+				)
 			   //.surface(EndBlocks.ENDSTONE_DUST, EndBlocks.END_MOSS)
 			   .particles(ParticleTypes.WHITE_ASH, 0.01F)
 			   .loop(EndSounds.AMBIENT_DUST_WASTELANDS)
@@ -33,5 +41,20 @@ public class NeonOasisBiome extends EndBiome.Config {
 			   .feature(EndFeatures.CHARNIA_RED)
 			   .structure(VANILLA_FEATURES.getEND_CITY())
 			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.ENDSTONE_DUST.defaultBlockState();
+			}
+
+			@Override
+			public BlockState getAltTopMaterial() {
+				return EndBlocks.END_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

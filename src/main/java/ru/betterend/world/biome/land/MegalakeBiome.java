@@ -1,7 +1,11 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
@@ -23,7 +27,11 @@ public class MegalakeBiome extends EndBiome.Config {
 			   .music(EndSounds.MUSIC_WATER)
 			   .loop(EndSounds.AMBIENT_MEGALAKE)
 			   //TODO: 1.18 check surface Rules
-			   .chancedSurface(END_MOSS, ENDSTONE_DUST, END_STONE)
+			   .chancedSurface(
+					   SurfaceRules.state(surfaceMaterial().getTopMaterial()),
+					   SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+					   END_STONE
+			   )
 			   //.surface(EndBlocks.END_MOSS, EndBlocks.ENDSTONE_DUST)
 			   //TODO: 1.18 removed
 			   //.depth(0F)
@@ -43,5 +51,20 @@ public class MegalakeBiome extends EndBiome.Config {
 			   .spawn(EndEntities.CUBOZOA, 50, 3, 8)
 			   .spawn(EndEntities.END_SLIME, 5, 1, 2)
 			   .spawn(EntityType.ENDERMAN, 10, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.END_MOSS.defaultBlockState();
+			}
+
+			@Override
+			public BlockState getAltTopMaterial() {
+				return EndBlocks.ENDSTONE_DUST.defaultBlockState();
+			}
+		};
 	}
 }

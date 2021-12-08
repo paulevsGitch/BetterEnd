@@ -1,7 +1,10 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -21,7 +24,7 @@ public class DragonGraveyardsBiome extends EndBiome.Config {
 			   .particles(EndParticles.FIREFLY, 0.0007F)
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
-			   .surface(EndBlocks.SANGNUM)
+			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
 			   .waterAndFogColor(203, 59, 167)
 			   .plantsColor(244, 46, 79)
 			   .feature(EndFeatures.OBSIDIAN_PILLAR_BASEMENT)
@@ -34,5 +37,15 @@ public class DragonGraveyardsBiome extends EndBiome.Config {
 			   .feature(EndFeatures.GLOBULAGUS)
 			   .feature(EndFeatures.CLAWFERN)
 			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.SANGNUM.defaultBlockState();
+			}
+		};
 	}
 }

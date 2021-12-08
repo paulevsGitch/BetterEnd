@@ -15,6 +15,7 @@ import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
+import ru.betterend.world.biome.EndBiome;
 
 public class BiomeIslandFeature extends DefaultFeature {
 	private static final MutableBlockPos CENTER = new MutableBlockPos();
@@ -31,7 +32,7 @@ public class BiomeIslandFeature extends DefaultFeature {
 		Biome biome = world.getBiome(pos);
         int dist = BlocksHelper.downRay(world, pos, 10) + 1;
 		BlockPos surfacePos = new BlockPos(pos.getX(), pos.getY()-dist, pos.getZ());
-		BlockState topMaterial = world.getBlockState(surfacePos);
+		BlockState topMaterial = EndBiome.findTopMaterial(world, surfacePos);;
 
 		//TODO: 1.18 the block selection should be based on the surface rules of the biome
 		if (BlocksHelper.isFluid(topMaterial)) {
@@ -39,8 +40,7 @@ public class BiomeIslandFeature extends DefaultFeature {
 			underBlock = Blocks.STONE.defaultBlockState();
 		}
 		else {
-			topBlock = topMaterial.is(Blocks.AIR)?Blocks.GRASS_BLOCK.defaultBlockState():topMaterial;
-			underBlock = Blocks.DIRT.defaultBlockState();
+			underBlock = EndBiome.findUnderMaterial(world, surfacePos);
 		}
 
 		simplexNoise = new OpenSimplexNoise(world.getSeed());

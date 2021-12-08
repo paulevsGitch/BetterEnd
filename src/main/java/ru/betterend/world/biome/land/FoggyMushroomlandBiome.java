@@ -1,7 +1,11 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
+import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -22,7 +26,11 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
 			   .fogDensity(3)
 			   .waterAndFogColor(119, 227, 250)
 			   //TODO: 1.18 check surface Rules
-			   .chancedSurface(END_MOSS, END_MYCELIUM, END_STONE)
+			   .chancedSurface(
+					   SurfaceRules.state(surfaceMaterial().getTopMaterial()),
+					   SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+					   END_STONE
+			   )
 			   //.surface(EndBlocks.END_MOSS, EndBlocks.END_MYCELIUM)
 			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
 			   .loop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
@@ -47,5 +55,22 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
 			   .spawn(EndEntities.CUBOZOA, 10, 3, 8)
 			   .spawn(EndEntities.END_SLIME, 10, 1, 2)
 			   .spawn(EntityType.ENDERMAN, 10, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.END_MOSS.defaultBlockState();
+			}
+
+			@Override
+			public BlockState getAltTopMaterial() {
+				return EndBlocks.END_MYCELIUM.defaultBlockState();
+			}
+		};
+
+
 	}
 }

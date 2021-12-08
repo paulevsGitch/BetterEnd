@@ -2,7 +2,10 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
@@ -20,7 +23,7 @@ public class ShadowForestBiome extends EndBiome.Config {
 			   .fogDensity(2.5F)
 			   .plantsColor(45, 45, 45)
 			   .waterAndFogColor(42, 45, 80)
-			   .surface(EndBlocks.SHADOW_GRASS)
+			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
 			   .particles(ParticleTypes.MYCELIUM, 0.01F)
 			   .loop(EndSounds.AMBIENT_CHORUS_FOREST)
 			   .music(EndSounds.MUSIC_DARK)
@@ -42,5 +45,15 @@ public class ShadowForestBiome extends EndBiome.Config {
 			   .spawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
 			   .spawn(EntityType.ENDERMAN, 40, 1, 4)
 			   .spawn(EntityType.PHANTOM, 1, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.SHADOW_GRASS.defaultBlockState();
+			}
+		};
 	}
 }

@@ -18,11 +18,16 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.world.biome.EndBiome;
 
 public class EndLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 	private static final MutableBlockPos POS = new MutableBlockPos();
+
+	public EndLakeFeature(){
+
+	}
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
@@ -124,8 +129,8 @@ public class EndLakeFeature extends DefaultFeature {
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 									//TODO: 1.18 this needs to change to a dynamic block
-									state = Blocks.END_STONE.defaultBlockState();
-//									state = world.getBiome(pos)
+									state = EndBiome.findTopMaterial(world, pos);
+									//state = world.getBiome(pos)
 //												 .getGenerationSettings()
 //												 .getSurfaceBuilderConfig()
 //												 .getTopMaterial();
@@ -196,7 +201,7 @@ public class EndLakeFeature extends DefaultFeature {
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.isEmptyBlock(POS.above())) {
 								//TODO: 1.18 this needs to change to a dynamic block
-								state = Blocks.END_STONE.defaultBlockState();
+								state = EndBiome.findTopMaterial(world, pos);
 //								state = world.getBiome(POS)
 //											 .getGenerationSettings()
 //											 .getSurfaceBuilderConfig()

@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.SurfaceRules;
@@ -39,6 +40,10 @@ public class EndBiome extends BCLBiome {
 		protected boolean hasCaves(){
 			return true;
 		}
+
+		protected boolean spawnVanillaMobs(){
+			return true;
+		}
 	}
 
 	public EndBiome(ResourceLocation biomeID, Biome biome) {
@@ -58,6 +63,10 @@ public class EndBiome extends BCLBiome {
 				.temperature(0.5f)
 				.wetness(0.5f)
 				.precipitation(Biome.Precipitation.NONE);
+
+		if (biomeConfig.spawnVanillaMobs()){
+			builder.spawn(EntityType.ENDERMAN, 10, 1, 4);
+		}
 
 		biomeConfig.addCustomBuildData(builder);
 		EndFeatures.addDefaultFeatures(builder, biomeConfig.hasCaves());

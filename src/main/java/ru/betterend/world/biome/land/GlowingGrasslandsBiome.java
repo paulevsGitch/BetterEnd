@@ -23,7 +23,7 @@ public class GlowingGrasslandsBiome extends EndBiome.Config {
 			   .particles(EndParticles.FIREFLY, 0.001F)
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
-			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
+			   .surface(surfaceMaterial().getTopMaterial())
 			   .waterAndFogColor(92, 250, 230)
 			   .plantsColor(73, 210, 209)
 			   .feature(EndFeatures.END_LAKE_RARE)

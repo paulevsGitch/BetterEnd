@@ -2,7 +2,6 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
@@ -26,7 +25,7 @@ public class AmberLandBiome extends EndBiome.Config {
                .music(EndSounds.MUSIC_FOREST)
                .loop(EndSounds.AMBIENT_AMBER_LAND)
                .particles(EndParticles.AMBER_SPHERE, 0.001F)
-               .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
+               .surface(surfaceMaterial().getTopMaterial())
                .feature(EndFeatures.AMBER_ORE)
                .feature(EndFeatures.END_LAKE_RARE)
                .feature(EndFeatures.HELIX_TREE)

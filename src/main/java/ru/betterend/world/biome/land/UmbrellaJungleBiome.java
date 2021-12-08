@@ -25,7 +25,7 @@ public class UmbrellaJungleBiome extends EndBiome.Config {
 				.particles(EndParticles.JUNGLE_SPORE, 0.001F)
 				.music(EndSounds.MUSIC_FOREST)
 				.loop(EndSounds.AMBIENT_UMBRELLA_JUNGLE)
-			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
+			   .surface(surfaceMaterial().getTopMaterial())
 				.feature(EndFeatures.END_LAKE)
 				.feature(EndFeatures.UMBRELLA_TREE)
 				.feature(EndFeatures.JELLYSHROOM)

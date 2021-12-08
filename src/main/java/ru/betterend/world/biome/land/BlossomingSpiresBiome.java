@@ -2,7 +2,6 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
@@ -26,7 +25,7 @@ public class BlossomingSpiresBiome extends EndBiome.Config {
 		builder.fogColor(241, 146, 229)
 			   .fogDensity(1.7F)
 			   .plantsColor(122, 45, 122)
-			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
+			   .surface(surfaceMaterial().getTopMaterial())
 			   .music(EndSounds.MUSIC_FOREST)
 			   .loop(EndSounds.AMBIENT_BLOSSOMING_SPIRES)
 			   .feature(EndFeatures.SPIRE)

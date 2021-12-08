@@ -21,7 +21,7 @@ public class DryShrublandBiome extends EndBiome.Config {
 			   .fogDensity(1.2F)
 			   .waterAndFogColor(113, 88, 53)
 			   .plantsColor(237, 122, 66)
-			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
+			   .surface(surfaceMaterial().getTopMaterial())
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .feature(EndFeatures.LUCERNIA_BUSH_RARE)
 			   .feature(EndFeatures.ORANGO)

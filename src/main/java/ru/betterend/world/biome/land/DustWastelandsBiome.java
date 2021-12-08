@@ -20,7 +20,7 @@ public class DustWastelandsBiome extends EndBiome.Config {
 		builder.fogColor(226, 239, 168)
 			   .fogDensity(2)
 			   .waterAndFogColor(192, 180, 131)
-			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
+			   .surface(surfaceMaterial().getTopMaterial())
 			   //TODO: 1.18 removed
 			   //.depth(1.5F)
 			   .particles(ParticleTypes.WHITE_ASH, 0.01F)

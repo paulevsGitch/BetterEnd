@@ -24,7 +24,7 @@ public class PaintedMountainsBiome extends EndBiome.Config {
 			   .waterAndFogColor(192, 180, 131)
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .loop(EndSounds.AMBIENT_DUST_WASTELANDS)
-			   .surface(SurfaceRules.state(surfaceMaterial().getTopMaterial()))
+			   .surface(surfaceMaterial().getTopMaterial())
 			   .particles(ParticleTypes.WHITE_ASH, 0.01F)
 			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}

@@ -1,12 +1,14 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.surface.SulphuricSurfaceNoiseCondition;
 
 public class SulphurSpringsBiome extends EndBiome.Config {
 	public SulphurSpringsBiome() {
@@ -23,6 +25,13 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 		builder
 			   //TODO: 1.18 surface Rules
 			   //.surface(SurfaceBuilders.SULPHURIC_SURFACE.configured(SurfaceBuilders.DEFAULT_END_CONFIG))
+				.surface(
+					SurfaceRules.sequence(
+						SurfaceRules.ifTrue(new SulphuricSurfaceNoiseCondition(-0.6), END_STONE),
+						SurfaceRules.ifTrue(new SulphuricSurfaceNoiseCondition(-0.3), FLAVOLITE),
+						SurfaceRules.ifTrue(new SulphuricSurfaceNoiseCondition(0.5), SULPHURIC_ROCK),
+						BRIMSTONE
+				))
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .loop(EndSounds.AMBIENT_SULPHUR_SPRINGS)
 			   .waterColor(25, 90, 157)

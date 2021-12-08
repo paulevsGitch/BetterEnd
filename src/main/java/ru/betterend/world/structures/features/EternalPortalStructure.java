@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplie
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import ru.bclib.util.StructureHelper;
+import ru.bclib.world.structures.BCLStructureFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.structures.piece.NBTPiece;
 
@@ -30,6 +31,8 @@ public class EternalPortalStructure extends FeatureBaseStructure {
     }
 
     protected static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {
+        if (!BCLStructureFeature.isValidBiome(context)) return false;
+
         final ChunkPos chunkPos = context.chunkPos();
         final ChunkGenerator chunkGenerator = context.chunkGenerator();
         final LevelHeightAccessor levelHeightAccessor = context.heightAccessor();

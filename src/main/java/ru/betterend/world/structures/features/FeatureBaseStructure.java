@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import ru.bclib.world.structures.BCLStructureFeature;
 
 public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureConfiguration> {
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
@@ -21,7 +22,7 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 	}
 
 	protected static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {
-		return getGenerationHeight(context.chunkPos(), context.chunkGenerator(), context.heightAccessor()) >= 20;
+		return getGenerationHeight(context.chunkPos(), context.chunkGenerator(), context.heightAccessor()) >= 20 && BCLStructureFeature.isValidBiome(context);
 	}
 	
 	private static int getGenerationHeight(ChunkPos chunkPos, ChunkGenerator chunkGenerator, LevelHeightAccessor levelHeightAccessor) {

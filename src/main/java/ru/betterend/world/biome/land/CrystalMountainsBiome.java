@@ -19,7 +19,7 @@ public class CrystalMountainsBiome extends EndBiome.Config {
 			 .plantsColor(255, 133, 211)
 			 .surface(EndBlocks.CRYSTAL_MOSS)
 			 .music(EndSounds.MUSIC_OPENSPACE)
-			 .feature(EndFeatures.ROUND_CAVE)
+			 //.feature(EndFeatures.ROUND_CAVE)
 			 .feature(EndFeatures.CRYSTAL_GRASS)
 			 .spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}

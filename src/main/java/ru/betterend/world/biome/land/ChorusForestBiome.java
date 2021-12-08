@@ -32,8 +32,6 @@ public class ChorusForestBiome extends EndBiome.Config {
 			   .feature(EndFeatures.PYTHADENDRON_BUSH)
 			   .feature(EndFeatures.PURPLE_POLYPORE)
 			   .feature(Decoration.VEGETAL_DECORATION, EndPlacements.CHORUS_PLANT)
-			   //TODO: 1.18 why was this added twice?
-			   //.feature(Decoration.VEGETAL_DECORATION, EndPlacements.CHORUS_PLANT)
 			   .feature(EndFeatures.CHORUS_GRASS)
 			   .feature(EndFeatures.CHORUS_MUSHROOM)
 			   .feature(EndFeatures.TAIL_MOSS)

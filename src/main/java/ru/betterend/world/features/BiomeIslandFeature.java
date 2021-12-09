@@ -34,7 +34,6 @@ public class BiomeIslandFeature extends DefaultFeature {
 		BlockPos surfacePos = new BlockPos(pos.getX(), pos.getY()-dist, pos.getZ());
 		BlockState topMaterial = EndBiome.findTopMaterial(world, surfacePos);;
 
-		//TODO: 1.18 the block selection should be based on the surface rules of the biome
 		if (BlocksHelper.isFluid(topMaterial)) {
 			topBlock = Blocks.GRAVEL.defaultBlockState();
 			underBlock = Blocks.STONE.defaultBlockState();

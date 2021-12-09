@@ -91,8 +91,7 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 			return Blocks.WATER.defaultBlockState();
 		}
 		else if (state.getValue(WATERLOGGED) && facing == Direction.UP && neighborState.is(Blocks.WATER)) {
-			//TODO: 1.18 see if it still ticks
-			world./*getBlockTicks().*/scheduleTick(pos, this, 20);
+			world.scheduleTick(pos, this, 20);
 		}
 		return state;
 	}
@@ -120,8 +119,7 @@ public class HydrothermalVentBlock extends BaseBlockNotFull implements EntityBlo
 		BlockPos up = pos.above();
 		if (world.getBlockState(up).is(Blocks.WATER)) {
 			BlocksHelper.setWithoutUpdate(world, up, EndBlocks.VENT_BUBBLE_COLUMN);
-			//TODO: 1.18 see if it still ticks
-			world./*getBlockTicks().*/scheduleTick(up, EndBlocks.VENT_BUBBLE_COLUMN, 5);
+			world.scheduleTick(up, EndBlocks.VENT_BUBBLE_COLUMN, 5);
 		}
 	}
 	

@@ -21,8 +21,6 @@ public class UmbraValleyBiome extends EndBiome.Config {
         builder.fogColor(100, 100, 100)
                .plantsColor(172, 189, 190)
                .waterAndFogColor(69, 104, 134)
-               //TODO: 1.18 check surface Rules
-               //.surface(SurfaceBuilders.UMBRA_SURFACE.configured(SurfaceBuilders.DEFAULT_END_CONFIG))
                .surface(
                        SurfaceRules.sequence(
                                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.sequence(

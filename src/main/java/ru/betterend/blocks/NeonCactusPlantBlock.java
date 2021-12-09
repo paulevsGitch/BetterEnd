@@ -116,8 +116,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 	
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
-		//TODO: 1.18 Check if this still workd
-		world./*getBlockTicks().*/scheduleTick(pos, this, 2);
+		world.scheduleTick(pos, this, 2);
 		if (state.getValue(WATERLOGGED)) {
 			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}

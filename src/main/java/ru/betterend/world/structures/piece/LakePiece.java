@@ -210,7 +210,8 @@ public class LakePiece extends BasePiece {
 						}
 						else if (chunk.getBlockState(mut.move(Direction.UP)).isAir()) {
 							//TODO: 1.18 test if this is thr right tick
-							/*chunk.getLiquidTicks()*/world.scheduleTick(mut.move(Direction.DOWN), state.getType(), 0);
+							chunk.markPosForPostprocessing(mut.move(Direction.DOWN));
+//							/*chunk.getLiquidTicks()*/world.scheduleTick(mut.move(Direction.DOWN), state.getType(), 0);
 						}
 					}
 				}

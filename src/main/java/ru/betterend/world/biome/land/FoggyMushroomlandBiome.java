@@ -25,13 +25,11 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
 			   .fogColor(41, 122, 173)
 			   .fogDensity(3)
 			   .waterAndFogColor(119, 227, 250)
-			   //TODO: 1.18 check surface Rules
 			   .chancedSurface(
 					   SurfaceRules.state(surfaceMaterial().getTopMaterial()),
 					   SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
 					   END_STONE
 			   )
-			   //.surface(EndBlocks.END_MOSS, EndBlocks.END_MYCELIUM)
 			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
 			   .loop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
 			   .music(EndSounds.MUSIC_FOREST)

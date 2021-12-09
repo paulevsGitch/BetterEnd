@@ -22,13 +22,11 @@ public class NeonOasisBiome extends EndBiome.Config {
 			   .fogColor(226, 239, 168)
 			   .fogDensity(2)
 			   .waterAndFogColor(106, 238, 215)
-			   //TODO: 1.18 check surface Rules
 			   .chancedSurface(
 						SurfaceRules.state(surfaceMaterial().getTopMaterial()),
 						SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
 						END_STONE
 				)
-			   //.surface(EndBlocks.ENDSTONE_DUST, EndBlocks.END_MOSS)
 			   .particles(ParticleTypes.WHITE_ASH, 0.01F)
 			   .loop(EndSounds.AMBIENT_DUST_WASTELANDS)
 			   .music(EndSounds.MUSIC_OPENSPACE)

@@ -31,7 +31,7 @@ public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
 		TerrainGenerator.initNoise(seed);
 	}
 
-	//TODO: 1.18 Find anothe rplace for this
+	//TODO: 1.18 Find another place for this
 //	@Inject(method = "fillNoiseColumn([DIIII)V", at = @At("HEAD"), cancellable = true, allow = 2)
 //	private void be_fillNoiseColumn(double[] buffer, int x, int z, int k, int l, CallbackInfo info) {
 //		if (GeneratorOptions.useNewGenerator() && settings.get().stable(NoiseGeneratorSettings.END)) {

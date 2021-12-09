@@ -26,13 +26,11 @@ public class MegalakeBiome extends EndBiome.Config {
 			   .fogDensity(1.75F)
 			   .music(EndSounds.MUSIC_WATER)
 			   .loop(EndSounds.AMBIENT_MEGALAKE)
-			   //TODO: 1.18 check surface Rules
 			   .chancedSurface(
 					   SurfaceRules.state(surfaceMaterial().getTopMaterial()),
 					   SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
 					   END_STONE
 			   )
-			   //.surface(EndBlocks.END_MOSS, EndBlocks.ENDSTONE_DUST)
 			   //TODO: 1.18 removed
 			   //.depth(0F)
 			   .feature(EndFeatures.END_LOTUS)

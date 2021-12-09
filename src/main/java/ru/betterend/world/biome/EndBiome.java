@@ -128,10 +128,7 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 	}
 
 	public static BlockState findTopMaterial(BCLBiome biome){
-		if (biome instanceof SurfaceMaterialProvider smp){
-			return smp.getTopMaterial();
-		}
-		return EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial();
+		return BiomeAPI.findTopMaterial(biome).orElse(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
 	}
 
 	public static BlockState findTopMaterial(Biome biome){
@@ -143,10 +140,7 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 	}
 
 	public static BlockState findUnderMaterial(BCLBiome biome){
-		if (biome instanceof SurfaceMaterialProvider smp){
-			return smp.getTopMaterial();
-		}
-		return EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial();
+		return BiomeAPI.findUnderMaterial(biome).orElse(EndBiome.Config.DEFAULT_MATERIAL.getUnderMaterial());
 	}
 
 	public static BlockState findUnderMaterial(WorldGenLevel world, BlockPos pos){

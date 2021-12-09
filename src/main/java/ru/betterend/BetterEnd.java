@@ -82,7 +82,7 @@ public class BetterEnd implements ModInitializer {
 		Configs.saveConfigs();
 
 		if (GeneratorOptions.useNewGenerator()) {
-			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes(GeneratorOptions.getIslandDistBlock() > 250000L);
+			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes((int)GeneratorOptions.getIslandDistBlock());
 			ru.bclib.world.generator.GeneratorOptions.setEndLandFunction((pos) -> TerrainGenerator.isLand(pos.x, pos.y));
 		}
 

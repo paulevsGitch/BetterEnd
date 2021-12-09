@@ -124,7 +124,6 @@ public class DesertLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
-									//TODO: 1.18 this needs to change to a dynamic block
 									state = EndBiome.findTopMaterial(world, pos); //world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
@@ -197,7 +196,6 @@ public class DesertLakeFeature extends DefaultFeature {
 							}
 							else if (y < waterLevel) {
 								if (world.isEmptyBlock(POS.above())) {
-									//TODO: 1.18 this needs to change to a dynamic block
 									state = EndBiome.findTopMaterial(world, pos); //world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 									BlocksHelper.setWithoutUpdate(
 										world,

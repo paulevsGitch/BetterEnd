@@ -128,7 +128,6 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
-									//TODO: 1.18 this needs to change to a dynamic block
 									state = EndBiome.findTopMaterial(world, pos);
 									//state = world.getBiome(pos)
 //												 .getGenerationSettings()
@@ -200,7 +199,6 @@ public class EndLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.isEmptyBlock(POS.above())) {
-								//TODO: 1.18 this needs to change to a dynamic block
 								state = EndBiome.findTopMaterial(world, pos);
 //								state = world.getBiome(POS)
 //											 .getGenerationSettings()

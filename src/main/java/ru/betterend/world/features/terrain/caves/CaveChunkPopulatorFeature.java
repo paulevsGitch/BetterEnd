@@ -42,7 +42,6 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		MutableBlockPos max = new MutableBlockPos().set(pos);
 		fillSets(sx, sz, world.getChunk(pos), floorPositions, ceilPositions, min, max);
 		EndCaveBiome biome = supplier.get();
-		//TODO: 1.18 This needs to change to a configured material
 		BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState(); //biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 		placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		placeCeil(world, biome, ceilPositions, random);

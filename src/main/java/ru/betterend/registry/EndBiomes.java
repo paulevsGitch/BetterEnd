@@ -160,6 +160,6 @@ public class EndBiomes {
 	}
 	
 	public static EndCaveBiome getCaveBiome(int x, int z) {
-		return (EndCaveBiome) caveBiomeMap.getBiome(x, z);
+		return (EndCaveBiome) caveBiomeMap.getBiome(x, 5, z);
 	}
 }

@@ -65,11 +65,9 @@ public class FloatingSpireFeature extends SpireFeature {
 				if (random.nextInt(16) == 0) {
 					support.add(info.getPos().above());
 				}
-				//TODO: 1.18 this needs to change to a dynamic block
 				return EndBiome.findTopMaterial(world, info.getPos());//world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir()) {
-				//TODO: 1.18 this needs to change to a dynamic block
 				return EndBiome.findUnderMaterial(world, info.getPos());
 //				return world.getBiome(info.getPos())
 //							.getGenerationSettings()

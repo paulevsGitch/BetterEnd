@@ -168,7 +168,6 @@ public class TunelCaveFeature extends EndCaveFeature {
 		}
 		
 		floorSets.forEach((biome, floorPositions) -> {
-			//TODO: 1.18 this needs to change to a dynamic block
 			BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState();
 //			BlockState surfaceBlock = biome.getBiome()
 //										   .getGenerationSettings()

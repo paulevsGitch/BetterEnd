@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
-import ru.bclib.api.biomes.SurfaceMaterialProvider;
+import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;

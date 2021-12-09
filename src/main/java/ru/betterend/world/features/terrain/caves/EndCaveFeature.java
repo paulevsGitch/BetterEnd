@@ -76,7 +76,6 @@ public abstract class EndCaveFeature extends DefaultFeature {
 					}
 				});
 
-				//TODO: 1.18 this needs to change to a dynamic block
 				BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState(); //biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 				placeFloor(world, biome, floorPositions, random, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, random);

@@ -30,7 +30,6 @@ public class CrystalMountainPiece extends MountainPiece {
 	
 	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
-		//TODO: 1.18 this needs to change to a dynamic block
 		top = EndBiome.findTopMaterial(biome); //biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
@@ -40,7 +39,7 @@ public class CrystalMountainPiece extends MountainPiece {
 	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
-		super.fromNbt(tag);//TODO: 1.18 this needs to change to a dynamic block
+		super.fromNbt(tag);
 		top = EndBiome.findTopMaterial(BiomeAPI.getBiome(biomeID)); //BiomeAPI.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	

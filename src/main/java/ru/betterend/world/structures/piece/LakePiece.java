@@ -133,7 +133,6 @@ public class LakePiece extends BasePiece {
 						)) {
 							state = chunk.getBlockState(mut.above());
 							if (state.isAir()) {
-								//TODO: 1.18 this needs to change to a dynamic block
 								state = EndBiome.findTopMaterial(world, worldPos);
 //								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos)
 //																			   .getGenerationSettings()
@@ -170,7 +169,6 @@ public class LakePiece extends BasePiece {
 							
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) {
-								//TODO: 1.18 this needs to change to a dynamic block
 								bState = EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
 //								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
 //																				.getGenerationSettings()
@@ -194,7 +192,6 @@ public class LakePiece extends BasePiece {
 									mut.setY(y + 1);
 									BlockState bState = chunk.getBlockState(mut);
 									if (bState.isAir()) {
-										//TODO: 1.18 this needs to change to a dynamic block
 										bState =EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
 //										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
 //																						.getGenerationSettings()

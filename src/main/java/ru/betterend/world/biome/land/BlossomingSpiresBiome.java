@@ -3,7 +3,7 @@ package ru.betterend.world.biome.land;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
-import ru.bclib.api.biomes.SurfaceMaterialProvider;
+import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;

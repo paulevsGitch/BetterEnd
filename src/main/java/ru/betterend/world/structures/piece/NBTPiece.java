@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.EndBiome;
 
 public class NBTPiece extends BasePiece {
 	private ResourceLocation structureID;
@@ -89,7 +90,7 @@ public class NBTPiece extends BasePiece {
 			StructureHelper.erode(world, bounds, erosion, random);
 		}
 		if (cover) {
-			StructureHelper.cover(world, bounds, random);
+			StructureHelper.cover(world, bounds, random, EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
 		}
 	}
 	

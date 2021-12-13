@@ -1,6 +1,6 @@
 package ru.betterend.world.surface;
 
-import ru.bclib.api.biomes.SurfaceNoiseCondition;
+import ru.bclib.api.surface.rules.SurfaceNoiseCondition;
 import ru.bclib.mixin.common.SurfaceRulesContextAccessor;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;

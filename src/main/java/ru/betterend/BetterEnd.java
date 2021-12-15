@@ -3,6 +3,7 @@ package ru.betterend;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biomes;
 import ru.bclib.api.WorldDataAPI;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.Logger;
@@ -67,8 +68,10 @@ public class BetterEnd implements ModInitializer {
 		}
 
 		BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
-			EndStructures.addBiomeStructures(biomeID, biome);
-			EndFeatures.addBiomeFeatures(biomeID, biome);
+			if (!biomeID.equals(Biomes.THE_VOID.location())) {
+				EndStructures.addBiomeStructures(biomeID, biome);
+				EndFeatures.addBiomeFeatures(biomeID, biome);
+			}
 		});
 
 	}

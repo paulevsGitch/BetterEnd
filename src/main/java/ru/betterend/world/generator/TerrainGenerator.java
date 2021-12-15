@@ -11,7 +11,9 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.BiomeSource;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
+import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
 
 public class TerrainGenerator {
@@ -83,23 +85,22 @@ public class TerrainGenerator {
 	}
 	
 	private static float getAverageDepth(BiomeSource biomeSource, int x, int z) {
-		//TODO: 1.18 find alternative
-//		if (getBiome(biomeSource, x, z).getDepth() < 0.1F) {
-//			return 0F;
-//		}
-//		float depth = 0F;
-//		for (int i = 0; i < OFFS.length; i++) {
-//			int px = x + OFFS[i].x;
-//			int pz = z + OFFS[i].y;
-//			depth += getBiome(biomeSource, px, pz).getDepth() * COEF[i];
-//		}
-//		return depth;
-		return 0;
+		if (getBiome(biomeSource, x, z).getTerrainHeight() < 0.1F) {
+			return 0F;
+		}
+		float depth = 0F;
+		for (int i = 0; i < OFFS.length; i++) {
+			int px = x + OFFS[i].x;
+			int pz = z + OFFS[i].y;
+			depth += getBiome(biomeSource, px, pz).getTerrainHeight() * COEF[i];
+		}
+		return depth;
 	}
 	
-//	private static Biome getBiome(BiomeSource biomeSource, int x, int z) {
-//		return biomeSource.getNoiseBiome(x, 0, z);
-//	}
+	private static BCLBiome getBiome(BiomeSource biomeSource, int x, int z) {
+		// TODO replace null sampler
+		return BiomeAPI.getBiome(biomeSource.getNoiseBiome(x, 0, z, null));
+	}
 	
 	/**
 	 * Check if this is land

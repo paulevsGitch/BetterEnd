@@ -2,7 +2,6 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
@@ -26,11 +25,6 @@ public class MegalakeBiome extends EndBiome.Config {
 			   .fogDensity(1.75F)
 			   .music(EndSounds.MUSIC_WATER)
 			   .loop(EndSounds.AMBIENT_MEGALAKE)
-			   .chancedSurface(
-					   SurfaceRules.state(surfaceMaterial().getTopMaterial()),
-					   SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
-					   END_STONE
-			   )
 			   //TODO: 1.18 removed
 			   //.depth(0F)
 			   .feature(EndFeatures.END_LOTUS)

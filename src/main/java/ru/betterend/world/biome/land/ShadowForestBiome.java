@@ -22,7 +22,6 @@ public class ShadowForestBiome extends EndBiome.Config {
 			   .fogDensity(2.5F)
 			   .plantsColor(45, 45, 45)
 			   .waterAndFogColor(42, 45, 80)
-			   .surface(surfaceMaterial().getTopMaterial())
 			   .particles(ParticleTypes.MYCELIUM, 0.01F)
 			   .loop(EndSounds.AMBIENT_CHORUS_FOREST)
 			   .music(EndSounds.MUSIC_DARK)

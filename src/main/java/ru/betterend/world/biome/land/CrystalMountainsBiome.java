@@ -19,7 +19,6 @@ public class CrystalMountainsBiome extends EndBiome.Config {
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder.structure(EndStructures.MOUNTAIN.getFeatureConfigured())
 			 .plantsColor(255, 133, 211)
-			   .surface(surfaceMaterial().getTopMaterial())
 			 .music(EndSounds.MUSIC_OPENSPACE)
 			 .feature(EndFeatures.CRYSTAL_GRASS)
 			 .spawn(EntityType.ENDERMAN, 50, 1, 2);

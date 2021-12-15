@@ -25,7 +25,6 @@ public class BlossomingSpiresBiome extends EndBiome.Config {
 		builder.fogColor(241, 146, 229)
 			   .fogDensity(1.7F)
 			   .plantsColor(122, 45, 122)
-			   .surface(surfaceMaterial().getTopMaterial())
 			   .music(EndSounds.MUSIC_FOREST)
 			   .loop(EndSounds.AMBIENT_BLOSSOMING_SPIRES)
 			   .feature(EndFeatures.SPIRE)

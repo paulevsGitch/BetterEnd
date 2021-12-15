@@ -1,10 +1,14 @@
 package ru.betterend.world.biome.land;
 
+import java.util.List;
+
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.surface.SurfaceRuleBuilder;
+import ru.bclib.api.surface.rules.SwitchRuleSource;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
@@ -27,13 +31,6 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder
-			   .surface(
-					SurfaceRules.sequence(
-						SurfaceRules.ifTrue(new SulphuricSurfaceNoiseCondition(-0.6), SurfaceRules.state(surfaceMaterial().getAltTopMaterial())),
-						SurfaceRules.ifTrue(new SulphuricSurfaceNoiseCondition(-0.3), SurfaceRules.state(surfaceMaterial().getTopMaterial())),
-						SurfaceRules.ifTrue(new SulphuricSurfaceNoiseCondition(0.5), SULPHURIC_ROCK),
-						BRIMSTONE
-				))
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .loop(EndSounds.AMBIENT_SULPHUR_SPRINGS)
 			   .waterColor(25, 90, 157)
@@ -67,6 +64,30 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 			@Override
 			public BlockState getAltTopMaterial() {
 				return Blocks.END_STONE.defaultBlockState();
+			}
+
+			@Override
+			public boolean generateFloorRule() {
+				return false;
+			}
+
+			@Override
+			public SurfaceRuleBuilder surface() {
+				return super
+						.surface()
+						.rule(
+							SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
+								new SwitchRuleSource(
+									new SulphuricSurfaceNoiseCondition(),
+									List.of(
+										SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+										SurfaceRules.state(surfaceMaterial().getTopMaterial()),
+										SULPHURIC_ROCK,
+										BRIMSTONE
+									)
+								)
+							)
+						);
 			}
 		};
 	}

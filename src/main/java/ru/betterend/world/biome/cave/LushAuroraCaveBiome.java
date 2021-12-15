@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.blocks.BlockProperties;
+import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -58,11 +59,21 @@ public class LushAuroraCaveBiome extends EndCaveBiome.Config {
 			   .plantsColor(108, 25, 46)
 			   .waterAndFogColor(186, 77, 237)
 			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
-			   .surface(EndBlocks.CAVE_MOSS);
+			   ;
 	}
 
 	@Override
 	public BiFunction<ResourceLocation, net.minecraft.world.level.biome.Biome, EndBiome> getSupplier() {
 		return LushAuroraCaveBiome.Biome::new;
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.CAVE_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

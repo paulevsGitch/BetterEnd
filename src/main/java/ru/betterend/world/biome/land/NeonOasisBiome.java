@@ -3,7 +3,6 @@ package ru.betterend.world.biome.land;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
@@ -22,11 +21,6 @@ public class NeonOasisBiome extends EndBiome.Config {
 			   .fogColor(226, 239, 168)
 			   .fogDensity(2)
 			   .waterAndFogColor(106, 238, 215)
-			   .chancedSurface(
-						SurfaceRules.state(surfaceMaterial().getTopMaterial()),
-						SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
-						END_STONE
-				)
 			   .particles(ParticleTypes.WHITE_ASH, 0.01F)
 			   .loop(EndSounds.AMBIENT_DUST_WASTELANDS)
 			   .music(EndSounds.MUSIC_OPENSPACE)

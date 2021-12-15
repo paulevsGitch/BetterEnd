@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.surface.SurfaceRuleBuilder;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.BetterEnd;
@@ -37,6 +38,28 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 		@Override
 		public BlockState getUnderMaterial() {
 			return END_STONE;
+		}
+
+		@Override
+		public boolean generateFloorRule(){
+			return true;
+		}
+
+		@Override
+		public SurfaceRuleBuilder surface() {
+			SurfaceRuleBuilder builder = SurfaceRuleBuilder
+					.start()
+					.filler(getUnderMaterial())
+					;
+
+			if (generateFloorRule() && getTopMaterial()!=getUnderMaterial()){
+				if (getTopMaterial()!=getAltTopMaterial()){
+					builder.floor(getTopMaterial());
+				} else {
+					builder.chancedFloor(getTopMaterial(), getAltTopMaterial());
+				}
+			}
+			return builder;
 		}
 	}
 
@@ -94,7 +117,8 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 				.mood(EndSounds.AMBIENT_DUST_WASTELANDS)
 				.temperature(0.5f)
 				.wetness(0.5f)
-				.precipitation(Biome.Precipitation.NONE);
+				.precipitation(Biome.Precipitation.NONE)
+				.surface(biomeConfig.surfaceMaterial().surface().build());
 
 		biomeConfig.addCustomBuildData(builder);
 		EndFeatures.addDefaultFeatures(builder, biomeConfig.hasCaves());
@@ -118,6 +142,7 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 		return surfMatProv.getTopMaterial();
 	}
 
+	@Override
 	public BlockState getUnderMaterial() {
 		return surfMatProv.getUnderMaterial();
 	}
@@ -126,6 +151,12 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 	public BlockState getAltTopMaterial() {
 		return surfMatProv.getAltTopMaterial();
 	}
+
+	@Override
+	public boolean generateFloorRule() { return surfMatProv.generateFloorRule(); }
+
+	@Override
+	public SurfaceRuleBuilder surface() { return surfMatProv.surface(); }
 
 	public static BlockState findTopMaterial(BCLBiome biome){
 		return BiomeAPI.findTopMaterial(biome).orElse(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());

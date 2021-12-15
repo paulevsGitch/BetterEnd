@@ -23,7 +23,6 @@ public class DragonGraveyardsBiome extends EndBiome.Config {
 			   .particles(EndParticles.FIREFLY, 0.0007F)
 			   .music(EndSounds.MUSIC_OPENSPACE)
 			   .loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
-			   .surface(surfaceMaterial().getTopMaterial())
 			   .waterAndFogColor(203, 59, 167)
 			   .plantsColor(244, 46, 79)
 			   .feature(EndFeatures.OBSIDIAN_PILLAR_BASEMENT)

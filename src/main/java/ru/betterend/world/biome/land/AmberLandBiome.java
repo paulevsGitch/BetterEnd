@@ -25,7 +25,6 @@ public class AmberLandBiome extends EndBiome.Config {
                .music(EndSounds.MUSIC_FOREST)
                .loop(EndSounds.AMBIENT_AMBER_LAND)
                .particles(EndParticles.AMBER_SPHERE, 0.001F)
-               .surface(surfaceMaterial().getTopMaterial())
                .feature(EndFeatures.AMBER_ORE)
                .feature(EndFeatures.END_LAKE_RARE)
                .feature(EndFeatures.HELIX_TREE)

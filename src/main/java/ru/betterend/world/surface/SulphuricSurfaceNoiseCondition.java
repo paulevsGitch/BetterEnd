@@ -1,37 +1,28 @@
 package ru.betterend.world.surface;
 
-import ru.bclib.api.surface.rules.SurfaceNoiseCondition;
+import ru.bclib.interfaces.NumericProvider;
 import ru.bclib.mixin.common.SurfaceRulesContextAccessor;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 
-public class SulphuricSurfaceNoiseCondition extends SurfaceNoiseCondition {
+/**
+ * Noise source that returns a value in [0, 3]
+ */
+public class SulphuricSurfaceNoiseCondition implements NumericProvider {
     private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(5123);
 
-    private final double threshold;
-    public SulphuricSurfaceNoiseCondition(double threshold){
-        this.threshold = threshold;
-    }
-
-    private static int lastX = Integer.MIN_VALUE;
-    private static int lastZ = Integer.MIN_VALUE;
-    private static double lastValue = 0;
-    
     @Override
-    public boolean test(SurfaceRulesContextAccessor context) {
+    public int getNumber(SurfaceRulesContextAccessor context) {
         final int x = context.getBlockX();
         final int z = context.getBlockZ();
-        if (lastX==x && lastZ==z) return lastValue < threshold;
-
-        double value = NOISE.eval(x * 0.03, z * 0.03) + NOISE.eval(x * 0.1, z * 0.1) * 0.3 + MHelper.randRange(
+        final double value = NOISE.eval(x * 0.03, z * 0.03) + NOISE.eval(x * 0.1, z * 0.1) * 0.3 + MHelper.randRange(
                 -0.1,
                 0.1,
                 MHelper.RANDOM
         );
-
-        lastX=x;
-        lastZ=z;
-        lastValue=value;
-        return value < threshold;
+        if (value < -0.6) return 0;
+        if (value < -0.3) return 1;
+        if (value < -0.5) return 2;
+        return 3;
     }
 }

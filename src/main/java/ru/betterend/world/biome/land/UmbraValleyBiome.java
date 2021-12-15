@@ -1,8 +1,12 @@
 package ru.betterend.world.biome.land;
 
+import java.util.List;
+
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.surface.SurfaceRuleBuilder;
+import ru.bclib.api.surface.rules.SwitchRuleSource;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
@@ -21,16 +25,6 @@ public class UmbraValleyBiome extends EndBiome.Config {
         builder.fogColor(100, 100, 100)
                .plantsColor(172, 189, 190)
                .waterAndFogColor(69, 104, 134)
-               .surface(
-                       SurfaceRules.sequence(
-                               SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.sequence(
-                                       SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(0.4), SurfaceRules.state(surfaceMaterial().getAltTopMaterial())),
-                                       SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(0.15), PALLIDIUM_HEAVY),
-                                       SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(-0.15), PALLIDIUM_THIN),
-                                       SurfaceRules.ifTrue(new UmbraSurfaceNoiseCondition(-0.4), PALLIDIUM_TINY)
-                               )), SurfaceRules.state(surfaceMaterial().getTopMaterial())
-                       )
-               )
                .particles(EndParticles.AMBER_SPHERE, 0.0001F)
                .loop(EndSounds.UMBRA_VALLEY)
                .music(EndSounds.MUSIC_DARK)
@@ -51,6 +45,31 @@ public class UmbraValleyBiome extends EndBiome.Config {
             @Override
             public BlockState getAltTopMaterial() {
                 return EndBlocks.PALLIDIUM_FULL.defaultBlockState();
+            }
+
+            @Override
+            public boolean generateFloorRule() {
+                return false;
+            }
+
+            @Override
+            public SurfaceRuleBuilder surface() {
+                return super
+                        .surface()
+                        .rule(
+                                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
+                                        new SwitchRuleSource(
+                                                new UmbraSurfaceNoiseCondition(),
+                                                List.of(
+                                                        SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+                                                        PALLIDIUM_HEAVY,
+                                                        PALLIDIUM_THIN,
+                                                        PALLIDIUM_TINY,
+                                                        SurfaceRules.state(surfaceMaterial().getTopMaterial())
+                                                )
+                                        )
+                                )
+                        );
             }
         };
     }

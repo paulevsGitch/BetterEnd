@@ -24,7 +24,6 @@ public class ChorusForestBiome extends EndBiome.Config {
 			   .fogDensity(1.5F)
 			   .plantsColor(122, 45, 122)
 			   .waterAndFogColor(73, 30, 73)
-			   .surface(surfaceMaterial().getTopMaterial())
 			   .particles(ParticleTypes.PORTAL, 0.01F)
 			   .loop(EndSounds.AMBIENT_CHORUS_FOREST)
 			   .music(EndSounds.MUSIC_DARK)

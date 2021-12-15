@@ -3,7 +3,9 @@ package ru.betterend.world.biome.cave;
 import java.util.function.BiFunction;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
@@ -42,12 +44,21 @@ public class LushSmaragdantCaveBiome extends EndCaveBiome.Config {
 			   .fogDensity(2.0F)
 			   .plantsColor(0, 131, 145)
 			   .waterAndFogColor(31, 167, 212)
-			   .particles(EndParticles.SMARAGDANT, 0.001F)
-				.surface(EndBlocks.CAVE_MOSS);
+			   .particles(EndParticles.SMARAGDANT, 0.001F);
 	}
 
 	@Override
 	public BiFunction<ResourceLocation, net.minecraft.world.level.biome.Biome, EndBiome> getSupplier() {
 		return LushSmaragdantCaveBiome.Biome::new;
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.CAVE_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

@@ -21,7 +21,6 @@ public class LanternWoodsBiome extends EndBiome.Config {
 			   .fogDensity(1.1F)
 			   .waterAndFogColor(171, 234, 226)
 			   .plantsColor(254, 85, 57)
-			   .surface(surfaceMaterial().getTopMaterial())
 			   .music(EndSounds.MUSIC_FOREST)
 			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
 			   .feature(EndFeatures.END_LAKE_NORMAL)

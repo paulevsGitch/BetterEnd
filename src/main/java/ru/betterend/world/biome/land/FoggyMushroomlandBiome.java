@@ -2,7 +2,6 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
@@ -25,11 +24,6 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
 			   .fogColor(41, 122, 173)
 			   .fogDensity(3)
 			   .waterAndFogColor(119, 227, 250)
-			   .chancedSurface(
-					   SurfaceRules.state(surfaceMaterial().getTopMaterial()),
-					   SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
-					   END_STONE
-			   )
 			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
 			   .loop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
 			   .music(EndSounds.MUSIC_FOREST)

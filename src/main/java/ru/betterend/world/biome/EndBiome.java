@@ -1,7 +1,5 @@
 package ru.betterend.world.biome;
 
-import java.util.function.BiFunction;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
@@ -22,12 +20,14 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 
+import java.util.function.BiFunction;
+
 public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 	public static class DefaultSurfaceMaterialProvider implements SurfaceMaterialProvider{
 		public static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 		@Override
 		public BlockState getTopMaterial() {
-			return END_STONE;
+			return getUnderMaterial();
 		}
 
 		@Override
@@ -47,11 +47,8 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 
 		@Override
 		public SurfaceRuleBuilder surface() {
-			SurfaceRuleBuilder builder = SurfaceRuleBuilder
-					.start()
-					.filler(getUnderMaterial())
-					;
-
+			SurfaceRuleBuilder builder = SurfaceRuleBuilder.start();
+			
 			if (generateFloorRule() && getTopMaterial()!=getUnderMaterial()){
 				if (getTopMaterial()!=getAltTopMaterial()){
 					builder.floor(getTopMaterial());
@@ -59,7 +56,7 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 					builder.chancedFloor(getTopMaterial(), getAltTopMaterial());
 				}
 			}
-			return builder;
+			return builder.filler(getUnderMaterial());
 		}
 	}
 

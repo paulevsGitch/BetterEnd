@@ -1,7 +1,5 @@
 package ru.betterend.world.biome.land;
 
-import java.util.List;
-
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,6 +15,8 @@ import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.surface.SulphuricSurfaceNoiseCondition;
+
+import java.util.List;
 
 public class SulphurSpringsBiome extends EndBiome.Config {
 	public SulphurSpringsBiome() {
@@ -75,7 +75,7 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 			public SurfaceRuleBuilder surface() {
 				return super
 						.surface()
-						.rule(
+						.rule(2,
 							SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
 								new SwitchRuleSource(
 									new SulphuricSurfaceNoiseCondition(),

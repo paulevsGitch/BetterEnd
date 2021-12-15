@@ -1,7 +1,5 @@
 package ru.betterend.world.biome.land;
 
-import java.util.List;
-
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
@@ -14,6 +12,8 @@ import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.surface.UmbraSurfaceNoiseCondition;
+
+import java.util.List;
 
 public class UmbraValleyBiome extends EndBiome.Config {
     public UmbraValleyBiome() {
@@ -56,7 +56,7 @@ public class UmbraValleyBiome extends EndBiome.Config {
             public SurfaceRuleBuilder surface() {
                 return super
                         .surface()
-                        .rule(
+                        .rule(2,
                                 SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
                                         new SwitchRuleSource(
                                                 new UmbraSurfaceNoiseCondition(),

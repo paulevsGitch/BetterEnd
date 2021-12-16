@@ -25,6 +25,7 @@ repositories {
     maven { url 'https://maven.blamejared.com' }
     maven { url "https://maven.shedaniel.me/" }
     maven { url 'https://jitpack.io' }
+	maven { url 'https://maven.terraformersmc.com/releases' }
 }
 
 dependencies {

@@ -84,8 +84,49 @@ public class TerrainGenerator {
 		LOCKER.unlock();
 	}
 	
+	public static float getTerrainDensity(int x, int y, int z, BiomeSource biomeSource) {
+		LOCKER.lock();
+		
+		largeIslands.clearCache();
+		mediumIslands.clearCache();
+		smallIslands.clearCache();
+		
+		double distortion1 = noise1.eval(x * 0.1, z * 0.1) * 20 + noise2.eval(
+			x * 0.2,
+			z * 0.2
+		) * 10 + noise1.eval(x * 0.4, z * 0.4) * 5;
+		double distortion2 = noise2.eval(x * 0.1, z * 0.1) * 20 + noise1.eval(
+			x * 0.2,
+			z * 0.2
+		) * 10 + noise2.eval(x * 0.4, z * 0.4) * 5;
+		double px = (double) x * SCALE_XZ + distortion1;
+		double pz = (double) z * SCALE_XZ + distortion2;
+		
+		largeIslands.updatePositions(px, pz);
+		mediumIslands.updatePositions(px, pz);
+		smallIslands.updatePositions(px, pz);
+		
+		float height = getAverageDepth(biomeSource, x << 1, z << 1) * 0.5F;
+		
+		double py = (double) y * SCALE_Y;
+		float dist = largeIslands.getDensity(px, py, pz, height);
+		dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz, height));
+		dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz, height));
+		if (dist > -0.5F) {
+			dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
+			dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
+			dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
+		}
+		if (py > 100) {
+			dist = (float) Mth.lerp((py - 100) / 27F, dist, -1);
+		}
+		
+		LOCKER.unlock();
+		return dist;
+	}
+	
 	private static float getAverageDepth(BiomeSource biomeSource, int x, int z) {
-		if (getBiome(biomeSource, x, z).getTerrainHeight() < 0.1F) {
+		/*if (getBiome(biomeSource, x, z).getTerrainHeight() < 0.1F) {
 			return 0F;
 		}
 		float depth = 0F;
@@ -94,7 +135,8 @@ public class TerrainGenerator {
 			int pz = z + OFFS[i].y;
 			depth += getBiome(biomeSource, px, pz).getTerrainHeight() * COEF[i];
 		}
-		return depth;
+		return depth;*/
+		return 0F;
 	}
 	
 	private static BCLBiome getBiome(BiomeSource biomeSource, int x, int z) {

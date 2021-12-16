@@ -25,7 +25,8 @@
 		"EntityMixin",
 		"PlayerMixin",
 		"SlimeMixin",
-		"StructureFeaturesMixin"
+		"StructureFeaturesMixin",
+		"NoiseInterpolatorMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

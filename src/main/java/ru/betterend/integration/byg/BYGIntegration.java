@@ -1,6 +1,6 @@
 package ru.betterend.integration.byg;
 
-import ru.bclib.integration.ModIntegration;
+import ru.bclib.integration.modmenu.ModIntegration;
 import ru.betterend.integration.EndBiomeIntegration;
 
 public class BYGIntegration extends ModIntegration implements EndBiomeIntegration {

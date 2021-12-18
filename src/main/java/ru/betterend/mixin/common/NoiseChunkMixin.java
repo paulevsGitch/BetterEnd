@@ -14,15 +14,15 @@ import ru.betterend.interfaces.TargetChecker;
 
 @Mixin(NoiseChunk.class)
 public class NoiseChunkMixin implements TargetChecker {
-	private boolean bnv_isNetherGenerator;
+	private boolean be_isEndGenerator;
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void bnv_onNoiseChunkInit(int i, int j, int k, NoiseSampler noiseSampler, int l, int m, NoiseFiller noiseFiller, NoiseGeneratorSettings noiseGeneratorSettings, Aquifer.FluidPicker fluidPicker, Blender blender, CallbackInfo info) {
-		bnv_isNetherGenerator = noiseGeneratorSettings.stable(NoiseGeneratorSettings.END);
+	private void be_onNoiseChunkInit(int i, int j, int k, NoiseSampler noiseSampler, int l, int m, NoiseFiller noiseFiller, NoiseGeneratorSettings noiseGeneratorSettings, Aquifer.FluidPicker fluidPicker, Blender blender, CallbackInfo info) {
+		be_isEndGenerator = noiseGeneratorSettings.stable(NoiseGeneratorSettings.END);
 	}
 	
 	@Override
 	public boolean isTarget() {
-		return bnv_isNetherGenerator;
+		return be_isEndGenerator;
 	}
 }

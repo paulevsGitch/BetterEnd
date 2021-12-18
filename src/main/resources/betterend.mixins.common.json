@@ -4,7 +4,6 @@
 	"package": "ru.betterend.mixin.common",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
-		"NoiseBasedChunkGeneratorMixin",
 		"ChorusPlantFeatureMixin",
 		"PlayerAdvancementsMixin",
 		"ChorusFlowerBlockMixin",

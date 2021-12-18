@@ -1,7 +1,5 @@
 package ru.betterend.blocks.basis;
 
-import java.util.Map;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -27,6 +25,8 @@ import net.minecraft.world.level.material.Fluids;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.client.models.ModelsHelper;
+
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer {

@@ -1,7 +1,5 @@
 package ru.betterend.world.biome.cave;
 
-import java.util.function.BiFunction;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,6 +10,8 @@ import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.world.biome.EndBiome;
+
+import java.util.function.BiFunction;
 
 public class LushAuroraCaveBiome extends EndCaveBiome.Config {
 	public static class Biome extends EndCaveBiome {

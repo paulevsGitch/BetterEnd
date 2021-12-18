@@ -1,8 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-import java.util.function.Consumer;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.ChunkPos;
@@ -13,6 +10,9 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import ru.bclib.world.structures.StructureWorld;
 import ru.betterend.registry.EndStructures;
+
+import java.util.Random;
+import java.util.function.Consumer;
 
 public class VoxelPiece extends BasePiece {
 	private StructureWorld world;

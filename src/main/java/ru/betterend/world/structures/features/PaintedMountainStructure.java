@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -17,6 +15,8 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.structures.piece.PaintedMountainPiece;
+
+import java.util.Random;
 
 public class PaintedMountainStructure extends FeatureBaseStructure {
 	private static final BlockState[] VARIANTS;

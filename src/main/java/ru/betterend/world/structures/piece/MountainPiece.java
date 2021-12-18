@@ -1,10 +1,6 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Map;
-import java.util.Random;
-
 import com.google.common.collect.Maps;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +15,9 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
+
+import java.util.Map;
+import java.util.Random;
 
 public abstract class MountainPiece extends BasePiece {
 	protected Map<Integer, Integer> heightmap = Maps.newHashMap();

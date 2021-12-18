@@ -1,13 +1,7 @@
 package ru.betterend.blocks;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -42,6 +36,11 @@ import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndFeatures;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLayerProvider, BonemealableBlock, PottablePlant {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);

@@ -1,8 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Optional;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +22,9 @@ import ru.bclib.api.WorldDataAPI;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.generator.GeneratorOptions;
+
+import java.util.Optional;
+import java.util.Random;
 
 @Mixin(EndPodiumFeature.class)
 public class EndPodiumFeatureMixin {

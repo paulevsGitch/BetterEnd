@@ -1,12 +1,7 @@
 package ru.betterend.blocks;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -50,6 +45,10 @@ import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.CactusBottom;
 import ru.betterend.interfaces.PottablePlant;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, RenderLayerProvider, PottablePlant {

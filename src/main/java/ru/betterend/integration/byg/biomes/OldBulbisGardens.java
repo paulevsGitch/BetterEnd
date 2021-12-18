@@ -1,8 +1,5 @@
 package ru.betterend.integration.byg.biomes;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.data.BuiltinRegistries;
@@ -24,6 +21,9 @@ import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.EndBiome;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 
 public class OldBulbisGardens extends EndBiome.Config {

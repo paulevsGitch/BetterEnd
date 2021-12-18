@@ -35,6 +35,7 @@
             "ru.betterend.integration.rei.REIPlugin"
         ]
 	},
+	"accessWidener" : "betterend.accesswidener",
 	"mixins": [
 		"betterend.mixins.common.json",
 		"betterend.mixins.client.json",

@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +16,8 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndStructures;
+
+import java.util.Random;
 
 public class CavePiece extends BasePiece {
 	private OpenSimplexNoise noise;

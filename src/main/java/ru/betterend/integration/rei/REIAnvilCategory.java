@@ -1,13 +1,6 @@
 package ru.betterend.integration.rei;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.google.common.collect.Lists;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.ints.IntList;
 import me.shedaniel.math.Point;
@@ -25,7 +18,12 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 import ru.betterend.blocks.basis.EndAnvilBlock;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class REIAnvilCategory implements DisplayCategory<REIAnvilDisplay> {
 	private final EntryStack<?>[] ANVILS;

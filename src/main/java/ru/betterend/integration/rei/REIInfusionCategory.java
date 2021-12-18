@@ -1,12 +1,6 @@
 package ru.betterend.integration.rei;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.google.common.collect.Lists;
-
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
@@ -18,8 +12,12 @@ import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class REIInfusionCategory implements DisplayCategory<REIInfusionDisplay> {
 	

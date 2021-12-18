@@ -1,13 +1,7 @@
 package ru.betterend.world.features.terrain.caves;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -29,6 +23,11 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 public abstract class EndCaveFeature extends DefaultFeature {
 	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();

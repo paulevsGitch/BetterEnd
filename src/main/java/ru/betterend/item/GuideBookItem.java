@@ -1,7 +1,5 @@
 package ru.betterend.item;
 
-import java.util.List;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +15,8 @@ import ru.bclib.items.ModelProviderItem;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.LangUtil;
+
+import java.util.List;
 
 public class GuideBookItem extends ModelProviderItem {
 	public final static ResourceLocation BOOK_ID = BetterEnd.makeID("guidebook");

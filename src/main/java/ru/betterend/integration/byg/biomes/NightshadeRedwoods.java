@@ -1,7 +1,5 @@
 package ru.betterend.integration.byg.biomes;
 
-import java.util.List;
-
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +15,8 @@ import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.EndBiome;
+
+import java.util.List;
 
 public class NightshadeRedwoods extends EndBiome.Config {
     public NightshadeRedwoods() {

@@ -1,14 +1,7 @@
 package ru.betterend.world.features.terrain.caves;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.IntStream;
-
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -29,6 +22,12 @@ import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 public class TunelCaveFeature extends EndCaveFeature {
 	private Set<BlockPos> generate(WorldGenLevel world, BlockPos center, Random random) {

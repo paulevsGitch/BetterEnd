@@ -1,8 +1,5 @@
 package ru.betterend.blocks;
 
-import java.util.Optional;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
@@ -20,6 +17,9 @@ import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
+
+import java.util.Optional;
+import java.util.Random;
 
 public class SmallAmaranitaBlock extends EndPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 10, 12);

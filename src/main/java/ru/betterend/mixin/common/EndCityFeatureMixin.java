@@ -1,8 +1,5 @@
 package ru.betterend.mixin.common;
 
-import java.util.Optional;
-import java.util.Random;
-
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -18,6 +15,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.betterend.world.generator.GeneratorOptions;
+
+import java.util.Optional;
+import java.util.Random;
 
 @Mixin(EndCityFeature.class)
 public class EndCityFeatureMixin {

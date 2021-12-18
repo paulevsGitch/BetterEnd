@@ -1,10 +1,6 @@
 package ru.betterend.util;
 
-import java.util.Set;
-import java.util.stream.IntStream;
-
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -22,6 +18,9 @@ import ru.bclib.util.BlocksHelper;
 import ru.betterend.blocks.BlueVineBlock;
 import ru.betterend.blocks.basis.FurBlock;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Set;
+import java.util.stream.IntStream;
 
 public class BlockFixer {
 	private static final BlockState AIR = Blocks.AIR.defaultBlockState();

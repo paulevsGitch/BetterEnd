@@ -1,12 +1,6 @@
 package ru.betterend.world.features.terrain.caves;
 
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -21,6 +15,11 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
+import java.util.function.Supplier;
 
 public class CaveChunkPopulatorFeature extends DefaultFeature {
 	private Supplier<EndCaveBiome> supplier;

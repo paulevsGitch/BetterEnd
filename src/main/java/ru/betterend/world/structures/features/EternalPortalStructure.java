@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.features;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
@@ -18,6 +16,8 @@ import ru.bclib.util.StructureHelper;
 import ru.bclib.world.structures.BCLStructureFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.structures.piece.NBTPiece;
+
+import java.util.Random;
 
 public class EternalPortalStructure extends FeatureBaseStructure {
     private static final ResourceLocation STRUCTURE_ID = BetterEnd.makeID("portal/eternal_portal");

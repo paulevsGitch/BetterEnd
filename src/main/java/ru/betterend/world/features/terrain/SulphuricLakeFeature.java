@@ -1,10 +1,6 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.Random;
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -22,6 +18,9 @@ import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
+
+import java.util.Random;
+import java.util.Set;
 
 public class SulphuricLakeFeature extends DefaultFeature {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);

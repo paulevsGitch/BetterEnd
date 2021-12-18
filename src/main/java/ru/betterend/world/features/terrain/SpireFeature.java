@@ -1,12 +1,6 @@
 package ru.betterend.world.features.terrain;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -30,6 +24,11 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.EndBiome;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.function.Function;
 
 public class SpireFeature extends DefaultFeature {
 	protected static final Function<BlockState, Boolean> REPLACE;

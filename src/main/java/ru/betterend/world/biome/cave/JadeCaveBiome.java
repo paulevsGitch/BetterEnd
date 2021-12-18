@@ -1,7 +1,5 @@
 package ru.betterend.world.biome.cave;
 
-import java.util.function.BiFunction;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -10,6 +8,8 @@ import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.biome.EndBiome;
+
+import java.util.function.BiFunction;
 
 public class JadeCaveBiome extends EndCaveBiome.Config {
 	public static class Biome extends EndCaveBiome {

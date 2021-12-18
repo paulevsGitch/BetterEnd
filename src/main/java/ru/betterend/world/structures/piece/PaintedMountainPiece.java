@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +18,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndStructures;
+
+import java.util.Random;
 
 public class PaintedMountainPiece extends MountainPiece {
 	private BlockState[] slises;

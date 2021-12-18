@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -21,6 +19,8 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.world.biome.EndBiome;
+
+import java.util.Random;
 
 public class NBTPiece extends BasePiece {
 	private ResourceLocation structureID;

@@ -1,8 +1,5 @@
 package ru.betterend.world.biome.cave;
 
-import java.util.Random;
-import java.util.function.BiFunction;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
@@ -18,6 +15,9 @@ import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
+
+import java.util.Random;
+import java.util.function.BiFunction;
 
 public class EndCaveBiome extends EndBiome {
 	public static abstract class Config extends EndBiome.Config {

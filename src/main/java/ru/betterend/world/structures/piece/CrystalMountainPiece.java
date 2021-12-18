@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.piece;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +22,8 @@ import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.world.biome.EndBiome;
+
+import java.util.Random;
 
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;

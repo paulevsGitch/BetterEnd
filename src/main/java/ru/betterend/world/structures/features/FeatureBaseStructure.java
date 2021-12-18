@@ -1,7 +1,5 @@
 package ru.betterend.world.structures.features;
 
-import java.util.Random;
-
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -13,6 +11,8 @@ import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import ru.bclib.world.structures.BCLStructureFeature;
+
+import java.util.Random;
 
 public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureConfiguration> {
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();

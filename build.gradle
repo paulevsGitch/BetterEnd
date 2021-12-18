@@ -28,6 +28,10 @@ repositories {
 	maven { url 'https://maven.terraformersmc.com/releases' }
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/betterend.accesswidener")
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings minecraft.officialMojangMappings()

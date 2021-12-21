@@ -8,8 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFTranslate;
@@ -17,6 +15,7 @@ import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
+import ru.betterend.world.biome.EndBiome;
 
 public class BiomeIslandFeature extends DefaultFeature {
 	private static final MutableBlockPos CENTER = new MutableBlockPos();
@@ -25,21 +24,24 @@ public class BiomeIslandFeature extends DefaultFeature {
 	private static OpenSimplexNoise simplexNoise = new OpenSimplexNoise(412L);
 	private static BlockState topBlock = Blocks.GRASS_BLOCK.defaultBlockState();
 	private static BlockState underBlock = Blocks.DIRT.defaultBlockState();
-	
+
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		Biome biome = world.getBiome(pos);
-		SurfaceBuilderConfiguration surfaceConfig = biome.getGenerationSettings().getSurfaceBuilderConfig();
-		BlockState topMaterial = surfaceConfig.getTopMaterial();
+		int dist = BlocksHelper.downRay(world, pos, 10) + 1;
+		BlockPos surfacePos = new BlockPos(pos.getX(), pos.getY()-dist, pos.getZ());
+		BlockState topMaterial = EndBiome.findTopMaterial(world, surfacePos);;
+
 		if (BlocksHelper.isFluid(topMaterial)) {
-			topBlock = ((SurfaceBuilderBaseConfiguration) surfaceConfig).getUnderwaterMaterial();
+			topBlock = Blocks.GRAVEL.defaultBlockState();
+			underBlock = Blocks.STONE.defaultBlockState();
 		}
 		else {
-			topBlock = topMaterial;
+			underBlock = EndBiome.findUnderMaterial(world, surfacePos);
 		}
-		underBlock = surfaceConfig.getUnderMaterial();
+
 		simplexNoise = new OpenSimplexNoise(world.getSeed());
 		CENTER.set(pos);
 		ISLAND.fillRecursive(world, pos.below());

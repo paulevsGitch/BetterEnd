@@ -429,8 +429,9 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 	}
 	
 	@Override
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
+	public void saveAdditional(CompoundTag tag) {
+		super.saveAdditional(tag);
+		
 		tag.putShort("BurnTime", (short) burnTime);
 		tag.putShort("FuelTime", (short) fuelTime);
 		tag.putShort("SmeltTime", (short) smeltTime);
@@ -439,8 +440,6 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 		CompoundTag usedRecipes = new CompoundTag();
 		recipesUsed.forEach((identifier, integer) -> usedRecipes.putInt(identifier.toString(), integer));
 		tag.put("RecipesUsed", usedRecipes);
-		
-		return tag;
 	}
 	
 	public boolean canPlaceItem(int slot, ItemStack stack) {

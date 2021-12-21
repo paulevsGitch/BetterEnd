@@ -8,7 +8,6 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -20,14 +19,16 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.FluidState;
-import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.EndBiome;
 
 import java.util.Map;
 import java.util.Random;
@@ -57,13 +58,13 @@ public class LakePiece extends BasePiece {
 		makeBoundingBox();
 	}
 	
-	public LakePiece(ServerLevel serverLevel, CompoundTag tag) {
+	public LakePiece(StructurePieceSerializationContext type, CompoundTag tag) {
 		super(EndStructures.LAKE_PIECE, tag);
 		makeBoundingBox();
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("depth", depth);
@@ -83,7 +84,7 @@ public class LakePiece extends BasePiece {
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int minY = this.boundingBox.minY();
 		int maxY = this.boundingBox.maxY();
 		int sx = SectionPos.sectionToBlockCoord(chunkPos.x);
@@ -131,10 +132,11 @@ public class LakePiece extends BasePiece {
 						)) {
 							state = chunk.getBlockState(mut.above());
 							if (state.isAir()) {
-								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos)
-																			   .getGenerationSettings()
-																			   .getSurfaceBuilderConfig()
-																			   .getTopMaterial();
+								state = EndBiome.findTopMaterial(world, worldPos);
+//								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos)
+//																			   .getGenerationSettings()
+//																			   .getSurfaceBuilderConfig()
+//																			   .getTopMaterial();
 							}
 							else {
 								state = state.getFluidState()
@@ -147,7 +149,6 @@ public class LakePiece extends BasePiece {
 			}
 		}
 		fixWater(world, chunk, mut, random, sx, sz);
-		return true;
 	}
 	
 	private void fixWater(WorldGenLevel world, ChunkAccess chunk, MutableBlockPos mut, Random random, int sx, int sz) {
@@ -167,10 +168,11 @@ public class LakePiece extends BasePiece {
 							
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) {
-								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
-																				.getGenerationSettings()
-																				.getSurfaceBuilderConfig()
-																				.getTopMaterial();
+								bState = EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
+//								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
+//																				.getGenerationSettings()
+//																				.getSurfaceBuilderConfig()
+//																				.getTopMaterial();
 							}
 							else {
 								bState = bState.getFluidState()
@@ -189,10 +191,11 @@ public class LakePiece extends BasePiece {
 									mut.setY(y + 1);
 									BlockState bState = chunk.getBlockState(mut);
 									if (bState.isAir()) {
-										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
-																						.getGenerationSettings()
-																						.getSurfaceBuilderConfig()
-																						.getTopMaterial();
+										bState =EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
+//										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz))
+//																						.getGenerationSettings()
+//																						.getSurfaceBuilderConfig()
+//																						.getTopMaterial();
 									}
 									else {
 										bState = bState.getFluidState()
@@ -205,7 +208,9 @@ public class LakePiece extends BasePiece {
 							}
 						}
 						else if (chunk.getBlockState(mut.move(Direction.UP)).isAir()) {
-							chunk.getLiquidTicks().scheduleTick(mut.move(Direction.DOWN), state.getType(), 0);
+							//TODO: 1.18 test if this is thr right tick
+							chunk.markPosForPostprocessing(mut.move(Direction.DOWN));
+//							/*chunk.getLiquidTicks()*/world.scheduleTick(mut.move(Direction.DOWN), state.getType(), 0);
 						}
 					}
 				}

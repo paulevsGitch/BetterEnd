@@ -2,16 +2,13 @@ package ru.betterend.world.structures.features;
 
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFRotation;
 import ru.bclib.sdf.operator.SDFTranslate;
@@ -26,13 +23,16 @@ import java.util.List;
 import java.util.Random;
 
 public class GiantIceStarStructure extends SDFStructureFeature {
-	private final float minSize = 20;
-	private final float maxSize = 35;
-	private final int minCount = 25;
-	private final int maxCount = 40;
-	
-	@Override
-	protected SDF getSDF(BlockPos pos, Random random) {
+	private static final float minSize = 20;
+	private static final float maxSize = 35;
+	private static final int minCount = 25;
+	private static final int maxCount = 40;
+
+	public GiantIceStarStructure() {
+		super(GiantIceStarStructure::generatePieces);
+	}
+
+	protected static SDF getSDF(BlockPos pos, Random random) {
 		float size = MHelper.randRange(minSize, maxSize, random);
 		int count = MHelper.randRange(minCount, maxCount, random);
 		List<Vector3f> points = getFibonacciPoints(count);
@@ -90,7 +90,7 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 		});
 	}
 	
-	private List<Vector3f> getFibonacciPoints(int count) {
+	private static List<Vector3f> getFibonacciPoints(int count) {
 		float max = count - 1;
 		List<Vector3f> result = new ArrayList<Vector3f>(count);
 		for (int i = 0; i < count; i++) {
@@ -103,28 +103,21 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 		}
 		return result;
 	}
-	
-	@Override
-	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-		return StarStructureStart::new;
-	}
-	
-	public static class StarStructureStart extends StructureStart<NoneFeatureConfiguration> {
-		public StarStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos pos, int references, long seed) {
-			super(feature, pos, references, seed);
-		}
 		
-		@Override
-		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
-			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
-			int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
-			BlockPos start = new BlockPos(x, MHelper.randRange(32, 128, random), z);
-			VoxelPiece piece = new VoxelPiece((world) -> {
-				((SDFStructureFeature) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start);
-			}, random.nextInt());
-			this.pieces.add(piece);
-			
-			//this.calculateBoundingBox();
-		}
+	public static void generatePieces(StructurePiecesBuilder structurePiecesBuilder, PieceGenerator.Context<NoneFeatureConfiguration> context) {
+		final Random random = context.random();
+		final ChunkPos chunkPos = context.chunkPos();
+		final ChunkGenerator chunkGenerator = context.chunkGenerator();
+		final LevelHeightAccessor levelHeightAccessor = context.heightAccessor();
+
+		int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
+		int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
+		BlockPos start = new BlockPos(x, MHelper.randRange(32, 128, random), z);
+		VoxelPiece piece = new VoxelPiece((world) -> {
+			getSDF(start, random).fillRecursive(world, start);
+		}, random.nextInt());
+		structurePiecesBuilder.addPiece(piece);
+
+		//this.calculateBoundingBox();
 	}
 }

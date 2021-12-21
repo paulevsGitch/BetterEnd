@@ -1,13 +1,11 @@
 package ru.betterend.integration.rei;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.vertex.PoseStack;
-import it.unimi.dsi.fastutil.ints.IntList;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
-import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
@@ -21,7 +19,7 @@ import ru.betterend.registry.EndBlocks;
 import java.util.ArrayList;
 import java.util.List;
 
-public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionDisplay> {
+public class REIInfusionCategory implements DisplayCategory<REIInfusionDisplay> {
 	
 	private final static ResourceLocation BACKGROUND = BetterEnd.makeID("textures/gui/rei_infusion.png");
 	private final EntryStack ICON;
@@ -109,7 +107,4 @@ public class REIInfusionCategory implements TransferDisplayCategory<REIInfusionD
 	public int getDisplayHeight() {
 		return 104;
 	}
-	
-	@Override
-	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIInfusionDisplay display, IntList redSlots) {}
 }

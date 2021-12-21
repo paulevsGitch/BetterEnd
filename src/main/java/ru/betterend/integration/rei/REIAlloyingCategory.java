@@ -7,7 +7,7 @@ import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
-import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
@@ -20,7 +20,7 @@ import ru.betterend.registry.EndBlocks;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingDisplay> {
+public class REIAlloyingCategory implements DisplayCategory<REIAlloyingDisplay> {
 	private final EntryStack ICON;
 	
 	REIAlloyingCategory(EntryStack icon) {
@@ -81,8 +81,9 @@ public class REIAlloyingCategory implements TransferDisplayCategory<REIAlloyingD
 						   .markOutput());
 		return widgets;
 	}
-	
-	@Override
+
+	//TODO: 1.18 REI find replacement
+	//@Override
 	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAlloyingDisplay display, IntList redSlots) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 27);
 		matrices.pushPose();

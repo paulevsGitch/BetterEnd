@@ -75,7 +75,7 @@ public class BlockFixer {
 					for (Direction dir : BlocksHelper.HORIZONTAL) {
 						if (level.isEmptyBlock(POS.relative(dir))) {
 							try {
-								level.getLiquidTicks().scheduleTick(POS, state.getFluidState().getType(), 0);
+								level.scheduleTick(POS, state.getFluidState().getType(), 0);
 							}
 							catch (Exception e) {}
 							break;

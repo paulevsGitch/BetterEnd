@@ -3,6 +3,9 @@ package ru.betterend.world.structures.features;
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFBinary;
 import ru.bclib.sdf.operator.SDFCoordModify;
@@ -29,8 +32,15 @@ import java.util.List;
 import java.util.Random;
 
 public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
-	@Override
-	protected SDF getSDF(BlockPos center, Random random) {
+	public GiantMossyGlowshroomStructure() {
+		super(GiantMossyGlowshroomStructure::generatePieces);
+	}
+
+	public static void generatePieces(StructurePiecesBuilder structurePiecesBuilder, PieceGenerator.Context<NoneFeatureConfiguration> context) {
+		SDFStructureFeature.generatePieces(structurePiecesBuilder, context, GiantMossyGlowshroomStructure::getSDF);
+	}
+
+	protected static SDF getSDF(BlockPos center, Random random) {
 		SDFCappedCone cone1 = new SDFCappedCone().setHeight(2.5F).setRadius1(1.5F).setRadius2(2.5F);
 		SDFCappedCone cone2 = new SDFCappedCone().setHeight(3F).setRadius1(2.5F).setRadius2(13F);
 		SDF posedCone2 = new SDFTranslate().setTranslate(0, 5, 0).setSource(cone2);

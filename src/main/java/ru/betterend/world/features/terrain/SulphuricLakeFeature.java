@@ -75,7 +75,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							else {
 								if (!isAbsoluteBorder(world, POS)) {
 									BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
-									world.getLiquidTicks().scheduleTick(POS, Fluids.WATER, 0);
+									world.scheduleTick(POS, Fluids.WATER, 0);
 									brimstone.add(POS.below());
 									if (random.nextBoolean()) {
 										brimstone.add(POS.below(2));

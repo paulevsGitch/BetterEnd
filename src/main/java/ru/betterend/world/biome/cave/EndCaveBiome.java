@@ -1,12 +1,15 @@
 package ru.betterend.world.biome.cave;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.WeightedList;
-import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndSounds;
@@ -14,24 +17,44 @@ import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
 import java.util.Random;
+import java.util.function.BiFunction;
 
 public class EndCaveBiome extends EndBiome {
+	public static abstract class Config extends EndBiome.Config {
+		protected Config(String name) {
+			super(name);
+		}
+
+		@Override
+		protected void addCustomBuildData(BCLBiomeBuilder builder) {
+			BCLFeature feature = BCLFeature.makeChunkFeature(
+					BetterEnd.makeID(ID.getPath() + "_cave_populator"),
+					GenerationStep.Decoration.RAW_GENERATION,
+					new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(ID))
+			);
+
+			builder.category(BiomeCategory.NONE)
+				   .feature(feature)
+				   .music(EndSounds.MUSIC_CAVES)
+				   .loop(EndSounds.AMBIENT_CAVES);
+		}
+
+		@Override
+		protected boolean hasCaves() {
+			return false;
+		}
+
+		@Override
+		public BiFunction<ResourceLocation, Biome, EndBiome> getSupplier() {
+			return EndCaveBiome::new;
+		}
+	}
+
 	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
 	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
-	
-	public EndCaveBiome(BCLBiomeDef definition) {
-		super(makeDef(definition));
-	}
-	
-	private static BCLBiomeDef makeDef(BCLBiomeDef definition) {
-		BCLFeature feature = BCLFeature.makeChunkFeature(
-			BetterEnd.makeID(definition.getID().getPath() + "_cave_populator"),
-			new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(definition.getID()))
-		);
-		definition.setCategory(BiomeCategory.NONE).addFeature(feature);
-		definition.setMusic(EndSounds.MUSIC_CAVES);
-		definition.setLoop(EndSounds.AMBIENT_CAVES);
-		return definition;
+
+	public EndCaveBiome(ResourceLocation biomeID, Biome biome) {
+		super(biomeID, biome);
 	}
 	
 	public void addFloorFeature(Feature<?> feature, float weight) {
@@ -64,5 +87,9 @@ public class EndCaveBiome extends EndBiome {
 	
 	public BlockState getWall(BlockPos pos) {
 		return null;
+	}
+
+	public static EndCaveBiome create(EndBiome.Config biomeConfig){
+		return (EndCaveBiome) EndBiome.create(biomeConfig);
 	}
 }

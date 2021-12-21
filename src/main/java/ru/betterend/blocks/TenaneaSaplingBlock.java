@@ -4,20 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.blocks.basis.PottableFeatureSapling;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
 public class TenaneaSaplingBlock extends PottableFeatureSapling {
 	public TenaneaSaplingBlock() {
-		super();
-	}
-	
-	@Override
-	@SuppressWarnings("deprecation")
-	protected Feature<?> getFeature() {
-		return EndFeatures.TENANEA.getFeature();
+		super((state)->EndFeatures.TENANEA.getFeature());
 	}
 	
 	@Override

@@ -429,8 +429,8 @@ public class EndBlocks {
 	public static final Block SILK_MOTH_HIVE = registerBlock("silk_moth_hive", new SilkMothHiveBlock());
 	
 	// Ores //
-	public static final Block ENDER_ORE = registerBlock("ender_ore", new BaseOreBlock(EndItems.ENDER_SHARD, 1, 3, 5));
-	public static final Block AMBER_ORE = registerBlock("amber_ore", new BaseOreBlock(EndItems.RAW_AMBER, 1, 2, 4));
+	public static final Block ENDER_ORE = registerBlock("ender_ore", new BaseOreBlock(()->EndItems.ENDER_SHARD, 1, 3, 5));
+	public static final Block AMBER_ORE = registerBlock("amber_ore", new BaseOreBlock(()->EndItems.RAW_AMBER, 1, 2, 4));
 	
 	// Materials //
 	public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal(

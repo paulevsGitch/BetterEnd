@@ -15,7 +15,6 @@ import ru.bclib.items.ModelProviderItem;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndItems;
 import ru.betterend.util.LangUtil;
-import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.List;
 
@@ -33,7 +32,8 @@ public class GuideBookItem extends ModelProviderItem {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
 		if (!world.isClientSide && user instanceof ServerPlayer) {
-			PatchouliAPI.get().openBookGUI((ServerPlayer) user, BOOK_ID);
+			//TODO: reanable Patchouli once it is available for 1.18
+			//PatchouliAPI.get().openBookGUI((ServerPlayer) user, BOOK_ID);
 			return InteractionResultHolder.success(user.getItemInHand(hand));
 		}
 		return InteractionResultHolder.consume(user.getItemInHand(hand));

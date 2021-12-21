@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.betterend.client.ClientOptions;
 import ru.betterend.world.biome.EndBiome;
 
@@ -90,9 +90,10 @@ public abstract class MusicTrackerMixin {
 	}
 	
 	private boolean be_shouldChangeSound(Music musicSound) {
-		return currentMusic != null && !musicSound.getEvent()
-												  .getLocation()
-												  .equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
+		return currentMusic != null && !musicSound
+			.getEvent()
+			.getLocation()
+			.equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
 	}
 	
 	private boolean be_checkNullSound(Music musicSound) {

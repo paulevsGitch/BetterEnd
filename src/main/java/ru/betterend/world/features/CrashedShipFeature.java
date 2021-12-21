@@ -23,6 +23,7 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.bclib.world.features.NBTStructureFeature;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -30,7 +31,11 @@ public class CrashedShipFeature extends NBTStructureFeature {
 	private static final StructureProcessor REPLACER;
 	private static final String STRUCTURE_PATH = "/data/minecraft/structures/end_city/ship.nbt";
 	private StructureTemplate structure;
-	
+
+	public CrashedShipFeature() {
+		super(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
+	}
+
 	@Override
 	protected StructureTemplate getStructure(WorldGenLevel world, BlockPos pos, Random random) {
 		if (structure == null) {

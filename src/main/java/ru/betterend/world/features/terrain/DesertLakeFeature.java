@@ -16,6 +16,7 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -123,10 +124,7 @@ public class DesertLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
-									state = world.getBiome(pos)
-												 .getGenerationSettings()
-												 .getSurfaceBuilderConfig()
-												 .getTopMaterial();
+									state = EndBiome.findTopMaterial(world, pos); //world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
 										BlocksHelper.setWithoutUpdate(
@@ -198,10 +196,7 @@ public class DesertLakeFeature extends DefaultFeature {
 							}
 							else if (y < waterLevel) {
 								if (world.isEmptyBlock(POS.above())) {
-									state = world.getBiome(POS)
-												 .getGenerationSettings()
-												 .getSurfaceBuilderConfig()
-												 .getTopMaterial();
+									state = EndBiome.findTopMaterial(world, pos); //world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 									BlocksHelper.setWithoutUpdate(
 										world,
 										POS,

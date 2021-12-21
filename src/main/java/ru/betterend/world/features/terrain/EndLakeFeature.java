@@ -16,6 +16,7 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -23,6 +24,10 @@ public class EndLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 	private static final MutableBlockPos POS = new MutableBlockPos();
+
+	public EndLakeFeature(){
+
+	}
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
@@ -123,10 +128,11 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
-									state = world.getBiome(pos)
-												 .getGenerationSettings()
-												 .getSurfaceBuilderConfig()
-												 .getTopMaterial();
+									state = EndBiome.findTopMaterial(world, pos);
+									//state = world.getBiome(pos)
+//												 .getGenerationSettings()
+//												 .getSurfaceBuilderConfig()
+//												 .getTopMaterial();
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
 										BlocksHelper.setWithoutUpdate(
@@ -193,10 +199,11 @@ public class EndLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.isEmptyBlock(POS.above())) {
-								state = world.getBiome(POS)
-											 .getGenerationSettings()
-											 .getSurfaceBuilderConfig()
-											 .getTopMaterial();
+								state = EndBiome.findTopMaterial(world, pos);
+//								state = world.getBiome(POS)
+//											 .getGenerationSettings()
+//											 .getSurfaceBuilderConfig()
+//											 .getTopMaterial();
 								BlocksHelper.setWithoutUpdate(
 									world,
 									POS,

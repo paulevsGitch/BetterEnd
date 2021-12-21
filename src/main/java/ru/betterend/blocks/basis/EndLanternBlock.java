@@ -101,7 +101,7 @@ public class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterlogg
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		Boolean water = state.getValue(WATERLOGGED);
 		if (water) {
-			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 		if (!canSurvive(state, world, pos)) {
 			return water ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();

@@ -82,7 +82,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	/**
 	 * Register new Pedestal block with specified mod id.
 	 *
-	 * @param id     pedestal id
+	 * @param id	 pedestal id
 	 * @param source source block
 	 * @return new Pedestal block with specified id.
 	 */

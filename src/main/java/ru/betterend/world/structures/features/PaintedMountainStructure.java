@@ -1,7 +1,6 @@
 package ru.betterend.world.structures.features;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -9,33 +8,39 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.structures.piece.PaintedMountainPiece;
 
+import java.util.Random;
+
 public class PaintedMountainStructure extends FeatureBaseStructure {
 	private static final BlockState[] VARIANTS;
-	
-	@Override
-	public StructureFeature.StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-		return SDFStructureStart::new;
+
+	public PaintedMountainStructure() {
+		super(PieceGeneratorSupplier.simple(
+				FeatureBaseStructure::checkLocation,
+				PaintedMountainStructure::generatePieces
+		));
 	}
-	
-	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> {
-		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> feature, ChunkPos chunkPos, int references, long seed) {
-			super(feature, chunkPos, references, seed);
-		}
-		
-		@Override
-		public void generatePieces(RegistryAccess registryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration featureConfiguration, LevelHeightAccessor levelHeightAccessor) {
-			int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
+
+	protected static void generatePieces(StructurePiecesBuilder structurePiecesBuilder, PieceGenerator.Context<NoneFeatureConfiguration> context) {
+		final Random random = context.random();
+		final ChunkPos chunkPos = context.chunkPos();
+		final ChunkGenerator chunkGenerator = context.chunkGenerator();
+		final LevelHeightAccessor levelHeightAccessor = context.heightAccessor();
+
+		int x = chunkPos.getBlockX(MHelper.randRange(4, 12, random));
 			int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
 			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 			if (y > 50) {
+				//TODO: 1.18 right way to get biome?
+				Biome biome = chunkGenerator.getNoiseBiome(x, y, z);
+
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.4F, 0.6F, random);
 				int count = MHelper.floor(height * MHelper.randRange(0.1F, 0.35F, random) + 1);
@@ -43,12 +48,12 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 				for (int i = 0; i < count; i++) {
 					slises[i] = VARIANTS[random.nextInt(VARIANTS.length)];
 				}
-				this.pieces.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises));
+				structurePiecesBuilder.addPiece(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises));
 			}
 			
 			//this.calculateBoundingBox();
 		}
-	}
+
 	
 	static {
 		VARIANTS = new BlockState[] {

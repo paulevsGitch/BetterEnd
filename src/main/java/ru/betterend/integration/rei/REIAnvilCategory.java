@@ -7,7 +7,7 @@ import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
-import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay> {
+public class REIAnvilCategory implements DisplayCategory<REIAnvilDisplay> {
 	private final EntryStack<?>[] ANVILS;
 	
 	REIAnvilCategory(EntryStack<?>[] anvils) {
@@ -85,8 +85,9 @@ public class REIAnvilCategory implements TransferDisplayCategory<REIAnvilDisplay
 		
 		return widgets;
 	}
-	
-	@Override
+
+	//TODO: 1.18 REI, find replacement
+	//@Override
 	public void renderRedSlots(PoseStack matrices, List<Widget> widgets, Rectangle bounds, REIAnvilDisplay display, IntList redSlots) {
 		Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 27);
 		matrices.pushPose();

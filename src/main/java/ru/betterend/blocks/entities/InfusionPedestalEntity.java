@@ -40,11 +40,11 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 	}
 	
 	@Override
-	public CompoundTag save(CompoundTag tag) {
+	public void saveAdditional(CompoundTag tag) {
 		if (hasRitual()) {
 			tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
 		}
-		return super.save(tag);
+		super.saveAdditional(tag);
 	}
 	
 	@Override

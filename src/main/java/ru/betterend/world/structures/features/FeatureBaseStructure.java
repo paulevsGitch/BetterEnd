@@ -2,29 +2,27 @@ package ru.betterend.world.structures.features;
 
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import ru.bclib.world.structures.BCLStructureFeature;
 
 import java.util.Random;
 
 public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureConfiguration> {
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
 	
-	public FeatureBaseStructure() {
-		super(NoneFeatureConfiguration.CODEC);
+	public FeatureBaseStructure(PieceGeneratorSupplier<NoneFeatureConfiguration> pieceGeneratorSupplier) {
+		super(NoneFeatureConfiguration.CODEC, pieceGeneratorSupplier);
 	}
-	
-	@Override
-	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long worldSeed, WorldgenRandom chunkRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration featureConfig, LevelHeightAccessor levelHeightAccessor) {
-		return getGenerationHeight(pos, chunkGenerator, levelHeightAccessor) >= 20;
+
+	protected static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {
+		return getGenerationHeight(context.chunkPos(), context.chunkGenerator(), context.heightAccessor()) >= 20 && BCLStructureFeature.isValidBiome(context);
 	}
 	
 	private static int getGenerationHeight(ChunkPos chunkPos, ChunkGenerator chunkGenerator, LevelHeightAccessor levelHeightAccessor) {

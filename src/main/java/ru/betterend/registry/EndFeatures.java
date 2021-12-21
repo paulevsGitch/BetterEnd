@@ -1,21 +1,20 @@
 package ru.betterend.registry;
 
-import com.google.common.collect.Lists;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.CountConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
-import ru.bclib.api.BiomeAPI;
+import net.minecraft.world.level.levelgen.placement.CountPlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.world.biomes.BCLBiome;
-import ru.bclib.world.biomes.BCLBiomeDef;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.BetterEnd;
@@ -81,11 +80,6 @@ import ru.betterend.world.features.trees.MossyGlowshroomFeature;
 import ru.betterend.world.features.trees.PythadendronTreeFeature;
 import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
-import ru.betterend.world.generator.GeneratorOptions;
-import ru.betterend.world.surface.UmbraSurfaceBuilder;
-
-import java.util.List;
-import java.util.function.Supplier;
 
 public class EndFeatures {
 	// Trees //
@@ -223,7 +217,8 @@ public class EndFeatures {
 		"umbralith_arch",
 		new ArchFeature(
 			EndBlocks.UMBRALITH.stone,
-			UmbraSurfaceBuilder::getSurfaceState
+				//TODO: 1.18 this needs to change to a dynamic block
+				(pos)->Blocks.END_STONE.defaultBlockState() //UmbraSurfaceBuilder::getSurfaceState
 		),
 		10);
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
@@ -295,9 +290,7 @@ public class EndFeatures {
 	
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {
 		OreLayerFeature layer = new OreLayerFeature(block.defaultBlockState(), radius, minY, maxY);
-		ConfiguredFeature<?, ?> configured = layer
-			.configured(FeatureConfiguration.NONE)
-			.decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(count)));
+		PlacedFeature configured = layer.configured(FeatureConfiguration.NONE).placed(new PlacementModifier[]{CountPlacement.of(count)});
 		return new BCLFeature(BetterEnd.makeID(name), layer, GenerationStep.Decoration.UNDERGROUND_ORES, configured);
 	}
 	
@@ -305,75 +298,46 @@ public class EndFeatures {
 		return registerLayer(name, material.stone, radius, minY, maxY, count);
 	}
 	
-	public static void registerBiomeFeatures(ResourceLocation id, Biome biome, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
+	public static void addBiomeFeatures(ResourceLocation id, Biome biome) {
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			return;
 		}
 		
-		if (GeneratorOptions.removeChorusFromVanillaBiomes()) {
-			if (id.getNamespace().equals("minecraft")) {
-				String path = id.getPath();
-				if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands")) {
-					int pos = GenerationStep.Decoration.VEGETAL_DECORATION.ordinal();
-					if (pos < features.size()) {
-						List<Supplier<ConfiguredFeature<?, ?>>> list = features.get(pos);
-						// If only chorus plants are enabled
-						if (list.size() == 1) {
-							features.get(pos).clear();
-						}
-					}
-				}
-			}
-		}
-		
-		addFeature(FLAVOLITE_LAYER, features);
-		addFeature(THALLASIUM_ORE, features);
-		addFeature(ENDER_ORE, features);
-		addFeature(CRASHED_SHIP, features);
+		BiomeAPI.addBiomeFeature(biome, FLAVOLITE_LAYER);
+		BiomeAPI.addBiomeFeature(biome, THALLASIUM_ORE);
+		BiomeAPI.addBiomeFeature(biome, ENDER_ORE);
+		BiomeAPI.addBiomeFeature(biome, CRASHED_SHIP);
 		
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
 		boolean hasCaves = bclbiome.getCustomData("has_caves", true) && !(bclbiome instanceof EndCaveBiome);
 		if (hasCaves && !BiomeAPI.END_VOID_BIOME_PICKER.containsImmutable(id)) {
 			if (Configs.BIOME_CONFIG.getBoolean(id, "hasCaves", true)) {
-				addFeature(ROUND_CAVE, features);
-				addFeature(TUNEL_CAVE, features);
+				// TODO replace caves with carvers
+				BiomeAPI.addBiomeFeature(biome, ROUND_CAVE);
+				BiomeAPI.addBiomeFeature(biome, TUNEL_CAVE);
 			}
 		}
 		
-		BCLFeature feature = BiomeAPI.getBiome(id).getStructuresFeature();
+		// TODO restore biome structures
+		/*BCLFeature feature = BiomeAPI.getBiome(id).getStructuresFeature();
 		if (feature != null) {
 			addFeature(feature, features);
-		}
+		}*/
 	}
 	
-	public static void addDefaultFeatures(BCLBiomeDef def) {
-		def.addFeature(FLAVOLITE_LAYER);
-		def.addFeature(THALLASIUM_ORE);
-		def.addFeature(ENDER_ORE);
-		def.addFeature(CRASHED_SHIP);
-		
-		if (def.getID().getPath().endsWith("_cave")) {
-			return;
-		}
-		
-		boolean hasCaves = def.getCustomData("has_caves", true);
-		hasCaves = Configs.BIOME_CONFIG.getBoolean(def.getID(), "hasCaves", hasCaves);
+	public static BCLBiomeBuilder addDefaultFeatures(BCLBiomeBuilder builder, boolean hasCaves) {
+		builder.feature(FLAVOLITE_LAYER);
+		builder.feature(THALLASIUM_ORE);
+		builder.feature(ENDER_ORE);
+		builder.feature(CRASHED_SHIP);
+
+		// TODO replace cave features with carvers
 		if (hasCaves) {
-			def.addFeature(ROUND_CAVE);
-			def.addFeature(TUNEL_CAVE);
+			builder.feature(ROUND_CAVE);
+			builder.feature(TUNEL_CAVE);
 		}
-	}
-	
-	private static void addFeature(BCLFeature feature, List<List<Supplier<ConfiguredFeature<?, ?>>>> features) {
-		int index = feature.getFeatureStep().ordinal();
-		if (features.size() > index) {
-			features.get(index).add(() -> feature.getFeatureConfigured());
-		}
-		else {
-			List<Supplier<ConfiguredFeature<?, ?>>> newFeature = Lists.newArrayList();
-			newFeature.add(() -> feature.getFeatureConfigured());
-			features.add(newFeature);
-		}
+		
+		return builder;
 	}
 	
 	public static void register() {}

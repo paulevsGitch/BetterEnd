@@ -35,6 +35,7 @@
             "ru.betterend.integration.rei.REIPlugin"
         ]
 	},
+	"accessWidener" : "betterend.accesswidener",
 	"mixins": [
 		"betterend.mixins.common.json",
 		"betterend.mixins.client.json",
@@ -42,10 +43,10 @@
 	],
 
 	"depends": {
-		"fabricloader": ">=0.12.4",
-		"fabric": ">=0.42.1",
-		"minecraft": ">=1.17",
-        "bclib": ">=0.5.4"
+		"fabricloader": ">=0.12.9",
+		"fabric": ">=0.44.0",
+		"minecraft": ">=1.18.1",
+        "bclib": ">=1.1.2"
 	},
 	"suggests": {
 		"byg": ">=1.1.3",

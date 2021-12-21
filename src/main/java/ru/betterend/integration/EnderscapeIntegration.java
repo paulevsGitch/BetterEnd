@@ -36,7 +36,9 @@ public class EnderscapeIntegration extends ModIntegration {
 		
 		BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
 			if (!biomeID.getNamespace().equals("enderscape")) {
-				BiomeAPI.addBiomeFeatures(biome, scatteredShadowQuartzOre, voidNebuliteOre, nebuliteOre);
+				BiomeAPI.addBiomeFeature(biome, scatteredShadowQuartzOre);
+				BiomeAPI.addBiomeFeature(biome, voidNebuliteOre);
+				BiomeAPI.addBiomeFeature(biome, nebuliteOre);
 			}
 		});
 		

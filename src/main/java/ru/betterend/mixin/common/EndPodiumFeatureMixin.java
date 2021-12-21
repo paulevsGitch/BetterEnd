@@ -58,7 +58,7 @@ public class EndPodiumFeatureMixin {
 		WorldGenLevel world = featurePlaceContext.level();
 		BlockPos pos = be_updatePortalPos(world);
 		return new FeaturePlaceContext<NoneFeatureConfiguration>(
-            Optional.empty(),
+			Optional.empty(),
 			world,
 			featurePlaceContext.chunkGenerator(),
 			featurePlaceContext.random(),

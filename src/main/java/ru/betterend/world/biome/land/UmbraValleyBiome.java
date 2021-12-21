@@ -16,61 +16,61 @@ import ru.betterend.world.surface.UmbraSurfaceNoiseCondition;
 import java.util.List;
 
 public class UmbraValleyBiome extends EndBiome.Config {
-    public UmbraValleyBiome() {
-        super("umbra_valley");
-    }
+	public UmbraValleyBiome() {
+		super("umbra_valley");
+	}
 
-    @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
-        builder.fogColor(100, 100, 100)
-               .plantsColor(172, 189, 190)
-               .waterAndFogColor(69, 104, 134)
-               .particles(EndParticles.AMBER_SPHERE, 0.0001F)
-               .loop(EndSounds.UMBRA_VALLEY)
-               .music(EndSounds.MUSIC_DARK)
-               .feature(EndFeatures.UMBRALITH_ARCH)
-               .feature(EndFeatures.THIN_UMBRALITH_ARCH)
-               .feature(EndFeatures.INFLEXIA)
-               .feature(EndFeatures.FLAMMALIX);
-    }
+	@Override
+	protected void addCustomBuildData(BCLBiomeBuilder builder) {
+		builder.fogColor(100, 100, 100)
+			   .plantsColor(172, 189, 190)
+			   .waterAndFogColor(69, 104, 134)
+			   .particles(EndParticles.AMBER_SPHERE, 0.0001F)
+			   .loop(EndSounds.UMBRA_VALLEY)
+			   .music(EndSounds.MUSIC_DARK)
+			   .feature(EndFeatures.UMBRALITH_ARCH)
+			   .feature(EndFeatures.THIN_UMBRALITH_ARCH)
+			   .feature(EndFeatures.INFLEXIA)
+			   .feature(EndFeatures.FLAMMALIX);
+	}
 
-    @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
-        return new EndBiome.DefaultSurfaceMaterialProvider() {
-            @Override
-            public BlockState getTopMaterial() {
-                return EndBlocks.UMBRALITH.stone.defaultBlockState();
-            }
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.UMBRALITH.stone.defaultBlockState();
+			}
 
-            @Override
-            public BlockState getAltTopMaterial() {
-                return EndBlocks.PALLIDIUM_FULL.defaultBlockState();
-            }
+			@Override
+			public BlockState getAltTopMaterial() {
+				return EndBlocks.PALLIDIUM_FULL.defaultBlockState();
+			}
 
-            @Override
-            public boolean generateFloorRule() {
-                return false;
-            }
+			@Override
+			public boolean generateFloorRule() {
+				return false;
+			}
 
-            @Override
-            public SurfaceRuleBuilder surface() {
-                return super
-                        .surface()
-                        .rule(2,
-                                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
-                                        new SwitchRuleSource(
-                                                new UmbraSurfaceNoiseCondition(),
-                                                List.of(
-                                                        SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
-                                                        PALLIDIUM_HEAVY,
-                                                        PALLIDIUM_THIN,
-                                                        PALLIDIUM_TINY,
-                                                        SurfaceRules.state(surfaceMaterial().getTopMaterial())
-                                                )
-                                        )
-                                )
-                        );
-            }
-        };
-    }
+			@Override
+			public SurfaceRuleBuilder surface() {
+				return super
+						.surface()
+						.rule(2,
+								SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
+										new SwitchRuleSource(
+												new UmbraSurfaceNoiseCondition(),
+												List.of(
+														SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+														PALLIDIUM_HEAVY,
+														PALLIDIUM_THIN,
+														PALLIDIUM_TINY,
+														SurfaceRules.state(surfaceMaterial().getTopMaterial())
+												)
+										)
+								)
+						);
+			}
+		};
+	}
 }

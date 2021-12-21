@@ -11,9 +11,9 @@ import ru.betterend.interfaces.StructureFeaturesAccessor;
 
 @Mixin(StructureFeatures.class)
 public class StructureFeaturesMixin implements StructureFeaturesAccessor {
-    @Shadow @Final private static ConfiguredStructureFeature<NoneFeatureConfiguration, ? extends StructureFeature<NoneFeatureConfiguration>> END_CITY;
+	@Shadow @Final private static ConfiguredStructureFeature<NoneFeatureConfiguration, ? extends StructureFeature<NoneFeatureConfiguration>> END_CITY;
 
-    public ConfiguredStructureFeature<NoneFeatureConfiguration, ? extends StructureFeature<NoneFeatureConfiguration>> getEND_CITY(){
-        return END_CITY;
-    }
+	public ConfiguredStructureFeature<NoneFeatureConfiguration, ? extends StructureFeature<NoneFeatureConfiguration>> getEND_CITY(){
+		return END_CITY;
+	}
 }

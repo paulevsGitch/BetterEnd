@@ -19,66 +19,66 @@ import ru.betterend.world.biome.EndBiome;
 import java.util.List;
 
 public class NightshadeRedwoods extends EndBiome.Config {
-    public NightshadeRedwoods() {
-        super("nightshade_redwoods");
-    }
+	public NightshadeRedwoods() {
+		super("nightshade_redwoods");
+	}
 
-    @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
-        Biome biome = Integrations.BYG.getBiome("nightshade_forest");
-        BiomeSpecialEffects effects = biome.getSpecialEffects();
+	@Override
+	protected void addCustomBuildData(BCLBiomeBuilder builder) {
+		Biome biome = Integrations.BYG.getBiome("nightshade_forest");
+		BiomeSpecialEffects effects = biome.getSpecialEffects();
 
-        builder.fogColor(140, 108, 47)
-               .fogDensity(1.5F)
-               .waterAndFogColor(55, 70, 186)
-               .foliageColor(122, 17, 155)
-               .particles(
-                       ParticleTypes.REVERSE_PORTAL,
-                       0.002F
-               )
-               //TODO: 1.18 surface rules
-//              .setSurface(biome.getGenerationSettings()
-//                               .getSurfaceBuilder()
-//                               .get())
-               .grassColor(48, 13, 89)
-               .plantsColor(200, 125, 9)
-               .feature(EndFeatures.END_LAKE_RARE)
-               .feature(BYGFeatures.NIGHTSHADE_REDWOOD_TREE)
-               .feature(BYGFeatures.NIGHTSHADE_MOSS_WOOD)
-               .feature(BYGFeatures.NIGHTSHADE_MOSS);
+		builder.fogColor(140, 108, 47)
+			   .fogDensity(1.5F)
+			   .waterAndFogColor(55, 70, 186)
+			   .foliageColor(122, 17, 155)
+			   .particles(
+					   ParticleTypes.REVERSE_PORTAL,
+					   0.002F
+			   )
+			   //TODO: 1.18 surface rules
+//			  .setSurface(biome.getGenerationSettings()
+//							   .getSurfaceBuilder()
+//							   .get())
+			   .grassColor(48, 13, 89)
+			   .plantsColor(200, 125, 9)
+			   .feature(EndFeatures.END_LAKE_RARE)
+			   .feature(BYGFeatures.NIGHTSHADE_REDWOOD_TREE)
+			   .feature(BYGFeatures.NIGHTSHADE_MOSS_WOOD)
+			   .feature(BYGFeatures.NIGHTSHADE_MOSS);
 
-        if (BCLib.isClient()) {
-            SoundEvent loop = effects.getAmbientLoopSoundEvent()
-                                     .get();
-            SoundEvent music = effects.getBackgroundMusic()
-                                      .get()
-                                      .getEvent();
-            SoundEvent additions = effects.getAmbientAdditionsSettings()
-                                          .get()
-                                          .getSoundEvent();
-            SoundEvent mood = effects.getAmbientMoodSettings()
-                                     .get()
-                                     .getSoundEvent();
-            builder.loop(loop)
-                   .music(music)
-                   .additions(additions)
-                   .mood(mood);
-        }
-        biome.getGenerationSettings()
-             .features()
-             .forEach((list) -> {
-                 list.forEach((feature) -> {
-                     builder.feature(Decoration.VEGETAL_DECORATION, feature.get());
-                 });
-             });
+		if (BCLib.isClient()) {
+			SoundEvent loop = effects.getAmbientLoopSoundEvent()
+									 .get();
+			SoundEvent music = effects.getBackgroundMusic()
+									  .get()
+									  .getEvent();
+			SoundEvent additions = effects.getAmbientAdditionsSettings()
+										  .get()
+										  .getSoundEvent();
+			SoundEvent mood = effects.getAmbientMoodSettings()
+									 .get()
+									 .getSoundEvent();
+			builder.loop(loop)
+				   .music(music)
+				   .additions(additions)
+				   .mood(mood);
+		}
+		biome.getGenerationSettings()
+			 .features()
+			 .forEach((list) -> {
+				 list.forEach((feature) -> {
+					 builder.feature(Decoration.VEGETAL_DECORATION, feature.get());
+				 });
+			 });
 
-        for (MobCategory group : MobCategory.values()) {
-            List<SpawnerData> list = biome.getMobSettings()
-                                          .getMobs(group)
-                                          .unwrap();
-            list.forEach((entry) -> {
-                builder.spawn((EntityType<? extends Mob>) entry.type, 1, entry.minCount, entry.maxCount);
-            });
-        }
-    }
+		for (MobCategory group : MobCategory.values()) {
+			List<SpawnerData> list = biome.getMobSettings()
+										  .getMobs(group)
+										  .unwrap();
+			list.forEach((entry) -> {
+				builder.spawn((EntityType<? extends Mob>) entry.type, 1, entry.minCount, entry.maxCount);
+			});
+		}
+	}
 }

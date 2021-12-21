@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *	 http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,7 +56,7 @@ public final class ArmorRenderingRegistry {
 	 * Registers a provider for custom armor models for an item.
 	 *
 	 * @param provider the provider for the model
-	 * @param items    the items to be registered for
+	 * @param items	the items to be registered for
 	 */
 	public static void registerModel(@Nullable ModelProvider provider, Item... items) {
 		registerModel(provider, Arrays.asList(items));
@@ -66,7 +66,7 @@ public final class ArmorRenderingRegistry {
 	 * Registers a provider for custom armor models for an item.
 	 *
 	 * @param provider the provider for the model
-	 * @param items    the items to be registered for
+	 * @param items	the items to be registered for
 	 */
 	public static void registerModel(@Nullable ModelProvider provider, Iterable<Item> items) {
 		ArmorRenderingRegistryImpl.registerModel(provider, items);
@@ -76,7 +76,7 @@ public final class ArmorRenderingRegistry {
 	 * Registers a provider for custom texture models for an item.
 	 *
 	 * @param provider the provider for the texture
-	 * @param items    the items to be registered for
+	 * @param items	the items to be registered for
 	 */
 	public static void registerTexture(@Nullable TextureProvider provider, Item... items) {
 		registerTexture(provider, Arrays.asList(items));
@@ -86,7 +86,7 @@ public final class ArmorRenderingRegistry {
 	 * Registers a provider for custom texture models for an item.
 	 *
 	 * @param provider the provider for the texture
-	 * @param items    the items to be registered for
+	 * @param items	the items to be registered for
 	 */
 	public static void registerTexture(@Nullable TextureProvider provider, Iterable<Item> items) {
 		ArmorRenderingRegistryImpl.registerTexture(provider, items);
@@ -96,7 +96,7 @@ public final class ArmorRenderingRegistry {
 	 * Register simple armor items to use the vanilla armor file name under the mods namespace.
 	 *
 	 * @param identifier The namespace + path to use for the armor texture location.
-	 * @param items      the items to be registered
+	 * @param items	  the items to be registered
 	 */
 	public static void registerSimpleTexture(ResourceLocation identifier, Item... items) {
 		registerTexture((entity, stack, slot, secondLayer, suffix, defaultTexture) -> {
@@ -110,9 +110,9 @@ public final class ArmorRenderingRegistry {
 	/**
 	 * Gets the model of the armor piece.
 	 *
-	 * @param entity       The entity equipping the armor
-	 * @param stack        The item stack of the armor
-	 * @param slot         The slot which the armor is in
+	 * @param entity	   The entity equipping the armor
+	 * @param stack		The item stack of the armor
+	 * @param slot		 The slot which the armor is in
 	 * @param defaultModel The default model that vanilla provides
 	 * @return The model of the armor piece.
 	 */
@@ -124,11 +124,11 @@ public final class ArmorRenderingRegistry {
 	/**
 	 * Gets the armor texture {@link net.minecraft.resources.ResourceLocation}.
 	 *
-	 * @param entity         The entity equipping the armor
-	 * @param stack          The item stack of the armor
-	 * @param slot           The slot which the armor is in
-	 * @param secondLayer    True if using the second texture layer
-	 * @param suffix         The texture suffix, used in vanilla by {@link net.minecraft.world.item.DyeableArmorItem}
+	 * @param entity		 The entity equipping the armor
+	 * @param stack		  The item stack of the armor
+	 * @param slot		   The slot which the armor is in
+	 * @param secondLayer	True if using the second texture layer
+	 * @param suffix		 The texture suffix, used in vanilla by {@link net.minecraft.world.item.DyeableArmorItem}
 	 * @param defaultTexture The default vanilla texture identifier
 	 * @return the custom armor texture identifier, return null to use the vanilla ones. Defaulted to the item's registry id.
 	 */
@@ -143,9 +143,9 @@ public final class ArmorRenderingRegistry {
 		/**
 		 * Gets the model of the armor piece.
 		 *
-		 * @param entity       The entity equipping the armor
-		 * @param stack        The item stack of the armor
-		 * @param slot         The slot which the armor is in
+		 * @param entity	   The entity equipping the armor
+		 * @param stack		The item stack of the armor
+		 * @param slot		 The slot which the armor is in
 		 * @param defaultModel The default vanilla armor model
 		 * @return The model of the armor piece. Should never be null.
 		 */
@@ -158,9 +158,9 @@ public final class ArmorRenderingRegistry {
 		/**
 		 * Gets the armor texture {@link net.minecraft.resources.ResourceLocation}.
 		 *
-		 * @param entity         The entity equipping the armor
-		 * @param stack          The item stack of the armor
-		 * @param slot           The slot which the armor is in
+		 * @param entity		 The entity equipping the armor
+		 * @param stack		  The item stack of the armor
+		 * @param slot		   The slot which the armor is in
 		 * @param defaultTexture The default vanilla texture identifier
 		 * @return the custom armor texture identifier. Should never be null.
 		 */

@@ -694,9 +694,9 @@ public class EternalRitual {
 	}
 	
 	/**
-	 * @param world       World for search
-	 * @param checkPos    Start search position
-	 * @param radius      Search radius
+	 * @param world	   World for search
+	 * @param checkPos	Start search position
+	 * @param radius	  Search radius
 	 * @param searchBlock Target block
 	 * @param condition   Predicate for test block states in the chunk section
 	 * @return Position of the first found block or null.
@@ -733,9 +733,9 @@ public class EternalRitual {
 	}
 	
 	/**
-	 * @param world       World for search
-	 * @param checkPos    Start search position
-	 * @param radius      Search radius
+	 * @param world	   World for search
+	 * @param checkPos	Start search position
+	 * @param radius	  Search radius
 	 * @param searchBlock Target block
 	 * @param condition   Predicate for test block states in the chunk section
 	 * @return List of positions of the all found blocks or empty list.

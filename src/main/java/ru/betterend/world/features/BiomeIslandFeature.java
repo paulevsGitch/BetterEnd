@@ -30,7 +30,7 @@ public class BiomeIslandFeature extends DefaultFeature {
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		Biome biome = world.getBiome(pos);
-        int dist = BlocksHelper.downRay(world, pos, 10) + 1;
+		int dist = BlocksHelper.downRay(world, pos, 10) + 1;
 		BlockPos surfacePos = new BlockPos(pos.getX(), pos.getY()-dist, pos.getZ());
 		BlockState topMaterial = EndBiome.findTopMaterial(world, surfacePos);;
 

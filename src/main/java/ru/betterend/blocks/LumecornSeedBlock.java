@@ -16,24 +16,24 @@ import java.util.Random;
 
 public class LumecornSeedBlock extends EndPlantWithAgeBlock {
 
-    @Override
-    public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
-        ((Feature<NoneFeatureConfiguration>) (EndFeatures.LUMECORN.getFeature())).place(new FeaturePlaceContext<>(
-                Optional.empty(),
-                world,
-                null,
-                random,
-                pos,
-                (NoneFeatureConfiguration) null));
-    }
+	@Override
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
+		((Feature<NoneFeatureConfiguration>) (EndFeatures.LUMECORN.getFeature())).place(new FeaturePlaceContext<>(
+				Optional.empty(),
+				world,
+				null,
+				random,
+				pos,
+				(NoneFeatureConfiguration) null));
+	}
 
-    @Override
-    protected boolean isTerrain(BlockState state) {
-        return state.is(EndBlocks.END_MOSS);
-    }
+	@Override
+	protected boolean isTerrain(BlockState state) {
+		return state.is(EndBlocks.END_MOSS);
+	}
 
-    @Override
-    public BlockBehaviour.OffsetType getOffsetType() {
-        return BlockBehaviour.OffsetType.NONE;
-    }
+	@Override
+	public BlockBehaviour.OffsetType getOffsetType() {
+		return BlockBehaviour.OffsetType.NONE;
+	}
 }

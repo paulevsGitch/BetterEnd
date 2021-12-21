@@ -303,14 +303,18 @@ public class EndFeatures {
 			return;
 		}
 		
-		BiomeAPI.addBiomeFeatures(biome, FLAVOLITE_LAYER, THALLASIUM_ORE, ENDER_ORE, CRASHED_SHIP);
+		BiomeAPI.addBiomeFeature(biome, FLAVOLITE_LAYER);
+		BiomeAPI.addBiomeFeature(biome, THALLASIUM_ORE);
+		BiomeAPI.addBiomeFeature(biome, ENDER_ORE);
+		BiomeAPI.addBiomeFeature(biome, CRASHED_SHIP);
 		
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
 		boolean hasCaves = bclbiome.getCustomData("has_caves", true) && !(bclbiome instanceof EndCaveBiome);
 		if (hasCaves && !BiomeAPI.END_VOID_BIOME_PICKER.containsImmutable(id)) {
 			if (Configs.BIOME_CONFIG.getBoolean(id, "hasCaves", true)) {
 				// TODO replace caves with carvers
-				BiomeAPI.addBiomeFeatures(biome, ROUND_CAVE, TUNEL_CAVE);
+				BiomeAPI.addBiomeFeature(biome, ROUND_CAVE);
+				BiomeAPI.addBiomeFeature(biome, TUNEL_CAVE);
 			}
 		}
 		

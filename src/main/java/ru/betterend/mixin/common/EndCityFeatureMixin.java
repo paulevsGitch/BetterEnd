@@ -3,8 +3,8 @@ package ru.betterend.mixin.common;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.feature.EndCityFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
@@ -26,9 +26,8 @@ public class EndCityFeatureMixin {
 		final ChunkPos pos = context.chunkPos();
 		final ChunkGenerator chunkGenerator = context.chunkGenerator();
 		final LevelHeightAccessor levelHeightAccessor = context.heightAccessor();
-		//TODO: 1.18 that is a different random source!
-		Random chunkRandom = new WorldgenRandom(new LegacyRandomSource(pos.x*pos.z));
-
+		Random chunkRandom = new WorldgenRandom(new XoroshiroRandomSource(pos.x, pos.z));
+		
 		if (GeneratorOptions.useNewGenerator()) {
 			int chance = GeneratorOptions.getEndCityFailChance();
 			if (chance == 0 || chunkRandom.nextInt(chance) == 0) {

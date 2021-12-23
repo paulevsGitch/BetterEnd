@@ -32,3 +32,4 @@ output/
 *.getBlock("log")
 Convert.class
 ModelPart.class
+libs/

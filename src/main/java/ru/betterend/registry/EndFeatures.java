@@ -1,5 +1,10 @@
 package ru.betterend.registry;
 
+import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -16,9 +21,14 @@ import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.features.BCLCommonFeatures;
 import ru.bclib.api.features.BCLFeatureBuilder;
+import ru.bclib.util.JsonFactory;
+import ru.bclib.util.StructureHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
+import ru.bclib.world.features.ListFeature;
+import ru.bclib.world.features.ListFeature.StructureInfo;
+import ru.bclib.world.features.NBTStructureFeature.TerrainMerge;
 import ru.betterend.BetterEnd;
 import ru.betterend.complexmaterials.StoneMaterial;
 import ru.betterend.config.Configs;
@@ -83,6 +93,9 @@ import ru.betterend.world.features.trees.MossyGlowshroomFeature;
 import ru.betterend.world.features.trees.PythadendronTreeFeature;
 import ru.betterend.world.features.trees.TenaneaFeature;
 import ru.betterend.world.features.trees.UmbrellaTreeFeature;
+
+import java.io.InputStream;
+import java.util.List;
 
 public class EndFeatures {
 	// Trees //
@@ -270,6 +283,7 @@ public class EndFeatures {
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		return BCLFeatureBuilder.start(id, feature).countLayersMax(density).onlyInBiome().build();
+		//return BCLFeatureBuilder.start(id, feature).countMax(density).heightmap().squarePlacement().onlyInBiome().build();
 	}
 	
 	private static BCLFeature registerRawGen(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
@@ -299,16 +313,21 @@ public class EndFeatures {
 	}
 	
 	public static void addBiomeFeatures(ResourceLocation id, Biome biome) {
-		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
-			return;
-		}
-		
 		BiomeAPI.addBiomeFeature(biome, FLAVOLITE_LAYER);
 		BiomeAPI.addBiomeFeature(biome, THALLASIUM_ORE);
 		BiomeAPI.addBiomeFeature(biome, ENDER_ORE);
 		BiomeAPI.addBiomeFeature(biome, CRASHED_SHIP);
 		
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
+		BCLFeature feature = getBiomeStructures(bclbiome);
+		if (feature != null) {
+			BiomeAPI.addBiomeFeature(biome, feature);
+		}
+		
+		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
+			return;
+		}
+		
 		boolean hasCaves = bclbiome.getCustomData("has_caves", true) && !(bclbiome instanceof EndCaveBiome);
 		if (hasCaves && !BiomeAPI.END_VOID_BIOME_PICKER.containsImmutable(id)) {
 			if (Configs.BIOME_CONFIG.getBoolean(id, "hasCaves", true)) {
@@ -317,12 +336,44 @@ public class EndFeatures {
 				BiomeAPI.addBiomeFeature(biome, TUNEL_CAVE);
 			}
 		}
+	}
+	
+	private static BCLFeature getBiomeStructures(BCLBiome biome) {
+		String ns = biome.getID().getNamespace();
+		String nm = biome.getID().getPath();
+		ResourceLocation id = new ResourceLocation(ns, nm + "_structures");
 		
-		// TODO restore biome structures
-		/*BCLFeature feature = BiomeAPI.getBiome(id).getStructuresFeature();
-		if (feature != null) {
-			addFeature(feature, features);
-		}*/
+		if (BuiltinRegistries.PLACED_FEATURE.containsKey(id)) {
+			PlacedFeature placed = BuiltinRegistries.PLACED_FEATURE.get(id);
+			Feature<?> feature = Registry.FEATURE.get(id);
+			return new BCLFeature(id, feature, Decoration.SURFACE_STRUCTURES, placed);
+		}
+		
+		String path = "/data/" + ns + "/structures/biome/" + nm + "/";
+		InputStream inputstream = StructureHelper.class.getResourceAsStream(path + "structures.json");
+		if (inputstream != null) {
+			JsonObject obj = JsonFactory.getJsonObject(inputstream);
+			JsonArray enties = obj.getAsJsonArray("structures");
+			if (enties != null) {
+				List<StructureInfo> list = Lists.newArrayList();
+				enties.forEach((entry) -> {
+					JsonObject e = entry.getAsJsonObject();
+					String structure = path + e.get("nbt").getAsString() + ".nbt";
+					TerrainMerge terrainMerge = TerrainMerge.getFromString(e.get("terrainMerge").getAsString());
+					int offsetY = e.get("offsetY").getAsInt();
+					list.add(new StructureInfo(structure, offsetY, terrainMerge));
+				});
+				if (!list.isEmpty()) {
+					return BCLCommonFeatures.makeChancedFeature(
+						new ResourceLocation(ns, nm + "_structures"),
+						Decoration.SURFACE_STRUCTURES,
+						new ListFeature(list, Blocks.END_STONE.defaultBlockState()),
+						10
+					);
+				}
+			}
+		}
+		return null;
 	}
 	
 	public static BCLBiomeBuilder addDefaultFeatures(BCLBiomeBuilder builder, boolean hasCaves) {

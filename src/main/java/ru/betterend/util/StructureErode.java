@@ -241,6 +241,9 @@ public class StructureErode {
 	}
 	
 	private static boolean ignore(BlockState state, WorldGenLevel world, BlockPos pos) {
+		if (state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.is(BlockTags.NYLIUM)) {
+			return true;
+		}
 		return !state.getMaterial().equals(Material.STONE) || BlocksHelper.isInvulnerable(state, world, pos);
 	}
 	

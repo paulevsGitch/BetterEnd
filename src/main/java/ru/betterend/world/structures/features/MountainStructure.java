@@ -34,9 +34,7 @@ public class MountainStructure extends FeatureBaseStructure {
 		int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
 		int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 		if (y > 5) {
-			//TODO: 1.18 right way to get biome?
-			Biome biome = chunkGenerator.getNoiseBiome(x, y, z);
-
+			Biome biome = chunkGenerator.getNoiseBiome(x >> 2, y >> 2, z >> 2);
 			float radius = MHelper.randRange(50, 100, random);
 			float height = radius * MHelper.randRange(0.8F, 1.2F, random);
 			CrystalMountainPiece piece = new CrystalMountainPiece(

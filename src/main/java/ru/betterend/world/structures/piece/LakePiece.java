@@ -193,7 +193,6 @@ public class LakePiece extends BasePiece {
 							}
 						}
 						else if (chunk.getBlockState(mut.move(Direction.UP)).isAir()) {
-							//TODO: 1.18 test if this is thr right tick
 							chunk.markPosForPostprocessing(mut.move(Direction.DOWN).immutable());
 						}
 					}

@@ -23,6 +23,7 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.bclib.world.features.NBTStructureFeature;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.util.StructureErode;
 import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
@@ -111,7 +112,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		addStructureData(placementData);
 		structure.placeInWorld(world, center, center, placementData.setBoundingBox(bounds), random, 2);
 		
-		StructureHelper.erodeIntense(world, bounds, random);
+		StructureErode.erodeIntense(world, bounds, random);
 		BlockFixer.fixBlocks(
 			world,
 			new BlockPos(bounds.minX(), bounds.minY(), bounds.minZ()),

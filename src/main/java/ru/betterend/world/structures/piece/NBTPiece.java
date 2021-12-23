@@ -18,6 +18,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.util.StructureErode;
 import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
@@ -77,9 +78,7 @@ public class NBTPiece extends BasePiece {
 			this.boundingBox.minY(),
 			blockBox.minZ()
 		), new Vec3i(blockBox.maxX(), this.boundingBox.maxX(), blockBox.maxZ()));
-		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation)
-																		   .setMirror(mirror)
-																		   .setBoundingBox(bounds);
+		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		structure.placeInWorld(world, pos, pos, placementData, random, 2);
 		if (erosion > 0) {
 			int x1 = MHelper.min(bounds.maxX(), boundingBox.maxX());
@@ -87,10 +86,10 @@ public class NBTPiece extends BasePiece {
 			int z1 = MHelper.min(bounds.maxZ(), boundingBox.maxZ());
 			int z0 = MHelper.max(bounds.minZ(), boundingBox.minZ());
 			bounds = BoundingBox.fromCorners(new Vec3i(x0, bounds.minY(), z0), new Vec3i(x1, bounds.maxY(), z1));
-			StructureHelper.erode(world, bounds, erosion, random);
+			StructureErode.erode(world, bounds, erosion, random);
 		}
 		if (cover) {
-			StructureHelper.cover(world, bounds, random, EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
+			StructureErode.cover(world, bounds, random, EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
 		}
 	}
 	

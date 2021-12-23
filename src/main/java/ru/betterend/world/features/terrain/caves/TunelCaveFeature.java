@@ -21,6 +21,7 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 import java.util.Map;
@@ -167,11 +168,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 		}
 		
 		floorSets.forEach((biome, floorPositions) -> {
-			BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState();
-//			BlockState surfaceBlock = biome.getBiome()
-//										   .getGenerationSettings()
-//										   .getSurfaceBuilderConfig()
-//										   .getTopMaterial();
+			BlockState surfaceBlock = EndBiome.findTopMaterial(biome);
 			placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		});
 		ceilSets.forEach((biome, ceilPositions) -> {

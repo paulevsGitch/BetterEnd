@@ -128,8 +128,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				if (wallBlock != null) {
 					for (Vec3i offset : SPHERE) {
 						BlockPos wallPos = pos.offset(offset);
-						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos)
-																							  .is(TagAPI.BLOCK_GEN_TERRAIN)) {
+						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 							wallBlock = biome.getWall(wallPos);
 							BlocksHelper.setWithoutUpdate(world, wallPos, wallBlock);
 							placed.add(wallPos);

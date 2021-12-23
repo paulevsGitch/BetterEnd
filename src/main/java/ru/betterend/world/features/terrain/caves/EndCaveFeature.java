@@ -153,11 +153,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	}
 
 	protected void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
-		//TODO: 1.18 No longer implemented in BCLib
-//		BiomeSetter array = (BiomeSetter) world.getChunk(pos).getBiomes();
-//		if (array != null) {
-//			array.bclib_setBiome(biome.getActualBiome(), pos);
-//		}
+		BiomeAPI.setBiome(world, pos, biome.getActualBiome());
 	}
 	
 	private BlockPos findPos(WorldGenLevel world, BlockPos pos, int radius, Random random) {

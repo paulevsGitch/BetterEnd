@@ -109,7 +109,7 @@ public class EndFeatures {
 	public static final BCLFeature PYTHADENDRON_TREE = redisterVegetation("pythadendron_tree", new PythadendronTreeFeature(), 2);
 	public static final BCLFeature LACUGROVE = redisterVegetation("lacugrove", new LacugroveFeature(), 4);
 	public static final BCLFeature DRAGON_TREE = redisterVegetation("dragon_tree", new DragonTreeFeature(), 3);
-	public static final BCLFeature TENANEA = redisterVegetation("tenanea", new TenaneaFeature(), 3);
+	public static final BCLFeature TENANEA = redisterVegetation("tenanea", new TenaneaFeature(), 2);
 	public static final BCLFeature HELIX_TREE = redisterVegetation("helix_tree", new HelixTreeFeature(), 1);
 	public static final BCLFeature UMBRELLA_TREE = redisterVegetation("umbrella_tree", new UmbrellaTreeFeature(), 4);
 	public static final BCLFeature JELLYSHROOM = redisterVegetation("jellyshroom", new JellyshroomFeature(), 3);
@@ -119,7 +119,7 @@ public class EndFeatures {
 	// Bushes //
 	public static final BCLFeature PYTHADENDRON_BUSH = redisterVegetation("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.getBark()), 4);
 	public static final BCLFeature DRAGON_TREE_BUSH = redisterVegetation("dragon_tree_bush", new BushFeature(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.getBark()), 15);
-	public static final BCLFeature TENANEA_BUSH = redisterVegetation("tenanea_bush", new TenaneaBushFeature(), 10);
+	public static final BCLFeature TENANEA_BUSH = redisterVegetation("tenanea_bush", new TenaneaBushFeature(), 6);
 	public static final BCLFeature LUMECORN = redisterVegetation("lumecorn", new Lumecorn(), 5);
 	public static final BCLFeature LARGE_AMARANITA = redisterVegetation("large_amaranita", new LargeAmaranitaFeature(), 5);
 	public static final BCLFeature LUCERNIA_BUSH = redisterVegetation("lucernia_bush", new BushWithOuterFeature(EndBlocks.LUCERNIA_LEAVES, EndBlocks.LUCERNIA_OUTER_LEAVES, EndBlocks.LUCERNIA.getBark()), 10);
@@ -136,8 +136,8 @@ public class EndFeatures {
 	public static final BCLFeature MURKWEED = redisterVegetation("murkweed", new SinglePlantFeature(EndBlocks.MURKWEED, 3), 2);
 	public static final BCLFeature NEEDLEGRASS = redisterVegetation("needlegrass", new SinglePlantFeature(EndBlocks.NEEDLEGRASS, 3), 2);
 	public static final BCLFeature SHADOW_BERRY = redisterVegetation("shadow_berry", new SinglePlantFeature(EndBlocks.SHADOW_BERRY, 2), 1);
-	public static final BCLFeature BUSHY_GRASS = redisterVegetation("bushy_grass", new SinglePlantFeature(EndBlocks.BUSHY_GRASS, 8, false), 20);
-	public static final BCLFeature BUSHY_GRASS_WG = redisterVegetation("bushy_grass_wg", new SinglePlantFeature(EndBlocks.BUSHY_GRASS, 5), 10);
+	public static final BCLFeature BUSHY_GRASS = redisterVegetation("bushy_grass", new SinglePlantFeature(EndBlocks.BUSHY_GRASS, 8, false), 10);
+	public static final BCLFeature BUSHY_GRASS_WG = redisterVegetation("bushy_grass_wg", new SinglePlantFeature(EndBlocks.BUSHY_GRASS, 5), 8);
 	public static final BCLFeature AMBER_GRASS = redisterVegetation("amber_grass", new SinglePlantFeature(EndBlocks.AMBER_GRASS, 6), 7);
 	public static final BCLFeature LANCELEAF = redisterVegetation("lanceleaf", new LanceleafFeature(), 2);
 	public static final BCLFeature GLOW_PILLAR = redisterVegetation("glow_pillar", new GlowPillarFeature(), 1);
@@ -169,7 +169,7 @@ public class EndFeatures {
 	// Vines //
 	public static final BCLFeature DENSE_VINE = redisterVegetation("dense_vine", new VineFeature(EndBlocks.DENSE_VINE, 24), 3);
 	public static final BCLFeature TWISTED_VINE = redisterVegetation("twisted_vine", new VineFeature(EndBlocks.TWISTED_VINE, 24), 3);
-	public static final BCLFeature BULB_VINE = redisterVegetation("bulb_vine", new VineFeature(EndBlocks.BULB_VINE, 24), 5);
+	public static final BCLFeature BULB_VINE = redisterVegetation("bulb_vine", new VineFeature(EndBlocks.BULB_VINE, 24), 3);
 	public static final BCLFeature JUNGLE_VINE = redisterVegetation("jungle_vine", new VineFeature(EndBlocks.JUNGLE_VINE, 24), 5);
 	
 	// Ceil plants
@@ -222,7 +222,7 @@ public class EndFeatures {
 	public static final BCLFeature END_LAKE_RARE = registerLake("end_lake_rare", new EndLakeFeature(), 40);
 	public static final BCLFeature DESERT_LAKE = registerLake("desert_lake", new DesertLakeFeature(), 8);
 	public static final BCLFeature ROUND_CAVE = registerRawGen("round_cave", new RoundCaveFeature(), 2);
-	public static final BCLFeature SPIRE = registerRawGen("spire", new SpireFeature(), 2);
+	public static final BCLFeature SPIRE = registerRawGen("spire", new SpireFeature(), 4);
 	public static final BCLFeature FLOATING_SPIRE = registerRawGen("floating_spire", new FloatingSpireFeature(), 8);
 	public static final BCLFeature GEYSER = registerRawGen("geyser", new GeyserFeature(), 8);
 	public static final BCLFeature SULPHURIC_LAKE = registerLake("sulphuric_lake", new SulphuricLakeFeature(), 8);
@@ -289,7 +289,6 @@ public class EndFeatures {
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
 		ResourceLocation id = BetterEnd.makeID(name);
 		return BCLFeatureBuilder.start(id, feature).countLayersMax(density).onlyInBiome().build();
-		//return BCLFeatureBuilder.start(id, feature).countMax(density).heightmap().squarePlacement().onlyInBiome().build();
 	}
 	
 	private static BCLFeature registerRawGen(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
@@ -305,16 +304,6 @@ public class EndFeatures {
 	}
 	
 	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize) {
-		/*BCLFeatureBuilder builder = BCLFeatureBuilder
-			.start(BetterEnd.makeID(name), Feature.ORE)
-			.decoration(Decoration.UNDERGROUND_ORES)
-			.count(veins)
-			.modifier(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(128)))
-			.squarePlacement()
-			.onlyInBiome();
-		
-		return builder.build(new OreConfiguration(new BlockMatchTest(Blocks.END_STONE), blockOre.defaultBlockState(), veinSize, 0F));*/
-		
 		return BCLCommonFeatures.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, 0, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(128)), false);
 	}
 	

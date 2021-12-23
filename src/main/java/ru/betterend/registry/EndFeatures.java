@@ -14,6 +14,8 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.features.BCLCommonFeatures;
+import ru.bclib.api.features.BCLFeatureBuilder;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
@@ -21,6 +23,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.complexmaterials.StoneMaterial;
 import ru.betterend.config.Configs;
 import ru.betterend.world.biome.cave.EndCaveBiome;
+import ru.betterend.world.biome.land.UmbraValleyBiome;
 import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.CavePumpkinFeature;
@@ -191,7 +194,7 @@ public class EndFeatures {
 	public static final BCLFeature CHARNIA_GREEN = redisterVegetation("charnia_green", new CharniaFeature(EndBlocks.CHARNIA_GREEN), 10);
 	public static final BCLFeature MENGER_SPONGE = redisterVegetation("menger_sponge", new MengerSpongeFeature(5), 1);
 	public static final BCLFeature CHARNIA_RED_RARE = redisterVegetation("charnia_red_rare", new CharniaFeature(EndBlocks.CHARNIA_RED),2);
-	public static final BCLFeature BIOME_ISLAND = BCLFeature.makeFeatureConfigured(BetterEnd.makeID("overworld_island"), Decoration.RAW_GENERATION, new BiomeIslandFeature());
+	public static final BCLFeature BIOME_ISLAND = BCLFeatureBuilder.start(BetterEnd.makeID("overworld_island"), new BiomeIslandFeature()).decoration(Decoration.RAW_GENERATION).build();
 	public static final BCLFeature FLAMAEA = redisterVegetation("flamaea", new SinglePlantFeature(EndBlocks.FLAMAEA, 12, false, 5), 20);
 	
 	// Terrain //
@@ -204,7 +207,7 @@ public class EndFeatures {
 	public static final BCLFeature FLOATING_SPIRE = registerRawGen("floating_spire", new FloatingSpireFeature(), 8);
 	public static final BCLFeature GEYSER = registerRawGen("geyser", new GeyserFeature(), 8);
 	public static final BCLFeature SULPHURIC_LAKE = registerLake("sulphuric_lake", new SulphuricLakeFeature(), 8);
-	public static final BCLFeature SULPHURIC_CAVE = BCLFeature.makeCountFeature(BetterEnd.makeID("sulphuric_cave"), Decoration.RAW_GENERATION, new SulphuricCaveFeature(), 2);
+	public static final BCLFeature SULPHURIC_CAVE = BCLCommonFeatures.makeCountFeature(BetterEnd.makeID("sulphuric_cave"), Decoration.RAW_GENERATION, new SulphuricCaveFeature(), 2);
 	public static final BCLFeature ICE_STAR = registerRawGen("ice_star", new IceStarFeature(5, 15, 10, 25), 15);
 	public static final BCLFeature ICE_STAR_SMALL = registerRawGen("ice_star_small", new IceStarFeature(3, 5, 7, 12), 8);
 	public static final BCLFeature SURFACE_VENT = registerChanced("surface_vent", new SurfaceVentFeature(), 4);
@@ -212,15 +215,11 @@ public class EndFeatures {
 	public static final BCLFeature OBSIDIAN_PILLAR_BASEMENT = registerChanced("obsidian_pillar_basement", new ObsidianPillarBasementFeature(), 8);
 	public static final BCLFeature OBSIDIAN_BOULDER = registerChanced("obsidian_boulder", new ObsidianBoulderFeature(), 10);
 	public static final BCLFeature FALLEN_PILLAR = registerChanced("fallen_pillar", new FallenPillarFeature(), 20);
-	public static final BCLFeature TUNEL_CAVE = BCLFeature.makeChunkFeature(BetterEnd.makeID("tunel_cave"), Decoration.RAW_GENERATION, new TunelCaveFeature());
-	public static final BCLFeature UMBRALITH_ARCH = registerChanced(
-		"umbralith_arch",
-		new ArchFeature(
-			EndBlocks.UMBRALITH.stone,
-				//TODO: 1.18 this needs to change to a dynamic block
-				(pos)->Blocks.END_STONE.defaultBlockState() //UmbraSurfaceBuilder::getSurfaceState
-		),
-		10);
+	public static final BCLFeature TUNEL_CAVE = BCLCommonFeatures.makeChunkFeature(BetterEnd.makeID("tunel_cave"), Decoration.RAW_GENERATION, new TunelCaveFeature());
+	public static final BCLFeature UMBRALITH_ARCH = registerChanced("umbralith_arch", new ArchFeature(
+		EndBlocks.UMBRALITH.stone,
+		pos -> UmbraValleyBiome.getSurface(pos.getX(), pos.getZ()).defaultBlockState()
+	), 10);
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
 	
 	// Ores //
@@ -269,23 +268,23 @@ public class EndFeatures {
 	public static final DefaultFeature CAVE_PUMPKIN = new CavePumpkinFeature();
 	
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
-		return BCLFeature.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
+		return BCLCommonFeatures.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
 	}
 	
 	private static BCLFeature registerRawGen(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		return BCLFeature.makeChancedFeature(BetterEnd.makeID(name), Decoration.RAW_GENERATION, feature, chance);
+		return BCLCommonFeatures.makeChancedFeature(BetterEnd.makeID(name), Decoration.RAW_GENERATION, feature, chance);
 	}
 	
 	private static BCLFeature registerLake(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		return BCLFeature.makeChancedFeature(BetterEnd.makeID(name), Decoration.RAW_GENERATION, feature, chance);
+		return BCLCommonFeatures.makeChancedFeature(BetterEnd.makeID(name), Decoration.RAW_GENERATION, feature, chance);
 	}
 	
 	private static BCLFeature registerChanced(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
-		return BCLFeature.makeChancedFeature(BetterEnd.makeID(name), Decoration.SURFACE_STRUCTURES, feature, chance);
+		return BCLCommonFeatures.makeChancedFeature(BetterEnd.makeID(name), Decoration.SURFACE_STRUCTURES, feature, chance);
 	}
 	
 	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize, int minY, int maxY) {
-		return BCLFeature.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, minY, maxY);
+		return BCLCommonFeatures.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, minY, maxY);
 	}
 	
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {

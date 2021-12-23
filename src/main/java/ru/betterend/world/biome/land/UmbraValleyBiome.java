@@ -1,5 +1,6 @@
 package ru.betterend.world.biome.land;
 
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
@@ -16,6 +17,14 @@ import ru.betterend.world.surface.UmbraSurfaceNoiseCondition;
 import java.util.List;
 
 public class UmbraValleyBiome extends EndBiome.Config {
+	private static final Block[] SURFACE_BLOCKS = new Block[] {
+		EndBlocks.PALLIDIUM_FULL,
+		EndBlocks.PALLIDIUM_HEAVY,
+		EndBlocks.PALLIDIUM_THIN,
+		EndBlocks.PALLIDIUM_TINY,
+		EndBlocks.UMBRALITH.stone
+	};
+	
 	public UmbraValleyBiome() {
 		super("umbra_valley");
 	}
@@ -41,6 +50,11 @@ public class UmbraValleyBiome extends EndBiome.Config {
 			public BlockState getTopMaterial() {
 				return EndBlocks.UMBRALITH.stone.defaultBlockState();
 			}
+			
+			@Override
+			public BlockState getUnderMaterial() {
+				return EndBlocks.UMBRALITH.stone.defaultBlockState();
+			}
 
 			@Override
 			public BlockState getAltTopMaterial() {
@@ -54,23 +68,24 @@ public class UmbraValleyBiome extends EndBiome.Config {
 
 			@Override
 			public SurfaceRuleBuilder surface() {
-				return super
-						.surface()
-						.rule(2,
-								SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
-										new SwitchRuleSource(
-												new UmbraSurfaceNoiseCondition(),
-												List.of(
-														SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
-														PALLIDIUM_HEAVY,
-														PALLIDIUM_THIN,
-														PALLIDIUM_TINY,
-														SurfaceRules.state(surfaceMaterial().getTopMaterial())
-												)
-										)
-								)
-						);
+				return super.surface()
+					.rule(2, SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
+						new SwitchRuleSource(
+							new UmbraSurfaceNoiseCondition(),
+							List.of(
+								SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+								PALLIDIUM_HEAVY,
+								PALLIDIUM_THIN,
+								PALLIDIUM_TINY,
+								SurfaceRules.state(surfaceMaterial().getTopMaterial())
+							)
+						)
+					));
 			}
 		};
+	}
+	
+	public static Block getSurface(int x, int z) {
+		return SURFACE_BLOCKS[UmbraSurfaceNoiseCondition.getDepth(x, z)];
 	}
 }

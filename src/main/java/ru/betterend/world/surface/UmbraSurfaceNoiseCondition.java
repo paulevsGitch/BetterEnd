@@ -15,11 +15,11 @@ public class UmbraSurfaceNoiseCondition implements NumericProvider {
 	public int getNumber(SurfaceRulesContextAccessor context) {
 		final int x = context.getBlockX();
 		final int z = context.getBlockZ();
-		final double value = NOISE.eval(x * 0.03, z * 0.03) + NOISE.eval(x * 0.1, z * 0.1) * 0.3 + MHelper.randRange(
-				-0.1,
-				0.1,
-				MHelper.RANDOM
-		);
+		return getDepth(x, z);
+	}
+	
+	public static int getDepth(int x, int z) {
+		final double value = NOISE.eval(x * 0.03, z * 0.03) + NOISE.eval(x * 0.1, z * 0.1) * 0.3 + MHelper.randRange(-0.1, 0.1, MHelper.RANDOM);
 		if (value > 0.4) return 0;
 		if (value > 0.15) return 1;
 		if (value > -0.15) return 2;

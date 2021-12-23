@@ -4,6 +4,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.surface.SurfaceRuleBuilder;
 import ru.bclib.api.surface.rules.SwitchRuleSource;
@@ -31,25 +33,25 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder
-			   .music(EndSounds.MUSIC_OPENSPACE)
-			   .loop(EndSounds.AMBIENT_SULPHUR_SPRINGS)
-			   .waterColor(25, 90, 157)
-			   .waterFogColor(30, 65, 61)
-			   .fogColor(207, 194, 62)
-			   .fogDensity(1.5F)
-			   .terrainHeight(0F)
-			   .particles(EndParticles.SULPHUR_PARTICLE, 0.001F)
-			   .feature(EndFeatures.GEYSER)
-			   .feature(EndFeatures.SURFACE_VENT)
-			   .feature(EndFeatures.SULPHURIC_LAKE)
-			   .feature(EndFeatures.SULPHURIC_CAVE)
-			   .feature(EndFeatures.HYDRALUX)
-			   .feature(EndFeatures.CHARNIA_GREEN)
-			   .feature(EndFeatures.CHARNIA_ORANGE)
-			   .feature(EndFeatures.CHARNIA_RED_RARE)
-			   .spawn(EndEntities.END_FISH, 50, 3, 8)
-			   .spawn(EndEntities.CUBOZOA, 50, 3, 8)
-			   .spawn(EntityType.ENDERMAN, 50, 1, 4);
+			.music(EndSounds.MUSIC_OPENSPACE)
+			.loop(EndSounds.AMBIENT_SULPHUR_SPRINGS)
+			.waterColor(25, 90, 157)
+			.waterFogColor(30, 65, 61)
+			.fogColor(207, 194, 62)
+			.fogDensity(1.5F)
+			.terrainHeight(0F)
+			.particles(EndParticles.SULPHUR_PARTICLE, 0.001F)
+			.feature(EndFeatures.GEYSER)
+			.feature(EndFeatures.SURFACE_VENT)
+			.feature(EndFeatures.SULPHURIC_LAKE)
+			.feature(EndFeatures.SULPHURIC_CAVE)
+			.feature(EndFeatures.HYDRALUX)
+			.feature(EndFeatures.CHARNIA_GREEN)
+			.feature(EndFeatures.CHARNIA_ORANGE)
+			.feature(EndFeatures.CHARNIA_RED_RARE)
+			.spawn(EndEntities.END_FISH, 50, 3, 8)
+			.spawn(EndEntities.CUBOZOA, 50, 3, 8)
+			.spawn(EntityType.ENDERMAN, 50, 1, 4);
 	}
 
 	@Override
@@ -72,21 +74,19 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 
 			@Override
 			public SurfaceRuleBuilder surface() {
+				RuleSource surfaceBlockRule = new SwitchRuleSource(
+					new SulphuricSurfaceNoiseCondition(),
+					List.of(
+						SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
+						SurfaceRules.state(surfaceMaterial().getTopMaterial()),
+						SULPHURIC_ROCK,
+						BRIMSTONE
+					)
+				);
 				return super
-						.surface()
-						.rule(2,
-							SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
-								new SwitchRuleSource(
-									new SulphuricSurfaceNoiseCondition(),
-									List.of(
-										SurfaceRules.state(surfaceMaterial().getAltTopMaterial()),
-										SurfaceRules.state(surfaceMaterial().getTopMaterial()),
-										SULPHURIC_ROCK,
-										BRIMSTONE
-									)
-								)
-							)
-						);
+					.surface()
+					.rule(2, SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surfaceBlockRule))
+					.rule(2, SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(5, false, false, CaveSurface.FLOOR), surfaceBlockRule));
 			}
 		};
 	}

@@ -37,8 +37,7 @@ public class SulphurSpringsBiome extends EndBiome.Config {
 			   .waterFogColor(30, 65, 61)
 			   .fogColor(207, 194, 62)
 			   .fogDensity(1.5F)
-			   //TODO: 1.18 removed
-			   //.depth(0F)
+			   .terrainHeight(0F)
 			   .particles(EndParticles.SULPHUR_PARTICLE, 0.001F)
 			   .feature(EndFeatures.GEYSER)
 			   .feature(EndFeatures.SURFACE_VENT)

@@ -268,7 +268,8 @@ public class EndFeatures {
 	public static final DefaultFeature CAVE_PUMPKIN = new CavePumpkinFeature();
 	
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
-		return BCLCommonFeatures.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
+		ResourceLocation id = BetterEnd.makeID(name);
+		return BCLFeatureBuilder.start(id, feature).countLayersMax(density).onlyInBiome().build();
 	}
 	
 	private static BCLFeature registerRawGen(String name, Feature<NoneFeatureConfiguration> feature, int chance) {

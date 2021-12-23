@@ -25,8 +25,7 @@ public class MegalakeBiome extends EndBiome.Config {
 			   .fogDensity(1.75F)
 			   .music(EndSounds.MUSIC_WATER)
 			   .loop(EndSounds.AMBIENT_MEGALAKE)
-			   //TODO: 1.18 removed
-			   //.depth(0F)
+			   .terrainHeight(0F)
 			   .feature(EndFeatures.END_LOTUS)
 			   .feature(EndFeatures.END_LOTUS_LEAF)
 			   .feature(EndFeatures.BUBBLE_CORAL_RARE)

@@ -27,8 +27,7 @@ public class MegalakeGroveBiome extends EndBiome.Config {
 			   .particles(EndParticles.GLOWING_SPHERE, 0.001F)
 			   .music(EndSounds.MUSIC_WATER)
 			   .loop(EndSounds.AMBIENT_MEGALAKE_GROVE)
-			   //TODO: 1.18 removed
-			   //.depth(0F)
+			   .terrainHeight(0F)
 			   .feature(EndFeatures.LACUGROVE)
 			   .feature(EndFeatures.END_LOTUS)
 			   .feature(EndFeatures.END_LOTUS_LEAF)

@@ -13,7 +13,7 @@ import ru.betterend.interfaces.StructureFeaturesAccessor;
 public class StructureFeaturesMixin implements StructureFeaturesAccessor {
 	@Shadow @Final private static ConfiguredStructureFeature<NoneFeatureConfiguration, ? extends StructureFeature<NoneFeatureConfiguration>> END_CITY;
 
-	public ConfiguredStructureFeature<NoneFeatureConfiguration, ? extends StructureFeature<NoneFeatureConfiguration>> getEND_CITY(){
+	public ConfiguredStructureFeature<NoneFeatureConfiguration, ? extends StructureFeature<NoneFeatureConfiguration>> getEndCity(){
 		return END_CITY;
 	}
 }

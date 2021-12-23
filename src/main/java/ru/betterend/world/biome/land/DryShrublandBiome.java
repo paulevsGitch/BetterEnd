@@ -26,7 +26,7 @@ public class DryShrublandBiome extends EndBiome.Config {
 			   .feature(EndFeatures.AERIDIUM)
 			   .feature(EndFeatures.LUTEBUS)
 			   .feature(EndFeatures.LAMELLARIUM)
-			   .structure(VANILLA_FEATURES.getEND_CITY())
+			   .structure(VANILLA_FEATURES.getEndCity())
 			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 

@@ -31,7 +31,7 @@ public class NeonOasisBiome extends EndBiome.Config {
 			   .feature(EndFeatures.CHARNIA_GREEN)
 			   .feature(EndFeatures.CHARNIA_CYAN)
 			   .feature(EndFeatures.CHARNIA_RED)
-			   .structure(VANILLA_FEATURES.getEND_CITY())
+			   .structure(VANILLA_FEATURES.getEndCity())
 			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 

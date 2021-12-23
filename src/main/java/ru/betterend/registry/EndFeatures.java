@@ -106,7 +106,7 @@ import java.util.List;
 public class EndFeatures {
 	// Trees //
 	public static final BCLFeature MOSSY_GLOWSHROOM = redisterVegetation("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
-	public static final BCLFeature PYTHADENDRON_TREE = redisterVegetation("pythadendron_tree", new PythadendronTreeFeature(), 2);
+	public static final BCLFeature PYTHADENDRON_TREE = redisterVegetation("pythadendron_tree", new PythadendronTreeFeature(), 1);
 	public static final BCLFeature LACUGROVE = redisterVegetation("lacugrove", new LacugroveFeature(), 4);
 	public static final BCLFeature DRAGON_TREE = redisterVegetation("dragon_tree", new DragonTreeFeature(), 3);
 	public static final BCLFeature TENANEA = redisterVegetation("tenanea", new TenaneaFeature(), 2);
@@ -117,7 +117,7 @@ public class EndFeatures {
 	public static final BCLFeature LUCERNIA = redisterVegetation("lucernia", new LucerniaFeature(), 3);
 	
 	// Bushes //
-	public static final BCLFeature PYTHADENDRON_BUSH = redisterVegetation("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.getBark()), 4);
+	public static final BCLFeature PYTHADENDRON_BUSH = redisterVegetation("pythadendron_bush", new BushFeature(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.getBark()), 3);
 	public static final BCLFeature DRAGON_TREE_BUSH = redisterVegetation("dragon_tree_bush", new BushFeature(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.getBark()), 15);
 	public static final BCLFeature TENANEA_BUSH = redisterVegetation("tenanea_bush", new TenaneaBushFeature(), 6);
 	public static final BCLFeature LUMECORN = redisterVegetation("lumecorn", new Lumecorn(), 5);
@@ -130,7 +130,7 @@ public class EndFeatures {
 	public static final BCLFeature UMBRELLA_MOSS = redisterVegetation("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);
 	public static final BCLFeature CREEPING_MOSS = redisterVegetation("creeping_moss", new SinglePlantFeature(EndBlocks.CREEPING_MOSS, 5), 5);
 	public static final BCLFeature BLUE_VINE = redisterVegetation("blue_vine", new BlueVineFeature(), 1);
-	public static final BCLFeature CHORUS_GRASS = redisterVegetation("chorus_grass", new SinglePlantFeature(EndBlocks.CHORUS_GRASS, 4), 5);
+	public static final BCLFeature CHORUS_GRASS = redisterVegetation("chorus_grass", new SinglePlantFeature(EndBlocks.CHORUS_GRASS, 4), 3);
 	public static final BCLFeature CRYSTAL_GRASS = redisterVegetation("crystal_grass", new SinglePlantFeature(EndBlocks.CRYSTAL_GRASS, 8, false), 5);
 	public static final BCLFeature SHADOW_PLANT = redisterVegetation("shadow_plant", new SinglePlantFeature(EndBlocks.SHADOW_PLANT, 6), 9);
 	public static final BCLFeature MURKWEED = redisterVegetation("murkweed", new SinglePlantFeature(EndBlocks.MURKWEED, 3), 2);
@@ -160,7 +160,7 @@ public class EndFeatures {
 	public static final BCLFeature GLOBULAGUS = redisterVegetation("globulagus", new SinglePlantFeature(EndBlocks.GLOBULAGUS, 5, 3), 6);
 	public static final BCLFeature CLAWFERN = redisterVegetation("clawfern", new SinglePlantFeature(EndBlocks.CLAWFERN, 5, 4), 5);
 	public static final BCLFeature BOLUX_MUSHROOM = redisterVegetation("bolux_mushroom", new SinglePlantFeature(EndBlocks.BOLUX_MUSHROOM, 5, 5), 2);
-	public static final BCLFeature CHORUS_MUSHROOM = redisterVegetation("chorus_mushroom", new SinglePlantFeature(EndBlocks.CHORUS_MUSHROOM, 5, 5), 1);
+	public static final BCLFeature CHORUS_MUSHROOM = redisterVegetation("chorus_mushroom", new SinglePlantFeature(EndBlocks.CHORUS_MUSHROOM, 3, 5), 1);
 	public static final BCLFeature AMBER_ROOT = redisterVegetation("amber_root", new SinglePlantFeature(EndBlocks.AMBER_ROOT, 5, 5), 1);
 	//public static final BCLFeature PEARLBERRY = redisterVegetation("pearlberry", new SinglePlantFeature(EndBlocks.PEARLBERRY, 5, 5), 1);
 	public static final BCLFeature INFLEXIA = redisterVegetation("inflexia", new SinglePlantFeature(EndBlocks.INFLEXIA, 7, false, 3), 16);

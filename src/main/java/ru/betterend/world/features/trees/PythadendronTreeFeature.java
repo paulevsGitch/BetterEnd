@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -188,9 +187,9 @@ public class PythadendronTreeFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.BLOCK_END_GROUND)) {
+			/*if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
-			}
+			}*/
 			if (state.getBlock() == EndBlocks.PYTHADENDRON_LEAVES) {
 				return true;
 			}

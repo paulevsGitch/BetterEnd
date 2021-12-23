@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFBinary;
 import ru.bclib.sdf.operator.SDFCoordModify;
@@ -172,9 +171,9 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 									   .setSourceB(new SDFUnion().setSourceA(HEAD_POS).setSourceB(ROOTS_ROT));
 		
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.BLOCK_END_GROUND)) {
+			/*if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
-			}
+			}*/
 			if (state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}

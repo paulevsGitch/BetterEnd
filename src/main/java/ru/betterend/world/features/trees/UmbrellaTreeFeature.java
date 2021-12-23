@@ -5,6 +5,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,15 +45,12 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		final NoneFeatureConfiguration config = featureConfig.config();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(BlockTags.NYLIUM)) return false;
 		
 		BlockState wood = EndBlocks.UMBRELLA_TREE.getBark().defaultBlockState();
-		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
-															  .setValue(UmbrellaTreeMembraneBlock.COLOR, 1);
-		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState()
-															.setValue(UmbrellaTreeMembraneBlock.COLOR, 0);
-		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState()
-														  .setValue(UmbrellaTreeClusterBlock.NATURAL, true);
+		BlockState membrane = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState().setValue(UmbrellaTreeMembraneBlock.COLOR, 1);
+		BlockState center = EndBlocks.UMBRELLA_TREE_MEMBRANE.defaultBlockState().setValue(UmbrellaTreeMembraneBlock.COLOR, 0);
+		BlockState fruit = EndBlocks.UMBRELLA_TREE_CLUSTER.defaultBlockState().setValue(UmbrellaTreeClusterBlock.NATURAL, true);
 		
 		float size = MHelper.randRange(10, 20, random);
 		int count = (int) (size * 0.15F);
@@ -220,8 +218,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial()
-													.equals(Material.PLANT) || state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
+			if (/*state.is(TagAPI.BLOCK_END_GROUND) || */state.getMaterial().equals(Material.PLANT) || state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

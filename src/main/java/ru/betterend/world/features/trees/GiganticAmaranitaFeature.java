@@ -6,13 +6,13 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
@@ -36,7 +36,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(BlockTags.NYLIUM)) return false;
 		
 		float size = MHelper.randRange(5, 10, random);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, size, 0, 5);
@@ -361,7 +361,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
+			if (/*state.is(TagAPI.BLOCK_END_GROUND) || */state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

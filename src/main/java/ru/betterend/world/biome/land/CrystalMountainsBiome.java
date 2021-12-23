@@ -17,11 +17,12 @@ public class CrystalMountainsBiome extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		builder.structure(EndStructures.MOUNTAIN.getFeatureConfigured())
-			 .plantsColor(255, 133, 211)
-			 .music(EndSounds.MUSIC_OPENSPACE)
-			 .feature(EndFeatures.CRYSTAL_GRASS)
-			 .spawn(EntityType.ENDERMAN, 50, 1, 2);
+		builder
+			.structure(EndStructures.MOUNTAIN.getFeatureConfigured())
+			.plantsColor(255, 133, 211)
+			.music(EndSounds.MUSIC_OPENSPACE)
+			.feature(EndFeatures.CRYSTAL_GRASS)
+			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 
 	@Override

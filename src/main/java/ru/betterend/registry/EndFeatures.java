@@ -6,17 +6,23 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.features.BCLCommonFeatures;
@@ -104,7 +110,7 @@ public class EndFeatures {
 	public static final BCLFeature LACUGROVE = redisterVegetation("lacugrove", new LacugroveFeature(), 4);
 	public static final BCLFeature DRAGON_TREE = redisterVegetation("dragon_tree", new DragonTreeFeature(), 3);
 	public static final BCLFeature TENANEA = redisterVegetation("tenanea", new TenaneaFeature(), 3);
-	public static final BCLFeature HELIX_TREE = redisterVegetation("helix_tree", new HelixTreeFeature(), 2);
+	public static final BCLFeature HELIX_TREE = redisterVegetation("helix_tree", new HelixTreeFeature(), 1);
 	public static final BCLFeature UMBRELLA_TREE = redisterVegetation("umbrella_tree", new UmbrellaTreeFeature(), 4);
 	public static final BCLFeature JELLYSHROOM = redisterVegetation("jellyshroom", new JellyshroomFeature(), 3);
 	public static final BCLFeature GIGANTIC_AMARANITA = redisterVegetation("gigantic_amaranita", new GiganticAmaranitaFeature(), 1);
@@ -132,8 +138,8 @@ public class EndFeatures {
 	public static final BCLFeature SHADOW_BERRY = redisterVegetation("shadow_berry", new SinglePlantFeature(EndBlocks.SHADOW_BERRY, 2), 1);
 	public static final BCLFeature BUSHY_GRASS = redisterVegetation("bushy_grass", new SinglePlantFeature(EndBlocks.BUSHY_GRASS, 8, false), 20);
 	public static final BCLFeature BUSHY_GRASS_WG = redisterVegetation("bushy_grass_wg", new SinglePlantFeature(EndBlocks.BUSHY_GRASS, 5), 10);
-	public static final BCLFeature AMBER_GRASS = redisterVegetation("amber_grass", new SinglePlantFeature(EndBlocks.AMBER_GRASS, 6), 9);
-	public static final BCLFeature LANCELEAF = redisterVegetation("lanceleaf", new LanceleafFeature(), 3);
+	public static final BCLFeature AMBER_GRASS = redisterVegetation("amber_grass", new SinglePlantFeature(EndBlocks.AMBER_GRASS, 6), 7);
+	public static final BCLFeature LANCELEAF = redisterVegetation("lanceleaf", new LanceleafFeature(), 2);
 	public static final BCLFeature GLOW_PILLAR = redisterVegetation("glow_pillar", new GlowPillarFeature(), 1);
 	public static final BCLFeature TWISTED_UMBRELLA_MOSS = redisterVegetation("twisted_umbrella_moss", new DoublePlantFeature(EndBlocks.TWISTED_UMBRELLA_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS_TALL, 6), 5);
 	public static final BCLFeature JUNGLE_GRASS = redisterVegetation("jungle_grass", new SinglePlantFeature(EndBlocks.JUNGLE_GRASS, 7, 3), 8);
@@ -236,10 +242,10 @@ public class EndFeatures {
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
 	
 	// Ores //
-	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 24, 8, 5, 128);
-	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 12, 4, 5, 128);
-	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 24, 6, 5, 128);
-	public static final BCLFeature DRAGON_BONE_BLOCK_ORE = registerOre("dragon_bone_ore", EndBlocks.DRAGON_BONE_BLOCK, 24, 8, 5, 128);
+	public static final BCLFeature THALLASIUM_ORE = registerOre("thallasium_ore", EndBlocks.THALLASIUM.ore, 24, 8);
+	public static final BCLFeature ENDER_ORE = registerOre("ender_ore", EndBlocks.ENDER_ORE, 12, 4);
+	public static final BCLFeature AMBER_ORE = registerOre("amber_ore", EndBlocks.AMBER_ORE, 60, 6);
+	public static final BCLFeature DRAGON_BONE_BLOCK_ORE = registerOre("dragon_bone_ore", EndBlocks.DRAGON_BONE_BLOCK, 24, 8);
 	public static final BCLFeature VIOLECITE_LAYER = registerLayer("violecite_layer", EndBlocks.VIOLECITE, 15, 16, 128, 8);
 	public static final BCLFeature FLAVOLITE_LAYER = registerLayer("flavolite_layer", EndBlocks.FLAVOLITE, 12, 16, 128, 6);
 	
@@ -298,8 +304,18 @@ public class EndFeatures {
 		return BCLCommonFeatures.makeChancedFeature(BetterEnd.makeID(name), Decoration.SURFACE_STRUCTURES, feature, chance);
 	}
 	
-	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize, int minY, int maxY) {
-		return BCLCommonFeatures.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, minY, maxY);
+	private static BCLFeature registerOre(String name, Block blockOre, int veins, int veinSize) {
+		/*BCLFeatureBuilder builder = BCLFeatureBuilder
+			.start(BetterEnd.makeID(name), Feature.ORE)
+			.decoration(Decoration.UNDERGROUND_ORES)
+			.count(veins)
+			.modifier(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(128)))
+			.squarePlacement()
+			.onlyInBiome();
+		
+		return builder.build(new OreConfiguration(new BlockMatchTest(Blocks.END_STONE), blockOre.defaultBlockState(), veinSize, 0F));*/
+		
+		return BCLCommonFeatures.makeOreFeature(BetterEnd.makeID(name), blockOre, Blocks.END_STONE, veins, veinSize, 0, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(128)), false);
 	}
 	
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {

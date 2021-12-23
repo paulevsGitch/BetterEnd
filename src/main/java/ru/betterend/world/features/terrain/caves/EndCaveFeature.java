@@ -22,6 +22,7 @@ import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 					}
 				});
 
-				BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState(); //biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+				BlockState surfaceBlock = EndBiome.findTopMaterial(biome);
 				placeFloor(world, biome, floorPositions, random, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, random);
 				placeWalls(world, biome, caveBlocks, random);

@@ -129,10 +129,6 @@ public class EndLakeFeature extends DefaultFeature {
 								pos = POS.below();
 								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 									state = EndBiome.findTopMaterial(world, pos);
-									//state = world.getBiome(pos)
-//												 .getGenerationSettings()
-//												 .getSurfaceBuilderConfig()
-//												 .getTopMaterial();
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
 										BlocksHelper.setWithoutUpdate(

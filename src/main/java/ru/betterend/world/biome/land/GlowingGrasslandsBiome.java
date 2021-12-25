@@ -17,28 +17,29 @@ public class GlowingGrasslandsBiome extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		builder.fogColor(99, 228, 247)
-			   .fogDensity(1.3F)
-			   .particles(EndParticles.FIREFLY, 0.001F)
-			   .music(EndSounds.MUSIC_OPENSPACE)
-			   .loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
-			   .waterAndFogColor(92, 250, 230)
-			   .plantsColor(73, 210, 209)
-			   .feature(EndFeatures.END_LAKE_RARE)
-			   .feature(EndFeatures.LUMECORN)
-			   .feature(EndFeatures.BLOOMING_COOKSONIA)
-			   .feature(EndFeatures.SALTEAGO)
-			   .feature(EndFeatures.VAIOLUSH_FERN)
-			   .feature(EndFeatures.FRACTURN)
-			   .feature(EndFeatures.UMBRELLA_MOSS_RARE)
-			   .feature(EndFeatures.CREEPING_MOSS_RARE)
-			   .feature(EndFeatures.TWISTED_UMBRELLA_MOSS_RARE)
-			   .feature(EndFeatures.CHARNIA_CYAN)
-			   .feature(EndFeatures.CHARNIA_GREEN)
-			   .feature(EndFeatures.CHARNIA_LIGHT_BLUE)
-			   .feature(EndFeatures.CHARNIA_RED_RARE)
-			   .structure(VANILLA_FEATURES.getEndCity())
-			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+		builder
+			.fogColor(99, 228, 247)
+			.fogDensity(1.3F)
+			.particles(EndParticles.FIREFLY, 0.001F)
+			.music(EndSounds.MUSIC_OPENSPACE)
+			.loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
+			.waterAndFogColor(92, 250, 230)
+			.plantsColor(73, 210, 209)
+			.feature(EndFeatures.END_LAKE_RARE)
+			.feature(EndFeatures.LUMECORN)
+			.feature(EndFeatures.BLOOMING_COOKSONIA)
+			.feature(EndFeatures.SALTEAGO)
+			.feature(EndFeatures.VAIOLUSH_FERN)
+			.feature(EndFeatures.FRACTURN)
+			.feature(EndFeatures.UMBRELLA_MOSS_RARE)
+			.feature(EndFeatures.CREEPING_MOSS_RARE)
+			.feature(EndFeatures.TWISTED_UMBRELLA_MOSS_RARE)
+			.feature(EndFeatures.CHARNIA_CYAN)
+			.feature(EndFeatures.CHARNIA_GREEN)
+			.feature(EndFeatures.CHARNIA_LIGHT_BLUE)
+			.feature(EndFeatures.CHARNIA_RED_RARE)
+			.structure(VANILLA_FEATURES.getEndCity())
+			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 
 	@Override

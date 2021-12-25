@@ -31,16 +31,17 @@ public class UmbraValleyBiome extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		builder.fogColor(100, 100, 100)
-			   .plantsColor(172, 189, 190)
-			   .waterAndFogColor(69, 104, 134)
-			   .particles(EndParticles.AMBER_SPHERE, 0.0001F)
-			   .loop(EndSounds.UMBRA_VALLEY)
-			   .music(EndSounds.MUSIC_DARK)
-			   .feature(EndFeatures.UMBRALITH_ARCH)
-			   .feature(EndFeatures.THIN_UMBRALITH_ARCH)
-			   .feature(EndFeatures.INFLEXIA)
-			   .feature(EndFeatures.FLAMMALIX);
+		builder
+			.fogColor(100, 100, 100)
+			.plantsColor(172, 189, 190)
+			.waterAndFogColor(69, 104, 134)
+			.particles(EndParticles.AMBER_SPHERE, 0.0001F)
+			.loop(EndSounds.UMBRA_VALLEY)
+			.music(EndSounds.MUSIC_DARK)
+			.feature(EndFeatures.UMBRALITH_ARCH)
+			.feature(EndFeatures.THIN_UMBRALITH_ARCH)
+			.feature(EndFeatures.INFLEXIA)
+			.feature(EndFeatures.FLAMMALIX);
 	}
 
 	@Override

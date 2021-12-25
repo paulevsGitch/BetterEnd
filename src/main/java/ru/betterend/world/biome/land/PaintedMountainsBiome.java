@@ -17,14 +17,15 @@ public class PaintedMountainsBiome extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		builder.structure(EndStructures.PAINTED_MOUNTAIN.getFeatureConfigured())
-			   .fogColor(226, 239, 168)
-			   .fogDensity(2)
-			   .waterAndFogColor(192, 180, 131)
-			   .music(EndSounds.MUSIC_OPENSPACE)
-			   .loop(EndSounds.AMBIENT_DUST_WASTELANDS)
-			   .particles(ParticleTypes.WHITE_ASH, 0.01F)
-			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+		builder
+			.structure(EndStructures.PAINTED_MOUNTAIN.getFeatureConfigured())
+			.fogColor(226, 239, 168)
+			.fogDensity(2)
+			.waterAndFogColor(192, 180, 131)
+			.music(EndSounds.MUSIC_OPENSPACE)
+			.loop(EndSounds.AMBIENT_DUST_WASTELANDS)
+			.particles(ParticleTypes.WHITE_ASH, 0.01F)
+			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 
 	@Override

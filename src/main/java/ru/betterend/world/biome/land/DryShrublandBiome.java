@@ -16,18 +16,19 @@ public class DryShrublandBiome extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		builder.fogColor(132, 35, 13)
-			   .fogDensity(1.2F)
-			   .waterAndFogColor(113, 88, 53)
-			   .plantsColor(237, 122, 66)
-			   .music(EndSounds.MUSIC_OPENSPACE)
-			   .feature(EndFeatures.LUCERNIA_BUSH_RARE)
-			   .feature(EndFeatures.ORANGO)
-			   .feature(EndFeatures.AERIDIUM)
-			   .feature(EndFeatures.LUTEBUS)
-			   .feature(EndFeatures.LAMELLARIUM)
-			   .structure(VANILLA_FEATURES.getEndCity())
-			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+		builder
+			.fogColor(132, 35, 13)
+			.fogDensity(1.2F)
+			.waterAndFogColor(113, 88, 53)
+			.plantsColor(237, 122, 66)
+			.music(EndSounds.MUSIC_OPENSPACE)
+			.feature(EndFeatures.LUCERNIA_BUSH_RARE)
+			.feature(EndFeatures.ORANGO)
+			.feature(EndFeatures.AERIDIUM)
+			.feature(EndFeatures.LUTEBUS)
+			.feature(EndFeatures.LAMELLARIUM)
+			.structure(VANILLA_FEATURES.getEndCity())
+			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 
 	@Override

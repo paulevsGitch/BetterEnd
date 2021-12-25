@@ -16,7 +16,6 @@ import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.surface.SplitNoiseCondition;
-import ru.betterend.world.surface.SulphuricSurfaceNoiseCondition;
 
 import java.util.List;
 
@@ -27,22 +26,23 @@ public class NeonOasisBiome extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		builder.genChance(0.5F)
-			   .fogColor(226, 239, 168)
-			   .fogDensity(2)
-			   .waterAndFogColor(106, 238, 215)
-			   .particles(ParticleTypes.WHITE_ASH, 0.01F)
-			   .loop(EndSounds.AMBIENT_DUST_WASTELANDS)
-			   .music(EndSounds.MUSIC_OPENSPACE)
-			   .feature(EndFeatures.DESERT_LAKE)
-			   .feature(EndFeatures.NEON_CACTUS)
-			   .feature(EndFeatures.UMBRELLA_MOSS)
-			   .feature(EndFeatures.CREEPING_MOSS)
-			   .feature(EndFeatures.CHARNIA_GREEN)
-			   .feature(EndFeatures.CHARNIA_CYAN)
-			   .feature(EndFeatures.CHARNIA_RED)
-			   .structure(VANILLA_FEATURES.getEndCity())
-			   .spawn(EntityType.ENDERMAN, 50, 1, 2);
+		builder
+			.genChance(0.5F)
+			.fogColor(226, 239, 168)
+			.fogDensity(2)
+			.waterAndFogColor(106, 238, 215)
+			.particles(ParticleTypes.WHITE_ASH, 0.01F)
+			.loop(EndSounds.AMBIENT_DUST_WASTELANDS)
+			.music(EndSounds.MUSIC_OPENSPACE)
+			.feature(EndFeatures.DESERT_LAKE)
+			.feature(EndFeatures.NEON_CACTUS)
+			.feature(EndFeatures.UMBRELLA_MOSS)
+			.feature(EndFeatures.CREEPING_MOSS)
+			.feature(EndFeatures.CHARNIA_GREEN)
+			.feature(EndFeatures.CHARNIA_CYAN)
+			.feature(EndFeatures.CHARNIA_RED)
+			.structure(VANILLA_FEATURES.getEndCity())
+			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 
 	@Override

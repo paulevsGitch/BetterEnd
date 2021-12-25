@@ -5,7 +5,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
-import net.minecraft.world.level.levelgen.SurfaceRules.SurfaceRule;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.surface.SurfaceRuleBuilder;

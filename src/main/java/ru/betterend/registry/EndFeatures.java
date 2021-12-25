@@ -101,7 +101,7 @@ import java.util.List;
 
 public class EndFeatures {
 	// Trees //
-	public static final BCLFeature MOSSY_GLOWSHROOM = redisterVegetation("mossy_glowshroom", new MossyGlowshroomFeature(), 3);
+	public static final BCLFeature MOSSY_GLOWSHROOM = redisterVegetation("mossy_glowshroom", new MossyGlowshroomFeature(), 2);
 	public static final BCLFeature PYTHADENDRON_TREE = redisterVegetation("pythadendron_tree", new PythadendronTreeFeature(), 1);
 	public static final BCLFeature LACUGROVE = redisterVegetation("lacugrove", new LacugroveFeature(), 4);
 	public static final BCLFeature DRAGON_TREE = redisterVegetation("dragon_tree", new DragonTreeFeature(), 2);
@@ -123,8 +123,8 @@ public class EndFeatures {
 	public static final BCLFeature NEON_CACTUS = redisterVegetation("neon_cactus", new NeonCactusFeature(), 2);
 	
 	// Plants //
-	public static final BCLFeature UMBRELLA_MOSS = redisterVegetation("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 5);
-	public static final BCLFeature CREEPING_MOSS = redisterVegetation("creeping_moss", new SinglePlantFeature(EndBlocks.CREEPING_MOSS, 5), 5);
+	public static final BCLFeature UMBRELLA_MOSS = redisterVegetation("umbrella_moss", new DoublePlantFeature(EndBlocks.UMBRELLA_MOSS, EndBlocks.UMBRELLA_MOSS_TALL, 5), 3);
+	public static final BCLFeature CREEPING_MOSS = redisterVegetation("creeping_moss", new SinglePlantFeature(EndBlocks.CREEPING_MOSS, 5), 3);
 	public static final BCLFeature BLUE_VINE = redisterVegetation("blue_vine", new BlueVineFeature(), 1);
 	public static final BCLFeature CHORUS_GRASS = redisterVegetation("chorus_grass", new SinglePlantFeature(EndBlocks.CHORUS_GRASS, 4), 3);
 	public static final BCLFeature CRYSTAL_GRASS = redisterVegetation("crystal_grass", new SinglePlantFeature(EndBlocks.CRYSTAL_GRASS, 8, false), 5);

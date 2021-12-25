@@ -2,13 +2,23 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.surface.SurfaceRuleBuilder;
+import ru.bclib.api.surface.rules.SwitchRuleSource;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
+import ru.betterend.world.surface.SplitNoiseCondition;
+import ru.betterend.world.surface.SulphuricSurfaceNoiseCondition;
+
+import java.util.List;
 
 public class NeonOasisBiome extends EndBiome.Config {
 	public NeonOasisBiome() {
@@ -46,6 +56,24 @@ public class NeonOasisBiome extends EndBiome.Config {
 			@Override
 			public BlockState getAltTopMaterial() {
 				return EndBlocks.END_MOSS.defaultBlockState();
+			}
+			
+			@Override
+			public SurfaceRuleBuilder surface() {
+				RuleSource surfaceBlockRule = new SwitchRuleSource(
+					new SplitNoiseCondition(),
+					List.of(
+						SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState()),
+						SurfaceRules.state(EndBlocks.END_MOSS.defaultBlockState())
+					)
+				);
+				return super
+					.surface()
+					.ceil(Blocks.END_STONE.defaultBlockState())
+					.rule(1, SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surfaceBlockRule))
+					.rule(4, SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(5, false, false, CaveSurface.FLOOR),
+						SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState())
+					));
 			}
 		};
 	}

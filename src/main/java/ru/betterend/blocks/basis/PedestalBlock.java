@@ -109,7 +109,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 				pedestal.setItem(0, itemStack);
 				level.blockEntityChanged(pos);
 				checkRitual(level, pos);
-				return InteractionResult.SUCCESS;//InteractionResult.sidedSuccess(level.isClientSide());
+				return InteractionResult.sidedSuccess(level.isClientSide());
 			}
 			else {
 				ItemStack itemStack = pedestal.getItem(0);
@@ -117,7 +117,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 					pedestal.removeItemNoUpdate(0);
 					level.blockEntityChanged(pos);
 					checkRitual(level, pos);
-					return InteractionResult.SUCCESS;//InteractionResult.sidedSuccess(level.isClientSide());
+					return InteractionResult.sidedSuccess(level.isClientSide());
 				}
 				return InteractionResult.FAIL;
 			}

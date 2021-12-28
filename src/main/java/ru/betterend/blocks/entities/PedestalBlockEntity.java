@@ -1,7 +1,5 @@
 package ru.betterend.blocks.entities;
 
-//import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -15,12 +13,8 @@ import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndItems;
 
-// TODO Fix client serialisation
-public class PedestalBlockEntity extends BlockEntity implements Container/*, BlockEntityClientSerializable*/ {
+public class PedestalBlockEntity extends BlockEntity implements Container {
 	private ItemStack activeItem = ItemStack.EMPTY;
-	
-	//private final int maxAge = 314;
-	//private int age;
 	
 	public PedestalBlockEntity(BlockPos blockPos, BlockState blockState) {
 		this(EndBlockEntities.PEDESTAL, blockPos, blockState);
@@ -30,13 +24,18 @@ public class PedestalBlockEntity extends BlockEntity implements Container/*, Blo
 		super(blockEntityType, blockPos, blockState);
 	}
 	
-	/*public int getAge() {
-		return age;
-	}*/
+	protected void toTag(CompoundTag tag) {
+		if (activeItem != ItemStack.EMPTY) {
+			tag.put("active_item", activeItem.save(new CompoundTag()));
+		}
+	}
 	
-	/*public int getMaxAge() {
-		return maxAge;
-	}*/
+	protected void fromTag(CompoundTag tag) {
+		if (tag.contains("active_item")) {
+			CompoundTag itemTag = tag.getCompound("active_item");
+			activeItem = ItemStack.of(itemTag);
+		}
+	}
 	
 	@Override
 	public int getContainerSize() {
@@ -114,28 +113,8 @@ public class PedestalBlockEntity extends BlockEntity implements Container/*, Blo
 	@Override
 	protected void saveAdditional(CompoundTag tag) {
 		super.saveAdditional(tag);
-		fromTag(tag);
+		toTag(tag);
 	}
-	
-	protected void fromTag(CompoundTag tag) {
-		if (tag.contains("active_item")) {
-			CompoundTag itemTag = tag.getCompound("active_item");
-			activeItem = ItemStack.of(itemTag);
-		}
-	}
-	
-	/*public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T uncastedEntity) {
-		clientTick(level, blockPos, blockState, (PedestalBlockEntity) uncastedEntity);
-	}*/
-	
-	/*private static void clientTick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
-		if (!blockEntity.isEmpty()) {
-			blockEntity.age++;
-			if (blockEntity.age > blockEntity.maxAge) {
-				blockEntity.age = 0;
-			}
-		}
-	}*/
 	
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {

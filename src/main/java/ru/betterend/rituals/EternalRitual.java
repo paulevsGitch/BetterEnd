@@ -440,16 +440,15 @@ public class EternalRitual {
 				direction = direction.getClockWise();
 			}
 		}
-		// TODO find island feature
-		/*if (targetWorld.dimension() == Level.END) {
-			Features.END_ISLAND.place(
+		if (targetWorld.dimension() == Level.END) {
+			net.minecraft.data.worldgen.features.EndFeatures.END_ISLAND.place(
 				targetWorld,
 				targetWorld.getChunkSource().getGenerator(),
 				new Random(basePos.asLong()),
 				basePos.below()
 			);
 		}
-		else */if (targetWorld.dimension() == Level.OVERWORLD) {
+		else if (targetWorld.dimension() == Level.OVERWORLD) {
 			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
 		}
 		EndFeatures.BIOME_ISLAND

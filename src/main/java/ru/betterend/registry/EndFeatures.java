@@ -332,7 +332,6 @@ public class EndFeatures {
 		boolean hasCaves = bclbiome.getCustomData("has_caves", true) && !(bclbiome instanceof EndCaveBiome);
 		if (hasCaves && !BiomeAPI.END_VOID_BIOME_PICKER.containsImmutable(id)) {
 			if (Configs.BIOME_CONFIG.getBoolean(id, "hasCaves", true)) {
-				// TODO replace caves with carvers
 				BiomeAPI.addBiomeFeature(biome, ROUND_CAVE);
 				BiomeAPI.addBiomeFeature(biome, TUNEL_CAVE);
 			}
@@ -382,8 +381,7 @@ public class EndFeatures {
 		builder.feature(THALLASIUM_ORE);
 		builder.feature(ENDER_ORE);
 		builder.feature(CRASHED_SHIP);
-
-		// TODO replace cave features with carvers
+		
 		if (hasCaves) {
 			builder.feature(ROUND_CAVE);
 			builder.feature(TUNEL_CAVE);

@@ -1,6 +1,7 @@
 package ru.betterend.blocks.basis;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -23,8 +24,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -45,17 +44,14 @@ import ru.betterend.blocks.InfusionPedestal;
 import ru.betterend.blocks.entities.InfusionPedestalEntity;
 import ru.betterend.blocks.entities.PedestalBlockEntity;
 import ru.betterend.client.models.Patterns;
-import ru.betterend.registry.EndBlocks;
 import ru.betterend.rituals.InfusionRitual;
 
 import java.awt.Point;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
 
-@SuppressWarnings({"deprecation"})
 public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	public final static EnumProperty<PedestalState> STATE = EndBlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = EndBlockProperties.HAS_ITEM;
@@ -68,37 +64,18 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	private static final VoxelShape SHAPE_COLUMN_TOP;
 	private static final VoxelShape SHAPE_BOTTOM;
 	
-	/**
-	 * Register new Pedestal block with Better End mod id.
-	 *
-	 * @param name   pedestal name
-	 * @param source source block
-	 * @return new Pedestal block with Better End id.
-	 */
-	public static Block registerPedestal(String name, Block source) {
-		return EndBlocks.registerBlock(name, new PedestalBlock(source));
-	}
-	
-	/**
-	 * Register new Pedestal block with specified mod id.
-	 *
-	 * @param id	 pedestal id
-	 * @param source source block
-	 * @return new Pedestal block with specified id.
-	 */
-	public static Block registerPedestal(ResourceLocation id, Block source) {
-		return EndBlocks.registerBlock(id, new PedestalBlock(source));
-	}
-	
 	protected final Block parent;
 	protected float height = 1.0F;
 	
 	public PedestalBlock(Block parent) {
 		super(FabricBlockSettings.copyOf(parent).luminance(getLuminance(parent.defaultBlockState())));
-		this.registerDefaultState(stateDefinition.any()
-												 .setValue(STATE, PedestalState.DEFAULT)
-												 .setValue(HAS_ITEM, false)
-												 .setValue(HAS_LIGHT, false));
+		this.registerDefaultState(
+			stateDefinition
+				.any()
+				.setValue(STATE, PedestalState.DEFAULT)
+				.setValue(HAS_ITEM, false)
+				.setValue(HAS_LIGHT, false)
+		);
 		this.parent = parent;
 	}
 	
@@ -118,28 +95,29 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 	
 	@Override
-	@Deprecated
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (world.isClientSide || !state.is(this)) return InteractionResult.CONSUME;
-		if (!isPlaceable(state)) {
+	@SuppressWarnings("deprecation")
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!state.is(this) || !isPlaceable(state)) {
 			return InteractionResult.PASS;
 		}
-		BlockEntity blockEntity = world.getBlockEntity(pos);
+		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof PedestalBlockEntity) {
 			PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
 			if (pedestal.isEmpty()) {
 				ItemStack itemStack = player.getItemInHand(hand);
 				if (itemStack.isEmpty()) return InteractionResult.CONSUME;
 				pedestal.setItem(0, itemStack);
-				checkRitual(world, pos);
-				return InteractionResult.SUCCESS;
+				level.blockEntityChanged(pos);
+				checkRitual(level, pos);
+				return InteractionResult.SUCCESS;//InteractionResult.sidedSuccess(level.isClientSide());
 			}
 			else {
 				ItemStack itemStack = pedestal.getItem(0);
 				if (player.addItem(itemStack)) {
 					pedestal.removeItemNoUpdate(0);
-					checkRitual(world, pos);
-					return InteractionResult.SUCCESS;
+					level.blockEntityChanged(pos);
+					checkRitual(level, pos);
+					return InteractionResult.SUCCESS;//InteractionResult.sidedSuccess(level.isClientSide());
 				}
 				return InteractionResult.FAIL;
 			}
@@ -207,7 +185,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 	
 	@Override
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		BlockState updated = getUpdatedState(state, direction, newState, world, pos, posFrom);
 		if (!updated.is(this)) return updated;
@@ -344,7 +322,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 	
 	@Override
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.is(this)) {
 			switch (state.getValue(STATE)) {
@@ -386,13 +364,13 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	}
 	
 	@Override
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	public boolean hasAnalogOutputSignal(BlockState state) {
 		return state.getBlock() instanceof PedestalBlock;
 	}
 	
 	@Override
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
 		return state.getValue(HAS_ITEM) ? 15 : 0;
 	}
@@ -446,17 +424,13 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 	protected Map<String, String> createTexturesMap() {
 		ResourceLocation blockId = Registry.BLOCK.getKey(parent);
 		String name = blockId.getPath();
-		return new HashMap<String, String>() {
-			private static final long serialVersionUID = 1L;
-			
-			{
-				put("%mod%", blockId.getNamespace());
-				put("%top%", name + "_top");
-				put("%base%", name + "_base");
-				put("%pillar%", name + "_pillar");
-				put("%bottom%", name + "_bottom");
-			}
-		};
+		Map<String, String> textures = Maps.newHashMap();
+		textures.put("%mod%", blockId.getNamespace());
+		textures.put("%top%", name + "_top");
+		textures.put("%base%", name + "_base");
+		textures.put("%pillar%", name + "_pillar");
+		textures.put("%bottom%", name + "_bottom");
+		return textures;
 	}
 	
 	static {
@@ -478,9 +452,9 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock {
 		SHAPE_BOTTOM = Shapes.or(basin, SHAPE_PILLAR);
 	}
 	
-	@Override
+	/*@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
 		return level.isClientSide() ? PedestalBlockEntity::tick : null;
-	}
+	}*/
 }

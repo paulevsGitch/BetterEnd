@@ -62,7 +62,7 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
 			if (blockEntity.hasRitual()) {
 				blockEntity.linkedRitual.tick();
 			}
-			PedestalBlockEntity.tick(level, blockPos, blockState, blockEntity);
+			//PedestalBlockEntity.tick(level, blockPos, blockState, blockEntity);
 		}
 	}
 }

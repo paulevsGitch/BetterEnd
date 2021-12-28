@@ -1,12 +1,13 @@
 package ru.betterend.blocks.entities;
 
 //import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,8 +19,8 @@ import ru.betterend.registry.EndItems;
 public class PedestalBlockEntity extends BlockEntity implements Container/*, BlockEntityClientSerializable*/ {
 	private ItemStack activeItem = ItemStack.EMPTY;
 	
-	private final int maxAge = 314;
-	private int age;
+	//private final int maxAge = 314;
+	//private int age;
 	
 	public PedestalBlockEntity(BlockPos blockPos, BlockState blockState) {
 		this(EndBlockEntities.PEDESTAL, blockPos, blockState);
@@ -29,13 +30,13 @@ public class PedestalBlockEntity extends BlockEntity implements Container/*, Blo
 		super(blockEntityType, blockPos, blockState);
 	}
 	
-	public int getAge() {
+	/*public int getAge() {
 		return age;
-	}
+	}*/
 	
-	public int getMaxAge() {
+	/*public int getMaxAge() {
 		return maxAge;
-	}
+	}*/
 	
 	@Override
 	public int getContainerSize() {
@@ -99,7 +100,6 @@ public class PedestalBlockEntity extends BlockEntity implements Container/*, Blo
 		super.setChanged();
 	}
 	
-	
 	@Override
 	public boolean stillValid(Player player) {
 		return true;
@@ -111,21 +111,11 @@ public class PedestalBlockEntity extends BlockEntity implements Container/*, Blo
 		fromTag(tag);
 	}
 	
-	/*@Override
-	public CompoundTag save(CompoundTag tag) {
-		tag.put("active_item", activeItem.save(new CompoundTag()));
-		return super.save(tag);
-	}
-	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
+	protected void saveAdditional(CompoundTag tag) {
+		super.saveAdditional(tag);
 		fromTag(tag);
 	}
-	
-	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		return save(tag);
-	}*/
 	
 	protected void fromTag(CompoundTag tag) {
 		if (tag.contains("active_item")) {
@@ -134,16 +124,26 @@ public class PedestalBlockEntity extends BlockEntity implements Container/*, Blo
 		}
 	}
 	
-	public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T uncastedEntity) {
+	/*public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T uncastedEntity) {
 		clientTick(level, blockPos, blockState, (PedestalBlockEntity) uncastedEntity);
-	}
+	}*/
 	
-	private static void clientTick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
+	/*private static void clientTick(Level tickLevel, BlockPos tickPos, BlockState tickState, PedestalBlockEntity blockEntity) {
 		if (!blockEntity.isEmpty()) {
 			blockEntity.age++;
 			if (blockEntity.age > blockEntity.maxAge) {
 				blockEntity.age = 0;
 			}
 		}
+	}*/
+	
+	@Override
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
+	}
+	
+	@Override
+	public CompoundTag getUpdateTag() {
+		return this.saveWithoutMetadata();
 	}
 }

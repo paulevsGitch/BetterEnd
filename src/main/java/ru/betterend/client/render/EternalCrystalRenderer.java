@@ -19,6 +19,7 @@ import ru.bclib.util.MHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.blocks.AuroraCrystalBlock;
 
+// TODO make crystals bright
 public class EternalCrystalRenderer {
 	private static final RenderType RENDER_LAYER;
 	private static final ModelPart[] SHARDS;
@@ -116,7 +117,7 @@ public class EternalCrystalRenderer {
 	}
 	
 	static {
-		RENDER_LAYER = RenderType.beaconBeam(BetterEnd.makeID("textures/entity/eternal_crystal.png"), true);
+		RENDER_LAYER = RenderType.itemEntityTranslucentCull(BetterEnd.makeID("textures/entity/eternal_crystal.png"));
 		SHARDS = new ModelPart[4];
 		
 		ModelPart root = getTexturedModelData().bakeRoot();

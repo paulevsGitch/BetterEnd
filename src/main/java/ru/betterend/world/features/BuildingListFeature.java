@@ -49,7 +49,6 @@ public class BuildingListFeature extends ListFeature {
 				);
 				chestEntity.setLootTable(LootTableUtil.getTable(biome), random.nextLong());
 				chestEntity.setChanged();
-				System.out.println("Set loot at " + chestPos);
 			}
 			return structureBlockInfo2;
 		}

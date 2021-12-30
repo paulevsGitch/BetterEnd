@@ -24,11 +24,9 @@ import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.features.BCLCommonFeatures;
 import ru.bclib.api.features.BCLFeatureBuilder;
 import ru.bclib.util.JsonFactory;
-import ru.bclib.util.StructureHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
-import ru.bclib.world.features.ListFeature;
 import ru.bclib.world.features.ListFeature.StructureInfo;
 import ru.bclib.world.features.NBTStructureFeature.TerrainMerge;
 import ru.betterend.BetterEnd;
@@ -38,6 +36,7 @@ import ru.betterend.world.biome.cave.EndCaveBiome;
 import ru.betterend.world.biome.land.UmbraValleyBiome;
 import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
+import ru.betterend.world.features.BuildingListFeature;
 import ru.betterend.world.features.CavePumpkinFeature;
 import ru.betterend.world.features.CharniaFeature;
 import ru.betterend.world.features.CrashedShipFeature;
@@ -107,8 +106,8 @@ public class EndFeatures {
 	public static final BCLFeature DRAGON_TREE = redisterVegetation("dragon_tree", new DragonTreeFeature(), 2);
 	public static final BCLFeature TENANEA = redisterVegetation("tenanea", new TenaneaFeature(), 2);
 	public static final BCLFeature HELIX_TREE = redisterVegetation("helix_tree", new HelixTreeFeature(), 1);
-	public static final BCLFeature UMBRELLA_TREE = redisterVegetation("umbrella_tree", new UmbrellaTreeFeature(), 4);
-	public static final BCLFeature JELLYSHROOM = redisterVegetation("jellyshroom", new JellyshroomFeature(), 3);
+	public static final BCLFeature UMBRELLA_TREE = redisterVegetation("umbrella_tree", new UmbrellaTreeFeature(), 2);
+	public static final BCLFeature JELLYSHROOM = redisterVegetation("jellyshroom", new JellyshroomFeature(), 2);
 	public static final BCLFeature GIGANTIC_AMARANITA = redisterVegetation("gigantic_amaranita", new GiganticAmaranitaFeature(), 1);
 	public static final BCLFeature LUCERNIA = redisterVegetation("lucernia", new LucerniaFeature(), 3);
 	
@@ -137,9 +136,9 @@ public class EndFeatures {
 	public static final BCLFeature AMBER_GRASS = redisterVegetation("amber_grass", new SinglePlantFeature(EndBlocks.AMBER_GRASS, 6), 7);
 	public static final BCLFeature LANCELEAF = redisterVegetation("lanceleaf", new LanceleafFeature(), 2);
 	public static final BCLFeature GLOW_PILLAR = redisterVegetation("glow_pillar", new GlowPillarFeature(), 1);
-	public static final BCLFeature TWISTED_UMBRELLA_MOSS = redisterVegetation("twisted_umbrella_moss", new DoublePlantFeature(EndBlocks.TWISTED_UMBRELLA_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS_TALL, 6), 5);
-	public static final BCLFeature JUNGLE_GRASS = redisterVegetation("jungle_grass", new SinglePlantFeature(EndBlocks.JUNGLE_GRASS, 7, 3), 8);
-	public static final BCLFeature SMALL_JELLYSHROOM_FLOOR = redisterVegetation("small_jellyshroom_floor", new SinglePlantFeature(EndBlocks.SMALL_JELLYSHROOM, 5, 5), 4);
+	public static final BCLFeature TWISTED_UMBRELLA_MOSS = redisterVegetation("twisted_umbrella_moss", new DoublePlantFeature(EndBlocks.TWISTED_UMBRELLA_MOSS, EndBlocks.TWISTED_UMBRELLA_MOSS_TALL, 6), 3);
+	public static final BCLFeature JUNGLE_GRASS = redisterVegetation("jungle_grass", new SinglePlantFeature(EndBlocks.JUNGLE_GRASS, 7, 3), 6);
+	public static final BCLFeature SMALL_JELLYSHROOM_FLOOR = redisterVegetation("small_jellyshroom_floor", new SinglePlantFeature(EndBlocks.SMALL_JELLYSHROOM, 5, 5), 2);
 	public static final BCLFeature BLOSSOM_BERRY = redisterVegetation("blossom_berry", new SinglePlantFeature(EndBlocks.BLOSSOM_BERRY, 3, 3), 2);
 	public static final BCLFeature BLOOMING_COOKSONIA = redisterVegetation("blooming_cooksonia", new SinglePlantFeature(EndBlocks.BLOOMING_COOKSONIA, 5), 5);
 	public static final BCLFeature SALTEAGO = redisterVegetation("salteago", new SinglePlantFeature(EndBlocks.SALTEAGO, 5), 5);
@@ -350,13 +349,13 @@ public class EndFeatures {
 		}
 		
 		String path = "/data/" + ns + "/structures/biome/" + nm + "/";
-		InputStream inputstream = StructureHelper.class.getResourceAsStream(path + "structures.json");
+		InputStream inputstream = EndFeatures.class.getResourceAsStream(path + "structures.json");
 		if (inputstream != null) {
 			JsonObject obj = JsonFactory.getJsonObject(inputstream);
-			JsonArray enties = obj.getAsJsonArray("structures");
-			if (enties != null) {
+			JsonArray structures = obj.getAsJsonArray("structures");
+			if (structures != null) {
 				List<StructureInfo> list = Lists.newArrayList();
-				enties.forEach((entry) -> {
+				structures.forEach((entry) -> {
 					JsonObject e = entry.getAsJsonObject();
 					String structure = path + e.get("nbt").getAsString() + ".nbt";
 					TerrainMerge terrainMerge = TerrainMerge.getFromString(e.get("terrainMerge").getAsString());
@@ -367,7 +366,7 @@ public class EndFeatures {
 					return BCLCommonFeatures.makeChancedFeature(
 						new ResourceLocation(ns, nm + "_structures"),
 						Decoration.SURFACE_STRUCTURES,
-						new ListFeature(list, Blocks.END_STONE.defaultBlockState()),
+						new BuildingListFeature(list, Blocks.END_STONE.defaultBlockState()),
 						10
 					);
 				}

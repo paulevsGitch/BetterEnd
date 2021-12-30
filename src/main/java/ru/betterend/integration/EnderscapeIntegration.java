@@ -4,9 +4,9 @@ import net.minecraft.core.MappedRegistry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
-import ru.bclib.integration.ModIntegration;
+import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.integration.modmenu.ModIntegration;
 import ru.bclib.world.features.BCLFeature;
 
 public class EnderscapeIntegration extends ModIntegration {
@@ -36,7 +36,9 @@ public class EnderscapeIntegration extends ModIntegration {
 		
 		BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
 			if (!biomeID.getNamespace().equals("enderscape")) {
-				BiomeAPI.addBiomeFeatures(biome, scatteredShadowQuartzOre, voidNebuliteOre, nebuliteOre);
+				BiomeAPI.addBiomeFeature(biome, scatteredShadowQuartzOre);
+				BiomeAPI.addBiomeFeature(biome, voidNebuliteOre);
+				BiomeAPI.addBiomeFeature(biome, nebuliteOre);
 			}
 		});
 		

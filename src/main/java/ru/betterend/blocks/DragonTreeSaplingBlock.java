@@ -4,20 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.blocks.basis.PottableFeatureSapling;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
 public class DragonTreeSaplingBlock extends PottableFeatureSapling {
 	public DragonTreeSaplingBlock() {
-		super();
-	}
-	
-	@Override
-	@SuppressWarnings("deprecation")
-	protected Feature<?> getFeature() {
-		return EndFeatures.DRAGON_TREE.getFeature();
+		super((state)->EndFeatures.DRAGON_TREE.getFeature());
 	}
 	
 	@Override

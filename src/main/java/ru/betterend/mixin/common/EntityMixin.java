@@ -66,8 +66,6 @@ public abstract class EntityMixin implements TeleportingEntity {
 						entity.getXRot()
 					);
 					entity.setDeltaMovement(teleportTarget.speed);
-					//TODO: check if this works as intended in 1.17
-					
 					destination.addDuringTeleport(entity);
 				}
 				

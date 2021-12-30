@@ -4,20 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.betterend.blocks.basis.PottableFeatureSapling;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 
 public class LacugroveSaplingBlock extends PottableFeatureSapling {
 	public LacugroveSaplingBlock() {
-		super();
-	}
-	
-	@Override
-	@SuppressWarnings("deprecation")
-	protected Feature<?> getFeature() {
-		return EndFeatures.LACUGROVE.getFeature();
+		super((state)->EndFeatures.LACUGROVE.getFeature());
 	}
 	
 	@Override

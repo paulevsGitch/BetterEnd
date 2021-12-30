@@ -23,6 +23,7 @@ import ru.bclib.util.StructureHelper;
 import ru.betterend.BetterEnd;
 import ru.betterend.world.generator.GeneratorOptions;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Mixin(EndPodiumFeature.class)
@@ -56,7 +57,8 @@ public class EndPodiumFeatureMixin {
 	private FeaturePlaceContext<NoneFeatureConfiguration> be_setPosOnGround(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
 		WorldGenLevel world = featurePlaceContext.level();
 		BlockPos pos = be_updatePortalPos(world);
-		return new FeaturePlaceContext<>(
+		return new FeaturePlaceContext<NoneFeatureConfiguration>(
+			Optional.empty(),
 			world,
 			featurePlaceContext.chunkGenerator(),
 			featurePlaceContext.random(),

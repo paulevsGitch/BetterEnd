@@ -1,5 +1,6 @@
 package ru.betterend.integration.byg.biomes;
 
+import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.world.biome.EndBiome;
@@ -11,7 +12,7 @@ public class BYGBiomes {
 	//public static final EndBiome ETHERIAL_GROVE = EndBiomes.registerSubBiomeIntegration(new EterialGrove());
 	
 	public static void register() {
-		System.out.println("Registered " + OLD_BULBIS_GARDENS);
+		BetterEnd.LOGGER.info("Registered " + OLD_BULBIS_GARDENS);
 	}
 	
 	public static void addBiomes() {

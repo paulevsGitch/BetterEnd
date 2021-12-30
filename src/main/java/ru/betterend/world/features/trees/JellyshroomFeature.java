@@ -3,6 +3,7 @@ package ru.betterend.world.features.trees;
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +37,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(BlockTags.NYLIUM)) return false;
 		
 		BlockState bark = EndBlocks.JELLYSHROOM.getBark().defaultBlockState();
 		BlockState membrane = EndBlocks.JELLYSHROOM_CAP_PURPLE.defaultBlockState();
@@ -122,7 +123,7 @@ public class JellyshroomFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial().equals(Material.PLANT)) {
+			if (/*state.is(TagAPI.BLOCK_END_GROUND) || */state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

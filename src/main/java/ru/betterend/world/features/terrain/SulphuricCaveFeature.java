@@ -167,8 +167,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
 						state = world.getBlockState(mut);
 						while (state.is(Blocks.WATER)) {
 							BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.VENT_BUBBLE_COLUMN.defaultBlockState());
-							world.getBlockTicks()
-								 .scheduleTick(mut, EndBlocks.VENT_BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
+							world.scheduleTick(mut.immutable(), EndBlocks.VENT_BUBBLE_COLUMN, MHelper.randRange(8, 32, random));
 							mut.setY(mut.getY() + 1);
 							state = world.getBlockState(mut);
 						}

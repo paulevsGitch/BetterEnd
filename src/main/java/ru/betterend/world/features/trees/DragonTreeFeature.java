@@ -5,6 +5,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,7 +46,7 @@ public class DragonTreeFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(BlockTags.NYLIUM)) return false;
 		
 		float size = MHelper.randRange(10, 25, random);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, size, 0, 6);
@@ -195,9 +196,9 @@ public class DragonTreeFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.BLOCK_END_GROUND)) {
+			/*if (state.is(TagAPI.BLOCK_END_GROUND)) {
 				return true;
-			}
+			}*/
 			if (state.getBlock() == EndBlocks.DRAGON_TREE_LEAVES) {
 				return true;
 			}

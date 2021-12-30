@@ -3,7 +3,7 @@ package ru.betterend.integration;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import ru.bclib.api.TagAPI;
-import ru.bclib.integration.ModIntegration;
+import ru.bclib.integration.modmenu.ModIntegration;
 import ru.betterend.registry.EndItems;
 
 public class NourishIntegration extends ModIntegration {

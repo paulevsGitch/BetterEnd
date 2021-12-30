@@ -15,15 +15,17 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -166,10 +168,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 		}
 		
 		floorSets.forEach((biome, floorPositions) -> {
-			BlockState surfaceBlock = biome.getBiome()
-										   .getGenerationSettings()
-										   .getSurfaceBuilderConfig()
-										   .getTopMaterial();
+			BlockState surfaceBlock = EndBiome.findTopMaterial(biome);
 			placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		});
 		ceilSets.forEach((biome, ceilPositions) -> {
@@ -197,7 +196,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
+					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.above(), null));
 				}
 			}
 		});
@@ -214,7 +213,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
+					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.below(), null));
 				}
 			}
 		});

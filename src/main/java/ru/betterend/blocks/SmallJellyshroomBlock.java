@@ -20,7 +20,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -37,6 +39,7 @@ import ru.betterend.registry.EndFeatures;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLayerProvider, BonemealableBlock, PottablePlant {
@@ -101,7 +104,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLa
 	@Override
 	public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
 		BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
-		EndFeatures.JELLYSHROOM.getFeature().place(new FeaturePlaceContext<>(world, null, random, pos, null));
+		((Feature<NoneFeatureConfiguration>)EndFeatures.JELLYSHROOM.getFeature()).place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos, null));
 	}
 	
 	@Override

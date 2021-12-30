@@ -14,18 +14,19 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.BiomeAPI;
 import ru.bclib.api.TagAPI;
-import ru.bclib.interfaces.BiomeSetter;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
@@ -74,10 +75,8 @@ public abstract class EndCaveFeature extends DefaultFeature {
 						}
 					}
 				});
-				BlockState surfaceBlock = biome.getBiome()
-											   .getGenerationSettings()
-											   .getSurfaceBuilderConfig()
-											   .getTopMaterial();
+
+				BlockState surfaceBlock = EndBiome.findTopMaterial(biome);
 				placeFloor(world, biome, floorPositions, random, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, random);
 				placeWalls(world, biome, caveBlocks, random);
@@ -99,7 +98,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
+					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.above(), null));
 				}
 			}
 		});
@@ -115,7 +114,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
+					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.below(), null));
 				}
 			}
 		});
@@ -129,8 +128,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 				if (wallBlock != null) {
 					for (Vec3i offset : SPHERE) {
 						BlockPos wallPos = pos.offset(offset);
-						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos)
-																							  .is(TagAPI.BLOCK_GEN_TERRAIN)) {
+						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
 							wallBlock = biome.getWall(wallPos);
 							BlocksHelper.setWithoutUpdate(world, wallPos, wallBlock);
 							placed.add(wallPos);
@@ -153,12 +151,9 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	protected void setBiomes(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> blocks) {
 		blocks.forEach((pos) -> setBiome(world, pos, biome));
 	}
-	
+
 	protected void setBiome(WorldGenLevel world, BlockPos pos, EndCaveBiome biome) {
-		BiomeSetter array = (BiomeSetter) world.getChunk(pos).getBiomes();
-		if (array != null) {
-			array.bclib_setBiome(biome.getActualBiome(), pos);
-		}
+		BiomeAPI.setBiome(world, pos, biome.getActualBiome());
 	}
 	
 	private BlockPos findPos(WorldGenLevel world, BlockPos pos, int radius, Random random) {

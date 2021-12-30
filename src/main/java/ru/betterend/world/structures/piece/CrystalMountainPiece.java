@@ -3,7 +3,6 @@ package ru.betterend.world.structures.piece;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -16,11 +15,13 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import ru.bclib.api.BiomeAPI;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import ru.bclib.api.TagAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -29,21 +30,21 @@ public class CrystalMountainPiece extends MountainPiece {
 	
 	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
-		top = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+		top = EndBiome.findTopMaterial(biome); //biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
-	public CrystalMountainPiece(ServerLevel serverLevel, CompoundTag tag) {
-		super(EndStructures.MOUNTAIN_PIECE, serverLevel, tag);
+	public CrystalMountainPiece(StructurePieceSerializationContext type, CompoundTag tag) {
+		super(EndStructures.MOUNTAIN_PIECE, tag);
 	}
 	
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		super.fromNbt(tag);
-		top = BiomeAPI.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+		top = EndBiome.findTopMaterial(BiomeAPI.getBiome(biomeID)); //BiomeAPI.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getMinBlockX();
 		int sz = chunkPos.getMinBlockZ();
 		MutableBlockPos pos = new MutableBlockPos();
@@ -138,8 +139,6 @@ public class CrystalMountainPiece extends MountainPiece {
 				}
 			}
 		}
-		
-		return true;
 	}
 	
 	private void crystal(ChunkAccess chunk, BlockPos pos, int radius, int height, float fill, Random random) {

@@ -16,6 +16,7 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.world.biome.cave.EndCaveBiome;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -40,7 +41,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		MutableBlockPos max = new MutableBlockPos().set(pos);
 		fillSets(sx, sz, world.getChunk(pos), floorPositions, ceilPositions, min, max);
 		EndCaveBiome biome = supplier.get();
-		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+		BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState(); //biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 		placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		placeCeil(world, biome, ceilPositions, random);
 		BlockFixer.fixBlocks(world, min, max);
@@ -111,7 +112,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.place(new FeaturePlaceContext<>(world, null, random, pos.above(), null));
+					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.above(), null));
 				}
 			}
 		});
@@ -127,7 +128,7 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.place(new FeaturePlaceContext<>(world, null, random, pos.below(), null));
+					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.below(), null));
 				}
 			}
 		});

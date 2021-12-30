@@ -8,7 +8,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.data.worldgen.Features;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -442,7 +441,7 @@ public class EternalRitual {
 			}
 		}
 		if (targetWorld.dimension() == Level.END) {
-			Features.END_ISLAND.place(
+			net.minecraft.data.worldgen.features.EndFeatures.END_ISLAND.place(
 				targetWorld,
 				targetWorld.getChunkSource().getGenerator(),
 				new Random(basePos.asLong()),
@@ -450,15 +449,15 @@ public class EternalRitual {
 			);
 		}
 		else if (targetWorld.dimension() == Level.OVERWORLD) {
-			basePos.setY(targetWorld.getChunk(basePos)
-									.getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
+			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
 		}
-		EndFeatures.BIOME_ISLAND.getFeatureConfigured()
-								.place(targetWorld,
-									targetWorld.getChunkSource().getGenerator(),
-									new Random(basePos.asLong()),
-									basePos.below()
-								);
+		EndFeatures.BIOME_ISLAND
+			.getPlacedFeature()
+			.place(targetWorld,
+				targetWorld.getChunkSource().getGenerator(),
+				new Random(basePos.asLong()),
+				basePos.below()
+			);
 		generatePortal(targetWorld, basePos, portalAxis, portalId);
 		return basePos.immutable();
 	}
@@ -694,9 +693,9 @@ public class EternalRitual {
 	}
 	
 	/**
-	 * @param world       World for search
-	 * @param checkPos    Start search position
-	 * @param radius      Search radius
+	 * @param world	   World for search
+	 * @param checkPos	Start search position
+	 * @param radius	  Search radius
 	 * @param searchBlock Target block
 	 * @param condition   Predicate for test block states in the chunk section
 	 * @return Position of the first found block or null.
@@ -733,9 +732,9 @@ public class EternalRitual {
 	}
 	
 	/**
-	 * @param world       World for search
-	 * @param checkPos    Start search position
-	 * @param radius      Search radius
+	 * @param world	   World for search
+	 * @param checkPos	Start search position
+	 * @param radius	  Search radius
 	 * @param searchBlock Target block
 	 * @param condition   Predicate for test block states in the chunk section
 	 * @return List of positions of the all found blocks or empty list.

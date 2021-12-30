@@ -3,7 +3,9 @@ package ru.betterend;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biomes;
 import ru.bclib.api.WorldDataAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
@@ -28,13 +30,12 @@ import ru.betterend.util.BonemealPlants;
 import ru.betterend.util.LootTableUtil;
 import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.generator.TerrainGenerator;
-import ru.betterend.world.surface.SurfaceBuilders;
 
 public class BetterEnd implements ModInitializer {
 	public static final String MOD_ID = "betterend";
 	public static final Logger LOGGER = new Logger(MOD_ID);
 	public static final boolean RUNS_FALL_FLYING_LIB = FabricLoader.getInstance().getModContainer("fallflyinglib").isPresent();
-	
+
 	@Override
 	public void onInitialize() {
 		WorldDataAPI.registerModCache(MOD_ID);
@@ -43,7 +44,6 @@ public class BetterEnd implements ModInitializer {
 		EndBlockEntities.register();
 		EndFeatures.register();
 		EndEntities.register();
-		SurfaceBuilders.register();
 		EndBiomes.register();
 		EndTags.register();
 		EndEnchantments.register();
@@ -61,14 +61,22 @@ public class BetterEnd implements ModInitializer {
 		FabricLoader.getInstance().getEntrypoints("betterend", BetterEndPlugin.class).forEach(BetterEndPlugin::register);
 		Integrations.init();
 		Configs.saveConfigs();
-		
+
 		if (GeneratorOptions.useNewGenerator()) {
-			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes(GeneratorOptions.getIslandDistBlock() > 250000L);
+			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes(GeneratorOptions.getIslandDistBlock());
 			ru.bclib.world.generator.GeneratorOptions.setEndLandFunction((pos) -> TerrainGenerator.isLand(pos.x, pos.y));
 		}
+
+		BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
+			if (!biomeID.equals(Biomes.THE_VOID.location())) {
+				EndStructures.addBiomeStructures(biomeID, biome);
+				EndFeatures.addBiomeFeatures(biomeID, biome);
+			}
+		});
+
 	}
-	
 	public static ResourceLocation makeID(String path) {
 		return new ResourceLocation(MOD_ID, path);
 	}
+	
 }

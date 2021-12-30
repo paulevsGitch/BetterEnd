@@ -2,12 +2,12 @@ package ru.betterend.world.structures.piece;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import ru.bclib.world.structures.StructureWorld;
 import ru.betterend.registry.EndStructures;
 
@@ -24,13 +24,13 @@ public class VoxelPiece extends BasePiece {
 		this.boundingBox = world.getBounds();
 	}
 	
-	public VoxelPiece(ServerLevel level, CompoundTag tag) {
+	public VoxelPiece(StructurePieceSerializationContext type, CompoundTag tag) {
 		super(EndStructures.VOXEL_PIECE, tag);
 		this.boundingBox = world.getBounds();
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
 		tag.put("world", world.toBNT());
 	}
 	
@@ -40,8 +40,7 @@ public class VoxelPiece extends BasePiece {
 	}
 	
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		this.world.placeChunk(world, chunkPos);
-		return true;
 	}
 }

@@ -1,40 +1,54 @@
 package ru.betterend.world.biome.land;
 
-import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
-import ru.bclib.world.biomes.BCLBiomeDef;
-import ru.betterend.BetterEnd;
+import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 
-public class GlowingGrasslandsBiome extends EndBiome {
+public class GlowingGrasslandsBiome extends EndBiome.Config {
 	public GlowingGrasslandsBiome() {
-		super(new BCLBiomeDef(BetterEnd.makeID("glowing_grasslands"))
-			.setFogColor(99, 228, 247)
-			.setFogDensity(1.3F)
-			.setParticles(EndParticles.FIREFLY, 0.001F)
-			.setMusic(EndSounds.MUSIC_OPENSPACE)
-			.setLoop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
-			.setSurface(EndBlocks.END_MOSS)
-			.setWaterAndFogColor(92, 250, 230)
-			.setPlantsColor(73, 210, 209)
-			.addFeature(EndFeatures.END_LAKE_RARE)
-			.addFeature(EndFeatures.LUMECORN)
-			.addFeature(EndFeatures.BLOOMING_COOKSONIA)
-			.addFeature(EndFeatures.SALTEAGO)
-			.addFeature(EndFeatures.VAIOLUSH_FERN)
-			.addFeature(EndFeatures.FRACTURN)
-			.addFeature(EndFeatures.UMBRELLA_MOSS_RARE)
-			.addFeature(EndFeatures.CREEPING_MOSS_RARE)
-			.addFeature(EndFeatures.TWISTED_UMBRELLA_MOSS_RARE)
-			.addFeature(EndFeatures.CHARNIA_CYAN)
-			.addFeature(EndFeatures.CHARNIA_GREEN)
-			.addFeature(EndFeatures.CHARNIA_LIGHT_BLUE)
-			.addFeature(EndFeatures.CHARNIA_RED_RARE)
-			.addStructureFeature(StructureFeatures.END_CITY)
-			.addMobSpawn(EntityType.ENDERMAN, 50, 1, 2));
+		super("glowing_grasslands");
+	}
+
+	@Override
+	protected void addCustomBuildData(BCLBiomeBuilder builder) {
+		builder
+			.fogColor(99, 228, 247)
+			.fogDensity(1.3F)
+			.particles(EndParticles.FIREFLY, 0.001F)
+			.music(EndSounds.MUSIC_OPENSPACE)
+			.loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
+			.waterAndFogColor(92, 250, 230)
+			.plantsColor(73, 210, 209)
+			.feature(EndFeatures.END_LAKE_RARE)
+			.feature(EndFeatures.LUMECORN)
+			.feature(EndFeatures.BLOOMING_COOKSONIA)
+			.feature(EndFeatures.SALTEAGO)
+			.feature(EndFeatures.VAIOLUSH_FERN)
+			.feature(EndFeatures.FRACTURN)
+			.feature(EndFeatures.UMBRELLA_MOSS_RARE)
+			.feature(EndFeatures.CREEPING_MOSS_RARE)
+			.feature(EndFeatures.TWISTED_UMBRELLA_MOSS_RARE)
+			.feature(EndFeatures.CHARNIA_CYAN)
+			.feature(EndFeatures.CHARNIA_GREEN)
+			.feature(EndFeatures.CHARNIA_LIGHT_BLUE)
+			.feature(EndFeatures.CHARNIA_RED_RARE)
+			.structure(VANILLA_FEATURES.getEndCity())
+			.spawn(EntityType.ENDERMAN, 50, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.END_MOSS.defaultBlockState();
+			}
+		};
 	}
 }

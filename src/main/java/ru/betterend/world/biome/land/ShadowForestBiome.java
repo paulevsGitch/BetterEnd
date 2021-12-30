@@ -1,44 +1,58 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.world.entity.EntityType;
-import ru.bclib.world.biomes.BCLBiomeDef;
-import ru.betterend.BetterEnd;
+import net.minecraft.world.level.block.state.BlockState;
+import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndEntities;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
 import ru.betterend.world.biome.EndBiome;
 
-public class ShadowForestBiome extends EndBiome {
+public class ShadowForestBiome extends EndBiome.Config {
 	public ShadowForestBiome() {
-		super(new BCLBiomeDef(BetterEnd.makeID("shadow_forest"))
-			.setFogColor(0, 0, 0)
-			.setFogDensity(2.5F)
-			.setPlantsColor(45, 45, 45)
-			.setWaterAndFogColor(42, 45, 80)
-			.setSurface(EndBlocks.SHADOW_GRASS)
-			.setParticles(ParticleTypes.MYCELIUM, 0.01F)
-			.setLoop(EndSounds.AMBIENT_CHORUS_FOREST)
-			.setMusic(EndSounds.MUSIC_DARK)
-			.addFeature(EndFeatures.VIOLECITE_LAYER)
-			.addFeature(EndFeatures.END_LAKE_RARE)
-			.addFeature(EndFeatures.DRAGON_TREE)
-			.addFeature(EndFeatures.DRAGON_TREE_BUSH)
-			.addFeature(EndFeatures.SHADOW_PLANT)
-			.addFeature(EndFeatures.MURKWEED)
-			.addFeature(EndFeatures.NEEDLEGRASS)
-			.addFeature(EndFeatures.SHADOW_BERRY)
-			.addFeature(EndFeatures.TWISTED_VINE)
-			.addFeature(EndFeatures.PURPLE_POLYPORE)
-			.addFeature(EndFeatures.TAIL_MOSS)
-			.addFeature(EndFeatures.TAIL_MOSS_WOOD)
-			.addFeature(EndFeatures.CHARNIA_PURPLE)
-			.addFeature(EndFeatures.CHARNIA_RED_RARE)
-			.addStructureFeature(StructureFeatures.END_CITY)
-			.addMobSpawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
-			.addMobSpawn(EntityType.ENDERMAN, 40, 1, 4)
-			.addMobSpawn(EntityType.PHANTOM, 1, 1, 2));
+		super("shadow_forest");
+	}
+
+	@Override
+	protected void addCustomBuildData(BCLBiomeBuilder builder) {
+		builder
+			.fogColor(0, 0, 0)
+			.fogDensity(2.5F)
+			.plantsColor(45, 45, 45)
+			.waterAndFogColor(42, 45, 80)
+			.particles(ParticleTypes.MYCELIUM, 0.01F)
+			.loop(EndSounds.AMBIENT_CHORUS_FOREST)
+			.music(EndSounds.MUSIC_DARK)
+			.feature(EndFeatures.VIOLECITE_LAYER)
+			.feature(EndFeatures.END_LAKE_RARE)
+			.feature(EndFeatures.DRAGON_TREE)
+			.feature(EndFeatures.DRAGON_TREE_BUSH)
+			.feature(EndFeatures.SHADOW_PLANT)
+			.feature(EndFeatures.MURKWEED)
+			.feature(EndFeatures.NEEDLEGRASS)
+			.feature(EndFeatures.SHADOW_BERRY)
+			.feature(EndFeatures.TWISTED_VINE)
+			.feature(EndFeatures.PURPLE_POLYPORE)
+			.feature(EndFeatures.TAIL_MOSS)
+			.feature(EndFeatures.TAIL_MOSS_WOOD)
+			.feature(EndFeatures.CHARNIA_PURPLE)
+			.feature(EndFeatures.CHARNIA_RED_RARE)
+			.structure(VANILLA_FEATURES.getEndCity())
+			.spawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
+			.spawn(EntityType.ENDERMAN, 40, 1, 4)
+			.spawn(EntityType.PHANTOM, 1, 1, 2);
+	}
+
+	@Override
+	protected SurfaceMaterialProvider surfaceMaterial() {
+		return new EndBiome.DefaultSurfaceMaterialProvider() {
+			@Override
+			public BlockState getTopMaterial() {
+				return EndBlocks.SHADOW_GRASS.defaultBlockState();
+			}
+		};
 	}
 }

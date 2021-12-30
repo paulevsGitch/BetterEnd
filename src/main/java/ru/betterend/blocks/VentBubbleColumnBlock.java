@@ -76,7 +76,7 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 			BlockPos up = pos.above();
 			if (world.getBlockState(up).is(Blocks.WATER)) {
 				BlocksHelper.setWithoutUpdate(world, up, this);
-				world.getBlockTicks().scheduleTick(up, this, 5);
+				world.scheduleTick(up, this, 5);
 			}
 		}
 		return state;

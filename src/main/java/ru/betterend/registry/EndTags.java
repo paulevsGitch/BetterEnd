@@ -13,12 +13,10 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.BonemealAPI;
 import ru.bclib.api.ComposterAPI;
@@ -133,8 +131,9 @@ public class EndTags {
 		TagAPI.addTag(ALLOYING_COPPER, Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
 	}
 	
+	// TODO make getter for biome top blocks
 	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
-		biomeRegistry.forEach((biome) -> {
+		/*biomeRegistry.forEach((biome) -> {
 			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {
 				SurfaceBuilderConfiguration config = biome.getGenerationSettings().getSurfaceBuilderConfig();
 				Block under = config.getUnderMaterial().getBlock();
@@ -143,6 +142,6 @@ public class EndTags {
 				TagAPI.addTag(TagAPI.BLOCK_END_GROUND, surface);
 			}
 		});
-		TagAPI.BLOCK_END_STONES.getValues().forEach(TagAPI::addEndGround);
+		TagAPI.BLOCK_END_STONES.getValues().forEach(TagAPI::addEndGround);*/
 	}
 }

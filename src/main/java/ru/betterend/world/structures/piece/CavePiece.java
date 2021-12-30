@@ -4,13 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import ru.bclib.api.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
@@ -32,13 +32,14 @@ public class CavePiece extends BasePiece {
 		makeBoundingBox();
 	}
 	
-	public CavePiece(ServerLevel serverLevel, CompoundTag tag) {
+	public CavePiece(StructurePieceSerializationContext type, CompoundTag tag) {
 		super(EndStructures.CAVE_PIECE, tag);
 		makeBoundingBox();
 	}
-	
+
+
 	@Override
-	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int x1 = MHelper.max(this.boundingBox.minX(), blockBox.minX());
 		int z1 = MHelper.max(this.boundingBox.minZ(), blockBox.minZ());
 		int x2 = MHelper.min(this.boundingBox.maxX(), blockBox.maxX());
@@ -79,11 +80,11 @@ public class CavePiece extends BasePiece {
 			}
 		}
 		
-		return true;
+		return;
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(ServerLevel serverLevel, CompoundTag tag) {
+	protected void addAdditionalSaveData(CompoundTag tag) {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 	}

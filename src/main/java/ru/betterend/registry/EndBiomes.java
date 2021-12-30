@@ -2,13 +2,14 @@ package ru.betterend.registry;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
-import ru.bclib.api.BiomeAPI;
+import ru.bclib.api.LifeCycleAPI;
+import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.world.biomes.BCLBiome;
-import ru.bclib.world.generator.BiomeMap;
 import ru.bclib.world.generator.BiomePicker;
+import ru.bclib.world.generator.map.hex.HexBiomeMap;
 import ru.betterend.config.Configs;
-import ru.betterend.util.FeaturesHelper;
 import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.biome.air.BiomeIceStarfield;
 import ru.betterend.world.biome.cave.EmptyAuroraCaveBiome;
@@ -41,7 +42,8 @@ import ru.betterend.world.generator.GeneratorOptions;
 
 public class EndBiomes {
 	public static final BiomePicker CAVE_BIOMES = new BiomePicker();
-	private static BiomeMap caveBiomeMap;
+	private static HexBiomeMap caveBiomeMap;
+	private static long lastSeed;
 	
 	// Better End Land
 	public static final EndBiome FOGGY_MUSHROOMLAND = registerBiome(new FoggyMushroomlandBiome(), BiomeType.LAND);
@@ -74,25 +76,29 @@ public class EndBiomes {
 	public static final EndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
 	public static final EndCaveBiome JADE_CAVE = registerCaveBiome(new JadeCaveBiome());
 	
-	public static void register() {}
+	public static void register() {
+		LifeCycleAPI.onLevelLoad(EndBiomes::onWorldLoad);
+	}
 	
-	public static void onWorldLoad(long seed, Registry<Biome> registry) {
+	private static void onWorldLoad(ServerLevel level, long seed, Registry<Biome> registry) {
 		CAVE_BIOMES.getBiomes().forEach(biome -> biome.updateActualBiomes(registry));
 		CAVE_BIOMES.rebuild();
-		if (caveBiomeMap == null || caveBiomeMap.getSeed() != seed) {
-			caveBiomeMap = new BiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+		if (caveBiomeMap == null || lastSeed != seed) {
+			caveBiomeMap = new HexBiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+			lastSeed = seed;
 		}
-		FeaturesHelper.addFeatures(registry);
 	}
 	
 	/**
 	 * Put existing {@link EndBiome} as a sub-biome into selected parent.
 	 *
-	 * @param biome  - {@link EndBiome} instance
+	 * @param biomeConfig  - {@link EndBiome.Config} instance
 	 * @param parent - {@link EndBiome} to be linked with
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiome(EndBiome biome, EndBiome parent) {
+	public static EndBiome registerSubBiome(EndBiome.Config biomeConfig, EndBiome parent) {
+		final EndBiome biome = EndBiome.create(biomeConfig);
+
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerSubBiome(parent, biome);
 		}
@@ -102,11 +108,12 @@ public class EndBiomes {
 	/**
 	 * Registers {@link EndBiome} and adds it into worldgen.
 	 *
-	 * @param biome - {@link EndBiome} instance
+	 * @param biomeConfig - {@link EndBiome.Config} instance
 	 * @param type  - {@link BiomeType}
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerBiome(EndBiome biome, BiomeType type) {
+	public static EndBiome registerBiome(EndBiome.Config biomeConfig, BiomeType type) {
+		final EndBiome biome = EndBiome.create(biomeConfig);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			if (type == BiomeType.LAND) {
 				BiomeAPI.registerEndLandBiome(biome);
@@ -121,10 +128,11 @@ public class EndBiomes {
 	/**
 	 * Put integration sub-biome {@link EndBiome} into subbiomes list and registers it.
 	 *
-	 * @param biome - {@link EndBiome} instance
+	 * @param biomeConfig - {@link EndBiome.Config} instance
 	 * @return registered {@link EndBiome}
 	 */
-	public static EndBiome registerSubBiomeIntegration(EndBiome biome) {
+	public static EndBiome registerSubBiomeIntegration(EndBiome.Config biomeConfig) {
+		EndBiome biome = EndBiome.create(biomeConfig);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(biome);
 		}
@@ -146,7 +154,8 @@ public class EndBiomes {
 		}
 	}
 	
-	public static EndCaveBiome registerCaveBiome(EndCaveBiome biome) {
+	public static EndCaveBiome registerCaveBiome(EndCaveBiome.Config biomeConfig) {
+		final EndCaveBiome biome = EndCaveBiome.create(biomeConfig);
 		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
 			BiomeAPI.registerBiome(biome);
 			CAVE_BIOMES.addBiome(biome);
@@ -155,6 +164,6 @@ public class EndBiomes {
 	}
 	
 	public static EndCaveBiome getCaveBiome(int x, int z) {
-		return (EndCaveBiome) caveBiomeMap.getBiome(x, z);
+		return (EndCaveBiome) caveBiomeMap.getBiome(x, 5, z);
 	}
 }

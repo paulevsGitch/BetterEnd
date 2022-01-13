@@ -41,10 +41,7 @@ public class IslandLayer {
 		
 		SDF coneBottom = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone1).setSourceB(cone2);
 		SDF coneTop = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone3).setSourceB(cone4);
-		noise = (SDFRadialNoiseMap) new SDFRadialNoiseMap().setSeed(seed)
-														   .setRadius(0.5F)
-														   .setIntensity(0.2F)
-														   .setSource(coneTop);
+		noise = (SDFRadialNoiseMap) new SDFRadialNoiseMap().setSeed(seed).setRadius(0.5F).setIntensity(0.2F).setSource(coneTop);
 		island = new SDFSmoothUnion().setRadius(0.01F).setSourceA(noise).setSourceB(coneBottom);
 	}
 	
@@ -87,7 +84,7 @@ public class IslandLayer {
 			for (int n = 0; n < count; n++) {
 				BlockPos pos = positions.get(n);
 				long d = (long) pos.getX() * (long) pos.getX() + (long) pos.getZ() * (long) pos.getZ();
-				if (d < GeneratorOptions.getIslandDistBlock()) {
+				if (d < GeneratorOptions.getIslandDistBlockSqr()) {
 					positions.remove(n);
 					count--;
 					n--;

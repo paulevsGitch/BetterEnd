@@ -4,19 +4,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.BCLBiomeBuilder.BiomeSupplier;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
+import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.world.biome.EndBiome;
 
-import java.util.function.BiFunction;
-
 public class LushAuroraCaveBiome extends EndCaveBiome.Config {
 	public static class Biome extends EndCaveBiome {
-		public Biome(ResourceLocation biomeID, net.minecraft.world.level.biome.Biome biome) {
-			super(biomeID, biome);
+		public Biome(ResourceLocation biomeID, net.minecraft.world.level.biome.Biome biome, BCLBiomeSettings settings) {
+			super(biomeID, biome, settings);
 
 			this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL, 1);
 			this.addFloorFeature(EndFeatures.CAVE_BUSH, 5);
@@ -63,7 +63,7 @@ public class LushAuroraCaveBiome extends EndCaveBiome.Config {
 	}
 
 	@Override
-	public BiFunction<ResourceLocation, net.minecraft.world.level.biome.Biome, EndBiome> getSupplier() {
+	public BiomeSupplier<EndBiome> getSupplier() {
 		return LushAuroraCaveBiome.Biome::new;
 	}
 

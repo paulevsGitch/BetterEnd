@@ -8,8 +8,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.BCLBiomeBuilder.BiomeSupplier;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.WeightedList;
+import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndSounds;
@@ -17,7 +19,6 @@ import ru.betterend.world.biome.EndBiome;
 import ru.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
 
 import java.util.Random;
-import java.util.function.BiFunction;
 
 public class EndCaveBiome extends EndBiome {
 	public static abstract class Config extends EndBiome.Config {
@@ -45,7 +46,7 @@ public class EndCaveBiome extends EndBiome {
 		}
 
 		@Override
-		public BiFunction<ResourceLocation, Biome, EndBiome> getSupplier() {
+		public BiomeSupplier<EndBiome> getSupplier() {
 			return EndCaveBiome::new;
 		}
 	}
@@ -53,8 +54,8 @@ public class EndCaveBiome extends EndBiome {
 	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
 	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
 
-	public EndCaveBiome(ResourceLocation biomeID, Biome biome) {
-		super(biomeID, biome);
+	public EndCaveBiome(ResourceLocation biomeID, Biome biome, BCLBiomeSettings settings) {
+		super(biomeID, biome, settings);
 	}
 	
 	public void addFloorFeature(Feature<?> feature, float weight) {

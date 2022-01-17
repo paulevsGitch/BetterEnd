@@ -2,16 +2,16 @@ package ru.betterend.world.biome.cave;
 
 import net.minecraft.resources.ResourceLocation;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.BCLBiomeBuilder.BiomeSupplier;
+import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.world.biome.EndBiome;
 
-import java.util.function.BiFunction;
-
 public class EmptySmaragdantCaveBiome extends EndCaveBiome.Config {
 	public static class Biome extends EndCaveBiome {
-		public Biome(ResourceLocation biomeID, net.minecraft.world.level.biome.Biome biome) {
-			super(biomeID, biome);
+		public Biome(ResourceLocation biomeID, net.minecraft.world.level.biome.Biome biome, BCLBiomeSettings settings) {
+			super(biomeID, biome, settings);
 
 			this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL, 1);
 			this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL_SHARD, 20);
@@ -45,7 +45,7 @@ public class EmptySmaragdantCaveBiome extends EndCaveBiome.Config {
 	}
 
 	@Override
-	public BiFunction<ResourceLocation, net.minecraft.world.level.biome.Biome, EndBiome> getSupplier() {
+	public BiomeSupplier<EndBiome> getSupplier() {
 		return EmptySmaragdantCaveBiome.Biome::new;
 	}
 }

@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFFlatWave;
 import ru.bclib.sdf.operator.SDFScale;
@@ -159,7 +159,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(CommonBlockTags.GEN_END_STONES)) {
 				SplineHelper.fillSplineForce(branch, world, wood, pos, REPLACE);
 			}
 		}
@@ -218,7 +218,7 @@ public class UmbrellaTreeFeature extends DefaultFeature {
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (/*state.is(TagAPI.BLOCK_END_GROUND) || */state.getMaterial().equals(Material.PLANT) || state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
+			if (/*state.is(CommonBlockTags.END_STONES) || */state.getMaterial().equals(Material.PLANT) || state.is(EndBlocks.UMBRELLA_TREE_MEMBRANE)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

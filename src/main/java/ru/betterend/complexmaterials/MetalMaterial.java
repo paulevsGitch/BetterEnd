@@ -1,9 +1,6 @@
 package ru.betterend.complexmaterials;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
@@ -15,7 +12,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MaterialColor;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.NamedBlockTags;
+import ru.bclib.api.tag.NamedCommonBlockTags;
+import ru.bclib.api.tag.NamedCommonItemTags;
+import ru.bclib.api.tag.NamedItemTags;
+import ru.bclib.api.tag.TagAPI;
+import ru.bclib.api.tag.TagAPI.TagNamed;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BaseChainBlock;
 import ru.bclib.blocks.BaseDoorBlock;
@@ -89,7 +91,7 @@ public class MetalMaterial {
 	public final Item leggings;
 	public final Item boots;
 
-	public final Tag.Named<Item> alloyingOre;
+	public final TagNamed<Item> alloyingOre;
 
 	public static MetalMaterial makeNormal(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
 		return new MetalMaterial(
@@ -153,7 +155,7 @@ public class MetalMaterial {
 		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseOreBlock(()->rawOre, 1, 3, 1)) : null;
 		alloyingOre = hasOre ? TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_alloying") : null;
 		if (hasOre) {
-			TagAPI.addTag(alloyingOre, ore, rawOre);
+			TagAPI.addItemTag(alloyingOre.getName(), ore, rawOre);
 		}
 
 		block = EndBlocks.registerBlock(name + "_block", new BaseBlock(settings));
@@ -490,10 +492,10 @@ public class MetalMaterial {
 				  .setGroup("end_metal_boots")
 				  .build();
 
-		TagAPI.addTag(BlockTags.ANVIL, anvilBlock);
-		TagAPI.addTag(BlockTags.BEACON_BASE_BLOCKS, block);
-		TagAPI.addTag(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
-		TagAPI.addTag(TagAPI.BLOCK_DRAGON_IMMUNE, ore, bars);
-		TagAPI.addTag(TagAPI.ITEM_HAMMERS, hammer);
+		TagAPI.addBlockTag(NamedBlockTags.ANVIL, anvilBlock);
+		TagAPI.addBlockTag(NamedBlockTags.BEACON_BASE_BLOCKS, block);
+		TagAPI.addItemTag(NamedItemTags.BEACON_PAYMENT_ITEMS, ingot);
+		TagAPI.addBlockTag(NamedCommonBlockTags.DRAGON_IMMUNE, ore, bars);
+		TagAPI.addItemTag(NamedCommonItemTags.HAMMERS, hammer);
 	}
 }

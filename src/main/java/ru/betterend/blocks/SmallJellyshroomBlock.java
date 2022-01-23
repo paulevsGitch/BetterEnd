@@ -29,7 +29,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
@@ -93,7 +93,7 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLa
 	
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean isClient) {
-		return state.getValue(FACING) == Direction.UP && world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND);
+		return state.getValue(FACING) == Direction.UP && world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES);
 	}
 	
 	@Override

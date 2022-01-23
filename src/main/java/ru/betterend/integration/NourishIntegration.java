@@ -1,8 +1,8 @@
 package ru.betterend.integration;
 
-import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.TagAPI;
+import ru.bclib.api.tag.TagAPI.TagLocation;
 import ru.bclib.integration.modmenu.ModIntegration;
 import ru.betterend.registry.EndItems;
 
@@ -13,13 +13,13 @@ public class NourishIntegration extends ModIntegration {
 	
 	@Override
 	public void init() {
-		Tag.Named<Item> fats = getItemTag("fats");
-		Tag.Named<Item> fruit = getItemTag("fruit");
-		Tag.Named<Item> protein = getItemTag("protein");
-		Tag.Named<Item> sweets = getItemTag("sweets");
+		TagLocation<Item> fats = TagLocation.of(getItemTag("fats"));
+		TagLocation<Item> fruit = TagLocation.of(getItemTag("fruit"));
+		TagLocation<Item> protein = TagLocation.of(getItemTag("protein"));
+		TagLocation<Item> sweets = TagLocation.of(getItemTag("sweets"));
 		
-		TagAPI.addTag(fats, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
-		TagAPI.addTag(
+		TagAPI.addItemTag(fats, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
+		TagAPI.addItemTag(
 			fruit,
 			EndItems.SHADOW_BERRY_RAW,
 			EndItems.SHADOW_BERRY_COOKED,
@@ -32,7 +32,7 @@ public class NourishIntegration extends ModIntegration {
 			EndItems.CHORUS_MUSHROOM_COOKED,
 			EndItems.BOLUX_MUSHROOM_COOKED
 		);
-		TagAPI.addTag(
+		TagAPI.addItemTag(
 			protein,
 			EndItems.END_FISH_RAW,
 			EndItems.END_FISH_COOKED,
@@ -40,7 +40,7 @@ public class NourishIntegration extends ModIntegration {
 			EndItems.BOLUX_MUSHROOM_COOKED,
 			EndItems.CAVE_PUMPKIN_PIE
 		);
-		TagAPI.addTag(
+		TagAPI.addItemTag(
 			sweets,
 			EndItems.SHADOW_BERRY_JELLY,
 			EndItems.SWEET_BERRY_JELLY,

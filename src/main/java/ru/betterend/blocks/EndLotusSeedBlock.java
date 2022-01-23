@@ -6,7 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.blocks.UnderwaterPlantWithAgeBlock;
 import ru.bclib.util.BlocksHelper;
@@ -134,6 +134,6 @@ public class EndLotusSeedBlock extends UnderwaterPlantWithAgeBlock {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.is(TagAPI.BLOCK_END_GROUND);
+		return state.is(CommonBlockTags.END_STONES);
 	}
 }

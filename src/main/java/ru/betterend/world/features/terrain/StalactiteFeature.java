@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.StalactiteBlock;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
@@ -45,7 +45,7 @@ public class StalactiteFeature extends DefaultFeature {
 			mut.setY(pos.getY() + i * dir);
 			BlockState state = world.getBlockState(mut);
 			if (!state.getMaterial().isReplaceable()) {
-				stalagnate = state.is(TagAPI.BLOCK_GEN_TERRAIN);
+				stalagnate = state.is(CommonBlockTags.GEN_END_STONES);
 				height = i;
 				break;
 			}

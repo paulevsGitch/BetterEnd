@@ -27,7 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonItemTags;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.interfaces.ItemModelProvider;
 
@@ -113,7 +113,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	
 	@Override
 	public float getMiningSpeedMultiplier(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(TagAPI.ITEM_HAMMERS)) {
+		if (tag.equals(CommonItemTags.HAMMERS)) {
 			return this.getDestroySpeed(stack, state);
 		}
 		return 1.0F;
@@ -121,7 +121,7 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	
 	@Override
 	public int getMiningLevel(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(TagAPI.ITEM_HAMMERS)) {
+		if (tag.equals(CommonItemTags.HAMMERS)) {
 			return this.getTier().getLevel();
 		}
 		return 0;

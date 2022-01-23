@@ -15,8 +15,8 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.TagAPI;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
@@ -82,7 +82,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 					) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(pos.getX() * 0.1, y * 0.1, pos.getZ() * 0.1) * 0.12F;
 					val = (val + vert * vert + dist) + density + gradient;
-					if (val < 0.15 && world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN) && noWaterNear(world, pos)) {
+					if (val < 0.15 && world.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES) && noWaterNear(world, pos)) {
 						positions.add(pos.immutable());
 					}
 				}
@@ -141,7 +141,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 			else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 				mut.setY(bpos.getY() - 1);
-				if (world.getBlockState(mut).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(CommonBlockTags.GEN_END_STONES)) {
 					Set<BlockPos> floorPositions = floorSets.get(bio);
 					if (floorPositions == null) {
 						floorPositions = Sets.newHashSet();
@@ -150,7 +150,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 					floorPositions.add(mut.immutable());
 				}
 				mut.setY(bpos.getY() + 1);
-				if (world.getBlockState(mut).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(CommonBlockTags.GEN_END_STONES)) {
 					Set<BlockPos> ceilPositions = ceilSets.get(bio);
 					if (ceilPositions == null) {
 						ceilPositions = Sets.newHashSet();

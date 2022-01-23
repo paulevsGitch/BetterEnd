@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFScale3D;
@@ -29,7 +29,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 			world,
 			new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
 		);
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			return false;
 		}
 		
@@ -46,7 +46,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 	}
 	
 	private void makeBoulder(WorldGenLevel world, BlockPos pos, Random random) {
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			return;
 		}
 		
@@ -68,7 +68,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.getMaterial()
+			return state.getMaterial().isReplaceable() || state.is(CommonBlockTags.GEN_END_STONES) || state.getMaterial()
 																							   .equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 	}

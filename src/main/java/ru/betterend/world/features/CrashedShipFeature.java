@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.bclib.world.features.NBTStructureFeature;
@@ -55,7 +55,7 @@ public class CrashedShipFeature extends NBTStructureFeature {
 		if (x * x + z * z < 3600) {
 			return false;
 		}
-		return pos.getY() > 5 && world.getBlockState(pos.below()).is(TagAPI.BLOCK_GEN_TERRAIN);
+		return pos.getY() > 5 && world.getBlockState(pos.below()).is(CommonBlockTags.GEN_END_STONES);
 	}
 	
 	@Override

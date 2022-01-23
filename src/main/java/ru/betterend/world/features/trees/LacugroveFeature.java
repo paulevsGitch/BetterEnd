@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -83,7 +83,7 @@ public class LacugroveFeature extends DefaultFeature {
 					boolean generate = false;
 					for (int y = minY; y < maxY; y++) {
 						mut.setY(y);
-						if (world.getBlockState(mut).is(TagAPI.BLOCK_END_GROUND)) {
+						if (world.getBlockState(mut).is(CommonBlockTags.END_STONES)) {
 							generate = true;
 							break;
 						}
@@ -94,7 +94,7 @@ public class LacugroveFeature extends DefaultFeature {
 							mut.setY(y);
 							BlockState state = world.getBlockState(mut);
 							if (state.getMaterial().isReplaceable() || state.getMaterial()
-																			.equals(Material.PLANT) || state.is(TagAPI.BLOCK_END_GROUND)) {
+																			.equals(Material.PLANT) || state.is(CommonBlockTags.END_STONES)) {
 								BlocksHelper.setWithoutUpdate(
 									world,
 									mut,
@@ -189,7 +189,7 @@ public class LacugroveFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			/*if (state.is(TagAPI.BLOCK_END_GROUND)) {
+			/*if (state.is(CommonBlockTags.END_STONES)) {
 				return true;
 			}*/
 			if (EndBlocks.LACUGROVE.isTreeLog(state)) {

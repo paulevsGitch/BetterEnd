@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.betterend.registry.EndBlocks;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
@@ -30,7 +30,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		BlockPos pos = ctx.getClickedPos();
 		Level world = ctx.getLevel();
 		BlockState plant = info.getReturnValue();
-		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
 		}
 	}
@@ -38,7 +38,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	@Inject(method = "Lnet/minecraft/world/level/block/ChorusPlantBlock;getStateForPlacement" + "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)" + "Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
 	private void be_getStateForPlacement(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
-		if (plant.is(Blocks.CHORUS_PLANT) && blockGetter.getBlockState(blockPos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (plant.is(Blocks.CHORUS_PLANT) && blockGetter.getBlockState(blockPos.below()).is(CommonBlockTags.END_STONES)) {
 			info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
 		}
 	}
@@ -54,7 +54,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	@Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
 	private void be_updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) {
 		BlockState plant = info.getReturnValue();
-		if (plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			plant = plant.setValue(BlockStateProperties.DOWN, true);
 			info.setReturnValue(plant);
 		}

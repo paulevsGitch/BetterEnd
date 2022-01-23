@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -38,7 +38,7 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) return false;
 		
 		BlockState log = Integrations.BYG.getDefaultState("nightshade_log");
 		BlockState wood = Integrations.BYG.getDefaultState("nightshade_wood");
@@ -49,7 +49,7 @@ public class NightshadeRedwoodTreeFeature extends DefaultFeature {
 			return log;
 		};
 		Function<BlockState, Boolean> replace = (state) -> {
-			return state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
+			return state.is(CommonBlockTags.END_STONES) || state.getMaterial().equals(Material.PLANT) || state.getMaterial()
 																									 .isReplaceable();
 		};
 		Function<PosInfo, BlockState> post = (info) -> {

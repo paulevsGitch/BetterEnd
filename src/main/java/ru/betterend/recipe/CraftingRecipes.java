@@ -7,7 +7,7 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonItemTags;
 import ru.bclib.recipes.GridRecipe;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;
@@ -34,7 +34,7 @@ public class CraftingRecipes {
 				  .setShape("T#T", "V V", "T#T")
 				  .addMaterial('#', Blocks.END_STONE_BRICKS)
 				  .addMaterial('T', EndBlocks.THALLASIUM.ingot)
-				  .addMaterial('V', TagAPI.ITEM_FURNACES)
+				  .addMaterial('V', CommonItemTags.FURNACES)
 				  .build();
 		
 		registerPedestal(

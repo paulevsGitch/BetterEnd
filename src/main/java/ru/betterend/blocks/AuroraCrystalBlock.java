@@ -20,7 +20,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonItemTags;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.interfaces.RenderLayerProvider;
@@ -39,7 +39,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 		super(FabricBlockSettings
 			.of(Material.GLASS)
 			 .breakByTool(FabricToolTags.PICKAXES)
-			 .breakByTool(TagAPI.ITEM_HAMMERS)
+			 .breakByTool(CommonItemTags.HAMMERS)
 			 .hardness(1F)
 			 .resistance(1F)
 			 .luminance(15)

@@ -33,8 +33,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import ru.bclib.api.TagAPI;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.biomes.BCLBiome;
@@ -213,7 +213,7 @@ public class EndSlimeEntity extends Slime {
 	}
 	
 	public static boolean canSpawn(EntityType entityType, LevelAccessor world, MobSpawnType spawnType, BlockPos pos, Random random) {
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			return false;
 		}
 		BCLBiome biome = BiomeAPI.getFromBiome(world.getBiome(pos));

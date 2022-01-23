@@ -7,7 +7,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
@@ -23,7 +23,7 @@ public class LargeAmaranitaFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) return false;
 		
 		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		int height = MHelper.randRange(2, 3, random);

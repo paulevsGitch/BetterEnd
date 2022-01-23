@@ -34,7 +34,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
@@ -331,7 +331,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
 			mut.move(dir);
 			state = world.getBlockState(mut);
 			if (!state.is(this)) {
-				if (!state.is(TagAPI.BLOCK_END_GROUND)) {
+				if (!state.is(CommonBlockTags.END_STONES)) {
 					length = -1;
 				}
 				break;

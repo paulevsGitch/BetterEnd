@@ -19,7 +19,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.NamedBlockTags;
+import ru.bclib.api.tag.TagAPI;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.util.ColorUtil;
@@ -44,7 +45,7 @@ public class HelixTreeLeavesBlock extends BaseBlock implements CustomColorProvid
 			.strength(0.2F)
 		);
 
-		TagAPI.addTags(this, TagAPI.BLOCK_LEAVES);
+		TagAPI.addBlockTag(NamedBlockTags.LEAVES, this);
 	}
 	
 	@Override

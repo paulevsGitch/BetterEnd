@@ -6,7 +6,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFRotation;
 import ru.bclib.sdf.primitive.SDFHexPrism;
@@ -40,8 +40,8 @@ public class BigAuroraCrystalFeature extends DefaultFeature {
 		Vector3f vec = MHelper.randomHorizontal(random);
 		prism = new SDFRotation().setRotation(vec, random.nextFloat()).setSource(prism);
 		prism.setReplaceFunction((bState) -> {
-			return bState.getMaterial().isReplaceable() || bState.is(TagAPI.BLOCK_GEN_TERRAIN) || bState.getMaterial()
-																								  .equals(Material.PLANT) || bState
+			return bState.getMaterial().isReplaceable() || bState.is(CommonBlockTags.GEN_END_STONES) || bState.getMaterial()
+																											  .equals(Material.PLANT) || bState
 				.getMaterial()
 				.equals(Material.LEAVES);
 		});

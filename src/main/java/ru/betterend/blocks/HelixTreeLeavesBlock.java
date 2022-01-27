@@ -1,6 +1,5 @@
 package ru.betterend.blocks;
 
-import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.client.color.block.BlockColor;
@@ -8,8 +7,6 @@ import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,17 +15,16 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import ru.bclib.api.tag.NamedBlockTags;
 import ru.bclib.api.tag.TagAPI;
 import ru.bclib.blocks.BaseBlock;
+import ru.bclib.blocks.BaseLeavesBlock;
 import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 
-import java.util.Collections;
 import java.util.List;
 
 public class HelixTreeLeavesBlock extends BaseBlock implements CustomColorProvider {
@@ -82,21 +78,6 @@ public class HelixTreeLeavesBlock extends BaseBlock implements CustomColorProvid
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-		if (tool != null) {
-			if (tool.is(FabricToolTags.SHEARS) || tool.isCorrectToolForDrops(state) || EnchantmentHelper.getItemEnchantmentLevel(
-				Enchantments.SILK_TOUCH,
-				tool
-			) > 0) {
-				return Collections.singletonList(new ItemStack(this));
-			}
-			int fortune = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
-			if (MHelper.RANDOM.nextInt(16) <= fortune) {
-				return Lists.newArrayList(new ItemStack(EndBlocks.HELIX_TREE_SAPLING));
-			}
-			return Lists.newArrayList();
-		}
-		return MHelper.RANDOM.nextInt(32) == 0 ? Lists.newArrayList(new ItemStack(EndBlocks.HELIX_TREE_SAPLING)) : Lists
-			.newArrayList();
+		return BaseLeavesBlock.getLeaveDrops(this, EndBlocks.HELIX_TREE_SAPLING, builder, 16, 32);
 	}
 }

@@ -7,7 +7,7 @@ import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.tag.NamedCommonBlockTags;
 import ru.bclib.api.tag.TagAPI;
-import ru.bclib.integration.modmenu.ModIntegration;
+import ru.bclib.integration.ModIntegration;
 import ru.bclib.world.features.BCLFeature;
 
 public class EnderscapeIntegration extends ModIntegration {

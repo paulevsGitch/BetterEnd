@@ -4,18 +4,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 
 public abstract class UnderwaterPlantScatter extends ScatterFeature {
-	private static final MutableBlockPos POS = new MutableBlockPos();
-	
 	public UnderwaterPlantScatter(int radius) {
 		super(radius);
 	}
 	
 	@Override
 	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
 		POS.setX(pos.getX());
 		POS.setZ(pos.getZ());
 		POS.setY(0);

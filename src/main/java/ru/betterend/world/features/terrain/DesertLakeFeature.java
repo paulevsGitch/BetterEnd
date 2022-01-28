@@ -16,6 +16,7 @@ import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.util.GlobalState;
 import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
@@ -23,10 +24,11 @@ import java.util.Random;
 public class DesertLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
+		
 		final Random random = featureConfig.random();
 		BlockPos blockPos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();

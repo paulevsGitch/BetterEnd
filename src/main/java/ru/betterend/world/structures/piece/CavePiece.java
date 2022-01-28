@@ -16,6 +16,7 @@ import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class CavePiece extends BasePiece {
 		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
-		MutableBlockPos pos = new MutableBlockPos();
+		final MutableBlockPos pos = GlobalState.stateForThread().POS;
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - center.getX();
 			xsq *= xsq;

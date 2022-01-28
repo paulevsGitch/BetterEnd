@@ -9,11 +9,11 @@ import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 
 public abstract class ScatterFeature extends DefaultFeature {
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	private final int radius;
 	
 	public ScatterFeature(int radius) {
@@ -57,6 +57,7 @@ public abstract class ScatterFeature extends DefaultFeature {
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
 		final Random random = featureConfig.random();
 		BlockPos center = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();

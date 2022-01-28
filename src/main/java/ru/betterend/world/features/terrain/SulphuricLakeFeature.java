@@ -18,17 +18,16 @@ import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 import java.util.Set;
 
 public class SulphuricLakeFeature extends DefaultFeature {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		final Random random = featureConfig.random();
 		BlockPos blockPos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		blockPos = getPosOnSurfaceWG(world, blockPos);
@@ -37,6 +36,8 @@ public class SulphuricLakeFeature extends DefaultFeature {
 			return false;
 		}
 		
+		final Random random = featureConfig.random();
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
 		double radius = MHelper.randRange(10.0, 20.0, random);
 		int dist2 = MHelper.floor(radius * 1.5);
 		
@@ -75,6 +76,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							else {
 								if (!isAbsoluteBorder(world, POS)) {
 									BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
+									//world.setBlock(blockPos, Blocks.WATER.defaultBlockState(), 2);
 									world.scheduleTick(POS, Fluids.WATER, 0);
 									brimstone.add(POS.below());
 									if (random.nextBoolean()) {

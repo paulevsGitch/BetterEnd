@@ -111,7 +111,6 @@ public class EndTags {
 			}
 		});
 		ToolManagerImpl.tag(CommonItemTags.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(ITEM_HAMMERS));
-		TagAPI.addItemTag(NamedCommonItemTags.HAMMERS, EndItems.AETERNIUM_HAMMER);
 		
 		TagAPI.addBlockTag(
 			NamedCommonBlockTags.GEN_END_STONES,

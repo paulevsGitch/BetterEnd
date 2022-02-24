@@ -24,16 +24,21 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.tag.CommonItemTags;
+import ru.bclib.api.tag.NamedCommonItemTags;
+import ru.bclib.api.tag.TagAPI.TagLocation;
 import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.interfaces.ItemModelProvider;
+import ru.bclib.interfaces.TagProvider;
 
+import java.util.List;
 import java.util.UUID;
 
-public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ItemModelProvider {
+public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ItemModelProvider, TagProvider {
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = Mth.createInsecureUUID(ThreadLocalRandom.current());
 	
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers;
@@ -160,5 +165,10 @@ public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, I
 	@Environment(EnvType.CLIENT)
 	public BlockModel getItemModel(ResourceLocation resourceLocation) {
 		return ModelsHelper.createHandheldItem(resourceLocation);
+	}
+	
+	@Override
+	public void addTags(List<TagLocation<Block>> blockTags, List<TagLocation<Item>> itemTags) {
+		itemTags.add(NamedCommonItemTags.HAMMERS);
 	}
 }

@@ -1,6 +1,6 @@
 {
     "name": "엔드 베일",
-    "description": "엔더맨의 눈을 봐도 공격하지 않습니다.",
+    "description": "엔더맨의 눈을 봐도 공격당하지 않습니다.",
     "icon": "betterend:textures/mob_effect/end_veil.png",
     "sortnum": 3
 }

@@ -31,6 +31,7 @@ import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.item.tool.EndHammerItem;
+import ru.betterend.world.biome.EndBiome;
 
 import java.util.List;
 
@@ -137,6 +138,12 @@ public class EndTags {
 	
 	public static void addEndGround(Block bl){
 		TagAPI.addBlockTag(NamedCommonBlockTags.END_STONES, bl);
+	}
+	
+	public static void addBiomeSurfaceToEndGroup(EndBiome b){
+		addEndGround(b.getTopMaterial().getBlock());
+		addEndGround(b.getAltTopMaterial().getBlock());
+		addEndGround(b.getUnderMaterial().getBlock());
 	}
 	
 	// TODO make getter for biome top blocks

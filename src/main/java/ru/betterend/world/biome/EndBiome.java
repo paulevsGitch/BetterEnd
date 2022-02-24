@@ -21,6 +21,7 @@ import ru.betterend.interfaces.StructureFeaturesAccessor;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
+import ru.betterend.registry.EndTags;
 
 public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 	public static class DefaultSurfaceMaterialProvider implements SurfaceMaterialProvider{
@@ -124,7 +125,8 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 		EndBiome biome = builder.build(biomeConfig.getSupplier());
 		biome.addCustomData("has_caves", biomeConfig.hasCaves());
 		biome.setSurfaceMaterial(biomeConfig.surfaceMaterial());
-
+		
+		EndTags.addBiomeSurfaceToEndGroup(biome);
 		return biome;
 	}
 

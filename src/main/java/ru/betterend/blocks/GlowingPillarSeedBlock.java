@@ -1,7 +1,6 @@
 package ru.betterend.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -13,6 +12,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
+import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndPlantWithAgeBlock;
@@ -20,11 +20,10 @@ import ru.betterend.registry.EndBlocks;
 
 import java.util.Random;
 
-public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock {
+public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock implements AddMineableShears {
 	
 	public GlowingPillarSeedBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
 								 .breakByHand(true)
 								 .sound(SoundType.GRASS)
 								 .lightLevel(state -> state.getValue(AGE) * 3 + 3)

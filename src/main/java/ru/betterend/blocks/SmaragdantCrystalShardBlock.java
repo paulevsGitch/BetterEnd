@@ -2,7 +2,6 @@ package ru.betterend.blocks;
 
 import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -28,18 +27,18 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
+import ru.bclib.interfaces.tools.AddMineablePickaxe;
 
 import java.util.EnumMap;
 
 @SuppressWarnings("deprecation")
-public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer {
+public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements AddMineablePickaxe, RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
 	public SmaragdantCrystalShardBlock() {
 		super(FabricBlockSettings.of(Material.STONE)
 								 .materialColor(MaterialColor.COLOR_GREEN)
-								 .breakByTool(FabricToolTags.PICKAXES)
 								 .luminance(15)
 								 .sound(SoundType.AMETHYST_CLUSTER)
 								 .requiresCorrectToolForDrops()

@@ -1,7 +1,7 @@
 package ru.betterend.world.structures.piece;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.levelgen.feature.StructurePieceType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;

@@ -8,6 +8,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
@@ -173,12 +174,12 @@ public class AlloyingRecipe implements Recipe<Container>, UnknownReceipBookCateg
 			return this;
 		}
 		
-		public Builder setPrimaryInput(Tag<Item> input) {
+		public Builder setPrimaryInput(TagKey<Item> input) {
 			this.primaryInput = Ingredient.of(input);
 			return this;
 		}
 		
-		public Builder setSecondaryInput(Tag<Item> input) {
+		public Builder setSecondaryInput(TagKey<Item> input) {
 			this.secondaryInput = Ingredient.of(input);
 			return this;
 		}
@@ -189,7 +190,7 @@ public class AlloyingRecipe implements Recipe<Container>, UnknownReceipBookCateg
 			return this;
 		}
 		
-		public Builder setInput(Tag<Item> primaryInput, Tag<Item> secondaryInput) {
+		public Builder setInput(TagKey<Item> primaryInput, TagKey<Item> secondaryInput) {
 			this.setPrimaryInput(primaryInput);
 			this.setSecondaryInput(secondaryInput);
 			return this;

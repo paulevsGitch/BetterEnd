@@ -1,7 +1,6 @@
 package ru.betterend.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
@@ -15,15 +14,15 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import ru.bclib.blocks.BaseBlock;
+import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.betterend.registry.EndBlocks;
 
-public class GlowingPillarLuminophorBlock extends BaseBlock {
+public class GlowingPillarLuminophorBlock extends BaseBlock implements AddMineableShears {
 	public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;
 	
 	public GlowingPillarLuminophorBlock() {
 		super(FabricBlockSettings.of(Material.LEAVES)
 								 .mapColor(MaterialColor.COLOR_ORANGE)
-								 .breakByTool(FabricToolTags.SHEARS)
 								 .strength(0.2F)
 								 .luminance(15)
 								 .sound(SoundType.GRASS));

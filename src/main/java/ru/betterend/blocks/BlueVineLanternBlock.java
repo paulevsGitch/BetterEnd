@@ -1,7 +1,6 @@
 package ru.betterend.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
@@ -15,14 +14,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BlockProperties;
+import ru.bclib.interfaces.tools.AddMineableAxe;
 import ru.betterend.registry.EndBlocks;
 
-public class BlueVineLanternBlock extends BaseBlock {
+public class BlueVineLanternBlock extends BaseBlock implements AddMineableAxe {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 	
 	public BlueVineLanternBlock() {
 		super(FabricBlockSettings.of(Material.WOOD)
-								 .breakByTool(FabricToolTags.AXES)
 								 .luminance(15)
 								 .sound(SoundType.WART_BLOCK));
 		this.registerDefaultState(this.stateDefinition.any().setValue(NATURAL, false));

@@ -1,8 +1,7 @@
 package ru.betterend.blocks;
 
 import com.google.common.collect.Lists;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
@@ -24,13 +23,14 @@ import ru.bclib.api.tag.CommonItemTags;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.interfaces.RenderLayerProvider;
+import ru.bclib.interfaces.tools.AddMineablePickaxe;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndItems;
 
 import java.util.List;
 
-public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider {
+public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider, AddMineablePickaxe {
 	public static final Vec3i[] COLORS;
 	private static final int MIN_DROP = 1;
 	private static final int MAX_DROP = 4;
@@ -38,7 +38,6 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 	public AuroraCrystalBlock() {
 		super(FabricBlockSettings
 			.of(Material.GLASS)
-			 .breakByTool(FabricToolTags.PICKAXES)
 			 .breakByTool(CommonItemTags.HAMMERS)
 			 .hardness(1F)
 			 .resistance(1F)

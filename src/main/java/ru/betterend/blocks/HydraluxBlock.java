@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -19,6 +18,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.UnderwaterPlantBlock;
+import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.HydraluxShape;
 import ru.betterend.registry.EndBlocks;
@@ -28,13 +28,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class HydraluxBlock extends UnderwaterPlantBlock {
+public class HydraluxBlock extends UnderwaterPlantBlock  implements AddMineableShears {
 	
 	public static final EnumProperty<HydraluxShape> SHAPE = EndBlockProperties.HYDRALUX_SHAPE;
 	
 	public HydraluxBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
 								 .breakByHand(true)
 								 .sound(SoundType.WET_GRASS)
 								 .lightLevel((state) -> state.getValue(SHAPE).hasGlow() ? 15 : 0)

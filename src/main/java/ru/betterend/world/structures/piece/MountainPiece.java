@@ -10,7 +10,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
-import net.minecraft.world.level.levelgen.feature.StructurePieceType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;

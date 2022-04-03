@@ -1,7 +1,6 @@
 package ru.betterend.blocks;
 
 import com.google.common.collect.Lists;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import ru.bclib.items.tool.BaseShearsItem;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
@@ -34,7 +34,7 @@ public class NeedlegrassBlock extends EndPlantBlock {
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-		if (tool != null && tool.is(FabricToolTags.SHEARS) || EnchantmentHelper.getItemEnchantmentLevel(
+		if (tool != null && BaseShearsItem.isShear(tool) || EnchantmentHelper.getItemEnchantmentLevel(
 			Enchantments.SILK_TOUCH,
 			tool
 		) > 0) {

@@ -1,11 +1,10 @@
 package ru.betterend.registry;
 
 import com.google.common.collect.Lists;
-import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
-import net.fabricmc.fabric.impl.tool.attribute.handlers.ModdedToolsVanillaBlocksToolHandler;
 import net.fabricmc.fabric.mixin.object.builder.AbstractBlockAccessor;
 import net.fabricmc.fabric.mixin.object.builder.AbstractBlockSettingsAccessor;
 import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -24,7 +23,6 @@ import ru.bclib.api.tag.NamedCommonItemTags;
 import ru.bclib.api.tag.NamedItemTags;
 import ru.bclib.api.tag.NamedMineableTags;
 import ru.bclib.api.tag.TagAPI;
-import ru.bclib.api.tag.TagAPI.TagNamed;
 import ru.bclib.blocks.BaseVineBlock;
 import ru.bclib.blocks.SimpleLeavesBlock;
 import ru.betterend.BetterEnd;
@@ -40,12 +38,12 @@ public class EndTags {
 	// https://fabricmc.net/wiki/tutorial:tags
 	
 	// Block Tags
-	public static final TagNamed<Block> PEDESTALS = TagAPI.makeBlockTag(BetterEnd.MOD_ID, "pedestal");
+	public static final TagKey<Block> PEDESTALS = TagAPI.makeBlockTag(BetterEnd.MOD_ID, "pedestal");
 
 	// Item Tags
-	public static final TagNamed<Item> ALLOYING_IRON = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_iron");
-	public static final TagNamed<Item> ALLOYING_GOLD = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_gold");
-	public static final TagNamed<Item> ALLOYING_COPPER = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_copper");
+	public static final TagKey<Item> ALLOYING_IRON = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_iron");
+	public static final TagKey<Item> ALLOYING_GOLD = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_gold");
+	public static final TagKey<Item> ALLOYING_COPPER = TagAPI.makeItemTag(BetterEnd.MOD_ID, "alloying_copper");
 	
 	public static void register() {
 		addEndGround(EndBlocks.THALLASIUM.ore);

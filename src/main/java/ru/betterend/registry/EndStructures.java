@@ -4,7 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.feature.StructurePieceType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.world.structures.BCLStructureFeature;
 import ru.betterend.BetterEnd;

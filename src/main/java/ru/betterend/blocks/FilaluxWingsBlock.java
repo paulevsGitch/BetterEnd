@@ -2,7 +2,6 @@ package ru.betterend.blocks;
 
 import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -15,15 +14,15 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
+import ru.bclib.interfaces.tools.AddMineableShears;
 
 import java.util.EnumMap;
 
-public class FilaluxWingsBlock extends BaseAttachedBlock implements RenderLayerProvider {
+public class FilaluxWingsBlock extends BaseAttachedBlock implements RenderLayerProvider, AddMineableShears {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public FilaluxWingsBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
 								 .sound(SoundType.WET_GRASS)
 								 .noCollission());
 	}

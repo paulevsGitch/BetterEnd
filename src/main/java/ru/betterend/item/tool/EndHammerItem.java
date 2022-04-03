@@ -6,7 +6,6 @@ import com.google.common.collect.Multimap;
 import io.netty.util.internal.ThreadLocalRandom;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -38,7 +37,7 @@ import ru.bclib.interfaces.TagProvider;
 import java.util.List;
 import java.util.UUID;
 
-public class EndHammerItem extends DiggerItem implements DynamicAttributeTool, ItemModelProvider, TagProvider {
+public class EndHammerItem extends DiggerItem implements ItemModelProvider, TagProvider {
 	public final static UUID ATTACK_KNOCKBACK_MODIFIER_ID = Mth.createInsecureUUID(ThreadLocalRandom.current());
 	
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers;

@@ -3,7 +3,6 @@ package ru.betterend.blocks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +22,7 @@ import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
+import ru.bclib.interfaces.tools.AddMineableAxe;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.LumecornShape;
 import ru.betterend.registry.EndBlocks;
@@ -32,14 +32,13 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class LumecornBlock extends BaseBlockNotFull implements RenderLayerProvider {
+public class LumecornBlock extends BaseBlockNotFull implements RenderLayerProvider, AddMineableAxe {
 	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create("shape", LumecornShape.class);
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape SHAPE_TOP = Block.box(6, 0, 6, 10, 8, 10);
 	
 	public LumecornBlock() {
 		super(FabricBlockSettings.of(Material.WOOD)
-								 .breakByTool(FabricToolTags.AXES)
 								 .hardness(0.5F)
 								 .luminance(state -> state.getValue(SHAPE).getLight()));
 	}

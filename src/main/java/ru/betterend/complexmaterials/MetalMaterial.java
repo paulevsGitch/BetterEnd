@@ -1,6 +1,7 @@
 package ru.betterend.complexmaterials;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
@@ -16,7 +17,6 @@ import ru.bclib.api.tag.NamedBlockTags;
 import ru.bclib.api.tag.NamedCommonBlockTags;
 import ru.bclib.api.tag.NamedItemTags;
 import ru.bclib.api.tag.TagAPI;
-import ru.bclib.api.tag.TagAPI.TagNamed;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BaseChainBlock;
 import ru.bclib.blocks.BaseDoorBlock;
@@ -90,7 +90,7 @@ public class MetalMaterial {
 	public final Item leggings;
 	public final Item boots;
 
-	public final TagNamed<Item> alloyingOre;
+	public final TagKey<Item> alloyingOre;
 
 	public static MetalMaterial makeNormal(String name, MaterialColor color, Tier material, ArmorMaterial armor) {
 		return new MetalMaterial(

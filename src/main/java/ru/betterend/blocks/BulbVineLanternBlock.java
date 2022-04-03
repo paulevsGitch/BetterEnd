@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -21,13 +20,14 @@ import ru.bclib.client.models.ModelsHelper;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.BlockModelProvider;
 import ru.bclib.interfaces.RenderLayerProvider;
+import ru.bclib.interfaces.tools.AddMineablePickaxe;
 import ru.betterend.blocks.basis.EndLanternBlock;
 import ru.betterend.client.models.Patterns;
 
 import java.util.Map;
 import java.util.Optional;
 
-public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayerProvider, BlockModelProvider {
+public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayerProvider, BlockModelProvider, AddMineablePickaxe {
 	private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
 	
@@ -35,7 +35,6 @@ public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayer
 		this(FabricBlockSettings.of(Material.METAL)
 								.hardness(1)
 								.resistance(1)
-								.breakByTool(FabricToolTags.PICKAXES)
 								.mapColor(MaterialColor.COLOR_LIGHT_GRAY)
 								.luminance(15)
 								.requiresCorrectToolForDrops()

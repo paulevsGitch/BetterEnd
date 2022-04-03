@@ -1,7 +1,6 @@
 package ru.betterend.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -42,7 +41,6 @@ public class SilkMothHiveBlock extends BaseBlock {
 	
 	public SilkMothHiveBlock() {
 		super(FabricBlockSettings.of(Material.WOOD)
-								 .breakByHand(true)
 								 .hardness(0.5F)
 								 .resistance(0.1F)
 								 .sound(SoundType.WOOL)

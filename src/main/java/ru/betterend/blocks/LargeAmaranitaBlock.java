@@ -1,7 +1,6 @@
 package ru.betterend.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -17,19 +16,19 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
+import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.betterend.blocks.basis.EndPlantBlock;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.Random;
 
-public class LargeAmaranitaBlock extends EndPlantBlock {
+public class LargeAmaranitaBlock extends EndPlantBlock implements AddMineableShears {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(4, 0, 4, 12, 14, 12);
 	private static final VoxelShape SHAPE_TOP = Shapes.or(Block.box(1, 3, 1, 15, 16, 15), SHAPE_BOTTOM);
 	
 	public LargeAmaranitaBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
 								 .breakByHand(true)
 								 .sound(SoundType.GRASS)
 								 .lightLevel((state) -> (state.getValue(SHAPE) == TripleShape.TOP) ? 15 : 0));

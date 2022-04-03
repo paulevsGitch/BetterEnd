@@ -3,7 +3,6 @@ package ru.betterend.blocks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.BlockGetter;
@@ -15,17 +14,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 
 import java.util.Random;
 
-public class BubbleCoralBlock extends EndUnderwaterPlantBlock {
+public class BubbleCoralBlock extends EndUnderwaterPlantBlock implements AddMineableShears {
 	
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
 	
 	public BubbleCoralBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
 								 .breakByHand(true)
 								 .sound(SoundType.CORAL_BLOCK)
 								 .noCollission());

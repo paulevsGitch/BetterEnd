@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
+import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.basis.EndUnderwaterPlantBlock;
 import ru.betterend.registry.EndBlocks;
@@ -36,14 +36,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class EndLilyBlock extends EndUnderwaterPlantBlock {
+public class EndLilyBlock extends EndUnderwaterPlantBlock implements AddMineableShears {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape SHAPE_BOTTOM = Block.box(4, 0, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_TOP = Block.box(2, 0, 2, 14, 6, 14);
 	
 	public EndLilyBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
 								 .breakByHand(true)
 								 .sound(SoundType.WET_GRASS)
 								 .lightLevel((state) -> state.getValue(SHAPE) == TripleShape.TOP ? 13 : 0)

@@ -3,7 +3,6 @@ package ru.betterend.blocks.basis;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -24,20 +23,19 @@ import ru.bclib.api.tag.TagAPI;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
+import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.bclib.util.MHelper;
 
 import java.util.EnumMap;
 import java.util.List;
 
-public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider {
+public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, AddMineableShears {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	private final ItemLike drop;
 	private final int dropChance;
 	
 	public FurBlock(ItemLike drop, int light, int dropChance, boolean wet) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
-								 .breakByHand(true)
 								 .luminance(light)
 								 .sound(wet ? SoundType.WET_GRASS : SoundType.GRASS)
 								 .noCollission());

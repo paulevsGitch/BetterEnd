@@ -75,7 +75,8 @@ public class OldBulbisGardens extends EndBiome.Config {
 		}
 
 		for (MobCategory group : MobCategory.values()) {
-			List<SpawnerData> list = biome.getMobSettings()
+			List<SpawnerData> list = biome.value()
+					                      .getMobSettings()
 										  .getMobs(group)
 										  .unwrap();
 			list.forEach((entry) -> {
@@ -83,7 +84,7 @@ public class OldBulbisGardens extends EndBiome.Config {
 			});
 		}
 
-		List<HolderSet<PlacedFeature>> features = biome.getGenerationSettings()
+		List<HolderSet<PlacedFeature>> features = biome.value().getGenerationSettings()
 															.features();
 		HolderSet<PlacedFeature> vegetal = features.get(Decoration.VEGETAL_DECORATION.ordinal());
 		if (vegetal.size() > 2) {

@@ -45,6 +45,7 @@ public class MinecraftClientMixin {
 				else {
 					Music sound = this.level.getBiomeManager()
 											.getNoiseBiomeAtPosition(this.player.blockPosition())
+							                .value()
 											.getBackgroundMusic()
 											.orElse(Musics.END);
 					info.setReturnValue(sound);

@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.PosInfo;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -112,7 +112,7 @@ public class DragonTreeFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(CommonBlockTags.GEN_END_STONES)) {
 				SplineHelper.fillSpline(branch, world, EndBlocks.DRAGON_TREE.getBark().defaultBlockState(), pos, REPLACE);
 			}
 		}
@@ -196,7 +196,7 @@ public class DragonTreeFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			/*if (state.is(TagAPI.BLOCK_END_GROUND)) {
+			/*if (state.is(CommonBlockTags.END_STONES)) {
 				return true;
 			}*/
 			if (state.getBlock() == EndBlocks.DRAGON_TREE_LEAVES) {

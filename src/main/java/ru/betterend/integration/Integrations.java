@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import ru.bclib.api.ModIntegrationAPI;
-import ru.bclib.integration.modmenu.ModIntegration;
+import ru.bclib.integration.ModIntegration;
 import ru.bclib.recipes.GridRecipe;
 import ru.betterend.BetterEnd;
 import ru.betterend.config.Configs;

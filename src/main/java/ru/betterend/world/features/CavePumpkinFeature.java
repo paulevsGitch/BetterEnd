@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.blocks.EndBlockProperties;
@@ -18,7 +18,7 @@ public class CavePumpkinFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.above()).is(TagAPI.BLOCK_GEN_TERRAIN) || !world.isEmptyBlock(pos) || !world.isEmptyBlock(
+		if (!world.getBlockState(pos.above()).is(CommonBlockTags.GEN_END_STONES) || !world.isEmptyBlock(pos) || !world.isEmptyBlock(
 			pos.below())) {
 			return false;
 		}

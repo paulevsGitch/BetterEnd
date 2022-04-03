@@ -17,12 +17,12 @@ import ru.betterend.interfaces.FallFlyingItem;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndParticles;
+import ru.betterend.util.GlobalState;
 
 import java.util.List;
 
 public class BlockEntityHydrothermalVent extends BlockEntity {
 	private final static Vec3 POSITIVE_Y = new Vec3(0.0f, 1.0f, 0.0f);
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	public BlockEntityHydrothermalVent(BlockPos blockPos, BlockState blockState) {
 		super(EndBlockEntities.HYDROTHERMAL_VENT, blockPos, blockState);
@@ -51,6 +51,7 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
 	}
 	
 	private static void serverTick(Level level, BlockPos worldPosition, BlockState state, BlockEntityHydrothermalVent blockEntity) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
 		boolean active = state.getValue(HydrothermalVentBlock.ACTIVATED);
 		POS.set(worldPosition).move(Direction.UP);
 		int height = active ? 85 : 25;

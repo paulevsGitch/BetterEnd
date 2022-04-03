@@ -19,7 +19,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.NamedBlockTags;
+import ru.bclib.api.tag.TagAPI;
 import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
@@ -42,7 +43,7 @@ public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider {
 								 .noCollission());
 		this.drop = drop;
 		this.dropChance = dropChance;
-		TagAPI.addTags(this, TagAPI.BLOCK_LEAVES);
+		TagAPI.addBlockTag(NamedBlockTags.LEAVES, this);
 	}
 	
 	public FurBlock(ItemLike drop, int dropChance) {
@@ -53,7 +54,7 @@ public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider {
 								 .noCollission());
 		this.drop = drop;
 		this.dropChance = dropChance;
-		TagAPI.addTags(this, TagAPI.BLOCK_LEAVES);
+		TagAPI.addBlockTag(NamedBlockTags.LEAVES, this);
 	}
 	
 	@Override

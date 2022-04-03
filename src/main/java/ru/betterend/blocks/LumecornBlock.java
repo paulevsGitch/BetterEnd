@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.BaseBlockNotFull;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
@@ -63,7 +63,7 @@ public class LumecornBlock extends BaseBlockNotFull implements RenderLayerProvid
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
-			return world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND);
+			return world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES);
 		}
 		else if (shape == LumecornShape.LIGHT_TOP) {
 			return world.getBlockState(pos.below()).is(this);

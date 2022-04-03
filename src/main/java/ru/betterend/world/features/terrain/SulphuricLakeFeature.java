@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluids;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
@@ -18,17 +18,16 @@ import ru.betterend.blocks.EndBlockProperties;
 import ru.betterend.blocks.SulphurCrystalBlock;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 import java.util.Set;
 
 public class SulphuricLakeFeature extends DefaultFeature {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
-		final Random random = featureConfig.random();
 		BlockPos blockPos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
 		blockPos = getPosOnSurfaceWG(world, blockPos);
@@ -37,6 +36,8 @@ public class SulphuricLakeFeature extends DefaultFeature {
 			return false;
 		}
 		
+		final Random random = featureConfig.random();
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
 		double radius = MHelper.randRange(10.0, 20.0, random);
 		int dist2 = MHelper.floor(radius * 1.5);
 		
@@ -61,7 +62,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 				int dist = x2 + z2;
 				if (dist <= r) {
 					POS.setY(getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+					if (world.getBlockState(POS).is(CommonBlockTags.GEN_END_STONES)) {
 						if (isBorder(world, POS)) {
 							if (random.nextInt(8) > 0) {
 								brimstone.add(POS.immutable());
@@ -75,6 +76,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							else {
 								if (!isAbsoluteBorder(world, POS)) {
 									BlocksHelper.setWithoutUpdate(world, POS, Blocks.WATER);
+									//world.setBlock(blockPos, Blocks.WATER.defaultBlockState(), 2);
 									world.scheduleTick(POS, Fluids.WATER, 0);
 									brimstone.add(POS.below());
 									if (random.nextBoolean()) {
@@ -97,7 +99,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 							brimstone.remove(POS);
 							for (Direction dir : BlocksHelper.HORIZONTAL) {
 								BlockPos offseted = POS.relative(dir);
-								if (world.getBlockState(offseted).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+								if (world.getBlockState(offseted).is(CommonBlockTags.GEN_END_STONES)) {
 									brimstone.add(offseted);
 								}
 							}
@@ -106,7 +108,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 								brimstone.remove(POS);
 								for (Direction dir : BlocksHelper.HORIZONTAL) {
 									BlockPos offseted = POS.relative(dir);
-									if (world.getBlockState(offseted).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+									if (world.getBlockState(offseted).is(CommonBlockTags.GEN_END_STONES)) {
 										brimstone.add(offseted);
 									}
 								}
@@ -123,7 +125,7 @@ public class SulphuricLakeFeature extends DefaultFeature {
 				}
 				else if (dist < r2) {
 					POS.setY(getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+					if (world.getBlockState(POS).is(CommonBlockTags.GEN_END_STONES)) {
 						brimstone.add(POS.immutable());
 						if (random.nextBoolean()) {
 							brimstone.add(POS.below());

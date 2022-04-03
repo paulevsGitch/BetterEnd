@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.UnderwaterPlantBlock;
 import ru.bclib.util.MHelper;
 import ru.betterend.blocks.EndBlockProperties.HydraluxShape;
@@ -63,7 +63,7 @@ public class HydraluxBlock extends UnderwaterPlantBlock {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.is(TagAPI.BLOCK_END_GROUND);
+		return state.is(CommonBlockTags.END_STONES);
 	}
 	
 	@Override

@@ -9,13 +9,14 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
+import ru.betterend.util.GlobalState;
 import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
@@ -23,10 +24,11 @@ import java.util.Random;
 public class DesertLakeFeature extends DefaultFeature {
 	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
+		
 		final Random random = featureConfig.random();
 		BlockPos blockPos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
@@ -119,11 +121,11 @@ public class DesertLakeFeature extends DefaultFeature {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.is(TagAPI.BLOCK_GEN_TERRAIN)) {
+								if (state.is(CommonBlockTags.GEN_END_STONES)) {
 									BlocksHelper.setWithoutUpdate(world, POS, AIR);
 								}
 								pos = POS.below();
-								if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+								if (world.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES)) {
 									state = EndBiome.findTopMaterial(world, pos); //world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
@@ -178,7 +180,7 @@ public class DesertLakeFeature extends DefaultFeature {
 								BlocksHelper.setWithoutUpdate(world, POS, state);
 							}
 							pos = POS.below();
-							if (world.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+							if (world.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES)) {
 								BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
 							}
 							pos = POS.above();
@@ -191,7 +193,7 @@ public class DesertLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y2 + x2 + z2 <= rb) {
 							state = world.getBlockState(POS);
-							if (state.is(TagAPI.BLOCK_GEN_TERRAIN) && world.isEmptyBlock(POS.above())) {
+							if (state.is(CommonBlockTags.GEN_END_STONES) && world.isEmptyBlock(POS.above())) {
 								BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.END_MOSS);
 							}
 							else if (y < waterLevel) {
@@ -230,7 +232,7 @@ public class DesertLakeFeature extends DefaultFeature {
 	
 	private boolean canReplace(BlockState state) {
 		return state.getMaterial()
-					.isReplaceable() || state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial()
+					.isReplaceable() || state.is(CommonBlockTags.GEN_END_STONES) || state.is(EndBlocks.ENDSTONE_DUST) || state.getMaterial()
 																												  .equals(
 																													  Material.PLANT) || state
 			.getMaterial()

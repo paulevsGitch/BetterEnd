@@ -11,11 +11,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class CavePiece extends BasePiece {
 		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
-		MutableBlockPos pos = new MutableBlockPos();
+		final MutableBlockPos pos = GlobalState.stateForThread().POS;
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - center.getX();
 			xsq *= xsq;
@@ -67,7 +68,7 @@ public class CavePiece extends BasePiece {
 					double r2 = r - 4.5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r2 * r2) {
-						if (world.getBlockState(pos).is(TagAPI.BLOCK_END_GROUND)) {
+						if (world.getBlockState(pos).is(CommonBlockTags.END_STONES)) {
 							BlocksHelper.setWithoutUpdate(world, pos, CAVE_AIR);
 						}
 					}

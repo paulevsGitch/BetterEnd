@@ -1,7 +1,7 @@
 package ru.betterend.blocks.basis;
 
 import net.minecraft.world.level.block.state.BlockState;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.UnderwaterPlantBlock;
 
 public class EndUnderwaterPlantBlock extends UnderwaterPlantBlock {
@@ -19,6 +19,6 @@ public class EndUnderwaterPlantBlock extends UnderwaterPlantBlock {
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.is(TagAPI.BLOCK_END_GROUND);
+		return state.is(CommonBlockTags.END_STONES);
 	}
 }

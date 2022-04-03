@@ -25,9 +25,9 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 
 	public EternalPortalStructure() {
 		super(PieceGeneratorSupplier.simple(
-				EternalPortalStructure::checkLocation,
-				EternalPortalStructure::generatePieces
-		));
+			EternalPortalStructure::checkLocation,
+			EternalPortalStructure::generatePieces)
+		);
 	}
 
 	protected static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {

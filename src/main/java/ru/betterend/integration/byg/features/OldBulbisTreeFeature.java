@@ -11,7 +11,8 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
+import ru.bclib.api.tag.TagAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFSubtraction;
@@ -39,8 +40,8 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) return false;
-		if (!world.getBlockState(pos.below(4)).is(TagAPI.BLOCK_GEN_TERRAIN)) return false;
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) return false;
+		if (!world.getBlockState(pos.below(4)).is(CommonBlockTags.GEN_END_STONES)) return false;
 		
 		BlockState stem = Integrations.BYG.getDefaultState("bulbis_stem");
 		BlockState wood = Integrations.BYG.getDefaultState("bulbis_wood");
@@ -48,7 +49,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 		BlockState glow = Integrations.BYG.getDefaultState("purple_shroomlight");
 		
 		Function<BlockState, Boolean> replacement = (state) -> {
-			if (state.equals(stem) || state.equals(wood) || state.is(TagAPI.BLOCK_END_GROUND) || state.getMaterial()
+			if (state.equals(stem) || state.equals(wood) || state.is(CommonBlockTags.END_STONES) || state.getMaterial()
 																								.equals(Material.PLANT)) {
 				return true;
 			}
@@ -155,7 +156,7 @@ public class OldBulbisTreeFeature extends DefaultFeature {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(CommonBlockTags.GEN_END_STONES)) {
 				SplineHelper.fillSpline(branch, world, wood, pos, replacement);
 			}
 		}

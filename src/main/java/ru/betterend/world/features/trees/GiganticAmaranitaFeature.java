@@ -361,7 +361,7 @@ public class GiganticAmaranitaFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (/*state.is(TagAPI.BLOCK_END_GROUND) || */state.getMaterial().equals(Material.PLANT)) {
+			if (/*state.is(CommonBlockTags.END_STONES) || */state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

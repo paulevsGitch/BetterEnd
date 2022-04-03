@@ -16,11 +16,12 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
-import ru.bclib.api.TagAPI;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
+import ru.betterend.util.GlobalState;
 import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
@@ -47,7 +48,7 @@ public class CrystalMountainPiece extends MountainPiece {
 	public void postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
 		int sx = chunkPos.getMinBlockX();
 		int sz = chunkPos.getMinBlockZ();
-		MutableBlockPos pos = new MutableBlockPos();
+		final MutableBlockPos pos = GlobalState.stateForThread().POS;
 		ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
 		Heightmap map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
 		Heightmap map2 = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE_WG);
@@ -69,7 +70,7 @@ public class CrystalMountainPiece extends MountainPiece {
 						continue;
 					}
 					pos.setY(minY);
-					while (!chunk.getBlockState(pos).is(TagAPI.BLOCK_GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(
+					while (!chunk.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES) && pos.getY() > 56 && !chunk.getBlockState(
 						pos.below()).is(Blocks.CAVE_AIR)) {
 						pos.setY(pos.getY() - 1);
 					}

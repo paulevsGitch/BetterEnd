@@ -11,8 +11,8 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFSmoothUnion;
@@ -41,8 +41,8 @@ public class SpireFeature extends DefaultFeature {
 		final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
 		pos = getPosOnSurfaceWG(world, pos);
 		if (pos.getY() < 10 || !world.getBlockState(pos.below(3))
-									 .is(TagAPI.BLOCK_GEN_TERRAIN) || !world.getBlockState(pos.below(6))
-																	  .is(TagAPI.BLOCK_GEN_TERRAIN)) {
+									 .is(CommonBlockTags.GEN_END_STONES) || !world.getBlockState(pos.below(6))
+																				  .is(CommonBlockTags.GEN_END_STONES)) {
 			return false;
 		}
 		
@@ -99,7 +99,7 @@ public class SpireFeature extends DefaultFeature {
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.is(TagAPI.BLOCK_END_GROUND)) {
+			if (state.is(CommonBlockTags.END_STONES)) {
 				return true;
 			}
 			if (state.getBlock() instanceof LeavesBlock) {

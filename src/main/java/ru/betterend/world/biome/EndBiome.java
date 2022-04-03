@@ -10,17 +10,18 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
+import ru.bclib.api.biomes.BCLBiomeBuilder.BiomeSupplier;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.surface.SurfaceRuleBuilder;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.bclib.world.biomes.BCLBiome;
+import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.betterend.BetterEnd;
 import ru.betterend.interfaces.StructureFeaturesAccessor;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
-
-import java.util.function.BiFunction;
+import ru.betterend.registry.EndTags;
 
 public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 	public static class DefaultSurfaceMaterialProvider implements SurfaceMaterialProvider{
@@ -85,7 +86,7 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 
 		protected abstract void addCustomBuildData(BCLBiomeBuilder builder);
 
-		public BiFunction<ResourceLocation, Biome, EndBiome> getSupplier(){
+		public BiomeSupplier<EndBiome> getSupplier(){
 			return EndBiome::new;
 		}
 
@@ -98,8 +99,8 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 		}
 	}
 
-	public EndBiome(ResourceLocation biomeID, Biome biome) {
-		super(biomeID, biome);
+	public EndBiome(ResourceLocation biomeID, Biome biome, BCLBiomeSettings settings) {
+		super(biomeID, biome, settings);
 	}
 
 	public static EndBiome create(Config biomeConfig){
@@ -124,7 +125,8 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 		EndBiome biome = builder.build(biomeConfig.getSupplier());
 		biome.addCustomData("has_caves", biomeConfig.hasCaves());
 		biome.setSurfaceMaterial(biomeConfig.surfaceMaterial());
-
+		
+		EndTags.addBiomeSurfaceToEndGroup(biome);
 		return biome;
 	}
 

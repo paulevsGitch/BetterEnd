@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 
 import java.util.List;
 import java.util.Random;
@@ -71,28 +71,28 @@ public abstract class EnchantmentMenuMixin extends AbstractContainerMenu {
 								0,
 								j
 							)) && world.isEmptyBlock(blockPos.offset(k, 1, j))) {
-								if (world.getBlockState(blockPos.offset(k * 2, 0, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
+								if (world.getBlockState(blockPos.offset(k * 2, 0, j * 2)).is(CommonBlockTags.BOOKSHELVES)) {
 									++i;
 								}
 								
-								if (world.getBlockState(blockPos.offset(k * 2, 1, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
+								if (world.getBlockState(blockPos.offset(k * 2, 1, j * 2)).is(CommonBlockTags.BOOKSHELVES)) {
 									++i;
 								}
 								
 								if (k != 0 && j != 0) {
-									if (world.getBlockState(blockPos.offset(k * 2, 0, j)).is(TagAPI.BLOCK_BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k * 2, 0, j)).is(CommonBlockTags.BOOKSHELVES)) {
 										++i;
 									}
 									
-									if (world.getBlockState(blockPos.offset(k * 2, 1, j)).is(TagAPI.BLOCK_BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k * 2, 1, j)).is(CommonBlockTags.BOOKSHELVES)) {
 										++i;
 									}
 									
-									if (world.getBlockState(blockPos.offset(k, 0, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k, 0, j * 2)).is(CommonBlockTags.BOOKSHELVES)) {
 										++i;
 									}
 									
-									if (world.getBlockState(blockPos.offset(k, 1, j * 2)).is(TagAPI.BLOCK_BOOKSHELVES)) {
+									if (world.getBlockState(blockPos.offset(k, 1, j * 2)).is(CommonBlockTags.BOOKSHELVES)) {
 										++i;
 									}
 								}

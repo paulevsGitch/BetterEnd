@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.operator.SDFScale3D;
@@ -43,8 +43,8 @@ public class BushWithOuterFeature extends DefaultFeature {
 		final Random random = featureConfig.random();
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND) && !world.getBlockState(pos.above())
-																			 .is(TagAPI.BLOCK_END_GROUND))
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES) && !world.getBlockState(pos.above())
+																					  .is(CommonBlockTags.END_STONES))
 			return false;
 		
 		float radius = MHelper.randRange(1.8F, 3.5F, random);

@@ -20,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
+import ru.bclib.api.tag.TagAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.generator.GeneratorOptions;
@@ -50,7 +51,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
 	private void be_randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random, CallbackInfo info) {
-		if (world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			BlockPos up = pos.above();
 			if (world.isEmptyBlock(up) && up.getY() < 256) {
 				int i = state.getValue(ChorusFlowerBlock.AGE);
@@ -80,7 +81,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 	@Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
 	private void be_placeDeadFlower(Level world, BlockPos pos, CallbackInfo info) {
 		BlockState down = world.getBlockState(pos.below());
-		if (down.is(Blocks.CHORUS_PLANT) || down.is(TagAPI.BLOCK_GEN_TERRAIN)) {
+		if (down.is(Blocks.CHORUS_PLANT) || down.is(CommonBlockTags.GEN_END_STONES)) {
 			world.setBlock(pos, this.defaultBlockState().setValue(BlockStateProperties.AGE_5, 5), 2);
 			world.levelEvent(1034, pos, 0);
 		}

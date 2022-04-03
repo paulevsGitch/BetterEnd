@@ -10,7 +10,6 @@ public class GeneratorOptions {
 	private static boolean hasPillars;
 	private static boolean hasDragonFights;
 	private static boolean changeChorusPlant;
-	private static boolean removeChorusFromVanillaBiomes;
 	private static boolean newGenerator;
 	private static boolean generateCentralIsland;
 	private static boolean generateObsidianPlatform;
@@ -25,6 +24,7 @@ public class GeneratorOptions {
 	private static int islandDistChunk;
 	private static boolean directSpikeHeight;
 	private static int circleRadius = 1000;
+	private static int circleRadiusSqr;
 	
 	public static void init() {
 		biomeSizeCaves = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeCaves", 32);
@@ -32,11 +32,6 @@ public class GeneratorOptions {
 		hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
 		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
-		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean(
-			"chorusPlant",
-			"removeChorusFromVanillaBiomes",
-			true
-		);
 		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", true);
 		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", true);
 		endCityFailChance = Configs.GENERATOR_CONFIG.getInt("customGenerator", "endCityFailChance", 5);
@@ -77,6 +72,7 @@ public class GeneratorOptions {
 		replacePortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "customEndPortal", true);
 		replacePillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "customObsidianSpikes", true);
 		circleRadius = Configs.GENERATOR_CONFIG.getInt("customGenerator", "voidRingSize", 1000);
+		circleRadiusSqr = circleRadius * circleRadius;
 		islandDistChunk = (circleRadius >> 3); // Twice bigger than normal
 	}
 	
@@ -98,10 +94,6 @@ public class GeneratorOptions {
 	
 	public static boolean changeChorusPlant() {
 		return changeChorusPlant;
-	}
-	
-	public static boolean removeChorusFromVanillaBiomes() {
-		return removeChorusFromVanillaBiomes;
 	}
 	
 	public static boolean useNewGenerator() {
@@ -138,6 +130,10 @@ public class GeneratorOptions {
 	
 	public static int getIslandDistBlock() {
 		return circleRadius;
+	}
+	
+	public static int getIslandDistBlockSqr() {
+		return circleRadiusSqr;
 	}
 	
 	public static int getIslandDistChunk() {

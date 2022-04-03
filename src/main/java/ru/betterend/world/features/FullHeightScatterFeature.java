@@ -9,11 +9,11 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.features.DefaultFeature;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 
 public abstract class FullHeightScatterFeature extends DefaultFeature {
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	private final int radius;
 	
 	public FullHeightScatterFeature(int radius) {
@@ -26,6 +26,7 @@ public abstract class FullHeightScatterFeature extends DefaultFeature {
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
 		final Random random = featureConfig.random();
 		final BlockPos center = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();

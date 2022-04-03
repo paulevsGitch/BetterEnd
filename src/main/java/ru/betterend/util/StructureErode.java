@@ -10,7 +10,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.material.Material;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
+import ru.bclib.api.tag.TagAPI;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
@@ -241,7 +242,7 @@ public class StructureErode {
 	}
 	
 	private static boolean ignore(BlockState state, WorldGenLevel world, BlockPos pos) {
-		if (state.is(TagAPI.BLOCK_GEN_TERRAIN) || state.is(BlockTags.NYLIUM)) {
+		if (state.is(CommonBlockTags.GEN_END_STONES) || state.is(BlockTags.NYLIUM)) {
 			return true;
 		}
 		return !state.getMaterial().equals(Material.STONE) || BlocksHelper.isInvulnerable(state, world, pos);
@@ -249,7 +250,7 @@ public class StructureErode {
 	
 	private static boolean isTerrainNear(WorldGenLevel world, BlockPos pos) {
 		for (Direction dir : BlocksHelper.DIRECTIONS) {
-			if (world.getBlockState(pos.relative(dir)).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+			if (world.getBlockState(pos.relative(dir)).is(CommonBlockTags.GEN_END_STONES)) {
 				return true;
 			}
 		}
@@ -266,7 +267,7 @@ public class StructureErode {
 				for (int y = bounds.maxY(); y >= bounds.minY(); y--) {
 					mut.setY(y);
 					BlockState state = world.getBlockState(mut);
-					if (state.is(TagAPI.BLOCK_END_GROUND) && !world.getBlockState(mut.above()).getMaterial().isSolidBlocking()) {
+					if (state.is(CommonBlockTags.END_STONES) && !world.getBlockState(mut.above()).getMaterial().isSolidBlocking()) {
 						BlocksHelper.setWithoutUpdate(world, mut, top);
 					}
 				}

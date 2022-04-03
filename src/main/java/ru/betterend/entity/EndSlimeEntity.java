@@ -33,13 +33,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import ru.bclib.api.TagAPI;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.interfaces.ISlime;
 import ru.betterend.registry.EndBiomes;
+import ru.betterend.util.GlobalState;
 
 import java.util.EnumSet;
 import java.util.Random;
@@ -49,7 +50,6 @@ public class EndSlimeEntity extends Slime {
 		EndSlimeEntity.class,
 		EntityDataSerializers.BYTE
 	);
-	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, Level world) {
 		super(entityType, world);
@@ -213,7 +213,7 @@ public class EndSlimeEntity extends Slime {
 	}
 	
 	public static boolean canSpawn(EntityType entityType, LevelAccessor world, MobSpawnType spawnType, BlockPos pos, Random random) {
-		if (!world.getBlockState(pos.below()).is(TagAPI.BLOCK_END_GROUND)) {
+		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			return false;
 		}
 		BCLBiome biome = BiomeAPI.getFromBiome(world.getBiome(pos));
@@ -227,6 +227,8 @@ public class EndSlimeEntity extends Slime {
 	}
 	
 	private static boolean isWaterNear(LevelAccessor world, BlockPos pos) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
+		
 		for (int x = pos.getX() - 32; x <= pos.getX() + 32; x++) {
 			POS.setX(x);
 			for (int z = pos.getZ() - 32; z <= pos.getZ() + 32; z++) {

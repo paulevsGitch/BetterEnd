@@ -5,8 +5,6 @@ buildscript {
 }
 
 plugins {
-    id 'idea'
-    id 'eclipse'
     id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
 }
@@ -86,17 +84,11 @@ def useApi(String dep) {
 }
 
 processResources {
-    inputs.property "version", project.version
-    duplicatesStrategy = 'WARN'
-
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
-        expand "version": project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
-    }
+    println "Version: ${project.version}"
+	inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
 }
 
 // ensure that the encoding is set to UTF-8, no matter what the system default is
@@ -104,6 +96,7 @@ processResources {
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
+    it.options.release = 17
 }
 
 javadoc {
@@ -121,6 +114,13 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
 }
 
 jar {
@@ -159,21 +159,21 @@ task release(dependsOn: [remapJar, sourcesJar, javadocJar]) {
 }
 
 // configure the maven publication
-//publishing {
-//	publications {
-//		mavenJava(MavenPublication) {
-//			artifact(remapJar) {
-//				builtBy remapJar
-//			}
-//			artifact(sourcesJar) {
-//				builtBy remapSourcesJar
-//			}
-//		}
-//	}
-//
-//	// select the repositories you want to publish to
-//	repositories {
-//		// uncomment to publish to the local maven
-//		// mavenLocal()
-//	}
-//}
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifact(remapJar) {
+				builtBy remapJar
+			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
+			}
+		}
+	}
+
+	// select the repositories you want to publish to
+	repositories {
+		// uncomment to publish to the local maven
+		// mavenLocal()
+	}
+}

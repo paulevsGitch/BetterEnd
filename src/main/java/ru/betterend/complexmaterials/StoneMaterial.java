@@ -1,12 +1,14 @@
 package ru.betterend.complexmaterials;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MaterialColor;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.NamedBlockTags;
+import ru.bclib.api.tag.NamedCommonBlockTags;
+import ru.bclib.api.tag.NamedCommonItemTags;
+import ru.bclib.api.tag.NamedItemTags;
+import ru.bclib.api.tag.TagAPI;
 import ru.bclib.blocks.BaseBlock;
 import ru.bclib.blocks.BaseFurnaceBlock;
 import ru.bclib.blocks.BaseRotatedPillarBlock;
@@ -177,22 +179,22 @@ public class StoneMaterial {
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		
 		// Item Tags //
-		TagAPI.addTag(ItemTags.SLABS, slab, brickSlab);
-		TagAPI.addTag(ItemTags.STONE_BRICKS, bricks);
-		TagAPI.addTag(ItemTags.STONE_CRAFTING_MATERIALS, stone);
-		TagAPI.addTag(ItemTags.STONE_TOOL_MATERIALS, stone);
-		TagAPI.addTag(TagAPI.ITEM_FURNACES, furnace);
+		TagAPI.addItemTag(NamedItemTags.SLABS, slab, brickSlab);
+		TagAPI.addItemTag(NamedItemTags.STONE_BRICKS, bricks);
+		TagAPI.addItemTag(NamedItemTags.STONE_CRAFTING_MATERIALS, stone);
+		TagAPI.addItemTag(NamedItemTags.STONE_TOOL_MATERIALS, stone);
+		TagAPI.addItemTag(NamedCommonItemTags.FURNACES, furnace);
 		
 		// Block Tags //
-		TagAPI.addTag(BlockTags.STONE_BRICKS, bricks);
-		TagAPI.addTag(BlockTags.WALLS, wall, brickWall);
-		TagAPI.addTag(BlockTags.SLABS, slab, brickSlab);
-		TagAPI.addTags(pressurePlate, BlockTags.PRESSURE_PLATES, BlockTags.STONE_PRESSURE_PLATES);
-		TagAPI.addTag(TagAPI.BLOCK_END_STONES, stone);
+		TagAPI.addBlockTag(NamedBlockTags.STONE_BRICKS, bricks);
+		TagAPI.addBlockTag(NamedBlockTags.WALLS, wall, brickWall);
+		TagAPI.addBlockTag(NamedBlockTags.SLABS, slab, brickSlab);
+		TagAPI.addBlockTags(pressurePlate, NamedBlockTags.PRESSURE_PLATES, NamedBlockTags.STONE_PRESSURE_PLATES);
+		TagAPI.addBlockTag(NamedCommonBlockTags.END_STONES, stone);
 		
-		TagAPI.addTag(TagAPI.BLOCK_DRAGON_IMMUNE, stone, stairs, slab, wall);
+		TagAPI.addBlockTag(NamedCommonBlockTags.DRAGON_IMMUNE, stone, stairs, slab, wall);
 
-		TagAPI.addTag(TagAPI.BLOCK_GEN_TERRAIN, stone);
-		TagAPI.addTag(TagAPI.BLOCK_END_GROUND, stone);
+		TagAPI.addBlockTag(NamedCommonBlockTags.GEN_END_STONES, stone);
+		TagAPI.addBlockTag(NamedCommonBlockTags.END_STONES, stone);
 	}
 }

@@ -1,10 +1,10 @@
 package ru.betterend.complexmaterials;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.NamedBlockTags;
+import ru.bclib.api.tag.NamedItemTags;
+import ru.bclib.api.tag.TagAPI;
 import ru.bclib.blocks.BaseSlabBlock;
 import ru.bclib.blocks.BaseStairsBlock;
 import ru.bclib.blocks.BaseWallBlock;
@@ -120,14 +120,14 @@ public class CrystalSubblocksMaterial {
 		CraftingRecipes.registerPedestal(name + "_pedestal", pedestal, slab, pillar);
 		
 		// Item Tags //
-		TagAPI.addTag(ItemTags.SLABS, slab, brick_slab);
-		TagAPI.addTag(ItemTags.STONE_BRICKS, bricks);
-		TagAPI.addTag(ItemTags.STONE_CRAFTING_MATERIALS, source);
-		TagAPI.addTag(ItemTags.STONE_TOOL_MATERIALS, source);
+		TagAPI.addItemTag(NamedItemTags.SLABS, slab, brick_slab);
+		TagAPI.addItemTag(NamedItemTags.STONE_BRICKS, bricks);
+		TagAPI.addItemTag(NamedItemTags.STONE_CRAFTING_MATERIALS, source);
+		TagAPI.addItemTag(NamedItemTags.STONE_TOOL_MATERIALS, source);
 		
 		// Block Tags //
-		TagAPI.addTag(BlockTags.STONE_BRICKS, bricks);
-		TagAPI.addTag(BlockTags.WALLS, wall, brick_wall);
-		TagAPI.addTag(BlockTags.SLABS, slab, brick_slab);
+		TagAPI.addBlockTag(NamedBlockTags.STONE_BRICKS, bricks);
+		TagAPI.addBlockTag(NamedBlockTags.WALLS, wall, brick_wall);
+		TagAPI.addBlockTag(NamedBlockTags.SLABS, slab, brick_slab);
 	}
 }

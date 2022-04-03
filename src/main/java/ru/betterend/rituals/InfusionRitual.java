@@ -228,7 +228,7 @@ public class InfusionRitual implements Container {
 		}
 	}
 	
-	public void markDirty() {
+	public void setDirty() {
 		this.isDirty = true;
 	}
 	

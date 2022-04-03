@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFCoordModify;
 import ru.bclib.sdf.operator.SDFDisplacement;
@@ -36,7 +36,7 @@ public class ThinArchFeature extends DefaultFeature {
 		Random random = featurePlaceContext.random();
 
 		BlockPos pos = getPosOnSurfaceWG(world, new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
-		if (!world.getBlockState(pos.below(5)).is(TagAPI.BLOCK_GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(5)).is(CommonBlockTags.GEN_END_STONES)) {
 			return false;
 		}
 	

@@ -66,7 +66,7 @@ public class BetterEnd implements ModInitializer {
 			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes(GeneratorOptions.getIslandDistBlock());
 			ru.bclib.world.generator.GeneratorOptions.setEndLandFunction((pos) -> TerrainGenerator.isLand(pos.x, pos.y));
 		}
-
+		
 		BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
 			if (!biomeID.equals(Biomes.THE_VOID.location())) {
 				EndStructures.addBiomeStructures(biomeID, biome);

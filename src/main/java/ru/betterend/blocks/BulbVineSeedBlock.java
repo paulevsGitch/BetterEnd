@@ -5,7 +5,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.bclib.api.TagAPI;
+import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.blocks.BlockProperties;
 import ru.bclib.blocks.BlockProperties.TripleShape;
 import ru.bclib.util.BlocksHelper;
@@ -19,7 +19,7 @@ public class BulbVineSeedBlock extends EndPlantWithAgeBlock {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState up = world.getBlockState(pos.above());
-		return up.is(TagAPI.BLOCK_GEN_TERRAIN) || up.is(BlockTags.LOGS) || up.is(BlockTags.LEAVES);
+		return up.is(CommonBlockTags.GEN_END_STONES) || up.is(BlockTags.LOGS) || up.is(BlockTags.LEAVES);
 	}
 	
 	@Override

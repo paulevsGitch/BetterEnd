@@ -14,12 +14,11 @@ import ru.bclib.blocks.BlockProperties;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.registry.EndBlocks;
+import ru.betterend.util.GlobalState;
 
 import java.util.Random;
 
 public class SilkMothNestFeature extends DefaultFeature {
-	private static final MutableBlockPos POS = new MutableBlockPos();
-	
 	private boolean canGenerate(WorldGenLevel world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos.above());
 		if (state.is(BlockTags.LEAVES) || state.is(BlockTags.LOGS)) {
@@ -35,6 +34,7 @@ public class SilkMothNestFeature extends DefaultFeature {
 	
 	@Override
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
+		final MutableBlockPos POS = GlobalState.stateForThread().POS;
 		final Random random = featureConfig.random();
 		final BlockPos center = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();

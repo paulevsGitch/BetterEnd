@@ -1,6 +1,6 @@
 package ru.betterend.integration.byg;
 
-import ru.bclib.integration.modmenu.ModIntegration;
+import ru.bclib.integration.ModIntegration;
 import ru.betterend.integration.EndBiomeIntegration;
 
 public class BYGIntegration extends ModIntegration implements EndBiomeIntegration {
@@ -12,7 +12,7 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 	public void init() {
 		/*Block block = Integrations.BYG.getBlock("ivis_phylium");
 		if (block != null) {
-			TagAPI.addTags(block, TagAPI.BLOCK_END_GROUND, TagAPI.BLOCK_GEN_TERRAIN);
+			TagAPI.addTags(block, CommonBlockTags.END_STONES, CommonBlockTags.GEN_END_STONES);
 		}
 		BYGBlocks.register();
 		BYGFeatures.register();

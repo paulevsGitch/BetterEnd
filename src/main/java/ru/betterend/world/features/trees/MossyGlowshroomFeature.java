@@ -171,7 +171,7 @@ public class MossyGlowshroomFeature extends DefaultFeature {
 									   .setSourceB(new SDFUnion().setSourceA(HEAD_POS).setSourceB(ROOTS_ROT));
 		
 		REPLACE = (state) -> {
-			/*if (state.is(TagAPI.BLOCK_END_GROUND)) {
+			/*if (state.is(CommonBlockTags.END_STONES)) {
 				return true;
 			}*/
 			if (state.getMaterial().equals(Material.PLANT)) {

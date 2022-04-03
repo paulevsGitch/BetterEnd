@@ -2,6 +2,7 @@ package ru.betterend.mixin.common;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
@@ -89,7 +90,7 @@ public abstract class ServerPlayerMixin extends Player implements TeleportingEnt
 			LevelData worldProperties = destination.getLevelData();
 			ServerPlayer player = ServerPlayer.class.cast(this);
 			connection.send(new ClientboundRespawnPacket(
-				destination.dimensionType(),
+				new Holder.Direct(destination.dimensionType()),
 				destination.dimension(),
 				BiomeManager.obfuscateSeed(destination.getSeed()),
 				gameMode.getGameModeForPlayer(),

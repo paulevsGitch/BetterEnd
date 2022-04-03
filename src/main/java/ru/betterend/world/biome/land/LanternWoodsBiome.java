@@ -1,5 +1,6 @@
 package ru.betterend.world.biome.land;
 
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
@@ -38,7 +39,7 @@ public class LanternWoodsBiome extends EndBiome.Config {
 			.feature(EndFeatures.CHARNIA_RED)
 			.feature(EndFeatures.RUSCUS)
 			.feature(EndFeatures.RUSCUS_WOOD)
-			.structure(VANILLA_FEATURES.getEndCity())
+			.structure(BiomeTags.HAS_END_CITY)
 			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 

@@ -10,6 +10,8 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.BCLBiomeBuilder.BiomeSupplier;
 import ru.bclib.api.biomes.BiomeAPI;
+import ru.bclib.api.features.BCLCommonFeatures;
+import ru.bclib.api.features.BCLFeatureBuilder;
 import ru.bclib.util.WeightedList;
 import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.bclib.world.features.BCLFeature;
@@ -28,7 +30,7 @@ public class EndCaveBiome extends EndBiome {
 
 		@Override
 		protected void addCustomBuildData(BCLBiomeBuilder builder) {
-			BCLFeature feature = BCLFeature.makeChunkFeature(
+			BCLFeature feature = BCLCommonFeatures.makeChunkFeature(
 					BetterEnd.makeID(ID.getPath() + "_cave_populator"),
 					GenerationStep.Decoration.RAW_GENERATION,
 					new CaveChunkPopulatorFeature(() -> (EndCaveBiome) BiomeAPI.getBiome(ID))

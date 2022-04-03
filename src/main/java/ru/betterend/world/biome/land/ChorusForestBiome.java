@@ -2,6 +2,7 @@ package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.data.worldgen.placement.EndPlacements;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
@@ -40,7 +41,7 @@ public class ChorusForestBiome extends EndBiome.Config {
 			.feature(EndFeatures.TAIL_MOSS_WOOD)
 			.feature(EndFeatures.CHARNIA_PURPLE)
 			.feature(EndFeatures.CHARNIA_RED_RARE)
-			.structure(VANILLA_FEATURES.getEndCity())
+			.structure(BiomeTags.HAS_END_CITY)
 			.spawn(EndEntities.END_SLIME, 5, 1, 2)
 			.spawn(EntityType.ENDERMAN, 50, 1, 4);
 	}

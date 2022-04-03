@@ -2,6 +2,7 @@ package ru.betterend.world.features;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -29,7 +30,7 @@ public class BiomeIslandFeature extends DefaultFeature {
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		Biome biome = world.getBiome(pos);
+		//Holder<Biome> biome = world.getBiome(pos);
 		int dist = BlocksHelper.downRay(world, pos, 10) + 1;
 		BlockPos surfacePos = new BlockPos(pos.getX(), pos.getY()-dist, pos.getZ());
 		BlockState topMaterial = EndBiome.findTopMaterial(world, surfacePos);;

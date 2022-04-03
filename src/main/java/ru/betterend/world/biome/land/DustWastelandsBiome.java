@@ -1,6 +1,7 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +29,7 @@ public class DustWastelandsBiome extends EndBiome.Config {
 			.particles(ParticleTypes.WHITE_ASH, 0.01F)
 			.loop(EndSounds.AMBIENT_DUST_WASTELANDS)
 			.music(EndSounds.MUSIC_OPENSPACE)
-			.structure(VANILLA_FEATURES.getEndCity())
+			.structure(BiomeTags.HAS_END_CITY)
 			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 
@@ -45,7 +46,7 @@ public class DustWastelandsBiome extends EndBiome.Config {
 				return super
 					.surface()
 					.ceil(Blocks.END_STONE.defaultBlockState())
-					.rule(4, SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(5, false, false, CaveSurface.FLOOR),
+					.rule(4, SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(5, false, CaveSurface.FLOOR),
 						SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState())
 					));
 			}

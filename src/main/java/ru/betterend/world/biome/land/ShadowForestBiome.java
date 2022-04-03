@@ -1,6 +1,7 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
@@ -40,7 +41,7 @@ public class ShadowForestBiome extends EndBiome.Config {
 			.feature(EndFeatures.TAIL_MOSS_WOOD)
 			.feature(EndFeatures.CHARNIA_PURPLE)
 			.feature(EndFeatures.CHARNIA_RED_RARE)
-			.structure(VANILLA_FEATURES.getEndCity())
+			.structure(BiomeTags.HAS_END_CITY)
 			.spawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
 			.spawn(EntityType.ENDERMAN, 40, 1, 4)
 			.spawn(EntityType.PHANTOM, 1, 1, 2);

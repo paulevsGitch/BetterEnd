@@ -3,6 +3,7 @@ package ru.betterend.util;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
@@ -92,8 +93,8 @@ public class LootTableUtil {
 		});
 	}
 	
-	public static ResourceLocation getTable(Biome biome) {
-		BCLBiome bclBiome = BiomeAPI.getBiome(biome);
+	public static ResourceLocation getTable(Holder<Biome> biome) {
+		BCLBiome bclBiome = BiomeAPI.getBiome(biome.value());
 		if (bclBiome == EndBiomes.FOGGY_MUSHROOMLAND) {
 			return FOGGY_MUSHROOMLAND;
 		}

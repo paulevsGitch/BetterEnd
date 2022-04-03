@@ -2,6 +2,7 @@ package ru.betterend.integration.byg.features;
 
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import ru.bclib.api.features.BCLCommonFeatures;
 import ru.bclib.world.features.BCLFeature;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
@@ -59,6 +60,6 @@ public class BYGFeatures {
 	}
 	
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
-		return BCLFeature.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
+		return BCLCommonFeatures.makeVegetationFeature(BetterEnd.makeID(name), feature, density);
 	}
 }

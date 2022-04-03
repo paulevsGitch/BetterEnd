@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
@@ -227,7 +228,7 @@ public abstract class EndCaveFeature extends DefaultFeature {
 	protected boolean biomeMissingCaves(WorldGenLevel world, BlockPos pos) {
 		for (int x = -2; x < 3; x++) {
 			for (int z = -2; z < 3; z++) {
-				Biome biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
+				Holder<Biome> biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
 				BCLBiome endBiome = BiomeAPI.getFromBiome(biome);
 				boolean hasCaves = endBiome.getCustomData("has_caves", true);
 				if (!hasCaves && BiomeAPI.END_LAND_BIOME_PICKER.containsImmutable(endBiome.getID())) {

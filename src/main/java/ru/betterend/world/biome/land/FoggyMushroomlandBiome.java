@@ -1,5 +1,6 @@
 package ru.betterend.world.biome.land;
 
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
@@ -20,7 +21,7 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder
-			.structure(EndStructures.GIANT_MOSSY_GLOWSHROOM.getFeatureConfigured())
+			.structure(EndStructures.GIANT_MOSSY_GLOWSHROOM)
 			.plantsColor(73, 210, 209)
 			.fogColor(41, 122, 173)
 			.fogDensity(3)
@@ -42,7 +43,7 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
 			.feature(EndFeatures.CHARNIA_CYAN)
 			.feature(EndFeatures.CHARNIA_LIGHT_BLUE)
 			.feature(EndFeatures.CHARNIA_RED_RARE)
-			.structure(VANILLA_FEATURES.getEndCity())
+			.structure(BiomeTags.HAS_END_CITY)
 			.spawn(EndEntities.DRAGONFLY, 80, 2, 5)
 			.spawn(EndEntities.END_FISH, 20, 2, 5)
 			.spawn(EndEntities.CUBOZOA, 10, 3, 8)

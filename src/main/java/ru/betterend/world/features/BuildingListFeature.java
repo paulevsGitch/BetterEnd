@@ -1,6 +1,7 @@
 package ru.betterend.world.features;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.ChestBlock;
@@ -42,7 +43,7 @@ public class BuildingListFeature extends ListFeature {
 				BlockEntity entity = chestBlock.newBlockEntity(chestPos, blockState);
 				levelReader.getChunk(chestPos).setBlockEntity(entity);
 				RandomizableContainerBlockEntity chestEntity = RandomizableContainerBlockEntity.class.cast(entity);
-				Biome biome = levelReader.getNoiseBiome(
+				Holder<Biome> biome = levelReader.getNoiseBiome(
 					chestPos.getX() >> 2,
 					chestPos.getY() >> 2,
 					chestPos.getZ() >> 2

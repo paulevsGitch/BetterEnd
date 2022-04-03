@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
@@ -227,7 +228,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 	
 	protected boolean hasCavesInBiome(WorldGenLevel world, BlockPos pos) {
-		Biome biome = world.getBiome(pos);
+		Holder<Biome> biome = world.getBiome(pos);
 		BCLBiome endBiome = BiomeAPI.getFromBiome(biome);
 		return endBiome.getCustomData("has_caves", true);
 	}

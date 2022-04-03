@@ -1,5 +1,6 @@
 package ru.betterend.integration.byg.biomes;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -25,8 +26,8 @@ public class NightshadeRedwoods extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		Biome biome = Integrations.BYG.getBiome("nightshade_forest");
-		BiomeSpecialEffects effects = biome.getSpecialEffects();
+		Holder<Biome> biome = Integrations.BYG.getBiome("nightshade_forest");
+		BiomeSpecialEffects effects = biome.value().getSpecialEffects();
 
 		builder.fogColor(140, 108, 47)
 			   .fogDensity(1.5F)
@@ -64,16 +65,17 @@ public class NightshadeRedwoods extends EndBiome.Config {
 				   .additions(additions)
 				   .mood(mood);
 		}
-		biome.getGenerationSettings()
+		biome.value().getGenerationSettings()
 			 .features()
 			 .forEach((list) -> {
 				 list.forEach((feature) -> {
-					 builder.feature(Decoration.VEGETAL_DECORATION, feature.get());
+					 builder.feature(Decoration.VEGETAL_DECORATION, feature);
 				 });
 			 });
 
 		for (MobCategory group : MobCategory.values()) {
-			List<SpawnerData> list = biome.getMobSettings()
+			List<SpawnerData> list = biome.value()
+					                      .getMobSettings()
 										  .getMobs(group)
 										  .unwrap();
 			list.forEach((entry) -> {

@@ -86,7 +86,7 @@ public abstract class MusicTrackerMixin {
 		if (minecraft.level == null) {
 			return false;
 		}
-		return BiomeAPI.getRenderBiome(minecraft.level.getBiome(minecraft.player.blockPosition())) instanceof EndBiome;
+		return BiomeAPI.getRenderBiome(minecraft.level.getBiome(minecraft.player.blockPosition()).value()) instanceof EndBiome;
 	}
 	
 	private boolean be_shouldChangeSound(Music musicSound) {

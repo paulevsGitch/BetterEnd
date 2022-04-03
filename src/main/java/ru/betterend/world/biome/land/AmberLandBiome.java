@@ -1,5 +1,6 @@
 package ru.betterend.world.biome.land;
 
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import ru.bclib.api.biomes.BCLBiomeBuilder;
@@ -37,7 +38,7 @@ public class AmberLandBiome extends EndBiome.Config {
 			.feature(EndFeatures.BULB_MOSS_WOOD)
 			.feature(EndFeatures.CHARNIA_ORANGE)
 			.feature(EndFeatures.CHARNIA_RED)
-			.structure(VANILLA_FEATURES.getEndCity())
+			.structure(BiomeTags.HAS_END_CITY)
 			.spawn(EntityType.ENDERMAN, 50, 1, 4)
 			.spawn(EndEntities.END_SLIME, 30, 1, 2);
 	}

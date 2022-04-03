@@ -3,6 +3,7 @@ package ru.betterend.registry;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -304,15 +305,21 @@ public class EndFeatures {
 	
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {
 		OreLayerFeature layer = new OreLayerFeature(block.defaultBlockState(), radius, minY, maxY);
-		PlacedFeature configured = layer.configured(FeatureConfiguration.NONE).placed(new PlacementModifier[]{CountPlacement.of(count)});
-		return new BCLFeature(BetterEnd.makeID(name), layer, GenerationStep.Decoration.UNDERGROUND_ORES, configured);
+		//PlacedFeature configured = layer.configured(FeatureConfiguration.NONE).placed(new PlacementModifier[]{CountPlacement.of(count)});
+		// return new BCLFeature(BetterEnd.makeID(name), layer, GenerationStep.Decoration.UNDERGROUND_ORES, configured);
+
+		return BCLFeatureBuilder
+				.start(BetterEnd.makeID(name), layer)
+				.decoration( GenerationStep.Decoration.UNDERGROUND_ORES)
+				.modifier(CountPlacement.of(count))
+				.build();
 	}
 	
 	private static BCLFeature registerLayer(String name, StoneMaterial material, float radius, int minY, int maxY, int count) {
 		return registerLayer(name, material.stone, radius, minY, maxY, count);
 	}
 	
-	public static void addBiomeFeatures(ResourceLocation id, Biome biome) {
+	public static void addBiomeFeatures(ResourceLocation id, Holder<Biome> biome) {
 		BiomeAPI.addBiomeFeature(biome, FLAVOLITE_LAYER);
 		BiomeAPI.addBiomeFeature(biome, THALLASIUM_ORE);
 		BiomeAPI.addBiomeFeature(biome, ENDER_ORE);
@@ -345,7 +352,12 @@ public class EndFeatures {
 		if (BuiltinRegistries.PLACED_FEATURE.containsKey(id)) {
 			PlacedFeature placed = BuiltinRegistries.PLACED_FEATURE.get(id);
 			Feature<?> feature = Registry.FEATURE.get(id);
-			return new BCLFeature(id, feature, Decoration.SURFACE_STRUCTURES, placed);
+			//return new BCLFeature(id, feature, Decoration.SURFACE_STRUCTURES, placed);
+			return BCLFeatureBuilder
+					.start(id, feature)
+					.decoration(Decoration.SURFACE_STRUCTURES)
+					.modifier(placed.placement())
+					.build(placed.feature().value().config());
 		}
 		
 		String path = "/data/" + ns + "/structures/biome/" + nm + "/";

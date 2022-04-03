@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -46,7 +47,7 @@ public class LakePiece extends BasePiece {
 	
 	private ResourceLocation biomeID;
 	
-	public LakePiece(BlockPos center, float radius, float depth, Random random, Biome biome) {
+	public LakePiece(BlockPos center, float radius, float depth, Random random, Holder<Biome> biome) {
 		super(EndStructures.LAKE_PIECE, random.nextInt(), null);
 		this.center = center;
 		this.radius = radius;
@@ -54,7 +55,7 @@ public class LakePiece extends BasePiece {
 		this.seed = random.nextInt();
 		this.noise = new OpenSimplexNoise(this.seed);
 		this.aspect = radius / depth;
-		this.biomeID = BiomeAPI.getBiomeID(biome);
+		this.biomeID = BiomeAPI.getBiomeID(biome.value());
 		makeBoundingBox();
 	}
 	

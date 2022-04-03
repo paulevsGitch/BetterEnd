@@ -1,6 +1,7 @@
 package ru.betterend.world.structures.features;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -38,7 +39,7 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 			int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
 			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 			if (y > 50) {
-				Biome biome = chunkGenerator.getNoiseBiome(x >> 2, y >> 2, z >> 2);
+				Holder<Biome> biome = chunkGenerator.getNoiseBiome(x >> 2, y >> 2, z >> 2);
 				float radius = MHelper.randRange(50, 100, random);
 				float height = radius * MHelper.randRange(0.4F, 0.6F, random);
 				int count = MHelper.floor(height * MHelper.randRange(0.1F, 0.35F, random) + 1);

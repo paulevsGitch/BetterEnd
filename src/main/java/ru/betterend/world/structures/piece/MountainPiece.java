@@ -3,6 +3,7 @@ package ru.betterend.world.structures.piece;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +32,7 @@ public abstract class MountainPiece extends BasePiece {
 	protected int seed1;
 	protected int seed2;
 	
-	public MountainPiece(StructurePieceType type, BlockPos center, float radius, float height, Random random, Biome biome) {
+	public MountainPiece(StructurePieceType type, BlockPos center, float radius, float height, Random random, Holder<Biome> biome) {
 		super(type, random.nextInt(), null);
 		this.center = center;
 		this.radius = radius;

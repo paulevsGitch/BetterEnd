@@ -7,7 +7,6 @@
 		"ChorusPlantFeatureMixin",
 		"PlayerAdvancementsMixin",
 		"ChorusFlowerBlockMixin",
-		"StructureFeaturesMixin",
 		"NoiseInterpolatorMixin",
 		"ChorusPlantBlockMixin",
 		"EndPodiumFeatureMixin",

@@ -19,7 +19,7 @@ public class BiomeIceStarfield extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		builder.structure(EndStructures.GIANT_ICE_STAR.getFeatureConfigured())
+		builder.structure(EndStructures.GIANT_ICE_STAR)
 			   .fogColor(224, 245, 254)
 			   .temperature(0F)
 			   .fogDensity(2.2F)

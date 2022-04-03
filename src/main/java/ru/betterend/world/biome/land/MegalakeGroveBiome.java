@@ -20,7 +20,7 @@ public class MegalakeGroveBiome extends EndBiome.Config {
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder
-			.structure(EndStructures.MEGALAKE_SMALL.getFeatureConfigured())
+			.structure(EndStructures.MEGALAKE_SMALL)
 			.plantsColor(73, 210, 209)
 			.fogColor(178, 209, 248)
 			.waterAndFogColor(96, 163, 255)

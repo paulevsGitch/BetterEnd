@@ -2,6 +2,7 @@ package ru.betterend.world.structures.piece;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -25,7 +26,7 @@ import java.util.Random;
 public class PaintedMountainPiece extends MountainPiece {
 	private BlockState[] slises;
 	
-	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome, BlockState[] slises) {
+	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Holder<Biome> biome, BlockState[] slises) {
 		super(EndStructures.PAINTED_MOUNTAIN_PIECE, center, radius, height, random, biome);
 		this.slises = slises;
 	}

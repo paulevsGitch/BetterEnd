@@ -1,5 +1,7 @@
 package ru.betterend.integration.byg.biomes;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.data.BuiltinRegistries;
@@ -33,8 +35,8 @@ public class OldBulbisGardens extends EndBiome.Config {
 
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		Biome biome = Integrations.BYG.getBiome("bulbis_gardens");
-		BiomeSpecialEffects effects = biome.getSpecialEffects();
+		Holder<Biome> biome = Integrations.BYG.getBiome("bulbis_gardens");
+		BiomeSpecialEffects effects = biome.value().getSpecialEffects();
 
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
 //		Block origin = biome.getGenerationSettings()
@@ -81,29 +83,28 @@ public class OldBulbisGardens extends EndBiome.Config {
 			});
 		}
 
-		List<List<Supplier<PlacedFeature>>> features = biome.getGenerationSettings()
+		List<HolderSet<PlacedFeature>> features = biome.getGenerationSettings()
 															.features();
-		List<Supplier<PlacedFeature>> vegetal = features.get(Decoration.VEGETAL_DECORATION.ordinal());
+		HolderSet<PlacedFeature> vegetal = features.get(Decoration.VEGETAL_DECORATION.ordinal());
 		if (vegetal.size() > 2) {
 			Supplier<PlacedFeature> getter;
 			// Trees (first two features)
 			// I couldn't process them with conditions, so that's why they are hardcoded (paulevs)
 			for (int i = 0; i < 2; i++) {
 				getter = vegetal.get(i);
-				PlacedFeature feature = getter.get();
+				Holder<PlacedFeature> feature = getter.get();
 				ResourceLocation id = BetterEnd.makeID("obg_feature_" + i);
 				feature = Registry.register(
 						BuiltinRegistries.PLACED_FEATURE,
 						id,
-						//TODO: 1.18 Check if this is correct
-						feature//.decorated(FeaturesAccesor.shadowHEIGHTMAP_SQUARE).countRandom(1)
+						feature
 				);
 				builder.feature(Decoration.VEGETAL_DECORATION, feature);
 			}
 			// Grasses and other features
 			for (int i = 2; i < vegetal.size(); i++) {
 				getter = vegetal.get(i);
-				PlacedFeature feature = getter.get();
+				Holder<PlacedFeature> feature = getter.get();
 				builder.feature(Decoration.VEGETAL_DECORATION, feature);
 			}
 		}

@@ -1,6 +1,7 @@
 package ru.betterend.world.biome.land;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,7 +42,7 @@ public class NeonOasisBiome extends EndBiome.Config {
 			.feature(EndFeatures.CHARNIA_GREEN)
 			.feature(EndFeatures.CHARNIA_CYAN)
 			.feature(EndFeatures.CHARNIA_RED)
-			.structure(VANILLA_FEATURES.getEndCity())
+			.structure(BiomeTags.HAS_END_CITY)
 			.spawn(EntityType.ENDERMAN, 50, 1, 2);
 	}
 
@@ -71,7 +72,7 @@ public class NeonOasisBiome extends EndBiome.Config {
 					.surface()
 					.ceil(Blocks.END_STONE.defaultBlockState())
 					.rule(1, SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surfaceBlockRule))
-					.rule(4, SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(5, false, false, CaveSurface.FLOOR),
+					.rule(4, SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(5, false, CaveSurface.FLOOR),
 						SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState())
 					));
 			}

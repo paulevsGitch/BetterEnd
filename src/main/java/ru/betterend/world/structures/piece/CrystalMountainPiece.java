@@ -2,6 +2,7 @@ package ru.betterend.world.structures.piece;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
@@ -29,9 +30,9 @@ import java.util.Random;
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;
 	
-	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
+	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Holder<Biome> biome) {
 		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
-		top = EndBiome.findTopMaterial(biome); //biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+		top = EndBiome.findTopMaterial(biome.value()); //biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
 	public CrystalMountainPiece(StructurePieceSerializationContext type, CompoundTag tag) {

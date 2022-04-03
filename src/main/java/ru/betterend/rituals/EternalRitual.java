@@ -441,7 +441,7 @@ public class EternalRitual {
 			}
 		}
 		if (targetWorld.dimension() == Level.END) {
-			net.minecraft.data.worldgen.features.EndFeatures.END_ISLAND.place(
+			net.minecraft.data.worldgen.features.EndFeatures.END_ISLAND.value().place(
 				targetWorld,
 				targetWorld.getChunkSource().getGenerator(),
 				new Random(basePos.asLong()),
@@ -453,6 +453,7 @@ public class EternalRitual {
 		}
 		EndFeatures.BIOME_ISLAND
 			.getPlacedFeature()
+			.value()
 			.place(targetWorld,
 				targetWorld.getChunkSource().getGenerator(),
 				new Random(basePos.asLong()),

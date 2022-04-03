@@ -108,6 +108,7 @@ public class EndTags {
 				ITEM_HAMMERS.add(item);
 			}
 		});
+
 		ToolManagerImpl.tag(CommonItemTags.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(ITEM_HAMMERS));
 		
 		TagAPI.addBlockTag(
@@ -128,9 +129,9 @@ public class EndTags {
 		);
 		TagAPI.addItemTag(NamedCommonItemTags.IRON_INGOTS, EndBlocks.THALLASIUM.ingot);
 		
-		TagAPI.addItemTag(ALLOYING_IRON.getName(), Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE, Items.RAW_IRON);
-		TagAPI.addItemTag(ALLOYING_GOLD.getName(), Items.GOLD_ORE, Items.DEEPSLATE_GOLD_ORE, Items.RAW_GOLD);
-		TagAPI.addItemTag(ALLOYING_COPPER.getName(), Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
+		TagAPI.addItemTag(ALLOYING_IRON, Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE, Items.RAW_IRON);
+		TagAPI.addItemTag(ALLOYING_GOLD, Items.GOLD_ORE, Items.DEEPSLATE_GOLD_ORE, Items.RAW_GOLD);
+		TagAPI.addItemTag(ALLOYING_COPPER, Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
 	}
 	
 	public static void addEndGround(Block bl){

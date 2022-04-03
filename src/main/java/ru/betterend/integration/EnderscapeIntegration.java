@@ -1,5 +1,6 @@
 package ru.betterend.integration;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
@@ -22,7 +23,7 @@ public class EnderscapeIntegration extends ModIntegration {
 		MappedRegistry<?> biomes = getStaticFieldValue(enderscape, "ENDERSCAPE_BIOME");
 		biomes.entrySet().forEach(entry -> {
 			ResourceKey key = entry.getKey();
-			Biome biome = getBiome(key.location().getPath());
+			Holder<Biome> biome = getBiome(key.location().getPath());
 			if (enderscapeIslandsBiome.isInstance(entry.getValue())) {
 				BiomeAPI.registerEndVoidBiome(biome);
 			}

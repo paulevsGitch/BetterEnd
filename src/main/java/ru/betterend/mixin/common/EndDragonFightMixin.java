@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.dimension.end.DragonRespawnAnimation;
 import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.phys.AABB;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,9 +30,7 @@ public class EndDragonFightMixin {
 	private boolean dragonKilled;
 	@Shadow
 	private BlockPos portalLocation;
-	@Final
-	@Shadow
-	private static Logger LOGGER;
+	@Shadow @Final private static Logger LOGGER;
 	@Final
 	@Shadow
 	private ServerLevel level;

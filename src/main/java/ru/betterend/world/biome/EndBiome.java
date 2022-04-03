@@ -1,7 +1,6 @@
 package ru.betterend.world.biome;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.WorldGenLevel;
@@ -17,7 +16,6 @@ import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.betterend.BetterEnd;
-import ru.betterend.interfaces.StructureFeaturesAccessor;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndSounds;
@@ -64,7 +62,6 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
 	public abstract static class Config {
 		public static final SurfaceMaterialProvider DEFAULT_MATERIAL = new DefaultSurfaceMaterialProvider();
 
-		protected static final StructureFeaturesAccessor VANILLA_FEATURES = (StructureFeaturesAccessor)new StructureFeatures();
 		protected static final SurfaceRules.RuleSource END_STONE = SurfaceRules.state(DefaultSurfaceMaterialProvider.END_STONE);
 		protected static final SurfaceRules.RuleSource END_MOSS = SurfaceRules.state(EndBlocks.END_MOSS.defaultBlockState());
 		protected static final SurfaceRules.RuleSource ENDSTONE_DUST = SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState());

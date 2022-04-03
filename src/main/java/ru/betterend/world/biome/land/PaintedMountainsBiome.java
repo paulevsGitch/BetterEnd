@@ -18,7 +18,7 @@ public class PaintedMountainsBiome extends EndBiome.Config {
 	@Override
 	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder
-			.structure(EndStructures.PAINTED_MOUNTAIN.getFeatureConfigured())
+			.structure(EndStructures.PAINTED_MOUNTAIN)
 			.fogColor(226, 239, 168)
 			.fogDensity(2)
 			.waterAndFogColor(192, 180, 131)

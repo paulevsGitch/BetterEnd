@@ -24,7 +24,6 @@ public class GlowingPillarSeedBlock extends EndPlantWithAgeBlock implements AddM
 	
 	public GlowingPillarSeedBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
-								 .breakByHand(true)
 								 .sound(SoundType.GRASS)
 								 .lightLevel(state -> state.getValue(AGE) * 3 + 3)
 								 .randomTicks()

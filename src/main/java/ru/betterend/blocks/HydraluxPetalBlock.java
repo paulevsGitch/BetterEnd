@@ -16,7 +16,6 @@ public class HydraluxPetalBlock extends BaseBlock implements AddMineableAxe {
 		this(
 			FabricBlockSettings
 				.of(Material.PLANT)
-				.breakByHand(true)
 				.hardness(1)
 				.resistance(1)
 				.mapColor(MaterialColor.PODZOL)

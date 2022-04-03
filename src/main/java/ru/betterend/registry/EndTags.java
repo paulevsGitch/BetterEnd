@@ -81,7 +81,7 @@ public class EndTags {
 				TagAPI.addBlockTag(NamedBlockTags.CLIMBABLE, block);
 			}
 			else if (block instanceof PedestalBlock) {
-				TagAPI.addBlockTag(PEDESTALS.getName(), block);
+				TagAPI.addBlockTag(PEDESTALS, block);
 			}
 			
 			Material mat = block.defaultBlockState().getMaterial();

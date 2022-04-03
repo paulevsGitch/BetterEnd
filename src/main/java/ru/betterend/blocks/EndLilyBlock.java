@@ -43,7 +43,6 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock implements AddMineable
 	
 	public EndLilyBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
-								 .breakByHand(true)
 								 .sound(SoundType.WET_GRASS)
 								 .lightLevel((state) -> state.getValue(SHAPE) == TripleShape.TOP ? 13 : 0)
 								 .noCollission());

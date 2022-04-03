@@ -24,7 +24,7 @@ public class PondAnemoneBlock extends EndUnderwaterPlantBlock implements AddMine
 	
 	public PondAnemoneBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
-								 .breakByHand(true)
+								 
 								 .luminance(13)
 								 .sound(SoundType.CORAL_BLOCK)
 								 .noCollission());

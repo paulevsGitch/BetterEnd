@@ -27,6 +27,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import ru.bclib.blocks.BaseBlock;
+import ru.bclib.items.tool.BaseShearsItem;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.entity.SilkMothEntity;
@@ -99,7 +100,7 @@ public class SilkMothHiveBlock extends BaseBlock {
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (hand == InteractionHand.MAIN_HAND) {
 			ItemStack stack = player.getMainHandItem();
-			if (stack.is(FabricToolTags.SHEARS) && state.getValue(FULLNESS) == 3) {
+			if (BaseShearsItem.isShear(stack) && state.getValue(FULLNESS) == 3) {
 				BlocksHelper.setWithUpdate(world, pos, state.setValue(FULLNESS, 0));
 				Direction dir = state.getValue(FACING);
 				double px = pos.getX() + dir.getStepX() + 0.5;

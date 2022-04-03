@@ -29,7 +29,7 @@ public class LargeAmaranitaBlock extends EndPlantBlock implements AddMineableShe
 	
 	public LargeAmaranitaBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
-								 .breakByHand(true)
+								 
 								 .sound(SoundType.GRASS)
 								 .lightLevel((state) -> (state.getValue(SHAPE) == TripleShape.TOP) ? 15 : 0));
 	}

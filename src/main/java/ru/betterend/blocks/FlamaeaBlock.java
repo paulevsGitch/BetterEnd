@@ -29,7 +29,6 @@ public class FlamaeaBlock extends EndPlantBlock implements CustomItemProvider, A
 	
 	public FlamaeaBlock() {
 		super(FabricBlockSettings.of(Material.PLANT)
-								 .breakByHand(true)
 								 .sound(SoundType.WET_GRASS));
 	}
 	

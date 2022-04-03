@@ -25,7 +25,6 @@ public class BubbleCoralBlock extends EndUnderwaterPlantBlock implements AddMine
 	
 	public BubbleCoralBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
-								 .breakByHand(true)
 								 .sound(SoundType.CORAL_BLOCK)
 								 .noCollission());
 	}

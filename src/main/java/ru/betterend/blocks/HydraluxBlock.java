@@ -34,7 +34,6 @@ public class HydraluxBlock extends UnderwaterPlantBlock  implements AddMineableS
 	
 	public HydraluxBlock() {
 		super(FabricBlockSettings.of(Material.WATER_PLANT)
-								 .breakByHand(true)
 								 .sound(SoundType.WET_GRASS)
 								 .lightLevel((state) -> state.getValue(SHAPE).hasGlow() ? 15 : 0)
 								 .noCollission());

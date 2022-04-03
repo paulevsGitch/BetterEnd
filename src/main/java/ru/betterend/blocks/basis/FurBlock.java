@@ -24,6 +24,7 @@ import ru.bclib.blocks.BaseAttachedBlock;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.RenderLayerProvider;
 import ru.bclib.interfaces.tools.AddMineableShears;
+import ru.bclib.items.tool.BaseShearsItem;
 import ru.bclib.util.MHelper;
 
 import java.util.EnumMap;
@@ -46,8 +47,7 @@ public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, 
 	
 	public FurBlock(ItemLike drop, int dropChance) {
 		super(FabricBlockSettings.of(Material.REPLACEABLE_PLANT)
-								 .breakByTool(FabricToolTags.SHEARS)
-								 .breakByHand(true)
+								 
 								 .sound(SoundType.GRASS)
 								 .noCollission());
 		this.drop = drop;
@@ -64,7 +64,7 @@ public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-		if (tool != null && tool.is(FabricToolTags.SHEARS) || EnchantmentHelper.getItemEnchantmentLevel(
+		if (tool != null && BaseShearsItem.isShear(tool) || EnchantmentHelper.getItemEnchantmentLevel(
 			Enchantments.SILK_TOUCH,
 			tool
 		) > 0) {

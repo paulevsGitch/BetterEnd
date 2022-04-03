@@ -154,7 +154,7 @@ public class MetalMaterial {
 		ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseOreBlock(()->rawOre, 1, 3, 1)) : null;
 		alloyingOre = hasOre ? TagAPI.makeItemTag(BetterEnd.MOD_ID, name + "_alloying") : null;
 		if (hasOre) {
-			TagAPI.addItemTag(alloyingOre.getName(), ore, rawOre);
+			TagAPI.addItemTag(alloyingOre, ore, rawOre);
 		}
 
 		block = EndBlocks.registerBlock(name + "_block", new BaseBlock(settings));

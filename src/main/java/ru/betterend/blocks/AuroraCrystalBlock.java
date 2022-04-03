@@ -23,6 +23,7 @@ import ru.bclib.api.tag.CommonItemTags;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.interfaces.RenderLayerProvider;
+import ru.bclib.interfaces.tools.AddMineableHammer;
 import ru.bclib.interfaces.tools.AddMineablePickaxe;
 import ru.bclib.util.ColorUtil;
 import ru.bclib.util.MHelper;
@@ -30,7 +31,7 @@ import ru.betterend.registry.EndItems;
 
 import java.util.List;
 
-public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider, AddMineablePickaxe {
+public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider, AddMineablePickaxe, AddMineableHammer {
 	public static final Vec3i[] COLORS;
 	private static final int MIN_DROP = 1;
 	private static final int MAX_DROP = 4;
@@ -38,7 +39,6 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 	public AuroraCrystalBlock() {
 		super(FabricBlockSettings
 			.of(Material.GLASS)
-			 .breakByTool(CommonItemTags.HAMMERS)
 			 .hardness(1F)
 			 .resistance(1F)
 			 .luminance(15)

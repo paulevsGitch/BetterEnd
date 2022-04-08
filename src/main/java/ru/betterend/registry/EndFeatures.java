@@ -324,12 +324,13 @@ public class EndFeatures {
 		BiomeAPI.addBiomeFeature(biome, THALLASIUM_ORE);
 		BiomeAPI.addBiomeFeature(biome, ENDER_ORE);
 		BiomeAPI.addBiomeFeature(biome, CRASHED_SHIP);
-		
+
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
-		BCLFeature feature = getBiomeStructures(bclbiome);
-		if (feature != null) {
-			BiomeAPI.addBiomeFeature(biome, feature);
-		}
+		//TODO: 1.18.2 - Not sure what this code is supposed to do....
+//		BCLFeature feature = getBiomeStructures(bclbiome);
+//		if (feature != null) {
+//			BiomeAPI.addBiomeFeature(biome, feature);
+//		}
 		
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			return;

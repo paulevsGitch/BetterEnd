@@ -31,25 +31,21 @@ public class NoiseChunkMixin implements TargetChecker {
 	}
 	
 	@Override
-	public boolean isTarget() {
+	public boolean be_isTarget() {
 		return be_isEndGenerator;
 	}
-
-	@Final
-	@Shadow(aliases = "this$0")
-	private NoiseChunk this$0;
 
 	@Shadow @Final private List<NoiseChunk.NoiseInterpolator> interpolators;
 
 	@Inject(method = "fillSlice", at = @At("HEAD"), cancellable = true)
 	private void be_fillSlice(boolean primarySlice, int x, CallbackInfo info) {
-		if (!TargetChecker.class.cast(this$0).isTarget()) {
+		if (!TargetChecker.class.cast(this).be_isTarget()) {
 			return;
 		}
 
 		info.cancel();
 
-		NoiseChunkAccessor accessor = NoiseChunkAccessor.class.cast(this$0);
+		NoiseChunkAccessor accessor = NoiseChunkAccessor.class.cast(this);
 		NoiseSettings noiseSettings = accessor.bnv_getNoiseSettings();
 
 		final int sizeY = noiseSettings.getCellHeight();

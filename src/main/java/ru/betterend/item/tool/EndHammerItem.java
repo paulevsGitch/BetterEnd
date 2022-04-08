@@ -116,22 +116,6 @@ public class EndHammerItem extends DiggerItem implements ItemModelProvider, TagP
 	}
 	
 	@Override
-	public float getMiningSpeedMultiplier(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(CommonItemTags.HAMMERS)) {
-			return this.getDestroySpeed(stack, state);
-		}
-		return 1.0F;
-	}
-	
-	@Override
-	public int getMiningLevel(Tag<Item> tag, BlockState state, ItemStack stack, LivingEntity user) {
-		if (tag.equals(CommonItemTags.HAMMERS)) {
-			return this.getTier().getLevel();
-		}
-		return 0;
-	}
-	
-	@Override
 	public boolean isCorrectToolForDrops(BlockState state) {
 		if (state.getMaterial().equals(Material.GLASS)) {
 			return true;

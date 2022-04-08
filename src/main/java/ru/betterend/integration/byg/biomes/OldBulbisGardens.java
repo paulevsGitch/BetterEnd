@@ -89,25 +89,29 @@ public class OldBulbisGardens extends EndBiome.Config {
 		HolderSet<PlacedFeature> vegetal = features.get(Decoration.VEGETAL_DECORATION.ordinal());
 		if (vegetal.size() > 2) {
 			Supplier<PlacedFeature> getter;
-			// Trees (first two features)
-			// I couldn't process them with conditions, so that's why they are hardcoded (paulevs)
-			for (int i = 0; i < 2; i++) {
-				getter = vegetal.get(i);
-				Holder<PlacedFeature> feature = getter.get();
-				ResourceLocation id = BetterEnd.makeID("obg_feature_" + i);
-				feature = Registry.register(
-						BuiltinRegistries.PLACED_FEATURE,
-						id,
-						feature
-				);
-				builder.feature(Decoration.VEGETAL_DECORATION, feature);
+			//TODO: 1.18.2 BRING BACK FEATURE COPY CODE
+			for(var placed : vegetal){
+				System.out.print(placed);
 			}
-			// Grasses and other features
-			for (int i = 2; i < vegetal.size(); i++) {
-				getter = vegetal.get(i);
-				Holder<PlacedFeature> feature = getter.get();
-				builder.feature(Decoration.VEGETAL_DECORATION, feature);
-			}
+//			// Trees (first two features)
+//			// I couldn't process them with conditions, so that's why they are hardcoded (paulevs)
+//			for (int i = 0; i < 2; i++) {
+//				getter = vegetal.get(i);
+//				Holder<PlacedFeature> feature = getter.get();
+//				ResourceLocation id = BetterEnd.makeID("obg_feature_" + i);
+//				feature = Registry.register(
+//						BuiltinRegistries.PLACED_FEATURE,
+//						id,
+//						feature
+//				);
+//				builder.feature(Decoration.VEGETAL_DECORATION, feature);
+//			}
+//			// Grasses and other features
+//			for (int i = 2; i < vegetal.size(); i++) {
+//				getter = vegetal.get(i);
+//				Holder<PlacedFeature> feature = getter.get();
+//				builder.feature(Decoration.VEGETAL_DECORATION, feature);
+//			}
 		}
 
 		builder.feature(EndFeatures.PURPLE_POLYPORE)

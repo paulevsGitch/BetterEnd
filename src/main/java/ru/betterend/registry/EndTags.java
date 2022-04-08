@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.BonemealAPI;
 import ru.bclib.api.ComposterAPI;
-import ru.bclib.api.tag.CommonItemTags;
 import ru.bclib.api.tag.NamedBlockTags;
 import ru.bclib.api.tag.NamedCommonBlockTags;
 import ru.bclib.api.tag.NamedCommonItemTags;
@@ -109,8 +108,6 @@ public class EndTags {
 			}
 		});
 
-		ToolManagerImpl.tag(CommonItemTags.HAMMERS).register(new ModdedToolsVanillaBlocksToolHandler(ITEM_HAMMERS));
-		
 		TagAPI.addBlockTag(
 			NamedCommonBlockTags.GEN_END_STONES,
 			EndBlocks.ENDER_ORE,

@@ -305,9 +305,6 @@ public class EndFeatures {
 	
 	private static BCLFeature registerLayer(String name, Block block, float radius, int minY, int maxY, int count) {
 		OreLayerFeature layer = new OreLayerFeature(block.defaultBlockState(), radius, minY, maxY);
-		//PlacedFeature configured = layer.configured(FeatureConfiguration.NONE).placed(new PlacementModifier[]{CountPlacement.of(count)});
-		// return new BCLFeature(BetterEnd.makeID(name), layer, GenerationStep.Decoration.UNDERGROUND_ORES, configured);
-
 		return BCLFeatureBuilder
 				.start(BetterEnd.makeID(name), layer)
 				.decoration( GenerationStep.Decoration.UNDERGROUND_ORES)
@@ -326,11 +323,10 @@ public class EndFeatures {
 		BiomeAPI.addBiomeFeature(biome, CRASHED_SHIP);
 
 		BCLBiome bclbiome = BiomeAPI.getBiome(id);
-		//TODO: 1.18.2 - Not sure what this code is supposed to do....
-//		BCLFeature feature = getBiomeStructures(bclbiome);
-//		if (feature != null) {
-//			BiomeAPI.addBiomeFeature(biome, feature);
-//		}
+		BCLFeature feature = getBiomeStructures(bclbiome);
+		if (feature != null) {
+			BiomeAPI.addBiomeFeature(biome, feature);
+		}
 		
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			return;
@@ -353,7 +349,6 @@ public class EndFeatures {
 		if (BuiltinRegistries.PLACED_FEATURE.containsKey(id)) {
 			PlacedFeature placed = BuiltinRegistries.PLACED_FEATURE.get(id);
 			Feature<?> feature = Registry.FEATURE.get(id);
-			//return new BCLFeature(id, feature, Decoration.SURFACE_STRUCTURES, placed);
 			return BCLFeatureBuilder
 					.start(id, feature)
 					.decoration(Decoration.SURFACE_STRUCTURES)

@@ -13,6 +13,7 @@
 		"ChorusPlantBlockMixin",
 		"EndPodiumFeatureMixin",
 		"EndDragonFightMixin",
+		"MappedRegistryMixin",
 		"WorldGenRegionMixin",
 		"BlockBehaviourMixin",
 		"NoiseChunkAccessor",

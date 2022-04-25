@@ -151,7 +151,7 @@ public class InfusionRitual implements Container {
 	}
 	
 	public boolean isValid() {
-		if (world == null || world.isClientSide || worldPos == null || input == null) return false;
+		if (world == null || world.isClientSide() || worldPos == null || input == null) return false;
 		return Arrays.stream(catalysts).noneMatch(Objects::isNull);
 	}
 	

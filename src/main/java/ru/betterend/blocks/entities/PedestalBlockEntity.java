@@ -83,18 +83,14 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
 	
 	@Override
 	public void setChanged() {
-		if (level != null && !level.isClientSide) {
+		if (level != null && !level.isClientSide()) {
 			BlockState state = level.getBlockState(worldPosition);
 			if (state.getBlock() instanceof PedestalBlock) {
-				BlockState trueState = state.setValue(PedestalBlock.HAS_ITEM, !isEmpty());
-				if (activeItem.getItem() == EndItems.ETERNAL_CRYSTAL) {
-					trueState = trueState.setValue(PedestalBlock.HAS_LIGHT, true);
-				}
-				else {
-					trueState = trueState.setValue(PedestalBlock.HAS_LIGHT, false);
-				}
-				level.setBlockAndUpdate(worldPosition, trueState);
+				state = state.setValue(PedestalBlock.HAS_ITEM, !isEmpty());
+				state = state.setValue(PedestalBlock.HAS_LIGHT, activeItem.getItem() == EndItems.ETERNAL_CRYSTAL);
 			}
+			level.setBlockAndUpdate(worldPosition, state);
+			level.blockEntityChanged(worldPosition);
 		}
 		super.setChanged();
 	}

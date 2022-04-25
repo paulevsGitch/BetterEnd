@@ -7,8 +7,6 @@ import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.world.biome.EndBiome;
 
-import java.util.function.BiFunction;
-
 public class EmptyEndCaveBiome extends EndCaveBiome.Config {
 	public static class Biome extends EndCaveBiome {
 		public Biome(ResourceLocation biomeID, net.minecraft.world.level.biome.Biome biome, BCLBiomeSettings settings) {

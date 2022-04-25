@@ -1,8 +1,11 @@
 package ru.betterend.mixin.common;
 
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.Aquifer;
+import net.minecraft.world.level.levelgen.DensityFunctions;
+import net.minecraft.world.level.levelgen.NoiseChunk;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.NoiseRouter;
+import net.minecraft.world.level.levelgen.NoiseSettings;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +17,6 @@ import ru.betterend.interfaces.BETargetChecker;
 import ru.betterend.world.generator.TerrainGenerator;
 
 import java.util.List;
-import java.util.Objects;
 
 @Mixin(NoiseChunk.class)
 public class NoiseChunkMixin implements BETargetChecker {

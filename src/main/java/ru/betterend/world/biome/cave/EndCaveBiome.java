@@ -11,7 +11,6 @@ import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.api.biomes.BCLBiomeBuilder.BiomeSupplier;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.features.BCLCommonFeatures;
-import ru.bclib.api.features.BCLFeatureBuilder;
 import ru.bclib.util.WeightedList;
 import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.bclib.world.features.BCLFeature;

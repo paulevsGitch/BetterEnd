@@ -1,7 +1,7 @@
 package ru.betterend.blocks;
 
 import com.google.common.collect.Lists;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
@@ -19,7 +19,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import ru.bclib.api.tag.CommonItemTags;
 import ru.bclib.client.render.BCLRenderLayer;
 import ru.bclib.interfaces.CustomColorProvider;
 import ru.bclib.interfaces.RenderLayerProvider;
@@ -30,6 +29,8 @@ import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndItems;
 
 import java.util.List;
+
+;
 
 public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider, AddMineablePickaxe, AddMineableHammer {
 	public static final Vec3i[] COLORS;

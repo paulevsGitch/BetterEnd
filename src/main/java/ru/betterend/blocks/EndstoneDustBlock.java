@@ -15,7 +15,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import ru.bclib.api.tag.NamedCommonBlockTags;
 import ru.bclib.api.tag.TagAPI.TagLocation;
 import ru.bclib.interfaces.TagProvider;
-import ru.bclib.interfaces.tools.AddMineableShears;
 import ru.bclib.interfaces.tools.AddMineableShovel;
 import ru.bclib.util.ColorUtil;
 

@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess;
 import net.minecraft.world.level.storage.ServerLevelData;
@@ -26,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.bclib.api.biomes.BiomeAPI;
 import ru.betterend.BetterEnd;
+import ru.betterend.interfaces.BETargetChecker;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.generator.GeneratorOptions;
 import ru.betterend.world.generator.TerrainGenerator;
@@ -57,6 +60,11 @@ public abstract class ServerLevelMixin extends Level {
 	private void be_onServerWorldInit(MinecraftServer minecraftServer, Executor executor, LevelStorageAccess levelStorageAccess, ServerLevelData serverLevelData, ResourceKey resourceKey, Holder holder, ChunkProgressListener chunkProgressListener, ChunkGenerator chunkGenerator, boolean bl, long seed, List list, boolean bl2, CallbackInfo ci) {
 		ServerLevel level = ServerLevel.class.cast(this);
 		if (level.dimension() == Level.END) {
+			if (chunkGenerator instanceof NoiseBasedChunkGenerator) {
+				Holder<NoiseGeneratorSettings> sHolder = NoiseBasedChunkGeneratorAccessor.class.cast(chunkGenerator).be_getSettings();
+				BETargetChecker.class.cast(sHolder.value()).be_setTarget(true);
+				
+			}
 			TerrainGenerator.initNoise(seed, chunkGenerator.getBiomeSource(), chunkGenerator.climateSampler());
 		}
 	}

@@ -4,10 +4,12 @@
 	"package": "ru.betterend.mixin.common",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
+		"NoiseBasedChunkGeneratorAccessor",
+		"NoiseGeneratorSettingsMixin",
+		"NoiseInterpolatorAccessor",
 		"ChorusPlantFeatureMixin",
 		"PlayerAdvancementsMixin",
 		"ChorusFlowerBlockMixin",
-		"NoiseInterpolatorMixin",
 		"ChorusPlantBlockMixin",
 		"EndPodiumFeatureMixin",
 		"EndDragonFightMixin",

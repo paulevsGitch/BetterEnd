@@ -20,6 +20,9 @@ import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -145,7 +148,8 @@ public abstract class LivingEntityMixin extends Entity {
 			boolean isFlying = getSharedFlag(7);
 			if (isFlying && !onGround && !isPassenger() && !hasEffect(MobEffects.LEVITATION)) {
 				if (ElytraItem.isFlyEnabled(itemStack)) {
-					if ((fallFlyTicks + 1) % 20 == 0) {
+					int level = 20 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, itemStack) * 5;
+					if ((fallFlyTicks + 1) % level == 0) {
 						itemStack.hurtAndBreak(
 								1,
 								LivingEntity.class.cast(this),

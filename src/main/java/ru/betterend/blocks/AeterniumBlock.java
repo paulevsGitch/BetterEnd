@@ -1,28 +1,28 @@
 package ru.betterend.blocks;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import ru.bclib.blocks.BaseBlock;
+import ru.bclib.interfaces.CustomItemProvider;
 
-public class AeterniumBlock extends BaseBlock {
-	
+public class AeterniumBlock extends BaseBlock implements CustomItemProvider {
 	public AeterniumBlock() {
-		super(FabricBlockSettings.of(Material.METAL, MaterialColor.COLOR_GRAY)
-								 .hardness(65F)
-								 .resistance(1200F)
-								 .requiresCorrectToolForDrops()
-								 .sound(SoundType.NETHERITE_BLOCK));
+		super(FabricBlockSettings
+			.of(Material.METAL, MaterialColor.COLOR_GRAY)
+			.hardness(65F)
+			.resistance(1200F)
+			.requiresCorrectToolForDrops()
+			.sound(SoundType.NETHERITE_BLOCK)
+		);
 	}
 	
-	@Environment(EnvType.CLIENT)
-	public int getColor(BlockState state, BlockGetter world, BlockPos pos) {
-		return 0xFF657A7A;
+	@Override
+	public BlockItem getCustomItem(ResourceLocation blockID, FabricItemSettings settings) {
+		return new BlockItem(this, settings.fireproof());
 	}
 }

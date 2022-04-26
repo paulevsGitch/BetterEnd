@@ -15,6 +15,7 @@ import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import org.jetbrains.annotations.NotNull;
 import ru.bclib.items.BaseArmorItem;
+import ru.bclib.items.ModelProviderItem;
 import ru.bclib.items.tool.BaseAxeItem;
 import ru.bclib.items.tool.BaseHoeItem;
 import ru.bclib.items.tool.BaseShovelItem;
@@ -46,8 +47,8 @@ public class EndItems {
 	// Materials //
 	public final static Item ENDER_DUST = registerEndItem("ender_dust");
 	public final static Item ENDER_SHARD = registerEndItem("ender_shard");
-	public final static Item AETERNIUM_INGOT = registerEndItem("aeternium_ingot");
-	public final static Item AETERNIUM_FORGED_PLATE = registerEndItem("aeternium_forged_plate");
+	public final static Item AETERNIUM_INGOT = registerEndItem("aeternium_ingot", new ModelProviderItem(makeEndItemSettings().fireResistant()));
+	public final static Item AETERNIUM_FORGED_PLATE = registerEndItem("aeternium_forged_plate", new ModelProviderItem(makeEndItemSettings().fireResistant()));
 	public final static Item END_LILY_LEAF = registerEndItem("end_lily_leaf");
 	public final static Item END_LILY_LEAF_DRIED = registerEndItem("end_lily_leaf_dried");
 	public final static Item CRYSTAL_SHARDS = registerEndItem("crystal_shards");
@@ -112,13 +113,13 @@ public class EndItems {
 	public static final TieredItem AETERNIUM_HAMMER = registerEndTool("aeternium_hammer", new EndHammerItem(EndToolMaterial.AETERNIUM, 6.0F, -3.0F, 0.3D, makeEndItemSettings().fireResistant()));
 	
 	// Toolparts //
-	public final static Item AETERNIUM_SHOVEL_HEAD = registerEndItem("aeternium_shovel_head");
-	public final static Item AETERNIUM_PICKAXE_HEAD = registerEndItem("aeternium_pickaxe_head");
-	public final static Item AETERNIUM_AXE_HEAD = registerEndItem("aeternium_axe_head");
-	public final static Item AETERNIUM_HOE_HEAD = registerEndItem("aeternium_hoe_head");
-	public final static Item AETERNIUM_HAMMER_HEAD = registerEndItem("aeternium_hammer_head");
-	public final static Item AETERNIUM_SWORD_BLADE = registerEndItem("aeternium_sword_blade");
-	public final static Item AETERNIUM_SWORD_HANDLE = registerEndItem("aeternium_sword_handle");
+	public final static Item AETERNIUM_SHOVEL_HEAD = registerEndItem("aeternium_shovel_head", new ModelProviderItem(makeEndItemSettings().fireResistant()));
+	public final static Item AETERNIUM_PICKAXE_HEAD = registerEndItem("aeternium_pickaxe_head", new ModelProviderItem(makeEndItemSettings().fireResistant()));
+	public final static Item AETERNIUM_AXE_HEAD = registerEndItem("aeternium_axe_head", new ModelProviderItem(makeEndItemSettings().fireResistant()));
+	public final static Item AETERNIUM_HOE_HEAD = registerEndItem("aeternium_hoe_head", new ModelProviderItem(makeEndItemSettings().fireResistant()));
+	public final static Item AETERNIUM_HAMMER_HEAD = registerEndItem("aeternium_hammer_head", new ModelProviderItem(makeEndItemSettings().fireResistant()));
+	public final static Item AETERNIUM_SWORD_BLADE = registerEndItem("aeternium_sword_blade", new ModelProviderItem(makeEndItemSettings().fireResistant()));
+	public final static Item AETERNIUM_SWORD_HANDLE = registerEndItem("aeternium_sword_handle", new ModelProviderItem(makeEndItemSettings().fireResistant()));
 	
 	// ITEM_HAMMERS //
 	public static final TieredItem IRON_HAMMER = registerEndTool("iron_hammer", new EndHammerItem(Tiers.IRON, 5.0F, -3.2F, 0.2D, makeEndItemSettings()));

@@ -50,7 +50,7 @@ public class InfusionRitual implements Container {
 	}
 	
 	public void configure() {
-		if (world == null || worldPos == null || world.isClientSide) return;
+		if (world == null || worldPos == null) return;
 		for (int i = 0; i < catalysts.length; i++) {
 			Point point = PEDESTALS_MAP[i];
 			MutableBlockPos checkPos = worldPos.mutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
@@ -115,7 +115,7 @@ public class InfusionRitual implements Container {
 			input.setItem(0, activeRecipe.assemble(this));
 			reset();
 		}
-		else {
+		else if (world instanceof ServerLevel) {
 			ServerLevel serverLevel = (ServerLevel) world;
 			BlockPos target = worldPos.above();
 			double tx = target.getX() + 0.5;
@@ -151,7 +151,7 @@ public class InfusionRitual implements Container {
 	}
 	
 	public boolean isValid() {
-		if (world == null || world.isClientSide() || worldPos == null || input == null) return false;
+		if (world == null || worldPos == null || input == null) return false;
 		return Arrays.stream(catalysts).noneMatch(Objects::isNull);
 	}
 	

@@ -13,7 +13,7 @@
 	"biome.betterend.dust_wastelands": "Пыльные пустоши",
 	"biome.betterend.chorus_forest": "Хорусовый лес",
 	"biome.betterend.megalake": "Мегаозеро",
- 	"biome.betterend.crystal_mountains": "Клисталлические горы",
+ 	"biome.betterend.crystal_mountains": "Кристаллические горы",
 	
 	"entity.betterend.dragonfly": "Стрекоза",
 	"item.betterend.spawn_egg_dragonfly": "Яйцо призыва стрекозы",
@@ -174,7 +174,7 @@
 	"block.betterend.flavolite": "Флаволит",
 	"block.betterend.flavolite_bricks": "Флаволитовые кирпичи",
 	"block.betterend.flavolite_bricks_slab": "Плита из флаволитовых кирпичей",
-	"block.betterend.flavolite_bricks_stairs": "Сутупени из флаволитовых кирпичей",
+	"block.betterend.flavolite_bricks_stairs": "Ступени из флаволитовых кирпичей",
 	"block.betterend.flavolite_bricks_wall": "Стена из флаволитовых кирпичей",
 	"block.betterend.flavolite_button": "Флаволитовая кнопка",
 	"block.betterend.flavolite_pillar": "Флаволитовая колонна",
@@ -573,7 +573,7 @@
 	"block.betterend.twisted_umbrella_moss": "Закрученный зонтичный мох",
 	"block.betterend.twisted_umbrella_moss_tall": "Высокий закрученный зонтичный мох",
 	"block.betterend.umbrella_tree_cluster": "Кластер зонтичного дерева",
-	"block.betterend.umbrella_tree_cluster_empty": "Пустой кластер хонтичного дерева",
+	"block.betterend.umbrella_tree_cluster_empty": "Пустой кластер зонтичного дерева",
 	"block.betterend.jungle_vine": "Лоза джунглей",
 	"block.betterend.jungle_fern": "Папоротник джунглей",
 	

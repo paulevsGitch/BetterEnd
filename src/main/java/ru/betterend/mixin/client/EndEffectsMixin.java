@@ -12,15 +12,15 @@ import ru.betterend.integration.Integrations;
 public class EndEffectsMixin {
 	@Inject(method = "getBrightnessDependentFogColor", at = @At("HEAD"), cancellable = true)
 	private void be_restoreBrightness(Vec3 color, float sunHeight, CallbackInfoReturnable<Vec3> info) {
-		if (Integrations.ENDERSCAPE.modIsInstalled()) {
-			info.setReturnValue(color.scale(0.15000000596046448D));
-		}
+//		if (Integrations.ENDERSCAPE.modIsInstalled()) {
+//			info.setReturnValue(color.scale(0.15000000596046448D));
+//		}
 	}
 	
 	@Inject(method = "isFoggyAt", at = @At("HEAD"), cancellable = true)
 	private void be_restoreFog(int camX, int camY, CallbackInfoReturnable<Boolean> info) {
-		if (Integrations.ENDERSCAPE.modIsInstalled()) {
+		/*if (Integrations.ENDERSCAPE.modIsInstalled()) {
 			info.setReturnValue(false);
-		}
+		}*/
 	}
 }

@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "betterend:amber_land",
+    "betterend:blossoming_spires",
+    "betterend:chorus_forest",
+    "betterend:crystal_mountains",
+    "betterend:dragon_graveyards",
+    "betterend:dry_shrubland",
+    "betterend:dust_wasteland",
+    "betterend:empty_aurora_cave",
+    "betterend:empty_end_cave",
+    "betterend:empty_smaragdant_cave",
+    "betterend:foggy_mushroomland",
+    "betterend:glowing_grassland",
+    "betterend:ice_starfield",
+    "betterend:jade_cave",
+    "betterend:lantern_woods",
+    "betterend:lush_aurora_cave",
+    "betterend:lush_smaragdant_cave",
+    "betterend:megalake",
+    "betterend:megalake_grove",
+    "betterend:neon_oasis",
+    "betterend:painted_mountains",
+    "betterend:shadow_forest",
+    "betterend:sulphur_springs",
+    "betterend:umbra_valley",
+    "betterend:umbrella_jungle"
+  ]
+}

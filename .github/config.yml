@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: New BetterEnd Repository
+    url: https://github.com/quiqueck/BetterEnd/issues
+    about: The Issue-Tracker (and main Repository) for BetterEnd moved to a new Maintainer. Please post your Issues there.

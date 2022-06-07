@@ -28,6 +28,7 @@ bin/
 
 run/
 run-client/
+run-server/
 output/
 *.getBlock("log")
 Convert.class
